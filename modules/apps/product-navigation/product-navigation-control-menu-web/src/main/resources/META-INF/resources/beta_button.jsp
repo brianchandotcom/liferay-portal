@@ -7,19 +7,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<div>
-	<react:component
-		module="{FeatureIndicator} from frontend-js-components-web"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"interactive", "true"
-			).put(
-				"learnResourceContext", LearnMessageUtil.getReactDataJSONObject("frontend-js-components-web")
-			).put(
-				"tooltipAlign", "bottom"
-			).put(
-				"type", "beta"
-			).build()
-		%>'
-	/>
-</div>
+<liferay-frontend:feature-indicator
+	interactive="<%= true %>"
+	tooltipAlign="bottom"
+	type="beta"
+/>

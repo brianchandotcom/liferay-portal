@@ -85,8 +85,9 @@ html#{$cadmin-selector} {
 			color: $control-menu-level-1-light-color;
 
 			a:not(.dropdown-item),
-			button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
+			button:not(.btn-link):not(.btn-translucent):not(.dropdown-item):not(.nav-link) {
 				color: $control-menu-level-1-light-link-color;
+
 				&:focus,
 				&:hover {
 					background-color: $control-menu-level-1-light-link-background-color;

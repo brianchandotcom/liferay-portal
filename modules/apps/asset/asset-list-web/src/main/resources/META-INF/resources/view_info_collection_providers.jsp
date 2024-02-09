@@ -43,13 +43,8 @@ InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (Inf
 
 					<c:if test="<%= infoCollectionProvider instanceof BetaInfoCollectionProvider %>">
 						<span>
-							<react:component
-								module="{FeatureIndicator} from frontend-js-components-web"
-								props='<%=
-									HashMapBuilder.<String, Object>put(
-										"type", "beta"
-									).build()
-								%>'
+							<liferay-frontend:feature-indicator
+								type="beta"
 							/>
 						</span>
 					</c:if>

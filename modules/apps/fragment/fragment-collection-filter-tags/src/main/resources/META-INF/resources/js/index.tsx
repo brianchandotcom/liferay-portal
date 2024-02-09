@@ -13,6 +13,7 @@ import React, {useCallback, useState} from 'react';
 interface IProps {
 	disabled: boolean;
 	fragmentEntryLinkId: string;
+	groupIds: Array<string>;
 	helpText: string;
 	label: string;
 	showLabel: boolean;
@@ -22,6 +23,7 @@ interface IProps {
 export function SelectTags({
 	disabled,
 	fragmentEntryLinkId,
+	groupIds,
 	helpText,
 	label,
 	showLabel,
@@ -59,6 +61,7 @@ export function SelectTags({
 	return (
 		<AssetTagsSelector
 			formGroupClassName="mb-0"
+			groupIds={groupIds}
 			helpText={helpText}
 			inputValue={inputValue}
 			label={label}

@@ -94,7 +94,8 @@ public class FragmentCollectionFilterTags implements FragmentCollectionFilter {
 			httpServletRequest.setAttribute(
 				FragmentCollectionFilterTagsDisplayContext.class.getName(),
 				new FragmentCollectionFilterTagsDisplayContext(
-					getConfiguration(), _fragmentEntryConfigurationParser,
+					httpServletRequest, getConfiguration(),
+					_fragmentEntryConfigurationParser,
 					fragmentRendererContext));
 
 			RequestDispatcher requestDispatcher =

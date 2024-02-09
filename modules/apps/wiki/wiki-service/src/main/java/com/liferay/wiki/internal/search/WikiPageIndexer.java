@@ -167,7 +167,7 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 				BooleanClauseOccur.MUST);
 
 			modelBooleanQuery.add(
-				keywordsBooleanQuery, BooleanClauseOccur.SHOULD);
+				keywordsBooleanQuery, BooleanClauseOccur.MUST);
 
 			searchQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
 		}

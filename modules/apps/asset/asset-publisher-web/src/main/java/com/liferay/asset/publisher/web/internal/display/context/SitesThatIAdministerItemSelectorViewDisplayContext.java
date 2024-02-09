@@ -72,39 +72,53 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		boolean filterManageableGroups = true;
-
-		if (permissionChecker.isCompanyAdmin()) {
-			filterManageableGroups = false;
-		}
+		boolean filterManageableGroups = permissionChecker.isCompanyAdmin();
 
 		_groupParams = LinkedHashMapBuilder.<String, Object>put(
+			"actionId",
+			() -> {
+				if (filterManageableGroups) {
+					return ActionKeys.UPDATE;
+				}
+
+				return null;
+			}
+		).put(
 			"active", Boolean.TRUE
+		).put(
+			"excludedGroupIds",
+			() -> {
+				if (getGroupId() <= 0) {
+					return null;
+				}
+
+				List<Long> excludedGroupIds = new ArrayList<>();
+
+				Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+
+				if (group.isStagingGroup()) {
+					excludedGroupIds.add(group.getLiveGroupId());
+				}
+				else {
+					excludedGroupIds.add(getGroupId());
+				}
+
+				return excludedGroupIds;
+			}
+		).put(
+			"site", Boolean.TRUE
+		).put(
+			"usersGroups",
+			() -> {
+				if (filterManageableGroups) {
+					User user = themeDisplay.getUser();
+
+					return user.getUserId();
+				}
+
+				return null;
+			}
 		).build();
-
-		if (filterManageableGroups) {
-			User user = themeDisplay.getUser();
-
-			_groupParams.put("actionId", ActionKeys.UPDATE);
-			_groupParams.put("usersGroups", user.getUserId());
-		}
-
-		_groupParams.put("site", Boolean.TRUE);
-
-		if (getGroupId() > 0) {
-			List<Long> excludedGroupIds = new ArrayList<>();
-
-			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
-
-			if (group.isStagingGroup()) {
-				excludedGroupIds.add(group.getLiveGroupId());
-			}
-			else {
-				excludedGroupIds.add(getGroupId());
-			}
-
-			_groupParams.put("excludedGroupIds", excludedGroupIds);
-		}
 
 		return _groupParams;
 	}

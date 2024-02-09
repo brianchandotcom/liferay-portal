@@ -88,7 +88,9 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
-	public void testCombineSegmentsOfDynamicCollection() throws Exception {
+	public void testCombineSegmentsEntriesOfDynamicCollection()
+		throws Exception {
+
 		_setCombinedAssetForDynamicCollections(true);
 
 		AssetListEntry assetListEntry =
@@ -147,7 +149,7 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
-	public void testCombineSegmentsOfDynamicCollectionWithCategoryFilter()
+	public void testCombineSegmentsEntriesOfDynamicCollectionWithCategoryFilter()
 		throws Exception {
 
 		_setCombinedAssetForDynamicCollections(true);
@@ -236,7 +238,7 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
-	public void testCombineSegmentsOfDynamicCollectionWithoutDuplications()
+	public void testCombineSegmentsEntriesOfDynamicCollectionWithoutDuplications()
 		throws Exception {
 
 		_setCombinedAssetForDynamicCollections(true);
@@ -872,7 +874,9 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
-	public void testNotCombineSegmentsOfDynamicCollection() throws Exception {
+	public void testNotCombineSegmentsEntriesOfDynamicCollection()
+		throws Exception {
+
 		_setCombinedAssetForDynamicCollections(false);
 
 		AssetListEntry assetListEntry =

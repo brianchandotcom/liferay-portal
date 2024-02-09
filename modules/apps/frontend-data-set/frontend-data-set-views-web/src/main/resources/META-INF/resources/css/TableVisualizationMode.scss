@@ -1,4 +1,6 @@
-html:not(#__):not(#___)
+@import 'cadmin-variables';
+
+html#{$cadmin-selector}
 	.cadmin
 	.dropdown-menu.fds-cell-renderers-dropdown-menu {
 	max-height: 500px;
@@ -6,6 +8,6 @@ html:not(#__):not(#___)
 	width: 100%;
 }
 
-html:not(#__):not(#___) .cadmin .input-localized .form-group {
+html#{$cadmin-selector} .cadmin .input-localized .form-group {
 	margin-bottom: 0;
 }

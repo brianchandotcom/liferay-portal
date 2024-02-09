@@ -94,7 +94,7 @@ public class AssetCategoryCommerceMLForecastManagerImpl
 
 		return getSearchResults(
 			getSearchSearchRequest(
-				commerceMLIndexer.getIndexName(companyId),
+				getIndexName(companyId),
 				_getMonthlyRevenueQuery(
 					actualDate, assetCategoryIds, commerceAccountIds,
 					historyLength, forecastLength),
@@ -109,7 +109,7 @@ public class AssetCategoryCommerceMLForecastManagerImpl
 
 		return getCountResult(
 			getCountSearchRequest(
-				commerceMLIndexer.getIndexName(companyId),
+				getIndexName(companyId),
 				_getMonthlyRevenueQuery(
 					actualDate, assetCategoryIds, commerceAccountIds,
 					historyLength, forecastLength)));

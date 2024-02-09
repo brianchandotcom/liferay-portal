@@ -99,7 +99,7 @@ public class SkuCommerceMLForecastManagerImpl
 
 		return getSearchResults(
 			getSearchSearchRequest(
-				commerceMLIndexer.getIndexName(companyId),
+				getIndexName(companyId),
 				_getMonthlyQuantityQuery(
 					skus, actualDate, historyLength, forecastLength),
 				start, end - start, getDefaultSort(true)));
@@ -124,7 +124,7 @@ public class SkuCommerceMLForecastManagerImpl
 
 		return getCountResult(
 			getCountSearchRequest(
-				commerceMLIndexer.getIndexName(companyId),
+				getIndexName(companyId),
 				_getMonthlyQuantityQuery(
 					skus, actualDate, historyLength, forecastLength)));
 	}

@@ -6,7 +6,7 @@
 package com.liferay.commerce.machine.learning.internal.recommendation;
 
 import com.liferay.commerce.machine.learning.internal.recommendation.constants.CommerceMLRecommendationField;
-import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
+import com.liferay.commerce.machine.learning.internal.search.api.IndexNamePatterns;
 import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendation;
 import com.liferay.commerce.machine.learning.recommendation.UserCommerceMLRecommendationManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,8 +47,7 @@ public class UserCommerceMLRecommendationManagerImpl
 
 		return addCommerceMLRecommendation(
 			userCommerceMLRecommendation,
-			_commerceMLIndexer.getIndexName(
-				userCommerceMLRecommendation.getCompanyId()));
+			_getIndexName(userCommerceMLRecommendation.getCompanyId()));
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class UserCommerceMLRecommendationManagerImpl
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
-			new String[] {_commerceMLIndexer.getIndexName(companyId)});
+			new String[] {_getIndexName(companyId)});
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
@@ -137,9 +137,13 @@ public class UserCommerceMLRecommendationManagerImpl
 		return userCommerceMLRecommendation;
 	}
 
-	@Reference(
-		target = "(component.name=com.liferay.commerce.machine.learning.internal.recommendation.search.index.UserRecommendationCommerceMLIndexer)"
-	)
-	private CommerceMLIndexer _commerceMLIndexer;
+	private String _getIndexName(long companyId) {
+		return IndexNamePatterns.getIndexName(
+			_indexNameBuilder, IndexNamePatterns.USER_RECOMMENDATION,
+			companyId);
+	}
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 }

@@ -8,7 +8,7 @@ package com.liferay.commerce.machine.learning.internal.forecast;
 import com.liferay.commerce.machine.learning.forecast.CommerceMLForecast;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastField;
 import com.liferay.commerce.machine.learning.internal.forecast.constants.CommerceMLForecastPeriod;
-import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
+import com.liferay.commerce.machine.learning.internal.search.api.IndexNamePatterns;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
@@ -37,6 +37,7 @@ import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -68,7 +69,7 @@ public abstract class BaseCommerceMLForecastServiceImpl
 		document.addKeyword(Field.UID, String.valueOf(model.getForecastId()));
 
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			commerceMLIndexer.getIndexName(model.getCompanyId()), document);
+			getIndexName(model.getCompanyId()), document);
 
 		IndexDocumentResponse indexDocumentResponse =
 			searchEngineAdapter.execute(indexDocumentRequest);
@@ -125,7 +126,7 @@ public abstract class BaseCommerceMLForecastServiceImpl
 
 		List<T> searchResults = getSearchResults(
 			getSearchSearchRequest(
-				commerceMLIndexer.getIndexName(companyId),
+				getIndexName(companyId),
 				new BooleanQueryImpl() {
 					{
 						setPreBooleanFilter(
@@ -281,6 +282,11 @@ public abstract class BaseCommerceMLForecastServiceImpl
 		return HashUtil.hash(values.length, sb.toString());
 	}
 
+	protected String getIndexName(long companyId) {
+		return IndexNamePatterns.getIndexName(
+			indexNameBuilder, IndexNamePatterns.FORECAST, companyId);
+	}
+
 	protected List<T> getSearchResults(
 		SearchSearchRequest searchSearchRequest) {
 
@@ -341,10 +347,8 @@ public abstract class BaseCommerceMLForecastServiceImpl
 
 	protected static final String SORTABLE_FIELD_SUFFIX = "_sortable";
 
-	@Reference(
-		target = "(component.name=com.liferay.commerce.machine.learning.internal.forecast.search.index.ForecastCommerceMLIndexer)"
-	)
-	protected volatile CommerceMLIndexer commerceMLIndexer;
+	@Reference
+	protected IndexNameBuilder indexNameBuilder;
 
 	@Reference
 	protected volatile SearchEngineAdapter searchEngineAdapter;

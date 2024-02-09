@@ -6,7 +6,7 @@
 package com.liferay.commerce.machine.learning.internal.recommendation;
 
 import com.liferay.commerce.machine.learning.internal.recommendation.constants.CommerceMLRecommendationField;
-import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
+import com.liferay.commerce.machine.learning.internal.search.api.IndexNamePatterns;
 import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendation;
 import com.liferay.commerce.machine.learning.recommendation.ProductContentCommerceMLRecommendationManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class ProductContentCommerceMLRecommendationManagerImpl
 
 		return addCommerceMLRecommendation(
 			productContentCommerceMLRecommendation,
-			_commerceMLIndexer.getIndexName(
+			_getIndexName(
 				productContentCommerceMLRecommendation.getCompanyId()));
 	}
 
@@ -56,8 +57,7 @@ public class ProductContentCommerceMLRecommendationManagerImpl
 		throws PortalException {
 
 		SearchSearchRequest searchSearchRequest = getSearchSearchRequest(
-			_commerceMLIndexer.getIndexName(companyId), companyId,
-			cpDefinition);
+			_getIndexName(companyId), companyId, cpDefinition);
 
 		Sort sort = SortFactoryUtil.create(
 			CommerceMLRecommendationField.RANK, Sort.INT_TYPE, false);
@@ -103,9 +103,13 @@ public class ProductContentCommerceMLRecommendationManagerImpl
 		return productContentCommerceMLRecommendation;
 	}
 
-	@Reference(
-		target = "(component.name=com.liferay.commerce.machine.learning.internal.recommendation.search.index.ProductContentRecommendationCommerceMLIndexer)"
-	)
-	private CommerceMLIndexer _commerceMLIndexer;
+	private String _getIndexName(long companyId) {
+		return IndexNamePatterns.getIndexName(
+			_indexNameBuilder, IndexNamePatterns.PRODUCT_CONTENT_RECOMMENDATION,
+			companyId);
+	}
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 }

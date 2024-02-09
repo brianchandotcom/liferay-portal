@@ -6,6 +6,7 @@
 package com.liferay.commerce.machine.learning.internal.search.index;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
+import com.liferay.commerce.machine.learning.internal.search.api.IndexNamePatterns;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -40,7 +41,8 @@ public abstract class BaseCommerceMLIndexer implements CommerceMLIndexer {
 			return;
 		}
 
-		String indexName = getIndexName(companyId);
+		String indexName = IndexNamePatterns.getIndexName(
+			indexNameBuilder, _indexNamePattern, companyId);
 
 		if (_indicesExists(indexName)) {
 			if (_log.isDebugEnabled()) {
@@ -70,7 +72,8 @@ public abstract class BaseCommerceMLIndexer implements CommerceMLIndexer {
 			return;
 		}
 
-		String indexName = getIndexName(companyId);
+		String indexName = IndexNamePatterns.getIndexName(
+			indexNameBuilder, _indexNamePattern, companyId);
 
 		if (!_indicesExists(indexName)) {
 			if (_log.isDebugEnabled()) {
@@ -89,12 +92,6 @@ public abstract class BaseCommerceMLIndexer implements CommerceMLIndexer {
 			_log.debug(
 				String.format("Index %s dropped successfully", indexName));
 		}
-	}
-
-	@Override
-	public String getIndexName(long companyId) {
-		return String.format(
-			_indexNamePattern, indexNameBuilder.getIndexName(companyId));
 	}
 
 	@Reference

@@ -14,6 +14,4 @@ public interface CommerceMLIndexer {
 
 	public void dropIndex(long companyId);
 
-	public String getIndexName(long companyId);
-
 }

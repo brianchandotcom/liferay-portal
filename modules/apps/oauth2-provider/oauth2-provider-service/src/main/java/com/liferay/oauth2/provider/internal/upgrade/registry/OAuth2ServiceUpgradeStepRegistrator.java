@@ -12,6 +12,7 @@ import com.liferay.oauth2.provider.internal.upgrade.v4_1_0.OAuth2ApplicationClie
 import com.liferay.oauth2.provider.internal.upgrade.v4_2_1.OAuth2ScopeGrantRemoveCompanyIdFromObjectsRelatedUpgradeProcess;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
@@ -136,6 +137,23 @@ public class OAuth2ServiceUpgradeStepRegistrator
 			"4.2.3", "4.2.4",
 			UpgradeProcessFactory.alterColumnType(
 				"OAuth2Application", "name", "VARCHAR(255) null"));
+
+		registry.register(
+			"4.2.4", "4.2.5",
+			new UpgradeProcess() {
+
+				@Override
+				protected void doUpgrade() throws Exception {
+					runSQL(
+						StringBundler.concat(
+							"update User_ set passwordReset = [$FALSE$] where ",
+							"type_ = ",
+							UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT,
+							" or type_ = ",
+							UserConstants.TYPE_SERVICE_ACCOUNT));
+				}
+
+			});
 	}
 
 	@Reference

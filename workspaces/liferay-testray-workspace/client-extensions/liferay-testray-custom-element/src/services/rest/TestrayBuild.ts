@@ -162,7 +162,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 	}
 
 	protected async validate(build: Build, id?: number) {
-		const searchBuilder = new SearchBuilder();
+		const searchBuilder = new SearchBuilder({useURIEncode: true});
 
 		if (id) {
 			searchBuilder.ne('id', id).and();

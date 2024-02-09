@@ -97,6 +97,7 @@ patch {
 	fileNames "org/opensearch/client/opensearch/cat/CatRequestBase.java"
 	fileNames "org/opensearch/client/opensearch/cluster/stats/ClusterNodeCount.java"
 	fileNames "org/opensearch/client/opensearch/cluster/stats/NodePackagingType.java"
+	fileNames "org/opensearch/client/opensearch/snapshot/GetSnapshotResponse.java"
 	fileNames "org/opensearch/client/transport/TransportOptions.java"
 	fileNames "org/opensearch/client/transport/aws/AwsSdk2Transport.java"
 	fileNames "org/opensearch/client/transport/httpclient5/ApacheHttpClient5Transport.java"
@@ -115,6 +116,7 @@ unzip {
 				it.name == "AwsSdk2Transport.java" ||
 				it.name == "CatRequestBase.java" ||
 				it.name == "ClusterNodeCount.java" ||
+				it.name == "GetSnapshotResponse.java" ||
 				it.name == "NodePackagingType.java" ||
 				it.name == "Property.java" ||
 				it.name == "TransportOptions.java") {

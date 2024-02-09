@@ -6,7 +6,7 @@
 import {TreeView} from '@clayui/core';
 import {ComponentProps} from 'react';
 import {FDSViewType} from '../../../../FDSViews';
-import {IFDSField} from '../Table';
+import {IFDSField} from '../../../../utils/types';
 declare const AddFieldsModalContent: ({
 	closeModal,
 	fdsView,

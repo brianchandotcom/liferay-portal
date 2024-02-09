@@ -5,8 +5,8 @@
 
 /// <reference types="react" />
 
-import {OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionProps} from '../FDSView';
+import {OBJECT_RELATIONSHIP} from '../utils/constants';
 import '../../css/Actions.scss';
 declare const SECTIONS: {
 	CREATION_ACTIONS: string;

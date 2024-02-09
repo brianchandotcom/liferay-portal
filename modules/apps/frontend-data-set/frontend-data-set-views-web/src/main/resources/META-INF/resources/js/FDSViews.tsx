@@ -15,9 +15,13 @@ import classNames from 'classnames';
 import {fetch, navigate, openModal} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import {API_URL, FDS_DEFAULT_PROPS, OBJECT_RELATIONSHIP} from './Constants';
 import {FDSEntryType} from './FDSEntries';
 import RequiredMark from './components/RequiredMark';
+import {
+	API_URL,
+	FDS_DEFAULT_PROPS,
+	OBJECT_RELATIONSHIP,
+} from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 

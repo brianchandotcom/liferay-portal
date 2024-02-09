@@ -14,11 +14,11 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {fetch, openModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {API_URL, OBJECT_RELATIONSHIP} from '../../Constants';
 import {FDSViewType} from '../../FDSViews';
 import RequiredMark from '../../components/RequiredMark';
 import Search from '../../components/Search';
 import ValidationFeedback from '../../components/ValidationFeedback';
+import {API_URL, OBJECT_RELATIONSHIP} from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IFDSAction} from '../Actions';

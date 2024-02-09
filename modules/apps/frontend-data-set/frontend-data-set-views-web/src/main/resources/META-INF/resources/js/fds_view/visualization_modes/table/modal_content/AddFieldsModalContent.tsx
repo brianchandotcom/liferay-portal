@@ -17,10 +17,9 @@ import React, {ComponentProps, useEffect, useState} from 'react';
 import {FDSViewType} from '../../../../FDSViews';
 import {getFields} from '../../../../api';
 import Search from '../../../../components/Search';
-import {IField} from '../../../../types';
 import openDefaultFailureToast from '../../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../../utils/openDefaultSuccessToast';
-import {IFDSField} from '../Table';
+import {IFDSField, IField} from '../../../../utils/types';
 
 interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];
@@ -206,7 +205,7 @@ const AddFieldsModalContent = ({
 			if (selectedKeys.has(field.name) && !field.savedId) {
 				creationData.push({
 					name: field.name,
-					type: field.type,
+					type: field.type || 'string',
 				});
 			}
 

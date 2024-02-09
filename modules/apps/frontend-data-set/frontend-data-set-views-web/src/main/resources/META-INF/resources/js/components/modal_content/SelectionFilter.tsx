@@ -14,7 +14,7 @@ import classNames from 'classnames';
 import fuzzy from 'fuzzy';
 import React, {useState} from 'react';
 
-import {IPickList} from '../../types';
+import {IPickList} from '../../utils/types';
 import CheckboxMultiSelect from '../CheckboxMultiSelect';
 
 function Header() {

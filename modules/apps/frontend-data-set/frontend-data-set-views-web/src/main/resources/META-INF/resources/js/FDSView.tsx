@@ -10,7 +10,6 @@ import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {API_URL, OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
 import Actions from './fds_view/Actions';
 import Details from './fds_view/Details';
@@ -19,6 +18,7 @@ import Pagination from './fds_view/Pagination';
 import Sorting from './fds_view/Sorting';
 import VisualizationModes from './fds_view/visualization_modes/VisualizationModes';
 import {Fields} from './fds_view/visualization_modes/table/Table';
+import {API_URL, OBJECT_RELATIONSHIP} from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 const NAVIGATION_BAR_ITEMS = [

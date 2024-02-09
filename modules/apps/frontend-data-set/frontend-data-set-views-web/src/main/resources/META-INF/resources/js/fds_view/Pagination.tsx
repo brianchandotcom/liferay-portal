@@ -10,9 +10,9 @@ import classnames from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import {API_URL} from '../Constants';
 import {IFDSViewSectionProps} from '../FDSView';
 import RequiredMark from '../components/RequiredMark';
+import {API_URL} from '../utils/constants';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 

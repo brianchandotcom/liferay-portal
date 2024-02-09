@@ -3,23 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-declare type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
-export declare enum EFilterType {
+type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+
+export enum EFilterType {
 	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
 	DATE_RANGE = 'DATE_RANGE',
 	SELECTION = 'SELECTION',
 }
-export declare enum EFieldFormat {
+
+export enum EFieldFormat {
 	DATE = 'date',
 	DATE_TIME = 'date-time',
 	INT64 = 'int64',
 }
-export declare enum EFieldType {
+
+export enum EFieldType {
 	ARRAY = 'array',
 	INTEGER = 'integer',
 	OBJECT = 'object',
 	STRING = 'string',
 }
+
 export interface IField {
 	children?: Array<IField>;
 	format?: EFieldFormat;
@@ -27,9 +31,23 @@ export interface IField {
 	label?: string;
 	name: string;
 	selected?: boolean;
-	type: string;
+	type?: string;
 	visible?: boolean;
 }
+
+export interface IFDSField {
+	contextPath: string;
+	externalReferenceCode: string;
+	id: number;
+	label: string;
+	label_i18n: LocalizedValue<string>;
+	name: string;
+	renderer: string;
+	rendererLabel?: string;
+	sortable: boolean;
+	type: string;
+}
+
 export interface IFilter {
 	fieldName: string;
 	filterType?: EFilterType;
@@ -38,19 +56,23 @@ export interface IFilter {
 	label_i18n: LocalizedValue<string>;
 	type: string;
 }
+
 export interface IClientExtensionFilter extends IFilter {
 	fdsFilterClientExtensionERC: string;
 }
+
 export interface IDateFilter extends IFilter {
 	from: string;
 	to: string;
 }
+
 export interface ISelectionFilter extends IFilter {
 	include: boolean;
 	listTypeDefinitionERC: string;
 	multiple: boolean;
 	preselectedValues: string;
 }
+
 export interface IPickList {
 	externalReferenceCode: string;
 	id: string;
@@ -60,6 +82,7 @@ export interface IPickList {
 		[key: string]: string;
 	};
 }
+
 export interface IListTypeEntry {
 	externalReferenceCode: string;
 	id: number;
@@ -69,4 +92,3 @@ export interface IListTypeEntry {
 		[key: string]: string;
 	};
 }
-export {};

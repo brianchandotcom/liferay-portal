@@ -4,7 +4,7 @@
  */
 
 import {FDSViewType} from './FDSViews';
-import {IField, IPickList} from './types';
+import {IField, IPickList} from './utils/types';
 export declare function getFields(fdsView: FDSViewType): Promise<IField[]>;
 export declare function getAllPicklists(
 	page?: number,

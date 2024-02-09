@@ -9,10 +9,10 @@ import {
 } from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 
-import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
-import {EFieldFormat, EFieldType, IField, IPickList} from './types';
+import {OBJECT_RELATIONSHIP} from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
+import {EFieldFormat, EFieldType, IField, IPickList} from './utils/types';
 
 const INVALID_FIELDS = ['actions', 'scopeKey', 'x-class-name', 'x-schema-name'];
 

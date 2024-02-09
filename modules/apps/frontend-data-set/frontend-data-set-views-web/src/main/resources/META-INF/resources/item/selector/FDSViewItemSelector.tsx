@@ -8,7 +8,7 @@ import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React, {useState} from 'react';
 
-import {API_URL, FDS_DEFAULT_PROPS} from '../../js/Constants';
+import {API_URL, FDS_DEFAULT_PROPS} from '../../js/utils/constants';
 
 import './FDSViewItemSelector.scss';
 

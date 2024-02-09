@@ -16,16 +16,16 @@ import fuzzy from 'fuzzy';
 import React, {useState} from 'react';
 
 import '../css/FDSEntries.scss';
+import {FDSViewType} from './FDSViews';
+import RequiredMark from './components/RequiredMark';
+import ValidationFeedback from './components/ValidationFeedback';
 import {
 	ALLOWED_ENDPOINTS_PARAMETERS,
 	API_URL,
 	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
-} from './Constants';
-import {FDSViewType} from './FDSViews';
-import RequiredMark from './components/RequiredMark';
-import ValidationFeedback from './components/ValidationFeedback';
+} from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 

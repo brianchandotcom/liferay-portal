@@ -20,37 +20,26 @@ import {fetch, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
-import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../../../Constants';
 import {IFDSViewSectionProps} from '../../../FDSView';
 import {FDSViewType} from '../../../FDSViews';
 import {getFields} from '../../../api';
 import OrderableTable from '../../../components/OrderableTable';
+import {
+	API_URL,
+	FUZZY_OPTIONS,
+	OBJECT_RELATIONSHIP,
+} from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 
 import '../../../../css/TableVisualizationMode.scss';
-import {IField} from '../../../types';
+import {IFDSField, IField} from '../../../utils/types';
 import {IBaseVisualizationMode} from '../VisualizationModes';
 import AddFieldsModalContent from './modal_content/AddFieldsModalContent';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
 export interface ITable extends IBaseVisualizationMode<'table'> {}
-
-export interface IFDSField {
-	contextPath: string;
-	externalReferenceCode: string;
-	id: number;
-	label: string;
-	label_i18n: LocalizedValue<string>;
-	name: string;
-	renderer: string;
-	rendererLabel?: string;
-	sortable: boolean;
-	type: string;
-}
-
 interface ISaveFDSFieldsModalContentProps {
 	closeModal: Function;
 	fdsFields: Array<IFDSField>;
@@ -171,7 +160,10 @@ const SaveFDSFieldsModalContent = ({
 
 		fields?.forEach((field) => {
 			if (field.selected && !field.id) {
-				creationData.push({name: field.name, type: field.type});
+				creationData.push({
+					name: field.name,
+					type: field.type || 'string',
+				});
 			}
 
 			if (!field.selected && field.id) {

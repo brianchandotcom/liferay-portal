@@ -15,7 +15,6 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {FDSViewType} from '../FDSViews';
 import {getAllPicklists, getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
@@ -23,6 +22,9 @@ import ValidationFeedback from '../components/ValidationFeedback';
 import ClientExtensionFilterModalContent from '../components/modal_content/ClientExtensionFilter';
 import DateRangeFilterModalContent from '../components/modal_content/DateRangeFilter';
 import SelectionFilterModalContent from '../components/modal_content/SelectionFilter';
+import {API_URL, OBJECT_RELATIONSHIP} from '../utils/constants';
+import openDefaultFailureToast from '../utils/openDefaultFailureToast';
+import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 import {
 	EFieldFormat,
 	EFieldType,
@@ -33,9 +35,7 @@ import {
 	IFilter,
 	IPickList,
 	ISelectionFilter,
-} from '../types';
-import openDefaultFailureToast from '../utils/openDefaultFailureToast';
-import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
+} from '../utils/types';
 
 import '../../css/Filters.scss';
 

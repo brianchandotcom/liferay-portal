@@ -6,8 +6,8 @@
 /// <reference types="react" />
 
 import '../css/FDSEntries.scss';
-import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
+import {OBJECT_RELATIONSHIP} from './utils/constants';
 declare type FDSEntryType = {
 	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: Array<FDSViewType>;
 	actions: {

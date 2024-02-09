@@ -8,20 +8,7 @@
 import {IFDSViewSectionProps} from '../../../FDSView';
 import '../../../../css/TableVisualizationMode.scss';
 import {IBaseVisualizationMode} from '../VisualizationModes';
-declare type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 export interface ITable extends IBaseVisualizationMode<'table'> {}
-export interface IFDSField {
-	contextPath: string;
-	externalReferenceCode: string;
-	id: number;
-	label: string;
-	label_i18n: LocalizedValue<string>;
-	name: string;
-	renderer: string;
-	rendererLabel?: string;
-	sortable: boolean;
-	type: string;
-}
 declare function Table({
 	fdsClientExtensionCellRenderers,
 	fdsView,

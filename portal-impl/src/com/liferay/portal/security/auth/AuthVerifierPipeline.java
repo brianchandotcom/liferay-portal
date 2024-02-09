@@ -330,7 +330,7 @@ public class AuthVerifierPipeline {
 			if ((user != null) &&
 				(!user.isActive() ||
 				 !user.isEmailAddressVerificationComplete() ||
-				 user.isPasswordReset())) {
+				 user.isPasswordResetRequired())) {
 
 				long userId = authVerifierResult.getUserId();
 

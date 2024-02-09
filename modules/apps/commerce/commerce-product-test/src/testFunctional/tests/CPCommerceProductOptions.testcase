@@ -2709,7 +2709,7 @@ definition {
 
 				AssertElementNotPresent(
 					key_cartItemName = ${optionName},
-					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6_ACCORDION_SHOW");
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_ACCORDION_SHOW");
 
 				AssertElementNotPresent(
 					key_cartItemSku = ${optionValue},

@@ -601,12 +601,12 @@
 </tr>
 <tr>
 	<td>MINI_CART_ITEM_NAME_H6</td>
-	<td>//h6[@class='item-name' and contains(.,'${key_cartItemName}')]</td>
+	<td>//div[@class='h6 item-name' and contains(.,'${key_cartItemName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MINI_CART_ITEM_NAME_H6_ACCORDION_SHOW</td>
-	<td>//div[contains(@class,'panel-collapse show')]//h6[@class='item-name' and contains(.,'${key_cartItemName}')]</td>
+	<td>MINI_CART_ITEM_NAME_ACCORDION_SHOW</td>
+	<td>//div[contains(@class,'panel-collapse show')]//div[@class='item-name' and contains(.,'${key_cartItemName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -621,12 +621,12 @@
 </tr>
 <tr>
 	<td>MINI_CART_ITEM_NAME_SKU</td>
-	<td>//h6[@class='item-name' and contains(.,'${key_cartItemName}')]/..//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]</td>
+	<td>//div[@class='item-name' and contains(.,'${key_cartItemName}')]/..//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MINI_CART_ITEM_NAME_SKU_INDEX</td>
-	<td>//div[contains(@class,'mini-cart-item align-items-start')][${key_index}]//h6[@class='item-name' and contains(.,'${key_cartItemName}')]/..//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]</td>
+	<td>//div[contains(@class,'mini-cart-item align-items-start')][${key_index}]//div[@class='item-name' and contains(.,'${key_cartItemName}')]/..//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]</td>
 	<td></td>
 </tr>
 <tr>

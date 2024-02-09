@@ -36,10 +36,10 @@ export class ViewsPage {
 
 	async goto(dataSetName?: string) {
 		await this.dataSetsPage.goto();
-		await this.dataSetsPage.gotoSampleDataSet(dataSetName);
+		await this.dataSetsPage.gotoDataSet(dataSetName);
 	}
 
-	async createSampleDataSetView({
+	async createDataSetView({
 		description,
 		name = DEFAULT_DATA_SET_VIEW_NAME,
 	}: {
@@ -57,7 +57,7 @@ export class ViewsPage {
 		await this.newDataSetViewModal.saveButton.click();
 	}
 
-	async gotoSampleDataSetView(name = DEFAULT_DATA_SET_VIEW_NAME) {
+	async gotoDataSetView(name = DEFAULT_DATA_SET_VIEW_NAME) {
 		await this.dataSetsViewTable
 			.getByRole('link', {
 				exact: true,

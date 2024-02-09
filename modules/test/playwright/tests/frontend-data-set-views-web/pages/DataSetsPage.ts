@@ -53,7 +53,7 @@ export class DataSetsPage {
 		this.page = page;
 	}
 
-	async createSampleDataSet({
+	async createDataSet({
 		name = 'Data Set Sample',
 		restApplication = '/data-set-manager/fields',
 		restEndpoint = '/',
@@ -100,7 +100,7 @@ export class DataSetsPage {
 			.waitFor();
 	}
 
-	async gotoSampleDataSet(name = 'Data Set Sample') {
+	async gotoDataSet(name = 'Data Set Sample') {
 		await this.page
 			.locator('.data-set-content-wrapper')
 			.getByRole('link', {name})

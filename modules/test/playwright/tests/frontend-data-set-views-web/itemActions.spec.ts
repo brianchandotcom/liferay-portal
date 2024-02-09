@@ -34,12 +34,12 @@ test('Create a Link Item Action', async ({
 
 	await test.step('Create Data Set', async () => {
 		await dataSetsPage.goto();
-		await dataSetsPage.createSampleDataSet({name: DATASET_NAME});
+		await dataSetsPage.createDataSet({name: DATASET_NAME});
 	});
 
 	await test.step('Create Data Set View', async () => {
 		await viewsPage.goto(DATASET_NAME);
-		await viewsPage.createSampleDataSetView({name: DATASET_VIEW_NAME});
+		await viewsPage.createDataSetView({name: DATASET_VIEW_NAME});
 	});
 
 	await test.step('Go to Actions tab', async () => {

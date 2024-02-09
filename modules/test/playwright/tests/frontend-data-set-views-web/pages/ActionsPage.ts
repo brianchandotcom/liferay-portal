@@ -55,7 +55,7 @@ export class ActionsPage {
 		dataSetViewName?: string;
 	} = {}) {
 		await this.viewsPage.goto(dataSetName);
-		await this.viewsPage.gotoSampleDataSetView(dataSetViewName);
+		await this.viewsPage.gotoDataSetView(dataSetViewName);
 
 		await this.page.getByRole('button', {name: 'Actions'}).first().click();
 	}

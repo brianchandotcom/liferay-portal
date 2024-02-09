@@ -33,12 +33,12 @@ test('Create a Creation Action', async ({
 
 	await test.step('Create Data Set', async () => {
 		await dataSetsPage.goto();
-		await dataSetsPage.createSampleDataSet();
+		await dataSetsPage.createDataSet();
 	});
 
 	await test.step('Create Data Set View', async () => {
 		await viewsPage.goto();
-		await viewsPage.createSampleDataSetView();
+		await viewsPage.createDataSetView();
 	});
 
 	await test.step('Go to Actions tab', async () => {

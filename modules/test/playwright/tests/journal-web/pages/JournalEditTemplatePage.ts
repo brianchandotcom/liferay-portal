@@ -27,7 +27,6 @@ export class JournalEditTemplatePage {
 	}
 
 	async gotoElements() {
-		await this.journalPage.goToCreateNewTemplate();
 		await this.elementsPanel.click();
 	}
 }

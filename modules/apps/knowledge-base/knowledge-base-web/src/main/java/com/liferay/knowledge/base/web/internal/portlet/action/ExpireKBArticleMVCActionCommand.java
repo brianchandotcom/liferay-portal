@@ -8,6 +8,7 @@ package com.liferay.knowledge.base.web.internal.portlet.action;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -36,13 +37,20 @@ public class ExpireKBArticleMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
+		try {
+			long resourcePrimKey = ParamUtil.getLong(
+				actionRequest, "resourcePrimKey");
 
-		_kbArticleService.expireKBArticle(
-			resourcePrimKey,
-			ServiceContextFactory.getInstance(
-				KBArticle.class.getName(), actionRequest));
+			_kbArticleService.expireKBArticle(
+				resourcePrimKey,
+				ServiceContextFactory.getInstance(
+					KBArticle.class.getName(), actionRequest));
+		}
+		catch(DuplicateLockException duplicateLockException) {
+			hideDefaultErrorMessage(actionRequest);
+
+			throw duplicateLockException;
+		}
 	}
 
 	@Reference

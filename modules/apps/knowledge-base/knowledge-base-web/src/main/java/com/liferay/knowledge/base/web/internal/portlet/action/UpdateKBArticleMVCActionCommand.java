@@ -16,6 +16,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
@@ -96,8 +97,14 @@ public class UpdateKBArticleMVCActionCommand
 			int version = ParamUtil.getInteger(
 				actionRequest, "version", KBArticleConstants.DEFAULT_VERSION);
 
-			_kbArticleService.revertKBArticle(
-				resourcePrimKey, version, serviceContext);
+			try {
+				_kbArticleService.revertKBArticle(
+					resourcePrimKey, version, serviceContext);
+			}catch(DuplicateLockException duplicateLockException) {
+					hideDefaultErrorMessage(actionRequest);
+
+					throw duplicateLockException;
+				}
 		}
 	}
 

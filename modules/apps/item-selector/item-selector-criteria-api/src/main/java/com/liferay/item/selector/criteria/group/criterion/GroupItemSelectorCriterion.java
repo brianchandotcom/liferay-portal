@@ -19,6 +19,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_privateLayout = privateLayout;
 	}
 
+	public long[] getExcludedGroupIds() {
+		return _excludedGroupIds;
+	}
+
 	public String getPortletId() {
 		return _portletId;
 	}
@@ -79,6 +83,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_allowNavigation = allowNavigation;
 	}
 
+	public void setExcludedGroupIds(long[] excludedGroupIds) {
+		_excludedGroupIds = excludedGroupIds;
+	}
+
 	public void setIncludeAllVisibleGroups(boolean includeAllVisibleGroups) {
 		_includeAllVisibleGroups = includeAllVisibleGroups;
 	}
@@ -134,6 +142,7 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	private boolean _allowNavigation = true;
+	private long[] _excludedGroupIds;
 	private boolean _includeAllVisibleGroups;
 	private boolean _includeChildSites;
 	private boolean _includeCompany = true;

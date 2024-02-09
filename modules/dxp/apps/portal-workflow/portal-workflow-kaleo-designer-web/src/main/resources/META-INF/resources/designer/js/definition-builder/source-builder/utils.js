@@ -291,11 +291,15 @@ export function parseNotifications(node) {
 			}
 		}
 		else if (item['recipients'] && item['recipients'][0]?.['user']) {
-			if (item['recipients'][0]['user']['email-address']) {
-				const emailAddress = [
-					item['recipients'][0]['user']['email-address'],
-				];
+			const emailAddress = [];
 
+			item['recipients'].forEach((item) => {
+				if (item['user']?.['email-address']) {
+					emailAddress.push(item['user']['email-address']);
+				}
+			});
+
+			if (emailAddress.length) {
 				if (receptionType) {
 					notifications.recipients[index].push({
 						assignmentType: ['user'],

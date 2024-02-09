@@ -274,16 +274,16 @@ const populateNotificationsData = (
 						)
 							.then((response) => response.json())
 							.then(({items}) => {
-								let sectionsData = null;
+								const sectionsData = [];
 
 								items.forEach((item, index) => {
-									sectionsData = {
+									sectionsData.push({
 										emailAddress: item.emailAddress,
 										identifier: `${Date.now()}-${index}`,
 										name: item.name,
 										screenName: item.alternateName,
 										userId: item.id,
-									};
+									});
 								});
 
 								if (

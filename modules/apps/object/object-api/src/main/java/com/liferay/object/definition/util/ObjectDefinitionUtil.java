@@ -85,6 +85,7 @@ public class ObjectDefinitionUtil {
 	}
 
 	private static final String[] _ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES = {
+		"com.liferay.commerce.service",
 		"com.liferay.frontend.data.set.views.web",
 		"com.liferay.headless.builder.impl", "com.liferay.list.type.service",
 		"com.liferay.notification.service", "com.liferay.object.service"
@@ -105,6 +106,8 @@ public class ObjectDefinitionUtil {
 			"APISort", "/headless-builder/sorts"
 		).put(
 			"Bookmark", "/bookmarks"
+		).put(
+			"CommerceReturn", "/commerce-returns"
 		).put(
 			"FDSAction", "/data-set-manager/actions"
 		).put(

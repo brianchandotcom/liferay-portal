@@ -27,10 +27,20 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseCommerceMLIndexer implements CommerceMLIndexer {
 
-	public void createIndex(String indexName, String indexMappingFileName) {
+	public BaseCommerceMLIndexer(
+		String indexMappingFileName, String indexNamePattern) {
+
+		_indexMappingFileName = indexMappingFileName;
+		_indexNamePattern = indexNamePattern;
+	}
+
+	@Override
+	public void createIndex(long companyId) {
 		if (!searchCapabilities.isCommerceSupported()) {
 			return;
 		}
+
+		String indexName = getIndexName(companyId);
 
 		if (_indicesExists(indexName)) {
 			if (_log.isDebugEnabled()) {
@@ -43,7 +53,7 @@ public abstract class BaseCommerceMLIndexer implements CommerceMLIndexer {
 		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 			indexName);
 
-		createIndexRequest.setMappings(_readJSON(indexMappingFileName));
+		createIndexRequest.setMappings(_readJSON(_indexMappingFileName));
 		createIndexRequest.setSettings(_readJSON("settings.json"));
 
 		searchEngineAdapter.execute(createIndexRequest);
@@ -54,10 +64,13 @@ public abstract class BaseCommerceMLIndexer implements CommerceMLIndexer {
 		}
 	}
 
-	public void dropIndex(String indexName) {
+	@Override
+	public void dropIndex(long companyId) {
 		if (!searchCapabilities.isCommerceSupported()) {
 			return;
 		}
+
+		String indexName = getIndexName(companyId);
 
 		if (!_indicesExists(indexName)) {
 			if (_log.isDebugEnabled()) {
@@ -76,6 +89,12 @@ public abstract class BaseCommerceMLIndexer implements CommerceMLIndexer {
 			_log.debug(
 				String.format("Index %s dropped successfully", indexName));
 		}
+	}
+
+	@Override
+	public String getIndexName(long companyId) {
+		return String.format(
+			_indexNamePattern, indexNameBuilder.getIndexName(companyId));
 	}
 
 	@Reference
@@ -118,5 +137,8 @@ public abstract class BaseCommerceMLIndexer implements CommerceMLIndexer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCommerceMLIndexer.class);
+
+	private final String _indexMappingFileName;
+	private final String _indexNamePattern;
 
 }

@@ -17,20 +17,8 @@ import org.osgi.service.component.annotations.Component;
 public class ProductInteractionRecommendationCommerceMLIndexer
 	extends BaseCommerceMLIndexer {
 
-	@Override
-	public void createIndex(long companyId) {
-		createIndex(getIndexName(companyId), _INDEX_MAPPING_FILE_NAME);
-	}
-
-	@Override
-	public void dropIndex(long companyId) {
-		dropIndex(getIndexName(companyId));
-	}
-
-	@Override
-	public String getIndexName(long companyId) {
-		return String.format(
-			_INDEX_NAME_PATTERN, indexNameBuilder.getIndexName(companyId));
+	public ProductInteractionRecommendationCommerceMLIndexer() {
+		super(_INDEX_MAPPING_FILE_NAME, _INDEX_NAME_PATTERN);
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =

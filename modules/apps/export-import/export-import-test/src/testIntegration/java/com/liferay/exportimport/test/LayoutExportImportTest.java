@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -79,6 +80,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Eduardo García
  */
+@FeatureFlags("LPS-199086")
 @RunWith(Arquillian.class)
 public class LayoutExportImportTest extends BaseExportImportTestCase {
 

@@ -75,10 +75,10 @@ describe('', () => {
 
 	it('renders', () => {
 		const {getByText} = renderApp({
-			initialScript: 'this is the initial script',
+			initialScript: 'thisistheinitialscript',
 		});
 
-		expect(getByText('this is the initial script')).toBeInTheDocument();
+		expect(getByText('thisistheinitialscript')).toBeInTheDocument();
 	});
 
 	it('includes the variable in the script when clicked', () => {

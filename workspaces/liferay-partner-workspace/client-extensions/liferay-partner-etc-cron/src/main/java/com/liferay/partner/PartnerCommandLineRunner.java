@@ -165,9 +165,6 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-				long mdfRequestId = itemJSONObject.getLong(
-					"r_mdfReqToActs_c_mdfRequestId");
-
 				ZonedDateTime zonedActivityEndDate = ZonedDateTime.parse(
 					itemJSONObject.getString("endDate"));
 
@@ -177,10 +174,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 				JSONArray mdfClaimActivitiesJSONArray =
 					itemJSONObject.getJSONArray("actToMDFClmActs");
 
-				if ((mdfClaimActivitiesJSONArray.length() == 0) &&
-					(mdfRequestId == 19290271)) {
-
-					System.out.println("mdfRequestId: " + mdfRequestId);
+				if (mdfClaimActivitiesJSONArray.length() == 0) {
 					_sendNotification(
 						itemJSONObject, zonedActivityExpirationDate,
 						zonedDateTime);
@@ -229,11 +223,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 						}
 					}
 
-					if ((claimedMdfClaimActivityJSONArray.length() == 0) &&
-						(mdfRequestId == 19290271)) {
-
-						System.out.println("mdfRequestId: " + mdfRequestId);
-
+					if (claimedMdfClaimActivityJSONArray.length() == 0) {
 						_sendNotification(
 							itemJSONObject, zonedActivityExpirationDate,
 							zonedDateTime);

@@ -57,7 +57,7 @@ test('can get updated title in response after publish', async ({
 			'headless-builder/applications',
 			basicAPIApplication.externalReferenceCode
 		);
-	await expect(modifiedBasicAPIApplication.title).toEqual(
+	expect(modifiedBasicAPIApplication.title).toEqual(
 		`${basicAPIApplication.title} 1`
 	);
 

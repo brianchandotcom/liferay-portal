@@ -6,6 +6,7 @@
 package com.liferay.commerce.machine.learning.internal.forecast.search.index;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
+import com.liferay.commerce.machine.learning.internal.search.api.IndexNamePatterns;
 import com.liferay.commerce.machine.learning.internal.search.index.BaseCommerceMLIndexer;
 
 import org.osgi.service.component.annotations.Component;
@@ -17,12 +18,10 @@ import org.osgi.service.component.annotations.Component;
 public class ForecastCommerceMLIndexer extends BaseCommerceMLIndexer {
 
 	public ForecastCommerceMLIndexer() {
-		super(_INDEX_MAPPING_FILE_NAME, _INDEX_NAME_PATTERN);
+		super(_INDEX_MAPPING_FILE_NAME, IndexNamePatterns.FORECAST);
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
 		"commerce-ml-forecast-mappings.json";
-
-	private static final String _INDEX_NAME_PATTERN = "%s-commerce-ml-forecast";
 
 }

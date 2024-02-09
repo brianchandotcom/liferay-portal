@@ -119,6 +119,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"FDSField", "/data-set-manager/fields"
 		).put(
+			"FDSListSection", "/data-set-manager/list-sections"
+		).put(
 			"FDSSort", "/data-set-manager/sorts"
 		).put(
 			"FDSView", "/data-set-manager/views"

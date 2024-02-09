@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -470,6 +471,47 @@ public class FDSViewsPortlet extends MVCPortlet {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
+	private void _createFDSListSectionObjectDefinition(
+			ObjectDefinition fdsViewObjectDefinition, Locale locale,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition fdsListSectionObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"FDSListSection", userId, 0, "FDSListSection", "FDSListSection",
+				false, LocalizedMapUtil.getLocalizedMap("FDS List Section"),
+				true, "FDSListSection", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("FDS List Sections"),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "name", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "renderer-name"), "rendererName",
+						false)));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, fdsListSectionObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, fdsViewObjectDefinition.getObjectDefinitionId(),
+			fdsListSectionObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(
+				"FDSView FDSListSection Relationship"),
+			"fdsViewFDSListSectionRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
 	private void _createFDSSortObjectDefinition(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
 			long userId)
@@ -626,6 +668,11 @@ public class FDSViewsPortlet extends MVCPortlet {
 		_createFDSFieldObjectDefinition(
 			fdsViewObjectDefinition, locale, userId);
 		_createFDSSortObjectDefinition(fdsViewObjectDefinition, locale, userId);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
+			_createFDSListSectionObjectDefinition(
+				fdsViewObjectDefinition, locale, userId);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

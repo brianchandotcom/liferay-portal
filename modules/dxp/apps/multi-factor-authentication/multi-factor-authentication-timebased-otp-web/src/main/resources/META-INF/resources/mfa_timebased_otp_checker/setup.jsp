@@ -31,22 +31,23 @@ String mfaTimeBasedOTPSharedSecret = GetterUtil.getString(request.getAttribute(M
 	<aui:button type="submit" value="submit" />
 </div>
 
-<aui:script require='<%= npmResolvedPackageName + "/qrcode/generateQRCode as generateQRCode" %>'>
-	var account = '<%= HtmlUtil.escapeJS(selectedUser.getEmailAddress()) %>';
-	var algorithm = '<%= HtmlUtil.escapeJS(mfaTimeBasedOTPAlgorithm) %>';
-	var counter =
-		'<%= GetterUtil.getInteger(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_TIME_COUNTER)) %>';
-	var digits =
-		'<%= GetterUtil.getInteger(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_DIGITS)) %>';
-	var issuer = '<%= HtmlUtil.escapeJS(mfaTimeBasedOTPCompanyName) %>';
-	var secret = '<%= HtmlUtil.escapeJS(mfaTimeBasedOTPSharedSecret) %>';
-
-	generateQRCode.default('<portlet:namespace />qrcode', {
-		account: account,
-		algorithm: algorithm,
-		counter: counter,
-		digits: digits,
-		issuer: issuer,
-		secret: secret,
-	});
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"account", HtmlUtil.escapeJS(selectedUser.getEmailAddress())
+		).put(
+			"algorithm", HtmlUtil.escapeJS(mfaTimeBasedOTPAlgorithm)
+		).put(
+			"containerId", portletDisplay.getNamespace() + "qrcode"
+		).put(
+			"counter", GetterUtil.getInteger(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_TIME_COUNTER))
+		).put(
+			"digits", GetterUtil.getInteger(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_DIGITS))
+		).put(
+			"issuer", HtmlUtil.escapeJS(mfaTimeBasedOTPCompanyName)
+		).put(
+			"secret", HtmlUtil.escapeJS(mfaTimeBasedOTPSharedSecret)
+		).build()
+	%>'
+	module="{generateQRCode} from multi-factor-authentication-timebased-otp-web"
+/>

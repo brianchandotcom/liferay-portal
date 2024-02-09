@@ -5,10 +5,15 @@
 
 import QRCode from 'qrcode';
 
-export default function generateQRCode(
+export function generateQRCode({
+	account,
+	algorithm,
 	containerId,
-	{account, algorithm, counter, digits, issuer, secret}
-) {
+	counter,
+	digits,
+	issuer,
+	secret,
+}) {
 	const url = new URL('otpauth://totp/' + encodeURIComponent(account));
 
 	const params = {

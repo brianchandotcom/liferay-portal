@@ -20,7 +20,7 @@ import ScriptInput from '../../../shared-components/ScriptInput';
 import SidebarPanel from '../../SidebarPanel';
 import Role from '../notifications/Role';
 import RoleType from '../notifications/RoleType';
-import User from '../notifications/User';
+import BaseUser from './BaseUser';
 
 let recipientTypeOptions = [
 	{
@@ -125,7 +125,7 @@ const BaseNotificationsInfo = ({
 		role: Role,
 		roleType: RoleType,
 		scriptedRecipient: ScriptInput,
-		user: User,
+		user: BaseUser,
 	};
 
 	const RecipientTypeComponent = recipientTypeComponents[recipientType];

@@ -65,7 +65,8 @@ public class DLAppServiceUtil {
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, String, String, String,
-	 String, String, String, File, Date, Date, Date, ServiceContext)}
+	 String, String, String, File, Date, Date, Date,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	public static com.liferay.portal.kernel.repository.model.FileEntry
@@ -105,7 +106,8 @@ public class DLAppServiceUtil {
 	 * @param description the file's description
 	 * @param changeLog the file's version change log
 	 * @param bytes the file's data (optionally <code>null</code>)
-	 * @param displayDate the date when file is set to display (optionally <code>null</code>)
+	 * @param displayDate the file's display date (optionally
+	 <code>null</code>)
 	 * @param expirationDate the file's expiration date (optionally <code>null
 	 </code>)
 	 * @param reviewDate the file's review Date (optionally <code>null</code>)
@@ -157,7 +159,8 @@ public class DLAppServiceUtil {
 	 * @param description the file's description
 	 * @param changeLog the file's version change log
 	 * @param file the file's data (optionally <code>null</code>)
-	 * @param displayDate the date when file is set to display (optionally <code>null</code>)
+	 * @param displayDate the file's display date (optionally
+	 <code>null</code>)
 	 * @param expirationDate the file's expiration date (optionally <code>null
 	 </code>)
 	 * @param reviewDate the file's review Date (optionally <code>null</code>)
@@ -210,8 +213,10 @@ public class DLAppServiceUtil {
 	 * @param changeLog the file's version change log
 	 * @param inputStream the file's data (optionally <code>null</code>)
 	 * @param size the file's size (optionally <code>0</code>)
-	 * @param displayDate the date when file is set to display (optionally <code>null</code>)
-	 * @param expirationDate the file's expiration date (optionally <code>null</code>)
+	 * @param displayDate the file's display date (optionally
+	 <code>null</code>)
+	 * @param expirationDate the file's expiration date (optionally
+	 <code>null</code>)
 	 * @param reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param serviceContext the service context to be applied. Can set the
 	 asset category IDs, asset tag names, and expando bridge

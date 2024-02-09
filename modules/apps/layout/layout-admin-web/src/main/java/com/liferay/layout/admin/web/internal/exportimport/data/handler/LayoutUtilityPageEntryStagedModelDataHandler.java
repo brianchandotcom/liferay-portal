@@ -100,12 +100,12 @@ public class LayoutUtilityPageEntryStagedModelDataHandler
 			portletDataContext.getScopeGroupId());
 		importedLayoutUtilityPageEntry.setPlid(plid);
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			LayoutUtilityPageEntry existingLayoutUtilityPageEntry =
-				_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
-					layoutUtilityPageEntry.getUuid(),
-					portletDataContext.getScopeGroupId());
+		LayoutUtilityPageEntry existingLayoutUtilityPageEntry =
+			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+				layoutUtilityPageEntry.getUuid(),
+				portletDataContext.getScopeGroupId());
 
+		if (portletDataContext.isDataStrategyMirror()) {
 			if (existingLayoutUtilityPageEntry == null) {
 				existingLayoutUtilityPageEntry =
 					_layoutUtilityPageEntryLocalService.
@@ -144,8 +144,19 @@ public class LayoutUtilityPageEntryStagedModelDataHandler
 			}
 		}
 		else {
-			importedLayoutUtilityPageEntry = _addStagedModel(
-				portletDataContext, importedLayoutUtilityPageEntry);
+			if (existingLayoutUtilityPageEntry == null) {
+				existingLayoutUtilityPageEntry =
+					_layoutUtilityPageEntryLocalService.
+						fetchLayoutUtilityPageEntryByExternalReferenceCode(
+							importedLayoutUtilityPageEntry.
+								getExternalReferenceCode(),
+							portletDataContext.getScopeGroupId());
+			}
+
+			if (existingLayoutUtilityPageEntry == null) {
+				importedLayoutUtilityPageEntry = _addStagedModel(
+					portletDataContext, importedLayoutUtilityPageEntry);
+			}
 		}
 
 		if (layoutUtilityPageEntry.getPreviewFileEntryId() > 0) {

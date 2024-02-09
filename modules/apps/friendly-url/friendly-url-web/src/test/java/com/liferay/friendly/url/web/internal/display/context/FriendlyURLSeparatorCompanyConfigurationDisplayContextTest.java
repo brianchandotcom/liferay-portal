@@ -78,8 +78,8 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			FriendlyURLSeparatorConfigurationManager.class);
 
 		Mockito.when(
-			_friendlyURLSeparatorConfigurationManager.getFriendlyURLSeparators(
-				Mockito.anyLong())
+			_friendlyURLSeparatorConfigurationManager.
+				getFriendlyURLSeparatorsJSONObjectString(Mockito.anyLong())
 		).thenReturn(
 			StringPool.BLANK
 		);

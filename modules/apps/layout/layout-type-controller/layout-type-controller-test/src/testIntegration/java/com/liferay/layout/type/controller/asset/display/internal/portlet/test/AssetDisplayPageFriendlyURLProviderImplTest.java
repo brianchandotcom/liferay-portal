@@ -124,7 +124,7 @@ public class AssetDisplayPageFriendlyURLProviderImplTest {
 						FriendlyURLSeparatorCompanyConfiguration.class.
 							getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"friendlyURLSeparators",
+							"friendlyURLSeparatorsJSONObjectString",
 							JSONUtil.put(
 								JournalArticle.class.getName(),
 								journalArticleFriendlyURLSeparator)

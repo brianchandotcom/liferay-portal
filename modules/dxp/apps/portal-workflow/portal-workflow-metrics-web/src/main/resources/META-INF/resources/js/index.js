@@ -7,6 +7,6 @@ import React from 'react';
 
 import App from './components/App.es';
 
-export default function (props) {
+export function Main(props) {
 	return <App companyId={Liferay.ThemeDisplay.getCompanyId()} {...props} />;
 }

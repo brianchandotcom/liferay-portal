@@ -15,7 +15,7 @@
 	%>
 
 	<react:component
-		module="js/index.es"
+		module="{Main} from portal-workflow-metrics-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"defaultDelta", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA

@@ -7,7 +7,7 @@
 	AUI().applyConfig({
 		groups: {
 			calendar: {
-				base: MODULE_PATH + '/js/',
+				base: MODULE_PATH + '/js/legacy/',
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
@@ -144,7 +144,7 @@
 						],
 					},
 				},
-				root: MODULE_PATH + '/js/',
+				root: MODULE_PATH + '/js/legacy/',
 			},
 		},
 	});

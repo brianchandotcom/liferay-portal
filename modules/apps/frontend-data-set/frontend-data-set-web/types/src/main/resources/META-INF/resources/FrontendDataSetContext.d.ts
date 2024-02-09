@@ -36,8 +36,8 @@ export interface IFrontendDataSetContext {
 	onActionDropdownItemClick?: Function;
 	onBulkActionItemClick?: Function;
 	onSelect?: Function;
-	openModal?: Function;
-	openSidePanel?: Function;
+	openModal: Function;
+	openSidePanel: Function;
 	portletId?: string;
 	searchParam?: string;
 	selectItems?: Function;

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
 
@@ -56,7 +57,7 @@ public class TicketResourceImpl extends BaseTicketResourceImpl {
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-		Date expirationDate = null;
+		Date expirationDate = new Date(System.currentTimeMillis() + Time.DAY);
 
 		if ((passwordPolicy != null) &&
 			(passwordPolicy.getResetTicketMaxAge() > 0)) {

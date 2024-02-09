@@ -48,16 +48,11 @@ test('This is a test for LPS-153976 and LPD-16407.', async ({
 	journalEditTemplatePage,
 	page,
 }) => {
+	await journalEditTemplatePage.goto();
 
 	// Featured image is present when we are editing a template.
 
-	await journalEditTemplatePage.goto();
-
-	await expect(
-		page.locator(
-			'[id="_com_liferay_journal_web_portlet_JournalPortlet_smallImageSource"]'
-		)
-	).toBeVisible();
+	await expect(page.getByLabel('Image Source')).toBeAttached();
 
 	// View reserved variables list under Journal section in web content template.
 

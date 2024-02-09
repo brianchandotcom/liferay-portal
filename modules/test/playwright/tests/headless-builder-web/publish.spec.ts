@@ -23,7 +23,7 @@ test('can get updated title in response after publish', async ({
 	headlessBuilderPage,
 	page,
 }) => {
-	const basicAPIApplication = await apiHelpers.object.postObjectEntry(
+	const application = await apiHelpers.object.postObjectEntry(
 		{
 			apiApplicationToAPISchemas: [
 				{
@@ -43,11 +43,11 @@ test('can get updated title in response after publish', async ({
 	);
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.openApplicationActions(basicAPIApplication.title);
+	await headlessBuilderPage.openApplicationActions(application.title);
 	await page.getByRole('menuitem', {name: 'Edit'}).click();
 
 	await applicationPage.applicationTitleTextBox.fill(
-		`${basicAPIApplication.title} 1`
+		`${application.title} 1`
 	);
 	await applicationPage.publishButton.click();
 
@@ -55,13 +55,13 @@ test('can get updated title in response after publish', async ({
 		(
 			await apiHelpers.object.getObjectEntryByExternalReferenceCode(
 				'headless-builder/applications',
-				basicAPIApplication.externalReferenceCode
+				application.externalReferenceCode
 			)
 		).title
-	).toEqual(`${basicAPIApplication.title} 1`);
+	).toEqual(`${application.title} 1`);
 
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
-		basicAPIApplication.externalReferenceCode
+		application.externalReferenceCode
 	);
 });

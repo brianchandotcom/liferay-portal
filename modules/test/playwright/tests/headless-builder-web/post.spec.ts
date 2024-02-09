@@ -17,7 +17,7 @@ export const test = mergeTests(
 	headlessDiscoveryPagesTest
 );
 
-const basicAPIApplication = {
+const application = {
 	apiApplicationToAPISchemas: [
 		{
 			description: 'API Application Schema',
@@ -258,12 +258,12 @@ test('can create post method endpoint with company scope', async ({
 	page,
 }) => {
 	await apiHelpers.object.postObjectEntry(
-		basicAPIApplication,
+		application,
 		'headless-builder/applications'
 	);
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditApplication(basicAPIApplication.title);
+	await headlessBuilderPage.goToEditApplication(application.title);
 
 	await applicationPage.createEndpoint(
 		'POST',
@@ -273,11 +273,11 @@ test('can create post method endpoint with company scope', async ({
 
 	await applicationPage.goToEndpointConfigurationTab();
 	await applicationPage.selectEndpointRequestSchema(
-		basicAPIApplication.apiApplicationToAPISchemas[0].name
+		application.apiApplicationToAPISchemas[0].name
 	);
 	await applicationPage.publishButton.click();
 
-	await apiExplorerPage.goToApplication(`c/${basicAPIApplication.baseURL}`);
+	await apiExplorerPage.goToApplication(`c/${application.baseURL}`);
 
 	await expect(
 		apiExplorerPage.getEndpointLocator('/test-post-endpoint')
@@ -286,6 +286,6 @@ test('can create post method endpoint with company scope', async ({
 	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
-		basicAPIApplication.externalReferenceCode
+		application.externalReferenceCode
 	);
 });

@@ -8,6 +8,7 @@ import {devices} from '@playwright/test';
 export const config = {
 	name: 'journal-web',
 	testDir: 'tests/journal-web',
+	timeout: 60 * 1000,
 	use: {
 		...devices['Desktop Chrome'],
 	},

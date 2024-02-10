@@ -43,7 +43,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.InfoFormException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -99,10 +98,9 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	}
 
 	public InputTemplateNode toInputTemplateNode(
-			FragmentEntryLink fragmentEntryLink,
-			HttpServletRequest httpServletRequest, InfoForm infoForm,
-			Locale locale)
-		throws JSONException {
+		FragmentEntryLink fragmentEntryLink,
+		HttpServletRequest httpServletRequest, InfoForm infoForm,
+		Locale locale) {
 
 		String errorMessage = StringPool.BLANK;
 

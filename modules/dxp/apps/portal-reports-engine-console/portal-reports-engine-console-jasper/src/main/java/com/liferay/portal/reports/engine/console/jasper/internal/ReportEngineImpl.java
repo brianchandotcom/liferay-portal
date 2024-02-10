@@ -139,6 +139,7 @@ public class ReportEngineImpl implements ReportEngine {
 			ReportDataSourceType.XLS, new XlsReportFillManager());
 		_reportFillManagers.put(
 			ReportDataSourceType.XML, new XmlReportFillManager());
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ReportFormatExporter.class, null,
 			(serviceReference, emitter) -> {

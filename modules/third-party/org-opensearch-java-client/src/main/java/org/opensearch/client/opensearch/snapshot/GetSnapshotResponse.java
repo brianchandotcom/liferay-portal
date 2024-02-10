@@ -288,3 +288,4 @@ public class GetSnapshotResponse implements JsonpSerializable {
     }
 
 }
+/* @generated */

@@ -237,6 +237,38 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public boolean hasUnpublishedCTEntries(
+		long modelClassNameId, long modelClassPK, int changeType) {
+
+		int count = ctEntryLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				CTEntryTable.INSTANCE.ctEntryId
+			).from(
+				CTEntryTable.INSTANCE
+			).innerJoinON(
+				CTCollectionTable.INSTANCE,
+				CTCollectionTable.INSTANCE.ctCollectionId.eq(
+					CTEntryTable.INSTANCE.ctCollectionId)
+			).where(
+				CTCollectionTable.INSTANCE.status.eq(
+					WorkflowConstants.STATUS_DRAFT
+				).and(
+					CTEntryTable.INSTANCE.modelClassNameId.eq(modelClassNameId)
+				).and(
+					CTEntryTable.INSTANCE.modelClassPK.eq(modelClassPK)
+				).and(
+					CTEntryTable.INSTANCE.changeType.eq(changeType)
+				)
+			));
+
+		if (count == 0) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public CTEntry updateCTEntry(CTEntry ctEntry) {
 		CTCollection ctCollection = _ctCollectionPersistence.fetchByPrimaryKey(
 			ctEntry.getCtCollectionId());

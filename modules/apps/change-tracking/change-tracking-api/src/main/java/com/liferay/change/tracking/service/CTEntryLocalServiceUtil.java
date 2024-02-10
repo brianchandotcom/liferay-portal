@@ -385,6 +385,13 @@ public class CTEntryLocalServiceUtil {
 			ctCollectionId, modelClassNameId, modelClassPK);
 	}
 
+	public static boolean hasUnpublishedCTEntries(
+		long modelClassNameId, long modelClassPK, int changeType) {
+
+		return getService().hasUnpublishedCTEntries(
+			modelClassNameId, modelClassPK, changeType);
+	}
+
 	/**
 	 * Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -322,6 +322,10 @@ public interface CTEntryLocalService
 	public boolean hasCTEntry(
 		long ctCollectionId, long modelClassNameId, long modelClassPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUnpublishedCTEntries(
+		long modelClassNameId, long modelClassPK, int changeType);
+
 	/**
 	 * Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

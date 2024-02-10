@@ -445,6 +445,14 @@ public class CTEntryLocalServiceWrapper
 			ctCollectionId, modelClassNameId, modelClassPK);
 	}
 
+	@Override
+	public boolean hasUnpublishedCTEntries(
+		long modelClassNameId, long modelClassPK, int changeType) {
+
+		return _ctEntryLocalService.hasUnpublishedCTEntries(
+			modelClassNameId, modelClassPK, changeType);
+	}
+
 	/**
 	 * Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

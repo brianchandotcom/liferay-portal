@@ -21,6 +21,8 @@ import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.OptionInfoFieldType;
+import com.liferay.info.field.type.PicklistMultiselectInfoFieldType;
+import com.liferay.info.field.type.PicklistSelectInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -787,6 +789,52 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				RelationshipInfoFieldType.INSTANCE) {
 
 			return infoFieldValue.getValue();
+		}
+
+		if (infoField.getInfoFieldType() ==
+				PicklistMultiselectInfoFieldType.INSTANCE) {
+
+			if (!(infoFieldValue.getValue() instanceof List)) {
+				return defaultValue;
+			}
+
+			List<KeyLocalizedLabelPair> values =
+				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+
+			if (ListUtil.isEmpty(values)) {
+				return defaultValue;
+			}
+
+			List<OptionInfoFieldType> optionInfoFieldTypes =
+				(List<OptionInfoFieldType>)infoField.getAttribute(
+					PicklistMultiselectInfoFieldType.OPTIONS);
+
+			return ListUtil.toString(
+				_getSelectedOptions(optionInfoFieldTypes, values),
+				StringPool.BLANK);
+		}
+
+		if (infoField.getInfoFieldType() ==
+				PicklistSelectInfoFieldType.INSTANCE) {
+
+			if (!(infoFieldValue.getValue() instanceof List)) {
+				return defaultValue;
+			}
+
+			List<KeyLocalizedLabelPair> values =
+				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();
+
+			if (ListUtil.isEmpty(values)) {
+				return defaultValue;
+			}
+
+			List<OptionInfoFieldType> optionInfoFieldTypes =
+				(List<OptionInfoFieldType>)infoField.getAttribute(
+					PicklistSelectInfoFieldType.OPTIONS);
+
+			return ListUtil.toString(
+				_getSelectedOptions(optionInfoFieldTypes, values),
+				StringPool.BLANK);
 		}
 
 		if (infoField.getInfoFieldType() == SelectInfoFieldType.INSTANCE) {

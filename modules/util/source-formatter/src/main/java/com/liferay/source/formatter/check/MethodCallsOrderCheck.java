@@ -365,8 +365,8 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 		content = _sortMethodCallsByMethodName(
 			content, "DDMFormFieldRenderingContext", "DropdownItem",
-			"LabelItem", "NavigationItem", "SearchContext", "SearchEntry",
-			"ServiceContext", "ThemeDisplay");
+			"LabelItem", "NavigationItem", "SearchContainer", "SearchContext",
+			"SearchEntry", "ServiceContext", "ThemeDisplay");
 
 		content = _sortMethodCallsByParameter(
 			content, "add", "ConcurrentSkipListSet", "HashSet", "TreeSet");

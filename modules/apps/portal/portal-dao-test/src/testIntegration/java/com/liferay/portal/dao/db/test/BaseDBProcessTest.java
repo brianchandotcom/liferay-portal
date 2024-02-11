@@ -611,7 +611,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 
 	private static final int _PROCESS_CONCURRENTLY_COUNT = 100;
 
-	private static final String _TABLE_NAME = "BasedDBProcessTest";
+	private static final String _TABLE_NAME = "BaseDBProcessTest";
 
 	private static Connection _connection;
 	private static DB _db;

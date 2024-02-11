@@ -81,7 +81,7 @@ public class IFrameSanitizerImpl implements Sanitizer {
 	}
 
 	private Document _getDocument(String content) {
-		Document document = Jsoup.parse(content);
+		Document document = Jsoup.parseBodyFragment(content);
 
 		document.outputSettings(
 			new Document.OutputSettings() {

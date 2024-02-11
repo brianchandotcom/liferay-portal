@@ -47,11 +47,11 @@ public class OAuth2ConnectedApplicationsDisplayContext {
 
 		searchContainer.setId("oAuth2ConnectedApplicationsSearchContainer");
 		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByType(_getOrderByType());
 		searchContainer.setOrderByComparator(
 			OrderByComparatorFactoryUtil.create(
 				"OAuth2Authorization", _getOrderByCol(),
 				Objects.equals(_getOrderByType(), "asc")));
+		searchContainer.setOrderByType(_getOrderByType());
 		searchContainer.setResultsAndTotal(
 			() -> OAuth2AuthorizationServiceUtil.getUserOAuth2Authorizations(
 				searchContainer.getStart(), searchContainer.getEnd(),

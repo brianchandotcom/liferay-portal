@@ -49,13 +49,11 @@ public class OAuth2AuthorizationsDisplayContext {
 
 		searchContainer.setId("oAuth2AuthorizationsSearchContainer");
 		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByType(_getOrderByType());
 		searchContainer.setOrderByComparator(
 			OrderByComparatorFactoryUtil.create(
 				"OAuth2Authorization", _getOrderByCol(),
 				Objects.equals(_getOrderByType(), "asc")));
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_liferayPortletResponse));
+		searchContainer.setOrderByType(_getOrderByType());
 		searchContainer.setResultsAndTotal(
 			() ->
 				OAuth2AuthorizationServiceUtil.
@@ -65,6 +63,8 @@ public class OAuth2AuthorizationsDisplayContext {
 						searchContainer.getOrderByComparator()),
 			OAuth2AuthorizationServiceUtil.
 				getApplicationOAuth2AuthorizationsCount(_oAuth2ApplicationId));
+		searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_liferayPortletResponse));
 
 		_searchContainer = searchContainer;
 

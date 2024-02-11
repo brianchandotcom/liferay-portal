@@ -49,11 +49,11 @@ public class OAuth2ApplicationsDisplayContext {
 
 		searchContainer.setId("oAuth2ApplicationsSearchContainer");
 		searchContainer.setOrderByCol(_getOrderByCol());
-		searchContainer.setOrderByType(_getOrderByType());
 		searchContainer.setOrderByComparator(
 			OrderByComparatorFactoryUtil.create(
 				"OAuth2Application", _getOrderByCol(),
 				Objects.equals(_getOrderByType(), "asc")));
+		searchContainer.setOrderByType(_getOrderByType());
 		searchContainer.setResultsAndTotal(
 			() -> OAuth2ApplicationServiceUtil.getOAuth2Applications(
 				_themeDisplay.getCompanyId(), searchContainer.getStart(),

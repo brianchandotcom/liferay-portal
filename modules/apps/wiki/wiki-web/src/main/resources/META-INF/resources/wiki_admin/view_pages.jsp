@@ -36,8 +36,8 @@ if (Validator.isNull(keywords)) {
 	request.setAttribute("view_pages.jsp-orderByCol", orderByCol);
 	request.setAttribute("view_pages.jsp-orderByType", orderByType);
 
-	wikiPagesSearchContainer.setOrderByType(orderByType);
 	wikiPagesSearchContainer.setOrderByCol(orderByCol);
+	wikiPagesSearchContainer.setOrderByType(orderByType);
 }
 
 wikiPagesSearchContainer.setRowChecker(new PagesChecker(liferayPortletRequest, liferayPortletResponse));

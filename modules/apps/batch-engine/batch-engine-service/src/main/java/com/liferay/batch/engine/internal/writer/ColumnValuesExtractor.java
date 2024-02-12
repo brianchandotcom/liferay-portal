@@ -5,6 +5,8 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
@@ -25,6 +27,8 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -446,6 +450,28 @@ public class ColumnValuesExtractor {
 		Class<?> fieldClass = field.getType();
 
 		if (ItemClassIndexUtil.isSingleColumnAdoptableValue(fieldClass)) {
+			if (ItemClassIndexUtil.isDate(fieldClass)) {
+				DateFormat dateFormat = new ISO8601DateFormat();
+
+				return new UnsafeFunction
+					<Object, Object, ReflectiveOperationException>() {
+
+					@Override
+					public Object apply(Object object)
+						throws ReflectiveOperationException {
+
+						Object value = _getValue(object, objectValuePair);
+
+						if (value == null) {
+							return StringPool.BLANK;
+						}
+
+						return dateFormat.format(value);
+					}
+
+				};
+			}
+
 			return new UnsafeFunction
 				<Object, Object, ReflectiveOperationException>() {
 

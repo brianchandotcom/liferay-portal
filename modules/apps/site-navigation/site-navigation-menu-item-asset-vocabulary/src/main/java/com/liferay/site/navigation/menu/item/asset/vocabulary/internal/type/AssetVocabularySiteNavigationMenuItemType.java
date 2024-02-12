@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.site.navigation.menu.item.asset.vocabulary.internal.constants.AssetVocabularySiteNavigationMenuTypeConstants;
 import com.liferay.site.navigation.menu.item.asset.vocabulary.internal.display.context.AssetVocabularySiteNavigationMenuTypeDisplayContext;
@@ -491,6 +492,13 @@ public class AssetVocabularySiteNavigationMenuItemType
 				_assetCategoryLocalService.getVocabularyCategories(
 					parentCategoryId, vocabularyId, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
+
+			if (!AssetCategoryPermission.contains(
+					themeDisplay.getPermissionChecker(), assetCategory,
+					ActionKeys.VIEW)) {
+
+				continue;
+			}
 
 			SiteNavigationMenuItem assetCategorySiteNavigationMenuItem =
 				vocabularySiteNavigationMenuItem.cloneWithOriginalValues();

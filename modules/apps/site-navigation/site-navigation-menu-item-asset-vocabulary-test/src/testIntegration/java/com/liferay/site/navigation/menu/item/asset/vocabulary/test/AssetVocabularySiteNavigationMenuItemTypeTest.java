@@ -586,6 +586,37 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 	}
 
 	@Test
+	public void testHasPermission() throws Exception {
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setAddGuestPermissions(false);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_addSiteNavigationMenuItem(
+				_assetVocabularyLocalService.addVocabulary(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					RandomTestUtil.randomString(), serviceContext),
+				_portal.getSiteDefaultLocale(_group.getGroupId()), "{}", false);
+
+		Assert.assertTrue(
+			siteNavigationMenuItemType.hasPermission(
+				PermissionThreadLocal.getPermissionChecker(),
+				siteNavigationMenuItem));
+
+		Assert.assertFalse(
+			siteNavigationMenuItemType.hasPermission(
+				PermissionCheckerFactoryUtil.create(
+					_userLocalService.getGuestUser(_group.getCompanyId())),
+				siteNavigationMenuItem));
+	}
+
+	@Test
 	public void testIsBrowsableAssetCategoryTypeWithDisplayPageTemplate()
 		throws Exception {
 
@@ -661,8 +692,8 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 	}
 
 	private SiteNavigationMenuItem _addSiteNavigationMenuItem(
-			Locale defaultLocale, String localizedNames,
-			boolean showAssetVocabularyLevel)
+			AssetVocabulary assetVocabulary, Locale defaultLocale,
+			String localizedNames, boolean showAssetVocabularyLevel)
 		throws Exception {
 
 		SiteNavigationMenu siteNavigationMenu =
@@ -681,25 +712,35 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 				Field.DEFAULT_LANGUAGE_ID,
 				LocaleUtil.toLanguageId(defaultLocale)
 			).put(
-				"classPK", String.valueOf(_assetVocabulary.getVocabularyId())
+				"classPK", String.valueOf(assetVocabulary.getVocabularyId())
 			).put(
-				"groupId", String.valueOf(_assetVocabulary.getGroupId())
+				"groupId", String.valueOf(assetVocabulary.getGroupId())
 			).put(
 				"localizedNames", localizedNames
 			).put(
 				"showAssetVocabularyLevel",
 				String.valueOf(showAssetVocabularyLevel)
 			).put(
-				"title", _assetVocabulary.getTitle(defaultLocale)
+				"title", assetVocabulary.getTitle(defaultLocale)
 			).put(
 				"type", "asset-vocabulary"
 			).put(
 				"useCustomName",
 				String.valueOf(!Objects.equals(localizedNames, "{}"))
 			).put(
-				"uuid", _assetVocabulary.getUuid()
+				"uuid", assetVocabulary.getUuid()
 			).buildString(),
 			_serviceContext);
+	}
+
+	private SiteNavigationMenuItem _addSiteNavigationMenuItem(
+			Locale defaultLocale, String localizedNames,
+			boolean showAssetVocabularyLevel)
+		throws Exception {
+
+		return _addSiteNavigationMenuItem(
+			_assetVocabulary, defaultLocale, localizedNames,
+			showAssetVocabularyLevel);
 	}
 
 	private void _assertAssetCategorySiteNavigationMenuItem(

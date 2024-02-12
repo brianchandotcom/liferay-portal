@@ -6,6 +6,7 @@
 import updateFragmentEntryLinkConfiguration from '../actions/updateFragmentEntryLinkConfiguration';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
 import FragmentService from '../services/FragmentService';
+import {clearPageContents} from '../utils/usePageContents';
 
 export default function updateFragmentConfiguration({
 	configurationValues,
@@ -35,6 +36,8 @@ export default function updateFragmentConfiguration({
 					layoutData,
 				})
 			);
+
+			clearPageContents();
 		});
 	};
 }

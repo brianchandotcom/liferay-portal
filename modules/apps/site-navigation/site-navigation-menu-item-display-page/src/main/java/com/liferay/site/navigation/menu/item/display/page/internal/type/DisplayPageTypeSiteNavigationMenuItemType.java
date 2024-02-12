@@ -9,8 +9,6 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
@@ -221,18 +219,10 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			return StringPool.BLANK;
 		}
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				siteNavigationMenuItem.getTypeSettings()
-			).build();
-
 		String friendlyURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				new InfoItemReference(
-					_displayPageTypeContext.getClassName(),
-					new ClassPKInfoItemIdentifier(
-						GetterUtil.getLong(
-							typeSettingsUnicodeProperties.get("classPK")))),
+				_displayPageTypeContext.getInfoItemReference(
+					siteNavigationMenuItem),
 				themeDisplay);
 
 		if (Validator.isNotNull(friendlyURL)) {
@@ -348,18 +338,10 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			return true;
 		}
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				siteNavigationMenuItem.getTypeSettings()
-			).build();
-
 		return infoItemPermissionProvider.hasPermission(
 			permissionChecker,
-			new InfoItemReference(
-				_displayPageTypeContext.getClassName(),
-				new ClassPKInfoItemIdentifier(
-					GetterUtil.getLong(
-						typeSettingsUnicodeProperties.get("classPK")))),
+			_displayPageTypeContext.getInfoItemReference(
+				siteNavigationMenuItem),
 			ActionKeys.VIEW);
 	}
 

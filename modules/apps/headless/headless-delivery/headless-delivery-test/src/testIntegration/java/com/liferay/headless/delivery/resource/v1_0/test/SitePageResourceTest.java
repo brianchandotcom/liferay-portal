@@ -1562,6 +1562,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 							{
 								changeFrequency = ChangeFrequency.ALWAYS;
 								include = RandomTestUtil.randomBoolean();
+								includeChildSitePages =
+									RandomTestUtil.randomBoolean();
 								pagePriority = RandomTestUtil.randomDouble();
 							}
 						};

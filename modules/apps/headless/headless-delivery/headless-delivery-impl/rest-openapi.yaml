@@ -4699,6 +4699,7 @@ components:
                                 Whether search engines should crawl and index the page.
                             type: boolean
                         includeChildSitePages:
+                            # @review
                             description:
                                 Whether search engines should crawl and index the child pages.
                             type: boolean

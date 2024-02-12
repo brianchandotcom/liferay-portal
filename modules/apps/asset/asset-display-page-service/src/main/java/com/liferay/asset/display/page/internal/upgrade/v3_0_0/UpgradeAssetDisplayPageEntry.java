@@ -45,10 +45,11 @@ public class UpgradeAssetDisplayPageEntry
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select groupId, companyId, userId, userName, fileEntryId ",
-					"from DLFileEntry where fileEntryId not in (select ",
-					"classPK from AssetDisplayPageEntry where classNameId in (",
-					dlFileEntryClassNameId, ", ", fileEntryClassNameId, "))"));
+					"select distinct groupId, companyId, userId, userName, ",
+					"fileEntryId from DLFileEntry where fileEntryId not in ",
+					"(select classPK from AssetDisplayPageEntry where ",
+					"classNameId in (", dlFileEntryClassNameId, ", ",
+					fileEntryClassNameId, "))"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

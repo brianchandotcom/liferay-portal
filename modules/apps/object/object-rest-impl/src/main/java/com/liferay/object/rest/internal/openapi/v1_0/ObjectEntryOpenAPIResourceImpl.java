@@ -300,25 +300,23 @@ public class ObjectEntryOpenAPIResourceImpl
 			HashMapBuilder.<String, Object>put(
 				"x-batch-unsupported-formats",
 				() -> {
-					if (Objects.equals(
+					if ((Objects.equals(
 							objectField.getBusinessType(),
-							ObjectFieldConstants.
-								BUSINESS_TYPE_AUTO_INCREMENT)) {
+							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+						 Objects.equals(
+							 objectField.getBusinessType(),
+							 ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
+						 Objects.equals(
+							 objectField.getBusinessType(),
+							 ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) &&
+						!FeatureFlagManagerUtil.isEnabled("LPD-6683")) {
 
 						return "CSV";
 					}
-					else if ((Objects.equals(
+					else if (Objects.equals(
 								objectField.getBusinessType(),
 								ObjectFieldConstants.
-									BUSINESS_TYPE_AGGREGATION) ||
-							  Objects.equals(
-								  objectField.getBusinessType(),
-								  ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN) ||
-							  Objects.equals(
-								  objectField.getBusinessType(),
-								  ObjectFieldConstants.
-									  BUSINESS_TYPE_FORMULA)) &&
-							 !FeatureFlagManagerUtil.isEnabled("LPD-6683")) {
+									BUSINESS_TYPE_AUTO_INCREMENT)) {
 
 						return "CSV";
 					}

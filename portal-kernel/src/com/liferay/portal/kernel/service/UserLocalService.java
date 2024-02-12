@@ -2278,6 +2278,9 @@ public interface UserLocalService
 	public User updateJobTitle(long userId, String jobTitle)
 		throws PortalException;
 
+	public User updateLanguageId(long userId, String languageId)
+		throws PortalException;
+
 	/**
 	 * Updates the user's last login with the current time and the IP address.
 	 *

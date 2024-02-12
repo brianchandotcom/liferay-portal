@@ -1454,6 +1454,12 @@ public class UserServiceUtil {
 			updateUserInformation, sendEmail, serviceContext);
 	}
 
+	public static User updateLanguageId(long userId, String languageId)
+		throws PortalException {
+
+		return getService().updateLanguageId(userId, languageId);
+	}
+
 	/**
 	 * Updates whether the user is locked out from logging in.
 	 *

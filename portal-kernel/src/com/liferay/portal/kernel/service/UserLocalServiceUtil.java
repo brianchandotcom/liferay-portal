@@ -2831,6 +2831,12 @@ public class UserLocalServiceUtil {
 		return getService().updateJobTitle(userId, jobTitle);
 	}
 
+	public static User updateLanguageId(long userId, String languageId)
+		throws PortalException {
+
+		return getService().updateLanguageId(userId, languageId);
+	}
+
 	/**
 	 * Updates the user's last login with the current time and the IP address.
 	 *

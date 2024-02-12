@@ -1223,6 +1223,9 @@ public interface UserService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public User updateLanguageId(long userId, String languageId)
+		throws PortalException;
+
 	/**
 	 * Updates whether the user is locked out from logging in.
 	 *

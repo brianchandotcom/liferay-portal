@@ -1535,6 +1535,13 @@ public class UserServiceWrapper
 			updateUserInformation, sendEmail, serviceContext);
 	}
 
+	@Override
+	public User updateLanguageId(long userId, String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userService.updateLanguageId(userId, languageId);
+	}
+
 	/**
 	 * Updates whether the user is locked out from logging in.
 	 *

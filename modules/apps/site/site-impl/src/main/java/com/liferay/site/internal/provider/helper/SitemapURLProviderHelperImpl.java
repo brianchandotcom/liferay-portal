@@ -34,6 +34,18 @@ public class SitemapURLProviderHelperImpl implements SitemapURLProviderHelper {
 			return true;
 		}
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		if (!GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.getProperty(
+					LayoutTypePortletConstants.SITEMAP_INCLUDE),
+				true) ||
+			!layout.isPublished()) {
+
+			return true;
+		}
+
 		if (FeatureFlagManagerUtil.isEnabled("LPS-187793")) {
 			LayoutSEOEntry layoutSEOEntry =
 				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
@@ -59,18 +71,6 @@ public class SitemapURLProviderHelperImpl implements SitemapURLProviderHelper {
 					return true;
 				}
 			}
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			layout.getTypeSettingsProperties();
-
-		if (!GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.getProperty(
-					LayoutTypePortletConstants.SITEMAP_INCLUDE),
-				true) ||
-			!layout.isPublished()) {
-
-			return true;
 		}
 
 		return false;

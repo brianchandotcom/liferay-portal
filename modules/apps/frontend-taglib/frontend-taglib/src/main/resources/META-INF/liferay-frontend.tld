@@ -656,7 +656,6 @@
 			<name>resourceValue</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>long</type>
 		</attribute>
 		<attribute>
 			<name>resourceValueKey</name>

@@ -36,7 +36,7 @@ public class ResourceSelectorTag extends IncludeTag {
 		return _resourceNameKey;
 	}
 
-	public long getResourceValue() {
+	public String getResourceValue() {
 		return _resourceValue;
 	}
 
@@ -87,7 +87,7 @@ public class ResourceSelectorTag extends IncludeTag {
 		_resourceNameKey = resourceNameKey;
 	}
 
-	public void setResourceValue(long resourceValue) {
+	public void setResourceValue(String resourceValue) {
 		_resourceValue = resourceValue;
 	}
 
@@ -120,7 +120,7 @@ public class ResourceSelectorTag extends IncludeTag {
 		_modalTitle = null;
 		_resourceName = null;
 		_resourceNameKey = null;
-		_resourceValue = 0;
+		_resourceValue = null;
 		_resourceValueKey = null;
 		_selectEventName = null;
 		_selectResourceURL = null;
@@ -172,7 +172,7 @@ public class ResourceSelectorTag extends IncludeTag {
 	private String _modalTitle;
 	private String _resourceName;
 	private String _resourceNameKey;
-	private long _resourceValue;
+	private String _resourceValue;
 	private String _resourceValueKey;
 	private String _selectEventName;
 	private String _selectResourceURL;

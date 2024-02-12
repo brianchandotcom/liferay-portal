@@ -19,6 +19,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -38,6 +41,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.site.navigation.menu.item.asset.vocabulary.internal.constants.AssetVocabularySiteNavigationMenuTypeConstants;
 import com.liferay.site.navigation.menu.item.asset.vocabulary.internal.display.context.AssetVocabularySiteNavigationMenuTypeDisplayContext;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
@@ -342,6 +346,29 @@ public class AssetVocabularySiteNavigationMenuItemType
 	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY;
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws PortalException {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		if (AssetVocabularyPermission.contains(
+				permissionChecker,
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("classPK")),
+				ActionKeys.VIEW)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

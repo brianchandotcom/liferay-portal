@@ -100,11 +100,12 @@ public class UpdateKBArticleMVCActionCommand
 			try {
 				_kbArticleService.revertKBArticle(
 					resourcePrimKey, version, serviceContext);
-			}catch(DuplicateLockException duplicateLockException) {
-					hideDefaultErrorMessage(actionRequest);
+			}
+			catch (DuplicateLockException duplicateLockException) {
+				hideDefaultErrorMessage(actionRequest);
 
-					throw duplicateLockException;
-				}
+				throw duplicateLockException;
+			}
 		}
 	}
 

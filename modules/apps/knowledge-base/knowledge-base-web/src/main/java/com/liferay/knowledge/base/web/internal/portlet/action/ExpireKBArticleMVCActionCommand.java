@@ -46,7 +46,7 @@ public class ExpireKBArticleMVCActionCommand extends BaseMVCActionCommand {
 				ServiceContextFactory.getInstance(
 					KBArticle.class.getName(), actionRequest));
 		}
-		catch(DuplicateLockException duplicateLockException) {
+		catch (DuplicateLockException duplicateLockException) {
 			hideDefaultErrorMessage(actionRequest);
 
 			throw duplicateLockException;

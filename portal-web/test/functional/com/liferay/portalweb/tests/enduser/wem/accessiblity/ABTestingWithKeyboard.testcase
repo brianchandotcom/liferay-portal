@@ -6,7 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
 	property test.run.type = "single";
-	property testray.component.names = "Echo Accessibility";
+	property testray.component.names = "Analytics Cloud Accessibility";
 	property testray.main.component.name = "A/B Test";
 
 	setUp {

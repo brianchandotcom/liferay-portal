@@ -9,3 +9,4 @@ export {default as LogoSelector} from './logo_selector/LogoSelector';
 export {default as SidePanelListenersInitializer} from './side_panel_content/SidePanelListenersInitializer';
 export {default as SidebarPanel} from './sidebar_panel/SidebarPanel';
 export {default as TranslationManager} from './translation_manager/index';
+export {default as ResourceSelector} from '../resource_selector/ResourceSelector';

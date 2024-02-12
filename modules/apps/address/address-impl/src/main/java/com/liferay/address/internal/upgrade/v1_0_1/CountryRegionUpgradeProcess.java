@@ -48,6 +48,9 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		CompanyCountriesUtil.updateRegionCounter(getConnection());
+		CompanyCountriesUtil.updateRegionLocalizationCounter(getConnection());
+
 		_updateRegion("FR", "75C", "75", "Paris");
 		_updateRegion("MX", "CMX", "DIF", "Ciudad de México");
 		_updateRegion("NL", "BO", "BQ1", "Bonaire");

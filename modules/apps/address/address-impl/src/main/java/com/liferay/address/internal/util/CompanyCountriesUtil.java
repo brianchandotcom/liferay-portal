@@ -30,7 +30,9 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -100,6 +102,9 @@ public class CompanyCountriesUtil {
 			Company company, CountryLocalService countryLocalService,
 			Connection connection)
 		throws Exception {
+
+		updateRegionCounter(connection);
+		updateRegionLocalizationCounter(connection);
 
 		int count = countryLocalService.getCompanyCountriesCount(
 			company.getCompanyId());
@@ -221,6 +226,35 @@ public class CompanyCountriesUtil {
 		}
 		catch (Exception exception) {
 			_log.error(exception);
+		}
+	}
+
+	public static void updateRegionCounter(Connection connection)
+		throws Exception {
+
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+				"select max(regionId) from Region")) {
+
+			if (resultSet.next()) {
+				CounterLocalServiceUtil.increment(
+					Region.class.getName(), (int)resultSet.getLong(1));
+			}
+		}
+	}
+
+	public static void updateRegionLocalizationCounter(Connection connection)
+		throws Exception {
+
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+				"select max(regionLocalizationId) from RegionLocalization")) {
+
+			if (resultSet.next()) {
+				CounterLocalServiceUtil.increment(
+					RegionLocalization.class.getName(),
+					(int)resultSet.getLong(1));
+			}
 		}
 	}
 

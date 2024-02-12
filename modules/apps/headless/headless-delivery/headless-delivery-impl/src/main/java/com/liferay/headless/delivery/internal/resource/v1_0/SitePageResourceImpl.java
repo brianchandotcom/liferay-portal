@@ -375,15 +375,15 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 						siteMapSettings.getIncludeChildSitePages();
 
 					if (includeChildSitePages != null) {
-						String siteMapIncludeChildSitePages = "false";
+						String siteMapIncludeChildLayouts = "false";
 
 						if (includeChildSitePages) {
-							siteMapIncludeChildSitePages = "true";
+							siteMapIncludeChildLayouts = "true";
 						}
 
 						typeSettingsUnicodeProperties.setProperty(
 							"sitemap-include-child-layouts",
-							siteMapIncludeChildSitePages);
+							siteMapIncludeChildLayouts);
 					}
 
 					Double pagePriority = siteMapSettings.getPagePriority();

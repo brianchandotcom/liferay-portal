@@ -325,7 +325,7 @@ public class FriendlyURLServlet extends HttpServlet {
 							group.getDefaultLanguageId());
 					}
 
-					String redirect = _getLocalizedFriendlyURL(
+					String redirect = _getLocalizedFriendlyURLRedirect(
 						httpServletRequest, layout, locale, originalLocale);
 
 					HttpServletRequest originalHttpServletRequest =
@@ -831,7 +831,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		return null;
 	}
 
-	private String _getLocalizedFriendlyURL(
+	private String _getLocalizedFriendlyURLRedirect(
 		HttpServletRequest httpServletRequest, Layout layout, Locale locale,
 		Locale originalLocale) {
 
@@ -1138,7 +1138,7 @@ public class FriendlyURLServlet extends HttpServlet {
 				siteFriendlyURL.getLanguageId());
 		}
 
-		String alternativeLayoutFriendlyURL = _getLocalizedFriendlyURL(
+		String alternativeLayoutFriendlyURL = _getLocalizedFriendlyURLRedirect(
 			httpServletRequest, layout, groupLocale, locale);
 
 		if (_isShowAlternativeLayoutFriendlyURLMessage(companyId)) {

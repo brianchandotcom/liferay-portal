@@ -132,21 +132,19 @@ public class APIPropertyObjectDefinitionDeployerImpl
 					_filterFactory.create("type eq null", objectDefinition),
 					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-			if (!valuesList.isEmpty()) {
-				for (Map<String, Serializable> item : valuesList) {
-					Collection<Serializable> values = item.values();
+			for (Map<String, Serializable> values : valuesList) {
+				Collection<Serializable> collection = values.values();
 
-					values.removeAll(Collections.singleton(null));
+				collection.removeAll(Collections.singleton(null));
 
-					item.put("type", "field");
+				values.put("type", "field");
 
-					_objectEntryLocalService.addOrUpdateObjectEntry(
-						(String)item.get("externalReferenceCode"),
-						objectDefinition.getUserId(),
-						GroupThreadLocal.getGroupId(),
-						objectDefinition.getObjectDefinitionId(), item,
-						new ServiceContext());
-				}
+				_objectEntryLocalService.addOrUpdateObjectEntry(
+					(String)values.get("externalReferenceCode"),
+					objectDefinition.getUserId(),
+					GroupThreadLocal.getGroupId(),
+					objectDefinition.getObjectDefinitionId(), values,
+					new ServiceContext());
 			}
 		}
 		catch (Exception exception) {

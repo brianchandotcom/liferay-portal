@@ -38,11 +38,13 @@ public class BatchEngineTaskItemDelegateExecutorFactory {
 
 	public BatchEngineTaskItemDelegateExecutor create(
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
-		Company company, Map<String, Serializable> parameters, User user) {
+		Company company, Map<String, Serializable> parameters,
+		String taskItemDelegateName, User user) {
 
 		return new BatchEngineTaskItemDelegateExecutor(
 			batchEngineTaskItemDelegate, company, _expressionConvert,
-			_filterParserProvider, parameters, _sortParserProvider, user);
+			_filterParserProvider, parameters, taskItemDelegateName,
+			_sortParserProvider, user);
 	}
 
 	public BatchEngineTaskItemDelegateExecutor create(
@@ -60,7 +62,9 @@ public class BatchEngineTaskItemDelegateExecutorFactory {
 					className);
 		}
 
-		return create(batchEngineTaskItemDelegate, company, parameters, user);
+		return create(
+			batchEngineTaskItemDelegate, company, parameters,
+			taskItemDelegateName, user);
 	}
 
 	private final BatchEngineTaskItemDelegateRegistry

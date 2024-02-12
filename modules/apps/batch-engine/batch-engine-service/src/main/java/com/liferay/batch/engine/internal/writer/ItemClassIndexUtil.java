@@ -55,6 +55,14 @@ public class ItemClassIndexUtil {
 		return fieldNameObjectValuePairs;
 	}
 
+	public static boolean isDate(Class<?> clazz) {
+		if (Objects.equals(clazz, Date.class)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isIterable(Class<?> valueClass) {
 		if (valueClass.isArray() ||
 			Collection.class.isAssignableFrom(valueClass)) {

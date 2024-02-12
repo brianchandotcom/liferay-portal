@@ -109,6 +109,10 @@ export class ApplicationsMenuPage {
 		await this.apiBuilderMenuItem.click();
 	}
 
+	async goToHome() {
+		await this.homePage.goto();
+	}
+
 	async goToObjects() {
 		await this.goToControlPanel();
 		await this.objectsMenuItem.click();

@@ -75,10 +75,11 @@ export class DataSetsPage {
 
 		await this.newDataSetModal.restSchemaField.waitFor();
 		await this.newDataSetModal.restSchemaField.click();
+		await this.page.getByRole('textbox', {name: 'Search'}).fill('page');
+		await this.newDataSetModal.restSchemaOptions.waitFor();
 		await this.newDataSetModal.restSchemaOptions
 			.getByRole('option', {name: restSchema})
 			.click();
-		await this.newDataSetModal.restSchemaField.click();
 
 		await this.newDataSetModal.restEndpointField.waitFor();
 		await this.newDataSetModal.restEndpointField.click();

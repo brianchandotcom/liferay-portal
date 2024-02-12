@@ -40,6 +40,25 @@ public class URLWeavingAdapter extends WeavingAdaptor {
 			_addAspectClass(aspectClass);
 		}
 
+		ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+
+		ClassLoader platformClassLoader = systemClassLoader.getParent();
+
+		bcelWorld.addTypeDelegateResolver(
+			referenceType -> {
+				try {
+					return bcelWorld.buildBcelDelegate(
+						referenceType,
+						_classToJavaClass(
+							platformClassLoader.loadClass(
+								referenceType.getName())),
+						false, false);
+				}
+				catch (Exception exception) {
+					return null;
+				}
+			});
+
 		weaver.prepareForWeave();
 	}
 

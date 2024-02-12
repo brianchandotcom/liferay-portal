@@ -1879,7 +1879,7 @@ public class RESTBuilder {
 		String clientName = sb.toString();
 
 		openAPIYAMLFile = _prepareForJSClientGenerator(
-			openAPIYAMLFile, openAPIYAML, _configYAML);
+			openAPIYAML, openAPIYAMLFile);
 
 		Path packajeJsonPath = Paths.get(baseClientDir, "package.json");
 
@@ -2014,8 +2014,7 @@ public class RESTBuilder {
 	}
 
 	private File _prepareForJSClientGenerator(
-			File openAPIYAMLFile, OpenAPIYAML openAPIYAML,
-			ConfigYAML configYAML)
+			OpenAPIYAML openAPIYAML, File openAPIYAMLFile)
 		throws Exception {
 
 		File outputOpenApiYamlFile = new File("openapi-js.yaml");
@@ -2027,7 +2026,7 @@ public class RESTBuilder {
 
 			String line;
 
-			Application application = configYAML.getApplication();
+			Application application = _configYAML.getApplication();
 
 			Info info = openAPIYAML.getInfo();
 

@@ -3,23 +3,26 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {HeadlessSiteClient} from '@liferay/headless-site-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
+import {headlessClientsTest} from '../../fixtures/headlessClientsTest';
 import {loginTest} from '../../fixtures/loginTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
+	headlessClientsTest({headlessSiteClient: HeadlessSiteClient}),
 	loginTest
 );
 
 const data = [];
 
-test.afterEach(async ({apiHelpers}) => {
+test.afterEach(async ({apiHelpers, headlessClients: {headlessSiteClient}}) => {
 	for await (const item of data.reverse()) {
 		switch (item.type) {
 			case 'catalog':
@@ -47,7 +50,7 @@ test.afterEach(async ({apiHelpers}) => {
 
 				break;
 			case 'site':
-				await apiHelpers.headlessSite.deleteSite(item.id);
+				await headlessSiteClient.site.deleteSite({siteId: item.id});
 
 				break;
 			default:
@@ -62,11 +65,14 @@ test('mini cart bundle with UOM', async ({
 	commerceLayoutsPage,
 	commerceMiniCartPage,
 	commerceProductAdminPage,
+	headlessClients: {headlessSiteClient},
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', true);
 
-	const site = await apiHelpers.headlessSite.createSite('Mini Cart Site');
+	const site = await headlessSiteClient.site.postSite({
+		requestBody: {name: 'Mini Cart Site'},
+	});
 
 	data.push({id: site.id, type: 'site'});
 

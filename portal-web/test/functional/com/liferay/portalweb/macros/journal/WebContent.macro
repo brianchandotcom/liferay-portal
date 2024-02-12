@@ -1231,13 +1231,10 @@ definition {
 				value1 = ${displayPageTemplateType});
 		}
 		else {
-			Click(
+			Select(
 				ariaLabel = "Select Display Page Type",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-			Click(
-				key_menuItem = ${displayPageTemplateType},
-				locator1 = "MenuItem#ANY_MENU_ITEM");
+				locator1 = "Select#ANY_ARIA_LABEL",
+				value1 = ${displayPageTemplateType});
 		}
 
 		if (${displayPageTemplateType} == "Specific") {
@@ -2549,9 +2546,9 @@ definition {
 				value1 = ${displayPageTemplateType});
 		}
 		else {
-			AssertTextEquals(
+			AssertSelectedLabel(
 				ariaLabel = "Select Display Page Type",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				locator1 = "Select#ANY_ARIA_LABEL",
 				value1 = ${displayPageTemplateType});
 		}
 

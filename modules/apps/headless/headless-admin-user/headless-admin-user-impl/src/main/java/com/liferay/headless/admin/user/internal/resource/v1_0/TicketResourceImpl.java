@@ -57,7 +57,7 @@ public class TicketResourceImpl extends BaseTicketResourceImpl {
 
 		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
-		Date expirationDate = new Date(System.currentTimeMillis() + Time.DAY);
+		Date expirationDate = null;
 
 		if ((passwordPolicy != null) &&
 			(passwordPolicy.getResetTicketMaxAge() > 0)) {
@@ -65,6 +65,9 @@ public class TicketResourceImpl extends BaseTicketResourceImpl {
 			expirationDate = new Date(
 				System.currentTimeMillis() +
 					(passwordPolicy.getResetTicketMaxAge() * 1000));
+		}
+		else {
+			expirationDate = new Date(System.currentTimeMillis() + Time.DAY);
 		}
 
 		com.liferay.portal.kernel.model.Ticket ticket =

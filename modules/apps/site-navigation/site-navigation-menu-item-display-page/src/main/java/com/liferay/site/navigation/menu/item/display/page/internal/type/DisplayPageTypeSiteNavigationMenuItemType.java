@@ -11,12 +11,14 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -329,6 +333,34 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	@Override
 	public String getType() {
 		return _displayPageTypeContext.getClassName();
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws PortalException {
+
+		InfoItemPermissionProvider infoItemPermissionProvider =
+			_displayPageTypeContext.getInfoItemPermissionProvider();
+
+		if (infoItemPermissionProvider == null) {
+			return true;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		return infoItemPermissionProvider.hasPermission(
+			permissionChecker,
+			new InfoItemReference(
+				_displayPageTypeContext.getClassName(),
+				new ClassPKInfoItemIdentifier(
+					GetterUtil.getLong(
+						typeSettingsUnicodeProperties.get("classPK")))),
+			ActionKeys.VIEW);
 	}
 
 	@Override

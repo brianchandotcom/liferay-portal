@@ -10,6 +10,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
@@ -66,6 +67,11 @@ public class DisplayPageTypeContext {
 
 		return _infoItemServiceRegistry.getFirstInfoItemService(
 			InfoItemFormVariationsProvider.class, _className);
+	}
+
+	public InfoItemPermissionProvider getInfoItemPermissionProvider() {
+		return _infoItemServiceRegistry.getFirstInfoItemService(
+			InfoItemPermissionProvider.class, _className);
 	}
 
 	public String getLabel(Locale locale) {

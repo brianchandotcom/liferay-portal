@@ -2017,12 +2017,12 @@ public class RESTBuilder {
 			OpenAPIYAML openAPIYAML, File openAPIYAMLFile)
 		throws Exception {
 
-		File outputOpenApiYamlFile = new File("openapi-js.yaml");
+		File outputOpenAPIYAMLFile = new File("openapi-js.yaml");
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new FileReader(openAPIYAMLFile));
 			BufferedWriter bufferedWriter = new BufferedWriter(
-				new FileWriter(outputOpenApiYamlFile))) {
+				new FileWriter(outputOpenAPIYAMLFile))) {
 
 			String line;
 
@@ -2049,7 +2049,7 @@ public class RESTBuilder {
 				bufferedWriter.write(line + "\n");
 			}
 
-			return outputOpenApiYamlFile;
+			return outputOpenAPIYAMLFile;
 		}
 	}
 

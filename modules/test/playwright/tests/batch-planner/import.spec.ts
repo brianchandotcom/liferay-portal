@@ -49,8 +49,11 @@ const companyObjectDefinition: ObjectDefinition = {
 			listTypeDefinitionId: 0,
 			name: 'testAggregationField',
 			objectFieldSettings: [
-				{name: 'objectRelationshipName', value: 'testRelationship'},
-				{name: 'function', value: 'COUNT'},
+				{
+					name: 'objectRelationshipName',
+					value: 'testRelationship',
+				} as any,
+				{name: 'function', value: 'COUNT'} as any,
 			],
 			required: false,
 			system: false,
@@ -127,8 +130,8 @@ const companyObjectDefinition: ObjectDefinition = {
 			listTypeDefinitionId: 0,
 			name: 'testFormulaField',
 			objectFieldSettings: [
-				{name: 'output', value: 'Integer'},
-				{name: 'script', value: 'id / id'},
+				{name: 'output', value: 'Integer'} as any,
+				{name: 'script', value: 'id / id'} as any,
 			],
 			required: false,
 			system: false,
@@ -261,8 +264,11 @@ const siteObjectDefinition: ObjectDefinition = {
 			listTypeDefinitionId: 0,
 			name: 'testAggregationField',
 			objectFieldSettings: [
-				{name: 'objectRelationshipName', value: 'testRelationship'},
-				{name: 'function', value: 'COUNT'},
+				{
+					name: 'objectRelationshipName',
+					value: 'testRelationship',
+				} as any,
+				{name: 'function', value: 'COUNT'} as any,
 			],
 			required: false,
 			system: false,
@@ -338,8 +344,8 @@ const siteObjectDefinition: ObjectDefinition = {
 			listTypeDefinitionId: 0,
 			name: 'testFormulaField',
 			objectFieldSettings: [
-				{name: 'output', value: 'Integer'},
-				{name: 'script', value: 'id / id'},
+				{name: 'output', value: 'Integer'} as any,
+				{name: 'script', value: 'id / id'} as any,
 			],
 			required: false,
 			system: false,

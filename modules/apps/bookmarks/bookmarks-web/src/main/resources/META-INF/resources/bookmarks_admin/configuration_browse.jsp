@@ -90,7 +90,7 @@ portletDisplay.setURLBackTitle("bookmarks");
 									inputName="preferences--rootFolderId--"
 									modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
 									resourceName="<%= rootFolderName %>"
-									resourceValue="<%= rootFolderId %>"
+									resourceValue="<%= String.valueOf(rootFolderId) %>"
 									selectEventName="selectFolder"
 									selectResourceURL='<%=
 										PortletURLBuilder.create(

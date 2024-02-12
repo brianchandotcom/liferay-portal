@@ -33,7 +33,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		inputName="newFolderId"
 		modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
 		resourceName="<%= journalEditArticleDisplayContext.getFolderName() %>"
-		resourceValue="<%= journalEditArticleDisplayContext.getFolderId() %>"
+		resourceValue="<%= String.valueOf(journalEditArticleDisplayContext.getFolderId()) %>"
 		selectEventName="selectFolder"
 		selectResourceURL='<%=
 			PortletURLBuilder.createRenderURL(

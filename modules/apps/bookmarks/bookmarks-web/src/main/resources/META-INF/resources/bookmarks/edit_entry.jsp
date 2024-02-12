@@ -92,7 +92,7 @@ renderResponse.setTitle(headerTitle);
 								inputName="newFolderId"
 								modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
 								resourceName="<%= folderName %>"
-								resourceValue="<%= folderId %>"
+								resourceValue="<%= String.valueOf(folderId) %>"
 								selectEventName="selectFolder"
 								selectResourceURL='<%=
 									PortletURLBuilder.createRenderURL(

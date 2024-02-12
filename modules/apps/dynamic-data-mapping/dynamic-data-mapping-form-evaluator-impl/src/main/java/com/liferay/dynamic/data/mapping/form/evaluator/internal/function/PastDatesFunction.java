@@ -9,7 +9,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.form.validation.util.DateParameterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author Carolina Barbosa
@@ -25,11 +25,11 @@ public class PastDatesFunction
 			return false;
 		}
 
-		LocalDate localDate = DateParameterUtil.getLocalDate(
+		LocalDateTime localDateTime = DateParameterUtil.getLocalDateTime(
 			object1.toString());
 
-		if (localDate.isAfter(
-				DateParameterUtil.getLocalDate(object2.toString()))) {
+		if (localDateTime.isAfter(
+				DateParameterUtil.getLocalDateTime(object2.toString()))) {
 
 			return false;
 		}

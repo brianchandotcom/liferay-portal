@@ -835,17 +835,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		HttpServletRequest httpServletRequest, Layout layout, Locale locale,
 		Locale originalLocale) {
 
-		String contextPath = portal.getPathContext();
-		String requestURI = httpServletRequest.getRequestURI();
-
-		if (Validator.isNotNull(contextPath) &&
-			requestURI.startsWith(contextPath)) {
-
-			requestURI = requestURI.substring(contextPath.length());
-		}
-
-		requestURI = StringUtil.replace(
-			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
+		String requestURI = _getRequestURI(httpServletRequest);
 
 		String layoutFriendlyURL = null;
 
@@ -897,7 +887,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			appendI18nPath = false;
 		}
 
-		String localizedFriendlyURL = contextPath;
+		String localizedFriendlyURL = portal.getPathContext();
 
 		if (appendI18nPath) {
 			String i18nPathLanguageId = portal.getI18nPathLanguageId(
@@ -963,6 +953,20 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		return new Redirect(
 			redirect.getDestinationURL(), true, redirect.isPermanent());
+	}
+
+	private String _getRequestURI(HttpServletRequest httpServletRequest) {
+		String contextPath = portal.getPathContext();
+		String requestURI = httpServletRequest.getRequestURI();
+
+		if (Validator.isNotNull(contextPath) &&
+			requestURI.startsWith(contextPath)) {
+
+			requestURI = requestURI.substring(contextPath.length());
+		}
+
+		return StringUtil.replace(
+			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 	}
 
 	private ServiceContext _getServiceContext(

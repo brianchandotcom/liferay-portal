@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -309,9 +310,11 @@ public class UpdatePasswordAction implements Action {
 			user.getCompanyId());
 
 		if (ticket != null) {
-			TicketLocalServiceUtil.deleteTickets(
+			List<Ticket> tickets = TicketLocalServiceUtil.getTickets(
 				user.getCompanyId(), User.class.getName(), userId,
 				ticket.getType());
+
+			tickets.forEach(TicketLocalServiceUtil::deleteTicket);
 
 			UserLocalServiceUtil.updateLockout(user, false);
 

@@ -95,7 +95,7 @@ public class PortalInstancePool {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company where webId = '" +
-					PropsValues.COMPANY_DEFAULT_WEB_ID + "'");
+					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID) + "'");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

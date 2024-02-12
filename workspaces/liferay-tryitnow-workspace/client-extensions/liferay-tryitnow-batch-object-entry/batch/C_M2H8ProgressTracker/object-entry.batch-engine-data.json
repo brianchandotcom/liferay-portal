@@ -5,7 +5,6 @@
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
 			"onErrorFail": "false",
-			"taskItemDelegateName": "C_M2H8ProgressTracker",
 			"updateStrategy": "UPDATE"
 		},
 		"taskItemDelegateName": "C_M2H8ProgressTracker"

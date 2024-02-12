@@ -7,9 +7,9 @@
 			"createStrategy": "UPSERT",
 			"featureFlag": "LPS-178642",
 			"importStrategy": "ON_ERROR_FAIL",
-			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
 		},
+		"taskItemDelegateName": "DEFAULT",
 		"userId": 0,
 		"version": "v1.0"
 	},

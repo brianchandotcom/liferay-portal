@@ -19,10 +19,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -139,7 +143,55 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
 		_assertGetChildrenSiteNavigationMenuItems(
-			locale, 0, _addSiteNavigationMenuItem(locale, "{}", false));
+			locale, 0, _addSiteNavigationMenuItem(locale, "{}", false),
+			_getThemeDisplay());
+	}
+
+	@Test
+	public void testGetChildrenSiteNavigationMenuItemsAssetCategoryWithoutViewPermission()
+		throws Exception {
+
+		AssetCategory permissionAssetCategory = _addAssetCategory(0);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setAddGuestPermissions(false);
+
+		AssetCategory noPermissionAssetCategory =
+			_assetCategoryLocalService.addCategory(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				_assetVocabulary.getVocabularyId(), null, serviceContext);
+
+		Assert.assertEquals(
+			2,
+			_assetCategoryLocalService.getVocabularyCategoriesCount(
+				_assetVocabulary.getVocabularyId()));
+
+		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_addSiteNavigationMenuItem(locale, "{}", false);
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		_assertGetChildrenSiteNavigationMenuItems(
+			ListUtil.fromArray(
+				permissionAssetCategory, noPermissionAssetCategory),
+			locale, siteNavigationMenuItem, themeDisplay);
+
+		User guestUser = _userLocalService.getGuestUser(_group.getCompanyId());
+
+		themeDisplay.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(guestUser));
+		themeDisplay.setUser(guestUser);
+
+		_assertGetChildrenSiteNavigationMenuItems(
+			ListUtil.fromArray(permissionAssetCategory), locale,
+			siteNavigationMenuItem, themeDisplay);
 	}
 
 	@Test
@@ -154,7 +206,8 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
 		_assertGetChildrenSiteNavigationMenuItems(
-			locale, 0, _addSiteNavigationMenuItem(locale, "{}", false));
+			locale, 0, _addSiteNavigationMenuItem(locale, "{}", false),
+			_getThemeDisplay());
 	}
 
 	@Test
@@ -673,11 +726,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 	}
 
 	private void _assertGetChildrenSiteNavigationMenuItems(
-			Locale locale, long parentAssetCategoryId,
-			SiteNavigationMenuItem siteNavigationMenuItem)
+			List<AssetCategory> assetCategories, Locale locale,
+			SiteNavigationMenuItem siteNavigationMenuItem,
+			ThemeDisplay themeDisplay)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -692,11 +744,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		List<SiteNavigationMenuItem> childrenSiteNavigationMenuItems =
 			siteNavigationMenuItemType.getChildrenSiteNavigationMenuItems(
 				mockHttpServletRequest, siteNavigationMenuItem);
-
-		List<AssetCategory> assetCategories =
-			_assetCategoryLocalService.getVocabularyCategories(
-				parentAssetCategoryId, _assetVocabulary.getVocabularyId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
 			childrenSiteNavigationMenuItems.toString(), assetCategories.size(),
@@ -713,8 +760,21 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 
 			_assertGetChildrenSiteNavigationMenuItems(
 				locale, assetCategory.getCategoryId(),
-				childrenSiteNavigationMenuItem);
+				childrenSiteNavigationMenuItem, themeDisplay);
 		}
+	}
+
+	private void _assertGetChildrenSiteNavigationMenuItems(
+			Locale locale, long parentAssetCategoryId,
+			SiteNavigationMenuItem siteNavigationMenuItem,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		_assertGetChildrenSiteNavigationMenuItems(
+			_assetCategoryLocalService.getVocabularyCategories(
+				parentAssetCategoryId, _assetVocabulary.getVocabularyId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			locale, siteNavigationMenuItem, themeDisplay);
 	}
 
 	private SiteNavigationMenuItem _getAssetCategorySiteNavigationMenuItem(
@@ -805,5 +865,8 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 
 	@Inject
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

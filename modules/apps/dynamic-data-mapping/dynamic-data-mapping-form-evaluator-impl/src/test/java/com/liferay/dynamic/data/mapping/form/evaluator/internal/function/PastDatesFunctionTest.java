@@ -8,6 +8,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 import org.junit.Assert;
@@ -37,10 +38,24 @@ public class PastDatesFunctionTest {
 	@Test
 	public void testApplyTrue() {
 		LocalDate yesterdayLocalDate = _todayLocalDate.minusDays(1);
+		LocalDateTime yesterdayLocalDateTime = _todayLocalDateTime.minusDays(1);
 
 		Assert.assertTrue(
 			_pastDatesFunction.apply(
 				yesterdayLocalDate.toString(), _todayLocalDate.toString()));
+
+		Assert.assertTrue(
+			_pastDatesFunction.apply(
+				yesterdayLocalDate.toString(), _todayLocalDateTime.toString()));
+
+		Assert.assertTrue(
+			_pastDatesFunction.apply(
+				yesterdayLocalDateTime.toString(), _todayLocalDate.toString()));
+
+		Assert.assertTrue(
+			_pastDatesFunction.apply(
+				yesterdayLocalDateTime.toString(),
+				_todayLocalDateTime.toString()));
 
 		Assert.assertTrue(
 			_pastDatesFunction.apply(
@@ -58,5 +73,7 @@ public class PastDatesFunctionTest {
 	private final PastDatesFunction _pastDatesFunction =
 		new PastDatesFunction();
 	private final LocalDate _todayLocalDate = LocalDate.now(ZoneId.of("UTC"));
+	private final LocalDateTime _todayLocalDateTime = LocalDateTime.now(
+		ZoneId.of("UTC"));
 
 }

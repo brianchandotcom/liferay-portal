@@ -341,36 +341,11 @@ public class SitemapManagerTest {
 	public void testSitemapIncludePagesCompanyEnabledGroupEnabled()
 		throws Exception {
 
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(),
-						_PID_SITEMAP_COMPANY_CONFIGURATION,
-						HashMapDictionaryBuilder.<String, Object>put(
-							"includeCategories", false
-						).put(
-							"includePages", true
-						).put(
-							"includeWebContent", false
-						).build());
-			GroupConfigurationTemporarySwapper
-				groupConfigurationTemporarySwapper =
-					new GroupConfigurationTemporarySwapper(
-						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
-						HashMapDictionaryBuilder.<String, Object>put(
-							"includeCategories", false
-						).put(
-							"includePages", true
-						).put(
-							"includeWebContent", false
-						).build())) {
-
-			_assertSitemap(
-				_layout.getUuid(),
-				_portal.getCanonicalURL(
-					_portal.getLayoutFullURL(_layout, _themeDisplay),
-					_themeDisplay, _layout));
-		}
+		_testSitemapIncludePagesCompanyEnabledGroupEnabled(
+			_layout.getUuid(),
+			_portal.getCanonicalURL(
+				_portal.getLayoutFullURL(_layout, _themeDisplay), _themeDisplay,
+				_layout));
 	}
 
 	@Test
@@ -703,6 +678,38 @@ public class SitemapManagerTest {
 
 		_themeDisplay.setServerName("localhost");
 		_themeDisplay.setServerPort(8080);
+	}
+
+	private void _testSitemapIncludePagesCompanyEnabledGroupEnabled(
+			String uuid, String... urls)
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			_assertSitemap(uuid, urls);
+		}
 	}
 
 	private static final String _PID_SITEMAP_COMPANY_CONFIGURATION =

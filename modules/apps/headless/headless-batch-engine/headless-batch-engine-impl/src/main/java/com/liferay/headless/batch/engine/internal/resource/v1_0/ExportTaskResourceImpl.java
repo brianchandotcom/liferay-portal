@@ -176,7 +176,7 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 	}
 
 	private static final Set<String> _ignoredParameters = new HashSet<>(
-		Arrays.asList("callbackURL", "fieldNames"));
+		Arrays.asList("callbackURL", "fieldNames", "taskItemDelegateName"));
 
 	@Reference
 	private BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;

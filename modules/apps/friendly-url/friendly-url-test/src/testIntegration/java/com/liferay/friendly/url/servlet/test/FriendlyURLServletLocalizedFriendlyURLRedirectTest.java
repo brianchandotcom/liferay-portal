@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -42,6 +43,8 @@ import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.Servlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.junit.AfterClass;
@@ -259,7 +262,12 @@ public class FriendlyURLServletLocalizedFriendlyURLRedirectTest {
 
 		Assert.assertEquals(
 			i18nPath.concat("/inicio"),
-			_portal.getLocalizedFriendlyURL(
+			ReflectionTestUtil.invoke(
+				_servlet, "_getLocalizedFriendlyURLRedirect",
+				new Class<?>[] {
+					HttpServletRequest.class, Layout.class, Locale.class,
+					Locale.class
+				},
 				new HttpServletRequestWrapper(mockHttpServletRequest) {
 
 					@Override
@@ -648,7 +656,12 @@ public class FriendlyURLServletLocalizedFriendlyURLRedirectTest {
 
 		Assert.assertEquals(
 			sb.toString(),
-			_portal.getLocalizedFriendlyURL(
+			ReflectionTestUtil.invoke(
+				_servlet, "_getLocalizedFriendlyURLRedirect",
+				new Class<?>[] {
+					HttpServletRequest.class, Layout.class, Locale.class,
+					Locale.class
+				},
 				mockHttpServletRequest, layout, locale, originalLocale));
 	}
 
@@ -711,7 +724,12 @@ public class FriendlyURLServletLocalizedFriendlyURLRedirectTest {
 
 		Assert.assertEquals(
 			sb.toString(),
-			_portal.getLocalizedFriendlyURL(
+			ReflectionTestUtil.invoke(
+				_servlet, "_getLocalizedFriendlyURLRedirect",
+				new Class<?>[] {
+					HttpServletRequest.class, Layout.class, Locale.class,
+					Locale.class
+				},
 				mockHttpServletRequest, layout, locale, originalLocale));
 	}
 
@@ -894,6 +912,11 @@ public class FriendlyURLServletLocalizedFriendlyURLRedirectTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject(
+		filter = "(&(servlet.type=friendly-url)(servlet.init.private=false))"
+	)
+	private Servlet _servlet;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

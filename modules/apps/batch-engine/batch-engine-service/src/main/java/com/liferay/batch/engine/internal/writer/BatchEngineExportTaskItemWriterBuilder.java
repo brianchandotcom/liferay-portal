@@ -77,6 +77,8 @@ public class BatchEngineExportTaskItemWriterBuilder {
 			_parameters.computeIfAbsent("updateStrategy", key -> "UPDATE");
 
 			batchEngineUnitConfiguration.setParameters(_parameters);
+			batchEngineUnitConfiguration.setTaskItemDelegateName(
+				_taskItemDelegateName);
 			batchEngineUnitConfiguration.setUserId(_userId);
 			batchEngineUnitConfiguration.setVersion("v1.0");
 
@@ -135,6 +137,14 @@ public class BatchEngineExportTaskItemWriterBuilder {
 		return this;
 	}
 
+	public BatchEngineExportTaskItemWriterBuilder taskItemDelegateName(
+		String taskItemDelegateName) {
+
+		_taskItemDelegateName = taskItemDelegateName;
+
+		return this;
+	}
+
 	public BatchEngineExportTaskItemWriterBuilder userId(long userId) {
 		_userId = userId;
 
@@ -148,6 +158,7 @@ public class BatchEngineExportTaskItemWriterBuilder {
 	private Class<?> _itemClass;
 	private OutputStream _outputStream;
 	private Map<String, Serializable> _parameters;
+	private String _taskItemDelegateName;
 	private long _userId;
 
 }

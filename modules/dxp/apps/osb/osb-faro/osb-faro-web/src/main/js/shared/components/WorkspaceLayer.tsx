@@ -1,6 +1,7 @@
 import BundleRouter from 'route-middleware/BundleRouter';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useEffect} from 'react';
+import RouteNotFound from './RouteNotFound';
 import {close, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
@@ -27,11 +28,11 @@ const Settings = lazy(
 
 const connector = connect(
 	(store: RootState, {location: {pathname}}: {location: Location}) => {
-		const {
-			params: {groupId}
-		} = matchPath(pathname, {
+		const path = matchPath<any>(pathname, {
 			path: Routes.WORKSPACE_WITH_ID
 		});
+
+		const groupId = path?.params?.groupId ?? '0';
 
 		const project =
 			store.getIn(['projects', groupId, 'data'], new Project()) ||
@@ -87,6 +88,8 @@ const WorkspaceLayer: React.FC<IWorkspaceLayerProps> = ({
 				<BundleRouter data={Settings} path={Routes.SETTINGS} />
 
 				<BundleRouter data={AppSidebarRoutes} path={Routes.CHANNEL} />
+
+				<RouteNotFound />
 			</Switch>
 		</Suspense>
 	);

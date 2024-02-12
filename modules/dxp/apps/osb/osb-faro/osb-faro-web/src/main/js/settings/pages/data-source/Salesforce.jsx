@@ -1,6 +1,7 @@
 import BundleRouter from 'route-middleware/BundleRouter';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
+import RouteNotFound from 'shared/components/RouteNotFound';
 import {DataSource} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
 import {Routes} from 'shared/util/router';
@@ -54,6 +55,8 @@ export default class Salesforce extends React.Component {
 						data={TabRoutes}
 						path={Routes.SETTINGS_DATA_SOURCE}
 					/>
+
+					<RouteNotFound />
 				</Switch>
 			</Suspense>
 		);

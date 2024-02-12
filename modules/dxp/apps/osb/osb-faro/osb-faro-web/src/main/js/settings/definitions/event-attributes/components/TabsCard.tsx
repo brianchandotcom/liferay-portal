@@ -4,6 +4,7 @@ import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense} from 'react';
+import RouteNotFound from 'shared/components/RouteNotFound';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Switch} from 'react-router';
 
@@ -73,6 +74,8 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 							Routes.SETTINGS_DEFINITIONS_EVENT_ATTRIBUTES_GLOBAL
 						}
 					/>
+
+					<RouteNotFound />
 				</Switch>
 			</Suspense>
 		</Card>

@@ -8,6 +8,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
+import RouteNotFound from 'shared/components/RouteNotFound';
 import {compose, withCurrentUser} from 'shared/hoc';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Switch, withRouter} from 'react-router-dom';
@@ -108,6 +109,8 @@ export const User: React.FC<IUserProps> = ({
 							exact
 							path={Routes.SETTINGS_USERS_REQUESTS}
 						/>
+
+						<RouteNotFound />
 					</Switch>
 				</Suspense>
 			</Card>

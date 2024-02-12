@@ -981,11 +981,6 @@ const FDSEntries = ({
 						sortable: true,
 					},
 					{
-						contentRenderer: VIEWS_COUNT_TABLE_CELL_RENDERER_NAME,
-						fieldName: OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW,
-						label: Liferay.Language.get('views'),
-					},
-					{
 						contentRenderer: 'dateTime',
 						fieldName: 'dateModified',
 						label: Liferay.Language.get('modified-date'),

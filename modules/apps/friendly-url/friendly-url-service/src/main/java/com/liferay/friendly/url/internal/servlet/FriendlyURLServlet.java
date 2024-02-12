@@ -837,6 +837,17 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		String requestURI = _getRequestURI(httpServletRequest);
 
+		if (!_hasRequestURIWithGroupFriendlyURL(
+				portal.getOriginalServletRequest(httpServletRequest))) {
+
+			int[] groupFriendlyURLIndex = portal.getGroupFriendlyURLIndex(
+				requestURI);
+
+			if (groupFriendlyURLIndex != null) {
+				requestURI = requestURI.substring(groupFriendlyURLIndex[1]);
+			}
+		}
+
 		String layoutFriendlyURL = null;
 
 		if (originalLocale == null) {
@@ -1002,6 +1013,29 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		return user;
+	}
+
+	private boolean _hasRequestURIWithGroupFriendlyURL(
+		HttpServletRequest httpServletRequest) {
+
+		String requestURI = _getRequestURI(httpServletRequest);
+
+		if (httpServletRequest.getAttribute(WebKeys.I18N_PATH) != null) {
+			int pos = requestURI.indexOf(StringPool.SLASH, 1);
+
+			if (pos != -1) {
+				requestURI = requestURI.substring(pos);
+			}
+		}
+
+		int[] groupFriendlyURLIndex = portal.getGroupFriendlyURLIndex(
+			requestURI);
+
+		if (groupFriendlyURLIndex == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isImpersonated(

@@ -5,7 +5,7 @@
 
 import {navigate, openSelectionModal} from 'frontend-js-web';
 
-export function openMySitesModal(jsOnClickConfig) {
+export function mySitesOpener(jsOnClickConfig) {
 	const {selectEventName, title, url} = jsOnClickConfig;
 
 	openSelectionModal({

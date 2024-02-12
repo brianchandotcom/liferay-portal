@@ -59,7 +59,6 @@ public class DeleteKBArticleMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "resourcePrimKey");
 
 		try {
-
 			if (cmd.equals(Constants.MOVE_TO_TRASH) &&
 				FeatureFlagManagerUtil.isEnabled("LPS-188058")) {
 
@@ -68,16 +67,16 @@ public class DeleteKBArticleMVCActionCommand extends BaseMVCActionCommand {
 					HashMapBuilder.<String, Object>put(
 						"trashedModels",
 						ListUtil.toList(
-							(TrashedModel) _kbArticleService.moveKBArticleToTrash(
-								resourcePrimKey))
+							(TrashedModel)
+								_kbArticleService.moveKBArticleToTrash(
+									resourcePrimKey))
 					).build());
 			}
 			else {
 				_kbArticleService.deleteKBArticle(resourcePrimKey);
 			}
 		}
-
-		catch(DuplicateLockException duplicateLockException) {
+		catch (DuplicateLockException duplicateLockException) {
 			hideDefaultErrorMessage(actionRequest);
 
 			throw duplicateLockException;

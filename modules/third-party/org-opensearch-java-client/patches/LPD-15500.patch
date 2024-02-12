@@ -1,0 +1,124 @@
+diff --git a/org/opensearch/client/opensearch/snapshot/GetSnapshotResponse.java b/org/opensearch/client/opensearch/snapshot/GetSnapshotResponse.java
+index d3c51899a9ed4..1c07f604d3225 100644
+--- a/org/opensearch/client/opensearch/snapshot/GetSnapshotResponse.java
++++ b/org/opensearch/client/opensearch/snapshot/GetSnapshotResponse.java
+@@ -55,9 +55,11 @@ public class GetSnapshotResponse implements JsonpSerializable {
+ 
+     private final List<SnapshotInfo> snapshots;
+ 
+-    private final int total;
++    @Nullable
++    private Integer total;
+ 
+-    private final int remaining;
++    @Nullable
++    private Integer remaining;
+ 
+     // ---------------------------------------------------------------------------------------------
+ 
+@@ -65,8 +67,8 @@ public class GetSnapshotResponse implements JsonpSerializable {
+ 
+         this.responses = ApiTypeHelper.unmodifiable(builder.responses);
+         this.snapshots = ApiTypeHelper.unmodifiable(builder.snapshots);
+-        this.total = ApiTypeHelper.requireNonNull(builder.total, this, "total");
+-        this.remaining = ApiTypeHelper.requireNonNull(builder.remaining, this, "remaining");
++        this.total = builder.total;
++        this.remaining = builder.remaining;
+ 
+     }
+ 
+@@ -89,23 +91,25 @@ public class GetSnapshotResponse implements JsonpSerializable {
+     }
+ 
+     /**
+-     * Required - The total number of snapshots that match the request when ignoring
++     * The total number of snapshots that match the request when ignoring
+      * size limit or after query parameter.
+      * <p>
+      * API name: {@code total}
+      */
+-    public final int total() {
++    @Nullable
++    public final Integer total() {
+         return this.total;
+     }
+ 
+     /**
+-     * Required - The number of remaining snapshots that were not returned due to
++     * The number of remaining snapshots that were not returned due to
+      * size limits and that can be fetched by additional requests using the next
+      * field value.
+      * <p>
+      * API name: {@code remaining}
+      */
+-    public final int remaining() {
++    @Nullable
++    public final Integer remaining() {
+         return this.remaining;
+     }
+ 
+@@ -140,11 +144,14 @@ public class GetSnapshotResponse implements JsonpSerializable {
+             generator.writeEnd();
+ 
+         }
+-        generator.writeKey("total");
+-        generator.write(this.total);
+-
+-        generator.writeKey("remaining");
+-        generator.write(this.remaining);
++        if (this.total != null) {
++            generator.writeKey("total");
++            generator.write(this.total);
++        }
++        if (this.remaining != null) {
++            generator.writeKey("remaining");
++            generator.write(this.remaining);
++        }
+ 
+     }
+ 
+@@ -161,8 +168,10 @@ public class GetSnapshotResponse implements JsonpSerializable {
+         @Nullable
+         private List<SnapshotInfo> snapshots;
+ 
++        @Nullable
+         private Integer total;
+ 
++        @Nullable
+         private Integer remaining;
+ 
+         /**
+@@ -224,24 +233,24 @@ public class GetSnapshotResponse implements JsonpSerializable {
+         }
+ 
+         /**
+-         * Required - The total number of snapshots that match the request when ignoring
++         * The total number of snapshots that match the request when ignoring
+          * size limit or after query parameter.
+          * <p>
+          * API name: {@code total}
+          */
+-        public final Builder total(int value) {
++        public final Builder total(@Nullable Integer value) {
+             this.total = value;
+             return this;
+         }
+ 
+         /**
+-         * Required - The number of remaining snapshots that were not returned due to
++         * The number of remaining snapshots that were not returned due to
+          * size limits and that can be fetched by additional requests using the next
+          * field value.
+          * <p>
+          * API name: {@code remaining}
+          */
+-        public final Builder remaining(int value) {
++        public final Builder remaining(@Nullable Integer value) {
+             this.remaining = value;
+             return this;
+         }
+@@ -279,3 +288,4 @@ public class GetSnapshotResponse implements JsonpSerializable {
+     }
+ 
+ }
++/* @generated */

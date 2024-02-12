@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {HeadlessDeliveryClient} from '@liferay/headless-delivery-client-js';
+
 // @ts-ignore
 
 import {expect, mergeTests} from '@playwright/test';
@@ -10,13 +12,20 @@ import * as path from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
+import {headlessClientsTest} from '../../../fixtures/headlessClientsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	commercePagesTest,
+	headlessClientsTest({headlessDeliveryClient: HeadlessDeliveryClient}),
+	loginTest
+);
 
 test('The download URL is present when the file entry is a file upload', async ({
 	apiHelpers,
 	attachmentsPage,
+	headlessClients: {headlessDeliveryClient},
 }) => {
 	await attachmentsPage.goToDocumentsAndMedia();
 	await attachmentsPage.createFileEntry(
@@ -77,13 +86,16 @@ test('The download URL is present when the file entry is a file upload', async (
 		),
 	]);
 
-	await apiHelpers.headlessDelivery.deleteDocument(siteDocument.id);
+	await headlessDeliveryClient.document.deleteDocument({
+		documentId: siteDocument.id,
+	});
 	await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
 });
 
 test('The download URL is not present when the file entry is an external resource', async ({
 	apiHelpers,
 	attachmentsPage,
+	headlessClients: {headlessDeliveryClient},
 }) => {
 	await attachmentsPage.goToDocumentsAndMedia();
 	await attachmentsPage.createExternalVideoShortcut(
@@ -144,6 +156,8 @@ test('The download URL is not present when the file entry is an external resourc
 		),
 	]);
 
-	await apiHelpers.headlessDelivery.deleteDocument(siteDocument.id);
+	await headlessDeliveryClient.document.deleteDocument({
+		documentId: siteDocument.id,
+	});
 	await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
 });

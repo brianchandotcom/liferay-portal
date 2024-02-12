@@ -5,13 +5,18 @@
 
 package com.liferay.site.navigation.site.map.web.internal.portlet.action;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSiteMapPortletKeys;
 
+import javax.portlet.PortletConfig;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,5 +32,20 @@ public class SiteNavigationSiteMapConfigurationAction
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/configuration.jsp";
 	}
+
+	@Override
+	public void include(
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		httpServletRequest.setAttribute(
+			ItemSelector.class.getName(), _itemSelector);
+
+		super.include(portletConfig, httpServletRequest, httpServletResponse);
+	}
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

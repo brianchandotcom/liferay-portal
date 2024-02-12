@@ -5,6 +5,9 @@
 
 package com.liferay.site.navigation.site.map.web.internal.display.context;
 
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
@@ -13,6 +16,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -28,6 +33,8 @@ import com.liferay.site.navigation.site.map.web.internal.configuration.SiteNavig
 
 import java.util.List;
 
+import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -36,10 +43,15 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationSiteMapDisplayContext {
 
 	public SiteNavigationSiteMapDisplayContext(
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest,
+			RenderResponse renderResponse)
 		throws ConfigurationException {
 
 		_httpServletRequest = httpServletRequest;
+		_renderResponse = renderResponse;
+
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
+			ItemSelector.class.getName());
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -84,6 +96,23 @@ public class SiteNavigationSiteMapDisplayContext {
 		}
 
 		return _displayStyleGroupId;
+	}
+
+	public String getItemSelectorURL() {
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion();
+
+		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new UUIDItemSelectorReturnType());
+		layoutItemSelectorCriterion.setShowBreadcrumb(false);
+		layoutItemSelectorCriterion.setMultiSelection(false);
+
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_renderResponse.getNamespace() + "selectLayout",
+				layoutItemSelectorCriterion)
+		).buildString();
 	}
 
 	public List<LayoutDescription> getLayoutDescriptions() {
@@ -291,6 +320,8 @@ public class SiteNavigationSiteMapDisplayContext {
 	private Long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 	private Boolean _includeRootInTree;
+	private final ItemSelector _itemSelector;
+	private final RenderResponse _renderResponse;
 	private Layout _rootLayout;
 	private Long _rootLayoutId;
 	private final SiteNavigationSiteMapPortletInstanceConfiguration

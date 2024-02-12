@@ -146,7 +146,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 		return Page.of(
 			TransformUtil.transform(
-				_ctCollectionLocalService.getCTCollections(
+				ctCollectionHistoryProvider.getCTCollections(
 					classNameId, classPK),
 				this::_toCTCollection));
 	}

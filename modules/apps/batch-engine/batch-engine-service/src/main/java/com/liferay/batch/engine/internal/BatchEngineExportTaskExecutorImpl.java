@@ -227,6 +227,8 @@ public class BatchEngineExportTaskExecutorImpl
 					batchEngineTaskContentType, unsyncByteArrayOutputStream)
 			).parameters(
 				parameters
+			).taskItemDelegateName(
+				batchEngineExportTask.getTaskItemDelegateName()
 			).userId(
 				batchEngineExportTask.getUserId()
 			).build();
@@ -261,10 +263,6 @@ public class BatchEngineExportTaskExecutorImpl
 		if (parameters == null) {
 			parameters = new HashMap<>();
 		}
-
-		parameters.computeIfAbsent(
-			"taskItemDelegateName",
-			key -> batchEngineExportTask.getTaskItemDelegateName());
 
 		return parameters;
 	}

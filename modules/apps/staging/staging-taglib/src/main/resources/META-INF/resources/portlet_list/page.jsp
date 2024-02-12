@@ -104,28 +104,23 @@
 					<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getPortletId() %>"></span>
 
 					<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
-						<aui:a
-							cssClass="content-link modify-link"
-							data='<%=
-								HashMapBuilder.<String, Object>put(
-									"portletid", portletId
-								).put(
-									"portlettitle", portletTitle
-								).build()
-							%>'
-							href="javascript:void(0);"
-							id='<%= "contentLink_" + portlet.getPortletId() %>'
+						<clay:button
+							cssClass="content-link modify-link pr-1"
+							id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getPortletId() %>'
+							data-portletid="<%= portletId %>"
+							data-portlettitle="<%= portletTitle %>"
+							displayType="link"
 							label="change"
-							method="get"
 						/>
+
 						<span id="<portlet:namespace />rightContentArrow_<%= portlet.getPortletId() %>">
 							<clay:icon
-								symbol="angle-right"
+								symbol="angle-right-small"
 							/>
 						</span>
 						<span class="hide" id="<portlet:namespace />downContentArrow_<%= portlet.getPortletId() %>">
 							<clay:icon
-								symbol="angle-down"
+								symbol="angle-down-small"
 							/>
 						</span>
 					</span>
@@ -207,7 +202,6 @@
 											</ul>
 										</aui:field-wrapper>
 									</c:if>
-
 								<%
 								}
 								%>
@@ -245,15 +239,21 @@ html = html.trim();
 		<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
 		<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
-			<aui:a cssClass="modify-link" href="javascript:void(0);" id="contentOptionsLink" label="change" method="get" />
+			<clay:button
+				cssClass="pr-1"
+				displayType="link"
+				id='<%= liferayPortletResponse.getNamespace() + "contentOptionsLink" %>'
+				label="change"
+			/>
+
 			<span id="<portlet:namespace />rightContentOptionsArrow">
 				<clay:icon
-					symbol="angle-right"
+					symbol="angle-right-small"
 				/>
 			</span>
 			<span class="hide" id="<portlet:namespace />downContentOptionsArrow">
 				<clay:icon
-					symbol="angle-down"
+					symbol="angle-down-small"
 				/>
 			</span>
 		</span>

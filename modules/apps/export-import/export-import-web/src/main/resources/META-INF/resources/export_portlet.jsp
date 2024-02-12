@@ -116,27 +116,21 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 														<li>
 															<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= selPortlet.getRootPortletId() %>"></span>
 
-															<aui:a
-																cssClass="configuration-link modify-link"
-																data='<%=
-																	HashMapBuilder.<String, Object>put(
-																		"portletid", selPortlet.getRootPortletId()
-																	).build()
-																%>'
-																href="javascript:void(0);"
+															<clay:button
+																cssClass="configuration-link modify-link pr-1"
+																data-portletid="<%= selPortlet.getRootPortletId() %>"
+																displayType="link"
 																label="change"
-																method="get"
-																role="button"
 															/>
 
 															<span id="<portlet:namespace />rightConfigurationArrow_<%= selPortlet.getRootPortletId() %>">
 																<clay:icon
-																	symbol="angle-right"
+																	symbol="angle-right-small"
 																/>
 															</span>
 															<span class="hide" id="<portlet:namespace />downConfigurationArrow_<%= selPortlet.getRootPortletId() %>">
 																<clay:icon
-																	symbol="angle-down"
+																	symbol="angle-down-small"
 																/>
 															</span>
 														</li>
@@ -350,28 +344,22 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 																	<li>
 																		<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></span>
 
-																		<aui:a
-																			cssClass="content-link modify-link"
-																			data='<%=
-																				HashMapBuilder.<String, Object>put(
-																					"portletid", selPortlet.getRootPortletId()
-																				).build()
-																			%>'
-																			href="javascript:void(0);"
-																			id='<%= "contentLink_" + selPortlet.getRootPortletId() %>'
+																		<clay:button
+																			cssClass="content-link modify-link pr-1"
+																			id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + selPortlet.getRootPortletId() %>'
+																			data-portletid="<%= selPortlet.getRootPortletId() %>"
+																			displayType="link"
 																			label="change"
-																			method="get"
-																			role="button"
 																		/>
 
 																		<span id="<portlet:namespace />rightContentArrow_<%= selPortlet.getRootPortletId() %>">
 																			<clay:icon
-																				symbol="angle-right"
+																				symbol="angle-right-small"
 																			/>
 																		</span>
 																		<span class="hide" id="<portlet:namespace />downContentArrow_<%= selPortlet.getRootPortletId() %>">
 																			<clay:icon
-																				symbol="angle-down"
+																				symbol="angle-down-small"
 																			/>
 																		</span>
 																	</li>
@@ -445,16 +433,21 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 														<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-export-their">
 															<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
-															<aui:a cssClass="modify-link options-link" href="javascript:void(0);" id="contentOptionsLink" label="change" method="get" role="button" />
+															<clay:button
+																cssClass="modify-link options-link pr-1"
+																displayType="link"
+																id='<%= liferayPortletResponse.getNamespace() + "contentOptionsLink" %>'
+																label="change"
+															/>
 
 															<span id="<portlet:namespace />rightContentOptionsArrow">
 																<clay:icon
-																	symbol="angle-right"
+																	symbol="angle-right-small"
 																/>
 															</span>
 															<span class="hide" id="<portlet:namespace />downContentOptionsArrow">
 																<clay:icon
-																	symbol="angle-down"
+																	symbol="angle-down-small"
 																/>
 															</span>
 

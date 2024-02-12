@@ -3373,14 +3373,10 @@ public class PortalImpl implements Portal {
 		HttpServletRequest httpServletRequest, Layout layout, Locale locale,
 		Locale originalLocale) {
 
-		String requestURI = httpServletRequest.getRequestURI();
-
 		HttpServletRequest originalHttpServletRequest =
 			getOriginalServletRequest(httpServletRequest);
 
-		if (originalHttpServletRequest.getPathInfo() == null) {
-			requestURI = originalHttpServletRequest.getRequestURI();
-		}
+		String requestURI = originalHttpServletRequest.getRequestURI();
 
 		String contextPath = getPathContext();
 

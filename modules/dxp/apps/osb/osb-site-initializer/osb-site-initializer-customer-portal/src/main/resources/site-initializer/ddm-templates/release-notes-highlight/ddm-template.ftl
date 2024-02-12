@@ -3,6 +3,14 @@
 	restArticle = restClient.get("/headless-delivery/v1.0/sites/${groupId}/structured-contents/by-key/${journalArticleId}?nestedFields=embeddedTaxonomyCategory")
 />
 
+<#list restArticle.contentFields as contentField>
+	<#if stringUtil.equals(contentField.label, "Description")>
+		<#assign description = contentField.contentFieldValue.data />
+	<#elseif stringUtil.equals(contentField.label, "Name")>
+		<#assign name = contentField.contentFieldValue.data />
+	</#if>
+</#list>
+
 <div class="product-capabilities">
 	<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
 		<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name />
@@ -14,14 +22,6 @@
 		</#if>
 	</#list>
 </div>
-
-<#list restArticle.contentFields as contentField>
-	<#if stringUtil.equals(contentField.label, "Description")>
-		<#assign description = contentField.contentFieldValue.data />
-	<#elseif stringUtil.equals(contentField.label, "Name")>
-		<#assign name = contentField.contentFieldValue.data />
-	</#if>
-</#list>
 
 <h2>
 	<#if name??>

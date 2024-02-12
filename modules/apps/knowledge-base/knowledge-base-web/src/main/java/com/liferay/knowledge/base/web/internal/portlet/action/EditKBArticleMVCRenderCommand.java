@@ -10,9 +10,11 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -22,6 +24,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,10 +59,16 @@ public class EditKBArticleMVCRenderCommand implements MVCRenderCommand {
 				_kbArticleService.lockKBArticle(kbArticle.getResourcePrimKey());
 			}
 			catch (PortalException portalException) {
-				SessionErrors.add(
+				HttpServletRequest httpServletRequest =
 					_portal.getOriginalServletRequest(
-						_portal.getHttpServletRequest(renderRequest)),
-					portalException.getClass());
+						_portal.getHttpServletRequest(renderRequest));
+
+				if (portalException instanceof DuplicateLockException) {
+					_hideDefaultErrorMessage(httpServletRequest);
+				}
+
+				SessionErrors.add(
+					httpServletRequest, portalException.getClass());
 
 				_sendRedirect(renderRequest, renderResponse);
 
@@ -68,6 +77,15 @@ public class EditKBArticleMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return "/admin/common/edit_kb_article.jsp";
+	}
+
+	private void _hideDefaultErrorMessage(
+		HttpServletRequest httpServletRequest) {
+
+		SessionMessages.add(
+			httpServletRequest,
+			_portal.getPortletId(httpServletRequest) +
+				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 	}
 
 	private void _sendRedirect(

@@ -27,7 +27,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -62,8 +64,32 @@ public class DateParameterUtil {
 			return null;
 		}
 
-		return LocalDateTime.parse(
-			dateTimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm"));
+		String parseException = null;
+
+		for (String dateTimePattern : _dateTimePatterns) {
+			try {
+				return LocalDateTime.parse(
+					dateTimeString,
+					DateTimeFormatter.ofPattern(dateTimePattern));
+			}
+			catch (DateTimeParseException dateTimeParseException) {
+				parseException = String.valueOf(dateTimeParseException);
+			}
+		}
+
+		if ((parseException != null) && _log.isWarnEnabled()) {
+			_log.warn(
+				dateTimeString + " could not be parsed by patterns: " +
+					_dateTimePatterns);
+		}
+
+		LocalDate localDate = getLocalDate(dateTimeString);
+
+		if (localDate == null) {
+			return null;
+		}
+
+		return localDate.atStartOfDay();
 	}
 
 	public static String getParameter(
@@ -194,5 +220,9 @@ public class DateParameterUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DateParameterUtil.class);
+
+	private static final List<String> _dateTimePatterns = Arrays.asList(
+		"yyyy-MM-dd H:mm", "yyyy-MM-dd HH:mm:ss",
+		"EEE MMM dd HH:mm:ss zzz yyyy");
 
 }

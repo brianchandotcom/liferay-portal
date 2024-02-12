@@ -97,7 +97,7 @@ const GenerateFolders = ({templateId}) => {
 				setIsSubmitting(true);
 
 				createFolder(templateId, values.parentFolder, values.name)
-					.then(() => showSuccess('Folder created!'))
+					.then(() => showSuccess('Folder Created'))
 					.catch((error) => showError('Error', error.message))
 					.finally(() => {
 						form.resetFields();

@@ -28,7 +28,7 @@ const CreateTemplate = ({onClose, onSuccess}) => {
 
 						onSuccess();
 
-						showSuccess('Template created!');
+						showSuccess('Template Created');
 					}
 					catch (error) {
 						showError('Error', error.message);

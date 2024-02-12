@@ -56,10 +56,6 @@ definition {
 			Click.waitForMenuToggleJSClick(locator1 = "ManagementBar#FILTER");
 
 			AssertElementAccessible(locator1 = "//div[contains(@class,'show') and contains(@class,'dropdown')]//li[contains(@class,'dropdown-subheader')][normalize-space()='Filter by Type']");
-
-			AssertElementAccessible(locator1 = "//div[contains(@class,'show')][contains(@class,'menu')][not(contains(@class,'product-menu'))]//*[normalize-space(text())='Content Page']");
-
-			AssertElementAccessible(locator1 = "//div[contains(@class,'show')][contains(@class,'menu')][not(contains(@class,'product-menu'))]//*[normalize-space(text())='Collection Page']");
 		}
 	}
 

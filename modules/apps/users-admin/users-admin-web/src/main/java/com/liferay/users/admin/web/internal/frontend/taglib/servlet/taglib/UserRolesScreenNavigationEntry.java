@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,11 +65,12 @@ public class UserRolesScreenNavigationEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String portletId = PortletProviderUtil.getPortletId(
-			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
-			PortletProvider.Action.VIEW);
+		if (Objects.equals(
+				portletDisplay.getPortletName(),
+				PortletProviderUtil.getPortletId(
+					PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
+					PortletProvider.Action.VIEW))) {
 
-		if (portletId.equals(portletDisplay.getPortletName())) {
 			return false;
 		}
 

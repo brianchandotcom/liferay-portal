@@ -82,7 +82,7 @@ IGConfigurationDisplayContext igConfigurationDisplayContext = (IGConfigurationDi
 					inputName="preferences--rootFolderId--"
 					modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
 					resourceName="<%= igConfigurationDisplayContext.getRootFolderName() %>"
-					resourceValue="<%= igConfigurationDisplayContext.getRootFolderId() %>"
+					resourceValue="<%= String.valueOf(igConfigurationDisplayContext.getRootFolderId()) %>"
 					selectEventName="folderSelected"
 					selectResourceURL="<%= igConfigurationDisplayContext.getSelectRootFolderURL() %>"
 					showRemoveButton="<%= true %>"

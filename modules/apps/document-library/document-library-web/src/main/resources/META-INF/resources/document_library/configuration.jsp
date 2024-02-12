@@ -96,7 +96,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				inputName="preferences--rootFolderId--"
 				modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
 				resourceName="<%= dlAdminDisplayContext.getRootFolderName() %>"
-				resourceValue="<%= dlAdminDisplayContext.getRootFolderId() %>"
+				resourceValue="<%= String.valueOf(dlAdminDisplayContext.getRootFolderId()) %>"
 				selectEventName="folderSelected"
 				selectResourceURL="<%= dlAdminDisplayContext.getSelectRootFolderURL() %>"
 				showRemoveButton="<%= true %>"

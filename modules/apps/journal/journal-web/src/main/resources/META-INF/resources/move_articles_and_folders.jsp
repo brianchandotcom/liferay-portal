@@ -157,7 +157,7 @@ JournalMoveEntriesDisplayContext journalMoveEntriesDisplayContext = new JournalM
 				inputName="newFolderId"
 				modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
 				resourceName="<%= journalMoveEntriesDisplayContext.getNewFolderName() %>"
-				resourceValue="<%= journalMoveEntriesDisplayContext.getNewFolderId() %>"
+				resourceValue="<%= String.valueOf(journalMoveEntriesDisplayContext.getNewFolderId()) %>"
 				selectEventName="selectFolder"
 				selectResourceURL='<%=
 					PortletURLBuilder.createRenderURL(

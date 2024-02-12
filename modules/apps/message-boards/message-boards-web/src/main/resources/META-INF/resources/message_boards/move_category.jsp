@@ -62,7 +62,7 @@ if (portletTitleBasedNavigation) {
 						inputName="parentCategoryId"
 						modalTitle='<%= LanguageUtil.format(request, "select-x", "category") %>'
 						resourceName="<%= parentCategoryName %>"
-						resourceValue="<%= parentCategoryId %>"
+						resourceValue="<%= String.valueOf(parentCategoryId) %>"
 						selectEventName="selectCategory"
 						selectResourceURL='<%=
 							PortletURLBuilder.createRenderURL(

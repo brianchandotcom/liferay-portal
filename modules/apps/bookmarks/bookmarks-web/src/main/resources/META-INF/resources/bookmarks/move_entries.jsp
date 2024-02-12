@@ -250,7 +250,7 @@ if (portletTitleBasedNavigation) {
 						inputName="newFolderId"
 						modalTitle='<%= LanguageUtil.get(request, "select-folder") %>'
 						resourceName="<%= folderName %>"
-						resourceValue="<%= newFolderId %>"
+						resourceValue="<%= String.valueOf(newFolderId) %>"
 						selectEventName="selectFolder"
 						selectResourceURL='<%=
 							PortletURLBuilder.createRenderURL(

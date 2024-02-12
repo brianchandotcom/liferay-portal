@@ -1,5 +1,24 @@
 #!/bin/bash
 
+readonly LIFERAY_LEARN_COMMERCE_DOCKER_IMAGE_TOKEN=\\[\$LIFERAY_LEARN_COMMERCE_DOCKER_IMAGE\$\\]
+readonly LIFERAY_LEARN_COMMERCE_DOCKER_IMAGE_VALUE=liferay\\/commerce\\:2.0.5
+readonly LIFERAY_LEARN_COMMERCE_GIT_TAG_TOKEN=\\[\$LIFERAY_LEARN_COMMERCE_GIT_TAG\$\\]
+readonly LIFERAY_LEARN_COMMERCE_GIT_TAG_VALUE=2.0.5
+readonly LIFERAY_LEARN_COMMERCE_WORKSPACE_TOKEN=
+readonly LIFERAY_LEARN_DXP_DOCKER_IMAGE_TOKEN=\\[\$LIFERAY_LEARN_DXP_DOCKER_IMAGE\$\\]
+readonly LIFERAY_LEARN_DXP_DOCKER_IMAGE_VALUE=liferay\\/dxp\\:2023.q4.0
+readonly LIFERAY_LEARN_DXP_WORKSPACE_TOKEN=dxp-7.4-u102
+readonly LIFERAY_LEARN_PORTAL_DOC_FILE_NAME=liferay-ce-portal-doc-7.4.3.102-ga102-20231109165213885.zip
+readonly LIFERAY_LEARN_PORTAL_DOCKER_IMAGE_TOKEN=\\[\$LIFERAY_LEARN_PORTAL_DOCKER_IMAGE\$\\]
+readonly LIFERAY_LEARN_PORTAL_DOCKER_IMAGE_VALUE=liferay\\/portal\\:7.4.3.102-ga102
+readonly LIFERAY_LEARN_PORTAL_GIT_TAG_TOKEN=\\[\$LIFERAY_LEARN_PORTAL_GIT_TAG\$\\]
+readonly LIFERAY_LEARN_PORTAL_GIT_TAG_VALUE=7.4.3.102-ga102
+readonly LIFERAY_LEARN_PORTAL_WORKSPACE_TOKEN=\\[\$LIFERAY_LEARN_PORTAL_WORKSPACE\$\\]
+readonly LIFERAY_LEARN_PORTAL_WORKSPACE_TOKEN_VALUE=portal-7.4-ga102
+readonly LIFERAY_LEARN_YOUTUBE_BEGIN_HTML='\<iframe allow\="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder\="0" height\="315" src\="'
+readonly LIFERAY_LEARN_YOUTUBE_END_HTML='" title\="YouTube video player" width\="560"\>\<\/iframe\>'
+readonly LIFERAY_LEARN_YOUTUBE_URL_TOKEN=\\[\$LIFERAY_LEARN_YOUTUBE_URL\$\\]
+
 function clone_repository {
 	eval $(ssh-agent -s)
 
@@ -37,7 +56,132 @@ function copy_images {
 	# Include must come before exclude.
 	#
 
-	rsync --include="images/*" --include="*/" --exclude="*" --prune-empty-dirs --recursive ~/liferay-learn/docs/ /public_html/images
+	rsync --include="images/*" --include="*/" --exclude="*" --prune-empty-dirs --recursive ${LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR}/ /public_html/images
+}
+
+function copy_template {
+	local zip_dir_name_pattern="liferay-*.zip"
+
+	if [ -n "${1}" ] && [ "${1}" != "prod" ]
+	then
+		zip_dir_name_pattern="liferay-${1}.zip"
+	fi
+
+	for zip_dir_name in `find . -name ${zip_dir_name_pattern} -type d`
+	do
+		local gradle_build_file_name="$(echo $(find ${zip_dir_name} -name build.gradle -print) | head -n1)"
+
+		if [ -n "${gradle_build_file_name}" ]
+		then
+			cp -fr _template/java/* ${zip_dir_name}
+
+			if [ ! $(git ls-files ${zip_dir_name}/gradle.properties) ]
+			then
+				if [ -n "$(grep release.dxp.api $(echo ${gradle_build_file_name}))" ]
+				then
+					echo -ne "liferay.workspace.product=${LIFERAY_LEARN_DXP_WORKSPACE_TOKEN}" > ${zip_dir_name}/gradle.properties
+				else
+					echo -ne "liferay.workspace.product=${LIFERAY_LEARN_PORTAL_WORKSPACE_TOKEN_VALUE}" > ${zip_dir_name}/gradle.properties
+				fi
+			fi
+
+			pushd ${zip_dir_name}
+
+			if [[ $(find . -name rest-config.yaml) ]]
+			then
+				./gradlew buildRest
+			fi
+
+			if [[ $(find . -name service.xml) ]]
+			then
+				./gradlew buildService
+			fi
+
+			./gradlew classes formatSource
+
+			if [ "${1}" == "prod" ]
+			then
+				git clean -d -e "gradle.properties" -fx .
+
+				cp -fr $(git rev-parse --show-toplevel)/docs/_template/java/* .
+			fi
+
+			popd
+		fi
+
+		local package_json_file_name="$(echo $(find ${zip_dir_name} -name package.json -print) | head -n1)"
+
+		if [ -n "${package_json_file_name}" ]
+		then
+			cp -fr _template/js/* ${zip_dir_name}
+		fi
+
+		if [ -z "${gradle_build_file_name}" ] && [ -z "${package_json_file_name}" ]
+		then
+			pushd $(git rev-parse --show-toplevel)
+
+			./gradlew formatSource -DformatSource.source.base.dir=./docs/${zip_dir_name}
+
+			popd
+		fi
+	done
+}
+
+function download_nexus_jar {
+	group="com.liferay"
+
+	if [[ ${1} == *"headless.commerce"* ]]
+	then
+		group="com.liferay.commerce"
+	fi
+
+	curl -L "https://repository-cdn.liferay.com/nexus/service/local/artifact/maven/redirect?a=${1}&g=${group}&r=liferay-public-releases&v=LATEST" -o $(ls -d liferay*.zip | head -n1)/java/${1}.jar
+}
+
+function generate_custom_element {
+	git clean -dfx .
+
+	mkdir liferay-${1}.zip
+
+	cp $(git rev-parse --show-toplevel)/docs/_template/js/setup_tutorial.sh ./liferay-${1}.zip
+
+	cd liferay-${1}.zip
+
+	curl -Ls https://github.com/liferay/liferay-portal/raw/master/tools/create_custom_element.sh | bash -s ${1}-custom-element react
+
+	if [ -e ../liferay-${1}-overlay ]
+	then
+
+		# TODO Prettify package.json (overlay and merged)
+
+		rm -fr ./${1}-custom-element/src
+
+		if [ -e ../liferay-${1}-overlay/src ]
+		then
+			cp -r ../liferay-${1}-overlay/src ${1}-custom-element
+		fi
+
+		if [ -e ../liferay-${1}-overlay/package.json ]
+		then
+			jq -s '.[0] * .[1]' ../liferay-${1}-overlay/package.json ./${1}-custom-element/package.json > package.json
+
+			rm -f ./${1}-custom-element/package.json
+
+			mv package.json ./${1}-custom-element/package.json
+
+			cd ${1}-custom-element
+
+			rm -fr node_modules
+
+			yarn install && yarn build
+
+			rm -fr node_modules
+
+			cd ..
+		fi
+	fi
+
+	cd ..
 }
 
 function generate_zip_files {
@@ -46,7 +190,7 @@ function generate_zip_files {
 		return
 	fi
 
-	pushd ~/liferay-learn/docs > /dev/null
+	pushd ${LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR} > /dev/null
 
 	for zip_dir_name in $(find * -name \*.zip -type d)
 	do
@@ -94,7 +238,7 @@ function get_reference_docs {
 
 	rm -f liferay-ce-portal-doc.zip
 
-	local apps_markdown_file_name=~/liferay-learn/docs/reference/latest/en/dxp/apps.md
+	local apps_markdown_file_name=${LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR}/reference/latest/en/dxp/apps.md
 
 	echo "---" > ${apps_markdown_file_name}
 	echo "uuid: ba71e6fa-d76f-42ec-b3bb-c54cebae6156" >> ${apps_markdown_file_name}
@@ -130,6 +274,8 @@ function get_reference_docs {
 
 function main {
 	clone_repository
+
+	copy_template
 
 	update_examples
 
@@ -167,9 +313,18 @@ function prepare_import {
 }
 
 function replace_tokens {
-	pushd ~/liferay-learn/docs
+	pushd ${LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR}
 
-	./replace_tokens.sh
+	for md_file_name in $(find . -name "*.md" -type f)
+	do
+		sed -i "s/${LIFERAY_LEARN_COMMERCE_DOCKER_IMAGE_TOKEN}/${LIFERAY_LEARN_COMMERCE_DOCKER_IMAGE_VALUE}/g" "${md_file_name}"
+		sed -i "s/${LIFERAY_LEARN_COMMERCE_GIT_TAG_TOKEN}/${LIFERAY_LEARN_COMMERCE_GIT_TAG_VALUE}/g" "${md_file_name}"
+		sed -i "s/${LIFERAY_LEARN_DXP_DOCKER_IMAGE_TOKEN}/${LIFERAY_LEARN_DXP_DOCKER_IMAGE_VALUE}/g" "${md_file_name}"
+		sed -i "s/${LIFERAY_LEARN_PORTAL_DOCKER_IMAGE_TOKEN}/${LIFERAY_LEARN_PORTAL_DOCKER_IMAGE_VALUE}/g" "${md_file_name}"
+		sed -i "s/${LIFERAY_LEARN_PORTAL_GIT_TAG_TOKEN}/${LIFERAY_LEARN_PORTAL_GIT_TAG_VALUE}/g" "${md_file_name}"
+		sed -i "s/${LIFERAY_LEARN_PORTAL_WORKSPACE_TOKEN}/${LIFERAY_LEARN_PORTAL_WORKSPACE_TOKEN_VALUE}/g" "${md_file_name}"
+		sed -i "s/\(${LIFERAY_LEARN_YOUTUBE_URL_TOKEN}\=\)\(\https:\/\/www.youtube.com\/embed\/.*\)/${LIFERAY_LEARN_YOUTUBE_BEGIN_HTML}\2${LIFERAY_LEARN_YOUTUBE_END_HTML}/" "${md_file_name}"
+	done
 
 	popd
 }
@@ -200,13 +355,22 @@ function update_examples {
 	export JAVA_HOME=/usr/lib/jvm/zulu-8-amd64
 	export PATH=${JAVA_HOME}/bin:${PATH}
 
-	source ~/liferay-learn/_common.sh
-
 	java -version
 
-	pushd ~/liferay-learn/docs
+	pushd ${LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR}
 
-	./update_examples.sh prod 2> ~/update_examples.err
+	function update {
+		for update_example_script_name in `find . -name "update_example.sh" -type f`
+		do
+			pushd $(dirname "${update_example_script_name}")
+
+			./$(basename "${update_example_script_name}")
+
+			popd
+		done
+	}
+
+	update 2> ~/update_examples.err
 
 	popd
 

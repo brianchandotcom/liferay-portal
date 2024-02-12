@@ -33,7 +33,6 @@ import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +43,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
-
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch.indices.CreateIndexRequest;
 import org.opensearch.client.opensearch.indices.DeleteIndexRequest;
@@ -101,7 +98,6 @@ public class OpenSearchSearchEngineAdapterSnapshotRequestTest
 		_deleteRepository(_REPOSITORY_NAME);
 	}
 
-	@Ignore
 	@Test
 	public void testCreateSnapshot() {
 		String snapshotName = "test_create_snapshot";
@@ -175,7 +171,6 @@ public class OpenSearchSearchEngineAdapterSnapshotRequestTest
 		_deleteRepository(repositoryName);
 	}
 
-	@Ignore
 	@Test
 	public void testDeleteSnapshot() throws Exception {
 		String snapshotName = "test_delete_snapshot";
@@ -232,7 +227,6 @@ public class OpenSearchSearchEngineAdapterSnapshotRequestTest
 			snapshotRepositoryDetails.getType());
 	}
 
-	@Ignore
 	@Test
 	public void testGetSnapshots() {
 		String snapshotName = "test_get_snapshots";

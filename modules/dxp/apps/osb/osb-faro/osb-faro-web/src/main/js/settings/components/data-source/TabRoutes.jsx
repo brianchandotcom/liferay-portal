@@ -1,6 +1,7 @@
 import BundleRouter from 'route-middleware/BundleRouter';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
+import RouteNotFound from 'shared/components/RouteNotFound';
 import {PropTypes} from 'prop-types';
 import {Switch} from 'react-router-dom';
 
@@ -31,6 +32,8 @@ export default class TabRoutes extends React.Component {
 						path={path}
 					/>
 				))}
+
+				<RouteNotFound />
 			</Switch>
 		);
 	}

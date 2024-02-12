@@ -226,8 +226,6 @@ public class RESTBuilder {
 				continue;
 			}
 
-			context.put("openApiYamlFile", openAPIYAMLFile);
-
 			OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 			Map<String, Schema> allSchemas = OpenAPIUtil.getAllSchemas(

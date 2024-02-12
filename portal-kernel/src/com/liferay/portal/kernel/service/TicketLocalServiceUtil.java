@@ -134,12 +134,6 @@ public class TicketLocalServiceUtil {
 		getService().deleteTickets(companyId, className, classPK);
 	}
 
-	public static void deleteTickets(
-		long companyId, String className, long classPK, int type) {
-
-		getService().deleteTickets(companyId, className, classPK, type);
-	}
-
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}

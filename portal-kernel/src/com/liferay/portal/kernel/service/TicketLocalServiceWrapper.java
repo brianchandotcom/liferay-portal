@@ -138,13 +138,6 @@ public class TicketLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteTickets(
-		long companyId, String className, long classPK, int type) {
-
-		_ticketLocalService.deleteTickets(companyId, className, classPK, type);
-	}
-
-	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _ticketLocalService.dslQuery(dslQuery);
 	}

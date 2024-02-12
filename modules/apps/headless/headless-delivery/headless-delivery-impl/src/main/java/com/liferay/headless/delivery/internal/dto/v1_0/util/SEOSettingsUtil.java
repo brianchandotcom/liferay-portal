@@ -96,10 +96,13 @@ public class SEOSettingsUtil {
 			"sitemap-changefreq");
 		String siteMapInclude = unicodeProperties.getProperty(
 			"sitemap-include");
+		String siteMapIncludeChildSitePages = unicodeProperties.getProperty(
+			"sitemap-include-child-layouts");
 		String siteMapPriority = unicodeProperties.getProperty(
 			"sitemap-priority");
 
 		if ((siteMapChangeFreq == null) && (siteMapInclude == null) &&
+			(siteMapIncludeChildSitePages == null) &&
 			(siteMapPriority == null)) {
 
 			return null;
@@ -128,6 +131,23 @@ public class SEOSettingsUtil {
 						}
 
 						if (siteMapInclude.equals("1")) {
+							return true;
+						}
+
+						return null;
+					});
+
+				setIncludeChildSitePages(
+					() -> {
+						if (siteMapIncludeChildSitePages == null) {
+							return null;
+						}
+
+						if (siteMapIncludeChildSitePages.equals("false")) {
+							return false;
+						}
+
+						if (siteMapIncludeChildSitePages.equals("true")) {
 							return true;
 						}
 

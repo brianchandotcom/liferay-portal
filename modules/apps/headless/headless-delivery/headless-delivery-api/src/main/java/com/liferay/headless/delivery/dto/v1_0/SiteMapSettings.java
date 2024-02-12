@@ -158,6 +158,52 @@ public class SiteMapSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _includeSupplier;
 
+	@Schema(
+		description = "Whether search engines should crawl and index the child pages."
+	)
+	public Boolean getIncludeChildSitePages() {
+		if (_includeChildSitePagesSupplier != null) {
+			includeChildSitePages = _includeChildSitePagesSupplier.get();
+
+			_includeChildSitePagesSupplier = null;
+		}
+
+		return includeChildSitePages;
+	}
+
+	public void setIncludeChildSitePages(Boolean includeChildSitePages) {
+		this.includeChildSitePages = includeChildSitePages;
+
+		_includeChildSitePagesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setIncludeChildSitePages(
+		UnsafeSupplier<Boolean, Exception>
+			includeChildSitePagesUnsafeSupplier) {
+
+		_includeChildSitePagesSupplier = () -> {
+			try {
+				return includeChildSitePagesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Whether search engines should crawl and index the child pages."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean includeChildSitePages;
+
+	@JsonIgnore
+	private Supplier<Boolean> _includeChildSitePagesSupplier;
+
 	@DecimalMax("1")
 	@DecimalMin("0")
 	@Schema(
@@ -258,6 +304,18 @@ public class SiteMapSettings implements Serializable {
 			sb.append("\"include\": ");
 
 			sb.append(include);
+		}
+
+		Boolean includeChildSitePages = getIncludeChildSitePages();
+
+		if (includeChildSitePages != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"includeChildSitePages\": ");
+
+			sb.append(includeChildSitePages);
 		}
 
 		Double pagePriority = getPagePriority();

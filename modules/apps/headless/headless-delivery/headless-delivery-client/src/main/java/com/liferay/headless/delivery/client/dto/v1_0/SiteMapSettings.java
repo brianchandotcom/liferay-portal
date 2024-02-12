@@ -76,6 +76,28 @@ public class SiteMapSettings implements Cloneable, Serializable {
 
 	protected Boolean include;
 
+	public Boolean getIncludeChildSitePages() {
+		return includeChildSitePages;
+	}
+
+	public void setIncludeChildSitePages(Boolean includeChildSitePages) {
+		this.includeChildSitePages = includeChildSitePages;
+	}
+
+	public void setIncludeChildSitePages(
+		UnsafeSupplier<Boolean, Exception>
+			includeChildSitePagesUnsafeSupplier) {
+
+		try {
+			includeChildSitePages = includeChildSitePagesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean includeChildSitePages;
+
 	public Double getPagePriority() {
 		return pagePriority;
 	}

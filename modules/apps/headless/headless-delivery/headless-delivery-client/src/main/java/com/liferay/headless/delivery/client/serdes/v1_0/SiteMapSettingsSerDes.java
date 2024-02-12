@@ -70,6 +70,16 @@ public class SiteMapSettingsSerDes {
 			sb.append(siteMapSettings.getInclude());
 		}
 
+		if (siteMapSettings.getIncludeChildSitePages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"includeChildSitePages\": ");
+
+			sb.append(siteMapSettings.getIncludeChildSitePages());
+		}
+
 		if (siteMapSettings.getPagePriority() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -115,6 +125,15 @@ public class SiteMapSettingsSerDes {
 			map.put("include", String.valueOf(siteMapSettings.getInclude()));
 		}
 
+		if (siteMapSettings.getIncludeChildSitePages() == null) {
+			map.put("includeChildSitePages", null);
+		}
+		else {
+			map.put(
+				"includeChildSitePages",
+				String.valueOf(siteMapSettings.getIncludeChildSitePages()));
+		}
+
 		if (siteMapSettings.getPagePriority() == null) {
 			map.put("pagePriority", null);
 		}
@@ -155,6 +174,14 @@ public class SiteMapSettingsSerDes {
 			else if (Objects.equals(jsonParserFieldName, "include")) {
 				if (jsonParserFieldValue != null) {
 					siteMapSettings.setInclude((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "includeChildSitePages")) {
+
+				if (jsonParserFieldValue != null) {
+					siteMapSettings.setIncludeChildSitePages(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "pagePriority")) {

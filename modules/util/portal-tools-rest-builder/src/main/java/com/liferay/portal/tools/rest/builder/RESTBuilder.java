@@ -371,7 +371,7 @@ public class RESTBuilder {
 			}
 
 			if (Validator.isNotNull(_configYAML.getClientDir())) {
-				_invokeJSClientGenerator(openAPIYAMLFile, openAPIYAML);
+				_invokeJSClientGenerator(openAPIYAML, openAPIYAMLFile);
 			}
 		}
 
@@ -1856,7 +1856,7 @@ public class RESTBuilder {
 	}
 
 	private void _invokeJSClientGenerator(
-			File openApiYamlFile, OpenAPIYAML openAPIYAML)
+			OpenAPIYAML openAPIYAML, File openApiYamlFile)
 		throws Exception {
 
 		String baseClientDir =

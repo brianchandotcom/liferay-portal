@@ -23,7 +23,7 @@ String warningMessage = (String)request.getAttribute("liferay-frontend:resource-
 	<span aria-hidden="true" class="loading-animation"></span>
 
 	<react:component
-		module="resource_selector/ResourceSelector"
+		module="{ResourceSelector} from frontend-taglib"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"inputLabel", inputLabel

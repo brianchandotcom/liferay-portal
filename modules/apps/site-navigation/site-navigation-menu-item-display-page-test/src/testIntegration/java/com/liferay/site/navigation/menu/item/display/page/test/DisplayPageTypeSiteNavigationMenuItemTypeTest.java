@@ -81,7 +81,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Jürgen Kappler
  */
 @RunWith(Arquillian.class)
-public class SiteNavigationMenuItemDisplayPageTest {
+public class DisplayPageTypeSiteNavigationMenuItemTypeTest {
 
 	@ClassRule
 	@Rule

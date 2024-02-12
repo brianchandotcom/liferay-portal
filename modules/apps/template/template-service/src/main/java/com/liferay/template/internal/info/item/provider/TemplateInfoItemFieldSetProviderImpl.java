@@ -127,12 +127,12 @@ public class TemplateInfoItemFieldSetProviderImpl
 			return Collections.emptyList();
 		}
 
+		List<Long> groupIds = new ArrayList<>();
+
 		long ddmStructureKey = GetterUtil.getLong(infoItemFormVariationKey);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			ddmStructureKey);
-
-		List<Long> groupIds = new ArrayList<>();
 
 		if (ddmStructure != null) {
 			groupIds.add(ddmStructure.getGroupId());

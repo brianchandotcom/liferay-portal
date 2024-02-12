@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {HeadlessDeliveryClient} from '@liferay/headless-delivery-client-js';
+import {HeadlessSiteClient} from '@liferay/headless-site-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {headlessClientsTest} from '../../fixtures/headlessClientsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomId from '../../utils/getRandomId';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
@@ -15,17 +17,20 @@ import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
+	}),
+	headlessClientsTest({
+		headlessDeliveryClient: HeadlessDeliveryClient,
+		headlessSiteClient: HeadlessSiteClient,
 	}),
 	loginTest,
 	pageEditorPagesTest
 );
 
 test('View Undo interaction state is cleared after refreshing the page', async ({
-	apiHelpers,
+	headlessClients: {headlessDeliveryClient, headlessSiteClient},
 	page,
 	pageEditorPage,
 }) => {
@@ -33,7 +38,9 @@ test('View Undo interaction state is cleared after refreshing the page', async (
 
 	// Create a site
 
-	const site = await apiHelpers.headlessSite.createSite(getRandomId());
+	const site = await headlessSiteClient.site.postSite({
+		requestBody: {name: getRandomId()},
+	});
 
 	// Create a page with a Heading fragment
 
@@ -44,11 +51,13 @@ test('View Undo interaction state is cleared after refreshing the page', async (
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomId(),
-		getPageDefinition([headingFragment])
-	);
+	const layout = await headlessDeliveryClient.sitePage.postSiteSitePage({
+		requestBody: {
+			pageDefinition: getPageDefinition([headingFragment]),
+			title: getRandomId(),
+		},
+		siteId: site.id,
+	});
 
 	// Go to edit mode of page
 
@@ -81,11 +90,11 @@ test('View Undo interaction state is cleared after refreshing the page', async (
 
 	// Delete the site
 
-	await apiHelpers.headlessSite.deleteSite(site.id);
+	await headlessSiteClient.site.deleteSite({siteId: site.id});
 });
 
 test('Undo and Redo buttons work as expected', async ({
-	apiHelpers,
+	headlessClients: {headlessDeliveryClient, headlessSiteClient},
 	page,
 	pageEditorPage,
 }) => {
@@ -93,7 +102,9 @@ test('Undo and Redo buttons work as expected', async ({
 
 	// Create a site
 
-	const site = await apiHelpers.headlessSite.createSite(getRandomId());
+	const site = await headlessSiteClient.site.postSite({
+		requestBody: {name: getRandomId()},
+	});
 
 	// Create a page with a Tabs fragment
 
@@ -104,11 +115,13 @@ test('Undo and Redo buttons work as expected', async ({
 		'BASIC_COMPONENT-tabs'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomId(),
-		getPageDefinition([fragmentDefinition])
-	);
+	const layout = await headlessDeliveryClient.sitePage.postSiteSitePage({
+		requestBody: {
+			pageDefinition: getPageDefinition([fragmentDefinition]),
+			title: getRandomId(),
+		},
+		siteId: site.id,
+	});
 
 	const tabsFragment = pageEditorPage.getFragment(tabsId);
 
@@ -163,11 +176,11 @@ test('Undo and Redo buttons work as expected', async ({
 
 	// Delete the site
 
-	await apiHelpers.headlessSite.deleteSite(site.id);
+	await headlessSiteClient.site.deleteSite({siteId: site.id});
 });
 
 test('Undo history works as expected', async ({
-	apiHelpers,
+	headlessClients: {headlessDeliveryClient, headlessSiteClient},
 	page,
 	pageEditorPage,
 }) => {
@@ -175,7 +188,9 @@ test('Undo history works as expected', async ({
 
 	// Create a site
 
-	const site = await apiHelpers.headlessSite.createSite(getRandomId());
+	const site = await headlessSiteClient.site.postSite({
+		requestBody: {name: getRandomId()},
+	});
 
 	// Create a page with a Heading fragment
 
@@ -186,11 +201,13 @@ test('Undo history works as expected', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomId(),
-		getPageDefinition([fragmentDefinition])
-	);
+	const layout = await headlessDeliveryClient.sitePage.postSiteSitePage({
+		requestBody: {
+			pageDefinition: getPageDefinition([fragmentDefinition]),
+			title: getRandomId(),
+		},
+		siteId: site.id,
+	});
 
 	// Go to edit mode of page
 
@@ -263,5 +280,5 @@ test('Undo history works as expected', async ({
 
 	// Delete the site
 
-	await apiHelpers.headlessSite.deleteSite(site.id);
+	await headlessSiteClient.site.deleteSite({siteId: site.id});
 });

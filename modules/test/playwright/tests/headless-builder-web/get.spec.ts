@@ -3,10 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectAdminRestClient} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
+import {headlessClientsTest} from '../../fixtures/headlessClientsTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 
@@ -14,7 +17,11 @@ export const test = mergeTests(
 	apiHelpersTest,
 	loginTest,
 	headlessBuilderPagesTest,
-	headlessDiscoveryPagesTest
+	headlessClientsTest({objectAdminRestClient: ObjectAdminRestClient}),
+	headlessDiscoveryPagesTest,
+	featureFlagsTest({
+		'LPS-178642': true,
+	})
 );
 
 test('can see available path parameter properties of a singleElement endpoint', async ({
@@ -99,43 +106,46 @@ test('can list site scoped endpoint', async ({
 	apiHelpers,
 	applicationPage,
 	headlessBuilderPage,
+	headlessClients: {objectAdminRestClient},
 	page,
 }) => {
 	const studentSiteDefinition =
-		await apiHelpers.objectAdmin.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'site-student-definition',
-			label: {
-				en_US: 'Student',
-			},
-			name: 'Student',
-			objectFields: [
-				{
-					DBType: 'String',
-					businessType: 'Text',
-					externalReferenceCode: 'student-name-field',
-					indexed: true,
-					indexedAsKeyword: false,
-					indexedLanguageId: 'en_US',
-					label: {
-						en_US: 'Student name',
-					},
-					listTypeDefinitionId: 0,
-					name: 'studentName',
-					required: true,
-					state: false,
-					system: false,
-					type: 'String',
+		await objectAdminRestClient.objectDefinition.postObjectDefinition({
+			requestBody: {
+				active: true,
+				externalReferenceCode: 'site-student-definition',
+				label: {
+					en_US: 'Student',
 				},
-			],
-			pluralLabel: {
-				en_US: 'Students',
-			},
-			portlet: true,
-			restContextPath: '/o/c/students',
-			scope: 'site',
-			status: {
-				code: 0,
+				name: 'Student',
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						externalReferenceCode: 'student-name-field',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: 'en_US',
+						label: {
+							en_US: 'Student name',
+						},
+						listTypeDefinitionId: 0,
+						name: 'studentName',
+						required: true,
+						state: false,
+						system: false,
+						type: 'String',
+					},
+				],
+				pluralLabel: {
+					en_US: 'Students',
+				},
+				portlet: true,
+				restContextPath: '/o/c/students',
+				scope: 'site',
+				status: {
+					code: 0,
+				},
 			},
 		});
 
@@ -195,7 +205,7 @@ test('can list site scoped endpoint', async ({
 		'headless-builder/applications',
 		studentApplication.externalReferenceCode
 	);
-	await apiHelpers.objectAdmin.deleteObjectDefinition(
-		studentSiteDefinition.id
-	);
+	await objectAdminRestClient.objectDefinition.deleteObjectDefinition({
+		objectDefinitionId: studentSiteDefinition.id,
+	});
 });

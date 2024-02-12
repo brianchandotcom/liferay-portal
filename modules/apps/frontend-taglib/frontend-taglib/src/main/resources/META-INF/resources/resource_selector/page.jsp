@@ -12,7 +12,9 @@ String inputLabel = (String)request.getAttribute("liferay-frontend:resource-sele
 String inputName = (String)request.getAttribute("liferay-frontend:resource-selector:inputName");
 String modalTitle = (String)request.getAttribute("liferay-frontend:resource-selector:modalTitle");
 String resourceName = (String)request.getAttribute("liferay-frontend:resource-selector:resourceName");
-long resourceValue = (long)request.getAttribute("liferay-frontend:resource-selector:resourceValue");
+String resourceNameKey = (String)request.getAttribute("liferay-frontend:resource-selector:resourceNameKey");
+String resourceValue = (String)request.getAttribute("liferay-frontend:resource-selector:resourceValue");
+String resourceValueKey = (String)request.getAttribute("liferay-frontend:resource-selector:resourceValueKey");
 String selectEventName = (String)request.getAttribute("liferay-frontend:resource-selector:selectEventName");
 String selectResourceURL = (String)request.getAttribute("liferay-frontend:resource-selector:selectResourceURL");
 boolean showRemoveButton = (boolean)request.getAttribute("liferay-frontend:resource-selector:showRemoveButton");
@@ -34,7 +36,11 @@ String warningMessage = (String)request.getAttribute("liferay-frontend:resource-
 			).put(
 				"resourceName", resourceName
 			).put(
+				"resourceNameKey", resourceNameKey
+			).put(
 				"resourceValue", resourceValue
+			).put(
+				"resourceValueKey", resourceValueKey
 			).put(
 				"selectEventName", selectEventName
 			).put(

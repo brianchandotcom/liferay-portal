@@ -32,8 +32,16 @@ public class ResourceSelectorTag extends IncludeTag {
 		return _resourceName;
 	}
 
+	public String getResourceNameKey() {
+		return _resourceNameKey;
+	}
+
 	public long getResourceValue() {
 		return _resourceValue;
+	}
+
+	public String getResourceValueKey() {
+		return _resourceValueKey;
 	}
 
 	public String getSelectEventName() {
@@ -75,8 +83,16 @@ public class ResourceSelectorTag extends IncludeTag {
 		_resourceName = resourceName;
 	}
 
+	public void setResourceNameKey(String resourceNameKey) {
+		_resourceNameKey = resourceNameKey;
+	}
+
 	public void setResourceValue(long resourceValue) {
 		_resourceValue = resourceValue;
+	}
+
+	public void setResourceValueKey(String resourceValueKey) {
+		_resourceValueKey = resourceValueKey;
 	}
 
 	public void setSelectEventName(String selectEventName) {
@@ -103,7 +119,9 @@ public class ResourceSelectorTag extends IncludeTag {
 		_inputName = null;
 		_modalTitle = null;
 		_resourceName = null;
+		_resourceNameKey = null;
 		_resourceValue = 0;
+		_resourceValueKey = null;
 		_selectEventName = null;
 		_selectResourceURL = null;
 		_showRemoveButton = false;
@@ -126,7 +144,13 @@ public class ResourceSelectorTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:resource-selector:resourceName", _resourceName);
 		httpServletRequest.setAttribute(
+			"liferay-frontend:resource-selector:resourceNameKey",
+			_resourceNameKey);
+		httpServletRequest.setAttribute(
 			"liferay-frontend:resource-selector:resourceValue", _resourceValue);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:resource-selector:resourceValueKey",
+			_resourceValueKey);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:resource-selector:selectEventName",
 			_selectEventName);
@@ -147,7 +171,9 @@ public class ResourceSelectorTag extends IncludeTag {
 	private String _inputName;
 	private String _modalTitle;
 	private String _resourceName;
+	private String _resourceNameKey;
 	private long _resourceValue;
+	private String _resourceValueKey;
 	private String _selectEventName;
 	private String _selectResourceURL;
 	private boolean _showRemoveButton;

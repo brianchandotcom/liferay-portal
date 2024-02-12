@@ -648,10 +648,20 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>resourceNameKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>resourceValue</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
+		</attribute>
+		<attribute>
+			<name>resourceValueKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>selectEventName</name>

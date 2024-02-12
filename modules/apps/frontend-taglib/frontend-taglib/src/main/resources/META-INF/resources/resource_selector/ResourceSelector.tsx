@@ -16,7 +16,9 @@ interface IResourceSelectorProps {
 	modalTitle: string;
 	portletNamespace: string;
 	resourceName: string;
+	resourceNameKey: string;
 	resourceValue: string;
+	resourceValueKey: string;
 	selectEventName: string;
 	selectResourceURL: string;
 	showRemoveButton: boolean;
@@ -29,7 +31,9 @@ export default function ResourceSelector({
 	modalTitle,
 	portletNamespace,
 	resourceName: initialResourceName,
+	resourceNameKey = 'resourcename',
 	resourceValue: initialResourceValue,
+	resourceValueKey = 'resourceid',
 	selectEventName,
 	selectResourceURL,
 	showRemoveButton,
@@ -54,8 +58,8 @@ export default function ResourceSelector({
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					setResourceData({
-						resourceName: selectedItem.resourcename,
-						resourceValue: selectedItem.resourceid,
+						resourceName: selectedItem[resourceNameKey],
+						resourceValue: selectedItem[resourceValueKey],
 						showWarning: false,
 					});
 				}

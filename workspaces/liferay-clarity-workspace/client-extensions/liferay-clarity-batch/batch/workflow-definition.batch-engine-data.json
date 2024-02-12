@@ -5,9 +5,9 @@
 			"containsHeaders": "true",
 			"createStrategy": "INSERT",
 			"importStrategy": "ON_ERROR_FAIL",
-			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
-		}
+		},
+		"taskItemDelegateName": "DEFAULT"
 	},
 	"items": [
 		{

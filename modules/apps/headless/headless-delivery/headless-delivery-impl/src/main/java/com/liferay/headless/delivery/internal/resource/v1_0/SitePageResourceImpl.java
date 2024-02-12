@@ -371,6 +371,21 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 							siteMapInclude);
 					}
 
+					Boolean includeChildSitePages =
+						siteMapSettings.getIncludeChildSitePages();
+
+					if (includeChildSitePages != null) {
+						String siteMapIncludeChildSitePages = "false";
+
+						if (includeChildSitePages) {
+							siteMapIncludeChildSitePages = "true";
+						}
+
+						typeSettingsUnicodeProperties.setProperty(
+							"sitemap-include-child-layouts",
+							siteMapIncludeChildSitePages);
+					}
+
 					Double pagePriority = siteMapSettings.getPagePriority();
 
 					if (pagePriority != null) {

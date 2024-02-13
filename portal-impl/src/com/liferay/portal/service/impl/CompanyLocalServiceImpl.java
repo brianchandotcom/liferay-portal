@@ -2278,7 +2278,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			   ArrayUtil.contains(PortalInstances.getCompanyIds(), nextLong)) {
 
 			nextLong = threadLocalRandom.nextLong(
-				(long)Math.pow(10, 15), Long.MAX_VALUE);
+				(long)Math.pow(10, 13), (long)Math.pow(10, 14));
 		}
 
 		return nextLong;

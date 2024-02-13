@@ -52,13 +52,21 @@ export default function List(props: IFDSViewSectionProps) {
 
 			<ClayTable className="mb-0">
 				<ClayTable.Head>
-					<ClayTable.Cell className="list-visualization-mode-label-cell">
-						{Liferay.Language.get('list-element')}
-					</ClayTable.Cell>
+					<ClayTable.Row>
+						<ClayTable.Cell
+							className="list-visualization-mode-label-cell"
+							headingCell
+						>
+							{Liferay.Language.get('list-element')}
+						</ClayTable.Cell>
 
-					<ClayTable.Cell className="list-visualization-mode-value-cell">
-						{Liferay.Language.get('field')}
-					</ClayTable.Cell>
+						<ClayTable.Cell
+							className="list-visualization-mode-value-cell"
+							headingCell
+						>
+							{Liferay.Language.get('field')}
+						</ClayTable.Cell>
+					</ClayTable.Row>
 				</ClayTable.Head>
 
 				<ClayTable.Body>

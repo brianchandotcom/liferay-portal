@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export const applicationERCs = {
-	OAUTH_AGENT_ERC: 'liferay-dlfoldertemplate-oauth-application-user-agent',
-	OAUTH_SERVER_ERC: 'liferay-dlfoldertemplate-oauth-application-server',
+export const applicationExternalReferenceCodes = {
+	OAUTH_AGENT_EXTERNAL_REFERENCE_CODE: 'liferay-dlfoldertemplate-oauth-application-user-agent',
+	OAUTH_SERVER_EXTERNAL_REFERENCE_CODE: 'liferay-dlfoldertemplate-oauth-application-server',
 };
 
 export const applicationSpecificConfigKeys = {

@@ -8,18 +8,18 @@ import cache from 'memory-cache';
 
 import {getConfigByKey, getOAuthConfigByKey} from './config-util.js';
 import {
-	applicationERCs,
+	applicationExternalReferenceCodes,
 	environmentConfigKeys,
 	oauthServerConfigKeys,
 } from './constants.js';
 
 const clientId = getOAuthConfigByKey(
-	applicationERCs.OAUTH_SERVER_ERC,
+	applicationExternalReferenceCodes.OAUTH_SERVER_EXTERNAL_REFERENCE_CODE,
 	oauthServerConfigKeys._OAUTH2_HEADLESS_SERVER_CLIENT_ID
 );
 
 const clientSecret = getOAuthConfigByKey(
-	applicationERCs.OAUTH_SERVER_ERC,
+	applicationExternalReferenceCodes.OAUTH_SERVER_EXTERNAL_REFERENCE_CODE,
 	oauthServerConfigKeys._OAUTH2_HEADLESS_SERVER_CLIENT_SECRET
 );
 
@@ -32,7 +32,7 @@ const lxcDXPServerProtocol = getConfigByKey(
 );
 
 const uri = getOAuthConfigByKey(
-	applicationERCs.OAUTH_SERVER_ERC,
+	applicationExternalReferenceCodes.OAUTH_SERVER_EXTERNAL_REFERENCE_CODE,
 	oauthServerConfigKeys._OAUTH2_TOKEN_URI
 );
 
@@ -73,7 +73,7 @@ export function getServerToken() {
 					})
 					.catch((error) => {
 						console.error(
-							`Error obtaining authorization code`,
+							`Error obtaining authorization code.`,
 							error.response.data
 						);
 

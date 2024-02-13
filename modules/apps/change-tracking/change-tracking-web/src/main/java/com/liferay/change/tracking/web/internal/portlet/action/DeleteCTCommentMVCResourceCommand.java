@@ -6,8 +6,8 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTComment;
 import com.liferay.change.tracking.constants.PublicationRoleConstants;
+import com.liferay.change.tracking.model.CTComment;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Role;

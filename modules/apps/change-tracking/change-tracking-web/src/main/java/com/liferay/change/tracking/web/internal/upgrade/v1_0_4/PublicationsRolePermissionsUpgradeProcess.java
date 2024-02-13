@@ -6,8 +6,8 @@
 package com.liferay.change.tracking.web.internal.upgrade.v1_0_4;
 
 import com.liferay.change.tracking.constants.CTActionKeys;
-import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.constants.PublicationRoleConstants;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;

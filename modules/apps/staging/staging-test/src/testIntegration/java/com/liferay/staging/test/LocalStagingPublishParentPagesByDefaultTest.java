@@ -86,7 +86,7 @@ public class LocalStagingPublishParentPagesByDefaultTest
 			StagingConfiguration.class.getName());
 	}
 
-	// LPD-6808 - AC7
+	// LPD-6808: AC7
 
 	@Test
 	public void testLocalStagingPublishJournalContentWithLayoutHrefLayoutDoesNotExistOnImportSide()
@@ -185,7 +185,7 @@ public class LocalStagingPublishParentPagesByDefaultTest
 		Assert.assertEquals(content, groupArticle.getContent());
 	}
 
-	// LPD-6808 - AC3
+	// LPD-6808: AC3
 
 	@Test
 	public void testStagingWithCheckedConfigurationAndModifiedContentAndExistingParentAndChildPagesOnLive()
@@ -288,7 +288,7 @@ public class LocalStagingPublishParentPagesByDefaultTest
 			));
 	}
 
-	// LPD-6808 - AC4
+	// LPD-6808: AC4
 
 	@Test
 	public void testStagingWithCheckedConfigurationAndModifiedContentAndNonexistingParentAndChildPagesOnLive()

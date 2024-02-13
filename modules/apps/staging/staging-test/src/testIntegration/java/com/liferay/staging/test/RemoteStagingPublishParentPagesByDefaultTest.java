@@ -111,7 +111,7 @@ public class RemoteStagingPublishParentPagesByDefaultTest {
 		}
 	}
 
-	// LPD-6808 - AC8
+	// LPD-6808: AC8
 
 	@Test
 	public void testRemoteStagingPublishJournalContentWithLayoutHrefLayoutDoesNotExistOnImportSide()

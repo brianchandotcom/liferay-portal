@@ -9,7 +9,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -55,7 +54,7 @@ public class SitemapCompanyConfigurationDisplayContext {
 		return _eventName;
 	}
 
-	public String getGroupSelectorURL() throws PortalException {
+	public String getGroupSelectorURL() throws Exception {
 		if (_groupSelectorURL != null) {
 			return _groupSelectorURL;
 		}
@@ -67,7 +66,12 @@ public class SitemapCompanyConfigurationDisplayContext {
 			new GroupItemSelectorReturnType());
 
 		siteItemSelectorCriterion.setAllowNavigation(false);
-		siteItemSelectorCriterion.setIncludeChildSites(true);
+
+		Group guestGroup = _getGuestGroup();
+
+		siteItemSelectorCriterion.setExcludedGroupIds(
+			new long[] {guestGroup.getGroupId()});
+
 		siteItemSelectorCriterion.setIncludeCompany(false);
 		siteItemSelectorCriterion.setIncludeParentSites(true);
 		siteItemSelectorCriterion.setIncludeRecentSites(false);

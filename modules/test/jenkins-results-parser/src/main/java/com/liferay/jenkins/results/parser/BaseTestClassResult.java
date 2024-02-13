@@ -205,7 +205,11 @@ public abstract class BaseTestClassResult implements TestClassResult {
 		sb.append(build.getBuildURL());
 
 		sb.append("testReport/");
-		sb.append(getPackageName());
+
+		String packageName = getPackageName();
+
+		sb.append(packageName.replaceAll("/", "_"));
+
 		sb.append("/");
 		sb.append(getSimpleClassName());
 

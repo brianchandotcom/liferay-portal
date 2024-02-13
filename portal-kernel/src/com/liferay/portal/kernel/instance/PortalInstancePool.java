@@ -75,10 +75,7 @@ public class PortalInstancePool {
 	public static long getDefaultCompanyId() {
 		if (!_portalInstances.isEmpty()) {
 			for (Map.Entry<Long, String> entry : _portalInstances.entrySet()) {
-				if (Objects.equals(
-						PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID),
-						entry.getValue())) {
-
+				if (Objects.equals(entry.getValue(), _COMPANY_DEFAULT_WEB_ID)) {
 					return entry.getKey();
 				}
 			}
@@ -181,7 +178,7 @@ public class PortalInstancePool {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company where webId = '" +
-					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID) + "'");
+					_COMPANY_DEFAULT_WEB_ID + "'");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
@@ -226,6 +223,9 @@ public class PortalInstancePool {
 
 		return webIds.toArray(new String[0]);
 	}
+
+	private static final String _COMPANY_DEFAULT_WEB_ID = PropsUtil.get(
+		PropsKeys.COMPANY_DEFAULT_WEB_ID);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstancePool.class);

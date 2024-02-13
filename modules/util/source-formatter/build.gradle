@@ -37,6 +37,7 @@ dependencies {
 	api group: "xerces", name: "xercesImpl", version: "2.12.2"
 
 	compileInclude group: "com.liferay", name: "com.liferay.petra.function", version: "5.5.0"
+	compileInclude group: "com.liferay", name: "com.liferay.petra.io", version: "5.0.6"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"

@@ -739,29 +739,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			showAssetVocabularyLevel);
 	}
 
-	private void _assertAssetCategorySiteNavigationMenuItem(
-		AssetCategory assetCategory, Locale locale,
-		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem) {
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				assetCategorySiteNavigationMenuItem.getTypeSettings()
-			).build();
-
-		Assert.assertEquals(
-			"asset-category", typeSettingsUnicodeProperties.get("type"));
-		Assert.assertEquals(
-			assetCategory.getCategoryId(),
-			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")));
-		Assert.assertEquals(
-			_assetVocabulary.getVocabularyId(),
-			GetterUtil.getLong(
-				typeSettingsUnicodeProperties.get("assetVocabularyId")));
-		Assert.assertEquals(
-			assetCategory.getTitle(locale),
-			typeSettingsUnicodeProperties.get("title"));
-	}
-
 	private void _assertGetChildrenSiteNavigationMenuItems(
 			List<AssetCategory> assetCategories, Locale locale,
 			SiteNavigationMenuItem siteNavigationMenuItem,
@@ -830,8 +807,23 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem =
 			childrenSiteNavigationMenuItems.get(0);
 
-		_assertAssetCategorySiteNavigationMenuItem(
-			assetCategory, locale, assetCategorySiteNavigationMenuItem);
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				assetCategorySiteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		Assert.assertEquals(
+			"asset-category", typeSettingsUnicodeProperties.get("type"));
+		Assert.assertEquals(
+			assetCategory.getCategoryId(),
+			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")));
+		Assert.assertEquals(
+			_assetVocabulary.getVocabularyId(),
+			GetterUtil.getLong(
+				typeSettingsUnicodeProperties.get("assetVocabularyId")));
+		Assert.assertEquals(
+			assetCategory.getTitle(locale),
+			typeSettingsUnicodeProperties.get("title"));
 
 		return assetCategorySiteNavigationMenuItem;
 	}

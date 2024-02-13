@@ -10,12 +10,14 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,6 +37,7 @@ import com.liferay.translation.service.TranslationEntryService;
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -63,8 +67,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-
 			long segmentsExperienceId = ParamUtil.getLong(
 				actionRequest, "segmentsExperienceId");
 
@@ -87,15 +89,48 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 					infoItemReference.getClassName(),
 					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
+			long modifiedDateTime = ParamUtil.getLong(
+				actionRequest, "modifiedDateTime");
+
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			infoItemIdentifier.setVersion(InfoItemIdentifier.VERSION_LATEST);
+
+			Object infoItem = infoItemObjectProvider.getInfoItem(
+				infoItemIdentifier);
+
+			InfoItemFieldValues sourceInfoItemFieldValues =
+				_getInfoItemFieldValues(className, infoItem);
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-11253") &&
+				(modifiedDateTime > 0)) {
+
+				Object infoItemFieldValue = _getInfoItemFieldValue(
+					"modifiedDate", sourceInfoItemFieldValues);
+
+				if (Validator.isNotNull(infoItemFieldValue)) {
+					int value = DateUtil.compareTo(
+						(Date)infoItemFieldValue, new Date(modifiedDateTime));
+
+					if (value > 0) {
+						SessionErrors.add(
+							actionRequest,
+							"anotherUserHasMadeChangesSinceYouStartedEditing");
+					}
+				}
+			}
+
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
 			InfoItemFieldValues infoItemFieldValues =
 				InfoItemFieldValues.builder(
 				).infoItemReference(
 					infoItemReference
 				).infoFieldValues(
 					_getInfoFieldValues(
-						actionRequest, className,
-						infoItemObjectProvider.getInfoItem(
-							new ClassPKInfoItemIdentifier(classPK)))
+						actionRequest, sourceInfoItemFieldValues, className,
+						infoItem)
 				).build();
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -156,15 +191,13 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private <T> List<InfoFieldValue<Object>> _getInfoFieldValues(
-		ActionRequest actionRequest, String className, T object) {
+		ActionRequest actionRequest, InfoItemFieldValues infoItemFieldValues,
+		String className, T object) {
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
 		Map<String, String[]> infoFieldParameterValues =
 			_getInfoFieldParameterValues(actionRequest);
-
-		InfoItemFieldValues infoItemFieldValues = _getInfoItemFieldValues(
-			className, object);
 
 		for (InfoField<?> infoField : _getInfoFields(className, object)) {
 			String[] infoFieldParameterValue = infoFieldParameterValues.get(
@@ -198,6 +231,19 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return infoFieldValues;
+	}
+
+	private Object _getInfoItemFieldValue(
+		String infoFieldName, InfoItemFieldValues infoItemFieldValues) {
+
+		InfoFieldValue<Object> infoFieldValue =
+			infoItemFieldValues.getInfoFieldValue(infoFieldName);
+
+		if (infoFieldValue == null) {
+			return null;
+		}
+
+		return infoFieldValue.getValue();
 	}
 
 	private <T> InfoItemFieldValues _getInfoItemFieldValues(

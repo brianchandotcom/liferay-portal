@@ -2418,12 +2418,15 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		var key_dmFolderName = ${dmFolderName};
+		var siteName = TestCase.getSiteName();
 
-		if (IsElementPresent(key_breadcrumbName = "Home", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
+		echo("## * siteName: ${siteName}");
+
+		if (IsElementPresent(key_breadcrumbName = ${siteName}, locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
 			AssertClick(
-				key_breadcrumbName = "Home",
+				key_breadcrumbName = ${siteName},
 				locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
-				value1 = "Home");
+				value1 = ${siteName});
 		}
 
 		AssertClick(

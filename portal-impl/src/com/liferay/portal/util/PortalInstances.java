@@ -196,11 +196,11 @@ public class PortalInstances {
 	}
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link PortalInstancePool#getDefaultCompanyIdBySQL()}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link PortalInstancePool#getDefaultCompanyId()}
 	 */
 	@Deprecated
 	public static long getDefaultCompanyIdBySQL() throws SQLException {
-		return PortalInstancePool.getDefaultCompanyIdBySQL();
+		return PortalInstancePool.getDefaultCompanyId();
 	}
 
 	/**

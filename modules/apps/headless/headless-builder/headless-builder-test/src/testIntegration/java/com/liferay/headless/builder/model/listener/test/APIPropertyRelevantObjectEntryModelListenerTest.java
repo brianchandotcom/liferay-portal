@@ -415,27 +415,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"objectFieldERC", _objectField1.getExternalReferenceCode()
-			).put(
-				"r_apiPropertyToAPIProperties_c_apiPropertyId",
-				apiPropertyJSONObject2.getLong("id")
-			).put(
-				"r_apiSchemaToAPIProperties_c_apiSchemaId",
-				apiSchemaJSONObject1.get("id")
-			).toString(),
-			"headless-builder/properties", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"A related API property must belong to the same API schema.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"description", RandomTestUtil.randomString()
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
 				"r_apiPropertyToAPIProperties_c_apiPropertyId",
 				apiPropertyJSONObject1.getLong("id")
 			).put(
@@ -450,6 +429,27 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		Assert.assertEquals(
 			"A record API property must be related to another record API " +
 				"property.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"objectFieldERC", _objectField1.getExternalReferenceCode()
+			).put(
+				"r_apiPropertyToAPIProperties_c_apiPropertyId",
+				apiPropertyJSONObject2.getLong("id")
+			).put(
+				"r_apiSchemaToAPIProperties_c_apiSchemaId",
+				apiSchemaJSONObject1.get("id")
+			).toString(),
+			"headless-builder/properties", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"A related API property must belong to the same API schema.",
 			jsonObject.get("title"));
 
 		String name = RandomTestUtil.randomString();

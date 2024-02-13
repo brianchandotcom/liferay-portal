@@ -170,10 +170,10 @@ public class CompanyThreadLocal {
 		long currentCompanyId = _companyId.get();
 
 		SafeCloseable localeSafeCloseable =
-			LocaleThreadLocal.setWithSafeCloseable(null);
+			LocaleThreadLocal.clearDefaultLocaleWithSafeCloseable();
 
 		SafeCloseable timeZoneSafeCloseable =
-			TimeZoneThreadLocal.setWithSafeCloseable(null);
+			TimeZoneThreadLocal.clearDefaultTimeZoneWithSafeCloseable();
 
 		boolean changed = _setCompanyId(companyId, false);
 

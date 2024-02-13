@@ -42,7 +42,7 @@ public class BatchEngineExportTaskServiceImpl
 			Map<String, Serializable> parameters, String taskItemDelegateName)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
 		return batchEngineExportTaskLocalService.addBatchEngineExportTask(
 			externalReferenceCode, companyId, userId, callbackURL, className,
@@ -59,9 +59,9 @@ public class BatchEngineExportTaskServiceImpl
 			batchEngineExportTaskLocalService.getBatchEngineExportTask(
 				batchEngineExportTaskId);
 
-		_checkCompanyPermissions(batchEngineExportTask.getCompanyId());
+		_checkPermission(batchEngineExportTask.getCompanyId());
 
-		_checkTaskPermissions(batchEngineExportTask);
+		_checkPermission(batchEngineExportTask);
 
 		return batchEngineExportTask;
 	}
@@ -72,14 +72,14 @@ public class BatchEngineExportTaskServiceImpl
 				String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
 		BatchEngineExportTask batchEngineExportTask =
 			batchEngineExportTaskLocalService.
 				getBatchEngineExportTaskByExternalReferenceCode(
 					externalReferenceCode, companyId);
 
-		_checkTaskPermissions(batchEngineExportTask);
+		_checkPermission(batchEngineExportTask);
 
 		return batchEngineExportTask;
 	}
@@ -89,7 +89,7 @@ public class BatchEngineExportTaskServiceImpl
 			long companyId, int start, int end)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
 		return _filterTaskListByPermissions(
 			batchEngineExportTaskLocalService.getBatchEngineExportTasks(
@@ -102,7 +102,7 @@ public class BatchEngineExportTaskServiceImpl
 			OrderByComparator<BatchEngineExportTask> orderByComparator)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
 		return _filterTaskListByPermissions(
 			batchEngineExportTaskPersistence.findByCompanyId(
@@ -113,14 +113,14 @@ public class BatchEngineExportTaskServiceImpl
 	public int getBatchEngineExportTasksCount(long companyId)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
 		return _filterTaskListByPermissions(
 			batchEngineExportTaskPersistence.findByCompanyId(companyId)
 		).size();
 	}
 
-	private void _checkCompanyPermissions(long companyId)
+	private void _checkPermission(long companyId)
 		throws PrincipalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -132,7 +132,7 @@ public class BatchEngineExportTaskServiceImpl
 		}
 	}
 
-	private void _checkTaskPermissions(
+	private void _checkPermission(
 			BatchEngineExportTask batchEngineExportTask)
 		throws PrincipalException {
 

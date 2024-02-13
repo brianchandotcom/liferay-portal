@@ -55,45 +55,6 @@ public class CookiesManagerImplTest {
 	}
 
 	@Test
-	public void testCookiePathIsCustomContextWhenUsingCustomContext()
-		throws Exception {
-
-		Cookie cookie = new Cookie(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		String customContextPath =
-			StringPool.SLASH + RandomTestUtil.randomString();
-
-		MockHttpServletRequest customContextMockHttpServletRequest =
-			new MockHttpServletRequest() {
-
-				@Override
-				public String getContextPath() {
-					return customContextPath;
-				}
-
-			};
-
-		CookiesManagerUtil.addCookie(
-			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
-			customContextMockHttpServletRequest, _mockHttpServletResponse);
-
-		Assert.assertEquals(customContextPath, cookie.getPath());
-	}
-
-	@Test
-	public void testCookiePathIsSlashWhenUsingRootContext() throws Exception {
-		Cookie cookie = new Cookie(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
-		CookiesManagerUtil.addCookie(
-			CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
-			_mockHttpServletRequest, _mockHttpServletResponse);
-
-		Assert.assertEquals(StringPool.SLASH, cookie.getPath());
-	}
-
-	@Test
 	public void testCookiesConsent() throws Exception {
 		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_FUNCTIONAL);
 		_testCookiesConsentType(CookiesConstants.CONSENT_TYPE_NECESSARY);

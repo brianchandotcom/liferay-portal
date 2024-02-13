@@ -20,8 +20,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -70,11 +74,13 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		addDefaultProjectJobProperty(batchName);
 
-		File buildTestBatchFile = new File(
-			portalGitWorkingDirectory.getWorkingDirectory(),
-			"build-test-batch.xml");
-
 		for (String projectName : _projectNames) {
+			List<TestClass> testClasses = _getTestClasses(projectName);
+
+			if (testClasses.isEmpty()) {
+				continue;
+			}
+
 			SegmentTestClassGroup segmentTestClassGroup =
 				TestClassGroupFactory.newSegmentTestClassGroup(this);
 
@@ -93,12 +99,11 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				playwrightSegmentTestClassGroup.addAxisTestClassGroup(
 					axisTestClassGroup);
 
-				TestClass testClass = TestClassFactory.newTestClass(
-					this, buildTestBatchFile, "0");
+				for (TestClass testClass : testClasses) {
+					axisTestClassGroup.addTestClass(testClass);
 
-				axisTestClassGroup.addTestClass(testClass);
-
-				addTestClass(testClass);
+					addTestClass(testClass);
+				}
 
 				addAxisTestClassGroup(axisTestClassGroup);
 
@@ -159,6 +164,136 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		Collections.addAll(_projectNames, projectNames.split("\\s*,\\s*"));
 	}
 
+	private String _callNPMCommand(File baseDir, String npmCommand) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("export PATH=");
+
+		String npmHome = _getPortalProperty("npm.home");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(npmHome)) {
+			sb.append(npmHome);
+			sb.append(":");
+		}
+
+		String nodeHome = _getPortalProperty("node.home");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(nodeHome)) {
+			sb.append(nodeHome);
+			sb.append("/bin:");
+		}
+
+		sb.append("${PATH}\n");
+
+		sb.append(npmCommand);
+
+		File npmScriptFile = new File(baseDir, "npm_script.sh");
+
+		try {
+			JenkinsResultsParserUtil.write(npmScriptFile, sb.toString());
+
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				true, baseDir, 1000 * 60 * 10, sb.toString());
+
+			return JenkinsResultsParserUtil.readInputStream(
+				process.getInputStream());
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(exception);
+		}
+		finally {
+			JenkinsResultsParserUtil.delete(npmScriptFile);
+		}
+	}
+
+	private synchronized JSONObject _getPlaywrightJSONObject() {
+		if (_playwrightJSONObject != null) {
+			return _playwrightJSONObject;
+		}
+
+		File playwrightBaseDir = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(),
+			"modules/test/playwright");
+
+		_callNPMCommand(playwrightBaseDir, "npm install");
+
+		String result = _callNPMCommand(
+			playwrightBaseDir, "npx playwright test --list --reporter=json");
+
+		result = result.replace("Finished executing Bash commands.", "");
+
+		_playwrightJSONObject = new JSONObject(result.trim());
+
+		return _playwrightJSONObject;
+	}
+
+	private String _getPortalProperty(String propertyName) {
+		File workingDirectory = JenkinsResultsParserUtil.getCanonicalFile(
+			portalGitWorkingDirectory.getWorkingDirectory());
+
+		Properties portalProperties = JenkinsResultsParserUtil.getProperties(
+			new File(workingDirectory, "build.properties"),
+			new File(workingDirectory, "app.server.properties"),
+			new File(workingDirectory, "release.properties"),
+			new File(workingDirectory, "test.properties"));
+
+		portalProperties.setProperty(
+			"project.dir", workingDirectory.toString());
+
+		return JenkinsResultsParserUtil.getProperty(
+			portalProperties, propertyName);
+	}
+
+	private List<TestClass> _getTestClasses(String projectName) {
+		List<TestClass> testClasses = new ArrayList<>();
+
+		JSONObject playwrightJSONObject = _getPlaywrightJSONObject();
+
+		JSONObject configJSONObject = playwrightJSONObject.getJSONObject(
+			"config");
+
+		File rootDir = new File(configJSONObject.getString("rootDir"));
+
+		JSONArray suitesJSONArray = playwrightJSONObject.getJSONArray("suites");
+
+		for (int i = 0; i < suitesJSONArray.length(); i++) {
+			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
+
+			JSONArray specsJSONArray = suiteJSONObject.optJSONArray("specs");
+
+			if (specsJSONArray == null) {
+				continue;
+			}
+
+			for (int j = 0; j < specsJSONArray.length(); j++) {
+				JSONObject specJSONObject = specsJSONArray.getJSONObject(j);
+
+				JSONArray testsJSONArray = specJSONObject.optJSONArray("tests");
+
+				if ((testsJSONArray == null) || testsJSONArray.isEmpty()) {
+					continue;
+				}
+
+				JSONObject testJSONObject = testsJSONArray.getJSONObject(0);
+
+				if (!Objects.equals(
+						projectName, testJSONObject.optString("projectName"))) {
+
+					continue;
+				}
+
+				testClasses.add(
+					TestClassFactory.newTestClass(
+						this,
+						new File(rootDir, suiteJSONObject.getString("file")),
+						specJSONObject.getString("title")));
+			}
+		}
+
+		return testClasses;
+	}
+
+	private JSONObject _playwrightJSONObject;
 	private final Set<String> _projectNames = new HashSet<>();
 
 }

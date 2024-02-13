@@ -197,7 +197,8 @@ public class TestClassFactory {
 				return new PlaywrightTestClass(batchTestClassGroup, jsonObject);
 			}
 
-			return new PlaywrightTestClass(batchTestClassGroup, testClassFile);
+			return new PlaywrightTestClass(
+				batchTestClassGroup, testClassFile, testClassMethodName);
 		}
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
 			if (jsonObject != null) {

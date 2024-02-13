@@ -9,7 +9,6 @@ import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
-import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.headless.batch.engine.dto.v1_0.ExportTask;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
@@ -18,6 +17,8 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.InputStream;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -117,7 +118,8 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 	}
 
 	private Response _getExportTaskContent(
-		BatchEngineExportTask batchEngineExportTask) {
+			BatchEngineExportTask batchEngineExportTask)
+		throws Exception {
 
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
 			BatchEngineTaskExecuteStatus.valueOf(
@@ -126,11 +128,13 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 		if (batchEngineTaskExecuteStatus ==
 				BatchEngineTaskExecuteStatus.COMPLETED) {
 
+			InputStream contentInputStream =
+				_batchEngineExportTaskService.openContentInputStream(
+					batchEngineExportTask.getBatchEngineExportTaskId());
+
 			StreamingOutput streamingOutput =
 				outputStream -> StreamUtil.transfer(
-					_batchEngineExportTaskLocalService.openContentInputStream(
-						batchEngineExportTask.getBatchEngineExportTaskId()),
-					outputStream);
+					contentInputStream, outputStream);
 
 			return Response.ok(
 				streamingOutput
@@ -181,10 +185,6 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 
 	@Reference
 	private BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;
-
-	@Reference
-	private BatchEngineExportTaskLocalService
-		_batchEngineExportTaskLocalService;
 
 	@Reference
 	private BatchEngineExportTaskService _batchEngineExportTaskService;

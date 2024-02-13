@@ -234,7 +234,12 @@ public class Main {
 	}
 
 	public void uploadToLiferay() throws Exception {
-		_validateUUIDs();
+		try {
+			_validateUUIDs();
+		}
+		catch (Exception exception) {
+			_error(exception.getMessage());
+		}
 
 		long start = System.currentTimeMillis();
 

@@ -7151,6 +7151,19 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="modules-unit-jdk8" />
 	</target>
 
+	<target name="modules-unit-jdk21_zulu">
+		<get-java-jdk-home type="zulu" version="21" />
+
+		<echo append="true" file="build.${user.name}.properties">
+junit.jvm.override=${java.jdk.home}/bin/java
+junit.jvm.override.version=21</echo>
+
+		<antcall target="modules-unit-jdk8">
+			<param name="junit.jvm.override" value="${java.jdk.home}/bin/java" />
+			<param name="junit.jvm.override.version" value="21" />
+		</antcall>
+	</target>
+
 	<target name="modules-unit-project-templates-jdk8">
 		<antcall target="modules-unit-jdk8">
 			<param name="project.templates.test" value="true" />
@@ -8769,6 +8782,19 @@ ${output.content}</echo>
 
 	<target name="unit-jdk8_stable">
 		<antcall target="unit-jdk8" />
+	</target>
+
+	<target name="unit-jdk21_zulu">
+		<get-java-jdk-home type="zulu" version="21" />
+
+		<echo append="true" file="build.${user.name}.properties">
+junit.jvm.override=${java.jdk.home}/bin/java
+junit.jvm.override.version=21</echo>
+
+		<antcall target="unit-jdk8">
+			<param name="junit.jvm.override" value="${java.jdk.home}/bin/java" />
+			<param name="junit.jvm.override.version" value="21" />
+		</antcall>
 	</target>
 
 	<target name="workspaces-compile-jdk8">

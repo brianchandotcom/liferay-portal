@@ -15,6 +15,9 @@ public class CommerceChannelFDSNames {
 	public static final String CHANNEL =
 		CPPortletKeys.COMMERCE_CHANNELS + "-channel";
 
+	public static final String CHANNEL_COUNTRIES =
+		CPPortletKeys.COMMERCE_CHANNELS + "-countries";
+
 	public static final String CHANNEL_HEALTH_CHECK =
 		CPPortletKeys.COMMERCE_CHANNELS + "-channelHealthCheck";
 

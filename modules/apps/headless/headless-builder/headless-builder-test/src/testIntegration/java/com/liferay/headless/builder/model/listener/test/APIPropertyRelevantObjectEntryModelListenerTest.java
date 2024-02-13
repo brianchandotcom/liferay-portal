@@ -248,7 +248,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 	@FeatureFlags("LPD-10964")
 	@Test
-	public void testAddObjectAPIProperty() throws Exception {
+	public void testAddRecordAPIProperty() throws Exception {
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
@@ -352,7 +352,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A field API property must be related to an object API property.",
+			"A field API property must be related to a record API property.",
 			jsonObject.get("title"));
 
 		JSONObject apiPropertyJSONObject2 = HTTPTestUtil.invokeToJSONObject(
@@ -367,6 +367,47 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				apiSchemaJSONObject2.get("id")
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"objectFieldERC", "APPLICATION_STATUS"
+			).put(
+				"r_apiSchemaToAPIProperties_c_apiSchemaId",
+				apiSchemaJSONObject1.get("id")
+			).put(
+				"type", "record"
+			).toString(),
+			"headless-builder/properties", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"A record API property can not an Object Field ERC value.",
+			jsonObject.get("title"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"objectRelationshipNames", RandomTestUtil.randomString()
+			).put(
+				"r_apiSchemaToAPIProperties_c_apiSchemaId",
+				apiSchemaJSONObject1.get("id")
+			).put(
+				"type", "record"
+			).toString(),
+			"headless-builder/properties", Http.Method.POST);
+
+		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
+		Assert.assertEquals(
+			"A record API property can not have an Object Relationship Names " +
+				"value.",
+			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -395,40 +436,19 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"objectFieldERC", "APPLICATION_STATUS"
-			).put(
-				"r_apiSchemaToAPIProperties_c_apiSchemaId",
-				apiSchemaJSONObject1.get("id")
-			).put(
-				"type", "object"
-			).toString(),
-			"headless-builder/properties", Http.Method.POST);
-
-		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
-		Assert.assertEquals(
-			"An object API property can have neither an Object Field ERC nor " +
-				"Object Relationship Names properties associated.",
-			jsonObject.get("title"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"description", RandomTestUtil.randomString()
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
 				"r_apiPropertyToAPIProperties_c_apiPropertyId",
 				apiPropertyJSONObject1.getLong("id")
 			).put(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject1.get("id")
 			).put(
-				"type", "object"
+				"type", "record"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"An object API property must be related to another object API " +
+			"A record API property must be related to another record API " +
 				"property.",
 			jsonObject.get("title"));
 
@@ -444,7 +464,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 					"r_apiSchemaToAPIProperties_c_apiSchemaId",
 					apiSchemaJSONObject1.get("id")
 				).put(
-					"type", "object"
+					"type", "record"
 				).toString(),
 				"headless-builder/properties", Http.Method.POST);
 
@@ -493,7 +513,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 				"r_apiSchemaToAPIProperties_c_apiSchemaId",
 				apiSchemaJSONObject1.get("id")
 			).put(
-				"type", "object"
+				"type", "record"
 			).toString(),
 			"headless-builder/properties", Http.Method.POST);
 

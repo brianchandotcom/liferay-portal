@@ -40,16 +40,18 @@ public class BatchEngineExportTaskServiceTest
 	public void testAddBatchEngineExportTask() throws Exception {
 		UserTestUtil.setUser(user);
 
+		try {
+			_testBatchEngineExportTask(
+				otherCompany.getCompanyId(), user);
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			Assert.assertNotNull(principalException);
+		}
+
 		_batchEngineExportTask1 = _testBatchEngineExportTask(
 			company.getCompanyId(), user);
-	}
-
-	@Test(expected = PrincipalException.class)
-	public void testAddBatchEngineExportTaskOtherCompany() throws Exception {
-		UserTestUtil.setUser(user);
-
-		_batchEngineExportTask1 = _testBatchEngineExportTask(
-			otherCompany.getCompanyId(), user);
 	}
 
 	@Test

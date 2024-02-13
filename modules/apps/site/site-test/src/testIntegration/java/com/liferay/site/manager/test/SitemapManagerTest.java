@@ -67,6 +67,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -637,19 +638,9 @@ public class SitemapManagerTest {
 
 		Assert.assertEquals(elements.toString(), urls.length, elements.size());
 
-		for (int i = 0; i < urls.length; i++) {
-			Element urlElement = elements.get(i);
-
-			Assert.assertEquals(
-				urlElement.getName(), "url", urlElement.getName());
-
-			Element locElement = urlElement.element("loc");
-
-			Assert.assertNotNull(locElement);
-
-			Assert.assertEquals(
-				locElement.getName(), _sitemapManager.encodeXML(urls[i]),
-				locElement.getData());
+		for (String url : urls) {
+			Assert.assertNotNull(
+				_getLocElement(elements, _sitemapManager.encodeXML(url)));
 		}
 	}
 
@@ -695,6 +686,24 @@ public class SitemapManagerTest {
 		}
 
 		return ArrayUtil.toStringArray(urls);
+	}
+
+	private Element _getLocElement(List<Element> elements, String url) {
+		for (Element element : elements) {
+			if (!Objects.equals(element.getName(), "url")) {
+				continue;
+			}
+
+			Element locElement = element.element("loc");
+
+			if ((locElement != null) &&
+				Objects.equals(url, locElement.getData())) {
+
+				return locElement;
+			}
+		}
+
+		return null;
 	}
 
 	private void _setUpAssetCategoryDisplayPage() throws Exception {

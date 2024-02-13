@@ -33,6 +33,21 @@ const application = {
 	title: 'Basic application',
 };
 
+const singleElementIdEndpoint = {
+	description: 'Test Single Element API Endpoint',
+	externalReferenceCode: 'basic-singleElement-endpoint',
+	httpMethod: 'get',
+	name: 'Basic Single Element API Endpoint',
+	path: '/single-element-endpoint/{id}',
+	pathParameter: 'id',
+	r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
+		application.externalReferenceCode,
+	r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
+		application.apiApplicationToAPISchemas[0].externalReferenceCode,
+	retrieveType: 'singleElement',
+	scope: 'company',
+};
+
 test('can see filter and sort parameters for collection endpoints', async ({
 	apiExplorerPage,
 	apiHelpers,
@@ -117,6 +132,39 @@ test('can see get endpoint path with erc parameter in api explorer', async ({
 	);
 });
 
+test('can see get endpoint path with id parameter in api explorer', async ({
+	apiExplorerPage,
+	apiHelpers,
+	page,
+}) => {
+	await apiHelpers.object.postObjectEntry(
+		application,
+		'headless-builder/applications'
+	);
+
+	await apiHelpers.object.postObjectEntry(
+		singleElementIdEndpoint,
+		'headless-builder/endpoints'
+	);
+
+	await apiExplorerPage.goToApplication(`c/${application.baseURL}`);
+
+	await apiExplorerPage.expectEndpointWithParameters(
+		singleElementIdEndpoint.path,
+		['id']
+	);
+
+	await apiExplorerPage.getEndpointLocator(singleElementIdEndpoint.path, {
+		hasText: '{id}',
+	});
+
+	await page.goto('/');
+	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		'headless-builder/applications',
+		application.externalReferenceCode
+	);
+});
+
 test('cannot see filter and sort parameters for singleElement endpoints', async ({
 	apiExplorerPage,
 	apiHelpers,
@@ -127,28 +175,15 @@ test('cannot see filter and sort parameters for singleElement endpoints', async 
 		'headless-builder/applications'
 	);
 
-	const singleElementEndpoint = await apiHelpers.object.postObjectEntry(
-		{
-			description: 'Test Single Element API Endpoint',
-			externalReferenceCode: 'basic-singleElement-endpoint',
-			httpMethod: 'get',
-			name: 'Basic Single Element API Endpoint',
-			path: '/single-element-endpoint/{id}',
-			pathParameter: 'id',
-			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
-				application.externalReferenceCode,
-			r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
-				application.apiApplicationToAPISchemas[0].externalReferenceCode,
-			retrieveType: 'singleElement',
-			scope: 'company',
-		},
+	await apiHelpers.object.postObjectEntry(
+		singleElementIdEndpoint,
 		'headless-builder/endpoints'
 	);
 
 	await apiExplorerPage.goToApplication(`c/${application.baseURL}`);
 
 	await apiExplorerPage.expectEndpointWithoutParameters(
-		singleElementEndpoint.path,
+		singleElementIdEndpoint.path,
 		['filter', 'sort']
 	);
 

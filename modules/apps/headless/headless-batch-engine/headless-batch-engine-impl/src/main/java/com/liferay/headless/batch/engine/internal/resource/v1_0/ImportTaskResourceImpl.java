@@ -17,8 +17,6 @@ import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.constants.CreateStrategy;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
-import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
-import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.headless.batch.engine.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
@@ -48,6 +46,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -321,7 +320,8 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	private Response _getImportTaskContent(
-		BatchEngineImportTask batchEngineImportTask) {
+			BatchEngineImportTask batchEngineImportTask)
+		throws Exception {
 
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
 			BatchEngineTaskExecuteStatus.valueOf(
@@ -337,10 +337,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			).build();
 		}
 
+		InputStream contentInputStream =
+			_batchEngineImportTaskService.openContentInputStream(
+				batchEngineImportTask.getBatchEngineImportTaskId());
+
 		StreamingOutput streamingOutput = outputStream -> StreamUtil.transfer(
-			_batchEngineImportTaskLocalService.openContentInputStream(
-				batchEngineImportTask.getBatchEngineImportTaskId()),
-			outputStream);
+			contentInputStream, outputStream);
 
 		return Response.ok(
 			streamingOutput
@@ -350,7 +352,13 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		).build();
 	}
 
-	private Response _getImportTaskFailedItemReport(long importTaskId) {
+	private Response _getImportTaskFailedItemReport(long importTaskId)
+		throws Exception {
+
+		List<BatchEngineImportTaskError> batchEngineImportTaskErrors =
+			_batchEngineImportTaskService.getBatchEngineImportTaskErrors(
+				importTaskId);
+
 		StreamingOutput streamingOutput = outputStream -> {
 			try (CSVPrinter csvPrinter = new CSVPrinter(
 					new BufferedWriter(new OutputStreamWriter(outputStream)),
@@ -359,8 +367,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				csvPrinter.printRecord("item", "itemIndex", "message");
 
 				for (BatchEngineImportTaskError batchEngineImportTaskError :
-						_batchEngineImportTaskErrorLocalService.
-							getBatchEngineImportTaskErrors(importTaskId)) {
+						batchEngineImportTaskErrors) {
 
 					csvPrinter.printRecord(
 						batchEngineImportTaskError.getItem(),
@@ -563,15 +570,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		Arrays.asList("callbackURL", "fieldNameMapping"));
 
 	@Reference
-	private BatchEngineImportTaskErrorLocalService
-		_batchEngineImportTaskErrorLocalService;
-
-	@Reference
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
-
-	@Reference
-	private BatchEngineImportTaskLocalService
-		_batchEngineImportTaskLocalService;
 
 	@Reference
 	private BatchEngineImportTaskService _batchEngineImportTaskService;

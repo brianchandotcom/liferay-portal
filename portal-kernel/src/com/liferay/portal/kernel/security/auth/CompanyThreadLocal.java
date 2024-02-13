@@ -137,7 +137,7 @@ public class CompanyThreadLocal {
 	}
 
 	public static void setCompanyId(Long companyId) {
-		if (_setCompanyId(companyId, true)) {
+		if (_setCompanyId(companyId)) {
 			CTCollectionThreadLocal.removeCTCollectionId();
 		}
 	}
@@ -169,13 +169,7 @@ public class CompanyThreadLocal {
 
 		long currentCompanyId = _companyId.get();
 
-		SafeCloseable localeSafeCloseable =
-			LocaleThreadLocal.clearDefaultLocaleWithSafeCloseable();
-
-		SafeCloseable timeZoneSafeCloseable =
-			TimeZoneThreadLocal.clearDefaultTimeZoneWithSafeCloseable();
-
-		boolean changed = _setCompanyId(companyId, false);
+		boolean changed = _setCompanyId(companyId);
 
 		SafeCloseable ctCollectionSafeCloseable =
 			CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -188,9 +182,9 @@ public class CompanyThreadLocal {
 
 			_companyId.set(currentCompanyId);
 
+			_clearUserThreadLocals();
+
 			ctCollectionSafeCloseable.close();
-			localeSafeCloseable.close();
-			timeZoneSafeCloseable.close();
 		};
 	}
 
@@ -199,9 +193,7 @@ public class CompanyThreadLocal {
 		TimeZoneThreadLocal.removeDefaultTimeZone();
 	}
 
-	private static boolean _setCompanyId(
-		Long companyId, boolean clearUserThreadLocals) {
-
+	private static boolean _setCompanyId(Long companyId) {
 		if (companyId.equals(_companyId.get())) {
 			if (!isLocked()) {
 				return false;
@@ -234,9 +226,7 @@ public class CompanyThreadLocal {
 			_companyId.set(CompanyConstants.SYSTEM);
 		}
 
-		if (clearUserThreadLocals) {
-			_clearUserThreadLocals();
-		}
+		_clearUserThreadLocals();
 
 		return true;
 	}

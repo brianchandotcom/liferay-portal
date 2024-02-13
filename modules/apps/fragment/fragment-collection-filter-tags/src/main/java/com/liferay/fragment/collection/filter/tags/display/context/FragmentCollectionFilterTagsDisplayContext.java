@@ -30,16 +30,16 @@ import javax.servlet.http.HttpServletRequest;
 public class FragmentCollectionFilterTagsDisplayContext {
 
 	public FragmentCollectionFilterTagsDisplayContext(
-		HttpServletRequest httpServletRequest, String configuration,
+		String configuration,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
-		FragmentRendererContext fragmentRendererContext) {
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
 
 		_configuration = configuration;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_fragmentRendererContext = fragmentRendererContext;
 
 		_fragmentEntryLink = fragmentRendererContext.getFragmentEntryLink();
-
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

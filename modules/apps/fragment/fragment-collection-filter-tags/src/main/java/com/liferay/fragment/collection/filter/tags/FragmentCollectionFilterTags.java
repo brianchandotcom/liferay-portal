@@ -94,9 +94,8 @@ public class FragmentCollectionFilterTags implements FragmentCollectionFilter {
 			httpServletRequest.setAttribute(
 				FragmentCollectionFilterTagsDisplayContext.class.getName(),
 				new FragmentCollectionFilterTagsDisplayContext(
-					httpServletRequest, getConfiguration(),
-					_fragmentEntryConfigurationParser,
-					fragmentRendererContext));
+					getConfiguration(), _fragmentEntryConfigurationParser,
+					fragmentRendererContext, httpServletRequest));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/page.jsp");

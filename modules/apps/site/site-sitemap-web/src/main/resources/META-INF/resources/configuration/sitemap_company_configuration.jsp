@@ -220,127 +220,15 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 			<p class="c-mb-0 c-mt-2 small text-secondary"><liferay-ui:message key="when-this-configuration-is-enabled,-search-engines-will-be-notified-that-category-URLs-are-available-for-crawling" /></p>
 		</clay:content-col>
 	</clay:content-row>
+
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"groupSelectorURL", sitemapCompanyConfigurationDisplayContext.getGroupSelectorURL()
+			).put(
+				"selectEventName", sitemapCompanyConfigurationDisplayContext.getEventName()
+			).build()
+		%>'
+		module="{SitemapCompanyConfiguration} from site-sitemap-web"
+	/>
 </clay:sheet-section>
-
-<aui:script use="liferay-search-container">
-	var groupIds = [];
-
-	const groupIdsInput = document.getElementById(
-		'<portlet:namespace />groupsSearchContainerPrimaryKeys'
-	);
-
-	var groupIds = groupIdsInput.value.split(',');
-
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />groupsSearchContainer'
-	);
-
-	var searchContainerContentBox = searchContainer.get('contentBox');
-
-	const selectSiteButton = document.getElementById(
-		'<portlet:namespace />selectSiteLink'
-	);
-
-	const handleOnSelect = selectSiteButton.addEventListener('click', (event) => {
-		var searchContainerData = searchContainer.getData();
-
-		if (!searchContainerData.length) {
-			searchContainerData = [];
-		}
-		else {
-			searchContainerData = searchContainerData.split(',');
-		}
-
-		Liferay.Util.openSelectionModal({
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
-					const entityId = selectedItem.groupid;
-					const entityName = selectedItem.groupdescriptivename;
-					const label = Liferay.Util.sub(
-						'<liferay-ui:message key="remove-x" />',
-						entityName
-					);
-
-					const rowColumns = [];
-
-					let sitesIcon = '<%= UnicodeFormatter.toString(sitesIcon) %>';
-
-					let removeButton =
-						'<%= UnicodeFormatter.toString(removeButtonSites) %>';
-
-					removeButton = removeButton
-						.replace('TOKEN_ARIA_LABEL', label)
-						.replace('TOKEN_DATA_ROW_ID', entityId)
-						.replace('TOKEN_TITLE', label);
-
-					rowColumns.push(sitesIcon);
-					rowColumns.push(entityName);
-					rowColumns.push(removeButton);
-
-					searchContainer.addRow(rowColumns, entityId);
-
-					searchContainer.updateDataStore();
-
-					groupIds.push(entityId);
-
-					groupIdsInput.value = groupIds.join(',');
-				}
-			},
-			selectEventName:
-				'<%= sitemapCompanyConfigurationDisplayContext.getEventName() %>',
-			selectedData: [searchContainerData],
-			title: '<liferay-ui:message arguments="site" key="select-x" />',
-			url:
-				'<%= sitemapCompanyConfigurationDisplayContext.getGroupSelectorURL() %>',
-		});
-	});
-
-	var handleOnRemoveButton = searchContainerContentBox.delegate(
-		'click',
-		(event) => {
-			var link = event.currentTarget;
-
-			var rowId = link.attr('data-rowId');
-			var tr = link.ancestor('tr');
-
-			searchContainer.deleteRow(tr, rowId);
-
-			var searchContainerData = searchContainer.getData();
-
-			if (!searchContainerData.length) {
-				groupIds = [];
-			}
-			else {
-				groupIds = searchContainerData.split(',');
-			}
-
-			groupIdsInput.value = groupIds.join(',');
-		},
-		'.remove-button'
-	);
-
-	var handleEnableRemoveSite = Liferay.on(
-		'<portlet:namespace />enableRemovedSites',
-		(event) => {
-			event.selectors.each((item, index, collection) => {
-				var groupId = item.attr('data-entityid');
-
-				if (groupIds.indexOf(groupId) != -1) {
-					Liferay.Util.toggleDisabled(item, false);
-				}
-			});
-		}
-	);
-
-	var onDestroyPortlet = function (event) {
-		if (event.portletId === '<%= portletDisplay.getId() %>') {
-			removeEventListener('click', handleOnSelect);
-			Liferay.detach(handleOnRemoveButton);
-			Liferay.detach(handleEnableRemoveSite);
-
-			Liferay.detach('destroyPortlet', onDestroyPortlet);
-		}
-	};
-
-	Liferay.on('destroyPortlet', onDestroyPortlet);
-</aui:script>

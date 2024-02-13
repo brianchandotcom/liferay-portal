@@ -7315,10 +7315,10 @@ ${output.content}</echo>
 								<if>
 									<equals arg1="${playwright.project.name}" arg2="" />
 									<then>
-										<property name="playwright.command" value="npm run playwright test ${playwright.test.shard}" />
+										<property name="playwright.command" value="npx playwright test ${playwright.test.shard}" />
 									</then>
 									<else>
-										<property name="playwright.command" value="npm run playwright test --project ${playwright.project.name} ${playwright.test.shard}" />
+										<property name="playwright.command" value="npx playwright test --project ${playwright.project.name} ${playwright.test.shard}" />
 									</else>
 								</if>
 

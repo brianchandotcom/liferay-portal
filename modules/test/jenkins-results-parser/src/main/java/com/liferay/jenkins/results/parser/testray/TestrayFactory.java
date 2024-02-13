@@ -140,7 +140,7 @@ public class TestrayFactory {
 
 		if (axisTestClassGroup instanceof PlaywrightAxisTestClassGroup) {
 			return new PlaywrightBatchBuildTestrayCaseResult(
-				testrayBuild, topLevelBuild, axisTestClassGroup);
+				testrayBuild, topLevelBuild, axisTestClassGroup, testClass);
 		}
 
 		if (topLevelBuild instanceof SourceFormatBuild) {

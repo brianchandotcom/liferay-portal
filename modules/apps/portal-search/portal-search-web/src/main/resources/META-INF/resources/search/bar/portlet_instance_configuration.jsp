@@ -33,7 +33,7 @@ SearchBarPortletInstanceConfigurationDisplayContext searchBarPortletInstanceConf
 		<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
 
 		<react:component
-			module="js/components/SystemSettingsFieldList"
+			module="{SystemSettingsFieldList} from portal-search-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"fieldHelp", LanguageUtil.get(request, "suggestions-contributor-configuration-system-settings-help")

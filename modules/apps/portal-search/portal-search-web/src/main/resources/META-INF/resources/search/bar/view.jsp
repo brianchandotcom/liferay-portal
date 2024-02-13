@@ -80,7 +80,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 					<c:when test="<%= searchBarPortletDisplayContext.isSuggestionsEnabled() %>">
 						<div id="<portlet:namespace />reactSearchBar">
 							<react:component
-								module="js/components/SearchBar"
+								module="{ReactSearchBar} from portal-search-web"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
 										"destinationFriendlyURL", searchBarPortletDisplayContext.getDestinationFriendlyURL()
@@ -175,7 +175,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 					"namespace", liferayPortletResponse.getNamespace()
 				).build()
 			%>'
-			module="js/SearchBar"
+			module="{SearchBar} from portal-search-web"
 		/>
 	</c:otherwise>
 </c:choose>

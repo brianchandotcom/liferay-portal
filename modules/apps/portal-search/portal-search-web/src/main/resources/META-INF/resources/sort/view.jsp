@@ -94,5 +94,5 @@ SortPortletInstanceConfiguration sortPortletInstanceConfiguration = sortDisplayC
 			"namespace", liferayPortletResponse.getNamespace()
 		).build()
 	%>'
-	module="js/SortUtil"
+	module="{Sort} from portal-search-web"
 />

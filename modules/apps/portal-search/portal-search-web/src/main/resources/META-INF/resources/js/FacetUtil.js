@@ -262,7 +262,9 @@ export const FacetUtil = {
 export default function ({namespace: portletNamespace}) {
 	Liferay.namespace('Search').FacetUtil = FacetUtil;
 
-	FacetUtil.enableInputs(
-		document.querySelectorAll(`#${portletNamespace}fm .facet-term`)
-	);
+	if (portletNamespace) {
+		FacetUtil.enableInputs(
+			document.querySelectorAll(`#${portletNamespace}fm .facet-term`)
+		);
+	}
 }

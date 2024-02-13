@@ -34,6 +34,7 @@
 			"<rootDir>/test/setup.js"
 		]
 	},
+	"main": "js/index.js",
 	"name": "portal-search-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

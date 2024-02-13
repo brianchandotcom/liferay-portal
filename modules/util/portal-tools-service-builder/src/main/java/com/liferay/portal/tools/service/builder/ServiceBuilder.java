@@ -8055,21 +8055,21 @@ public class ServiceBuilder {
 
 		int startIndex = 0;
 
-		if (fileName.startsWith(_apiDirName)) {
-			startIndex = _apiDirName.length();
-		}
-		else if (fileName.startsWith(_implDirName)) {
-			startIndex = _implDirName.length();
-		}
-		else if (fileName.startsWith(_uadDirName)) {
-			startIndex = _uadDirName.length();
-		}
-		else if (fileName.startsWith(_testDirName)) {
-			startIndex = _testDirName.length();
+		int index = fileName.indexOf("/java/");
+
+		if (index > 0) {
+			startIndex = index + 6;
 		}
 		else {
-			throw new ServiceBuilderException(
-				"Unable to parse package path from " + fileName);
+			index = fileName.indexOf("/src/");
+
+			if (index > 0) {
+				startIndex = index + 5;
+			}
+			else {
+				throw new ServiceBuilderException(
+					"Unable to parse package path from " + fileName);
+			}
 		}
 
 		ToolsUtil.writeFileRaw(
@@ -8078,7 +8078,7 @@ public class ServiceBuilder {
 				file,
 				StringUtil.replace(
 					fileName.substring(
-						startIndex + 1, fileName.lastIndexOf(StringPool.SLASH)),
+						startIndex, fileName.lastIndexOf(StringPool.SLASH)),
 					CharPool.SLASH, CharPool.PERIOD),
 				content, _MAX_LINE_LENGTH, false),
 			modifiedFileNames);

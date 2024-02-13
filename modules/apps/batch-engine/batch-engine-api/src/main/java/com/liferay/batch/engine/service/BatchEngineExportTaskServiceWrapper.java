@@ -105,6 +105,15 @@ public class BatchEngineExportTaskServiceWrapper
 	}
 
 	@Override
+	public java.io.InputStream openContentInputStream(
+			long batchEngineExportTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchEngineExportTaskService.openContentInputStream(
+			batchEngineExportTaskId);
+	}
+
+	@Override
 	public BatchEngineExportTaskService getWrappedService() {
 		return _batchEngineExportTaskService;
 	}

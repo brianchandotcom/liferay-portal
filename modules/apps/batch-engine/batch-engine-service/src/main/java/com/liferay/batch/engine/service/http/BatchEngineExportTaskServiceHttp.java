@@ -314,6 +314,47 @@ public class BatchEngineExportTaskServiceHttp {
 		}
 	}
 
+	public static java.io.InputStream openContentInputStream(
+			HttpPrincipal httpPrincipal, long batchEngineExportTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				BatchEngineExportTaskServiceUtil.class,
+				"openContentInputStream",
+				_openContentInputStreamParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, batchEngineExportTaskId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.io.InputStream)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		BatchEngineExportTaskServiceHttp.class);
 
@@ -339,5 +380,7 @@ public class BatchEngineExportTaskServiceHttp {
 		_getBatchEngineExportTasksCountParameterTypes5 = new Class[] {
 			long.class
 		};
+	private static final Class<?>[] _openContentInputStreamParameterTypes6 =
+		new Class[] {long.class};
 
 }

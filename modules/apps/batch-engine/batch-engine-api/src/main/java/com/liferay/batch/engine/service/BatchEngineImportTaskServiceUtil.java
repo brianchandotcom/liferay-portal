@@ -9,6 +9,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -82,6 +83,15 @@ public class BatchEngineImportTaskServiceUtil {
 			externalReferenceCode, companyId);
 	}
 
+	public static List
+		<com.liferay.batch.engine.model.BatchEngineImportTaskError>
+				getBatchEngineImportTaskErrors(long batchEngineImportTaskId)
+			throws PortalException {
+
+		return getService().getBatchEngineImportTaskErrors(
+			batchEngineImportTaskId);
+	}
+
 	public static List<BatchEngineImportTask> getBatchEngineImportTasks(
 			long companyId, int start, int end)
 		throws PortalException {
@@ -111,6 +121,13 @@ public class BatchEngineImportTaskServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static InputStream openContentInputStream(
+			long batchEngineImportTaskId)
+		throws PortalException {
+
+		return getService().openContentInputStream(batchEngineImportTaskId);
 	}
 
 	public static BatchEngineImportTaskService getService() {

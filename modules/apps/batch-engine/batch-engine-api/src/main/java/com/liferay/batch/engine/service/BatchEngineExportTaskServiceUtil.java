@@ -9,6 +9,7 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -91,6 +92,13 @@ public class BatchEngineExportTaskServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static InputStream openContentInputStream(
+			long batchEngineExportTaskId)
+		throws PortalException {
+
+		return getService().openContentInputStream(batchEngineExportTaskId);
 	}
 
 	public static BatchEngineExportTaskService getService() {

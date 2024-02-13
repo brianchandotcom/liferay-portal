@@ -5,7 +5,7 @@
 
 package com.liferay.change.tracking.web.internal.upgrade.v1_0_5;
 
-import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
+import com.liferay.change.tracking.constants.PublicationRoleConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;

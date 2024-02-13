@@ -46,6 +46,7 @@ import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -396,8 +397,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		Date displayDate = _getDisplayDate(
 			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
+
 		Date expirationDate = _getExpirationDate(
-			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
+			uploadPortletRequest, displayDate, neverExpireDefaultValue,
+			user.getTimeZone());
+
 		Date reviewDate = _getReviewDate(
 			uploadPortletRequest, neverExpireDefaultValue, user.getTimeZone());
 
@@ -962,7 +966,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private Date _getExpirationDate(
-			UploadPortletRequest uploadPortletRequest,
+			UploadPortletRequest uploadPortletRequest, Date displayDate,
 			boolean neverExpireDefaultValue, TimeZone timeZone)
 		throws PortalException {
 
@@ -998,6 +1002,15 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		if ((expirationDate != null) && expirationDate.before(new Date())) {
 			throw new FileEntryExpirationDateException(
 				"Expiration date " + expirationDate + " is in the past");
+		}
+
+		if ((displayDate != null) && (expirationDate != null) &&
+			displayDate.after(expirationDate)) {
+
+			throw new FileEntryExpirationDateException(
+				StringBundler.concat(
+					"Expiration date ", expirationDate,
+					" is prior to display date ", displayDate));
 		}
 
 		return expirationDate;
@@ -1353,8 +1366,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			Date displayDate = _getDisplayDate(
 				uploadPortletRequest, addDynamic, user.getTimeZone());
+
 			Date expirationDate = _getExpirationDate(
-				uploadPortletRequest, addDynamic, user.getTimeZone());
+				uploadPortletRequest, displayDate, addDynamic,
+				user.getTimeZone());
+
 			Date reviewDate = _getReviewDate(
 				uploadPortletRequest, addDynamic, user.getTimeZone());
 

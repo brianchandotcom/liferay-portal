@@ -123,9 +123,7 @@ public class BatchEngineExportTaskServiceImpl
 	private void _checkPermission(BatchEngineExportTask batchEngineExportTask)
 		throws PrincipalException {
 
-		if (!_hasPermission(
-				batchEngineExportTask, getPermissionChecker())) {
-
+		if (!_hasPermission(batchEngineExportTask, getPermissionChecker())) {
 			throw new PrincipalException();
 		}
 	}

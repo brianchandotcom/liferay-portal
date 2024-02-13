@@ -59,8 +59,6 @@ public class BatchEngineExportTaskServiceImpl
 			batchEngineExportTaskLocalService.getBatchEngineExportTask(
 				batchEngineExportTaskId);
 
-		_checkPermission(batchEngineExportTask.getCompanyId());
-
 		_checkPermission(batchEngineExportTask);
 
 		return batchEngineExportTask;

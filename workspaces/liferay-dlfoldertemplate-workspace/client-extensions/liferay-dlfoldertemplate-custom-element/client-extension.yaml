@@ -7,7 +7,7 @@ liferay-dlfoldertemplate-custom-element:
     friendlyURLMapping: liferay-dlfoldertemplate-custom-element
     htmlElementName: liferay-dlfoldertemplate-custom-element
     instanceable: true
-    name: Liferay Folder Template
+    name: Liferay Document Library Folder Template
     portletCategoryName: category.client-extensions
     type: customElement
     urls:

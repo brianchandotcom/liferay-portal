@@ -11,13 +11,13 @@ import fetch from 'node-fetch';
 import {getConfigByKey, getOAuthConfigByKey} from './config-util.js';
 import config from './configTreePath.js';
 import {
-	applicationERCs,
+	applicationExternalReferenceCodes,
 	environmentConfigKeys,
 	oauthAgentConfigKeys,
 } from './constants.js';
 
 const agentUriPath = getOAuthConfigByKey(
-	applicationERCs.OAUTH_AGENT_ERC,
+	applicationExternalReferenceCodes.OAUTH_AGENT_EXTERNAL_REFERENCE_CODE,
 	oauthAgentConfigKeys._OAUTH2_JWKS_URI
 );
 
@@ -34,7 +34,7 @@ const lxcDXPServerProtocol = getConfigByKey(
 );
 
 const oauthAgentClientId = getOAuthConfigByKey(
-	applicationERCs.OAUTH_AGENT_ERC,
+	applicationExternalReferenceCodes.OAUTH_AGENT_EXTERNAL_REFERENCE_CODE,
 	oauthAgentConfigKeys._OAUTH2_USER_AGENT_CLIENT_ID
 );
 

@@ -230,8 +230,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 	}
 
-	// LPD-6808: AC12-AC14
-
+	/**
+	 * LPD-6808: AC12-AC14
+	 */
 	@Test
 	public void testExportImportLayouts() throws Exception {
 		LayoutTestUtil.addTypePortletLayout(group);
@@ -246,9 +247,10 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
 	}
 
-	// LPD-6808: test if the link is correct between parent and child pages
-	// export/import parent first, then child page
-
+	/**
+	 * LPD-6808 Test if the link is correct between parent and child pages.
+	 * Export/import parent page first, and then the child page.
+	 */
 	@Test
 	public void testExportImportLayoutSetInvalidLARType() throws Exception {
 

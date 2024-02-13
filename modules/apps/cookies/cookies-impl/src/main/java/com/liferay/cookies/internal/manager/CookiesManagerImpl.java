@@ -155,8 +155,6 @@ public class CookiesManagerImpl implements CookiesManager {
 			}
 		}
 
-		cookie.setPath(_getContextPath(httpServletRequest));
-
 		// LEP-5175
 
 		cookie.setSecure(secure);
@@ -178,6 +176,7 @@ public class CookiesManagerImpl implements CookiesManager {
 
 		cookie.setValue(encodedCookieValue);
 		cookie.setVersion(0);
+		cookie.setPath(_getContextPath(httpServletRequest));
 
 		httpServletResponse.addCookie(cookie);
 

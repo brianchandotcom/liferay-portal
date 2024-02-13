@@ -49,34 +49,31 @@ public class PortalInstancePool {
 	}
 
 	public static long getDefaultCompanyId() {
-		long[] companyIds = getCompanyIds();
+		if (!_portalInstances.isEmpty()) {
+			for (Map.Entry<Long, String> entry : _portalInstances.entrySet()) {
+				if (Objects.equals(
+						PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID),
+						entry.getValue())) {
 
-		if (companyIds.length == 0) {
-			try {
-				return getDefaultCompanyIdBySQL();
+					return entry.getKey();
+				}
 			}
-			catch (SQLException sqlException) {
-				_log.error(
-					"Unable to get the default company ID by SQL",
-					sqlException);
 
-				throw new RuntimeException(sqlException);
-			}
+			throw new IllegalStateException("Unable to get default company ID");
 		}
 
-		for (Map.Entry<Long, String> entry : _portalInstances.entrySet()) {
-			if (Objects.equals(
-					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID),
-					entry.getValue())) {
-
-				return entry.getKey();
-			}
+		try {
+			return _getDefaultCompanyIdBySQL();
 		}
+		catch (SQLException sqlException) {
+			_log.error(
+					"Unable to get the default company ID by SQL", sqlException);
 
-		throw new IllegalStateException("Unable to get default company ID");
+			throw new RuntimeException(sqlException);
+		}
 	}
 
-	public static long getDefaultCompanyIdBySQL() throws SQLException {
+	private static long _getDefaultCompanyIdBySQL() throws SQLException {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from Company where webId = '" +
@@ -106,7 +103,7 @@ public class PortalInstancePool {
 	private static long[] _getCompanyIdsBySQL() throws SQLException {
 		List<Long> companyIds = new ArrayList<>();
 
-		long defaultCompanyId = getDefaultCompanyIdBySQL();
+		long defaultCompanyId = _getDefaultCompanyIdBySQL();
 
 		if (defaultCompanyId != 0) {
 			companyIds.add(defaultCompanyId);

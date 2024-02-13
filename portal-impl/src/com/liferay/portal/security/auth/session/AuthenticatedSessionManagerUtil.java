@@ -7,6 +7,7 @@ package com.liferay.portal.security.auth.session;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterNode;
@@ -161,6 +162,8 @@ public class AuthenticatedSessionManagerUtil {
 			companyIdCookie.setDomain(domain);
 		}
 
+		companyIdCookie.setPath(StringPool.SLASH);
+
 		Cookie idCookie = new Cookie(
 			CookiesConstants.NAME_ID,
 			EncryptorUtil.encrypt(company.getKeyObj(), userIdString));
@@ -168,6 +171,8 @@ public class AuthenticatedSessionManagerUtil {
 		if (domain != null) {
 			idCookie.setDomain(domain);
 		}
+
+		idCookie.setPath(StringPool.SLASH);
 
 		int loginMaxAge = PropsValues.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE;
 
@@ -202,6 +207,7 @@ public class AuthenticatedSessionManagerUtil {
 			}
 
 			loginCookie.setMaxAge(loginMaxAge);
+			loginCookie.setPath(StringPool.SLASH);
 
 			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, loginCookie,
@@ -216,6 +222,7 @@ public class AuthenticatedSessionManagerUtil {
 			}
 
 			passwordCookie.setMaxAge(loginMaxAge);
+			passwordCookie.setPath(StringPool.SLASH);
 
 			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, passwordCookie,
@@ -229,6 +236,7 @@ public class AuthenticatedSessionManagerUtil {
 			}
 
 			rememberMeCookie.setMaxAge(loginMaxAge);
+			rememberMeCookie.setPath(StringPool.SLASH);
 
 			CookiesManagerUtil.addCookie(
 				CookiesConstants.CONSENT_TYPE_FUNCTIONAL, rememberMeCookie,

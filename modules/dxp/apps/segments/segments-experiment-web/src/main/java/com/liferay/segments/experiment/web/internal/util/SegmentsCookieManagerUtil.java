@@ -5,6 +5,7 @@
 
 package com.liferay.segments.experiment.web.internal.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -79,6 +80,7 @@ public class SegmentsCookieManagerUtil {
 		}
 
 		abTestVariantIdCookie.setMaxAge(CookiesConstants.MAX_AGE);
+		abTestVariantIdCookie.setPath(StringPool.SLASH);
 
 		CookiesManagerUtil.addCookie(
 			CookiesConstants.CONSENT_TYPE_PERSONALIZATION,

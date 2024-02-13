@@ -177,12 +177,14 @@ public class PortalInstancePool {
 	private static long _getDefaultCompanyIdBySQL() throws SQLException {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId from Company where webId = '" +
-					_COMPANY_DEFAULT_WEB_ID + "'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				"select companyId from Company where webId = ?")) {
 
-			if (resultSet.next()) {
-				return resultSet.getLong(1);
+			preparedStatement.setString(1, _COMPANY_DEFAULT_WEB_ID);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong(1);
+				}
 			}
 		}
 

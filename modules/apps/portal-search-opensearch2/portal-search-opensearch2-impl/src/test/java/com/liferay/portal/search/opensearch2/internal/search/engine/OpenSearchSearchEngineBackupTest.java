@@ -14,6 +14,7 @@ import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
+
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -21,6 +22,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
+
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch.snapshot.CreateSnapshotRequest;
 import org.opensearch.client.opensearch.snapshot.DeleteSnapshotRequest;

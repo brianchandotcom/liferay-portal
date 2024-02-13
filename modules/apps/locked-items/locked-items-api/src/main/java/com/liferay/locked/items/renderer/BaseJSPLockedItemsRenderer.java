@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Marco Galluzzi
  */
-public abstract class BaseLockedItemsRenderer implements LockedItemsRenderer {
+public abstract class BaseJSPLockedItemsRenderer
+	implements LockedItemsRenderer {
 
 	@Override
 	public void render(
@@ -47,6 +48,6 @@ public abstract class BaseLockedItemsRenderer implements LockedItemsRenderer {
 		HttpServletResponse httpServletResponse);
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseLockedItemsRenderer.class);
+		BaseJSPLockedItemsRenderer.class);
 
 }

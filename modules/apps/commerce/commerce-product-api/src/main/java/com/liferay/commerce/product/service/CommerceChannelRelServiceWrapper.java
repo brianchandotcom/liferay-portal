@@ -40,6 +40,16 @@ public class CommerceChannelRelServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CommerceChannelRel> addCommerceChannelRels(
+			String className, long[] classPKs, long commerceChannelId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelRelService.addCommerceChannelRels(
+			className, classPKs, commerceChannelId, serviceContext);
+	}
+
+	@Override
 	public void deleteCommerceChannelRel(long commerceChannelRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -62,6 +72,24 @@ public class CommerceChannelRelServiceWrapper
 
 		return _commerceChannelRelService.fetchCommerceChannelRel(
 			className, classPK, commerceChannelId);
+	}
+
+	@Override
+	public java.util.List<CommerceChannelRel> getCommerceChannelCountries(
+			long commerceChannelId, String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelRelService.getCommerceChannelCountries(
+			commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCommerceChannelCountriesCount(
+			long commerceChannelId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelRelService.getCommerceChannelCountriesCount(
+			commerceChannelId, name);
 	}
 
 	@Override

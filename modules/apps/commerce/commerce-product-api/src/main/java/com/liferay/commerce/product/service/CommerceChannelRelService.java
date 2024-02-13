@@ -51,6 +51,11 @@ public interface CommerceChannelRelService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public List<CommerceChannelRel> addCommerceChannelRels(
+			String className, long[] classPKs, long commerceChannelId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCommerceChannelRel(long commerceChannelRelId)
 		throws PortalException;
 
@@ -60,6 +65,16 @@ public interface CommerceChannelRelService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceChannelRel fetchCommerceChannelRel(
 			String className, long classPK, long commerceChannelId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannelRel> getCommerceChannelCountries(
+			long commerceChannelId, String name, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceChannelCountriesCount(
+			long commerceChannelId, String name)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

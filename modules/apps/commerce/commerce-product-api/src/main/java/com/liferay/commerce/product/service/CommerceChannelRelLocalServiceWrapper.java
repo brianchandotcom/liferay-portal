@@ -60,6 +60,15 @@ public class CommerceChannelRelLocalServiceWrapper
 			className, classPK, commerceChannelId, serviceContext);
 	}
 
+	@Override
+	public java.util.List<CommerceChannelRel> addCommerceChannelRels(
+		String className, long[] classPKs, long commerceChannelId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+
+		return _commerceChannelRelLocalService.addCommerceChannelRels(
+			className, classPKs, commerceChannelId, serviceContext);
+	}
+
 	/**
 	 * Creates a new commerce channel rel with the primary key. Does not add the commerce channel rel to the database.
 	 *
@@ -272,6 +281,22 @@ public class CommerceChannelRelLocalServiceWrapper
 		getActionableDynamicQuery() {
 
 		return _commerceChannelRelLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<CommerceChannelRel> getCommerceChannelCountries(
+		long commerceChannelId, String name, int start, int end) {
+
+		return _commerceChannelRelLocalService.getCommerceChannelCountries(
+			commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCommerceChannelCountriesCount(
+		long commerceChannelId, String name) {
+
+		return _commerceChannelRelLocalService.getCommerceChannelCountriesCount(
+			commerceChannelId, name);
 	}
 
 	/**

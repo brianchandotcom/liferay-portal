@@ -50,6 +50,7 @@ import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -396,6 +397,27 @@ public class TranslateDisplayContext {
 			"classPK", _classPK
 		).setParameter(
 			"groupId", _getGroupId()
+		).setParameter(
+			"modifiedDateTime",
+			() -> {
+				InfoFieldValue<Object> infoFieldValue =
+					_sourceInfoItemFieldValues.getInfoFieldValue(
+						"modifiedDate");
+
+				if (infoFieldValue == null) {
+					return null;
+				}
+
+				Object value = infoFieldValue.getValue();
+
+				if (value == null) {
+					return null;
+				}
+
+				Date modifiedDate = (Date)value;
+
+				return modifiedDate.getTime();
+			}
 		).setParameter(
 			"segmentsExperienceId", _segmentsExperienceId
 		).buildPortletURL();

@@ -67,25 +67,10 @@ public class PortalInstancePool {
 		}
 		catch (SQLException sqlException) {
 			_log.error(
-					"Unable to get the default company ID by SQL", sqlException);
+				"Unable to get the default company ID by SQL", sqlException);
 
 			throw new RuntimeException(sqlException);
 		}
-	}
-
-	private static long _getDefaultCompanyIdBySQL() throws SQLException {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId from Company where webId = '" +
-					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID) + "'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (resultSet.next()) {
-				return resultSet.getLong(1);
-			}
-		}
-
-		return 0;
 	}
 
 	public static String getWebId(long companyId) {
@@ -124,6 +109,21 @@ public class PortalInstancePool {
 		}
 
 		return ArrayUtil.toArray(companyIds.toArray(new Long[0]));
+	}
+
+	private static long _getDefaultCompanyIdBySQL() throws SQLException {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select companyId from Company where webId = '" +
+					PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID) + "'");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getLong(1);
+			}
+		}
+
+		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

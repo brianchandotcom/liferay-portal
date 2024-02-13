@@ -34,7 +34,7 @@ export class FieldsPage {
 
 	async goto() {
 		await this.viewsPage.goto();
-		await this.viewsPage.gotoSampleDataSetView();
+		await this.viewsPage.gotoDataSetView();
 
 		await this.page
 			.getByRole('button', {exact: true, name: 'Fields'})
@@ -51,15 +51,33 @@ export class FieldsPage {
 		await this.addFieldsDialog.saveButton.click();
 	}
 
-	async addParentField(field: string) {
+	async addRootField(field: string) {
 		await this.addFieldsDialog.fields
 			.getByText(field, {exact: true})
 			.click();
 	}
 
-	async addChildField(parent: string, field: string) {
+	async openParentField(path: string[]) {
+		let fullPath = '';
+
+		path.forEach(async (item) => {
+			fullPath += item;
+			const expandButton = this.page.locator(
+				`button[aria-controls='${fullPath}.*']`
+			);
+			fullPath += '.';
+
+			if (!(await expandButton.getAttribute('aria-expanded'))) {
+				await expandButton.click();
+			}
+		});
+	}
+
+	async addChildField(path: string[], field: string) {
+		this.openParentField(path);
+
 		await this.page
-			.locator(`[id*="${parent}"]`)
+			.locator(`[data-id$="${path.join('.')}.${field}"]`)
 			.getByText(field, {exact: true})
 			.check();
 	}

@@ -6,14 +6,23 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
+import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {fieldsPageTest} from './fixtures/fieldsPageTest';
 import {viewsPageTest} from './fixtures/viewsPageTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
 	dataSetsPageTest,
+	fdsFragmentPageTest,
+	featureFlagsTest({
+		'LPS-164563': true,
+		'LPS-178052': true,
+		'LPS-186871': true,
+		'LPS-194395': true,
+	}),
 	fieldsPageTest,
 	loginTest,
 	viewsPageTest
@@ -28,12 +37,17 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 	}) => {
 		await test.step('Create sample DataSet', async () => {
 			await dataSetsPage.goto();
-			await dataSetsPage.createSampleDataSetUI();
+			await dataSetsPage.createDataSet({
+				name: 'Data Set Sample',
+				restApplication: '/headless-delivery/v1.0',
+				restEndpoint: '/v1.0/sites/{siteId}/site-pages',
+				restSchema: 'SitePage',
+			});
 		});
 
 		await test.step('Create sample DataSet View', async () => {
 			await viewsPage.goto();
-			await viewsPage.createSampleDataSetViewUI();
+			await viewsPage.createDataSetView();
 		});
 
 		await test.step('Open modal to add fields', async () => {
@@ -42,11 +56,11 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 		});
 
 		await test.step('Check fields in treeview', async () => {
-			await fieldsPage.addParentField('dateCreated');
-			await fieldsPage.addParentField('title');
-			await fieldsPage.addParentField('creator');
-			await fieldsPage.addChildField('creator', 'name');
-			await fieldsPage.addChildField('creator', 'id');
+			await fieldsPage.addRootField('dateCreated');
+			await fieldsPage.addRootField('title');
+			await fieldsPage.addRootField('creator');
+			await fieldsPage.addChildField(['creator'], 'name');
+			await fieldsPage.addChildField(['creator'], 'id');
 		});
 
 		await test.step('Save changes', async () => {
@@ -62,32 +76,37 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 		});
 	});
 
-	test('Add DataSet fragment', async ({applicationsMenuPage, page}) => {
-		await test.step('Go to Home', async () => {
-			await applicationsMenuPage.goToHome();
-		});
+	test('Show Creation Action in fragment', async ({
+		fdsFragmentPage,
+		page,
+	}) => {
+		await fdsFragmentPage.goto();
 
-		await test.step('Click on "Edit" button', async () => {
-			const editPageButton = await page.getByRole('link', {
-				name: 'Edit',
-			});
-			await editPageButton.click();
+		const site = await fdsFragmentPage
+			.createSite('FDSFragment')
+			.then((response) => response);
+
+		const layout = await fdsFragmentPage
+			.createPage({
+				siteId: site.id,
+				title: 'fdsfragmentpagetest',
+			})
+			.then((response) => response);
+
+		await page.reload();
+
+		await test.step('Edit page', async () => {
+			await fdsFragmentPage.editPage({layout, site});
 		});
 
 		await test.step('Search for "Data Set" fragment', async () => {
-			const fragmentSearchInput = await page.getByLabel(
-				'Search Fragments and Widgets'
-			);
-			fragmentSearchInput.fill('Data Set');
+			await fdsFragmentPage.searchFragmentOrWidget('Data Set');
 		});
 
 		await test.step('Drag "Data Set" fragment & Drop into the page editor w/ keyboard', async () => {
-			const source = await page.getByRole('menuitem', {
-				name: 'Data Set Add Data Set Mark Data Set as Favorite',
-			});
-			await source.focus();
-			await source.press('Enter');
-			await source.press('Enter');
+			await fdsFragmentPage.dragAndDropFragment(
+				'Data Set Add Data Set Mark Data Set as Favorite'
+			);
 		});
 
 		await test.step('Select empty Data Set fragment', async () => {
@@ -101,12 +120,19 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 			await page
 				.getByRole('button', {name: 'Select Data Set View'})
 				.click();
-			await page
-				.getByRole('menuitem', {name: 'Select Data Set View...'})
-				.click();
 		});
 
 		await test.step('Select Data Set View', async () => {
+			if (
+				await page
+					.getByRole('menuitem', {name: 'Select Data Set View...'})
+					.isVisible()
+			) {
+				await page
+					.getByRole('menuitem', {name: 'Select Data Set View...'})
+					.click();
+			}
+
 			await expect(page.getByRole('dialog')).toBeVisible();
 			await expect(
 				page.getByRole('heading', {name: 'Select'})
@@ -124,31 +150,30 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 		});
 
 		await test.step('Publish page with Data Set View', async () => {
-			await page.getByRole('button', {name: 'Publish'}).click();
+			await fdsFragmentPage.publishPage();
+			await fdsFragmentPage.goToPage({layout, site});
 
-			await applicationsMenuPage.goToHome();
-
-			await expect(
-				page.locator('.data-set-wrapper').first()
-			).toBeVisible();
+			await page.locator('.data-set-wrapper').waitFor();
 		});
 
 		await test.step('Fields are present in fragment table heading', async () => {
 			await expect(
-				page.getByRole('button', {name: 'creator.*'})
+				page.getByRole('button', {name: 'creator.*'}).first()
 			).toBeVisible();
 			await expect(
-				page.getByRole('button', {name: 'creator.id'})
+				page.getByRole('button', {name: 'creator.id'}).first()
 			).toBeVisible();
 			await expect(
-				page.getByRole('button', {name: 'creator.name'})
+				page.getByRole('button', {name: 'creator.name'}).first()
 			).toBeVisible();
 			await expect(
-				page.getByRole('button', {name: 'dateCreated'})
+				page.getByRole('button', {name: 'dateCreated'}).first()
 			).toBeVisible();
 			await expect(
-				page.getByRole('button', {name: 'title'})
+				page.getByRole('button', {name: 'title'}).first()
 			).toBeVisible();
 		});
+
+		await fdsFragmentPage.deleteSite(site.id);
 	});
 });

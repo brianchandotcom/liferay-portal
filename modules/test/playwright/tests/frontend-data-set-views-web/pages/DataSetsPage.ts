@@ -72,17 +72,25 @@ export class DataSetsPage {
 		await this.newDataSetModal.restApplicationOptions
 			.getByRole('option', {name: restApplication})
 			.click();
-
 		await this.newDataSetModal.restSchemaField.waitFor();
 		await this.newDataSetModal.restSchemaField.click();
-		await this.page.getByRole('textbox', {name: 'Search'}).fill('page');
+		await this.page.getByRole('textbox', {name: 'Search'}).fill(restSchema);
 		await this.newDataSetModal.restSchemaOptions.waitFor();
 		await this.newDataSetModal.restSchemaOptions
 			.getByRole('option', {name: restSchema})
 			.click();
 
-		await this.newDataSetModal.restEndpointField.waitFor();
+		await this.page
+			.locator('div')
+			.filter({hasText: /^SaveCancel$/})
+			.first()
+			.click();
+
 		await this.newDataSetModal.restEndpointField.click();
+		await this.page
+			.getByRole('textbox', {name: 'Search'})
+			.fill(restEndpoint);
+		await this.newDataSetModal.restEndpointOptions.waitFor();
 		await this.newDataSetModal.restEndpointOptions
 			.getByRole('option', {name: restEndpoint})
 			.click();

@@ -91,7 +91,7 @@ public class BatchEngineExportTaskServiceImpl
 
 		_checkPermission(companyId);
 
-		return _filterTaskListByPermissions(
+		return _filterBatchEngineExportTasks(
 			batchEngineExportTaskLocalService.getBatchEngineExportTasks(
 				companyId, start, end));
 	}
@@ -104,7 +104,7 @@ public class BatchEngineExportTaskServiceImpl
 
 		_checkPermission(companyId);
 
-		return _filterTaskListByPermissions(
+		return _filterBatchEngineExportTasks(
 			batchEngineExportTaskPersistence.findByCompanyId(
 				companyId, start, end, orderByComparator));
 	}
@@ -115,7 +115,7 @@ public class BatchEngineExportTaskServiceImpl
 
 		_checkPermission(companyId);
 
-		return _filterTaskListByPermissions(
+		return _filterBatchEngineExportTasks(
 			batchEngineExportTaskPersistence.findByCompanyId(companyId)
 		).size();
 	}
@@ -140,7 +140,7 @@ public class BatchEngineExportTaskServiceImpl
 		}
 	}
 
-	private List<BatchEngineExportTask> _filterTaskListByPermissions(
+	private List<BatchEngineExportTask> _filterBatchEngineExportTasks(
 			List<BatchEngineExportTask> batchEngineExportTasks)
 		throws PrincipalException {
 

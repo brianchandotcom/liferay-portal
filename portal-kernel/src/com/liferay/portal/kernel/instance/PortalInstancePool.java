@@ -48,7 +48,7 @@ public class PortalInstancePool {
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				_GET_COMPANY_IDS);
+				"select companyId from Company");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -117,9 +117,6 @@ public class PortalInstancePool {
 	public static void remove(long companyId) {
 		_portalInstances.remove(companyId);
 	}
-
-	private static final String _GET_COMPANY_IDS =
-		"select companyId from Company";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstancePool.class);

@@ -33,6 +33,30 @@ public class PortalInstancePool {
 		_portalInstances.put(company.getCompanyId(), company.getWebId());
 	}
 
+	public static long getCompanyId(String webId) {
+		if (!_portalInstances.isEmpty()) {
+			for (Map.Entry<Long, String> entry : _portalInstances.entrySet()) {
+				if (Objects.equals(entry.getValue(), webId)) {
+					return entry.getKey();
+				}
+			}
+
+			throw new IllegalArgumentException(
+				"Unable to get company ID with web ID" + webId);
+		}
+
+		try {
+			return _getCompanyIdBySQL(webId);
+		}
+		catch (SQLException sqlException) {
+			_log.error(
+				"Unable to get the company ID for web ID " + webId + " by SQL",
+				sqlException);
+
+			throw new RuntimeException(sqlException);
+		}
+	}
+
 	public static long[] getCompanyIds() {
 		if (!_portalInstances.isEmpty()) {
 			return ArrayUtil.toLongArray(_portalInstances.keySet());
@@ -108,6 +132,23 @@ public class PortalInstancePool {
 
 	public static void remove(long companyId) {
 		_portalInstances.remove(companyId);
+	}
+
+	private static long _getCompanyIdBySQL(String webId) throws SQLException {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select companyId from Company where webId = ?")) {
+
+			preparedStatement.setString(1, webId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong(1);
+				}
+			}
+		}
+
+		throw new IllegalArgumentException("Invalid web ID" + webId);
 	}
 
 	private static long[] _getCompanyIdsBySQL() throws SQLException {

@@ -28,33 +28,6 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 	</clay:content-col>
 </clay:content-row>
 
-<liferay-util:buffer
-	var="removeButtonSites"
->
-	<clay:button
-		aria-label='TOKEN_ARIA_LABEL'
-		borderless="<%= true %>"
-		cssClass="lfr-portal-tooltip remove-button"
-		data-rowId="TOKEN_DATA_ROW_ID"
-		displayType="secondary"
-		icon="times-circle"
-		monospaced="<%= true %>"
-		small="<%= true %>"
-		title="TOKEN_TITLE"
-		type="button"
-	/>
-</liferay-util:buffer>
-
-<liferay-util:buffer
-	var="sitesIcon"
->
-	<div class="sticker sticker-secondary sticker-static">
-		<clay:icon
-			symbol="sites"
-		/>
-	</div>
-</liferay-util:buffer>
-
 <clay:sheet-section role="group" aria-labelledby='<%= liferayPortletResponse.getNamespace() + "sitesIncludedTitle" %>'>
 	<clay:content-row
 		containerElement="h3"

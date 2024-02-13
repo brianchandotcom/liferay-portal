@@ -62,6 +62,7 @@ public class TestrayAttachmentRecorder {
 				_recordJenkinsReport();
 			}
 			else {
+				_recordDockerLogs();
 				_recordFailureMessages();
 				_recordGradlePluginsFiles();
 				_recordLiferayLogs();
@@ -360,6 +361,31 @@ public class TestrayAttachmentRecorder {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
+		}
+	}
+
+	private void _recordDockerLogs() {
+		File sourceDockerLogsDir = new File(
+			System.getenv("BUILD_DIR"), "docker-logs");
+
+		if (!sourceDockerLogsDir.exists()) {
+			return;
+		}
+
+		File destinationDockerLogsDir = new File(
+			_getRecordedFilesBuildDir(), "docker-logs");
+
+		for (File sourceDockerLogFile : sourceDockerLogsDir.listFiles()) {
+			try {
+				JenkinsResultsParserUtil.copy(
+					sourceDockerLogFile,
+					new File(
+						destinationDockerLogsDir,
+						sourceDockerLogFile.getName() + ".txt"));
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 		}
 	}
 

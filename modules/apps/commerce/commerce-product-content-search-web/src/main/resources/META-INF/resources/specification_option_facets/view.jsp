@@ -148,4 +148,6 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 	</c:otherwise>
 </c:choose>
 
-<aui:script use="liferay-search-facet-util" />
+<liferay-frontend:component
+	module="{FacetUtil} from portal-search-web"
+/>

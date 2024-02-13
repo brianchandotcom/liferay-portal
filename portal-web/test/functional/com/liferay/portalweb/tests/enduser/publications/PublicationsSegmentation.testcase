@@ -187,25 +187,35 @@ definition {
 
 		Segmentation.deleteSegment(entry = "Segment Title");
 
-		Publications.publishPublication(
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Segments Entry",
+			changeSite = "Site Name",
+			changeTitle = "Segment Title",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name 2");
 
-		Publications.selectPublication(publicationName = "Publication Name 1");
-
-		PublicationsNavigator.gotoPublish(publicationName = "Publication Name 1");
-
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Segments Entry",
-			warningMessage = "Missing Entity");
-
-		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "Edited Segment Title");
+			warningMessage = "Entity Updated Before Deletion");
 
 		PublicationsChanges.discardChanges(
 			changeCategory = "Segments Entry",
-			changeTitle = "Edited Segment Title",
-			conflictingChanges = "true",
-			entryTitle = "Segments Entry");
+			changeTitle = "Segments Entry",
+			conflictingChanges = "true");
+
+		Publications.publishPublication(publicationName = "Publication Name 2");
+
+		Publications.selectPublication(publicationName = "Publication Name 1");
+
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name 1");
 	}
 
 	@description = "Segment should support locales in review changes."

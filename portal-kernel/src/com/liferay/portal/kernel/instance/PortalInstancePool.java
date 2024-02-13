@@ -48,32 +48,6 @@ public class PortalInstancePool {
 		}
 	}
 
-	private static long[] _getCompanyIdsBySQL() throws SQLException {
-		List<Long> companyIds = new ArrayList<>();
-
-		long defaultCompanyId = getDefaultCompanyIdBySQL();
-
-		if (defaultCompanyId != 0) {
-			companyIds.add(defaultCompanyId);
-		}
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId from Company");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				long companyId = resultSet.getLong("companyId");
-
-				if (companyId != defaultCompanyId) {
-					companyIds.add(companyId);
-				}
-			}
-		}
-
-		return ArrayUtil.toArray(companyIds.toArray(new Long[0]));
-	}
-
 	public static long getDefaultCompanyId() {
 		long[] companyIds = getCompanyIds();
 
@@ -127,6 +101,32 @@ public class PortalInstancePool {
 
 	public static void remove(long companyId) {
 		_portalInstances.remove(companyId);
+	}
+
+	private static long[] _getCompanyIdsBySQL() throws SQLException {
+		List<Long> companyIds = new ArrayList<>();
+
+		long defaultCompanyId = getDefaultCompanyIdBySQL();
+
+		if (defaultCompanyId != 0) {
+			companyIds.add(defaultCompanyId);
+		}
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select companyId from Company");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				long companyId = resultSet.getLong("companyId");
+
+				if (companyId != defaultCompanyId) {
+					companyIds.add(companyId);
+				}
+			}
+		}
+
+		return ArrayUtil.toArray(companyIds.toArray(new Long[0]));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

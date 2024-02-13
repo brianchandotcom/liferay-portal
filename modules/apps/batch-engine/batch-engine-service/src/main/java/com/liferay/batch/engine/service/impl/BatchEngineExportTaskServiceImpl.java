@@ -125,7 +125,7 @@ public class BatchEngineExportTaskServiceImpl
 	private void _checkPermission(BatchEngineExportTask batchEngineExportTask)
 		throws PrincipalException {
 
-		if (!_hasTaskPermissions(
+		if (!_hasPermission(
 				batchEngineExportTask, getPermissionChecker())) {
 
 			throw new PrincipalException();
@@ -154,7 +154,7 @@ public class BatchEngineExportTaskServiceImpl
 		for (BatchEngineExportTask batchEngineExportTask :
 				batchEngineExportTasks) {
 
-			if (_hasTaskPermissions(batchEngineExportTask, permissionChecker)) {
+			if (_hasPermission(batchEngineExportTask, permissionChecker)) {
 				filteredBatchEngineExportTasks.add(batchEngineExportTask);
 			}
 		}
@@ -162,7 +162,7 @@ public class BatchEngineExportTaskServiceImpl
 		return filteredBatchEngineExportTasks;
 	}
 
-	private boolean _hasTaskPermissions(
+	private boolean _hasPermission(
 		BatchEngineExportTask batchEngineExportTask,
 		PermissionChecker permissionChecker) {
 

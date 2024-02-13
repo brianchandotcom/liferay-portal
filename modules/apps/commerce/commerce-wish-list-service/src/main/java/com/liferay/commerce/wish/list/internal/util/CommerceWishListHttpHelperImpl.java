@@ -98,6 +98,7 @@ public class CommerceWishListHttpHelperImpl
 					cookieName, commerceWishList.getUuid());
 
 				cookie.setMaxAge(CookiesConstants.MAX_AGE);
+				cookie.setPath(StringPool.SLASH);
 
 				CookiesManagerUtil.addCookie(
 					CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,

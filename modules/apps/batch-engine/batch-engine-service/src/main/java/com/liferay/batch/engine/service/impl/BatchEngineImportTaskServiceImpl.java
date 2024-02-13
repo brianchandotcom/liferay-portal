@@ -148,9 +148,7 @@ public class BatchEngineImportTaskServiceImpl
 	private void _checkPermission(BatchEngineImportTask batchEngineImportTask)
 		throws PrincipalException {
 
-		if (!_hasPermission(
-				batchEngineImportTask, getPermissionChecker())) {
-
+		if (!_hasPermission(batchEngineImportTask, getPermissionChecker())) {
 			throw new PrincipalException();
 		}
 	}

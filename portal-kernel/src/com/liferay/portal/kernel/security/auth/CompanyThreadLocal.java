@@ -169,15 +169,16 @@ public class CompanyThreadLocal {
 
 		long currentCompanyId = _companyId.get();
 
+		SafeCloseable localeSafeCloseable =
+			LocaleThreadLocal.setWithSafeCloseable(null);
+		SafeCloseable timeZoneSafeCloseable =
+			TimeZoneThreadLocal.setWithSafeCloseable(null);
+
 		boolean modified = _setCompanyId(companyId, false);
 
 		SafeCloseable ctCollectionSafeCloseable =
 			CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 				ctCollectionId);
-		SafeCloseable localeSafeCloseable =
-			LocaleThreadLocal.setWithSafeCloseable(null);
-		SafeCloseable timeZoneSafeCloseable =
-			TimeZoneThreadLocal.setWithSafeCloseable(null);
 
 		return () -> {
 			if (modified) {

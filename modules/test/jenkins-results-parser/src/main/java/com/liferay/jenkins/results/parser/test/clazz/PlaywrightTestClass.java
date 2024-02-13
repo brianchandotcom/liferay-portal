@@ -68,7 +68,7 @@ public class PlaywrightTestClass extends BaseTestClass {
 	}
 
 	private static final Pattern _testFilePathPattern = Pattern.compile(
-		".+/test/playwright/(?<specFilePath>.+)");
+		".+/test/playwright/tests/(?<specFilePath>.+)");
 
 	private final String _specTitle;
 

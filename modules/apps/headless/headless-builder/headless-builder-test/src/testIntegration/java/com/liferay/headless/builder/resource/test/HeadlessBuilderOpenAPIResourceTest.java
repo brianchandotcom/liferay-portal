@@ -86,28 +86,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 
-		_objectDefinition3 = _publishObjectDefinition(
-			Arrays.asList(
-				new TextObjectFieldBuilder(
-				).externalReferenceCode(
-					_API_SCHEMA_OBJECT_PROPERTY_TEXT_FIELD_ERC
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"textField"
-				).build(),
-				new LongTextObjectFieldBuilder(
-				).externalReferenceCode(
-					_API_SCHEMA_OBJECT_PROPERTY_LONG_TEXT_FIELD_ERC
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"longTextField"
-				).build()),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		_singleElementObjectDefinition = _publishObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
@@ -287,6 +265,28 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"textField"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectDefinition3 = _publishObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_SCHEMA_OBJECT_PROPERTY_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textField"
+				).build(),
+				new LongTextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_SCHEMA_OBJECT_PROPERTY_LONG_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"longTextField"
 				).build()),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 

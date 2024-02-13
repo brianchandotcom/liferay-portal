@@ -140,6 +140,18 @@ public class CTRowUtil {
 		sb.append(targetCTCollectionId);
 
 		for (String uniqueIndexColumnName : uniqueIndexColumnNames) {
+			_getUniqueIndexColumnNamePredicate(sb, uniqueIndexColumnName);
+		}
+
+		return sb.toString();
+	}
+
+	private static void _getUniqueIndexColumnNamePredicate(
+		StringBundler sb, String uniqueIndexColumnName) {
+
+		if ((DBManagerUtil.getDBType() == DBType.ORACLE) ||
+			(DBManagerUtil.getDBType() == DBType.SQLSERVER)) {
+
 			sb.append(" and ((sourceTable.");
 			sb.append(uniqueIndexColumnName);
 			sb.append(" = targetTable.");
@@ -150,8 +162,12 @@ public class CTRowUtil {
 			sb.append(uniqueIndexColumnName);
 			sb.append(" is null))");
 		}
-
-		return sb.toString();
+		else {
+			sb.append(" and sourceTable.");
+			sb.append(uniqueIndexColumnName);
+			sb.append(" = targetTable.");
+			sb.append(uniqueIndexColumnName);
+		}
 	}
 
 	private static boolean _isPostgresBlobTable(

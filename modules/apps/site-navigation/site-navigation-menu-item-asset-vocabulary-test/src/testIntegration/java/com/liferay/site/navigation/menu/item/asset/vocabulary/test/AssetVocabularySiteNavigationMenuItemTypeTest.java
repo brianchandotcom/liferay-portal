@@ -369,14 +369,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			siteNavigationMenuItems.toString(), 3,
 			siteNavigationMenuItems.size());
 
-		for (int i = 0; i < assetCategories.size(); i++) {
-			AssetCategory assetCategory = assetCategories.get(i);
-
-			SiteNavigationMenuItem siteNavigationMenuItem =
-				siteNavigationMenuItems.get(i);
-
-			_assertAssetCategorySiteNavigationMenuItem(
-				assetCategory, locale, siteNavigationMenuItem);
+		for (AssetCategory assetCategory : assetCategories) {
+			Assert.assertNotNull(
+				_getSiteNavigationMenuItemByCategoryId(
+					assetCategory, locale, siteNavigationMenuItems));
 		}
 	}
 
@@ -790,14 +786,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			childrenSiteNavigationMenuItems.toString(), assetCategories.size(),
 			childrenSiteNavigationMenuItems.size());
 
-		for (int i = 0; i < assetCategories.size(); i++) {
-			AssetCategory assetCategory = assetCategories.get(i);
-
+		for (AssetCategory assetCategory : assetCategories) {
 			SiteNavigationMenuItem childrenSiteNavigationMenuItem =
-				childrenSiteNavigationMenuItems.get(i);
-
-			_assertAssetCategorySiteNavigationMenuItem(
-				assetCategory, locale, childrenSiteNavigationMenuItem);
+				_getSiteNavigationMenuItemByCategoryId(
+					assetCategory, locale, childrenSiteNavigationMenuItems);
 
 			_assertGetChildrenSiteNavigationMenuItems(
 				locale, assetCategory.getCategoryId(),
@@ -854,6 +846,49 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		return _getAssetCategorySiteNavigationMenuItem(
 			assetCategory, mockHttpServletRequest, locale,
 			siteNavigationMenuItemType);
+	}
+
+	private SiteNavigationMenuItem _getSiteNavigationMenuItemByCategoryId(
+		AssetCategory assetCategory, Locale locale,
+		List<SiteNavigationMenuItem> siteNavigationMenuItems) {
+
+		SiteNavigationMenuItem assetCategorySiteNavigationMenuItem = null;
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.fastLoad(
+					siteNavigationMenuItem.getTypeSettings()
+				).build();
+
+			if (!Objects.equals(
+					typeSettingsUnicodeProperties.get("type"),
+					"asset-category") ||
+				!Objects.equals(
+					assetCategory.getCategoryId(),
+					GetterUtil.getLong(
+						typeSettingsUnicodeProperties.get("classPK")))) {
+
+				continue;
+			}
+
+			Assert.assertEquals(
+				assetCategory.getVocabularyId(),
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.get("assetVocabularyId")));
+			Assert.assertEquals(
+				assetCategory.getTitle(locale),
+				typeSettingsUnicodeProperties.get("title"));
+
+			assetCategorySiteNavigationMenuItem = siteNavigationMenuItem;
+
+			break;
+		}
+
+		Assert.assertNotNull(assetCategorySiteNavigationMenuItem);
+
+		return assetCategorySiteNavigationMenuItem;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

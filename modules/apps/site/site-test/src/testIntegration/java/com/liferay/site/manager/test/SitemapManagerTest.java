@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -239,6 +240,58 @@ public class SitemapManagerTest {
 
 			_assertSitemap(_layout.getUuid(), _getExpectedAssetCategoryUrls());
 		}
+	}
+
+	@Test
+	public void testSitemapIncludeChildPages() throws Exception {
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), _layout.getPlid());
+
+		String childLayoutCanonicalURL = _portal.getCanonicalURL(
+			_portal.getLayoutFullURL(childLayout, _themeDisplay), _themeDisplay,
+			childLayout);
+
+		_testSitemapIncludePagesCompanyEnabledGroupEnabled(
+			childLayout.getUuid(), childLayoutCanonicalURL);
+
+		Layout grandChildLayout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId(), childLayout.getPlid());
+
+		_testSitemapIncludePagesCompanyEnabledGroupEnabled(
+			grandChildLayout.getUuid(),
+			_portal.getCanonicalURL(
+				_portal.getLayoutFullURL(grandChildLayout, _themeDisplay),
+				_themeDisplay, grandChildLayout));
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			childLayout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"sitemap-include-child-layouts", "false");
+
+		_layoutLocalService.updateLayout(
+			childLayout.getGroupId(), false, childLayout.getLayoutId(),
+			typeSettingsUnicodeProperties.toString());
+
+		_testSitemapIncludePagesCompanyEnabledGroupEnabled(
+			childLayout.getUuid(), childLayoutCanonicalURL);
+
+		_testEmptySitemapIncludePagesCompanyEnabledGroupEnabled(
+			grandChildLayout.getUuid());
+
+		typeSettingsUnicodeProperties = _layout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty(
+			"sitemap-include-child-layouts", "false");
+
+		_layoutLocalService.updateLayout(
+			_layout.getGroupId(), false, _layout.getLayoutId(),
+			typeSettingsUnicodeProperties.toString());
+
+		_testEmptySitemapIncludePagesCompanyEnabledGroupEnabled(
+			childLayout.getUuid());
+		_testEmptySitemapIncludePagesCompanyEnabledGroupEnabled(
+			grandChildLayout.getUuid());
 	}
 
 	@Test
@@ -678,6 +731,38 @@ public class SitemapManagerTest {
 
 		_themeDisplay.setServerName("localhost");
 		_themeDisplay.setServerPort(8080);
+	}
+
+	private void _testEmptySitemapIncludePagesCompanyEnabledGroupEnabled(
+			String uuid)
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						_group.getGroupId(), _PID_SITEMAP_GROUP_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			_assertEmptySitemap(uuid);
+		}
 	}
 
 	private void _testSitemapIncludePagesCompanyEnabledGroupEnabled(

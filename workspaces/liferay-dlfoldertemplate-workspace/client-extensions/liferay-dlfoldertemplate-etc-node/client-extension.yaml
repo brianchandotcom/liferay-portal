@@ -19,14 +19,8 @@ liferay-dlfoldertemplate-oauth-application-server:
 liferay-dlfoldertemplate-oauth-application-user-agent:
     .serviceAddress: localhost:8050
     .serviceScheme: http
-    name: Liferay DL Folder Template Etc Node OAuth Application  User Agent
+    name: Liferay DL Folder Template Etc Node OAuth Application User Agent
     scopes:
         - Liferay.Headless.Delivery.everything.read
         - Liferay.Object.Admin.REST.everything
     type: oAuthApplicationUserAgent
-liferay-dlfoldertemplate-sample-hr-object-action:
-    name: Create HR Employee Folder
-    oAuth2ApplicationExternalReferenceCode: liferay-dlfoldertemplate-oauth-application-user-agent
-    resourcePath: /jobs/hr/employee/folder
-    type: objectAction
-

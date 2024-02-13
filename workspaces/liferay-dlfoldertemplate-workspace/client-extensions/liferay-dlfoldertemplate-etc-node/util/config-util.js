@@ -6,17 +6,13 @@
 import config from './configTreePath.js';
 
 export function getConfigByKey(configKey) {
-	configKey = configKey.toString().toUpperCase().replaceAll('.', '_');
+	configKey = toConstantCase(configKey);
 
 	if (process.env[configKey] && process.env[configKey].length > 1) {
 		return process.env[configKey.toString()];
 	}
 	else {
-		configKey = configKey
-			.toString()
-			.toLowerCase()
-			.replaceAll('_', '.')
-			.replaceAll('-', '.');
+		configKey = toDotCase(configKey);
 
 		if (config[configKey]) {
 			return config[configKey];
@@ -29,18 +25,14 @@ export function getConfigByKey(configKey) {
 	}
 }
 
-export function getOAuthConfigByKey(erc, configKey) {
-	configKey = `${erc}${configKey}`;
+export function getOAuthConfigByKey(externalReferenceCode, configKey) {
+	configKey = `${externalReferenceCode}${configKey}`;
 
 	if (process.env[configKey] && process.env[configKey].length > 1) {
-		return process.env[configKey.toString().toUpperCase()];
+		return process.env[toConstantCase(configKey)];
 	}
 	else {
-		configKey = configKey
-			.toString()
-			.toLowerCase()
-			.replaceAll('_', '.')
-			.replaceAll('-', '.');
+		configKey = toDotCase(configKey);
 
 		if (config[configKey]) {
 			return config[configKey];
@@ -52,3 +44,23 @@ export function getOAuthConfigByKey(erc, configKey) {
 		}
 	}
 }
+
+function toConstantCase(key) {
+	return key
+		.toString()
+		.toUpperCase()
+		.replaceAll('-', '_')
+		.replaceAll('.', '_');
+}
+
+function toDotCase(key) {
+	return key
+		.toString()
+		.toLowerCase()
+		.replaceAll('_', '.')
+		.replaceAll('-', '.');
+}
+
+
+
+

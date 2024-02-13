@@ -7,6 +7,8 @@ package com.liferay.batch.engine.service.impl;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.model.BatchEngineImportTaskError;
+import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -15,6 +17,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -107,6 +111,19 @@ public class BatchEngineImportTaskServiceImpl
 	}
 
 	@Override
+	public List<BatchEngineImportTaskError> getBatchEngineImportTaskErrors(
+			long batchEngineImportTaskId)
+		throws PortalException {
+
+		_checkPermission(
+			batchEngineImportTaskLocalService.getBatchEngineImportTask(
+				batchEngineImportTaskId));
+
+		return _batchEngineImportTaskErrorLocalService.
+			getBatchEngineImportTaskErrors(batchEngineImportTaskId);
+	}
+
+	@Override
 	public List<BatchEngineImportTask> getBatchEngineImportTasks(
 			long companyId, int start, int end)
 		throws PortalException {
@@ -143,6 +160,18 @@ public class BatchEngineImportTaskServiceImpl
 					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 		return filteredBatchEngineImportTasks.size();
+	}
+
+	@Override
+	public InputStream openContentInputStream(long batchEngineImportTaskId)
+		throws PortalException {
+
+		_checkPermission(
+			batchEngineImportTaskLocalService.getBatchEngineImportTask(
+				batchEngineImportTaskId));
+
+		return batchEngineImportTaskLocalService.openContentInputStream(
+			batchEngineImportTaskId);
 	}
 
 	private void _checkPermission(BatchEngineImportTask batchEngineImportTask)
@@ -197,5 +226,9 @@ public class BatchEngineImportTaskServiceImpl
 
 		return false;
 	}
+
+	@Reference
+	private BatchEngineImportTaskErrorLocalService
+		_batchEngineImportTaskErrorLocalService;
 
 }

@@ -8,11 +8,13 @@ package com.liferay.batch.engine.service.impl;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.service.base.BatchEngineExportTaskServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -103,7 +105,7 @@ public class BatchEngineExportTaskServiceImpl
 		_checkPermission(companyId);
 
 		return _filterBatchEngineExportTasks(
-			batchEngineExportTaskPersistence.findByCompanyId(
+			batchEngineExportTaskLocalService.getBatchEngineExportTasks(
 				companyId, start, end, orderByComparator));
 	}
 
@@ -115,9 +117,22 @@ public class BatchEngineExportTaskServiceImpl
 
 		List<BatchEngineExportTask> filteredBatchEngineExportTasks =
 			_filterBatchEngineExportTasks(
-				batchEngineExportTaskPersistence.findByCompanyId(companyId));
+				batchEngineExportTaskLocalService.getBatchEngineExportTasks(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 		return filteredBatchEngineExportTasks.size();
+	}
+
+	@Override
+	public InputStream openContentInputStream(long batchEngineExportTaskId)
+		throws PortalException {
+
+		_checkPermission(
+			batchEngineExportTaskLocalService.getBatchEngineExportTask(
+				batchEngineExportTaskId));
+
+		return batchEngineExportTaskLocalService.openContentInputStream(
+			batchEngineExportTaskId);
 	}
 
 	private void _checkPermission(BatchEngineExportTask batchEngineExportTask)

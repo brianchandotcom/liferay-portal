@@ -115,9 +115,11 @@ public class BatchEngineExportTaskServiceImpl
 
 		_checkPermission(companyId);
 
-		return _filterBatchEngineExportTasks(
-			batchEngineExportTaskPersistence.findByCompanyId(companyId)
-		).size();
+		List<BatchEngineExportTask> filteredBatchEngineExportTasks =
+			_filterBatchEngineExportTasks(
+				batchEngineExportTaskPersistence.findByCompanyId(companyId));
+
+		return filteredBatchEngineExportTasks.size();
 	}
 
 	private void _checkPermission(BatchEngineExportTask batchEngineExportTask)

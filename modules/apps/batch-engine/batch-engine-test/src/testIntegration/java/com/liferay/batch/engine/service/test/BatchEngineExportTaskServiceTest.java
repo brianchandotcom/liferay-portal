@@ -205,11 +205,11 @@ public class BatchEngineExportTaskServiceTest
 	}
 
 	private BatchEngineExportTask _addBatchEngineExportTask(
-			long companyId, User owner)
+			long companyId, User user)
 		throws Exception {
 
 		return _batchEngineExportTaskLocalService.addBatchEngineExportTask(
-			null, companyId, owner.getUserId(), null,
+			null, companyId, user.getUserId(), null,
 			BlogPosting.class.getName(), "JSON",
 			BatchEngineTaskExecuteStatus.INITIAL.name(),
 			Collections.emptyList(),

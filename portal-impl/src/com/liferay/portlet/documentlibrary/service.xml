@@ -508,8 +508,10 @@
 		<exception>DuplicateFolderName</exception>
 		<exception>DuplicateRepositoryName</exception>
 		<exception>FileEntryDisplayDate</exception>
+		<exception>FileEntryExpirationDate</exception>
 		<exception>FileEntryExpired</exception>
 		<exception>FileEntryLock</exception>
+		<exception>FileEntryReviewDate</exception>
 		<exception>FileExtension</exception>
 		<exception>FileMimeType</exception>
 		<exception>FileName</exception>

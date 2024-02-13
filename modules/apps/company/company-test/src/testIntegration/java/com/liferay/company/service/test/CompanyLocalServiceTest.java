@@ -1258,7 +1258,9 @@ public class CompanyLocalServiceTest {
 	}
 
 	private void _verifyRandomCompanyId(long companyId, long counterCompanyId) {
-		Assert.assertTrue(companyId >= (long)Math.pow(10, 15));
+		Assert.assertTrue(
+			(companyId >= (long)Math.pow(10, 13)) &&
+			(companyId < (long)Math.pow(10, 14)));
 		Assert.assertNotEquals(counterCompanyId, companyId);
 	}
 

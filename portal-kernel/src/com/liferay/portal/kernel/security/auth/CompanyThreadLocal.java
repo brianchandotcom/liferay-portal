@@ -171,17 +171,18 @@ public class CompanyThreadLocal {
 
 		SafeCloseable localeSafeCloseable =
 			LocaleThreadLocal.setWithSafeCloseable(null);
+
 		SafeCloseable timeZoneSafeCloseable =
 			TimeZoneThreadLocal.setWithSafeCloseable(null);
 
-		boolean modified = _setCompanyId(companyId, false);
+		boolean changed = _setCompanyId(companyId, false);
 
 		SafeCloseable ctCollectionSafeCloseable =
 			CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 				ctCollectionId);
 
 		return () -> {
-			if (modified) {
+			if (changed) {
 				_syncLastDBPartitionSessionState();
 			}
 

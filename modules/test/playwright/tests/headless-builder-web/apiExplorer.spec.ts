@@ -86,7 +86,7 @@ test('can see filter and sort parameters for collection endpoints', async ({
 	);
 });
 
-test('can see get endpoint path with erc parameter in api explorer', async ({
+test('can see get endpoint path with erc parameter', async ({
 	apiExplorerPage,
 	apiHelpers,
 	page,
@@ -132,7 +132,7 @@ test('can see get endpoint path with erc parameter in api explorer', async ({
 	);
 });
 
-test('can see get endpoint path with id parameter in api explorer', async ({
+test('can see get endpoint path with id parameter', async ({
 	apiExplorerPage,
 	apiHelpers,
 	page,

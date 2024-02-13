@@ -77,12 +77,12 @@ test('can create post endpoint and can not edit http method', async ({
 	headlessBuilderPage,
 }) => {
 	await apiHelpers.object.postObjectEntry(
-		basicAPIApplication,
+		application,
 		'headless-builder/applications'
 	);
 
 	await headlessBuilderPage.goto();
-	await headlessBuilderPage.goToEditApplication(basicAPIApplication.title);
+	await headlessBuilderPage.goToEditApplication(application.title);
 
 	await applicationPage.createEndpoint('POST', 'Company', 'student');
 

@@ -8068,7 +8068,7 @@ public class ServiceBuilder {
 			startIndex = _testDirName.length();
 		}
 		else {
-			throw new IllegalArgumentException(
+			throw new ServiceBuilderException(
 				"Unable to parse package path from " + fileName);
 		}
 

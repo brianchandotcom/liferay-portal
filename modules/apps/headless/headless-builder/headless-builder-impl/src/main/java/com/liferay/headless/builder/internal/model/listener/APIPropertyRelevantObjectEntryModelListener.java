@@ -127,23 +127,28 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 			String type = (String)values.get("type");
 
-			if (Objects.equals(type, "object")) {
+			if (Objects.equals(type, "record")) {
 				if (!FeatureFlagManagerUtil.isEnabled("LPD-10964")) {
 					throw new UnsupportedOperationException(
-						"Object is not supported");
+						"Record is not supported");
 				}
 
-				if (!Validator.isBlank(objectFieldERC) ||
-					!Validator.isBlank(objectRelationshipNames)) {
-
+				if (!Validator.isBlank(objectFieldERC)) {
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"An object API property can have neither an Object " +
-							"Field ERC nor Object Relationship Names " +
-								"properties associated",
-						"an-object-api-property-can-have-neither-an-object-" +
-							"field-erc-nor-object-relationship-names-" +
-								"properties-associated");
+						"A record API property can not an Object Field ERC " +
+							"value",
+						"a-record-api-property-can-not-have-an-object-field-" +
+							"erc-value");
+				}
+
+				if (!Validator.isBlank(objectRelationshipNames)) {
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null,
+						"A record API property can not have an Object " +
+							"Relationship Names value",
+						"a-record-api-property-can-not-have-an-object-" +
+							"relationship-names-value");
 				}
 			}
 			else {
@@ -206,21 +211,21 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"A field API property must be related to an object " +
+						"A field API property must be related to a record " +
 							"API property",
-						"a-field-api-property-must-be-related-to-an-object-" +
+						"a-field-api-property-must-be-related-to-a-record-" +
 							"api-property");
 				}
 
-				if (Objects.equals(values.get("type"), "object") &&
+				if (Objects.equals(values.get("type"), "record") &&
 					Objects.equals(apiPropertyValues.get("type"), "field")) {
 
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"An object API property must be related to another " +
-							"object API property",
-						"an-object-api-property-must-be-related-to-another-" +
-							"object-api-property");
+						"A record API property must be related to another " +
+							"record API property",
+						"a-record-api-property-must-be-related-to-another-" +
+							"record-api-property");
 				}
 			}
 

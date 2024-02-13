@@ -402,7 +402,7 @@ public class ProjectController extends BaseFaroController {
 				faroProject);
 		}
 
-		return _getProjectDisplay(faroProject);
+		return _getProjectDisplay(faroProject, true);
 	}
 
 	@GET
@@ -491,7 +491,7 @@ public class ProjectController extends BaseFaroController {
 						faroUser.getGroupId());
 
 				try {
-					return _getProjectDisplay(faroProject);
+					return _getProjectDisplay(faroProject, false);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -637,7 +637,7 @@ public class ProjectController extends BaseFaroController {
 		}
 
 		return _getProjectDisplay(
-			faroProjectLocalService.updateFaroProject(faroProject));
+			faroProjectLocalService.updateFaroProject(faroProject), true);
 	}
 
 	protected OSBAccountEntry createOSBAccountEntry(boolean trial) {
@@ -874,7 +874,8 @@ public class ProjectController extends BaseFaroController {
 			resourceBundle, "invalid-incident-report-email-addresses");
 	}
 
-	private ProjectDisplay _getProjectDisplay(FaroProject faroProject)
+	private ProjectDisplay _getProjectDisplay(
+			FaroProject faroProject, boolean refreshSubscription)
 		throws Exception {
 
 		if (StringUtil.equals(
@@ -916,9 +917,16 @@ public class ProjectController extends BaseFaroController {
 				faroProject);
 		}
 
-		ProjectDisplay projectDisplay = new ProjectDisplay(
-			faroProject, cerebroEngineClient, contactsEngineClient,
-			_provisioningClient);
+		ProjectDisplay projectDisplay = null;
+
+		if (refreshSubscription) {
+			projectDisplay = new ProjectDisplay(
+				faroProject, cerebroEngineClient, contactsEngineClient,
+				_provisioningClient);
+		}
+		else {
+			projectDisplay = new ProjectDisplay(faroProject);
+		}
 
 		Group group = _groupLocalService.getGroup(faroProject.getGroupId());
 

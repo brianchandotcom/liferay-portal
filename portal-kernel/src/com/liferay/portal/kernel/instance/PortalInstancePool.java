@@ -34,10 +34,21 @@ public class PortalInstancePool {
 	}
 
 	public static long[] getCompanyIds() {
-		return ArrayUtil.toLongArray(_portalInstances.keySet());
+		if (!_portalInstances.isEmpty()) {
+			return ArrayUtil.toLongArray(_portalInstances.keySet());
+		}
+
+		try {
+			return _getCompanyIdsBySQL();
+		}
+		catch (SQLException sqlException) {
+			_log.error("Unable to get the company IDs by SQL", sqlException);
+
+			throw new RuntimeException(sqlException);
+		}
 	}
 
-	public static long[] getCompanyIdsBySQL() throws SQLException {
+	private static long[] _getCompanyIdsBySQL() throws SQLException {
 		List<Long> companyIds = new ArrayList<>();
 
 		long defaultCompanyId = getDefaultCompanyIdBySQL();

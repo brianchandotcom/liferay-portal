@@ -5,11 +5,16 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.test.clazz.PlaywrightTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Kenji Heigel
@@ -19,9 +24,52 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 	public PlaywrightBatchBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuild topLevelBuild,
-		AxisTestClassGroup axisTestClassGroup) {
+		AxisTestClassGroup axisTestClassGroup, TestClass testClass) {
 
 		super(testrayBuild, topLevelBuild, axisTestClassGroup);
+
+		_testClass = testClass;
+	}
+
+	@Override
+	public String getErrors() {
+		TestResult testResult = _getTestResult();
+
+		if (testResult == null) {
+			return super.getErrors();
+		}
+
+		if (!testResult.isFailing()) {
+			return null;
+		}
+
+		return testResult.getErrorStackTrace();
+	}
+
+	@Override
+	public String getName() {
+		PlaywrightTestClass playwrightTestClass = _getPlaywrightTestClass();
+
+		if (playwrightTestClass == null) {
+			return super.getName();
+		}
+
+		return playwrightTestClass.getName();
+	}
+
+	@Override
+	public Status getStatus() {
+		TestResult testResult = _getTestResult();
+
+		if (testResult == null) {
+			return Status.UNTESTED;
+		}
+
+		if (testResult.isFailing()) {
+			return Status.FAILED;
+		}
+
+		return Status.PASSED;
 	}
 
 	@Override
@@ -41,5 +89,42 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			getBuild(), "Playwright Report",
 			getAxisBuildURLPath() + "/playwright-report/index.html");
 	}
+
+	private PlaywrightTestClass _getPlaywrightTestClass() {
+		if (!(_testClass instanceof PlaywrightTestClass)) {
+			return null;
+		}
+
+		return (PlaywrightTestClass)_testClass;
+	}
+
+	private TestResult _getTestResult() {
+		Build build = getBuild();
+
+		if (build == null) {
+			return null;
+		}
+
+		PlaywrightTestClass playwrightTestClass = _getPlaywrightTestClass();
+
+		if (playwrightTestClass == null) {
+			return null;
+		}
+
+		String specFilePath = playwrightTestClass.getSpecFilePath();
+		String specTitle = playwrightTestClass.getSpecTitle();
+
+		for (TestResult testResult : build.getTestResults()) {
+			if (Objects.equals(specFilePath, testResult.getClassName()) &&
+				Objects.equals(specTitle, testResult.getTestName())) {
+
+				return testResult;
+			}
+		}
+
+		return null;
+	}
+
+	private final TestClass _testClass;
 
 }

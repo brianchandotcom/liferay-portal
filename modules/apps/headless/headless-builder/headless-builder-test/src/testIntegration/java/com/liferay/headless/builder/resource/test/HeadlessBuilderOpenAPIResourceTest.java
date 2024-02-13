@@ -557,19 +557,19 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 								"externalReferenceCode",
 								RandomTestUtil.randomString()
 							).put(
-								"name", "objectProperty1"
+								"name", "recordProperty1"
 							).put(
-								"type", "object"
+								"type", "record"
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_PROPERTY_OBJECT_ERC_1
+								_API_PROPERTY_RECORD_ERC_1
 							).put(
-								"name", "objectProperty2"
+								"name", "recordProperty2"
 							).put(
-								"type", "object"
+								"type", "record"
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -577,35 +577,35 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 								"externalReferenceCode",
 								RandomTestUtil.randomString()
 							).put(
-								"name", "objectProperty3"
+								"name", "recordProperty3"
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-								_API_PROPERTY_OBJECT_ERC_1
+								_API_PROPERTY_RECORD_ERC_1
 							).put(
-								"type", "object"
+								"type", "record"
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_PROPERTY_OBJECT_ERC_2
+								_API_PROPERTY_RECORD_ERC_2
 							).put(
-								"name", "objectProperty4"
+								"name", "recordProperty4"
 							).put(
-								"type", "object"
+								"type", "record"
 							),
 							JSONUtil.put(
 								"description", "description"
 							).put(
 								"externalReferenceCode",
-								_API_PROPERTY_OBJECT_ERC_3
+								_API_PROPERTY_RECORD_ERC_3
 							).put(
-								"name", "objectProperty5"
+								"name", "recordProperty5"
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-								_API_PROPERTY_OBJECT_ERC_2
+								_API_PROPERTY_RECORD_ERC_2
 							).put(
-								"type", "object"
+								"type", "record"
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -619,7 +619,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 								_API_SCHEMA_OBJECT_PROPERTY_TEXT_FIELD_ERC
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-								_API_PROPERTY_OBJECT_ERC_1
+								_API_PROPERTY_RECORD_ERC_1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -633,7 +633,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 								_API_SCHEMA_OBJECT_PROPERTY_LONG_TEXT_FIELD_ERC
 							).put(
 								"r_apiPropertyToAPIProperties_c_apiPropertyERC",
-								_API_PROPERTY_OBJECT_ERC_3
+								_API_PROPERTY_RECORD_ERC_3
 							))
 					).put(
 						"description", "description"
@@ -643,7 +643,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"mainObjectDefinitionERC",
 						_objectDefinition3.getExternalReferenceCode()
 					).put(
-						"name", "ObjectSchemaName"
+						"name", "RecordSchemaName"
 					),
 					JSONUtil.put(
 						"apiSchemaToAPIProperties",
@@ -955,13 +955,13 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_POST_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_OBJECT_ERC_1 =
+	private static final String _API_PROPERTY_RECORD_ERC_1 =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_OBJECT_ERC_2 =
+	private static final String _API_PROPERTY_RECORD_ERC_2 =
 		RandomTestUtil.randomString();
 
-	private static final String _API_PROPERTY_OBJECT_ERC_3 =
+	private static final String _API_PROPERTY_RECORD_ERC_3 =
 		RandomTestUtil.randomString();
 
 	private static final String _API_SCHEMA_AGGREGATION_FIELD_ERC =

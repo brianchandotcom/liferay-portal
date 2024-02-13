@@ -131,8 +131,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
-	// LPD-6808 - AC15-16
-
+	/**
+	 * LPD-6808: AC15-AC16
+	 */
 	@Test
 	public void testExportImportCompanyScopeStructuredJournalArticle()
 		throws Exception {
@@ -140,8 +141,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		exportImportJournalArticle(true);
 	}
 
-	// LPD-6808 - AC15-17
-
+	/**
+	 * LPD-6808: AC15-AC17
+	 */
 	@Test
 	public void testExportImportJournalArticleWithLayoutHrefLayoutDoesNotExistOnImportSide()
 		throws Exception {

@@ -95,6 +95,69 @@ test('can see path parameter property with map details', async ({
 	await headlessBuilderPage.deleteApplication('My-app');
 });
 
+test('can see schema unique fields as path parameter properties', async ({
+	apiHelpers,
+	applicationPage,
+	headlessBuilderPage,
+	page,
+}) => {
+	const application = await apiHelpers.object.postObjectEntry(
+		{
+			apiApplicationToAPISchemas: [
+				{
+					description: 'API Application Schema',
+					externalReferenceCode: 'api-application-schema',
+					mainObjectDefinitionERC: 'L_API_APPLICATION',
+					name: 'API Application Schema',
+				},
+			],
+			applicationStatus: 'published',
+			baseURL: 'basic-application',
+			description: 'Test API Application',
+			externalReferenceCode: 'basic-application',
+			title: 'Basic application',
+		},
+		'headless-builder/applications'
+	);
+
+	const endpoint = await apiHelpers.object.postObjectEntry(
+		{
+			description: 'Test API Endpoint',
+			externalReferenceCode: 'basic-endpoint',
+			httpMethod: 'get',
+			name: 'Basic API Endpoint',
+			path: '/endpoint/{pathParam}',
+			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
+				application.externalReferenceCode,
+			r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
+				application.apiApplicationToAPISchemas[0].externalReferenceCode,
+			retrieveType: 'singleElement',
+			scope: 'company',
+		},
+		'headless-builder/endpoints'
+	);
+
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.goToEditApplication(application.title);
+	await applicationPage.goToEndpointsTab();
+	await applicationPage.goToEditEndpoint(endpoint.path);
+	await applicationPage.goToEndpointConfigurationTab();
+
+	await page.getByRole('button', {name: 'Select an Option'}).click();
+	await expect(page.getByRole('menuitem', {name: 'Base URL'})).toBeVisible();
+	await expect(
+		page.getByRole('menuitem', {name: 'External Reference Code'})
+	).toBeVisible();
+	await expect(page.getByRole('menuitem', {name: 'ID'})).toBeVisible();
+	await expect(page.getByRole('menuitem', {name: 'Title'})).toBeVisible();
+
+	await page.goto('/');
+	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		'headless-builder/applications',
+		application.externalReferenceCode
+	);
+});
+
 test('can list site scoped endpoint', async ({
 	apiHelpers,
 	applicationPage,

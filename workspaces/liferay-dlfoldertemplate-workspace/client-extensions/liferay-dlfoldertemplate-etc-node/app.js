@@ -21,15 +21,10 @@ const serverPort = getConfigByKey(serviceConfigKeys.SERVER_PORT);
 const app = express();
 
 app.use(bodyParser.json());
-
 app.use(corsWithReady);
-
 app.use(cors());
-
 app.use(express.json());
-
 app.use(liferayJWT);
-
 app.use('/jobs', Services);
 
 app.get(getConfigByKey(serviceConfigKeys.READY_PATH), (req, res) => {

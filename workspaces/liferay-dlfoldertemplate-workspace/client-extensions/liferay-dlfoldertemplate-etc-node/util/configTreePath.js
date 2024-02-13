@@ -36,7 +36,7 @@ async function* walk(dir) {
 const configTreeMap = async () => {
 	try {
 		if (isValidConfiguration(config.configTreePaths)) {
-			throw new Error('Invalid LXC configuration');
+			throw new Error('Invalid LXC Configuration');
 		}
 		for (const configTreePath of config.configTreePaths) {
 			for await (const configFile of walk(configTreePath)) {
@@ -50,7 +50,7 @@ const configTreeMap = async () => {
 	}
 	catch (error) {
 		console.error(
-			'Your environment variables have not been initialized properly!, We will switch to DXP SH / LXC SM Configurations'
+			'Your environment variables have not been initialized properly. The DXP SH / LXC SM configurations will be used instead.'
 		);
 	}
 

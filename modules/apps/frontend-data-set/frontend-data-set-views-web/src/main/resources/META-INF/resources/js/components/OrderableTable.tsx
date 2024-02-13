@@ -422,6 +422,7 @@ const OrderableTable = ({
 					</DndProvider>
 				) : query ? (
 					<ClayEmptyState
+						className="text-center"
 						description={Liferay.Language.get(
 							'sorry,-no-results-were-found'
 						)}
@@ -429,6 +430,7 @@ const OrderableTable = ({
 					/>
 				) : (
 					<ClayEmptyState
+						className="text-center"
 						description={noItemsDescription}
 						title={noItemsTitle}
 					>

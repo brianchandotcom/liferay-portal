@@ -19,10 +19,14 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.WordUtils;
 
@@ -202,6 +206,8 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 	@Override
 	public List<TestrayAttachment> getTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		testrayAttachments.addAll(_getDockerLogsTestrayAttachments());
 
 		testrayAttachments.add(_getGradlePluginsAttachment());
 		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
@@ -409,6 +415,28 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			getTopLevelJobSummaryTestrayAttachment();
 	}
 
+	private List<TestrayAttachment> _getDockerLogsTestrayAttachments() {
+		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+
+		Build build = getBuild();
+
+		for (URL testrayAttachmentURL : build.getTestrayAttachmentURLs()) {
+			Matcher matcher = _dockerLogsURLPattern.matcher(
+				String.valueOf(testrayAttachmentURL));
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			testrayAttachments.add(
+				getTestrayAttachment(
+					build, "Docker Log (" + matcher.group("fileName") + ")",
+					getAxisBuildURLPath() + "/" + matcher.group("key")));
+		}
+
+		return testrayAttachments;
+	}
+
 	private TestrayAttachment _getGradlePluginsAttachment() {
 		return getTestrayAttachment(
 			getBuild(), "Gradle Plugins Test Report",
@@ -488,6 +516,9 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 			getBuild(), "Warnings",
 			getAxisBuildURLPath() + "/warnings.html.gz");
 	}
+
+	private static final Pattern _dockerLogsURLPattern = Pattern.compile(
+		"https?://.+/(?<key>docker-logs/(?<fileName>[^/]+.log).txt.gz)");
 
 	private final AxisTestClassGroup _axisTestClassGroup;
 	private TopLevelBuildTestrayCaseResult _topLevelBuildTestrayCaseResult;

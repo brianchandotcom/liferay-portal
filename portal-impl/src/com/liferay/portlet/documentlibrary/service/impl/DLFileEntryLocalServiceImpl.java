@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.InvalidLockException;
@@ -909,6 +910,8 @@ public class DLFileEntryLocalServiceImpl
 					dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
 					dlFileEntry.setVersion(dlLatestFileVersion.getVersion());
 					dlFileEntry.setSize(dlLatestFileVersion.getSize());
+					dlFileEntry.setDisplayDate(
+						dlLatestFileVersion.getDisplayDate());
 					dlFileEntry.setExpirationDate(
 						dlLatestFileVersion.getExpirationDate());
 					dlFileEntry.setReviewDate(
@@ -1983,6 +1986,17 @@ public class DLFileEntryLocalServiceImpl
 
 		int oldStatus = dlFileVersion.getStatus();
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10701")) {
+			Date date = new Date();
+
+			if ((status == WorkflowConstants.STATUS_APPROVED) &&
+				(dlFileVersion.getDisplayDate() != null) &&
+				date.before(dlFileVersion.getDisplayDate())) {
+
+				status = WorkflowConstants.STATUS_SCHEDULED;
+			}
+		}
+
 		dlFileVersion.setStatus(status);
 		dlFileVersion.setStatusByUserId(user.getUserId());
 		dlFileVersion.setStatusByUserName(user.getFullName());
@@ -2079,6 +2093,7 @@ public class DLFileEntryLocalServiceImpl
 		if (((status == WorkflowConstants.STATUS_APPROVED) ||
 			 (status == WorkflowConstants.STATUS_EXPIRED) ||
 			 (status == WorkflowConstants.STATUS_IN_TRASH) ||
+			 (status == WorkflowConstants.STATUS_SCHEDULED) ||
 			 (oldStatus == WorkflowConstants.STATUS_IN_TRASH)) &&
 			((serviceContext == null) || serviceContext.isIndexingEnabled())) {
 

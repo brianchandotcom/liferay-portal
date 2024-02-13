@@ -50,7 +50,10 @@ export class ApiExplorerPage {
 		);
 	}
 
-	getEndpointLocator(endpointPath: string): Locator {
-		return this.page.locator(`//span[@data-path="${endpointPath}"]/a/span`);
+	getEndpointLocator(endpointPath: string, options?: object): Locator {
+		return this.page.locator(
+			`//span[@data-path="${endpointPath}"]/a/span`,
+			options
+		);
 	}
 }

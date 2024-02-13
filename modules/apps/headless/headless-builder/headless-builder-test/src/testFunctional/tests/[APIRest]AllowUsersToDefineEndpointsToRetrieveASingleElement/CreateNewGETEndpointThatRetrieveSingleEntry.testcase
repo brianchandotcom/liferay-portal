@@ -26,69 +26,6 @@ definition {
 	}
 
 	@priority = 4
-	test CanSeeGetEndpointPathWithErcParameterInAPIExplorer {
-		property portal.acceptance = "true";
-
-		task ("Given a custom object Student with name field published") {
-			ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "Student",
-				en_US_plural_label = "Students",
-				name = "Student",
-				objectDefinitionExternalReferenceCode = "student",
-				requiredStringFieldName = "name",
-				requiredStringFieldNameExternalReferenceCode = "studentName");
-		}
-
-		task ("And Given Student entry created") {
-			ObjectDefinitionAPI.createObjectEntryWithName(
-				en_US_plural_label = "Students",
-				name = "Test");
-		}
-
-		task ("And Given a unpublished API Application with singleElement and ID and '/getTest/{entryId}' path Endpoint with Student as main object Schema") {
-			ApplicationAPI.createAPIApplication(
-				baseURL = "my-app",
-				endpointName = "testendpoint",
-				endpointPath = "/gettest/{externalreferencecode}",
-				mainObjectDefinitionErc = "student",
-				pathParameter = "externalReferenceCode",
-				relatedEndpoint = "true",
-				relatedSchema = "true",
-				retrieveType = "singleElement",
-				schemaName = "testSchema",
-				status = "published",
-				title = "My-app");
-
-			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "My-app_testendpoint",
-				requestSchemaErc = "My-app_testSchema");
-
-			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "My-app_testendpoint",
-				responseSchemaErc = "My-app_testSchema");
-		}
-
-		task ("And Given I create schema a property with erc of name field") {
-			PropertyAPI.createAPIProperty(
-				name = "entryName",
-				objectFieldERC = "studentName",
-				schemaERC = "My-app_testSchema");
-		}
-
-		task ("When I navigate to API application in API Explorer") {
-			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
-		}
-
-		task ("Then get{EndpointPath} with {externalreferencecode} is present") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "OpenAPI#API_METHOD",
-				method = "getGettestExternalreferencecode",
-				service = "testSchema",
-				value1 = "/gettest/{externalreferencecode}");
-		}
-	}
-
-	@priority = 4
 	test CanSeeGetEndpointPathWithIdParameterInAPIExplorer {
 		property portal.acceptance = "true";
 

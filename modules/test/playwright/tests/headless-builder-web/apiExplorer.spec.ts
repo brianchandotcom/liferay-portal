@@ -71,6 +71,52 @@ test('can see filter and sort parameters for collection endpoints', async ({
 	);
 });
 
+test('can see get endpoint path with erc parameter in api explorer', async ({
+	apiExplorerPage,
+	apiHelpers,
+	page,
+}) => {
+	await apiHelpers.object.postObjectEntry(
+		application,
+		'headless-builder/applications'
+	);
+
+	const singleElementEndpoint = await apiHelpers.object.postObjectEntry(
+		{
+			description: 'Test Single Element API Endpoint',
+			externalReferenceCode: 'basic-singleElement-endpoint',
+			httpMethod: 'get',
+			name: 'Basic Single Element API Endpoint',
+			path: '/single-element-endpoint/{erc}',
+			pathParameter: 'externalReferenceCode',
+			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
+				application.externalReferenceCode,
+			r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
+				application.apiApplicationToAPISchemas[0].externalReferenceCode,
+			retrieveType: 'singleElement',
+			scope: 'company',
+		},
+		'headless-builder/endpoints'
+	);
+
+	await apiExplorerPage.goToApplication(`c/${application.baseURL}`);
+
+	await apiExplorerPage.expectEndpointWithParameters(
+		singleElementEndpoint.path,
+		['erc']
+	);
+
+	await apiExplorerPage.getEndpointLocator(singleElementEndpoint.path, {
+		hasText: '{erc}',
+	});
+
+	await page.goto('/');
+	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		'headless-builder/applications',
+		application.externalReferenceCode
+	);
+});
+
 test('cannot see filter and sort parameters for singleElement endpoints', async ({
 	apiExplorerPage,
 	apiHelpers,

@@ -148,5 +148,5 @@ TagFacetPortletInstanceConfiguration tagFacetPortletInstanceConfiguration = asse
 			"namespace", liferayPortletResponse.getNamespace()
 		).build()
 	%>'
-	module="js/FacetUtil"
+	module="{FacetUtil} from portal-search-web"
 />

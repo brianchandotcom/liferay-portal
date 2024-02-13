@@ -157,5 +157,5 @@ JSONArray rangesJSONArray = dateFacetPortletPreferences.getRangesJSONArray();
 			"namespace", liferayPortletResponse.getNamespace()
 		).build()
 	%>'
-	module="js/shared/DateFacetConfiguration"
+	module="{DateFacetConfiguration} from portal-search-web"
 />

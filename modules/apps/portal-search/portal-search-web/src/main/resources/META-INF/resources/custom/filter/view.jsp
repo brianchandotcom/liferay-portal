@@ -85,6 +85,6 @@ CustomFilterPortletInstanceConfiguration customFilterPortletInstanceConfiguratio
 				"namespace", liferayPortletResponse.getNamespace()
 			).build()
 		%>'
-		module="js/CustomFilter"
+		module="{CustomFilter} from portal-search-web"
 	/>
 </c:if>

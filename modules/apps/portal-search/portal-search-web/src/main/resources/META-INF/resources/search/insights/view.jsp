@@ -29,11 +29,9 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 %>
 
 <style>
-	<!--
-	.full-query {
+	/* .full-query {
 		font-size: x-small;
-	}
-	-->
+	} */
 </style>
 
 <c:choose>
@@ -50,7 +48,7 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 						"selector", ".search-insights-copy-to-clipboard"
 					).build()
 				%>'
-				module="js/utils/initialize_clipboard"
+				module="{InitializeClipboard} from portal-search-web"
 			/>
 
 			<liferay-ui:panel-container
@@ -85,7 +83,7 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 								"id", insightsRequestId
 							).build()
 						%>'
-						module="js/components/CodeMirrorTextArea"
+						module="{CodeMirrorTextArea} from portal-search-web"
 					/>
 				</liferay-ui:panel>
 
@@ -115,7 +113,7 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 								"id", insightsResponseId
 							).build()
 						%>'
-						module="js/components/CodeMirrorTextArea"
+						module="{CodeMirrorTextArea} from portal-search-web"
 					/>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>

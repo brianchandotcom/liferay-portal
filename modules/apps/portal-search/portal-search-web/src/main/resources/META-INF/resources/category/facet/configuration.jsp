@@ -83,7 +83,7 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 
 			<div id="<portlet:namespace />selectVocabularies">
 				<react:component
-					module="js/components/SelectVocabularies"
+					module="{SelectVocabularies} from portal-search-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())

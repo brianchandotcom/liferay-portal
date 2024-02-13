@@ -202,7 +202,7 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 				"namespace", liferayPortletResponse.getNamespace()
 			).build()
 		%>'
-		module="js/FacetUtil"
+		module="{FacetUtil} from portal-search-web"
 	/>
 
 	<aui:script use="liferay-search-date-facet">

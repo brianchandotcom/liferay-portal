@@ -82,7 +82,7 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 				<span aria-hidden="true" class="loading-animation loading-animation-sm mt-4"></span>
 
 				<react:component
-					module="js/components/SortConfigurationOptions"
+					module="{SortConfigurationOptions} from portal-search-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"fieldsInputName", PortletPreferencesJspUtil.getInputName(SortPortletPreferences.PREFERENCE_KEY_FIELDS)

@@ -74,11 +74,36 @@ public class PortalInstancePool {
 	}
 
 	public static String getWebId(long companyId) {
-		return _portalInstances.get(companyId);
+		if (!_portalInstances.isEmpty()) {
+			return _portalInstances.get(companyId);
+		}
+
+		try {
+			return _getWebIdBySQL(companyId);
+		}
+		catch (SQLException sqlException) {
+			_log.error(
+				"Unable to get the web ID for company with companyID " +
+					companyId + " by SQL",
+				sqlException);
+
+			throw new RuntimeException(sqlException);
+		}
 	}
 
 	public static String[] getWebIds() {
-		return ArrayUtil.toStringArray(_portalInstances.values());
+		if (!_portalInstances.isEmpty()) {
+			return ArrayUtil.toStringArray(_portalInstances.values());
+		}
+
+		try {
+			return _getWebIdsBySQL();
+		}
+		catch (SQLException sqlException) {
+			_log.error("Unable to get the web IDs by SQL", sqlException);
+
+			throw new RuntimeException(sqlException);
+		}
 	}
 
 	public static void remove(long companyId) {
@@ -124,6 +149,41 @@ public class PortalInstancePool {
 		}
 
 		return 0;
+	}
+
+	private static String _getWebIdBySQL(long companyId) throws SQLException {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select webId from Company where companyId = ?")) {
+
+			preparedStatement.setLong(1, companyId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getString(1);
+				}
+			}
+		}
+
+		throw new IllegalArgumentException("Invalid company ID" + companyId);
+	}
+
+	private static String[] _getWebIdsBySQL() throws SQLException {
+		List<String> webIds = new ArrayList<>();
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select webId from Company");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				String webId = resultSet.getString("webId");
+
+				webIds.add(webId);
+			}
+		}
+
+		return webIds.toArray(new String[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

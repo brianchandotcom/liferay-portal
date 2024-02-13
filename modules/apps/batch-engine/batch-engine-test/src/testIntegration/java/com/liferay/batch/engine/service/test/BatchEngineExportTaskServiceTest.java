@@ -41,7 +41,7 @@ public class BatchEngineExportTaskServiceTest
 		UserTestUtil.setUser(user);
 
 		try {
-			_testBatchEngineExportTask(
+			_testAddBatchEngineExportTask(
 				otherCompany.getCompanyId(), user);
 
 			Assert.fail();
@@ -50,7 +50,7 @@ public class BatchEngineExportTaskServiceTest
 			Assert.assertNotNull(principalException);
 		}
 
-		_batchEngineExportTask1 = _testBatchEngineExportTask(
+		_batchEngineExportTask1 = _testAddBatchEngineExportTask(
 			company.getCompanyId(), user);
 	}
 
@@ -189,7 +189,7 @@ public class BatchEngineExportTaskServiceTest
 			actualBatchEngineExportTask.getBatchEngineExportTaskId());
 	}
 
-	private BatchEngineExportTask _testBatchEngineExportTask(
+	private BatchEngineExportTask _testAddBatchEngineExportTask(
 			long companyId, User user)
 		throws Exception {
 

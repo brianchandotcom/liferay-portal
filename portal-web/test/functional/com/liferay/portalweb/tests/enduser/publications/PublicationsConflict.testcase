@@ -298,18 +298,12 @@ definition {
 				webContentTitleEdit = "Web Content Title Edit");
 		}
 
-		task ("Publish Publication 1 and attempt to publish Publication 2") {
+		task ("Attempt to publish Publication 1") {
 			JSONPublications.selectPublication(publicationName = "Publication 1");
-
-			Publications.publishPublication(
-				gotoPublicationsAdmin = "true",
-				publicationName = "Publication 1");
-
-			JSONPublications.selectPublication(publicationName = "Publication 2");
 
 			Refresh();
 
-			PublicationsNavigator.gotoPublish(publicationName = "Publication 2");
+			PublicationsNavigator.gotoPublish(publicationName = "Publication 1");
 
 			Click(locator1 = "Publications#PUBLISH_BUTTON");
 

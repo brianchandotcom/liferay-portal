@@ -183,25 +183,26 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 2 Name");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Team",
+			warningMessage = "Entity Updated Before Deletion");
+
+		PublicationsChanges.discardChanges(
+			changeCategory = "Team",
+			changeTitle = "Team",
+			conflictingChanges = "true");
+
 		Publications.publishPublication(publicationName = "Publication 2 Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
-		PublicationsNavigator.gotoPublish(
+		Publications.publishPublication(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication 1 Name");
-
-		Publications.viewNeedsManualResolution(
-			entryTitle = "Team",
-			warningMessage = "Missing Entity");
-
-		PublicationsChanges.discardChanges(
-			changeCategory = "Team",
-			changeTitle = "Team Name Edit",
-			conflictingChanges = "true",
-			entryTitle = "Team");
-
-		Publications.publishPublication(publicationName = "Publication 1 Name");
 	}
 
 }

@@ -39,6 +39,15 @@ public class CommerceChannelRelServiceUtil {
 			className, classPK, commerceChannelId, serviceContext);
 	}
 
+	public static List<CommerceChannelRel> addCommerceChannelRels(
+			String className, long[] classPKs, long commerceChannelId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCommerceChannelRels(
+			className, classPKs, commerceChannelId, serviceContext);
+	}
+
 	public static void deleteCommerceChannelRel(long commerceChannelRelId)
 		throws PortalException {
 
@@ -57,6 +66,22 @@ public class CommerceChannelRelServiceUtil {
 
 		return getService().fetchCommerceChannelRel(
 			className, classPK, commerceChannelId);
+	}
+
+	public static List<CommerceChannelRel> getCommerceChannelCountries(
+			long commerceChannelId, String name, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceChannelCountries(
+			commerceChannelId, name, start, end);
+	}
+
+	public static int getCommerceChannelCountriesCount(
+			long commerceChannelId, String name)
+		throws PortalException {
+
+		return getService().getCommerceChannelCountriesCount(
+			commerceChannelId, name);
 	}
 
 	public static CommerceChannelRel getCommerceChannelRel(

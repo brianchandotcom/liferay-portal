@@ -79,6 +79,10 @@ public interface CommerceChannelRelLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public List<CommerceChannelRel> addCommerceChannelRels(
+		String className, long[] classPKs, long commerceChannelId,
+		ServiceContext serviceContext);
+
 	/**
 	 * Creates a new commerce channel rel with the primary key. Does not add the commerce channel rel to the database.
 	 *
@@ -218,6 +222,14 @@ public interface CommerceChannelRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannelRel> getCommerceChannelCountries(
+		long commerceChannelId, String name, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceChannelCountriesCount(
+		long commerceChannelId, String name);
 
 	/**
 	 * Returns the commerce channel rel with the primary key.

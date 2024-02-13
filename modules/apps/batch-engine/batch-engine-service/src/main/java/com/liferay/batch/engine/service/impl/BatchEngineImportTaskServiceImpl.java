@@ -46,7 +46,7 @@ public class BatchEngineImportTaskServiceImpl
 			String taskItemDelegateName)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
 		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
 			externalReferenceCode, companyId, userId, batchSize, callbackURL,
@@ -65,7 +65,7 @@ public class BatchEngineImportTaskServiceImpl
 			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
 		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
 			externalReferenceCode, companyId, userId, batchSize, callbackURL,
@@ -83,9 +83,7 @@ public class BatchEngineImportTaskServiceImpl
 			batchEngineImportTaskLocalService.getBatchEngineImportTask(
 				batchEngineImportTaskId);
 
-		_checkCompanyPermissions(batchEngineImportTask.getCompanyId());
-
-		_checkTaskPermissions(batchEngineImportTask);
+		_checkPermission(batchEngineImportTask);
 
 		return batchEngineImportTask;
 	}
@@ -96,14 +94,14 @@ public class BatchEngineImportTaskServiceImpl
 				String externalReferenceCode, long companyId)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
 		BatchEngineImportTask batchEngineImportTask =
 			batchEngineImportTaskLocalService.
 				getBatchEngineImportTaskByExternalReferenceCode(
 					externalReferenceCode, companyId);
 
-		_checkTaskPermissions(batchEngineImportTask);
+		_checkPermission(batchEngineImportTask);
 
 		return batchEngineImportTask;
 	}
@@ -113,9 +111,9 @@ public class BatchEngineImportTaskServiceImpl
 			long companyId, int start, int end)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
-		return _filterTaskListByPermissions(
+		return _filterBatchEngineImportTasks(
 			batchEngineImportTaskLocalService.getBatchEngineImportTasks(
 				companyId, start, end));
 	}
@@ -126,9 +124,9 @@ public class BatchEngineImportTaskServiceImpl
 			OrderByComparator<BatchEngineImportTask> orderByComparator)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
-		return _filterTaskListByPermissions(
+		return _filterBatchEngineImportTasks(
 			batchEngineImportTaskLocalService.getBatchEngineImportTasks(
 				companyId, start, end, orderByComparator));
 	}
@@ -137,17 +135,27 @@ public class BatchEngineImportTaskServiceImpl
 	public int getBatchEngineImportTasksCount(long companyId)
 		throws PortalException {
 
-		_checkCompanyPermissions(companyId);
+		_checkPermission(companyId);
 
-		return _filterTaskListByPermissions(
-			batchEngineImportTaskLocalService.getBatchEngineImportTasks(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)
-		).size();
+		List<BatchEngineImportTask> filteredBatchEngineImportTasks =
+			_filterBatchEngineImportTasks(
+				batchEngineImportTaskLocalService.getBatchEngineImportTasks(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+
+		return filteredBatchEngineImportTasks.size();
 	}
 
-	private void _checkCompanyPermissions(long companyId)
+	private void _checkPermission(BatchEngineImportTask batchEngineImportTask)
 		throws PrincipalException {
 
+		if (!_hasPermission(
+				batchEngineImportTask, getPermissionChecker())) {
+
+			throw new PrincipalException();
+		}
+	}
+
+	private void _checkPermission(long companyId) throws PrincipalException {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if ((companyId != permissionChecker.getCompanyId()) &&
@@ -157,18 +165,7 @@ public class BatchEngineImportTaskServiceImpl
 		}
 	}
 
-	private void _checkTaskPermissions(
-			BatchEngineImportTask batchEngineImportTask)
-		throws PrincipalException {
-
-		if (!_hasTaskPermissions(
-				batchEngineImportTask, getPermissionChecker())) {
-
-			throw new PrincipalException();
-		}
-	}
-
-	private List<BatchEngineImportTask> _filterTaskListByPermissions(
+	private List<BatchEngineImportTask> _filterBatchEngineImportTasks(
 			List<BatchEngineImportTask> batchEngineImportTasks)
 		throws PrincipalException {
 
@@ -180,7 +177,7 @@ public class BatchEngineImportTaskServiceImpl
 		for (BatchEngineImportTask batchEngineImportTask :
 				batchEngineImportTasks) {
 
-			if (_hasTaskPermissions(batchEngineImportTask, permissionChecker)) {
+			if (_hasPermission(batchEngineImportTask, permissionChecker)) {
 				filteredBatchEngineImportTasks.add(batchEngineImportTask);
 			}
 		}
@@ -188,7 +185,7 @@ public class BatchEngineImportTaskServiceImpl
 		return filteredBatchEngineImportTasks;
 	}
 
-	private boolean _hasTaskPermissions(
+	private boolean _hasPermission(
 		BatchEngineImportTask batchEngineImportTask,
 		PermissionChecker permissionChecker) {
 

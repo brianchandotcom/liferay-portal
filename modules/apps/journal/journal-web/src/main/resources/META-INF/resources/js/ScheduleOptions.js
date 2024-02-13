@@ -25,6 +25,12 @@ export default function ScheduleOptions({
 
 	useEffect(() => {
 		if (displayDate) {
+			if (!moment(displayDate, 'yyyy-MM-DD HH:mm', true).isValid()) {
+				setError(Liferay.Language.get('please-enter-a-valid-date'));
+
+				return;
+			}
+
 			const date = new Date(displayDate);
 
 			if (date.valueOf() <= new Date().valueOf()) {
@@ -33,9 +39,6 @@ export default function ScheduleOptions({
 						'the-date-entered-has-already-occurred'
 					)
 				);
-			}
-			else if (!moment(date).isValid()) {
-				setError(Liferay.Language.get('please-enter-a-valid-date'));
 			}
 			else {
 				setError('');

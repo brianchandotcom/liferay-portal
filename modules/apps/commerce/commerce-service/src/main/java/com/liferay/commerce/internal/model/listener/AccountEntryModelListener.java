@@ -8,13 +8,17 @@ package com.liferay.commerce.internal.model.listener;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.exception.CommerceAccountOrdersException;
 import com.liferay.commerce.internal.search.CommerceOrderBatchReindexer;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
+import com.liferay.portal.search.indexer.IndexerWriter;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,7 +40,7 @@ public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 			return;
 		}
 
-		commerceOrderBatchReindexer.reindex(
+		_commerceOrderBatchReindexer.reindex(
 			accountEntry.getAccountEntryId(), accountEntry.getCompanyId());
 	}
 
@@ -56,8 +60,14 @@ public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 				accountEntry.getAccountEntryId());
 	}
 
-	@Reference
-	protected CommerceOrderBatchReindexer commerceOrderBatchReindexer;
+	@Activate
+	protected void activate() {
+		_commerceOrderBatchReindexer = new CommerceOrderBatchReindexer(
+			_commerceOrderLocalService, _indexerDocumentBuilder,
+			_indexerWriter);
+	}
+
+	private CommerceOrderBatchReindexer _commerceOrderBatchReindexer;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
@@ -65,5 +75,15 @@ public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 	@Reference
 	private CommerceShippingOptionAccountEntryRelLocalService
 		_commerceShippingOptionAccountEntryRelLocalService;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private IndexerDocumentBuilder _indexerDocumentBuilder;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private IndexerWriter<CommerceOrder> _indexerWriter;
 
 }

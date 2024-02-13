@@ -164,7 +164,7 @@
 										request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 										request.setAttribute("render_controls.jsp-portletId", portlet.getPortletId());
 										%>
-		
+
 										<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
 											<ul class="lfr-tree list-unstyled">
 												<liferay-util:include page="/portlet_list/render_controls.jsp" servletContext="<%= application %>" />
@@ -202,6 +202,7 @@
 											</ul>
 										</aui:field-wrapper>
 									</c:if>
+
 								<%
 								}
 								%>

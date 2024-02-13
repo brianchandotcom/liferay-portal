@@ -17,18 +17,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration",
-	localization = "content/Language",
-	name = "friendly-url-separator-company-configuration-name"
+	id = "com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration"
 )
 public interface FriendlyURLSeparatorCompanyConfiguration {
 
-	@Meta.AD(
-		deflt = "{}",
-		description = "friendly-url-separators-json-object-string-description",
-		name = "friendly-url-separators-json-object-string-name",
-		required = false
-	)
+	@Meta.AD(deflt = "{}", required = false)
 	public String friendlyURLSeparatorsJSONObjectString();
 
 }

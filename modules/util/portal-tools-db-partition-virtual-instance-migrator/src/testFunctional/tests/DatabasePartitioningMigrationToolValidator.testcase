@@ -130,11 +130,11 @@ definition {
 
 		task ("Then a README it's provided with the usage information expected.") {
 			if (!(contains(${readmeFile}, "# DB Partition Virtual Instance Migrator Tool"))) {
-				fail("Content doesn't match with what it's expected: ${readmeFile}");
+				fail("Content title doesn't match with what it's expected: ${readmeFile}");
 			}
 
-			if (!(contains(${readmeFile}, "## Execution example"))) {
-				fail("Content doesn't match with what it's expected: ${readmeFile}");
+			if (!(contains(${readmeFile}, "## Usage"))) {
+				fail("Content example doesn't match with what it's expected: ${readmeFile}");
 			}
 		}
 	}

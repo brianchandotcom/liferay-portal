@@ -208,9 +208,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<java
 			classname="com.liferay.portal.tools.service.builder.ServiceBuilder"
 			classpathref="service.builder.classpath"
+			failonerror="true"
 			fork="true"
+			logError="true"
 			newenvironment="true"
-			outputproperty="build-service.output"
 		>
 			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
 			<jvmarg value="-Dfile.encoding=UTF-8" />
@@ -247,15 +248,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
-
-		<echo>${build-service.output}</echo>
-
-		<if>
-			<contains string="${build-service.output}" substring="Error" />
-			<then>
-				<fail>Service Builder generated exceptions.</fail>
-			</then>
-		</if>
 
 		<ant dir="../portal-kernel" inheritAll="false" target="compile" />
 	</target>

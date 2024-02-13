@@ -7338,6 +7338,8 @@ ${output.content}</echo>
 								</ant>
 
 								<split-testsuites-junit-report test.suites.report.filepath="${playwright.dir}/test-results/TEST-playwright.xml" />
+
+								<print-docker-database-logs />
 							</finally>
 						</trycatch>
 					</test-action>

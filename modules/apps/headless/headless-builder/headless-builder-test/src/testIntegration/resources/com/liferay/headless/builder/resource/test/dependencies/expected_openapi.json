@@ -123,46 +123,6 @@
 					"name": "ListEntry"
 				}
 			},
-			"ObjectSchemaName": {
-				"description": "description",
-				"properties": {
-					"objectProperty1": {
-						"description": "description",
-						"type": "object"
-					},
-					"objectProperty2": {
-						"description": "description",
-						"properties": {
-							"objectProperty3": {
-								"description": "description",
-								"type": "object"
-							},
-							"textProperty": {
-								"description": "description",
-								"type": "string"
-							}
-						},
-						"type": "object"
-					},
-					"objectProperty4": {
-						"description": "description",
-						"properties": {
-							"objectProperty5": {
-								"description": "description",
-								"properties": {
-									"longTextProperty": {
-										"description": "description",
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
-						},
-						"type": "object"
-					}
-				},
-				"type": "object"
-			},
 			"PageSchemaName": {
 				"properties": {
 					"actions": {
@@ -243,6 +203,46 @@
 					"totalCount": {
 						"format": "int64",
 						"type": "integer"
+					}
+				},
+				"type": "object"
+			},
+			"RecordSchemaName": {
+				"description": "description",
+				"properties": {
+					"recordProperty1": {
+						"description": "description",
+						"type": "object"
+					},
+					"recordProperty2": {
+						"description": "description",
+						"properties": {
+							"recordProperty3": {
+								"description": "description",
+								"type": "object"
+							},
+							"textProperty": {
+								"description": "description",
+								"type": "string"
+							}
+						},
+						"type": "object"
+					},
+					"recordProperty4": {
+						"description": "description",
+						"properties": {
+							"recordProperty5": {
+								"description": "description",
+								"properties": {
+									"longTextProperty": {
+										"description": "description",
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						},
+						"type": "object"
 					}
 				},
 				"type": "object"

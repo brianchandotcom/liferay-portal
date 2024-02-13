@@ -7,7 +7,7 @@ package com.liferay.layout.locked.layouts.web.internal.locked.items.renderer;
 
 import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsDisplayContext;
 import com.liferay.layout.manager.LayoutLockManager;
-import com.liferay.locked.items.renderer.BaseLockedItemsRenderer;
+import com.liferay.locked.items.renderer.BaseJSPLockedItemsRenderer;
 import com.liferay.locked.items.renderer.LockedItemsRenderer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Galluzzi
  */
 @Component(service = LockedItemsRenderer.class)
-public class LayoutLockedItemsRenderer extends BaseLockedItemsRenderer {
+public class LayoutLockedItemsRenderer extends BaseJSPLockedItemsRenderer {
 
 	@Override
 	public String getDescription(Locale locale) {

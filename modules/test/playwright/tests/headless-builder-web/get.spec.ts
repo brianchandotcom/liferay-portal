@@ -151,7 +151,6 @@ test('can see schema unique fields as path parameter properties', async ({
 	await expect(page.getByRole('menuitem', {name: 'ID'})).toBeVisible();
 	await expect(page.getByRole('menuitem', {name: 'Title'})).toBeVisible();
 
-	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		application.externalReferenceCode
@@ -253,7 +252,6 @@ test('can list site scoped endpoint', async ({
 	await applicationPage.goToEndpointsTab();
 	await applicationPage.goToEditEndpoint('/gettest/{entryerc}/');
 
-	await page.goto('/');
 	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
 		'headless-builder/applications',
 		studentApplication.externalReferenceCode

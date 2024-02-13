@@ -325,7 +325,7 @@ AUI.add(
 						'LFR_SESSION_STATE_' + themeDisplay.getRealUserId();
 
 					instance._cookieOptions = {
-						path: themeDisplay.getPathContext() || '/',
+						path: '/',
 						secure: A.UA.secure,
 					};
 

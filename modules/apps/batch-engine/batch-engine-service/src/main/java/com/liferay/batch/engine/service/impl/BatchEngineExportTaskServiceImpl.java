@@ -120,24 +120,21 @@ public class BatchEngineExportTaskServiceImpl
 		).size();
 	}
 
-	private void _checkPermission(long companyId)
+	private void _checkPermission(BatchEngineExportTask batchEngineExportTask)
 		throws PrincipalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if ((companyId != permissionChecker.getCompanyId()) &&
-			!permissionChecker.isOmniadmin()) {
+		if (!_hasTaskPermissions(
+				batchEngineExportTask, getPermissionChecker())) {
 
 			throw new PrincipalException();
 		}
 	}
 
-	private void _checkPermission(
-			BatchEngineExportTask batchEngineExportTask)
-		throws PrincipalException {
+	private void _checkPermission(long companyId) throws PrincipalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!_hasTaskPermissions(
-				batchEngineExportTask, getPermissionChecker())) {
+		if ((companyId != permissionChecker.getCompanyId()) &&
+			!permissionChecker.isOmniadmin()) {
 
 			throw new PrincipalException();
 		}

@@ -7,6 +7,7 @@ package com.liferay.batch.engine.service;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -78,6 +80,11 @@ public interface BatchEngineImportTaskService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchEngineImportTaskError> getBatchEngineImportTaskErrors(
+			long batchEngineImportTaskId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchEngineImportTask> getBatchEngineImportTasks(
 			long companyId, int start, int end)
 		throws PortalException;
@@ -98,5 +105,8 @@ public interface BatchEngineImportTaskService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public InputStream openContentInputStream(long batchEngineImportTaskId)
+		throws PortalException;
 
 }

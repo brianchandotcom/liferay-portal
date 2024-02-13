@@ -88,6 +88,16 @@ public class BatchEngineImportTaskServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.batch.engine.model.BatchEngineImportTaskError>
+				getBatchEngineImportTaskErrors(long batchEngineImportTaskId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchEngineImportTaskService.getBatchEngineImportTaskErrors(
+			batchEngineImportTaskId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.batch.engine.model.BatchEngineImportTask>
 			getBatchEngineImportTasks(long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -125,6 +135,15 @@ public class BatchEngineImportTaskServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _batchEngineImportTaskService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.io.InputStream openContentInputStream(
+			long batchEngineImportTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchEngineImportTaskService.openContentInputStream(
+			batchEngineImportTaskId);
 	}
 
 	@Override

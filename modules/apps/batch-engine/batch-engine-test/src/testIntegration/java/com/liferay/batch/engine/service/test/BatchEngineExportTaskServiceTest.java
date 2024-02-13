@@ -41,8 +41,15 @@ public class BatchEngineExportTaskServiceTest
 		UserTestUtil.setUser(user);
 
 		try {
-			_testAddBatchEngineExportTask(
-				otherCompany.getCompanyId(), user);
+			_batchEngineExportTaskService.addBatchEngineExportTask(
+				null, otherCompany.getCompanyId(), user.getUserId(), null,
+				BlogPosting.class.getName(), "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				Collections.emptyList(),
+				HashMapBuilder.<String, Serializable>put(
+				"siteId", TestPropsValues.getGroupId()
+				).build(),
+				null);
 
 			Assert.fail();
 		}
@@ -50,8 +57,16 @@ public class BatchEngineExportTaskServiceTest
 			Assert.assertNotNull(principalException);
 		}
 
-		_batchEngineExportTask1 = _testAddBatchEngineExportTask(
-			company.getCompanyId(), user);
+		_batchEngineExportTask1 =
+			_batchEngineExportTaskService.addBatchEngineExportTask(
+				null, company.getCompanyId(), user.getUserId(), null,
+				BlogPosting.class.getName(), "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				Collections.emptyList(),
+				HashMapBuilder.<String, Serializable>put(
+				"siteId", TestPropsValues.getGroupId()
+				).build(),
+				null);
 	}
 
 	@Test
@@ -187,21 +202,6 @@ public class BatchEngineExportTaskServiceTest
 		Assert.assertEquals(
 			_batchEngineExportTask1.getBatchEngineExportTaskId(),
 			actualBatchEngineExportTask.getBatchEngineExportTaskId());
-	}
-
-	private BatchEngineExportTask _testAddBatchEngineExportTask(
-			long companyId, User user)
-		throws Exception {
-
-		return _batchEngineExportTaskService.addBatchEngineExportTask(
-			null, companyId, user.getUserId(), null,
-			BlogPosting.class.getName(), "JSON",
-			BatchEngineTaskExecuteStatus.INITIAL.name(),
-			Collections.emptyList(),
-			HashMapBuilder.<String, Serializable>put(
-				"siteId", TestPropsValues.getGroupId()
-			).build(),
-			null);
 	}
 
 	private BatchEngineExportTask _addBatchEngineExportTask(

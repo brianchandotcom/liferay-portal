@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -48,7 +49,9 @@ import java.nio.channels.FileChannel;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletResponse;
@@ -243,11 +246,12 @@ public class CompanyLogServletTest {
 
 		_servlet.service(mockHttpServletRequest, _mockHttpServletResponse);
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(
+		Map<Long, JSONObject> jsonObjects = _toCompanyJSONObjects(
 			_mockHttpServletResponse.getContentAsString());
 
 		_assertCompanyLogFiles(
-			_company, (JSONObject)jsonArray.get(0), mockHttpServletRequest);
+			_company, jsonObjects.get(_company.getCompanyId()),
+			mockHttpServletRequest);
 	}
 
 	@Ignore
@@ -276,14 +280,16 @@ public class CompanyLogServletTest {
 
 			_servlet.service(mockHttpServletRequest, _mockHttpServletResponse);
 
-			JSONArray jsonArray = _jsonFactory.createJSONArray(
+			Map<Long, JSONObject> jsonObjects = _toCompanyJSONObjects(
 				_mockHttpServletResponse.getContentAsString());
 
 			_assertCompanyLogFiles(
 				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
-				(JSONObject)jsonArray.get(0), mockHttpServletRequest);
+				jsonObjects.get(TestPropsValues.getCompanyId()),
+				mockHttpServletRequest);
 			_assertCompanyLogFiles(
-				_company, (JSONObject)jsonArray.get(1), mockHttpServletRequest);
+				_company, jsonObjects.get(_company.getCompanyId()),
+				mockHttpServletRequest);
 		}
 		finally {
 			if (omniAdminUser != null) {
@@ -507,6 +513,22 @@ public class CompanyLogServletTest {
 		mockHttpServletRequest.setPathInfo(path);
 
 		return mockHttpServletRequest;
+	}
+
+	private Map<Long, JSONObject> _toCompanyJSONObjects(String json)
+		throws JSONException {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		Map<Long, JSONObject> jsonObjects = new HashMap<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			jsonObjects.put(jsonObject.getLong("companyId"), jsonObject);
+		}
+
+		return jsonObjects;
 	}
 
 	private static Company _company;

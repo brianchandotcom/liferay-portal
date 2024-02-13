@@ -190,7 +190,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 								%>
 
 								<c:if test="<%= (exportModelCount != 0) || (modelDeletionCount != 0) || (startDate != null) || (endDate != null) %>">
-									<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="content">
+									<aui:fieldset collapsible="<%= true %>" cssClass="options-group" id="content">
 										<ul class="lfr-tree list-unstyled select-options">
 											<li class="tree-item">
 												<div id="<portlet:namespace />range">

@@ -88,10 +88,34 @@ else {
 
 											<aui:input label="configuration" name="<%= rootControlId %>" type="checkbox" value="<%= true %>" />
 
+											<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= selPortlet.getRootPortletId() %>">
+												<li>
+													<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= selPortlet.getRootPortletId() %>"></span>
+
+													<clay:button
+														cssClass="configuration-link modify-link pr-1"
+														data-portletid="<%= selPortlet.getRootPortletId() %>"
+														displayType="link"
+														label="change"
+													/>
+
+													<span id="<portlet:namespace />rightConfigurationArrow_<%= selPortlet.getRootPortletId() %>">
+														<clay:icon
+															symbol="angle-right-small"
+														/>
+													</span>
+													<span class="hide" id="<portlet:namespace />downConfigurationArrow_<%= selPortlet.getRootPortletId() %>">
+														<clay:icon
+															symbol="angle-down-small"
+														/>
+													</span>
+												</li>
+											</ul>
+
 											<div class="hide" id="<portlet:namespace />configuration_<%= selPortlet.getRootPortletId() %>">
 												<ul class="lfr-tree list-unstyled">
 													<li class="tree-item">
-														<aui:fieldset cssClass="portlet-type-data-section" label="configuration">
+														<aui:fieldset cssClass="portlet-type-data-section" id="configuration">
 															<ul class="lfr-tree list-unstyled">
 
 																<%
@@ -108,24 +132,6 @@ else {
 													</li>
 												</ul>
 											</div>
-
-											<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= selPortlet.getRootPortletId() %>">
-												<li>
-													<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= selPortlet.getRootPortletId() %>"></span>
-
-													<aui:a
-														cssClass="configuration-link modify-link"
-														data='<%=
-															HashMapBuilder.<String, Object>put(
-																"portletid", selPortlet.getRootPortletId()
-															).build()
-														%>'
-														href="javascript:void(0);"
-														label="change"
-														method="get"
-													/>
-												</li>
-											</ul>
 
 											<aui:script>
 												Liferay.Util.toggleBoxes(
@@ -161,7 +167,7 @@ else {
 						long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 						%>
 
-						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="content">
+						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" id="content">
 							<ul class="lfr-tree list-unstyled select-options">
 								<li class="tree-item">
 									<div id="<portlet:namespace />range">
@@ -317,10 +323,35 @@ else {
 												%>
 
 												<c:if test="<%= ArrayUtil.isNotEmpty(exportControls) || ArrayUtil.isNotEmpty(metadataControls) %>">
+													<ul id="<portlet:namespace />showChangeContent_<%= selPortlet.getRootPortletId() %>">
+														<li>
+															<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></span>
+
+															<clay:button
+																cssClass="content-link modify-link pr-1"
+																id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + selPortlet.getRootPortletId() %>'
+																data-portletid="<%= selPortlet.getRootPortletId() %>"
+																displayType="link"
+																label="change"
+															/>
+
+															<span id="<portlet:namespace />rightContentArrow_<%= selPortlet.getRootPortletId() %>">
+																<clay:icon
+																	symbol="angle-right-small"
+																/>
+															</span>
+															<span class="hide" id="<portlet:namespace />downContentArrow_<%= selPortlet.getRootPortletId() %>">
+																<clay:icon
+																	symbol="angle-down-small"
+																/>
+															</span>
+														</li>
+													</ul>
+
 													<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
 														<ul class="lfr-tree list-unstyled">
 															<li class="tree-item">
-																<aui:fieldset cssClass="portlet-type-data-section" label="content">
+																<aui:fieldset cssClass="portlet-type-data-section" id="content">
 																	<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
 																		<c:if test="<%= exportControls != null %>">
 
@@ -370,25 +401,6 @@ else {
 															</li>
 														</ul>
 													</div>
-
-													<ul id="<portlet:namespace />showChangeContent_<%= selPortlet.getRootPortletId() %>">
-														<li>
-															<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></span>
-
-															<aui:a
-																cssClass="content-link modify-link"
-																data='<%=
-																	HashMapBuilder.<String, Object>put(
-																		"portletid", selPortlet.getRootPortletId()
-																	).build()
-																%>'
-																href="javascript:void(0);"
-																id='<%= "contentLink_" + selPortlet.getRootPortletId() %>'
-																label="change"
-																method="get"
-															/>
-														</li>
-													</ul>
 
 													<aui:script>
 														Liferay.Util.toggleBoxes(

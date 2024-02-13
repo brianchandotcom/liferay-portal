@@ -50,6 +50,19 @@ public class CommerceChannelRelServiceImpl
 	}
 
 	@Override
+	public List<CommerceChannelRel> addCommerceChannelRels(
+			String className, long[] classPKs, long commerceChannelId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.UPDATE);
+
+		return commerceChannelRelLocalService.addCommerceChannelRels(
+			className, classPKs, commerceChannelId, serviceContext);
+	}
+
+	@Override
 	public void deleteCommerceChannelRel(long commerceChannelRelId)
 		throws PortalException {
 
@@ -90,6 +103,30 @@ public class CommerceChannelRelServiceImpl
 
 		return commerceChannelRelLocalService.fetchCommerceChannelRel(
 			className, classPK, commerceChannelId);
+	}
+
+	@Override
+	public List<CommerceChannelRel> getCommerceChannelCountries(
+			long commerceChannelId, String name, int start, int end)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
+
+		return commerceChannelRelLocalService.getCommerceChannelCountries(
+			commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCommerceChannelCountriesCount(
+			long commerceChannelId, String name)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
+
+		return commerceChannelRelLocalService.getCommerceChannelCountriesCount(
+			commerceChannelId, name);
 	}
 
 	@Override

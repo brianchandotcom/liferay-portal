@@ -1033,14 +1033,6 @@ public class PortalUtil {
 		return _portal.getLocale(portletRequest);
 	}
 
-	public static String getLocalizedFriendlyURL(
-		HttpServletRequest httpServletRequest, Layout layout, Locale locale,
-		Locale originalLocale) {
-
-		return _portal.getLocalizedFriendlyURL(
-			httpServletRequest, layout, locale, originalLocale);
-	}
-
 	public static String getMailId(
 		String mx, String popPortletPrefix, Object... ids) {
 

@@ -1,4 +1,4 @@
-@component-name = "portal-segmentation"
+@component-name = "portal-analytics-cloud"
 definition {
 
 	property ci.retries.disabled = "true";
@@ -7,7 +7,7 @@ definition {
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
 	property test.run.type = "single";
-	property testray.main.component.name = "Segmentation";
+	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
 		task ("Open Analytics Cloud") {

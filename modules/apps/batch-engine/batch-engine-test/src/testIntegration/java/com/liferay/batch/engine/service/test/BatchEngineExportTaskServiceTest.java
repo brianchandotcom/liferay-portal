@@ -76,14 +76,56 @@ public class BatchEngineExportTaskServiceTest
 
 		_batchEngineExportTaskService.getBatchEngineExportTask(
 			_batchEngineExportTask1.getBatchEngineExportTaskId());
-	}
 
-	@Test
-	public void testGetBatchEngineExportTaskByCompanyAdmin() throws Exception {
 		_batchEngineExportTask1 = _addBatchEngineExportTask(
 			company.getCompanyId(), user);
 
 		UserTestUtil.setUser(companyAdminUser);
+
+		_batchEngineExportTaskService.getBatchEngineExportTask(
+			_batchEngineExportTask1.getBatchEngineExportTaskId());
+
+		_batchEngineExportTask1 = _addBatchEngineExportTask(
+			company.getCompanyId(), user);
+
+		UserTestUtil.setUser(user);
+
+		_batchEngineExportTaskService.
+			getBatchEngineExportTaskByExternalReferenceCode(
+				_batchEngineExportTask1.getExternalReferenceCode(),
+				company.getCompanyId());
+
+		_batchEngineExportTask1 = _addBatchEngineExportTask(
+			company.getCompanyId(), user);
+
+		_batchEngineExportTaskService.getBatchEngineExportTask(
+			_batchEngineExportTask1.getBatchEngineExportTaskId());
+
+		_batchEngineExportTask1 = _addBatchEngineExportTask(
+			company.getCompanyId(), companyAdminUser);
+
+		try {
+			_batchEngineExportTaskService.getBatchEngineExportTask(
+				_batchEngineExportTask1.getBatchEngineExportTaskId());
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			Assert.assertNotNull(principalException);
+		}
+
+		_batchEngineExportTask1 = _addBatchEngineExportTask(
+			otherCompany.getCompanyId(), omniadminUser);
+
+		try {
+			_batchEngineExportTaskService.getBatchEngineExportTask(
+				_batchEngineExportTask1.getBatchEngineExportTaskId());
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			Assert.assertNotNull(principalException);
+		}
+
+		UserTestUtil.setUser(omniadminUser);
 
 		_batchEngineExportTaskService.getBatchEngineExportTask(
 			_batchEngineExportTask1.getBatchEngineExportTaskId());
@@ -96,86 +138,29 @@ public class BatchEngineExportTaskServiceTest
 		_batchEngineExportTask1 = _addBatchEngineExportTask(
 			company.getCompanyId(), user);
 
-		UserTestUtil.setUser(user);
-
-		_batchEngineExportTaskService.
-			getBatchEngineExportTaskByExternalReferenceCode(
-				_batchEngineExportTask1.getExternalReferenceCode(),
-				company.getCompanyId());
-	}
-
-	@Test
-	public void testGetBatchEngineExportTaskByExternalReferenceCodeByCompanyAdmin()
-		throws Exception {
-
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
-			company.getCompanyId(), user);
-
 		UserTestUtil.setUser(companyAdminUser);
 
 		_batchEngineExportTaskService.
 			getBatchEngineExportTaskByExternalReferenceCode(
 				_batchEngineExportTask1.getExternalReferenceCode(),
 				company.getCompanyId());
-	}
-
-	@Test(expected = PrincipalException.class)
-	public void testGetBatchEngineExportTaskByExternalReferenceCodeByNotOwner()
-		throws Exception {
 
 		_batchEngineExportTask1 = _addBatchEngineExportTask(
 			company.getCompanyId(), companyAdminUser);
 
 		UserTestUtil.setUser(user);
 
-		_batchEngineExportTaskService.
-			getBatchEngineExportTaskByExternalReferenceCode(
-				_batchEngineExportTask1.getExternalReferenceCode(),
-				company.getCompanyId());
-	}
+		try {
+			_batchEngineExportTaskService.
+				getBatchEngineExportTaskByExternalReferenceCode(
+					_batchEngineExportTask1.getExternalReferenceCode(),
+					company.getCompanyId());
 
-	@Test
-	public void testGetBatchEngineExportTaskByOwner() throws Exception {
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
-			company.getCompanyId(), user);
-
-		UserTestUtil.setUser(user);
-
-		_batchEngineExportTaskService.getBatchEngineExportTask(
-			_batchEngineExportTask1.getBatchEngineExportTaskId());
-	}
-
-	@Test(expected = PrincipalException.class)
-	public void testGetBatchEngineExportTaskByUser() throws Exception {
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
-			company.getCompanyId(), companyAdminUser);
-
-		UserTestUtil.setUser(user);
-
-		_batchEngineExportTaskService.getBatchEngineExportTask(
-			_batchEngineExportTask1.getBatchEngineExportTaskId());
-	}
-
-	@Test(expected = PrincipalException.class)
-	public void testGetBatchEngineExportTaskOtherCompany() throws Exception {
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
-			otherCompany.getCompanyId(), omniadminUser);
-
-		UserTestUtil.setUser(user);
-
-		_batchEngineExportTaskService.getBatchEngineExportTask(
-			_batchEngineExportTask1.getBatchEngineExportTaskId());
-	}
-
-	@Test
-	public void testGetBatchEngineExportTaskOtherCompanyByOmniadmin()
-		throws Exception {
-
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
-			otherCompany.getCompanyId(), omniadminUser);
-
-		_batchEngineExportTaskService.getBatchEngineExportTask(
-			_batchEngineExportTask1.getBatchEngineExportTaskId());
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			Assert.assertNotNull(principalException);
+		}
 	}
 
 	@Test

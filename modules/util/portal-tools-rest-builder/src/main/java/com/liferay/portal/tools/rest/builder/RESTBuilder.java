@@ -1863,20 +1863,12 @@ public class RESTBuilder {
 			baseClientDir.getPath(), "/src/main/resources/META-INF/resources/",
 			targetClientType);
 
-		List<String> args = new ArrayList<>(
+		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
 				"npx", "openapi-typescript-codegen@0.27.0", "--input",
 				openAPIYAMLFile.getPath(), "--output", outputDirPath,
-				"--client", targetClientType));
-
-		args.add("--name");
-
-		args.add(clientName);
-
-		args.add("--useOptions");
-		args.add("--useUnionTypes");
-
-		ProcessBuilder processBuilder = new ProcessBuilder(args);
+				"--client", targetClientType, "--name", clientName,
+				"--useOptions", "--useUnionTypes"));
 
 		Process process = processBuilder.start();
 

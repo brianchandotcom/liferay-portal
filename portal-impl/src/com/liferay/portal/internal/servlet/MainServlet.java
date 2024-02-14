@@ -789,8 +789,6 @@ public class MainServlet extends HttpServlet {
 			throw new RuntimeException("Company default web ID is null");
 		}
 
-		List<Company> companies = new ArrayList<>();
-
 		CompanyLocalServiceUtil.forEachCompany(
 			company -> {
 				if (StartupHelperUtil.isDBNew() &&
@@ -803,11 +801,9 @@ public class MainServlet extends HttpServlet {
 				else {
 					PortalInstances.initCompany(company, false);
 				}
-
-				companies.add(company);
 			});
 
-		PortalInstancePool.set(companies);
+		PortalInstancePool.enableCache();
 	}
 
 	private void _initLayoutTemplates(PluginPackage pluginPackage) {

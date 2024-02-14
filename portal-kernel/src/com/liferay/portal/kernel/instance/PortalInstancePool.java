@@ -30,13 +30,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortalInstancePool {
 
 	public static void add(Company company) {
-		if (_portalInstances != null) {
-			_portalInstances.put(company.getCompanyId(), company.getWebId());
-		}
+		_portalInstances.put(company.getCompanyId(), company.getWebId());
+	}
+
+	public static void enableCache() {
+		_cacheEnabled = true;
 	}
 
 	public static long getCompanyId(String webId) {
-		if (_portalInstances != null) {
+		if (_cacheEnabled && !_portalInstances.isEmpty()) {
 			for (Map.Entry<Long, String> entry : _portalInstances.entrySet()) {
 				if (Objects.equals(entry.getValue(), webId)) {
 					return entry.getKey();
@@ -60,7 +62,7 @@ public class PortalInstancePool {
 	}
 
 	public static long[] getCompanyIds() {
-		if (_portalInstances != null) {
+		if (_cacheEnabled && !_portalInstances.isEmpty()) {
 			return ArrayUtil.toLongArray(_portalInstances.keySet());
 		}
 
@@ -75,7 +77,7 @@ public class PortalInstancePool {
 	}
 
 	public static long getDefaultCompanyId() {
-		if (_portalInstances != null) {
+		if (_cacheEnabled && !_portalInstances.isEmpty()) {
 			for (Map.Entry<Long, String> entry : _portalInstances.entrySet()) {
 				if (Objects.equals(entry.getValue(), _COMPANY_DEFAULT_WEB_ID)) {
 					return entry.getKey();
@@ -97,7 +99,7 @@ public class PortalInstancePool {
 	}
 
 	public static String getWebId(long companyId) {
-		if (_portalInstances != null) {
+		if (_cacheEnabled && !_portalInstances.isEmpty()) {
 			return _portalInstances.get(companyId);
 		}
 
@@ -115,7 +117,7 @@ public class PortalInstancePool {
 	}
 
 	public static String[] getWebIds() {
-		if (_portalInstances != null) {
+		if (_cacheEnabled && !_portalInstances.isEmpty()) {
 			return ArrayUtil.toStringArray(_portalInstances.values());
 		}
 
@@ -130,19 +132,7 @@ public class PortalInstancePool {
 	}
 
 	public static void remove(long companyId) {
-		if (_portalInstances != null) {
-			_portalInstances.remove(companyId);
-		}
-	}
-
-	public static void set(List<Company> companies) {
-		Map<Long, String> portalInstances = new ConcurrentHashMap<>();
-
-		for (Company company : companies) {
-			portalInstances.put(company.getCompanyId(), company.getWebId());
-		}
-
-		_portalInstances = portalInstances;
+		_portalInstances.remove(companyId);
 	}
 
 	private static long _getCompanyIdBySQL(String webId) throws SQLException {
@@ -246,6 +236,8 @@ public class PortalInstancePool {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstancePool.class);
 
-	private static Map<Long, String> _portalInstances;
+	private static volatile boolean _cacheEnabled;
+	private static final Map<Long, String> _portalInstances =
+		new ConcurrentHashMap<>();
 
 }

@@ -47,7 +47,7 @@ public class BatchEngineExportTaskServiceTest
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyList(),
 				HashMapBuilder.<String, Serializable>put(
-				"siteId", TestPropsValues.getGroupId()
+					"siteId", TestPropsValues.getGroupId()
 				).build(),
 				null);
 
@@ -64,7 +64,7 @@ public class BatchEngineExportTaskServiceTest
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyList(),
 				HashMapBuilder.<String, Serializable>put(
-				"siteId", TestPropsValues.getGroupId()
+					"siteId", TestPropsValues.getGroupId()
 				).build(),
 				null);
 	}

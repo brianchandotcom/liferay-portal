@@ -59,6 +59,10 @@ export type SEOSettings = {
          */
         include?: boolean;
         /**
+         * Whether search engines should crawl and index the child pages.
+         */
+        includeChildSitePages?: boolean;
+        /**
          * How the page should be prioritized relative to other pages.
          */
         pagePriority?: number;

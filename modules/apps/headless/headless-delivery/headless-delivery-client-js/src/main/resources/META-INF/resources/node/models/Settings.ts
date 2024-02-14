@@ -62,5 +62,9 @@ export type Settings = {
      * The page's theme settings.
      */
     themeSettings?: Record<string, any>;
+    /**
+     * The Client Extension for the theme spritemap of a page
+     */
+    themeSpritemapClientExtension?: ClientExtension;
 };
 

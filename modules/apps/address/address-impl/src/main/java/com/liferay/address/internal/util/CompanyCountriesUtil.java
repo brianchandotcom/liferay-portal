@@ -239,65 +239,18 @@ public class CompanyCountriesUtil {
 			Connection connection, CounterLocalService counterLocalService)
 		throws Exception {
 
-		try (Statement statement = connection.createStatement();
-			ResultSet resultSet1 = statement.executeQuery(
-				StringBundler.concat(
-					"select currentId from Counter where name = '",
-					Region.class.getName(), "'"))) {
-
-			long counter = 0;
-
-			if (resultSet1.next()) {
-				counter = resultSet1.getLong("currentId");
-			}
-
-			try (ResultSet resultSet2 = statement.executeQuery(
-					"select max(regionId) from Region")) {
-
-				if (resultSet2.next()) {
-					long increment = Math.max(
-						0, resultSet2.getLong(1) - counter);
-
-					if (increment > 0) {
-						counterLocalService.increment(
-							Region.class.getName(), (int)increment);
-					}
-				}
-			}
-		}
+		_updateCounter(
+			connection, counterLocalService, Region.class.getName(), "Region",
+			"regionId");
 	}
 
 	public static void updateRegionLocalizationCounter(
 			Connection connection, CounterLocalService counterLocalService)
 		throws Exception {
 
-		try (Statement statement = connection.createStatement();
-			ResultSet resultSet1 = statement.executeQuery(
-				StringBundler.concat(
-					"select currentId from Counter where name = '",
-					RegionLocalization.class.getName(), "'"))) {
-
-			long counter = 0;
-
-			if (resultSet1.next()) {
-				counter = resultSet1.getLong("currentId");
-			}
-
-			try (ResultSet resultSet2 = statement.executeQuery(
-					"select max(regionLocalizationId) from " +
-						"RegionLocalization")) {
-
-				if (resultSet2.next()) {
-					long increment = Math.max(
-						0, resultSet2.getLong(1) - counter);
-
-					if (increment > 0) {
-						counterLocalService.increment(
-							RegionLocalization.class.getName(), (int)increment);
-					}
-				}
-			}
-		}
+		_updateCounter(
+			connection, counterLocalService, RegionLocalization.class.getName(),
+			"RegionLocalization", "regionLocalizationId");
 	}
 
 	private static void _addRegionBatch(
@@ -332,6 +285,39 @@ public class CompanyCountriesUtil {
 		preparedStatement.setString(5, title);
 
 		preparedStatement.addBatch();
+	}
+
+	private static void _updateCounter(
+			Connection connection, CounterLocalService counterLocalService,
+			String className, String tableName, String primaryKey)
+		throws Exception {
+
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet1 = statement.executeQuery(
+				StringBundler.concat(
+					"select currentId from Counter where name = '", className,
+					"'"))) {
+
+			long counter = 0;
+
+			if (resultSet1.next()) {
+				counter = resultSet1.getLong("currentId");
+			}
+
+			try (ResultSet resultSet2 = statement.executeQuery(
+					"select max(" + primaryKey + ") from " + tableName)) {
+
+				if (resultSet2.next()) {
+					long increment = Math.max(
+						0, resultSet2.getLong(1) - counter);
+
+					if (increment > 0) {
+						counterLocalService.increment(
+							RegionLocalization.class.getName(), (int)increment);
+					}
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

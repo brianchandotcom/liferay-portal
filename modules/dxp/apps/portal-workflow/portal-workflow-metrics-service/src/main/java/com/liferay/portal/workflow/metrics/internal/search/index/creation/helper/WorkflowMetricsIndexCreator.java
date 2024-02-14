@@ -35,32 +35,17 @@ import org.osgi.service.component.annotations.Reference;
 public class WorkflowMetricsIndexCreator {
 
 	public void createIndex(Company company) throws PortalException {
-		boolean indexCreated = _instanceWorkflowMetricsIndex.createIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
+		for (WorkflowMetricsIndex workflowMetricsIndex :
+				WorkflowMetricsIndex.values()) {
 
-		if (!indexCreated) {
-			return;
+			boolean indexCreated = workflowMetricsIndex.createIndex(
+				_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+				company.getCompanyId());
+
+			if (!indexCreated) {
+				return;
+			}
 		}
-
-		_nodeWorkflowMetricsIndex.createIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_processWorkflowMetricsIndex.createIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_slaInstanceResultWorkflowMetricsIndex.createIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_slaTaskResultWorkflowMetricsIndex.createIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_taskWorkflowMetricsIndex.createIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_transitionWorkflowMetricsIndex.createIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
 	}
 
 	public void reindex(Company company) {
@@ -112,32 +97,17 @@ public class WorkflowMetricsIndexCreator {
 	}
 
 	public void removeIndex(Company company) throws PortalException {
-		boolean indexRemoved = _instanceWorkflowMetricsIndex.removeIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
+		for (WorkflowMetricsIndex workflowMetricsIndex :
+				WorkflowMetricsIndex.values()) {
 
-		if (!indexRemoved) {
-			return;
+			boolean indexRemoved = workflowMetricsIndex.removeIndex(
+				_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+				company.getCompanyId());
+
+			if (!indexRemoved) {
+				return;
+			}
 		}
-
-		_nodeWorkflowMetricsIndex.removeIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_processWorkflowMetricsIndex.removeIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_slaInstanceResultWorkflowMetricsIndex.removeIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_slaTaskResultWorkflowMetricsIndex.removeIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_taskWorkflowMetricsIndex.removeIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
-		_transitionWorkflowMetricsIndex.removeIndex(
-			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
-			company.getCompanyId());
 	}
 
 	@Reference
@@ -145,15 +115,6 @@ public class WorkflowMetricsIndexCreator {
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
-	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
 
 	@Reference
 	private Queries _queries;
@@ -163,19 +124,5 @@ public class WorkflowMetricsIndexCreator {
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
-
-	@Reference(
-		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
-	)
-	private WorkflowMetricsIndex _slaInstanceResultWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
-	private WorkflowMetricsIndex _slaTaskResultWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=task)")
-	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
-	private WorkflowMetricsIndex _transitionWorkflowMetricsIndex;
 
 }

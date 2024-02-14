@@ -1,0 +1,132 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useEventListener} from '@liferay/frontend-js-react-web';
+import {useContext, useEffect, useRef} from 'react';
+
+import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
+import {ITEM_TYPES} from '../../config/constants/itemTypes';
+import {
+	useActivationOrigin,
+	useHoverItem,
+	useIsActive,
+	useSelectItem,
+} from '../../contexts/ControlsContext';
+import {LayoutKeyboardContext} from '../../contexts/LayoutKeyboardContext';
+
+export function useLayoutKeyboardNavigation(item) {
+	const elementRef = useRef(null);
+
+	const activationOrigin = useActivationOrigin();
+	const isActive = useIsActive()(item.itemId);
+	const hoverItem = useHoverItem();
+	const selectItem = useSelectItem();
+
+	const {itemList, setTargetId, targetId} = useContext(LayoutKeyboardContext);
+
+	// Set target when selecting an item
+
+	useEffect(() => {
+		if (
+			isActive &&
+			activationOrigin === ITEM_ACTIVATION_ORIGINS.pageEditor
+		) {
+			setTargetId(item.itemId);
+		}
+	}, [activationOrigin, isActive, item, setTargetId]);
+
+	// Focus and hover when changing target
+
+	useEffect(() => {
+		if (targetId === item.itemId) {
+			elementRef.current.focus();
+			hoverItem(item.itemId);
+		}
+	}, [hoverItem, item, targetId]);
+
+	// Hover and set target when focusing first item
+
+	useEventListener(
+		'focus',
+		() => {
+			setTargetId(item.itemId);
+			hoverItem(item.itemId);
+		},
+		false,
+		elementRef.current
+	);
+
+	// Null hover when focus goes outside the editor
+
+	useEventListener(
+		'focusout',
+		() => hoverItem(null),
+		false,
+		elementRef.current
+	);
+
+	// Change target or select item with keyboard
+
+	useEventListener(
+		'keydown',
+		(event) => {
+			const {key} = event;
+
+			if (!['ArrowDown', 'ArrowUp', 'Enter'].includes(key)) {
+				return;
+			}
+
+			event.preventDefault();
+			event.stopPropagation();
+
+			// Calculate next item and set target
+
+			if (key === 'ArrowDown' || key === 'ArrowUp') {
+				const nextId = getNextId(key, item.itemId, itemList);
+
+				if (nextId) {
+					setTargetId(nextId);
+				}
+			}
+
+			// Select item
+
+			else if (key === 'Enter') {
+				const editableId = event.target.dataset.lfrEditableId;
+
+				if (editableId) {
+					selectItem(
+						`${item.config.fragmentEntryLinkId}-${editableId}`,
+						{
+							itemType: ITEM_TYPES.editable,
+						}
+					);
+				}
+				else {
+					selectItem(item.itemId);
+				}
+			}
+		},
+		false,
+		elementRef.current
+	);
+
+	// When there's a target, it's the focusable item.
+	// Otherwise, the first item is
+
+	const isTarget = item.itemId === targetId;
+	const isFirst = item.itemId === itemList[0];
+
+	return {
+		elementRef,
+		isFocusable: targetId ? isTarget : isFirst,
+	};
+}
+
+function getNextId(key, itemId, itemList) {
+	const index = itemList.findIndex((element) => element === itemId);
+
+	return itemList[key === 'ArrowDown' ? index + 1 : index - 1];
+}

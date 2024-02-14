@@ -21,6 +21,7 @@ import {
 	KeyboardMovementContextProvider,
 	useMovementSource,
 } from '../contexts/KeyboardMovementContext';
+import {LayoutKeyboardContextProvider} from '../contexts/LayoutKeyboardContext';
 import {LocalConfigContextProvider} from '../contexts/LocalConfigContext';
 import {StoreContextProvider} from '../contexts/StoreContext';
 import AppHooks from '../hooks/app_hooks/index';
@@ -78,7 +79,9 @@ export default function App({state}) {
 													<StyleBookContextProvider>
 														<Sidebar />
 
-														<LayoutViewport />
+														<LayoutKeyboardContextProvider>
+															<LayoutViewport />
+														</LayoutKeyboardContextProvider>
 
 														<LayoutBreadcrumbs />
 

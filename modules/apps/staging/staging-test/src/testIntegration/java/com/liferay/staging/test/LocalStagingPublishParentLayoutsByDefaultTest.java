@@ -70,7 +70,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 @FeatureFlags("LPS-199086")
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
-public class LocalStagingPublishParentPagesByDefaultTest
+public class LocalStagingPublishParentLayoutsByDefaultTest
 	extends BaseLocalStagingTestCase {
 
 	@ClassRule
@@ -190,7 +190,7 @@ public class LocalStagingPublishParentPagesByDefaultTest
 	 * LPD-6808: AC3
 	 */
 	@Test
-	public void testStagingWithCheckedConfigurationAndModifiedContentAndExistingParentAndChildPagesOnLive()
+	public void testStagingWithCheckedConfigurationAndModifiedContentAndExistingParentAndChildLayoutsOnLive()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -294,7 +294,7 @@ public class LocalStagingPublishParentPagesByDefaultTest
 	 * LPD-6808: AC4
 	 */
 	@Test
-	public void testStagingWithCheckedConfigurationAndModifiedContentAndNonexistingParentAndChildPagesOnLive()
+	public void testStagingWithCheckedConfigurationAndModifiedContentAndNonexistingParentAndChildLayoutsOnLive()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -349,7 +349,7 @@ public class LocalStagingPublishParentPagesByDefaultTest
 	 * LPD-6808: AC5
 	 */
 	@Test
-	public void testStagingWithUncheckedConfigurationAndModifiedContentAndExistingParentAndChildPagesOnLive()
+	public void testStagingWithUncheckedConfigurationAndModifiedContentAndExistingParentAndChildLayoutsOnLive()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -451,7 +451,7 @@ public class LocalStagingPublishParentPagesByDefaultTest
 	 * LPD-6808: AC6
 	 */
 	@Test
-	public void testStagingWithUncheckedConfigurationAndModifiedContentAndNonexistingParentAndChildPagesOnLive()
+	public void testStagingWithUncheckedConfigurationAndModifiedContentAndNonexistingParentAndChildLayoutsOnLive()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(

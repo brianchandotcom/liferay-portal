@@ -343,8 +343,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	/**
-	 * LPD-6808 Test if the link is correct between parent and child pages.
-	 * Export/import parent page first, and then the child page.
+	 * LPD-6808 Test if the link is correct between parent and child layouts.
+	 * Export/import parent layout first, and then the child layout.
 	 */
 	@Test
 	public void testExportImportLayoutSetInvalidLARType() throws Exception {
@@ -625,7 +625,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
-	public void testLayoutExportImportWithModifiedContentAndExistingParentAndChildPagesOnImportSide()
+	public void testLayoutExportImportWithModifiedContentAndExistingParentAndChildLayoutsOnImportSide()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -713,7 +713,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
-	public void testLayoutExportImportWithModifiedContentAndNonexistentParentAndChildPagesOnImportSide()
+	public void testLayoutExportImportWithModifiedContentAndNonexistentParentAndChildLayoutsOnImportSide()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -757,7 +757,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
-	public void testLayoutExportImportWithUncheckedConfigurationAndModifiedContentAndExistingParentAndChildPagesOnImportSide()
+	public void testLayoutExportImportWithUncheckedConfigurationAndModifiedContentAndExistingParentAndChildLayoutsOnImportSide()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -845,7 +845,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
-	public void testLayoutExportImportWithUncheckedConfigurationAndModifiedContentAndNonexistentParentAndChildPagesOnImportSide()
+	public void testLayoutExportImportWithUncheckedConfigurationAndModifiedContentAndNonexistentParentAndChildLayoutsOnImportSide()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -890,12 +890,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
-	public void testPublishParentPagesByDefaultConfigurationPublishParentFirstThenChild()
+	public void testPublishParentLayoutsByDefaultConfigurationPublishParentLayoutFirstThenChildLayout()
 		throws Exception {
 
-		_testPublishParentPagesByDefaultConfigurationPublishParentFirstThenChild(
+		_testPublishParentLayoutsByDefaultConfigurationPublishParentLayoutFirstThenChildLayout(
 			false);
-		_testPublishParentPagesByDefaultConfigurationPublishParentFirstThenChild(
+		_testPublishParentLayoutsByDefaultConfigurationPublishParentLayoutFirstThenChildLayout(
 			true);
 	}
 
@@ -956,14 +956,14 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	private void
-			_testPublishParentPagesByDefaultConfigurationPublishParentFirstThenChild(
-				boolean publishParentPagesByDefault)
+			_testPublishParentLayoutsByDefaultConfigurationPublishParentLayoutFirstThenChildLayout(
+				boolean publishParentLayoutsByDefault)
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
 			StagingConfiguration.class, CompanyThreadLocal.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"publishParentLayoutsByDefault", publishParentPagesByDefault
+				"publishParentLayoutsByDefault", publishParentLayoutsByDefault
 			).build());
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(group);

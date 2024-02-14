@@ -7,12 +7,12 @@
 	AUI().applyConfig({
 		groups: {
 			exportimportweb: {
-				base: MODULE_PATH + '/',
+				base: MODULE_PATH + '/js/legacy/',
 				combine: Liferay.AUI.getCombine(),
 				filter: Liferay.AUI.getFilterConfig(),
 				modules: {
 					'liferay-export-import-export-import': {
-						path: 'js/main.js',
+						path: 'main.js',
 						requires: [
 							'aui-datatype',
 							'aui-dialog-iframe-deprecated',
@@ -24,7 +24,7 @@
 						],
 					},
 				},
-				root: MODULE_PATH + '/',
+				root: MODULE_PATH + '/js/legacy/',
 			},
 		},
 	});

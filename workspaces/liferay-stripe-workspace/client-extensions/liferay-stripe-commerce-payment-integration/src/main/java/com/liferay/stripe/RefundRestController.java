@@ -59,21 +59,20 @@ public class RefundRestController extends BaseRestController {
 			Session session = Session.retrieve(
 				commercePaymentEntryJSONObject.getString("transactionCode"));
 
-			RefundCreateParams refundCreateParams = RefundCreateParams.builder(
-			).setAmount(
-				BigDecimal.valueOf(
-					commercePaymentEntryJSONObject.getDouble("amount")
-				).multiply(
-					BigDecimal.valueOf(100)
-				).longValue()
-			).setPaymentIntent(
-				session.getPaymentIntent()
-			).setReason(
-				_getReason(
-					commercePaymentEntryJSONObject.getString("reasonKey"))
-			).build();
-
-			Refund refund = Refund.create(refundCreateParams);
+			Refund refund = Refund.create(
+				RefundCreateParams.builder(
+				).setAmount(
+					BigDecimal.valueOf(
+						commercePaymentEntryJSONObject.getDouble("amount")
+					).multiply(
+						BigDecimal.valueOf(100)
+					).longValue()
+				).setPaymentIntent(
+					session.getPaymentIntent()
+				).setReason(
+					_getReason(
+						commercePaymentEntryJSONObject.getString("reasonKey"))
+				).build());
 
 			if (Objects.equals(refund.getStatus(), "succeeded")) {
 				paymentStatus = "17";

@@ -136,7 +136,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
 						"A record API property cannot have an object field " +
-							"ERC value",
+							"erc value",
 						"a-record-api-property-cannot-have-an-object-field-" +
 							"erc-value");
 				}
@@ -146,7 +146,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 						null,
 						"A record API property cannot have an object " +
 							"relationship names value",
-						"a-record-api-property-can-not-have-an-object-" +
+						"a-record-api-property-cannot-have-an-object-" +
 							"relationship-names-value");
 				}
 			}
@@ -155,9 +155,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
 						"A field API property cannot have an empty object " +
-							"field ERC value",
-						"a-field-api-property-cannot-have-an-empty-object-field-" +
-							"erc-value");
+							"field erc value",
+						"a-field-api-property-cannot-have-an-empty-object-" +
+							"field-erc-value");
 				}
 
 				if (!_isValidAPIProperty(

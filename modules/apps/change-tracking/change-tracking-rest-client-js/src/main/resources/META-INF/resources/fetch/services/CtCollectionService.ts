@@ -181,6 +181,26 @@ export class CtCollectionService {
         });
     }
     /**
+     * @returns CTCollection The array of CTCollections that were retrieved by the supplied classNameId and classPk
+     * @throws ApiError
+     */
+    public getCtCollectionsHistoryPage({
+        classNameId,
+        classPk,
+    }: {
+        classNameId?: number,
+        classPk?: number,
+    }): CancelablePromise<Array<CTCollection>> {
+        return this.httpRequest.request({
+            method: 'GET',
+            url: '/change-tracking-rest/v1.0/ct-collections/history',
+            query: {
+                'classNameId': classNameId,
+                'classPK': classPk,
+            },
+        });
+    }
+    /**
      * @returns void
      * @throws ApiError
      */

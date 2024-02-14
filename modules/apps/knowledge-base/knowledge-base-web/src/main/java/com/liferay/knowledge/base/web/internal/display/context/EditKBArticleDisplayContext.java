@@ -107,6 +107,12 @@ public class EditKBArticleDisplayContext {
 	}
 
 	public String getCancelURL() {
+		long resourcePrimKey = getResourcePrimKey();
+
+		if (resourcePrimKey == 0) {
+			return getRedirect();
+		}
+
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
@@ -116,7 +122,7 @@ public class EditKBArticleDisplayContext {
 		).setRedirect(
 			getRedirect()
 		).setParameter(
-			"resourcePrimKey", getResourcePrimKey()
+			"resourcePrimKey", resourcePrimKey
 		).buildString();
 	}
 

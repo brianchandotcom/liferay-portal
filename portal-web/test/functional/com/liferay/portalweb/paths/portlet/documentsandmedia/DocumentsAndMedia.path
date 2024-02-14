@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_RESOURCE_BUTTON</td>
+	<td>//button[@data-resourcename='${key_dmFolderName}']/span[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORTED_DOWN_ICON</td>
 	<td>//*[name()='svg'][contains(@class,'lexicon-icon-order-list-down')]</td>
 	<td></td>

@@ -33,6 +33,23 @@ html#{$cadmin-selector} .cadmin {
 			border-bottom: 1px solid $gray-200;
 			margin-bottom: 0;
 		}
+
+		.management-bar {
+			margin-bottom: 12px;
+			min-height: initial;
+
+			> .container-fluid {
+				padding: 0;
+
+				> .navbar-nav {
+					gap: 16px;
+				}
+			}
+
+			.nav-btn {
+				margin: 0;
+			}
+		}
 	}
 
 	.tab-pane .orderable-table-sheet {

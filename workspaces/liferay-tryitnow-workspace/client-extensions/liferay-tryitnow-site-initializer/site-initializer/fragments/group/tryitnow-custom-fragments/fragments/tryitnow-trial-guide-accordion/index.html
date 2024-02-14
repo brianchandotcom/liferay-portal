@@ -59,16 +59,16 @@
 		const stepNumberElements = document.getElementsByName('txt-step-incomplete');
 		var steps = {};
 
-		function loadData() {
-			$.ajax({
-				url: '/o/c/m2h8progresstrackers?p_auth=' + Liferay.authToken,
-				method: 'GET',
-				success: success,
-				error: error,
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
+		async function loadData() {
+			const apiResponse = await fetch('/o/c/m2h8progresstrackers?p_auth=' + Liferay.authToken, {headers: {'Content-Type': 'application/json'}});
+
+			if (apiResponse.ok){
+				const data = await apiResponse.json();
+				
+				success(data);
+			}else{
+				error();
+			}
 
 			function error() {
 				showToastError('Could not load data.');
@@ -220,19 +220,22 @@
 			}
 		}
 
-		function updateStep(data, success, error) {
-			$.ajax({
-				url: '/o/c/m2h8progresstrackers/' + data.id + '?p_auth=' + Liferay.authToken,
-				success: success,
-				error: error,
-				method: 'PUT',
-				data: JSON.stringify(data),
-				headers: {
+		async function updateStep(data, success, error) {
+			const apiResponse = await fetch('/o/c/m2h8progresstrackers/' + data.id + '?p_auth=' + Liferay.authToken, {headers: {
 					'Content-Type': 'application/json'
-				}
-			});
+				}});
+
+			if (apiResponse.ok){
+				const data = await apiResponse.json();
+
+				success(data);
+			}else{
+				error();
+			}
 		}
 
-		loadData();
+		(async () => {
+			await loadData();
+		})();
 	}
 </script>

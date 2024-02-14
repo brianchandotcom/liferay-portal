@@ -1,7 +1,7 @@
 {
 	"className": "com.liferay.template.model.TemplateEntry",
-	"ddmTemplateKey": "M2H8-ATTACHMENT-NAME",
+	"ddmTemplateKey": "M2H8-TICKET-ATTACHMENT",
 	"infoItemClassName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
-	"name": "M2H8 Attachment Name",
+	"name": "M2H8 Ticket Attachment",
 	"resourceClassName": "com.liferay.template.model.TemplateEntry"
 }

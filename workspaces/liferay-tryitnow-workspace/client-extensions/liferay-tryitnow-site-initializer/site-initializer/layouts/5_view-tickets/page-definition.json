@@ -519,7 +519,7 @@
 								"definition": {
 									"collectionConfig": {
 										"collectionReference": {
-											"className": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_Ticket"
+											"className": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_J3Y7Ticket"
 										},
 										"collectionType": "CollectionProvider"
 									},
@@ -773,7 +773,7 @@
 																				},
 																				"text": {
 																					"mapping": {
-																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Attachment Description Summarized$]",
+																						"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:M2H8 Attachment Description Summarized$]",
 																						"itemReference": {
 																							"contextSource": "CollectionItem"
 																						}

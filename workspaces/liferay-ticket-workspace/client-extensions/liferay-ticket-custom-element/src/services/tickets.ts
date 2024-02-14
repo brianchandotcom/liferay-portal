@@ -115,6 +115,10 @@ export async function updateTicketStatus(ticket: Ticket) {
 		delete ticket.payload.r_userToJ3Y7Ticket_userId;
 	}
 
+	if (!ticket.payload.r_relatedTicket_c_j3y7TicketId){
+		delete ticket.payload.r_relatedTicket_c_j3y7TicketId;
+	}
+
 	const result = await request(
 		`/o/c/j3y7tickets/${ticket.id}`,
 		'PUT',

@@ -13,3 +13,5 @@ liferay-ticket-custom-element:
     urls:
         - "*.js"
     useESM: true
+    properties: 
+        defaultScreen: dashboard

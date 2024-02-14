@@ -129,8 +129,7 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"value_i18n": {
 														"en_US": "Ticket #"
@@ -165,11 +164,10 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {
-												},
+												"fragmentLink": {},
 												"text": {
 													"mapping": {
-														"fieldKey": "ObjectEntry_objectEntryId",
+														"fieldKey": "ObjectField_subject",
 														"itemReference": {
 															"contextSource": "DisplayPageItem"
 														}
@@ -234,13 +232,11 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {
-									}
+									"rowViewportDefinition": {}
 								}
 							],
 							"verticalAlignment": "top"
@@ -256,13 +252,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],
@@ -361,13 +355,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],
@@ -411,8 +403,7 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "ticket"
@@ -466,8 +457,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "#"
@@ -496,11 +486,10 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "ObjectEntry_objectEntryId",
+																				"fieldKey": "ObjectField_subject",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}
@@ -528,8 +517,7 @@
 														"bottomSpacing": "1",
 														"separatorColor": "light"
 													},
-													"fragmentFields": [
-													],
+													"fragmentFields": [],
 													"fragmentStyle": {
 														"marginBottom": "4",
 														"marginTop": "4"
@@ -551,8 +539,7 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Status"
@@ -582,11 +569,10 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"mapping": {
-																		"fieldKey": "ObjectField_wFStatus",
+																		"fieldKey": "ObjectField_ticketStatus",
 																		"itemReference": {
 																			"contextSource": "DisplayPageItem"
 																		}
@@ -617,8 +603,7 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Description"
@@ -649,8 +634,7 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "ObjectField_description",
@@ -684,8 +668,7 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Uploads"
@@ -706,31 +689,16 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "DIALECT-dialect-text",
-														"siteKey": "[$GROUP_KEY$]"
+														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {
-														"textType": "text-paragraph-sm"
-													},
+													"fragmentConfig": {},
 													"fragmentFields": [
 														{
-															"id": "element-text",
+															"id": "element-html",
 															"value": {
-																"fragmentLink": {
-																	"value": {
-																		"href": {
-																			"mapping": {
-																				"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Attachment Link$]",
-																				"itemReference": {
-																					"contextSource": "DisplayPageItem"
-																				}
-																			}
-																		}
-																	}
-																},
-																"text": {
+																"html": {
 																	"mapping": {
-																		"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:Attachment Name$]",
+																		"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:M2H8 Ticket Attachment$]",
 																		"itemReference": {
 																			"contextSource": "DisplayPageItem"
 																		}
@@ -739,11 +707,6 @@
 															}
 														}
 													],
-													"fragmentStyle": {
-														"fontWeight": "fontWeightLight",
-														"marginTop": "1",
-														"textColor": "colorBrandPrimary"
-													},
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -761,8 +724,7 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Related Tickets"
@@ -784,7 +746,7 @@
 												"definition": {
 													"collectionConfig": {
 														"collectionReference": {
-															"className": "com.liferay.object.internal.info.collection.provider.OneToManyObjectRelationshipRelatedInfoCollectionProvider_[$COMPANY_ID$]_C_Ticket_relatedTicket"
+															"className": "com.liferay.object.internal.info.collection.provider.OneToManyObjectRelationshipRelatedInfoCollectionProvider_[$COMPANY_ID$]_C_J3Y7Ticket_relatedTicket"
 														},
 														"collectionType": "CollectionProvider"
 													},
@@ -796,13 +758,11 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"collectionViewportDefinition": {
-															},
+															"collectionViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
-															"collectionViewportDefinition": {
-															},
+															"collectionViewportDefinition": {},
 															"id": "tablet"
 														}
 													],
@@ -821,8 +781,7 @@
 												"pageElements": [
 													{
 														"definition": {
-															"collectionItemConfig": {
-															}
+															"collectionItemConfig": {}
 														},
 														"pageElements": [
 															{
@@ -892,13 +851,11 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {
-											},
+											"columnViewportDefinition": {},
 											"id": "tablet"
 										}
 									],

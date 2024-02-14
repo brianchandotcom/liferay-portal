@@ -13,9 +13,8 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.bookmarks.constants.BookmarksFolderConstants;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -58,14 +57,7 @@ public class AssetSearcherClassNameIdsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_journalArticleFixture.setDDMStructureLocalService(
-			_ddmStructureLocalService);
 		_group = GroupTestUtil.addGroup();
-
-		_journalArticleFixture.setGroup(_group);
-
-		_journalArticleFixture.setJournalArticleLocalService(
-			_journalArticleLocalService);
 	}
 
 	@Test
@@ -74,7 +66,9 @@ public class AssetSearcherClassNameIdsTest {
 
 		addBlogsEntry();
 		addBookmarksEntry();
-		addJournalArticle();
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Hits hits = search(getAssetEntryQuery(), getSearchContext());
 
@@ -87,7 +81,9 @@ public class AssetSearcherClassNameIdsTest {
 
 		addBlogsEntry();
 		addBookmarksEntry();
-		addJournalArticle();
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Hits hits = search(
 			getAssetEntryQuery(
@@ -104,7 +100,9 @@ public class AssetSearcherClassNameIdsTest {
 
 		addBlogsEntry();
 		addBookmarksEntry();
-		addJournalArticle();
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Hits hits = search(
 			getAssetEntryQuery("com.liferay.journal.model.JournalArticle"),
@@ -128,10 +126,6 @@ public class AssetSearcherClassNameIdsTest {
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), "http://www.liferay.com",
 			RandomTestUtil.randomString(), getServiceContext());
-	}
-
-	protected JournalArticle addJournalArticle() throws Exception {
-		return _journalArticleFixture.addJournalArticle(getServiceContext());
 	}
 
 	protected User addUser() throws Exception {
@@ -189,17 +183,9 @@ public class AssetSearcherClassNameIdsTest {
 	@Inject
 	private static BookmarksEntryLocalService _bookmarksEntryLocalService;
 
-	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private final JournalArticleFixture _journalArticleFixture =
-		new JournalArticleFixture();
 	private final List<User> _users = new ArrayList<>();
 
 }

@@ -8,9 +8,8 @@ package com.liferay.asset.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.search.AssetSearcherFactory;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -69,14 +67,6 @@ public class AssetSearcherStagingTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_journalArticleFixture.setDDMStructureLocalService(
-			_ddmStructureLocalService);
-		_journalArticleFixture.setGroup(_group);
-		_journalArticleFixture.setJournalArticleLocalService(
-			_journalArticleLocalService);
-
-		_journalArticles = _journalArticleFixture.getJournalArticles();
 	}
 
 	@Test
@@ -95,7 +85,9 @@ public class AssetSearcherStagingTest {
 
 		addUserGroupRole(user, role);
 
-		addJournalArticle();
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
@@ -132,10 +124,6 @@ public class AssetSearcherStagingTest {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	protected JournalArticle addJournalArticle() throws Exception {
-		return _journalArticleFixture.addJournalArticle();
-	}
 
 	protected Role addRole(int roleType) throws Exception {
 		Role role = RoleTestUtil.addRole(roleType);
@@ -203,25 +191,10 @@ public class AssetSearcherStagingTest {
 	private static AssetSearcherFactory _assetSearcherFactory;
 
 	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject
 	private static UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Inject
-	private static UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private final JournalArticleFixture _journalArticleFixture =
-		new JournalArticleFixture();
-
-	@DeleteAfterTestRun
-	private List<JournalArticle> _journalArticles;
 
 	@DeleteAfterTestRun
 	private final List<Role> _roles = new ArrayList<>();

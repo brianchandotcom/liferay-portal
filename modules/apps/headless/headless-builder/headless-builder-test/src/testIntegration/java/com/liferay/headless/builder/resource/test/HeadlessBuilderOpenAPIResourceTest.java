@@ -84,32 +84,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 
-		_singleElementObjectDefinition = _publishObjectDefinition(
-			Arrays.asList(
-				new TextObjectFieldBuilder(
-				).externalReferenceCode(
-					_API_SINGLE_ELEMENT_SCHEMA_TEXT_FIELD_ERC
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"textField"
-				).build()),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_singleElementSiteScopedObjectDefinition = _publishObjectDefinition(
-			Arrays.asList(
-				new TextObjectFieldBuilder(
-				).externalReferenceCode(
-					_API_SINGLE_ELEMENT_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"textField"
-				).build()),
-			ObjectDefinitionConstants.SCOPE_SITE);
-
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
@@ -265,7 +239,6 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					"textField"
 				).build()),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		_objectDefinition3 = _publishObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
@@ -287,7 +260,30 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					"longTextField"
 				).build()),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-
+		_singleElementObjectDefinition = _publishObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_SINGLE_ELEMENT_SCHEMA_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textField"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+		_singleElementSiteScopedObjectDefinition = _publishObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_SINGLE_ELEMENT_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textField"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_SITE);
 		_siteScopedObjectDefinition = _publishObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(

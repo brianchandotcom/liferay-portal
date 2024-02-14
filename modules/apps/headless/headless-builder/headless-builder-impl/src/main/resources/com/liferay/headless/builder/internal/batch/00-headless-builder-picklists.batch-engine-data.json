@@ -15,10 +15,10 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "API_PROPERTY_TYPE_PICKLIST",
+			"externalReferenceCode": "L_API_PROPERTY_TYPE_PICKLIST",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "API_PROPERTY_TYPE_PICKLIST_FIELD",
+					"externalReferenceCode": "L_API_PROPERTY_TYPE_PICKLIST_FIELD",
 					"key": "field",
 					"name": "field",
 					"name_i18n": {
@@ -26,7 +26,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "API_PROPERTY_TYPE_PICKLIST_OBJECT",
+					"externalReferenceCode": "L_API_PROPERTY_TYPE_PICKLIST_OBJECT",
 					"key": "record",
 					"name": "record",
 					"name_i18n": {
@@ -34,9 +34,9 @@
 					}
 				}
 			],
-			"name": "API_PROPERTY_TYPE_PICKLIST",
+			"name": "L_API_PROPERTY_TYPE_PICKLIST",
 			"name_i18n": {
-				"en-US": "API_PROPERTY_TYPE_PICKLIST"
+				"en-US": "L_API_PROPERTY_TYPE_PICKLIST"
 			},
 			"system": true
 		}

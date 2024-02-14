@@ -381,7 +381,7 @@
 					"label": {
 						"en_US": "Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "API_PROPERTY_TYPE_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "L_API_PROPERTY_TYPE_PICKLIST",
 					"name": "type",
 					"required": false,
 					"state": false,

@@ -16,6 +16,30 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
  */
 public class CTCollectionPermission {
 
+	public static void check(
+			PermissionChecker permissionChecker, CTCollection ctCollection,
+			String actionId)
+		throws PortalException {
+
+		ModelResourcePermission<CTCollection> modelResourcePermission =
+			_ctCollectionModelResourcePermissionSnapshot.get();
+
+		modelResourcePermission.check(
+			permissionChecker, ctCollection, actionId);
+	}
+
+	public static void check(
+			PermissionChecker permissionChecker, long ctCollectionId,
+			String actionId)
+		throws PortalException {
+
+		ModelResourcePermission<CTCollection> modelResourcePermission =
+			_ctCollectionModelResourcePermissionSnapshot.get();
+
+		modelResourcePermission.check(
+			permissionChecker, ctCollectionId, actionId);
+	}
+
 	public static boolean contains(
 			PermissionChecker permissionChecker, CTCollection ctCollection,
 			String actionId)

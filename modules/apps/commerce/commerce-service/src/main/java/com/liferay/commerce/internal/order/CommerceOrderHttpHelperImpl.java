@@ -597,6 +597,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		_commerceOrderThreadLocal.set(userCommerceOrder);
 
 		try {
+			httpSession.setAttribute(cookieName, userCommerceOrder.getUuid());
+
 			_commerceOrderLocalService.mergeGuestCommerceOrder(
 				user.getUserId(), commerceOrder.getCommerceOrderId(),
 				userCommerceOrder.getCommerceOrderId(),

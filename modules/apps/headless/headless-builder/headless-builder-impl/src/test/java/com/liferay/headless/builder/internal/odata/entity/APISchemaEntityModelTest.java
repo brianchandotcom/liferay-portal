@@ -60,7 +60,7 @@ public class APISchemaEntityModelTest {
 	}
 
 	@Test
-	public void testGetEntityFieldsMapNonexistingMatch() {
+	public void testGetEntityFieldsMapNonexistentMatch() {
 		APISchemaEntityModel apiSchemaEntityModel = new APISchemaEntityModel(
 			_getEntityModel(
 				Arrays.asList("field1", "field2", "field3", "field4")),

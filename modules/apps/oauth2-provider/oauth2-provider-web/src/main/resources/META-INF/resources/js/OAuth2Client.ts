@@ -132,24 +132,29 @@ class OAuth2Client {
 
 				resolve(tokenResponse);
 
-				tokenResponse.then((response) =>
-					Liferay.Util.SessionStorage.setItem(
-						sessionKey,
-						JSON.stringify({
-							...response,
-							expires_after_ms:
-								new Date().getTime() +
-								response.expires_in * 1000,
-						}),
-						Liferay.Util.SessionStorage.TYPES.NECESSARY
+				tokenResponse
+					.then((response) =>
+						Liferay.Util.SessionStorage.setItem(
+							sessionKey,
+							JSON.stringify({
+								...response,
+								expires_after_ms:
+									new Date().getTime() +
+									response.expires_in * 1000,
+							}),
+							Liferay.Util.SessionStorage.TYPES.NECESSARY
+						)
 					)
-				).then(() => {
-					// Remove the iframe
+					.then(() => {
 
-					if (event.target && event.target.parentElement) {
-						event.target.parentElement.removeChild(event.target);
-					}
-				});
+						// Remove the iframe
+
+						if (event.target && event.target.parentElement) {
+							event.target.parentElement.removeChild(
+								event.target
+							);
+						}
+					});
 			};
 
 			if (ifrm.contentWindow) {

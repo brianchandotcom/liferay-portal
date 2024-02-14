@@ -1519,7 +1519,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"objectFieldERC", _API_SCHEMA_INTEGER_FIELD_ERC + 1
 				)),
 			JSONUtil.put("integerProperty", 1), objectEntry1);
-
 		_testGetWithRecordProperty(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -2545,7 +2544,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"record1", Collections.emptyMap()
 			).toString(),
 			JSONUtil.put("integerProperty", 1));
-
 		_testPostWithRecordProperty(
 			JSONUtil.putAll(
 				JSONUtil.put(

@@ -6,6 +6,7 @@
 package com.liferay.address.internal.osgi.commands;
 
 import com.liferay.address.internal.util.CompanyCountriesUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -51,7 +52,7 @@ public class PortalAddressOSGiCommands implements OSGiCommands {
 		try (Connection connection = DataAccess.getConnection()) {
 			CompanyCountriesUtil.populateCompanyCountries(
 				_companyLocalService.getCompany(companyId),
-				_countryLocalService, connection);
+				_counterLocalService, _countryLocalService, connection);
 		}
 	}
 
@@ -82,8 +83,8 @@ public class PortalAddressOSGiCommands implements OSGiCommands {
 
 				if (!countryNames.contains(name)) {
 					CompanyCountriesUtil.addCountry(
-						company, countryJSONObject, _countryLocalService,
-						connection);
+						company, _counterLocalService, countryJSONObject,
+						_countryLocalService, connection);
 
 					continue;
 				}
@@ -100,7 +101,8 @@ public class PortalAddressOSGiCommands implements OSGiCommands {
 					country.getPosition(), country.isShippingAllowed(),
 					country.isSubjectToVAT());
 
-				CompanyCountriesUtil.processCountryRegions(country, connection);
+				CompanyCountriesUtil.processCountryRegions(
+					country, connection, _counterLocalService);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -113,6 +115,9 @@ public class PortalAddressOSGiCommands implements OSGiCommands {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private CountryLocalService _countryLocalService;

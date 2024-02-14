@@ -6,6 +6,7 @@
 package com.liferay.address.internal.upgrade.v1_0_1;
 
 import com.liferay.address.internal.util.CompanyCountriesUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -38,18 +39,22 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 
 	public CountryRegionUpgradeProcess(
 		CompanyLocalService companyLocalService,
+		CounterLocalService counterLocalService,
 		CountryLocalService countryLocalService,
 		RegionLocalService regionLocalService) {
 
 		_companyLocalService = companyLocalService;
+		_counterLocalService = counterLocalService;
 		_countryLocalService = countryLocalService;
 		_regionLocalService = regionLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		CompanyCountriesUtil.updateRegionCounter(getConnection());
-		CompanyCountriesUtil.updateRegionLocalizationCounter(getConnection());
+		CompanyCountriesUtil.updateRegionCounter(
+			getConnection(), _counterLocalService);
+		CompanyCountriesUtil.updateRegionLocalizationCounter(
+			getConnection(), _counterLocalService);
 
 		_updateRegion("FR", "75C", "75", "Paris");
 		_updateRegion("MX", "CMX", "DIF", "Ciudad de México");
@@ -214,17 +219,23 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 		}
 		else {
 			String oldRegionCode = region.getRegionCode();
+			String oldRegionName = region.getName();
+
+			if (Objects.equals(oldRegionCode, newRegionCode) &&
+				Objects.equals(
+					oldRegionName, regionJSONObject.getString("name"))) {
+
+				return;
+			}
 
 			region.setName(regionJSONObject.getString("name"));
 			region.setRegionCode(newRegionCode);
 
 			region = _regionLocalService.updateRegion(region);
 
-			if (!Objects.equals(oldRegionCode, newRegionCode)) {
-				_updateData(
-					country.getA2(), region.getRegionCode(), oldRegionCode,
-					"CIWarehouse");
-			}
+			_updateData(
+				country.getA2(), region.getRegionCode(), oldRegionCode,
+				"CIWarehouse");
 		}
 
 		JSONObject localizationsJSONObject = regionJSONObject.getJSONObject(
@@ -294,6 +305,7 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 		CountryRegionUpgradeProcess.class);
 
 	private final CompanyLocalService _companyLocalService;
+	private final CounterLocalService _counterLocalService;
 	private final CountryLocalService _countryLocalService;
 	private final RegionLocalService _regionLocalService;
 

@@ -84,41 +84,50 @@ class OAuth2Client {
 
 		return new Promise((resolve, reject) => {
 			const eventHandler = (event: any) => {
-				try {
-					if (event.data.error) {
-						reject(event.data.error);
+				if (event.data.error) {
+					// Remove the iframe and reject the promise
 
-						return;
-					}
-					else if (event.data.code === null) {
-						reject();
-
-						return;
+					if (event.target && event.target.parentElement) {
+						event.target.parentElement.removeChild(event.target);
 					}
 
-					const tokenResponse = oauth2Client._requestToken(
-						challenge.code_verifier,
-						event.data.code
-					);
+					reject(event.data.error);
 
-					resolve(tokenResponse);
+					return;
+				}
+				else if (!event.data.code) {
+					// Ignore messages that don't contain a code
 
-					tokenResponse.then((response) =>
-						Liferay.Util.SessionStorage.setItem(
-							sessionKey,
-							JSON.stringify({
-								...response,
-								expires_after_ms:
-									new Date().getTime() +
-									response.expires_in * 1000,
-							}),
-							Liferay.Util.SessionStorage.TYPES.NECESSARY
-						)
-					);
+					return;
 				}
-				finally {
-					ifrm.parentElement?.removeChild(ifrm);
-				}
+
+				console.log("OAuth2Client Event:", event);
+
+				const tokenResponse = oauth2Client._requestToken(
+					challenge.code_verifier,
+					event.data.code
+				);
+
+				resolve(tokenResponse);
+
+				tokenResponse.then((response) =>
+					Liferay.Util.SessionStorage.setItem(
+						sessionKey,
+						JSON.stringify({
+							...response,
+							expires_after_ms:
+								new Date().getTime() +
+								response.expires_in * 1000,
+						}),
+						Liferay.Util.SessionStorage.TYPES.NECESSARY
+					)
+				).then(() => {
+					// Remove the iframe
+
+					if (event.target && event.target.parentElement) {
+						event.target.parentElement.removeChild(event.target);
+					}
+				});
 			};
 
 			if (ifrm.contentWindow) {

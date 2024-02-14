@@ -6,6 +6,7 @@
 package com.liferay.address.internal.upgrade.v1_0_2;
 
 import com.liferay.address.internal.util.CompanyCountriesUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -30,10 +31,12 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 	public CountryUpgradeProcess(
 		CompanyLocalService companyLocalService,
+		CounterLocalService counterLocalService,
 		CountryLocalService countryLocalService, JSONFactory jsonFactory,
 		RegionLocalService regionLocalService) {
 
 		_companyLocalService = companyLocalService;
+		_counterLocalService = counterLocalService;
 		_countryLocalService = countryLocalService;
 		_jsonFactory = jsonFactory;
 		_regionLocalService = regionLocalService;
@@ -97,8 +100,9 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		}
 
 		CompanyCountriesUtil.addCountry(
-			company, _jsonFactory.createJSONObject(countryMap),
-			_countryLocalService, connection);
+			company, _counterLocalService,
+			_jsonFactory.createJSONObject(countryMap), _countryLocalService,
+			connection);
 
 		Country chinaCountry = _countryLocalService.fetchCountryByA2(
 			company.getCompanyId(), "CN");
@@ -192,6 +196,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		CountryUpgradeProcess.class);
 
 	private final CompanyLocalService _companyLocalService;
+	private final CounterLocalService _counterLocalService;
 	private final CountryLocalService _countryLocalService;
 	private final JSONFactory _jsonFactory;
 	private final RegionLocalService _regionLocalService;

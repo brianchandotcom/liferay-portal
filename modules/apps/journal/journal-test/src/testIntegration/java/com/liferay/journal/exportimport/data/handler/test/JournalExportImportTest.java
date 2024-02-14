@@ -184,7 +184,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		exportPortlet(JournalPortletKeys.JOURNAL, parentLayout);
 
-		// deletes both parent and child pages
+		// deletes both parent and child layouts
 
 		LayoutServiceUtil.deleteLayout(
 			groupId, parentLayout.isPrivateLayout(), parentLayout.getLayoutId(),

@@ -385,7 +385,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A record API property can not an Object Field ERC value.",
+			"A record API property cannot an object field ERC value.",
 			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -405,7 +405,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A record API property can not have an Object Relationship Names " +
+			"A record API property cannot have an object relationship names " +
 				"value.",
 			jsonObject.get("title"));
 

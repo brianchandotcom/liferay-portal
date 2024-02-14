@@ -8,6 +8,7 @@ import {ApiHelpers} from './ApiHelpers';
 
 type TChannel = {
 	currencyCode?: string;
+	id?: number;
 	name?: string;
 	siteGroupId: number | string;
 	type?: string;
@@ -34,7 +35,7 @@ export class HeadlessCommerceAdminChannelApiHelper {
 		);
 	}
 
-	async postChannel(channel: TChannel) {
+	async postChannel(channel: TChannel): Promise<TChannel> {
 		return await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels`,
 			{

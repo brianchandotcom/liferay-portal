@@ -9,6 +9,9 @@ import {test} from '@playwright/test';
 
 import {SpecificationFacetsPage} from '../pages/commerce/commerce-product-content-search-web/specificationFacetsPage';
 import {AttachmentsPage} from '../pages/commerce/commerce-product-definitions-web/attachmentsPage';
+import {CommerceAdminChannelDetailsCountriesPage} from '../pages/commerce/commerceAdminChannelDetailsCountriesPage';
+import {CommerceAdminChannelDetailsPage} from '../pages/commerce/commerceAdminChannelDetailsPage';
+import {CommerceAdminChannelsPage} from '../pages/commerce/commerceAdminChannelsPage';
 import {CommerceAdminOrderDetailsPage} from '../pages/commerce/commerceAdminOrderDetailsPage';
 import {CommerceAdminOrdersPage} from '../pages/commerce/commerceAdminOrdersPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
@@ -17,6 +20,9 @@ import {CommerceProductAdminPage} from '../pages/commerce/commerceProductAdminPa
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
+	commerceAdminChannelDetailsCountriesPage: CommerceAdminChannelDetailsCountriesPage;
+	commerceAdminChannelDetailsPage: CommerceAdminChannelDetailsPage;
+	commerceAdminChannelsPage: CommerceAdminChannelsPage;
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
 	commerceAdminOrdersPage: CommerceAdminOrdersPage;
 	commerceLayoutsPage: CommerceLayoutsPage;
@@ -26,6 +32,15 @@ const commercePagesTest = test.extend<{
 }>({
 	attachmentsPage: async ({page}, use) => {
 		await use(new AttachmentsPage(page));
+	},
+	commerceAdminChannelDetailsCountriesPage: async ({page}, use) => {
+		await use(new CommerceAdminChannelDetailsCountriesPage(page));
+	},
+	commerceAdminChannelDetailsPage: async ({page}, use) => {
+		await use(new CommerceAdminChannelDetailsPage(page));
+	},
+	commerceAdminChannelsPage: async ({page}, use) => {
+		await use(new CommerceAdminChannelsPage(page));
 	},
 	commerceAdminOrderDetailsPage: async ({page}, use) => {
 		await use(new CommerceAdminOrderDetailsPage(page));

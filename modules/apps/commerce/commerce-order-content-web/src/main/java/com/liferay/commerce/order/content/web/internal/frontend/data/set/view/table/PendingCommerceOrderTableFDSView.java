@@ -42,7 +42,7 @@ public class PendingCommerceOrderTableFDSView extends BaseTableFDSView {
 		).add(
 			"purchaseOrderNumber", "purchase-order-number"
 		).add(
-			_addAccountNameFDSTableSchemaField()
+			_addAccountNameStringFDSTableSchemaField()
 		).add(
 			"author", "created-by"
 		).add(
@@ -52,7 +52,9 @@ public class PendingCommerceOrderTableFDSView extends BaseTableFDSView {
 		).build();
 	}
 
-	private StringFDSTableSchemaField _addAccountNameFDSTableSchemaField() {
+	private StringFDSTableSchemaField
+		_addAccountNameStringFDSTableSchemaField() {
+
 		StringFDSTableSchemaField stringFDSTableSchemaField =
 			new StringFDSTableSchemaField();
 

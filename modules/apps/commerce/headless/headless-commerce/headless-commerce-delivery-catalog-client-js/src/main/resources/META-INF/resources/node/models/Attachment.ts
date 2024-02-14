@@ -8,9 +8,13 @@ export type Attachment = {
      * Base64 encoded file
      */
     attachment?: string;
+    cdnEnabled?: boolean;
+    cdnURL?: string;
     readonly customFields?: Array<CustomField>;
     displayDate?: string;
     expirationDate?: string;
+    externalReferenceCode?: string;
+    readonly fileEntryId?: number;
     readonly galleryEnabled?: boolean;
     readonly id?: number;
     neverExpire?: boolean;

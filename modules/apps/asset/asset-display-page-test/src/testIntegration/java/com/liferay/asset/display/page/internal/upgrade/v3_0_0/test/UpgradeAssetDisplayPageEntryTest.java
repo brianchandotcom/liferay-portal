@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -9,14 +9,23 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -27,6 +36,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -114,6 +124,79 @@ public class UpgradeAssetDisplayPageEntryTest {
 			AssetDisplayPageConstants.TYPE_NONE);
 	}
 
+	@Test
+	public void testUpgradeProcessWithPublication() throws Exception {
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CTSettingsConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build())) {
+
+			DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+			DLFileEntry dlFileEntry1 = DLTestUtil.addDLFileEntry(
+				dlFolder.getFolderId());
+
+			_addAssetDisplayPageEntry(
+				dlFileEntry1.getFileEntryId(), 0,
+				AssetDisplayPageConstants.TYPE_DEFAULT, 0);
+
+			DLFileEntry dlFileEntry2 = DLTestUtil.addDLFileEntry(
+				dlFolder.getFolderId());
+
+			_addAssetDisplayPageEntry(
+				dlFileEntry2.getFileEntryId(),
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				AssetDisplayPageConstants.TYPE_SPECIFIC,
+				_layoutPageTemplateEntry.getPlid());
+
+			DLFileEntry dlFileEntry3 = DLTestUtil.addDLFileEntry(
+				dlFolder.getFolderId());
+
+			CTCollection ctCollection =
+				_ctCollectionLocalService.addCTCollection(
+					null, TestPropsValues.getCompanyId(),
+					TestPropsValues.getUserId(), 0,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctCollection.getCtCollectionId())) {
+
+				_updateDLFileEntryTitle(dlFileEntry1.getFileEntryId());
+				_updateDLFileEntryTitle(dlFileEntry2.getFileEntryId());
+				_updateDLFileEntryTitle(dlFileEntry3.getFileEntryId());
+			}
+
+			_assertAssetDisplayPageEntry(
+				dlFileEntry1.getFileEntryId(), 0,
+				AssetDisplayPageConstants.TYPE_DEFAULT);
+			_assertAssetDisplayPageEntry(
+				dlFileEntry2.getFileEntryId(),
+				_layoutPageTemplateEntry.getPlid(),
+				AssetDisplayPageConstants.TYPE_SPECIFIC);
+			_assertNoAssetDisplayPageEntry(dlFileEntry3.getFileEntryId());
+
+			_ctCollectionService.publishCTCollection(
+				TestPropsValues.getUserId(), ctCollection.getCtCollectionId());
+
+			_runUpgrade();
+
+			_assertNoAssetDisplayPageEntry(dlFileEntry1.getFileEntryId());
+			_assertAssetDisplayPageEntry(
+				dlFileEntry2.getFileEntryId(),
+				_layoutPageTemplateEntry.getPlid(),
+				AssetDisplayPageConstants.TYPE_SPECIFIC);
+			_assertAssetDisplayPageEntry(
+				dlFileEntry3.getFileEntryId(), 0,
+				AssetDisplayPageConstants.TYPE_NONE);
+		}
+	}
+
 	private void _addAssetDisplayPageEntry(
 		long classPK, long layoutPageTemplateEntryId, int type, long plid) {
 
@@ -170,6 +253,17 @@ public class UpgradeAssetDisplayPageEntryTest {
 		}
 	}
 
+	private void _updateDLFileEntryTitle(long fileEntryId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
+			fileEntryId);
+
+		dlFileEntry.setTitle(RandomTestUtil.randomString());
+
+		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.asset.display.page.internal.upgrade.v3_0_0." +
 			"UpgradeAssetDisplayPageEntry";
@@ -187,6 +281,15 @@ public class UpgradeAssetDisplayPageEntryTest {
 
 	@Inject
 	private CounterLocalService _counterLocalService;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private CTCollectionService _ctCollectionService;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -11,12 +11,17 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTC
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -54,9 +59,19 @@ public class UpdateCTCommentMVCResourceCommand
 		long ctCollectionId = ParamUtil.getLong(
 			resourceRequest, "ctCollectionId");
 
-		if (!CTCollectionPermission.contains(
+		try {
+			AuthTokenUtil.checkCSRFToken(
+				_portal.getHttpServletRequest(resourceRequest),
+				UpdateCTCommentMVCResourceCommand.class.getName());
+
+			CTCollectionPermission.check(
 				themeDisplay.getPermissionChecker(), ctCollectionId,
-				ActionKeys.VIEW)) {
+				ActionKeys.VIEW);
+		}
+		catch (PrincipalException principalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(principalException);
+			}
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
@@ -110,7 +125,13 @@ public class UpdateCTCommentMVCResourceCommand
 			resourceRequest, resourceResponse, jsonObject);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpdateCTCommentMVCResourceCommand.class);
+
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

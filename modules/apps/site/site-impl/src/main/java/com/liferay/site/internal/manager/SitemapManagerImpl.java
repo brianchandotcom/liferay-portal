@@ -8,6 +8,7 @@ package com.liferay.site.internal.manager;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -15,10 +16,12 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -36,12 +39,14 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -216,6 +221,40 @@ public class SitemapManagerImpl implements SitemapManager {
 		_serviceTrackerMap.close();
 	}
 
+	private List<LayoutSet> _getCompanySitemapGroupLayoutSets(
+			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (!group.isGuest()) {
+			return Collections.emptyList();
+		}
+
+		try {
+			return TransformUtil.transformToList(
+				_sitemapConfigurationManager.getCompanySitemapGroupIds(
+					themeDisplay.getCompanyId()),
+				curGroupId -> {
+					Group curGroup = _groupLocalService.fetchGroup(curGroupId);
+
+					if ((curGroup == null) || curGroup.isGuest()) {
+						return null;
+					}
+
+					return _layoutSetLocalService.getLayoutSet(
+						curGroup.getGroupId(), privateLayout);
+				});
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
 	private String _getIndexSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -235,6 +274,13 @@ public class SitemapManagerImpl implements SitemapManager {
 			rootElement,
 			_layoutSetLocalService.getLayoutSet(groupId, privateLayout),
 			themeDisplay);
+
+		for (LayoutSet layoutSet :
+				_getCompanySitemapGroupLayoutSets(
+					groupId, privateLayout, themeDisplay)) {
+
+			_visitLayoutSet(rootElement, layoutSet, themeDisplay);
+		}
 
 		_removeEntriesAndSize(rootElement);
 
@@ -477,6 +523,9 @@ public class SitemapManagerImpl implements SitemapManager {
 		SystemBundleUtil.getBundleContext();
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private Language _language;
 
 	@Reference
@@ -492,5 +541,8 @@ public class SitemapManagerImpl implements SitemapManager {
 	private SAXReader _saxReader;
 
 	private ServiceTrackerMap<String, SitemapURLProvider> _serviceTrackerMap;
+
+	@Reference
+	private SitemapConfigurationManager _sitemapConfigurationManager;
 
 }

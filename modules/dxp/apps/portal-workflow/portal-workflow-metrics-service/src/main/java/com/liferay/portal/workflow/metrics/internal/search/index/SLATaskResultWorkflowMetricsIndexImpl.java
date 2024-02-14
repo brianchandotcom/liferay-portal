@@ -18,7 +18,7 @@ import org.osgi.service.component.annotations.Component;
 	service = WorkflowMetricsIndex.class
 )
 public class SLATaskResultWorkflowMetricsIndexImpl
-	extends BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
+	extends WorkflowMetricsIndex {
 
 	public SLATaskResultWorkflowMetricsIndexImpl() {
 		super(

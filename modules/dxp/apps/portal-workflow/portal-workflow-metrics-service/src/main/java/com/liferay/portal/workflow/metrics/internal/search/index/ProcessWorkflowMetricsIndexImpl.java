@@ -17,8 +17,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "workflow.metrics.index.entity.name=process",
 	service = WorkflowMetricsIndex.class
 )
-public class ProcessWorkflowMetricsIndexImpl
-	extends BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
+public class ProcessWorkflowMetricsIndexImpl extends WorkflowMetricsIndex {
 
 	public ProcessWorkflowMetricsIndexImpl() {
 		super(

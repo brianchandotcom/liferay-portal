@@ -46,7 +46,7 @@ public class PlacedCommerceOrderTableFDSView extends BaseTableFDSView {
 			"date", "order-date",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			_addAccountNameFDSTableSchemaField()
+			_addAccountNameStringFDSTableSchemaField()
 		).add(
 			"author", "submitted-by"
 		).add(
@@ -56,7 +56,9 @@ public class PlacedCommerceOrderTableFDSView extends BaseTableFDSView {
 		).build();
 	}
 
-	private StringFDSTableSchemaField _addAccountNameFDSTableSchemaField() {
+	private StringFDSTableSchemaField
+		_addAccountNameStringFDSTableSchemaField() {
+
 		StringFDSTableSchemaField stringFDSTableSchemaField =
 			new StringFDSTableSchemaField();
 

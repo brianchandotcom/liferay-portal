@@ -90,7 +90,10 @@ export default function PublishModal({
 							displayType="primary"
 							form={formId}
 							onClick={() => {
-								if (!displayDate) {
+								if (
+									!displayDate &&
+									actionButton === 'schedule'
+								) {
 									setDateError(
 										Liferay.Language.get(
 											'please-enter-a-valid-date'
@@ -106,7 +109,10 @@ export default function PublishModal({
 								}
 							}}
 							type={
-								!dateError && displayDate ? 'submit' : 'button'
+								dateError ||
+								(!displayDate && actionButton === 'schedule')
+									? 'button'
+									: 'submit'
 							}
 						>
 							{button}

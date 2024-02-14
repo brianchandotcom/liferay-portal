@@ -7,11 +7,9 @@ package com.liferay.change.tracking.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.internal.test.util.CTCollectionTestUtil;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTCollectionService;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -34,9 +32,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -82,27 +77,12 @@ public class PublicationUserNotificationHandlerTest {
 
 	@Test
 	public void testGetBodyForConflict() throws Exception {
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			StringPool.BLANK);
+		CTCollection ctCollection =
+			CTCollectionTestUtil.createCTCollectionWithConflict(
+				TestPropsValues.getUser());
 
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), null);
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
-
-			journalArticle = _journalArticleLocalService.updateArticle(
-				journalArticle.getId(), RandomTestUtil.randomString());
-		}
-
-		_journalArticleLocalService.deleteArticle(
-			_group.getGroupId(), journalArticle.getArticleId(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_publishCTCollection(ctCollection.getCtCollectionId());
+		CTCollectionTestUtil.publishCTCollectionWithError(
+			ctCollection.getCtCollectionId());
 
 		List<UserNotificationEvent> userNotificationEvents =
 			_userNotificationEventLocalService.getUserNotificationEvents(
@@ -180,7 +160,8 @@ public class PublicationUserNotificationHandlerTest {
 				}
 			}
 
-			_publishCTCollection(ctCollection.getCtCollectionId());
+			CTCollectionTestUtil.publishCTCollectionWithError(
+				ctCollection.getCtCollectionId());
 
 			List<UserNotificationEvent> userNotificationEvents =
 				_userNotificationEventLocalService.getUserNotificationEvents(
@@ -232,27 +213,12 @@ public class PublicationUserNotificationHandlerTest {
 
 	@Test
 	public void testGetLinkToViewConflicts() throws Exception {
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			StringPool.BLANK);
+		CTCollection ctCollection =
+			CTCollectionTestUtil.createCTCollectionWithConflict(
+				TestPropsValues.getUser());
 
-		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, RandomTestUtil.randomString(), null);
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
-
-			journalArticle = _journalArticleLocalService.updateArticle(
-				journalArticle.getId(), RandomTestUtil.randomString());
-		}
-
-		_journalArticleLocalService.deleteArticle(
-			_group.getGroupId(), journalArticle.getArticleId(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_publishCTCollection(ctCollection.getCtCollectionId());
+		CTCollectionTestUtil.publishCTCollectionWithError(
+			ctCollection.getCtCollectionId());
 
 		List<UserNotificationEvent> userNotificationEvents =
 			_userNotificationEventLocalService.getUserNotificationEvents(
@@ -315,36 +281,10 @@ public class PublicationUserNotificationHandlerTest {
 		return serviceContext;
 	}
 
-	private void _publishCTCollection(long ctCollectionId) throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.background.task.internal.messaging." +
-					"BackgroundTaskMessageListener",
-				LoggerTestUtil.ERROR)) {
-
-			_ctCollectionService.publishCTCollection(
-				TestPropsValues.getUserId(), ctCollectionId);
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Assert.assertEquals(
-				"Unable to execute background task", logEntry.getMessage());
-		}
-	}
-
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
 
-	@Inject
-	private static CTCollectionService _ctCollectionService;
-
 	private Group _group;
-
-	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;

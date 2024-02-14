@@ -47,10 +47,12 @@ export default function VisualizationModes(props: IFDSViewSectionProps) {
 
 	return (
 		<ClayLayout.ContainerFluid className="mt-3">
-			<ClayLayout.ContainerFluid className="bg-white mb-4 p-0 rounded-sm">
-				<h2 className="mb-0 p-4">
-					{Liferay.Language.get('visualization-modes')}
-				</h2>
+			<ClayLayout.Sheet>
+				<ClayLayout.SheetHeader className="mb-4">
+					<h2 className="mb-0">
+						{Liferay.Language.get('visualization-modes')}
+					</h2>
+				</ClayLayout.SheetHeader>
 
 				<ClayTabs
 					activation="automatic"
@@ -75,6 +77,7 @@ export default function VisualizationModes(props: IFDSViewSectionProps) {
 
 						return (
 							<ClayTabs.TabPane
+								className="px-0"
 								key={visualizationMode.visualizationModeId}
 							>
 								<Component {...props} />
@@ -82,7 +85,7 @@ export default function VisualizationModes(props: IFDSViewSectionProps) {
 						);
 					})}
 				</ClayTabs.Content>
-			</ClayLayout.ContainerFluid>
+			</ClayLayout.Sheet>
 		</ClayLayout.ContainerFluid>
 	);
 }

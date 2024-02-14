@@ -5,14 +5,21 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 
-export const test = mergeTests(dataSetsPageTest, loginTest);
+export const test = mergeTests(
+	dataSetsPageTest,
+	featureFlagsTest({
+		'LPS-164563': true,
+	}),
+	loginTest
+);
 
 test('Assert table columns', async ({dataSetsPage, page}) => {
 	await dataSetsPage.goto();
-	await dataSetsPage.createSampleDataSetUI();
+	await dataSetsPage.createDataSet();
 
 	const tableColumns = await page
 		.locator('.dnd-thead > .dnd-tr')

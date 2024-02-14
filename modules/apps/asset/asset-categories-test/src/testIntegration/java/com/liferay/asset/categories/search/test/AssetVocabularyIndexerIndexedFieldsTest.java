@@ -3,12 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.asset.search.test;
+package com.liferay.asset.categories.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -43,6 +41,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -55,7 +54,7 @@ import org.junit.runner.RunWith;
  * @author Lucas Marques
  */
 @RunWith(Arquillian.class)
-public class AssetCategoryIndexerIndexedFieldsTest {
+public class AssetVocabularyIndexerIndexedFieldsTest {
 
 	@ClassRule
 	@Rule
@@ -74,21 +73,22 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 		AssetVocabularyFixture assetVocabularyFixture =
 			new AssetVocabularyFixture(assetVocabularyService, group);
 
-		AssetCategoryFixture assetCategoryFixture = new AssetCategoryFixture(
-			assetCategoryService, assetVocabularyFixture, group);
-
-		_assetCategoryFixture = assetCategoryFixture;
-
-		_assetCategories = assetCategoryFixture.getAssetCategories();
-
 		_assetVocabularies = assetVocabularyFixture.getAssetVocabularies();
+		_assetVocabularyFixture = assetVocabularyFixture;
 
 		_group = group;
 
 		_groups = groupSearchFixture.getGroups();
+
 		_indexedFieldsFixture = new IndexedFieldsFixture(
 			resourcePermissionLocalService, searchEngineHelper, uidFactory,
 			documentBuilderFactory);
+		_defaultLocale = LocaleThreadLocal.getDefaultLocale();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		LocaleThreadLocal.setDefaultLocale(_defaultLocale);
 	}
 
 	@Test
@@ -97,13 +97,13 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 
 		setTestLocale(locale);
 
-		AssetCategory assetCategory = _assetCategoryFixture.createAssetCategory(
-			"新しい商品");
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyFixture.createAssetVocabulary("新しい商品");
 
 		String searchTerm = "新しい";
 
 		assertFieldValues(
-			_expectedFieldValues(assetCategory), locale, searchTerm);
+			_expectedFieldValues(assetVocabulary), locale, searchTerm);
 	}
 
 	@Rule
@@ -127,31 +127,28 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 				).locale(
 					locale
 				).modelIndexerClasses(
-					AssetCategory.class
+					AssetVocabulary.class
 				).queryString(
 					searchTerm
 				).build()));
 	}
 
 	protected void setTestLocale(Locale locale) throws Exception {
-		_assetCategoryFixture.updateDisplaySettings(locale);
+		_assetVocabularyFixture.updateDisplaySettings(locale);
 
 		LocaleThreadLocal.setDefaultLocale(locale);
 	}
-
-	@Inject(
-		filter = "indexer.class.name=com.liferay.asset.kernel.model.AssetCategory"
-	)
-	protected static Indexer<AssetCategory> indexer;
-
-	@Inject
-	protected AssetCategoryService assetCategoryService;
 
 	@Inject
 	protected AssetVocabularyService assetVocabularyService;
 
 	@Inject
 	protected DocumentBuilderFactory documentBuilderFactory;
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.asset.kernel.model.AssetVocabulary"
+	)
+	protected Indexer<AssetVocabulary> indexer;
 
 	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
@@ -171,83 +168,68 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 	protected UserSearchFixture userSearchFixture;
 
 	private Map<String, String> _expectedFieldValues(
-			AssetCategory assetCategory)
+			AssetVocabulary assetVocabulary)
 		throws Exception {
 
 		Map<String, String> map = HashMapBuilder.put(
-			Field.ASSET_CATEGORY_ID,
-			String.valueOf(assetCategory.getCategoryId())
-		).put(
-			Field.ASSET_CATEGORY_TITLE,
-			StringUtil.lowerCase(assetCategory.getName())
-		).put(
 			Field.ASSET_VOCABULARY_ID,
-			String.valueOf(assetCategory.getVocabularyId())
+			String.valueOf(assetVocabulary.getVocabularyId())
 		).put(
-			Field.COMPANY_ID, String.valueOf(assetCategory.getCompanyId())
+			Field.COMPANY_ID, String.valueOf(assetVocabulary.getCompanyId())
 		).put(
-			Field.ENTRY_CLASS_NAME, AssetCategory.class.getName()
+			Field.ENTRY_CLASS_NAME, AssetVocabulary.class.getName()
 		).put(
-			Field.ENTRY_CLASS_PK, String.valueOf(assetCategory.getCategoryId())
+			Field.ENTRY_CLASS_PK,
+			String.valueOf(assetVocabulary.getVocabularyId())
 		).put(
-			Field.GROUP_ID, String.valueOf(assetCategory.getGroupId())
+			Field.GROUP_ID, String.valueOf(assetVocabulary.getGroupId())
 		).put(
-			Field.NAME, assetCategory.getName()
+			Field.NAME, assetVocabulary.getName()
 		).put(
-			Field.SCOPE_GROUP_ID, String.valueOf(assetCategory.getGroupId())
+			Field.SCOPE_GROUP_ID, String.valueOf(assetVocabulary.getGroupId())
 		).put(
 			Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup())
 		).put(
-			Field.TITLE, assetCategory.getName()
+			Field.TITLE, assetVocabulary.getName()
 		).put(
-			Field.USER_ID, String.valueOf(assetCategory.getUserId())
+			Field.USER_ID, String.valueOf(assetVocabulary.getUserId())
 		).put(
-			Field.USER_NAME, StringUtil.lowerCase(assetCategory.getUserName())
+			Field.USER_NAME, StringUtil.lowerCase(assetVocabulary.getUserName())
 		).put(
-			"assetCategoryTitle_ja_JP",
-			StringUtil.lowerCase(assetCategory.getName())
+			Field.VISIBILITY_TYPE,
+			String.valueOf(assetVocabulary.getVisibilityType())
 		).put(
-			"name_sortable", StringUtil.lowerCase(assetCategory.getName())
+			"name_sortable", StringUtil.lowerCase(assetVocabulary.getName())
 		).put(
-			"parentCategoryId",
-			String.valueOf(assetCategory.getParentCategoryId())
+			"title_ja_JP", assetVocabulary.getName()
 		).put(
-			"title_ja_JP", assetCategory.getName()
+			"title_sortable", StringUtil.lowerCase(assetVocabulary.getName())
 		).put(
-			"title_sortable", StringUtil.lowerCase(assetCategory.getName())
-		).put(
-			"treePath", assetCategory.getTreePath()
+			"visibilityType_sortable",
+			String.valueOf(assetVocabulary.getVisibilityType())
 		).build();
 
-		_indexedFieldsFixture.populateUID(assetCategory, map);
+		_indexedFieldsFixture.populateUID(assetVocabulary, map);
 
-		_populateDates(assetCategory, map);
-		_populateRoles(assetCategory, map);
-		_populateTitles(assetCategory.getName(), map);
+		_populateDates(assetVocabulary, map);
+		_populateRoles(assetVocabulary, map);
+		_populateLocalizedTitles(assetVocabulary.getTitle(), map);
 
 		return map;
 	}
 
 	private void _populateDates(
-		AssetCategory assetCategory, Map<String, String> map) {
+		AssetVocabulary assetVocabulary, Map<String, String> map) {
 
 		_indexedFieldsFixture.populateDate(
-			Field.CREATE_DATE, assetCategory.getCreateDate(), map);
+			Field.CREATE_DATE, assetVocabulary.getCreateDate(), map);
 		_indexedFieldsFixture.populateDate(
-			Field.MODIFIED_DATE, assetCategory.getModifiedDate(), map);
+			Field.MODIFIED_DATE, assetVocabulary.getModifiedDate(), map);
 	}
 
-	private void _populateRoles(
-			AssetCategory assetCategory, Map<String, String> map)
-		throws Exception {
+	private void _populateLocalizedTitles(
+		String title, Map<String, String> map) {
 
-		_indexedFieldsFixture.populateRoleIdFields(
-			assetCategory.getCompanyId(), AssetCategory.class.getName(),
-			assetCategory.getCategoryId(), assetCategory.getGroupId(), null,
-			map);
-	}
-
-	private void _populateTitles(String title, Map<String, String> map) {
 		map.put("localized_title", title);
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
@@ -266,14 +248,21 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 		}
 	}
 
-	@DeleteAfterTestRun
-	private List<AssetCategory> _assetCategories;
+	private void _populateRoles(
+			AssetVocabulary assetVocabulary, Map<String, String> map)
+		throws Exception {
 
-	private AssetCategoryFixture _assetCategoryFixture;
+		_indexedFieldsFixture.populateRoleIdFields(
+			assetVocabulary.getCompanyId(), AssetVocabulary.class.getName(),
+			assetVocabulary.getVocabularyId(), assetVocabulary.getGroupId(),
+			null, map);
+	}
 
 	@DeleteAfterTestRun
 	private List<AssetVocabulary> _assetVocabularies;
 
+	private AssetVocabularyFixture _assetVocabularyFixture;
+	private Locale _defaultLocale;
 	private Group _group;
 
 	@DeleteAfterTestRun

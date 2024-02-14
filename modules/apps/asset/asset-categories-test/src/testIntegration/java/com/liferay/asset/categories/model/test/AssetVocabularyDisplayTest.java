@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.asset.model.test;
+package com.liferay.asset.categories.model.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetCategoryDisplay;
+import com.liferay.asset.kernel.model.AssetVocabularyDisplay;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
  * @author Igor Spasic
  */
 @RunWith(Arquillian.class)
-public class AssetCategoryDisplayTest {
+public class AssetVocabularyDisplayTest {
 
 	@ClassRule
 	@Rule
@@ -28,21 +28,22 @@ public class AssetCategoryDisplayTest {
 
 	@Test
 	public void testGetPage() {
-		AssetCategoryDisplay assetCategoryDisplay = new AssetCategoryDisplay();
+		AssetVocabularyDisplay assetVocabularyDisplay =
+			new AssetVocabularyDisplay();
 
-		assetCategoryDisplay.setStart(0);
-		assetCategoryDisplay.setEnd(20);
+		assetVocabularyDisplay.setStart(0);
+		assetVocabularyDisplay.setEnd(20);
 
-		Assert.assertEquals(1, assetCategoryDisplay.getPage());
+		Assert.assertEquals(1, assetVocabularyDisplay.getPage());
 
-		assetCategoryDisplay.setStart(20);
-		assetCategoryDisplay.setEnd(40);
+		assetVocabularyDisplay.setStart(20);
+		assetVocabularyDisplay.setEnd(40);
 
-		Assert.assertEquals(2, assetCategoryDisplay.getPage());
+		Assert.assertEquals(2, assetVocabularyDisplay.getPage());
 
-		assetCategoryDisplay.setEnd(0);
+		assetVocabularyDisplay.setEnd(0);
 
-		Assert.assertEquals(0, assetCategoryDisplay.getPage());
+		Assert.assertEquals(0, assetVocabularyDisplay.getPage());
 	}
 
 }

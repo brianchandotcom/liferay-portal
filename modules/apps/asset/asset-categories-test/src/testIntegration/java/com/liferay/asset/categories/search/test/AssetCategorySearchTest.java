@@ -3,15 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.asset.search.test;
+package com.liferay.asset.categories.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -29,7 +34,7 @@ import org.junit.runner.RunWith;
  * @author Tibor Lipusz
  */
 @RunWith(Arquillian.class)
-public class AssetVocabularySearchTest extends BaseSearchTestCase {
+public class AssetCategorySearchTest extends BaseSearchTestCase {
 
 	@ClassRule
 	@Rule
@@ -37,11 +42,6 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Override
-	@Test
-	public void testParentBaseModelUserPermissions() throws Exception {
-	}
 
 	@Override
 	@Test
@@ -114,9 +114,12 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 			Map<Locale, String> keywordsMap, ServiceContext serviceContext)
 		throws Exception {
 
-		return AssetVocabularyServiceUtil.addVocabulary(
-			serviceContext.getScopeGroupId(), null, keywordsMap, null, null,
-			serviceContext);
+		AssetVocabulary vocabulary = (AssetVocabulary)parentBaseModel;
+
+		return AssetCategoryServiceUtil.addCategory(
+			serviceContext.getScopeGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, keywordsMap,
+			null, vocabulary.getVocabularyId(), null, serviceContext);
 	}
 
 	@Override
@@ -125,18 +128,31 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return AssetVocabularyServiceUtil.addVocabulary(
-			serviceContext.getScopeGroupId(), keywords, serviceContext);
+		AssetVocabulary vocabulary = (AssetVocabulary)parentBaseModel;
+
+		return AssetCategoryServiceUtil.addCategory(
+			serviceContext.getScopeGroupId(), keywords,
+			vocabulary.getVocabularyId(), serviceContext);
 	}
 
 	@Override
 	protected void deleteBaseModel(long primaryKey) throws Exception {
-		AssetVocabularyServiceUtil.deleteVocabulary(primaryKey);
+		AssetCategoryServiceUtil.deleteCategory(primaryKey);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
-		return AssetVocabulary.class;
+		return AssetCategory.class;
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
+
+		return AssetVocabularyServiceUtil.addVocabulary(
+			serviceContext.getScopeGroupId(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	@Override
@@ -150,12 +166,11 @@ public class AssetVocabularySearchTest extends BaseSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		AssetVocabulary vocabulary = (AssetVocabulary)baseModel;
+		AssetCategory category = (AssetCategory)baseModel;
 
-		vocabulary.setTitle(keywords);
+		category.setTitle(keywords);
 
-		return AssetVocabularyLocalServiceUtil.updateAssetVocabulary(
-			vocabulary);
+		return AssetCategoryLocalServiceUtil.updateAssetCategory(category);
 	}
 
 }

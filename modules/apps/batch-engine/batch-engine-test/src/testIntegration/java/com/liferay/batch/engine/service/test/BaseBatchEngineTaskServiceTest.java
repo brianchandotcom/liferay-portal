@@ -33,20 +33,21 @@ public class BaseBatchEngineTaskServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		company = CompanyLocalServiceUtil.getCompany(
+		defaultCompany = CompanyLocalServiceUtil.getCompany(
 			TestPropsValues.getCompanyId());
+		omniadminUser = TestPropsValues.getUser();
+
+		company = CompanyTestUtil.addCompany();
 
 		companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
-		omniadminUser = TestPropsValues.getUser();
-		otherCompany = CompanyTestUtil.addCompany();
 		user = UserTestUtil.addUser(company);
 	}
 
 	protected static Company company;
 	protected static User companyAdminUser;
+	protected static Company defaultCompany;
 	protected static User omniadminUser;
-	protected static Company otherCompany;
 	protected static User user;
 
 }

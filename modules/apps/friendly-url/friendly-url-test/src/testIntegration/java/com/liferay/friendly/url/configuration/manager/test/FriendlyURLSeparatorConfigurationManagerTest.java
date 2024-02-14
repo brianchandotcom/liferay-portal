@@ -55,9 +55,7 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 	}
 
 	@Test
-	public void testGetEmptyFriendlyURLSeparatorsJSON()
-		throws Exception {
-
+	public void testGetEmptyFriendlyURLSeparatorsJSON() throws Exception {
 		String friendlyURLSeparatorsJSON =
 			_friendlyURLSeparatorConfigurationManager.
 				getFriendlyURLSeparatorsJSON(_companyId);
@@ -70,9 +68,7 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 	}
 
 	@Test
-	public void testGetFriendlyURLSeparatorsJSON()
-		throws Exception {
-
+	public void testGetFriendlyURLSeparatorsJSON() throws Exception {
 		JSONObject friendlyURLSeparatorsJSONObject = JSONUtil.put(
 			JournalArticle.class.getName(), "/test1/");
 

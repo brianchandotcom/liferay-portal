@@ -42,8 +42,7 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 		_configurationProvider.saveCompanyConfiguration(
 			FriendlyURLSeparatorCompanyConfiguration.class, companyId,
 			HashMapDictionaryBuilder.<String, Object>put(
-				"friendlyURLSeparatorsJSON",
-				friendlyURLSeparatorsJSON
+				"friendlyURLSeparatorsJSON", friendlyURLSeparatorsJSON
 			).build());
 	}
 

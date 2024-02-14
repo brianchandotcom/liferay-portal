@@ -228,6 +228,10 @@ public class SitemapManagerImpl implements SitemapManager {
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187793")) {
+			return Collections.emptyList();
+		}
+
 		Group group = _groupLocalService.getGroup(groupId);
 
 		if (!group.isGuest() || !_isCompanyVirtualHostname(themeDisplay)) {

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.asset.exportimport.data.handler.test;
+package com.liferay.asset.categories.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
  * @author Zoltan Csaszi
  */
 @RunWith(Arquillian.class)
-public class AssetCategoryPortletDataHandlerTest
+public class AssetCategoriesNavigationPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
@@ -34,12 +34,12 @@ public class AssetCategoryPortletDataHandlerTest
 
 	@Override
 	protected DataLevel getDataLevel() {
-		return DataLevel.SITE;
+		return DataLevel.PORTLET_INSTANCE;
 	}
 
 	@Override
 	protected String getPortletId() {
-		return AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN;
+		return AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION;
 	}
 
 	@Override
@@ -49,12 +49,12 @@ public class AssetCategoryPortletDataHandlerTest
 
 	@Override
 	protected boolean isDataPortletInstanceLevel() {
-		return false;
+		return true;
 	}
 
 	@Override
 	protected boolean isDataSiteLevel() {
-		return true;
+		return false;
 	}
 
 }

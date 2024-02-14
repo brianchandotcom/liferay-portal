@@ -36,24 +36,31 @@ public class WorkflowMetricsIndexCreator {
 
 	public void createIndex(Company company) throws PortalException {
 		boolean indexCreated = _instanceWorkflowMetricsIndex.createIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 
 		if (!indexCreated) {
 			return;
 		}
 
 		_nodeWorkflowMetricsIndex.createIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_processWorkflowMetricsIndex.createIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_slaInstanceResultWorkflowMetricsIndex.createIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_slaTaskResultWorkflowMetricsIndex.createIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_taskWorkflowMetricsIndex.createIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_transitionWorkflowMetricsIndex.createIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 	}
 
 	public void reindex(Company company) {
@@ -106,24 +113,31 @@ public class WorkflowMetricsIndexCreator {
 
 	public void removeIndex(Company company) throws PortalException {
 		boolean indexRemoved = _instanceWorkflowMetricsIndex.removeIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 
 		if (!indexRemoved) {
 			return;
 		}
 
 		_nodeWorkflowMetricsIndex.removeIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_processWorkflowMetricsIndex.removeIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_slaInstanceResultWorkflowMetricsIndex.removeIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_slaTaskResultWorkflowMetricsIndex.removeIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_taskWorkflowMetricsIndex.removeIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 		_transitionWorkflowMetricsIndex.removeIndex(
-			_indexNameBuilder, company.getCompanyId());
+			_searchCapabilities, _searchEngineAdapter, _indexNameBuilder,
+			company.getCompanyId());
 	}
 
 	@Reference

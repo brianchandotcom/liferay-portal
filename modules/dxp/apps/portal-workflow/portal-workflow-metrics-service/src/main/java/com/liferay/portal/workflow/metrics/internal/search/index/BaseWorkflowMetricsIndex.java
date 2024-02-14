@@ -22,8 +22,6 @@ import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Inácio Nery
  */
@@ -36,11 +34,14 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public boolean createIndex(
+			SearchCapabilities searchCapabilities,
+			SearchEngineAdapter searchEngineAdapter,
 			IndexNameBuilder indexNameBuilder, long companyId)
 		throws PortalException {
 
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
 			_hasIndex(
+				searchEngineAdapter,
 				WorkflowMetricsIndex.getIndexName(
 					indexNameBuilder, _indexNameSuffix, companyId))) {
 
@@ -67,11 +68,14 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public boolean deleteAllDocuments(
+			SearchCapabilities searchCapabilities,
+			SearchEngineAdapter searchEngineAdapter, Queries queries,
 			IndexNameBuilder indexNameBuilder, long companyId)
 		throws PortalException {
 
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
 			!_hasIndex(
+				searchEngineAdapter,
 				WorkflowMetricsIndex.getIndexName(
 					indexNameBuilder, _indexNameSuffix, companyId))) {
 
@@ -89,11 +93,14 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Override
 	public boolean removeIndex(
+			SearchCapabilities searchCapabilities,
+			SearchEngineAdapter searchEngineAdapter,
 			IndexNameBuilder indexNameBuilder, long companyId)
 		throws PortalException {
 
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
 			!_hasIndex(
+				searchEngineAdapter,
 				WorkflowMetricsIndex.getIndexName(
 					indexNameBuilder, _indexNameSuffix, companyId))) {
 
@@ -108,16 +115,9 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		return true;
 	}
 
-	@Reference
-	protected Queries queries;
+	private boolean _hasIndex(
+		SearchEngineAdapter searchEngineAdapter, String indexName) {
 
-	@Reference
-	protected SearchCapabilities searchCapabilities;
-
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
-
-	private boolean _hasIndex(String indexName) {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(indexName);
 

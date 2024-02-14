@@ -23,7 +23,10 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.background.task.constants.WorkflowMetricsReindexBackgroundTaskConstants;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
@@ -84,6 +87,7 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 				_serviceTrackerMap.getService(indexEntityName);
 
 			workflowMetricsIndex.deleteAllDocuments(
+				_searchCapabilities, _searchEngineAdapter, _queries,
 				_indexNameBuilder, backgroundTask.getCompanyId());
 		}
 
@@ -203,6 +207,15 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
+
+	@Reference
+	private Queries _queries;
+
+	@Reference
+	private SearchCapabilities _searchCapabilities;
+
+	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	private ServiceTrackerMap<String, WorkflowMetricsIndex> _serviceTrackerMap;
 

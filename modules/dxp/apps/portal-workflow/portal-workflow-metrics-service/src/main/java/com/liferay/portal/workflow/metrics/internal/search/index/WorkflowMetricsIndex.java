@@ -6,7 +6,10 @@
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.search.capabilities.SearchCapabilities;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.search.query.Queries;
 
 /**
  * @author Rafael Praxedes
@@ -21,14 +24,20 @@ public interface WorkflowMetricsIndex {
 	}
 
 	public boolean createIndex(
+			SearchCapabilities searchCapabilities,
+			SearchEngineAdapter searchEngineAdapter,
 			IndexNameBuilder indexNameBuilder, long companyId)
 		throws PortalException;
 
 	public boolean deleteAllDocuments(
+			SearchCapabilities searchCapabilities,
+			SearchEngineAdapter searchEngineAdapter, Queries queries,
 			IndexNameBuilder indexNameBuilder, long companyId)
 		throws PortalException;
 
 	public boolean removeIndex(
+			SearchCapabilities searchCapabilities,
+			SearchEngineAdapter searchEngineAdapter,
 			IndexNameBuilder indexNameBuilder, long companyId)
 		throws PortalException;
 

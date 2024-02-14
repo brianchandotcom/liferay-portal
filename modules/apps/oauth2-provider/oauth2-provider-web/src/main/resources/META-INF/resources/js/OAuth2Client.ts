@@ -8,6 +8,7 @@ import pkceChallenge from 'pkce-challenge';
 interface IOAuth2ClientFromParametersOptions {
 	authorizeURL?: string;
 	clientId: string;
+	debug?: boolean;
 	homePageURL: string;
 	redirectURIs?: Array<string>;
 	tokenURL?: string;
@@ -16,6 +17,7 @@ interface IOAuth2ClientFromParametersOptions {
 interface IOAuth2ClientOptions {
 	authorizeURL: string;
 	clientId: string;
+	debug?: boolean;
 	encodedRedirectURL: string;
 	homePageURL: string;
 	redirectURIs: Array<string>;
@@ -34,6 +36,7 @@ interface IOAuth2ClientTokenResponse {
 class OAuth2Client {
 	private authorizeURL: string;
 	private clientId: string;
+	private debug: boolean;
 	private encodedRedirectURL: string;
 	private homePageURL: string;
 	private redirectURIs: Array<string>;
@@ -42,6 +45,7 @@ class OAuth2Client {
 	constructor(options: IOAuth2ClientOptions) {
 		this.authorizeURL = options.authorizeURL;
 		this.clientId = options.clientId;
+		this.debug = options.debug || false;
 		this.encodedRedirectURL = options.encodedRedirectURL;
 		this.homePageURL = options.homePageURL;
 		this.redirectURIs = options.redirectURIs;
@@ -84,7 +88,13 @@ class OAuth2Client {
 
 		return new Promise((resolve, reject) => {
 			const eventHandler = (event: any) => {
+				if (oauth2Client.debug) {
+					// eslint-disable-next-line no-console
+					console.debug('OAuth2Client._createIframe.event', event);
+				}
+
 				if (event.data.error) {
+
 					// Remove the iframe and reject the promise
 
 					if (event.target && event.target.parentElement) {
@@ -203,6 +213,14 @@ class OAuth2Client {
 				Liferay.Util.SessionStorage.TYPES.NECESSARY
 			);
 
+			if (oauth2Client.debug && cachedTokenData) {
+				// eslint-disable-next-line no-console
+				console.debug(
+					'OAuth2Client._getOrRequestToken.cachedTokenData',
+					cachedTokenData
+				);
+			}
+
 			if (cachedTokenData !== null && cachedTokenData !== undefined) {
 				const cachedToken = JSON.parse(
 					cachedTokenData
@@ -263,6 +281,7 @@ export function FromParameters(options: IOAuth2ClientFromParametersOptions) {
 	return new OAuth2Client({
 		authorizeURL: options.authorizeURL || Liferay.OAuth2.getAuthorizeURL(),
 		clientId: options.clientId,
+		debug: options.debug,
 		encodedRedirectURL: encodeURIComponent(
 			(options.redirectURIs && options.redirectURIs[0]) ||
 				Liferay.OAuth2.getBuiltInRedirectURL()
@@ -275,7 +294,10 @@ export function FromParameters(options: IOAuth2ClientFromParametersOptions) {
 	});
 }
 
-export function FromUserAgentApplication(userAgentApplicationName: string) {
+export function FromUserAgentApplication(
+	userAgentApplicationName: string,
+	debug?: boolean
+) {
 	const userAgentApplication = Liferay.OAuth2.getUserAgentApplication(
 		userAgentApplicationName
 	);
@@ -289,6 +311,7 @@ export function FromUserAgentApplication(userAgentApplicationName: string) {
 	return new OAuth2Client({
 		authorizeURL: Liferay.OAuth2.getAuthorizeURL(),
 		clientId: userAgentApplication.clientId,
+		debug,
 		encodedRedirectURL: encodeURIComponent(
 			userAgentApplication.redirectURIs[0]
 		),

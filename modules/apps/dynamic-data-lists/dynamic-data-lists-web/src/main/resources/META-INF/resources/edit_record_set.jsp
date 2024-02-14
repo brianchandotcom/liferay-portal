@@ -206,7 +206,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 				"selectEventName", "<portlet:namespace />selectDDMStructure"
 			).build()
 		%>'
-		module="js/EditRecordSetStructureSelector"
+		module="{EditRecordSetStructureSelector} from dynamic-data-lists-web"
 	/>
 
 	function <portlet:namespace />saveRecordSet() {

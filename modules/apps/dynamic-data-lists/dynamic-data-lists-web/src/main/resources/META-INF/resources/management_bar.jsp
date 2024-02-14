@@ -28,7 +28,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	disabled="<%= ddlDisplayContext.isDisabledManagementBar() %>"
 	itemsTotal="<%= ddlDisplayContext.getTotalItems() %>"
 	orderDropdownItems="<%= ddlDisplayContext.getOrderItemsDropdownItems() %>"
-	propsTransformer="js/ManagementToolbarPropsTransformer"
+	propsTransformer="{ManagementToolbarPropsTransformer} from dynamic-data-lists-web"
 	searchActionURL="<%= portletURL.toString() %>"
 	searchContainerId="<%= ddlDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"

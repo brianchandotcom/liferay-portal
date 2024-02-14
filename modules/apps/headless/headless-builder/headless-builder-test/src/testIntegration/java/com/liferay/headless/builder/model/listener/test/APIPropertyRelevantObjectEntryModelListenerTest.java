@@ -130,7 +130,7 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A field API property cannot have empty Object Field ERC value.",
+			"A field API property cannot have an empty object field ERC value.",
 			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -288,18 +288,6 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/schemas", Http.Method.POST);
 
-		JSONObject apiSchemaJSONObject2 = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"mainObjectDefinitionERC",
-				_objectDefinition.getExternalReferenceCode()
-			).put(
-				"name", RandomTestUtil.randomString()
-			).put(
-				"r_apiApplicationToAPISchemas_c_apiApplicationId",
-				apiApplicationJSONObject.getLong("id")
-			).toString(),
-			"headless-builder/schemas", Http.Method.POST);
-
 		JSONObject apiPropertyJSONObject1 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"description", RandomTestUtil.randomString()
@@ -354,6 +342,18 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 		Assert.assertEquals(
 			"A field API property must be related to a record API property.",
 			jsonObject.get("title"));
+
+		JSONObject apiSchemaJSONObject2 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).toString(),
+			"headless-builder/schemas", Http.Method.POST);
 
 		JSONObject apiPropertyJSONObject2 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

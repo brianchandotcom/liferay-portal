@@ -109,11 +109,6 @@ definition {
 
 		if (IsElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE")) {
 			Refresh();
-
-			User.firstLoginUI(
-				password = "test",
-				specificURL = "http://localhost:9080",
-				userEmailAddress = "test@liferay.com");
 		}
 
 		ServerAdministration.openServerAdmin(baseURL = "http://localhost:9080");

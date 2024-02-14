@@ -34,7 +34,7 @@ export type Role = {
     description?: string;
     description_i18n?: Record<string, string>;
     /**
-     * The portable ID of this role.
+     * The optional external key of this role.
      */
     externalReferenceCode?: string;
     /**

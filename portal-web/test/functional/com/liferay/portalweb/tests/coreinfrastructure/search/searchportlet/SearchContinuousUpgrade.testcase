@@ -20,6 +20,126 @@ definition {
 	}
 
 	@priority = 5
+	test ViewResultRankingsEntry {
+		property portal.suite.search.engine = "elasticsearch7";
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		var content = "Article Article Article Article";
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		for (var count : list "1,2,3,4") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = ${content},
+				webContentTitle = "Article ${count}");
+
+			PortletEntry.publish();
+
+			var content = StringUtil.replaceFirst(${content}, "Article ", "");
+		}
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Result Rankings");
+
+		Click(locator1 = "//a[contains(@class,'btn')][contains(@href,'new') or contains(@href,'redirect') or contains(@href,'mvc') or contains(@href,'javascript')][.//*[name()='svg'][contains(@class,'icon-plus')]][not(contains(@class,'borderless'))]");
+
+		PortletEntry.inputText(
+			fieldLabel = "Search Query",
+			text = "Article");
+
+		Button.click(button = "Customize Results");
+
+		Alert.viewSuccessMessage();
+
+		SearchTuning.pinResult(assetTitle = "Article 4");
+
+		SearchTuning.configureAliases(addAlias = "apple");
+
+		Uncheck.uncheckToggleSwitch(locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		AssertElementPresent(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
+
+		Click(locator1 = "//a[contains(@class,'btn')][contains(@href,'new') or contains(@href,'redirect') or contains(@href,'mvc') or contains(@href,'javascript')][.//*[name()='svg'][contains(@class,'icon-plus')]][not(contains(@class,'borderless'))]");
+
+		PortletEntry.inputText(
+			fieldLabel = "Search Query",
+			text = "Article");
+
+		Button.click(button = "Customize Results");
+
+		Alert.viewSuccessMessage();
+
+		SearchTuning.configureAliases(addAlias = "orange");
+
+		SearchTuning.pinResult(assetTitle = "Article 3");
+
+		SearchTuning.hideResult(assetTitle = "Article 2");
+
+		Button.clickSave();
+
+		Upgrade.restoreOriginalBundleAndUpgrade();
+
+		TestUtils.hardRefresh();
+
+		SearchPage.searchEmbedded(searchTerm = "apple");
+
+		SearchResults.viewNoSearchResults(searchTerm = "apple");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Result Rankings");
+
+		Click(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
+
+		AssertElementPresent(
+			key_assetTitle = "Article 4",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
+
+		for (var assetTitle : list "Article 1,Article 2,Article 3") {
+			AssertElementPresent(
+				key_assetTitle = ${assetTitle},
+				locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+		}
+
+		Navigator.gotoBack();
+
+		Click(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_ACTIVE_RANKING");
+
+		AssertElementPresent(
+			key_assetTitle = "Article 3",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
+
+		for (var assetTitle : list "Article 1,Article 4") {
+			AssertElementPresent(
+				key_assetTitle = ${assetTitle},
+				locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+		}
+
+		AssertElementNotPresent(
+			key_assetTitle = "Article 2",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+	}
+
+	@priority = 5
 	test ViewSearchPortletsConfiguration {
 		property portal.suite.search.engine = "elasticsearch7,solr";
 

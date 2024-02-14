@@ -142,6 +142,8 @@ function FragmentContentInteractionsFilter({
 			if (isActive(editable.itemId)) {
 				editable.element.classList.add(EDITABLE_CLASS_NAMES.active);
 
+				editable.element.focus();
+
 				if (isBeingEdited) {
 					editable.element.removeAttribute('title');
 				}

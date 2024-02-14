@@ -3333,15 +3333,18 @@ definition {
 		task ("Then can add a new product in Minium Catalog") {
 			CommerceProducts.openProductsAdmin();
 
-			CPCommerceCatalog.newProductsEntry(
-				productCatalog = "Minium",
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				neverExpire = "true",
+				price = 101,
 				productName = "Simple T-Shirt",
-				productType = "Simple");
+				productType = "Simple",
+				purchasable = "true",
+				sku = 1234123);
 
-			AssertSelectedLabel(
-				key_fieldLabel = "Catalog",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Minium");
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Simple T-Shirt");
 		}
 
 		task ("And can edit the product") {
@@ -3356,7 +3359,7 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-			CommerceNavigator.gotoEntry(entryName = "default");
+			CommerceNavigator.gotoEntry(entryName = 1234123);
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

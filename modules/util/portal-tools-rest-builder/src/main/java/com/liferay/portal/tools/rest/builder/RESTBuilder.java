@@ -1894,52 +1894,61 @@ public class RESTBuilder {
 					).getFileName()
 				).build()));
 
-		for (String target : Arrays.asList("fetch", "node")) {
-			Path outputDirPath = Paths.get(
-				baseClientDir, "src", "main", "resources", "META-INF",
-				"resources", target);
-
-			List<String> args = new ArrayList<>(
-				Arrays.asList(
-					"npx", "openapi-typescript-codegen@0.27.0", "--input",
-					openAPIYAMLFile.getPath(), "--output",
-					outputDirPath.toString(), "--client", target));
-
-			args.add("--name");
-
-			args.add(clientName);
-
-			args.add("--useOptions");
-			args.add("--useUnionTypes");
-
-			ProcessBuilder processBuilder = new ProcessBuilder(args);
-
-			Process process = processBuilder.start();
-
-			System.out.printf(
-				"Invoking Typescript %s client generator%n", target);
-
-			process.waitFor();
-
-			if (process.exitValue() > 0) {
-				System.out.println("Typescript client generator failed");
-
-				Scanner scanner = new Scanner(process.getErrorStream());
-
-				scanner.useDelimiter("\n");
-
-				while (scanner.hasNext()) {
-					System.out.println("[codegen] " + scanner.next());
-				}
-			}
-			else {
-				System.out.printf(
-					"Typescript client generated at %s%n",
-					outputDirPath.toRealPath());
-			}
-		}
+		_invokeJSClientGenerator(
+			baseClientDir, clientName, openAPIYAMLFile, "fetch");
+		_invokeJSClientGenerator(
+			baseClientDir, clientName, openAPIYAMLFile, "node");
 
 		FileUtil.delete(openAPIYAMLFile);
+	}
+
+	private void _invokeJSClientGenerator(
+			String baseClientDir, String clientName, File openAPIYAMLFile,
+			String targetClientType)
+		throws Exception {
+
+		Path outputDirPath = Paths.get(
+			baseClientDir, "src", "main", "resources", "META-INF", "resources",
+			targetClientType);
+
+		List<String> args = new ArrayList<>(
+			Arrays.asList(
+				"npx", "openapi-typescript-codegen@0.27.0", "--input",
+				openAPIYAMLFile.getPath(), "--output", outputDirPath.toString(),
+				"--client", targetClientType));
+
+		args.add("--name");
+
+		args.add(clientName);
+
+		args.add("--useOptions");
+		args.add("--useUnionTypes");
+
+		ProcessBuilder processBuilder = new ProcessBuilder(args);
+
+		Process process = processBuilder.start();
+
+		System.out.printf(
+			"Invoking Typescript %s client generator%n", targetClientType);
+
+		process.waitFor();
+
+		if (process.exitValue() > 0) {
+			System.out.println("Typescript client generator failed");
+
+			Scanner scanner = new Scanner(process.getErrorStream());
+
+			scanner.useDelimiter("\n");
+
+			while (scanner.hasNext()) {
+				System.out.println("[codegen] " + scanner.next());
+			}
+		}
+		else {
+			System.out.printf(
+				"Typescript client generated at %s%n",
+				outputDirPath.toRealPath());
+		}
 	}
 
 	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) {

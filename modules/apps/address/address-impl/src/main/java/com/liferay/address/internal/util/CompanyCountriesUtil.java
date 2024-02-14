@@ -206,7 +206,7 @@ public class CompanyCountriesUtil {
 
 						_addRegionLocalizationBatch(
 							regionLocalizationPreparedStatement,
-							country.getCountryId(),
+							country.getCompanyId(),
 							LanguageUtil.getLanguageId(locale), regionId,
 							regionJSONObject.getString("name"));
 					}
@@ -215,7 +215,7 @@ public class CompanyCountriesUtil {
 					for (String key : localizationsJSONObject.keySet()) {
 						_addRegionLocalizationBatch(
 							regionLocalizationPreparedStatement,
-							country.getCountryId(), key, regionId,
+							country.getCompanyId(), key, regionId,
 							localizationsJSONObject.getString(key));
 					}
 				}
@@ -278,7 +278,7 @@ public class CompanyCountriesUtil {
 	}
 
 	private static void _addRegionLocalizationBatch(
-			PreparedStatement preparedStatement, long countryId,
+			PreparedStatement preparedStatement, long companyId,
 			String languageId, long regionId, String title)
 		throws SQLException {
 
@@ -286,7 +286,7 @@ public class CompanyCountriesUtil {
 			1,
 			CounterLocalServiceUtil.increment(
 				RegionLocalization.class.getName()));
-		preparedStatement.setLong(2, countryId);
+		preparedStatement.setLong(2, companyId);
 		preparedStatement.setLong(3, regionId);
 		preparedStatement.setString(4, languageId);
 		preparedStatement.setString(5, title);

@@ -39,7 +39,12 @@ public class BatchEngineImportTaskServiceTest
 		UserTestUtil.setUser(user);
 
 		try {
-			_addBatchEngineImportTask(otherCompany.getCompanyId(), user);
+			_batchEngineImportTaskService.addBatchEngineImportTask(
+				null, otherCompany.getCompanyId(), user.getUserId(), 10, null,
+				BlogPosting.class.getName(), new byte[0], "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
+				BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null);
 
 			Assert.fail();
 		}
@@ -47,8 +52,13 @@ public class BatchEngineImportTaskServiceTest
 			Assert.assertNotNull(principalException);
 		}
 
-		_batchEngineImportTask1 = _addBatchEngineImportTask(
-			company.getCompanyId(), user);
+		_batchEngineImportTask1 =
+			_batchEngineImportTaskService.addBatchEngineImportTask(
+				null, company.getCompanyId(), user.getUserId(), 10, null,
+				BlogPosting.class.getName(), new byte[0], "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
+				BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null);
 	}
 
 	@Test
@@ -184,18 +194,6 @@ public class BatchEngineImportTaskServiceTest
 		Assert.assertEquals(
 			_batchEngineImportTask1.getBatchEngineImportTaskId(),
 			actualBatchEngineImportTask.getBatchEngineImportTaskId());
-	}
-
-	private BatchEngineImportTask _addBatchEngineImportTask(
-			long companyId, User user)
-		throws Exception {
-
-		return _batchEngineImportTaskService.addBatchEngineImportTask(
-			null, companyId, user.getUserId(), 10, null,
-			BlogPosting.class.getName(), new byte[0], "JSON",
-			BatchEngineTaskExecuteStatus.INITIAL.name(), null,
-			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
-			BatchEngineTaskOperation.CREATE.name(), new HashMap<>(), null);
 	}
 
 	private BatchEngineImportTask _addTestBatchEngineImportTask(

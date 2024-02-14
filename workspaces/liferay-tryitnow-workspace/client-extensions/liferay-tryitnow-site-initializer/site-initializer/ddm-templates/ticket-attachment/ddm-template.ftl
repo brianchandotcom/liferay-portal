@@ -12,9 +12,9 @@
 	<#if (myTicket.attachment??)>
 		<#assign
 			attachmentId = myTicket.attachment.id
-			ticketAttachment = restClient.get("/headless-delivery/v1.0/documents/" + attachmentId)
+			ticketAttachment = myTicket.attachment.link
 		/>
 
-		${themeDisplay.getPortalURL() + ticketAttachment.contentUrl}
+		<a href="${ticketAttachment.href}">${ticketAttachment.label}</a>
 	</#if>
 </#if>

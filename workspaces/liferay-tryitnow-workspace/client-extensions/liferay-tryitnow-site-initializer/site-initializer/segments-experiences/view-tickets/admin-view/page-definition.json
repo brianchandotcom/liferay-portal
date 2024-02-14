@@ -1,0 +1,894 @@
+{
+    "pageElement": {
+        "pageElements": [
+            {
+                "definition": {
+                    "customCSS": ".[$FRAGMENT_CLASS$] {\n    background-position: 0 -64px !important;\n    background-repeat: no-repeat;\n}\n",
+                    "fragmentStyle": {
+                        "backgroundFragmentImage": {
+                            "title": {
+                                "value": "background_header_2"
+                            },
+                            "url": {
+                                "value": "[$DOCUMENT_URL:/site-initializer/documents/group/M2H8/Look and Feel/Public and Private Master Pages/background_header_2.svg$]"
+                            }
+                        },
+                        "borderWidth": "0"
+                    },
+                    "indexed": true,
+                    "layout": {
+                        "borderWidth": 0,
+                        "marginBottom": 0,
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "marginTop": 0,
+                        "opacity": 100,
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "widthType": "Fluid"
+                    }
+                },
+                "pageElements": [
+                    {
+                        "definition": {
+                            "fragmentStyle": {
+                                "borderWidth": "0"
+                            },
+                            "indexed": true,
+                            "layout": {
+                                "borderWidth": 0,
+                                "marginBottom": 0,
+                                "marginLeft": 0,
+                                "marginRight": 0,
+                                "marginTop": 0,
+                                "opacity": 100,
+                                "paddingBottom": 0,
+                                "paddingLeft": 0,
+                                "paddingRight": 0,
+                                "paddingTop": 0,
+                                "widthType": "Fixed"
+                            }
+                        },
+                        "pageElements": [
+                            {
+                                "definition": {
+                                    "fragment": {
+                                        "key": "DIALECT-dialect-text",
+                                        "siteKey": "[$GROUP_KEY$]"
+                                    },
+                                    "fragmentConfig": {
+                                        "textType": "h1"
+                                    },
+                                    "fragmentFields": [
+                                        {
+                                            "id": "element-text",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "My Tickets"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "fragmentStyle": {
+                                        "fontSize": "1.125rem",
+                                        "fontWeight": "fontWeightNormal",
+                                        "marginBottom": "2",
+                                        "paddingBottom": "4",
+                                        "paddingTop": "2",
+                                        "textAlign": "center",
+                                        "textColor": "colorBrandPrimaryLighten6"
+                                    },
+                                    "indexed": true
+                                },
+                                "type": "Fragment"
+                            }
+                        ],
+                        "type": "Section"
+                    }
+                ],
+                "type": "Section"
+            },
+            {
+                "definition": {
+                    "fragmentStyle": {
+                        "borderRadius": "5px",
+                        "borderWidth": "0",
+                        "marginBottom": "5",
+                        "marginTop": "5",
+                        "paddingBottom": "3",
+                        "paddingLeft": "5",
+                        "paddingRight": "5",
+                        "paddingTop": "3"
+                    },
+                    "indexed": true,
+                    "layout": {
+                        "borderWidth": 0,
+                        "marginBottom": 4,
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "marginTop": 4,
+                        "opacity": 100,
+                        "paddingBottom": 1,
+                        "paddingLeft": 4,
+                        "paddingRight": 4,
+                        "paddingTop": 1,
+                        "widthType": "Fixed"
+                    }
+                },
+                "pageElements": [
+                    {
+                        "definition": {
+                            "fragmentStyle": {
+                                "paddingBottom": "4",
+                                "paddingTop": "4"
+                            },
+                            "indexed": true,
+                            "layout": {
+                                "align": "Center",
+                                "borderWidth": 0,
+                                "contentDisplay": "FlexRow",
+                                "flexWrap": "Wrap",
+                                "justify": "End",
+                                "marginBottom": 0,
+                                "marginLeft": 0,
+                                "marginRight": 0,
+                                "marginTop": 0,
+                                "opacity": 100,
+                                "paddingBottom": 2,
+                                "paddingLeft": 0,
+                                "paddingRight": 0,
+                                "paddingTop": 2,
+                                "widthType": "Fixed"
+                            }
+                        },
+                        "pageElements": [
+                            {
+                                "definition": {
+                                    "indexed": true,
+                                    "layout": {
+                                        "align": "Center",
+                                        "borderWidth": 0,
+                                        "contentDisplay": "FlexRow",
+                                        "flexWrap": "Wrap",
+                                        "justify": "Center",
+                                        "marginBottom": 0,
+                                        "marginLeft": 0,
+                                        "marginRight": 0,
+                                        "marginTop": 0,
+                                        "opacity": 100,
+                                        "paddingBottom": 0,
+                                        "paddingLeft": 0,
+                                        "paddingRight": 0,
+                                        "paddingTop": 0,
+                                        "widthType": "Fluid"
+                                    }
+                                },
+                                "pageElements": [
+                                    {
+                                        "definition": {
+                                            "fragment": {
+                                                "key": "BASIC_COMPONENT-button"
+                                            },
+                                            "fragmentConfig": {
+                                                "buttonType": "primary",
+                                                "buttonSize": "sm"
+                                            },
+                                            "fragmentFields": [
+                                                {
+                                                    "id": "link",
+                                                    "value": {
+                                                        "fragmentLink": {
+                                                            "value": {
+                                                                "href": {
+                                                                    "mapping": {
+                                                                        "itemReference": {
+                                                                            "className": "com.liferay.portal.kernel.model.Layout",
+                                                                            "fields": [
+                                                                                {
+                                                                                    "fieldName": "friendlyURL",
+                                                                                    "fieldValue": "/new-ticket"
+                                                                                },
+                                                                                {
+                                                                                    "fieldName": "privatePage",
+                                                                                    "fieldValue": "false"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "text": {
+                                                            "value_i18n": {
+                                                                "en_US": "New Ticket"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "fragmentStyle": {
+                                                "paddingRight": "4"
+                                            },
+                                            "indexed": true
+                                        },
+                                        "type": "Fragment"
+                                    },
+                                    {
+                                        "definition": {
+                                            "fragment": {
+                                                "key": "BASIC_COMPONENT-button"
+                                            },
+                                            "fragmentConfig": {
+                                                "buttonType": "primary",
+                                                "buttonSize": "sm"
+                                            },
+                                            "fragmentFields": [
+                                                {
+                                                    "id": "link",
+                                                    "value": {
+                                                        "fragmentLink": {
+                                                            "value": {
+                                                                "href": {
+                                                                    "mapping": {
+                                                                        "itemReference": {
+                                                                            "className": "com.liferay.portal.kernel.model.Layout",
+                                                                            "fields": [
+                                                                                {
+                                                                                    "fieldName": "friendlyURL",
+                                                                                    "fieldValue": "/tickets-dashboard"
+                                                                                },
+                                                                                {
+                                                                                    "fieldName": "privatePage",
+                                                                                    "fieldValue": "false"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "text": {
+                                                            "value_i18n": {
+                                                                "en_US": "View Dashboard"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ],
+                                            "indexed": true
+                                        },
+                                        "type": "Fragment"
+                                    }
+                                ],
+                                "type": "Section"
+                            }
+                        ],
+                        "type": "Section"
+                    },
+                    {
+                        "definition": {
+                            "fragmentStyle": {
+                                "paddingBottom": "6"
+                            },
+                            "indexed": true,
+                            "layout": {
+                                "borderWidth": 0,
+                                "marginBottom": 0,
+                                "marginLeft": 0,
+                                "marginRight": 0,
+                                "marginTop": 0,
+                                "opacity": 100,
+                                "paddingBottom": 6,
+                                "paddingLeft": 0,
+                                "paddingRight": 0,
+                                "paddingTop": 0,
+                                "widthType": "Fixed"
+                            }
+                        },
+                        "pageElements": [
+                            {
+                                "definition": {
+                                    "fragmentStyle": {
+                                        "backgroundColor": "colorBrandPrimaryLighten6",
+                                        "borderRadius": "5px",
+                                        "marginBottom": "4",
+                                        "paddingBottom": "3",
+                                        "paddingLeft": "2",
+                                        "paddingRight": "2",
+                                        "paddingTop": "3"
+                                    },
+                                    "gutters": true,
+                                    "indexed": true,
+                                    "modulesPerRow": 4,
+                                    "numberOfColumns": 4,
+                                    "reverseOrder": false,
+                                    "rowViewports": [
+                                        {
+                                            "id": "landscapeMobile",
+                                            "rowViewportDefinition": {
+                                                "modulesPerRow": 1
+                                            }
+                                        },
+                                        {
+                                            "id": "portraitMobile",
+                                            "rowViewportDefinition": {}
+                                        },
+                                        {
+                                            "id": "tablet",
+                                            "rowViewportDefinition": {}
+                                        }
+                                    ],
+                                    "verticalAlignment": "top"
+                                },
+                                "pageElements": [
+                                    {
+                                        "definition": {
+                                            "columnViewports": [
+                                                {
+                                                    "columnViewportDefinition": {
+                                                        "size": 12
+                                                    },
+                                                    "id": "landscapeMobile"
+                                                },
+                                                {
+                                                    "columnViewportDefinition": {},
+                                                    "id": "portraitMobile"
+                                                },
+                                                {
+                                                    "columnViewportDefinition": {},
+                                                    "id": "tablet"
+                                                }
+                                            ],
+                                            "size": 2
+                                        },
+                                        "pageElements": [
+                                            {
+                                                "definition": {
+                                                    "fragment": {
+                                                        "key": "DIALECT-dialect-text",
+                                                        "siteKey": "[$GROUP_KEY$]"
+                                                    },
+                                                    "fragmentConfig": {
+                                                        "textType": "h6"
+                                                    },
+                                                    "fragmentFields": [
+                                                        {
+                                                            "id": "element-text",
+                                                            "value": {
+                                                                "fragmentLink": {},
+                                                                "text": {
+                                                                    "value_i18n": {
+                                                                        "en_US": "Number"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "fragmentStyle": {
+                                                        "fontWeight": "fontWeightBolder",
+                                                        "textColor": "colorNeutral9"
+                                                    },
+                                                    "indexed": true
+                                                },
+                                                "type": "Fragment"
+                                            }
+                                        ],
+                                        "type": "Column"
+                                    },
+                                    {
+                                        "definition": {
+                                            "columnViewports": [
+                                                {
+                                                    "columnViewportDefinition": {
+                                                        "size": 12
+                                                    },
+                                                    "id": "landscapeMobile"
+                                                },
+                                                {
+                                                    "columnViewportDefinition": {},
+                                                    "id": "portraitMobile"
+                                                },
+                                                {
+                                                    "columnViewportDefinition": {},
+                                                    "id": "tablet"
+                                                }
+                                            ],
+                                            "size": 4
+                                        },
+                                        "pageElements": [
+                                            {
+                                                "definition": {
+                                                    "fragment": {
+                                                        "key": "DIALECT-dialect-text",
+                                                        "siteKey": "[$GROUP_KEY$]"
+                                                    },
+                                                    "fragmentConfig": {
+                                                        "textType": "h6"
+                                                    },
+                                                    "fragmentFields": [
+                                                        {
+                                                            "id": "element-text",
+                                                            "value": {
+                                                                "fragmentLink": {},
+                                                                "text": {
+                                                                    "value_i18n": {
+                                                                        "en_US": "Title"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "fragmentStyle": {
+                                                        "fontWeight": "fontWeightBolder",
+                                                        "textColor": "colorNeutral9"
+                                                    },
+                                                    "indexed": true
+                                                },
+                                                "type": "Fragment"
+                                            }
+                                        ],
+                                        "type": "Column"
+                                    },
+                                    {
+                                        "definition": {
+                                            "columnViewports": [
+                                                {
+                                                    "columnViewportDefinition": {
+                                                        "size": 12
+                                                    },
+                                                    "id": "landscapeMobile"
+                                                },
+                                                {
+                                                    "columnViewportDefinition": {},
+                                                    "id": "portraitMobile"
+                                                },
+                                                {
+                                                    "columnViewportDefinition": {},
+                                                    "id": "tablet"
+                                                }
+                                            ],
+                                            "size": 3
+                                        },
+                                        "pageElements": [
+                                            {
+                                                "definition": {
+                                                    "fragment": {
+                                                        "key": "DIALECT-dialect-text",
+                                                        "siteKey": "[$GROUP_KEY$]"
+                                                    },
+                                                    "fragmentConfig": {
+                                                        "textType": "h6"
+                                                    },
+                                                    "fragmentFields": [
+                                                        {
+                                                            "id": "element-text",
+                                                            "value": {
+                                                                "fragmentLink": {},
+                                                                "text": {
+                                                                    "value_i18n": {
+                                                                        "en_US": "Description"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "fragmentStyle": {
+                                                        "fontWeight": "fontWeightBolder",
+                                                        "textColor": "colorNeutral9"
+                                                    },
+                                                    "indexed": true
+                                                },
+                                                "type": "Fragment"
+                                            }
+                                        ],
+                                        "type": "Column"
+                                    },
+                                    {
+                                        "definition": {
+                                            "columnViewports": [
+                                                {
+                                                    "columnViewportDefinition": {
+                                                        "size": 12
+                                                    },
+                                                    "id": "landscapeMobile"
+                                                },
+                                                {
+                                                    "columnViewportDefinition": {},
+                                                    "id": "portraitMobile"
+                                                },
+                                                {
+                                                    "columnViewportDefinition": {},
+                                                    "id": "tablet"
+                                                }
+                                            ],
+                                            "size": 3
+                                        },
+                                        "pageElements": [
+                                            {
+                                                "definition": {
+                                                    "fragment": {
+                                                        "key": "DIALECT-dialect-text",
+                                                        "siteKey": "[$GROUP_KEY$]"
+                                                    },
+                                                    "fragmentConfig": {
+                                                        "textType": "h6"
+                                                    },
+                                                    "fragmentFields": [
+                                                        {
+                                                            "id": "element-text",
+                                                            "value": {
+                                                                "fragmentLink": {},
+                                                                "text": {
+                                                                    "value_i18n": {
+                                                                        "en_US": "Submitted On"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ],
+                                                    "fragmentStyle": {
+                                                        "fontWeight": "fontWeightBolder",
+                                                        "textAlign": "center",
+                                                        "textColor": "colorNeutral9"
+                                                    },
+                                                    "indexed": true
+                                                },
+                                                "type": "Fragment"
+                                            }
+                                        ],
+                                        "type": "Column"
+                                    }
+                                ],
+                                "type": "Row"
+                            },
+                            {
+                                "definition": {
+                                    "collectionConfig": {
+                                        "collectionReference": {
+                                            "className": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_J3Y7Ticket"
+                                        },
+                                        "collectionType": "CollectionProvider"
+                                    },
+                                    "collectionViewports": [
+                                        {
+                                            "collectionViewportDefinition": {
+                                                "numberOfColumns": 1
+                                            },
+                                            "id": "landscapeMobile"
+                                        },
+                                        {
+                                            "collectionViewportDefinition": {},
+                                            "id": "portraitMobile"
+                                        },
+                                        {
+                                            "collectionViewportDefinition": {},
+                                            "id": "tablet"
+                                        }
+                                    ],
+                                    "displayAllItems": false,
+                                    "displayAllPages": false,
+                                    "listItemStyle": "",
+                                    "listStyle": "",
+                                    "numberOfColumns": 1,
+                                    "numberOfItems": 5,
+                                    "numberOfItemsPerPage": 10,
+                                    "numberOfPages": 5,
+                                    "paginationType": "Numeric",
+                                    "showAllItems": false,
+                                    "templateKey": ""
+                                },
+                                "pageElements": [
+                                    {
+                                        "definition": {
+                                            "collectionItemConfig": {}
+                                        },
+                                        "pageElements": [
+                                            {
+                                                "definition": {
+                                                    "fragmentStyle": {
+                                                        "marginBottom": "3",
+                                                        "paddingLeft": "2",
+                                                        "paddingRight": "2"
+                                                    },
+                                                    "gutters": true,
+                                                    "indexed": true,
+                                                    "modulesPerRow": 4,
+                                                    "numberOfColumns": 4,
+                                                    "reverseOrder": false,
+                                                    "rowViewports": [
+                                                        {
+                                                            "id": "landscapeMobile",
+                                                            "rowViewportDefinition": {
+                                                                "modulesPerRow": 1
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "portraitMobile",
+                                                            "rowViewportDefinition": {}
+                                                        },
+                                                        {
+                                                            "id": "tablet",
+                                                            "rowViewportDefinition": {}
+                                                        }
+                                                    ],
+                                                    "verticalAlignment": "top"
+                                                },
+                                                "pageElements": [
+                                                    {
+                                                        "definition": {
+                                                            "columnViewports": [
+                                                                {
+                                                                    "columnViewportDefinition": {
+                                                                        "size": 12
+                                                                    },
+                                                                    "id": "landscapeMobile"
+                                                                },
+                                                                {
+                                                                    "columnViewportDefinition": {},
+                                                                    "id": "portraitMobile"
+                                                                },
+                                                                {
+                                                                    "columnViewportDefinition": {},
+                                                                    "id": "tablet"
+                                                                }
+                                                            ],
+                                                            "size": 2
+                                                        },
+                                                        "pageElements": [
+                                                            {
+                                                                "definition": {
+                                                                    "fragment": {
+                                                                        "key": "DIALECT-dialect-text",
+                                                                        "siteKey": "[$GROUP_KEY$]"
+                                                                    },
+                                                                    "fragmentConfig": {
+                                                                        "textType": "text-paragraph"
+                                                                    },
+                                                                    "fragmentFields": [
+                                                                        {
+                                                                            "id": "element-text",
+                                                                            "value": {
+                                                                                "fragmentLink": {
+                                                                                    "value": {
+                                                                                        "href": {
+                                                                                            "mapping": {
+                                                                                                "fieldKey": "displayPageURL",
+                                                                                                "itemReference": {
+                                                                                                    "contextSource": "CollectionItem"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "text": {
+                                                                                    "mapping": {
+                                                                                        "fieldKey": "ObjectEntry_objectEntryId",
+                                                                                        "itemReference": {
+                                                                                            "contextSource": "CollectionItem"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "fragmentStyle": {
+                                                                        "fontWeight": "fontWeightLight",
+                                                                        "textColor": "colorNeutral7"
+                                                                    },
+                                                                    "indexed": true
+                                                                },
+                                                                "type": "Fragment"
+                                                            }
+                                                        ],
+                                                        "type": "Column"
+                                                    },
+                                                    {
+                                                        "definition": {
+                                                            "columnViewports": [
+                                                                {
+                                                                    "columnViewportDefinition": {
+                                                                        "size": 12
+                                                                    },
+                                                                    "id": "landscapeMobile"
+                                                                },
+                                                                {
+                                                                    "columnViewportDefinition": {},
+                                                                    "id": "portraitMobile"
+                                                                },
+                                                                {
+                                                                    "columnViewportDefinition": {},
+                                                                    "id": "tablet"
+                                                                }
+                                                            ],
+                                                            "size": 4
+                                                        },
+                                                        "pageElements": [
+                                                            {
+                                                                "definition": {
+                                                                    "fragment": {
+                                                                        "key": "DIALECT-dialect-text",
+                                                                        "siteKey": "[$GROUP_KEY$]"
+                                                                    },
+                                                                    "fragmentConfig": {
+                                                                        "textType": "text-paragraph"
+                                                                    },
+                                                                    "fragmentFields": [
+                                                                        {
+                                                                            "id": "element-text",
+                                                                            "value": {
+                                                                                "fragmentLink": {
+                                                                                    "value": {
+                                                                                        "href": {
+                                                                                            "mapping": {
+                                                                                                "fieldKey": "displayPageURL",
+                                                                                                "itemReference": {
+                                                                                                    "contextSource": "CollectionItem"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "text": {
+                                                                                    "mapping": {
+                                                                                        "fieldKey": "ObjectField_subject",
+                                                                                        "itemReference": {
+                                                                                            "contextSource": "CollectionItem"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "fragmentStyle": {
+                                                                        "fontWeight": "fontWeightLight",
+                                                                        "textColor": "colorNeutral7"
+                                                                    },
+                                                                    "indexed": true
+                                                                },
+                                                                "type": "Fragment"
+                                                            }
+                                                        ],
+                                                        "type": "Column"
+                                                    },
+                                                    {
+                                                        "definition": {
+                                                            "columnViewports": [
+                                                                {
+                                                                    "columnViewportDefinition": {
+                                                                        "size": 12
+                                                                    },
+                                                                    "id": "landscapeMobile"
+                                                                },
+                                                                {
+                                                                    "columnViewportDefinition": {},
+                                                                    "id": "portraitMobile"
+                                                                },
+                                                                {
+                                                                    "columnViewportDefinition": {},
+                                                                    "id": "tablet"
+                                                                }
+                                                            ],
+                                                            "size": 3
+                                                        },
+                                                        "pageElements": [
+                                                            {
+                                                                "definition": {
+                                                                    "fragment": {
+                                                                        "key": "DIALECT-dialect-text",
+                                                                        "siteKey": "[$GROUP_KEY$]"
+                                                                    },
+                                                                    "fragmentConfig": {
+                                                                        "textType": "text-paragraph"
+                                                                    },
+                                                                    "fragmentFields": [
+                                                                        {
+                                                                            "id": "element-text",
+                                                                            "value": {
+                                                                                "fragmentLink": {},
+                                                                                "text": {
+                                                                                    "mapping": {
+                                                                                        "fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:M2H8 Attachment Description Summarized$]",
+                                                                                        "itemReference": {
+                                                                                            "contextSource": "CollectionItem"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "fragmentStyle": {
+                                                                        "fontWeight": "fontWeightLight",
+                                                                        "textColor": "colorNeutral7"
+                                                                    },
+                                                                    "indexed": true
+                                                                },
+                                                                "type": "Fragment"
+                                                            }
+                                                        ],
+                                                        "type": "Column"
+                                                    },
+                                                    {
+                                                        "definition": {
+                                                            "columnViewports": [
+                                                                {
+                                                                    "columnViewportDefinition": {
+                                                                        "size": 12
+                                                                    },
+                                                                    "id": "landscapeMobile"
+                                                                },
+                                                                {
+                                                                    "columnViewportDefinition": {},
+                                                                    "id": "portraitMobile"
+                                                                },
+                                                                {
+                                                                    "columnViewportDefinition": {},
+                                                                    "id": "tablet"
+                                                                }
+                                                            ],
+                                                            "size": 3
+                                                        },
+                                                        "pageElements": [
+                                                            {
+                                                                "definition": {
+                                                                    "fragment": {
+                                                                        "key": "BASIC_COMPONENT-date"
+                                                                    },
+                                                                    "fragmentConfig": {},
+                                                                    "fragmentFields": [
+                                                                        {
+                                                                            "id": "element-date",
+                                                                            "value": {
+                                                                                "fragmentLink": {},
+                                                                                "text": {
+                                                                                    "mapping": {
+                                                                                        "fieldKey": "ObjectEntry_createDate",
+                                                                                        "itemReference": {
+                                                                                            "contextSource": "CollectionItem"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "fragmentStyle": {
+                                                                        "fontWeight": "fontWeightLight",
+                                                                        "textAlign": "center",
+                                                                        "textColor": "colorNeutral7"
+                                                                    },
+                                                                    "indexed": true
+                                                                },
+                                                                "type": "Fragment"
+                                                            }
+                                                        ],
+                                                        "type": "Column"
+                                                    }
+                                                ],
+                                                "type": "Row"
+                                            }
+                                        ],
+                                        "type": "CollectionItem"
+                                    }
+                                ],
+                                "type": "Collection"
+                            }
+                        ],
+                        "type": "Section"
+                    }
+                ],
+                "type": "Section"
+            }
+        ],
+        "type": "Root"
+    },
+    "version": 1.1,
+    "settings": {
+        "masterPage": {
+            "key": "main"
+        }
+    }
+}

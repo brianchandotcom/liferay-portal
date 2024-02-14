@@ -73,4 +73,5 @@ export type TicketPayload = {
 	ticketStatus: {name: string};
 	type: {name: string};
 	userToJ3Y7Ticket: User;
+	r_relatedTicket_c_j3y7TicketId?: string;
 };

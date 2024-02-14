@@ -112,7 +112,7 @@
 			"DELETE",
 			"UPDATE",
 			"VIEW",
-			"assignTicketToMe"
+			"AssignTicketToMe"
 		],
 		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",

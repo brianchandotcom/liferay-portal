@@ -73,7 +73,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 @FeatureFlags("LPS-199086")
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
-public class RemoteStagingPublishParentPagesByDefaultTest {
+public class RemoteStagingPublishParentLayoutsByDefaultTest {
 
 	@ClassRule
 	@Rule
@@ -278,7 +278,7 @@ public class RemoteStagingPublishParentPagesByDefaultTest {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RemoteStagingPublishParentPagesByDefaultTest.class);
+		RemoteStagingPublishParentLayoutsByDefaultTest.class);
 
 	@Inject
 	private static ConfigurationProvider _configurationProvider;

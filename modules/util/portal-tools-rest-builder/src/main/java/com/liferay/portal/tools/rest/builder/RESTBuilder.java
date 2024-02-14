@@ -57,7 +57,6 @@ import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.security.CodeSource;
@@ -1856,65 +1855,18 @@ public class RESTBuilder {
 	}
 
 	private void _invokeJSClientGenerator(
-			OpenAPIYAML openAPIYAML, File openAPIYAMLFile)
-		throws Exception {
-
-		String baseClientDir =
-			StringUtil.removeLast(_configDir.getPath(), "-impl") + "-client-js";
-
-		// Constructs client name from the api package path
-
-		String apiPackagePath = _configYAML.getApiPackagePath();
-
-		StringBundler sb = new StringBundler();
-
-		String[] parts = apiPackagePath.split("\\.");
-
-		for (int i = 2; i < parts.length; i++) {
-			sb.append(StringUtil.upperCaseFirstLetter(parts[i]));
-		}
-
-		sb.append("Client");
-
-		String clientName = sb.toString();
-
-		openAPIYAMLFile = _prepareForJSClientGenerator(
-			openAPIYAML, openAPIYAMLFile);
-
-		Path packajeJsonPath = Paths.get(baseClientDir, "package.json");
-
-		FileUtil.write(
-			packajeJsonPath.toFile(),
-			FreeMarkerUtil.processTemplate(
-				null, null, "package_json",
-				HashMapBuilder.<String, Object>put(
-					"clientName",
-					Paths.get(
-						baseClientDir
-					).getFileName()
-				).build()));
-
-		_invokeJSClientGenerator(
-			baseClientDir, clientName, openAPIYAMLFile, "fetch");
-		_invokeJSClientGenerator(
-			baseClientDir, clientName, openAPIYAMLFile, "node");
-
-		FileUtil.delete(openAPIYAMLFile);
-	}
-
-	private void _invokeJSClientGenerator(
-			String baseClientDir, String clientName, File openAPIYAMLFile,
+			File baseClientDir, String clientName, File openAPIYAMLFile,
 			String targetClientType)
 		throws Exception {
 
-		Path outputDirPath = Paths.get(
-			baseClientDir, "src", "main", "resources", "META-INF", "resources",
+		String outputDirPath = StringBundler.concat(
+			baseClientDir.getPath(), "/src/main/resources/META-INF/resources/",
 			targetClientType);
 
 		List<String> args = new ArrayList<>(
 			Arrays.asList(
 				"npx", "openapi-typescript-codegen@0.27.0", "--input",
-				openAPIYAMLFile.getPath(), "--output", outputDirPath.toString(),
+				openAPIYAMLFile.getPath(), "--output", outputDirPath,
 				"--client", targetClientType));
 
 		args.add("--name");
@@ -1946,9 +1898,51 @@ public class RESTBuilder {
 		}
 		else {
 			System.out.printf(
-				"Typescript client generated at %s%n",
-				outputDirPath.toRealPath());
+				"Typescript client generated at %s%n", outputDirPath);
 		}
+	}
+
+	private void _invokeJSClientGenerator(
+			OpenAPIYAML openAPIYAML, File openAPIYAMLFile)
+		throws Exception {
+
+		File baseClientDir = new File(
+			StringUtil.removeLast(_configDir.getPath(), "-impl") +
+				"-client-js");
+
+		// Constructs client name from the api package path
+
+		String apiPackagePath = _configYAML.getApiPackagePath();
+
+		StringBundler sb = new StringBundler();
+
+		String[] parts = apiPackagePath.split("\\.");
+
+		for (int i = 2; i < parts.length; i++) {
+			sb.append(StringUtil.upperCaseFirstLetter(parts[i]));
+		}
+
+		sb.append("Client");
+
+		String clientName = sb.toString();
+
+		openAPIYAMLFile = _prepareForJSClientGenerator(
+			openAPIYAML, openAPIYAMLFile);
+
+		FileUtil.write(
+			new File(baseClientDir, "package.json"),
+			FreeMarkerUtil.processTemplate(
+				null, null, "package_json",
+				HashMapBuilder.<String, Object>put(
+					"clientName", baseClientDir.getName()
+				).build()));
+
+		_invokeJSClientGenerator(
+			baseClientDir, clientName, openAPIYAMLFile, "fetch");
+		_invokeJSClientGenerator(
+			baseClientDir, clientName, openAPIYAMLFile, "node");
+
+		FileUtil.delete(openAPIYAMLFile);
 	}
 
 	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) {

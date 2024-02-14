@@ -71,6 +71,8 @@ public class BatchEngineExportTaskServiceTest
 
 	@Test
 	public void testGetBatchEngineExportTask() throws Exception {
+		UserTestUtil.setUser(omniadminUser);
+
 		_batchEngineExportTask1 = _addBatchEngineExportTask(
 			company.getCompanyId(), omniadminUser);
 

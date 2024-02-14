@@ -63,6 +63,8 @@ public class BatchEngineImportTaskServiceTest
 
 	@Test
 	public void testGetBatchEngineImportTask() throws Exception {
+		UserTestUtil.setUser(omniadminUser);
+
 		_batchEngineImportTask1 = _addTestBatchEngineImportTask(
 			company.getCompanyId(), omniadminUser);
 

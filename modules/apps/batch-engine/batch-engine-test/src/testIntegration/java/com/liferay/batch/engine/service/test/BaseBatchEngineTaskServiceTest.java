@@ -44,8 +44,6 @@ public class BaseBatchEngineTaskServiceTest {
 	public void setUp() throws Exception {
 		omniadminUser = TestPropsValues.getUser();
 
-		UserTestUtil.setUser(omniadminUser);
-
 		companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
 		user = UserTestUtil.addUser(company);

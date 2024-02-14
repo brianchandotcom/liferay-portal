@@ -13,6 +13,7 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
@@ -97,7 +98,7 @@ public class NodeWorkflowMetricsIndexerImpl
 
 	@Override
 	public String getIndexType() {
-		return _nodeWorkflowMetricsIndex.getIndexType();
+		return WorkflowMetricsIndexTypeConstants.NODE_TYPE;
 	}
 
 	@Override
@@ -178,8 +179,8 @@ public class NodeWorkflowMetricsIndexerImpl
 		).setString(
 			"uid",
 			WorkflowMetricsIndexerUtil.digest(
-				_taskWorkflowMetricsIndex.getIndexType(), companyId, processId,
-				processVersion, nodeId)
+				WorkflowMetricsIndexTypeConstants.TASK_TYPE, companyId,
+				processId, processVersion, nodeId)
 		).setString(
 			"version", processVersion
 		);
@@ -190,14 +191,8 @@ public class NodeWorkflowMetricsIndexerImpl
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;
-
 	@Reference
 	private SLATaskResultWorkflowMetricsIndexer
 		_slaTaskResultWorkflowMetricsIndexer;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=task)")
-	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
 
 }

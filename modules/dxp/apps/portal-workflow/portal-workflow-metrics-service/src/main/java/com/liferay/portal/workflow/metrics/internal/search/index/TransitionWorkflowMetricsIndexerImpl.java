@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.model.AddTransitionRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteTransitionRequest;
 import com.liferay.portal.workflow.metrics.search.index.TransitionWorkflowMetricsIndexer;
@@ -96,13 +97,10 @@ public class TransitionWorkflowMetricsIndexerImpl
 
 	@Override
 	public String getIndexType() {
-		return _transitionWorkflowMetricsIndex.getIndexType();
+		return WorkflowMetricsIndexTypeConstants.TRANSITION_TYPE;
 	}
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
-	private WorkflowMetricsIndex _transitionWorkflowMetricsIndex;
 
 }

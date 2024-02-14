@@ -16,6 +16,7 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
+import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteProcessRequest;
@@ -146,7 +147,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 	@Override
 	public String getIndexType() {
-		return _processWorkflowMetricsIndex.getIndexType();
+		return WorkflowMetricsIndexTypeConstants.PROCESS_TYPE;
 	}
 
 	@Override
@@ -206,7 +207,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 					new UpdateDocumentRequest(
 						getIndexName(updateProcessRequest.getCompanyId()),
 						WorkflowMetricsIndexerUtil.digest(
-							_processWorkflowMetricsIndex.getIndexType(),
+							WorkflowMetricsIndexTypeConstants.PROCESS_TYPE,
 							updateProcessRequest.getCompanyId(),
 							updateProcessRequest.getProcessId()),
 						scriptBuilder.idOrCode(
@@ -252,7 +253,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 		).setString(
 			"uid",
 			WorkflowMetricsIndexerUtil.digest(
-				_instanceWorkflowMetricsIndex.getIndexType(), companyId,
+				WorkflowMetricsIndexTypeConstants.INSTANCE_TYPE, companyId,
 				processId)
 		);
 
@@ -261,12 +262,6 @@ public class ProcessWorkflowMetricsIndexerImpl
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
-	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
 
 	@Reference
 	private SLAInstanceResultWorkflowMetricsIndexer

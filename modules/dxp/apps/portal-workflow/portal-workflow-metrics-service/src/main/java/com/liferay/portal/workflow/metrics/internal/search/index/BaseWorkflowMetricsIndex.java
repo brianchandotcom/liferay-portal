@@ -52,7 +52,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 				indexNameBuilder, _indexNameSuffix, companyId));
 
 		createIndexRequest.setMappings(
-			_readJSON(getIndexType() + "-mappings.json"));
+			_readJSON(_indexType + "-mappings.json"));
 		createIndexRequest.setSettings(_readJSON("settings.json"));
 
 		try {
@@ -85,11 +85,6 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 					indexNameBuilder, _indexNameSuffix, companyId)));
 
 		return true;
-	}
-
-	@Override
-	public String getIndexType() {
-		return _indexType;
 	}
 
 	@Override

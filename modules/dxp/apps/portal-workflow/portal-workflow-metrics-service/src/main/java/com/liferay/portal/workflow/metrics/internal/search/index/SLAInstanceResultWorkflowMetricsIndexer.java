@@ -15,6 +15,7 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
+import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAInstanceResult;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
@@ -209,15 +210,10 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 
 	@Override
 	public String getIndexType() {
-		return _slaInstanceResultWorkflowMetricsIndex.getIndexType();
+		return WorkflowMetricsIndexTypeConstants.SLA_INSTANCE_RESULT_TYPE;
 	}
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference(
-		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
-	)
-	private WorkflowMetricsIndex _slaInstanceResultWorkflowMetricsIndex;
 
 }

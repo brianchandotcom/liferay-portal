@@ -28,8 +28,6 @@ public interface WorkflowMetricsIndex {
 			IndexNameBuilder indexNameBuilder, long companyId)
 		throws PortalException;
 
-	public String getIndexType();
-
 	public boolean removeIndex(
 			IndexNameBuilder indexNameBuilder, long companyId)
 		throws PortalException;

@@ -42,6 +42,7 @@ import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
@@ -618,7 +619,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 						WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
 						workflowMetricsSLAInstanceResult.getCompanyId()),
 					WorkflowMetricsIndexerUtil.digest(
-						_instanceWorkflowMetricsIndex.getIndexType(),
+						WorkflowMetricsIndexTypeConstants.INSTANCE_TYPE,
 						workflowMetricsSLAInstanceResult.getCompanyId(),
 						workflowMetricsSLAInstanceResult.getInstanceId()),
 					scriptBuilder.idOrCode(
@@ -721,9 +722,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
-	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

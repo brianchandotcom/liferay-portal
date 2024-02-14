@@ -19,6 +19,7 @@ import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 
 import org.osgi.service.component.annotations.Reference;
@@ -27,6 +28,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
+
+	public BaseWorkflowMetricsIndex(String indexNameSuffix, String indexType) {
+		_indexNameSuffix = indexNameSuffix;
+		_indexType = indexType;
+	}
 
 	@Override
 	public boolean createIndex(long companyId) throws PortalException {
@@ -69,6 +75,16 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	}
 
 	@Override
+	public String getIndexName(long companyId) {
+		return indexNameBuilder.getIndexName(companyId) + _indexNameSuffix;
+	}
+
+	@Override
+	public String getIndexType() {
+		return _indexType;
+	}
+
+	@Override
 	public boolean removeIndex(long companyId) throws PortalException {
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
 			!_hasIndex(getIndexName(companyId))) {
@@ -81,6 +97,9 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 		return true;
 	}
+
+	@Reference
+	protected IndexNameBuilder indexNameBuilder;
 
 	@Reference
 	protected Queries queries;
@@ -117,5 +136,8 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseWorkflowMetricsIndex.class);
+
+	private final String _indexNameSuffix;
+	private final String _indexType;
 
 }

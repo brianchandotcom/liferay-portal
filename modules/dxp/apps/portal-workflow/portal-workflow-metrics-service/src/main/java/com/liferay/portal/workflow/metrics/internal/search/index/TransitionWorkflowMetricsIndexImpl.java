@@ -5,11 +5,9 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -21,18 +19,10 @@ import org.osgi.service.component.annotations.Reference;
 public class TransitionWorkflowMetricsIndexImpl
 	extends BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
-	@Override
-	public String getIndexName(long companyId) {
-		return _indexNameBuilder.getIndexName(companyId) +
-			WorkflowMetricsIndexNameConstants.SUFFIX_TRANSITION;
+	public TransitionWorkflowMetricsIndexImpl() {
+		super(
+			WorkflowMetricsIndexNameConstants.SUFFIX_TRANSITION,
+			"WorkflowMetricsTransitionType");
 	}
-
-	@Override
-	public String getIndexType() {
-		return "WorkflowMetricsTransitionType";
-	}
-
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
 
 }

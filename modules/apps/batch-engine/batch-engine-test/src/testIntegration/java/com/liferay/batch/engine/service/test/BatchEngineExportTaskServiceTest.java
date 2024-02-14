@@ -14,7 +14,6 @@ import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -57,70 +56,69 @@ public class BatchEngineExportTaskServiceTest
 			Assert.assertNotNull(principalException);
 		}
 
-		_batchEngineExportTask1 =
-			_batchEngineExportTaskService.addBatchEngineExportTask(
-				null, company.getCompanyId(), user.getUserId(), null,
-				BlogPosting.class.getName(), "JSON",
-				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				Collections.emptyList(),
-				HashMapBuilder.<String, Serializable>put(
-					"siteId", TestPropsValues.getGroupId()
-				).build(),
-				null);
+		_batchEngineExportTaskService.addBatchEngineExportTask(
+			null, company.getCompanyId(), user.getUserId(), null,
+			BlogPosting.class.getName(), "JSON",
+			BatchEngineTaskExecuteStatus.INITIAL.name(),
+			Collections.emptyList(),
+			HashMapBuilder.<String, Serializable>put(
+				"siteId", TestPropsValues.getGroupId()
+			).build(),
+			null);
 	}
 
 	@Test
 	public void testGetBatchEngineExportTask() throws Exception {
-		UserTestUtil.setUser(omniadminUser);
-
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
+		BatchEngineExportTask batchEngineExportTask = _addBatchEngineExportTask(
 			company.getCompanyId(), omniadminUser);
 
-		_batchEngineExportTaskService.getBatchEngineExportTask(
-			_batchEngineExportTask1.getBatchEngineExportTaskId());
+		UserTestUtil.setUser(omniadminUser);
 
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
+		_batchEngineExportTaskService.getBatchEngineExportTask(
+			batchEngineExportTask.getBatchEngineExportTaskId());
+
+		batchEngineExportTask = _addBatchEngineExportTask(
 			company.getCompanyId(), user);
 
 		UserTestUtil.setUser(companyAdminUser);
 
 		_batchEngineExportTaskService.getBatchEngineExportTask(
-			_batchEngineExportTask1.getBatchEngineExportTaskId());
+			batchEngineExportTask.getBatchEngineExportTaskId());
 
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
+		batchEngineExportTask = _addBatchEngineExportTask(
 			company.getCompanyId(), user);
 
 		UserTestUtil.setUser(user);
 
 		_batchEngineExportTaskService.
 			getBatchEngineExportTaskByExternalReferenceCode(
-				_batchEngineExportTask1.getExternalReferenceCode(),
+				batchEngineExportTask.getExternalReferenceCode(),
 				company.getCompanyId());
 
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
+		batchEngineExportTask = _addBatchEngineExportTask(
 			company.getCompanyId(), user);
 
 		_batchEngineExportTaskService.getBatchEngineExportTask(
-			_batchEngineExportTask1.getBatchEngineExportTaskId());
+			batchEngineExportTask.getBatchEngineExportTaskId());
 
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
+		batchEngineExportTask = _addBatchEngineExportTask(
 			company.getCompanyId(), companyAdminUser);
 
 		try {
 			_batchEngineExportTaskService.getBatchEngineExportTask(
-				_batchEngineExportTask1.getBatchEngineExportTaskId());
+				batchEngineExportTask.getBatchEngineExportTaskId());
 			Assert.fail();
 		}
 		catch (PrincipalException principalException) {
 			Assert.assertNotNull(principalException);
 		}
 
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
+		batchEngineExportTask = _addBatchEngineExportTask(
 			otherCompany.getCompanyId(), omniadminUser);
 
 		try {
 			_batchEngineExportTaskService.getBatchEngineExportTask(
-				_batchEngineExportTask1.getBatchEngineExportTaskId());
+				batchEngineExportTask.getBatchEngineExportTaskId());
 			Assert.fail();
 		}
 		catch (PrincipalException principalException) {
@@ -130,24 +128,24 @@ public class BatchEngineExportTaskServiceTest
 		UserTestUtil.setUser(omniadminUser);
 
 		_batchEngineExportTaskService.getBatchEngineExportTask(
-			_batchEngineExportTask1.getBatchEngineExportTaskId());
+			batchEngineExportTask.getBatchEngineExportTaskId());
 	}
 
 	@Test
 	public void testGetBatchEngineExportTaskByExternalReferenceCode()
 		throws Exception {
 
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
+		BatchEngineExportTask batchEngineExportTask = _addBatchEngineExportTask(
 			company.getCompanyId(), user);
 
 		UserTestUtil.setUser(companyAdminUser);
 
 		_batchEngineExportTaskService.
 			getBatchEngineExportTaskByExternalReferenceCode(
-				_batchEngineExportTask1.getExternalReferenceCode(),
+				batchEngineExportTask.getExternalReferenceCode(),
 				company.getCompanyId());
 
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
+		batchEngineExportTask = _addBatchEngineExportTask(
 			company.getCompanyId(), companyAdminUser);
 
 		UserTestUtil.setUser(user);
@@ -155,7 +153,7 @@ public class BatchEngineExportTaskServiceTest
 		try {
 			_batchEngineExportTaskService.
 				getBatchEngineExportTaskByExternalReferenceCode(
-					_batchEngineExportTask1.getExternalReferenceCode(),
+					batchEngineExportTask.getExternalReferenceCode(),
 					company.getCompanyId());
 
 			Assert.fail();
@@ -167,27 +165,30 @@ public class BatchEngineExportTaskServiceTest
 
 	@Test
 	public void testGetBatchEngineExportTasks() throws Exception {
-		_batchEngineExportTask1 = _addBatchEngineExportTask(
+		UserTestUtil.setUser(user);
+
+		int batchEngineExportTasksCount =
+			_batchEngineExportTaskService.getBatchEngineExportTasksCount(
+				company.getCompanyId());
+
+		BatchEngineExportTask batchEngineExportTask = _addBatchEngineExportTask(
 			company.getCompanyId(), user);
 
-		_batchEngineExportTask2 = _addBatchEngineExportTask(
-			company.getCompanyId(), omniadminUser);
-
-		UserTestUtil.setUser(user);
+		_addBatchEngineExportTask(company.getCompanyId(), omniadminUser);
 
 		List<BatchEngineExportTask> batchEngineExportTasks =
 			_batchEngineExportTaskService.getBatchEngineExportTasks(
 				company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
-			batchEngineExportTasks.toString(), 1,
+			batchEngineExportTasks.toString(), batchEngineExportTasksCount + 1,
 			batchEngineExportTasks.size());
 
 		BatchEngineExportTask actualBatchEngineExportTask =
-			batchEngineExportTasks.get(0);
+			batchEngineExportTasks.get(batchEngineExportTasksCount);
 
 		Assert.assertEquals(
-			_batchEngineExportTask1.getBatchEngineExportTaskId(),
+			batchEngineExportTask.getBatchEngineExportTaskId(),
 			actualBatchEngineExportTask.getBatchEngineExportTaskId());
 	}
 
@@ -205,12 +206,6 @@ public class BatchEngineExportTaskServiceTest
 			).build(),
 			null);
 	}
-
-	@DeleteAfterTestRun
-	private BatchEngineExportTask _batchEngineExportTask1;
-
-	@DeleteAfterTestRun
-	private BatchEngineExportTask _batchEngineExportTask2;
 
 	@Inject
 	private BatchEngineExportTaskLocalService

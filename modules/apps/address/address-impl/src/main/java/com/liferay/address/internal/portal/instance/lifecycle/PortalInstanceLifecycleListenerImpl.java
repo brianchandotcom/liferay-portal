@@ -6,6 +6,7 @@
 package com.liferay.address.internal.portal.instance.lifecycle;
 
 import com.liferay.address.internal.util.CompanyCountriesUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
@@ -33,10 +34,13 @@ public class PortalInstanceLifecycleListenerImpl
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		CompanyCountriesUtil.populateCompanyCountries(
-			company, _countryLocalService,
+			company, _counterLocalService, _countryLocalService,
 			_currentConnection.getConnection(
 				InfrastructureUtil.getDataSource()));
 	}
+
+	@Reference
+	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private CountryLocalService _countryLocalService;

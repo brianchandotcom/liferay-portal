@@ -312,11 +312,22 @@ public class BatchEngineImportTaskExecutorTest
 
 		String content = sb.toString();
 
-		_importBlogPostings(
-			BatchEngineTaskOperation.CREATE,
-			_compressContent(content.getBytes(StandardCharsets.UTF_8), "CSV"),
-			"CSV", null,
-			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_CONTINUE);
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal.strategy." +
+					"OnErrorContinueBatchEngineImportStrategy",
+				LoggerTestUtil.ERROR);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
+
+			_importBlogPostings(
+				BatchEngineTaskOperation.CREATE,
+				_compressContent(
+					content.getBytes(StandardCharsets.UTF_8), "CSV"),
+				"CSV", null,
+				BatchEngineImportTaskConstants.
+					IMPORT_STRATEGY_ON_ERROR_CONTINUE);
+		}
 
 		_assertInvalidFileImportWithOnErrorContinueStrategy(
 			Arrays.asList(
@@ -567,18 +578,24 @@ public class BatchEngineImportTaskExecutorTest
 			)
 		).toString();
 
-		_batchEngineImportTask =
-			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, TestPropsValues.getCompanyId(), user.getUserId(),
-				_BATCH_SIZE, null,
-				"com.liferay.headless.admin.user.dto.v1_0.Account",
-				_compressContent(json.getBytes(), "JSON"), "JSON",
-				BatchEngineTaskExecuteStatus.INITIAL.name(), null,
-				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
-				BatchEngineTaskOperation.CREATE.toString(), new HashMap<>(),
-				null);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
 
-		_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
+			_batchEngineImportTask =
+				_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+					null, TestPropsValues.getCompanyId(), user.getUserId(),
+					_BATCH_SIZE, null,
+					"com.liferay.headless.admin.user.dto.v1_0.Account",
+					_compressContent(json.getBytes(), "JSON"), "JSON",
+					BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+					BatchEngineImportTaskConstants.
+						IMPORT_STRATEGY_ON_ERROR_FAIL,
+					BatchEngineTaskOperation.CREATE.toString(), new HashMap<>(),
+					null);
+
+			_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
+		}
 
 		Assert.assertEquals(
 			BatchEngineTaskExecuteStatus.FAILED.toString(),

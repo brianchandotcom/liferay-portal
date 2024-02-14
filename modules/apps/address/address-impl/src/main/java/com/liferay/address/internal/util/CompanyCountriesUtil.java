@@ -5,7 +5,7 @@
 
 package com.liferay.address.internal.util;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,7 +44,8 @@ import java.util.Map;
 public class CompanyCountriesUtil {
 
 	public static void addCountry(
-			Company company, JSONObject countryJSONObject,
+			Company company, CounterLocalService counterLocalService,
+			JSONObject countryJSONObject,
 			CountryLocalService countryLocalService, Connection connection)
 		throws Exception {
 
@@ -78,7 +79,7 @@ public class CompanyCountriesUtil {
 
 			countryLocalService.updateCountryLocalizations(country, titleMap);
 
-			processCountryRegions(country, connection);
+			processCountryRegions(country, connection, counterLocalService);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -99,12 +100,12 @@ public class CompanyCountriesUtil {
 	}
 
 	public static void populateCompanyCountries(
-			Company company, CountryLocalService countryLocalService,
-			Connection connection)
+			Company company, CounterLocalService counterLocalService,
+			CountryLocalService countryLocalService, Connection connection)
 		throws Exception {
 
-		updateRegionCounter(connection);
-		updateRegionLocalizationCounter(connection);
+		updateRegionCounter(connection, counterLocalService);
+		updateRegionLocalizationCounter(connection, counterLocalService);
 
 		int count = countryLocalService.getCompanyCountriesCount(
 			company.getCompanyId());
@@ -134,8 +135,8 @@ public class CompanyCountriesUtil {
 
 			try {
 				addCountry(
-					company, countryJSONObject, countryLocalService,
-					connection);
+					company, counterLocalService, countryJSONObject,
+					countryLocalService, connection);
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -144,7 +145,8 @@ public class CompanyCountriesUtil {
 	}
 
 	public static void processCountryRegions(
-			Country country, Connection connection)
+			Country country, Connection connection,
+			CounterLocalService counterLocalService)
 		throws Exception {
 
 		String a2 = country.getA2();
@@ -187,7 +189,7 @@ public class CompanyCountriesUtil {
 			for (int i = 0; i < regionsJSONArray.length(); i++) {
 				JSONObject regionJSONObject = regionsJSONArray.getJSONObject(i);
 
-				long regionId = CounterLocalServiceUtil.increment(
+				long regionId = counterLocalService.increment(
 					Region.class.getName());
 
 				_addRegionBatch(
@@ -208,6 +210,8 @@ public class CompanyCountriesUtil {
 							regionLocalizationPreparedStatement,
 							country.getCompanyId(),
 							LanguageUtil.getLanguageId(locale), regionId,
+							counterLocalService.increment(
+								RegionLocalization.class.getName()),
 							regionJSONObject.getString("name"));
 					}
 				}
@@ -216,6 +220,8 @@ public class CompanyCountriesUtil {
 						_addRegionLocalizationBatch(
 							regionLocalizationPreparedStatement,
 							country.getCompanyId(), key, regionId,
+							counterLocalService.increment(
+								RegionLocalization.class.getName()),
 							localizationsJSONObject.getString(key));
 					}
 				}
@@ -229,31 +235,67 @@ public class CompanyCountriesUtil {
 		}
 	}
 
-	public static void updateRegionCounter(Connection connection)
+	public static void updateRegionCounter(
+			Connection connection, CounterLocalService counterLocalService)
 		throws Exception {
 
 		try (Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(
-				"select max(regionId) from Region")) {
+			ResultSet resultSet1 = statement.executeQuery(
+				StringBundler.concat(
+					"select currentId from Counter where name = '",
+					Region.class.getName(), "'"))) {
 
-			if (resultSet.next()) {
-				CounterLocalServiceUtil.increment(
-					Region.class.getName(), (int)resultSet.getLong(1));
+			long counter = 0;
+
+			if (resultSet1.next()) {
+				counter = resultSet1.getLong("currentId");
+			}
+
+			try (ResultSet resultSet2 = statement.executeQuery(
+					"select max(regionId) from Region")) {
+
+				if (resultSet2.next()) {
+					long increment = Math.max(
+						0, resultSet2.getLong(1) - counter);
+
+					if (increment > 0) {
+						counterLocalService.increment(
+							Region.class.getName(), (int)increment);
+					}
+				}
 			}
 		}
 	}
 
-	public static void updateRegionLocalizationCounter(Connection connection)
+	public static void updateRegionLocalizationCounter(
+			Connection connection, CounterLocalService counterLocalService)
 		throws Exception {
 
 		try (Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(
-				"select max(regionLocalizationId) from RegionLocalization")) {
+			ResultSet resultSet1 = statement.executeQuery(
+				StringBundler.concat(
+					"select currentId from Counter where name = '",
+					RegionLocalization.class.getName(), "'"))) {
 
-			if (resultSet.next()) {
-				CounterLocalServiceUtil.increment(
-					RegionLocalization.class.getName(),
-					(int)resultSet.getLong(1));
+			long counter = 0;
+
+			if (resultSet1.next()) {
+				counter = resultSet1.getLong("currentId");
+			}
+
+			try (ResultSet resultSet2 = statement.executeQuery(
+					"select max(regionLocalizationId) from " +
+						"RegionLocalization")) {
+
+				if (resultSet2.next()) {
+					long increment = Math.max(
+						0, resultSet2.getLong(1) - counter);
+
+					if (increment > 0) {
+						counterLocalService.increment(
+							RegionLocalization.class.getName(), (int)increment);
+					}
+				}
 			}
 		}
 	}
@@ -279,13 +321,11 @@ public class CompanyCountriesUtil {
 
 	private static void _addRegionLocalizationBatch(
 			PreparedStatement preparedStatement, long companyId,
-			String languageId, long regionId, String title)
+			String languageId, long regionId, long regionLocalizationId,
+			String title)
 		throws SQLException {
 
-		preparedStatement.setLong(
-			1,
-			CounterLocalServiceUtil.increment(
-				RegionLocalization.class.getName()));
+		preparedStatement.setLong(1, regionLocalizationId);
 		preparedStatement.setLong(2, companyId);
 		preparedStatement.setLong(3, regionId);
 		preparedStatement.setString(4, languageId);

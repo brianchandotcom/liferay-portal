@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -312,6 +313,14 @@ public class SitemapManagerImpl implements SitemapManager {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			groupId, privateLayout);
 
+		List<LayoutSet> layoutSets = ListUtil.fromArray(layoutSet);
+
+		if (Validator.isNull(layoutUuid)) {
+			layoutSets.addAll(
+				_getCompanySitemapGroupLayoutSets(
+					groupId, privateLayout, themeDisplay));
+		}
+
 		for (SitemapURLProvider sitemapURLProvider :
 				_getSitemapURLProviders()) {
 
@@ -324,8 +333,10 @@ public class SitemapManagerImpl implements SitemapManager {
 			}
 
 			if (Validator.isNull(layoutUuid)) {
-				sitemapURLProvider.visitLayoutSet(
-					rootElement, layoutSet, themeDisplay);
+				for (LayoutSet curLayoutSet : layoutSets) {
+					sitemapURLProvider.visitLayoutSet(
+						rootElement, curLayoutSet, themeDisplay);
+				}
 			}
 			else {
 				sitemapURLProvider.visitLayout(

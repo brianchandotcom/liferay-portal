@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -52,6 +53,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -228,7 +230,7 @@ public class SitemapManagerImpl implements SitemapManager {
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		if (!group.isGuest()) {
+		if (!group.isGuest() || !_isCompanyVirtualHostname(themeDisplay)) {
 			return Collections.emptyList();
 		}
 
@@ -394,6 +396,22 @@ public class SitemapManagerImpl implements SitemapManager {
 		int size = _getSize(rootElement);
 
 		rootElement.addAttribute("size", String.valueOf(size));
+	}
+
+	private boolean _isCompanyVirtualHostname(ThemeDisplay themeDisplay) {
+		Company company = themeDisplay.getCompany();
+
+		String virtualHostname = company.getVirtualHostname();
+
+		if (Validator.isNull(virtualHostname)) {
+			virtualHostname = "localhost";
+		}
+
+		if (Objects.equals(virtualHostname, themeDisplay.getServerName())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _removeEntriesAndSize(Element rootElement) {

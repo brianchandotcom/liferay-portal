@@ -121,7 +121,6 @@ public class APIPropertyRelevantObjectEntryModelListener
 			}
 
 			String objectFieldERC = (String)values.get("objectFieldERC");
-
 			String objectRelationshipNames = (String)values.get(
 				"objectRelationshipNames");
 
@@ -136,17 +135,17 @@ public class APIPropertyRelevantObjectEntryModelListener
 				if (!Validator.isBlank(objectFieldERC)) {
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"A record API property can not an Object Field ERC " +
-							"value",
-						"a-record-api-property-can-not-have-an-object-field-" +
+						"A record API property cannot have an object field " +
+							"ERC value",
+						"a-record-api-property-cannot-have-an-object-field-" +
 							"erc-value");
 				}
 
 				if (!Validator.isBlank(objectRelationshipNames)) {
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"A record API property can not have an Object " +
-							"Relationship Names value",
+						"A record API property cannot have an object " +
+							"relationship names value",
 						"a-record-api-property-can-not-have-an-object-" +
 							"relationship-names-value");
 				}
@@ -155,9 +154,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 				if (Validator.isNull(objectFieldERC)) {
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"A field API property cannot have empty Object Field " +
-							"ERC value",
-						"a-field-api-property-cannot-have-empty-object-field-" +
+						"A field API property cannot have an empty object " +
+							"field ERC value",
+						"a-field-api-property-cannot-have-an-empty-object-field-" +
 							"erc-value");
 				}
 

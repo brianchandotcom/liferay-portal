@@ -38,16 +38,17 @@ public class BatchEngineImportTaskServiceTest
 	public void testAddBatchEngineImportTask() throws Exception {
 		UserTestUtil.setUser(user);
 
+		try {
+			_createBatchEngineImportTask(otherCompany.getCompanyId(), user);
+
+			Assert.fail();
+		}
+		catch (PrincipalException principalException) {
+			Assert.assertNotNull(principalException);
+		}
+
 		_batchEngineImportTask1 = _createBatchEngineImportTask(
 			company.getCompanyId(), user);
-	}
-
-	@Test(expected = PrincipalException.class)
-	public void testAddBatchEngineImportTaskOtherCompany() throws Exception {
-		UserTestUtil.setUser(user);
-
-		_batchEngineImportTask1 = _createBatchEngineImportTask(
-			otherCompany.getCompanyId(), user);
 	}
 
 	@Test

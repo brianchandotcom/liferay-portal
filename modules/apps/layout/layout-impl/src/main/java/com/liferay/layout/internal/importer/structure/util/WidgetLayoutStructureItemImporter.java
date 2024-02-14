@@ -37,16 +37,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemImporter.class)
 public class WidgetLayoutStructureItemImporter
 	extends BaseLayoutStructureItemImporter
 	implements LayoutStructureItemImporter {
+
+	public WidgetLayoutStructureItemImporter(
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
+		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
+		PortletConfigurationImporterHelper portletConfigurationImporterHelper,
+		PortletLocalService portletLocalService,
+		PortletPermissionsImporterHelper portletPermissionsImporterHelper,
+		PortletPreferencesLocalService portletPreferencesLocalService,
+		SegmentsExperienceLocalService segmentsExperienceLocalService) {
+
+		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
+		_fragmentEntryProcessorRegistry = fragmentEntryProcessorRegistry;
+		_portletConfigurationImporterHelper =
+			portletConfigurationImporterHelper;
+		_portletLocalService = portletLocalService;
+		_portletPermissionsImporterHelper = portletPermissionsImporterHelper;
+		_portletPreferencesLocalService = portletPreferencesLocalService;
+		_segmentsExperienceLocalService = segmentsExperienceLocalService;
+	}
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
@@ -241,26 +256,17 @@ public class WidgetLayoutStructureItemImporter
 		return StringPool.BLANK;
 	}
 
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
-	@Reference
-	private PortletConfigurationImporterHelper
+	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private final FragmentEntryProcessorRegistry
+		_fragmentEntryProcessorRegistry;
+	private final PortletConfigurationImporterHelper
 		_portletConfigurationImporterHelper;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPermissionsImporterHelper _portletPermissionsImporterHelper;
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+	private final PortletLocalService _portletLocalService;
+	private final PortletPermissionsImporterHelper
+		_portletPermissionsImporterHelper;
+	private final PortletPreferencesLocalService
+		_portletPreferencesLocalService;
+	private final SegmentsExperienceLocalService
+		_segmentsExperienceLocalService;
 
 }

@@ -6,8 +6,13 @@
 package com.liferay.layout.internal.importer;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 
 /**
  * @author Lourdes Fernández Besada
@@ -16,7 +21,13 @@ public class LayoutStructureItemImporterContext {
 
 	public LayoutStructureItemImporterContext(
 		Layout layout, double pageDefinitionVersion, String parentItemId,
-		int position, boolean preserveItemIds, long segmentsExperienceId) {
+		int position, boolean preserveItemIds, long segmentsExperienceId,
+		GroupLocalService groupLocalService,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
+		LayoutLocalService layoutLocalService,
+		LayoutPageTemplateEntryLocalService
+			layoutPageTemplateEntryLocalService) {
 
 		_layout = layout;
 		_pageDefinitionVersion = pageDefinitionVersion;
@@ -24,6 +35,24 @@ public class LayoutStructureItemImporterContext {
 		_position = position;
 		_preserveItemIds = preserveItemIds;
 		_segmentsExperienceId = segmentsExperienceId;
+		_groupLocalService = groupLocalService;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
+		_layoutLocalService = layoutLocalService;
+		_layoutPageTemplateEntryLocalService =
+			layoutPageTemplateEntryLocalService;
+	}
+
+	public GroupLocalService getGroupLocalService() {
+		return _groupLocalService;
+	}
+
+	public InfoItemServiceRegistry getInfoItemServiceRegistry() {
+		return _infoItemServiceRegistry;
+	}
+
+	public InfoSearchClassMapperRegistry getInfoSearchClassMapperRegistry() {
+		return _infoSearchClassMapperRegistry;
 	}
 
 	public String getItemId(PageElement pageElement) {
@@ -36,6 +65,16 @@ public class LayoutStructureItemImporterContext {
 
 	public Layout getLayout() {
 		return _layout;
+	}
+
+	public LayoutLocalService getLayoutLocalService() {
+		return _layoutLocalService;
+	}
+
+	public LayoutPageTemplateEntryLocalService
+		getLayoutPageTemplateEntryLocalService() {
+
+		return _layoutPageTemplateEntryLocalService;
 	}
 
 	public double getPageDefinitionVersion() {
@@ -58,7 +97,13 @@ public class LayoutStructureItemImporterContext {
 		return _preserveItemIds;
 	}
 
+	private final GroupLocalService _groupLocalService;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 	private final Layout _layout;
+	private final LayoutLocalService _layoutLocalService;
+	private final LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 	private final double _pageDefinitionVersion;
 	private final String _parentItemId;
 	private final int _position;

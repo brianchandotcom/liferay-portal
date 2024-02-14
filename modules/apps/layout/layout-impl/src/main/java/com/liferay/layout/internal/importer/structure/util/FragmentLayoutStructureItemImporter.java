@@ -37,10 +37,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsExperience;
@@ -78,16 +79,45 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemImporter.class)
 public class FragmentLayoutStructureItemImporter
 	extends BaseLayoutStructureItemImporter
 	implements LayoutStructureItemImporter {
+
+	public FragmentLayoutStructureItemImporter(
+		CompanyLocalService companyLocalService,
+		FragmentCollectionContributorRegistry
+			fragmentCollectionContributorRegistry,
+		FragmentCollectionService fragmentCollectionService,
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
+		FragmentEntryLocalService fragmentEntryLocalService,
+		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
+		FragmentEntryValidator fragmentEntryValidator,
+		FragmentRendererRegistry fragmentRendererRegistry,
+		PortletConfigurationImporterHelper portletConfigurationImporterHelper,
+		PortletFileRepository portletFileRepository,
+		PortletLocalService portletLocalService,
+		PortletPermissionsImporterHelper portletPermissionsImporterHelper,
+		SegmentsExperienceLocalService segmentsExperienceLocalService) {
+
+		_companyLocalService = companyLocalService;
+		_fragmentCollectionContributorRegistry =
+			fragmentCollectionContributorRegistry;
+		_fragmentCollectionService = fragmentCollectionService;
+		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
+		_fragmentEntryLocalService = fragmentEntryLocalService;
+		_fragmentEntryProcessorRegistry = fragmentEntryProcessorRegistry;
+		_fragmentEntryValidator = fragmentEntryValidator;
+		_fragmentRendererRegistry = fragmentRendererRegistry;
+		_portletConfigurationImporterHelper =
+			portletConfigurationImporterHelper;
+		_portletFileRepository = portletFileRepository;
+		_portletLocalService = portletLocalService;
+		_portletPermissionsImporterHelper = portletPermissionsImporterHelper;
+		_segmentsExperienceLocalService = segmentsExperienceLocalService;
+	}
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
@@ -257,7 +287,10 @@ public class FragmentLayoutStructureItemImporter
 		if (groupKey != null) {
 			useGlobalAsFallback = false;
 
-			Group fragmentEntryGroup = _groupLocalService.fetchGroup(
+			GroupLocalService groupLocalService =
+				layoutStructureItemImporterContext.getGroupLocalService();
+
+			Group fragmentEntryGroup = groupLocalService.fetchGroup(
 				layout.getCompanyId(), groupKey);
 
 			Company company = _companyLocalService.fetchCompany(
@@ -308,7 +341,7 @@ public class FragmentLayoutStructureItemImporter
 		int type = FragmentConstants.TYPE_COMPONENT;
 
 		JSONObject defaultEditableValuesJSONObject =
-			_jsonFactory.createJSONObject();
+			JSONFactoryUtil.createJSONObject();
 
 		if (fragmentEntry != null) {
 			js = fragmentEntry.getJs();
@@ -319,7 +352,7 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		JSONObject fragmentEntryProcessorValuesJSONObject =
-			_jsonFactory.createJSONObject();
+			JSONFactoryUtil.createJSONObject();
 
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			_toFreeMarkerFragmentEntryProcessorJSONObject(
@@ -417,7 +450,7 @@ public class FragmentLayoutStructureItemImporter
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
 		Map<String, Object> map) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (map == null) {
 			return jsonObject;
@@ -467,7 +500,7 @@ public class FragmentLayoutStructureItemImporter
 	private JSONObject _createFragmentConfigJSONObject(
 		Map<String, Object> fragmentImageMap) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (fragmentImageMap == null) {
 			return jsonObject;
@@ -494,7 +527,7 @@ public class FragmentLayoutStructureItemImporter
 		}
 
 		JSONObject localizedDescriptionJSONObject =
-			_jsonFactory.createJSONObject();
+			JSONFactoryUtil.createJSONObject();
 
 		for (Map.Entry<String, Object> entry :
 				localizedDescriptionMap.entrySet()) {
@@ -512,7 +545,7 @@ public class FragmentLayoutStructureItemImporter
 		Map<String, Object> fragmentLinkMap,
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (fragmentLinkMap == null) {
 			return jsonObject;
@@ -565,7 +598,7 @@ public class FragmentLayoutStructureItemImporter
 		Map<String, Object> fragmentLinkValueMap,
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (fragmentLinkValueMap == null) {
 			return jsonObject;
@@ -634,7 +667,7 @@ public class FragmentLayoutStructureItemImporter
 	private JSONObject _createImageJSONObject(
 		Map<String, Object> classPKReferencesMap) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (classPKReferencesMap == null) {
 			return jsonObject;
@@ -684,14 +717,14 @@ public class FragmentLayoutStructureItemImporter
 		throws Exception {
 
 		if (jsonObject1 == null) {
-			return _jsonFactory.createJSONObject(jsonObject2.toString());
+			return JSONFactoryUtil.createJSONObject(jsonObject2.toString());
 		}
 
 		if (jsonObject2 == null) {
-			return _jsonFactory.createJSONObject(jsonObject1.toString());
+			return JSONFactoryUtil.createJSONObject(jsonObject1.toString());
 		}
 
-		JSONObject jsonObject3 = _jsonFactory.createJSONObject(
+		JSONObject jsonObject3 = JSONFactoryUtil.createJSONObject(
 			jsonObject1.toString());
 
 		Iterator<String> iterator = jsonObject2.keys();
@@ -729,7 +762,7 @@ public class FragmentLayoutStructureItemImporter
 
 		Map<String, String> configurationTypes = new HashMap<>();
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(configuration);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(configuration);
 
 		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
 
@@ -844,10 +877,10 @@ public class FragmentLayoutStructureItemImporter
 			locale = serviceContext.getLocale();
 		}
 		else {
-			locale = portal.getSiteDefaultLocale(groupId);
+			locale = PortalUtil.getSiteDefaultLocale(groupId);
 		}
 
-		return _language.format(
+		return LanguageUtil.format(
 			locale, "fragment-with-key-x-was-ignored-because-it-does-not-exist",
 			new String[] {fragmentKey});
 	}
@@ -868,11 +901,11 @@ public class FragmentLayoutStructureItemImporter
 			return;
 		}
 
-		JSONObject configJSONObject = _jsonFactory.createJSONObject();
+		JSONObject configJSONObject = JSONFactoryUtil.createJSONObject();
 
 		fragmentFieldJSONObject.put("config", configJSONObject);
 
-		JSONObject mappedActionJSONObject = _jsonFactory.createJSONObject();
+		JSONObject mappedActionJSONObject = JSONFactoryUtil.createJSONObject();
 
 		configJSONObject.put("mappedAction", mappedActionJSONObject);
 
@@ -897,7 +930,7 @@ public class FragmentLayoutStructureItemImporter
 			return;
 		}
 
-		JSONObject resultJSONObject = _jsonFactory.createJSONObject();
+		JSONObject resultJSONObject = JSONFactoryUtil.createJSONObject();
 
 		configJSONObject.put(resultType, resultJSONObject);
 
@@ -975,7 +1008,7 @@ public class FragmentLayoutStructureItemImporter
 				return;
 			}
 
-			JSONObject textJSONObject = _jsonFactory.createJSONObject();
+			JSONObject textJSONObject = JSONFactoryUtil.createJSONObject();
 
 			resultJSONObject.put("text", textJSONObject);
 
@@ -1031,7 +1064,7 @@ public class FragmentLayoutStructureItemImporter
 				return;
 			}
 
-			JSONObject urlJSONObject = _jsonFactory.createJSONObject();
+			JSONObject urlJSONObject = JSONFactoryUtil.createJSONObject();
 
 			resultJSONObject.put("url", urlJSONObject);
 
@@ -1124,11 +1157,11 @@ public class FragmentLayoutStructureItemImporter
 		List<Object> fragmentFields) {
 
 		if (fragmentFields == null) {
-			return _jsonFactory.createJSONObject();
+			return JSONFactoryUtil.createJSONObject();
 		}
 
 		JSONObject backgroundImageFragmentEntryProcessorValuesJSONObject =
-			_jsonFactory.createJSONObject();
+			JSONFactoryUtil.createJSONObject();
 
 		for (Object fragmentField : fragmentFields) {
 			Map<String, Object> fragmentFieldMap =
@@ -1179,7 +1212,7 @@ public class FragmentLayoutStructureItemImporter
 		Map<String, String> editableTypes, List<Object> fragmentFields,
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (fragmentFields == null) {
 			return jsonObject;
@@ -1187,7 +1220,7 @@ public class FragmentLayoutStructureItemImporter
 
 		for (Object fragmentField : fragmentFields) {
 			JSONObject fragmentFieldJSONObject =
-				_jsonFactory.createJSONObject();
+				JSONFactoryUtil.createJSONObject();
 
 			Map<String, Object> fragmentFieldMap =
 				(Map<String, Object>)fragmentField;
@@ -1230,7 +1263,8 @@ public class FragmentLayoutStructureItemImporter
 				Map<String, Object> fragmentImageMap =
 					(Map<String, Object>)valueMap.get("fragmentImage");
 
-				baseFragmentFieldJSONObject = _jsonFactory.createJSONObject();
+				baseFragmentFieldJSONObject =
+					JSONFactoryUtil.createJSONObject();
 
 				if (fragmentImageMap != null) {
 					if (fragmentImageMap.containsKey("url")) {
@@ -1259,7 +1293,7 @@ public class FragmentLayoutStructureItemImporter
 									"fragmentImageConfiguration");
 
 						JSONObject amImageConfigurationJSONObject =
-							_jsonFactory.createJSONObject();
+							JSONFactoryUtil.createJSONObject();
 
 						for (Map.Entry<String, String> entry :
 								fragmentImageConfigurationMap.entrySet()) {
@@ -1320,7 +1354,7 @@ public class FragmentLayoutStructureItemImporter
 		Map<String, String> configurationTypes,
 		Map<String, Object> fragmentConfigMap) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (fragmentConfigMap == null) {
 			return jsonObject;
@@ -1359,54 +1393,23 @@ public class FragmentLayoutStructureItemImporter
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private FragmentCollectionContributorRegistry
+	private final CompanyLocalService _companyLocalService;
+	private final FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
-
-	@Reference
-	private FragmentCollectionService _fragmentCollectionService;
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Reference
-	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
-	@Reference
-	private FragmentEntryValidator _fragmentEntryValidator;
-
-	@Reference
-	private FragmentRendererRegistry _fragmentRendererRegistry;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private PortletConfigurationImporterHelper
+	private final FragmentCollectionService _fragmentCollectionService;
+	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+	private final FragmentEntryLocalService _fragmentEntryLocalService;
+	private final FragmentEntryProcessorRegistry
+		_fragmentEntryProcessorRegistry;
+	private final FragmentEntryValidator _fragmentEntryValidator;
+	private final FragmentRendererRegistry _fragmentRendererRegistry;
+	private final PortletConfigurationImporterHelper
 		_portletConfigurationImporterHelper;
-
-	@Reference
-	private PortletFileRepository _portletFileRepository;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPermissionsImporterHelper _portletPermissionsImporterHelper;
-
-	@Reference
-	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+	private final PortletFileRepository _portletFileRepository;
+	private final PortletLocalService _portletLocalService;
+	private final PortletPermissionsImporterHelper
+		_portletPermissionsImporterHelper;
+	private final SegmentsExperienceLocalService
+		_segmentsExperienceLocalService;
 
 }

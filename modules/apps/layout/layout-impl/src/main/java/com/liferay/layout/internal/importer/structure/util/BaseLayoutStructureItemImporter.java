@@ -32,14 +32,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -80,6 +78,9 @@ public abstract class BaseLayoutStructureItemImporter {
 		long groupId = currentLayout.getGroupId();
 
 		if (Validator.isNotNull(siteKey)) {
+			GroupLocalService groupLocalService =
+				layoutStructureItemImporterContext.getGroupLocalService();
+
 			Group group = groupLocalService.fetchGroup(
 				currentLayout.getCompanyId(), siteKey);
 
@@ -96,6 +97,9 @@ public abstract class BaseLayoutStructureItemImporter {
 
 			groupId = group.getGroupId();
 		}
+
+		LayoutLocalService layoutLocalService =
+			layoutStructureItemImporterContext.getLayoutLocalService();
 
 		Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
 			groupId, privatePage, friendlyURL);
@@ -192,6 +196,9 @@ public abstract class BaseLayoutStructureItemImporter {
 
 			String fieldValue = (String)itemReferenceMap.get("fieldValue");
 
+			LayoutLocalService layoutLocalService =
+				layoutStructureItemImporterContext.getLayoutLocalService();
+
 			Layout layout = layoutLocalService.fetchLayout(
 				GetterUtil.getLong(fieldValue));
 
@@ -213,7 +220,7 @@ public abstract class BaseLayoutStructureItemImporter {
 		String classNameId = null;
 
 		try {
-			classNameId = String.valueOf(portal.getClassNameId(className));
+			classNameId = String.valueOf(PortalUtil.getClassNameId(className));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -466,25 +473,6 @@ public abstract class BaseLayoutStructureItemImporter {
 		);
 	}
 
-	@Reference
-	protected GroupLocalService groupLocalService;
-
-	@Reference
-	protected InfoItemServiceRegistry infoItemServiceRegistry;
-
-	@Reference
-	protected InfoSearchClassMapperRegistry infoSearchClassMapperRegistry;
-
-	@Reference
-	protected LayoutLocalService layoutLocalService;
-
-	@Reference
-	protected LayoutPageTemplateEntryLocalService
-		layoutPageTemplateEntryLocalService;
-
-	@Reference
-	protected Portal portal;
-
 	private JSONObject _getLayoutJSONObject(
 		String fieldKey, String fieldValue, Layout layout) {
 
@@ -527,12 +515,20 @@ public abstract class BaseLayoutStructureItemImporter {
 		}
 
 		if (layout.isDraftLayout()) {
+			LayoutLocalService layoutLocalService =
+				layoutStructureItemImporterContext.getLayoutLocalService();
+
 			layout = layoutLocalService.fetchLayout(layout.getClassPK());
 		}
 
 		if (layout == null) {
 			return false;
 		}
+
+		LayoutPageTemplateEntryLocalService
+			layoutPageTemplateEntryLocalService =
+				layoutStructureItemImporterContext.
+					getLayoutPageTemplateEntryLocalService();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			layoutPageTemplateEntryLocalService.
@@ -542,11 +538,18 @@ public abstract class BaseLayoutStructureItemImporter {
 			return false;
 		}
 
+		InfoItemServiceRegistry infoItemServiceRegistry =
+			layoutStructureItemImporterContext.getInfoItemServiceRegistry();
+
+		InfoSearchClassMapperRegistry infoSearchClassMapperRegistry =
+			layoutStructureItemImporterContext.
+				getInfoSearchClassMapperRegistry();
+
 		InfoItemFormProvider<Object> infoItemFormProvider =
 			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class,
 				infoSearchClassMapperRegistry.getClassName(
-					portal.getClassName(
+					PortalUtil.getClassName(
 						layoutPageTemplateEntry.getClassNameId())));
 
 		if (infoItemFormProvider == null) {

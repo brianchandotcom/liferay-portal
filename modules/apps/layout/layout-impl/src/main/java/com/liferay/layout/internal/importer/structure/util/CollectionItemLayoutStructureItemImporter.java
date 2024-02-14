@@ -14,12 +14,9 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemImporter.class)
 public class CollectionItemLayoutStructureItemImporter
 	implements LayoutStructureItemImporter {
 

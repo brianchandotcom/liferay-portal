@@ -17,12 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(service = LayoutStructureItemImporter.class)
 public class ColumnLayoutStructureItemImporter
 	extends BaseLayoutStructureItemImporter
 	implements LayoutStructureItemImporter {

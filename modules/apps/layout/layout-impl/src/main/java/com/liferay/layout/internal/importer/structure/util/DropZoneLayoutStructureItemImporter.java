@@ -29,16 +29,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rubén Pulido
  */
-@Component(service = LayoutStructureItemImporter.class)
 public class DropZoneLayoutStructureItemImporter
 	extends BaseLayoutStructureItemImporter
 	implements LayoutStructureItemImporter {
+
+	public DropZoneLayoutStructureItemImporter(
+		FragmentCollectionContributorRegistry
+			fragmentCollectionContributorRegistry,
+		FragmentCollectionLocalService fragmentCollectionLocalService,
+		FragmentEntryLocalService fragmentEntryLocalService,
+		FragmentRendererRegistry fragmentRendererRegistry) {
+
+		_fragmentCollectionContributorRegistry =
+			fragmentCollectionContributorRegistry;
+		_fragmentCollectionLocalService = fragmentCollectionLocalService;
+		_fragmentEntryLocalService = fragmentEntryLocalService;
+		_fragmentRendererRegistry = fragmentRendererRegistry;
+	}
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
@@ -183,17 +193,11 @@ public class DropZoneLayoutStructureItemImporter
 
 	private static final String _KEY_UNALLOWED_FRAGMENTS = "unallowedFragments";
 
-	@Reference
-	private FragmentCollectionContributorRegistry
+	private final FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
-
-	@Reference
-	private FragmentCollectionLocalService _fragmentCollectionLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Reference
-	private FragmentRendererRegistry _fragmentRendererRegistry;
+	private final FragmentCollectionLocalService
+		_fragmentCollectionLocalService;
+	private final FragmentEntryLocalService _fragmentEntryLocalService;
+	private final FragmentRendererRegistry _fragmentRendererRegistry;
 
 }

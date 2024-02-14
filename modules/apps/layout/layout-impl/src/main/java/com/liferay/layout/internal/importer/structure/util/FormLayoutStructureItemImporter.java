@@ -17,11 +17,12 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -31,13 +32,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = LayoutStructureItemImporter.class)
 public class FormLayoutStructureItemImporter
 	extends BaseLayoutStructureItemImporter
 	implements LayoutStructureItemImporter {
@@ -106,7 +103,7 @@ public class FormLayoutStructureItemImporter
 			}
 			else {
 				formStyledLayoutStructureItem.setClassNameId(
-					portal.getClassNameId(
+					PortalUtil.getClassNameId(
 						(String)itemReferenceMap.get("className")));
 
 				Integer classType = (Integer)itemReferenceMap.get("classType");
@@ -220,7 +217,7 @@ public class FormLayoutStructureItemImporter
 	private JSONObject _getLocalizedValuesJSONObject(
 		String key, Map<String, Object> propertiesMap) {
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		Map<String, Object> map = (Map<String, Object>)propertiesMap.get(key);
 
@@ -336,8 +333,5 @@ public class FormLayoutStructureItemImporter
 
 		return null;
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

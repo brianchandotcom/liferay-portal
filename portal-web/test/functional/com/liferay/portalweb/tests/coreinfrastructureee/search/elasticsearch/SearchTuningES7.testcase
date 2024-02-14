@@ -616,13 +616,11 @@ definition {
 			key_assetTitle = "Article 3",
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
 
-		// Workaround LPS-107009
-
-		/*for (var assetTitle : list "Article 1,Article 2,Article 3") {
+		for (var assetTitle : list "Article 1,Article 2,Article 3") {
 			AssertElementPresent(
-			key_assetTitle = "${assetTitle}",
-			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
-		}*/
+				key_assetTitle = ${assetTitle},
+				locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+		}
 
 		Navigator.openURL();
 

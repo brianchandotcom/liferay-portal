@@ -8,10 +8,8 @@ package com.liferay.asset.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.search.AssetSearcherFactory;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.bookmarks.constants.BookmarksFolderConstants;
-import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -58,17 +56,25 @@ public class AssetSearcherClassNameIdsTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_blogsEntryLocalService.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), getServiceContext());
+
+		_bookmarksEntryLocalService.addEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), "http://www.liferay.com",
+			RandomTestUtil.randomString(), getServiceContext());
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Test
 	public void testAll() throws Exception {
 		UserTestUtil.setUser(addUser());
-
-		addBlogsEntry();
-		addBookmarksEntry();
-		JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Hits hits = search(getAssetEntryQuery(), getSearchContext());
 
@@ -78,12 +84,6 @@ public class AssetSearcherClassNameIdsTest {
 	@Test
 	public void testMultiple() throws Exception {
 		UserTestUtil.setUser(addUser());
-
-		addBlogsEntry();
-		addBookmarksEntry();
-		JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Hits hits = search(
 			getAssetEntryQuery(
@@ -98,12 +98,6 @@ public class AssetSearcherClassNameIdsTest {
 	public void testSingle() throws Exception {
 		UserTestUtil.setUser(addUser());
 
-		addBlogsEntry();
-		addBookmarksEntry();
-		JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
 		Hits hits = search(
 			getAssetEntryQuery("com.liferay.journal.model.JournalArticle"),
 			getSearchContext());
@@ -113,20 +107,6 @@ public class AssetSearcherClassNameIdsTest {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	protected BlogsEntry addBlogsEntry() throws Exception {
-		return _blogsEntryLocalService.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), getServiceContext());
-	}
-
-	protected BookmarksEntry addBookmarksEntry() throws Exception {
-		return _bookmarksEntryLocalService.addEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), "http://www.liferay.com",
-			RandomTestUtil.randomString(), getServiceContext());
-	}
 
 	protected User addUser() throws Exception {
 		User user = UserTestUtil.addUser(_group.getGroupId());

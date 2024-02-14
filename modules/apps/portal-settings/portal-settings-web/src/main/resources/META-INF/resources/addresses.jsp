@@ -100,7 +100,7 @@
 							"regionSelectVal", ParamUtil.getLong(request, "addressRegionId" + addressesIndex, address.getRegionId())
 						).build()
 					%>'
-					module="js/CountryRegionDynamicSelect"
+					module="{CountryRegionDynamicSelect} from portal-settings-web"
 				/>
 
 			<%
@@ -110,35 +110,14 @@
 			<aui:input name="addressesIndexes" type="hidden" value="<%= StringUtil.merge(addressesIndexes) %>" />
 		</aui:fieldset>
 
-		<aui:script require='<%= npmResolvedPackageName + "/js/CountryRegionDynamicSelect as CountryRegionDynamicSelect" %>'>
-			AUI().use('liferay-auto-fields', (A) => {
-				new Liferay.AutoFields({
-					contentBox: '#<portlet:namespace />addresses',
-					fieldIndexes: '<portlet:namespace />addressesIndexes',
-					namespace: '<portlet:namespace />',
-					on: {
-						clone: function (event) {
-							var guid = event.guid;
-							var row = event.row;
-
-							var dynamicSelects = row.one(
-								'select[data-componentType=dynamic_select]'
-							);
-
-							if (dynamicSelects) {
-								dynamicSelects.detach('change');
-							}
-
-							CountryRegionDynamicSelect.default({
-								countrySelect:
-									'<portlet:namespace />addressCountryId' + guid,
-								regionSelect: '<portlet:namespace />addressRegionId' + guid,
-							});
-						},
-					},
-				}).render();
-			});
-		</aui:script>
+		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"namespace", portletDisplay.getNamespace()
+				).build()
+			%>'
+			module="{main} from portal-settings-web"
+		/>
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

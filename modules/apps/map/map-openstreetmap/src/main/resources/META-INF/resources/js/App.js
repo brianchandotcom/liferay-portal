@@ -53,10 +53,5 @@ export default function App({
 		Liferay.MapBase.register(name, map, portletId);
 	};
 
-	if (Liferay.Maps.gmapsReady) {
-		createMap();
-	}
-	else {
-		Liferay.once('gmapsReady', createMap);
-	}
+	createMap();
 }

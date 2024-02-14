@@ -17,9 +17,11 @@ import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.workflow.metrics.internal.background.task.WorkflowMetricsReindexBackgroundTaskExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 
 import java.io.Serializable;
 
@@ -34,19 +36,24 @@ public class WorkflowMetricsIndexCreator {
 
 	public void createIndex(Company company) throws PortalException {
 		boolean indexCreated = _instanceWorkflowMetricsIndex.createIndex(
-			company.getCompanyId());
+			_indexNameBuilder, company.getCompanyId());
 
 		if (!indexCreated) {
 			return;
 		}
 
-		_nodeWorkflowMetricsIndex.createIndex(company.getCompanyId());
-		_processWorkflowMetricsIndex.createIndex(company.getCompanyId());
+		_nodeWorkflowMetricsIndex.createIndex(
+			_indexNameBuilder, company.getCompanyId());
+		_processWorkflowMetricsIndex.createIndex(
+			_indexNameBuilder, company.getCompanyId());
 		_slaInstanceResultWorkflowMetricsIndex.createIndex(
-			company.getCompanyId());
-		_slaTaskResultWorkflowMetricsIndex.createIndex(company.getCompanyId());
-		_taskWorkflowMetricsIndex.createIndex(company.getCompanyId());
-		_transitionWorkflowMetricsIndex.createIndex(company.getCompanyId());
+			_indexNameBuilder, company.getCompanyId());
+		_slaTaskResultWorkflowMetricsIndex.createIndex(
+			_indexNameBuilder, company.getCompanyId());
+		_taskWorkflowMetricsIndex.createIndex(
+			_indexNameBuilder, company.getCompanyId());
+		_transitionWorkflowMetricsIndex.createIndex(
+			_indexNameBuilder, company.getCompanyId());
 	}
 
 	public void reindex(Company company) {
@@ -60,7 +67,9 @@ public class WorkflowMetricsIndexCreator {
 					new CountSearchRequest();
 
 				countSearchRequest.setIndexNames(
-					_processWorkflowMetricsIndex.getIndexName(
+					WorkflowMetricsIndex.getIndexName(
+						_indexNameBuilder,
+						WorkflowMetricsIndexNameConstants.SUFFIX_PROCESS,
 						company.getCompanyId()));
 				countSearchRequest.setQuery(_queries.booleanQuery());
 
@@ -97,23 +106,31 @@ public class WorkflowMetricsIndexCreator {
 
 	public void removeIndex(Company company) throws PortalException {
 		boolean indexRemoved = _instanceWorkflowMetricsIndex.removeIndex(
-			company.getCompanyId());
+			_indexNameBuilder, company.getCompanyId());
 
 		if (!indexRemoved) {
 			return;
 		}
 
-		_nodeWorkflowMetricsIndex.removeIndex(company.getCompanyId());
-		_processWorkflowMetricsIndex.removeIndex(company.getCompanyId());
+		_nodeWorkflowMetricsIndex.removeIndex(
+			_indexNameBuilder, company.getCompanyId());
+		_processWorkflowMetricsIndex.removeIndex(
+			_indexNameBuilder, company.getCompanyId());
 		_slaInstanceResultWorkflowMetricsIndex.removeIndex(
-			company.getCompanyId());
-		_slaTaskResultWorkflowMetricsIndex.removeIndex(company.getCompanyId());
-		_taskWorkflowMetricsIndex.removeIndex(company.getCompanyId());
-		_transitionWorkflowMetricsIndex.removeIndex(company.getCompanyId());
+			_indexNameBuilder, company.getCompanyId());
+		_slaTaskResultWorkflowMetricsIndex.removeIndex(
+			_indexNameBuilder, company.getCompanyId());
+		_taskWorkflowMetricsIndex.removeIndex(
+			_indexNameBuilder, company.getCompanyId());
+		_transitionWorkflowMetricsIndex.removeIndex(
+			_indexNameBuilder, company.getCompanyId());
 	}
 
 	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
 	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;

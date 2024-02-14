@@ -12,10 +12,12 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.model.AddNodeRequest;
 import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 
 import java.util.Objects;
 
@@ -88,7 +90,9 @@ public class NodeWorkflowMetricsIndexerImpl
 
 	@Override
 	public String getIndexName(long companyId) {
-		return _nodeWorkflowMetricsIndex.getIndexName(companyId);
+		return WorkflowMetricsIndex.getIndexName(
+			_indexNameBuilder, WorkflowMetricsIndexNameConstants.SUFFIX_NODE,
+			companyId);
 	}
 
 	@Override
@@ -119,7 +123,9 @@ public class NodeWorkflowMetricsIndexerImpl
 
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new IndexDocumentRequest(
-					_taskWorkflowMetricsIndex.getIndexName(
+					WorkflowMetricsIndex.getIndexName(
+						_indexNameBuilder,
+						WorkflowMetricsIndexNameConstants.SUFFIX_TASK,
 						document.getLong("companyId")),
 					_createWorkflowMetricsTaskDocument(
 						document.getLong("companyId"),
@@ -130,7 +136,9 @@ public class NodeWorkflowMetricsIndexerImpl
 
 		bulkDocumentRequest.addBulkableDocumentRequest(
 			new IndexDocumentRequest(
-				_nodeWorkflowMetricsIndex.getIndexName(
+				WorkflowMetricsIndex.getIndexName(
+					_indexNameBuilder,
+					WorkflowMetricsIndexNameConstants.SUFFIX_NODE,
 					document.getLong("companyId")),
 				document));
 
@@ -178,6 +186,9 @@ public class NodeWorkflowMetricsIndexerImpl
 
 		return documentBuilder.build();
 	}
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=node)")
 	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;

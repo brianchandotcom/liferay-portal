@@ -35,15 +35,21 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	}
 
 	@Override
-	public boolean createIndex(long companyId) throws PortalException {
+	public boolean createIndex(
+			IndexNameBuilder indexNameBuilder, long companyId)
+		throws PortalException {
+
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
-			_hasIndex(getIndexName(companyId))) {
+			_hasIndex(
+				WorkflowMetricsIndex.getIndexName(
+					indexNameBuilder, _indexNameSuffix, companyId))) {
 
 			return false;
 		}
 
 		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-			getIndexName(companyId));
+			WorkflowMetricsIndex.getIndexName(
+				indexNameBuilder, _indexNameSuffix, companyId));
 
 		createIndexRequest.setMappings(
 			_readJSON(getIndexType() + "-mappings.json"));
@@ -60,23 +66,25 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	}
 
 	@Override
-	public boolean deleteAllDocuments(long companyId) throws PortalException {
+	public boolean deleteAllDocuments(
+			IndexNameBuilder indexNameBuilder, long companyId)
+		throws PortalException {
+
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
-			!_hasIndex(getIndexName(companyId))) {
+			!_hasIndex(
+				WorkflowMetricsIndex.getIndexName(
+					indexNameBuilder, _indexNameSuffix, companyId))) {
 
 			return false;
 		}
 
 		searchEngineAdapter.execute(
 			new DeleteByQueryDocumentRequest(
-				queries.matchAll(), getIndexName(companyId)));
+				queries.matchAll(),
+				WorkflowMetricsIndex.getIndexName(
+					indexNameBuilder, _indexNameSuffix, companyId)));
 
 		return true;
-	}
-
-	@Override
-	public String getIndexName(long companyId) {
-		return indexNameBuilder.getIndexName(companyId) + _indexNameSuffix;
 	}
 
 	@Override
@@ -85,21 +93,25 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	}
 
 	@Override
-	public boolean removeIndex(long companyId) throws PortalException {
+	public boolean removeIndex(
+			IndexNameBuilder indexNameBuilder, long companyId)
+		throws PortalException {
+
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
-			!_hasIndex(getIndexName(companyId))) {
+			!_hasIndex(
+				WorkflowMetricsIndex.getIndexName(
+					indexNameBuilder, _indexNameSuffix, companyId))) {
 
 			return false;
 		}
 
 		searchEngineAdapter.execute(
-			new DeleteIndexRequest(getIndexName(companyId)));
+			new DeleteIndexRequest(
+				WorkflowMetricsIndex.getIndexName(
+					indexNameBuilder, _indexNameSuffix, companyId)));
 
 		return true;
 	}
-
-	@Reference
-	protected IndexNameBuilder indexNameBuilder;
 
 	@Reference
 	protected Queries queries;

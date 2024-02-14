@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
@@ -23,6 +24,7 @@ import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
+import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 
 import java.util.Objects;
 
@@ -89,7 +91,10 @@ public class UserModelListener extends BaseModelListener<User> {
 								).scriptType(
 									ScriptType.INLINE
 								).build(),
-								_instanceWorkflowMetricsIndex.getIndexName(
+								WorkflowMetricsIndex.getIndexName(
+									_indexNameBuilder,
+									WorkflowMetricsIndexNameConstants.
+										SUFFIX_INSTANCE,
 									user.getCompanyId())));
 					});
 
@@ -100,8 +105,8 @@ public class UserModelListener extends BaseModelListener<User> {
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
-	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 	@Reference
 	private Queries _queries;

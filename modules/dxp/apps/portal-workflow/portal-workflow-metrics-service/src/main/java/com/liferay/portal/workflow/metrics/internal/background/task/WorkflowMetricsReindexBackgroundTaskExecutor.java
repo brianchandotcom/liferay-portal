@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.workflow.metrics.internal.background.task.constants.WorkflowMetricsReindexBackgroundTaskConstants;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
@@ -83,7 +84,7 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 				_serviceTrackerMap.getService(indexEntityName);
 
 			workflowMetricsIndex.deleteAllDocuments(
-				backgroundTask.getCompanyId());
+				_indexNameBuilder, backgroundTask.getCompanyId());
 		}
 
 		List<NoticeableFuture<?>> noticeableFutures = new ArrayList<>();
@@ -199,6 +200,9 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 	@Reference
 	private BackgroundTaskStatusMessageSender
 		_backgroundTaskStatusMessageSender;
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 	private ServiceTrackerMap<String, WorkflowMetricsIndex> _serviceTrackerMap;
 

@@ -6,20 +6,32 @@
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 /**
  * @author Rafael Praxedes
  */
 public interface WorkflowMetricsIndex {
 
-	public boolean createIndex(long companyId) throws PortalException;
+	public static String getIndexName(
+		IndexNameBuilder indexNameBuilder, String indexNameSuffix,
+		long companyId) {
 
-	public boolean deleteAllDocuments(long companyId) throws PortalException;
+		return indexNameBuilder.getIndexName(companyId) + indexNameSuffix;
+	}
 
-	public String getIndexName(long companyId);
+	public boolean createIndex(
+			IndexNameBuilder indexNameBuilder, long companyId)
+		throws PortalException;
+
+	public boolean deleteAllDocuments(
+			IndexNameBuilder indexNameBuilder, long companyId)
+		throws PortalException;
 
 	public String getIndexType();
 
-	public boolean removeIndex(long companyId) throws PortalException;
+	public boolean removeIndex(
+			IndexNameBuilder indexNameBuilder, long companyId)
+		throws PortalException;
 
 }

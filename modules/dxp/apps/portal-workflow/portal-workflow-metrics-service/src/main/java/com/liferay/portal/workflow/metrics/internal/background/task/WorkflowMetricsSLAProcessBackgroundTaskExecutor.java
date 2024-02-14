@@ -613,7 +613,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new UpdateDocumentRequest(
-					_instanceWorkflowMetricsIndex.getIndexName(
+					WorkflowMetricsIndex.getIndexName(
+						_indexNameBuilder,
+						WorkflowMetricsIndexNameConstants.SUFFIX_INSTANCE,
 						workflowMetricsSLAInstanceResult.getCompanyId()),
 					WorkflowMetricsIndexerUtil.digest(
 						_instanceWorkflowMetricsIndex.getIndexType(),

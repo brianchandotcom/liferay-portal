@@ -23,7 +23,7 @@
 	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
 	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE) %>"
 	orderDropdownItems="<%= ddmDisplayContext.getOrderItemsDropdownItems() %>"
-	propsTransformer="js/DDMStructureManagementToolbarPropsTransformer"
+	propsTransformer="{DDMStructureManagementToolbarPropsTransformer} from dynamic-data-mapping-web"
 	searchActionURL="<%= ddmDisplayContext.getStructureSearchActionURL() %>"
 	searchContainerId="<%= ddmDisplayContext.getStructureSearchContainerId() %>"
 	searchFormName="fm1"

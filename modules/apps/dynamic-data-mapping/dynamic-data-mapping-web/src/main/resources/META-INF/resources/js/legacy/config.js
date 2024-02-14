@@ -9,7 +9,7 @@
 	AUI().applyConfig({
 		groups: {
 			ddm: {
-				base: MODULE_PATH + '/js/',
+				base: MODULE_PATH + '/js/legacy/',
 				combine: Liferay.AUI.getCombine(),
 				filter: LiferayAUI.getFilterConfig(),
 				modules: {
@@ -56,7 +56,7 @@
 						requires: ['liferay-portlet-dynamic-data-mapping'],
 					},
 				},
-				root: MODULE_PATH + '/js/',
+				root: MODULE_PATH + '/js/legacy/',
 			},
 		},
 	});

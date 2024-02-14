@@ -5,13 +5,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			ignore: [
-				'**/config.js',
-				'**/custom_fields.js',
-				'**/ddm_form.js',
-				'**/main.js',
-			],
-		},
+		main: 'src/main/resources/META-INF/resources/js/index.js',
 	},
 };

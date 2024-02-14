@@ -240,8 +240,8 @@ public class CompanyCountriesUtil {
 		throws Exception {
 
 		_updateCounter(
-			connection, counterLocalService, Region.class.getName(), "Region",
-			"regionId");
+			Region.class.getName(), connection, counterLocalService, "regionId",
+			"Region");
 	}
 
 	public static void updateRegionLocalizationCounter(
@@ -249,8 +249,8 @@ public class CompanyCountriesUtil {
 		throws Exception {
 
 		_updateCounter(
-			connection, counterLocalService, RegionLocalization.class.getName(),
-			"RegionLocalization", "regionLocalizationId");
+			RegionLocalization.class.getName(), connection, counterLocalService,
+			"regionLocalizationId", "RegionLocalization");
 	}
 
 	private static void _addRegionBatch(
@@ -288,32 +288,38 @@ public class CompanyCountriesUtil {
 	}
 
 	private static void _updateCounter(
-			Connection connection, CounterLocalService counterLocalService,
-			String className, String tableName, String primaryKey)
+			String className, Connection connection,
+			CounterLocalService counterLocalService, String primaryKey,
+			String tableName)
 		throws Exception {
 
-		try (Statement statement = connection.createStatement();
-			ResultSet resultSet1 = statement.executeQuery(
-				StringBundler.concat(
-					"select currentId from Counter where name = '", className,
-					"'"))) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select currentId from Counter where name = ?")) {
 
-			long counter = 0;
+			preparedStatement.setString(1, className);
 
-			if (resultSet1.next()) {
-				counter = resultSet1.getLong("currentId");
+			long currentId;
+
+			try (ResultSet resultSet1 = preparedStatement.executeQuery()) {
+				if (!resultSet1.next()) {
+					return;
+				}
+
+				currentId = resultSet1.getLong("currentId");
 			}
 
-			try (ResultSet resultSet2 = statement.executeQuery(
-					"select max(" + primaryKey + ") from " + tableName)) {
+			try (Statement statement = connection.createStatement();
+				ResultSet resultSet2 = statement.executeQuery(
+					StringBundler.concat(
+						"select max(", primaryKey, ") from ", tableName))) {
 
 				if (resultSet2.next()) {
 					long increment = Math.max(
-						0, resultSet2.getLong(1) - counter);
+						0, resultSet2.getLong(1) - currentId);
 
 					if (increment > 0) {
 						counterLocalService.increment(
-							RegionLocalization.class.getName(), (int)increment);
+							tableName, (int)increment);
 					}
 				}
 			}

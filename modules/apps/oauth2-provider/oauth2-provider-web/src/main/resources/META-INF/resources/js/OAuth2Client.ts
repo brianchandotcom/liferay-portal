@@ -77,7 +77,7 @@ class OAuth2Client {
 
 		const ifrm = document.createElement('iframe');
 
-		ifrm.src = `${oauth2Client.authorizeURL}?client_id=${oauth2Client.clientId}&code_challenge=${challenge.code_challenge}&code_challenge_method=S256&redirect_uri=${oauth2Client.encodedRedirectURL}&response_type=code&prompt=none`;
+		ifrm.src = `${oauth2Client.authorizeURL}?client_id=${oauth2Client.clientId}&code_challenge=${challenge.code_challenge}&code_challenge_method=S256&redirect_uri=${oauth2Client.encodedRedirectURL}&response_type=code&prompt=none&state=${sessionKey}`;
 		ifrm.style.display = 'none';
 
 		document.body.appendChild(ifrm);
@@ -96,12 +96,24 @@ class OAuth2Client {
 					return;
 				}
 				else if (!event.data.code) {
+
 					// Ignore messages that don't contain a code
 
 					return;
 				}
 
-				console.log("OAuth2Client Event:", event);
+				if (event.data.state !== sessionKey) {
+
+					// Remove the iframe and reject the promise
+
+					if (event.target && event.target.parentElement) {
+						event.target.parentElement.removeChild(event.target);
+					}
+
+					reject('state does not match');
+
+					return;
+				}
 
 				const tokenResponse = oauth2Client._requestToken(
 					challenge.code_verifier,

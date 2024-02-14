@@ -39,7 +39,8 @@ public class OAuth2ProviderApplicationRedirect {
 	@Produces(MediaType.TEXT_HTML)
 	public Response redirect(
 		@DefaultValue("") @Encoded @QueryParam("code") String code,
-		@DefaultValue("") @Encoded @QueryParam("error") String error) {
+		@DefaultValue("") @Encoded @QueryParam("error") String error,
+		@DefaultValue("") @Encoded @QueryParam("state") String state) {
 
 		return Response.ok(
 			StringBundler.concat(
@@ -51,6 +52,8 @@ public class OAuth2ProviderApplicationRedirect {
 					"code", HtmlUtil.escapeJS(code)
 				).put(
 					"error", HtmlUtil.escapeJS(error)
+				).put(
+					"state", HtmlUtil.escapeJS(state)
 				),
 				", document.location.href);</script></body></html>")
 		).build();

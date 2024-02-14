@@ -100,6 +100,23 @@ export class MessageBoardMessageService {
         });
     }
     /**
+     * @returns void
+     * @throws ApiError
+     */
+    public putMessageBoardMessageMarkAsAnswer({
+        messageBoardMessageId,
+    }: {
+        messageBoardMessageId: number,
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: 'PUT',
+            url: '/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/mark-as-answer',
+            path: {
+                'messageBoardMessageId': messageBoardMessageId,
+            },
+        });
+    }
+    /**
      * Deletes the message board message's rating and returns a 204 if the operation succeeds.
      * @returns void
      * @throws ApiError
@@ -250,6 +267,23 @@ export class MessageBoardMessageService {
         return this.httpRequest.request({
             method: 'PUT',
             url: '/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/subscribe',
+            path: {
+                'messageBoardMessageId': messageBoardMessageId,
+            },
+        });
+    }
+    /**
+     * @returns void
+     * @throws ApiError
+     */
+    public putMessageBoardMessageUnmarkAsAnswer({
+        messageBoardMessageId,
+    }: {
+        messageBoardMessageId: number,
+    }): CancelablePromise<void> {
+        return this.httpRequest.request({
+            method: 'PUT',
+            url: '/headless-delivery/v1.0/message-board-messages/{messageBoardMessageId}/unmark-as-answer',
             path: {
                 'messageBoardMessageId': messageBoardMessageId,
             },

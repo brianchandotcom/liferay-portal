@@ -1525,7 +1525,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		ObjectEntry objectEntry1 = _addCustomObjectEntry(
 			1, null, _objectDefinition1, "value1",
 			RandomTestUtil.randomString());
-
 		ObjectEntry objectEntry2 = _addCustomObjectEntry(
 			2, null, _objectDefinition2, "value2",
 			RandomTestUtil.randomString());

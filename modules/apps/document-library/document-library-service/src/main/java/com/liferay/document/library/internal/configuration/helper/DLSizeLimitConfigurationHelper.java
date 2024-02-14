@@ -131,8 +131,6 @@ public class DLSizeLimitConfigurationHelper {
 			_companyConfigurationBeans.remove(companyId);
 			_companyMimeTypeSizeLimitsMap.remove(companyId);
 
-			_groupConfigurationBeans.clear();
-			_groupIds.clear();
 			_groupMimeTypeSizeLimitsMap.clear();
 		}
 		else if (_groupIds.containsKey(pid)) {

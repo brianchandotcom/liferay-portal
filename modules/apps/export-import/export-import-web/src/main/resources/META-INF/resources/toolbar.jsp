@@ -16,7 +16,7 @@ ExportImportToolbarDisplayContext exportImportToolbarDisplayContext = new Export
 	creationMenu="<%= exportImportToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= exportImportToolbarDisplayContext.getFilterDropdownItems() %>"
 	orderDropdownItems="<%= exportImportToolbarDisplayContext.getOrderByDropDownItems() %>"
-	propsTransformer="js/ExportImportManagementToolbarPropsTransformer"
+	propsTransformer="{ExportImportManagementToolbarPropsTransformer} from exportimport-web"
 	searchContainerId="<%= exportImportToolbarDisplayContext.getSearchContainerId() %>"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= false %>"

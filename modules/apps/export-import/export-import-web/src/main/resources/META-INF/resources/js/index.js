@@ -9,7 +9,10 @@ import {
 	postForm,
 } from 'frontend-js-web';
 
-export default function propsTransformer({portletNamespace, ...otherProps}) {
+export function ExportImportManagementToolbarPropsTransformer({
+	portletNamespace,
+	...otherProps
+}) {
 	return {
 		...otherProps,
 		onActionButtonClick: (event, {item}) => {

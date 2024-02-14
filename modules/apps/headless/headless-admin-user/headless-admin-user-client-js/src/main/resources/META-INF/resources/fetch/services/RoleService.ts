@@ -52,6 +52,28 @@ export class RoleService {
         });
     }
     /**
+     * update the given Role
+     * @returns Role
+     * @throws ApiError
+     */
+    public putRoleByExternalReferenceCode({
+        externalReferenceCode,
+        requestBody,
+    }: {
+        externalReferenceCode: string,
+        requestBody?: Role,
+    }): CancelablePromise<Role> {
+        return this.httpRequest.request({
+            method: 'PUT',
+            url: '/headless-admin-user/v1.0/roles/by-external-reference-code/{externalReferenceCode}',
+            path: {
+                'externalReferenceCode': externalReferenceCode,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
      * Retrieves the role.
      * @returns Role
      * @throws ApiError

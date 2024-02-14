@@ -60,7 +60,3 @@ function toDotCase(key) {
 		.replaceAll('_', '.')
 		.replaceAll('-', '.');
 }
-
-
-
-

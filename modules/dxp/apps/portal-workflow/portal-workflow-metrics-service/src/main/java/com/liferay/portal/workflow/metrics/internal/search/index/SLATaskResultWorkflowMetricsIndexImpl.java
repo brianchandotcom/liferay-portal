@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
+import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,7 +23,7 @@ public class SLATaskResultWorkflowMetricsIndexImpl
 	public SLATaskResultWorkflowMetricsIndexImpl() {
 		super(
 			WorkflowMetricsIndexNameConstants.SUFFIX_SLA_TASK_RESULT,
-			"WorkflowMetricsSLATaskResultType");
+			WorkflowMetricsIndexTypeConstants.SLA_TASK_RESULT_TYPE);
 	}
 
 }

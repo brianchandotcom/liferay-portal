@@ -246,6 +246,12 @@ function FragmentContentInteractionsFilter({
 			}
 		};
 
+		const onKeyDown = (event) => {
+			if (event.key === 'Enter') {
+				enableProcessor(event);
+			}
+		};
+
 		if (activeItemType === ITEM_TYPES.editable) {
 			activeEditable = editables.find((editable) =>
 				isActive(editable.itemId)
@@ -260,6 +266,11 @@ function FragmentContentInteractionsFilter({
 						activeEditable.element.addEventListener(
 							'click',
 							enableProcessor
+						);
+
+						activeEditable.element.addEventListener(
+							'keydown',
+							onKeyDown
 						);
 					});
 				}
@@ -279,6 +290,11 @@ function FragmentContentInteractionsFilter({
 				activeEditable.element.removeEventListener(
 					'click',
 					enableProcessor
+				);
+
+				activeEditable.element.removeEventListener(
+					'keydown',
+					onKeyDown
 				);
 			}
 		};

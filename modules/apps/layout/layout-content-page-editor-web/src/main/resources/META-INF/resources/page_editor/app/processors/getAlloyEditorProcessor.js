@@ -10,6 +10,7 @@ import {SPACE_KEY_CODE} from '../config/constants/keyboardCodes';
 import {config} from '../config/index';
 
 const ENTER_KEYCODE = 13;
+const ESCAPE_KEYCODE = 27;
 const SHIFT_ENTER_KEYCODE = (window.CKEDITOR?.SHIFT ?? 0) + ENTER_KEYCODE;
 
 const defaultGetEditorWrapper = (element) => {
@@ -163,6 +164,9 @@ export default function getAlloyEditorProcessor(
 							_element.dataset.lfrEditableType === 'text')
 					) {
 						event.cancel();
+					}
+					else if (event.data.keyCode === ESCAPE_KEYCODE) {
+						onBlurEditor();
 					}
 				}),
 				nativeEditor.on('blur', () => {

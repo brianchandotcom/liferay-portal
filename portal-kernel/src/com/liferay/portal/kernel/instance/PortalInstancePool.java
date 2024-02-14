@@ -38,7 +38,7 @@ public class PortalInstancePool {
 	}
 
 	public static long getCompanyId(String webId) {
-		if (_cacheEnabled && !_portalInstances.isEmpty()) {
+		if (_cacheEnabled) {
 			for (Map.Entry<Long, String> entry : _portalInstances.entrySet()) {
 				if (Objects.equals(entry.getValue(), webId)) {
 					return entry.getKey();
@@ -62,7 +62,7 @@ public class PortalInstancePool {
 	}
 
 	public static long[] getCompanyIds() {
-		if (_cacheEnabled && !_portalInstances.isEmpty()) {
+		if (_cacheEnabled) {
 			return ArrayUtil.toLongArray(_portalInstances.keySet());
 		}
 
@@ -77,7 +77,7 @@ public class PortalInstancePool {
 	}
 
 	public static long getDefaultCompanyId() {
-		if (_cacheEnabled && !_portalInstances.isEmpty()) {
+		if (_cacheEnabled) {
 			for (Map.Entry<Long, String> entry : _portalInstances.entrySet()) {
 				if (Objects.equals(entry.getValue(), _COMPANY_DEFAULT_WEB_ID)) {
 					return entry.getKey();
@@ -99,7 +99,7 @@ public class PortalInstancePool {
 	}
 
 	public static String getWebId(long companyId) {
-		if (_cacheEnabled && !_portalInstances.isEmpty()) {
+		if (_cacheEnabled) {
 			return _portalInstances.get(companyId);
 		}
 
@@ -117,7 +117,7 @@ public class PortalInstancePool {
 	}
 
 	public static String[] getWebIds() {
-		if (_cacheEnabled && !_portalInstances.isEmpty()) {
+		if (_cacheEnabled) {
 			return ArrayUtil.toStringArray(_portalInstances.values());
 		}
 

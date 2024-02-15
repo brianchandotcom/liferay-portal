@@ -217,16 +217,19 @@ export function NextSteps({
 							Liferay.CommerceContext.account = {
 								accountId: cart?.accountId,
 							};
-							window.location.href = Liferay.ThemeDisplay.getCanonicalURL().replace(
-								'/next-steps',
-								`/customer-dashboard`
+
+							Liferay.Util.navigate(
+								Liferay.ThemeDisplay.getCanonicalURL().replace(
+									'/next-steps',
+									`/customer-dashboard`
+								)
 							);
 						});
 					}}
 					onClickContinue={() => {
 						if (onClickContinue) {
 							window.location.href =
-								'https://console.marketplacedemo.liferay.sh/projects';
+								'https://console.liferay.cloud/projects';
 						}
 					}}
 					showBackButton={showBackButton}

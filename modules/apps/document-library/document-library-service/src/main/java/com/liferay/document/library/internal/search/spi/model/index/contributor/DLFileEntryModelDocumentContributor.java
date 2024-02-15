@@ -9,8 +9,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -256,12 +256,12 @@ public class DLFileEntryModelDocumentContributor
 	private String _extractText(DLFileEntry dlFileEntry)
 		throws IOException, PortalException {
 
-		if (DLStoreUtil.hasFile(
+		if (_dlStore.hasFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), _getIndexVersionLabel(dlFileEntry))) {
 
 			return StreamUtil.toString(
-				DLStoreUtil.getFileAsStream(
+				_dlStore.getFileAsStream(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					_getIndexVersionLabel(dlFileEntry)));
@@ -277,7 +277,7 @@ public class DLFileEntryModelDocumentContributor
 			inputStream, PropsValues.DL_FILE_INDEXING_MAX_SIZE);
 
 		if (Validator.isNotNull(text)) {
-			DLStoreUtil.addFile(
+			_dlStore.addFile(
 				DLStoreRequest.builder(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName()
@@ -346,6 +346,9 @@ public class DLFileEntryModelDocumentContributor
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
+	private DLStore _dlStore;
 
 	@Reference
 	private InputStreamSanitizer _inputStreamSanitizer;

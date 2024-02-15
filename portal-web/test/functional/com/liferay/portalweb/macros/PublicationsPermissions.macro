@@ -98,6 +98,8 @@ definition {
 			key_menuItem = "Publish",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
+		Refresh();
+
 		Publications.selectPublication(publicationName = ${publicationName});
 
 		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");

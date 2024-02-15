@@ -6,6 +6,7 @@
 package com.liferay.portal.osgi.web.wab.generator.internal.connection;
 
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -21,6 +22,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 import java.net.UnknownServiceException;
+
+import java.util.Hashtable;
 
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -62,15 +65,23 @@ public class WabURLConnectionTest {
 
 		unsecureSAXReaderUtil.setSAXReader(new SAXReaderImpl());
 
-		URL.setURLStreamHandlerFactory(
-			protocol -> new URLStreamHandler() {
+		ReflectionTestUtil.setFieldValue(
+			URL.class, "handlers",
+			new Hashtable<String, URLStreamHandler>() {
 
 				@Override
-				protected URLConnection openConnection(URL url) {
-					return new URLConnection(url) {
+				public synchronized URLStreamHandler get(Object key) {
+					return new URLStreamHandler() {
 
 						@Override
-						public void connect() {
+						protected URLConnection openConnection(URL url) {
+							return new URLConnection(url) {
+
+								@Override
+								public void connect() {
+								}
+
+							};
 						}
 
 					};

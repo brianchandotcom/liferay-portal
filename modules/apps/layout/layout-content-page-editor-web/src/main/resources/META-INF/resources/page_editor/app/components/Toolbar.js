@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
@@ -22,6 +21,7 @@ import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanPublish from '../selectors/selectCanPublish';
 import {useDropClear} from '../utils/drag_and_drop/useDragAndDrop';
+import DiscardDraftButton from './DiscardDraftButton';
 import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
 import HideSidebarButton from './HideSidebarButton';
@@ -38,6 +38,7 @@ import Undo from './undo/Undo';
 const {Suspense, useCallback, useRef} = React;
 
 function ToolbarBody({className}) {
+	const discardDraftFormRef = useRef();
 	const dispatch = useDispatch();
 	const dropClearRef = useDropClear();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
@@ -51,7 +52,6 @@ function ToolbarBody({className}) {
 	const canPublish = selectCanPublish(store);
 
 	const [publishPending, setPublishPending] = useState(false);
-	const [enableDiscard, setEnableDiscard] = useState(false);
 
 	const {
 		network,
@@ -59,14 +59,6 @@ function ToolbarBody({className}) {
 		segmentsExperimentStatus,
 		selectedViewportSize,
 	} = store;
-
-	useEffect(() => {
-		setEnableDiscard(
-			network.status === SERVICE_NETWORK_STATUS_TYPES.draftSaved ||
-				store.draft ||
-				config.isConversionDraft
-		);
-	}, [network, store.draft]);
 
 	const loadingRef = useRef(() => {
 		Promise.all(
@@ -123,19 +115,6 @@ function ToolbarBody({className}) {
 		}, [])
 	);
 
-	const handleDiscardDraft = (event) => {
-		openConfirmModal({
-			message: Liferay.Language.get(
-				'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
-			),
-			onConfirm: (isConfirmed) => {
-				if (!isConfirmed) {
-					event.preventDefault();
-				}
-			},
-		});
-	};
-
 	const onPublish = () => {
 		if (!config.masterUsed) {
 			setPublishPending(true);
@@ -159,15 +138,6 @@ function ToolbarBody({className}) {
 			selectItem(null);
 		}
 	};
-
-	let draftButtonLabel = Liferay.Language.get('discard-draft');
-
-	if (config.isConversionDraft) {
-		draftButtonLabel = Liferay.Language.get('discard-conversion-draft');
-	}
-	else if (config.singleSegmentsExperienceMode) {
-		draftButtonLabel = Liferay.Language.get('discard-variant');
-	}
 
 	let publishButtonLabel = Liferay.Language.get('publish');
 
@@ -301,22 +271,20 @@ function ToolbarBody({className}) {
 						'd-lg-flex d-none': Liferay.FeatureFlags['LPD-10988'],
 					})}
 				>
-					<form action={config.discardDraftURL} method="POST">
-						<ClayButton
-							disabled={!enableDiscard}
-							displayType="secondary"
-							onClick={handleDiscardDraft}
-							size="sm"
-							type="submit"
-						>
-							{draftButtonLabel}
-						</ClayButton>
+					<form
+						action={config.discardDraftURL}
+						method="POST"
+						ref={discardDraftFormRef}
+					>
+						<DiscardDraftButton />
 					</form>
 				</li>
 
 				{Liferay.FeatureFlags['LPD-10988'] ? (
 					<li className="d-lg-none nav-item">
-						<ToolbarActionsDropdown />
+						<ToolbarActionsDropdown
+							discardDraftFormRef={discardDraftFormRef}
+						/>
 					</li>
 				) : null}
 

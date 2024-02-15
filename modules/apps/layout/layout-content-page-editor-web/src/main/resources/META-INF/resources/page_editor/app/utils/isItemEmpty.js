@@ -4,7 +4,7 @@
  */
 
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
-import {getResponsiveConfig} from './getResponsiveConfig';
+import {isItemHidden} from './isItemHidden';
 
 export default function isItemEmpty(
 	item,
@@ -17,19 +17,4 @@ export default function isItemEmpty(
 			isItemHidden(layoutData, childId, selectedViewportSize)
 		)
 	);
-}
-
-function isItemHidden(layoutData, itemId, selectedViewportSize) {
-	const item = layoutData?.items[itemId];
-
-	if (!item) {
-		return false;
-	}
-
-	const responsiveConfig = getResponsiveConfig(
-		item.config,
-		selectedViewportSize
-	);
-
-	return responsiveConfig.styles.display === 'none';
 }

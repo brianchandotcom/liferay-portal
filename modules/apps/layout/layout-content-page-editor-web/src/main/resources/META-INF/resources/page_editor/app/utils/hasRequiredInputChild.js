@@ -5,26 +5,8 @@
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {getDescendantIds} from './getDescendantIds';
-import {getResponsiveConfig} from './getResponsiveConfig';
+import {isItemHidden} from './isItemHidden';
 import {isRequiredFormInput} from './isRequiredFormInput';
-
-function isItemHidden(layoutData, itemId, selectedViewportSize) {
-	const item = layoutData?.items[itemId];
-
-	if (!item) {
-		return false;
-	}
-
-	const responsiveConfig = getResponsiveConfig(
-		item.config,
-		selectedViewportSize
-	);
-
-	return (
-		responsiveConfig.styles.display === 'none' ||
-		isItemHidden(layoutData, item.parentId, selectedViewportSize)
-	);
-}
 
 export default function hasRequiredInputChild({
 	checkHidden = false,
@@ -45,7 +27,9 @@ export default function hasRequiredInputChild({
 
 		return (
 			(!checkHidden ||
-				isItemHidden(layoutData, descendantId, selectedViewportSize)) &&
+				isItemHidden(layoutData, descendantId, selectedViewportSize, {
+					recursive: true,
+				})) &&
 			isRequiredFormInput(item, fragmentEntryLinks, formFields)
 		);
 	});

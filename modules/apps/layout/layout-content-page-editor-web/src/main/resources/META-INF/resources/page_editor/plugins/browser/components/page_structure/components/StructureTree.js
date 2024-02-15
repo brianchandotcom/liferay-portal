@@ -56,8 +56,8 @@ import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
-import {getResponsiveConfig} from '../../../../../app/utils/getResponsiveConfig';
 import getSelectedField from '../../../../../app/utils/getSelectedField';
+import {isItemHidden} from '../../../../../app/utils/isItemHidden';
 import usePageContents from '../../../../../app/utils/usePageContents';
 import StructureTreeNode from './StructureTreeNode';
 import StructureTreeNodeActions from './StructureTreeNodeActions';
@@ -584,15 +584,6 @@ function fragmentIsMapped(item, fragmentEntryLinks) {
 	return false;
 }
 
-function isItemHidden(item, selectedViewportSize) {
-	const responsiveConfig = getResponsiveConfig(
-		item.config,
-		selectedViewportSize
-	);
-
-	return responsiveConfig.styles.display === 'none';
-}
-
 function isHidable(item, fragmentEntryLinks, layoutData) {
 	if (!isRemovable(item, layoutData)) {
 		return false;
@@ -648,7 +639,7 @@ function visit(
 		masterLayoutData &&
 		Object.keys(masterLayoutData.items).includes(item.itemId);
 
-	const hidden = isItemHidden(item, selectedViewportSize);
+	const hidden = isItemHidden(layoutData, item.itemId, selectedViewportSize);
 
 	let icon = LAYOUT_DATA_ITEM_TYPE_ICONS[item.type];
 

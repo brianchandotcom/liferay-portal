@@ -8,8 +8,6 @@ package com.liferay.gradle.plugins.workspace.task;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.util.Validator;
 
-import java.util.Objects;
-
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.tasks.Input;
@@ -43,47 +41,29 @@ public class VerifyProductTask extends DefaultTask {
 
 	@TaskAction
 	public void verifyProduct() throws Exception {
-		WorkspaceExtension.ProductInfo productInfo =
-			_extension.getProductInfo();
-
-		if (Objects.isNull(productInfo)) {
-			throw new GradleException(
-				"Unable to get product info for product '" + _product + "'");
-		}
-
-		if (Validator.isNull(_extension.getAppServerTomcatVersion()) &&
-			Validator.isNull(productInfo.getAppServerTomcatVersion())) {
-
+		if (Validator.isNull(_extension.getAppServerTomcatVersion())) {
 			throw new GradleException(
 				"Unable to get Tomcat version for product '" + _product + "'");
 		}
 
-		if (Validator.isNull(_extension.getBundleChecksumMD5()) &&
-			Validator.isNull(productInfo.getBundleChecksumMD5())) {
-
+		if (Validator.isNull(_extension.getBundleChecksumMD5())) {
 			throw new GradleException(
 				"Unable to get bundle checksum MD5 for product '" + _product +
 					"'");
 		}
 
-		if (Validator.isNull(_extension.getBundleUrl()) &&
-			Validator.isNull(productInfo.getBundleUrl())) {
-
+		if (Validator.isNull(_extension.getBundleUrl())) {
 			throw new GradleException(
 				"Unable to get bundle URL for product '" + _product + "'");
 		}
 
-		if (Validator.isNull(_extension.getDockerImageLiferay()) &&
-			Validator.isNull(productInfo.getLiferayDockerImage())) {
-
+		if (Validator.isNull(_extension.getDockerImageLiferay())) {
 			throw new GradleException(
 				"Unable to get Liferay Docker image for product '" + _product +
 					"'");
 		}
 
-		if (Validator.isNull(_extension.getTargetPlatformVersion()) &&
-			Validator.isNull(productInfo.getTargetPlatformVersion())) {
-
+		if (Validator.isNull(_extension.getTargetPlatformVersion())) {
 			throw new GradleException(
 				"Unable to get target platform version for product '" +
 					_product + "'");

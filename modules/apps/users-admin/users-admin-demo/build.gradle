@@ -7,4 +7,5 @@ dependencies {
 	compileOnly project(":apps:roles:roles-admin-demo-data-creator-api")
 	compileOnly project(":apps:site:site-demo-data-creator-api")
 	compileOnly project(":apps:users-admin:users-admin-demo-data-creator-api")
+	compileOnly project(":core:petra:petra-string")
 }

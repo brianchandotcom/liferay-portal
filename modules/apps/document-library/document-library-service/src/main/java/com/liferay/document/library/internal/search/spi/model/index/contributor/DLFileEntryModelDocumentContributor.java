@@ -58,6 +58,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -171,6 +172,7 @@ public class DLFileEntryModelDocumentContributor
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_dlIndexerConfiguration = ConfigurableUtil.createConfigurable(
 			DLIndexerConfiguration.class, properties);

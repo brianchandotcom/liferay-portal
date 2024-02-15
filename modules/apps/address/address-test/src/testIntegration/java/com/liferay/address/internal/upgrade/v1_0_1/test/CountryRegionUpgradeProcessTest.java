@@ -9,11 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.model.RegionLocalizationTable;
 import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
@@ -81,7 +78,7 @@ public class CountryRegionUpgradeProcessTest {
 						companyCountry.getCountryId()));
 			});
 
-		_verifyCounters();
+		_verifyCounter();
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -91,7 +88,7 @@ public class CountryRegionUpgradeProcessTest {
 		upgradeProcess.upgrade();
 	}
 
-	private void _verifyCounters() {
+	private void _verifyCounter() {
 		List<Long> results = _regionLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
 				DSLFunctionFactoryUtil.max(

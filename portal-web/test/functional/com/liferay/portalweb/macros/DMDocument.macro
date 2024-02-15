@@ -2384,9 +2384,16 @@ definition {
 
 			var key_dmFolderName = ${dmFolderName};
 
-			AssertClick(
-				locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
-				value1 = "Select");
+			if (IsElementPresent(key_text = "Select", locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON")) {
+				AssertClick(
+					locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
+					value1 = "Select");
+			}
+			else {
+				AssertClick(
+					locator1 = "DocumentsAndMedia#SELECT_RESOURCE_BUTTON",
+					value1 = "Select");
+			}
 		}
 
 		SelectFrame(locator1 = "relative=top");
@@ -2906,10 +2913,18 @@ definition {
 					value1 = ${breadcrumbName});
 			}
 
-			AssertClick(
-				key_dmFolderName = ${dmRootFolderName},
-				locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
-				value1 = "Select");
+			if (IsElementPresent(key_text = "Select", locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON")) {
+				AssertClick(
+					key_dmFolderName = ${dmRootFolderName},
+					locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
+					value1 = "Select");
+			}
+			else {
+				AssertClick(
+					key_dmFolderName = ${dmRootFolderName},
+					locator1 = "DocumentsAndMedia#SELECT_RESOURCE_BUTTON",
+					value1 = "Select");
+			}
 		}
 
 		SelectFrame(locator1 = "relative=top");

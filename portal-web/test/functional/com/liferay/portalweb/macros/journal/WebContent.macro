@@ -1616,7 +1616,7 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Move Web Content");
 
-		Click(locator1 = "Button#PARENT_FOLDER_SELECT");
+		Click(locator1 = "Button#SELECT");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

@@ -157,6 +157,27 @@ public class SitemapManagerTest {
 	}
 
 	@Test
+	public void testCompanySitemapWithAdditionalGroupIdConfiguredButNotCompanyVirtualHost()
+		throws Exception {
+
+		Group group = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		_setUpThemeDisplay(
+			group,
+			_layoutLocalService.fetchFirstLayout(group.getGroupId(), false, 0),
+			"myvirtualhost");
+
+		String[] guestLayoutURLs = _getSitemapLayoutURLs(group.getGroupId());
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(guestLayoutURLs));
+
+		_testCompanySitemapIncludePages(
+			new long[] {_group.getGroupId()}, group.getGroupId(),
+			guestLayoutURLs);
+	}
+
+	@Test
 	public void testSitemapIncludeCategoriesCompanyDisabledGroupDisabled()
 		throws Exception {
 

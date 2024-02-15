@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "User to MDF Claims"
+	},
+	"name": "usrToMDFClms",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:MDFClaim$]",
+	"objectDefinitionName2": "MDFClaim",
+	"type": "oneToMany"
+}

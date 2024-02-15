@@ -59,10 +59,6 @@ public class CountryRegionUpgradeProcessTest {
 				Country country = _countryLocalService.fetchCountryByA2(
 					companyId, "US");
 
-				if (country == null) {
-					return;
-				}
-
 				_regionLocalService.deleteCountryRegions(
 					country.getCountryId());
 			});
@@ -73,10 +69,6 @@ public class CountryRegionUpgradeProcessTest {
 			companyId -> {
 				Country country = _countryLocalService.fetchCountryByA2(
 					companyId, "US");
-
-				if (country == null) {
-					return;
-				}
 
 				Assert.assertEquals(
 					57,

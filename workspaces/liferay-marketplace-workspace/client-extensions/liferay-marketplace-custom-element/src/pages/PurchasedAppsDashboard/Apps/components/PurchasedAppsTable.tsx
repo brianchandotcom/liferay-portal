@@ -18,7 +18,6 @@ import Table from '../../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderType} from '../../../../enums/OrderType';
 import i18n from '../../../../i18n';
-import {showAppImage} from '../../../../utils/util';
 
 type AppsTableProps = {
 	items: Order[];
@@ -49,7 +48,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							<img
 								alt="App Image"
 								height={36}
-								src={showAppImage(thumbnail)}
+								src={thumbnail}
 								width={36}
 							/>
 
@@ -135,8 +134,8 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							orderStatusInfo?.label !== OrderStatuses.COMPLETED;
 
 						const isFreeApp =
-							placedOrderItems[0]?.price?.price === 0 &&
-							placedOrderItems[0]?.sku !== 'TRIAL';
+							placedOrderItems?.[0]?.price?.price === 0 &&
+							placedOrderItems?.[0]?.sku !== 'TRIAL';
 
 						return (
 							<div onClick={(event) => event.stopPropagation()}>

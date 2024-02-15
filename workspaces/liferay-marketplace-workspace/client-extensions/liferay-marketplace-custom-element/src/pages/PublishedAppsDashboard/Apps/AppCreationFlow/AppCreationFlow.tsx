@@ -19,7 +19,7 @@ import {CustomizeAppStorefrontPage} from '../../../StorefrontPage/CustomizeAppSt
 import {initialFLowListItems} from './AppCreationFlowUtil';
 
 import './AppCreationFlow.scss';
-import {useSupplierAccount} from '../../../../hooks/data/useSupplierAccounts';
+import {useAccount} from '../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../liferay/liferay';
 import {useAppContext} from '../../../../manage-app-state/AppManageState';
 import {DefineAppProfilePage} from '../../../DefineAppProfilePage/DefineAppProfilePage';
@@ -41,7 +41,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 		initialFLowListItems
 	);
 	const [currentFlow, setCurrentFlow] = useState('create');
-	const {data: supplierAccount} = useSupplierAccount();
+	const {data: account} = useAccount();
 
 	const setAppFlowListState = ({
 		checkedItems,
@@ -77,8 +77,8 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 	return (
 		<div className="app-creation-flow-container">
 			<NewAppToolBar
-				accountImage={supplierAccount?.logoURL}
-				accountName={supplierAccount?.name as string}
+				accountImage={account?.logoURL}
+				accountName={account?.name as string}
 				appImage={appLogo?.preview}
 				appName={appName}
 			/>

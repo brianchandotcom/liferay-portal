@@ -8,6 +8,7 @@ import {useOutletContext} from 'react-router-dom';
 
 import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
+import {Liferay} from '../../../liferay/liferay';
 import PurchasedAppsTable from './components/PurchasedAppsTable';
 
 const Apps = () => {
@@ -21,7 +22,7 @@ const Apps = () => {
 				title: 'My Apps',
 			}}
 			onButtonClick={() => {
-				window.location.href = getSiteURL();
+				Liferay.Util.navigate(getSiteURL() || '/');
 			}}
 		>
 			<PurchasedAppsTable items={purchasedAppTable.items ?? []} />

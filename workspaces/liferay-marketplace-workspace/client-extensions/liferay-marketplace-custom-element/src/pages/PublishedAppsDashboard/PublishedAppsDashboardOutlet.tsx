@@ -14,28 +14,26 @@ import './PublishedAppsDashboard.scss';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import SearchBuilder from '../../core/SearchBuilder';
-import {useSupplierAccount} from '../../hooks/data/useSupplierAccounts';
+import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
 import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
 import {getAccountImage} from '../../utils/util';
 import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
 
 type PublishedAppsDashboardOutletProps = {
-	accountId?: number | string | null;
+	accountsSearch: ReturnType<typeof useAccounts>;
 	catalogId: any;
-	catalogs: Catalog[];
-	supplierAccounts: UserAccount[];
 };
 
 const PublishedAppsDashboardOutlet: React.FC<PublishedAppsDashboardOutletProps> = ({
+	accountsSearch,
 	catalogId,
-	supplierAccounts,
 }) => {
 	const [page, setPage] = useState(1);
 
 	const {
 		data: supplierAccount,
 		isLoading: isLoadingSupplierAccount,
-	} = useSupplierAccount();
+	} = useAccount();
 
 	const {data: publishedProductTable = {}, isLoading, isValidating} = useSWR(
 		`/user-published-apps/${supplierAccount?.id}/${page}/${catalogId}`,
@@ -72,7 +70,7 @@ const PublishedAppsDashboardOutlet: React.FC<PublishedAppsDashboardOutletProps> 
 			<DashboardNavigation
 				accountAppsNumber={publishedProductTable.totalCount}
 				accountIcon={getAccountImage(supplierAccount?.logoURL)}
-				accounts={(supplierAccounts as unknown) as Account[]}
+				accountsSearch={accountsSearch}
 				currentAccount={(supplierAccount as unknown) as Account}
 				dashboardNavigationItems={initialDashboardNavigationItems}
 			/>

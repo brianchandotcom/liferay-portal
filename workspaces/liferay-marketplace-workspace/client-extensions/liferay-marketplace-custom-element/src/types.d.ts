@@ -513,6 +513,7 @@ type UserAccount = {
 	newsSubscription: boolean;
 	password: string;
 	roleBriefs: {id: number; name: string}[];
+	type: string;
 };
 
 type RequestBody = {

@@ -238,6 +238,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 			cssClass="container-view"
 		>
 			<div class="article-content-content">
+				<%@ include file="/error_article_exceptions.jspf" %>
 				<c:choose>
 					<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-114700") %>'>
 						<clay:panel

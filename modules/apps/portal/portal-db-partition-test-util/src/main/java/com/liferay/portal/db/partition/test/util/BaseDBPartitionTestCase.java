@@ -71,6 +71,8 @@ public abstract class BaseDBPartitionTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	public static void assume() {
+		Assume.assumeTrue(DBPartition.isPartitionEnabled());
+
 		db = DBManagerUtil.getDB();
 
 		Assume.assumeTrue(db.isSupportsDBPartition());

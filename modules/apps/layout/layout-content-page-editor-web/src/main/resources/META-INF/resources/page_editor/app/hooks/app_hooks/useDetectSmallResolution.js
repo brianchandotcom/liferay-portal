@@ -17,6 +17,11 @@ export default function useDetectSmallResolution() {
 		}
 
 		const onChange = (event) => {
+			document.body.classList.toggle(
+				'page-editor__small-resolution',
+				event.matches
+			);
+
 			dispatch(
 				switchSidebarPanel({
 					itemConfigurationOpen: !event.matches,
@@ -28,6 +33,11 @@ export default function useDetectSmallResolution() {
 		const mediaQuery = window.matchMedia('(max-width: 768px)');
 
 		if (mediaQuery.matches) {
+			document.body.classList.toggle(
+				'page-editor__small-resolution',
+				true
+			);
+
 			dispatch(
 				switchSidebarPanel({
 					itemConfigurationOpen: false,

@@ -4,6 +4,7 @@
  */
 
 import useBackURL from './useBackURL';
+import useDetectSmallResolution from './useDetectSmallResolution';
 import useExtendSession from './useExtendSession';
 import useLanguageDirection from './useLanguageDirection';
 import usePortletConfigurationListener from './usePortletConfigurationListener';
@@ -13,6 +14,7 @@ import useURLParser from './useURLParser';
 
 export default function AppHooks() {
 	useBackURL();
+	useDetectSmallResolution();
 	useExtendSession();
 	useLanguageDirection();
 	usePortletConfigurationListener();

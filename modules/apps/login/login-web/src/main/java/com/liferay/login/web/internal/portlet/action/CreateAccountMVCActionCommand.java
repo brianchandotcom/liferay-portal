@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -76,6 +77,7 @@ import com.liferay.portal.util.PropsValues;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -220,8 +222,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception exception) {
 			if (exception instanceof
-					UserEmailAddressException.MustNotBeDuplicate ||
-				exception instanceof
 					UserScreenNameException.MustNotBeDuplicate) {
 
 				String emailAddress = ParamUtil.getString(
@@ -235,6 +235,67 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 					SessionErrors.add(
 						actionRequest, exception.getClass(), exception);
+				}
+				else {
+					actionResponse.setRenderParameter(
+						"mvcPath", "/update_account.jsp");
+				}
+			}
+			else if (exception instanceof
+						UserEmailAddressException.MustNotBeDuplicate) {
+
+				String emailAddress = ParamUtil.getString(
+					actionRequest, "emailAddress");
+
+				User user = _userLocalService.fetchUserByEmailAddress(
+					themeDisplay.getCompanyId(), emailAddress);
+
+				if (user == null) {
+					SessionErrors.add(
+						actionRequest, exception.getClass(), exception);
+				}
+				else if (user.getStatus() !=
+							WorkflowConstants.STATUS_INCOMPLETE) {
+
+					PortletPreferences portletPreferences =
+						actionRequest.getPreferences();
+
+					String languageId = _language.getLanguageId(actionRequest);
+
+					String emailFromName = portletPreferences.getValue(
+						"emailFromName", null);
+					String emailFromAddress = portletPreferences.getValue(
+						"emailFromAddress", null);
+					String emailToAddress = user.getEmailAddress();
+
+					String emailParam = "emailPasswordSent";
+
+					String subject = portletPreferences.getValue(
+						emailParam + "Subject_" + languageId, null);
+					String body = portletPreferences.getValue(
+						emailParam + "Body_" + languageId, null);
+
+					LoginUtil.sendEmailAccountCreationAttempt(
+						actionRequest, emailFromName, emailFromAddress,
+						emailToAddress, subject, body);
+
+					HttpServletRequest httpServletRequest =
+						_portal.getHttpServletRequest(actionRequest);
+
+					if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+						SessionMessages.add(
+							httpServletRequest, "userAdded",
+							user.getEmailAddress());
+					}
+					else {
+						SessionMessages.add(
+							httpServletRequest, "userPending",
+							user.getEmailAddress());
+					}
+
+					sendRedirect(
+						actionRequest, actionResponse, themeDisplay, user,
+						user.getPasswordUnencrypted());
 				}
 				else {
 					actionResponse.setRenderParameter(
@@ -551,6 +612,9 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

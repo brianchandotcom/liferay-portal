@@ -298,14 +298,12 @@ public class CompanyCountriesUtil {
 
 			preparedStatement.setString(1, className);
 
-			long currentId;
+			long currentId = 0;
 
 			try (ResultSet resultSet1 = preparedStatement.executeQuery()) {
-				if (!resultSet1.next()) {
-					return;
+				if (resultSet1.next()) {
+					currentId = resultSet1.getLong("currentId");
 				}
-
-				currentId = resultSet1.getLong("currentId");
 			}
 
 			try (Statement statement = connection.createStatement();

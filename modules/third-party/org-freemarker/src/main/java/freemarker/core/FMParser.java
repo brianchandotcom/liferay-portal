@@ -65,7 +65,7 @@ public class FMParser implements FMParserConstants {
      */
     private int continuableDirectiveNesting;
 
-    private boolean inMacro, inFunction;
+    private boolean inMacro, inFunction, requireArgsSpecialVariable;
     private LinkedList escapes = new LinkedList();
     private int mixedContentNesting; // for stripText
 
@@ -392,7 +392,7 @@ public class FMParser implements FMParserConstants {
      */
     private void notBooleanLiteral(Expression exp, String expected) throws ParseException {
         if (exp instanceof BooleanLiteral) {
-            throw new ParseException("Found: " + exp.getCanonicalForm() + ". Expecting " + expected, exp);
+            throw new ParseException("Found: " + exp.getCanonicalForm() + " literal. Expecting " + expected , exp);
         }
     }
 
@@ -450,7 +450,7 @@ public class FMParser implements FMParserConstants {
         notNumberLiteral(exp, "boolean (true/false)");
     }
 
-    private Expression escapedExpression(Expression exp) {
+    private Expression escapedExpression(Expression exp) throws ParseException {
         if (!escapes.isEmpty()) {
             return ((EscapeBlock) escapes.getFirst()).doEscape(exp);
         } else {
@@ -884,10 +884,10 @@ result = lhs;
         throw new ParseException();
       }
       rhs = RelationalExpression();
-notHashLiteral(lhs, "string");
-                notHashLiteral(rhs, "string");
-                notListLiteral(lhs, "string");
-                notListLiteral(rhs, "string");
+notHashLiteral(lhs, "different type for equality check");
+                notHashLiteral(rhs, "different type for equality check");
+                notListLiteral(lhs, "different type for equality check");
+                notListLiteral(rhs, "different type for equality check");
                 result = new ComparisonExpression(lhs, rhs, t.image);
                 result.setLocation(template, lhs, rhs);
     } else {
@@ -933,12 +933,8 @@ result = lhs;
         throw new ParseException();
       }
       rhs = RangeExpression();
-notHashLiteral(lhs, "number");
-            notHashLiteral(rhs, "number");
-            notListLiteral(lhs, "number");
-            notListLiteral(rhs, "number");
-            notStringLiteral(lhs, "number");
-            notStringLiteral(rhs, "number");
+numberLiteralOnly(lhs);
+            numberLiteralOnly(rhs);
             result = new ComparisonExpression(lhs, rhs, t.image);
             result.setLocation(template, lhs, rhs);
     } else {
@@ -1135,6 +1131,13 @@ BuiltinVariable result = null;
             parseTimeValue = new SimpleScalar(outputFormat.getName());
         } else if (nameStr.equals(BuiltinVariable.AUTO_ESC) || nameStr.equals(BuiltinVariable.AUTO_ESC_CC)) {
             parseTimeValue = autoEscaping ? TemplateBooleanModel.TRUE : TemplateBooleanModel.FALSE;
+        } else if (nameStr.equals(BuiltinVariable.ARGS)) {
+            if (!inMacro && !inFunction) {
+                {if (true) throw new ParseException("The \"" + BuiltinVariable.ARGS + "\" special variable must be "
+                        + "inside a macro or function in the template source code.", template, name);}
+            }
+            requireArgsSpecialVariable = true;
+            parseTimeValue = null;
         } else {
             parseTimeValue = null;
         }
@@ -1576,8 +1579,8 @@ result.setLocation(template, t, t);
 
   final public HashLiteral HashLiteral() throws ParseException {Token begin, end;
     Expression key, value;
-    ArrayList keys = new ArrayList();
-    ArrayList values = new ArrayList();
+    ArrayList<Expression> keys = new ArrayList<Expression>();
+    ArrayList<Expression> values = new ArrayList<Expression>();
     begin = jj_consume_token(OPENING_CURLY_BRACKET);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case STRING_LITERAL:
@@ -1652,7 +1655,9 @@ stringLiteralOnly(key);
       ;
     }
     end = jj_consume_token(CLOSING_CURLY_BRACKET);
-HashLiteral result = new HashLiteral(keys, values);
+keys.trimToSize();
+        values.trimToSize();
+        HashLiteral result = new HashLiteral(keys, values);
         result.setLocation(template, begin, end);
         {if ("" != null) return result;}
     throw new Error("Missing return statement in function");
@@ -2697,17 +2702,16 @@ LibraryLoad result = new LibraryLoad(template, nameExp, ns.image);
   final public Macro Macro() throws ParseException {Token arg, start, end;
     Expression nameExp;
     String name;
-    ArrayList argNames = new ArrayList();
-    HashMap args = new HashMap();
-    ArrayList defNames = new ArrayList();
+    Map<String, Expression> paramNamesWithDefault = new LinkedHashMap<String, Expression>();
     Expression defValue = null;
+    String catchAllParamName = null;
+    boolean isCatchAll = false;
     List lastIteratorBlockContexts;
     int lastBreakableDirectiveNesting;
-    int lastContiunableDirectiveNesting;
+    int lastContinuableDirectiveNesting;
     TemplateElements children;
-    boolean isFunction = false, hasDefaults = false;
-    boolean isCatchAll = false;
-    String catchAll = null;
+    boolean isFunction = false;
+    boolean hasDefaults = false;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case MACRO:{
       start = jj_consume_token(MACRO);
@@ -2727,6 +2731,7 @@ if (inMacro || inFunction) {
             {if (true) throw new ParseException("Macro or function definitions can't be nested into each other.", template, start);}
         }
         if (isFunction) inFunction = true; else inMacro = true;
+        requireArgsSpecialVariable = false;
     nameExp = IdentifierOrStringLiteral();
 name = (nameExp instanceof StringLiteral)
                 ? ((StringLiteral) nameExp).getAsString()
@@ -2767,8 +2772,7 @@ isCatchAll = true;
       case EQUALS:{
         jj_consume_token(EQUALS);
         defValue = Expression();
-defNames.add(arg.image);
-                hasDefaults = true;
+hasDefaults = true;
         break;
         }
       default:
@@ -2784,7 +2788,7 @@ defNames.add(arg.image);
         jj_la1[65] = jj_gen;
         ;
       }
-if (catchAll != null) {
+if (catchAllParamName != null) {
                 {if (true) throw new ParseException(
                 "There may only be one \"catch-all\" parameter in a macro declaration, and it must be the last parameter.",
                 template, arg);}
@@ -2795,16 +2799,15 @@ if (catchAll != null) {
                     "\"Catch-all\" macro parameter may not have a default value.",
                     template, arg);}
                 }
-                catchAll = arg.image;
+                catchAllParamName = arg.image;
             } else {
-                argNames.add(arg.image);
                 if (hasDefaults && defValue == null) {
                     {if (true) throw new ParseException(
                                     "In a macro declaration, parameters without a default value "
                                     + "must all occur before the parameters with default values.",
                     template, arg);}
                 }
-                args.put(arg.image, defValue);
+                paramNamesWithDefault.put(arg.image, defValue);
             }
     }
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -2822,12 +2825,12 @@ if (catchAll != null) {
         iteratorBlockContexts = null;
         if (incompatibleImprovements >= _TemplateAPI.VERSION_INT_2_3_23) {
                 lastBreakableDirectiveNesting = breakableDirectiveNesting;
-                lastContiunableDirectiveNesting = continuableDirectiveNesting;
+                lastContinuableDirectiveNesting = continuableDirectiveNesting;
                 breakableDirectiveNesting = 0;
                 continuableDirectiveNesting = 0;
         } else {
             lastBreakableDirectiveNesting = 0; // Just to prevent uninitialized local variable error later
-            lastContiunableDirectiveNesting = 0;
+            lastContinuableDirectiveNesting = 0;
         }
     children = MixedContentElements();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -2849,11 +2852,12 @@ if (!isFunction) {if (true) throw new ParseException("Expected macro end tag her
 iteratorBlockContexts = lastIteratorBlockContexts;
         if (incompatibleImprovements >= _TemplateAPI.VERSION_INT_2_3_23) {
             breakableDirectiveNesting = lastBreakableDirectiveNesting;
-            continuableDirectiveNesting = lastContiunableDirectiveNesting;
+            continuableDirectiveNesting = lastContinuableDirectiveNesting;
         }
 
         inMacro = inFunction = false;
-        Macro result = new Macro(name, argNames, args, catchAll, isFunction, children);
+        Macro result = new Macro(
+                name, paramNamesWithDefault, catchAllParamName, isFunction, requireArgsSpecialVariable, children);
         result.setLocation(template, start, end);
         template.addMacro(result);
         {if ("" != null) return result;}
@@ -2880,8 +2884,17 @@ CompressedBlock cb = new CompressedBlock(children);
     int pushedCtxCount = 0;
     start = jj_consume_token(UNIFIED_CALL);
     exp = Expression();
-if (exp instanceof Identifier || (exp instanceof Dot && ((Dot) exp).onlyHasIdentifiers())) {
-            startTagNameExp = exp;
+// To allow <@foo.bar?withArgs(...)>...</@foo.bar>, but we also remove superfluous (...):
+        Expression cleanedExp = exp;
+        if (cleanedExp instanceof MethodCall) {
+            Expression methodCallTarget = ((MethodCall) cleanedExp).getTarget();
+            if (methodCallTarget instanceof BuiltInsForCallables.with_argsBI) {
+                cleanedExp = ((BuiltInsForCallables.with_argsBI) methodCallTarget).target;
+            }
+        }
+
+        if (cleanedExp instanceof Identifier || (cleanedExp instanceof Dot && ((Dot) cleanedExp).onlyHasIdentifiers())) {
+            startTagNameExp = cleanedExp;
         } else {
             startTagNameExp = null;
         }
@@ -4804,12 +4817,6 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3_9()
- {
-    if (jj_scan_token(OPEN_PAREN)) return true;
-    return false;
-  }
-
   private boolean jj_3R_66()
  {
     if (jj_3R_81()) return true;
@@ -4836,6 +4843,13 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
+  private boolean jj_3_12()
+ {
+    if (jj_scan_token(ID)) return true;
+    if (jj_scan_token(EQUALS)) return true;
+    return false;
+  }
+
   private boolean jj_3R_64()
  {
     if (jj_3R_79()) return true;
@@ -4851,12 +4865,6 @@ TemplateElement root = children.asSingleElement();
   private boolean jj_3R_95()
  {
     if (jj_scan_token(RAW_STRING)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_43()
- {
-    if (jj_scan_token(ID)) return true;
     return false;
   }
 
@@ -4904,10 +4912,9 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3_12()
+  private boolean jj_3R_43()
  {
     if (jj_scan_token(ID)) return true;
-    if (jj_scan_token(EQUALS)) return true;
     return false;
   }
 
@@ -4951,23 +4958,6 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_75()
- {
-    if (jj_3R_89()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_79()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(97)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(98)) return true;
-    }
-    return false;
-  }
-
   private boolean jj_3R_88()
  {
     if (jj_scan_token(OPEN_PAREN)) return true;
@@ -4976,9 +4966,24 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
+  private boolean jj_3R_75()
+ {
+    if (jj_3R_89()) return true;
+    return false;
+  }
+
   private boolean jj_3R_74()
  {
     if (jj_3R_88()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_114()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(130)) jj_scanpos = xsp;
+    if (jj_3R_113()) return true;
     return false;
   }
 
@@ -4991,6 +4996,17 @@ TemplateElement root = children.asSingleElement();
   private boolean jj_3R_49()
  {
     if (jj_scan_token(PERCENT)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_79()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(97)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(98)) return true;
+    }
     return false;
   }
 
@@ -5035,6 +5051,25 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
+  private boolean jj_3R_112()
+ {
+    if (jj_3R_113()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_114()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_100()
+ {
+    if (jj_scan_token(OPEN_PAREN)) return true;
+    if (jj_3R_98()) return true;
+    if (jj_scan_token(CLOSE_PAREN)) return true;
+    return false;
+  }
+
   private boolean jj_3_2()
  {
     Token xsp;
@@ -5049,11 +5084,16 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_100()
+  private boolean jj_3_17()
  {
-    if (jj_scan_token(OPEN_PAREN)) return true;
-    if (jj_3R_98()) return true;
-    if (jj_scan_token(CLOSE_PAREN)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(79)) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(77)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(76)) return true;
+    }
     return false;
   }
 
@@ -5068,20 +5108,11 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_114()
+  private boolean jj_3R_109()
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(130)) jj_scanpos = xsp;
-    if (jj_3R_113()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_83()
- {
-    if (jj_scan_token(OPEN_BRACKET)) return true;
-    if (jj_3R_98()) return true;
-    if (jj_scan_token(CLOSE_BRACKET)) return true;
+    if (jj_3R_112()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5100,33 +5131,28 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_112()
+  private boolean jj_3R_83()
  {
-    if (jj_3R_113()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_114()) { jj_scanpos = xsp; break; }
-    }
+    if (jj_scan_token(OPEN_BRACKET)) return true;
+    if (jj_3R_98()) return true;
+    if (jj_scan_token(CLOSE_BRACKET)) return true;
     return false;
   }
 
-  private boolean jj_3_17()
+  private boolean jj_3R_87()
  {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(79)) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(77)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(76)) return true;
-    }
+    if (jj_scan_token(OPEN_BRACKET)) return true;
+    if (jj_3R_29()) return true;
+    if (jj_scan_token(CLOSE_BRACKET)) return true;
     return false;
   }
 
-  private boolean jj_3_7()
+  private boolean jj_3R_111()
  {
-    if (jj_scan_token(OR)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(130)) jj_scanpos = xsp;
+    if (jj_3R_29()) return true;
     return false;
   }
 
@@ -5141,52 +5167,15 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_109()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_112()) jj_scanpos = xsp;
-    return false;
-  }
-
-  private boolean jj_3R_87()
- {
-    if (jj_scan_token(OPEN_BRACKET)) return true;
-    if (jj_3R_29()) return true;
-    if (jj_scan_token(CLOSE_BRACKET)) return true;
-    return false;
-  }
-
   private boolean jj_3R_29()
  {
     if (jj_3R_33()) return true;
     return false;
   }
 
-  private boolean jj_3R_41()
+  private boolean jj_3_7()
  {
     if (jj_scan_token(OR)) return true;
-    if (jj_3R_40()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_111()
- {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(130)) jj_scanpos = xsp;
-    if (jj_3R_29()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_33()
- {
-    if (jj_3R_40()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_41()) { jj_scanpos = xsp; break; }
-    }
     return false;
   }
 
@@ -5201,24 +5190,6 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_39()
- {
-    if (jj_scan_token(MINUS)) return true;
-    return false;
-  }
-
-  private boolean jj_3_6()
- {
-    if (jj_scan_token(AND)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_38()
- {
-    if (jj_scan_token(PLUS)) return true;
-    return false;
-  }
-
   private boolean jj_3R_98()
  {
     Token xsp;
@@ -5227,14 +5198,10 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3_1()
+  private boolean jj_3R_41()
  {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(120)) {
-    jj_scanpos = xsp;
-    if (jj_scan_token(121)) return true;
-    }
+    if (jj_scan_token(OR)) return true;
+    if (jj_3R_40()) return true;
     return false;
   }
 
@@ -5255,10 +5222,43 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_51()
+  private boolean jj_3R_33()
+ {
+    if (jj_3R_40()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_41()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  private boolean jj_3R_39()
+ {
+    if (jj_scan_token(MINUS)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_38()
+ {
+    if (jj_scan_token(PLUS)) return true;
+    return false;
+  }
+
+  private boolean jj_3_1()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(120)) {
+    jj_scanpos = xsp;
+    if (jj_scan_token(121)) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3_6()
  {
     if (jj_scan_token(AND)) return true;
-    if (jj_3R_50()) return true;
     return false;
   }
 
@@ -5271,17 +5271,6 @@ TemplateElement root = children.asSingleElement();
     if (jj_3R_39()) return true;
     }
     if (jj_3R_31()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_40()
- {
-    if (jj_3R_50()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_51()) { jj_scanpos = xsp; break; }
-    }
     return false;
   }
 
@@ -5317,6 +5306,13 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
+  private boolean jj_3R_51()
+ {
+    if (jj_scan_token(AND)) return true;
+    if (jj_3R_50()) return true;
+    return false;
+  }
+
   private boolean jj_3R_28()
  {
     if (jj_3R_31()) return true;
@@ -5342,9 +5338,14 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3_5()
+  private boolean jj_3R_40()
  {
-    if (jj_3R_28()) return true;
+    if (jj_3R_50()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_51()) { jj_scanpos = xsp; break; }
+    }
     return false;
   }
 
@@ -5366,21 +5367,34 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
+  private boolean jj_3_13()
+ {
+    if (jj_scan_token(OPEN_PAREN)) return true;
+    return false;
+  }
+
+  private boolean jj_3_5()
+ {
+    if (jj_3R_28()) return true;
+    return false;
+  }
+
   private boolean jj_3R_58()
  {
     if (jj_scan_token(MINUS)) return true;
     return false;
   }
 
-  private boolean jj_3R_106()
+  private boolean jj_3_14()
  {
-    if (jj_3R_28()) return true;
+    if (jj_scan_token(ID)) return true;
+    if (jj_scan_token(EQUALS)) return true;
     return false;
   }
 
-  private boolean jj_3_13()
+  private boolean jj_3R_106()
  {
-    if (jj_scan_token(OPEN_PAREN)) return true;
+    if (jj_3R_28()) return true;
     return false;
   }
 
@@ -5396,12 +5410,6 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_105()
- {
-    if (jj_scan_token(DOT_DOT_ASTERISK)) return true;
-    return false;
-  }
-
   private boolean jj_3R_91()
  {
     if (jj_scan_token(EXISTS)) return true;
@@ -5414,32 +5422,10 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_104()
- {
-    if (jj_scan_token(DOT_DOT_LESS)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_93()
- {
-    if (jj_scan_token(DOT_DOT)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_106()) jj_scanpos = xsp;
-    return false;
-  }
-
   private boolean jj_3R_52()
  {
     if (jj_scan_token(COMMA)) return true;
     if (jj_3R_43()) return true;
-    return false;
-  }
-
-  private boolean jj_3_14()
- {
-    if (jj_scan_token(ID)) return true;
-    if (jj_scan_token(EQUALS)) return true;
     return false;
   }
 
@@ -5463,27 +5449,30 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
+  private boolean jj_3R_105()
+ {
+    if (jj_scan_token(DOT_DOT_ASTERISK)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_104()
+ {
+    if (jj_scan_token(DOT_DOT_LESS)) return true;
+    return false;
+  }
+
   private boolean jj_3R_110()
  {
     if (jj_3R_29()) return true;
     return false;
   }
 
-  private boolean jj_3R_92()
+  private boolean jj_3R_93()
  {
+    if (jj_scan_token(DOT_DOT)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_104()) {
-    jj_scanpos = xsp;
-    if (jj_3R_105()) return true;
-    }
-    if (jj_3R_28()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_59()
- {
-    if (jj_scan_token(EXCLAM)) return true;
+    if (jj_3R_106()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5498,26 +5487,21 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_54()
+  private boolean jj_3R_59()
  {
-    Token xsp;
-    if (jj_3R_59()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_59()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_3R_55()) return true;
+    if (jj_scan_token(EXCLAM)) return true;
     return false;
   }
 
-  private boolean jj_3R_78()
+  private boolean jj_3R_92()
  {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_92()) {
+    if (jj_3R_104()) {
     jj_scanpos = xsp;
-    if (jj_3R_93()) return true;
+    if (jj_3R_105()) return true;
     }
+    if (jj_3R_28()) return true;
     return false;
   }
 
@@ -5547,12 +5531,15 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_62()
+  private boolean jj_3R_54()
  {
-    if (jj_3R_28()) return true;
     Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_78()) jj_scanpos = xsp;
+    if (jj_3R_59()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_59()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -5563,6 +5550,17 @@ TemplateElement root = children.asSingleElement();
     xsp = jj_scanpos;
     if (jj_3R_42()) jj_scanpos = xsp;
     if (jj_scan_token(CLOSE_PAREN)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_78()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_92()) {
+    jj_scanpos = xsp;
+    if (jj_3R_93()) return true;
+    }
     return false;
   }
 
@@ -5587,12 +5585,6 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_46()
- {
-    if (jj_3R_55()) return true;
-    return false;
-  }
-
   private boolean jj_3R_30()
  {
     Token xsp;
@@ -5604,15 +5596,24 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_45()
+  private boolean jj_3R_46()
  {
-    if (jj_3R_54()) return true;
+    if (jj_3R_55()) return true;
     return false;
   }
 
-  private boolean jj_3R_44()
+  private boolean jj_3R_62()
  {
-    if (jj_3R_53()) return true;
+    if (jj_3R_28()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_78()) jj_scanpos = xsp;
+    return false;
+  }
+
+  private boolean jj_3R_45()
+ {
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -5652,17 +5653,9 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_36()
+  private boolean jj_3R_44()
  {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_44()) {
-    jj_scanpos = xsp;
-    if (jj_3R_45()) {
-    jj_scanpos = xsp;
-    if (jj_3R_46()) return true;
-    }
-    }
+    if (jj_3R_53()) return true;
     return false;
   }
 
@@ -5675,6 +5668,20 @@ TemplateElement root = children.asSingleElement();
   private boolean jj_3R_116()
  {
     if (jj_3R_33()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_36()
+ {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_44()) {
+    jj_scanpos = xsp;
+    if (jj_3R_45()) {
+    jj_scanpos = xsp;
+    if (jj_3R_46()) return true;
+    }
+    }
     return false;
   }
 
@@ -5736,13 +5743,6 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
-  private boolean jj_3R_85()
- {
-    if (jj_scan_token(DOT)) return true;
-    if (jj_scan_token(ID)) return true;
-    return false;
-  }
-
   private boolean jj_3R_84()
  {
     if (jj_scan_token(OPEN_PAREN)) return true;
@@ -5786,6 +5786,13 @@ TemplateElement root = children.asSingleElement();
     return false;
   }
 
+  private boolean jj_3R_85()
+ {
+    if (jj_scan_token(DOT)) return true;
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
   private boolean jj_3R_56()
  {
     if (jj_3R_62()) return true;
@@ -5810,6 +5817,12 @@ TemplateElement root = children.asSingleElement();
   private boolean jj_3R_69()
  {
     if (jj_3R_43()) return true;
+    return false;
+  }
+
+  private boolean jj_3_9()
+ {
+    if (jj_scan_token(OPEN_PAREN)) return true;
     return false;
   }
 

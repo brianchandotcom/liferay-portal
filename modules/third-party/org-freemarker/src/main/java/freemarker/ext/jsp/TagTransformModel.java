@@ -59,6 +59,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
         isTryCatchFinally = TryCatchFinally.class.isAssignableFrom(tagClass);
     }
     
+    @Override
     public Writer getWriter(Writer out, Map args) throws TemplateModelException {
         try {
             Tag tag = (Tag) getTagInstance();
@@ -334,6 +335,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
             return pageContext;
         }
         
+        @Override
         public int onStart()
         throws TemplateModelException {
             try {
@@ -372,6 +374,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
             }
         }
         
+        @Override
         public int afterBody()
         throws TemplateModelException {
             try {
@@ -404,6 +407,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
             }
         }
         
+        @Override
         public void onError(Throwable t) throws Throwable {
             if (isTryCatchFinally) {
                 ((TryCatchFinally) tag).doCatch(t);

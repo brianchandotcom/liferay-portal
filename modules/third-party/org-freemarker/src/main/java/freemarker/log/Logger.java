@@ -552,6 +552,7 @@ public abstract class Logger {
         try {
             return (String) AccessController.doPrivileged(
                     new PrivilegedAction() {
+                        @Override
                         public Object run() {
                             return System.getProperty(key, null);
                         }

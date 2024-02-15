@@ -132,7 +132,7 @@ export default function List(props: IFDSViewSectionProps) {
 
 		const fdsListSection: IFDSListSection = await response.json();
 
-		openDefaultSuccessToast();
+		closeModal();
 
 		setListSections(
 			listSections.map((listSection) => {
@@ -150,7 +150,7 @@ export default function List(props: IFDSViewSectionProps) {
 			})
 		);
 
-		closeModal();
+		openDefaultSuccessToast();
 	};
 
 	useEffect(() => {
@@ -160,7 +160,7 @@ export default function List(props: IFDSViewSectionProps) {
 	}, []);
 
 	return (
-		<ClayLayout.ContentCol className="c-gap-4">
+		<ClayLayout.ContentCol className="c-gap-4 list-visualization-mode">
 			<ClayAlert
 				displayType="info"
 				title={`${Liferay.Language.get('info')}:`}
@@ -175,16 +175,13 @@ export default function List(props: IFDSViewSectionProps) {
 				<ClayTable.Head>
 					<ClayTable.Row>
 						<ClayTable.Cell
-							className="list-visualization-mode-label-cell"
+							className="list-section-label"
 							headingCell
 						>
 							{Liferay.Language.get('list-element')}
 						</ClayTable.Cell>
 
-						<ClayTable.Cell
-							className="list-visualization-mode-value-cell"
-							headingCell
-						>
+						<ClayTable.Cell className="field-name" headingCell>
 							{Liferay.Language.get('field')}
 						</ClayTable.Cell>
 					</ClayTable.Row>
@@ -235,6 +232,7 @@ function ListSection({
 
 	const onClick = () => {
 		openModal({
+			className: 'list-visualization-mode-field-select-modal',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<FieldSelectModalContent
 					{...modalProps}
@@ -258,11 +256,11 @@ function ListSection({
 
 	return (
 		<ClayTable.Row>
-			<ClayTable.Cell className="list-visualization-mode-label-cell">
+			<ClayTable.Cell className="list-section-label">
 				<strong>{label}</strong>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell className="list-visualization-mode-value-cell">
+			<ClayTable.Cell className="field-name">
 				<ClayInput.Group small>
 					<ClayInput.GroupItem>
 						<p

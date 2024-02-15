@@ -53,7 +53,7 @@ export default function VisualizationModes(props: IFDSViewSectionProps) {
 	] = useState(0);
 
 	return (
-		<ClayLayout.ContainerFluid className="mt-3">
+		<ClayLayout.ContainerFluid className="mt-3 visualization-modes">
 			<ClayLayout.Sheet>
 				<ClayLayout.SheetHeader className="mb-4">
 					<h2 className="mb-0">

@@ -7,6 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {DEFAULT_LABEL} from '../utils/constants';
 
 export class DataSetsPage {
 	readonly apiHelpers: ApiHelpers;
@@ -26,6 +27,7 @@ export class DataSetsPage {
 		readonly saveButton: Locator;
 	};
 	readonly page: Page;
+	private readonly pageContainer: Locator;
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
@@ -51,10 +53,11 @@ export class DataSetsPage {
 			saveButton: page.getByRole('button', {name: 'Save'}),
 		};
 		this.page = page;
+		this.pageContainer = page.locator('.fds-entries');
 	}
 
 	async createDataSet({
-		name = 'Data Set Sample',
+		name = DEFAULT_LABEL.DATA_SET,
 		restApplication = '/data-set-manager/fields',
 		restEndpoint = '/',
 		restSchema = 'FDSField',
@@ -102,28 +105,16 @@ export class DataSetsPage {
 	async goto() {
 		await this.applicationsMenuPage.goToDataSetManager();
 
-		await this.page
-			.getByRole('heading', {
-				name: 'Data Sets',
-			})
-			.waitFor();
+		await this.pageContainer.waitFor();
 	}
 
-	async gotoDataSet(name = 'Data Set Sample') {
-		await this.page
-			.locator('.data-set-content-wrapper')
-			.getByRole('link', {name})
-			.first()
-			.click();
+	async gotoDataSet(name = DEFAULT_LABEL.DATA_SET) {
+		await this.pageContainer.waitFor();
 
-		await this.page
-			.getByRole('heading', {
-				name,
-			})
-			.waitFor();
+		await this.pageContainer.getByRole('link', {name}).first().click();
 	}
 
-	async deleteDataSet(name = 'Data Set Sample') {
+	async deleteDataSet(name = DEFAULT_LABEL.DATA_SET) {
 		await this.goto();
 
 		const datasetTestRow = await this.page

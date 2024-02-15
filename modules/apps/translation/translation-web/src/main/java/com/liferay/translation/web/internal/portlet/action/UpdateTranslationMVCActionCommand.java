@@ -17,6 +17,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -96,6 +97,12 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 					InfoItemObjectProvider.class,
 					infoItemReference.getClassName(),
 					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+			if (infoItemObjectProvider == null) {
+				throw new NoSuchModelException(
+					"No info item object provider found for " +
+						infoItemReference.getClassName());
+			}
 
 			long modifiedDateTime = ParamUtil.getLong(
 				actionRequest, "modifiedDateTime");

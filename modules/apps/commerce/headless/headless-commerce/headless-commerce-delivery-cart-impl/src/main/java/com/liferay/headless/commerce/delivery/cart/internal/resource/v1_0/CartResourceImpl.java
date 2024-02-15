@@ -206,8 +206,15 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		Cart cart = _toCart(commerceOrder);
 
-		cart.setCartItems(_getValidatedCommerceOrderItems(commerceOrder, cart));
-		cart.setValid(true);
+		CommerceOrder finalCommerceOrder = commerceOrder;
+
+		Cart finalCart = cart;
+
+		cart.setCartItems(
+			() -> _getValidatedCommerceOrderItems(
+				finalCommerceOrder, finalCart));
+
+		cart.setValid(() -> true);
 
 		try {
 			commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
@@ -216,39 +223,43 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			cart = _toCart(commerceOrder);
 		}
 		catch (Exception exception) {
-			cart.setValid(false);
+			cart.setValid(() -> false);
 
 			if (exception.getCause() instanceof
 					CommerceOrderBillingAddressException) {
 
-				cart.setErrorMessages(new String[] {"Invalid billing address"});
+				cart.setErrorMessages(
+					() -> new String[] {"Invalid billing address"});
 			}
 
 			if (exception.getCause() instanceof
 					CommerceOrderGuestCheckoutException) {
 
-				cart.setErrorMessages(new String[] {"Invalid guest checkout"});
+				cart.setErrorMessages(
+					() -> new String[] {"Invalid guest checkout"});
 			}
 
 			if (exception.getCause() instanceof CommerceOrderPriceException) {
-				cart.setErrorMessages(new String[] {"Invalid price"});
+				cart.setErrorMessages(() -> new String[] {"Invalid price"});
 			}
 
 			if (exception.getCause() instanceof
 					CommerceOrderShippingAddressException) {
 
 				cart.setErrorMessages(
-					new String[] {"Invalid shipping address"});
+					() -> new String[] {"Invalid shipping address"});
 			}
 
 			if (exception.getCause() instanceof
 					CommerceOrderShippingMethodException) {
 
-				cart.setErrorMessages(new String[] {"Invalid shipping method"});
+				cart.setErrorMessages(
+					() -> new String[] {"Invalid shipping method"});
 			}
 
 			if (exception.getCause() instanceof CommerceOrderStatusException) {
-				cart.setErrorMessages(new String[] {"Invalid cart status"});
+				cart.setErrorMessages(
+					() -> new String[] {"Invalid cart status"});
 			}
 		}
 
@@ -645,12 +656,14 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 					}
 				}
 
-				cartItem.setValid(cartItemValid);
+				boolean finalCartItemValid = cartItemValid;
 
-				cart.setValid(cartItemValid);
+				cartItem.setValid(() -> finalCartItemValid);
+
+				cart.setValid(() -> finalCartItemValid);
 
 				cartItem.setErrorMessages(
-					transformToArray(
+					() -> transformToArray(
 						commerceOrderItemValidatorResults,
 						CommerceOrderValidatorResult::getLocalizedMessage,
 						String.class));

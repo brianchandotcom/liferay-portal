@@ -17,15 +17,24 @@ export const test = mergeTests(
 	loginTest
 );
 
-test('Assert table columns', async ({dataSetsPage, page}) => {
+test('Assert table column labels', async ({dataSetsPage, page}) => {
 	await dataSetsPage.goto();
 	await dataSetsPage.createDataSet();
 
-	const tableColumns = await page
+	const tableColumnLabels = await page
 		.locator('.dnd-thead > .dnd-tr')
 		.first()
 		.locator('.dnd-th')
-		.count();
+		.allInnerTexts();
 
-	await expect(tableColumns).toBe(6);
+	const expectedLabels = [
+		'Name',
+		'REST Application',
+		'REST Schema',
+		'REST Endpoint',
+		'Modified Date',
+		'',
+	];
+
+	await expect(tableColumnLabels).toEqual(expectedLabels);
 });

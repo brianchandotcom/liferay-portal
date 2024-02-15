@@ -7,12 +7,42 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {useSelector} from '../../contexts/StoreContext';
+import {useDispatch, useSelector} from '../../contexts/StoreContext';
+import redo from '../../thunks/redo';
+import undo from '../../thunks/undo';
 import UndoHistory from './UndoHistory';
 
-export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
+export function useUndoRedo() {
+	const dispatch = useDispatch();
+	const store = useSelector((state) => state);
+
+	const onUndo = () => {
+		dispatch(undo({store}));
+	};
+
+	const onRedo = () => {
+		dispatch(redo({store}));
+	};
+
+	return {onRedo, onUndo};
+}
+
+export function useDisabledUndo() {
 	const undoHistory = useSelector((state) => state.undoHistory);
+
+	return !undoHistory || !undoHistory.length;
+}
+
+export function useDisabledRedo() {
 	const redoHistory = useSelector((state) => state.redoHistory);
+
+	return !redoHistory || !redoHistory.length;
+}
+
+export default function Undo() {
+	const disabledRedo = useDisabledRedo();
+	const disabledUndo = useDisabledUndo();
+	const {onRedo, onUndo} = useUndoRedo();
 
 	return (
 		<>
@@ -20,7 +50,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('undo')}
 					className="btn-monospaced"
-					disabled={!undoHistory || !undoHistory.length}
+					disabled={disabledUndo}
 					displayType="secondary"
 					onClick={onUndo}
 					size="sm"
@@ -31,7 +61,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('redo')}
 					className="btn-monospaced"
-					disabled={!redoHistory || !redoHistory.length}
+					disabled={disabledRedo}
 					displayType="secondary"
 					onClick={onRedo}
 					size="sm"

@@ -21,8 +21,6 @@ import {useSelectItem} from '../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanPublish from '../selectors/selectCanPublish';
-import redo from '../thunks/redo';
-import undo from '../thunks/undo';
 import {useDropClear} from '../utils/drag_and_drop/useDragAndDrop';
 import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
@@ -155,14 +153,6 @@ function ToolbarBody({className}) {
 		}
 	};
 
-	const onUndo = () => {
-		dispatch(undo({store}));
-	};
-
-	const onRedo = () => {
-		dispatch(redo({store}));
-	};
-
 	const deselectItem = (event) => {
 		if (event.target === event.currentTarget) {
 			selectItem(null);
@@ -286,7 +276,7 @@ function ToolbarBody({className}) {
 						'd-lg-flex d-none': Liferay.FeatureFlags['LPD-10988'],
 					})}
 				>
-					<Undo onRedo={onRedo} onUndo={onUndo} />
+					<Undo />
 				</li>
 
 				<li className="nav-item">

@@ -871,7 +871,7 @@ definition {
 		task ("Given 20 is the default pagination set") {
 			CountriesManagement.openCountriesManagementPortlet();
 
-			Pagination.viewResults(results = "Showing 1 to 20 of 247 entries.");
+			Pagination.viewResults(results = "Showing 1 to 20 of 249 entries.");
 		}
 
 		task ("When pagination is changed to 4") {
@@ -885,7 +885,7 @@ definition {
 
 			LexiconEntry.viewNoEntry(rowEntry = "American Samoa");
 
-			Pagination.viewResults(results = "Showing 1 to 4 of 247 entries.");
+			Pagination.viewResults(results = "Showing 1 to 4 of 249 entries.");
 		}
 
 		task ("When pagination is changed to 8") {
@@ -899,7 +899,7 @@ definition {
 
 			LexiconEntry.viewNoEntry(rowEntry = "Antarctica");
 
-			Pagination.viewResults(results = "Showing 1 to 8 of 247 entries.");
+			Pagination.viewResults(results = "Showing 1 to 8 of 249 entries.");
 		}
 	}
 

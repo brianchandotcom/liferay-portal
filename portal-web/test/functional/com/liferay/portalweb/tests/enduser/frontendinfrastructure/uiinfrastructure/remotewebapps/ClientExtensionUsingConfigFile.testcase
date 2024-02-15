@@ -86,7 +86,7 @@ definition {
 		}
 
 		task ("Then My Pretty IFrame is displayed correctly") {
-			AssertElementPresent(locator1 = "//iframe[contains(@src,'https://liferay.github.io/liferay-frontend-projects/index.html?b=2&a=1')]");
+			AssertElementPresent(locator1 = "//iframe[contains(@src,'https://liferay.github.io/liferay-frontend-projects/index.html?') and contains(@src,'a=1') and contains(@src, 'b=2')]");
 		}
 	}
 

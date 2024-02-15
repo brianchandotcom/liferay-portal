@@ -17,23 +17,31 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryService;
+import com.liferay.translation.url.provider.TranslationURLProvider;
 import com.liferay.translation.web.internal.helper.TranslationRequestHelper;
 
 import java.util.ArrayList;
@@ -117,6 +125,11 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 						SessionErrors.add(
 							actionRequest,
 							"anotherUserHasMadeChangesSinceYouStartedEditing");
+						sendRedirect(
+							actionRequest, actionResponse,
+							_getRedirect(actionRequest, className, classPK));
+
+						return;
 					}
 				}
 			}
@@ -256,6 +269,32 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		return infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 	}
 
+	private String _getRedirect(
+			ActionRequest actionRequest, String className, long classPK)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return PortletURLBuilder.create(
+			_translationURLProvider.getTranslateURL(
+				themeDisplay.getScopeGroupId(),
+				_portal.getClassNameId(className), classPK,
+				RequestBackedPortletURLFactoryUtil.create(actionRequest))
+		).setRedirect(
+			ParamUtil.getString(actionRequest, "redirect")
+		).setPortletResource(
+			() -> {
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				return portletDisplay.getId();
+			}
+		).setParameter(
+			"backURLTitle", ParamUtil.getString(actionRequest, "backURLTitle")
+		).buildString();
+	}
+
 	private String _getSourceLanguageId(ActionRequest actionRequest) {
 		return ParamUtil.getString(actionRequest, "sourceLanguageId");
 	}
@@ -281,9 +320,15 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private TranslationEntryService _translationEntryService;
+
+	@Reference
+	private TranslationURLProvider _translationURLProvider;
 
 }

@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.internal.search.spi.model.index.contributor;
 
+import com.liferay.document.library.internal.configuration.DLIndexerConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -21,6 +22,7 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -52,7 +54,9 @@ import java.nio.charset.StandardCharsets;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,6 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
+	configurationPid = "com.liferay.document.library.internal.configuration.DLIndexerConfiguration",
 	property = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
 	service = ModelDocumentContributor.class
 )
@@ -165,6 +170,12 @@ public class DLFileEntryModelDocumentContributor
 		}
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_dlIndexerConfiguration = ConfigurableUtil.createConfigurable(
+			DLIndexerConfiguration.class, properties);
+	}
+
 	private void _addFile(
 		Document document, String fieldName, DLFileEntry dlFileEntry) {
 
@@ -256,7 +267,8 @@ public class DLFileEntryModelDocumentContributor
 	private String _extractText(DLFileEntry dlFileEntry)
 		throws IOException, PortalException {
 
-		if (_dlStore.hasFile(
+		if (_dlIndexerConfiguration.cacheTextExtraction() &&
+			_dlStore.hasFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), _getIndexVersionLabel(dlFileEntry))) {
 
@@ -276,7 +288,9 @@ public class DLFileEntryModelDocumentContributor
 		String text = _textExtractor.extractText(
 			inputStream, PropsValues.DL_FILE_INDEXING_MAX_SIZE);
 
-		if (Validator.isNotNull(text)) {
+		if (_dlIndexerConfiguration.cacheTextExtraction() &&
+			Validator.isNotNull(text)) {
+
 			_dlStore.addFile(
 				DLStoreRequest.builder(
 					dlFileEntry.getCompanyId(),
@@ -346,6 +360,8 @@ public class DLFileEntryModelDocumentContributor
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	private volatile DLIndexerConfiguration _dlIndexerConfiguration;
 
 	@Reference
 	private DLStore _dlStore;

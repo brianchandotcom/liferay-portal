@@ -7,7 +7,6 @@ package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.display.context.AddRankingDisplayContext;
 
@@ -45,8 +44,5 @@ public class AddResultsRankingsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private Portal _portal;
 
 }

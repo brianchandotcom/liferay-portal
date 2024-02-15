@@ -64,7 +64,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -111,7 +110,7 @@ public class S3Store implements Store {
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		String key = _s3KeyTransformer.getDirectoryKey(
+		String key = S3KeyTransformerUtil.getDirectoryKey(
 			companyId, repositoryId, dirName);
 
 		deleteObjects(key);
@@ -123,7 +122,7 @@ public class S3Store implements Store {
 		String versionLabel) {
 
 		try {
-			String key = _s3KeyTransformer.getFileVersionKey(
+			String key = S3KeyTransformerUtil.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 
 			DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(
@@ -179,10 +178,11 @@ public class S3Store implements Store {
 		String key = null;
 
 		if (Validator.isNull(dirName)) {
-			key = _s3KeyTransformer.getRepositoryKey(companyId, repositoryId);
+			key = S3KeyTransformerUtil.getRepositoryKey(
+				companyId, repositoryId);
 		}
 		else {
-			key = _s3KeyTransformer.getDirectoryKey(
+			key = S3KeyTransformerUtil.getDirectoryKey(
 				companyId, repositoryId, dirName);
 		}
 
@@ -195,7 +195,7 @@ public class S3Store implements Store {
 		for (int i = 0; i < fileNames.length; i++) {
 			S3ObjectSummary s3ObjectSummary = iterator.next();
 
-			fileNames[i] = _s3KeyTransformer.getFileName(
+			fileNames[i] = S3KeyTransformerUtil.getFileName(
 				s3ObjectSummary.getKey());
 		}
 
@@ -213,7 +213,7 @@ public class S3Store implements Store {
 				companyId, repositoryId, fileName);
 		}
 
-		String key = _s3KeyTransformer.getFileVersionKey(
+		String key = S3KeyTransformerUtil.getFileVersionKey(
 			companyId, repositoryId, fileName, versionLabel);
 
 		GetObjectMetadataRequest getObjectMetadataRequest =
@@ -233,7 +233,7 @@ public class S3Store implements Store {
 	public String[] getFileVersions(
 		long companyId, long repositoryId, String fileName) {
 
-		String key = _s3KeyTransformer.getFileKey(
+		String key = S3KeyTransformerUtil.getFileKey(
 			companyId, repositoryId, fileName);
 
 		List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(key);
@@ -273,7 +273,7 @@ public class S3Store implements Store {
 					companyId, repositoryId, fileName);
 			}
 
-			String key = _s3KeyTransformer.getFileVersionKey(
+			String key = S3KeyTransformerUtil.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 
 			return _amazonS3.doesObjectExist(_bucketName, key);
@@ -503,7 +503,7 @@ public class S3Store implements Store {
 			long companyId, long repositoryId, String fileName)
 		throws NoSuchFileException {
 
-		String key = _s3KeyTransformer.getFileKey(
+		String key = S3KeyTransformerUtil.getFileKey(
 			companyId, repositoryId, fileName);
 
 		List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(key);
@@ -542,7 +542,7 @@ public class S3Store implements Store {
 					companyId, repositoryId, fileName);
 			}
 
-			String key = _s3KeyTransformer.getFileVersionKey(
+			String key = S3KeyTransformerUtil.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 
 			GetObjectRequest getObjectRequest = new GetObjectRequest(
@@ -643,7 +643,7 @@ public class S3Store implements Store {
 		Upload upload = null;
 
 		try {
-			String key = _s3KeyTransformer.getFileVersionKey(
+			String key = S3KeyTransformerUtil.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 
 			PutObjectRequest putObjectRequest = new PutObjectRequest(
@@ -720,10 +720,6 @@ public class S3Store implements Store {
 	private AmazonS3 _amazonS3;
 	private AWSCredentialsProvider _awsCredentialsProvider;
 	private String _bucketName;
-
-	@Reference
-	private S3KeyTransformer _s3KeyTransformer;
-
 	private StorageClass _storageClass;
 	private TransferManager _transferManager;
 

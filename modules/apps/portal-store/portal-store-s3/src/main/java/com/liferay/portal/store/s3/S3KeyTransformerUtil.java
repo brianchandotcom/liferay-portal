@@ -9,23 +9,18 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Edward C. Han
  */
-@Component(service = S3KeyTransformer.class)
-public class S3KeyTransformerImpl implements S3KeyTransformer {
+public class S3KeyTransformerUtil {
 
-	@Override
-	public String getDirectoryKey(
+	public static String getDirectoryKey(
 		long companyId, long repositoryId, String folderName) {
 
 		return getFileKey(companyId, repositoryId, folderName);
 	}
 
-	@Override
-	public String getFileKey(
+	public static String getFileKey(
 		long companyId, long repositoryId, String fileName) {
 
 		return StringBundler.concat(
@@ -33,8 +28,7 @@ public class S3KeyTransformerImpl implements S3KeyTransformer {
 			getNormalizedFileName(fileName));
 	}
 
-	@Override
-	public String getFileName(String key) {
+	public static String getFileName(String key) {
 
 		// Convert /${companyId}/${repositoryId}/${dirName}/${fileName}
 		// /${versionLabel} to ${dirName}/${fileName}
@@ -48,8 +42,7 @@ public class S3KeyTransformerImpl implements S3KeyTransformer {
 		return key.substring(x + 1, y);
 	}
 
-	@Override
-	public String getFileVersionKey(
+	public static String getFileVersionKey(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {
 
@@ -58,8 +51,7 @@ public class S3KeyTransformerImpl implements S3KeyTransformer {
 			getNormalizedFileName(fileName), StringPool.SLASH, versionLabel);
 	}
 
-	@Override
-	public String getNormalizedFileName(String fileName) {
+	public static String getNormalizedFileName(String fileName) {
 		String normalizedFileName = fileName;
 
 		if (!fileName.startsWith(StringPool.SLASH)) {
@@ -74,13 +66,13 @@ public class S3KeyTransformerImpl implements S3KeyTransformer {
 		return normalizedFileName;
 	}
 
-	@Override
-	public String getRepositoryKey(long companyId, long repositoryId) {
+	public static String getRepositoryKey(long companyId, long repositoryId) {
 		return companyId + StringPool.SLASH + repositoryId;
 	}
 
-	@Override
-	public String moveKey(String key, String oldPrefix, String newPrefix) {
+	public static String moveKey(
+		String key, String oldPrefix, String newPrefix) {
+
 		String name = key.substring(oldPrefix.length());
 
 		return newPrefix.concat(name);

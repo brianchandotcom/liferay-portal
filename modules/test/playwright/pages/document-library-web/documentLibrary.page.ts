@@ -37,6 +37,10 @@ export class DocumentLibraryPage {
 		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
 	}
 
+	async new() {
+		await this.page.getByRole('button', { name: 'New' }).click();
+	}
+
 	async openOptionsMenu() {
 		await this.optionsMenu
 			.and(this.page.locator('[aria-haspopup]'))

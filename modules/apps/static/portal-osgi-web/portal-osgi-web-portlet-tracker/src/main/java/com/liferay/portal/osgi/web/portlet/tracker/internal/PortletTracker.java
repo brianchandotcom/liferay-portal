@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DelegateProxyFactory;
@@ -177,16 +179,23 @@ public class PortletTracker
 		FutureTask<com.liferay.portal.kernel.model.Portlet> futureTask =
 			new FutureTask<>(
 				() -> {
-					com.liferay.portal.kernel.model.Portlet addedPortletModel =
-						_addingPortlet(
-							serviceReference, portlet, finalPortletName,
-							finalPortletId);
+					try {
+						com.liferay.portal.kernel.model.Portlet
+							addedPortletModel = TransactionInvokerUtil.invoke(
+								_transactionConfig,
+								() -> _addingPortlet(
+									serviceReference, portlet, finalPortletName,
+									finalPortletId));
 
-					if (addedPortletModel == null) {
-						_bundleContext.ungetService(serviceReference);
+						if (addedPortletModel == null) {
+							_bundleContext.ungetService(serviceReference);
+						}
+
+						return addedPortletModel;
 					}
-
-					return addedPortletModel;
+					catch (Throwable throwable) {
+						return ReflectionUtil.throwException(throwable);
+					}
 				});
 
 		if (_parallel &&
@@ -1453,6 +1462,11 @@ public class PortletTracker
 				String.valueOf(WindowState.MAXIMIZED),
 				String.valueOf(WindowState.MINIMIZED),
 				String.valueOf(WindowState.NORMAL)));
+	private static final TransactionConfig _transactionConfig =
+		new TransactionConfig.Builder(
+		).setRollbackForClasses(
+			Exception.class
+		).build();
 
 	@Reference
 	private BeanProperties _beanProperties;

@@ -303,10 +303,8 @@ public class BatchEngineBrokerTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		Group globalGroup = company.getGroup();
-
 		_testExportSiteScopeObjectEntryJSONT(
-			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_2);
+			company.getGroupId(), _OBJECT_ENTRY_ERC_2);
 
 		// New group
 

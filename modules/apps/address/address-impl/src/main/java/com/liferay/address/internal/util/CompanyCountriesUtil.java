@@ -104,9 +104,6 @@ public class CompanyCountriesUtil {
 			CountryLocalService countryLocalService, Connection connection)
 		throws Exception {
 
-		updateRegionCounter(connection, counterLocalService);
-		updateRegionLocalizationCounter(connection, counterLocalService);
-
 		int count = countryLocalService.getCompanyCountriesCount(
 			company.getCompanyId());
 
@@ -121,6 +118,9 @@ public class CompanyCountriesUtil {
 
 			return;
 		}
+
+		updateRegionCounter(connection, counterLocalService);
+		updateRegionLocalizationCounter(connection, counterLocalService);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

@@ -154,7 +154,7 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		if (dataSource.getDataSourceId() == null) {
 			dataSource.setDataSourceId(
-				analyticsConfiguration.liferayAnalyticsDataSourceId());
+				analyticsConfiguration::liferayAnalyticsDataSourceId);
 		}
 		else if (!Objects.equals(
 					dataSource.getDataSourceId(),

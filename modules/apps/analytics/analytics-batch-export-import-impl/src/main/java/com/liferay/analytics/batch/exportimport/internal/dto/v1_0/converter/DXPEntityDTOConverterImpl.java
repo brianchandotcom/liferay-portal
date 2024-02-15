@@ -426,7 +426,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				if (StringUtil.equals(field.getName(), "name")) {
 					Group group = (Group)baseModel;
 
-					field.setValue(group.getNameCurrentValue());
+					field.setValue(group::getNameCurrentValue);
 
 					break;
 				}
@@ -438,11 +438,11 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 			Field field = new Field();
 
-			field.setName("parentOrganizationName");
+			field.setName(() -> "parentOrganizationName");
 
 			Organization organization = (Organization)baseModel;
 
-			field.setValue(organization.getParentOrganizationName());
+			field.setValue(organization::getParentOrganizationName);
 
 			fields.add(field);
 		}
@@ -581,20 +581,27 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 		DXPEntity dxpEntity = new DXPEntity();
 
-		if (expandoFields == null) {
-			expandoFields = new ExpandoField[0];
-		}
+		dxpEntity.setExpandoFields(
+			() -> {
+				if (expandoFields != null) {
+					return expandoFields;
+				}
 
-		dxpEntity.setExpandoFields(expandoFields);
+				return new ExpandoField[0];
+			});
 
-		if (fields == null) {
-			fields = new Field[0];
-		}
+		dxpEntity.setFields(
+			() -> {
+				if (fields != null) {
+					return fields;
+				}
 
-		dxpEntity.setFields(fields);
-		dxpEntity.setId(id);
-		dxpEntity.setModifiedDate(modifiedDate);
-		dxpEntity.setType(type);
+				return new Field[0];
+			});
+
+		dxpEntity.setId(() -> id);
+		dxpEntity.setModifiedDate(() -> modifiedDate);
+		dxpEntity.setType(() -> type);
 
 		return dxpEntity;
 	}

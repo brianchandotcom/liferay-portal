@@ -6,7 +6,7 @@ import RecommendationJobRunsQuery from '../queries/RecommendationJobRunsQuery';
 import TrainingItemsCard from '../components/TrainingItemsCard';
 import withRecommendation from 'shared/hoc/WithRecommendation';
 import {addAlert} from 'shared/actions/alerts';
-import {Alert, Router} from 'shared/types';
+import {Alert} from 'shared/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
@@ -18,58 +18,32 @@ import {
 	RECOMMENDATION_DELETE_MUTATION,
 	RECOMMENDATION_RUN_MUTATION
 } from '../queries/RecommendationMutation';
-import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useMutation, useQuery} from '@apollo/react-hooks';
-import {User} from 'shared/util/records';
-import {withCurrentUser, withHistory} from 'shared/hoc';
+import {useParams} from 'react-router-dom';
+import {useTimeZone} from 'shared/hooks/useTimeZone';
+import {withHistory} from 'shared/hoc';
 
 const {
 	pagination: {orderDescending}
 } = Constants;
-const connector = connect(
-	(
-		store: RootState,
-		{
-			router: {
-				params: {groupId}
-			}
-		}: {router: Router}
-	) => ({
-		timeZoneId: store.getIn([
-			'projects',
-			groupId,
-			'data',
-			'timeZone',
-			'timeZoneId'
-		])
-	}),
-	{addAlert, close, open}
-);
+const connector = connect(null, {addAlert, close, open});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IViewProps extends PropsFromRedux {
-	currentUser: User;
 	history: {
 		push: (value: string) => void;
 	};
 	job: Job;
-	router: Router;
 }
 
-const View: React.FC<IViewProps> = ({
-	addAlert,
-	close,
-	currentUser,
-	history,
-	job,
-	open,
-	router,
-	timeZoneId
-}) => {
-	const {groupId, jobId} = router.params;
+const View: React.FC<IViewProps> = ({addAlert, close, history, job, open}) => {
+	const {groupId, jobId} = useParams();
+	const {timeZoneId} = useTimeZone();
+	const currentUser = useCurrentUser();
 
 	const {data: jobRuns, loading} = useQuery(RecommendationJobRunsQuery, {
 		variables: {
@@ -282,8 +256,8 @@ const View: React.FC<IViewProps> = ({
 					pageTitle={name}
 				>
 					<OutputVersionsCard
+						jobId={jobId}
 						nextRunDate={get(job, 'nextRunDate')}
-						router={router}
 						runFrequency={get(job, 'runFrequency')}
 						timeZoneId={timeZoneId}
 					/>
@@ -294,9 +268,4 @@ const View: React.FC<IViewProps> = ({
 	);
 };
 
-export default compose<any>(
-	withRecommendation,
-	withHistory,
-	withCurrentUser,
-	connector
-)(View);
+export default compose<any>(withRecommendation, withHistory, connector)(View);

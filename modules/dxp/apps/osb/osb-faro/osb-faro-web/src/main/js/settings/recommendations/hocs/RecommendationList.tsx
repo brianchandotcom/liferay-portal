@@ -43,10 +43,9 @@ import {RECOMMENDATION_DELETE_MUTATION} from '../queries/RecommendationMutation'
 import {RootState} from 'shared/store';
 import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
-import {withCurrentUser} from 'shared/hoc';
 
 const {
 	pagination: {cur: defaultPage}
@@ -68,7 +67,6 @@ const connector = connect(
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IRecommendationListProps extends PropsFromRedux {
-	currentUser: User;
 	groupId: string;
 	history: {
 		push: (value: string) => void;
@@ -79,7 +77,6 @@ interface IRecommendationListProps extends PropsFromRedux {
 const RecommendationList: React.FC<IRecommendationListProps> = ({
 	addAlert,
 	close,
-	currentUser,
 	groupId,
 	history,
 	open,
@@ -104,6 +101,8 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 	const [deleteRecommendationJobs] = useMutation(
 		RECOMMENDATION_DELETE_MUTATION
 	);
+
+	const currentUser = useCurrentUser();
 
 	const singleSelectedItem =
 		selectedItems.size === 1 ? selectedItems.first() : null;
@@ -352,7 +351,6 @@ const RecommendationList: React.FC<IRecommendationListProps> = ({
 };
 
 export default compose<any>(
-	withCurrentUser,
 	withSelectionProvider,
 	connector
 )(RecommendationList);

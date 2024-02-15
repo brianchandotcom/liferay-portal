@@ -1,6 +1,6 @@
 import {Record} from 'immutable';
 
-interface ITimeZone {
+export interface ITimeZone {
 	country: string;
 	displayTimeZone: string;
 	timeZoneId: string;

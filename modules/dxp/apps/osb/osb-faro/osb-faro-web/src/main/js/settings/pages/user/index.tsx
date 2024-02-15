@@ -9,10 +9,9 @@ import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {lazy, Suspense, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
-import {compose, withCurrentUser} from 'shared/hoc';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
-import {Switch, withRouter} from 'react-router-dom';
-import {User as UserRecord} from 'shared/util/records';
+import {Switch, useParams} from 'react-router-dom';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {UserStatuses} from 'shared/util/constants';
 
 const UserList = lazy(
@@ -22,16 +21,9 @@ const UserRequest = lazy(
 	() => import(/* webpackChunkName: "UserRequest" */ './UserRequest')
 );
 
-interface IUserProps extends React.HTMLAttributes<HTMLElement> {
-	currentUser: UserRecord;
-	groupId: string;
-}
-
-export const User: React.FC<IUserProps> = ({
-	className,
-	currentUser,
-	groupId
-}) => {
+export const User = ({className}) => {
+	const {groupId} = useParams();
+	const currentUser = useCurrentUser();
 	const [userRequest, setUserRequest] = useState<number>(0);
 
 	const onSetUserRequest = userRequest => setUserRequest(userRequest);
@@ -118,4 +110,4 @@ export const User: React.FC<IUserProps> = ({
 	);
 };
 
-export default compose<any>(withRouter, withCurrentUser)(User);
+export default User;

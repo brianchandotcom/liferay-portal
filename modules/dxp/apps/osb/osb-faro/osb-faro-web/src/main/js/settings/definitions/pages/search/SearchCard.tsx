@@ -12,13 +12,13 @@ import React, {useRef} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert, Modal} from 'shared/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose, withCurrentUser, withHistory} from 'shared/hoc';
+import {compose, withHistory} from 'shared/hoc';
 import {connect} from 'react-redux';
 import {FieldArray, Formik, FormikTouched, FormikValues} from 'formik';
 import {Routes, toRoute} from 'shared/util/router';
 import {sequence} from 'shared/util/promise';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useMutation, useQuery} from '@apollo/react-hooks';
-import {User} from 'shared/util/records';
 import {WrapSafeResults} from 'shared/hoc/util';
 
 const QUERY_STRING_SIZE_LIMIT = 512;
@@ -27,7 +27,6 @@ const SEARCH_QUERY_STRINGS_KEY = 'search-query-strings';
 interface ISearchCardProps {
 	addAlert: Alert.AddAlert;
 	close: Modal.close;
-	currentUser: User;
 	groupId: string;
 	history: {
 		push: (path: string) => void;
@@ -67,11 +66,11 @@ const removeSpecialCharacters = (originalValue: string): string =>
 export const SearchCard: React.FC<ISearchCardProps> = ({
 	addAlert,
 	close,
-	currentUser,
 	groupId,
 	history,
 	open
 }) => {
+	const currentUser = useCurrentUser();
 	const {data: searchQueryStringsData, error, loading} = useQuery(
 		PreferenceQuery,
 		{
@@ -326,7 +325,6 @@ export const SearchCard: React.FC<ISearchCardProps> = ({
 };
 
 export default compose<any>(
-	withCurrentUser,
 	withHistory,
 	connect(null, {addAlert, close, open})
 )(SearchCard);

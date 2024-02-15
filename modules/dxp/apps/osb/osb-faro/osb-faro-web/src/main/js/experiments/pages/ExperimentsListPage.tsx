@@ -5,8 +5,6 @@ import ExperimentListCard from '../hocs/ExperimentListCard';
 import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
-import {compose, withCurrentUser} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
 import {
 	createOrderIOMap,
 	getGraphQLVariablesFromPagination,
@@ -14,62 +12,24 @@ import {
 } from 'shared/util/pagination';
 import {EXPERIMENT_LIST_QUERY} from '../queries/ExperimentQuery';
 import {get} from 'lodash';
-import {IBasePageContext, Router} from 'shared/types';
-import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSource} from 'shared/hooks/useDataSource';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
+import {useTimeZone} from 'shared/hooks/useTimeZone';
 
-const connector = connect(
-	(
-		store: RootState,
-		{
-			router: {
-				params: {groupId}
-			}
-		}: {router: Router}
-	) => ({
-		timeZoneId: store.getIn([
-			'projects',
-			groupId,
-			'data',
-			'timeZone',
-			'timeZoneId'
-		])
-	})
-);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface IExperimentsListPage extends IBasePageContext, PropsFromRedux {
-	currentUser: User;
-	router: {
-		params: {
-			channelId: string;
-			groupId: string;
-		};
-		query: {
-			query: string;
-		};
-	};
-	timeZoneId: string;
-}
-
-const ExperimentsListPage: React.FC<IExperimentsListPage> = ({
-	currentUser,
-	router,
-	timeZoneId
-}) => {
+const ExperimentsListPage = () => {
 	const {channelId, groupId} = useParams();
 	const {delta, orderIOMap, page, query} = useQueryPagination({
 		initialOrderIOMap: createOrderIOMap(MODIFIED_DATE)
 	});
 	const dataSourceStates = useDataSource();
 	const {selectedChannel} = useChannelContext();
+	const currentUser = useCurrentUser();
+	const {timeZoneId} = useTimeZone();
 
 	const {data = {}, error, loading} = useQuery(EXPERIMENT_LIST_QUERY, {
 		fetchPolicy: 'network-only',
@@ -103,74 +63,67 @@ const ExperimentsListPage: React.FC<IExperimentsListPage> = ({
 				/>
 			</BasePage.Header>
 
-			<BasePage.Context.Provider
-				value={{
-					filters: {},
-					router
-				}}
-			>
-				<BasePage.Body>
-					<StatesRenderer {...dataSourceStates}>
-						<StatesRenderer.Empty
-							description={
-								<>
-									{Liferay.Language.get(
-										'connect-a-data-source-with-sites-data'
-									)}
+			<BasePage.Body>
+				<StatesRenderer {...dataSourceStates}>
+					<StatesRenderer.Empty
+						description={
+							<>
+								{Liferay.Language.get(
+									'connect-a-data-source-with-sites-data'
+								)}
 
+								<ClayLink
+									className='d-block mb-3'
+									href={URLConstants.DataSourceConnection}
+									key='DOCUMENTATION'
+									target='_blank'
+								>
+									{Liferay.Language.get(
+										'access-our-documentation-to-learn-more'
+									)}
+								</ClayLink>
+
+								{authorized && (
 									<ClayLink
-										className='d-block mb-3'
-										href={URLConstants.DataSourceConnection}
-										key='DOCUMENTATION'
-										target='_blank'
+										button
+										className='button-root'
+										displayType='primary'
+										href={toRoute(
+											Routes.SETTINGS_ADD_DATA_SOURCE,
+											{
+												groupId
+											}
+										)}
 									>
 										{Liferay.Language.get(
-											'access-our-documentation-to-learn-more'
+											'connect-data-source'
 										)}
 									</ClayLink>
+								)}
+							</>
+						}
+						displayCard
+						title={Liferay.Language.get(
+							'no-sites-synced-from-data-sources'
+						)}
+					/>
 
-									{authorized && (
-										<ClayLink
-											button
-											className='button-root'
-											displayType='primary'
-											href={toRoute(
-												Routes.SETTINGS_ADD_DATA_SOURCE,
-												{
-													groupId
-												}
-											)}
-										>
-											{Liferay.Language.get(
-												'connect-data-source'
-											)}
-										</ClayLink>
-									)}
-								</>
-							}
-							displayCard
-							title={Liferay.Language.get(
-								'no-sites-synced-from-data-sources'
-							)}
+					<StatesRenderer.Success>
+						<ExperimentListCard
+							{...get(data, 'experiments', {})}
+							delta={delta}
+							error={error}
+							loading={loading}
+							orderIOMap={orderIOMap}
+							page={page}
+							query={query}
+							timeZoneId={timeZoneId}
 						/>
-
-						<StatesRenderer.Success>
-							<ExperimentListCard
-								{...get(data, 'experiments', {})}
-								delta={delta}
-								error={error}
-								loading={loading}
-								orderIOMap={orderIOMap}
-								page={page}
-								query={query}
-								timeZoneId={timeZoneId}
-							/>
-						</StatesRenderer.Success>
-					</StatesRenderer>
-				</BasePage.Body>
-			</BasePage.Context.Provider>
+					</StatesRenderer.Success>
+				</StatesRenderer>
+			</BasePage.Body>
 		</BasePage>
 	);
 };
 
-export default compose<any>(withCurrentUser, connector)(ExperimentsListPage);
+export default ExperimentsListPage;

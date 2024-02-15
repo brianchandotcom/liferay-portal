@@ -21,7 +21,6 @@ import {PROD_MODE} from 'shared/util/constants';
 import {Project} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
 import {Routes, toRoute} from 'shared/util/router';
-import {useApolloClient} from '@apollo/react-hooks';
 
 /**
  * Organizes the projects by account
@@ -54,20 +53,8 @@ const filterProjects = projects =>
 			faroSubscription.name !== PLANS.basic.name || groupId
 	);
 
-const Workspaces = ({
-	className,
-	clearStore,
-	joinableProjects = [],
-	projects
-}) => {
-	const client = useApolloClient();
+const Workspaces = ({className, joinableProjects = [], projects}) => {
 	const projectsFiltered = filterProjects(projects);
-
-	// Clear Redux Store
-	clearStore();
-
-	// Clear Apollo GraphQL Store
-	client.clearStore();
 
 	const renderButtons = () => (
 		<div className='mt-4'>

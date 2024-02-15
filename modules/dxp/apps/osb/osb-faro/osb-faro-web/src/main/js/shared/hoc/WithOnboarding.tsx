@@ -1,12 +1,12 @@
 import React, {useContext, useEffect} from 'react';
 import SitesDashboardQuery from 'shared/queries/SitesDashboardQuery';
-import withCurrentUser from './WithCurrentUser';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {graphql} from '@apollo/react-hoc';
 import {isArray} from 'lodash';
 import {OnboardingContext} from 'shared/context/onboarding';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {User} from 'shared/util/records';
 
 const withOnboarding = (
@@ -17,12 +17,12 @@ const withOnboarding = (
 ) =>
 	compose<any>(
 		connect(null, {close, open}),
-		withCurrentUser,
 		graphql(SitesDashboardQuery, {options: {variables: {type: null}}})
-	)(({close, currentUser, data, groupId, open, ...otherProps}) => {
+	)(({close, data, groupId, open, ...otherProps}) => {
 		const {onboardingTriggered, setOnboardingTriggered} = useContext(
 			OnboardingContext
 		);
+		const currentUser = useCurrentUser();
 
 		useEffect(() => {
 			const {dataSources, loading} = data;

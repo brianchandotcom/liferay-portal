@@ -41,14 +41,13 @@ import {RootState} from 'shared/store';
 import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
 import {
 	useSelectionContext,
 	withSelectionProvider
 } from 'shared/context/selection';
-import {withCurrentUser} from 'shared/hoc';
 
 const EVENT_LIMIT_REACHED = /Processing request will exceed custom event definition limit/;
 
@@ -68,7 +67,6 @@ const connector = connect(
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IBlockListCardProps extends PropsFromRedux {
-	currentUser: User;
 	groupId: string;
 	history: {push: (url: string) => void};
 	timeZoneId: string;
@@ -77,7 +75,6 @@ interface IBlockListCardProps extends PropsFromRedux {
 const BlockListCard: React.FC<IBlockListCardProps> = ({
 	addAlert,
 	close,
-	currentUser,
 	groupId,
 	history,
 	open,
@@ -147,6 +144,8 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 			}
 		}
 	});
+
+	const currentUser = useCurrentUser();
 
 	const handleHideEvents = (events: BlockedCustomEvent[] = []) => {
 		const visibleEvents = events.filter(({hidden}) => !hidden);
@@ -505,8 +504,4 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 	);
 };
 
-export default compose<any>(
-	withSelectionProvider,
-	withCurrentUser,
-	connector
-)(BlockListCard);
+export default compose<any>(withSelectionProvider, connector)(BlockListCard);

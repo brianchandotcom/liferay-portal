@@ -10,12 +10,12 @@ import React, {useEffect, useState} from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import TypeTrendCard from '../hocs/TypeTrendCard';
 import URLConstants from 'shared/util/url-constants';
-import {DataSource, User} from 'shared/util/records';
+import {DataSource} from 'shared/util/records';
 import {fromJS} from 'immutable';
 import {Routes, toRoute} from 'shared/util/router';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSource} from 'shared/hooks/useDataSource';
 import {useParams} from 'react-router-dom';
-import {withCurrentUser} from 'shared/hoc';
 
 const {
 	pagination: {cur}
@@ -23,13 +23,10 @@ const {
 
 const MAX_DELTA = 500;
 
-interface IOverviewProps extends React.HTMLAttributes<HTMLElement> {
-	currentUser: User;
-}
-
-const Overview: React.FC<IOverviewProps> = ({currentUser}) => {
+const Overview = () => {
 	const [dataSources, setDataSources] = useState(null);
 	const {channelId, groupId} = useParams();
+	const currentUser = useCurrentUser();
 	const authorized = currentUser.isAdmin();
 	const dataSourceStates = useDataSource();
 
@@ -135,4 +132,4 @@ const Overview: React.FC<IOverviewProps> = ({currentUser}) => {
 	);
 };
 
-export default withCurrentUser(Overview);
+export default Overview;

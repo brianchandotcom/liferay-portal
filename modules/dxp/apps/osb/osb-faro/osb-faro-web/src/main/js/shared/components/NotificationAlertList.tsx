@@ -40,7 +40,6 @@ const notificationStrategies = new Map<string, Function>([
 	[
 		NotificationSubtypes.TimeZoneChanged,
 		({
-			groupId,
 			modifiedTime,
 			notificationId,
 			onClose,
@@ -48,7 +47,6 @@ const notificationStrategies = new Map<string, Function>([
 		}: NotificationStrategyParams) => ({
 			customComponent: () => (
 				<TimeZoneAlert
-					groupId={groupId}
 					key={notificationId}
 					modifiedTime={modifiedTime}
 					onClose={() => onClose(notificationId)}

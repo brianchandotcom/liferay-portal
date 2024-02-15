@@ -4,7 +4,7 @@ import React, {lazy, Suspense, useEffect} from 'react';
 import RouteNotFound from './RouteNotFound';
 import {close, open} from 'shared/actions/modals';
 import {compose} from 'redux';
-import {connect, ConnectedProps} from 'react-redux';
+import {connect} from 'react-redux';
 import {matchPath} from 'react-router';
 import {Project} from 'shared/util/records';
 import {RootState} from 'shared/store';
@@ -51,11 +51,7 @@ const connector = connect(
 	{close, open}
 );
 
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface IWorkspaceLayerProps extends PropsFromRedux {}
-
-const WorkspaceLayer: React.FC<IWorkspaceLayerProps> = ({
+const WorkspaceLayer = ({
 	close,
 	currentUserId,
 	groupId,
@@ -95,4 +91,4 @@ const WorkspaceLayer: React.FC<IWorkspaceLayerProps> = ({
 	);
 };
 
-export default compose(connector, withHelpWidget)(WorkspaceLayer);
+export default compose<any>(connector, withHelpWidget)(WorkspaceLayer);

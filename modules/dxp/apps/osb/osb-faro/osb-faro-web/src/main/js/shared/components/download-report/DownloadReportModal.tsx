@@ -21,7 +21,7 @@ import {spritemap} from 'shared/util/constants';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
-import {useTimeZoneId} from 'shared/hooks/useTimeZoneId';
+import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 export enum ReportType {
 	CSV = 'CSV',
@@ -70,7 +70,7 @@ export const DownloadReportModal: React.FC<IDownloadReportModal> = ({
 	const [submitDisabled, setSubmitDisabled] = useState(false);
 
 	const retentionPeriod = useRetentionPeriod();
-	const timeZoneId = useTimeZoneId();
+	const {timeZoneId} = useTimeZone();
 
 	const maxDate =
 		initialMaxDate ||

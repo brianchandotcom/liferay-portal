@@ -19,52 +19,39 @@ import {
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose, withCurrentUser} from 'shared/hoc';
+import {compose} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {CREATE_DATE, createOrderIOMap, KEYWORD} from 'shared/util/pagination';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {getDefinitions} from 'shared/util/breadcrumbs';
 import {partition} from 'lodash';
-import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
 import {useRequest} from 'shared/hooks/useRequest';
+import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 const INITIAL_PAGE = 1;
 
-const connector = connect(
-	(store: RootState, {groupId}: {groupId: string}) => ({
-		timeZoneId: store.getIn([
-			'projects',
-			groupId,
-			'data',
-			'timeZone',
-			'timeZoneId'
-		])
-	}),
-	{addAlert, close, open}
-);
+const connector = connect(null, {addAlert, close, open});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IInterestTopicsProps extends PropsFromRedux {
-	currentUser: User;
 	groupId: string;
-	timeZoneId: string;
 }
 
 const InterestTopics: React.FC<IInterestTopicsProps> = ({
 	addAlert,
 	close,
-	currentUser,
 	groupId,
-	open,
-	timeZoneId
+	open
 }) => {
+	const currentUser = useCurrentUser();
+	const {timeZoneId} = useTimeZone();
 	const {selectedItems, selectionDispatch} = useSelectionContext();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
@@ -381,8 +368,4 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 	);
 };
 
-export default compose(
-	connector,
-	withCurrentUser,
-	withSelectionProvider
-)(InterestTopics);
+export default compose(connector, withSelectionProvider)(InterestTopics);

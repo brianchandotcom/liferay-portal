@@ -12,15 +12,13 @@ import NoResultsDisplay, {
 } from 'shared/components/NoResultsDisplay';
 import React, {useEffect, useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
-import {compose, withCurrentUser} from 'shared/hoc';
-import {connect, ConnectedProps} from 'react-redux';
 import {
 	CREATE_DATE,
 	createOrderIOMap,
 	NAME,
 	PROVIDER_TYPE
 } from 'shared/util/pagination';
-import {DataSource, User} from 'shared/util/records';
+import {DataSource} from 'shared/util/records';
 import {
 	DataSourceStates,
 	DataSourceStatuses,
@@ -35,12 +33,13 @@ import {
 	validAnalyticsConfig,
 	validContactsConfig
 } from 'shared/util/data-sources';
-import {Link} from 'react-router-dom';
-import {RootState} from 'shared/store';
+import {Link, useParams} from 'react-router-dom';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
+import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 interface ICellProps {
 	data: {[key: string]: any};
@@ -166,31 +165,11 @@ const typeFormatter = (type: DataSourceTypes): string => {
 	}
 };
 
-const connector = connect((store: RootState, {groupId}: {groupId: string}) => ({
-	timeZoneId: store.getIn([
-		'projects',
-		groupId,
-		'data',
-		'timeZone',
-		'timeZoneId'
-	])
-}));
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface IDataSourceListProps extends PropsFromRedux {
-	className: string;
-	currentUser: User;
-	groupId: string;
-}
-
-const DataSourceList: React.FC<IDataSourceListProps> = ({
-	className,
-	currentUser,
-	groupId,
-	timeZoneId
-}) => {
+const DataSourceList = ({className}) => {
+	const currentUser = useCurrentUser();
+	const {groupId} = useParams();
 	const [alerts, setAlerts] = useState([]);
+	const {timeZoneId} = useTimeZone();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
 		initialOrderIOMap: createOrderIOMap(NAME)
@@ -403,4 +382,4 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({
 	);
 };
 
-export default compose(withCurrentUser, connector)(DataSourceList);
+export default DataSourceList;

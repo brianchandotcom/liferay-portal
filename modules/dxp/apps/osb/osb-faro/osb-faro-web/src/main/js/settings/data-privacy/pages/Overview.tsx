@@ -24,9 +24,8 @@ import {get} from 'lodash';
 import {Option, Picker} from '@clayui/core';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useMutation, useQuery} from '@apollo/react-hooks';
-import {User} from 'shared/util/records';
-import {withCurrentUser} from 'shared/hoc';
 
 let RETENTION_OPTIONS = [SEVEN_MONTHS, THIRTEEN_MONTHS];
 
@@ -60,22 +59,18 @@ const fetchDownload = ({fromDate, groupId, toDate, type}) =>
 
 interface IOverviewProps {
 	close: () => void;
-	currentUser: User;
 	groupId: string;
 	open: (modalType: string, options: object) => void;
 }
 
-export const Overview: React.FC<IOverviewProps> = ({
-	close,
-	currentUser,
-	groupId,
-	open
-}) => {
+export const Overview: React.FC<IOverviewProps> = ({close, groupId, open}) => {
 	const [updatePreference] = useMutation(PreferenceMutation);
 
 	const {data} = useQuery(PreferenceQuery, {
 		variables: {key: DATA_RETENTION_PERIOD_KEY}
 	});
+
+	const currentUser = useCurrentUser();
 
 	const handleDateRetentionPeriodChange = value => {
 		const curVal = parseInt(data.preference.value);
@@ -320,7 +315,4 @@ export const Overview: React.FC<IOverviewProps> = ({
 	);
 };
 
-export default compose<any>(
-	withCurrentUser,
-	connect(null, {close, open})
-)(Overview);
+export default compose<any>(connect(null, {close, open}))(Overview);

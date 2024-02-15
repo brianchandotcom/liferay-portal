@@ -12,7 +12,7 @@ import {formatDateWithTimezone} from './dropdown-range-key/utils';
 import {isNil, noop} from 'lodash';
 import {sub} from 'shared/util/lang';
 import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
-import {useTimeZoneId} from 'shared/hooks/useTimeZoneId';
+import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 const convertToMoment = (value: string, format): moment.Moment => {
 	const date = moment(value, format);
@@ -55,7 +55,7 @@ const DateInput: React.FC<IDateInputProps> = ({
 }) => {
 	const [active, setActive] = useState(false);
 
-	const timeZoneId = useTimeZoneId();
+	const {timeZoneId} = useTimeZone();
 	const retentionPeriod = useRetentionPeriod();
 
 	const convertMomentToDisplayFormat = (value: moment.Moment): string =>

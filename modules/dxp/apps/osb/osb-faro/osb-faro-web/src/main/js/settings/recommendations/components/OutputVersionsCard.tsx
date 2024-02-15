@@ -27,7 +27,6 @@ import {
 } from 'shared/util/constants';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
-import {Router} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {withEmpty} from 'cerebro-shared/hocs/utils';
 import {
@@ -50,8 +49,8 @@ const getContextItemCount = (contextItemKey: string) => (
 };
 
 interface IOutputVersionsCardProps {
+	jobId: string;
 	nextRunDate: string;
-	router: Router;
 	runFrequency: JobRunFrequencies;
 	timeZoneId: string;
 }
@@ -105,107 +104,94 @@ const OutputVersionsListWithData = withStatefulPagination(
 );
 
 const OutputVersionsCard: React.FC<IOutputVersionsCardProps> = ({
+	jobId,
 	nextRunDate,
-	router,
 	runFrequency,
 	timeZoneId
-}) => {
-	const {
-		params: {jobId}
-	} = router;
+}) => (
+	<Card className='output-versions-card-root'>
+		<Card.Header className='d-flex justify-content-between'>
+			<Card.Title>{Liferay.Language.get('output-versions')}</Card.Title>
 
-	return (
-		<Card className='output-versions-card-root'>
-			<Card.Header className='d-flex justify-content-between'>
-				<Card.Title>
-					{Liferay.Language.get('output-versions')}
-				</Card.Title>
+			<div className='training-frequency'>
+				{Liferay.Language.get('training-frequency')}
 
-				<div className='training-frequency'>
-					{Liferay.Language.get('training-frequency')}
+				<b>{JOB_RUN_FREQUENCIES_LABEL_MAP[runFrequency]}</b>
 
-					<b>{JOB_RUN_FREQUENCIES_LABEL_MAP[runFrequency]}</b>
+				{!!nextRunDate && (
+					<b>{`(${sub(Liferay.Language.get('next-x'), [
+						moment(nextRunDate).fromNow()
+					])})`}</b>
+				)}
+			</div>
+		</Card.Header>
 
-					{!!nextRunDate && (
-						<b>{`(${sub(Liferay.Language.get('next-x'), [
-							moment(nextRunDate).fromNow()
-						])})`}</b>
-					)}
-				</div>
-			</Card.Header>
-
-			<Card.Body>
-				<OutputVersionsListWithData
-					columns={[
-						{
-							accessor: 'completedDate',
-							className: 'table-cell-expand',
-							dataFormatter: val =>
-								applyTimeZone(val, timeZoneId).calendar(null, {
-									lastDay: CUSTOM_DATE_FORMAT,
-									lastWeek: CUSTOM_DATE_FORMAT,
-									nextDay: CUSTOM_DATE_FORMAT,
-									nextWeek: CUSTOM_DATE_FORMAT,
-									sameDay: `[${Liferay.Language.get(
-										'today'
-									)}]`,
-									sameElse: CUSTOM_DATE_FORMAT
-								}),
-							label: Liferay.Language.get('training-date'),
-							sortable: false,
-							title: true
-						},
-						{
-							accessor: 'context',
-							className: 'table-column-text-end',
-							dataFormatter: getContextItemCount(
-								'userItemInteractionsDatasetCount'
-							),
-							label: Liferay.Language.get('events'),
-							sortable: false
-						},
-						{
-							accessor: 'context',
-							className: 'table-column-text-end',
-							dataFormatter: getContextItemCount(
-								'itemsDatasetCount'
-							),
-							label: Liferay.Language.get('items'),
-							sortable: false
-						},
-						{
-							accessor: 'status',
-							cellRenderer: ({
-								className,
-								data: {status}
-							}: {
-								className: string;
-								data: {status: JobRunStatuses};
-							}) => (
-								<td className={className}>
-									<Label
-										className='status'
-										display={
-											JOB_RUN_STATUSES_DISPLAY_MAP[status]
-										}
-										size='lg'
-										uppercase
-									>
-										{JOB_RUN_STATUSES_LABEL_MAP[status]}
-									</Label>
-								</td>
-							),
-							label: Liferay.Language.get('status'),
-							sortable: false
-						}
-					]}
-					jobId={jobId}
-					router={router}
-					showDeltaDropdown={false}
-				/>
-			</Card.Body>
-		</Card>
-	);
-};
+		<Card.Body>
+			<OutputVersionsListWithData
+				columns={[
+					{
+						accessor: 'completedDate',
+						className: 'table-cell-expand',
+						dataFormatter: val =>
+							applyTimeZone(val, timeZoneId).calendar(null, {
+								lastDay: CUSTOM_DATE_FORMAT,
+								lastWeek: CUSTOM_DATE_FORMAT,
+								nextDay: CUSTOM_DATE_FORMAT,
+								nextWeek: CUSTOM_DATE_FORMAT,
+								sameDay: `[${Liferay.Language.get('today')}]`,
+								sameElse: CUSTOM_DATE_FORMAT
+							}),
+						label: Liferay.Language.get('training-date'),
+						sortable: false,
+						title: true
+					},
+					{
+						accessor: 'context',
+						className: 'table-column-text-end',
+						dataFormatter: getContextItemCount(
+							'userItemInteractionsDatasetCount'
+						),
+						label: Liferay.Language.get('events'),
+						sortable: false
+					},
+					{
+						accessor: 'context',
+						className: 'table-column-text-end',
+						dataFormatter: getContextItemCount('itemsDatasetCount'),
+						label: Liferay.Language.get('items'),
+						sortable: false
+					},
+					{
+						accessor: 'status',
+						cellRenderer: ({
+							className,
+							data: {status}
+						}: {
+							className: string;
+							data: {status: JobRunStatuses};
+						}) => (
+							<td className={className}>
+								<Label
+									className='status'
+									display={
+										JOB_RUN_STATUSES_DISPLAY_MAP[status]
+									}
+									size='lg'
+									uppercase
+								>
+									{JOB_RUN_STATUSES_LABEL_MAP[status]}
+								</Label>
+							</td>
+						),
+						label: Liferay.Language.get('status'),
+						sortable: false
+					}
+				]}
+				jobId={jobId}
+				showDeltaDropdown={false}
+			/>
+		</Card.Body>
+	</Card>
+);
 
 export default OutputVersionsCard;

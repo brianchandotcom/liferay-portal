@@ -2,19 +2,18 @@ import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BaseDataSourcePage from '../../components/data-source/BasePage';
 import LiferayOverview from '../../components/liferay/Overview';
 import React from 'react';
-import {compose} from 'redux';
-import {DataSource, User} from 'shared/util/records';
-import {withCurrentUser} from 'shared/hoc';
+import {DataSource} from 'shared/util/records';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 
 interface ILiferayProps {
-	currentUser: User;
 	dataSource: DataSource;
 	groupId: string;
 	id: string;
 }
 
-export const LiferayDataSource: React.FC<ILiferayProps> = props => {
+const LiferayDataSource: React.FC<ILiferayProps> = props => {
 	const {dataSource, groupId, id} = props;
+	const currentUser = useCurrentUser();
 
 	return (
 		<BaseDataSourcePage
@@ -31,9 +30,9 @@ export const LiferayDataSource: React.FC<ILiferayProps> = props => {
 			pageTitle={dataSource.name}
 			showDelete
 		>
-			<LiferayOverview id={id} {...props} />
+			<LiferayOverview {...props} currentUser={currentUser} id={id} />
 		</BaseDataSourcePage>
 	);
 };
 
-export default compose<any>(withCurrentUser)(LiferayDataSource);
+export default LiferayDataSource;

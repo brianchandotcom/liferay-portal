@@ -25,34 +25,24 @@ import {
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose, withCurrentUser} from 'shared/hoc';
+import {compose} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {EntityTypes, SegmentTypes, Sizes} from 'shared/util/constants';
 import {individualsListColumns} from 'shared/util/table-columns';
 import {isNil} from 'lodash';
 import {List} from 'immutable';
 import {OrderByDirections} from 'shared/util/constants';
-import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {Segment, User} from 'shared/util/records';
 import {sub} from 'shared/util/lang';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSource} from 'shared/hooks/useDataSource';
 import {useParams} from 'react-router-dom';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
+import {useTimeZone} from 'shared/hooks/useTimeZone';
 
-const connector = connect(
-	(store: RootState, {groupId}: {groupId: string}) => ({
-		timeZoneId: store.getIn([
-			'projects',
-			groupId,
-			'data',
-			'timeZone',
-			'timeZoneId'
-		])
-	}),
-	{addAlert, close, open}
-);
+const connector = connect(null, {addAlert, close, open});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -65,9 +55,7 @@ interface IKnownIndividualsProps
 const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 	addAlert,
 	close,
-	currentUser,
-	open,
-	timeZoneId
+	open
 }) => {
 	const {channelId, groupId} = useParams();
 	const {selectedItems, selectionDispatch} = useSelectionContext();
@@ -86,7 +74,11 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 
 	const dataSourceStates = useDataSource();
 
+	const currentUser = useCurrentUser();
+
 	const authorized = currentUser.isAdmin();
+
+	const {timeZoneId} = useTimeZone();
 
 	const addToSegment = (
 		selectedSegmentsList: List<Segment>,
@@ -368,8 +360,4 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = ({
 	);
 };
 
-export default compose<any>(
-	withCurrentUser,
-	connector,
-	withSelectionProvider
-)(KnownIndividuals);
+export default compose<any>(connector, withSelectionProvider)(KnownIndividuals);

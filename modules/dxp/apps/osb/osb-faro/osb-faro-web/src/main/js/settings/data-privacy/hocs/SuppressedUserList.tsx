@@ -8,7 +8,7 @@ import React from 'react';
 import SuppressedUsersListQuery from '../queries/SuppressedUsersListQuery';
 import URLConstants from 'shared/util/url-constants';
 import {addAlert} from 'shared/actions/alerts';
-import {Alert, Router} from 'shared/types';
+import {Alert} from 'shared/types';
 import {
 	compose,
 	withBaseResults,
@@ -149,7 +149,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface ISuppressedUserListProps extends PropsFromRedux {
 	currentUser: User;
-	router: Router;
 	timeZoneId: string;
 }
 

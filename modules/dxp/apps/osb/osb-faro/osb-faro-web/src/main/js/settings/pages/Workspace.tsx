@@ -4,11 +4,12 @@ import BasePage from 'settings/components/BasePage';
 import React from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
-import {compose, withCurrentUser, withHistory, withQuery} from 'shared/hoc';
+import {compose, withHistory, withQuery} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
-import {Project, User} from 'shared/util/records';
+import {Project} from 'shared/util/records';
 import {Routes, toRoute} from 'shared/util/router';
 import {updateProject} from 'shared/actions/projects';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {withProject} from 'shared/hoc/WithProject';
 
 type History = {
@@ -25,7 +26,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 interface IWorkspaceProps
 	extends React.HTMLAttributes<HTMLElement>,
 		PropsFromRedux {
-	currentUser: User;
 	emailAddressDomains: string[];
 	groupId: string;
 	project: Project;
@@ -34,13 +34,14 @@ interface IWorkspaceProps
 
 export const Workspace: React.FC<IWorkspaceProps> = ({
 	addAlert,
-	currentUser,
 	emailAddressDomains,
 	groupId,
 	history,
 	project,
 	updateProject
 }) => {
+	const currentUser = useCurrentUser();
+
 	const handleSubmit = ({
 		emailAddressDomains,
 		friendlyURL,
@@ -106,7 +107,6 @@ export const Workspace: React.FC<IWorkspaceProps> = ({
 
 export default compose(
 	connector,
-	withCurrentUser,
 	withHistory,
 	withProject(true),
 	withQuery(

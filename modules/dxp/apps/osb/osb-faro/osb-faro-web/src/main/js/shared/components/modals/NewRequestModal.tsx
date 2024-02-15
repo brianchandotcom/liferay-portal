@@ -13,7 +13,7 @@ import {Formik, FormikValues} from 'formik';
 import {NetworkStatus} from '@clayui/data-provider';
 import {paginationDefaults} from 'shared/util/pagination';
 import {sub} from 'shared/util/lang';
-import {useDebounce} from 'shared/hooks';
+import {useDebounce} from 'shared/hooks/useDebounce';
 
 const SAMPLE_CSV = 'user@example.com\nuser1@example.com\nuser2@example.com';
 

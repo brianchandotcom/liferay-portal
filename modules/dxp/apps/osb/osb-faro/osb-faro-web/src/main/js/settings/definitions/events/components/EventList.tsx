@@ -30,28 +30,25 @@ import {get} from 'lodash';
 import {OrderedMap} from 'immutable';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
 import {
 	useSelectionContext,
 	withSelectionProvider
 } from 'shared/context/selection';
-import {withCurrentUser} from 'shared/hoc';
 
 const connector = connect(null, {addAlert, close, open});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IEventListProps extends PropsFromRedux {
-	currentUser: User;
 	groupId: string;
 }
 
 const EventList: React.FC<IEventListProps> = ({
 	addAlert,
 	close,
-	currentUser,
 	groupId,
 	open
 }) => {
@@ -114,6 +111,8 @@ const EventList: React.FC<IEventListProps> = ({
 			}
 		}
 	});
+
+	const currentUser = useCurrentUser();
 
 	const handleHideEvents = (events: Event[] = []) => {
 		const visibleEvents = events.filter(({hidden}) => !hidden);
@@ -322,8 +321,4 @@ const EventList: React.FC<IEventListProps> = ({
 	);
 };
 
-export default compose<any>(
-	withSelectionProvider,
-	withCurrentUser,
-	connector
-)(EventList);
+export default compose<any>(withSelectionProvider, connector)(EventList);

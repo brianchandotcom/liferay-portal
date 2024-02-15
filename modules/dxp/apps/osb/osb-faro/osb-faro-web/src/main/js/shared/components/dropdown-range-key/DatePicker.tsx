@@ -4,14 +4,14 @@ import {Text as ClayText} from '@clayui/core';
 import {formatDateWithTimezone} from './utils';
 import {MomentDateRange} from 'shared/components/DateRangeInput';
 import {sub} from 'shared/util/lang';
-import {useTimeZoneId} from 'shared/hooks/useTimeZoneId';
+import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 export const DropdownRangeKeyDatePicker = ({
 	customDateRange,
 	onCustomRangeChange,
 	retentionPeriod
 }) => {
-	const timeZoneId = useTimeZoneId();
+	const {timeZoneId} = useTimeZone();
 
 	return (
 		<DatePicker

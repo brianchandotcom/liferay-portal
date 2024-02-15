@@ -13,9 +13,9 @@ import {Router} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSource} from 'shared/hooks/useDataSource';
 import {User} from 'shared/util/records';
-import {withCurrentUser} from 'shared/hoc';
 
 const BlogsList = lazy(
 	() => import(/* webpackChunkName: "BlogsList" */ './BlogsList')
@@ -73,10 +73,11 @@ interface IAssetsProps extends React.HTMLAttributes<HTMLElement> {
 	router: Router;
 }
 
-const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
+const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 	const {channelId, groupId} = useParams();
 	const dataSourceStates = useDataSource();
 	const {selectedChannel} = useChannelContext();
+	const currentUser = useCurrentUser();
 
 	const authorized = currentUser.isAdmin();
 
@@ -283,4 +284,4 @@ const Assets: React.FC<IAssetsProps> = ({className, currentUser, router}) => {
 	);
 };
 
-export default withCurrentUser(Assets);
+export default Assets;

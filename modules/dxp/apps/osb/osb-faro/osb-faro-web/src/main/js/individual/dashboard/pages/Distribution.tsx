@@ -5,7 +5,7 @@ import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
-import {compose, withCurrentUser, withQuery} from 'shared/hoc';
+import {compose, withQuery} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {
 	fetchIndividualsDistribution,
@@ -14,9 +14,9 @@ import {
 import {get} from 'lodash';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSource} from 'shared/hooks/useDataSource';
 import {useParams} from 'react-router-dom';
-import {User} from 'shared/util/records';
 
 const connector = connect(null, {
 	fetchDistribution: fetchIndividualsDistribution
@@ -25,18 +25,17 @@ const connector = connect(null, {
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IIndividualsDistributionProps extends PropsFromRedux {
-	currentUser: User;
 	knownIndividualCount: number | null;
 }
 
 export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = ({
-	currentUser,
 	knownIndividualCount,
 	...otherProps
 }) => {
 	const {groupId} = useParams();
-	const authorized = currentUser.isAdmin();
 	const dataSourceStates = useDataSource();
+	const currentUser = useCurrentUser();
+	const authorized = currentUser.isAdmin();
 
 	return (
 		<StatesRenderer {...dataSourceStates}>
@@ -130,7 +129,6 @@ export const IndividualsDistribution: React.FC<IIndividualsDistributionProps> = 
 };
 
 export default compose<any>(
-	withCurrentUser,
 	withQuery(
 		({channelId, groupId}) =>
 			API.individuals.search({

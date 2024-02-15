@@ -43,21 +43,19 @@ import {OrderedMap} from 'immutable';
 import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useMutation, useQuery} from '@apollo/react-hooks';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
 import {
 	useSelectionContext,
 	withSelectionProvider
 } from 'shared/context/selection';
-import {withCurrentUser} from 'shared/hoc';
 
 const connector = connect(null, {addAlert, close, open, removeAlert});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface ICustomEventListProps extends PropsFromRedux {
-	currentUser: User;
 	groupId: string;
 	history: {push: (url: string) => void};
 }
@@ -65,7 +63,6 @@ interface ICustomEventListProps extends PropsFromRedux {
 const CustomEventList: React.FC<ICustomEventListProps> = ({
 	addAlert,
 	close,
-	currentUser,
 	groupId,
 	history,
 	open,
@@ -138,6 +135,8 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 	});
 
 	const notificationResponse = useNotificationsAPI(groupId);
+
+	const currentUser = useCurrentUser();
 
 	const handleBlockEvents = (events: Event[] = []) => {
 		const eventsCount = events.length;
@@ -507,8 +506,4 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 	);
 };
 
-export default compose<any>(
-	withSelectionProvider,
-	withCurrentUser,
-	connector
-)(CustomEventList);
+export default compose<any>(withSelectionProvider, connector)(CustomEventList);

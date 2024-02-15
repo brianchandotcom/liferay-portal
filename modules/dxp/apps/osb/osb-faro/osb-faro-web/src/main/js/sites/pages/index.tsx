@@ -16,9 +16,8 @@ import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDataSource} from 'shared/hooks/useDataSource';
-import {User} from 'shared/util/records';
-import {withCurrentUser} from 'shared/hoc';
 
 const InterestDetails = lazy(
 	() =>
@@ -69,14 +68,14 @@ type Router = {
 };
 
 interface IDashboardProps extends React.HTMLAttributes<HTMLDivElement> {
-	currentUser: User;
 	router: Router;
 }
 
-export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
+export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 	const {channelId, groupId} = useParams();
 	const dataSourceStates = useDataSource();
 	const {selectedChannel} = useChannelContext();
+	const currentUser = useCurrentUser();
 
 	const authorized = currentUser.isAdmin();
 	const selectedChannelName = selectedChannel && selectedChannel.name;
@@ -250,4 +249,4 @@ export const Dashboard: React.FC<IDashboardProps> = ({currentUser, router}) => {
 	);
 };
 
-export default withCurrentUser(Dashboard);
+export default Dashboard;

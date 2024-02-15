@@ -15,9 +15,9 @@ import {accountsListColumns} from 'shared/util/table-columns';
 import {FetchSegmentsParams} from 'segment/pages/List';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
-import {withCurrentUser} from 'shared/hoc';
 
 const getAccountsDataSource = ({
 	channelId,
@@ -42,12 +42,8 @@ interface IListProps {
 	groupId: string;
 }
 
-const List: React.FC<IListProps> = ({
-	channelId,
-	currentUser,
-	groupId,
-	...otherProps
-}) => {
+const List: React.FC<IListProps> = ({channelId, groupId, ...otherProps}) => {
+	const currentUser = useCurrentUser();
 	const authorized = currentUser.isAdmin();
 
 	const columns = [
@@ -139,4 +135,4 @@ const List: React.FC<IListProps> = ({
 	);
 };
 
-export default withCurrentUser(List);
+export default List;

@@ -20,7 +20,7 @@ import {
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {close, modalTypes, open} from 'shared/actions/modals';
-import {compose, withCurrentUser} from 'shared/hoc';
+import {compose} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {CREATE_TIME, createOrderIOMap} from 'shared/util/pagination';
 import {formatDateToTimeZone} from 'shared/util/date';
@@ -34,9 +34,10 @@ import {setBackURL} from 'shared/actions/settings';
 import {Sizes} from 'shared/util/constants';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
 import {updateDefaultChannelId} from 'shared/actions/preferences';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
-import {User} from 'shared/util/records';
 import {useRequest} from 'shared/hooks/useRequest';
+import {useTimeZone} from 'shared/hooks/useTimeZone';
 
 type ChannelNameFn = (attrs: {
 	data: {id: string; name: string};
@@ -58,19 +59,12 @@ const ChannelName: ChannelNameFn = ({data, hrefFormatter}) => (
 );
 
 const connector = connect(
-	(state: RootState, {groupId}: {groupId: string}) => ({
+	(state: RootState) => ({
 		defaultChannelId: state.getIn([
 			'preferences',
 			'user',
 			'defaultChannelId',
 			'data'
-		]),
-		timeZoneId: state.getIn([
-			'projects',
-			groupId,
-			'data',
-			'timeZone',
-			'timeZoneId'
 		])
 	}),
 	{addAlert, close, open, setBackURL, updateDefaultChannelId}
@@ -79,7 +73,6 @@ const connector = connect(
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface IChannelListProps extends IPagination, PropsFromRedux {
-	currentUser: User;
 	groupId: string;
 	history: {
 		push: (href: string) => void;
@@ -89,13 +82,11 @@ interface IChannelListProps extends IPagination, PropsFromRedux {
 const ChannelList: React.FC<IChannelListProps> = ({
 	addAlert,
 	close,
-	currentUser,
 	defaultChannelId,
 	groupId,
 	history,
 	open,
 	setBackURL,
-	timeZoneId,
 	updateDefaultChannelId
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
@@ -114,6 +105,10 @@ const ChannelList: React.FC<IChannelListProps> = ({
 			query
 		}
 	});
+
+	const currentUser = useCurrentUser();
+
+	const {timeZoneId} = useTimeZone();
 
 	const handleAddChannel = () => {
 		open(modalTypes.ADD_CHANNEL_MODAL, {
@@ -548,8 +543,4 @@ const ChannelList: React.FC<IChannelListProps> = ({
 	);
 };
 
-export default compose(
-	connector,
-	withCurrentUser,
-	withSelectionProvider
-)(ChannelList);
+export default compose(connector, withSelectionProvider)(ChannelList);

@@ -62,10 +62,9 @@ public class SitemapCompanyConfigurationDisplayContext {
 		SiteItemSelectorCriterion siteItemSelectorCriterion =
 			new SiteItemSelectorCriterion();
 
+		siteItemSelectorCriterion.setAllowNavigation(false);
 		siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new GroupItemSelectorReturnType());
-
-		siteItemSelectorCriterion.setAllowNavigation(false);
 
 		Group guestGroup = _getGuestGroup();
 

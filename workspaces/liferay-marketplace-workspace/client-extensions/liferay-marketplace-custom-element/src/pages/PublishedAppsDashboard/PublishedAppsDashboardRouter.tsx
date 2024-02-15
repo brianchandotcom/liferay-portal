@@ -6,6 +6,7 @@
 import {useEffect} from 'react';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import {useAccount} from '../../hooks/data/useAccounts';
 import {useCatalogs} from '../../hooks/data/useCatalogs';
 import {useSupplierAccounts} from '../../hooks/data/useSupplierAccounts';
 import {Liferay} from '../../liferay/liferay';
@@ -21,52 +22,31 @@ import Solutions from './Solutions';
 
 const PublishedAppsDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
+	const {data: catalogs = []} = useCatalogs();
+	const accountsSearch = useSupplierAccounts();
+	const {data, isValidating} = useAccount();
 
-	const {
-		data: catalogs = [],
-		isValidating: isCatalogsValidating,
-	} = useCatalogs();
-	const {
-		data: supplierAccounts = [],
-		isValidating: isSupplierAccountsValidating,
-	} = useSupplierAccounts();
+	useEffect(() => {
+		const checkAccount = async (accountId: number) => {
+			await CommerceSelectAccountImpl.selectAccount(accountId);
+
+			Liferay.CommerceContext.account = {
+				accountId,
+			};
+
+			window.location.reload();
+		};
+
+		const newAccountId = accountsSearch.items.at(0)?.id;
+
+		if (!isValidating && data?.type !== 'supplier' && newAccountId) {
+			checkAccount(newAccountId);
+		}
+	}, [isValidating, data?.type, accountsSearch.items]);
 
 	const catalogId = catalogs.find(
 		(catalog) => catalog.accountId === accountId
 	)?.id;
-
-	if (!isCatalogsValidating && !isSupplierAccountsValidating) {
-		if (!supplierAccounts.length) {
-			window.location.href = Liferay.ThemeDisplay.getCanonicalURL().replace(
-				'/publisher-dashboard',
-				'/home'
-			);
-		}
-	}
-
-	useEffect(() => {
-		const selectDefaultAccount = async () => {
-			if (
-				(!accountId ||
-					!supplierAccounts.find(
-						(supplier) => supplier.id === accountId
-					)) &&
-				supplierAccounts.length
-			) {
-				const newAccountId = supplierAccounts[0].id;
-
-				await CommerceSelectAccountImpl.selectAccount(newAccountId);
-
-				Liferay.CommerceContext.account = {
-					accountId: newAccountId,
-				};
-
-				window.location.reload();
-			}
-		};
-
-		selectDefaultAccount();
-	}, [accountId, supplierAccounts]);
 
 	return (
 		<HashRouter>
@@ -79,16 +59,8 @@ const PublishedAppsDashboardRouter = () => {
 				<Route
 					element={
 						<PublishedAppsDashboardOutlet
-							accountId={accountId}
+							accountsSearch={accountsSearch}
 							catalogId={catalogId}
-							catalogs={catalogs}
-							supplierAccounts={supplierAccounts.filter(
-								(supplierAccount) =>
-									catalogs.some(
-										({accountId}) =>
-											supplierAccount.id === accountId
-									)
-							)}
 						/>
 					}
 				>

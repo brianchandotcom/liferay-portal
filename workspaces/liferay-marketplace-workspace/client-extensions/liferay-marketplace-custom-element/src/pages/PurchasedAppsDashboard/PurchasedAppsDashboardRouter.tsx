@@ -17,22 +17,20 @@ import Solutions from './Solutions';
 const PurchasedAppsDashboardRouter = () => (
 	<HashRouter>
 		<Routes>
-			<Route path=":accountId?">
-				<Route element={<PurchasedAppsDashboardOutlet />}>
-					<Route element={<Apps />} index />
-					<Route element={<AppOutlet />} path="order/:orderId">
-						<Route element={<App />} index />
-						<Route element={<Licenses />} path="licenses" />
-					</Route>
-					<Route element={<Members />} path="members" />
-					<Route element={<Solutions />} path="solutions" />
+			<Route element={<PurchasedAppsDashboardOutlet />}>
+				<Route element={<Apps />} index />
+				<Route element={<AppOutlet />} path="order/:orderId">
+					<Route element={<App />} index />
+					<Route element={<Licenses />} path="licenses" />
 				</Route>
-
-				<Route
-					element={<CreateLicense />}
-					path="order/:orderId/create-license"
-				/>
+				<Route element={<Members />} path="members" />
+				<Route element={<Solutions />} path="solutions" />
 			</Route>
+
+			<Route
+				element={<CreateLicense />}
+				path="order/:orderId/create-license"
+			/>
 		</Routes>
 	</HashRouter>
 );

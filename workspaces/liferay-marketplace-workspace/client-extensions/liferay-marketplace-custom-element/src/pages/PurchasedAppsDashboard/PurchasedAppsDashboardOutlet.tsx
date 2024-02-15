@@ -7,45 +7,13 @@ import {useState} from 'react';
 import {Outlet} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
-import {getDeliveryProductImages} from '../../utils/api';
-import {
-	getAccountImage,
-	getThumbnailByProductAttachment,
-} from '../../utils/util';
+import {getAccountImage} from '../../utils/util';
 import {initialDashboardNavigationItems as dashboardNavigationItems} from './PurchasedDashboardPageUtil';
 
 import './PurchasedAppsDashboard.scss';
-
-import useSWR from 'swr';
-
-import useAccounts from '../../hooks/data/useAccounts';
+import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
 import {Liferay} from '../../liferay/liferay';
-import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
 import {usePurchasedOrders} from './usePurchasedOrders';
-
-const useAccountCached = (accounts: any[], accountId: string | null) => {
-	const {data: account} = useSWR(`/account/${accountId}`, async () => {
-		if (!accountId) {
-			return;
-		}
-
-		const cacheAccount = accounts?.find(
-			({id}: Account) => id === Number(accountId)
-		);
-
-		if (cacheAccount) {
-			return cacheAccount;
-		}
-
-		const account = await HeadlessAdminUserImpl.getAccount(
-			accountId as string
-		);
-
-		return account;
-	});
-
-	return account ?? accounts[0];
-};
 
 export type PurchasedAppProps = {
 	name: string;
@@ -64,70 +32,29 @@ export type PurchasedAppProps = {
 };
 
 const PurchasedAppsDashboardOutlet = () => {
-	const {accountId} = Liferay.CommerceContext.account || {};
 	const channelId = Number(Liferay.CommerceContext.commerceChannelId);
 
 	const [page, setPage] = useState(1);
-	const {data: accounts = []} = useAccounts();
-	const selectedAccount = useAccountCached(accounts, accountId as string);
+	const accountsSearch = useAccounts();
+	const {data: selectedAccount} = useAccount();
 
 	const {
 		data: placedOrders = {items: [], totalCount: 0},
-		key,
 	} = usePurchasedOrders({
-		accountId: selectedAccount?.id,
+		accountId: selectedAccount?.id as number,
 		channelId,
 		orderTypeExternalReferenceCodes: ['CLOUDAPP', 'DXPAPP'],
 		page,
 		pageSize: 10,
 	});
 
-	const {
-		data: placedOrdersWithAttachements = {items: [], totalCount: 0},
-	} = useSWR(
-		`/${key}/with-attachments/${placedOrders.totalCount}`,
-		async () => {
-			if (!selectedAccount?.id && channelId) {
-				return {items: [], totalCount: 0};
-			}
-
-			const orders = await Promise.all(
-				placedOrders.items.map(async (order) => {
-					const [placeOrderItem] = order.placedOrderItems;
-
-					const images = await getDeliveryProductImages(
-						selectedAccount.id,
-						channelId,
-						placeOrderItem.productId
-					);
-
-					return {
-						...order,
-						name: placeOrderItem.name,
-						productId: order.placedOrderItems[0].productId,
-						thumbnail: getThumbnailByProductAttachment(images),
-						type: placeOrderItem.subscription
-							? 'Subscription'
-							: 'Perpetual',
-						virtualURL: placeOrderItem?.virtualItemURLs,
-					};
-				})
-			);
-
-			return {
-				items: orders,
-				totalCount: placedOrders.totalCount,
-			};
-		}
-	);
-
 	return (
 		<div className="purchased-apps-dashboard-page-container">
 			<DashboardNavigation
-				accountAppsNumber={placedOrdersWithAttachements.items.length}
+				accountAppsNumber={placedOrders.totalCount}
 				accountIcon={getAccountImage(selectedAccount?.logoURL)}
-				accounts={(accounts as unknown) as Account[]}
-				currentAccount={selectedAccount}
+				accountsSearch={accountsSearch}
+				currentAccount={selectedAccount as any}
 				dashboardNavigationItems={dashboardNavigationItems}
 			/>
 
@@ -135,7 +62,23 @@ const PurchasedAppsDashboardOutlet = () => {
 				context={{
 					dashboardNavigationItems,
 					page,
-					purchasedAppTable: placedOrdersWithAttachements,
+					purchasedAppTable: {
+						...placedOrders,
+						items: placedOrders.items.map((order) => {
+							const [placeOrderItem] = order.placedOrderItems;
+
+							return {
+								...order,
+								name: placeOrderItem.name,
+								productId: order.placedOrderItems[0].productId,
+								thumbnail: placeOrderItem.thumbnail,
+								type: placeOrderItem.subscription
+									? 'Subscription'
+									: 'Perpetual',
+								virtualURL: placeOrderItem?.virtualItemURLs,
+							};
+						}),
+					},
 					selectedAccount,
 					setPage,
 				}}

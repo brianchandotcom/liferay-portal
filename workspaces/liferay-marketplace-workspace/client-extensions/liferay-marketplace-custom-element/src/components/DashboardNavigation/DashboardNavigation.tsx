@@ -5,15 +5,16 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import {getAccountImage} from '../../utils/util';
 import {DashboardNavigationList} from './DashboardNavigationList';
 
 import './DashboardNavigation.scss';
 
-import classNames from 'classnames';
-import {useState} from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
+import useAccounts from '../../hooks/data/useAccounts';
 import {Liferay} from '../../liferay/liferay';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {AppProps} from '../DashboardTable/DashboardTable';
@@ -31,25 +32,64 @@ export type DashboardListItems = {
 type DashboardNavigationProps = {
 	accountAppsNumber: number;
 	accountIcon: string;
-	accounts: Account[];
+	accountsSearch: ReturnType<typeof useAccounts>;
 	currentAccount: Account;
 	dashboardNavigationItems: DashboardListItems[];
+};
+
+const DropdownItems: React.FC<{
+	accounts: DashboardNavigationProps['accountsSearch']['items'];
+}> = ({accounts = []}) => {
+	return (
+		<ClayDropDown.ItemList>
+			{accounts.map((_account) => {
+				const account = _account as UserAccount;
+				const isActive =
+					account.id === Liferay.CommerceContext.account?.accountId;
+
+				return (
+					<ClayDropDown.Item
+						active={isActive}
+						autoFocus={isActive}
+						className="mb-1"
+						data-index={3}
+						key={account.id}
+						onClick={() =>
+							CommerceSelectAccountImpl.selectAccount(
+								account.id
+							).then(() => {
+								Liferay.CommerceContext.account = {
+									accountId: account.id,
+								};
+
+								window.location.reload();
+							})
+						}
+					>
+						<img
+							className="mr-4 rounded-circle"
+							height={32}
+							src={account.logoURL}
+							width={32}
+						/>
+
+						{account.name}
+					</ClayDropDown.Item>
+				);
+			})}
+		</ClayDropDown.ItemList>
+	);
 };
 
 export function DashboardNavigation({
 	accountAppsNumber,
 	accountIcon,
-	accounts,
+	accountsSearch,
 	currentAccount,
 	dashboardNavigationItems,
 }: DashboardNavigationProps) {
-	const [search, setSearch] = useState('');
-
-	const filteredAccounts = accounts.filter(({name}) =>
-		search ? name.toLowerCase().includes(search.toLowerCase()) : true
-	);
-
-	const fewAccountsToSearch = accounts.length <= 5;
+	const {infiniteSearch, items} = accountsSearch;
+	const {allowFetching, fetchMore, search, setSearch} = infiniteSearch;
 
 	return (
 		<div className="dashboard-navigation-container">
@@ -90,52 +130,35 @@ export function DashboardNavigation({
 					</div>
 				}
 			>
-				<div className="dashboard-navigation-container-dropdown-body">
-					{!fewAccountsToSearch && (
+				{!!(
+					!!infiniteSearch.search.length ||
+					infiniteSearch.totalCount > 5
+				) && (
+					<div className="dashboard-navigation-container-dropdown-body">
 						<Search search={search} setSearch={setSearch} />
-					)}
+					</div>
+				)}
 
-					<ClayDropDown.ItemList
-						className={classNames({
-							'overflow-auto': !fewAccountsToSearch,
-							'overflow-hidden': fewAccountsToSearch,
-						})}
+				{infiniteSearch.totalCount > 5 ? (
+					<InfiniteScroll
+						dataLength={items.length}
+						endMessage={
+							<p className="text-center">
+								<b>Yay! You have seen it all</b>
+							</p>
+						}
+						hasMore={allowFetching}
+						height={200}
+						loader={<ClayLoadingIndicator />}
+						next={fetchMore}
 					>
-						{filteredAccounts.map((account) => (
-							<ClayDropDown.Item
-								active={account.id === currentAccount?.id}
-								className="mb-1"
-								key={account.id}
-								onClick={() =>
-									CommerceSelectAccountImpl.selectAccount(
-										account.id
-									).then(() => {
-										Liferay.CommerceContext.account = {
-											accountId: account.id,
-										};
-
-										window.location.reload();
-									})
-								}
-							>
-								<img
-									className="mr-4 rounded-circle"
-									height={32}
-									src={account.logoURL}
-									width={32}
-								/>
-
-								{account.name}
-							</ClayDropDown.Item>
-						))}
-
-						{!filteredAccounts.length && search && (
-							<span className="px-2">
-								No Accounts match that name
-							</span>
-						)}
-					</ClayDropDown.ItemList>
-				</div>
+						<DropdownItems accounts={items} />
+					</InfiniteScroll>
+				) : (
+					<div className="py-2">
+						<DropdownItems accounts={items} />
+					</div>
+				)}
 			</ClayDropDown>
 
 			<div className="dashboard-navigation-body">

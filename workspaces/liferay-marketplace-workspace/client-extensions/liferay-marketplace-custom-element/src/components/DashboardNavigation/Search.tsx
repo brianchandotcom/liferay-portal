@@ -15,8 +15,8 @@ type SearchProps = {
 	setSearch: Dispatch<string>;
 };
 
-const Search: React.FC<SearchProps> = ({search, setSearch}) => {
-	const isClear = !!search.trim().length;
+const Search: React.FC<SearchProps> = ({search = '', setSearch}) => {
+	const isClear = !!search.trim()?.length;
 
 	return (
 		<ClayInput.Group className="mb-4">
@@ -36,6 +36,7 @@ const Search: React.FC<SearchProps> = ({search, setSearch}) => {
 					tag="span"
 				>
 					<ClayButton
+						aria-labelledby="search"
 						displayType="unstyled"
 						onClick={() => setSearch('')}
 					>

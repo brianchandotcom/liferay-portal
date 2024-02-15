@@ -44,6 +44,12 @@ public interface PropsKeys {
 	public static final String ADMIN_EMAIL_PASSWORD_RESET_SUBJECT =
 		"admin.email.password.reset.subject";
 
+	public static final String ADMIN_EMAIL_ACCOUNT_CREATION_ATTEMPT_SUBJECT =
+		"admin.email.account.creation.attempt.subject";
+
+	public static final String ADMIN_EMAIL_ACCOUNT_CREATION_ATTEMPT_BODY =
+		"admin.email.account.creation.attempt.body";
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */

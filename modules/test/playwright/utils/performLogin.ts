@@ -6,10 +6,10 @@
 import {Cookie, Page, expect} from '@playwright/test';
 
 export type LoginScreenName =
-	| 'default-company-admin'
 	| 'test'
+	| 'test-company-admin'
 	| 'test-organization-owner'
-	| 'unprivileged';
+	| 'test-unprivileged';
 
 async function performLogin(
 	page: Page,

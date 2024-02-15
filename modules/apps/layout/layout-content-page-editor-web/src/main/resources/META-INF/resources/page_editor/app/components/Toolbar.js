@@ -27,6 +27,7 @@ import ExperimentsLabel from './ExperimentsLabel';
 import HideSidebarButton from './HideSidebarButton';
 import NetworkStatusBar from './NetworkStatusBar';
 import PublishButton from './PublishButton';
+import ToolbarActionsDropdown from './ToolbarActionsDropdown';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
 import ViewportSizeSelector from './ViewportSizeSelector';
@@ -311,6 +312,12 @@ function ToolbarBody({className}) {
 						</ClayButton>
 					</form>
 				</li>
+
+				{Liferay.FeatureFlags['LPD-10988'] ? (
+					<li className="d-lg-none nav-item">
+						<ToolbarActionsDropdown />
+					</li>
+				) : null}
 
 				<li className="nav-item">
 					<PublishButton

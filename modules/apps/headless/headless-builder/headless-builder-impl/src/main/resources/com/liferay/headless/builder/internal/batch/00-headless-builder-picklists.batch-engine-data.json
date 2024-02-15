@@ -26,7 +26,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "L_API_PROPERTY_TYPE_PICKLIST_OBJECT",
+					"externalReferenceCode": "L_API_PROPERTY_TYPE_PICKLIST_RECORD",
 					"key": "record",
 					"name": "record",
 					"name_i18n": {

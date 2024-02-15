@@ -5,9 +5,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			ignore: ['**/config.js', '**/date_facet.js'],
-		},
 		main: 'src/main/resources/META-INF/resources/js/index.js',
 	},
 };

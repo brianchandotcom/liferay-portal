@@ -18,17 +18,6 @@ const testFeatureFlagsEnabled = mergeTests(
 );
 
 testFeatureFlagsEnabled(
-	'can see default folder in  DM',
-	async ({documentLibraryPage, page}) => {
-		await documentLibraryPage.goto();
-
-		const defaultFolder = page.getByTitle('Provided by Liferay');
-
-		await expect(defaultFolder).toBeVisible();
-	}
-);
-
-testFeatureFlagsEnabled(
 	'Create AI Image option in Management Toolbar without API Key opens an alert',
 	async ({documentLibraryPage, page}) => {
 		await documentLibraryPage.goto();

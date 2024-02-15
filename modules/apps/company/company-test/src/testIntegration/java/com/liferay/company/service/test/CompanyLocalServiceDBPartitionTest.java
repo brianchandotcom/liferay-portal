@@ -79,7 +79,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		enableDBPartition();
+		BaseDBPartitionTestCase.setUpClass();
 
 		_defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
 
@@ -91,8 +91,6 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		disableDBPartition();
-
 		_regenerateResourceActions();
 	}
 

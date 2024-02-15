@@ -37,7 +37,7 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		enableDBPartition();
+		BaseDBPartitionTestCase.setUpClass();
 
 		addDBPartitions();
 
@@ -54,8 +54,6 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 		deletePartitionRequiredData();
 
 		removeDBPartitions();
-
-		disableDBPartition();
 	}
 
 	@Test

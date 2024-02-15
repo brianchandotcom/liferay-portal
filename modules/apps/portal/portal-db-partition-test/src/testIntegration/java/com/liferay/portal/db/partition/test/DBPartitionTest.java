@@ -59,13 +59,11 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		enableDBPartition();
-
 		entityCache.removeCache(ClassNameImpl.class.getName());
 		entityCache.removeCache(ResourceActionImpl.class.getName());
-
 		finderCache.removeCache(ClassNameImpl.class.getName());
 		finderCache.removeCache(ResourceActionImpl.class.getName());
+		BaseDBPartitionTestCase.setUpClass();
 
 		createControlTable(TEST_CONTROL_TABLE_NAME);
 
@@ -89,9 +87,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		removeDBPartitions();
 
 		dropTable(TEST_CONTROL_TABLE_NAME);
-
-		disableDBPartition();
-
 		entityCache.removeCache(ClassNameImpl.class.getName());
 		entityCache.removeCache(ResourceActionImpl.class.getName());
 

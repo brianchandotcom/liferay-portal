@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,9 +66,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 		}
 
 		_serviceRegistrations.clear();
-
-		PropsUtil.set(
-			"database.partition.enabled", _originalDatabasePartitionEnabled);
 
 		_companyLocalService.deleteCompany(_company);
 
@@ -259,11 +255,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 		_activeCompanyIds = companyIds.toArray(new Long[0]);
 
-		_originalDatabasePartitionEnabled = PropsUtil.get(
-			"database.partition.enabled");
-
-		PropsUtil.set("database.partition.enabled", "true");
-
 		_testDBPartitionMessageListener = new TestDBPartitionMessageListener();
 
 		Destination destination = _destinationFactory.createDestination(
@@ -307,7 +298,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 	@Inject
 	private static MessageBus _messageBus;
 
-	private static String _originalDatabasePartitionEnabled;
 	private static String _originalName;
 	private static final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();

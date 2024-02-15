@@ -16,6 +16,7 @@ export class ApplicationPage {
 	readonly pathParameterTextBox: Locator;
 	readonly publishButton: Locator;
 	readonly schemaNameTextBox: Locator;
+	readonly schemaObjectDefinitionSelector: Locator;
 
 	constructor(page: Page) {
 		this.addEndpointButton = page.getByLabel('Add API Endpoint');
@@ -30,6 +31,10 @@ export class ApplicationPage {
 		this.pathParameterTextBox = page.getByPlaceholder('{Enter Parameter}');
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.schemaNameTextBox = page.getByPlaceholder('Enter name.');
+		this.schemaObjectDefinitionSelector = page.getByLabel(
+			'Select an Object Definition',
+			{exact: true}
+		);
 	}
 
 	async goToDetailsTab() {
@@ -88,9 +93,7 @@ export class ApplicationPage {
 	}
 
 	async setSchemaMainObjectDefinition(objectName: string) {
-		await this.page
-			.getByLabel('Select an Object Definition', {exact: true})
-			.click();
+		await this.schemaObjectDefinitionSelector.click();
 		await this.page.getByRole('menuitem', {name: objectName}).click();
 	}
 

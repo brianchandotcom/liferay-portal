@@ -435,14 +435,8 @@ const NotificationsInfo = ({
 				});
 			}
 		}
-		else if (
-			selectedItem?.data?.notifications?.recipients?.[notificationIndex]
-				?.sectionsData &&
-			recipientType === 'user'
-		) {
-			sectionsData =
-				selectedItem.data.notifications.recipients[notificationIndex]
-					.sectionsData;
+		else if (recipients?.sectionsData && recipientType === 'user') {
+			sectionsData = recipients?.sectionsData;
 		}
 
 		if (sectionsData.length) {

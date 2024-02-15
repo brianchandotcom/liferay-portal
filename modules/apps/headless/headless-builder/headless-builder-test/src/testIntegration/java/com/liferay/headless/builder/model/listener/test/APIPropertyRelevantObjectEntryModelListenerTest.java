@@ -97,7 +97,8 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A field API property cannot have an empty object field erc value.",
+			"A field API property cannot have an empty object field external " +
+				"reference code.",
 			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -339,7 +340,8 @@ public class APIPropertyRelevantObjectEntryModelListenerTest
 
 		Assert.assertEquals("BAD_REQUEST", jsonObject.get("status"));
 		Assert.assertEquals(
-			"A record API property cannot have an object field erc value.",
+			"A record API property cannot have an object field external " +
+				"reference code.",
 			jsonObject.get("title"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(

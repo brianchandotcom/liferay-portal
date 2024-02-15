@@ -136,9 +136,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
 						"A record API property cannot have an object field " +
-							"erc value",
+							"external reference code",
 						"a-record-api-property-cannot-have-an-object-field-" +
-							"erc-value");
+							"external-reference-code");
 				}
 
 				if (!Validator.isBlank(objectRelationshipNames)) {
@@ -155,9 +155,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
 						"A field API property cannot have an empty object " +
-							"field erc value",
+							"field external reference code",
 						"a-field-api-property-cannot-have-an-empty-object-" +
-							"field-erc-value");
+							"field-external-reference-code");
 				}
 
 				if (!_isValidAPIProperty(

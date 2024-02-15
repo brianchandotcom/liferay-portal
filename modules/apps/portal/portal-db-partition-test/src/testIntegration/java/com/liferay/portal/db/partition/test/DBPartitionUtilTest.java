@@ -29,7 +29,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -44,12 +43,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		enableDBPartition();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		disableDBPartition();
+		BaseDBPartitionTestCase.setUpClass();
 	}
 
 	@Before

@@ -37,7 +37,7 @@ public class UpgradePartitionedControlTableTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		enableDBPartition();
+		BaseDBPartitionTestCase.setUpClass();
 
 		addDBPartitions();
 
@@ -49,8 +49,6 @@ public class UpgradePartitionedControlTableTest
 		deletePartitionRequiredData();
 
 		removeDBPartitions();
-
-		disableDBPartition();
 	}
 
 	@Test

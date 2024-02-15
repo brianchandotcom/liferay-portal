@@ -727,52 +727,19 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					String dockerLocalRegistryAddress =
 						workspaceExtension.getDockerLocalRegistryAddress();
 
-					if (Objects.nonNull(workspaceExtension.getProduct())) {
-						WorkspaceExtension.ProductInfo productInfo =
-							workspaceExtension.getProductInfo();
+					String dockerImageLiferay =
+						workspaceExtension.getDockerImageLiferay();
 
-						if (Objects.nonNull(productInfo)) {
-							String dockerImageLiferay =
-								productInfo.getLiferayDockerImage();
-
-							if (!Objects.equals(
-									workspaceExtension.getDockerImageLiferay(),
-									productInfo.getLiferayDockerImage()) &&
-								Objects.nonNull(
-									workspaceExtension.
-										getDockerImageLiferay())) {
-
-								dockerImageLiferay =
-									workspaceExtension.getDockerImageLiferay();
-							}
-
-							if (Objects.nonNull(dockerLocalRegistryAddress)) {
-								dockerImageLiferay = dockerImageLiferay.replace(
-									"liferay", dockerLocalRegistryAddress);
-							}
-
-							Dockerfile.FromInstruction baseImage =
-								new Dockerfile.FromInstruction(
-									new Dockerfile.From(dockerImageLiferay));
-
-							originalInstructions.add(0, baseImage);
-						}
+					if (Objects.nonNull(dockerLocalRegistryAddress)) {
+						dockerImageLiferay = dockerImageLiferay.replace(
+							"liferay", dockerLocalRegistryAddress);
 					}
-					else {
-						String dockerImageLiferay =
-							workspaceExtension.getDockerImageLiferay();
 
-						if (Objects.nonNull(dockerLocalRegistryAddress)) {
-							dockerImageLiferay = dockerImageLiferay.replace(
-								"liferay", dockerLocalRegistryAddress);
-						}
+					Dockerfile.FromInstruction baseImage =
+						new Dockerfile.FromInstruction(
+							new Dockerfile.From(dockerImageLiferay));
 
-						Dockerfile.FromInstruction baseImage =
-							new Dockerfile.FromInstruction(
-								new Dockerfile.From(dockerImageLiferay));
-
-						originalInstructions.add(0, baseImage);
-					}
+					originalInstructions.add(0, baseImage);
 
 					instructions.set(originalInstructions);
 				}

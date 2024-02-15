@@ -282,23 +282,46 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return PortletURLBuilder.create(
-			_translationURLProvider.getTranslateURL(
-				themeDisplay.getScopeGroupId(),
-				_portal.getClassNameId(className), classPK,
-				RequestBackedPortletURLFactoryUtil.create(actionRequest))
-		).setRedirect(
-			ParamUtil.getString(actionRequest, "redirect")
-		).setPortletResource(
-			() -> {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
+		PortletURLBuilder.AfterParameterStep afterParameterStep =
+			PortletURLBuilder.create(
+				_translationURLProvider.getTranslateURL(
+					themeDisplay.getScopeGroupId(),
+					_portal.getClassNameId(className), classPK,
+					RequestBackedPortletURLFactoryUtil.create(actionRequest))
+			).setRedirect(
+				ParamUtil.getString(actionRequest, "redirect")
+			).setPortletResource(
+				() -> {
+					PortletDisplay portletDisplay =
+						themeDisplay.getPortletDisplay();
 
-				return portletDisplay.getId();
+					return portletDisplay.getId();
+				}
+			).setParameter(
+				"backURLTitle",
+				ParamUtil.getString(actionRequest, "backURLTitle")
+			);
+
+		Map<String, String[]> infoFieldParameterValues =
+			_getInfoFieldParameterValues(actionRequest);
+
+		if (infoFieldParameterValues.isEmpty()) {
+			return afterParameterStep.buildString();
+		}
+
+		for (Map.Entry<String, String[]> entry :
+				infoFieldParameterValues.entrySet()) {
+
+			String[] values = entry.getValue();
+
+			if (ArrayUtil.isEmpty(values)) {
+				continue;
 			}
-		).setParameter(
-			"backURLTitle", ParamUtil.getString(actionRequest, "backURLTitle")
-		).buildString();
+
+			afterParameterStep.setParameter(entry.getKey(), values[0]);
+		}
+
+		return afterParameterStep.buildString();
 	}
 
 	private String _getSourceLanguageId(ActionRequest actionRequest) {

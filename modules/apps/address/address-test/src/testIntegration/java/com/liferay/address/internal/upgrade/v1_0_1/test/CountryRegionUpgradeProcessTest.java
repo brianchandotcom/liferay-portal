@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionTable;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
@@ -27,7 +29,9 @@ import com.liferay.portal.util.PortalInstances;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,6 +40,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Stefano Motta
  */
+@DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
 public class CountryRegionUpgradeProcessTest {
 
@@ -46,36 +51,44 @@ public class CountryRegionUpgradeProcessTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Test
-	public void testUpgradeProcessRegionCreation() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		Country country = _countryLocalService.fetchCountryByA2(
 			PortalInstances.getDefaultCompanyId(), "US");
 
-		int regionsCount = _regionLocalService.getRegionsCount(
+		_regionsCount = _regionLocalService.getRegionsCount(
 			country.getCountryId());
 
-		CompanyTestUtil.addCompany();
+		_company = CompanyTestUtil.addCompany();
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+	}
+
+	@Test
+	public void testUpgradeProcessRegionCreation() throws Exception {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				Country companyCountry = _countryLocalService.fetchCountryByA2(
+				Country country = _countryLocalService.fetchCountryByA2(
 					companyId, "US");
 
 				_regionLocalService.deleteCountryRegions(
-					companyCountry.getCountryId());
+					country.getCountryId());
 			});
 
 		_runUpgrade();
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				Country companyCountry = _countryLocalService.fetchCountryByA2(
+				Country country = _countryLocalService.fetchCountryByA2(
 					companyId, "US");
 
 				Assert.assertEquals(
-					regionsCount,
+					_regionsCount,
 					_regionLocalService.getRegionsCount(
-						companyCountry.getCountryId()));
+						country.getCountryId()));
 			});
 
 		_verifyCounter();
@@ -109,21 +122,25 @@ public class CountryRegionUpgradeProcessTest {
 		"com.liferay.address.internal.upgrade.v1_0_1." +
 			"CountryRegionUpgradeProcess";
 
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	@Inject
+	private static CounterLocalService _counterLocalService;
+
+	@Inject
+	private static CountryLocalService _countryLocalService;
+
+	@Inject
+	private static RegionLocalService _regionLocalService;
+
+	private static int _regionsCount;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.address.internal.upgrade.registry.AddressUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private CounterLocalService _counterLocalService;
-
-	@Inject
-	private CountryLocalService _countryLocalService;
-
-	@Inject
-	private RegionLocalService _regionLocalService;
 
 }

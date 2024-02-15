@@ -54,6 +54,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					mainFieldName: 'name',
 					mainFieldPlaceholder: Liferay.Language.get('name'),
 					namespace: portletNamespace,
+					size: 'sm',
 				});
 			}
 		},

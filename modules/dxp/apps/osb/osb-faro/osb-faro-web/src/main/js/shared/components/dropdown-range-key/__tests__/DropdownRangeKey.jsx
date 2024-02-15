@@ -14,6 +14,12 @@ import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({
+		timeZoneId: 'UTC'
+	})
+}));
+
 const WrapperComponent = ({children, retentionPeriodTimeRange}) => {
 	const history = createMemoryHistory();
 

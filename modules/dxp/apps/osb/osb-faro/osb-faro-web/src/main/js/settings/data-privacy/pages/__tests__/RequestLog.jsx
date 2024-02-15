@@ -9,6 +9,19 @@ import {StaticRouter} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({
+		timeZoneId: 'UTC'
+	})
+}));
+
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({
+		groupId: '23'
+	})
+}));
+
 describe('RequestLog', () => {
 	afterEach(cleanup);
 

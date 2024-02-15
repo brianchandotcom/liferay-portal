@@ -7,6 +7,13 @@ import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({
+		displayTimeZone: 'UTC -03:00 Brasilia Time (America/Recife)',
+		timeZoneId: 'UTC'
+	})
+}));
+
 describe('TimeZoneAlert', () => {
 	it('should render', () => {
 		const {container} = render(

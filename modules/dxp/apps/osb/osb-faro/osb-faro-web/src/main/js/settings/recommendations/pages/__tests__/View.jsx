@@ -16,9 +16,20 @@ import {waitForLoading} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-const defaultProps = {
-	router: {params: {groupId: '23'}, query: {delta: '10', page: '1'}}
-};
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({
+		timeZoneId: 'UTC'
+	})
+}));
+
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({
+		groupId: '123',
+		jobId: '321',
+		query: {delta: '10', page: '1'}
+	})
+}));
 
 const DefaultComponent = props => (
 	<ApolloProvider client={client}>
@@ -33,7 +44,6 @@ const DefaultComponent = props => (
 					]}
 				>
 					<View
-						{...defaultProps}
 						{...props}
 						router={{params: {groupId: '123', jobId: '321'}}}
 					/>

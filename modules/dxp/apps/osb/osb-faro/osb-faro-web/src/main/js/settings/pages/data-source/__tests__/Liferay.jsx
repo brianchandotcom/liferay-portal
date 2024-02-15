@@ -1,13 +1,19 @@
 import * as data from 'test/data';
+import LiferayDataSource from '../Liferay';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {DataSource, User} from 'shared/util/records';
-import {LiferayDataSource} from '../Liferay';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
+
+jest.mock('shared/hooks/useCurrentUser', () => ({
+	useCurrentUser: () => ({
+		isAdmin: () => true
+	})
+}));
 
 const defaultProps = {
 	currentUser: data.getImmutableMock(User, data.mockUser),

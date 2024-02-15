@@ -10,6 +10,12 @@ import {fromJS} from 'immutable';
 import {mockAddOns, mockSubscription} from 'test/data';
 import {Plan} from '../../util/records';
 
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({
+		timeZoneId: 'UTC'
+	})
+}));
+
 describe('subscriptions', () => {
 	describe('getPlanAddOns', () => {
 		it('should return the correct plan addons', () => {

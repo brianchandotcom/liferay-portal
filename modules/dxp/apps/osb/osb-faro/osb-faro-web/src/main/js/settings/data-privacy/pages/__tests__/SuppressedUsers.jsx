@@ -12,6 +12,19 @@ import {waitForLoading} from 'test/helpers';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/hooks/useCurrentUser', () => ({
+	useCurrentUser: () => ({
+		id: '123',
+		isAdmin: () => true,
+		name: 'Marcos',
+		userId: '456'
+	})
+}));
+
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({timeZoneId: 'UTC'})
+}));
+
 const mockItems = [
 	{
 		createDate: data.getTimestamp(),
@@ -39,7 +52,6 @@ describe('SuppressedUsers', () => {
 							path={Routes.SETTINGS_DATA_PRIVACY_SUPPRESSED_USERS}
 						>
 							<SuppressedUsers
-								currentUser={{isAdmin: () => true}}
 								router={{
 									params: {groupId: '23'},
 									query: {delta: '5', page: '1'}

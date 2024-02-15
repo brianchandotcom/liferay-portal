@@ -53,6 +53,8 @@ public class CountryRegionUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeProcessRegionCreation() throws Exception {
+		CompanyTestUtil.addCompany();
+
 		_companyLocalService.forEachCompany(
 			company -> {
 				Country country = _countryLocalService.fetchCountryByA2(
@@ -82,14 +84,6 @@ public class CountryRegionUpgradeProcessTest {
 					_regionLocalService.getRegionsCount(
 						country.getCountryId()));
 			});
-
-		Company company = CompanyTestUtil.addCompany();
-
-		Country country = _countryLocalService.getCountryByA2(
-			company.getCompanyId(), "US");
-
-		Assert.assertEquals(
-			57, _regionLocalService.getRegionsCount(country.getCountryId()));
 
 		_verifyCounters();
 		_verifyRegionLocalizationCompanyId();

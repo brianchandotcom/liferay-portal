@@ -29,7 +29,7 @@ public class FreeMarker {
 		_configuration.setNumberFormat("computer");
 
 		DefaultObjectWrapperBuilder defaultObjectWrapperBuilder =
-			new DefaultObjectWrapperBuilder(Configuration.getVersion());
+			new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_30);
 
 		_configuration.setObjectWrapper(defaultObjectWrapperBuilder.build());
 
@@ -67,6 +67,6 @@ public class FreeMarker {
 	}
 
 	private static final Configuration _configuration = new Configuration(
-		Configuration.getVersion());
+		Configuration.VERSION_2_3_30);
 
 }

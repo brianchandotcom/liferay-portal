@@ -7,10 +7,14 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenu.page';
+import { AICreatorInstanceSettingsPage } from './aiCreatorSettings.page';
 export class DocumentLibraryPage {
 	readonly optionsMenu: Locator;
 	readonly page: Page;
 	readonly exportImportOptionsMenuItem: Locator;
+	readonly productMenuPage: ProductMenuPage;
+	readonly aiCreatorPageSettingsPage: AICreatorInstanceSettingsPage;
 
 	constructor(page: Page) {
 		this.exportImportOptionsMenuItem = page.getByRole('menuitem', {
@@ -20,12 +24,12 @@ export class DocumentLibraryPage {
 			.getByTestId('headerOptions')
 			.getByLabel('Options');
 		this.page = page;
+		this.productMenuPage = new ProductMenuPage(page);
+		this.aiCreatorPageSettingsPage = new AICreatorInstanceSettingsPage(page);
 	}
 
 	async goto() {
-		await this.page.goto(
-			'/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet'
-		);
+		await this.productMenuPage.goToDocumentsAndMediaMenuItem();
 		await this.page.waitForLoadState();
 	}
 
@@ -47,27 +51,11 @@ export class DocumentLibraryPage {
 			.click();
 	}
 
-	async enableAICreatorFromInstanceSettings() {
-		await this.page.getByLabel('Open Applications MenuCtrl+').click();
-		await this.page.getByRole('tab', {name: 'Control Panel'}).click();
-		await this.page
-			.getByRole('menuitem', {name: 'Instance Settings'})
-			.click();
-		await this.page.getByRole('link', {name: 'AI Creator'}).click();
-		await this.page.getByText('Enable DALL-E to Create Images').check();
-		await this.page.getByRole('button', {name: 'Save'}).click();
-		await this.page.waitForLoadState();
+	async enableAICreator() {
+		await this.aiCreatorPageSettingsPage.enableDalleCreateImages();
 	}
 
-	async disableAICreatorFromInstanceSettings() {
-		await this.page.getByLabel('Open Applications MenuCtrl+').click();
-		await this.page.getByRole('tab', {name: 'Control Panel'}).click();
-		await this.page
-			.getByRole('menuitem', {name: 'Instance Settings'})
-			.click();
-		await this.page.getByRole('link', {name: 'AI Creator'}).click();
-		await this.page.getByText('Enable DALL-E to Create Images').uncheck();
-		await this.page.getByRole('button', {name: 'Save'}).click();
-		await this.page.waitForLoadState();
+	async disableAICreator() {
+		await this.aiCreatorPageSettingsPage.disableDalleCreateImages();
 	}
 }

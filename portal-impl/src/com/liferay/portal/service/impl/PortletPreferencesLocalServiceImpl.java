@@ -172,14 +172,11 @@ public class PortletPreferencesLocalServiceImpl
 			long portletPreferencesId)
 		throws PortalException {
 
-		for (PortletPreferenceValue portletPreferenceValue :
-				_portletPreferenceValuePersistence.findByPortletPreferencesId(
-					portletPreferencesId)) {
+		PortletPreferences portletPreferences =
+			portletPreferencesPersistence.findByPrimaryKey(
+				portletPreferencesId);
 
-			_portletPreferenceValuePersistence.remove(portletPreferenceValue);
-		}
-
-		return super.deletePortletPreferences(portletPreferencesId);
+		return deletePortletPreferences(portletPreferences);
 	}
 
 	@Override
@@ -218,10 +215,17 @@ public class PortletPreferencesLocalServiceImpl
 			portletPreferencesPersistence.findByO_O_P_P(
 				ownerId, ownerType, plid, portletId);
 
+		deletePortletPreferences(portletPreferences);
+	}
+
+	@Override
+	public PortletPreferences deletePortletPreferences(
+		PortletPreferences portletPreferences) {
+
 		_portletPreferenceValuePersistence.removeByPortletPreferencesId(
 			portletPreferences.getPortletPreferencesId());
 
-		portletPreferencesPersistence.remove(portletPreferences);
+		return portletPreferencesPersistence.remove(portletPreferences);
 	}
 
 	@Override

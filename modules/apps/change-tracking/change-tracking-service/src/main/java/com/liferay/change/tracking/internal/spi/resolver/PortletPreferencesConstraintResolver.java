@@ -7,15 +7,13 @@ package com.liferay.change.tracking.internal.spi.resolver;
 
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.PortletPreferenceValueTable;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -26,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = ConstraintResolver.class)
-public class PortletPreferenceConstraintResolver
+public class PortletPreferencesConstraintResolver
 	implements ConstraintResolver<PortletPreferences> {
 
 	@Override
@@ -47,7 +45,7 @@ public class PortletPreferenceConstraintResolver
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
-			locale, PortletPreferenceConstraintResolver.class);
+			locale, PortletPreferencesConstraintResolver.class);
 	}
 
 	@Override
@@ -64,30 +62,26 @@ public class PortletPreferenceConstraintResolver
 		PortletPreferences sourcePortletPreferences =
 			constraintResolverContext.getSourceCTModel();
 
+		javax.portlet.PortletPreferences javaxPortletPreferences =
+			_portletPreferenceValueLocalService.getPreferences(
+				sourcePortletPreferences);
+
 		_portletPreferencesLocalService.deletePortletPreferences(
-			constraintResolverContext.getSourceCTModel());
+			sourcePortletPreferences);
 
-		List<Long> portletPreferenceValueIds =
-			_portletPreferenceValueLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					PortletPreferenceValueTable.INSTANCE.
-						portletPreferenceValueId
-				).from(
-					PortletPreferenceValueTable.INSTANCE
-				).where(
-					PortletPreferenceValueTable.INSTANCE.portletPreferencesId.
-						eq(
-							sourcePortletPreferences.getPortletPreferencesId()
-						).and(
-							PortletPreferenceValueTable.INSTANCE.ctCollectionId.
-								eq(sourcePortletPreferences.getCtCollectionId())
-						)
-				));
+		CTPersistence ctPersistence =
+			_portletPreferencesLocalService.getCTPersistence();
 
-		for (long portletPreferenceValueId : portletPreferenceValueIds) {
-			_portletPreferenceValueLocalService.deletePortletPreferenceValue(
-				portletPreferenceValueId);
-		}
+		ctPersistence.flush();
+
+		PortletPreferences targetPortletPreferences =
+			constraintResolverContext.getTargetCTModel();
+
+		_portletPreferencesLocalService.updatePreferences(
+			targetPortletPreferences.getOwnerId(),
+			targetPortletPreferences.getOwnerType(),
+			targetPortletPreferences.getPlid(),
+			targetPortletPreferences.getPortletId(), javaxPortletPreferences);
 	}
 
 	@Reference

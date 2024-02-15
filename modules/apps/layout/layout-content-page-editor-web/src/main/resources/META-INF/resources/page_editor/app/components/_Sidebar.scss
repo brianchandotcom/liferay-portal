@@ -43,6 +43,43 @@ html#{$cadmin-selector} .cadmin .page-editor__item-configuration-sidebar {
 	}
 }
 
+html#{$cadmin-selector}
+	.page-editor__small-resolution
+	.cadmin
+	.page-editor__item-configuration-sidebar {
+	height: unset;
+	min-height: calc(
+		100vh - (var(--control-menu-container-height) + var(--toolbar-height))
+	);
+	position: absolute;
+	top: calc(var(--control-menu-container-height));
+	z-index: $sidebarZIndex + 1;
+}
+
+html#{$cadmin-selector}
+	.page-editor__small-resolution
+	.cadmin
+	.page-editor__sidebar {
+	min-height: calc(
+		100vh - (var(--control-menu-container-height) + var(--toolbar-height))
+	);
+	height: unset;
+	position: absolute;
+	top: calc(var(--control-menu-container-height));
+	z-index: $sidebarZIndex + 1;
+
+	&__buttons {
+		position: absolute;
+		top: 0;
+	}
+
+	&__content {
+		min-height: calc(100vh - var(--control-menu-container-height));
+		position: absolute;
+		top: 0;
+	}
+}
+
 html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 	@include sidebar;
 	left: 0;
@@ -178,6 +215,10 @@ html#{$cadmin-selector} body {
 	}
 }
 
+html#{$cadmin-selector} .page-editor__small-resolution .page-editor__wrapper {
+	max-height: unset;
+}
+
 html#{$cadmin-selector} .page-editor__wrapper {
 	&--sidebar--hidden {
 		padding-left: 0;
@@ -198,13 +239,13 @@ html#{$cadmin-selector} .page-editor__wrapper {
 	overflow: auto;
 
 	&--padded-start {
-		@include media-breakpoint-up(sm) {
+		@include media-breakpoint-up(md) {
 			padding-left: $sidebarButtonWidth + $defaultSidebarContentWidth;
 		}
 	}
 
 	&--padded-end {
-		@include media-breakpoint-up(sm) {
+		@include media-breakpoint-up(md) {
 			margin-right: $defaultSidebarContentWidth;
 		}
 	}

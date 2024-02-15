@@ -59,3 +59,9 @@
 @import '../../plugins/page_content/components/Plugin';
 @import '../../plugins/page_design_options/components/Plugin';
 @import '../../plugins/page_rules/components/Plugin';
+
+html#{$cadmin-selector}
+	.page-editor__small-resolution
+	.cadmin.control-menu-container {
+	position: static;
+}

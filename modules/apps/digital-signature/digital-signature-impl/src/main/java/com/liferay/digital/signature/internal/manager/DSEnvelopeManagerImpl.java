@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -125,7 +126,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		long companyId, long groupId, String fromDateString, String keywords,
 		String order, Pagination pagination, String status) {
 
-		Matcher matcher = _pattern.matcher(keywords);
+		Matcher matcher = _pattern.matcher(GetterUtil.get(keywords, ""));
 
 		if (matcher.matches()) {
 			DSEnvelope dsEnvelope = getDSEnvelope(companyId, groupId, keywords);
@@ -140,9 +141,11 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 		String location = StringBundler.concat(
 			"envelopes?count=", pagination.getPageSize(), "&from_date=",
-			fromDateString, "&folder_types=sentitems&start_position=",
+			GetterUtil.get(fromDateString, "2000-01-01"),
+			"&folder_types=sentitems&start_position=",
 			pagination.getStartPosition(),
-			"&include=custom_fields,documents,recipients&order=", order);
+			"&include=custom_fields,documents,recipients&order=",
+			GetterUtil.get(order, ""));
 
 		if (!Validator.isBlank(keywords)) {
 			location += "&search_text=" + keywords;

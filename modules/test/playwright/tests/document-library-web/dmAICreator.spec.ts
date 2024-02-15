@@ -37,7 +37,7 @@ testFeatureFlagsEnabled(
 testFeatureFlagsEnabled(
 	'Create AI Image option is hidden when disabled from Instance Settings',
 	async ({documentLibraryPage, page}) => {
-		await documentLibraryPage.disableAICreatorFromInstanceSettings();
+		await documentLibraryPage.disableAICreator();
 
 		await documentLibraryPage.goto();
 
@@ -47,6 +47,6 @@ testFeatureFlagsEnabled(
 			page.getByRole('menuitem', {name: 'Create AI Image'})
 		).not.toBeVisible();
 
-		await documentLibraryPage.enableAICreatorFromInstanceSettings();
+		await documentLibraryPage.enableAICreator();
 	}
 );

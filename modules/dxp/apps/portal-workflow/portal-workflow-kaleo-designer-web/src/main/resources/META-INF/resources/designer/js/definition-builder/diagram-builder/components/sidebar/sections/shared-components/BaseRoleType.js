@@ -152,14 +152,16 @@ const BaseRoleType = ({
 		setRoleNameDropdownActive(false);
 
 		setSections((prev) => {
-			prev[index] = {
-				...prev[index],
+			const newSections = [...prev];
+
+			newSections[index] = {
+				...newSections[index],
 				...item,
 			};
 
-			updateSelectedItem(prev);
+			updateSelectedItem(newSections);
 
-			return prev;
+			return newSections;
 		});
 	};
 
@@ -328,16 +330,18 @@ const BaseRoleType = ({
 							onChange={() => {
 								setChecked((value) => {
 									setSections((prev) => {
-										prev[index] = {
-											...prev[index],
+										const newSections = [...prev];
+
+										newSections[index] = {
+											...newSections[index],
 											autoCreate: !value,
 											roleName: selectedRoleName,
 											roleType: selectedRoleType,
 										};
 
-										updateSelectedItem(prev);
+										updateSelectedItem(newSections);
 
-										return prev;
+										return newSections;
 									});
 
 									return !value;

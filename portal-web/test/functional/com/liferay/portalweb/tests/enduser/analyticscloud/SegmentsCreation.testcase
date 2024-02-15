@@ -872,12 +872,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-7962 | Test Summary: Create a segment that contains anonymous individuals"
-	@ignore = "true"
 	@priority = 5
 	test CanCreateSegmentWithAnonymousIndividuals {
-
-		// AC Bug ticket: LRAC-14840
-
 		var usernameList = "ac,liferay,dxp";
 		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
 		var nameList = "ac ac,liferay liferay,dxp dxp";
@@ -1088,12 +1084,9 @@ definition {
 	}
 
 	@description = "Create a static segment with individual"
-	@ignore = "true"
 	@priority = 5
 	test CanCreateStaticSegmentWithIndividuals {
 		property test.run.type = "single";
-
-		// AC Bug ticket: LRAC-14840
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(

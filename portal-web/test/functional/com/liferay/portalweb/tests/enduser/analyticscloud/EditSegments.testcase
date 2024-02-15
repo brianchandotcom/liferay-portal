@@ -218,12 +218,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8135 | Test Summary: Edit a static segment and check the edits are saved"
-	@ignore = "true"
 	@priority = 5
 	test CanEditStaticSegmentCheckEditSaved {
-
-		// AC Bug ticket: LRAC-14840
-
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";

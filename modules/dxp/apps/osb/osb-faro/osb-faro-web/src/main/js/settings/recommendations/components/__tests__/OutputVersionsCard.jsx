@@ -29,8 +29,8 @@ describe('OutputVersionsCard', () => {
 				]}
 			>
 				<OutputVersionsCard
+					jobId='321'
 					nextRunDate={new Date()}
-					router={{params: {jobId: '321'}}}
 					runFrequency={JobRunFrequencies.Every14Days}
 				/>
 			</MockedProvider>
@@ -62,7 +62,6 @@ describe('OutputVersionsCard', () => {
 				]}
 			>
 				<OutputVersionsCard
-					router={{params: {jobId: '321'}}}
 					runFrequency={JobRunFrequencies.Every14Days}
 				/>
 			</MockedProvider>

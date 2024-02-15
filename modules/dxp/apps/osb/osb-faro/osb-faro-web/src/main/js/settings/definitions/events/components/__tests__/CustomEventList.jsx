@@ -14,9 +14,14 @@ import {NotificationSubtypes} from 'shared/util/records/Notification';
 import {Provider} from 'react-redux';
 import {range} from 'lodash';
 import {Routes} from 'shared/util/router';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {waitForLoading} from 'test/helpers';
 
 jest.unmock('react-dom');
+
+jest.mock('shared/hooks/useCurrentUser', () => ({
+	useCurrentUser: jest.fn()
+}));
 
 const mockNotificationAlertList = NotificationAlertList;
 
@@ -57,6 +62,8 @@ describe('CustomEventList', () => {
 	afterAll(cleanup);
 
 	it('should render', async () => {
+		useCurrentUser.mockImplementation(() => ({isAdmin: () => true}));
+
 		const {container, queryByTestId} = render(<WrappedComponent />);
 
 		await waitForLoading(container);
@@ -68,6 +75,8 @@ describe('CustomEventList', () => {
 	});
 
 	it('should render w/o select all checkbox if user is not an admin', async () => {
+		useCurrentUser.mockImplementation(() => ({isAdmin: () => false}));
+
 		API.user.fetchCurrentUser.mockReturnValueOnce(
 			Promise.resolve(data.mockMemberUser('23'))
 		);
@@ -82,6 +91,8 @@ describe('CustomEventList', () => {
 	});
 
 	it('should render alert notification', async () => {
+		useCurrentUser.mockImplementation(() => ({isAdmin: () => true}));
+
 		mockNotificationAlertList.useNotificationsAPI = jest.fn(() => ({
 			data: range(1).map(i =>
 				data.mockNotification(i, {

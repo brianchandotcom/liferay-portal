@@ -10,6 +10,12 @@ import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({
+		displayTimeZone: 'UTC -03:00 Brasilia Time (America/Recife)'
+	})
+}));
+
 const defaultProps = {
 	data: range(1).map(i => data.mockNotification(i)),
 	groupId: '23',
@@ -36,7 +42,7 @@ describe('NotificationAlertList', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	xit('should hide notification when click on close button', () => {
+	it('should hide notification when click on close button', () => {
 		const {container, queryByText} = render(
 			<Provider store={mockStore()}>
 				<StaticRouter>

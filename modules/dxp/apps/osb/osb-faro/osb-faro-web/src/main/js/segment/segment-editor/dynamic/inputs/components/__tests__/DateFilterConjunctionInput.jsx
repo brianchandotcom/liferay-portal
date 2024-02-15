@@ -25,6 +25,12 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({
+		timeZoneId: 'UTC'
+	})
+}));
+
 const WrapperComponent = ({children}) => (
 	<ApolloProvider client={client}>
 		<Provider store={mockStore()}>

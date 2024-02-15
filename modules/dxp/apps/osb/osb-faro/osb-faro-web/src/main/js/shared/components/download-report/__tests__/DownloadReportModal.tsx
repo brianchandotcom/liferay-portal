@@ -30,6 +30,10 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({timeZoneId: 'UTC'})
+}));
+
 const WrapperCSVComponent = props => (
 	<WrapperComponent
 		{...props}

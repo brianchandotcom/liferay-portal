@@ -80,10 +80,6 @@ describe('WithOnboarding', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		jest.runAllTimers();
-
-		await waitForLoadingToBeRemoved(container);
-
 		expect(open).not.toBeCalled();
 	});
 

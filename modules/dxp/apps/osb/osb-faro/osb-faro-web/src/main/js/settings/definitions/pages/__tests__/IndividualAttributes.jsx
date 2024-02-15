@@ -11,6 +11,10 @@ import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
+jest.mock('shared/hooks/useTimeZone', () => ({
+	useTimeZone: () => ({timeZoneId: 'UTC'})
+}));
+
 const DefaultComponent = props => (
 	<Provider store={mockStore()}>
 		<StaticRouter>

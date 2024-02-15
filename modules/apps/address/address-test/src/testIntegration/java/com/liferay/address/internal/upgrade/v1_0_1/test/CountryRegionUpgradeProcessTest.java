@@ -28,6 +28,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+import com.liferay.portal.util.PortalInstances;
 
 import java.util.List;
 
@@ -52,28 +53,34 @@ public class CountryRegionUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeProcessRegionCreation() throws Exception {
+		Country country = _countryLocalService.fetchCountryByA2(
+			PortalInstances.getDefaultCompanyId(), "US");
+
+		int regionsCount = _regionLocalService.getRegionsCount(
+			country.getCountryId());
+
 		CompanyTestUtil.addCompany();
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				Country country = _countryLocalService.fetchCountryByA2(
+				Country companyCountry = _countryLocalService.fetchCountryByA2(
 					companyId, "US");
 
 				_regionLocalService.deleteCountryRegions(
-					country.getCountryId());
+					companyCountry.getCountryId());
 			});
 
 		_runUpgrade();
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				Country country = _countryLocalService.fetchCountryByA2(
+				Country companyCountry = _countryLocalService.fetchCountryByA2(
 					companyId, "US");
 
 				Assert.assertEquals(
-					57,
+					regionsCount,
 					_regionLocalService.getRegionsCount(
-						country.getCountryId()));
+						companyCountry.getCountryId()));
 			});
 
 		_verifyCounters();

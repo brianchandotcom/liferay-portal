@@ -52,11 +52,13 @@ public class JournalRecentArticlesResultRowSplitter
 			currentCalendar.get(Calendar.DATE), 0, 0, 0, 0,
 			_themeDisplay.getTimeZone());
 
-		LocalDateTime todayDateTime = _toLocalDateTime(
+		LocalDateTime todayLocalDateTime = _toLocalDateTime(
 			calendar.getTime(), ZoneId.of(user.getTimeZoneId()));
 
-		LocalDateTime sevenDaysAgoDateTime = todayDateTime.minusDays(7);
-		LocalDateTime thirtyDaysAgoDateTime = todayDateTime.minusDays(30);
+		LocalDateTime sevenDaysAgoLocalDateTime = todayLocalDateTime.minusDays(
+			7);
+		LocalDateTime thirtyDaysAgoLocalDateTime = todayLocalDateTime.minusDays(
+			30);
 
 		List<ResultRow> todayJournalArticleResultRows = new ArrayList<>();
 		List<ResultRow> lastSevenDaysJournalArticleResultRows =
@@ -73,13 +75,13 @@ public class JournalRecentArticlesResultRowSplitter
 				journalArticle.getModifiedDate(),
 				ZoneId.of(user.getTimeZoneId()));
 
-			if (localDateTime.isBefore(thirtyDaysAgoDateTime)) {
+			if (localDateTime.isBefore(thirtyDaysAgoLocalDateTime)) {
 				olderJournalArticleResultRows.add(resultRow);
 			}
-			else if (localDateTime.isBefore(sevenDaysAgoDateTime)) {
+			else if (localDateTime.isBefore(sevenDaysAgoLocalDateTime)) {
 				lastThirtyDaysJournalArticleResultRows.add(resultRow);
 			}
-			else if (localDateTime.isBefore(todayDateTime)) {
+			else if (localDateTime.isBefore(todayLocalDateTime)) {
 				lastSevenDaysJournalArticleResultRows.add(resultRow);
 			}
 			else {

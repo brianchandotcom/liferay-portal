@@ -11,10 +11,22 @@ import React, {useMemo} from 'react';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 
-export default function HideSidebarButton() {
+export function useOnToggleSidebars() {
 	const dispatch = useDispatch();
+	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
+
+	return () =>
+		dispatch(
+			switchSidebarPanel({
+				hidden: !sidebarHidden,
+			})
+		);
+}
+
+export default function HideSidebarButton() {
 	const id = useId();
 	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
+	const onToggleSidebars = useOnToggleSidebars();
 
 	const buttonTitle = useMemo(() => {
 		const keyLabel = Liferay.Browser?.isMac() ? '⌘' : 'Ctrl';
@@ -30,13 +42,7 @@ export default function HideSidebarButton() {
 				data-title={ReactDOMServer.renderToString(buttonTitle)}
 				data-title-set-as-html
 				displayType="secondary"
-				onClick={() =>
-					dispatch(
-						switchSidebarPanel({
-							hidden: !sidebarHidden,
-						})
-					)
-				}
+				onClick={onToggleSidebars}
 				size="sm"
 				symbol={sidebarHidden ? 'hidden' : 'view'}
 				type="button"

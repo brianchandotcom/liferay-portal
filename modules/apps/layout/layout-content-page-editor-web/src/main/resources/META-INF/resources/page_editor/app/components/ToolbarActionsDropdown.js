@@ -8,10 +8,12 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React from 'react';
 
 import {useSelector} from '../contexts/StoreContext';
+import {onDiscardDraft, useDisabledDiscardDraft} from './DiscardDraftButton';
 import {useOnToggleSidebars} from './HideSidebarButton';
 import {useDisabledRedo, useDisabledUndo, useUndoRedo} from './undo/Undo';
 
-export default function ToolbarActionsDropdown() {
+export default function ToolbarActionsDropdown({discardDraftFormRef}) {
+	const disabledDiscardDraft = useDisabledDiscardDraft();
 	const disabledRedo = useDisabledRedo();
 	const disabledUndo = useDisabledUndo();
 	const {onRedo, onUndo} = useUndoRedo();
@@ -43,6 +45,12 @@ export default function ToolbarActionsDropdown() {
 					symbolLeft: 'view',
 				},
 				{type: 'divider'},
+				{
+					disabled: disabledDiscardDraft,
+					label: Liferay.Language.get('discard-draft'),
+					onClick: (event) =>
+						onDiscardDraft(event, discardDraftFormRef.current),
+				},
 			]}
 			trigger={
 				<ClayButtonWithIcon

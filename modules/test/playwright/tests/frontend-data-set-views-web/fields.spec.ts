@@ -12,6 +12,7 @@ import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {fieldsPageTest} from './fixtures/fieldsPageTest';
 import {viewsPageTest} from './fixtures/viewsPageTest';
+import {DEFAULT_LABEL} from './utils/constants';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -38,7 +39,7 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 		await test.step('Create sample DataSet', async () => {
 			await dataSetsPage.goto();
 			await dataSetsPage.createDataSet({
-				name: 'Data Set Sample',
+				name: DEFAULT_LABEL.DATA_SET,
 				restApplication: '/headless-delivery/v1.0',
 				restEndpoint: '/v1.0/sites/{siteId}/site-pages',
 				restSchema: 'SitePage',
@@ -141,7 +142,7 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 			await page
 				.frameLocator('iframe[title="Select"]')
 				.locator('li')
-				.filter({hasText: 'Data Set View Sample'})
+				.filter({hasText: DEFAULT_LABEL.VIEW})
 				.first()
 				.click();
 			await page

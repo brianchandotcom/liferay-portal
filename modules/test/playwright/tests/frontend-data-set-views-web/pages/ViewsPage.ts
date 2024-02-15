@@ -5,9 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {DEFAULT_LABEL} from '../utils/constants';
 import {DataSetsPage} from './DataSetsPage';
-
-const DEFAULT_DATA_SET_VIEW_NAME = 'Data Set View Sample';
 
 export class ViewsPage {
 	readonly dataSetsPage: DataSetsPage;
@@ -34,14 +33,9 @@ export class ViewsPage {
 		this.page = page;
 	}
 
-	async goto(dataSetName?: string) {
-		await this.dataSetsPage.goto();
-		await this.dataSetsPage.gotoDataSet(dataSetName);
-	}
-
 	async createDataSetView({
 		description,
-		name = DEFAULT_DATA_SET_VIEW_NAME,
+		name = DEFAULT_LABEL.VIEW,
 	}: {
 		description?: string;
 		name?: string;
@@ -57,18 +51,23 @@ export class ViewsPage {
 		await this.newDataSetViewModal.saveButton.click();
 	}
 
-	async gotoDataSetView(name = DEFAULT_DATA_SET_VIEW_NAME) {
+	async goto(dataSetLabel: string = DEFAULT_LABEL.DATA_SET) {
+		await this.dataSetsPage.goto();
+		await this.dataSetsPage.gotoDataSet(dataSetLabel);
+	}
+
+	async openDataSetView(viewLabel: string = DEFAULT_LABEL.VIEW) {
 		await this.dataSetsViewTable
 			.getByRole('link', {
 				exact: true,
-				name,
+				name: viewLabel,
 			})
 			.first()
 			.click();
 
 		await this.page
-			.getByRole('heading', {
-				name,
+			.getByRole('button', {
+				name: 'Details',
 			})
 			.waitFor();
 	}

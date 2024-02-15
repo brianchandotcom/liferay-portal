@@ -697,6 +697,8 @@ definition {
 
 				Click(locator1 = "ACEventAnalysis#INPUT_CONDITION");
 
+				ACUtils.waitForLoading();
+
 				for (var attributeValue : list ${attributeValueList}) {
 					AssertElementPresent(
 						key_buttonName = ${attributeValue},

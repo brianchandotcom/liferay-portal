@@ -77,7 +77,14 @@ public class APIPropertyObjectDefinitionDeployerImpl
 				"=", ObjectRelationshipConstants.TYPE_ONE_TO_MANY, "))"),
 			new ObjectRelatedModelsProviderServiceTrackerCustomizer());
 
-		_updateExistingAPIProperties(objectDefinition);
+		try {
+			_updateExistingAPIProperties(objectDefinition);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
 
 		return Collections.emptyList();
 	}
@@ -112,44 +119,36 @@ public class APIPropertyObjectDefinitionDeployerImpl
 			objectDefinition.getExternalReferenceCode(), "L_API_PROPERTY");
 	}
 
-	private void _updateExistingAPIProperties(
-		ObjectDefinition objectDefinition) {
+	private void _updateExistingAPIProperties(ObjectDefinition objectDefinition)
+		throws Exception {
 
-		try {
-			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectDefinition.getObjectDefinitionId(), "type");
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(), "type");
 
-			if (objectField == null) {
-				return;
-			}
-
-			List<Map<String, Serializable>> valuesList =
-				_objectEntryLocalService.getValuesList(
-					GroupThreadLocal.getGroupId(),
-					objectDefinition.getCompanyId(),
-					objectDefinition.getUserId(),
-					objectDefinition.getObjectDefinitionId(),
-					_filterFactory.create("type eq null", objectDefinition),
-					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			for (Map<String, Serializable> values : valuesList) {
-				Collection<Serializable> collection = values.values();
-
-				collection.removeAll(Collections.singleton(null));
-
-				values.put("type", "field");
-
-				_objectEntryLocalService.addOrUpdateObjectEntry(
-					(String)values.get("externalReferenceCode"),
-					objectDefinition.getUserId(), GroupThreadLocal.getGroupId(),
-					objectDefinition.getObjectDefinitionId(), values,
-					new ServiceContext());
-			}
+		if (objectField == null) {
+			return;
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+
+		List<Map<String, Serializable>> valuesList =
+			_objectEntryLocalService.getValuesList(
+				GroupThreadLocal.getGroupId(), objectDefinition.getCompanyId(),
+				objectDefinition.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				_filterFactory.create("type eq null", objectDefinition), null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (Map<String, Serializable> values : valuesList) {
+			Collection<Serializable> collection = values.values();
+
+			collection.removeAll(Collections.singleton(null));
+
+			values.put("type", "field");
+
+			_objectEntryLocalService.addOrUpdateObjectEntry(
+				(String)values.get("externalReferenceCode"),
+				objectDefinition.getUserId(), GroupThreadLocal.getGroupId(),
+				objectDefinition.getObjectDefinitionId(), values,
+				new ServiceContext());
 		}
 	}
 

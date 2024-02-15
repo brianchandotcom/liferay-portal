@@ -17,7 +17,7 @@ const TIME_POLLING = 500;
 const TIME_SHOW_MSG = 2000;
 const DEFAULT_ERROR = Liferay.Language.get('an-unexpected-error-occurred');
 
-class DocumentLibraryOpener {
+export class DocumentLibraryOpener {
 	constructor({namespace}) {
 		this._namespace = namespace;
 
@@ -182,5 +182,3 @@ class DocumentLibraryOpener {
 		return Promise.all([loadingPromise, pollingPromise]);
 	}
 }
-
-export default DocumentLibraryOpener;

@@ -3,6 +3,7 @@
 		"@liferay/frontend-icons-web": "*",
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "document-library-opener-onedrive-web",
 	"private": true,
 	"scripts": {

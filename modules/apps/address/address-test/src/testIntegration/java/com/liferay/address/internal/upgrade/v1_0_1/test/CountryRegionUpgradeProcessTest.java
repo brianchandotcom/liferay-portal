@@ -10,7 +10,6 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
@@ -55,10 +54,10 @@ public class CountryRegionUpgradeProcessTest {
 	public void testUpgradeProcessRegionCreation() throws Exception {
 		CompanyTestUtil.addCompany();
 
-		_companyLocalService.forEachCompany(
-			company -> {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
 				Country country = _countryLocalService.fetchCountryByA2(
-					company.getCompanyId(), "US");
+					companyId, "US");
 
 				if (country == null) {
 					return;
@@ -70,10 +69,10 @@ public class CountryRegionUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_companyLocalService.forEachCompany(
-			company -> {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
 				Country country = _countryLocalService.fetchCountryByA2(
-					company.getCompanyId(), "US");
+					companyId, "US");
 
 				if (country == null) {
 					return;

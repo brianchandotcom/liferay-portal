@@ -151,7 +151,7 @@ public class JournalContentPortletToolbarContributor
 					ddmStructure -> ddmStructure.getName(locale)));
 
 			ddmStructures = ddmStructures.subList(
-				0, _DEFAULT_MAX_DISPLAY_ITEMS);
+				0, Math.min(ddmStructures.size(), _DEFAULT_MAX_DISPLAY_ITEMS));
 		}
 		else {
 			ddmStructures = _ddmStructureService.getStructures(

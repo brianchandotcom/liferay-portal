@@ -222,6 +222,13 @@ public class DLFileVersionLocalServiceUtil {
 			fileEntryId, excludeWorkingCopy);
 	}
 
+	public static DLFileVersion fetchLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy, int status) {
+
+		return getService().fetchLatestFileVersion(
+			fileEntryId, excludeWorkingCopy, status);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

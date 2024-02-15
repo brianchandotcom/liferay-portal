@@ -245,6 +245,14 @@ public class DLFileVersionLocalServiceWrapper
 	}
 
 	@Override
+	public DLFileVersion fetchLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy, int status) {
+
+		return _dlFileVersionLocalService.fetchLatestFileVersion(
+			fileEntryId, excludeWorkingCopy, status);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

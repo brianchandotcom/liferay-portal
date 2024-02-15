@@ -221,6 +221,10 @@ public interface DLFileVersionLocalService
 		long fileEntryId, boolean excludeWorkingCopy);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileVersion fetchLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

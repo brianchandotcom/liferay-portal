@@ -31,6 +31,7 @@ import com.liferay.gradle.plugins.workspace.docker.DockerPruneImage;
 import com.liferay.gradle.plugins.workspace.internal.configurator.TargetPlatformRootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.ReleaseUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateTokenTask;
 import com.liferay.gradle.plugins.workspace.task.InitBundleTask;
@@ -1556,7 +1557,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				public boolean isSatisfiedBy(Task task) {
 					if (!Objects.equals(
 							workspaceExtension.getBundleUrl(),
-							workspaceExtension.getDefaultBundleUrl())) {
+							ReleaseUtil.getFromReleaseProperties(
+								workspaceExtension.getProduct(),
+								ReleaseUtil.ReleaseProperties::getBundleUrl))) {
 
 						if (Objects.nonNull(_bundleCheckSumMD5)) {
 							return true;

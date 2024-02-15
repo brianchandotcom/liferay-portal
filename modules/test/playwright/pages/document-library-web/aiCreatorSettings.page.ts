@@ -5,25 +5,27 @@
 
 // @ts-ignore
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 const MOCK_API_KEY = 'VALID_API_KEY';
 const STR_BLANK = '';
 export class AICreatorInstanceSettingsPage {
-    readonly apiKeyInput: Locator;
-    readonly dalleCheckbox: Locator;
+	readonly apiKeyInput: Locator;
+	readonly dalleCheckbox: Locator;
 	readonly page: Page;
-    readonly saveButton: Locator;
+	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
-        this.apiKeyInput = this.page.getByLabel('API Key');
-        this.dalleCheckbox = this.page.getByText('Enable DALL-E to Create Images');
-        this.saveButton = this.page.getByRole('button', {name: 'Save'});
+		this.apiKeyInput = this.page.getByLabel('API Key');
+		this.dalleCheckbox = this.page.getByText(
+			'Enable DALL-E to Create Images'
+		);
+		this.saveButton = this.page.getByRole('button', {name: 'Save'});
 	}
 
-    async goto() {
+	async goto() {
 		await this.page.getByLabel('Open Applications MenuCtrl+').click();
 		await this.page.getByRole('tab', {name: 'Control Panel'}).click();
 		await this.page
@@ -40,7 +42,7 @@ export class AICreatorInstanceSettingsPage {
 		await this.page.waitForLoadState();
 	}
 
-    async disableDalleCreateImages() {
+	async disableDalleCreateImages() {
 		await this.goto();
 
 		await this.dalleCheckbox.uncheck();
@@ -48,19 +50,19 @@ export class AICreatorInstanceSettingsPage {
 		await this.page.waitForLoadState();
 	}
 
-    async addApiKey() {
-        await this.setAPIKey(MOCK_API_KEY);
-    }
+	async addApiKey() {
+		await this.setAPIKey(MOCK_API_KEY);
+	}
 
-    async removeApiKey() {
-        await this.setAPIKey(STR_BLANK);
-    }
+	async removeApiKey() {
+		await this.setAPIKey(STR_BLANK);
+	}
 
-    async setAPIKey(apikey) {
-        await this.goto();
+	async setAPIKey(apikey) {
+		await this.goto();
 
-        await this.apiKeyInput.fill(apikey);
-        await this.saveButton.click();
+		await this.apiKeyInput.fill(apikey);
+		await this.saveButton.click();
 		await this.page.waitForLoadState();
-    }
+	}
 }

@@ -28,7 +28,9 @@ export class DocumentLibraryPage {
 			.getByLabel('Options');
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
-		this.aiCreatorPageSettingsPage = new AICreatorInstanceSettingsPage(page);
+		this.aiCreatorPageSettingsPage = new AICreatorInstanceSettingsPage(
+			page
+		);
 		this.gogoShellPage = new GogoShellPage(page);
 	}
 

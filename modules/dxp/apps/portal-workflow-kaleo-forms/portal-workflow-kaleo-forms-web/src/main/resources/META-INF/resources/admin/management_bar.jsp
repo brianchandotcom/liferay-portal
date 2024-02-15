@@ -23,7 +23,7 @@
 	creationMenu="<%= kaleoFormsAdminDisplayContext.getCreationMenu() %>"
 	itemsTotal="<%= kaleoFormsAdminDisplayContext.getTotalItems() %>"
 	orderDropdownItems="<%= kaleoFormsAdminDisplayContext.getOrderItemsDropdownItems() %>"
-	propsTransformer="admin/js/KaleoFormsAdminManagementToolbarPropsTransformer"
+	propsTransformer="{KaleoFormsAdminManagementToolbarPropsTransformer} from portal-workflow-kaleo-forms"
 	searchActionURL="<%= kaleoFormsAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= kaleoFormsAdminDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"

@@ -110,7 +110,7 @@ KaleoFormsTaskTemplateSearchDisplayContext kaleoFormsTaskTemplateSearchDisplayCo
 			"saveInPortletSessionURL", saveInPortletSessionURL
 		).build()
 	%>'
-	module="admin/js/KaleoFormsTemplateSelector"
+	module="{KaleoFormsTemplateSelector} from portal-workflow-kaleo-forms"
 />
 
 <aui:script use="aui-base,aui-io-request,liferay-util">

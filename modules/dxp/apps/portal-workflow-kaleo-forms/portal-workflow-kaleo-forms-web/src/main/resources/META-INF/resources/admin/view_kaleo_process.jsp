@@ -45,7 +45,7 @@ KaleoProcess kaleoProcess = kaleoFormsViewRecordsDisplayContext.getKaleoProcess(
 	creationMenu="<%= kaleoFormsViewRecordsDisplayContext.getCreationMenu() %>"
 	itemsTotal="<%= kaleoFormsViewRecordsDisplayContext.getTotalItems() %>"
 	orderDropdownItems="<%= kaleoFormsViewRecordsDisplayContext.getOrderItemsDropdownItems() %>"
-	propsTransformer="admin/js/KaleoFormsViewRecordsManagementToolbarPropsTransformer"
+	propsTransformer="{KaleoFormsViewRecordsManagementToolbarPropsTransformer} from portal-workflow-kaleo-forms"
 	searchActionURL="<%= kaleoFormsViewRecordsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= kaleoFormsViewRecordsDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm"

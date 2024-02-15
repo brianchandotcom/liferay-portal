@@ -35,21 +35,25 @@ public interface DSEnvelopeResource {
 	}
 
 	public Page<DSEnvelope> getSiteDSEnvelopesPage(
-			Long siteId, Pagination pagination)
+			Long siteId, String fromDate, String keywords, String order,
+			String status, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteDSEnvelopesPageHttpResponse(
-			Long siteId, Pagination pagination)
+			Long siteId, String fromDate, String keywords, String order,
+			String status, Pagination pagination)
 		throws Exception;
 
 	public void postSiteDSEnvelopesPageExportBatch(
-			Long siteId, String callbackURL, String contentType,
+			Long siteId, String fromDate, String keywords, String order,
+			String status, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postSiteDSEnvelopesPageExportBatchHttpResponse(
-				Long siteId, String callbackURL, String contentType,
+				Long siteId, String fromDate, String keywords, String order,
+				String status, String callbackURL, String contentType,
 				String fieldNames)
 		throws Exception;
 
@@ -186,11 +190,13 @@ public interface DSEnvelopeResource {
 	public static class DSEnvelopeResourceImpl implements DSEnvelopeResource {
 
 		public Page<DSEnvelope> getSiteDSEnvelopesPage(
-				Long siteId, Pagination pagination)
+				Long siteId, String fromDate, String keywords, String order,
+				String status, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteDSEnvelopesPageHttpResponse(siteId, pagination);
+				getSiteDSEnvelopesPageHttpResponse(
+					siteId, fromDate, keywords, order, status, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -252,7 +258,8 @@ public interface DSEnvelopeResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteDSEnvelopesPageHttpResponse(
-				Long siteId, Pagination pagination)
+				Long siteId, String fromDate, String keywords, String order,
+				String status, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -276,6 +283,22 @@ public interface DSEnvelopeResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (fromDate != null) {
+				httpInvoker.parameter("fromDate", String.valueOf(fromDate));
+			}
+
+			if (keywords != null) {
+				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
+			if (order != null) {
+				httpInvoker.parameter("order", String.valueOf(order));
+			}
+
+			if (status != null) {
+				httpInvoker.parameter("status", String.valueOf(status));
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
@@ -297,13 +320,15 @@ public interface DSEnvelopeResource {
 		}
 
 		public void postSiteDSEnvelopesPageExportBatch(
-				Long siteId, String callbackURL, String contentType,
+				Long siteId, String fromDate, String keywords, String order,
+				String status, String callbackURL, String contentType,
 				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteDSEnvelopesPageExportBatchHttpResponse(
-					siteId, callbackURL, contentType, fieldNames);
+					siteId, fromDate, keywords, order, status, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -355,7 +380,8 @@ public interface DSEnvelopeResource {
 
 		public HttpInvoker.HttpResponse
 				postSiteDSEnvelopesPageExportBatchHttpResponse(
-					Long siteId, String callbackURL, String contentType,
+					Long siteId, String fromDate, String keywords, String order,
+					String status, String callbackURL, String contentType,
 					String fieldNames)
 			throws Exception {
 
@@ -381,6 +407,22 @@ public interface DSEnvelopeResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (fromDate != null) {
+				httpInvoker.parameter("fromDate", String.valueOf(fromDate));
+			}
+
+			if (keywords != null) {
+				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
+			if (order != null) {
+				httpInvoker.parameter("order", String.valueOf(order));
+			}
+
+			if (status != null) {
+				httpInvoker.parameter("status", String.valueOf(status));
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(

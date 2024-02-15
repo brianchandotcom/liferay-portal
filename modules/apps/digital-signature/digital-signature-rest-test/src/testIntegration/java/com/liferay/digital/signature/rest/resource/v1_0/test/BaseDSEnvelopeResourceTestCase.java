@@ -200,7 +200,9 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			testGetSiteDSEnvelopesPage_getIrrelevantSiteId();
 
 		Page<DSEnvelope> page = dsEnvelopeResource.getSiteDSEnvelopesPage(
-			siteId, Pagination.of(1, 10));
+			siteId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -210,7 +212,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 					irrelevantSiteId, randomIrrelevantDSEnvelope());
 
 			page = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				irrelevantSiteId, Pagination.of(1, (int)totalCount + 1));
+				irrelevantSiteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -229,7 +232,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			siteId, randomDSEnvelope());
 
 		page = dsEnvelopeResource.getSiteDSEnvelopesPage(
-			siteId, Pagination.of(1, 10));
+			siteId, null, null, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -262,7 +265,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		Long siteId = testGetSiteDSEnvelopesPage_getSiteId();
 
 		Page<DSEnvelope> dsEnvelopePage =
-			dsEnvelopeResource.getSiteDSEnvelopesPage(siteId, null);
+			dsEnvelopeResource.getSiteDSEnvelopesPage(
+				siteId, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(dsEnvelopePage.getTotalCount());
 
@@ -281,7 +285,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<DSEnvelope> page1 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				siteId,
+				siteId, null, null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -291,7 +295,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			assertContains(dsEnvelope1, (List<DSEnvelope>)page1.getItems());
 
 			Page<DSEnvelope> page2 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				siteId,
+				siteId, null, null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -299,7 +303,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			assertContains(dsEnvelope2, (List<DSEnvelope>)page2.getItems());
 
 			Page<DSEnvelope> page3 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				siteId,
+				siteId, null, null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -308,7 +312,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		}
 		else {
 			Page<DSEnvelope> page1 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				siteId, Pagination.of(1, totalCount + 2));
+				siteId, null, null, null, null,
+				Pagination.of(1, totalCount + 2));
 
 			List<DSEnvelope> dsEnvelopes1 = (List<DSEnvelope>)page1.getItems();
 
@@ -316,7 +321,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 				dsEnvelopes1.toString(), totalCount + 2, dsEnvelopes1.size());
 
 			Page<DSEnvelope> page2 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				siteId, Pagination.of(2, totalCount + 2));
+				siteId, null, null, null, null,
+				Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -326,7 +332,8 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 				dsEnvelopes2.toString(), 1, dsEnvelopes2.size());
 
 			Page<DSEnvelope> page3 = dsEnvelopeResource.getSiteDSEnvelopesPage(
-				siteId, Pagination.of(1, (int)totalCount + 3));
+				siteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(dsEnvelope1, (List<DSEnvelope>)page3.getItems());
 			assertContains(dsEnvelope2, (List<DSEnvelope>)page3.getItems());

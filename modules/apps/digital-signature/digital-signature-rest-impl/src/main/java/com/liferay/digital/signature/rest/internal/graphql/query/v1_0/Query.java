@@ -51,11 +51,15 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelopes(page: ___, pageSize: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dSEnvelopes(fromDate: ___, keywords: ___, order: ___, page: ___, pageSize: ___, siteKey: ___, status: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DSEnvelopePage dSEnvelopes(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("fromDate") String fromDate,
+			@GraphQLName("keywords") String keywords,
+			@GraphQLName("order") String order,
+			@GraphQLName("status") String status,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -65,7 +69,8 @@ public class Query {
 			this::_populateResourceContext,
 			dsEnvelopeResource -> new DSEnvelopePage(
 				dsEnvelopeResource.getSiteDSEnvelopesPage(
-					Long.valueOf(siteKey), Pagination.of(page, pageSize))));
+					Long.valueOf(siteKey), fromDate, keywords, order, status,
+					Pagination.of(page, pageSize))));
 	}
 
 	/**

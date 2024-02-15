@@ -49,11 +49,13 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DSEnvelopeResource {
 
 	public Page<DSEnvelope> getSiteDSEnvelopesPage(
-			Long siteId, Pagination pagination)
+			Long siteId, String fromDate, String keywords, String order,
+			String status, Pagination pagination)
 		throws Exception;
 
 	public Response postSiteDSEnvelopesPageExportBatch(
-			Long siteId, String callbackURL, String contentType,
+			Long siteId, String fromDate, String keywords, String order,
+			String status, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 

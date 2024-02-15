@@ -16,15 +16,19 @@ String defaultType = ParamUtil.getString(request, "defaultType");
 
 AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
-String backURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCRenderCommandName(
-	"/account_admin/edit_account_entry"
-).setParameter(
-	"accountEntryId", accountEntryDisplay.getAccountEntryId()
-).setParameter(
-	"screenNavigationCategoryKey", "addresses"
-).buildString();
+String backURL = ParamUtil.getString(request, "backURL");
+
+if (Validator.isNull(backURL)) {
+	backURL = PortletURLBuilder.createRenderURL(
+		renderResponse
+	).setMVCRenderCommandName(
+		"/account_admin/edit_account_entry"
+	).setParameter(
+		"accountEntryId", accountEntryDisplay.getAccountEntryId()
+	).setParameter(
+		"screenNavigationCategoryKey", "addresses"
+	).buildString();
+}
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);

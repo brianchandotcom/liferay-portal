@@ -38,6 +38,7 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.util.UriBuilder;
 
 /**
@@ -219,12 +220,12 @@ public class QueueListener {
 					}
 				}
 				catch (Exception exception) {
-					channel.basicReject(deliveryTag, true);
-
 					_log.error(
 						StringBundler.concat(
 							"Could NOT Update Account with name: ", accountName,
 							" ERROR: ", exception));
+
+					channel.basicReject(deliveryTag, true);
 				}
 			}
 
@@ -244,6 +245,13 @@ public class QueueListener {
 				}
 
 				String accountName = accountJSONObject.getString("name");
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Received Account: ", accountName,
+							", from message ", deliveryTag));
+				}
 
 				try {
 					_delete(
@@ -307,8 +315,8 @@ public class QueueListener {
 						REGULAR_ROLE_NAME_PARTNER_SALES_USER);
 				}
 
-				if ((salesforceAccountKey == null) ||
-					(contactEmailAddress == null) || roleNames.isEmpty()) {
+				if ((contactEmailAddress == null) || roleNames.isEmpty() ||
+					(salesforceAccountKey == null)) {
 
 					channel.basicAck(deliveryTag, false);
 
@@ -316,6 +324,30 @@ public class QueueListener {
 				}
 
 				String accountName = accountJSONObject.getString("name");
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Received User: ", contactEmailAddress,
+							", from message ", deliveryTag));
+				}
+
+				try {
+					_getAccountJSONObject(salesforceAccountKey);
+				}
+				catch (WebClientResponseException.NotFound
+							webClientResponseException) {
+
+					_log.error(
+						StringBundler.concat(
+							"Account: ", accountName, " (",
+							salesforceAccountKey, ") was NOT FOUND ",
+							webClientResponseException));
+
+					channel.basicAck(deliveryTag, false);
+
+					return;
+				}
 
 				JSONArray contanctTeamsJSONArray =
 					contactJSONObject.getJSONArray("teams");
@@ -381,7 +413,7 @@ public class QueueListener {
 									"User with Email Address: ",
 									contactEmailAddress,
 									" was assigned to the Regular Role: ",
-									accountRoleName));
+									roleNames.get(accountRoleName)));
 						}
 						catch (Exception exception) {
 							_log.error(
@@ -456,6 +488,67 @@ public class QueueListener {
 							return;
 						}
 					}
+				}
+			}
+
+			if (receivedRoutingKey.equals("koroneiki.contact.delete")) {
+				JSONObject jsonObject = new JSONObject(body);
+
+				JSONObject contactJSONObject = jsonObject.getJSONObject(
+					"contact");
+
+				String contactEmailAddress = contactJSONObject.optString(
+					"emailAddress");
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Received User: ", contactEmailAddress,
+							", from message ", deliveryTag));
+				}
+
+				try {
+					JSONObject userAccountJSONObject =
+						_getUserAccountJSONObject(contactEmailAddress);
+
+					if (userAccountJSONObject == null) {
+						channel.basicAck(deliveryTag, false);
+
+						return;
+					}
+
+					Long userAccountId = userAccountJSONObject.getLong("id");
+
+					_delete(
+						"/o/headless-admin-user/v1.0/user-accounts/" +
+							userAccountId);
+
+					_log.info(
+						StringBundler.concat(
+							"User with Email Address: ", contactEmailAddress,
+							" was deleted"));
+				}
+				catch (WebClientResponseException.NotFound
+							webClientResponseException) {
+
+					_log.error(
+						StringBundler.concat(
+							"User with Email Address: ", contactEmailAddress,
+							" was NOT FOUND ", webClientResponseException));
+
+					channel.basicAck(deliveryTag, false);
+
+					return;
+				}
+				catch (Exception exception) {
+					_log.error(
+						StringBundler.concat(
+							"Could NOT delete User with Email Address: ",
+							contactEmailAddress, " ERROR: ", exception));
+
+					channel.basicReject(deliveryTag, false);
+
+					return;
 				}
 			}
 
@@ -644,6 +737,15 @@ public class QueueListener {
 		return countryISOCode;
 	}
 
+	private JSONObject _getAccountJSONObject(String salesforceAccountKey) {
+		return _get(
+			uriBuilder -> uriBuilder.path(
+				StringBundler.concat(
+					"/o/headless-admin-user/v1.0/accounts",
+					"/by-external-reference-code/", salesforceAccountKey)
+			).build());
+	}
+
 	private Map<String, Long> _getAccountRolesIds(
 		String accountExternalReferenceCode) {
 
@@ -781,31 +883,32 @@ public class QueueListener {
 	}
 
 	private String _getSalesforceAccountKey(JSONObject accountJSONObject) {
-		JSONArray entitlementsJSONArray = accountJSONObject.getJSONArray(
-			"entitlements");
 
-		if (entitlementsJSONArray == null) {
-			return null;
-		}
+		// JSONArray entitlementsJSONArray = accountJSONObject.getJSONArray(
+		// 	"entitlements");
 
-		boolean partner = false;
+		// if (entitlementsJSONArray == null) {
+		// 	return null;
+		// }
 
-		for (int i = 0; i < entitlementsJSONArray.length(); i++) {
-			JSONObject entitlementJSONObject =
-				entitlementsJSONArray.getJSONObject(i);
+		// boolean partner = false;
 
-			if (StringUtil.equalsIgnoreCase(
-					entitlementJSONObject.getString("name"), "Partner")) {
+		// for (int i = 0; i < entitlementsJSONArray.length(); i++) {
+		// 	JSONObject entitlementJSONObject =
+		// 		entitlementsJSONArray.getJSONObject(i);
 
-				partner = true;
+		// 	if (StringUtil.equalsIgnoreCase(
+		// 			entitlementJSONObject.getString("name"), "Partner")) {
 
-				break;
-			}
-		}
+		// 		partner = true;
 
-		if (!partner) {
-			return null;
-		}
+		// 		break;
+		// 	}
+		// }
+
+		// if (!partner) {
+		// 	return null;
+		// }
 
 		JSONArray externalLinksJSONArray = accountJSONObject.getJSONArray(
 			"externalLinks");

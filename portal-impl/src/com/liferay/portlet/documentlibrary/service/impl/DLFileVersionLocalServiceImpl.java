@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.kernel.util.comparator.DLFileVersionVersionComparator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -56,6 +57,18 @@ public class DLFileVersionLocalServiceImpl
 		}
 
 		return dlFileVersion;
+	}
+
+	@Override
+	public DLFileVersion fetchLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy, int status) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return fetchLatestFileVersion(fileEntryId, excludeWorkingCopy);
+		}
+
+		return dlFileVersionPersistence.fetchByF_S_Last(
+			fileEntryId, status, new DLFileVersionVersionComparator());
 	}
 
 	@Override

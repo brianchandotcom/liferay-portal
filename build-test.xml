@@ -11815,7 +11815,20 @@ ${update.properties}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="database.partition.enabled" />
+		<propertycopy from="database.partition.enabled[${env.CI_TEST_SUITE}]" name="database.partition.enabled" override="true" silent="true" />
+
+		<if>
+			<or>
+				<equals arg1="database.partition.enabled" arg2="" />
+				<not>
+					<isset property="database.partition.enabled" />
+				</not>
+			</or>
+			<then>
+				<get-testcase-property property.name="database.partition.enabled" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="liferay.online.properties" />
 		<get-testcase-property property.name="portal.version" />
 
@@ -11823,7 +11836,7 @@ ${update.properties}</echo>
 			<and>
 				<isset property="portal.version" />
 				<or>
-					<isset property="database.partition.enabled" />
+					<equals arg1="database.partition.enabled" arg2="true" />
 					<isset property="liferay.online.properties" />
 				</or>
 			</and>
@@ -12065,9 +12078,6 @@ upgrade.report.enabled=true</echo>
 				</replace>
 			</then>
 		</if>
-
-		<get-testcase-property property.name="database.partition.enabled" />
-		<propertycopy from="database.partition.enabled[${env.CI_TEST_SUITE}]" name="database.partition.enabled" silent="true" />
 
 		<if>
 			<equals arg1="${database.partition.enabled}" arg2="true" />

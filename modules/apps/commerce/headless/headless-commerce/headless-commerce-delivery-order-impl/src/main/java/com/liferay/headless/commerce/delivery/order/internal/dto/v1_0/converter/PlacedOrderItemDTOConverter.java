@@ -258,9 +258,9 @@ public class PlacedOrderItemDTOConverter
 			BigDecimal unitPromoPrice = promoPriceCommerceMoney.getPrice();
 
 			if (unitPromoPrice != null) {
-				price.setPromoPrice(unitPromoPrice.doubleValue());
+				price.setPromoPrice(unitPromoPrice::doubleValue);
 				price.setPromoPriceFormatted(
-					promoPriceCommerceMoney.format(locale));
+					() -> promoPriceCommerceMoney.format(locale));
 			}
 		}
 
@@ -271,11 +271,11 @@ public class PlacedOrderItemDTOConverter
 			BigDecimal discountAmount = discountAmountCommerceMoney.getPrice();
 
 			if (discountAmount != null) {
-				price.setDiscount(discountAmount.doubleValue());
+				price.setDiscount(discountAmount::doubleValue);
 				price.setDiscountFormatted(
-					discountAmountCommerceMoney.format(locale));
+					() -> discountAmountCommerceMoney.format(locale));
 				price.setDiscountPercentage(
-					_commercePriceFormatter.format(
+					() -> _commercePriceFormatter.format(
 						commerceOrderItemPrice.getDiscountPercentage(),
 						locale));
 
@@ -289,13 +289,13 @@ public class PlacedOrderItemDTOConverter
 					commerceOrderItemPrice.getDiscountPercentageLevel4();
 
 				price.setDiscountPercentageLevel1(
-					discountPercentageLevel1.doubleValue());
+					discountPercentageLevel1::doubleValue);
 				price.setDiscountPercentageLevel2(
-					discountPercentageLevel2.doubleValue());
+					discountPercentageLevel2::doubleValue);
 				price.setDiscountPercentageLevel3(
-					discountPercentageLevel3.doubleValue());
+					discountPercentageLevel3::doubleValue);
 				price.setDiscountPercentageLevel4(
-					discountPercentageLevel4.doubleValue());
+					discountPercentageLevel4::doubleValue);
 			}
 		}
 
@@ -306,8 +306,8 @@ public class PlacedOrderItemDTOConverter
 
 		if (finalPrice != null) {
 			price.setFinalPriceFormatted(
-				finalPriceCommerceMoney.format(locale));
-			price.setFinalPrice(finalPrice.doubleValue());
+				() -> finalPriceCommerceMoney.format(locale));
+			price.setFinalPrice(finalPrice::doubleValue);
 		}
 
 		return price;
@@ -346,23 +346,30 @@ public class PlacedOrderItemDTOConverter
 			if ((allowedOrderQuantitiesArray != null) &&
 				(allowedOrderQuantitiesArray.length > 0)) {
 
-				settings.setAllowedQuantities(allowedOrderQuantitiesArray);
+				settings.setAllowedQuantities(
+					() -> allowedOrderQuantitiesArray);
 			}
 		}
 
 		if (minOrderQuantity != null) {
+			BigDecimal finalMinOrderQuantity = minOrderQuantity;
+
 			settings.setMinQuantity(
-				BigDecimalUtil.stripTrailingZeros(minOrderQuantity));
+				() -> BigDecimalUtil.stripTrailingZeros(finalMinOrderQuantity));
 		}
 
 		if (maxOrderQuantity != null) {
+			BigDecimal finalMaxOrderQuantity = maxOrderQuantity;
+
 			settings.setMaxQuantity(
-				BigDecimalUtil.stripTrailingZeros(maxOrderQuantity));
+				() -> BigDecimalUtil.stripTrailingZeros(finalMaxOrderQuantity));
 		}
 
 		if (multipleQuantity != null) {
+			BigDecimal finalMultipleQuantity = multipleQuantity;
+
 			settings.setMultipleQuantity(
-				BigDecimalUtil.stripTrailingZeros(multipleQuantity));
+				() -> BigDecimalUtil.stripTrailingZeros(finalMultipleQuantity));
 		}
 
 		return settings;

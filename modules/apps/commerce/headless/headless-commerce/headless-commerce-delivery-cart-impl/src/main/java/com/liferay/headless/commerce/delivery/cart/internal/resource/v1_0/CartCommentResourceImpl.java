@@ -127,7 +127,7 @@ public class CartCommentResourceImpl extends BaseCartCommentResourceImpl {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderNote.getCommerceOrderId());
 
-		cartComment.setId(commentId);
+		cartComment.setId(() -> commentId);
 
 		return _addOrUpdateOrderNote(commerceOrder, cartComment);
 	}

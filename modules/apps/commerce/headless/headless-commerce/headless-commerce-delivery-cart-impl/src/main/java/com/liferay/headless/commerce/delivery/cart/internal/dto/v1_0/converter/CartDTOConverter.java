@@ -322,9 +322,9 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		BigDecimal taxAmount = commerceOrder.getTaxAmount();
 
 		if (taxAmount != null) {
-			summary.setTaxValue(taxAmount.doubleValue());
+			summary.setTaxValue(taxAmount::doubleValue);
 			summary.setTaxValueFormatted(
-				_formatPrice(taxAmount, commerceCurrency, locale));
+				() -> _formatPrice(taxAmount, commerceCurrency, locale));
 		}
 
 		_setShippingDiscountOnSummary(
@@ -384,18 +384,35 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 					getShippingDiscountPercentageLevel4WithTaxAmount();
 		}
 
+		BigDecimal finalShippingDiscountPercentageLevel1 =
+			shippingDiscountPercentageLevel1;
+
+		BigDecimal finalShippingDiscountPercentageLevel2 =
+			shippingDiscountPercentageLevel2;
+
+		BigDecimal finalShippingDiscountPercentageLevel3 =
+			shippingDiscountPercentageLevel3;
+
+		BigDecimal finalShippingDiscountPercentageLevel4 =
+			shippingDiscountPercentageLevel4;
+
 		summary.setShippingDiscountPercentages(
-			_getFormattedDiscountPercentages(
+			() -> _getFormattedDiscountPercentages(
 				new BigDecimal[] {
-					shippingDiscountPercentageLevel1,
-					shippingDiscountPercentageLevel2,
-					shippingDiscountPercentageLevel3,
-					shippingDiscountPercentageLevel4
+					finalShippingDiscountPercentageLevel1,
+					finalShippingDiscountPercentageLevel2,
+					finalShippingDiscountPercentageLevel3,
+					finalShippingDiscountPercentageLevel4
 				},
 				locale));
-		summary.setShippingDiscountValue(shippingDiscountAmount.doubleValue());
+
+		summary.setShippingDiscountValue(shippingDiscountAmount::doubleValue);
+
+		BigDecimal finalShippingDiscountAmount = shippingDiscountAmount;
+
 		summary.setShippingDiscountValueFormatted(
-			_formatPrice(shippingDiscountAmount, commerceCurrency, locale));
+			() -> _formatPrice(
+				finalShippingDiscountAmount, commerceCurrency, locale));
 	}
 
 	private void _setSubtotalDiscountOnSummary(
@@ -440,18 +457,35 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 					getSubtotalDiscountPercentageLevel4WithTaxAmount();
 		}
 
+		BigDecimal finalSubtotalDiscountPercentageLevel1 =
+			subtotalDiscountPercentageLevel1;
+
+		BigDecimal finalSubtotalDiscountPercentageLevel2 =
+			subtotalDiscountPercentageLevel2;
+
+		BigDecimal finalSubtotalDiscountPercentageLevel3 =
+			subtotalDiscountPercentageLevel3;
+
+		BigDecimal finalSubtotalDiscountPercentageLevel4 =
+			subtotalDiscountPercentageLevel4;
+
 		summary.setSubtotalDiscountPercentages(
-			_getFormattedDiscountPercentages(
+			() -> _getFormattedDiscountPercentages(
 				new BigDecimal[] {
-					subtotalDiscountPercentageLevel1,
-					subtotalDiscountPercentageLevel2,
-					subtotalDiscountPercentageLevel3,
-					subtotalDiscountPercentageLevel4
+					finalSubtotalDiscountPercentageLevel1,
+					finalSubtotalDiscountPercentageLevel2,
+					finalSubtotalDiscountPercentageLevel3,
+					finalSubtotalDiscountPercentageLevel4
 				},
 				locale));
-		summary.setSubtotalDiscountValue(subtotalDiscountAmount.doubleValue());
+
+		summary.setSubtotalDiscountValue(subtotalDiscountAmount::doubleValue);
+
+		BigDecimal finalSubtotalDiscountAmount = subtotalDiscountAmount;
+
 		summary.setSubtotalDiscountValueFormatted(
-			_formatPrice(subtotalDiscountAmount, commerceCurrency, locale));
+			() -> _formatPrice(
+				finalSubtotalDiscountAmount, commerceCurrency, locale));
 	}
 
 	private void _setTotalDiscountOnSummary(
@@ -490,17 +524,35 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 				commerceOrder.getTotalDiscountPercentageLevel4WithTaxAmount();
 		}
 
+		BigDecimal finalTotalDiscountPercentageLevel1 =
+			totalDiscountPercentageLevel1;
+
+		BigDecimal finalTotalDiscountPercentageLevel2 =
+			totalDiscountPercentageLevel2;
+
+		BigDecimal finalTotalDiscountPercentageLevel3 =
+			totalDiscountPercentageLevel3;
+
+		BigDecimal finalTotalDiscountPercentageLevel4 =
+			totalDiscountPercentageLevel4;
+
 		summary.setTotalDiscountPercentages(
-			_getFormattedDiscountPercentages(
+			() -> _getFormattedDiscountPercentages(
 				new BigDecimal[] {
-					totalDiscountPercentageLevel1,
-					totalDiscountPercentageLevel2,
-					totalDiscountPercentageLevel3, totalDiscountPercentageLevel4
+					finalTotalDiscountPercentageLevel1,
+					finalTotalDiscountPercentageLevel2,
+					finalTotalDiscountPercentageLevel3,
+					finalTotalDiscountPercentageLevel4
 				},
 				locale));
-		summary.setTotalDiscountValue(totalDiscountAmount.doubleValue());
+
+		summary.setTotalDiscountValue(totalDiscountAmount::doubleValue);
+
+		BigDecimal finalTotalDiscountAmount = totalDiscountAmount;
+
 		summary.setTotalDiscountValueFormatted(
-			_formatPrice(totalDiscountAmount, commerceCurrency, locale));
+			() -> _formatPrice(
+				finalTotalDiscountAmount, commerceCurrency, locale));
 	}
 
 	private Status _toStatus(

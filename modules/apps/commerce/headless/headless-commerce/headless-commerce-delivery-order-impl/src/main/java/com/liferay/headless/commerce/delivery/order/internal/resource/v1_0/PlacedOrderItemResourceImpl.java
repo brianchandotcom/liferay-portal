@@ -171,13 +171,17 @@ public class PlacedOrderItemResourceImpl
 				continue;
 			}
 
-			if (parentOrderItem.getPlacedOrderItems() == null) {
-				parentOrderItem.setPlacedOrderItems(new PlacedOrderItem[0]);
+			PlacedOrderItem[] parentOrderItemPlacedOrderItems =
+				parentOrderItem.getPlacedOrderItems();
+
+			if (parentOrderItemPlacedOrderItems == null) {
+				parentOrderItem.setPlacedOrderItems(
+					() -> new PlacedOrderItem[0]);
 			}
 
 			parentOrderItem.setPlacedOrderItems(
-				ArrayUtil.append(
-					parentOrderItem.getPlacedOrderItems(), placedOrderItem));
+				() -> ArrayUtil.append(
+					parentOrderItemPlacedOrderItems, placedOrderItem));
 
 			placedOrderItemMap.remove(placedOrderItem.getId());
 		}

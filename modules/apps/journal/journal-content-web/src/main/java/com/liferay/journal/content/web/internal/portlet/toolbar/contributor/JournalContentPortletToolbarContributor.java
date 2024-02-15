@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -137,20 +139,16 @@ public class JournalContentPortletToolbarContributor
 		if (journalContentPortletInstanceConfiguration.
 				sortStructuresByByName()) {
 
-			ddmStructures = _ddmStructureService.getStructures(
-				themeDisplay.getCompanyId(), currentAndAncestorSiteGroupIds,
-				_portal.getClassNameId(JournalArticle.class), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new StructureCreateDateComparator());
-
 			Locale locale = themeDisplay.getLocale();
 
-			ddmStructures.sort(
-				(ddmStructure1, ddmStructure2) -> {
-					String name1 = ddmStructure1.getName(locale);
-					String name2 = ddmStructure2.getName(locale);
-
-					return name1.compareTo(name2);
-				});
+			ddmStructures = ListUtil.sort(
+				_ddmStructureService.getStructures(
+					themeDisplay.getCompanyId(), currentAndAncestorSiteGroupIds,
+					_portal.getClassNameId(JournalArticle.class),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					new StructureCreateDateComparator()),
+				Comparator.comparing(
+					ddmStructure -> ddmStructure.getName(locale)));
 
 			ddmStructures = ddmStructures.subList(
 				0, _DEFAULT_MAX_DISPLAY_ITEMS);

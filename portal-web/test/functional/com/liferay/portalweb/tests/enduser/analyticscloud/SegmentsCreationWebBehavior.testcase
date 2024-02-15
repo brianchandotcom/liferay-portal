@@ -36,12 +36,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9220 | Test Summary: Create a segment with behavior of commenting on a blog"
-	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentCommentingBlog {
-
-		// AC Bug ticket: LRAC-14840
-
 		ACUtils.createBlogsAndAddToPage();
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -209,12 +205,9 @@ definition {
 	}
 
 	@description = "Create a segment with behavior of downloading a document"
-	@ignore = "true"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentDownloadingDocument {
 		property test.run.type = "single";
-
-		// AC Bug ticket: LRAC-14840
 
 		ACUtils.createDMAndAddToPage();
 
@@ -286,12 +279,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9222 | Test Summary: Create a Web Behavior since X days"
-	@ignore = "true"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentSinceXdays {
 		property test.run.type = "single";
-
-		// AC Bug ticket: LRAC-14840
 
 		ACUtils.createWCAndAddToPage();
 

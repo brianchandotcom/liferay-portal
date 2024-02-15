@@ -126,13 +126,9 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8993 | Test Summary: Selecting a Segment in Individuals"
-	@ignore = "true"
 	@priority = 3
 	test AssertIndividualsSegmentSelected {
 		property test.run.type = "single";
-
-		// AC Bug ticket: LRAC-14840
-
 		var emailList = "user1@liferay.com";
 
 		task ("View the page as different users") {

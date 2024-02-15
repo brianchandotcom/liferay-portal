@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import React, {useRef} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {
 	useMovementTarget,
 	useMovementTargetPosition,
@@ -68,7 +69,8 @@ function TopperEmpty({children, className, item}) {
 							isValidDrop &&
 							dropTargetPosition === TARGET_POSITIONS.TOP,
 						'drop-container': dropContainerId === item.itemId,
-						'page-editor__topper': true,
+						'page-editor__topper':
+							item.type !== LAYOUT_DATA_ITEM_TYPES.root,
 					}),
 					ref: (node) => {
 						containerRef.current = node;

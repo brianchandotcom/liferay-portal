@@ -5,7 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {documentLibraryPages}  from '../../fixtures/documentLibraryPages';
+import {documentLibraryPages} from '../../fixtures/documentLibraryPages';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 
@@ -19,14 +19,28 @@ const testFeatureFlagsEnabled = mergeTests(
 
 testFeatureFlagsEnabled(
 	'can see default folder in  DM',
-	async ({
-		documentLibraryPage,
-		page,
-	}) => {
-        await documentLibraryPage.goto();
+	async ({documentLibraryPage, page}) => {
+		await documentLibraryPage.goto();
 
 		const defaultFolder = page.getByTitle('Provided by Liferay');
 
 		await expect(defaultFolder).toBeVisible();
+	}
+);
+
+testFeatureFlagsEnabled(
+	'Create AI Image option in Management Toolbar without API Key opens an alert',
+	async ({documentLibraryPage, page}) => {
+		await documentLibraryPage.goto();
+
+		await documentLibraryPage.new();
+
+		await page
+			.getByRole('menuitem', {
+				name: 'Create AI Image',
+			})
+			.click();
+
+		await expect(page.getByText('Configure OpenAI')).toBeVisible();
 	}
 );

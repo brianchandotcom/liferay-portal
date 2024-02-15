@@ -22,12 +22,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,6 +140,31 @@ public class DisplayPageTemplateInfoPanelDisplayContext {
 				LayoutPageTemplateAdminWebKeys.LAYOUT_PAGE_TEMPLATE_ENTRIES);
 
 		return _layoutPageTemplateEntries;
+	}
+
+	public String getPermissionsLayoutPageTemplateEntryCollectionURL(
+			LayoutPageTemplateCollection layoutPageTemplateCollection)
+		throws Exception {
+
+		return PermissionsURLTag.doTag(
+			StringPool.BLANK, LayoutPageTemplateCollection.class.getName(),
+			layoutPageTemplateCollection.getName(), null,
+			String.valueOf(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId()),
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
+	}
+
+	public String getPermissionsLayoutPageTemplateEntryURL(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		return PermissionsURLTag.doTag(
+			StringPool.BLANK, LayoutPageTemplateEntry.class.getName(),
+			layoutPageTemplateEntry.getName(), null,
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
+			LiferayWindowState.POP_UP.toString(), null, _httpServletRequest);
 	}
 
 	public String getSubtypeLabel(

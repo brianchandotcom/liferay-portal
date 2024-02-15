@@ -43,6 +43,10 @@ export {default as LayoutPrototypeManagementToolbarPropsTransformer} from './pro
 
 // @ts-ignore
 
+export {default as ManagePermissionsPropsTransformer} from './propsTransformers/ManagePermissionsPropsTransformer';
+
+// @ts-ignore
+
 export {default as MasterLayoutDropdownPropsTransformer} from './propsTransformers/MasterLayoutDropdownPropsTransformer';
 
 // @ts-ignore

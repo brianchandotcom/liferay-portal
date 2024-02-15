@@ -61,6 +61,19 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(DateFormat.MEDIUM,
 		</div>
 
 		<div class="sidebar-body">
+			<clay:button
+				additionalProps='<%=
+					HashMapBuilder.<String, Object>put(
+						"permissionsURL", displayPageTemplateInfoPanelDisplayContext.getPermissionsLayoutPageTemplateEntryURL(layoutPageTemplateEntry)
+					).build()
+				%>'
+				cssClass="c-mb-4"
+				displayType="secondary"
+				label="manage-permissions"
+				propsTransformer="{ManagePermissionsPropsTransformer} from layout-page-template-admin-web"
+				small="<%= true %>"
+			/>
+
 			<div class="mb-4">
 				<p class="font-weight-semi-bold mb-1 text-3">
 					<liferay-ui:message key="location" />
@@ -144,6 +157,21 @@ Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(DateFormat.MEDIUM,
 		</div>
 
 		<div class="sidebar-body">
+			<c:if test="<%= layoutPageTemplateCollection != null %>">
+				<clay:button
+					additionalProps='<%=
+						HashMapBuilder.<String, Object>put(
+							"permissionsURL", displayPageTemplateInfoPanelDisplayContext.getPermissionsLayoutPageTemplateEntryCollectionURL(layoutPageTemplateCollection)
+						).build()
+					%>'
+					cssClass="c-mb-4"
+					displayType="secondary"
+					label="manage-permissions"
+					propsTransformer="{ManagePermissionsPropsTransformer} from layout-page-template-admin-web"
+					small="<%= true %>"
+				/>
+			</c:if>
+
 			<div class="mb-4">
 				<p class="font-weight-semi-bold mb-1 text-3">
 					<liferay-ui:message key="number-of-items" />

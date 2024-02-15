@@ -13,6 +13,7 @@ export {default as LayoutPageTemplateCollectionPropsTransformer} from './propsTr
 export {default as LayoutPageTemplateEntryManagementToolbarPropsTransformer} from './propsTransformers/LayoutPageTemplateEntryManagementToolbarPropsTransformer';
 export {default as LayoutPageTemplateEntryPropsTransformer} from './propsTransformers/LayoutPageTemplateEntryPropsTransformer';
 export {default as LayoutPrototypeManagementToolbarPropsTransformer} from './propsTransformers/LayoutPrototypeManagementToolbarPropsTransformer';
+export {default as ManagePermissionsPropsTransformer} from './propsTransformers/ManagePermissionsPropsTransformer';
 export {default as MasterLayoutDropdownPropsTransformer} from './propsTransformers/MasterLayoutDropdownPropsTransformer';
 export {default as MasterLayoutManagementToolbarPropsTransformer} from './propsTransformers/MasterLayoutManagementToolbarPropsTransformer';
 export {default as SelectDisplayPageMasterLayoutVerticalCardPropsTransformer} from './propsTransformers/SelectDisplayPageMasterLayoutVerticalCardPropsTransformer';

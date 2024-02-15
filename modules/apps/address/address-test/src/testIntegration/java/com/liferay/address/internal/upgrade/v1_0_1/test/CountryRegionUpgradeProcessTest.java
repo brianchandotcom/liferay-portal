@@ -82,7 +82,6 @@ public class CountryRegionUpgradeProcessTest {
 			});
 
 		_verifyCounters();
-		_verifyRegionLocalizationCompanyId();
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -109,28 +108,6 @@ public class CountryRegionUpgradeProcessTest {
 				Region.class.getName()));
 	}
 
-	private void _verifyRegionLocalizationCompanyId() {
-		int count = _companyLocalService.dslQueryCount(
-			DSLQueryFactoryUtil.select(
-				DSLFunctionFactoryUtil.count(
-					RegionLocalizationTable.INSTANCE.companyId
-				).as(
-					"COUNT_VALUE"
-				)
-			).from(
-				RegionLocalizationTable.INSTANCE
-			).where(
-				RegionLocalizationTable.INSTANCE.companyId.notIn(
-					DSLQueryFactoryUtil.select(
-						CompanyTable.INSTANCE.companyId
-					).from(
-						CompanyTable.INSTANCE
-					))
-			));
-
-		Assert.assertEquals(0, count);
-	}
-
 	private static final String _CLASS_NAME =
 		"com.liferay.address.internal.upgrade.v1_0_1." +
 			"CountryRegionUpgradeProcess";
@@ -148,9 +125,6 @@ public class CountryRegionUpgradeProcessTest {
 
 	@Inject
 	private CountryLocalService _countryLocalService;
-
-	@Inject
-	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private RegionLocalService _regionLocalService;

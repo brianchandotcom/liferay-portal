@@ -5,11 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import {
-	ReactPortal,
-	useEventListener,
-	useIsMounted,
-} from '@liferay/frontend-js-react-web';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useState} from 'react';
 
 import {SELECT_SEGMENTS_EXPERIENCE} from '../../../plugins/experience/actions';
@@ -18,23 +14,24 @@ import {config} from '../../config/index';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import multipleUndo from '../../thunks/multipleUndo';
 import getSegmentsExperienceName from '../../utils/getSegmentsExperienceName';
+import UndoOverlay from './UndoOverlay';
 import getActionLabel from './getActionLabel';
 
-export default function UndoHistory() {
+export function useOnHistoryItemClick() {
 	const dispatch = useDispatch();
+	const isMounted = useIsMounted();
+	const [loadingHistory, setLoadingHistory] = useState(false);
 	const store = useSelector((state) => state);
-	const redoHistory = useSelector((state) => state.redoHistory || []);
 	const undoHistory = useSelector((state) => state.undoHistory || []);
 
-	const isMounted = useIsMounted();
-
-	const [active, setActive] = useState(false);
-	const [loading, setLoading] = useState(false);
-
-	const onHistoryItemClick = (event, numberOfActions, type) => {
+	const onHistoryItemClick = (
+		event,
+		numberOfActions = undoHistory.length,
+		type = UNDO_TYPES.undo
+	) => {
 		event.preventDefault();
 
-		setLoading(true);
+		setLoadingHistory(true);
 
 		dispatch(
 			multipleUndo({
@@ -44,10 +41,21 @@ export default function UndoHistory() {
 			})
 		).finally(() => {
 			if (isMounted()) {
-				setLoading(false);
+				setLoadingHistory(false);
 			}
 		});
 	};
+
+	return {loadingHistory, onHistoryItemClick};
+}
+
+export default function UndoHistory() {
+	const redoHistory = useSelector((state) => state.redoHistory || []);
+	const undoHistory = useSelector((state) => state.undoHistory || []);
+
+	const [active, setActive] = useState(false);
+
+	const {loadingHistory, onHistoryItemClick} = useOnHistoryItemClick();
 
 	return (
 		<>
@@ -91,50 +99,18 @@ export default function UndoHistory() {
 
 					<ClayDropDown.Item
 						disabled={!undoHistory.length}
-						onClick={(event) =>
-							onHistoryItemClick(
-								event,
-								undoHistory.length,
-								UNDO_TYPES.undo
-							)
-						}
+						onClick={onHistoryItemClick}
 					>
 						{Liferay.Language.get('undo-all')}
 					</ClayDropDown.Item>
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 
-			{loading && (
-				<ReactPortal className="cadmin">
-					<Overlay />
-				</ReactPortal>
-			)}
+			{loadingHistory && <UndoOverlay />}
 		</>
 	);
 }
 
-const Overlay = () => {
-	useEventListener(
-		'keydown',
-		(event) => {
-			event.preventDefault();
-			event.stopPropagation();
-			event.stopImmediatePropagation();
-		},
-		true,
-		window
-	);
-
-	return (
-		<div
-			className="page-editor__undo-history__overlay"
-			onClickCapture={(event) => {
-				event.preventDefault();
-				event.stopPropagation();
-			}}
-		></div>
-	);
-};
 const History = ({actions = [], type, onHistoryItemClick}) => {
 	const store = useSelector((state) => state);
 

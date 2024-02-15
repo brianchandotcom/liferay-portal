@@ -51,7 +51,6 @@ import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
@@ -1333,9 +1332,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessageTable.INSTANCE
 		).where(
 			MBMessageTable.INSTANCE.modifiedDate.in(
-				DSLQueryFactoryUtil.select(
-					DSLFunctionFactoryUtil.max(
-						MBMessageTable.INSTANCE.modifiedDate)
+				DSLQueryFactoryUtil.selectDistinct(
+					MBMessageTable.INSTANCE.modifiedDate
 				).from(
 					aliasMBMessageTable
 				).where(
@@ -1391,9 +1389,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				MBMessageTable.INSTANCE
 			).where(
 				MBMessageTable.INSTANCE.modifiedDate.in(
-					DSLQueryFactoryUtil.select(
-						DSLFunctionFactoryUtil.max(
-							MBMessageTable.INSTANCE.modifiedDate)
+					DSLQueryFactoryUtil.selectDistinct(
+						MBMessageTable.INSTANCE.modifiedDate
 					).from(
 						aliasMBMessageTable
 					).where(

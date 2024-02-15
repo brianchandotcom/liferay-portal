@@ -7,7 +7,10 @@
 
 import {Page} from '@playwright/test';
 
+const MOCK_API_KEY = 'VALID_API_KEY';
+const STR_BLANK = '';
 export class AICreatorInstanceSettingsPage {
+    readonly apiKeyInput: Locator;
     readonly dalleCheckbox: Locator;
 	readonly page: Page;
     readonly saveButton: Locator;
@@ -15,6 +18,7 @@ export class AICreatorInstanceSettingsPage {
 	constructor(page: Page) {
 		this.page = page;
 
+        this.apiKeyInput = this.page.getByLabel('API Key');
         this.dalleCheckbox = this.page.getByText('Enable DALL-E to Create Images');
         this.saveButton = this.page.getByRole('button', {name: 'Save'});
 	}
@@ -43,4 +47,20 @@ export class AICreatorInstanceSettingsPage {
 		await this.saveButton.click();
 		await this.page.waitForLoadState();
 	}
+
+    async addApiKey() {
+        await this.setAPIKey(MOCK_API_KEY);
+    }
+
+    async removeApiKey() {
+        await this.setAPIKey(STR_BLANK);
+    }
+
+    async setAPIKey(apikey) {
+        await this.goto();
+
+        await this.apiKeyInput.fill(apikey);
+        await this.saveButton.click();
+		await this.page.waitForLoadState();
+    }
 }

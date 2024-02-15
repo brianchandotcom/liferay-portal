@@ -8,13 +8,16 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenu.page';
-import { AICreatorInstanceSettingsPage } from './aiCreatorSettings.page';
+import {AICreatorInstanceSettingsPage} from './aiCreatorSettings.page';
+import {GogoShellPage} from './gogoShell.page';
+
 export class DocumentLibraryPage {
 	readonly optionsMenu: Locator;
 	readonly page: Page;
 	readonly exportImportOptionsMenuItem: Locator;
 	readonly productMenuPage: ProductMenuPage;
 	readonly aiCreatorPageSettingsPage: AICreatorInstanceSettingsPage;
+	readonly gogoShellPage: GogoShellPage;
 
 	constructor(page: Page) {
 		this.exportImportOptionsMenuItem = page.getByRole('menuitem', {
@@ -26,6 +29,7 @@ export class DocumentLibraryPage {
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
 		this.aiCreatorPageSettingsPage = new AICreatorInstanceSettingsPage(page);
+		this.gogoShellPage = new GogoShellPage(page);
 	}
 
 	async goto() {
@@ -57,5 +61,17 @@ export class DocumentLibraryPage {
 
 	async disableAICreator() {
 		await this.aiCreatorPageSettingsPage.disableDalleCreateImages();
+	}
+
+	async addApiKey() {
+		await this.aiCreatorPageSettingsPage.addApiKey();
+	}
+
+	async removeApiKey() {
+		await this.aiCreatorPageSettingsPage.removeApiKey();
+	}
+
+	async addGogoShellCommand(command: string) {
+		this.gogoShellPage.addCommand(command);
 	}
 }

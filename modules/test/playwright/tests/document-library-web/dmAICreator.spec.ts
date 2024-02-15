@@ -50,3 +50,26 @@ testFeatureFlagsEnabled(
 		await documentLibraryPage.enableAICreator();
 	}
 );
+
+testFeatureFlagsEnabled(
+	'Create AI Image opens a modal when API Key is provided',
+	async ({documentLibraryPage, page}) => {
+		await documentLibraryPage.addGogoShellCommand('scr:enable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient');
+
+		await documentLibraryPage.addApiKey();
+
+		await documentLibraryPage.goto();
+
+		await documentLibraryPage.new();
+
+		await page
+			.getByRole('menuitem', {
+				name: 'Create AI Image',
+			})
+			.click();
+
+		await expect(page.getByText('Create AI Image')).toBeVisible();
+
+		await documentLibraryPage.addGogoShellCommand('scr:disable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient');
+	}
+);

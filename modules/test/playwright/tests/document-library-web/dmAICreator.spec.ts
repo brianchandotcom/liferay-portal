@@ -33,3 +33,20 @@ testFeatureFlagsEnabled(
 		await expect(page.getByText('Configure OpenAI')).toBeVisible();
 	}
 );
+
+testFeatureFlagsEnabled(
+	'Create AI Image option is hidden when disabled from Instance Settings',
+	async ({documentLibraryPage, page}) => {
+		await documentLibraryPage.disableAICreatorFromInstanceSettings();
+
+		await documentLibraryPage.goto();
+
+		await documentLibraryPage.new();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Create AI Image'})
+		).not.toBeVisible();
+
+		await documentLibraryPage.enableAICreatorFromInstanceSettings();
+	}
+);

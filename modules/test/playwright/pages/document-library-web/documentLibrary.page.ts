@@ -38,12 +38,36 @@ export class DocumentLibraryPage {
 	}
 
 	async new() {
-		await this.page.getByRole('button', { name: 'New' }).click();
+		await this.page.getByRole('button', {name: 'New'}).click();
 	}
 
 	async openOptionsMenu() {
 		await this.optionsMenu
 			.and(this.page.locator('[aria-haspopup]'))
 			.click();
+	}
+
+	async enableAICreatorFromInstanceSettings() {
+		await this.page.getByLabel('Open Applications MenuCtrl+').click();
+		await this.page.getByRole('tab', {name: 'Control Panel'}).click();
+		await this.page
+			.getByRole('menuitem', {name: 'Instance Settings'})
+			.click();
+		await this.page.getByRole('link', {name: 'AI Creator'}).click();
+		await this.page.getByText('Enable DALL-E to Create Images').check();
+		await this.page.getByRole('button', {name: 'Save'}).click();
+		await this.page.waitForLoadState();
+	}
+
+	async disableAICreatorFromInstanceSettings() {
+		await this.page.getByLabel('Open Applications MenuCtrl+').click();
+		await this.page.getByRole('tab', {name: 'Control Panel'}).click();
+		await this.page
+			.getByRole('menuitem', {name: 'Instance Settings'})
+			.click();
+		await this.page.getByRole('link', {name: 'AI Creator'}).click();
+		await this.page.getByText('Enable DALL-E to Create Images').uncheck();
+		await this.page.getByRole('button', {name: 'Save'}).click();
+		await this.page.waitForLoadState();
 	}
 }

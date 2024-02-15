@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
@@ -171,6 +173,33 @@ public class SitemapManagerTest {
 		String[] guestLayoutURLs = _getSitemapLayoutURLs(group.getGroupId());
 
 		Assert.assertTrue(ArrayUtil.isNotEmpty(guestLayoutURLs));
+
+		_testCompanySitemapIncludePages(
+			new long[] {_group.getGroupId()}, group.getGroupId(),
+			guestLayoutURLs);
+	}
+
+	@Test
+	public void testCompanySitemapWithAdditionalGroupWithVirtualHostConfigured()
+		throws Exception {
+
+		Group group = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		_setUpThemeDisplay(
+			group,
+			_layoutLocalService.fetchFirstLayout(group.getGroupId(), false, 0),
+			"localhost");
+
+		String[] guestLayoutURLs = _getSitemapLayoutURLs(group.getGroupId());
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(guestLayoutURLs));
+
+		_layoutSetLocalService.updateVirtualHosts(
+			_group.getGroupId(), false,
+			TreeMapBuilder.put(
+				"myvirtualhost", _layout.getDefaultLanguageId()
+			).build());
 
 		_testCompanySitemapIncludePages(
 			new long[] {_group.getGroupId()}, group.getGroupId(),
@@ -1034,6 +1063,9 @@ public class SitemapManagerTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private Portal _portal;

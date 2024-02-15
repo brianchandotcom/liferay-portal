@@ -336,7 +336,7 @@ const BaseRoleType = ({
 											...newSections[index],
 											autoCreate: !value,
 											roleName: selectedRoleName,
-											roleType: selectedRoleType,
+											roleType: selectedRoleType.toLowerCase(),
 										};
 
 										updateSelectedItem(newSections);

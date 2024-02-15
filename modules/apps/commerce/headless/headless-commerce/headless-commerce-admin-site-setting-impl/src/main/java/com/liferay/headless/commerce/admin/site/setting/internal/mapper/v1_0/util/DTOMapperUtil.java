@@ -22,66 +22,69 @@ public class DTOMapperUtil {
 	public static AvailabilityEstimate modelToDTO(
 		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
 
-		AvailabilityEstimate availabilityEstimate = new AvailabilityEstimate();
-
 		if (commerceAvailabilityEstimate == null) {
-			return availabilityEstimate;
+			return new AvailabilityEstimate();
 		}
 
-		availabilityEstimate.setId(
-			commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId());
-		availabilityEstimate.setPriority(
-			commerceAvailabilityEstimate.getPriority());
-		availabilityEstimate.setTitle(
-			LanguageUtils.getLanguageIdMap(
-				commerceAvailabilityEstimate.getTitleMap()));
-
-		return availabilityEstimate;
+		return new AvailabilityEstimate() {
+			{
+				setId(
+					commerceAvailabilityEstimate::
+						getCommerceAvailabilityEstimateId);
+				setPriority(commerceAvailabilityEstimate::getPriority);
+				setTitle(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceAvailabilityEstimate.getTitleMap()));
+			}
+		};
 	}
 
 	public static Warehouse modelToDTO(
 		CommerceInventoryWarehouse commerceInventoryWarehouse) {
 
-		Warehouse warehouse = new Warehouse();
-
 		if (commerceInventoryWarehouse == null) {
-			return warehouse;
+			return new Warehouse();
 		}
 
-		warehouse.setActive(commerceInventoryWarehouse.isActive());
-		warehouse.setCity(commerceInventoryWarehouse.getCity());
-		warehouse.setDescription(
-			LanguageUtils.getLanguageIdMap(
-				commerceInventoryWarehouse.getDescriptionMap()));
-		warehouse.setId(
-			commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
-		warehouse.setLatitude(commerceInventoryWarehouse.getLatitude());
-		warehouse.setLongitude(commerceInventoryWarehouse.getLongitude());
-		warehouse.setName(
-			LanguageUtils.getLanguageIdMap(
-				commerceInventoryWarehouse.getNameMap()));
-		warehouse.setStreet1(commerceInventoryWarehouse.getStreet1());
-		warehouse.setStreet2(commerceInventoryWarehouse.getStreet2());
-		warehouse.setStreet3(commerceInventoryWarehouse.getStreet3());
-		warehouse.setZip(commerceInventoryWarehouse.getZip());
-
-		return warehouse;
+		return new Warehouse() {
+			{
+				setActive(commerceInventoryWarehouse::isActive);
+				setCity(commerceInventoryWarehouse::getCity);
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceInventoryWarehouse.getDescriptionMap()));
+				setId(
+					commerceInventoryWarehouse::
+						getCommerceInventoryWarehouseId);
+				setLatitude(commerceInventoryWarehouse::getLatitude);
+				setLongitude(commerceInventoryWarehouse::getLongitude);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						commerceInventoryWarehouse.getNameMap()));
+				setStreet1(commerceInventoryWarehouse::getStreet1);
+				setStreet2(commerceInventoryWarehouse::getStreet2);
+				setStreet3(commerceInventoryWarehouse::getStreet3);
+				setZip(commerceInventoryWarehouse::getZip);
+			}
+		};
 	}
 
 	public static TaxCategory modelToDTO(CPTaxCategory cpTaxCategory) {
-		TaxCategory taxCategory = new TaxCategory();
-
 		if (cpTaxCategory == null) {
-			return taxCategory;
+			return new TaxCategory();
 		}
 
-		taxCategory.setDescription(
-			LanguageUtils.getLanguageIdMap(cpTaxCategory.getDescriptionMap()));
-		taxCategory.setId(cpTaxCategory.getCPTaxCategoryId());
-		taxCategory.setName(
-			LanguageUtils.getLanguageIdMap(cpTaxCategory.getNameMap()));
-
-		return taxCategory;
+		return new TaxCategory() {
+			{
+				setDescription(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpTaxCategory.getDescriptionMap()));
+				setId(cpTaxCategory::getCPTaxCategoryId);
+				setName(
+					() -> LanguageUtils.getLanguageIdMap(
+						cpTaxCategory.getNameMap()));
+			}
+		};
 	}
 
 }

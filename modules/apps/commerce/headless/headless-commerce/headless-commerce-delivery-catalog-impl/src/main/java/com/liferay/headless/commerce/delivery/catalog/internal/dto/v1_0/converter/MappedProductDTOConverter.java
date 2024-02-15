@@ -405,19 +405,20 @@ public class MappedProductDTOConverter
 						cpInstance.getSku(), unitOfMeasureKey),
 					CommerceInventoryAvailabilityConstants.AVAILABLE)) {
 
-				availability.setLabel_i18n(_language.get(locale, "available"));
-				availability.setLabel("available");
+				availability.setLabel_i18n(
+					() -> _language.get(locale, "available"));
+				availability.setLabel(() -> "available");
 			}
 			else {
 				availability.setLabel_i18n(
-					_language.get(locale, "unavailable"));
-				availability.setLabel("unavailable");
+					() -> _language.get(locale, "unavailable"));
+				availability.setLabel(() -> "unavailable");
 			}
 		}
 
 		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
 			availability.setStockQuantity(
-				BigDecimalUtil.stripTrailingZeros(
+				() -> BigDecimalUtil.stripTrailingZeros(
 					_commerceInventoryEngine.getStockQuantity(
 						companyId, cpInstance.getGroupId(),
 						commerceChannelGroupId, sku, unitOfMeasureKey)));
@@ -487,9 +488,9 @@ public class MappedProductDTOConverter
 			(unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) &&
 			(unitPromoPrice.compareTo(unitPriceCommerceMoney.getPrice()) < 0)) {
 
-			price.setPromoPrice(unitPromoPrice.doubleValue());
+			price.setPromoPrice(unitPromoPrice::doubleValue);
 			price.setPromoPriceFormatted(
-				unitPromoPriceCommerceMoney.format(locale));
+				() -> unitPromoPriceCommerceMoney.format(locale));
 		}
 
 		CommerceDiscountValue discountValue =
@@ -499,19 +500,19 @@ public class MappedProductDTOConverter
 			CommerceMoney discountAmountCommerceMoney =
 				discountValue.getDiscountAmount();
 
-			price.setDiscount(discountAmountCommerceMoney.format(locale));
+			price.setDiscount(() -> discountAmountCommerceMoney.format(locale));
 
 			price.setDiscountPercentage(
-				_commercePriceFormatter.format(
+				() -> _commercePriceFormatter.format(
 					discountValue.getDiscountPercentage(), locale));
 			price.setDiscountPercentages(
-				_getFormattedDiscountPercentages(
+				() -> _getFormattedDiscountPercentages(
 					discountValue.getPercentages(), locale));
 
 			CommerceMoney finalPriceCommerceMoney =
 				commerceProductPrice.getFinalPrice();
 
-			price.setFinalPrice(finalPriceCommerceMoney.format(locale));
+			price.setFinalPrice(() -> finalPriceCommerceMoney.format(locale));
 		}
 
 		return price;

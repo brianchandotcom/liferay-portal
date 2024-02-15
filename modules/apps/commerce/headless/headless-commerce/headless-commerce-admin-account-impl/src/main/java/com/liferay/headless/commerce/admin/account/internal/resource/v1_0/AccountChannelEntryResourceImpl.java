@@ -1278,15 +1278,18 @@ public class AccountChannelEntryResourceImpl
 			int type)
 		throws Exception {
 
-		long commerceChannelId =
-			commerceChannelAccountEntryRel.getCommerceChannelId();
+		Long channelId = accountChannelEntry.getChannelId();
 
-		if (accountChannelEntry.getChannelId() != null) {
-			commerceChannelId = _getCommerceChannelId(
-				accountChannelEntry, commerceChannelAccountEntryRel.getType());
-		}
+		accountChannelEntry.setChannelId(
+			() -> {
+				if (channelId != null) {
+					return _getCommerceChannelId(
+						accountChannelEntry,
+						commerceChannelAccountEntryRel.getType());
+				}
 
-		accountChannelEntry.setChannelId(commerceChannelId);
+				return commerceChannelAccountEntryRel.getCommerceChannelId();
+			});
 
 		long classPK = commerceChannelAccountEntryRel.getClassPK();
 
@@ -1301,7 +1304,7 @@ public class AccountChannelEntryResourceImpl
 				updateCommerceChannelAccountEntryRel(
 					commerceChannelAccountEntryRel.
 						getCommerceChannelAccountEntryRelId(),
-					commerceChannelId, classPK,
+					accountChannelEntry.getChannelId(), classPK,
 					GetterUtil.getBoolean(
 						accountChannelEntry.getOverrideEligibility(),
 						commerceChannelAccountEntryRel.isOverrideEligibility()),

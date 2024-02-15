@@ -312,19 +312,20 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						cpInstance.getSku(), unitOfMeasureKey),
 					CommerceInventoryAvailabilityConstants.AVAILABLE)) {
 
-				availability.setLabel_i18n(_language.get(locale, "available"));
-				availability.setLabel("available");
+				availability.setLabel_i18n(
+					() -> _language.get(locale, "available"));
+				availability.setLabel(() -> "available");
 			}
 			else {
 				availability.setLabel_i18n(
-					_language.get(locale, "unavailable"));
-				availability.setLabel("unavailable");
+					() -> _language.get(locale, "unavailable"));
+				availability.setLabel(() -> "unavailable");
 			}
 		}
 
 		if (_cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance)) {
 			availability.setStockQuantity(
-				_commerceInventoryEngine.getStockQuantity(
+				() -> _commerceInventoryEngine.getStockQuantity(
 					companyId, commerceCatalogGroupId, commerceChannelGroupId,
 					sku, unitOfMeasureKey));
 		}
@@ -338,20 +339,19 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			BigDecimal quantity, String unitOfMeasureKey)
 		throws Exception {
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCalculateTax(
-			_isTaxIncludedInPrice(commerceContext.getCommerceChannelId()));
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
-		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
-		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);
-		commerceProductPriceRequest.setQuantity(quantity);
-		commerceProductPriceRequest.setSecure(true);
-		commerceProductPriceRequest.setUnitOfMeasureKey(unitOfMeasureKey);
-
-		return commerceProductPriceRequest;
+		return new CommerceProductPriceRequest() {
+			{
+				setCalculateTax(
+					_isTaxIncludedInPrice(
+						commerceContext.getCommerceChannelId()));
+				setCommerceContext(commerceContext);
+				setCommerceOptionValues(commerceOptionValues);
+				setCpInstanceId(cpInstanceId);
+				setQuantity(quantity);
+				setSecure(true);
+				setUnitOfMeasureKey(unitOfMeasureKey);
+			}
+		};
 	}
 
 	private String[] _getFormattedDiscountPercentages(
@@ -415,9 +415,9 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			((unitPromoPrice.compareTo(unitPrice) < 0) ||
 			 unitPriceCommerceMoney.isPriceOnApplication())) {
 
-			price.setPromoPrice(unitPromoPrice.doubleValue());
+			price.setPromoPrice(unitPromoPrice::doubleValue);
 			price.setPromoPriceFormatted(
-				unitPromoPriceCommerceMoney.format(locale));
+				() -> unitPromoPriceCommerceMoney.format(locale));
 		}
 
 		CommerceDiscountValue discountValue =
@@ -430,14 +430,14 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			CommerceMoney finalPriceCommerceMoney =
 				commerceProductPrice.getFinalPrice();
 
-			price.setDiscount(discountAmountCommerceMoney.format(locale));
+			price.setDiscount(() -> discountAmountCommerceMoney.format(locale));
 			price.setDiscountPercentage(
-				_commercePriceFormatter.format(
+				() -> _commercePriceFormatter.format(
 					discountValue.getDiscountPercentage(), locale));
 			price.setDiscountPercentages(
-				_getFormattedDiscountPercentages(
+				() -> _getFormattedDiscountPercentages(
 					discountValue.getPercentages(), locale));
-			price.setFinalPrice(finalPriceCommerceMoney.format(locale));
+			price.setFinalPrice(() -> finalPriceCommerceMoney.format(locale));
 		}
 
 		return price;

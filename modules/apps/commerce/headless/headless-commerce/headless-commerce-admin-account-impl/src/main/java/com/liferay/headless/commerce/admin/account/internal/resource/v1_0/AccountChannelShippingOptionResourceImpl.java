@@ -166,7 +166,7 @@ public class AccountChannelShippingOptionResourceImpl
 			}
 
 			accountChannelShippingOption.setShippingMethodKey(
-				commerceShippingMethod.getEngineKey());
+				commerceShippingMethod::getEngineKey);
 		}
 
 		CommerceShippingFixedOption commerceShippingFixedOption =
@@ -188,7 +188,7 @@ public class AccountChannelShippingOptionResourceImpl
 			}
 
 			accountChannelShippingOption.setShippingOptionKey(
-				commerceShippingFixedOption.getKey());
+				commerceShippingFixedOption::getKey);
 		}
 
 		if (commerceShippingMethod.getCommerceShippingMethodId() !=

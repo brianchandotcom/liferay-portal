@@ -201,6 +201,28 @@ public class LoginUtil {
 		).buildPortletURL();
 	}
 
+	public static void sendEmailAccountCreationAttempt(
+			ActionRequest actionRequest, String fromName, String fromAddress,
+			String toAddress, String subject, String body)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Company company = themeDisplay.getCompany();
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			User.class.getName(), actionRequest);
+
+		UserLocalServiceUtil.sendEmailAccountCreationAttempt(
+			company.getCompanyId(), toAddress, fromName, fromAddress, subject,
+			body, serviceContext);
+	}
+
 	public static void sendPassword(
 			ActionRequest actionRequest, String fromName, String fromAddress,
 			String toAddress, String subject, String body)

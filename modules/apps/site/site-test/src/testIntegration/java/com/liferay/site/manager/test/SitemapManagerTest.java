@@ -132,6 +132,31 @@ public class SitemapManagerTest {
 	}
 
 	@Test
+	public void testCompanySitemapWithAdditionalGroupIdConfigured()
+		throws Exception {
+
+		Group group = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		_setUpThemeDisplay(
+			group,
+			_layoutLocalService.fetchFirstLayout(group.getGroupId(), false, 0),
+			"localhost");
+
+		String[] guestLayoutURLs = _getSitemapLayoutURLs(group.getGroupId());
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(guestLayoutURLs));
+
+		_testCompanySitemapIncludePages(
+			new long[] {_group.getGroupId()}, group.getGroupId(),
+			ArrayUtil.append(
+				guestLayoutURLs,
+				_portal.getCanonicalURL(
+					_portal.getLayoutFullURL(_layout, _themeDisplay),
+					_themeDisplay, _layout)));
+	}
+
+	@Test
 	public void testSitemapIncludeCategoriesCompanyDisabledGroupDisabled()
 		throws Exception {
 

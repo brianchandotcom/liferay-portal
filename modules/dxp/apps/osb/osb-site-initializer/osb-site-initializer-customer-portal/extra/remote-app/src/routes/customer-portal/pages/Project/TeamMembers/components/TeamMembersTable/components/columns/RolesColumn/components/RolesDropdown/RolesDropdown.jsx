@@ -33,6 +33,7 @@ const RolesDropdown = ({
 					: isSupportSeatRole(accountRole.name) &&
 					  availableSupportSeatsCount === 0,
 				label: accountRole.name,
+				raysourceName: accountRole.raysourceName,
 				value: accountRole.id,
 			})),
 		[

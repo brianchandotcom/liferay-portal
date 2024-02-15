@@ -124,7 +124,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 
 	const update = (userAccount, currentAccountRoles, newAccountRoleItem) => {
 		const newContactRoleName = getRaysourceContactRoleName(
-			newAccountRoleItem.label
+			newAccountRoleItem.raysourceName
 		);
 
 		const currentContactRolesName = currentAccountRoles.map((roleBrief) =>

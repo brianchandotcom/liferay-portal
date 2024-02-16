@@ -149,7 +149,23 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 															/>
 														</c:if>
 
-														<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+														<c:choose>
+															<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && latestFileVersion.isScheduled() %>'>
+
+																<%
+																String displayDateString = StringPool.BLANK;
+
+																if (latestFileVersion.getDisplayDate() != null) {
+																	displayDateString = dateTimeFormat.format(latestFileVersion.getDisplayDate());
+																}
+																%>
+
+																<aui:workflow-status helpMessage="<%= latestFileVersion.isScheduled() ? displayDateString : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= latestFileVersion.isScheduled() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+															</c:when>
+															<c:otherwise>
+																<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+															</c:otherwise>
+														</c:choose>
 
 														<c:choose>
 															<c:when test="<%= fileShortcut != null %>">
@@ -299,7 +315,23 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 												/>
 											</c:if>
 
-											<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+											<c:choose>
+												<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && latestFileVersion.isScheduled() %>'>
+
+													<%
+													String displayDateString = StringPool.BLANK;
+
+													if (latestFileVersion.getDisplayDate() != null) {
+														displayDateString = dateTimeFormat.format(latestFileVersion.getDisplayDate());
+													}
+													%>
+
+													<aui:workflow-status helpMessage="<%= latestFileVersion.isScheduled() ? displayDateString : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= latestFileVersion.isScheduled() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+												</c:when>
+												<c:otherwise>
+													<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+												</c:otherwise>
+											</c:choose>
 										</liferay-ui:search-container-column-text>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("downloads") %>'>

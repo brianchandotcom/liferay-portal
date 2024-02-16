@@ -196,7 +196,15 @@ export default function SaveButtons({
 						symbolLeft="arrow-right-full"
 						type={articleId ? 'submit' : 'button'}
 					>
-						{publishButtonLabel}
+						{articleId
+							? workflowEnabled
+								? Liferay.Language.get('submit-for-workflow')
+								: Liferay.Language.get('publish')
+							: workflowEnabled
+							? Liferay.Language.get(
+									'submit-for-workflow-with-permissions'
+							  )
+							: Liferay.Language.get('publish-with-permissions')}
 					</ClayDropDown.Item>
 
 					<ClayDropDown.Item

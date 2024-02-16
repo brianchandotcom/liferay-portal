@@ -10,12 +10,15 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.db.DBPartitionDB;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
@@ -23,12 +26,15 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.model.impl.CompanyImpl;
+import com.liferay.portal.model.impl.VirtualHostImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -77,6 +83,8 @@ public abstract class BaseDBPartitionTestCase {
 			for (long companyId : COMPANY_IDS) {
 				DBPartitionUtil.addDBPartition(companyId);
 			}
+
+			_clearCaches();
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -301,6 +309,8 @@ public abstract class BaseDBPartitionTestCase {
 
 	protected static void removeDBPartitions() throws Exception {
 		removeDBPartitions(COMPANY_IDS);
+
+		_clearCaches();
 	}
 
 	protected static void removeDBPartitions(long[] companyIds)
@@ -377,6 +387,16 @@ public abstract class BaseDBPartitionTestCase {
 
 	@Inject
 	protected static Portal portal;
+
+	private static void _clearCaches() throws Exception {
+		EntityCacheUtil.clearCache(CompanyImpl.class);
+		EntityCacheUtil.clearCache(VirtualHostImpl.class);
+
+		for (long companyId : COMPANY_IDS) {
+			PortalCacheHelperUtil.removePortalCaches(
+				PortalCacheManagerNames.MULTI_VM, companyId);
+		}
+	}
 
 	private static void _executeOnDBPartitions(
 			long[] companyIds,

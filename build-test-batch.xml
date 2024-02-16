@@ -7280,9 +7280,12 @@ ${output.content}</echo>
 
 						<trycatch>
 							<try>
-								<ant antfile="build-test-playwright.xml" target="set-up-playwright-environment">
-									<property name="playwright.project.name" value="${playwright.project.name}" />
-								</ant>
+								<exec executable="/bin/bash">
+									<arg value="modules/test/playwright/env/set_up.sh" />
+									<env key="LIFERAY_HOME" value="${liferay.home}" />
+									<env key="LIFERAY_PORTAL_URL" value="http://${env.HOSTNAME}:8080" />
+									<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
+								</exec>
 
 								<start-docker-playwright />
 
@@ -7333,9 +7336,12 @@ ${output.content}</echo>
 							<finally>
 								<stop-docker-playwright />
 
-								<ant antfile="build-test-playwright.xml" target="tear-down-playwright-environment">
-									<property name="playwright.project.name" value="${playwright.project.name}" />
-								</ant>
+								<exec executable="/bin/bash">
+									<arg value="modules/test/playwright/env/tear_down.sh" />
+									<env key="LIFERAY_HOME" value="${liferay.home}" />
+									<env key="LIFERAY_PORTAL_URL" value="http://${env.HOSTNAME}:8080" />
+									<env key="PLAYWRIGHT_PROJECT_NAME" value="${playwright.project.name}" />
+								</exec>
 
 								<split-testsuites-junit-report test.suites.report.filepath="${playwright.dir}/test-results/TEST-playwright.xml" />
 

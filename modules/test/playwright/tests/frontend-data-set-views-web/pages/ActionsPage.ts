@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {CreationActionTypes, ItemActionTypes} from '../utils/types';
+import {ICreationAction, IItemAction} from '../utils/types';
 import {ViewsPage} from './ViewsPage';
 
 export class ActionsPage {
@@ -20,6 +20,7 @@ export class ActionsPage {
 			iconsList: Locator;
 			searchInput: Locator;
 		};
+		titleText: Locator;
 		typeSelect: Locator;
 		urlText: Locator;
 	};
@@ -40,6 +41,7 @@ export class ActionsPage {
 				iconsList: page.getByRole('listitem'),
 				searchInput: page.getByPlaceholder('Search'),
 			},
+			titleText: page.getByLabel('TitleRequired', {exact: true}),
 			typeSelect: page.getByLabel('TypeRequired', {exact: true}),
 			urlText: page.getByPlaceholder('Add a URL here.'),
 		};
@@ -60,17 +62,7 @@ export class ActionsPage {
 		await this.page.getByRole('button', {name: 'Actions'}).first().click();
 	}
 
-	async createCreationAction({
-		icon,
-		name,
-		type,
-		url,
-	}: {
-		icon: string;
-		name: string;
-		type: CreationActionTypes;
-		url: string;
-	}) {
+	async createCreationAction({icon, name, type, url}: ICreationAction) {
 		await this.creationActionsTab.click();
 
 		await this.newActionButton.click();
@@ -78,35 +70,21 @@ export class ActionsPage {
 		await this.createAction({icon, name, type, url});
 	}
 
-	async createItemAction({
-		icon,
-		name,
-		type,
-		url,
-	}: {
-		icon: string;
-		name: string;
-		type: ItemActionTypes;
-		url?: string;
-	}) {
+	async createItemAction({icon, name, title, type, url}: IItemAction) {
 		await this.itemActionsTab.click();
 
 		await this.newActionButton.click();
 
-		await this.createAction({icon, name, type, url});
+		await this.createAction({icon, name, title, type, url});
 	}
 
 	private async createAction({
 		icon,
 		name,
+		title,
 		type,
 		url,
-	}: {
-		icon: string;
-		name: string;
-		type: ItemActionTypes;
-		url?: string;
-	}) {
+	}: ICreationAction | IItemAction) {
 		await this.newActionForm.nameInput.fill(name);
 		await this.newActionForm.addIconButton.click();
 
@@ -118,10 +96,12 @@ export class ActionsPage {
 		await this.newActionForm.typeSelect.selectOption(type);
 
 		if (type === 'modal' || type === 'sidePanel') {
+			const actionTitle = !title ? `${name} title` : `${title}`;
+
 			await this.page.getByPlaceholder('add-here-the-title').click();
 			await this.page
 				.getByPlaceholder('add-here-the-title')
-				.fill(`${name} Title`);
+				.fill(`${actionTitle}`);
 		}
 
 		await this.newActionForm.urlText.fill(url);

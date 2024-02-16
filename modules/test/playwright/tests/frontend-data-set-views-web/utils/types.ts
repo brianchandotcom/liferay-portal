@@ -9,3 +9,18 @@ export type ItemActionTypes =
 	| 'link'
 	| 'modal'
 	| 'sidePanel';
+
+interface IBaseAction {
+	icon: string;
+	name: string;
+	title?: string;
+	url?: string;
+}
+
+export interface ICreationAction extends IBaseAction {
+	type: CreationActionTypes;
+}
+
+export interface IItemAction extends IBaseAction {
+	type: ItemActionTypes;
+}

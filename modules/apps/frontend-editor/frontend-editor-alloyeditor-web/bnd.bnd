@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Frontend Editor AlloyEditor Web
 Bundle-SymbolicName: com.liferay.frontend.editor.alloyeditor.web
 Bundle-Version: 5.0.46
-Liferay-JS-Config: /META-INF/resources/js/config.js
+Liferay-JS-Config: /META-INF/resources/js/legacy/config.js
 Provide-Capability:\
 	alloyeditor.link.browse;\
 		alloyeditor.link.browse:String="default"

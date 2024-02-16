@@ -2,40 +2,12 @@
 
 set -e -x
 
-if [[ "${LIFERAY_HOME}" == "" ]]
-then
-	echo "Please set 'LIFERAY_HOME'"
-
-	exit 1
-fi
-
-if [[ "${PLAYWRIGHT_BASE_DIR}" == "" ]]
-then
-	echo "Please set 'PLAYWRIGHT_BASE_DIR'"
-
-	exit 1
-fi
-
-if [[ "${PLAYWRIGHT_PROJECT_DIR}" == "" ]]
-then
-	echo "Please set 'PLAYWRIGHT_PROJECT_DIR'"
-
-	exit 1
-fi
-
-if [[ "${PROJECT_DIR}" == "" ]]
-then
-	echo "Please set 'PROJECT_DIR'"
-
-	exit 1
-fi
-
 function deploy_client_extensions() {
 	if [[ -n ${1} ]]
 	then
 		mkdir -p ${LIFERAY_HOME}/deploy
 
-		cd ${PROJECT_DIR}
+		cd ${PORTAL_PROJECT_DIR}
 
 		for client_extension_dir in ${@}
 		do
@@ -49,7 +21,7 @@ function deploy_osgi_modules() {
 	then
 		mkdir -p ${LIFERAY_HOME}/deploy
 
-		cd ${PROJECT_DIR}
+		cd ${PORTAL_PROJECT_DIR}
 
 		for osgi_module_dir in ${@}
 		do
@@ -82,7 +54,7 @@ function deploy_project_osgi_modules() {
 }
 
 function start_app_server() {
-	cd ${PROJECT_DIR}
+	cd ${PORTAL_PROJECT_DIR}
 
 	ant -f build-test.xml start-app-server
 
@@ -90,7 +62,7 @@ function start_app_server() {
 }
 
 function stop_app_server() {
-	cd ${PROJECT_DIR}
+	cd ${PORTAL_PROJECT_DIR}
 
 	ant -f build-test.xml stop-app-server
 
@@ -98,7 +70,7 @@ function stop_app_server() {
 }
 
 function update_portal_ext_properties() {
-	cd ${PROJECT_DIR}
+	cd ${PORTAL_PROJECT_DIR}
 
 	if [[ -f ${PLAYWRIGHT_BASE_DIR}/env/portal-ext.properties ]]
 	then
@@ -110,3 +82,23 @@ function update_portal_ext_properties() {
 		ant -f build-test-playwright.xml update-portal-ext-properties -Dupdated.portal.ext.properties=${PLAYWRIGHT_PROJECT_DIR}/env/portal-ext.properties
 	fi
 }
+
+
+PLAYWRIGHT_ENV_DIR=$(dirname ${BASH_SOURCE[0]})
+
+export PLAYWRIGHT_BASE_DIR=$(get_absolute_dir ${PLAYWRIGHT_ENV_DIR}/../..)
+export PORTAL_PROJECT_DIR=$(get_absolute_dir ${PLAYWRIGHT_ENV_DIR}/../../../../..)
+
+if [[ "${LIFERAY_HOME}" == "" ]]
+then
+	echo "Please set 'LIFERAY_HOME'"
+
+	exit 1
+fi
+
+if [[ "${PLAYWRIGHT_PROJECT_DIR}" == "" ]]
+then
+	echo "Please set 'PLAYWRIGHT_PROJECT_DIR'"
+
+	exit 1
+fi

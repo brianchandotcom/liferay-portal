@@ -2,6 +2,8 @@
 
 set -e -x
 
-source ${PLAYWRIGHT_BASE_DIR}/env/common.sh
+CURRENT_DIR_NAME=$(dirname ${BASH_SOURCE[0]})
+
+source ${CURRENT_DIR_NAME}/common.sh
 
 stop_app_server

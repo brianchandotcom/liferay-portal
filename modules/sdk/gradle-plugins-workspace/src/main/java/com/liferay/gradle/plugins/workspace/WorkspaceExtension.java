@@ -62,7 +62,8 @@ public class WorkspaceExtension {
 			settings, "app.server.tomcat.version");
 		_bundleCacheDir = _getProperty(
 			settings, "bundle.cache.dir", _BUNDLE_CACHE_DIR);
-		_bundleChecksumMD5 = _getProperty(settings, "bundle.checksum.md5");
+		_bundleChecksumSHA512 = _getProperty(
+			settings, "bundle.checksum.sha512");
 		_bundleDistIncludeMetadata = _getProperty(
 			settings, "bundle.dist.include.metadata",
 			_BUNDLE_DIST_INCLUDE_METADATA);
@@ -150,13 +151,13 @@ public class WorkspaceExtension {
 					}
 
 					if (!Objects.equals(
-							getBundleChecksumMD5(),
+							getBundleChecksumSHA512(),
 							releaseProperties.getBundleChecksumSHA512())) {
 
 						logger.lifecycle(
 							String.format(
 								overridePropertyInfo,
-								"liferay.workspace.bundle.checksum.md5"));
+								"liferay.workspace.bundle.checksum.sha512"));
 					}
 
 					if (!Objects.equals(
@@ -208,14 +209,14 @@ public class WorkspaceExtension {
 		return GradleUtil.toFile(_gradle.getRootProject(), _bundleCacheDir);
 	}
 
-	public String getBundleChecksumMD5() {
-		if (Objects.isNull(_bundleChecksumMD5)) {
+	public String getBundleChecksumSHA512() {
+		if (Objects.isNull(_bundleChecksumSHA512)) {
 			return ReleaseUtil.getFromReleaseProperties(
 				getProduct(),
 				ReleaseUtil.ReleaseProperties::getBundleChecksumSHA512);
 		}
 
-		return GradleUtil.toString(_bundleChecksumMD5);
+		return GradleUtil.toString(_bundleChecksumSHA512);
 	}
 
 	public String getBundleDistRootDirName() {
@@ -350,8 +351,8 @@ public class WorkspaceExtension {
 		_bundleCacheDir = bundleCacheDir;
 	}
 
-	public void setBundleChecksumMD5(Object bundleChecksumMD5) {
-		_bundleChecksumMD5 = bundleChecksumMD5;
+	public void setBundleChecksumSHA512(Object bundleChecksumSHA512) {
+		_bundleChecksumSHA512 = bundleChecksumSHA512;
 	}
 
 	public void setBundleDistIncludeMetadata(Object bundleDistIncludeMetadata) {
@@ -511,7 +512,7 @@ public class WorkspaceExtension {
 
 	private final Object _appServerTomcatVersion;
 	private Object _bundleCacheDir;
-	private Object _bundleChecksumMD5;
+	private Object _bundleChecksumSHA512;
 	private Object _bundleDistIncludeMetadata;
 	private Object _bundleDistRootDirName;
 	private Object _bundleTokenDownload;

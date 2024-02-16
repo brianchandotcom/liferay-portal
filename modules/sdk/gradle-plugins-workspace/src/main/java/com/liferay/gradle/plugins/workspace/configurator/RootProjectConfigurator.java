@@ -202,9 +202,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	public RootProjectConfigurator(Settings settings) {
-		_bundleCheckSumMD5 = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.checksum.md5",
-			null);
+		_bundleCheckSumSHA512 = GradleUtil.getProperty(
+			settings,
+			WorkspacePlugin.PROPERTY_PREFIX + "bundle.checksum.sha512", null);
 		_defaultRepositoryEnabled = GradleUtil.getProperty(
 			settings,
 			WorkspacePlugin.PROPERTY_PREFIX + "default.repository.enabled",
@@ -1528,7 +1528,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 								workspaceExtension.getProduct(),
 								ReleaseUtil.ReleaseProperties::getBundleUrl))) {
 
-						if (Objects.nonNull(_bundleCheckSumMD5)) {
+						if (Objects.nonNull(_bundleCheckSumSHA512)) {
 							return true;
 						}
 
@@ -1551,7 +1551,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 							workspaceExtension.getBundleUrl())) {
 
 						verifyBundleTask.checksum(
-							workspaceExtension.getBundleChecksumMD5());
+							workspaceExtension.getBundleChecksumSHA512());
 
 						TaskOutputs taskOutputs =
 							downloadBundleTask.getOutputs();
@@ -2061,7 +2061,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		};
 
-	private String _bundleCheckSumMD5;
+	private String _bundleCheckSumSHA512;
 	private boolean _defaultRepositoryEnabled;
 
 }

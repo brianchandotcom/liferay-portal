@@ -640,6 +640,7 @@ gradle.beforeProject {
 			if (dir.exists() && !GradleUtil.getProperty(project, "com.liferay.portal.tools.rest.builder.ignore.local", true)) {
 				buildREST {
 					dependsOn ":util:portal-tools-rest-builder:deploy"
+					mustRunAfter ":util:portal-tools-rest-builder:deployDependencies"
 				}
 			}
 		}
@@ -650,6 +651,7 @@ gradle.beforeProject {
 			if (dir.exists() && !GradleUtil.getProperty(project, "com.liferay.portal.tools.service.builder.ignore.local", true)) {
 				buildService {
 					dependsOn ":util:portal-tools-service-builder:deploy"
+					mustRunAfter ":util:portal-tools-service-builder:deployDependencies"
 				}
 			}
 		}

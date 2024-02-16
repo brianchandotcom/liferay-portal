@@ -48,6 +48,7 @@ dependencies {
 deployDependencies {
 	from (configurations.compileClasspath) {
 		include "checkstyle-*.jar"
+		include "org.freemarker-*.jar"
 	}
 
 	rename(/checkstyle-(.+)\.jar/, "checkstyle" + renameSuffix)

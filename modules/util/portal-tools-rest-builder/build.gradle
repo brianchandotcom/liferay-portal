@@ -33,6 +33,7 @@ dependencies {
 deployDependencies {
 	from (configurations.compileClasspath) {
 		include "checkstyle-*.jar"
+		include "org.freemarker-*.jar"
 	}
 
 	rename(/animal-sniffer-annotations-(.+)\.jar/, "animal-sniffer-annotations" + renameSuffix)

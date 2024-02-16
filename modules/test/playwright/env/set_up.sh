@@ -6,12 +6,19 @@ CURRENT_DIR_NAME=$(dirname ${BASH_SOURCE[0]})
 
 source ${CURRENT_DIR_NAME}/common.sh
 
-update_portal_ext_properties
+playwright_project_dir=$(get_playwright_project_dir)
 
-start_app_server
+if [[ -f ${playwright_project_dir}/env/set_up.sh ]]
+then
+	/bin/bash ${playwright_project_dir}/env/set_up.sh
+else
+	update_portal_ext_properties
 
-deploy_project_osgi_modules
+	start_app_server
 
-deploy_project_env_deploy_folder
+	deploy_project_osgi_modules
 
-deploy_project_client_extensions
+	deploy_project_env_deploy_folder
+
+	deploy_project_client_extensions
+fi

@@ -78,6 +78,8 @@ public class GetConflictInfoMVCResourceCommandTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
+			_assertGetConflictInfo("change-tracking-conflict-icon", "check");
+
 			_journalArticle = JournalTestUtil.updateArticle(
 				_journalArticle, "testModifyJournalArticle");
 

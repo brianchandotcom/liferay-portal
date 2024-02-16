@@ -92,8 +92,6 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest)
 		throws PortalException {
 
-		JSONObject conflictsInfoJSONObject = _jsonFactory.createJSONObject();
-
 		long currentCTCollectionId = ParamUtil.getLong(
 			resourceRequest, "currentCTCollectionId");
 
@@ -101,7 +99,7 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 			_ctCollectionLocalService.getCTCollection(currentCTCollectionId);
 
 		if (currentCTCollection == null) {
-			return conflictsInfoJSONObject;
+			return _jsonFactory.createJSONObject();
 		}
 
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
@@ -125,12 +123,19 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 				)
 			));
 
-		if (ListUtil.isEmpty(ctEntries)) {
-			return conflictsInfoJSONObject;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (ListUtil.isEmpty(ctEntries)) {
+			return JSONUtil.put(
+				"conflictIconClass", "change-tracking-conflict-icon"
+			).put(
+				"conflictIconLabel",
+				_language.get(themeDisplay.getLocale(), "no-modifications-help")
+			).put(
+				"conflictIconName", "check"
+			);
+		}
 
 		Map<Long, List<ConflictInfo>> conflictInfoMap =
 			_ctCollectionLocalService.checkConflicts(

@@ -1512,7 +1512,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		VerifyBundleTask verifyBundleTask = GradleUtil.addTask(
 			project, VERIFY_BUNDLE_TASK_NAME, VerifyBundleTask.class);
 
-		verifyBundleTask.algorithm("MD5");
+		verifyBundleTask.algorithm("SHA-512");
 		verifyBundleTask.dependsOn(verifyProductTask, downloadBundleTask);
 		verifyBundleTask.setDescription(
 			"Verifies the Liferay bundle zip file.");

@@ -46,10 +46,10 @@ public class VerifyProductTask extends DefaultTask {
 				"Unable to get Tomcat version for product '" + _product + "'");
 		}
 
-		if (Validator.isNull(_extension.getBundleChecksumMD5())) {
+		if (Validator.isNull(_extension.getBundleChecksumSHA512())) {
 			throw new GradleException(
-				"Unable to get bundle checksum MD5 for product '" + _product +
-					"'");
+				"Unable to get bundle checksum SHA-512 for product '" +
+					_product + "'");
 		}
 
 		if (Validator.isNull(_extension.getBundleUrl())) {

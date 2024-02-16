@@ -46,6 +46,7 @@ GradleMissingJarManifestTaskCheck | .gradle | Finds missing `jarManifest` task w
 GradlePropertiesCheck | .gradle | Validates property values in gradle build files. |
 GradleProvidedDependenciesCheck | .gradle | Validates the scope of dependencies in build gradle files. |
 [GradleRequiredDependenciesCheck](check/gradle_required_dependencies_check.markdown#gradlerequireddependenciescheck) | .gradle | Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`. |
+GradleRestClientDependenciesCheck | .gradle | Validates the project dependencies `.*-rest-client` can only be used for `testIntegrationImplementation`. |
 GradleTestDependencyVersionCheck | .gradle | Checks the version for dependencies in gradle build files. |
 GradleTestUtilDeployDirCheck | .gradle | Checks for incorrect use of `deployDir`. |
 IllegalImportsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases of incorrect use of certain classes. |

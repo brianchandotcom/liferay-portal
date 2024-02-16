@@ -16,6 +16,7 @@ GradleMissingJarManifestTaskCheck | [Bug Prevention](bug_prevention_checks.markd
 GradlePropertiesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates property values in gradle build files. |
 GradleProvidedDependenciesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the scope of dependencies in build gradle files. |
 [GradleRequiredDependenciesCheck](check/gradle_required_dependencies_check.markdown#gradlerequireddependenciescheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`. |
+GradleRestClientDependenciesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Validates the project dependencies `.*-rest-client` can only be used for `testIntegrationImplementation`. |
 GradleStylingCheck | [Styling](styling_checks.markdown#styling-checks) | Applies rules to enforce consistency in code style. |
 [GradleTaskCreationCheck](check/gradle_task_creation_check.markdown#gradletaskcreationcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks that a task is declared on a separate line before the closure. |
 GradleTestDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks the version for dependencies in gradle build files. |

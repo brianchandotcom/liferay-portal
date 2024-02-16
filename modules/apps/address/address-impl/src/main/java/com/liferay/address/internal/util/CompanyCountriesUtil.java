@@ -317,7 +317,7 @@ public class CompanyCountriesUtil {
 
 					if (increment > 0) {
 						counterLocalService.increment(
-							tableName, (int)increment);
+							className, (int)increment);
 					}
 				}
 			}

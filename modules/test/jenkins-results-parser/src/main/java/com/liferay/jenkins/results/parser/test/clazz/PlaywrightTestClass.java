@@ -24,7 +24,11 @@ public class PlaywrightTestClass extends BaseTestClass {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put("spec_title", _specTitle);
+		jsonObject.put(
+			"spec_title", _specTitle
+		).put(
+			"testray_main_component_name", _testrayMainComponentName
+		);
 
 		return jsonObject;
 	}
@@ -50,11 +54,30 @@ public class PlaywrightTestClass extends BaseTestClass {
 		return _specTitle;
 	}
 
+	public String getTestrayMainComponentName() {
+		return _testrayMainComponentName;
+	}
+
 	protected PlaywrightTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile,
 		String specTitle) {
 
 		super(batchTestClassGroup, testClassFile);
+
+		File testPropertiesBaseDir = getTestPropertiesBaseDir(
+			getTestClassFile());
+
+		if ((testPropertiesBaseDir != null) && testPropertiesBaseDir.exists()) {
+			File testPropertiesFile = new File(
+				testPropertiesBaseDir, "test.properties");
+
+			_testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getProperties(testPropertiesFile),
+				"testray.main.component.name");
+		}
+		else {
+			_testrayMainComponentName = null;
+		}
 
 		_specTitle = specTitle;
 	}
@@ -65,11 +88,14 @@ public class PlaywrightTestClass extends BaseTestClass {
 		super(batchTestClassGroup, jsonObject);
 
 		_specTitle = jsonObject.getString("spec_title");
+		_testrayMainComponentName = jsonObject.optString(
+			"testray_main_component_name");
 	}
 
 	private static final Pattern _testFilePathPattern = Pattern.compile(
 		".+/test/playwright/tests/(?<specFilePath>.+)");
 
 	private final String _specTitle;
+	private final String _testrayMainComponentName;
 
 }

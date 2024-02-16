@@ -236,6 +236,32 @@ public abstract class BaseTestClass implements TestClass {
 		return getName();
 	}
 
+	protected File getTestPropertiesBaseDir(File file) {
+		if (file == null) {
+			return null;
+		}
+
+		File canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(file);
+
+		File parentFile = canonicalFile.getParentFile();
+
+		if ((parentFile == null) || !parentFile.exists()) {
+			return file;
+		}
+
+		if (!canonicalFile.isDirectory()) {
+			return getTestPropertiesBaseDir(parentFile);
+		}
+
+		File testPropertiesFile = new File(canonicalFile, "test.properties");
+
+		if (!testPropertiesFile.exists()) {
+			return getTestPropertiesBaseDir(parentFile);
+		}
+
+		return canonicalFile;
+	}
+
 	private Long _averageDuration;
 	private Long _averageOverheadDuration;
 	private final BatchTestClassGroup _batchTestClassGroup;

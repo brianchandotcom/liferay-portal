@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.test.clazz.PlaywrightTestClass;
@@ -29,6 +30,24 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		super(testrayBuild, topLevelBuild, axisTestClassGroup);
 
 		_testClass = testClass;
+	}
+
+	@Override
+	public String getComponentName() {
+		PlaywrightTestClass playwrightTestClass = _getPlaywrightTestClass();
+
+		if (playwrightTestClass == null) {
+			return super.getComponentName();
+		}
+
+		String testrayMainComponentName =
+			playwrightTestClass.getTestrayMainComponentName();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testrayMainComponentName)) {
+			return super.getComponentName();
+		}
+
+		return testrayMainComponentName;
 	}
 
 	@Override

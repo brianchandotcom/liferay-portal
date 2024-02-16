@@ -59,7 +59,7 @@ public class JUnitTestClass extends BaseTestClass {
 
 		super(batchTestClassGroup, testClassFile);
 
-		File testPropertiesBaseDir = _getTestPropertiesBaseDir(
+		File testPropertiesBaseDir = getTestPropertiesBaseDir(
 			getTestClassFile());
 
 		if ((testPropertiesBaseDir != null) && testPropertiesBaseDir.exists()) {
@@ -215,32 +215,6 @@ public class JUnitTestClass extends BaseTestClass {
 		}
 
 		return _getPackageName();
-	}
-
-	private File _getTestPropertiesBaseDir(File file) {
-		if (file == null) {
-			return null;
-		}
-
-		File canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(file);
-
-		File parentFile = canonicalFile.getParentFile();
-
-		if ((parentFile == null) || !parentFile.exists()) {
-			return file;
-		}
-
-		if (!canonicalFile.isDirectory()) {
-			return _getTestPropertiesBaseDir(parentFile);
-		}
-
-		File testPropertiesFile = new File(canonicalFile, "test.properties");
-
-		if (!testPropertiesFile.exists()) {
-			return _getTestPropertiesBaseDir(parentFile);
-		}
-
-		return canonicalFile;
 	}
 
 	private void _initTestClassMethods(String fileContent) {

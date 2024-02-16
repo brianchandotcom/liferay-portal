@@ -103,6 +103,13 @@ else {
 </c:if>
 
 <span class="file-entry-status">
+	<c:if test="<%= !latestFileVersion.isApproved() && dlViewFileVersionDisplayContext.hasApprovedVersion() %>">
+		<clay:label
+			displayType="success"
+			label="approved"
+		/>
+	</c:if>
+
 	<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
 
 	<c:choose>

@@ -67,20 +67,34 @@ function get_playwright_project_dir() {
 	find ${PLAYWRIGHT_BASE_DIR} -name config.ts -type f -print | xargs grep "name: '${PLAYWRIGHT_PROJECT_NAME}'" | sed -n 's/\(.*\)\/config.ts.*/\1/p'
 }
 
+function get_tomcat_dir() {
+	find ${LIFERAY_HOME} -type d -name "tomcat*"
+}
+
 function start_app_server() {
-	cd ${PORTAL_PROJECT_DIR}
+	cd $(get_tomcat_dir)/bin
 
-	ant -f build-test.xml start-app-server
+	/bin/bash catalina.sh run &
 
-	ant -f build-test.xml wait-for-server-startup
+	while ! curl --output /dev/null --silent --head --fail ${LIFERAY_PORTAL_URL}
+	do
+		sleep 5
+	done
+
+	echo "${LIFERAY_PORTAL_URL} is now available"
 }
 
 function stop_app_server() {
-	cd ${PORTAL_PROJECT_DIR}
+	cd $(get_tomcat_dir)/bin
 
-	ant -f build-test.xml stop-app-server
+	/bin/bash shutdown.sh &
 
-	ant -f build-test.xml wait-for-server-shutdown -Dapp.server.port.number=8080
+	while curl --output /dev/null --silent --head --fail ${LIFERAY_PORTAL_URL}
+	do
+		sleep 5
+	done
+
+	echo "${LIFERAY_PORTAL_URL} is no longer available"
 }
 
 function update_portal_ext_properties() {
@@ -108,6 +122,13 @@ export PORTAL_PROJECT_DIR=$(get_absolute_dir ${PLAYWRIGHT_ENV_DIR}/../../../../.
 if [[ "${LIFERAY_HOME}" == "" ]]
 then
 	echo "Please set 'LIFERAY_HOME'"
+
+	exit 1
+fi
+
+if [[ "${LIFERAY_PORTAL_URL}" == "" ]]
+then
+	echo "Please set 'LIFERAY_PORTAL_URL'"
 
 	exit 1
 fi

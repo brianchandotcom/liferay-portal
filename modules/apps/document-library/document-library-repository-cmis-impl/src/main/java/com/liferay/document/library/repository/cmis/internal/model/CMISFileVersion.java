@@ -388,6 +388,9 @@ public class CMISFileVersion extends BaseCMISModel implements FileVersion {
 	public boolean isPending() {
 		return false;
 	}
+	public boolean isScheduled() {
+		return false;
+	}
 
 	@Override
 	public void setCompanyId(long companyId) {

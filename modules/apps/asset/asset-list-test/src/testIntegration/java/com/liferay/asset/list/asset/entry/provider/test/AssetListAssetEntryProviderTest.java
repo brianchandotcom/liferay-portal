@@ -16,6 +16,11 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.test.util.AssetListTestUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -42,6 +47,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -497,6 +503,62 @@ public class AssetListAssetEntryProviderTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(assetEntries.toString(), 0, assetEntries.size());
+	}
+
+	@Test
+	public void testGetDynamicAssetEntriesWithMultipleClassNameIds()
+		throws Exception {
+
+		_blogsEntryLocalService.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		DLAppTestUtil.addFileEntryWithWorkflow(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			StringPool.BLANK, RandomTestUtil.randomString(), true,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"anyAssetType", false
+				).put(
+					"classNameIds",
+					StringUtil.merge(
+						new long[] {
+							_portal.getClassNameId(BlogsEntry.class.getName()),
+							_portal.getClassNameId(DLFileEntry.class.getName()),
+							_portal.getClassNameId(
+								JournalArticle.class.getName())
+						})
+				).put(
+					"classTypeIdsDLFileEntryAssetRendererFactory",
+					String.valueOf(
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+				).put(
+					"classTypeIdsJournalArticleAssetRendererFactory",
+					String.valueOf(journalArticle.getDDMStructureId())
+				).put(
+					"groupIds", String.valueOf(_group.getGroupId())
+				).buildString(),
+				_serviceContext);
+
+		Assert.assertEquals(
+			3,
+			_assetListAssetEntryProvider.getAssetEntriesCount(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK, StringPool.BLANK));
 	}
 
 	@Test
@@ -1036,6 +1098,9 @@ public class AssetListAssetEntryProviderTest {
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

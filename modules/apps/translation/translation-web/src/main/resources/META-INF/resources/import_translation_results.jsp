@@ -106,7 +106,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 						</div>
 
 						<react:component
-							module="js/ImportTranslationResultsPanelSuccess"
+							module="{ImportTranslationResultsPanelSuccess} from translation-web"
 							props='<%=
 								HashMapBuilder.<String, Object>put(
 									"defaultExpanded", !importTranslationResultsErrors

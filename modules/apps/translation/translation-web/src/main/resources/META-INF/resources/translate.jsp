@@ -213,7 +213,7 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 
 	<c:if test="<%= translateDisplayContext.hasTranslationPermission() %>">
 		<react:component
-			module="js/translate/Translate"
+			module="{Translate} from translation-web"
 			props="<%= translateDisplayContext.getInfoFieldSetEntriesData() %>"
 		/>
 	</c:if>

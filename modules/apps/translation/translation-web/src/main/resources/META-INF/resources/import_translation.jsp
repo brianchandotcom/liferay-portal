@@ -22,7 +22,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 		<span aria-hidden="true" class="loading-animation"></span>
 
 		<react:component
-			module="js/import-translation/ImportTranslation"
+			module="{ImportTranslation} from translation-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"errorMessage", importTranslationDisplayContext.getErrorMessage()

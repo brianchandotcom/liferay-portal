@@ -13,7 +13,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= viewDisplayContext.getTranslationEntryManagementToolbarDisplayContext() %>"
-	propsTransformer="js/TranslationManagementToolbarPropsTransformer"
+	propsTransformer="{TranslationManagementToolbarPropsTransformer} from translation-web"
 />
 
 <clay:container-fluid
@@ -74,7 +74,7 @@ ViewDisplayContext viewDisplayContext = (ViewDisplayContext)request.getAttribute
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= viewDisplayContext.getActionDropdownItems(translationEntry) %>"
-						propsTransformer="js/ElementsDefaultPropsTransformer"
+						propsTransformer="{ElementsDefaultPropsTransformer} from translation-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

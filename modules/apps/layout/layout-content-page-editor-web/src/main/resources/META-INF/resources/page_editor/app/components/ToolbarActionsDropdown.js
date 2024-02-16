@@ -11,13 +11,14 @@ import {useSelector} from '../contexts/StoreContext';
 import {onDiscardDraft, useDisabledDiscardDraft} from './DiscardDraftButton';
 import {useOnToggleSidebars} from './HideSidebarButton';
 import {useDisabledRedo, useDisabledUndo, useUndoRedo} from './undo/Undo';
-import {useOnHistoryItemClick} from './undo/UndoHistory';
+import {useHistoryItems, useOnHistoryItemClick} from './undo/UndoHistory';
 import UndoOverlay from './undo/UndoOverlay';
 
 export default function ToolbarActionsDropdown({discardDraftFormRef}) {
 	const disabledDiscardDraft = useDisabledDiscardDraft();
 	const disabledRedo = useDisabledRedo();
 	const disabledUndo = useDisabledUndo();
+	const historyItems = useHistoryItems();
 	const {loadingHistory, onHistoryItemClick} = useOnHistoryItemClick();
 	const {onRedo, onUndo} = useUndoRedo();
 	const onToggleSidebars = useOnToggleSidebars();
@@ -43,14 +44,18 @@ export default function ToolbarActionsDropdown({discardDraftFormRef}) {
 						symbolLeft: 'redo',
 					},
 					{
-						items: [
-							{type: 'divider'},
-							{
-								disabled: !undoHistory.length,
-								label: Liferay.Language.get('undo-all'),
-								onClick: onHistoryItemClick,
-							},
-						],
+						disabled: !historyItems.length,
+						items: historyItems.length
+							? [
+									...historyItems,
+									{type: 'divider'},
+									{
+										disabled: !undoHistory.length,
+										label: Liferay.Language.get('undo-all'),
+										onClick: onHistoryItemClick,
+									},
+							  ]
+							: null,
 						label: Liferay.Language.get('history'),
 						symbolLeft: 'time',
 						type: 'contextual',

@@ -49,6 +49,50 @@ export function useOnHistoryItemClick() {
 	return {loadingHistory, onHistoryItemClick};
 }
 
+export function useHistoryItems() {
+	const redoHistory = useSelector((state) => state.redoHistory || []);
+	const undoHistory = useSelector((state) => state.undoHistory || []);
+	const store = useSelector((state) => state);
+	const {onHistoryItemClick} = useOnHistoryItemClick();
+
+	const actionsToItems = (items, type) => {
+		const isSelectedAction = (index) =>
+			type === UNDO_TYPES.undo && index === 0;
+
+		return items.map((action, index) => ({
+			disabled: isSelectedAction(index),
+			experience:
+				action.type !== SELECT_SEGMENTS_EXPERIENCE &&
+				action.segmentsExperienceId !==
+					config.defaultSegmentsExperienceId &&
+				!config.singleSegmentsExperienceMode &&
+				getSegmentsExperienceName(
+					action.segmentsExperienceId,
+					store.availableSegmentsExperiences
+				),
+			label: getActionLabel(action, type, {
+				availableSegmentsExperiences:
+					store.availableSegmentsExperiences,
+			}),
+			onClick: (event) => {
+				const numberOfActions =
+					type === UNDO_TYPES.undo ? index : items.length - index;
+
+				onHistoryItemClick(event, numberOfActions, type);
+			},
+			symbolRight: isSelectedAction(index) ? 'check' : '',
+		}));
+	};
+
+	const redoItems = actionsToItems(
+		[...redoHistory].reverse(),
+		UNDO_TYPES.redo
+	);
+	const undoItems = actionsToItems(undoHistory, UNDO_TYPES.undo);
+
+	return [...redoItems, ...undoItems];
+}
+
 export default function UndoHistory() {
 	const redoHistory = useSelector((state) => state.redoHistory || []);
 	const undoHistory = useSelector((state) => state.undoHistory || []);
@@ -56,6 +100,7 @@ export default function UndoHistory() {
 	const [active, setActive] = useState(false);
 
 	const {loadingHistory, onHistoryItemClick} = useOnHistoryItemClick();
+	const historyItems = useHistoryItems();
 
 	return (
 		<>
@@ -83,17 +128,20 @@ export default function UndoHistory() {
 				}
 			>
 				<ClayDropDown.ItemList>
-					<History
-						actions={redoHistory}
-						onHistoryItemClick={onHistoryItemClick}
-						type={UNDO_TYPES.redo}
-					/>
+					{historyItems.map((item) => {
+						return (
+							<ClayDropDown.Item
+								disabled={item.disabled}
+								key={item.id}
+								onClick={item.onClick}
+								symbolRight={item.symbolRight}
+							>
+								{item.label}
 
-					<History
-						actions={undoHistory}
-						onHistoryItemClick={onHistoryItemClick}
-						type={UNDO_TYPES.undo}
-					/>
+								{item.experience}
+							</ClayDropDown.Item>
+						);
+					})}
 
 					<ClayDropDown.Divider />
 
@@ -110,45 +158,3 @@ export default function UndoHistory() {
 		</>
 	);
 }
-
-const History = ({actions = [], type, onHistoryItemClick}) => {
-	const store = useSelector((state) => state);
-
-	const isSelectedAction = (index) => type === UNDO_TYPES.undo && index === 0;
-
-	const actionList =
-		type === UNDO_TYPES.undo ? actions : [...actions].reverse();
-
-	return actionList.map((action, index) => (
-		<ClayDropDown.Item
-			disabled={isSelectedAction(index)}
-			key={action.actionId}
-			onClick={(event) => {
-				const numberOfActions =
-					type === UNDO_TYPES.undo
-						? index
-						: actionList.length - index;
-
-				onHistoryItemClick(event, numberOfActions, type);
-			}}
-			symbolRight={isSelectedAction(index) ? 'check' : ''}
-		>
-			{getActionLabel(action, type, {
-				availableSegmentsExperiences:
-					store.availableSegmentsExperiences,
-			})}
-
-			{action.type !== SELECT_SEGMENTS_EXPERIENCE &&
-				action.segmentsExperienceId !==
-					config.defaultSegmentsExperienceId &&
-				!config.singleSegmentsExperienceMode && (
-					<span>
-						{getSegmentsExperienceName(
-							action.segmentsExperienceId,
-							store.availableSegmentsExperiences
-						)}
-					</span>
-				)}
-		</ClayDropDown.Item>
-	));
-};

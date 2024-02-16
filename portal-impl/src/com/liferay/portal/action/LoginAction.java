@@ -5,8 +5,6 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
-import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
 import com.liferay.petra.string.CharPool;
@@ -123,26 +121,12 @@ public class LoginAction implements Action {
 					themeDisplay.getScopeGroupId(),
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
-		if (utilityPage != null) {
+		if ((utilityPage != null) &&
+			!Objects.equals(
+				getWindowState(httpServletRequest),
+				LiferayWindowState.EXCLUSIVE)) {
+
 			redirect = Portal.PATH_MAIN + "/portal/sign_in";
-
-			if (Objects.equals(
-					getWindowState(httpServletRequest),
-					LiferayWindowState.EXCLUSIVE)) {
-
-				LayoutUtilityPageEntryViewRenderer
-					layoutUtilityPageEntryViewRenderer =
-						LayoutUtilityPageEntryViewRendererRegistryUtil.
-							getLayoutUtilityPageEntryViewRenderer(
-								LayoutUtilityPageEntryConstants.TYPE_SIGN_IN);
-
-				if (layoutUtilityPageEntryViewRenderer != null) {
-					layoutUtilityPageEntryViewRenderer.renderHTML(
-						httpServletRequest, httpServletResponse);
-
-					return null;
-				}
-			}
 		}
 
 		if (Validator.isNull(redirect)) {

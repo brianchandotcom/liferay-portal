@@ -191,15 +191,13 @@ public class AssetListAssetEntryProviderImpl
 
 			assetEntryQuery.setClassNameIds(classNameIds);
 
-			for (long classNameId : classNameIds) {
-				classTypeIds = ArrayUtil.append(
-					classTypeIds,
-					_getClassTypeIds(
-						assetListEntry, unicodeProperties,
-						_portal.getClassName(classNameId)));
-			}
+			if (classNameIds.length == 1) {
+				classTypeIds = _getClassTypeIds(
+					assetListEntry, unicodeProperties,
+					_portal.getClassName(classNameIds[0]));
 
-			assetEntryQuery.setClassTypeIds(classTypeIds);
+				assetEntryQuery.setClassTypeIds(classTypeIds);
+			}
 		}
 		else {
 			assetEntryQuery.setClassNameIds(availableClassNameIds);

@@ -23,7 +23,9 @@ import i18n from '../../i18n';
 import {submitBase64EncodedFile} from '../../utils/util';
 
 const ACCEPT_FILE_TYPES = {
-	'image/*': ['.png', '.svg', '.jpg', '.gif'],
+	'image/gif': ['.gif'],
+	'image/jpg': ['.jpg'],
+	'image/png': ['.png'],
 };
 const MAX_IMAGE_QUANTITY = 10;
 

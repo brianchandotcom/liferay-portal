@@ -352,10 +352,9 @@ const RequiredInformation = ({
 			);
 		}
 	};
-
 	const HandleButtonValue = () => {
 		if (isRenew) {
-			return i18n.sub('renew-x-key', [state?.activationKeys.length]);
+			return state?.activationKeys.length === 1 ? i18n.sub('renew-x-key', [state?.activationKeys.length]) : i18n.sub('renew-x-keys', [state?.activationKeys.length]);
 		}
 
 		if (selectedKeyData?.licenseEntryType.includes('Virtual Cluster')) {
@@ -475,6 +474,7 @@ const RequiredInformation = ({
 											type="text"
 										/>
 									</div>
+									
 									{!hasComplimentaryKey && (
 										<h6 className="font-weight-normal ml-3 mr-0 mt-1">
 											{i18n.translate(

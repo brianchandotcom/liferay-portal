@@ -74,7 +74,6 @@ const RenewTableFooter = ({
 						{i18n.translate('cancel')}
 					</Button>
 				</Link>
-
 				{(isAdminUserAccount || isAdminOrPartnerManager) &&
 					allowSelfProvisioning && (
 						<RenewButton
@@ -88,7 +87,9 @@ const RenewTableFooter = ({
 							project={project}
 							renewKeysFilterChecked={renewKeysFilterChecked}
 						>
-							{i18n.sub('renew-x-key', [keysSelectedCount])}
+							{keysSelectedCount === 1 ? i18n.sub('renew-x-key',
+							 [keysSelectedCount]) : i18n.sub('renew-x-keys', 
+							 [keysSelectedCount])}
 						</RenewButton>
 					)}
 			</div>

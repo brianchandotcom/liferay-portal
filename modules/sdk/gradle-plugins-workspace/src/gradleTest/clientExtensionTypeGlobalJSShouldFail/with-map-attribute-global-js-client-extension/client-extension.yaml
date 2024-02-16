@@ -1,0 +1,7 @@
+with-map-attribute-global-js-client-extension:
+    scriptElementAttributes:
+        att:
+            a: a
+            b: b
+    type: globalJS
+    url: src/dummy.js

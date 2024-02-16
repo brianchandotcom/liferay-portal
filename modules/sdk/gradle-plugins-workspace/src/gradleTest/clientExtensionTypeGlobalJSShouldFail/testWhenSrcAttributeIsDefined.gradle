@@ -1,0 +1,4 @@
+ext.expectedErrorMessage = "Use the 'url' property instead of the script attribute 'src'"
+ext.taskPath = ":with-src-global-js-client-extension:validateClientExtensions"
+
+apply from: "./_baseShouldFailTestCase.gradle"

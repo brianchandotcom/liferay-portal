@@ -1,0 +1,5 @@
+with-src-global-js-client-extension:
+    scriptElementAttributes:
+        src: src/dummy.js
+    type: globalJS
+    url: src/dummy.js

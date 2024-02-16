@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.time.LocalDate;
 
 import java.util.List;
 import java.util.Locale;
@@ -71,9 +74,19 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest {
 			ddmFormValues
 		);
 
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			_mockDDMFormInstanceSettings();
+
+		Mockito.when(
+			formInstance.getSettingsModel()
+		).thenReturn(
+			ddmFormInstanceSettings
+		);
+
 		DDMFormValues formInstanceSettingsDDMFormValuesCopy =
 			_copyFormInstanceMVCActionCommand.
-				createFormInstanceSettingsDDMFormValues(formInstance);
+				createFormInstanceSettingsDDMFormValues(
+					formInstance, new ThemeDisplay());
 
 		Assert.assertEquals(
 			formInstanceSettingsDDMForm,
@@ -209,6 +222,25 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest {
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		return ddmFormFields.size();
+	}
+
+	private DDMFormInstanceSettings _mockDDMFormInstanceSettings() {
+		DDMFormInstanceSettings ddmFormInstanceSettings = Mockito.mock(
+			DDMFormInstanceSettings.class);
+
+		Mockito.when(
+			ddmFormInstanceSettings.expirationDate()
+		).thenReturn(
+			String.valueOf(LocalDate.now())
+		);
+
+		Mockito.when(
+			ddmFormInstanceSettings.neverExpire()
+		).thenReturn(
+			false
+		);
+
+		return ddmFormInstanceSettings;
 	}
 
 	private static final CopyFormInstanceMVCActionCommand

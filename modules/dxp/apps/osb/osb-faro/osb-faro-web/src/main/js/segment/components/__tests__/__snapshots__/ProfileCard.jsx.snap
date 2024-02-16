@@ -4,6 +4,7 @@ exports[`SegmentProfileCard should render 1`] = `
 <div>
   <div
     class="card card-root segment-profile-card-root"
+    id="segmentMembershipCardRoot"
   >
     <div
       class="card-header"
@@ -22,12 +23,8 @@ exports[`SegmentProfileCard should render 1`] = `
       >
         <div
           class="recharts-responsive-container"
-          style="width: 100%; height: 360px;"
-        >
-          <div
-            style="position: absolute; width: 0px; height: 0px; visibility: hidden; display: none;"
-          />
-        </div>
+          style="width: 100%; height: 360px; min-width: 0;"
+        />
       </div>
     </div>
     <div
@@ -43,7 +40,7 @@ exports[`SegmentProfileCard should render 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#angle-right-small"
+            href="#angle-right-small"
           />
         </svg>
       </a>

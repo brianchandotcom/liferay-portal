@@ -406,7 +406,7 @@ test.describe('Data Set Item Actions', () => {
 
 			const dialog = await page.getByRole('dialog');
 			await expect(dialog.getByRole('heading')).toHaveText(
-				MODAL_ITEM_ACTION_NAME
+				MODAL_ITEM_ACTION_TITLE
 			);
 
 			await dialog.getByRole('button', {name: 'close'}).click();

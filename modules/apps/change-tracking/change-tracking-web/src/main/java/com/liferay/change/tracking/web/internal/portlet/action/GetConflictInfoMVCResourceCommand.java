@@ -76,9 +76,6 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 					bundleContext.ungetService(serviceReference);
 				}
 			});
-
-		_defaultCTCollectionHistoryProvider =
-			new DefaultCTCollectionHistoryProvider<>();
 	}
 
 	@Override
@@ -115,7 +112,8 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 			_serviceTrackerMap.getService(classNameId);
 
 		if (ctCollectionHistoryProvider == null) {
-			ctCollectionHistoryProvider = _defaultCTCollectionHistoryProvider;
+			ctCollectionHistoryProvider =
+				new DefaultCTCollectionHistoryProvider<>();
 		}
 
 		List<CTEntry> ctEntries = _ctEntryLocalService.dslQuery(
@@ -213,8 +211,6 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
-
-	private CTCollectionHistoryProvider<?> _defaultCTCollectionHistoryProvider;
 
 	@Reference
 	private JSONFactory _jsonFactory;

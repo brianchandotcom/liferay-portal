@@ -375,7 +375,13 @@ public class DLFileEntryLocalServiceImpl
 			companyId,
 			key -> new Date(date.getTime() - (checkInterval * Time.MINUTE)));
 
-		_checkFileEntriesByExpirationDate(companyId, date);
+		long userId = _getActiveCompanyAdminUserId(companyId);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10701")) {
+			_checkFileEntriesByDisplayDate(companyId, date, userId);
+		}
+
+		_checkFileEntriesByExpirationDate(companyId, date, userId);
 
 		_checkFileEntriesByReviewDate(companyId, date);
 
@@ -2311,8 +2317,24 @@ public class DLFileEntryLocalServiceImpl
 		return entryURL;
 	}
 
+	private void _checkFileEntriesByDisplayDate(
+			long companyId, Date displayDate, long userId)
+		throws PortalException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Publishing file entries with display date less than ",
+					displayDate, " for companyId ", companyId));
+		}
+
+		_publishFileEntriesByCompanyId(
+			companyId, displayDate, userId, Collections.emptyMap(),
+			new ServiceContext());
+	}
+
 	private void _checkFileEntriesByExpirationDate(
-			long companyId, Date expirationDate)
+			long companyId, Date expirationDate, long userId)
 		throws PortalException {
 
 		if (_log.isDebugEnabled()) {
@@ -2323,7 +2345,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		_expireFileEntriesByCompanyId(
-			companyId, expirationDate, Collections.emptyMap(),
+			companyId, expirationDate, userId, Collections.emptyMap(),
 			new ServiceContext());
 	}
 
@@ -2659,12 +2681,10 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private void _expireFileEntriesByCompanyId(
-			long companyId, Date expirationDate,
+			long companyId, Date expirationDate, long userId,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		long userId = _getActiveCompanyAdminUserId(companyId);
 
 		List<DLFileEntry> fileEntries =
 			_getFileEntriesByCompanyIdAndExpirationDate(
@@ -2789,6 +2809,23 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return null;
+	}
+
+	private List<DLFileEntry> _getFileEntriesByCompanyIdAndDisplayDate(
+		long companyId, Date displayDate) {
+
+		return dlFileEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				DLFileEntryTable.INSTANCE
+			).from(
+				DLFileEntryTable.INSTANCE
+			).where(
+				DLFileEntryTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					DLFileEntryTable.INSTANCE.displayDate.lte(displayDate)
+				)
+			));
 	}
 
 	private List<DLFileEntry> _getFileEntriesByCompanyIdAndExpirationDate(
@@ -3458,6 +3495,35 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry));
 
 		actionableDynamicQuery.performActions();
+	}
+
+	private void _publishFileEntriesByCompanyId(
+			long companyId, Date displayDate, long userId,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		List<DLFileEntry> fileEntries =
+			_getFileEntriesByCompanyIdAndDisplayDate(companyId, displayDate);
+
+		for (DLFileEntry fileEntry : fileEntries) {
+			if (fileEntry.isInTrash()) {
+				continue;
+			}
+
+			DLFileVersion latestFileVersion =
+				_dlFileVersionLocalService.fetchLatestFileVersion(
+					fileEntry.getFileEntryId(), false);
+
+			if (WorkflowConstants.STATUS_SCHEDULED ==
+					latestFileVersion.getStatus()) {
+
+				updateStatus(
+					userId, fileEntry, latestFileVersion,
+					WorkflowConstants.STATUS_APPROVED, serviceContext,
+					workflowContext);
+			}
+		}
 	}
 
 	private void _registerPWCDeletionCallback(

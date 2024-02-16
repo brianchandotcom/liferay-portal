@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserWrapper;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.security.DefaultAdminUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -108,7 +107,7 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 			}
 
 			Ticket ticket = _onDemandAdminTicketGenerator.generate(
-				_companyLocalService.getCompany(targetCompanyId), null, user);
+				companyLocalService.getCompany(targetCompanyId), null, user);
 
 			Assert.assertNotNull(ticket);
 			Assert.assertNotEquals(user.getCompanyId(), ticket.getCompanyId());
@@ -118,9 +117,6 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 	private void _assertCompanyId(long companyId) {
 		Assert.assertEquals(companyId, (long)CompanyThreadLocal.getCompanyId());
 	}
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private OnDemandAdminTicketGenerator _onDemandAdminTicketGenerator;

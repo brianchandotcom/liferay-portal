@@ -105,7 +105,7 @@ public class BatchExportImportPerformanceTest {
 	@Test
 	public void testImportAndExportTask() throws Exception {
 		for (String className : _jsonTemplates.keySet()) {
-			_writeToLogFile("ClassName: ", className);
+			_writeToLogFile("ClassName: " + className);
 
 			_testPostImportTask(className);
 
@@ -268,12 +268,14 @@ public class BatchExportImportPerformanceTest {
 		return () -> {
 			long totalTimeMillis = System.currentTimeMillis() - startTime;
 
+			double speed =
+				(double)(_recordsCount * 1000) / (double)totalTimeMillis;
+
 			_writeToLogFile(
 				StringBundler.concat(
 					invokerName, " used ", totalTimeMillis, " ms, for ",
-					_recordsCount, " records speed=",
-					(double)(_recordsCount * 1000) / (double)totalTimeMillis,
-					" records/s"));
+					_recordsCount, " records, speed: ",
+					String.format("%.3f", speed), " records/s"));
 		};
 	}
 

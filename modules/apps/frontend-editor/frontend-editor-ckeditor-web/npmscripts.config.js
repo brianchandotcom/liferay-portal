@@ -5,11 +5,6 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			exclude: {
-				'liferay-ckeditor': true,
-			},
-			ignore: ['_diffs/**/*'],
-		},
+		main: 'src/main/resources/META-INF/resources/js/index.js',
 	},
 };

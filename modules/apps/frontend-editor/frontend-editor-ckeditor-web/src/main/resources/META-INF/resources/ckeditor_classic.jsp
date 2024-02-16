@@ -28,7 +28,7 @@ if (editorData != null) {
 
 <div>
 	<react:component
-		module="editor/ClassicEditor"
+		module="{ClassicEditor} from frontend-editor-ckeditor-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"contents", contents

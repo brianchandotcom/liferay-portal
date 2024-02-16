@@ -21,7 +21,7 @@ if (Validator.isNotNull(onChangeMethod)) {
 
 <div>
 	<react:component
-		module="editor/BalloonEditor"
+		module="{BalloonEditor} from frontend-editor-ckeditor-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"config", (editorData == null) ? null : (JSONObject)editorData.get("editorConfig")

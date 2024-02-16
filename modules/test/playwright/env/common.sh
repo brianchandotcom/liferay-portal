@@ -7,11 +7,20 @@ function deploy_client_extensions() {
 	then
 		mkdir -p ${LIFERAY_HOME}/deploy
 
-		cd ${PORTAL_PROJECT_DIR}
-
-		for client_extension_dir in ${@}
+		for client_extension_name in ${@}
 		do
-			ant -f build-test-playwright.xml deploy-client-extension -Dclient.extension.dir=${client_extension_dir}
+			local client_extension_dir=$(find ${PORTAL_PROJECT_DIR}/workspaces -type d -name "${client_extension_name}" | grep -v .releng | grep -v .npmscripts)
+
+			if [[ -f ${client_extension_dir}/build.gradle ]]
+			then
+				echo "Deploy '${client_extension_dir}'"
+
+				cd ${osgi_module_dir}
+
+				local gradlew=$(get_gradlew)
+
+				${gradlew} deploy
+			fi
 		done
 	fi
 }
@@ -21,11 +30,20 @@ function deploy_osgi_modules() {
 	then
 		mkdir -p ${LIFERAY_HOME}/deploy
 
-		cd ${PORTAL_PROJECT_DIR}
-
-		for osgi_module_dir in ${@}
+		for osgi_module_name in ${@}
 		do
-			ant -f build-test-playwright.xml deploy-osgi-module -Dosgi.module.dir=${osgi_module_dir}
+			local osgi_module_dir=$(find ${PORTAL_PROJECT_DIR}/modules -type d -name "${osgi_module_name}" | grep -v .releng | grep -v .npmscripts)
+
+			if [[ -f ${osgi_module_dir}/build.gradle ]]
+			then
+				echo "Deploy '${osgi_module_dir}'"
+
+				cd ${osgi_module_dir}
+
+				local gradlew=$(get_gradlew)
+
+				${gradlew} deploy
+			fi
 		done
 	fi
 }
@@ -61,6 +79,20 @@ function deploy_project_osgi_modules() {
 
 function get_absolute_dir() {
 	echo $(cd -- $(dirname -- $1) &> /dev/null && pwd)
+}
+
+function get_gradlew() {
+	if [[ -e ./gradlew ]]
+	then
+		echo "$(pwd)/gradlew"
+	elif [[ $(pwd) == / ]]
+	then
+		echo "unable to find gradlew"
+
+		exit 1
+	else
+		echo $(cd .. ; get_gradlew)
+	fi
 }
 
 function get_playwright_project_dir() {

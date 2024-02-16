@@ -1,9 +1,9 @@
-[#assign mdfRequestId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
+[#assign mdfClaimId = (request.getAttribute("INFO_ITEM").objectEntryId)! /]
 
-[#if mdfRequestId?has_content]
-	[#assign mdfRequest = (restClient.get("/c/mdfrequests/${mdfRequestId}?nestedFields=user"))! /]
+[#if mdfClaimId?has_content]
+	[#assign mdfClaim = (restClient.get("/c/mdfclaims/${mdfClaimId}?nestedFields=user"))! /]
 
-	[#assign userAccountId = (mdfRequest.creator.id!) /]
+	[#assign userAccountId = (mdfClaim.creator.id!) /]
 
 	[#assign userAccount = (restClient.get("/headless-admin-user/v1.0/user-accounts/${userAccountId}"))! /]
 
@@ -11,23 +11,21 @@
 		[#assign telephones = (userAccount.userAccountContactInformation.telephones?map(telephone -> telephone.phoneNumber)?join(', '))! /]
 	[/#if]
 
-	[#assign firstName = (mdfRequest.r_usrToMDFReqs_user.givenName)! /]
-	[#assign lastName = (mdfRequest.r_usrToMDFReqs_user.familyName)! /]
-	[#assign infoEmail = (mdfRequest.r_usrToMDFReqs_user.emailAddress)! /]
+	[#assign partnerAccount = (mdfClaim.companyName)! /]
+	[#assign firstName = (mdfClaim.r_usrToMDFClms_user.givenName)! /]
+	[#assign lastName = (mdfClaim.r_usrToMDFClms_user.familyName)! /]
+	[#assign infoEmail = (mdfClaim.r_usrToMDFClms_user.emailAddress)! /]
 
 	<table class="table table-borderless w-100">
-		<thead>
-			<tr>
-				<th class="w-50">
-					<p class="text-neutral-10" id="tableTitle" type="rich-text">
-						Contact Info
-					</p>
-				</th>
-				<th class="w-50"></th>
-			</tr>
-		</thead>
-
 		<tbody class="ml-1">
+			<tr>
+				<td class="w-50">
+					<p class="text-neutral-10" type="rich-text">Partner Account</p>
+				</td>
+				<td class="w-50">
+					<p class="text-neutral-10" type="rich-text">${partnerAccount}</p>
+				</td>
+			</tr>
 			<tr>
 				<td class="w-50">
 					<p class="text-neutral-10" type="rich-text">First Name</p>
@@ -54,7 +52,7 @@
 			</tr>
 			<tr>
 				<td class="w-50">
-					<p class="text-neutral-10" type="rich-text">Telephone</p>
+					<p class="text-neutral-10" type="rich-text">Phone</p>
 				</td>
 				<td>
 					<p class="text-neutral-10" type="rich-text">${telephones}</p>

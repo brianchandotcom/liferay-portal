@@ -168,4 +168,3 @@ const useProjectCategoryItems = () => {
 };
 
 export default useProjectCategoryItems;
-export {useProjectOrganizations};

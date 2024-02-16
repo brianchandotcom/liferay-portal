@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {createContext, useContext, useEffect, useReducer} from 'react';
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useReducer,
+	useState,
+} from 'react';
 import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
 import {Liferay} from '../../../common/services/liferay';
 import {
@@ -33,6 +39,7 @@ const AppContextProvider = ({children}) => {
 		subscriptionGroups: undefined,
 		userAccount: undefined,
 	});
+	const [errorOccurred, setErrorOccurred] = useState(false);
 
 	const pageRoutes = routerPath();
 
@@ -68,20 +75,30 @@ const AppContextProvider = ({children}) => {
 					({name}) => name === 'Administrator'
 				);
 
-				const isPartner = data.userAccount?.organizationBriefs?.filter(
-					({name}) => (
-						name !== 'Account Access EU' &&
-						name !== 'Account Access US' && 
-						name !== 'Liferay Staff' && 
-						name !== 'Systems - Provisioning')
-				).length > 0;
+				const isPartner =
+					data.userAccount?.organizationBriefs?.filter(
+						({name}) =>
+							name !== 'Account Access EU' &&
+							name !== 'Account Access US' &&
+							name !== 'Liferay Staff' &&
+							name !== 'Systems - Provisioning'
+					).length > 0;
 
 				const isStaff = data.userAccount?.organizationBriefs?.some(
 					(organization) => organization.name === 'Liferay Staff'
 				);
 
+				const hasAccountAccessOrg =
+					data.userAccount?.organizationBriefs?.filter(
+						({name}) =>
+							name === 'Account Access EU' ||
+							name === 'Account Access US' ||
+							name === 'Systems - Provisioning'
+					).length > 0;
+
 				const userAccount = {
 					...data.userAccount,
+					hasAccountAccessOrg,
 					isAccountAdmin: isAccountAdministrator,
 					isOmniAdmin,
 					isPartner,
@@ -170,54 +187,69 @@ const AppContextProvider = ({children}) => {
 		};
 
 		const fetchData = async () => {
-			const projectExternalReferenceCode = getAccountKey();
+			try {
+				const projectExternalReferenceCode = getAccountKey();
 
-			if (!projectExternalReferenceCode) {
-				Liferay.Util.navigate(pageRoutes.home());
-			}
+				if (!projectExternalReferenceCode) {
+					Liferay.Util.navigate(pageRoutes.home());
+				}
 
-			const user = await getUser(projectExternalReferenceCode);
+				const user = await getUser(projectExternalReferenceCode);
 
-			if (user) {
-				const isValid = await isValidPage(
-					client,
-					user,
-					projectExternalReferenceCode,
-					ROUTE_TYPES.project
-				);
-
-				if (isValid) {
-					let accountBrief = user.accountBriefs?.find(
-						(accountBrief) =>
-							accountBrief.externalReferenceCode ===
-							projectExternalReferenceCode
+				if (user) {
+					const isValid = await isValidPage(
+						client,
+						user,
+						projectExternalReferenceCode,
+						ROUTE_TYPES.project
 					);
 
-					const apiPermission = 
-						user.isOmniAdmin || user.isPartner || user.isStaff;
+					if (isValid) {
+						let accountBrief = user.accountBriefs?.find(
+							(accountBrief) =>
+								accountBrief.externalReferenceCode ===
+								projectExternalReferenceCode
+						);
 
-					if (!accountBrief && apiPermission) {
-						const {data: dataAccount} = await client.query({
-							query: getAccountByExternalReferenceCode,
-							variables: {
-								externalReferenceCode: projectExternalReferenceCode,
+						const apiPermission =
+							user.hasAccountAccessOrg ||
+							user.isOmniAdmin ||
+							user.isPartner ||
+							user.isStaff;
+
+						if (!accountBrief && apiPermission) {
+							const {data: dataAccount} = await client.query({
+								query: getAccountByExternalReferenceCode,
+								variables: {
+									externalReferenceCode: projectExternalReferenceCode,
+								}
+							});
+
+							if (dataAccount) {
+								accountBrief =
+									dataAccount?.accountByExternalReferenceCode;
 							}
-						});
-
-						if (dataAccount) {
-							accountBrief =
-								dataAccount?.accountByExternalReferenceCode;
 						}
-					}
 
-					if (accountBrief) {
-						getProject(projectExternalReferenceCode, accountBrief);
-						getSubscriptionGroups(projectExternalReferenceCode);
-					}
+						if (accountBrief) {
+							getProject(
+								projectExternalReferenceCode,
+								accountBrief
+							);
+							getSubscriptionGroups(projectExternalReferenceCode);
+						}
 
-					getStructuredContents();
-					getSessionId();
+						if (!accountBrief) {
+							setErrorOccurred(true);
+						}
+
+						getStructuredContents();
+						getSessionId();
+					}
 				}
+			} catch (error) {
+				console.error(error);
+				setErrorOccurred(true);
 			}
 		};
 
@@ -226,7 +258,7 @@ const AppContextProvider = ({children}) => {
 	}, [oktaSessionAPI]);
 
 	return (
-		<AppContext.Provider value={[state, dispatch]}>
+		<AppContext.Provider value={[state, dispatch, errorOccurred]}>
 			{children}
 		</AppContext.Provider>
 	);

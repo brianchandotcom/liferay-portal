@@ -6,12 +6,15 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useRef, useState} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
-import {useProjectOrganizations} from '~/routes/home/hooks/useProjectCategoryItems';
 import ProjectBreadcrumb from '../../components/ProjectBreadcrumb/ProjectBreadcrumb';
 import ProjectErrorMessage from '../../components/ProjectErrorMessage';
 import SideMenu from '../../containers/SideMenu';
+import {useCustomerPortal} from '../../context';
 
 const Layout = () => {
+	const contextAccount = useCustomerPortal();
+	const errorOccurred = contextAccount[2];
+
 	const [hasSideMenu, setHasSideMenu] = useState(true);
 
 	const {accountKey} = useParams();
@@ -30,58 +33,31 @@ const Layout = () => {
 		}
 	}, [accountKey]);
 
-	const {myUserAccount, organizations, swr} = useProjectOrganizations();
-
-	if (
-		swr.myUserAccountSWR.isLoading ||
-		swr.myUserAccountSWR.isValidating ||
-		swr.organizationsSWR.isLoading ||
-		swr.organizationsSWR.isValidating
-	) {
-		return <ClayLoadingIndicator />;
-	}
-
-	const teamMembersERC = myUserAccount?.accountBriefs?.map(
-		({externalReferenceCode}) => externalReferenceCode
-	);
-	const isTeamMember = teamMembersERC.includes(accountKey);
-
-	const liferayContactERC =
-		myUserAccount.accountBriefs
-			?.filter(({roleBriefs}) =>
-				roleBriefs.some(
-					(roleBrief) => roleBrief.name === 'Provisioning'
-				)
-			)
-			.map(({externalReferenceCode}) => externalReferenceCode) || [];
-
-	const accountInsideOrganization = organizations.some(
-		({externalReferenceCode}) => externalReferenceCode === accountKey
-	);
-	const isLiferayContact = liferayContactERC.includes(accountKey);
-	const isAccountAdministrator = myUserAccount.roleBriefs?.some(
+	const isAccountAdministrator = contextAccount[0].userAccount.roleBriefs?.some(
 		(roleBrief) => roleBrief.name === 'Administrator'
 	);
 
-	const accountPermission =
-		accountInsideOrganization ||
-		isAccountAdministrator ||
-		isLiferayContact ||
-		isTeamMember;
+	const accountPermission = !errorOccurred || isAccountAdministrator;
 
 	if (!accountPermission) {
 		return <ProjectErrorMessage />;
 	}
 
+	if (!contextAccount[0]?.project && !isAccountAdministrator) {
+		return <ClayLoadingIndicator />;
+	}
+
 	return (
 		<div className="d-flex position-relative w-100">
-			<div>
-				<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4 mt-4">
-					<ProjectBreadcrumb />
-				</div>
+			{!isRenewTablePage && (
+				<div>
+					<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4 mt-4">
+						<ProjectBreadcrumb />
+					</div>
 
-				{hasSideMenu && <SideMenu />}
-			</div>
+					{hasSideMenu && <SideMenu />}
+				</div>
+			)}
 
 			<div className="mx-4 px-2 w-100">
 				<div className="mx-4 px-2 w-100">

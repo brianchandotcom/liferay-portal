@@ -118,7 +118,7 @@ definition {
 
 		AssertSelectedLabel(
 			locator1 = "Select#TIME_ZONE",
-			value1 = "(UTC +03:00) Eastern European Time");
+			value1 = "(UTC +03:00)");
 	}
 
 	@summary = "Default summary"

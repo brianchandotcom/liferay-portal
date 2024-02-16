@@ -25,10 +25,6 @@ public class GradleRestClientDependenciesCheck extends BaseFileCheck {
 		List<String> dependenciesBlocks =
 			GradleSourceUtil.getDependenciesBlocks(content);
 
-		if (dependenciesBlocks.isEmpty()) {
-			return content;
-		}
-
 		for (String dependenciesBlock : dependenciesBlocks) {
 			int x = dependenciesBlock.indexOf("\n");
 			int y = dependenciesBlock.lastIndexOf("\n");

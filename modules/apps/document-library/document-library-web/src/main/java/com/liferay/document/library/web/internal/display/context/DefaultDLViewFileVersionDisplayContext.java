@@ -12,7 +12,9 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.versioning.VersioningStrategy;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
@@ -37,6 +39,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +48,7 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
@@ -248,6 +252,24 @@ public class DefaultDLViewFileVersionDisplayContext
 	@Override
 	public UUID getUuid() {
 		return _UUID;
+	}
+
+	@Override
+	public boolean hasApprovedVersion() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10701")) {
+			return false;
+		}
+
+		DLFileVersion dlFileVersion =
+			DLFileVersionLocalServiceUtil.fetchLatestFileVersion(
+				_fileVersion.getFileEntryId(), false,
+				WorkflowConstants.STATUS_APPROVED);
+
+		if (dlFileVersion == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

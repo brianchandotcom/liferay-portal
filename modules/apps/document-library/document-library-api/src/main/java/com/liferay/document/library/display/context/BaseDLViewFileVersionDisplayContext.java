@@ -95,6 +95,11 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
+	public boolean hasApprovedVersion() {
+		return parentDisplayContext.hasApprovedVersion();
+	}
+
+	@Override
 	public boolean hasCustomThumbnail() {
 		return parentDisplayContext.hasCustomThumbnail();
 	}

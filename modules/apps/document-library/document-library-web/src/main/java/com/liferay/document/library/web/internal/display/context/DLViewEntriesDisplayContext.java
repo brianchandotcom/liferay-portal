@@ -10,7 +10,9 @@ import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
@@ -23,6 +25,7 @@ import com.liferay.document.library.web.internal.security.permission.resource.DL
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -40,6 +43,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.servlet.BrowserSnifferUtil;
 import com.liferay.portal.util.RepositoryUtil;
 
@@ -282,6 +286,22 @@ public class DLViewEntriesDisplayContext {
 		).setParameter(
 			"fileEntryId", fileEntry.getFileEntryId()
 		).buildString();
+	}
+
+	public boolean hasApprovedVersion(long fileEntryId) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10701")) {
+			return false;
+		}
+
+		DLFileVersion dlFileVersion =
+			DLFileVersionLocalServiceUtil.fetchLatestFileVersion(
+				fileEntryId, false, WorkflowConstants.STATUS_APPROVED);
+
+		if (dlFileVersion == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public boolean isDescriptiveDisplayStyle() {

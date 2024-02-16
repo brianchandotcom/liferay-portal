@@ -48,6 +48,8 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 		return "document-default";
 	}
 
+	public boolean hasApprovedVersion();
+
 	public default boolean hasCustomThumbnail() {
 		return false;
 	}

@@ -204,6 +204,10 @@ public class ExtRepositoryFileVersionAdapter
 	public boolean isPending() {
 		return false;
 	}
+	@Override
+	public boolean isScheduled() {
+		return false;
+	}
 
 	private final ExtRepositoryFileEntryAdapter _extRepositoryFileEntryAdapter;
 	private final ExtRepositoryFileVersion _extRepositoryFileVersion;

@@ -98,4 +98,6 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public boolean isPending();
 
+	public boolean isScheduled();
+
 }

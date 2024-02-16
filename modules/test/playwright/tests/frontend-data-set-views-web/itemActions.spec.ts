@@ -102,8 +102,6 @@ test.describe('Data Set Item Actions', () => {
 			await viewsPage.createDataSetView({name: DATASET_VIEW_NAME});
 		});
 
-		// Missing (Add fields)
-
 		await test.step('Go to Actions tab', async () => {
 			await actionsPage.goto({
 				dataSetName: DATASET_NAME,
@@ -199,7 +197,265 @@ test.describe('Data Set Item Actions', () => {
 			await tableRow.getByRole('link').click();
 
 			await page.waitForURL('https://www.liferay.com');
+
 			await expect(page.url()).toContain('https://www.liferay.com');
+		});
+
+		await test.step('Delete Data Set and site', async () => {
+			await fdsFragmentPage.deleteSite(siteInfo.site.id);
+			await dataSetsPage.deleteDataSet(DATASET_NAME);
+		});
+	});
+
+	test('Link, Modal and Side Panel Item Actions are shown in fragment', async ({
+		actionsPage,
+		dataSetsPage,
+		fdsFragmentPage,
+		page,
+		viewsPage,
+	}) => {
+		const DATASET_NAME = 'Item Actions DS';
+		const DATASET_VIEW_NAME = 'Item Actions DS View';
+		const LINK_ITEM_ACTION_NAME = 'Link item action';
+		const MODAL_ITEM_ACTION_NAME = 'Modal item action';
+		const MODAL_ITEM_ACTION_TITLE = 'Modal title';
+		const PAGE_NAME = 'Test page';
+		const SITE_NAME = 'FDSFragmentSite';
+		const SIDE_PANEL_ITEM_ACTION_NAME = 'SidePanel item action';
+		const SIDE_PANEL_ITEM_ACTION_URL = '/home';
+
+		const siteInfo =
+			await test.step('Go home and create a new site and page', async () => {
+				await page.goto('/');
+
+				const newSite = await fdsFragmentPage.createSite(SITE_NAME);
+
+				const pageLayout = await fdsFragmentPage.createPage({
+					siteId: newSite.id,
+					title: PAGE_NAME,
+				});
+
+				await page.reload();
+
+				return {layout: pageLayout, site: newSite};
+			});
+
+		await test.step('Create Data Set', async () => {
+			await dataSetsPage.goto();
+			await dataSetsPage.createDataSet({name: DATASET_NAME});
+		});
+
+		await test.step('Create Data Set View', async () => {
+			await viewsPage.goto(DATASET_NAME);
+			await viewsPage.createDataSetView({name: DATASET_VIEW_NAME});
+		});
+
+		// Missing (Add fields)
+
+		await test.step('Go to Actions tab', async () => {
+			await actionsPage.goto({
+				dataSetName: DATASET_NAME,
+				dataSetViewName: DATASET_VIEW_NAME,
+			});
+		});
+
+		await test.step('Create a link item action', async () => {
+			await actionsPage.createItemAction({
+				icon: 'link',
+				name: LINK_ITEM_ACTION_NAME,
+				type: 'link',
+				url: 'https://www.liferay.com/',
+			});
+		});
+
+		await test.step('Create a modal item action', async () => {
+			await actionsPage.createItemAction({
+				icon: 'cloud',
+				name: MODAL_ITEM_ACTION_NAME,
+				title: MODAL_ITEM_ACTION_TITLE,
+				type: 'modal',
+				url: '/home',
+			});
+		});
+
+		await test.step('Create a side panel item action', async () => {
+			await actionsPage.createItemAction({
+				icon: 'container',
+				name: SIDE_PANEL_ITEM_ACTION_NAME,
+				title: SIDE_PANEL_ITEM_ACTION_NAME,
+				type: 'sidePanel',
+				url: SIDE_PANEL_ITEM_ACTION_URL,
+			});
+		});
+
+		await test.step('Edit page', async () => {
+			await fdsFragmentPage.editPage({...siteInfo});
+		});
+
+		await test.step('Search for "Data Set" fragment', async () => {
+			await fdsFragmentPage.searchFragmentOrWidget('Data Set');
+		});
+
+		await test.step('Drag "Data Set" fragment & Drop into the page editor w/ keyboard', async () => {
+			await fdsFragmentPage.dragAndDropFragment(
+				'Data Set Add Data Set Mark Data Set as Favorite'
+			);
+		});
+
+		await test.step('Select empty Data Set fragment', async () => {
+			await page
+				.getByText('Select a data set view. Beta')
+				.first()
+				.click();
+		});
+
+		await test.step('Open Data Set View Selector', async () => {
+			await page
+				.getByRole('button', {name: 'Select Data Set View'})
+				.click();
+		});
+
+		await test.step('Select Data Set View', async () => {
+			await expect(page.getByRole('dialog')).toBeVisible();
+
+			await expect(
+				page.getByRole('heading', {name: 'Select'})
+			).toBeVisible();
+
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.locator('li')
+				.filter({hasText: DATASET_VIEW_NAME})
+				.first()
+				.click();
+
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('button', {name: 'Save'})
+				.click();
+		});
+
+		await test.step('Publish page with Data Set View', async () => {
+			await fdsFragmentPage.publishPage();
+
+			await fdsFragmentPage.gotoPage({...siteInfo});
+
+			await expect(page.locator('.data-set-wrapper')).toBeVisible();
+		});
+
+		const datasetRow =
+			await test.step('Item actions dropdown is present in table row', async () => {
+				const tableRow = await page
+					.locator('.dnd-td.item-actions')
+					.first();
+
+				await expect(
+					tableRow.getByRole('button', {exact: true, name: 'Actions'})
+				).toBeVisible;
+
+				const button = await tableRow.getByRole('button', {
+					exact: true,
+					name: 'Actions',
+				});
+				const dropdownId = await button.evaluate((node) =>
+					node.getAttribute('aria-controls')
+				);
+
+				await button.click();
+
+				await page
+					.locator(`#${dropdownId}`)
+					.filter({has: page.getByRole('menu')})
+					.waitFor();
+
+				await expect(
+					page.locator(`#${dropdownId}`).getByRole('menuitem')
+				).toHaveCount(3);
+
+				await page.keyboard.press('Escape');
+
+				return tableRow;
+			});
+
+		await test.step('Click the modal item action opens a modal window', async () => {
+			const button = await datasetRow.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			});
+
+			const dropdownId = await button.evaluate((node) =>
+				node.getAttribute('aria-controls')
+			);
+
+			await button.click();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.getByRole('menuitem', {
+					exact: true,
+					name: MODAL_ITEM_ACTION_NAME,
+				})
+				.click();
+
+			await page.getByRole('dialog').waitFor();
+
+			const dialog = await page.getByRole('dialog');
+			await expect(dialog.getByRole('heading')).toHaveText(
+				MODAL_ITEM_ACTION_NAME
+			);
+
+			await dialog.getByRole('button', {name: 'close'}).click();
+
+			await expect(dialog).not.toBeInViewport();
+		});
+
+		await test.step('Click the side panel item action opens a side panel', async () => {
+			const button = await datasetRow.getByRole('button', {
+				exact: true,
+				name: 'Actions',
+			});
+
+			const dropdownId = await button.evaluate((node) =>
+				node.getAttribute('aria-controls')
+			);
+
+			await button.click();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.filter({has: page.getByRole('menu')})
+				.waitFor();
+
+			await page
+				.locator(`#${dropdownId}`)
+				.getByRole('menuitem', {
+					exact: true,
+					name: SIDE_PANEL_ITEM_ACTION_NAME,
+				})
+				.click();
+
+			await page.getByRole('tabpanel').waitFor();
+
+			const sidePanel = await page.getByRole('tabpanel');
+
+			const iframeElement = await sidePanel
+				.locator('iframe')
+				.elementHandle();
+
+			const frame = await iframeElement.contentFrame();
+
+			await frame.waitForURL(
+				new RegExp(`.*${SIDE_PANEL_ITEM_ACTION_URL}`, 'i')
+			);
+
+			await page.keyboard.press('Escape');
+
+			await expect(sidePanel).not.toBeInViewport();
 		});
 
 		await test.step('Delete Data Set and site', async () => {

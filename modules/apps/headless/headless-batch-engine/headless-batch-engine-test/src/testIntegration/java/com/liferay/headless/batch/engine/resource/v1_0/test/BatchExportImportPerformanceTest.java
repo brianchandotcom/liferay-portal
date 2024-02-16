@@ -27,10 +27,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -43,10 +43,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
@@ -98,7 +96,25 @@ public class BatchExportImportPerformanceTest {
 					"dependencies/batch-export-import-performance.properties")),
 			"\nResults:");
 
-		_jsonTemplate = JSONUtil.put(
+		_jsonTemplates = LinkedHashMapBuilder.put(
+			"com.liferay.headless.admin.user.dto.v1_0.UserAccount",
+			_createUserAccountJSONTemplate()
+		).build();
+	}
+
+	@Test
+	public void testImportAndExportTask() throws Exception {
+		for (String className : _jsonTemplates.keySet()) {
+			_writeToLogFile("ClassName: ", className);
+
+			_testPostImportTask(className);
+
+			_testPostExportTask(className);
+		}
+	}
+
+	private static String _createUserAccountJSONTemplate() throws Exception {
+		return JSONUtil.put(
 			"additionalName", ""
 		).put(
 			"alternateName", "[$ALTERNATE_NAME$]"
@@ -172,32 +188,24 @@ public class BatchExportImportPerformanceTest {
 		).toString();
 	}
 
-	@Test
-	public void testImportAndExportTask() throws Exception {
-		_testPostImportTask(
-			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
-
-		_testPostExportTask(
-			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
-	}
-
 	private static void _writeToLogFile(String... contents) throws IOException {
 		Files.write(
 			_logFilePath, Arrays.asList(contents), StandardOpenOption.APPEND,
 			StandardOpenOption.CREATE, StandardOpenOption.WRITE);
 	}
 
-	private String _createBatchJSON(int usersCount) {
+	private String _createBatchJSON(String className, int recordsCount) {
 		StringBundler batchJsonSB = new StringBundler();
 
 		batchJsonSB.append(StringPool.OPEN_BRACKET);
 
-		for (int i = 0; i < usersCount; i++) {
+		for (int i = 0; i < recordsCount; i++) {
 			String alternateName = RandomTestUtil.randomString(
 				8, UniqueStringRandomizerBumper.INSTANCE);
 
 			String json = StringUtil.replace(
-				_jsonTemplate, "[$ALTERNATE_NAME$]", alternateName);
+				_jsonTemplates.get(className), "[$ALTERNATE_NAME$]",
+				alternateName);
 
 			json = StringUtil.replace(
 				json, "[$FAMILY_NAME$]",
@@ -220,7 +228,7 @@ public class BatchExportImportPerformanceTest {
 						alternateName, "@", RandomTestUtil.randomString(),
 						".com")));
 
-			if (i < (usersCount - 1)) {
+			if (i < (recordsCount - 1)) {
 				batchJsonSB.append(StringPool.COMMA);
 			}
 		}
@@ -331,7 +339,7 @@ public class BatchExportImportPerformanceTest {
 	private void _testPostImportTask(String className) throws Exception {
 		Map<String, String> classNamePartsMap = _splitClassName(className);
 
-		String json = _createBatchJSON(_recordsCount);
+		String json = _createBatchJSON(className, _recordsCount);
 
 		JSONArray itemsJSONArray = _jsonFactory.createJSONArray(json);
 
@@ -372,7 +380,7 @@ public class BatchExportImportPerformanceTest {
 		}
 	}
 
-	private static String _jsonTemplate;
+	private static Map<String, String> _jsonTemplates;
 	private static Path _logFilePath;
 	private static int _recordsCount;
 
@@ -381,7 +389,5 @@ public class BatchExportImportPerformanceTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
-
-	private final List<LogCapture> _logCaptures = new ArrayList<>();
 
 }

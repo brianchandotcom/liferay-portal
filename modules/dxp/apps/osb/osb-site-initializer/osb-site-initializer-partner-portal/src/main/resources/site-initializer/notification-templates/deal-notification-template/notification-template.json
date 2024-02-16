@@ -1,6 +1,6 @@
 {
 	"description": "",
-	"editorType": "freeMarker",
+	"editorType": "richText",
 	"externalReferenceCode": "PARTNER-DEAL-REGISTRATION",
 	"name": "Partner Deal Registration",
 	"recipientType": "email",

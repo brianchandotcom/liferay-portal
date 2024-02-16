@@ -1,113 +1,41 @@
-<#assign portalURL="[$PORTAL_URL$]" />
-<!DOCTYPE html>
+<div style="background-color: #e6e6e6; padding: 20px">
+	<main style=" background-color: #ffffff; align-items: center; border: solid 1px; border-color: #ffffff; ">
+		<h2 style="color: #1355cc; padding-left: 15px">Partner Deal Registration</h2>
 
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-	</head>
+		<table style="color: #565656; width: 100%; border-spacing: 15px">
+			<tbody>
+				<tr>
+					<td style="font-weight: bold; white-space: nowrap">Partner Account Name:</td>
+					<td>[%LEADNOTIFICATION_PARTNERACCOUNTNAME%]</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold; white-space: nowrap">Partner Contact:</td>
+					<td>[%LEADNOTIFICATION_AUTHOR_FIRST_NAME%] [%LEADNOTIFICATION_AUTHOR_LAST_NAME%]</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold; white-space: nowrap">Primary Contact Name:</td>
+					<td>[%LEADNOTIFICATION_PRIMARYPROSPECTFIRSTNAME%] [%LEADNOTIFICATION_PRIMARYPROSPECTLASTNAME%]</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold; white-space: nowrap">Primary Contact Email:</td>
+					<td>[%LEADNOTIFICATION_PRIMARYPROSPECTEMAILADDRESS%]</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold; white-space: nowrap">Country:</td>
+					<td>[%LEADNOTIFICATION_PROSPECTCOUNTRYCODE%]</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold; white-space: nowrap">Account Name:</td>
+					<td>[%LEADNOTIFICATION_PROSPECTACCOUNTNAME%]</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold; white-space: nowrap">Salesforce URL:&nbsp;</td>
+					<td>https://liferay.lightning.force.com/lightning/r/Lead/[%LEADNOTIFICATION_LEADEXTERNALREFERENCECODE%]/view</td>
+				</tr>
+			</tbody>
+		</table>
 
-	<body>
-		<div style="background-color: #e6e6e6; padding: 20px">
-			<main
-				style="
-						background-color: #ffffff;
-						align-items: center;
-						border: solid 1px;
-						border-color: #ffffff;
-					">
-				<h2 style="color: #1355cc; padding-left: 15px">
-					Partner Deal Registration
-				</h2>
-
-				<table
-					style="color: #565656; width: 100%; border-spacing: 15px"
-				>
-					<tbody>
-						<tr>
-							<td style="font-weight: bold; white-space: nowrap">
-								Partner Account Name:
-							</td>
-							<td>
-								${ObjectField_partnerAccountName.getData()}
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold; white-space: nowrap">
-								Partner Contact:
-							</td>
-							<td>
-								${ObjectField_primaryProspectFirstName.getData()}&nbsp;${ObjectField_primaryProspectLastName.getData()}
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold; white-space: nowrap">
-								Primary Contact Name:
-							</td>
-							<td>
-								${ObjectField_prospectAccountName.getData()}
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold; white-space: nowrap">
-								Primary Contact Email:
-							</td>
-							<td>
-								${ObjectField_primaryProspectEmailAddress.getData()}
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold; white-space: nowrap">
-								Country:
-							</td>
-							<td>
-								${ObjectField_prospectCountry.getData()}
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold; white-space: nowrap">
-								Account Name:
-							</td>
-							<td>
-								${ObjectEntry_author.getData()}
-							</td>
-						</tr>
-						<tr>
-							<td style="font-weight: bold; white-space: nowrap">
-								Salesforce URL:&nbsp;
-							</td>
-							<td>
-								<#if portalURL !="partner.lxc.liferay.com">
-									<a
-										href="https://liferay--uat.sandbox.lightning.force.com/lightning/r/Lead/${ObjectField_leadExternalReferenceCode.getData()}/view">https://liferay--uat.sandbox.lightning.force.com/lightning/r/Lead/${ObjectField_leadExternalReferenceCode.getData()}/view
-									</a
-									>
-								<#else>
-									<a
-										href="https://liferay.my.salesforce.com/${ObjectField_leadExternalReferenceCode.getData()}"
-									>
-										https://liferay.my.salesforce.com/${ObjectField_leadExternalReferenceCode.getData()}
-									</a>
-								</#if>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<footer style="color: #565656; text-align: center">
-					<span>Please claim the</span>
-					<#if portalURL !="partner.lxc.liferay.com">
-						<a
-							href="https://liferay--uat.sandbox.lightning.force.com/lightning/r/Lead/${ObjectField_leadExternalReferenceCode.getData()}/view">Lead</a
-						>
-					<#else>
-						<a
-							href="https://liferay.my.salesforce.com/${ObjectField_leadExternalReferenceCode.getData()}">Lead</a
-						>
-					</#if>
-					<span>and follow up with the prospect</span>
-				</footer>
-			</main>
-		</div>
-	</body>
-</html>
+		<footer style="color: #565656; text-align: center"><span>Please claim the</span> <a href="https://liferay.lightning.force.com/lightning/r/Lead/[%LEADNOTIFICATION_LEADEXTERNALREFERENCECODE%]/view">Lead</a> and follow up with the prospect
+		</footer>
+	</main>
+</div>

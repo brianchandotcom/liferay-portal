@@ -2,6 +2,54 @@
 
 set -e -x
 
+function combine_properties_files() {
+	local temp_properties_file=temp.properties
+
+	echo "" > ${temp_properties_file}
+
+	for properties_file in ${@}
+	do
+		if [ ! -f "${properties_file}" ]
+		then
+			continue
+		fi
+
+		echo -e "\n# From ${properties_file}\n" >> ${temp_properties_file}
+
+		while IFS='=' read -r property_name property_value || [ -n "${property_name}" ]
+		do
+			if [[ ${property_name} =~ ^\ *# || -z "${property_name}" ]]
+			then
+				continue
+			fi
+
+			property_name=$(echo "${property_name}" | sed 's/^\ *//;s/\ *$//')
+			property_value=$(echo "${property_value}" | sed 's/^\ *//;s/\ *$//')
+
+			while [[ ${property_value} =~ \\$ ]]
+			do
+				read -r property_value_next
+
+				property_value="${property_value%\\}${property_value_next}"
+			done
+
+			sed -i "/^${property_name}=/d" ${temp_properties_file}
+
+			echo "${property_name}=${property_value}" >> ${temp_properties_file}
+		done < "${properties_file}"
+	done
+
+	mv ${temp_properties_file} ${1}
+
+	echo ""
+	echo "##"
+	echo "## ${1}"
+	echo "##"
+	echo ""
+
+	cat ${1}
+}
+
 function deploy_client_extensions() {
 	if [[ -n ${1} ]]
 	then
@@ -99,6 +147,10 @@ function get_playwright_project_dir() {
 	find ${PLAYWRIGHT_BASE_DIR} -name config.ts -type f -print | xargs grep "name: '${PLAYWRIGHT_PROJECT_NAME}'" | sed -n 's/\(.*\)\/config.ts.*/\1/p'
 }
 
+function get_tomcat_portal_ext_properties_file() {
+	find ${LIFERAY_HOME} -type f -name "portal-ext.properties"
+}
+
 function get_tomcat_dir() {
 	find ${LIFERAY_HOME} -type d -name "tomcat*"
 }
@@ -130,19 +182,15 @@ function stop_app_server() {
 }
 
 function update_portal_ext_properties() {
-	cd ${PORTAL_PROJECT_DIR}
-
-	if [[ -f ${PLAYWRIGHT_BASE_DIR}/env/portal-ext.properties ]]
-	then
-		ant -f build-test-playwright.xml update-portal-ext-properties -Dupdated.portal.ext.properties=${PLAYWRIGHT_BASE_DIR}/env/portal-ext.properties
-	fi
-
+	local tomcat_portal_ext_properties_file=$(get_tomcat_portal_ext_properties_file)
 	local playwright_project_dir=$(get_playwright_project_dir)
 
-	if [[ -f ${playwright_project_dir}/env/portal-ext.properties ]]
-	then
-		ant -f build-test-playwright.xml update-portal-ext-properties -Dupdated.portal.ext.properties=${playwright_project_dir}/env/portal-ext.properties
-	fi
+	combine_properties_files \
+		${tomcat_portal_ext_properties_file} \
+		\
+		${PLAYWRIGHT_BASE_DIR}/env/portal-ext.properties \
+		\
+		${playwright_project_dir}/env/portal-ext.properties
 }
 
 

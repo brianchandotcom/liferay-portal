@@ -16,7 +16,7 @@ import {createStore} from 'redux';
 import {fromJS, List} from 'immutable';
 import {LanguageIds, ProjectStates, UserRoleNames} from 'shared/util/constants';
 import {Provider} from 'react-redux';
-import {shallow} from 'enzyme';
+import {render} from '@testing-library/react';
 
 export function toRD(data) {
 	return new RemoteData({data, loading: false});
@@ -171,7 +171,7 @@ export default function mockStore(
 }
 
 export function renderWithStore(Component, props, mapStore = s => s) {
-	return shallow(
+	return render(
 		<Provider store={mockStore(mapStore(mockStoreData))}>
 			<Component key='child' {...props} />
 		</Provider>

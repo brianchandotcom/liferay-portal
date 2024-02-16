@@ -19,7 +19,7 @@ const defaultProps = {
 	timeZoneId: 'UTC'
 };
 
-describe.skip('Membership', () => {
+describe('Membership', () => {
 	const WrappedComponent = props => (
 		<Provider store={mockStore()}>
 			<StaticRouter>
@@ -39,7 +39,7 @@ describe.skip('Membership', () => {
 	});
 });
 
-describe.skip('MembershipChart', () => {
+describe('MembershipChart', () => {
 	const WrappedComponent = props => (
 		<StaticRouter>
 			<MembershipChart {...defaultProps} {...props} />

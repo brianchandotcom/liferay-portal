@@ -5,6 +5,8 @@ import {RemoteData} from '../../util/records';
 import {renderWithStore} from 'test/mock-store';
 import {withStaticRouter} from 'test/mock-router';
 
+jest.unmock('react-dom');
+
 describe('withAction', () => {
 	const action = () => ({type: 'NO_OP'});
 	const mapStateToRemoteData = () => new RemoteData({loading: false});
@@ -24,9 +26,9 @@ describe('withAction', () => {
 			mapStateToRemoteData
 		)(() => <div>{'foo'}</div>);
 
-		const component = renderWithStore(WrappedComponent);
+		const {container} = renderWithStore(WrappedComponent);
 
-		expect(component.render()).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('should render loading if the RemoteData is loading and data is null', () => {
@@ -35,9 +37,9 @@ describe('withAction', () => {
 			() => new RemoteData()
 		)(jest.fn());
 
-		const component = renderWithStore(WrappedComponent);
+		const {container} = renderWithStore(WrappedComponent);
 
-		expect(component.render()).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('should render error if the RemoteData has error', () => {
@@ -46,9 +48,9 @@ describe('withAction', () => {
 			withAction(action, () => new RemoteData({error: true}))
 		)(jest.fn());
 
-		const component = renderWithStore(WrappedComponent);
+		const {container} = renderWithStore(WrappedComponent);
 
-		expect(component.render()).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('should render a custom error message', () => {
@@ -61,9 +63,9 @@ describe('withAction', () => {
 			})
 		)(jest.fn());
 
-		const component = renderWithStore(WrappedComponent);
+		const {container} = renderWithStore(WrappedComponent);
 
-		expect(component.render()).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('should render the wrapped component if bypassErrorPage is true even if the RemoteData has an error', () => {
@@ -76,8 +78,8 @@ describe('withAction', () => {
 			)
 		)(() => <div>{'foo'}</div>);
 
-		const component = renderWithStore(WrappedComponent);
+		const {container} = renderWithStore(WrappedComponent);
 
-		expect(component.render()).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 });

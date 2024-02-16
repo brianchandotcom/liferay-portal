@@ -1,23 +1,30 @@
-jest.mock('shared/hoc/WithAction', () => () => wrappedComponent =>
-	wrappedComponent
-);
-
 import withSegment from '../WithSegment';
 import {renderWithStore} from 'test/mock-store';
 import {Segment} from 'shared/util/records';
 
+jest.unmock('react-dom');
+
+jest.mock('shared/hoc/WithAction', () => () => wrappedComponent =>
+	wrappedComponent
+);
+
 describe('WithSegment', () => {
 	it('should pass the segment to the WrappedComponent', () => {
-		const MockComponent = jest.fn();
+		let result = null;
+
+		const MockComponent = props => {
+			result = props;
+
+			return null;
+		};
+
 		const WrappedComponent = withSegment(MockComponent);
 
-		const component = renderWithStore(WrappedComponent, {
+		renderWithStore(WrappedComponent, {
 			id: 'test',
 			segment: new Segment()
 		});
 
-		expect(component.find(MockComponent).prop('segment')).toBeInstanceOf(
-			Segment
-		);
+		expect(result.segment).toBeInstanceOf(Segment);
 	});
 });

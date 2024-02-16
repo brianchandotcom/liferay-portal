@@ -1,21 +1,22 @@
-import BasePage from '../index';
-import {cleanup, render} from '@testing-library/react';
-import {renderWithStore} from 'test/mock-store';
-import {withStaticRouter} from 'test/mock-router';
-
-const WrappedComponent = withStaticRouter(BasePage);
+import mockStore from 'test/mock-store';
+import React from 'react';
+import {BasePage} from '../index';
+import {Provider} from 'react-redux';
+import {render} from '@testing-library/react';
+import {StaticRouter} from 'react-router';
 
 jest.unmock('react-dom');
 
 describe('BasePage', () => {
-	afterEach(cleanup);
-
 	it('renders BasePage', () => {
 		const {container} = render(
-			renderWithStore(WrappedComponent, {
-				children: 'Test test',
-				documentTitle: 'Test title'
-			})
+			<Provider store={mockStore()}>
+				<StaticRouter>
+					<BasePage documentTitle='Test title'>
+						{'Test test'}
+					</BasePage>
+				</StaticRouter>
+			</Provider>
 		);
 
 		expect(container).toMatchSnapshot();

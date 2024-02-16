@@ -33,7 +33,7 @@ const DefaultComponent = props => (
 	</MemoryRouter>
 );
 
-describe.skip('Activities', () => {
+describe('Activities', () => {
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 

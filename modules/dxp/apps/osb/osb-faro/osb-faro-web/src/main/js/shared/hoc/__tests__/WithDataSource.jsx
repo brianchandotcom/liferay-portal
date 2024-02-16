@@ -1,4 +1,4 @@
-import withProject from '../WithProject';
+import withDataSource from '../WithDataSource';
 import {renderWithStore} from 'test/mock-store';
 
 jest.unmock('react-dom');
@@ -7,8 +7,8 @@ jest.mock('shared/hoc/WithAction', () => () => wrappedComponent =>
 	wrappedComponent
 );
 
-describe('WithProject', () => {
-	it('should pass the project to the WrappedComponent', () => {
+describe('WithDataSource', () => {
+	it('should pass dataSource to the WrappedComponent', () => {
 		let result = null;
 
 		const MockComponent = props => {
@@ -17,13 +17,13 @@ describe('WithProject', () => {
 			return null;
 		};
 
-		const WrappedComponent = withProject(MockComponent);
+		const WrappedComponent = withDataSource(MockComponent);
 
 		renderWithStore(WrappedComponent, {
-			id: 'test',
-			project: 'fooProject'
+			dataSource: 'fooDataSource',
+			id: 'test'
 		});
 
-		expect(result.project).toBe('fooProject');
+		expect(result.dataSource).toBe('fooDataSource');
 	});
 });

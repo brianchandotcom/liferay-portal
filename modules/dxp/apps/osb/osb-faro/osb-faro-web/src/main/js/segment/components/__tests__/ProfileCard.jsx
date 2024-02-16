@@ -20,7 +20,7 @@ const DefaultComponent = props => (
 	</StaticRouter>
 );
 
-describe.skip('SegmentProfileCard', () => {
+describe('SegmentProfileCard', () => {
 	it('should render', async () => {
 		const {container} = render(<DefaultComponent />);
 

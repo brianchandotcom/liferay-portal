@@ -498,9 +498,7 @@ module.exports = {
 		'^touchpoints(.*)': '<rootDir>/src/main/js/touchpoints$1',
 		'^ui-kit(.*)$': '<rootDir>/src/main/js/ui-kit$1'
 	},
-	setupFiles: ['<rootDir>/enzyme.config.js'],
 	setupFilesAfterEnv: ['<rootDir>/src/main/js/test/setup.js'],
-	snapshotSerializers: ['enzyme-to-json/serializer'],
 	testEnvironment: 'jest-environment-jsdom-fifteen',
 	testURL: 'http://liferay.com',
 	timers: 'fake',

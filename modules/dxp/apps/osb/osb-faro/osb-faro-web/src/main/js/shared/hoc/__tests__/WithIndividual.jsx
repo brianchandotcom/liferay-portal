@@ -1,4 +1,4 @@
-import withProject from '../WithProject';
+import withIndividual from '../WithIndividual';
 import {renderWithStore} from 'test/mock-store';
 
 jest.unmock('react-dom');
@@ -7,8 +7,8 @@ jest.mock('shared/hoc/WithAction', () => () => wrappedComponent =>
 	wrappedComponent
 );
 
-describe('WithProject', () => {
-	it('should pass the project to the WrappedComponent', () => {
+describe('WithIndividual', () => {
+	it('should pass the individual to the WrappedComponent', () => {
 		let result = null;
 
 		const MockComponent = props => {
@@ -17,13 +17,13 @@ describe('WithProject', () => {
 			return null;
 		};
 
-		const WrappedComponent = withProject(MockComponent);
+		const WrappedComponent = withIndividual(MockComponent);
 
 		renderWithStore(WrappedComponent, {
 			id: 'test',
-			project: 'fooProject'
+			individual: 'fooIndividual'
 		});
 
-		expect(result.project).toBe('fooProject');
+		expect(result.individual).toBe('fooIndividual');
 	});
 });

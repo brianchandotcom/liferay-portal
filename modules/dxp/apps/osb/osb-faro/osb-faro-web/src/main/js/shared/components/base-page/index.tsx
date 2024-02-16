@@ -12,7 +12,7 @@ interface IBasePageProps extends React.HTMLAttributes<HTMLElement> {
 	documentTitle: string;
 }
 
-const BasePage: React.FC<IBasePageProps> & {
+export const BasePage: React.FC<IBasePageProps> & {
 	Body: typeof Body;
 	Context: typeof Context;
 	Header: typeof Header;

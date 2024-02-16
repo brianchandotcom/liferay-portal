@@ -20,6 +20,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -36,6 +37,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -69,13 +71,16 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.manager.SitemapManager;
+import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -768,6 +773,25 @@ public class SitemapManagerTest {
 		}
 	}
 
+	private Set<Locale> _getAvailableLocales(Layout layout)
+		throws PortalException {
+
+		Set<Locale> availableLocales = new HashSet<>();
+
+		InfoItemLanguagesProvider<Layout> infoItemLanguagesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemLanguagesProvider.class, Layout.class.getName());
+
+		for (String availableLanguageId :
+				infoItemLanguagesProvider.getAvailableLanguageIds(layout)) {
+
+			availableLocales.add(
+				LocaleUtil.fromLanguageId(availableLanguageId));
+		}
+
+		return availableLocales;
+	}
+
 	private String[] _getExpectedAssetCategoryUrls() throws Exception {
 		List<String> urls = new ArrayList<>();
 
@@ -853,7 +877,8 @@ public class SitemapManagerTest {
 									_portal.getLayoutFullURL(
 										layout, _themeDisplay),
 									_themeDisplay, layout),
-								_themeDisplay, layout);
+								_themeDisplay, layout,
+								_getAvailableLocales(layout));
 
 						String[] alternateURLs = ArrayUtil.toStringArray(
 							alternateURLMap.values());
@@ -1054,6 +1079,9 @@ public class SitemapManagerTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	private Layout _layout;
 

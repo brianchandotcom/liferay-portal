@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.GradleSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
@@ -42,12 +43,18 @@ public class GradleRestClientDependenciesCheck extends BaseFileCheck {
 				dependencies);
 
 			while (matcher.find()) {
-				addMessage(
-					fileName,
-					"Project dependencies '.*-rest-client' can only be used " +
-						"for 'testIntegrationImplementation'",
-					SourceUtil.getLineNumber(
-						content, content.indexOf(matcher.group())));
+				String matched = matcher.group();
+
+				if (!StringUtil.startsWith(
+						matched, "testIntegrationImplementation")) {
+
+					addMessage(
+						fileName,
+						"Project dependencies '.*-rest-client' can only be " +
+							"used for 'testIntegrationImplementation'",
+						SourceUtil.getLineNumber(
+							content, content.indexOf(matched)));
+				}
 			}
 		}
 
@@ -55,6 +62,6 @@ public class GradleRestClientDependenciesCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _restClientDependencyPattern = Pattern.compile(
-		"(?<!testIntegrationImplementation) project\\(\".*-rest-client\"\\)");
+		"(\\w+) project\\(\".*-rest-client\"\\)");
 
 }

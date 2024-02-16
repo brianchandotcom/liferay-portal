@@ -116,9 +116,7 @@ definition {
 			configurationName = "Time Zone",
 			configurationScope = "Virtual Instance Scope");
 
-		AssertSelectedLabel(
-			locator1 = "Select#TIME_ZONE",
-			value1 = "(UTC +03:00) Eastern European Time");
+		AssertElementPresent(locator1 = "//option[@value='Europe/Istanbul' and @selected]");
 	}
 
 	@summary = "Default summary"

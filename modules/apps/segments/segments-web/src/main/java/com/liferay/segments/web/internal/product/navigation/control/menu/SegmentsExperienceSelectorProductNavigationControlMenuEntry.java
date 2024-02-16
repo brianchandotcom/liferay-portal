@@ -97,9 +97,7 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 			printWriter.write("control-menu-nav-item c-ml-3 c-pl-md-3\">");
 
 			_reactRenderer.renderReact(
-				new ComponentDescriptor(
-					_npmResolver.resolveModuleName("segments-web") +
-						"/js/components/ExperiencePicker"),
+				new ComponentDescriptor("{ExperiencePicker} from segments-web"),
 				segmentsExperienceSelectorDisplayContext.getData(),
 				httpServletRequest, printWriter);
 

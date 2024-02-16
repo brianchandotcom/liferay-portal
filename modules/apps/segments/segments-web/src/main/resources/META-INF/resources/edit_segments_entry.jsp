@@ -40,7 +40,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 		</div>
 
 		<react:component
-			module="js/SegmentsApp.es"
+			module="{SegmentsApp} from segments-web"
 			props="<%= editSegmentsEntryDisplayContext.getData() %>"
 		/>
 	</div>

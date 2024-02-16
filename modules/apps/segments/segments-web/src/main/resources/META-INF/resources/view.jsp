@@ -17,7 +17,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new SegmentsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderResponse, segmentsDisplayContext.getSearchContainer()) %>"
-	propsTransformer="js/SegmentsManagementToolbarPropsTransformer"
+	propsTransformer="{SegmentsManagementToolbarPropsTransformer} from segments-web"
 />
 
 <c:if test="<%= !segmentsDisplayContext.isSegmentationEnabled(themeDisplay.getCompanyId()) %>">
@@ -125,7 +125,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 				<clay:dropdown-actions
 					aria-label='<%= LanguageUtil.format(request, "show-more-options-for-x", HtmlUtil.escape(segmentsEntry.getName(locale))) %>'
 					dropdownItems="<%= segmentsEntryActionDropdownItemsProvider.getActionDropdownItems() %>"
-					propsTransformer="js/SegmentsEntryDropdownDefaultPropsTransformer"
+					propsTransformer="{SegmentsEntryDropdownDefaultPropsTransformer} from segments-web"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

@@ -206,5 +206,5 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 </clay:sheet>
 
 <liferay-frontend:component
-	module="js/ConfigurationFormEventHandler"
+	module="{ConfigurationFormEventHandler} from segments-web"
 />

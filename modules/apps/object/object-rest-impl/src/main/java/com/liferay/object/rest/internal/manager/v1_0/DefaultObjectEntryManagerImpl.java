@@ -1687,9 +1687,14 @@ public class DefaultObjectEntryManagerImpl
 				values.put(
 					objectField.getName(),
 					_toDate(locale, String.valueOf(value)));
+
+				continue;
 			}
 
-			if ((value == null) &&
+			if (!Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_DATE_TIME) &&
+				(value == null) &&
 				(!objectField.isRequired() ||
 				 _isObjectEntryDraft(objectEntry.getStatus()))) {
 

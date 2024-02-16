@@ -693,7 +693,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					).put(
 						"successMessage", properties.get("successMessage")
 					).put(
-						"title", properties.get("label")
+						"title", properties.get("title")
 					)
 				).put(
 					"href", properties.get("url")

@@ -9,22 +9,19 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.model.DefaultModelHintsImpl;
-import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.service.impl.ClassNameLocalServiceImpl;
 import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
@@ -59,23 +56,11 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		entityCache.removeCache(ClassNameImpl.class.getName());
-		entityCache.removeCache(ResourceActionImpl.class.getName());
-		finderCache.removeCache(ClassNameImpl.class.getName());
-		finderCache.removeCache(ResourceActionImpl.class.getName());
 		BaseDBPartitionTestCase.setUpClass();
 
 		createControlTable(TEST_CONTROL_TABLE_NAME);
 
 		addDBPartitions();
-
-		_resourceActions = ReflectionTestUtil.getFieldValue(
-			ResourceActionLocalServiceImpl.class, "_resourceActions");
-
-		_resourceActions.clear();
-
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> _resourceActionLocalService.checkResourceActions());
 
 		insertPartitionRequiredData();
 	}
@@ -87,18 +72,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		removeDBPartitions();
 
 		dropTable(TEST_CONTROL_TABLE_NAME);
-		entityCache.removeCache(ClassNameImpl.class.getName());
-		entityCache.removeCache(ResourceActionImpl.class.getName());
-
-		finderCache.removeCache(ClassNameImpl.class.getName());
-		finderCache.removeCache(ResourceActionImpl.class.getName());
-
-		if (_resourceActions != null) {
-			_resourceActions.clear();
-		}
-
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> _resourceActionLocalService.checkResourceActions());
 	}
 
 	@After
@@ -194,6 +167,14 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCopyResourceAction() throws Exception {
+		EntityCacheUtil.clearCache(ResourceActionImpl.class);
+
+		Map<String, ResourceAction> resourceActions =
+			ReflectionTestUtil.getFieldValue(
+				ResourceActionLocalServiceImpl.class, "_resourceActions");
+
+		resourceActions.clear();
+
 		String actionId = "";
 		long bitwiseValue = 0;
 		String name = "";
@@ -217,19 +198,34 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		String finalName = name;
 		long finalResourceActionId = resourceActionId;
 
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> {
-				ResourceAction resourceAction =
-					_resourceActionLocalService.fetchResourceAction(
-						finalName, finalActionId);
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId ->
+					_resourceActionLocalService.checkResourceActions());
 
-				Assert.assertNotNull(resourceAction);
-				Assert.assertEquals(
-					finalBitwiseValue, resourceAction.getBitwiseValue());
-				Assert.assertEquals(
-					finalResourceActionId,
-					resourceAction.getResourceActionId());
-			});
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					ResourceAction resourceAction =
+						_resourceActionLocalService.fetchResourceAction(
+							finalName, finalActionId);
+
+					Assert.assertNotNull(resourceAction);
+					Assert.assertEquals(
+						finalBitwiseValue, resourceAction.getBitwiseValue());
+					Assert.assertEquals(
+						finalResourceActionId,
+						resourceAction.getResourceActionId());
+				});
+		}
+		finally {
+			EntityCacheUtil.clearCache(ResourceActionImpl.class);
+
+			resourceActions.clear();
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId ->
+					_resourceActionLocalService.checkResourceActions());
+		}
 	}
 
 	@Test
@@ -419,25 +415,16 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	}
 
-	@Inject
-	protected static EntityCache entityCache;
-
-	@Inject
-	protected static FinderCache finderCache;
-
 	private static final String _CLASS_NAME_VALUE = "class.name.test";
 
 	@Inject
 	private static ResourceActionLocalService _resourceActionLocalService;
-
-	private static Map<String, ResourceAction> _resourceActions;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
 	private class ClassNameModelHints extends DefaultModelHintsImpl {
 
 		@Override

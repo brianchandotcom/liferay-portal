@@ -7,7 +7,7 @@ import ClayLabel from '@clayui/label';
 import {
 	Panel,
 	PanelSimpleBody,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
@@ -31,7 +31,7 @@ export function ObjectLayoutRelationship({
 		<>
 			<Panel key={`field_${objectRelationshipId}`}>
 				<PanelSimpleBody
-					title={getLocalizableLabel(
+					title={stringUtils.getLocalizableLabel(
 						creationLanguageId,
 						objectRelationship.label,
 						objectRelationship.name

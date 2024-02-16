@@ -4,11 +4,7 @@
  */
 
 import ClayPanel from '@clayui/panel';
-import {
-	API,
-	getLocalizableLabel,
-	openToast,
-} from '@liferay/object-js-components-web';
+import {API, stringUtils, openToast} from '@liferay/object-js-components-web';
 import {FeatureIndicator} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
@@ -211,7 +207,7 @@ export default function EditObjectDetails({
 					}
 					isApproved={isApproved}
 					isRootDescendantNode={isRootDescendantNode}
-					label={getLocalizableLabel(
+					label={stringUtils.getLocalizableLabel(
 						values.defaultLanguageId as Liferay.Language.Locale,
 						values.label,
 						values.name

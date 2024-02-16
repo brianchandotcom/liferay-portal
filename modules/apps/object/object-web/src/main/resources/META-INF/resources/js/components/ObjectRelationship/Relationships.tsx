@@ -9,7 +9,7 @@ import {
 	// @ts-ignore
 
 } from '@liferay/frontend-data-set-web';
-import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
+import {API, stringUtils} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -273,7 +273,7 @@ export default function Relationships({
 									Liferay.Language.get(
 										'x-is-being-used-by-a-root-object-and-cannot-be-deleted'
 									),
-									`<strong>"${getLocalizableLabel(
+									`<strong>"${stringUtils.getLocalizableLabel(
 										creationLanguageId as Liferay.Language.Locale,
 										selectedObjectRelationship?.label,
 										selectedObjectRelationship?.name

@@ -11,7 +11,7 @@ import {
 	API,
 	FormError,
 	Input,
-	REQUIRED_MSG,
+	constantsUtils,
 	SingleSelect,
 	openToast,
 	useForm,
@@ -131,13 +131,13 @@ export function ModalAddObjectDefinition({
 		const errors: FormError<TInitialValues> = {};
 
 		if (!values.label) {
-			errors.label = REQUIRED_MSG;
+			errors.label = constantsUtils.REQUIRED_MSG;
 		}
 		if (!(values.name ?? values.label)) {
-			errors.name = REQUIRED_MSG;
+			errors.name = constantsUtils.REQUIRED_MSG;
 		}
 		if (!values.pluralLabel) {
-			errors.pluralLabel = REQUIRED_MSG;
+			errors.pluralLabel = constantsUtils.REQUIRED_MSG;
 		}
 
 		return errors;

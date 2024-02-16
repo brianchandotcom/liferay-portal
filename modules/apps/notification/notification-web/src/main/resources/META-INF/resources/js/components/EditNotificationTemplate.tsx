@@ -7,7 +7,7 @@ import ClayForm from '@clayui/form';
 import {
 	API,
 	ManagementToolbar,
-	REQUIRED_MSG,
+	constantsUtils,
 	invalidateRequired,
 	openToast,
 	useForm,
@@ -78,7 +78,7 @@ export default function EditNotificationTemplate({
 		const errors: NotificationTemplateError = {};
 
 		if (!values.name) {
-			errors.name = REQUIRED_MSG;
+			errors.name = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (!values.subject[defaultLanguageId]) {
@@ -87,15 +87,15 @@ export default function EditNotificationTemplate({
 
 		if (notificationTemplateType === 'email' || values.type === 'email') {
 			if (!values.recipients[0].from) {
-				errors.from = REQUIRED_MSG;
+				errors.from = constantsUtils.REQUIRED_MSG;
 			}
 
 			if (!values.recipients[0].fromName[defaultLanguageId]) {
-				errors.fromName = REQUIRED_MSG;
+				errors.fromName = constantsUtils.REQUIRED_MSG;
 			}
 
 			if (!values.recipients[0].to[defaultLanguageId]) {
-				errors.to = REQUIRED_MSG;
+				errors.to = constantsUtils.REQUIRED_MSG;
 			}
 		}
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getLocalizableLabel} from '@liferay/object-js-components-web';
+import {stringUtils} from '@liferay/object-js-components-web';
 import {Edge, Node, isEdge, isNode} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
@@ -91,7 +91,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							hiddenObjectDefinitionNode: false,
 							id: newObjectDefinition.id,
 							kebabOptions,
-							label: getLocalizableLabel(
+							label: stringUtils.getLocalizableLabel(
 								newObjectDefinition.defaultLanguageId,
 								newObjectDefinition.label,
 								newObjectDefinition.name
@@ -532,7 +532,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 							hiddenObjectDefinitionNode: false,
 							id: objectDefinition.id,
 							kebabOptions,
-							label: getLocalizableLabel(
+							label: stringUtils.getLocalizableLabel(
 								objectDefinition.defaultLanguageId,
 								objectDefinition.label,
 								objectDefinition.name
@@ -551,7 +551,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				return {
 					hiddenObjectFolderObjectDefinitionNodes: false,
 					leftSidebarObjectDefinitionItems,
-					name: getLocalizableLabel(
+					name: stringUtils.getLocalizableLabel(
 						defaultLanguageId,
 						objectFolder.label,
 						objectFolder.name
@@ -1187,7 +1187,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 								) {
 									return {
 										...leftSidebarObjectDefinitionItem,
-										label: getLocalizableLabel(
+										label: stringUtils.getLocalizableLabel(
 											defaultLanguageId,
 											updatedObjectDefinition.label,
 											updatedObjectDefinition.name

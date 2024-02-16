@@ -9,7 +9,7 @@ import {
 	CodeEditor,
 	SidebarCategory,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import {
 	ILearnResourceContext,
@@ -66,7 +66,11 @@ export function Conditions({
 	const objectFieldsItems = useMemo(() => {
 		return customObjectFields.map(
 			({externalReferenceCode, label, name}) => ({
-				label: getLocalizableLabel(creationLanguageId, label, name),
+				label: stringUtils.getLocalizableLabel(
+					creationLanguageId,
+					label,
+					name
+				),
 				value: externalReferenceCode,
 			})
 		);

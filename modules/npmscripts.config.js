@@ -456,10 +456,13 @@ module.exports = {
 			'@liferay/map-common': [],
 			'@liferay/map-google-maps': [],
 			'@liferay/map-openstreetmap': [],
+			'@liferay/object-js-components-web': [],
 			'@liferay/portal-workflow-instance-tracker-web': [],
 			'@liferay/template-web': [],
 			'asset-taglib': [],
 			'data-engine-js-components-web': [],
+			'frontend-editor-alloyeditor-web': [],
+			'frontend-editor-ckeditor-web': [],
 			'frontend-js-components-web': [],
 			'frontend-js-web': [],
 			'frontend-taglib-clay': [

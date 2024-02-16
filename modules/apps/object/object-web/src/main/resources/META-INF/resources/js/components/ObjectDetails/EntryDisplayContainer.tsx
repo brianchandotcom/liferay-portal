@@ -6,7 +6,7 @@
 import {
 	FormError,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo} from 'react';
 
@@ -37,7 +37,7 @@ export function EntryDisplayContainer({
 	const titleFieldOptions = useMemo(() => {
 		return nonRelationshipObjectFieldsInfo?.map(({label, name}) => {
 			return {
-				label: getLocalizableLabel(
+				label: stringUtils.getLocalizableLabel(
 					values.defaultLanguageId as Liferay.Language.Locale,
 					label,
 					name

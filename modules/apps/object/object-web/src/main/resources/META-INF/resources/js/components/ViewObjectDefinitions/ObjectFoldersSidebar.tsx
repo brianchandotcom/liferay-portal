@@ -8,7 +8,7 @@ import {Text} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
-import {getLocalizableLabel} from '@liferay/object-js-components-web';
+import {stringUtils} from '@liferay/object-js-components-web';
 import {createResourceURL} from 'frontend-js-web';
 import React, {SetStateAction} from 'react';
 
@@ -163,7 +163,7 @@ export default function ObjectFoldersSideBar({
 					>
 						<span className="lfr__object-web-view-object-definitions-object-folder-list-item-label">
 							<Text truncate>
-								{getLocalizableLabel(
+								{stringUtils.getLocalizableLabel(
 									defaultLanguageId,
 									currentObjectFolder.label,
 									currentObjectFolder.name

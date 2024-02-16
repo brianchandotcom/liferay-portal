@@ -13,7 +13,7 @@ import {
 	MultiSelectItem,
 	MultipleSelect,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {
 	FormEvent,
@@ -143,7 +143,7 @@ export function ModalAddFilter({
 
 	const filterByItems = useMemo(() => {
 		return objectFields.map(({id, label, name}) => ({
-			label: getLocalizableLabel(
+			label: stringUtils.getLocalizableLabel(
 				creationLanguageId as Liferay.Language.Locale,
 				label,
 				name

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getLocalizableLabel} from '@liferay/object-js-components-web';
+import {stringUtils} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React from 'react';
 import {useStore} from 'react-flow-renderer';
@@ -66,7 +66,7 @@ export default function ObjectDefinitionNodeFields({
 						>
 							<div className="lfr-objects__model-builder-node-field-label">
 								<span>
-									{getLocalizableLabel(
+									{stringUtils.getLocalizableLabel(
 										defaultLanguageId,
 										objectField.label,
 										objectField.name

@@ -11,7 +11,7 @@ import {
 	API,
 	FormError,
 	Input,
-	REQUIRED_MSG,
+	constantsUtils,
 	SingleSelect,
 	invalidateRequired,
 	useForm,
@@ -75,7 +75,7 @@ export function ModalAddObjectValidation({
 		const label = validation.name?.[defaultLanguageId];
 
 		if (invalidateRequired(label)) {
-			errors.name = REQUIRED_MSG;
+			errors.name = constantsUtils.REQUIRED_MSG;
 		}
 
 		return errors;

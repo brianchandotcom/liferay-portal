@@ -7,7 +7,7 @@ import ClayLabel from '@clayui/label';
 import {
 	Panel,
 	PanelSimpleBody,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
@@ -62,7 +62,7 @@ export function ObjectLayoutField({
 							}}
 						/>
 					}
-					title={getLocalizableLabel(
+					title={stringUtils.getLocalizableLabel(
 						creationLanguageId,
 						objectField.label,
 						objectField.name

@@ -9,7 +9,7 @@ import {
 	RadioField,
 	SingleSelect,
 	Toggle,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
@@ -54,7 +54,11 @@ export function BasicInfo({
 	const objectFieldsItems = useMemo(() => {
 		return customObjectFields.map(
 			({externalReferenceCode, label, name}) => ({
-				label: getLocalizableLabel(creationLanguageId, label, name),
+				label: stringUtils.getLocalizableLabel(
+					creationLanguageId,
+					label,
+					name
+				),
 				value: externalReferenceCode,
 			})
 		);

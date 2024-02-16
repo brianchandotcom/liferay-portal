@@ -7,9 +7,9 @@ import {
 	API,
 	FormError,
 	Input,
-	REQUIRED_MSG,
+	constantsUtils,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -96,23 +96,23 @@ export function useObjectRelationshipForm({
 		const label = relationship.label?.[defaultLanguageId];
 
 		if (invalidateRequired(label)) {
-			errors.label = REQUIRED_MSG;
+			errors.label = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (invalidateRequired(relationship.name ?? label)) {
-			errors.name = REQUIRED_MSG;
+			errors.name = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (invalidateRequired(relationship.type)) {
-			errors.type = REQUIRED_MSG;
+			errors.type = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (!relationship.objectDefinitionId1) {
-			errors.objectDefinitionId1 = REQUIRED_MSG;
+			errors.objectDefinitionId1 = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (!relationship.objectDefinitionId2) {
-			errors.objectDefinitionId2 = REQUIRED_MSG;
+			errors.objectDefinitionId2 = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (
@@ -120,7 +120,7 @@ export function useObjectRelationshipForm({
 			relationship.type === 'oneToMany' &&
 			!relationship.parameterObjectFieldName
 		) {
-			errors.parameterObjectFieldName = REQUIRED_MSG;
+			errors.parameterObjectFieldName = constantsUtils.REQUIRED_MSG;
 		}
 
 		return errors;
@@ -410,7 +410,7 @@ export function ObjectRelationshipFormBase({
 								name="currentObjectInput"
 								readOnly={true}
 								required
-								value={getLocalizableLabel(
+								value={stringUtils.getLocalizableLabel(
 									objectDefinition2?.defaultLanguageId as Liferay.Language.Locale,
 									objectDefinition2?.label,
 									objectDefinition2?.name
@@ -453,7 +453,7 @@ export function ObjectRelationshipFormBase({
 								name="currentObjectInput"
 								readOnly={true}
 								required
-								value={getLocalizableLabel(
+								value={stringUtils.getLocalizableLabel(
 									objectDefinition1?.defaultLanguageId as Liferay.Language.Locale,
 									objectDefinition1?.label,
 									objectDefinition1?.name

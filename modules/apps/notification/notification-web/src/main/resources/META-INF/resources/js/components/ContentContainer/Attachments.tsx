@@ -9,7 +9,7 @@ import {
 	MultiSelectItem,
 	MultipleSelect,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
@@ -53,7 +53,7 @@ export function Attachments({
 		fields.forEach(({id, label, name}) => {
 			parsedFields.push({
 				checked: attachmentObjectFieldIds.has(id as number),
-				label: getLocalizableLabel(
+				label: stringUtils.getLocalizableLabel(
 					selectedObjectDefinitionItem?.defaultLanguageId as Locale,
 					label,
 					name
@@ -98,7 +98,7 @@ export function Attachments({
 				if (!system) {
 					newObjectDefinitionItems.push({
 						id,
-						label: getLocalizableLabel(
+						label: stringUtils.getLocalizableLabel(
 							defaultLanguageId,
 							label,
 							name

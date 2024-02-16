@@ -7,9 +7,9 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {
 	Card,
 	Input,
-	REQUIRED_MSG,
-	getLocalizableLabel,
+	constantsUtils,
 	invalidateRequired,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React from 'react';
 
@@ -26,13 +26,13 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	if (
 		invalidateRequired(
-			getLocalizableLabel(
+			stringUtils.getLocalizableLabel(
 				creationLanguageId as Liferay.Language.Locale,
 				objectLayout.name
 			)
 		)
 	) {
-		error = REQUIRED_MSG;
+		error = constantsUtils.REQUIRED_MSG;
 	}
 
 	return (
@@ -49,7 +49,7 @@ const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 					});
 				}}
 				required
-				value={getLocalizableLabel(
+				value={stringUtils.getLocalizableLabel(
 					creationLanguageId as Liferay.Language.Locale,
 					objectLayout.name
 				)}

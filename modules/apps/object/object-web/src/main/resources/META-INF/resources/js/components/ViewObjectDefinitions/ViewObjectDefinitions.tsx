@@ -5,12 +5,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import {
-	API,
-	Card,
-	getLocalizableLabel,
-	stringToURLParameterFormat,
-} from '@liferay/object-js-components-web';
+import {API, Card, stringUtils} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -176,7 +171,7 @@ export default function ViewObjectDefinitions({
 		let url: string = '';
 
 		if (selectedObjectFolder.externalReferenceCode) {
-			url = `/o/object-admin/v1.0/object-definitions?${stringToURLParameterFormat(
+			url = `/o/object-admin/v1.0/object-definitions?${stringUtils.stringToURLParameterFormat(
 				`filter=objectFolderExternalReferenceCode eq '${selectedObjectFolder.externalReferenceCode}'`
 			)}`;
 		}
@@ -630,7 +625,7 @@ export default function ViewObjectDefinitions({
 										Liferay.Language.get(
 											'x-is-being-used-by-a-root-object-and-cannot-be-deleted'
 										),
-										`<strong>"${getLocalizableLabel(
+										`<strong>"${stringUtils.getLocalizableLabel(
 											selectedObjectDefinition.defaultLanguageId,
 											selectedObjectDefinition.label,
 											selectedObjectDefinition.name

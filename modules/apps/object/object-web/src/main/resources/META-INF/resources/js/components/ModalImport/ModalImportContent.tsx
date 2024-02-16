@@ -7,8 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {Input} from '@liferay/object-js-components-web';
-import {ErrorDetails} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/utils/api';
+import {API, Input} from '@liferay/object-js-components-web';
 import React, {FormEvent, useRef} from 'react';
 
 import {ModalImportProperties} from '../ViewObjectDefinitions/ViewObjectDefinitions';
@@ -19,7 +18,7 @@ import {
 } from './modalImportLanguageUtil';
 
 interface ModalImportContentProps extends ModalImportProperties {
-	error?: ErrorDetails;
+	error?: API.ErrorDetails;
 	externalReferenceCode: string;
 	fileName: string;
 	handleOnClose: () => void;
@@ -29,7 +28,7 @@ interface ModalImportContentProps extends ModalImportProperties {
 	name: string;
 	nameMaxLength: string;
 	portletNamespace: string;
-	setError: (value?: ErrorDetails) => void;
+	setError: (value?: API.ErrorDetails) => void;
 	setExternalReferenceCode: (value: string) => void;
 	setFile: (value: TFile) => void;
 	setName: (value: string) => void;

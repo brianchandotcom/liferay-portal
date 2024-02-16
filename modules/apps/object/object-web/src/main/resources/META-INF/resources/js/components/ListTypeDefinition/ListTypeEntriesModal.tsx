@@ -9,7 +9,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {
 	API,
 	Input,
-	REQUIRED_MSG,
+	constantsUtils,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
@@ -148,11 +148,11 @@ function ListTypeEntriesModal() {
 		const name_i18n = entry.name_i18n?.[defaultLanguageId];
 
 		if (invalidateRequired(name_i18n)) {
-			errors.name_i18n = REQUIRED_MSG;
+			errors.name_i18n = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (invalidateRequired(key)) {
-			errors.name = REQUIRED_MSG;
+			errors.name = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (specialCharactersInString(key as string)) {
@@ -162,7 +162,7 @@ function ListTypeEntriesModal() {
 		}
 
 		if (modalType === 'edit' && invalidateRequired(externalReferenceCode)) {
-			errors.externalReferenceCode = REQUIRED_MSG;
+			errors.externalReferenceCode = constantsUtils.REQUIRED_MSG;
 		}
 
 		return errors;

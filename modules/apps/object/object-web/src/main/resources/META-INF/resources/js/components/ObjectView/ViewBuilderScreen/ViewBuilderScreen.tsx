@@ -7,7 +7,7 @@ import {useModal} from '@clayui/modal';
 import {
 	BuilderScreen,
 	Card,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
@@ -44,7 +44,11 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 
 		parentWindow.Liferay.fire('openModalSelectObjectFields', {
 			getName: ({label, name}: ObjectField) =>
-				getLocalizableLabel(creationLanguageId, label, name),
+				stringUtils.getLocalizableLabel(
+					creationLanguageId,
+					label,
+					name
+				),
 			header: Liferay.Language.get('add-columns'),
 			items: objectFields.map((objectField) => {
 				return {

@@ -6,7 +6,7 @@
 import {
 	API,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -32,7 +32,7 @@ export default function SelectRelationship({
 		() =>
 			objectFields.map(({label, name}) => {
 				return {
-					label: getLocalizableLabel(
+					label: stringUtils.getLocalizableLabel(
 						creationLanguageId as Liferay.Language.Locale,
 						label,
 						name

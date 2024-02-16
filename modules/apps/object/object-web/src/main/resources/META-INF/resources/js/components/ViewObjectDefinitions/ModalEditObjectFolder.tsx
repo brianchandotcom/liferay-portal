@@ -11,8 +11,8 @@ import {
 	API,
 	FormError,
 	Input,
-	REQUIRED_MSG,
-	getLocalizableLabel,
+	constantsUtils,
+	stringUtils,
 	invalidateLocalizableLabelRequired,
 	openToast,
 	useForm,
@@ -76,7 +76,7 @@ export function ModalEditObjectFolder({
 				message: sub(
 					Liferay.Language.get('x-was-saved-successfully'),
 					`<strong>${Liferay.Util.escapeHTML(
-						getLocalizableLabel(
+						stringUtils.getLocalizableLabel(
 							defaultLanguageId,
 							objectFolder.label,
 							objectFolder.name
@@ -97,11 +97,11 @@ export function ModalEditObjectFolder({
 		const errors: FormError<TInitialValues> = {};
 
 		if (invalidateLocalizableLabelRequired(values.label)) {
-			errors.label = REQUIRED_MSG;
+			errors.label = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (!values.externalReferenceCode) {
-			errors.externalReferenceCode = REQUIRED_MSG;
+			errors.externalReferenceCode = constantsUtils.REQUIRED_MSG;
 		}
 
 		return errors;

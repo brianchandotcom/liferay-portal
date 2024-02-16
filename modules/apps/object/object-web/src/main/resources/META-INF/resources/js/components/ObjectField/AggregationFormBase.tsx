@@ -7,7 +7,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {
 	API,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -94,7 +94,7 @@ export function AggregationFormBase({
 
 	const filteredObjectRelationships = useMemo(() => {
 		return objectRelationships?.map(({label, name}) => ({
-			label: getLocalizableLabel(
+			label: stringUtils.getLocalizableLabel(
 				creationLanguageId2 as Liferay.Language.Locale,
 				label,
 				name
@@ -105,7 +105,7 @@ export function AggregationFormBase({
 
 	const filteredObjectRelationshipFields = useMemo(() => {
 		return objectRelationshipFields?.map(({label, name}) => ({
-			label: getLocalizableLabel(
+			label: stringUtils.getLocalizableLabel(
 				creationLanguageId2 as Liferay.Language.Locale,
 				label,
 				name

@@ -9,9 +9,9 @@ import {
 	Card,
 	MultiSelectItem,
 	MultipleSelect,
-	getLocalizableLabel,
+	TBuilderScreenItem,
+	stringUtils,
 } from '@liferay/object-js-components-web';
-import {TBuilderScreenItem} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/components/BuilderScreen/BuilderScreen';
 import {createResourceURL, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -116,7 +116,11 @@ export function UniqueCompositeKey({
 					),
 				},
 				getName: ({label, name}: ObjectField) =>
-					getLocalizableLabel(creationLanguageId, label, name),
+					stringUtils.getLocalizableLabel(
+						creationLanguageId,
+						label,
+						name
+					),
 				header: Liferay.Language.get(
 					'add-fields-to-unique-composite-key'
 				),
@@ -295,7 +299,7 @@ export function UniqueCompositeKey({
 				);
 
 				if (filteredObjectFieldObjectValidationRuleSetting) {
-					const label = getLocalizableLabel(
+					const label = stringUtils.getLocalizableLabel(
 						creationLanguageId,
 						filteredObjectFieldObjectValidationRuleSetting.label,
 						filteredObjectFieldObjectValidationRuleSetting.name

@@ -5,7 +5,6 @@
 
 import ClayModal, {useModal} from '@clayui/modal';
 import {API} from '@liferay/object-js-components-web';
-import {ErrorDetails} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/utils/api';
 import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useState} from 'react';
 
@@ -46,7 +45,7 @@ export default function ModalImport({
 	portletNamespace,
 	showModal,
 }: ModalImportProps) {
-	const [error, setError] = useState<ErrorDetails>();
+	const [error, setError] = useState<API.ErrorDetails>();
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
 		''
 	);
@@ -102,7 +101,7 @@ export default function ModalImport({
 			}
 		}
 		catch (error) {
-			setError(error as ErrorDetails);
+			setError(error as API.ErrorDetails);
 		}
 	};
 

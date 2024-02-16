@@ -7,8 +7,9 @@ import {useModal} from '@clayui/modal';
 import {
 	API,
 	BuilderScreen,
-	getLocalizableLabel,
+	constantsUtils,
 	invalidateRequired,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {ElementType, useCallback, useEffect, useState} from 'react';
@@ -58,8 +59,6 @@ interface AggregationFilterProps {
 interface CustomWindow extends Window {
 	__isReactDndBackendSetUp?: boolean;
 }
-
-const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function AggregationFilterContainer({
 	aggregationFilters,
@@ -155,7 +154,7 @@ export function AggregationFilterContainer({
 
 				if (objectField && filterType) {
 					const aggregationFilter: AggregationFilters = {
-						fieldLabel: getLocalizableLabel(
+						fieldLabel: stringUtils.getLocalizableLabel(
 							creationLanguageId2 as Liferay.Language.Locale,
 							objectField.label,
 							objectField.name
@@ -277,11 +276,11 @@ export function AggregationFilterContainer({
 			const currentErrors: FilterErrors = {};
 
 			if (!selectedFilterBy) {
-				currentErrors.selectedFilterBy = REQUIRED_MSG;
+				currentErrors.selectedFilterBy = constantsUtils.REQUIRED_MSG;
 			}
 
 			if (!selectedFilterTypeValue) {
-				currentErrors.selectedFilterType = REQUIRED_MSG;
+				currentErrors.selectedFilterType = constantsUtils.REQUIRED_MSG;
 			}
 
 			if (
@@ -289,7 +288,7 @@ export function AggregationFilterContainer({
 					selectedFilterBy?.businessType === 'Picklist') &&
 				!checkedItems.length
 			) {
-				currentErrors.items = REQUIRED_MSG;
+				currentErrors.items = constantsUtils.REQUIRED_MSG;
 			}
 
 			if (
@@ -300,11 +299,11 @@ export function AggregationFilterContainer({
 				const endDate = items.find((date) => date.value === 'le');
 
 				if (!startDate) {
-					currentErrors.startDate = REQUIRED_MSG;
+					currentErrors.startDate = constantsUtils.REQUIRED_MSG;
 				}
 
 				if (!endDate) {
-					currentErrors.endDate = REQUIRED_MSG;
+					currentErrors.endDate = constantsUtils.REQUIRED_MSG;
 				}
 			}
 
@@ -313,7 +312,7 @@ export function AggregationFilterContainer({
 					selectedFilterBy?.businessType === 'LongInteger') &&
 				invalidateRequired(value)
 			) {
-				currentErrors.value = REQUIRED_MSG;
+				currentErrors.value = constantsUtils.REQUIRED_MSG;
 			}
 
 			setErrors(currentErrors);
@@ -336,7 +335,7 @@ export function AggregationFilterContainer({
 			const newAggregationFilters = [
 				...aggregationFilters,
 				{
-					fieldLabel: getLocalizableLabel(
+					fieldLabel: stringUtils.getLocalizableLabel(
 						creationLanguageId2 as Liferay.Language.Locale,
 						fieldLabel,
 						objectFieldName

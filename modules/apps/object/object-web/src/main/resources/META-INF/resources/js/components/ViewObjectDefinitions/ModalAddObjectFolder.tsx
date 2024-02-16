@@ -11,7 +11,7 @@ import {
 	API,
 	FormError,
 	Input,
-	REQUIRED_MSG,
+	constantsUtils,
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -105,10 +105,10 @@ export function ModalAddObjectFolder({
 		const errors: FormError<TInitialValues> = {};
 
 		if (!values.label) {
-			errors.label = REQUIRED_MSG;
+			errors.label = constantsUtils.REQUIRED_MSG;
 		}
 		if (!(values.name ?? values.label)) {
-			errors.name = REQUIRED_MSG;
+			errors.name = constantsUtils.REQUIRED_MSG;
 		}
 
 		return errors;

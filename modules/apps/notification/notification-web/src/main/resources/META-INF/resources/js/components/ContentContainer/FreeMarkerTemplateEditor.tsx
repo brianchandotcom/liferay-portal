@@ -7,7 +7,7 @@ import {
 	CodeEditorLocalized,
 	SidebarCategory,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
@@ -51,7 +51,11 @@ export function FreeMarkerTemplateEditor({
 
 		return availableObjectDefinitions.map(
 			({defaultLanguageId, id, label, name}) => ({
-				label: getLocalizableLabel(defaultLanguageId, label, name),
+				label: stringUtils.getLocalizableLabel(
+					defaultLanguageId,
+					label,
+					name
+				),
 				value: id,
 			})
 		) as LabelValueObject<number>[];

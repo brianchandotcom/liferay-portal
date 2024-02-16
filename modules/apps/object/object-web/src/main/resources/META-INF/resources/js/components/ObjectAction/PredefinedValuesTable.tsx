@@ -11,7 +11,7 @@ import {
 	Card,
 	DatePicker,
 	ExpressionBuilder,
-	getLocalizableLabel,
+	stringUtils,
 	onActionDropdownItemClick,
 	openToast,
 } from '@liferay/object-js-components-web';
@@ -104,7 +104,7 @@ export default function PredefinedValuesTable({
 
 					label: (
 						<div className="lfr-object-web__predefined-values-table-field">
-							{getLocalizableLabel(
+							{stringUtils.getLocalizableLabel(
 								creationLanguageId,
 								label,
 								name
@@ -266,7 +266,11 @@ export default function PredefinedValuesTable({
 
 			parentWindow.Liferay.fire('openModalSelectObjectFields', {
 				getLabel: ({label, name}: ObjectField) =>
-					getLocalizableLabel(creationLanguageId, label, name),
+					stringUtils.getLocalizableLabel(
+						creationLanguageId,
+						label,
+						name
+					),
 				getName: ({name}: ObjectField) => name,
 				header: Liferay.Language.get('add-fields'),
 				items: currentObjectDefinitionFields

@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {getLocalizableLabel} from '@liferay/object-js-components-web';
+import {stringUtils} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
@@ -31,7 +31,11 @@ export default function ObjectFolderCardHeader({
 			<div>
 				<div className="d-flex lfr__object-web-view-object-definitions-title-kebab">
 					<span className="lfr__object-web-view-object-definitions-title mb-0">
-						{getLocalizableLabel(defaultLanguageId, label, name)}
+						{stringUtils.getLocalizableLabel(
+							defaultLanguageId,
+							label,
+							name
+						)}
 					</span>
 
 					<ClayDropDownWithItems

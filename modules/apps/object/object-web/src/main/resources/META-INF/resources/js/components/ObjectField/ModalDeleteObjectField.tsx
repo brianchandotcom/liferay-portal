@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
-import {getLocalizableLabel} from '@liferay/object-js-components-web';
+import {stringUtils} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
@@ -68,7 +68,7 @@ export function ModalDeleteObjectField({
 									onClick={() => {
 										deleteObjectField(
 											objectField.id,
-											getLocalizableLabel(
+											stringUtils.getLocalizableLabel(
 												defaultLanguageId,
 												objectField.label,
 												objectField.name

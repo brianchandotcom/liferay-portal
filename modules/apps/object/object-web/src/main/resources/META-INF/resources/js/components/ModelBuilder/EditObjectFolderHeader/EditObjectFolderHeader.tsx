@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {getLocalizableLabel} from '@liferay/object-js-components-web';
+import {stringUtils} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -48,14 +48,14 @@ export default function EditObjectFolderHeader({
 									Liferay.Language.get(
 										'object-folder-label'
 									) +
-									`: ${getLocalizableLabel(
+									`: ${stringUtils.getLocalizableLabel(
 										defaultLanguageId,
 										selectedObjectFolder.label,
 										selectedObjectFolder.name
 									)}`
 								}
 							>
-								{getLocalizableLabel(
+								{stringUtils.getLocalizableLabel(
 									defaultLanguageId,
 									selectedObjectFolder.label,
 									selectedObjectFolder.name

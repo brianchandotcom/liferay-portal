@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export {BuilderScreen} from './components/BuilderScreen/BuilderScreen';
+export {
+	BuilderScreen,
+	TBuilderScreenItem,
+} from './components/BuilderScreen/BuilderScreen';
 export {Card} from './components/Card';
 export {
 	default as CodeEditor,
@@ -14,7 +17,10 @@ export {
 } from './components/CodeEditor/index';
 export {CodeEditorLocalized} from './components/CodeEditor/CodeEditorLocalized';
 export {DatePicker} from './components/DatePicker';
-export * from './components/ExpressionBuilder';
+export {
+	ExpressionBuilder,
+	ExpressionBuilderModal,
+} from './components/ExpressionBuilder';
 export {Input} from './components/Input';
 export {ManagementToolbar} from './components/ManagementToolbar/index';
 export {ManagementToolbarSearch} from './components/ManagementToolbar/ManagementToolbarSearch';
@@ -48,7 +54,7 @@ export {Panel} from './components/Panel/Panel';
 export {PanelBody, PanelSimpleBody} from './components/Panel/PanelBody';
 export {PanelHeader} from './components/Panel/PanelHeader';
 export * as API from './utils/api';
-export * from './utils/string';
-export * from './utils/array';
-export * from './utils/constants';
-export * from './utils/datetime';
+export * as stringUtils from './utils/string';
+export * as arrayUtils from './utils/array';
+export * as constantsUtils from './utils/constants';
+export * as datetimeUtils from './utils/datetime';

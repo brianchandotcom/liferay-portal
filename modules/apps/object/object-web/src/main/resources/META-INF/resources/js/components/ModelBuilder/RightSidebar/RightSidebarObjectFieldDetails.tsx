@@ -6,11 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayPanel from '@clayui/panel';
-import {
-	API,
-	getLocalizableLabel,
-	openToast,
-} from '@liferay/object-js-components-web';
+import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {useStore} from 'react-flow-renderer';
@@ -162,7 +158,7 @@ export function RightSidebarObjectFieldDetails() {
 								handleTriggerDeleteObjectField({
 									baseResourceURL,
 									objectFieldId: selectedObjectField?.id!,
-									objectFieldLabel: getLocalizableLabel(
+									objectFieldLabel: stringUtils.getLocalizableLabel(
 										objectDefinitionNodeData.defaultLanguageId,
 										objectDefinitionNodeData.label,
 										objectDefinitionNodeData.name
@@ -267,7 +263,7 @@ export function RightSidebarObjectFieldDetails() {
 									Liferay.Language.get(
 										'the-object-field-x-cannot-be-deleted-because-it-is-the-only-custom-object-field-of-the-published-object-definition'
 									),
-									`${getLocalizableLabel(
+									`${stringUtils.getLocalizableLabel(
 										objectDefinitionNodeData.defaultLanguageId as Liferay.Language.Locale,
 										values.label,
 										values.name
@@ -280,7 +276,7 @@ export function RightSidebarObjectFieldDetails() {
 									Liferay.Language.get(
 										'the-object-field-x-cannot-be-deleted-because-it-is-used-in-a-unique-composite-key-validation'
 									),
-									`${getLocalizableLabel(
+									`${stringUtils.getLocalizableLabel(
 										objectDefinitionNodeData.defaultLanguageId as Liferay.Language.Locale,
 										values.label,
 										values.name

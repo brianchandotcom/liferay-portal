@@ -8,7 +8,7 @@ import {
 	API,
 	SidePanelForm,
 	SidebarCategory,
-	getLocalizableLabel,
+	stringUtils,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
@@ -223,7 +223,10 @@ export default function EditObjectValidation({
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}
-			title={getLocalizableLabel(creationLanguageId, values.name)}
+			title={stringUtils.getLocalizableLabel(
+				creationLanguageId,
+				values.name
+			)}
 		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) =>

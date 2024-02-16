@@ -8,7 +8,7 @@ import ClayLabel from '@clayui/label';
 import {
 	API,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -51,7 +51,7 @@ export default function SelectObjectDefinition({
 	const objectDefinitionsItems = useMemo(() => {
 		return objectDefinitions.map(
 			({externalReferenceCode, label, name, system}) => ({
-				label: getLocalizableLabel(
+				label: stringUtils.getLocalizableLabel(
 					creationLanguageId as Liferay.Language.Locale,
 					label,
 					name

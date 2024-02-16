@@ -11,9 +11,9 @@ import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
 import {
 	FormError,
-	REQUIRED_MSG,
+	constantsUtils,
 	SingleSelect,
-	getLocalizableLabel,
+	stringUtils,
 	useForm,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
@@ -105,7 +105,7 @@ export default function ModalAddObjectLayoutField({
 				if (!inLayout) {
 					availableObjectFields.push({
 						businessType,
-						label: getLocalizableLabel(
+						label: stringUtils.getLocalizableLabel(
 							defaultLanguageId,
 							label,
 							name
@@ -139,7 +139,7 @@ export default function ModalAddObjectLayoutField({
 		const errors: FormError<TInitialValues> = {};
 
 		if (!values.objectFieldName) {
-			errors.objectFieldName = REQUIRED_MSG;
+			errors.objectFieldName = constantsUtils.REQUIRED_MSG;
 		}
 
 		return errors;

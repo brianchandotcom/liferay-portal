@@ -11,7 +11,7 @@ import {
 	Panel,
 	PanelBody,
 	PanelHeader,
-	getLocalizableLabel,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
@@ -110,7 +110,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 										/>
 									</>
 								}
-								title={getLocalizableLabel(
+								title={stringUtils.getLocalizableLabel(
 									creationLanguageId,
 									name
 								)}
@@ -134,7 +134,7 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 													boxIndex={boxIndex}
 													collapsable={collapsable}
 													key={`box_${boxIndex}`}
-													label={getLocalizableLabel(
+													label={stringUtils.getLocalizableLabel(
 														creationLanguageId,
 														name
 													)}

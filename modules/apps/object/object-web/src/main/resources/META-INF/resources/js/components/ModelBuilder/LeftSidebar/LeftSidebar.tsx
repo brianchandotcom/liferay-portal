@@ -8,7 +8,7 @@ import ClayPanel from '@clayui/panel';
 import {
 	CustomVerticalBar,
 	ManagementToolbarSearch,
-	stringIncludesQuery,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {useMemo, useState} from 'react';
 
@@ -43,7 +43,7 @@ export default function LeftSidebar() {
 
 			const newLeftSidebarObjectDefinitionItems = leftSidebarItem.leftSidebarObjectDefinitionItems.filter(
 				(leftSidebarObjectDefinitionItem) =>
-					stringIncludesQuery(
+					stringUtils.stringIncludesQuery(
 						leftSidebarObjectDefinitionItem.label,
 						query
 					)

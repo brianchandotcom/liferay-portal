@@ -6,9 +6,9 @@
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
 	SingleSelect,
-	getLocalizableLabel,
 	onActionDropdownItemClick,
 	openToast,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -48,7 +48,11 @@ export function DefinitionOfTerms({
 	const objectDefinitionItems = useMemo(() => {
 		return objectDefinitions.map(
 			({defaultLanguageId, id, label, name}) => ({
-				label: getLocalizableLabel(defaultLanguageId, label, name),
+				label: stringUtils.getLocalizableLabel(
+					defaultLanguageId,
+					label,
+					name
+				),
 				value: id,
 			})
 		) as LabelValueObject<number>[];

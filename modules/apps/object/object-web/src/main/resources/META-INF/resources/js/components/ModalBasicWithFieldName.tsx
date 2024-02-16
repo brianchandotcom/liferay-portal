@@ -12,7 +12,7 @@ import {
 	API,
 	FormError,
 	Input,
-	REQUIRED_MSG,
+	constantsUtils,
 	useForm,
 } from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
@@ -63,7 +63,7 @@ export function ModalBasicWithFieldName({
 		const errors: FormError<TInitialValues> = {};
 
 		if (name[defaultLanguageId] === '') {
-			errors.name = REQUIRED_MSG;
+			errors.name = constantsUtils.REQUIRED_MSG;
 		}
 
 		return errors;

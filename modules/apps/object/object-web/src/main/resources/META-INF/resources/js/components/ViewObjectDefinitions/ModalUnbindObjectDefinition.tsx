@@ -6,11 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
-import {
-	API,
-	getLocalizableLabel,
-	openToast,
-} from '@liferay/object-js-components-web';
+import {API, stringUtils, openToast} from '@liferay/object-js-components-web';
 import {createResourceURL, fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -103,7 +99,7 @@ export function ModalUnbindObjectDefinition({
 										'please-confirm-before-unbinding-the-root-x'
 									),
 									[
-										getLocalizableLabel(
+										stringUtils.getLocalizableLabel(
 											rootObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
 											rootObjectDefinition?.label,
 											rootObjectDefinition?.name
@@ -115,12 +111,12 @@ export function ModalUnbindObjectDefinition({
 										'please-confirm-before-unbinding-the-object-x-from-the-root-x'
 									),
 									[
-										getLocalizableLabel(
+										stringUtils.getLocalizableLabel(
 											selectedObjectDefinitionToUnbind?.defaultLanguageId as Liferay.Language.Locale,
 											selectedObjectDefinitionToUnbind?.label,
 											selectedObjectDefinitionToUnbind?.name
 										),
-										getLocalizableLabel(
+										stringUtils.getLocalizableLabel(
 											rootObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
 											rootObjectDefinition?.label,
 											rootObjectDefinition?.name

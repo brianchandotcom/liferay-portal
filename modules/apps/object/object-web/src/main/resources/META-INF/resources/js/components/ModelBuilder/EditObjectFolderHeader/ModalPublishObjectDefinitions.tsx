@@ -10,7 +10,7 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
-import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
+import {API, stringUtils} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {Elements, FlowElement, isNode} from 'react-flow-renderer';
@@ -454,7 +454,7 @@ export function ModalPublishObjectDefinitions({
 													size={3}
 													weight="semi-bold"
 												>
-													{getLocalizableLabel(
+													{stringUtils.getLocalizableLabel(
 														defaultLanguageId,
 														data?.label,
 														data?.name

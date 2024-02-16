@@ -7,7 +7,7 @@ import {useModal} from '@clayui/modal';
 import {
 	BuilderScreen,
 	Card,
-	REQUIRED_MSG,
+	constantsUtils,
 } from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
@@ -93,7 +93,7 @@ export function FilterScreen() {
 		const currentErrors: FilterErrors = {};
 
 		if (!selectedFilterBy) {
-			currentErrors.selectedFilterBy = REQUIRED_MSG;
+			currentErrors.selectedFilterBy = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (
@@ -102,7 +102,7 @@ export function FilterScreen() {
 			(selectedFilterBy?.name !== 'status' ||
 				selectedFilterBy?.businessType !== 'Picklist')
 		) {
-			currentErrors.selectedFilterType = REQUIRED_MSG;
+			currentErrors.selectedFilterType = constantsUtils.REQUIRED_MSG;
 		}
 
 		if (
@@ -112,7 +112,7 @@ export function FilterScreen() {
 				selectedFilterBy?.businessType === 'Relationship') &&
 			!checkedItems.length
 		) {
-			currentErrors.items = REQUIRED_MSG;
+			currentErrors.items = constantsUtils.REQUIRED_MSG;
 		}
 
 		setErrors(currentErrors);

@@ -5,6 +5,7 @@
 
 import {
 	FormError,
+	constantsUtils,
 	invalidateLocalizableLabelRequired,
 	invalidateRequired,
 	useForm,
@@ -72,13 +73,13 @@ export function useObjectDetailsForm({
 
 		if (!objectDefinition.system) {
 			if (invalidateLocalizableLabelRequired(objectDefinition.label)) {
-				errors.label = REQUIRED_MSG;
+				errors.label = constantsUtils.REQUIRED_MSG;
 			}
 
 			if (
 				invalidateLocalizableLabelRequired(objectDefinition.pluralLabel)
 			) {
-				errors.pluralLabel = REQUIRED_MSG;
+				errors.pluralLabel = constantsUtils.REQUIRED_MSG;
 			}
 		}
 

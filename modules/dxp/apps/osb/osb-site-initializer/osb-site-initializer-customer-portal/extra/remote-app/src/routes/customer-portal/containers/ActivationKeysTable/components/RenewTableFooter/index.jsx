@@ -74,6 +74,7 @@ const RenewTableFooter = ({
 						{i18n.translate('cancel')}
 					</Button>
 				</Link>
+
 				{(isAdminUserAccount || isAdminOrPartnerManager) &&
 					allowSelfProvisioning && (
 						<RenewButton

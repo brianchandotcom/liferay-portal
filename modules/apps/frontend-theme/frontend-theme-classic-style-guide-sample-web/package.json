@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/layout": "3.106.1",
+		"@clayui/layout": "3.111.0",
 		"classnames": "2.3.1",
 		"react": "16.12.0"
 	},

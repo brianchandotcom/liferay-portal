@@ -1,0 +1,7 @@
+with-array-attribute-global-js-client-extension:
+    scriptElementAttributes:
+        att:
+            - a
+            - b
+    type: globalJS
+    url: src/dummy.js

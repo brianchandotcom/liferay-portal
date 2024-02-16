@@ -487,11 +487,15 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
+		var siteName = TestCase.getSiteName();
+
+		echo("## * siteName: ${siteName}");
+
 		if (${moveSubfolder} == "true") {
 			AssertClick(
-				key_breadcrumbName = "Home",
+				key_breadcrumbName = ${siteName},
 				locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
-				value1 = "Home");
+				value1 = ${siteName});
 
 			AssertClick(
 				key_text = "Select This Folder",

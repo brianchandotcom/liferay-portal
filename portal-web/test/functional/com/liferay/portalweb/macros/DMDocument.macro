@@ -2356,16 +2356,22 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		if (${dmFolderName} == "Home") {
-			if (IsElementPresent(key_breadcrumbName = "Home", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
+		echo("## * dmFolderName: ${dmFolderName}");
+
+		var siteName = TestCase.getSiteName();
+
+		echo("## * siteName: ${siteName}");
+
+		if ((${dmFolderName} == "Home") || (${dmFolderName} == ${siteName})) {
+			if (IsElementPresent(key_breadcrumbName = ${siteName}, locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
 				AssertVisible(
 					key_text = "Select This Folder",
 					locator1 = "Button#ANY_DISABLED");
 
 				AssertClick(
-					key_breadcrumbName = "Home",
+					key_breadcrumbName = ${siteName},
 					locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
-					value1 = "Home");
+					value1 = ${siteName});
 			}
 
 			var key_text = "Select This Folder";
@@ -2375,11 +2381,11 @@ definition {
 				value1 = "Select This Folder");
 		}
 		else {
-			if (IsElementPresent(key_breadcrumbName = "Home", locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
+			if (IsElementPresent(key_breadcrumbName = ${siteName}, locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER")) {
 				AssertClick(
-					key_breadcrumbName = "Home",
+					key_breadcrumbName = ${siteName},
 					locator1 = "BreadcrumbPortlet#BREADCRUMB_FOLDER",
-					value1 = "Home");
+					value1 = ${siteName});
 			}
 
 			var key_dmFolderName = ${dmFolderName};

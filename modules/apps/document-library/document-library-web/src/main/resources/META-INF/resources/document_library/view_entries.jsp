@@ -142,6 +142,13 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 													</div>
 
 													<div class="card-detail">
+														<c:if test="<%= !latestFileVersion.isApproved() && dlViewEntriesDisplayContext.hasApprovedVersion(latestFileVersion.getFileEntryId()) %>">
+															<clay:label
+																displayType="success"
+																label="approved"
+															/>
+														</c:if>
+
 														<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
 
 														<c:choose>
@@ -281,11 +288,19 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 										/>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("status") %>'>
-										<liferay-ui:search-container-column-status
+										<liferay-ui:search-container-column-text
 											cssClass="table-cell-expand-smallest"
 											name="status"
-											status="<%= latestFileVersion.getStatus() %>"
-										/>
+										>
+											<c:if test="<%= !latestFileVersion.isApproved() && dlViewEntriesDisplayContext.hasApprovedVersion(latestFileVersion.getFileEntryId()) %>">
+												<clay:label
+													displayType="success"
+													label="approved"
+												/>
+											</c:if>
+
+											<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
+										</liferay-ui:search-container-column-text>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("downloads") %>'>
 										<c:if test="<%= ViewCountManagerUtil.isViewCountEnabled(PortalUtil.getClassNameId(DLFileEntryConstants.getClassName())) %>">

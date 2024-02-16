@@ -46,6 +46,8 @@ const UserMenuDropdownItem: React.FC<
 				externalLink ? (
 					<ClayLink
 						className='button-root btn btn-block btn-unstyled'
+						// @ts-ignore
+						externalLink
 						href={url}
 					>
 						<Content />

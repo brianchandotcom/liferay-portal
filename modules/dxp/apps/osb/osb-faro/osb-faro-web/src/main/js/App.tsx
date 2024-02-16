@@ -221,8 +221,13 @@ const App = () => {
 				<Provider store={store}>
 					<ClayIconSpriteContext.Provider value={spritemap}>
 						<ClayLinkContext.Provider
-							value={({children, href, ...otherProps}: any) => {
-								if (href?.startsWith('http')) {
+							value={({
+								children,
+								externalLink,
+								href,
+								...otherProps
+							}: any) => {
+								if (href?.startsWith('http') || externalLink) {
 									return (
 										<a {...otherProps} href={href}>
 											{children}

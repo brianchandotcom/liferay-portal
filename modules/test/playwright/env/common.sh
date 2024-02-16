@@ -59,6 +59,10 @@ function deploy_project_osgi_modules() {
 	fi
 }
 
+function get_absolute_dir() {
+	echo $(cd -- $(dirname -- $1) &> /dev/null && pwd)
+}
+
 function get_playwright_project_dir() {
 	find ${PLAYWRIGHT_BASE_DIR} -name config.ts -type f -print | xargs grep "name: '${PLAYWRIGHT_PROJECT_NAME}'" | sed -n 's/\(.*\)\/config.ts.*/\1/p'
 }

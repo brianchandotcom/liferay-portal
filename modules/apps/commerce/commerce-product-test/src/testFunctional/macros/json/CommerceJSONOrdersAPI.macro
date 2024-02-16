@@ -264,7 +264,9 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
+					"author": "${userEmail}",
 					"content": "${content}",
+					"orderId": ${orderId},
 					"restricted": ${restricted}
 				}'
 		''';

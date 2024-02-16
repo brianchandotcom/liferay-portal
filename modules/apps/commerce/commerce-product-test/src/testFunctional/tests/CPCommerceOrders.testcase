@@ -2745,10 +2745,6 @@ definition {
 				userRole = "Buyer",
 				userScreenName = "buyeruser",
 				userSiteMembership = "Minium");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Operations Manager",
-				userEmailAddress = "buyer@liferay.com");
 		}
 
 		task ("And a payment method is activated") {
@@ -2788,7 +2784,8 @@ definition {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = ${notePermission},
 					resourceName = "com.liferay.commerce.order",
-					roleTitle = "Operations Manager");
+					roleTitle = "Buyer",
+					roleType = "account");
 			}
 		}
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -334,7 +335,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 			Summary summary, String className, long classPK,
 			AssetRendererFactory<?> assetRendererFactory,
 			AssetRenderer<?> assetRenderer)
-		throws PortalException, PortletException {
+		throws Exception {
 
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			new SearchResultSummaryDisplayContext();
@@ -368,7 +369,8 @@ public class SearchResultSummaryDisplayContextBuilder {
 			searchResultSummaryDisplayContext, assetEntry);
 
 		_buildAssetRendererURLDownload(
-			searchResultSummaryDisplayContext, assetRenderer, summary);
+			searchResultSummaryDisplayContext, assetRendererFactory,
+			assetRenderer, summary);
 		_buildCreationDateString(searchResultSummaryDisplayContext);
 		_buildCreatorUserName(searchResultSummaryDisplayContext);
 		_buildCreatorUserPortrait(searchResultSummaryDisplayContext);
@@ -519,14 +521,21 @@ public class SearchResultSummaryDisplayContextBuilder {
 	}
 
 	private void _buildAssetRendererURLDownload(
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-		AssetRenderer<?> assetRenderer, Summary summary) {
+			SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
+			AssetRendererFactory<?> assetRendererFactory,
+			AssetRenderer<?> assetRenderer, Summary summary)
+		throws Exception {
 
 		if (_hasAssetRendererURLDownload(assetRenderer)) {
 			searchResultSummaryDisplayContext.setAssetRendererURLDownload(
 				assetRenderer.getURLDownload(_themeDisplay));
 			searchResultSummaryDisplayContext.
-				setAssetRendererURLDownloadVisible(true);
+				setAssetRendererURLDownloadVisible(
+					assetRendererFactory.hasPermission(
+						_themeDisplay.getPermissionChecker(),
+						assetRenderer.getClassPK(), ActionKeys.DOWNLOAD));
+			searchResultSummaryDisplayContext.setDownloadSize(
+				_getFieldValueLong("size"));
 			searchResultSummaryDisplayContext.setTitle(
 				assetRenderer.getTitle(summary.getLocale()));
 		}

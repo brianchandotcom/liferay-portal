@@ -54,6 +54,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _documentFormFieldDisplayContexts;
 	}
 
+	public long getDownloadSize() {
+		return _downloadSize;
+	}
+
 	public String getFieldAssetCategoryIds() {
 		return _fieldAssetCategoryIds;
 	}
@@ -273,6 +277,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		_documentFormVisible = documentFormVisible;
 	}
 
+	public void setDownloadSize(long downloadSize) {
+		_downloadSize = downloadSize;
+	}
+
 	public void setFieldAssetCategoryIds(String fieldAssetCategoryIds) {
 		_fieldAssetCategoryIds = fieldAssetCategoryIds;
 	}
@@ -414,6 +422,7 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private List<SearchResultFieldDisplayContext>
 		_documentFormFieldDisplayContexts;
 	private boolean _documentFormVisible;
+	private long _downloadSize;
 	private String _fieldAssetCategoryIds;
 	private String _fieldAssetTagNames;
 	private List<SearchResultFieldDisplayContext> _fieldDisplayContexts;

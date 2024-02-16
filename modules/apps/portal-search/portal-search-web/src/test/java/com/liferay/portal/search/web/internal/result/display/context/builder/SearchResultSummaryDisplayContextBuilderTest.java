@@ -343,7 +343,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		String urlDownload,
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		Assert.assertTrue(
+		Assert.assertFalse(
 			searchResultSummaryDisplayContext.
 				isAssetRendererURLDownloadVisible());
 

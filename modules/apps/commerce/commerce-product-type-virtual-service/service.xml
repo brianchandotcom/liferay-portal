@@ -75,6 +75,9 @@
 		<finder name="CPDefinitionVirtualSettingId" return-type="Collection">
 			<finder-column name="CPDefinitionVirtualSettingId" />
 		</finder>
+		<finder name="FileEntryId" return-type="Collection">
+			<finder-column name="fileEntryId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>CPDefinitionVirtualSetting</exception>

@@ -175,7 +175,7 @@ renderResponse.setTitle(exportTranslationDisplayContext.getTitle());
 				</div>
 
 				<react:component
-					module="js/ExportTranslation"
+					module="{ExportTranslation} from translation-web"
 					props="<%= exportTranslationData %>"
 				/>
 			</div>

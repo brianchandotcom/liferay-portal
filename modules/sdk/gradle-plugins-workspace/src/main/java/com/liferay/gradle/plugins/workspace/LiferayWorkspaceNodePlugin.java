@@ -7,7 +7,8 @@ package com.liferay.gradle.plugins.workspace;
 
 import aQute.bnd.version.Version;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
@@ -142,6 +143,7 @@ public class LiferayWorkspaceNodePlugin implements Plugin<Project> {
 
 	private final NodeInfos _nodeInfos;
 
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	private static class NodeInfo {
 
 		public String getLts() {
@@ -156,13 +158,13 @@ public class LiferayWorkspaceNodePlugin implements Plugin<Project> {
 			return _npmVersion;
 		}
 
-		@SerializedName("lts")
+		@JsonProperty("lts")
 		private String _lts;
 
-		@SerializedName("version")
+		@JsonProperty("version")
 		private String _nodeVersion;
 
-		@SerializedName("npm")
+		@JsonProperty("npm")
 		private String _npmVersion;
 
 	}

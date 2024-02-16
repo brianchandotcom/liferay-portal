@@ -30,6 +30,7 @@ export type UploadedFile = {
 };
 
 interface FileListProps {
+	onArrowClick?: (index: number, direction: string) => void;
 	onDelete: (id: string, versionName?: string) => void;
 	type: 'document' | 'image';
 	uploadedFiles: UploadedFile[];
@@ -37,6 +38,7 @@ interface FileListProps {
 }
 
 export function FileList({
+	onArrowClick,
 	onDelete,
 	type,
 	uploadedFiles,
@@ -44,7 +46,7 @@ export function FileList({
 }: FileListProps) {
 	return (
 		<div className="file-list-container">
-			{uploadedFiles?.map((uploadedFile) => {
+			{uploadedFiles?.map((uploadedFile, index) => {
 				if (type === 'document') {
 					return (
 						<DocumentFileItem
@@ -59,8 +61,11 @@ export function FileList({
 				if (type === 'image') {
 					return (
 						<ImageFileItem
+							index={index}
 							key={uploadedFile?.id}
+							onArrowClick={onArrowClick}
 							onDelete={onDelete}
+							position={uploadedFiles.length}
 							tooltip="Use the image description to provide more context about the screenshot, such as what is the user trying to accomplish, what are the business requirements met by this screen or anything else you feel would be helpful to guide your potential customer.  This content will be provided in the form of a mouse over of the image."
 							uploadedFile={uploadedFile}
 							versionName={versionName}

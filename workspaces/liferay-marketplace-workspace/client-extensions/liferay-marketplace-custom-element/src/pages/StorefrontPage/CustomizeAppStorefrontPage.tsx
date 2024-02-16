@@ -57,6 +57,7 @@ export function CustomizeAppStorefrontPage({
 				file,
 				fileName: file.name,
 				id: crypto.randomUUID(),
+				index: 0,
 				preview: URL.createObjectURL(file),
 				progress: 0,
 				readableSize: filesize(file.size),
@@ -77,6 +78,33 @@ export function CustomizeAppStorefrontPage({
 	const handleDelete = (id: string) => {
 		const files = appStorefrontImages.filter(
 			(uploadedFile) => uploadedFile.id !== id
+		);
+
+		dispatch({
+			payload: {
+				files,
+			},
+			type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+		});
+	};
+
+	const swapImageElements = (
+		imagesArray: UploadedFile[],
+		currentIndex: number,
+		newIndex: number
+	) => {
+		const value = imagesArray[currentIndex];
+		imagesArray[currentIndex] = imagesArray[newIndex];
+		imagesArray[newIndex] = value;
+
+		return imagesArray;
+	};
+
+	const handleArrowClick = (index: number, direction: string) => {
+		const files = swapImageElements(
+			appStorefrontImages,
+			index,
+			direction === 'up' ? index - 1 : index + 1
 		);
 
 		dispatch({
@@ -125,6 +153,7 @@ export function CustomizeAppStorefrontPage({
 
 				{appStorefrontImages?.length > 0 && (
 					<FileList
+						onArrowClick={handleArrowClick}
 						onDelete={handleDelete}
 						type="image"
 						uploadedFiles={appStorefrontImages}

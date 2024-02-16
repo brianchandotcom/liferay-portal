@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e -x
-
 function combine_properties_files() {
 	local temp_properties_file=temp.properties
 
@@ -59,17 +57,28 @@ function deploy_client_extensions() {
 		do
 			local client_extension_dir=$(find ${PORTAL_PROJECT_DIR}/workspaces -type d -name "${client_extension_name}" | grep -v .releng | grep -v .npmscripts)
 
-			if [[ -f ${client_extension_dir}/build.gradle ]]
+			if [[ -d ${client_extension_dir} ]]
 			then
 				echo "Deploy '${client_extension_dir}'"
 
-				cd ${osgi_module_dir}
+				cd ${client_extension_dir}
 
 				local gradlew=$(get_gradlew)
 
 				${gradlew} deploy
 			fi
 		done
+	fi
+}
+
+function deploy_deploy_folder() {
+	mkdir -p ${LIFERAY_HOME}/deploy
+
+	local playwright_project_dir=${1}
+
+	if [[ -d ${playwright_project_dir}/env/deploy ]]
+	then
+		cp -r ${playwright_project_dir}/env/deploy/ ${LIFERAY_HOME}/deploy
 	fi
 }
 
@@ -96,6 +105,35 @@ function deploy_osgi_modules() {
 	fi
 }
 
+function deploy_parent_project_client_extensions() {
+	for parent_playwright_project_dir in $(get_parent_playwright_project_dirs)
+	do
+		if [[ -f ${parent_playwright_project_dir}/env/client-extensions.list ]]
+		then
+			deploy_client_extensions $(cat ${parent_playwright_project_dir}/env/client-extensions.list)
+		fi
+	done
+}
+
+function deploy_parent_project_deploy_folder() {
+	mkdir -p ${LIFERAY_HOME}/deploy
+
+	for parent_playwright_project_dir in $(get_parent_playwright_project_dirs)
+	do
+		deploy_deploy_folder ${parent_playwright_project_dir}
+	done
+}
+
+function deploy_parent_project_osgi_modules() {
+	for parent_playwright_project_dir in $(get_parent_playwright_project_dirs)
+	do
+		if [[ -f ${parent_playwright_project_dir}/env/osgi-modules.list ]]
+		then
+			deploy_osgi_modules $(cat ${parent_playwright_project_dir}/env/osgi-modules.list)
+		fi
+	done
+}
+
 function deploy_project_client_extensions() {
 	local playwright_project_dir=$(get_playwright_project_dir)
 
@@ -105,15 +143,8 @@ function deploy_project_client_extensions() {
 	fi
 }
 
-function deploy_project_env_deploy_folder() {
-	mkdir -p ${LIFERAY_HOME}/deploy
-
-	local playwright_project_dir=$(get_playwright_project_dir)
-
-	if [[ -f ${playwright_project_dir}/env/osgi-modules.list ]]
-	then
-		cp -r ${playwright_project_dir}/env/deploy/ ${LIFERAY_HOME}/deploy
-	fi
+function deploy_project_deploy_folder() {
+	deploy_deploy_folder $(get_playwright_project_dir)
 }
 
 function deploy_project_osgi_modules() {
@@ -141,6 +172,24 @@ function get_gradlew() {
 	else
 		echo $(cd .. ; get_gradlew)
 	fi
+}
+
+function get_parent_playwright_project_dirs() {
+	local playwright_project_dir=${1}
+
+	if [[ "${playwright_project_dir}" == "" ]]
+	then
+		playwright_project_dir=$(get_playwright_project_dir)
+	fi
+
+	current_playwright_project_dir=${playwright_project_dir}
+
+	while [[ "${current_playwright_project_dir}" != "/" ]] && [[ "${current_playwright_project_dir}" != "${PLAYWRIGHT_BASE_DIR}" ]]
+	do
+		current_playwright_project_dir=$(dirname "${current_playwright_project_dir}")
+
+		echo ${current_playwright_project_dir}
+	done
 }
 
 function get_playwright_project_dir() {

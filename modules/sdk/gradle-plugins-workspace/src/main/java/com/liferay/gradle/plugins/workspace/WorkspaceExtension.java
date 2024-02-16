@@ -69,18 +69,6 @@ public class WorkspaceExtension {
 			_BUNDLE_DIST_INCLUDE_METADATA);
 		_bundleDistRootDirName = _getProperty(
 			settings, "bundle.dist.root.dir", _BUNDLE_DIST_ROOT_DIR_NAME);
-		_bundleTokenDownload = _getProperty(
-			settings, "bundle.token.download", _BUNDLE_TOKEN_DOWNLOAD);
-		_bundleTokenEmailAddress = _getProperty(
-			settings, "bundle.token.email.address",
-			_BUNDLE_TOKEN_EMAIL_ADDRESS);
-		_bundleTokenForce = _getProperty(
-			settings, "bundle.token.force", _BUNDLE_TOKEN_FORCE);
-		_bundleTokenPassword = _getProperty(
-			settings, "bundle.token.password", _BUNDLE_TOKEN_PASSWORD);
-		_bundleTokenPasswordFile = _getProperty(
-			settings, "bundle.token.password.file",
-			_BUNDLE_TOKEN_PASSWORD_FILE);
 		_bundleUrl = _getProperty(settings, "bundle.url");
 		_configsDir = _getProperty(
 			settings, "configs.dir",
@@ -223,19 +211,6 @@ public class WorkspaceExtension {
 		return GradleUtil.toString(_bundleDistRootDirName);
 	}
 
-	public String getBundleTokenEmailAddress() {
-		return GradleUtil.toString(_bundleTokenEmailAddress);
-	}
-
-	public String getBundleTokenPassword() {
-		return GradleUtil.toString(_bundleTokenPassword);
-	}
-
-	public File getBundleTokenPasswordFile() {
-		return GradleUtil.toFile(
-			_gradle.getRootProject(), _bundleTokenPasswordFile);
-	}
-
 	public String getBundleUrl() {
 		if (Objects.isNull(_bundleUrl)) {
 			return ReleaseUtil.getFromReleaseProperties(
@@ -329,14 +304,6 @@ public class WorkspaceExtension {
 		return GradleUtil.toBoolean(_bundleDistIncludeMetadata);
 	}
 
-	public boolean isBundleTokenDownload() {
-		return GradleUtil.toBoolean(_bundleTokenDownload);
-	}
-
-	public boolean isBundleTokenForce() {
-		return GradleUtil.toBoolean(_bundleTokenForce);
-	}
-
 	public ProjectConfigurator propertyMissing(String name) {
 		for (ProjectConfigurator projectConfigurator : _projectConfigurators) {
 			if (name.equals(projectConfigurator.getName())) {
@@ -361,26 +328,6 @@ public class WorkspaceExtension {
 
 	public void setBundleDistRootDirName(Object bundleDistRootDirName) {
 		_bundleDistRootDirName = bundleDistRootDirName;
-	}
-
-	public void setBundleTokenDownload(Object bundleTokenDownload) {
-		_bundleTokenDownload = bundleTokenDownload;
-	}
-
-	public void setBundleTokenEmailAddress(Object bundleTokenEmailAddress) {
-		_bundleTokenEmailAddress = bundleTokenEmailAddress;
-	}
-
-	public void setBundleTokenForce(Object bundleTokenForce) {
-		_bundleTokenForce = bundleTokenForce;
-	}
-
-	public void setBundleTokenPassword(Object bundleTokenPassword) {
-		_bundleTokenPassword = bundleTokenPassword;
-	}
-
-	public void setBundleTokenPasswordFile(Object bundleTokenPasswordFile) {
-		_bundleTokenPasswordFile = bundleTokenPasswordFile;
 	}
 
 	public void setBundleUrl(Object bundleUrl) {
@@ -493,16 +440,6 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_DIST_ROOT_DIR_NAME = null;
 
-	private static final boolean _BUNDLE_TOKEN_DOWNLOAD = false;
-
-	private static final String _BUNDLE_TOKEN_EMAIL_ADDRESS = null;
-
-	private static final boolean _BUNDLE_TOKEN_FORCE = false;
-
-	private static final String _BUNDLE_TOKEN_PASSWORD = null;
-
-	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
-
 	private static final File _DOCKER_DIR = new File(
 		Project.DEFAULT_BUILD_DIR_NAME + File.separator + "docker");
 
@@ -515,11 +452,6 @@ public class WorkspaceExtension {
 	private Object _bundleChecksumSHA512;
 	private Object _bundleDistIncludeMetadata;
 	private Object _bundleDistRootDirName;
-	private Object _bundleTokenDownload;
-	private Object _bundleTokenEmailAddress;
-	private Object _bundleTokenForce;
-	private Object _bundleTokenPassword;
-	private Object _bundleTokenPasswordFile;
 	private Object _bundleUrl;
 	private Object _configsDir;
 	private Iterable<String> _dirExcludesGlobs;

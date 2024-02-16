@@ -108,14 +108,6 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
-		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-			_serviceTrackerMap.getService(classNameId);
-
-		if (ctCollectionHistoryProvider == null) {
-			ctCollectionHistoryProvider =
-				new DefaultCTCollectionHistoryProvider<>();
-		}
-
 		List<CTEntry> ctEntries = _ctEntryLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
 				CTEntryTable.INSTANCE
@@ -158,6 +150,14 @@ public class GetConflictInfoMVCResourceCommand extends BaseMVCResourceCommand {
 			).put(
 				"conflictIconName", "warning-full"
 			);
+		}
+
+		CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
+			_serviceTrackerMap.getService(classNameId);
+
+		if (ctCollectionHistoryProvider == null) {
+			ctCollectionHistoryProvider =
+				new DefaultCTCollectionHistoryProvider<>();
 		}
 
 		List<CTCollection> ctCollections =

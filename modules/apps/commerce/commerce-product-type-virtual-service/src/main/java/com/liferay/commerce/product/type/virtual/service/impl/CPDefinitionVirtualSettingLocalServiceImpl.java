@@ -257,6 +257,11 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				}
 			}
 
+			_cpdVirtualSettingFileEntryLocalService.
+				deleteCPDVirtualSettingFileEntries(
+					cpDefinitionVirtualSetting.
+						getCPDefinitionVirtualSettingId());
+
 			cpDefinitionVirtualSettingPersistence.remove(
 				cpDefinitionVirtualSetting);
 		}

@@ -14,6 +14,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -90,6 +91,55 @@ public class CPDVirtualSettingFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public int countByFileEntryId(long fileEntryId) {
+		return cpdVirtualSettingFileEntryPersistence.countByFileEntryId(
+			fileEntryId);
+	}
+
+	@Override
+	public void deleteCPDVirtualSettingFileEntries(
+			long cpDefinitionVirtualSettingId)
+		throws PortalException {
+
+		List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries =
+			cpdVirtualSettingFileEntryPersistence.
+				findByCPDefinitionVirtualSettingId(
+					cpDefinitionVirtualSettingId);
+
+		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
+				cpdVirtualSettingFileEntries) {
+
+			cpdVirtualSettingFileEntryLocalService.
+				deleteCPDVirtualSettingFileEntry(cpdVirtualSettingFileEntry);
+		}
+	}
+
+	@Override
+	public CPDVirtualSettingFileEntry deleteCPDVirtualSettingFileEntry(
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry) {
+
+		cpdVirtualSettingFileEntry =
+			cpdVirtualSettingFileEntryPersistence.remove(
+				cpdVirtualSettingFileEntry);
+
+		_deleteFileEntry(cpdVirtualSettingFileEntry);
+
+		return cpdVirtualSettingFileEntry;
+	}
+
+	@Override
+	public CPDVirtualSettingFileEntry deleteCPDVirtualSettingFileEntry(
+			long cpdVirtualSettingFileEntryId)
+		throws PortalException {
+
+		return cpdVirtualSettingFileEntryLocalService.
+			deleteCPDVirtualSettingFileEntry(
+				cpdVirtualSettingFileEntryLocalService.
+					getCPDVirtualSettingFileEntry(
+						cpdVirtualSettingFileEntryId));
+	}
+
+	@Override
 	public List<CPDVirtualSettingFileEntry> getCPDVirtualSettingFileEntries(
 		long cpDefinitionVirtualSettingId) {
 
@@ -124,6 +174,9 @@ public class CPDVirtualSettingFileEntryLocalServiceImpl
 			cpdVirtualSettingFileEntryPersistence.findByPrimaryKey(
 				cpdVirtualSettingFileEntryId);
 
+		long oldCPDVirtualSettingFileEntryFileEntryId =
+			cpdVirtualSettingFileEntry.getFileEntryId();
+
 		if (Validator.isNotNull(url)) {
 			fileEntryId = 0;
 		}
@@ -137,8 +190,41 @@ public class CPDVirtualSettingFileEntryLocalServiceImpl
 		cpdVirtualSettingFileEntry.setUrl(url);
 		cpdVirtualSettingFileEntry.setVersion(version);
 
-		return cpdVirtualSettingFileEntryPersistence.update(
-			cpdVirtualSettingFileEntry);
+		cpdVirtualSettingFileEntry =
+			cpdVirtualSettingFileEntryPersistence.update(
+				cpdVirtualSettingFileEntry);
+
+		if (fileEntryId != oldCPDVirtualSettingFileEntryFileEntryId) {
+			_deleteFileEntry(oldCPDVirtualSettingFileEntryFileEntryId);
+		}
+
+		return cpdVirtualSettingFileEntry;
+	}
+
+	private void _deleteFileEntry(
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry) {
+
+		_deleteFileEntry(cpdVirtualSettingFileEntry.getFileEntryId());
+	}
+
+	private void _deleteFileEntry(long cpdVirtualSettingFileEntryFileEntryId) {
+		try {
+			if(cpdVirtualSettingFileEntryFileEntryId <= 0) {
+				return;
+			}
+
+			int countCPDVirtualSettingFileEntryByFileEntryId =
+				cpdVirtualSettingFileEntryLocalService.countByFileEntryId(
+					cpdVirtualSettingFileEntryFileEntryId);
+
+			if (countCPDVirtualSettingFileEntryByFileEntryId == 0) {
+				_dlAppLocalService.deleteFileEntry(
+					cpdVirtualSettingFileEntryFileEntryId);
+			}
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	private void _validate(long fileEntryId, String url)

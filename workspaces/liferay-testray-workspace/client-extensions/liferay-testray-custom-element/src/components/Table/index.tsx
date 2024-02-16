@@ -43,6 +43,9 @@ export type TableProps<T = any> = {
 	items: T[];
 	mutate: KeyedMutator<T>;
 	navigateTo?: (item: T) => string;
+	normalizers: {
+		onSelectRow: (item: any) => any;
+	};
 	onClickRow?: (item: T) => void;
 	onSelectAllRows: () => void;
 	onSelectRow?: (row: any) => void;
@@ -63,6 +66,7 @@ const Table: React.FC<TableProps> = ({
 	items,
 	mutate,
 	navigateTo,
+	normalizers,
 	onClickRow,
 	onSelectAllRows,
 	onSelectRow,
@@ -232,8 +236,10 @@ const Table: React.FC<TableProps> = ({
 												}`;
 											})
 											.join(', ')}
-										checked={selectedRows.includes(item.id)}
-										onChange={() => onSelectRow(item.id)}
+										checked={selectedRows.includes(
+											normalizers?.onSelectRow(item)
+										)}
+										onChange={() => onSelectRow(item)}
 									/>
 								</ClayTable.Cell>
 							)}

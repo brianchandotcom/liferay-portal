@@ -14,7 +14,10 @@ export class ActionsPage {
 	readonly newActionButton: Locator;
 	readonly newActionForm: {
 		addIconButton: Locator;
+		headlessPermissionKeyText: Locator;
+		methodSelect: Locator;
 		nameInput: Locator;
+		permissionKeyText: Locator;
 		saveButton: Locator;
 		selectIconModal: {
 			iconsList: Locator;
@@ -35,7 +38,15 @@ export class ActionsPage {
 		this.newActionButton = page.getByRole('button', {name: 'Add Action'});
 		this.newActionForm = {
 			addIconButton: page.getByLabel('add-icon'),
+			headlessPermissionKeyText: page.getByLabel(
+				'Headless Action KeyRequired',
+				{exact: true}
+			),
+			methodSelect: page.getByLabel('MethodRequired', {exact: true}),
 			nameInput: page.getByPlaceholder('Action Name'),
+			permissionKeyText: page.getByLabel('Headless Action Key', {
+				exact: true,
+			}),
 			saveButton: page.getByRole('button', {name: 'Save'}),
 			selectIconModal: {
 				iconsList: page.getByRole('listitem'),
@@ -70,33 +81,31 @@ export class ActionsPage {
 		await this.createAction({icon, name, type, url});
 	}
 
-	async createItemAction({icon, name, title, type, url}: IItemAction) {
+	async createItemAction(itemActionProps: IItemAction) {
 		await this.itemActionsTab.click();
 
 		await this.newActionButton.click();
 
-		await this.createAction({icon, name, title, type, url});
+		await this.createAction({...itemActionProps});
 	}
 
-	private async createAction({
-		icon,
-		name,
-		title,
-		type,
-		url,
-	}: ICreationAction | IItemAction) {
-		await this.newActionForm.nameInput.fill(name);
+	private async createAction(actionProps: ICreationAction | IItemAction) {
+		await this.newActionForm.nameInput.fill(actionProps.name);
 		await this.newActionForm.addIconButton.click();
 
-		await this.newActionForm.selectIconModal.searchInput.fill(icon);
+		await this.newActionForm.selectIconModal.searchInput.fill(
+			actionProps.icon
+		);
 		await this.newActionForm.selectIconModal.iconsList
-			.getByText(icon, {exact: true})
+			.getByText(actionProps.icon, {exact: true})
 			.click();
 
-		await this.newActionForm.typeSelect.selectOption(type);
+		await this.newActionForm.typeSelect.selectOption(actionProps.type);
 
-		if (type === 'modal' || type === 'sidePanel') {
-			const actionTitle = !title ? `${name} title` : `${title}`;
+		if (actionProps.type === 'modal' || actionProps.type === 'sidePanel') {
+			const actionTitle = !actionProps.title
+				? `${actionProps.name} title`
+				: `${actionProps.title}`;
 
 			await this.page.getByPlaceholder('add-here-the-title').click();
 			await this.page
@@ -104,7 +113,29 @@ export class ActionsPage {
 				.fill(`${actionTitle}`);
 		}
 
-		await this.newActionForm.urlText.fill(url);
+		if (actionProps.type === 'async') {
+			await this.newActionForm.methodSelect.selectOption(
+				actionProps.method
+			);
+		}
+
+		if (actionProps.type !== 'headless') {
+			await this.newActionForm.urlText.fill(actionProps.url);
+		}
+
+		if ('permissionKey' in actionProps) {
+			if (actionProps.type === 'headless') {
+				await this.newActionForm.headlessPermissionKeyText.fill(
+					actionProps.permissionKey
+				);
+			}
+			else {
+				await this.newActionForm.permissionKeyText.fill(
+					actionProps.permissionKey
+				);
+			}
+		}
+
 		await this.newActionForm.saveButton.click();
 	}
 }

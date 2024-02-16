@@ -9,6 +9,7 @@ export type ItemActionTypes =
 	| 'link'
 	| 'modal'
 	| 'sidePanel';
+export type AsyncActionMethod = 'DELETE' | 'GET' | 'PATCH' | 'POST';
 
 interface IBaseAction {
 	icon: string;
@@ -22,5 +23,7 @@ export interface ICreationAction extends IBaseAction {
 }
 
 export interface IItemAction extends IBaseAction {
+	method?: AsyncActionMethod;
+	permissionKey?: string;
 	type: ItemActionTypes;
 }

@@ -192,6 +192,10 @@ definition {
 
 	@summary = "Default summary"
 	macro addObjectFieldViaAPI(isRequired = null, userPassword = null, fieldName = null, indexed = null, outputOption = null, fileSource = null, showFilesInDocumentsAndMedia = null, userEmailAddress = null, fieldBusinessType = null, readOnlyExpression = null, picklistName = null, indexedAsKeyword = null, isReadOnly = null, formulaScript = null, fieldLabelName = null, indexedLanguageId = null, objectName = null, fieldType = null, timeStorageOption = null) {
+		if ((${fieldBusinessType} == "Formula") || (${fieldBusinessType} == "Aggregation")) {
+			var indexed = "false";
+		}
+
 		JSONObject.addObjectField(
 			fieldBusinessType = ${fieldBusinessType},
 			fieldLabelName = ${fieldLabelName},

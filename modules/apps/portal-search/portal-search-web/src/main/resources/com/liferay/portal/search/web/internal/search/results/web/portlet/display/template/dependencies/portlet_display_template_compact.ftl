@@ -10,10 +10,28 @@
 	<ul class="list-unstyled">
 		<#if entries?has_content>
 			<#list entries as entry>
-				<li class="c-mb-3 c-mt-3">
-					<a class="link-primary single-link" href="${entry.getViewURL()}">
-						${entry.getHighlightedTitle()}
-					</a>
+				<li class="align-items-center d-flex">
+					<div class="c-mb-2 c-mt-2">
+						<a class="link-primary single-link" href="${entry.getViewURL()}">
+							${entry.getHighlightedTitle()}
+						</a>
+					</div>
+
+					<#if entry.isAssetRendererURLDownloadVisible() && entry.getAssetRendererURLDownload()?has_content>
+						<span
+							class="lfr-portal-tooltip c-ml-1"
+							title="${languageUtil.format(locale, 'download-x', ['(' + languageUtil.formatStorageSize(entry.getDownloadSize(), locale) + ')'])}"
+						>
+							<@clay.link
+								aria\-label="${languageUtil.format(locale, 'download-x', [entry.getTitle()])}"
+								cssClass="link-monospaced link-outline link-outline-borderless link-outline-secondary"
+								displayType="secondary"
+								href="${entry.getAssetRendererURLDownload()}"
+							>
+								<@clay.icon symbol="download" />
+							</@clay.link>
+						</span>
+					</#if>
 				</li>
 			</#list>
 		</#if>

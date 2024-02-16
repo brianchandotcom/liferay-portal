@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -126,14 +125,14 @@ public class CompanyLocalServiceDBPartitionTest
 
 		AopInvocationHandler aopInvocationHandler =
 			ProxyUtil.fetchInvocationHandler(
-				_companyLocalService, AopInvocationHandler.class);
+				companyLocalService, AopInvocationHandler.class);
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					(CompanyLocalServiceImpl)aopInvocationHandler.getTarget(),
 					"_dlFileEntryTypeLocalService", null)) {
 
-			company = _companyLocalService.addCompany(
+			company = companyLocalService.addCompany(
 				RandomTestUtil.randomLong(), "test.com", "test.com", "test.com",
 				0, true, null, null, null, null, null, null);
 
@@ -185,7 +184,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 		finally {
 			if (company != null) {
-				_companyLocalService.deleteCompany(company);
+				companyLocalService.deleteCompany(company);
 			}
 		}
 	}
@@ -198,7 +197,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		Assert.assertEquals(_JOBS_COUNT + 1, _getJobsCount(_defaultCompanyId));
 
-		_companyLocalService.extractDBPartitionCompany(company.getCompanyId());
+		companyLocalService.extractDBPartitionCompany(company.getCompanyId());
 
 		Assert.assertEquals(_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
 		Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
@@ -210,7 +209,7 @@ public class CompanyLocalServiceDBPartitionTest
 		boolean standaloneDBPartition = true;
 
 		try {
-			company = _companyLocalService.addDBPartitionCompany(
+			company = companyLocalService.addDBPartitionCompany(
 				company.getCompanyId(), name, virtualHostName, webId);
 
 			standaloneDBPartition = false;
@@ -231,7 +230,7 @@ public class CompanyLocalServiceDBPartitionTest
 				removeDBPartitions(new long[] {company.getCompanyId()});
 			}
 			else {
-				_companyLocalService.deleteCompany(company);
+				companyLocalService.deleteCompany(company);
 			}
 		}
 	}
@@ -249,7 +248,7 @@ public class CompanyLocalServiceDBPartitionTest
 		boolean standaloneDBPartition = false;
 
 		try {
-			_companyLocalService.extractDBPartitionCompany(
+			companyLocalService.extractDBPartitionCompany(
 				company.getCompanyId());
 
 			standaloneDBPartition = true;
@@ -257,11 +256,11 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertEquals(_JOBS_COUNT, _getJobsCount(_defaultCompanyId));
 			Assert.assertEquals(1, _getJobsCount(company.getCompanyId()));
 
-			Company defaultCompany = _companyLocalService.getCompany(
+			Company defaultCompany = companyLocalService.getCompany(
 				_defaultCompanyId);
 
 			try {
-				_companyLocalService.addDBPartitionCompany(
+				companyLocalService.addDBPartitionCompany(
 					company.getCompanyId(), null, null,
 					defaultCompany.getWebId());
 
@@ -287,7 +286,7 @@ public class CompanyLocalServiceDBPartitionTest
 				removeDBPartitions(new long[] {company.getCompanyId()});
 			}
 			else {
-				_companyLocalService.deleteCompany(company);
+				companyLocalService.deleteCompany(company);
 			}
 		}
 	}
@@ -305,7 +304,7 @@ public class CompanyLocalServiceDBPartitionTest
 		boolean standaloneDBPartition = false;
 
 		try {
-			_companyLocalService.extractDBPartitionCompany(
+			companyLocalService.extractDBPartitionCompany(
 				company.getCompanyId());
 
 			standaloneDBPartition = true;
@@ -331,7 +330,7 @@ public class CompanyLocalServiceDBPartitionTest
 								return method.invoke(dbPartitionDB, args);
 							}))) {
 
-				company = _companyLocalService.addDBPartitionCompany(
+				company = companyLocalService.addDBPartitionCompany(
 					company.getCompanyId(), null, null, null);
 
 				standaloneDBPartition = false;
@@ -356,7 +355,7 @@ public class CompanyLocalServiceDBPartitionTest
 				removeDBPartitions(new long[] {company.getCompanyId()});
 			}
 			else {
-				_companyLocalService.deleteCompany(company);
+				companyLocalService.deleteCompany(company);
 			}
 		}
 	}
@@ -371,7 +370,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		int dbPartitionsCount = _getDBPartitionsCount();
 
-		_companyLocalService.deleteCompany(company);
+		companyLocalService.deleteCompany(company);
 
 		Assert.assertFalse(
 			ArrayUtil.contains(_getCompanyIdsBySQL(), company.getCompanyId()));
@@ -403,7 +402,7 @@ public class CompanyLocalServiceDBPartitionTest
 							return method.invoke(dbPartitionDB, args);
 						}))) {
 
-			_companyLocalService.deleteCompany(_company);
+			companyLocalService.deleteCompany(_company);
 
 			Assert.fail();
 		}
@@ -427,7 +426,7 @@ public class CompanyLocalServiceDBPartitionTest
 		boolean standaloneDBPartition = false;
 
 		try {
-			_companyLocalService.extractDBPartitionCompany(
+			companyLocalService.extractDBPartitionCompany(
 				company.getCompanyId());
 
 			Assert.assertFalse(
@@ -447,7 +446,7 @@ public class CompanyLocalServiceDBPartitionTest
 				removeDBPartitions(new long[] {company.getCompanyId()});
 			}
 			else {
-				_companyLocalService.deleteCompany(company);
+				companyLocalService.deleteCompany(company);
 			}
 		}
 	}
@@ -485,7 +484,7 @@ public class CompanyLocalServiceDBPartitionTest
 							return method.invoke(dbPartitionDB, args);
 						}))) {
 
-			_companyLocalService.extractDBPartitionCompany(
+			companyLocalService.extractDBPartitionCompany(
 				company.getCompanyId());
 
 			standaloneDBPartition = true;
@@ -508,7 +507,7 @@ public class CompanyLocalServiceDBPartitionTest
 				removeDBPartitions(new long[] {company.getCompanyId()});
 			}
 			else {
-				_companyLocalService.deleteCompany(company);
+				companyLocalService.deleteCompany(company);
 			}
 		}
 	}
@@ -637,9 +636,6 @@ public class CompanyLocalServiceDBPartitionTest
 	private static final String _JOB_NAME = "test";
 
 	private static final int _JOBS_COUNT = 2;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
 
 	private static long _defaultCompanyId;
 

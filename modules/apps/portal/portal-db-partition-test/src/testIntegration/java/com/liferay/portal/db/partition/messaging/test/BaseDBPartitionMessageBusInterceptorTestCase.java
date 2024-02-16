@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -67,7 +66,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 		_serviceRegistrations.clear();
 
-		_companyLocalService.deleteCompany(_company);
+		companyLocalService.deleteCompany(_company);
 
 		PrincipalThreadLocal.setName(_originalName);
 	}
@@ -246,7 +245,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 		Set<Long> companyIds = new TreeSet<>();
 
-		_companyLocalService.forEachCompany(
+		companyLocalService.forEachCompany(
 			company -> {
 				if (company.isActive()) {
 					companyIds.add(company.getCompanyId());
@@ -281,10 +280,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 	private static Long[] _activeCompanyIds;
 	private static Company _company;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private static volatile CountDownLatch _countDownLatch;
 
 	@Inject(

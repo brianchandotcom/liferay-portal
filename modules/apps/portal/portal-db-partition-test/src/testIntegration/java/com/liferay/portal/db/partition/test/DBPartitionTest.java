@@ -251,7 +251,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 							"class.name.test"))));
 
 			Assert.assertEquals(
-				classNames.toString(), _companyLocalService.getCompaniesCount(),
+				classNames.toString(), companyLocalService.getCompaniesCount(),
 				classNames.size());
 		}
 		finally {
@@ -290,7 +290,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 			Assert.assertEquals(
 				resourceActions.toString(),
-				_companyLocalService.getCompaniesCount(),
+				companyLocalService.getCompaniesCount(),
 				resourceActions.size());
 		}
 		finally {
@@ -423,8 +423,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
-	@Inject
-	private CompanyLocalService _companyLocalService;
 	private class ClassNameModelHints extends DefaultModelHintsImpl {
 
 		@Override

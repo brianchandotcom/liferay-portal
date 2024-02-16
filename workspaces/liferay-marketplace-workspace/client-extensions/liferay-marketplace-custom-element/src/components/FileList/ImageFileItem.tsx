@@ -7,6 +7,8 @@ import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import {CircularProgressbarWithChildren} from 'react-circular-progressbar';
 
+import arrowNorth from '../../assets/icons/arrow_north_icon.svg';
+import arrowSouth from '../../assets/icons/arrow_south_icon.svg';
 import {Tooltip} from '../Tooltip/Tooltip';
 import {UploadedFile} from './FileList';
 
@@ -15,20 +17,56 @@ import './ImageFileItem.scss';
 import {ClayInput} from '@clayui/form';
 
 type ImageFileItemProps = {
+	index: number;
+	onArrowClick?: (index: number, direction: string) => void;
 	onDelete: (id: string, versionName?: string) => void;
+	position: number;
 	tooltip?: string;
 	uploadedFile: UploadedFile;
 	versionName?: string;
 };
 
 export function ImageFileItem({
+	index,
+	onArrowClick,
 	onDelete,
+	position,
 	tooltip,
 	uploadedFile,
 	versionName,
 }: ImageFileItemProps) {
 	return (
 		<div className="image-file-item-container">
+			<div className="image-file-item-arrow-container">
+				{onArrowClick && (
+					<>
+						<ClayButton
+							disabled={index === 0}
+							displayType="unstyled"
+							onClick={() => onArrowClick(index, 'up')}
+						>
+							<img
+								alt="Arrow Up"
+								className="image-file-item-arrow-icon"
+								src={arrowNorth}
+							/>
+						</ClayButton>
+
+						<ClayButton
+							disabled={index === position - 1}
+							displayType="unstyled"
+							onClick={() => onArrowClick(index, 'down')}
+						>
+							<img
+								alt="Arrow South"
+								className="image-file-item-arrow-icon"
+								src={arrowSouth}
+							/>
+						</ClayButton>
+					</>
+				)}
+			</div>
+
 			{uploadedFile.uploaded && !uploadedFile.error ? (
 				<img
 					className="image-file-item-uploaded-preview"

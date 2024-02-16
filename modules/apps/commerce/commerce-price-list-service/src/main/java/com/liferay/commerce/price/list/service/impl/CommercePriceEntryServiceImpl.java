@@ -305,12 +305,12 @@ public class CommercePriceEntryServiceImpl
 			return 0;
 		}
 
+		int count = 0;
+
 		List<CommercePriceEntry> commercePriceEntries =
 			_commercePriceListFinder.findByCPInstanceUuid(
 				cpInstance.getCPInstanceUuid(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, false);
-
-		int commercePriceEntriesCount = 0;
 
 		for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
 			if (_commercePriceListModelResourcePermission.contains(
@@ -318,11 +318,11 @@ public class CommercePriceEntryServiceImpl
 					commercePriceEntry.getCommercePriceListId(),
 					ActionKeys.VIEW)) {
 
-				commercePriceEntriesCount++;
+				count++;
 			}
 		}
 
-		return commercePriceEntriesCount;
+		return count;
 	}
 
 	@Override

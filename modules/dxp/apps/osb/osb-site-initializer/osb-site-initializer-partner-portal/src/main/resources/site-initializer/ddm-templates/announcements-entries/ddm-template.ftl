@@ -36,8 +36,8 @@
 	<#if entries?has_content>
 		<#list entries as curEntry>
 			<#assign
-				entryDate = dateUtil.getDate(entry.getDisplayDate(), "MMM dd, yyyy", locale)
-				summary = entry.getContent()
+				entryDate = dateUtil.getDate(curEntry.getDisplayDate(), "MMM dd, yyyy", locale)
+				summary = curEntry.getContent()
 				title = curEntry.getTitle()
 			/>
 

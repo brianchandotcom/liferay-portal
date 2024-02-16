@@ -301,6 +301,11 @@ public class FileVersionWrapper
 	}
 
 	@Override
+	public boolean isScheduled() {
+		return _fileVersion.isScheduled();
+	}
+
+	@Override
 	public void setCompanyId(long companyId) {
 		_fileVersion.setCompanyId(companyId);
 	}

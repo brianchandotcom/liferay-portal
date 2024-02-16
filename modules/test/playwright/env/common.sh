@@ -31,26 +31,36 @@ function deploy_osgi_modules() {
 }
 
 function deploy_project_client_extensions() {
-	if [[ -f ${PLAYWRIGHT_PROJECT_DIR}/env/client-extensions.list ]]
+	local playwright_project_dir=$(get_playwright_project_dir)
+
+	if [[ -f ${playwright_project_dir}/env/client-extensions.list ]]
 	then
-		deploy_client_extensions $(cat ${PLAYWRIGHT_PROJECT_DIR}/env/client-extensions.list)
+		deploy_client_extensions $(cat ${playwright_project_dir}/env/client-extensions.list)
 	fi
 }
 
 function deploy_project_env_deploy_folder() {
 	mkdir -p ${LIFERAY_HOME}/deploy
 
-	if [[ -f ${PLAYWRIGHT_PROJECT_DIR}/env/osgi-modules.list ]]
+	local playwright_project_dir=$(get_playwright_project_dir)
+
+	if [[ -f ${playwright_project_dir}/env/osgi-modules.list ]]
 	then
-		cp -r ${PLAYWRIGHT_PROJECT_DIR}/env/deploy/ ${LIFERAY_HOME}/deploy
+		cp -r ${playwright_project_dir}/env/deploy/ ${LIFERAY_HOME}/deploy
 	fi
 }
 
 function deploy_project_osgi_modules() {
-	if [[ -f ${PLAYWRIGHT_PROJECT_DIR}/env/osgi-modules.list ]]
+	local playwright_project_dir=$(get_playwright_project_dir)
+
+	if [[ -f ${playwright_project_dir}/env/osgi-modules.list ]]
 	then
-		deploy_osgi_modules $(cat ${PLAYWRIGHT_PROJECT_DIR}/env/osgi-modules.list)
+		deploy_osgi_modules $(cat ${playwright_project_dir}/env/osgi-modules.list)
 	fi
+}
+
+function get_playwright_project_dir() {
+	find ${PLAYWRIGHT_BASE_DIR} -name config.ts -type f -print | xargs grep "name: '${PLAYWRIGHT_PROJECT_NAME}'" | sed -n 's/\(.*\)\/config.ts.*/\1/p'
 }
 
 function start_app_server() {
@@ -77,9 +87,11 @@ function update_portal_ext_properties() {
 		ant -f build-test-playwright.xml update-portal-ext-properties -Dupdated.portal.ext.properties=${PLAYWRIGHT_BASE_DIR}/env/portal-ext.properties
 	fi
 
-	if [[ -f ${PLAYWRIGHT_PROJECT_DIR}/env/portal-ext.properties ]]
+	local playwright_project_dir=$(get_playwright_project_dir)
+
+	if [[ -f ${playwright_project_dir}/env/portal-ext.properties ]]
 	then
-		ant -f build-test-playwright.xml update-portal-ext-properties -Dupdated.portal.ext.properties=${PLAYWRIGHT_PROJECT_DIR}/env/portal-ext.properties
+		ant -f build-test-playwright.xml update-portal-ext-properties -Dupdated.portal.ext.properties=${playwright_project_dir}/env/portal-ext.properties
 	fi
 }
 
@@ -96,9 +108,9 @@ then
 	exit 1
 fi
 
-if [[ "${PLAYWRIGHT_PROJECT_DIR}" == "" ]]
+if [[ "${PLAYWRIGHT_PROJECT_NAME}" == "" ]]
 then
-	echo "Please set 'PLAYWRIGHT_PROJECT_DIR'"
+	echo "Please set 'PLAYWRIGHT_PROJECT_NAME'"
 
 	exit 1
 fi

@@ -9,7 +9,7 @@
 
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "DocumentLibraryOpener" %>'
-	module="{DocumentLibraryOpener} from document-library-opener"
+	module="{DocumentLibraryOpener} from document-library-opener-onedrive-web"
 />
 
 <aui:script>

@@ -58,6 +58,6 @@ Import-Package:\
 	org.tukaani.*;resolution:=optional,\
 	\
 	*
-Web-ContextPath: /document-library-opener-one-drive-web
+Web-ContextPath: /document-library-opener-onedrive-web
 -dsannotations-options: inherit
 -fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

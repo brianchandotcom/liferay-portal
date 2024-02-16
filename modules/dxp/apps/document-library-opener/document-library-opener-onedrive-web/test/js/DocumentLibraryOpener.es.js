@@ -5,7 +5,7 @@
 
 import {openWindow} from 'frontend-js-web';
 
-import DocumentLibraryOpener from '../../src/main/resources/META-INF/resources/js/DocumentLibraryOpener.es';
+import {DocumentLibraryOpener} from '../../src/main/resources/META-INF/resources/js/index';
 
 const realSetTimeout = setTimeout;
 

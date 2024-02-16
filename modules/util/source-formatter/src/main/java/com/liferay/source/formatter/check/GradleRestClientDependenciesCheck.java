@@ -58,6 +58,6 @@ public class GradleRestClientDependenciesCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _restClientDependencyPattern = Pattern.compile(
-		"(\\w+) project\\(\".*-rest-client\"\\)");
+		"\\w+ project\\(\".*-rest-client\"\\)");
 
 }

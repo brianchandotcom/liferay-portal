@@ -860,62 +860,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Any asset types."
-	@priority = 5
-	@uitest
-	test ViewDynamicCollectionWithAnyAssetType {
-		property portal.acceptance = "true";
-
-		task ("Add a Web Content Article,a Blogs Entry and a document") {
-			JSONWebcontent.addWebContent(
-				content = "Web Content Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-
-			HeadlessBlog.addBlogEntry(
-				content = "Blogs Entry Content",
-				groupName = "Test Site Name",
-				title = "Blogs Entry Title");
-
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_1.jpg");
-		}
-
-		task ("Add a dynamic Collection and select Any as Asset Entry Type") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
-		}
-
-		task ("Add a Collection Display to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display");
-		}
-
-		task ("Assert assets are available to Collection Display") {
-			PageEditor.editCollectionDisplay(
-				assetListName = "Dynamic Collection",
-				fragmentName = "Collection Display");
-
-			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
-				AssertVisible(
-					key_entryTitle = ${title},
-					locator1 = "PageEditor#COLLECTION_CELL");
-			}
-		}
-	}
-
 	@description = "This is a test for LPS-112249. The flags of each collection item are shown when add a Content Flags fragment to Collection Display."
 	@priority = 5
 	@uitest

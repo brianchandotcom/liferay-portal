@@ -506,6 +506,45 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
+	public void testGetDynamicAssetEntriesWithAnyClassNameIds()
+		throws Exception {
+
+		_blogsEntryLocalService.addEntry(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		DLAppTestUtil.addFileEntryWithWorkflow(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			StringPool.BLANK, RandomTestUtil.randomString(), true,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"anyAssetType", true
+				).put(
+					"groupIds", String.valueOf(_group.getGroupId())
+				).buildString(),
+				_serviceContext);
+
+		Assert.assertEquals(
+			3,
+			_assetListAssetEntryProvider.getAssetEntriesCount(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK, StringPool.BLANK));
+	}
+
+	@Test
 	public void testGetDynamicAssetEntriesWithMultipleClassNameIds()
 		throws Exception {
 

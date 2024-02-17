@@ -105,7 +105,9 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 		if (bundleVersion == null) {
 			addMessage(fileName, "Missing Bundle-Version");
 		}
-		else if (!bundleVersion.matches("^\\d+\\.\\d+\\.\\d+$")) {
+		else if (!bundleVersion.matches("^\\d+\\.\\d+\\.\\d+$") &&
+				 !absolutePath.contains("/poshi-runner/")) {
+
 			addMessage(fileName, "Invalid Bundle-Version: " + bundleVersion);
 		}
 		else if (absolutePath.endsWith("-test/bnd.bnd") &&

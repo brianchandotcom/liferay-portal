@@ -708,7 +708,7 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 				objectDefinitionId
 			).and(
-				predicate
+				Predicate.withParentheses(predicate)
 			).and(
 				_getPermissionWherePredicate(
 					dynamicObjectDefinitionTable, groupId)
@@ -1205,7 +1205,8 @@ public class ObjectEntryLocalServiceImpl
 						return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
 					}
 				).and(
-					_fillPredicate(objectDefinitionId, predicate, search)
+					Predicate.withParentheses(
+						_fillPredicate(objectDefinitionId, predicate, search))
 				).and(
 					_getPermissionWherePredicate(
 						dynamicObjectDefinitionTable, groupId)
@@ -1282,7 +1283,8 @@ public class ObjectEntryLocalServiceImpl
 					return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
 				}
 			).and(
-				_fillPredicate(objectDefinitionId, predicate, search)
+				Predicate.withParentheses(
+					_fillPredicate(objectDefinitionId, predicate, search))
 			).and(
 				_getPermissionWherePredicate(
 					dynamicObjectDefinitionTable, groupId)

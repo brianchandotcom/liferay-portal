@@ -908,7 +908,13 @@ public class SitemapManagerTest {
 				StringPool.BLANK, _serviceContext);
 
 		AssetTestUtil.addCategory(
-			_group.getGroupId(), assetVocabulary.getVocabularyId());
+			assetVocabulary.getGroupId(), assetVocabulary.getVocabularyId());
+
+		Assert.assertEquals(
+			1,
+			_assetCategoryService.getVocabularyCategoriesCount(
+				assetVocabulary.getGroupId(),
+				assetVocabulary.getVocabularyId()));
 	}
 
 	private void _setUpThemeDisplay() throws Exception {

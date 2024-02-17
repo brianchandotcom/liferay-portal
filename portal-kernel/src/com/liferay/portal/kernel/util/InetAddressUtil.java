@@ -5,7 +5,10 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.concurrent.AbortPolicy;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
+import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -14,12 +17,11 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
-
 import java.util.Enumeration;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Michael C. Han
@@ -31,30 +33,34 @@ public class InetAddressUtil {
 	public static InetAddress getInetAddressByName(String domain)
 		throws UnknownHostException {
 
-		AtomicInteger atomicInteger = new AtomicInteger(
-			_DNS_SECURITY_THREAD_LIMIT);
+		InetAddress inetAddress = _fastResolveAddress(domain);
+
+		if (inetAddress != null) {
+			return inetAddress;
+		}
 
 		try {
-			if (atomicInteger.getAndDecrement() <= 0) {
-				_log.error(
-					"Thread limit exceeded to resolve domain: " + domain);
-
-				return null;
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"getInetAddressByName(" + domain + ") active=" +
+					_executor.getActiveCount() + " pending=" +
+					_executor.getPendingTaskCount());
 			}
 
 			DefaultNoticeableFuture<InetAddress> defaultNoticeableFuture =
 				new DefaultNoticeableFuture<>(
 					() -> InetAddress.getByName(domain));
 
-			Thread thread = new Thread(
-				defaultNoticeableFuture, "Inet Address Util");
-
-			thread.setDaemon(true);
-
-			thread.start();
+			_executor.submit(defaultNoticeableFuture);
 
 			return defaultNoticeableFuture.get(
 				_DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+		}
+		catch (RejectedExecutionException exception) {
+			_log.error(
+				"Thread limit exceeded to resolve domain: " + domain);
+
+			return null;
 		}
 		catch (ExecutionException | InterruptedException | TimeoutException
 					exception) {
@@ -65,9 +71,6 @@ public class InetAddressUtil {
 
 			throw new UnknownHostException(
 				"Unable to resolve domain: " + domain);
-		}
-		finally {
-			atomicInteger.incrementAndGet();
 		}
 	}
 
@@ -117,6 +120,152 @@ public class InetAddressUtil {
 		return false;
 	}
 
+	/**
+	 * Tries to returns InetAddress of the provided value if it is a literal
+	 * IPv4 or IPv6 address. Only commons values are managed:
+	 * <ul>
+	 *  <li>IPv4 with all the four numbers. For example "12.3.5" is a valid
+	 *  shortcut to "12.3.0.5" but is not managed</li>
+	 *  <li>Ipv6 with all the eight parts only with hexadecimal values. For
+	 *  example "fe80::250:56ff:fec0:8" is a valid shortcut to
+	 *  "fe80:0:0:0:250:56ff:fec0:8" but is not managed</li>
+	 * </ul>
+	 *
+	 * @param domain
+	 * @return
+	 * @throws UnknownHostException
+	 */
+	private static InetAddress _fastResolveAddress(String domain)
+		throws UnknownHostException {
+
+		if (domain == null || domain.length() == 0) {
+			return null;
+		}
+
+		if (domain.startsWith("[")) {
+			if (domain.endsWith("]")) {
+				domain = domain.substring(1, domain.length() - 1);
+			}
+			else {
+				throw new UnknownHostException(
+					domain + ": invalid IPv6 address");
+			}
+		}
+
+		if (domain.length() == 0) {
+			return null;
+		}
+
+		if (Character.digit(domain.charAt(0), 16) == -1 &&
+			domain.charAt(0) != ':') {
+
+			return null;
+		}
+
+		try {
+			if (domain.indexOf(':') >= 0) {
+				return _fastResolveIPv6Address(domain);
+			}
+			else if (domain.indexOf('.') >= 0) {
+				return _fastResolveIPv4Address(domain);
+			}
+		}
+		catch (Exception  exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to fast resolve " + domain);
+			}
+		}
+
+		return null;
+	}
+
+	private static InetAddress _fastResolveIPv4Address(String domain)
+		throws Exception {
+
+		byte[] bytes = new byte[4];
+		int section = 0;
+		int value = 0;
+
+		for (int x = 0; x < domain.length(); x++) {
+			char c = domain.charAt(x);
+
+			if (c == '.') {
+				bytes[section] = (byte)(value & 0xFF);
+				value = 0;
+
+				if (section++ == 3) {
+					return null;
+				}
+			}
+			else {
+				int d = Character.digit(c, 10);
+
+				if (d == -1) {
+					return null;
+				}
+
+				value = (value * 10) + d;
+
+				if (value > 255) {
+					return null;
+				}
+			}
+		}
+
+		if (section == 3) {
+			bytes[section] = (byte)(value & 0xFF);
+
+			return InetAddress.getByAddress(bytes);
+		}
+
+		return null;
+	}
+
+	private static InetAddress _fastResolveIPv6Address(String domain)
+		throws Exception {
+
+		byte[] bytes = new byte[16];
+		int pos = 0;
+		int value = 0;
+
+		for (int x = 0; x < domain.length(); x++) {
+			char c = domain.charAt(x);
+
+			if (c == ':') {
+				bytes[pos++] = (byte)(value >> 8 & 0xFF);
+				bytes[pos++] = (byte)(value & 0xFF);
+				value = 0;
+
+				if (pos == 16) {
+					return null;
+				}
+			}
+			else {
+				int d = Character.digit(c, 16);
+
+				if (d == -1) {
+					return null;
+				}
+
+				value = (value << 4) + d;
+
+				if (value > 0xFFFF) {
+					return null;
+				}
+			}
+		}
+
+		if (pos == 14) {
+			bytes[pos++] = (byte)(value >> 8 & 0xFF);
+			bytes[pos++] = (byte)(value & 0xFF);
+
+			return InetAddress.getByAddress(bytes);
+		}
+
+		return null;
+	}
+
+
 	private static final int _DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS));
@@ -124,8 +273,20 @@ public class InetAddressUtil {
 	private static final int _DNS_SECURITY_THREAD_LIMIT = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.DNS_SECURITY_THREAD_LIMIT));
 
+	private static final int _DNS_SECURITY_THREAD_QUEUE_LIMIT =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.DNS_SECURITY_THREAD_QUEUE_LIMIT));
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		InetAddressUtil.class);
+
+	private static ThreadPoolExecutor _executor = new ThreadPoolExecutor(
+		1, _DNS_SECURITY_THREAD_LIMIT, 300, TimeUnit.SECONDS, false,
+		_DNS_SECURITY_THREAD_QUEUE_LIMIT, new AbortPolicy(),
+		new NamedThreadFactory(
+			"Inet Address Util",Thread.NORM_PRIORITY,
+			PortalClassLoaderUtil.getClassLoader()),
+		new ThreadPoolHandlerAdapter());
 
 	private static class LocalHostNameHolder {
 

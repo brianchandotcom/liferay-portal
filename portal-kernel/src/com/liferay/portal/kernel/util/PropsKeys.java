@@ -939,6 +939,9 @@ public interface PropsKeys {
 	public static final String DNS_SECURITY_THREAD_LIMIT =
 		"dns.security.thread.limit";
 
+	public static final String DNS_SECURITY_THREAD_QUEUE_LIMIT =
+		"dns.security.thread.queue.limit";
+
 	public static final String EDITOR_WYSIWYG_DEFAULT =
 		"editor.wysiwyg.default";
 

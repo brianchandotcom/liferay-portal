@@ -242,7 +242,6 @@ function update_portal_ext_properties() {
 		${playwright_project_dir}/env/portal-ext.properties
 }
 
-
 PLAYWRIGHT_ENV_DIR=$(dirname ${BASH_SOURCE[0]})
 
 export PLAYWRIGHT_BASE_DIR=$(get_absolute_dir ${PLAYWRIGHT_ENV_DIR}/../..)

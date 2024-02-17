@@ -6834,6 +6834,14 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
+	<target name="modules-integration-db-partition-postgresql153-jdk8">
+		<run-modules-integration-test
+			database.partition.enabled="true"
+			database.type="postgresql"
+			database.version="15.3"
+		/>
+	</target>
+
 	<target name="modules-integration-db2111-jdk8">
 		<run-modules-integration-test database.type="db2" />
 	</target>

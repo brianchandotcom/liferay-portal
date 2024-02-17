@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -69,8 +70,10 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -90,6 +93,18 @@ public class GetPageContentMVCResourceCommandTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PrincipalThreadLocal.setName(_originalName);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -495,6 +510,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		return themeDisplay;
 	}
+
+	private static String _originalName;
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -58,8 +59,10 @@ import java.util.Iterator;
 
 import org.hamcrest.CoreMatchers;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -81,6 +84,18 @@ public class LayoutAdaptiveMediaProcessorTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PrincipalThreadLocal.setName(_originalName);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -282,6 +297,8 @@ public class LayoutAdaptiveMediaProcessorTest {
 			layout.getTheme(), layout.getColorScheme());
 		_themeDisplay.setPlid(layout.getPlid());
 	}
+
+	private static String _originalName;
 
 	@Inject
 	private AMImageConfigurationHelper _amImageConfigurationHelper;

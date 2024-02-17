@@ -161,8 +161,11 @@ public class ToggleTag extends BaseContainerTag {
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
 		props.put("disabled", _disabled);
-		props.put("helpText", LanguageUtil.get(
-			TagResourceBundleUtil.getResourceBundle(pageContext), _helpText));
+		props.put(
+			"helpText",
+			LanguageUtil.get(
+				TagResourceBundleUtil.getResourceBundle(pageContext),
+				_helpText));
 		props.put("id", _id);
 		props.put(
 			"label",

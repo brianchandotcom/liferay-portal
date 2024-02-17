@@ -38,13 +38,17 @@
 <clay:row
 	cssClass="mb-3"
 >
-	<clay:col md="2">
+	<clay:col
+		md="2"
+	>
 		<clay:toggle
 			disabled="<%= true %>"
 		/>
 	</clay:col>
 
-	<clay:col md="2">
+	<clay:col
+		md="2"
+	>
 		<clay:toggle
 			disabled="<%= true %>"
 			label="Label Text"
@@ -96,14 +100,18 @@
 <clay:row
 	cssClass="mb-3"
 >
-	<clay:col md="2">
+	<clay:col
+		md="2"
+	>
 		<clay:toggle
 			helpText="Help Text"
 			label="Label Text"
 		/>
 	</clay:col>
 
-	<clay:col md="2">
+	<clay:col
+		md="2"
+	>
 		<clay:toggle
 			disabled="<%= true %>"
 			helpText="Help Text"
@@ -117,14 +125,18 @@
 <clay:row
 	cssClass="mb-3"
 >
-	<clay:col md="2">
+	<clay:col
+		md="2"
+	>
 		<clay:toggle
 			label="Label Text"
 			sizing="sm"
 		/>
 	</clay:col>
 
-	<clay:col md="2">
+	<clay:col
+		md="2"
+	>
 		<clay:toggle
 			helpText="Help Text"
 			label="Label Text"
@@ -134,7 +146,9 @@
 		/>
 	</clay:col>
 
-	<clay:col md="2">
+	<clay:col
+		md="2"
+	>
 		<clay:toggle
 			disabled="<%= true %>"
 			label="Label Text"

@@ -30,3 +30,11 @@ For modules ending with `-util`, the `Bundle-Name` should end with `Utilities`.
 
     Bundle-Name: Liferay Users Admin Utilities
     Bundle-SymbolicName: com.liferay.users.admin.util
+
+---
+
+The `Bundle-Version` should match regex `\d+\.\d+\.\d+`.
+
+### Example
+
+    Bundle-Version: 1.0.487

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.security.audit.event.generators.util.AuditMessageBuilder;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -119,16 +120,18 @@ public class OnDemandAdminTicketGeneratorImpl
 
 			String emailAddress = screenName + StringPool.AT + mx;
 
-			Date date = new Date();
+			Calendar calendar = Calendar.getInstance();
+
 			Role role = _roleLocalService.getRole(
 				companyId, RoleConstants.ADMINISTRATOR);
 
 			User user = _userLocalService.addUser(
 				0, companyId, false, password, password, true, null,
 				emailAddress, locale, firstName, middleName, lastName, 0, 0,
-				male, date.getMonth(), date.getDay(), date.getYear(), null,
-				UserConstants.TYPE_REGULAR, null, null,
-				new long[] {role.getRoleId()}, null, false,
+				male, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), null, UserConstants.TYPE_REGULAR,
+				null, null, new long[] {role.getRoleId()}, null, false,
 				new ServiceContext());
 
 			screenName = _getScreenName(userId, user.getUserId());

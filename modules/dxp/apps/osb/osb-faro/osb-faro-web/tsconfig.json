@@ -14,7 +14,6 @@
 	},
 	"include": [
 		"./src/main/js/**/*",
-		"./node_modules/isemail/**/*",
 		"./node_modules/query-string/**/*",
 		"./node_modules/strict-uri-encode/**/*"
 	]

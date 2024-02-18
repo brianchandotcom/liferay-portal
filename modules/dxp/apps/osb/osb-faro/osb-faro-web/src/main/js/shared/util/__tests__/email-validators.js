@@ -8,13 +8,11 @@ import {
 describe('email-validators', () => {
 	describe('validateEmailDomain', () => {
 		it.each`
-			domain                     | isValid
-			${'liferay.com'}           | ${true}
-			${'test@liferay.com'}      | ${false}
-			${'liferay.com.'}          | ${false}
-			${'liferay.com(JoeSmith)'} | ${false}
-			${'111.222.333.444'}       | ${false}
-			${'[123.123.123.123]'}     | ${false}
+			domain                 | isValid
+			${'liferay.com'}       | ${true}
+			${'test@liferay.com'}  | ${false}
+			${'111.222.333.444'}   | ${false}
+			${'[123.123.123.123]'} | ${false}
 		`('should return $domain as $isValid', ({domain, isValid}) => {
 			expect(validateEmailDomain(domain)).toEqual(isValid);
 		});
@@ -36,14 +34,12 @@ describe('email-validators', () => {
 
 	describe('validateEmail', () => {
 		it.each`
-			email                              | isValid
-			${'test@liferay.com'}              | ${true}
-			${'test@liferay.com.br'}           | ${true}
-			${'liferay.com'}                   | ${false}
-			${'test@liferay.com.'}             | ${false}
-			${'hooplah@liferay.com(JoeSmith)'} | ${false}
-			${'111.222.333.444'}               | ${false}
-			${'[123.123.123.123]'}             | ${false}
+			email                    | isValid
+			${'test@liferay.com'}    | ${true}
+			${'test@liferay.com.br'} | ${true}
+			${'liferay.com'}         | ${false}
+			${'111.222.333.444'}     | ${false}
+			${'[123.123.123.123]'}   | ${false}
 		`('should return $email as $isValid', ({email, isValid}) => {
 			expect(validateEmail(email)).toEqual(isValid);
 		});

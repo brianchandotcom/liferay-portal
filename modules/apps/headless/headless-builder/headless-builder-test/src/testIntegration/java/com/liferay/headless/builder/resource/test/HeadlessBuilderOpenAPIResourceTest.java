@@ -50,6 +50,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -363,10 +365,15 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 		Assert.assertFalse(jsonObject.has("/" + _API_BASE_URL));
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(
-				null, apiApplicationURL + "/openapi.json", Http.Method.GET));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, apiApplicationURL + "/openapi.json",
+					Http.Method.GET));
+		}
 
 		assertSuccessfulJSONObject(
 			JSONUtil.put(

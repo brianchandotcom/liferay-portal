@@ -69,6 +69,8 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -251,11 +253,18 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			"test@able.com", "test"
 		).apply(
 			() -> {
-				Assert.assertEquals(
-					404,
-					HTTPTestUtil.invokeToHttpCode(
-						null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
-						Http.Method.GET));
+				try (LogCapture logCapture =
+						LoggerTestUtil.configureLog4JLogger(
+							"portal_web.docroot.errors.code_jsp",
+							LoggerTestUtil.WARN)) {
+
+					Assert.assertEquals(
+						404,
+						HTTPTestUtil.invokeToHttpCode(
+							null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
+							Http.Method.GET));
+				}
+
 				Assert.assertFalse(
 					HTTPTestUtil.invokeToJSONObject(
 						null, "openapi", Http.Method.GET
@@ -836,15 +845,25 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String endpoint1 = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(null, endpoint1, Http.Method.GET));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, endpoint1, Http.Method.GET));
+		}
 
 		String endpoint2 = "c/" + _BASE_URL_2 + _API_APPLICATION_PATH_2;
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(null, endpoint2, Http.Method.GET));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, endpoint2, Http.Method.GET));
+		}
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 		_publishAPIApplication(_API_APPLICATION_ERC_2);
@@ -924,22 +943,31 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(
-				null,
-				StringBundler.concat(
-					"c/", _BASE_URL_1, StringPool.SLASH,
-					RandomTestUtil.randomString()),
-				Http.Method.GET));
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(
-				null,
-				StringBundler.concat(
-					"c/", _BASE_URL_2, StringPool.SLASH,
-					RandomTestUtil.randomString()),
-				Http.Method.GET));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null,
+					StringBundler.concat(
+						"c/", _BASE_URL_1, StringPool.SLASH,
+						RandomTestUtil.randomString()),
+					Http.Method.GET));
+		}
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null,
+					StringBundler.concat(
+						"c/", _BASE_URL_2, StringPool.SLASH,
+						RandomTestUtil.randomString()),
+					Http.Method.GET));
+		}
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -949,9 +977,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				_API_APPLICATION_ERC_1,
 			Http.Method.PATCH);
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(null, endpoint1, Http.Method.GET));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, endpoint1, Http.Method.GET));
+		}
+
 		Assert.assertEquals(
 			200,
 			HTTPTestUtil.invokeToHttpCode(null, endpoint2, Http.Method.GET));
@@ -1755,24 +1789,39 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String endpointPath = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(null, endpointPath, Http.Method.GET));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, endpointPath, Http.Method.GET));
+		}
 
 		String scopedEndpointPath = StringBundler.concat(
 			"c/", _BASE_URL_1, "/scopes/", TestPropsValues.getGroupId(),
 			_API_APPLICATION_PATH_1);
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(
-				null, scopedEndpointPath, Http.Method.GET));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, scopedEndpointPath, Http.Method.GET));
+		}
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(null, endpointPath, Http.Method.GET));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, endpointPath, Http.Method.GET));
+		}
+
 		Assert.assertEquals(
 			200,
 			HTTPTestUtil.invokeToHttpCode(
@@ -1837,13 +1886,23 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				_API_APPLICATION_ERC_1,
 			Http.Method.PATCH);
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(null, endpointPath, Http.Method.GET));
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(
-				null, scopedEndpointPath, Http.Method.GET));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, endpointPath, Http.Method.GET));
+		}
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					null, scopedEndpointPath, Http.Method.GET));
+		}
 	}
 
 	@Test
@@ -2348,27 +2407,39 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		String endpointPath = "c/" + _BASE_URL_1 + "/test";
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(
-				body, endpointPath, Http.Method.POST));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					body, endpointPath, Http.Method.POST));
+		}
 
 		long groupId = TestPropsValues.getGroupId();
 
 		String scopedEndpointPath = StringBundler.concat(
 			"c/", _BASE_URL_1, "/scopes/", groupId, "/test");
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(
-				body, scopedEndpointPath, Http.Method.POST));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					body, scopedEndpointPath, Http.Method.POST));
+		}
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
-		Assert.assertEquals(
-			404,
-			HTTPTestUtil.invokeToHttpCode(
-				body, endpointPath, Http.Method.POST));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
+
+			Assert.assertEquals(
+				404,
+				HTTPTestUtil.invokeToHttpCode(
+					body, endpointPath, Http.Method.POST));
+		}
 
 		Assert.assertEquals(
 			200,

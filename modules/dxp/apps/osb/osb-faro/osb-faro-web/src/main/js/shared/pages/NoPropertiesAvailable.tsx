@@ -76,16 +76,6 @@ const NoPropertiesAvailable: React.FC<INoPropertiesAvailableProps> = ({
 									button
 									className='button-root'
 									displayType='primary'
-									href={
-										dataSources
-											? toRoute(
-													Routes.SETTINGS_CHANNELS,
-													{
-														groupId
-													}
-											  )
-											: null
-									}
 									onClick={
 										dataSources
 											? () =>

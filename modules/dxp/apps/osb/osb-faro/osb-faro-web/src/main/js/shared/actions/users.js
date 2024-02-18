@@ -7,7 +7,7 @@ export const actionTypes = {
 	...createActionTypes('fetch', 'current_user')
 };
 
-export function fetchCurrentUser(groupId = 0) {
+export function fetchCurrentUser(groupId) {
 	return {
 		meta: {
 			[CALL_API]: {

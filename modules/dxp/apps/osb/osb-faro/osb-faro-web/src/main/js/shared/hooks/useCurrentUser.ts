@@ -7,7 +7,7 @@ import {User} from 'shared/util/records';
  * Used only on the first time on App.tsx to fetch data from backend.
  * To get currentUser, you can use WithCurrentUser (for HOC) or useCurrentUser (for HOOK).
  */
-export const useFetchCurrentUser = (groupId: string = '0') => {
+export const useFetchCurrentUser = (initialGroupId: string = '0') => {
 	const currentUser = useSelector<any, any>(state =>
 		state.get('currentUser')
 	);
@@ -19,8 +19,10 @@ export const useFetchCurrentUser = (groupId: string = '0') => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchCurrentUser(Number(groupId)));
-	}, [groupId]);
+		const groupId = !isNaN(Number(initialGroupId)) ? initialGroupId : 0;
+
+		dispatch(fetchCurrentUser(groupId));
+	}, [initialGroupId]);
 
 	if (error) {
 		throw new Error('Error on fetchCurrentUser');

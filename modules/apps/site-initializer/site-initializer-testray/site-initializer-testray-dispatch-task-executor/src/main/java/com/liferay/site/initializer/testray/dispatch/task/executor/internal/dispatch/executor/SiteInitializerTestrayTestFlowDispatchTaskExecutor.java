@@ -396,7 +396,7 @@ public class SiteInitializerTestrayTestFlowDispatchTaskExecutor
 
 		properties.replace("dueStatus", testrayTaskStatus);
 
-		objectEntry.setProperties(properties);
+		objectEntry.setProperties(() -> properties);
 
 		ObjectEntryUtil.updateObjectEntry(
 			_defaultDTOConverterContext, "Task", objectEntry, testrayTaskId,

@@ -34,15 +34,13 @@ public class ObjectEntryUtil {
 			Map<String, Object> properties)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _getObjectDefinition(
-			objectDefinitionShortName);
-
 		ObjectEntry objectEntry = new ObjectEntry();
 
-		objectEntry.setProperties(properties);
+		objectEntry.setProperties(() -> properties);
 
 		return objectEntryManager.addObjectEntry(
-			defaultDTOConverterContext, objectDefinition, objectEntry, null);
+			defaultDTOConverterContext,
+			_getObjectDefinition(objectDefinitionShortName), objectEntry, null);
 	}
 
 	public static List<ObjectEntry> getObjectEntries(

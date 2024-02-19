@@ -257,7 +257,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					sourceLayout.getGroupId(), sourceLayout.getPlid());
 
 		Map<Long, FragmentEntryLink> fragmentEntryLinksMap =
-			_getFragmentEntryLinksMap(sourceLayout, segmentsExperiencesIds);
+			_getFragmentEntryLinksMap(
+				sourceLayout, segmentsExperiencesIds, targetLayout);
 
 		LayoutPageTemplateStructure targetLayoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -330,7 +331,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		JSONObject dataJSONObject = _processDataJSONObject(
 			layoutStructure, targetLayout,
 			_getFragmentEntryLinksMap(
-				sourceLayout, new long[] {sourceSegmentsExperienceId}),
+				sourceLayout, new long[] {sourceSegmentsExperienceId},
+				targetLayout),
 			targetSegmentsExperienceId, user);
 
 		_layoutPageTemplateStructureLocalService.
@@ -537,7 +539,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private Map<Long, FragmentEntryLink> _getFragmentEntryLinksMap(
-		Layout sourceLayout, long[] segmentsExperiencesIds) {
+		Layout sourceLayout, long[] segmentsExperiencesIds,
+		Layout targetLayout) {
 
 		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = new HashMap<>();
 
@@ -545,7 +548,22 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_fragmentEntryLinkLocalService.
 					getFragmentEntryLinksBySegmentsExperienceId(
 						sourceLayout.getGroupId(), segmentsExperiencesIds,
-						sourceLayout.getPlid(), false)) {
+						sourceLayout.getPlid())) {
+
+			if (fragmentEntryLink.isDeleted()) {
+				FragmentEntryLink targetLayoutFragmentEntryLink =
+					_fragmentEntryLinkLocalService.getFragmentEntryLink(
+						targetLayout.getGroupId(),
+						fragmentEntryLink.getFragmentEntryLinkId(),
+						targetLayout.getPlid());
+
+				if (targetLayoutFragmentEntryLink != null) {
+					_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+						targetLayoutFragmentEntryLink);
+				}
+
+				continue;
+			}
 
 			fragmentEntryLinksMap.put(
 				fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink);

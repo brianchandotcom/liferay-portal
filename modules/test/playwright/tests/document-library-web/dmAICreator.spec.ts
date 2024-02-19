@@ -9,7 +9,7 @@ import {documentLibraryPages} from '../../fixtures/documentLibraryPages';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-const testFeatureFlagsEnabled = mergeTests(
+export const test = mergeTests(
 	loginTest,
 	featureFlagsTest({
 		'LPD-10793': true,
@@ -17,7 +17,7 @@ const testFeatureFlagsEnabled = mergeTests(
 	documentLibraryPages
 );
 
-testFeatureFlagsEnabled(
+test(
 	'Create AI Image option in Management Toolbar without API Key opens an alert',
 	async ({documentLibraryPage, page}) => {
 		await documentLibraryPage.goto();
@@ -34,7 +34,7 @@ testFeatureFlagsEnabled(
 	}
 );
 
-testFeatureFlagsEnabled(
+test(
 	'Create AI Image option is hidden when disabled from Instance Settings',
 	async ({documentLibraryPage, page}) => {
 		await documentLibraryPage.disableAICreator();
@@ -51,7 +51,7 @@ testFeatureFlagsEnabled(
 	}
 );
 
-testFeatureFlagsEnabled(
+test(
 	'Create AI Image opens a modal when API Key is provided',
 	async ({documentLibraryPage, page}) => {
 		await documentLibraryPage.addGogoShellCommand(

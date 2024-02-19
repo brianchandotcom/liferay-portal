@@ -6,9 +6,6 @@
 import {devices} from '@playwright/test';
 
 export const config = {
-	expect: {
-		timeout: 30 * 1000,
-	},
 	name: 'document-library-web',
 	testDir: 'tests/document-library-web',
 	use: {

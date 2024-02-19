@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
-import togglePermission from '../actions/togglePermission';
+import togglePermission, {PermissionKey} from '../actions/togglePermission';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanSwitchEditMode from '../selectors/selectCanSwitchEditMode';
 
@@ -22,7 +22,7 @@ const EDIT_MODES = [
 	{label: Liferay.Language.get('page-design'), value: 'page-design'},
 ];
 
-const TriggerLabel = React.forwardRef(
+const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	({children, className, ...otherProps}, ref) => (
 		<ClayButton
 			className={classNames('form-control-select', {
@@ -44,13 +44,15 @@ export default function EditModeSelector() {
 
 	const [editMode, setEditMode] = useState(
 		canSwitchEditMode
-			? EDIT_MODES.find(({value}) => value === 'page-design')
-			: EDIT_MODES.find(({value}) => value === 'content-editing')
+			? EDIT_MODES.find(({value}) => value === 'page-design')!
+			: EDIT_MODES.find(({value}) => value === 'content-editing')!
 	);
 
 	const permissions = useSelector((state) => state.permissions);
 
-	const higherUpdatePermissionRef = useRef();
+	const higherUpdatePermissionRef = useRef<PermissionKey>(
+		'UPDATE_LAYOUT_LIMITED'
+	);
 
 	useEffect(() => {
 		if (permissions.UPDATE) {
@@ -58,9 +60,6 @@ export default function EditModeSelector() {
 		}
 		else if (permissions.UPDATE_LAYOUT_BASIC) {
 			higherUpdatePermissionRef.current = 'UPDATE_LAYOUT_BASIC';
-		}
-		else {
-			higherUpdatePermissionRef.current = 'UPDATE_LAYOUT_LIMITED';
 		}
 
 		/* eslint-disable-next-line react-hooks/exhaustive-deps */
@@ -79,17 +78,17 @@ export default function EditModeSelector() {
 				defaultSelectedKey={editMode.value}
 				disabled={!canSwitchEditMode}
 				items={EDIT_MODES}
-				onSelectionChange={(key) => {
+				onSelectionChange={(key: React.Key) => {
 					const selectedOption = EDIT_MODES.find(
 						({value}) => value === key
-					);
+					)!;
 
 					setEditMode(selectedOption);
 
 					dispatch(
 						togglePermission(
 							higherUpdatePermissionRef.current,
-							selectedOption.value === 'page-design'
+							selectedOption!.value === 'page-design'
 						)
 					);
 				}}

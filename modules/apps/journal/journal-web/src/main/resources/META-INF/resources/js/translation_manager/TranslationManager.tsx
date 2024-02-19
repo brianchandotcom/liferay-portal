@@ -100,7 +100,7 @@ export default function TranslationManager({
 	useEffect(() => {
 		Liferay.fire('inputLocalized:localeChanged', {
 			item: document.querySelector(
-				`[data-languageid="${selectedLanguageId}"]`
+				`[data-languageid="${selectedLanguageId}"][data-value="${selectedLanguageId}"]`
 			),
 		});
 	}, [selectedLanguageId]);

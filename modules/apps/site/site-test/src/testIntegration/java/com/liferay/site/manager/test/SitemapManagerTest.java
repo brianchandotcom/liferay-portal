@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -70,6 +71,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.site.manager.SitemapManager;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
@@ -82,8 +84,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -104,6 +108,20 @@ public class SitemapManagerTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws PortalException {
+		_originalXMLSitemapIndexEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "XML_SITEMAP_INDEX_ENABLED", Boolean.FALSE);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "XML_SITEMAP_INDEX_ENABLED",
+			_originalXMLSitemapIndexEnabled);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -1055,6 +1073,8 @@ public class SitemapManagerTest {
 
 	private static final String _PID_SITEMAP_GROUP_CONFIGURATION =
 		"com.liferay.site.internal.configuration.SitemapGroupConfiguration";
+
+	private static boolean _originalXMLSitemapIndexEnabled;
 
 	@Inject
 	private AssetCategoryService _assetCategoryService;

@@ -6,8 +6,9 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {useEffect, useMemo, useState} from 'react';
-import {Control, UseFormRegister, useFieldArray} from 'react-hook-form';
+import {UseFormRegister, useFieldArray, useForm} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
+import Loading from '~/components/Loading';
 
 import Form from '../../../../../components/Form';
 import SearchBuilder from '../../../../../core/SearchBuilder';
@@ -17,85 +18,85 @@ import i18n from '../../../../../i18n';
 import yupSchema from '../../../../../schema/yup';
 import {
 	APIResponse,
-	TestrayFactor,
-	TestrayFactorOption,
+	TestrayFactorCategory,
+	TestrayOptionsByCategory,
+	TestrayRun,
 	testrayFactorCategoryRest,
-	testrayFactorRest,
+	testrayRunImpl,
 } from '../../../../../services/rest';
 import FactorOptionsFormModal from '../../../../Standalone/FactorOptions/FactorOptionsFormModal';
-import BuildSelectStacksModal, {FactorStack} from './BuildSelectStacksModal';
 import StackList from './Stack';
-import {Category} from './Stack/StackList';
 
 export type BuildFormType = typeof yupSchema.build.__outputType;
 
 type BuildFormRunProps = {
-	control: Control<BuildFormType>;
 	register: UseFormRegister<BuildFormType>;
 };
 
-const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
+const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 	const {modal: optionModal} = useFormModal();
-	const {routineId} = useParams();
+	const {buildId} = useParams();
+	const {control} = useForm({});
 
 	const {append, fields, remove, update} = useFieldArray({
 		control,
-		name: 'factorStacks',
+		name: 'runOptions',
 	});
 
-	const {modal: optionSelectModal} = useFormModal({
-		onSave: (factorStacks: FactorStack[]) => {
-			for (const factor of factorStacks) {
-				append({...factor, disabled: false});
-			}
-		},
-	});
-
-	const [factorOptionsList, setFactorOptionsList] = useState<
-		TestrayFactorOption[][]
+	const [runOptionsList, setRunOptionsList] = useState<
+		TestrayOptionsByCategory[]
 	>([[] as any]);
 
-	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
-		testrayFactorRest.resource,
+	const {data: runData, loading} = useFetch<APIResponse<TestrayRun>>(
+		testrayRunImpl.resource,
 		{
 			params: {
-				filter: SearchBuilder.eq('routineId', routineId as string),
+				filter: SearchBuilder.eq('buildId', buildId as string),
 				pageSize: 100,
 			},
 			transformData: (response) =>
-				testrayFactorRest.transformDataFromList(response),
+				testrayRunImpl.transformDataFromList(response),
 		}
 	);
 
-	const factorItems = useMemo(() => factorsData?.items || [], [
-		factorsData?.items,
+	const runItems = useMemo(() => runData?.items || [], [runData?.items]);
+
+	const {data: categories} = useFetch<APIResponse<TestrayFactorCategory>>(
+		testrayFactorCategoryRest.resource,
+		{
+			transformData: (response) =>
+				testrayFactorCategoryRest.transformDataFromList(response),
+		}
+	);
+
+	const categoryItems = useMemo(() => categories?.items || [], [
+		categories?.items,
 	]);
 
 	useEffect(() => {
-		if (factorItems.length) {
+		if (categoryItems.length) {
 			testrayFactorCategoryRest
-				.getFactorCategoryItems(factorItems)
-				.then(setFactorOptionsList)
+				.getOptionsByCategoryItems(categoryItems)
+				.then(setRunOptionsList)
 				.catch(console.error);
 		}
-	}, [factorItems]);
+	}, [categoryItems]);
 
 	useEffect(() => {
-		if (factorItems.length) {
-			const runItem: Category = {};
-
-			factorItems.forEach((factorItem, index) => {
-				runItem[index] = {
-					factorCategory: factorItem.factorCategory?.name as string,
-					factorCategoryId: factorItem.factorCategory?.id as number,
-					factorOption: factorItem.factorOption?.name as string,
-					factorOptionId: factorItem.factorOption?.id as number,
-				};
+		runItems.forEach((item, index) => {
+			update(index, {
+				applicationServer: item?.applicationServer as string,
+				browser: item?.browser as string,
+				database: item?.database as string,
+				javaJDK: item?.javaJDK as string,
+				operatingSystem: item?.operatingSystem as string,
 			});
+		});
+	}, [update, runItems]);
 
-			update(0, runItem);
-		}
-	}, [update, factorItems]);
+	if (loading) {
+		return <Loading />;
+	}
 
 	return (
 		<>
@@ -103,7 +104,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
 
 			<Form.Divider />
 
-			{!factorItems.length && (
+			{!runItems.length && (
 				<ClayAlert>
 					{i18n.translate(
 						'create-environment-factors-if-you-want-to-generate-runs'
@@ -111,7 +112,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
 				</ClayAlert>
 			)}
 
-			{!!factorItems.length && (
+			{!!runItems.length && !loading && (
 				<>
 					<ClayButton.Group className="mb-4">
 						<ClayButton
@@ -120,34 +121,20 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({control, register}) => {
 						>
 							{i18n.translate('add-option')}
 						</ClayButton>
-
-						<ClayButton
-							className="ml-1"
-							displayType="secondary"
-							onClick={() => optionSelectModal.open()}
-						>
-							{i18n.translate('select-stacks')}
-						</ClayButton>
 					</ClayButton.Group>
 
 					<StackList
 						append={append as any}
-						factorItems={factorItems}
-						factorOptionsList={factorOptionsList}
 						fields={fields}
 						register={register}
 						remove={remove}
+						runOptionsList={runOptionsList}
 						update={update as any}
 					/>
 				</>
 			)}
 
 			<FactorOptionsFormModal modal={optionModal} />
-
-			<BuildSelectStacksModal
-				factorItems={factorItems}
-				modal={optionSelectModal}
-			/>
 		</>
 	);
 };

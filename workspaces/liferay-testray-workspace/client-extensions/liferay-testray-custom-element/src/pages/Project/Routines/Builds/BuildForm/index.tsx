@@ -105,7 +105,6 @@ const BuildForm = () => {
 	} = useFormActions();
 
 	const {
-		control,
 		formState: {errors},
 		handleSubmit,
 		register,
@@ -252,7 +251,7 @@ const BuildForm = () => {
 					type="textarea"
 				/>
 
-				<BuildFormRun control={control} register={register} />
+				<BuildFormRun register={register} />
 
 				<BuildFormCases
 					buildId={buildId}

@@ -256,17 +256,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				fetchLayoutPageTemplateStructure(
 					sourceLayout.getGroupId(), sourceLayout.getPlid());
 
-		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = new HashMap<>();
-
-		for (FragmentEntryLink fragmentEntryLink :
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						sourceLayout.getGroupId(), segmentsExperiencesIds,
-						sourceLayout.getPlid(), false)) {
-
-			fragmentEntryLinksMap.put(
-				fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink);
-		}
+		Map<Long, FragmentEntryLink> fragmentEntryLinksMap =
+			_getFragmentEntryLinksMap(sourceLayout, segmentsExperiencesIds);
 
 		LayoutPageTemplateStructure targetLayoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -327,18 +318,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			return;
 		}
 
-		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = new HashMap<>();
-
-		for (FragmentEntryLink fragmentEntryLink :
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						sourceLayout.getGroupId(), sourceSegmentsExperienceId,
-						sourceLayout.getPlid(), false)) {
-
-			fragmentEntryLinksMap.put(
-				fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink);
-		}
-
 		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
 		for (DeletedLayoutStructureItem deletedLayoutStructureItem :
@@ -349,7 +328,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		JSONObject dataJSONObject = _processDataJSONObject(
-			layoutStructure, targetLayout, fragmentEntryLinksMap,
+			layoutStructure, targetLayout,
+			_getFragmentEntryLinksMap(
+				sourceLayout, new long[] {sourceSegmentsExperienceId}),
 			targetSegmentsExperienceId, user);
 
 		_layoutPageTemplateStructureLocalService.
@@ -553,6 +534,24 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				PortletPermissionUtil.getPrimaryKey(
 					layout.getPlid(), portletId));
 		}
+	}
+
+	private Map<Long, FragmentEntryLink> _getFragmentEntryLinksMap(
+		Layout sourceLayout, long[] segmentsExperiencesIds) {
+
+		Map<Long, FragmentEntryLink> fragmentEntryLinksMap = new HashMap<>();
+
+		for (FragmentEntryLink fragmentEntryLink :
+				_fragmentEntryLinkLocalService.
+					getFragmentEntryLinksBySegmentsExperienceId(
+						sourceLayout.getGroupId(), segmentsExperiencesIds,
+						sourceLayout.getPlid(), false)) {
+
+			fragmentEntryLinksMap.put(
+				fragmentEntryLink.getFragmentEntryLinkId(), fragmentEntryLink);
+		}
+
+		return fragmentEntryLinksMap;
 	}
 
 	private List<String> _getLayoutPortletIds(

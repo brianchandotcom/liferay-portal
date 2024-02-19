@@ -5,8 +5,8 @@
 
 import {useState} from 'react';
 
-import RunsList, {RunsListProps} from './RunsList';
 import RunsHistory from './RunsHistory';
+import RunsList, {RunsListProps} from './RunsList';
 
 type StackProps = {} & RunsListProps;
 

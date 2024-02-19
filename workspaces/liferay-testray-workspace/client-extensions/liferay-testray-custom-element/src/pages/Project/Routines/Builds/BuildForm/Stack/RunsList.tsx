@@ -9,13 +9,13 @@ import React from 'react';
 
 import Form from '../../../../../../components/Form';
 import {TestrayOptionsByCategory} from '../../../../../../services/rest';
+import RunsListActions from './RunsListActions';
 
 import type {
 	UseFieldArrayAppend,
 	UseFieldArrayUpdate,
 	UseFormRegister,
 } from 'react-hook-form';
-import RunsListActions from './RunsListActions';
 
 export type CategoryOptions = {
 	factorCategory: string;
@@ -63,10 +63,8 @@ const RunsList: React.FC<RunsListProps> = ({
 						<ClayLayout.Col size={12}>
 							<ClayLayout.Row
 								className={classNames({
-									'align-items-center d-flex justify-content-space-between':
-										!displayVertical,
-									'flex-column justify-content-space-between':
-										displayVertical,
+									'align-items-center d-flex justify-content-space-between': !displayVertical,
+									'flex-column justify-content-space-between': displayVertical,
 								})}
 							>
 								{Object.keys(field).map(
@@ -119,7 +117,9 @@ const RunsList: React.FC<RunsListProps> = ({
 															register={register}
 															registerOptions={{
 																onBlur: (
-																	event: React.FocusEvent<HTMLSelectElement>
+																	event: React.FocusEvent<
+																		HTMLSelectElement
+																	>
 																) => {
 																	const runOptionName =
 																		event
@@ -130,12 +130,10 @@ const RunsList: React.FC<RunsListProps> = ({
 																				.selectedIndex
 																		]?.text;
 
-																	const dataToUpdate =
-																		{
-																			...(field as any),
-																			[optionItem]:
-																				runOptionName,
-																		};
+																	const dataToUpdate = {
+																		...(field as any),
+																		[optionItem]: runOptionName,
+																	};
 
 																	update(
 																		index,

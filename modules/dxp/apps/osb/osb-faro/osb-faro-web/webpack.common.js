@@ -1,4 +1,3 @@
-const BundleQueryStringPlugin = require('./bundle-query-string-webpack-plugin');
 const clayCss = require('@clayui/css');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
@@ -12,11 +11,7 @@ function resolveModule(name = '') {
 	return path.resolve(__dirname, 'src', 'main', 'js', name);
 }
 
-const include = [
-	resolveModule(),
-	path.resolve(__dirname, 'node_modules', 'query-string'),
-	path.resolve(__dirname, 'node_modules', 'strict-uri-encode')
-];
+const include = [resolveModule(), path.resolve(__dirname, 'node_modules')];
 
 const config = {
 	entry: [
@@ -139,7 +134,6 @@ const config = {
 		new MiniCssExtractPlugin({
 			filename: 'main.css'
 		}),
-		new BundleQueryStringPlugin(),
 		new ForkTsCheckerWebpackPlugin({
 			eslint: {
 				files: 'src/main/js/**/*.+(js|ts)?(x)'

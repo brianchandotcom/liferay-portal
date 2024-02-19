@@ -13,8 +13,6 @@
 		"target": "ES5"
 	},
 	"include": [
-		"./src/main/js/**/*",
-		"./node_modules/query-string/**/*",
-		"./node_modules/strict-uri-encode/**/*"
+		"./src/main/js/**/*"
 	]
 }

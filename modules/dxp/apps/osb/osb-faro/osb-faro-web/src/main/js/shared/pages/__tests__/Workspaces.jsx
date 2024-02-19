@@ -2,6 +2,7 @@ import * as data from 'test/data';
 import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
 import React from 'react';
+import Workspaces, {routingFn} from '../Workspaces';
 import {ApolloProvider} from '@apollo/react-components';
 import {BrowserRouter} from 'react-router-dom';
 import {cleanup, render} from '@testing-library/react';
@@ -10,7 +11,7 @@ import {noop} from 'lodash';
 import {Project} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {Routes, toRoute} from 'shared/util/router';
-import {routingFn, Workspaces} from '../Workspaces';
+import {useFetchProjects} from 'shared/hooks/useProjects';
 
 const corpProjectUuid = 'corpProjectUuid24';
 
@@ -43,6 +44,11 @@ const DefaultComponent = props => (
 	</ApolloProvider>
 );
 
+jest.mock('shared/hooks/useProjects', () => ({
+	useFetchJoinableProjects: () => ({data: [], loading: false}),
+	useFetchProjects: jest.fn()
+}));
+
 jest.unmock('react-dom');
 
 describe('Workspaces', () => {
@@ -53,7 +59,9 @@ describe('Workspaces', () => {
 	};
 
 	it('should render empty state', () => {
-		const {container} = render(<DefaultComponent projects={[]} />);
+		useFetchProjects.mockImplementation(() => ({data: [], loading: false}));
+
+		const {container} = render(<DefaultComponent />);
 
 		expect(container).toMatchSnapshot();
 	});
@@ -70,29 +78,36 @@ describe('Workspaces', () => {
 			})
 		];
 
-		const {container} = render(
-			<DefaultComponent projects={mockProjects} />
-		);
+		useFetchProjects.mockImplementation(() => ({
+			data: mockProjects,
+			loading: false
+		}));
+
+		const {container} = render(<DefaultComponent />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('should render with a message that all basic tier plans have been configured if all of the basic tier plans have been configured and the allBasicConfigured url prop is true', () => {
+		useFetchProjects.mockImplementation(() => ({
+			data: [mockBasicProject(123), mockBasicProject(124)],
+			loading: false
+		}));
+
 		const {container} = render(
-			<DefaultComponent
-				allBasicConfigured
-				client={client}
-				projects={[mockBasicProject(123), mockBasicProject(124)]}
-			/>
+			<DefaultComponent allBasicConfigured client={client} />
 		);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('should render a list of projects if there is only one project and it is configured', () => {
-		const {container} = render(
-			<DefaultComponent projects={[mockBasicProject(23)]} />
-		);
+		useFetchProjects.mockImplementation(() => ({
+			data: [mockBasicProject(23)],
+			loading: false
+		}));
+
+		const {container} = render(<DefaultComponent />);
 
 		expect(container).toMatchSnapshot();
 	});

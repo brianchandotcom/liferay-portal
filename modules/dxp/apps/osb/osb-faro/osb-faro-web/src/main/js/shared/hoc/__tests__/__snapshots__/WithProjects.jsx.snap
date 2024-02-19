@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`WithProjects should render WrappedComponent 1`] = `
-<div>
-  <div>
-    foo
-  </div>
-</div>
-`;

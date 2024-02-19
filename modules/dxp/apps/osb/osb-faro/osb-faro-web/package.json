@@ -56,7 +56,6 @@
 		"normalizr": "^3.2.4",
 		"odata-v4-parser": "^0.1.29",
 		"path-to-regexp": "^2.1.0",
-		"query-string": "^8.1.0",
 		"react": "^16.8.6",
 		"react-billboardjs": "^1.5.2",
 		"react-dnd": "11.1.1",

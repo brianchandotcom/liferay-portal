@@ -12,6 +12,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
@@ -139,10 +140,10 @@ public class SXPBlueprintDTOConverter
 		Map<Locale, String> titleMap) {
 
 		sxpElement.setDescription(
-			SXPDTOConverterUtil.translate(
+			() -> SXPDTOConverterUtil.translate(
 				fallbackDescription, _language, locale, descriptionMap));
 		sxpElement.setTitle(
-			SXPDTOConverterUtil.translate(
+			() -> SXPDTOConverterUtil.translate(
 				fallbackTitle, _language, locale, titleMap));
 	}
 
@@ -182,9 +183,12 @@ public class SXPBlueprintDTOConverter
 		for (ElementInstance elementInstance : elementInstances) {
 			SXPElement sxpElement = elementInstance.getSxpElement();
 
+			ElementDefinition elementDefinition =
+				sxpElement.getElementDefinition();
+
 			sxpElement.setElementDefinition(
-				SXPDTOConverterUtil.translate(
-					sxpElement.getElementDefinition(), _language, locale));
+				() -> SXPDTOConverterUtil.translate(
+					elementDefinition, _language, locale));
 
 			try {
 				com.liferay.search.experiences.model.SXPElement

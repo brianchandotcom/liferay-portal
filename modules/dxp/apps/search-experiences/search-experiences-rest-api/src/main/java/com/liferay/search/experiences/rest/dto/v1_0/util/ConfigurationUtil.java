@@ -37,8 +37,9 @@ public class ConfigurationUtil {
 			configuration.getAggregationConfiguration();
 
 		if (aggregationConfiguration != null) {
-			aggregationConfiguration.setAggs(
-				UnpackUtil.unpack(aggregationConfiguration.getAggs()));
+			Object aggs = aggregationConfiguration.getAggs();
+
+			aggregationConfiguration.setAggs(() -> UnpackUtil.unpack(aggs));
 		}
 
 		QueryConfiguration queryConfiguration =
@@ -60,7 +61,7 @@ public class ConfigurationUtil {
 
 					if (condition != null) {
 						queryEntry.setCondition(
-							ConditionUtil.unpack(condition));
+							() -> ConditionUtil.unpack(condition));
 					}
 				});
 		}
@@ -69,8 +70,9 @@ public class ConfigurationUtil {
 			configuration.getSortConfiguration();
 
 		if (sortConfiguration != null) {
-			sortConfiguration.setSorts(
-				UnpackUtil.unpack(sortConfiguration.getSorts()));
+			Object sorts = sortConfiguration.getSorts();
+
+			sortConfiguration.setSorts(() -> UnpackUtil.unpack(sorts));
 		}
 
 		return configuration;
@@ -81,7 +83,9 @@ public class ConfigurationUtil {
 			return;
 		}
 
-		clause.setQuery(UnpackUtil.unpack(clause.getQuery()));
+		Object query = clause.getQuery();
+
+		clause.setQuery(() -> UnpackUtil.unpack(query));
 	}
 
 	private static void _unpack(Rescore rescore) {
@@ -89,7 +93,9 @@ public class ConfigurationUtil {
 			return;
 		}
 
-		rescore.setQuery(UnpackUtil.unpack(rescore.getQuery()));
+		Object query = rescore.getQuery();
+
+		rescore.setQuery(() -> UnpackUtil.unpack(query));
 	}
 
 }

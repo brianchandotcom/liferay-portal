@@ -22,7 +22,7 @@ public class SXPElementUtil {
 
 		if (elementDefinition != null) {
 			sxpElement.setElementDefinition(
-				ElementDefinitionUtil.unpack(elementDefinition));
+				() -> ElementDefinitionUtil.unpack(elementDefinition));
 		}
 
 		return sxpElement;

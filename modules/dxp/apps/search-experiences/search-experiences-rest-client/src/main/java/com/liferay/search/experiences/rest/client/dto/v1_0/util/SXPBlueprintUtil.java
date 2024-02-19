@@ -22,7 +22,7 @@ public class SXPBlueprintUtil {
 
 		if (configuration != null) {
 			sxpBlueprint.setConfiguration(
-				ConfigurationUtil.unpack(configuration));
+				() -> ConfigurationUtil.unpack(configuration));
 		}
 
 		return sxpBlueprint;

@@ -38,11 +38,11 @@ public class DecodeSXPUtil {
 	public static void decodeSXPElement(SXPElement sxpElement)
 		throws Exception {
 
+		ElementDefinition elementDefinition = sxpElement.getElementDefinition();
+
 		sxpElement.setElementDefinition(
-			ElementDefinition.toDTO(
-				URLDecoder.decode(
-					String.valueOf(sxpElement.getElementDefinition()),
-					"UTF-8")));
+			() -> ElementDefinition.toDTO(
+				URLDecoder.decode(String.valueOf(elementDefinition), "UTF-8")));
 	}
 
 }

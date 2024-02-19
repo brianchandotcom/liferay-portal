@@ -189,7 +189,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 						getName();
 
 				sxpBlueprint.setActions(
-					HashMapBuilder.put(
+					() -> HashMapBuilder.put(
 						"create",
 						() -> addAction(
 							SXPActionKeys.ADD_SXP_BLUEPRINT, "postSXPBlueprint",
@@ -284,7 +284,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 
 		SXPBlueprintUtil.unpack(sxpBlueprint);
 
-		sxpBlueprint.setId(sxpBlueprintId);
+		sxpBlueprint.setId(() -> sxpBlueprintId);
 
 		com.liferay.search.experiences.model.SXPBlueprint
 			serviceBuilderSXPBlueprint = _sxpBlueprintService.fetchSXPBlueprint(
@@ -307,7 +307,7 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				_sxpBlueprintService.fetchSXPBlueprintByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId());
 
-		sxpBlueprint.setExternalReferenceCode(externalReferenceCode);
+		sxpBlueprint.setExternalReferenceCode(() -> externalReferenceCode);
 
 		if (serviceBuilderSXPBlueprint != null) {
 			return _updateSXPBlueprint(

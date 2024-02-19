@@ -232,9 +232,12 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				_ddmStructureLocalService.getStructure(
 					deDataDefinitionFieldLink.getClassPK()));
 
+			DataDefinitionField[] dataDefinitionFields =
+				dataDefinition.getDataDefinitionFields();
+
 			dataDefinition.setDataDefinitionFields(
-				ArrayUtil.filter(
-					dataDefinition.getDataDefinitionFields(),
+				() -> ArrayUtil.filter(
+					dataDefinitionFields,
 					dataDefinitionField -> !StringUtil.equals(
 						dataDefinitionField.getName(),
 						deDataDefinitionFieldLink.getFieldName())));
@@ -432,7 +435,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		_uniquifyDataDefinitionFields(dataDefinition);
 
-		dataDefinition.setDataDefinitionKey(StringPool.BLANK);
+		dataDefinition.setDataDefinitionKey(() -> StringPool.BLANK);
 
 		return _postSiteDataDefinitionByContentType(
 			dataDefinition.getSiteId(), dataDefinition.getContentType(),
@@ -477,10 +480,11 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataLayoutResource dataLayoutResource = _getDataLayoutResource(
 				false);
 
-			dataDefinition.setDefaultDataLayout(
-				dataLayoutResource.putDataLayout(
-					_getDefaultDataLayoutId(dataDefinitionId, dataLayout),
-					dataLayout));
+			DataLayout putDataLayout = dataLayoutResource.putDataLayout(
+				_getDefaultDataLayoutId(dataDefinitionId, dataLayout),
+				dataLayout);
+
+			dataDefinition.setDefaultDataLayout(() -> putDataLayout);
 		}
 
 		JSONObject definitionJSONObject = _jsonFactory.createJSONObject(
@@ -1003,19 +1007,24 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 									new String[] {"fields"})),
 							"JSONArray/pages", "Object/0", "JSONArray/rows")));
 
-				Gson gson = new Gson();
-
-				DataDefinitionField[] nestedDataDefinitionFields =
-					gson.fromJson(
-						_jsonFactory.looseSerializeDeep(
-							dataDefinition.getDataDefinitionFields()),
-						DataDefinitionField[].class);
-
-				_normalizeNestedDataDefinitionFields(
-					dataDefinitionFieldsCount, nestedDataDefinitionFields);
+				int finalDataDefinitionFieldsCount = dataDefinitionFieldsCount;
 
 				dataDefinitionField.setNestedDataDefinitionFields(
-					nestedDataDefinitionFields);
+					() -> {
+						Gson gson = new Gson();
+
+						DataDefinitionField[] nestedDataDefinitionFields =
+							gson.fromJson(
+								_jsonFactory.looseSerializeDeep(
+									dataDefinition.getDataDefinitionFields()),
+								DataDefinitionField[].class);
+
+						_normalizeNestedDataDefinitionFields(
+							finalDataDefinitionFieldsCount,
+							nestedDataDefinitionFields);
+
+						return nestedDataDefinitionFields;
+					});
 
 				if ((structureArticlesCount > 0) &&
 					!GetterUtil.getBoolean(
@@ -1049,10 +1058,12 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		for (DataDefinitionField nestedDataDefinitionField :
 				nestedDataDefinitionFields) {
 
+			String nestedDataDefinitionFieldName =
+				nestedDataDefinitionField.getName();
+
 			nestedDataDefinitionField.setName(
-				_normalizeFieldName(
-					nestedDataDefinitionField.getName(),
-					dataDefinitionFieldsCount));
+				() -> _normalizeFieldName(
+					nestedDataDefinitionFieldName, dataDefinitionFieldsCount));
 
 			Map<String, Object> customProperties =
 				nestedDataDefinitionField.getCustomProperties();
@@ -1168,19 +1179,21 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
 		if (dataLayout != null) {
-			dataLayout.setDataLayoutKey(ddmStructure.getStructureKey());
+			dataLayout.setDataLayoutKey(ddmStructure::getStructureKey);
 
 			if (Validator.isNull(dataLayout.getName())) {
-				dataLayout.setName(dataDefinition.getName());
+				dataLayout.setName(dataDefinition::getName);
 			}
 
 			DataLayoutResource dataLayoutResource = _getDataLayoutResource(
 				false);
 
 			try {
-				dataDefinition.setDefaultDataLayout(
+				DataLayout postDataLayout =
 					dataLayoutResource.postDataDefinitionDataLayout(
-						ddmStructure.getStructureId(), dataLayout));
+						ddmStructure.getStructureId(), dataLayout);
+
+				dataDefinition.setDefaultDataLayout(() -> postDataLayout);
 			}
 			catch (Exception exception) {
 				_ddmStructureLocalService.deleteStructure(ddmStructure);
@@ -1258,24 +1271,32 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				for (DataLayoutColumn dataLayoutColumn :
 						dataLayoutRow.getDataLayoutColumns()) {
 
+					String[] dataLayoutColumnFieldNames =
+						dataLayoutColumn.getFieldNames();
+
 					dataLayoutColumn.setFieldNames(
-						ArrayUtil.filter(
-							dataLayoutColumn.getFieldNames(),
+						() -> ArrayUtil.filter(
+							dataLayoutColumnFieldNames,
 							fieldName -> !ArrayUtil.contains(
 								fieldNames, fieldName)));
 				}
 
+				DataLayoutColumn[] dataLayoutColumns =
+					dataLayoutRow.getDataLayoutColumns();
+
 				dataLayoutRow.setDataLayoutColumns(
-					ArrayUtil.filter(
-						dataLayoutRow.getDataLayoutColumns(),
+					() -> ArrayUtil.filter(
+						dataLayoutColumns,
 						column ->
 							!(ArrayUtil.isEmpty(column.getFieldNames()) &&
 							  (column.getColumnSize() == 12))));
 			}
 
+			DataLayoutRow[] dataLayoutRows = dataLayoutPage.getDataLayoutRows();
+
 			dataLayoutPage.setDataLayoutRows(
-				ArrayUtil.filter(
-					dataLayoutPage.getDataLayoutRows(),
+				() -> ArrayUtil.filter(
+					dataLayoutRows,
 					row -> !ArrayUtil.isEmpty(row.getDataLayoutColumns())));
 		}
 	}
@@ -1377,7 +1398,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				deDataListViewId);
 
 			dataListView.setFieldNames(
-				ArrayUtil.filter(
+				() -> ArrayUtil.filter(
 					JSONUtil.toStringArray(
 						_jsonFactory.createJSONArray(
 							dataListView.getFieldNames())),
@@ -1762,7 +1783,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	private void _uniquifyDataDefinitionFields(
 		DataDefinitionField dataDefinitionField) {
 
-		dataDefinitionField.setName("CopyOf" + dataDefinitionField.getName());
+		String dataDefinitionFieldName = dataDefinitionField.getName();
+
+		dataDefinitionField.setName(() -> "CopyOf" + dataDefinitionFieldName);
 
 		Map<String, Object> customProperties =
 			dataDefinitionField.getCustomProperties();

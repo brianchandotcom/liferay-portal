@@ -110,19 +110,19 @@ public class DataLayoutUtil {
 			ddmFormFieldTypeServicesRegistry,
 			ddmStructureLayout.getDDMFormLayout(), spiDDMFormRuleConverter);
 
-		dataLayout.setDateCreated(ddmStructureLayout.getCreateDate());
-		dataLayout.setDataDefinitionId(ddmStructureLayout.getDDMStructureId());
-		dataLayout.setDataLayoutKey(ddmStructureLayout.getStructureLayoutKey());
-		dataLayout.setDateModified(ddmStructureLayout.getModifiedDate());
+		dataLayout.setDateCreated(ddmStructureLayout::getCreateDate);
+		dataLayout.setDataDefinitionId(ddmStructureLayout::getDDMStructureId);
+		dataLayout.setDataLayoutKey(ddmStructureLayout::getStructureLayoutKey);
+		dataLayout.setDateModified(ddmStructureLayout::getModifiedDate);
 		dataLayout.setDescription(
-			LocalizedValueUtil.toStringObjectMap(
+			() -> LocalizedValueUtil.toStringObjectMap(
 				ddmStructureLayout.getDescriptionMap()));
-		dataLayout.setId(ddmStructureLayout.getStructureLayoutId());
+		dataLayout.setId(ddmStructureLayout::getStructureLayoutId);
 		dataLayout.setName(
-			LocalizedValueUtil.toStringObjectMap(
+			() -> LocalizedValueUtil.toStringObjectMap(
 				ddmStructureLayout.getNameMap()));
-		dataLayout.setSiteId(ddmStructureLayout.getGroupId());
-		dataLayout.setUserId(ddmStructureLayout.getUserId());
+		dataLayout.setSiteId(ddmStructureLayout::getGroupId);
+		dataLayout.setUserId(ddmStructureLayout::getUserId);
 
 		return dataLayout;
 	}
@@ -308,7 +308,7 @@ public class DataLayoutUtil {
 			Gson gson = new Gson();
 
 			dataRule.setActions(
-				TransformUtil.transformToArray(
+				() -> TransformUtil.transformToArray(
 					spiDDMFormRule.getSPIDDMFormRuleActions(),
 					spiDDMFormRuleAction -> gson.fromJson(
 						JSONFactoryUtil.looseSerializeDeep(
@@ -316,7 +316,7 @@ public class DataLayoutUtil {
 						Map.class),
 					Map.class));
 			dataRule.setConditions(
-				TransformUtil.transformToArray(
+				() -> TransformUtil.transformToArray(
 					spiDDMFormRule.getSPIDDMFormRuleConditions(),
 					spiDDMFormRuleCondition -> gson.fromJson(
 						JSONFactoryUtil.looseSerializeDeep(
@@ -324,9 +324,9 @@ public class DataLayoutUtil {
 						Map.class),
 					Map.class));
 
-			dataRule.setLogicalOperator(spiDDMFormRule.getLogicalOperator());
+			dataRule.setLogicalOperator(spiDDMFormRule::getLogicalOperator);
 			dataRule.setName(
-				LocalizedValueUtil.toLocalizedValuesMap(
+				() -> LocalizedValueUtil.toLocalizedValuesMap(
 					spiDDMFormRule.getName()));
 
 			dataRules = ArrayUtil.append(dataRules, dataRule);

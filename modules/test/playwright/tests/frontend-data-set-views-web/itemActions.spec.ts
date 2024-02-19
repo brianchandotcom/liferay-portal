@@ -779,4 +779,187 @@ test.describe('Data Set Item Actions', () => {
 			await dataSetsPage.deleteDataSet(DATASET_NAME);
 		});
 	});
+
+	test('Async Item Action shows an error toast in the fragment when a failure occurs', async ({
+		actionsPage,
+		dataSetsPage,
+		fdsFragmentPage,
+		page,
+		viewsPage,
+	}) => {
+		const DATASET_NAME = 'Item Actions DS';
+		const DATASET_VIEW_NAME = 'Item Actions DS View';
+		const ASYNC_ITEM_ACTION_NAME = 'Async item action';
+		const ASYNC_ITEM_ACTION_METHOD = 'DELETE';
+		const ASYNC_ITEM_ACTION_WRONG_URL = '/o/data-set-manager/fields/{foo}';
+		const PAGE_NAME = 'Test page';
+		const SITE_NAME = 'FDSFragmentSite';
+
+		const siteInfo =
+			await test.step('Go home and create a new site and page', async () => {
+				await page.goto('/');
+
+				const newSite = await fdsFragmentPage.createSite(SITE_NAME);
+
+				const pageLayout = await fdsFragmentPage.createPage({
+					siteId: newSite.id,
+					title: PAGE_NAME,
+				});
+
+				await page.reload();
+
+				return {layout: pageLayout, site: newSite};
+			});
+
+		await test.step('Create Data Set', async () => {
+			await dataSetsPage.goto();
+			await dataSetsPage.createDataSet({name: DATASET_NAME});
+		});
+
+		await test.step('Create Data Set View', async () => {
+			await viewsPage.goto(DATASET_NAME);
+			await viewsPage.createDataSetView({name: DATASET_VIEW_NAME});
+		});
+
+		// Manually adding fields (with LPD-10735=false / visualization modes)
+
+		await test.step('Open Data Set Fields Tab', async () => {
+			await viewsPage.gotoDataSetView(DATASET_VIEW_NAME);
+
+			await page.getByRole('button', {name: 'Fields'}).first().waitFor();
+
+			await page.getByRole('button', {name: 'Fields'}).first().click();
+		});
+
+		const fieldModal =
+			await test.step('Open Data Set Fields Modal', async () => {
+				page.getByRole('button', {
+					name: 'Add Fields',
+				})
+					.first()
+					.waitFor();
+
+				page.getByRole('button', {
+					name: 'Add Fields',
+				})
+					.first()
+					.click();
+
+				page.getByRole('heading', {
+					name: 'Add Fields',
+				}).waitFor;
+
+				return page.getByRole('dialog');
+			});
+
+		await test.step('Select id and name fields', async () => {
+			await fieldModal.getByLabel(/id/).check();
+			await fieldModal.getByLabel(/name/).check();
+			await fieldModal.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				page.locator('.orderable-table-row').nth(0)
+			).toContainText('id');
+			await expect(
+				page.locator('.orderable-table-row').nth(1)
+			).toContainText('name');
+		});
+
+		// Finish manually adding fields
+
+		await test.step('Go to Actions tab', async () => {
+			await actionsPage.goto({
+				dataSetName: DATASET_NAME,
+				dataSetViewName: DATASET_VIEW_NAME,
+			});
+		});
+
+		await test.step('Create an async item action', async () => {
+			await actionsPage.createItemAction({
+				icon: 'cloud',
+				method: ASYNC_ITEM_ACTION_METHOD,
+				name: ASYNC_ITEM_ACTION_NAME,
+				type: 'async',
+				url: ASYNC_ITEM_ACTION_WRONG_URL,
+			});
+		});
+
+		await test.step('Edit page', async () => {
+			await fdsFragmentPage.editPage({...siteInfo});
+		});
+
+		await test.step('Search for "Data Set" fragment', async () => {
+			await fdsFragmentPage.searchFragmentOrWidget('Data Set');
+		});
+
+		await test.step('Drag "Data Set" fragment & Drop into the page editor w/ keyboard', async () => {
+			await fdsFragmentPage.dragAndDropFragment(
+				'Data Set Add Data Set Mark Data Set as Favorite'
+			);
+		});
+
+		await test.step('Select empty Data Set fragment', async () => {
+			await page
+				.getByText('Select a data set view. Beta')
+				.first()
+				.click();
+		});
+
+		await test.step('Open Data Set View Selector', async () => {
+			await page
+				.getByRole('button', {name: 'Select Data Set View'})
+				.click();
+		});
+
+		await test.step('Select Data Set View', async () => {
+			await expect(page.getByRole('dialog')).toBeVisible();
+
+			await expect(
+				page.getByRole('heading', {name: 'Select'})
+			).toBeVisible();
+
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.locator('li')
+				.filter({hasText: DATASET_VIEW_NAME})
+				.first()
+				.click();
+
+			await page
+				.frameLocator('iframe[title="Select"]')
+				.getByRole('button', {name: 'Save'})
+				.click();
+		});
+
+		await test.step('Publish page with Data Set View', async () => {
+			await fdsFragmentPage.publishPage();
+
+			await fdsFragmentPage.gotoPage({...siteInfo});
+
+			await expect(page.locator('.data-set-wrapper')).toBeVisible();
+		});
+
+		await test.step('Item action is present in table row', async () => {
+			const tableRow = await page.locator('.dnd-td.item-actions').first();
+
+			await expect(tableRow.getByRole('button')).toBeVisible();
+
+			await tableRow
+				.getByRole('button', {name: ASYNC_ITEM_ACTION_NAME})
+				.click();
+
+			await page.getByRole('alert').waitFor();
+
+			const alert = await page.getByRole('alert');
+
+			await expect(alert).toHaveText(
+				'Error:An unexpected error occurred.'
+			);
+		});
+
+		await test.step('Delete Data Set and site', async () => {
+			await fdsFragmentPage.deleteSite(siteInfo.site.id);
+			await dataSetsPage.deleteDataSet(DATASET_NAME);
+		});
+	});
 });

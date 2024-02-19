@@ -1,0 +1,5 @@
+theme-css-without-frontend-token-definition-json:
+    clayURL: css/clay.css
+    mainURL: css/main.css
+    name: theme-css-without-frontend-token-definition-json
+    type: themeCSS

@@ -1,0 +1,8 @@
+{
+	"liferayDesignPack": {
+		"baseTheme": "styled"
+	},
+	"main": "package.json",
+	"name": "theme-css-without-frontend-token-definition-json",
+	"version": "0.0.0"
+}

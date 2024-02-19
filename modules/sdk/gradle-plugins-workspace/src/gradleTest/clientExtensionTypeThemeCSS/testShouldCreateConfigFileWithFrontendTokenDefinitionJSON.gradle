@@ -1,0 +1,32 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":theme-css-with-frontend-token-definition-json:build"
+
+	doLast {
+		Project project = project(":theme-css-with-frontend-token-definition-json")
+
+		File buildDir = new File(project.buildDir, "liferay-client-extension-build")
+
+		File configJSONFile = new File(buildDir, "theme-css-with-frontend-token-definition-json.client-extension-config.json")
+
+		assert configJSONFile.exists()
+
+		def jsonSlurper = new JsonSlurper()
+
+		def jsonData = jsonSlurper.parse(configJSONFile)
+
+		String expectedJSON = "{\"frontendTokenCategories\":[{\"frontendTokenSets\":[{\"frontendTokens\":[{\"defaultValue\":\"#0b5fff\",\"editorType\":\"ColorPicker\",\"label\":\"brand-color-1\",\"mappings\":[{\"type\":\"cssVariable\",\"value\":\"brand-color-1\"}],\"name\":\"brandColor1\",\"type\":\"String\"}]}]}]}"
+
+		jsonData.each {
+			key, value ->
+			assert value instanceof Map
+
+			assert value.get("typeSettings") == ["frontendTokenDefinitionJSON=${expectedJSON}"]
+
+		}
+	}
+}

@@ -8,7 +8,6 @@ package com.liferay.users.admin.demo.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -27,20 +26,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.roles.admin.demo.data.creator.RoleDemoDataCreator;
-import com.liferay.site.demo.data.creator.SiteDemoDataCreator;
-import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
-import com.liferay.users.admin.demo.data.creator.CompanyAdminUserDemoDataCreator;
-import com.liferay.users.admin.demo.data.creator.SiteAdminUserDemoDataCreator;
-import com.liferay.users.admin.demo.data.creator.SiteMemberUserDemoDataCreator;
 
 import java.util.Calendar;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -52,21 +43,14 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		if (company.getCompanyId() == _portal.getDefaultCompanyId()) {
-			_populateTestData(company);
+			Organization organization = _addTestOrganization(company);
+
+			_addTestCompanyAdminUser(company);
+
+			_addTestOrganizationOwnerUser(organization);
+
+			_addTestUnprivilegedUser(company);
 		}
-
-		_populateDemoData(company);
-	}
-
-	@Deactivate
-	protected void deactivate() throws PortalException {
-		_basicUserDemoDataCreator.delete();
-		_companyAdminUserDemoDataCreator.delete();
-		_siteAdminUserDemoDataCreator.delete();
-		_siteMemberUserDemoDataCreator.delete();
-
-		_siteDemoDataCreator.delete();
-		_siteRoleDemoDataCreator.delete();
 	}
 
 	private User _addTestCompanyAdminUser(Company company) throws Exception {
@@ -211,78 +195,6 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		return null;
 	}
 
-	private void _populateDemoData(Company company) throws Exception {
-		_basicUserDemoDataCreator.create(
-			company.getCompanyId(), "usersn", "userea@liferay.com", "userfn",
-			"userln");
-
-		_companyAdminUserDemoDataCreator.create(
-			company.getCompanyId(), "bruno.admin@liferay.com");
-
-		Group acmeCorpGroup = _siteDemoDataCreator.create(
-			company.getCompanyId(), "Acme’s Corporation");
-
-		_siteAdminUserDemoDataCreator.create(
-			acmeCorpGroup.getGroupId(), "helen@liferay.com");
-
-		// Web Content Author role
-
-		String webContentAuthorPermissionsXML = StringUtil.read(
-			UsersDemo.class, "dependencies/permissions-web-content-author.xml");
-
-		Role webContentAuthorRole = _siteRoleDemoDataCreator.create(
-			company.getCompanyId(), "Web Content Author",
-			webContentAuthorPermissionsXML);
-
-		_siteMemberUserDemoDataCreator.create(
-			acmeCorpGroup.getGroupId(), "joe@liferay.com",
-			new long[] {webContentAuthorRole.getRoleId()});
-
-		// Forum Moderator role
-
-		Group petLoversGroup = _siteDemoDataCreator.create(
-			company.getCompanyId(), "Pet Lovers");
-
-		String forumModeratorPermissionsXML = StringUtil.read(
-			UsersDemo.class, "dependencies/permissions-forum-moderator.xml");
-
-		Role forumModeratorRole = _siteRoleDemoDataCreator.create(
-			company.getCompanyId(), "Forum Moderator",
-			forumModeratorPermissionsXML);
-
-		_siteMemberUserDemoDataCreator.create(
-			petLoversGroup.getGroupId(), "maria@liferay.com",
-			new long[] {forumModeratorRole.getRoleId()});
-
-		// Portal Content Reviewer role
-
-		Role portalContentReviewerRole = _roleLocalService.getRole(
-			company.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER);
-
-		User portalContentReviewerUser = _basicUserDemoDataCreator.create(
-			company.getCompanyId(), "reviewersn", "reviewerea@liferay.com",
-			"reviewerfn", "reviewerln");
-
-		_roleLocalService.addUserRole(
-			portalContentReviewerUser.getUserId(), portalContentReviewerRole);
-	}
-
-	private void _populateTestData(Company company) throws Exception {
-		Organization organization = _addTestOrganization(company);
-
-		_addTestCompanyAdminUser(company);
-
-		_addTestOrganizationOwnerUser(organization);
-
-		_addTestUnprivilegedUser(company);
-	}
-
-	@Reference
-	private BasicUserDemoDataCreator _basicUserDemoDataCreator;
-
-	@Reference
-	private CompanyAdminUserDemoDataCreator _companyAdminUserDemoDataCreator;
-
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -300,18 +212,6 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private SiteAdminUserDemoDataCreator _siteAdminUserDemoDataCreator;
-
-	@Reference
-	private SiteDemoDataCreator _siteDemoDataCreator;
-
-	@Reference
-	private SiteMemberUserDemoDataCreator _siteMemberUserDemoDataCreator;
-
-	@Reference(target = "(role.type=site)")
-	private RoleDemoDataCreator _siteRoleDemoDataCreator;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

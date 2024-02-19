@@ -1070,14 +1070,14 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
 
 		if (accountBriefs != null) {
-			existingUserAccount.setAccountBriefs(accountBriefs);
+			existingUserAccount.setAccountBriefs(() -> accountBriefs);
 		}
 
 		OrganizationBrief[] organizationBriefs =
 			userAccount.getOrganizationBriefs();
 
 		if (organizationBriefs != null) {
-			existingUserAccount.setOrganizationBriefs(organizationBriefs);
+			existingUserAccount.setOrganizationBriefs(() -> organizationBriefs);
 		}
 
 		UserAccountContactInformation userAccountContactInformation =
@@ -1093,19 +1093,20 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 			if (emailAddresses != null) {
 				existingUserAccountContactInformation.setEmailAddresses(
-					emailAddresses);
+					() -> emailAddresses);
 			}
 
 			String facebook = userAccountContactInformation.getFacebook();
 
 			if (facebook != null) {
-				existingUserAccountContactInformation.setFacebook(facebook);
+				existingUserAccountContactInformation.setFacebook(
+					() -> facebook);
 			}
 
 			String jabber = userAccountContactInformation.getJabber();
 
 			if (jabber != null) {
-				existingUserAccountContactInformation.setJabber(jabber);
+				existingUserAccountContactInformation.setJabber(() -> jabber);
 			}
 
 			PostalAddress[] postalAddresses =
@@ -1113,37 +1114,38 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 			if (postalAddresses != null) {
 				existingUserAccountContactInformation.setPostalAddresses(
-					postalAddresses);
+					() -> postalAddresses);
 			}
 
 			String skype = userAccountContactInformation.getSkype();
 
 			if (skype != null) {
-				existingUserAccountContactInformation.setSkype(skype);
+				existingUserAccountContactInformation.setSkype(() -> skype);
 			}
 
 			String sms = userAccountContactInformation.getSms();
 
 			if (sms != null) {
-				existingUserAccountContactInformation.setSms(sms);
+				existingUserAccountContactInformation.setSms(() -> sms);
 			}
 
 			Phone[] telephones = userAccountContactInformation.getTelephones();
 
 			if (telephones != null) {
-				existingUserAccountContactInformation.setTelephones(telephones);
+				existingUserAccountContactInformation.setTelephones(
+					() -> telephones);
 			}
 
 			String twitter = userAccountContactInformation.getTwitter();
 
 			if (twitter != null) {
-				existingUserAccountContactInformation.setTwitter(twitter);
+				existingUserAccountContactInformation.setTwitter(() -> twitter);
 			}
 
 			WebUrl[] webUrls = userAccountContactInformation.getWebUrls();
 
 			if (webUrls != null) {
-				existingUserAccountContactInformation.setWebUrls(webUrls);
+				existingUserAccountContactInformation.setWebUrls(() -> webUrls);
 			}
 		}
 	}

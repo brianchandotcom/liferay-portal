@@ -191,7 +191,7 @@ public class PageElementDTOConverter
 
 		if ((pageElement != null) && !pageElements.isEmpty()) {
 			pageElement.setPageElements(
-				pageElements.toArray(new PageElement[0]));
+				() -> pageElements.toArray(new PageElement[0]));
 		}
 
 		return pageElement;

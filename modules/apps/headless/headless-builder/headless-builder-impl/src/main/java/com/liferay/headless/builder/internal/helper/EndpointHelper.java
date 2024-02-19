@@ -139,7 +139,7 @@ public class EndpointHelper {
 				objectEntryProperties, properties, property);
 		}
 
-		objectEntry.setProperties(objectEntryProperties);
+		objectEntry.setProperties(() -> objectEntryProperties);
 
 		return _getResponseEntityMap(
 			_objectEntryHelper.addObjectEntry(

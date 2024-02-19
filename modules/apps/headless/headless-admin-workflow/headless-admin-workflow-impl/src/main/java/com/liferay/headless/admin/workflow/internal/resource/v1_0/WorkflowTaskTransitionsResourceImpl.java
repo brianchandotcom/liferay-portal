@@ -75,20 +75,20 @@ public class WorkflowTaskTransitionsResourceImpl
 			new WorkflowTaskTransition();
 
 		workflowTaskTransition.setTransitions(
-			transformToArray(
+			() -> transformToArray(
 				transitionNames,
 				transitionName -> TransitionUtil.toTransition(
 					contextAcceptLanguage.getPreferredLocale(), transitionName),
 				Transition.class));
 		workflowTaskTransition.setWorkflowDefinitionVersion(
-			String.valueOf(workflowTask.getWorkflowDefinitionVersion()));
+			() -> String.valueOf(workflowTask.getWorkflowDefinitionVersion()));
 		workflowTaskTransition.setWorkflowTaskLabel(
-			_language.get(
+			() -> _language.get(
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
 					contextAcceptLanguage.getPreferredLocale(),
 					WorkflowTaskTransitionsResourceImpl.class),
 				workflowTask.getName()));
-		workflowTaskTransition.setWorkflowTaskName(workflowTask.getName());
+		workflowTaskTransition.setWorkflowTaskName(workflowTask::getName);
 
 		return workflowTaskTransition;
 	}

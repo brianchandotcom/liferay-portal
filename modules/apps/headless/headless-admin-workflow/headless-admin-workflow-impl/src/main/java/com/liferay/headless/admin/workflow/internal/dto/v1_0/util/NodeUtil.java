@@ -16,18 +16,19 @@ import java.util.Locale;
 public class NodeUtil {
 
 	public static Node toNode(Locale locale, WorkflowNode workflowNode) {
-		Node node = new Node();
+		return new Node() {
+			{
+				setLabel(() -> workflowNode.getLabel(locale));
+				setName(workflowNode::getName);
+				setType(
+					() -> {
+						WorkflowNode.Type workflowNodeType =
+							workflowNode.getType();
 
-		node.setLabel(workflowNode.getLabel(locale));
-		node.setName(workflowNode.getName());
-		node.setType(
-			() -> {
-				WorkflowNode.Type workflowNodeType = workflowNode.getType();
-
-				return Node.Type.create(workflowNodeType.name());
-			});
-
-		return node;
+						return Node.Type.create(workflowNodeType.name());
+					});
+			}
+		};
 	}
 
 }

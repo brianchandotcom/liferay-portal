@@ -53,7 +53,7 @@ public class ListTypeEntryUtil {
 			}
 		};
 
-		listTypeEntry.setActions(actions);
+		listTypeEntry.setActions(() -> actions);
 
 		return listTypeEntry;
 	}

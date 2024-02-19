@@ -642,22 +642,22 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 			if (organizationContactInformation.getEmailAddresses() != null) {
 				existingOrganizationContactInformation.setEmailAddresses(
-					organizationContactInformation.getEmailAddresses());
+					organizationContactInformation::getEmailAddresses);
 			}
 
 			if (organizationContactInformation.getPostalAddresses() != null) {
 				existingOrganizationContactInformation.setPostalAddresses(
-					organizationContactInformation.getPostalAddresses());
+					organizationContactInformation::getPostalAddresses);
 			}
 
 			if (organizationContactInformation.getTelephones() != null) {
 				existingOrganizationContactInformation.setTelephones(
-					organizationContactInformation.getTelephones());
+					organizationContactInformation::getTelephones);
 			}
 
 			if (organizationContactInformation.getWebUrls() != null) {
 				existingOrganizationContactInformation.setWebUrls(
-					organizationContactInformation.getWebUrls());
+					organizationContactInformation::getWebUrls);
 			}
 		}
 
@@ -669,7 +669,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		if (parentOrganization != null) {
 			try {
 				existingOrganization.setParentOrganization(
-					_toOrganization(parentOrganization.getId()));
+					() -> _toOrganization(parentOrganization.getId()));
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
@@ -679,7 +679,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		}
 
 		if (organization.getServices() != null) {
-			existingOrganization.setServices(organization.getServices());
+			existingOrganization.setServices(organization::getServices);
 		}
 	}
 

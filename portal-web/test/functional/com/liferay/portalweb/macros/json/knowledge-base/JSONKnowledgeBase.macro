@@ -72,7 +72,7 @@ definition {
 				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d parentResourcePrimKey=${folderId} \
-				-d status=0 \
+				-d "status=-1" \
 				-d "start=-1" \
 				-d "end=-1" \
 				-d -orderByComparator=

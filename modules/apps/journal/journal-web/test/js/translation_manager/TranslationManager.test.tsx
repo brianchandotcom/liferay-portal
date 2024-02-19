@@ -96,10 +96,26 @@ describe('TranslationManager', () => {
 	});
 
 	it('attaches inputLocalized:localeChanged fire event on mount', () => {
+		const renderComponent = () =>
+			render(
+				<>
+					<div data-languageid="ar_SA" data-value="ar_SA" />
+
+					<TranslationManager {...DEFAULT_PROPS} />
+				</>
+			);
+
 		renderComponent();
 
-		expect(
-			global.Liferay.fire
-		).toHaveBeenCalledWith('inputLocalized:localeChanged', {item: null});
+		const item = document.createElement('div');
+		item.dataset.value = 'ar_SA';
+		item.dataset.languageid = 'ar_SA';
+
+		expect(global.Liferay.fire).toHaveBeenCalledWith(
+			'inputLocalized:localeChanged',
+			{
+				item,
+			}
+		);
 	});
 });

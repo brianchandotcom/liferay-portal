@@ -137,10 +137,10 @@ public class ImportObjectFolderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "externalReferenceCode");
 
 		if (Validator.isNotNull(externalReferenceCode)) {
-			objectFolder.setExternalReferenceCode(externalReferenceCode);
+			objectFolder.setExternalReferenceCode(() -> externalReferenceCode);
 		}
 
-		objectFolder.setName(ParamUtil.getString(actionRequest, "name"));
+		objectFolder.setName(() -> ParamUtil.getString(actionRequest, "name"));
 
 		objectFolderResource.putObjectFolderByExternalReferenceCode(
 			objectFolder.getExternalReferenceCode(), objectFolder);

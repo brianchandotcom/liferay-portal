@@ -70,7 +70,7 @@ public class ObjectLayoutUtil {
 			}
 		};
 
-		objectLayout.setActions(actions);
+		objectLayout.setActions(() -> actions);
 
 		return objectLayout;
 	}

@@ -130,11 +130,11 @@ public class ObjectEntryDTOConverter
 
 		User user = dtoConverterContext.getUser();
 
-		objectEntry.setActions(dtoConverterContext.getActions());
+		objectEntry.setActions(dtoConverterContext::getActions);
 
 		if (objectEntry.getStatus() == null) {
 			objectEntry.setStatus(
-				new Status() {
+				() -> new Status() {
 					{
 						setCode(() -> WorkflowConstants.STATUS_APPROVED);
 						setLabel(() -> WorkflowConstants.LABEL_APPROVED);
@@ -169,7 +169,7 @@ public class ObjectEntryDTOConverter
 					dtoConverterContext, map.get("key"),
 					objectField.getListTypeDefinitionId()));
 
-			objectEntry.setProperties(properties);
+			objectEntry.setProperties(() -> properties);
 		}
 
 		return objectEntry;
@@ -598,17 +598,16 @@ public class ObjectEntryDTOConverter
 						AuditEvent newAuditEvent = new AuditEvent();
 
 						newAuditEvent.setAuditFieldChanges(
-							_toAuditFieldChanges(
+							() -> _toAuditFieldChanges(
 								auditEvent.getAdditionalInfo(),
 								auditEvent.getEventType()));
 						newAuditEvent.setCreator(
-							CreatorUtil.toCreator(
+							() -> CreatorUtil.toCreator(
 								_portal, dtoConverterContext.getUriInfo(),
 								_userLocalService.fetchUser(
 									auditEvent.getUserId())));
-						newAuditEvent.setDateCreated(
-							auditEvent.getCreateDate());
-						newAuditEvent.setEventType(auditEvent.getEventType());
+						newAuditEvent.setDateCreated(auditEvent::getCreateDate);
+						newAuditEvent.setEventType(auditEvent::getEventType);
 
 						return newAuditEvent;
 					},
@@ -741,13 +740,13 @@ public class ObjectEntryDTOConverter
 							objectDefinition.getCompanyId(), "LPS-174455")) {
 
 						fileEntry.setFileBase64(
-							(String)NestedFieldsSupplier.supply(
+							() -> (String)NestedFieldsSupplier.supply(
 								objectFieldName + ".fileBase64",
 								fieldName -> Base64.encode(
 									_file.getBytes(
 										dlFileEntry.getContentStream()))));
 						fileEntry.setFolder(
-							(Folder)NestedFieldsSupplier.supply(
+							() -> (Folder)NestedFieldsSupplier.supply(
 								objectFieldName + ".folder",
 								fieldName -> {
 									if (!Objects.equals(
@@ -777,19 +776,19 @@ public class ObjectEntryDTOConverter
 											return dlFolder.
 												getExternalReferenceCode();
 										});
-									folder.setSiteId(dlFileEntry.getGroupId());
+									folder.setSiteId(dlFileEntry::getGroupId);
 
 									return folder;
 								}));
 					}
 
-					fileEntry.setId(dlFileEntry.getFileEntryId());
+					fileEntry.setId(dlFileEntry::getFileEntryId);
 					fileEntry.setLink(
-						LinkUtil.toLink(
+						() -> LinkUtil.toLink(
 							_dlAppService, dlFileEntry, _dlURLHelper,
 							objectDefinition.getExternalReferenceCode(),
 							objectEntry.getExternalReferenceCode(), _portal));
-					fileEntry.setName(dlFileEntry.getFileName());
+					fileEntry.setName(dlFileEntry::getFileName);
 				}
 
 				map.put(objectFieldName, fileEntry);

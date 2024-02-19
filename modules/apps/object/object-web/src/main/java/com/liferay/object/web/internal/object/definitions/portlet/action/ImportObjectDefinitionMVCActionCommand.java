@@ -148,24 +148,24 @@ public class ImportObjectDefinitionMVCActionCommand
 			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
 				jsonObject.toString());
 
-			objectDefinition.setActive(false);
+			objectDefinition.setActive(() -> false);
 
 			String externalReferenceCode = ParamUtil.getString(
 				actionRequest, "externalReferenceCode");
 
 			if (Validator.isNotNull(externalReferenceCode)) {
 				objectDefinition.setExternalReferenceCode(
-					externalReferenceCode);
+					() -> externalReferenceCode);
 			}
 
 			String name = ParamUtil.getString(actionRequest, "name");
 
 			if (Validator.isNotNull(name)) {
-				objectDefinition.setName(name);
+				objectDefinition.setName(() -> name);
 			}
 
 			objectDefinition.setObjectFolderExternalReferenceCode(
-				ParamUtil.getString(
+				() -> ParamUtil.getString(
 					actionRequest, "objectFolderExternalReferenceCode"));
 
 			try {
@@ -175,10 +175,10 @@ public class ImportObjectDefinitionMVCActionCommand
 							objectDefinition.getExternalReferenceCode(),
 							objectDefinition);
 
-				putObjectDefinition.setPortlet(objectDefinition.getPortlet());
+				putObjectDefinition.setPortlet(objectDefinition::getPortlet);
 
 				if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
-					putObjectDefinition.setStorageType(StringPool.BLANK);
+					putObjectDefinition.setStorageType(() -> StringPool.BLANK);
 				}
 
 				objectDefinitionResource.putObjectDefinition(

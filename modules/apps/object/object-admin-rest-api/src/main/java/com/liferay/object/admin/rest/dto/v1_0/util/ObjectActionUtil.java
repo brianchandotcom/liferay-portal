@@ -90,7 +90,7 @@ public class ObjectActionUtil {
 			}
 		};
 
-		objectAction.setActions(actions);
+		objectAction.setActions(() -> actions);
 
 		return objectAction;
 	}

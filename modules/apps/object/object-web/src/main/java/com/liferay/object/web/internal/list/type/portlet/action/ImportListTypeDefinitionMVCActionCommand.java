@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -102,10 +104,11 @@ public class ImportListTypeDefinitionMVCActionCommand
 		ListTypeDefinition listTypeDefinition = ListTypeDefinition.toDTO(
 			listTypeDefinitionJSONObject.toString());
 
+		Map<String, String> nameI18n = listTypeDefinition.getName_i18n();
+
 		listTypeDefinition.setName_i18n(
-			LocalizedMapUtil.mergeI18nMap(
-				listTypeDefinition.getName_i18n(),
-				LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			() -> LocalizedMapUtil.mergeI18nMap(
+				nameI18n, LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 				ParamUtil.getString(actionRequest, "name")));
 
 		listTypeDefinitionResource.putListTypeDefinitionByExternalReferenceCode(

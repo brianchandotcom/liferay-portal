@@ -512,7 +512,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 			return objectEntry;
 		}
 
-		objectEntry.setId((Long)map.get(getIdName()));
+		objectEntry.setId(() -> (Long)map.get(getIdName()));
 
 		Map<String, Object> properties = objectEntry.getProperties();
 

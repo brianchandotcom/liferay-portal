@@ -284,7 +284,8 @@ public class ObjectRelationshipResourceImpl
 						externalReferenceCode, contextCompany.getCompanyId(),
 						objectRelationship.getObjectDefinitionId1());
 
-		objectRelationship.setExternalReferenceCode(externalReferenceCode);
+		objectRelationship.setExternalReferenceCode(
+			() -> externalReferenceCode);
 
 		if (serviceBuilderObjectRelationship != null) {
 			return putObjectRelationship(

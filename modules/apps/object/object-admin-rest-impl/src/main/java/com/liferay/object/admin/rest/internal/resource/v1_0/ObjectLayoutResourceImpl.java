@@ -187,7 +187,7 @@ public class ObjectLayoutResourceImpl extends BaseObjectLayoutResourceImpl {
 						contextCompany.getCompanyId());
 
 			objectLayout.setObjectDefinitionId(
-				objectDefinition.getObjectDefinitionId());
+				objectDefinition::getObjectDefinitionId);
 		}
 
 		return _toObjectLayout(

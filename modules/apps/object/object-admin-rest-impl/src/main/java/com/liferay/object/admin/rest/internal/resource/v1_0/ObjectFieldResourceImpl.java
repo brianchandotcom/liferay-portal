@@ -174,26 +174,11 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		com.liferay.object.model.ObjectField serviceBuilderObjectField =
-			_objectFieldService.getObjectField(objectFieldId);
+		Long listTypeDefinitionId = objectField.getListTypeDefinitionId();
 
-		com.liferay.object.model.ObjectDefinition
-			serviceBuilderObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					serviceBuilderObjectField.getObjectDefinitionId());
-
-		if (!serviceBuilderObjectDefinition.isApproved()) {
-			objectField.setListTypeDefinitionId(
-				ObjectFieldUtil.addListTypeDefinition(
-					contextUser.getCompanyId(), _listTypeDefinitionLocalService,
-					_listTypeEntryLocalService, objectField,
-					contextUser.getUserId()));
-		}
-
-		if (Validator.isNull(objectField.getListTypeDefinitionId())) {
-			objectField.setListTypeDefinitionId(
-				serviceBuilderObjectField.getListTypeDefinitionId());
-		}
+		objectField.setListTypeDefinitionId(
+			() -> _getListTypeDefinitionId(
+				objectField, objectFieldId, listTypeDefinitionId));
 
 		return _toObjectField(
 			_objectFieldService.updateObjectField(
@@ -224,8 +209,36 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 
 		if (objectField.getObjectFieldSettings() != null) {
 			existingObjectField.setObjectFieldSettings(
-				objectField.getObjectFieldSettings());
+				objectField::getObjectFieldSettings);
 		}
+	}
+
+	private Long _getListTypeDefinitionId(
+			ObjectField objectField, long objectFieldId,
+			Long listTypeDefinitionId)
+		throws Exception {
+
+		com.liferay.object.model.ObjectField serviceBuilderObjectField =
+			_objectFieldService.getObjectField(objectFieldId);
+
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					serviceBuilderObjectField.getObjectDefinitionId());
+
+		if (!serviceBuilderObjectDefinition.isApproved()) {
+			listTypeDefinitionId = ObjectFieldUtil.addListTypeDefinition(
+				contextUser.getCompanyId(), _listTypeDefinitionLocalService,
+				_listTypeEntryLocalService, objectField,
+				contextUser.getUserId());
+		}
+
+		if (Validator.isNull(listTypeDefinitionId)) {
+			listTypeDefinitionId =
+				serviceBuilderObjectField.getListTypeDefinitionId();
+		}
+
+		return listTypeDefinitionId;
 	}
 
 	private Page<ObjectField> _getObjectFieldsPage(

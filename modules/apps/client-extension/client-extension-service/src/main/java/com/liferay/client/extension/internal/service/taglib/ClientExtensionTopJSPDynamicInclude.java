@@ -5,29 +5,15 @@
 
 package com.liferay.client.extension.internal.service.taglib;
 
-import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
-import com.liferay.client.extension.internal.service.taglib.util.ClientExtensionDynamicIncludeUtil;
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
-import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.manager.CETManager;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
-import java.util.List;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,63 +29,8 @@ public class ClientExtensionTopJSPDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		List<ClientExtensionEntryRel> clientExtensionEntryRels =
-			ClientExtensionDynamicIncludeUtil.getClientExtensionEntryRels(
-				themeDisplay.getLayout(),
-				ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
-
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				clientExtensionEntryRels) {
-
-			GlobalJSCET globalJSCET = (GlobalJSCET)_cetManager.getCET(
-				clientExtensionEntryRel.getCompanyId(),
-				clientExtensionEntryRel.getCETExternalReferenceCode());
-
-			if (globalJSCET == null) {
-				continue;
-			}
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				UnicodePropertiesBuilder.create(
-					true
-				).fastLoad(
-					clientExtensionEntryRel.getTypeSettings()
-				).build();
-
-			if (!Objects.equals(
-					typeSettingsUnicodeProperties.getProperty(
-						"scriptLocation", StringPool.BLANK),
-					"head")) {
-
-				continue;
-			}
-
-			printWriter.print("<script");
-			printWriter.print(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-					httpServletRequest));
-
-			String loadType = typeSettingsUnicodeProperties.getProperty(
-				"loadType", StringPool.BLANK);
-
-			if (Validator.isNotNull(loadType) &&
-				!Objects.equals(loadType, "default")) {
-
-				printWriter.print(StringPool.SPACE);
-				printWriter.print(loadType);
-				printWriter.print(StringPool.SPACE);
-			}
-
-			printWriter.print(" data-senna-track=\"temporary\" src=\"");
-			printWriter.print(globalJSCET.getURL());
-			printWriter.print("\" type=\"text/javascript\"></script>");
-		}
+		_clientExtensionJSInclude.include(
+			httpServletRequest, httpServletResponse, "head");
 	}
 
 	@Override
@@ -108,7 +39,14 @@ public class ClientExtensionTopJSPDynamicInclude implements DynamicInclude {
 			"/html/common/themes/top_js.jspf#resources");
 	}
 
+	@Activate
+	protected void activate() {
+		_clientExtensionJSInclude = new ClientExtensionJSInclude(_cetManager);
+	}
+
 	@Reference
 	private CETManager _cetManager;
+
+	private ClientExtensionJSInclude _clientExtensionJSInclude;
 
 }

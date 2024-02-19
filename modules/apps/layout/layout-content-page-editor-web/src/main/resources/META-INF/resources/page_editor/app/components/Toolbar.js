@@ -29,6 +29,7 @@ import ExperimentsLabel from './ExperimentsLabel';
 import HideSidebarButton from './HideSidebarButton';
 import NetworkStatusBar from './NetworkStatusBar';
 import PublishButton from './PublishButton';
+import ToggleConfigurationSidebarButton from './ToggleConfigurationSidebarButton';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
 import ViewportSizeSelector from './ViewportSizeSelector';
@@ -318,6 +319,12 @@ function ToolbarBody({className}) {
 						onPublish={onPublish}
 					/>
 				</li>
+
+				{Liferay.FeatureFlags['LPD-10988'] ? (
+					<li className="d-md-none nav-item">
+						<ToggleConfigurationSidebarButton />
+					</li>
+				) : null}
 			</ul>
 		</ClayLayout.ContainerFluid>
 	);

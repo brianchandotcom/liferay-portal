@@ -7,6 +7,7 @@ package com.liferay.object.web.internal.object.definitions.portlet.action.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -45,9 +46,11 @@ public class ExportImportObjectDefinitionUtil {
 					jsonFactory::createJSONObject));
 		}
 
+		ObjectField[] objectFields = objectDefinition.getObjectFields();
+
 		objectDefinition.setObjectFields(
-			ArrayUtil.filter(
-				objectDefinition.getObjectFields(),
+			() -> ArrayUtil.filter(
+				objectFields,
 				objectField -> Validator.isNull(
 					objectField.getRelationshipType())));
 	}

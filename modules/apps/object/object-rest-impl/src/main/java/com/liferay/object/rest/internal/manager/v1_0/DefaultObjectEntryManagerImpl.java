@@ -728,20 +728,20 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, objectDefinition, objectEntryId);
 
 		if (objectEntry.getDateCreated() != null) {
-			existingObjectEntry.setDateCreated(objectEntry.getDateCreated());
+			existingObjectEntry.setDateCreated(objectEntry::getDateCreated);
 		}
 
 		if (objectEntry.getDateModified() != null) {
-			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+			existingObjectEntry.setDateModified(objectEntry::getDateModified);
 		}
 
 		if (objectEntry.getExternalReferenceCode() != null) {
 			existingObjectEntry.setExternalReferenceCode(
-				objectEntry.getExternalReferenceCode());
+				objectEntry::getExternalReferenceCode);
 		}
 
 		if (objectEntry.getKeywords() != null) {
-			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+			existingObjectEntry.setKeywords(objectEntry::getKeywords);
 		}
 
 		if (objectEntry.getProperties() != null) {
@@ -750,16 +750,16 @@ public class DefaultObjectEntryManagerImpl
 
 			properties.putAll(objectEntry.getProperties());
 
-			existingObjectEntry.setProperties(properties);
+			existingObjectEntry.setProperties(() -> properties);
 		}
 
 		if (objectEntry.getStatus() != null) {
-			existingObjectEntry.setStatus(objectEntry.getStatus());
+			existingObjectEntry.setStatus(objectEntry::getStatus);
 		}
 
 		if (objectEntry.getTaxonomyCategoryIds() != null) {
 			existingObjectEntry.setTaxonomyCategoryIds(
-				objectEntry.getTaxonomyCategoryIds());
+				objectEntry::getTaxonomyCategoryIds);
 		}
 
 		return updateObjectEntry(
@@ -1420,8 +1420,8 @@ public class DefaultObjectEntryManagerImpl
 				objectField.getObjectFieldId(), serviceContext);
 		}
 
-		fileEntry.setFileBase64((String)null);
-		fileEntry.setId(serviceBuilderFileEntry.getFileEntryId());
+		fileEntry.setFileBase64(() -> (String)null);
+		fileEntry.setId(serviceBuilderFileEntry::getFileEntryId);
 
 		Map<String, Object> properties = objectEntry.getProperties();
 

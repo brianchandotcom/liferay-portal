@@ -523,7 +523,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		ObjectEntry objectEntry, ObjectEntry existingObjectEntry) {
 
 		if (objectEntry.getStatus() != null) {
-			existingObjectEntry.setStatus(objectEntry.getStatus());
+			existingObjectEntry.setStatus(objectEntry::getStatus);
 		}
 	}
 

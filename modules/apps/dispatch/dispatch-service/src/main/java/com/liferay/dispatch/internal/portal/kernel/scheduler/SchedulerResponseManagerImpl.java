@@ -9,7 +9,6 @@ import com.liferay.dispatch.scheduler.SchedulerResponseManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -148,9 +147,6 @@ public class SchedulerResponseManagerImpl implements SchedulerResponseManager {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerResponseManagerImpl.class);
-
-	@Reference
-	private MessageBus _messageBus;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

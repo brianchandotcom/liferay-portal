@@ -14,7 +14,9 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -71,9 +73,7 @@ public class PublicationUserNotificationTest {
 	public void testUserNotificationForPublicationAdministrator()
 		throws Exception {
 
-		_addPublicationUserGroupRole(
-			PublicationRoleConstants.NAME_ADMIN,
-			PublicationRoleConstants.ROLE_ADMIN);
+		_addPublicationUserGroupRole(PublicationRoleConstants.NAME_ADMIN);
 
 		CTCollectionTestUtil.publishCTCollectionWithError(
 			_ctCollection.getCtCollectionId());
@@ -89,9 +89,7 @@ public class PublicationUserNotificationTest {
 
 	@Test
 	public void testUserNotificationForPublicationEditor() throws Exception {
-		_addPublicationUserGroupRole(
-			PublicationRoleConstants.NAME_EDITOR,
-			PublicationRoleConstants.ROLE_EDITOR);
+		_addPublicationUserGroupRole(PublicationRoleConstants.NAME_EDITOR);
 
 		CTCollectionTestUtil.publishCTCollectionWithError(
 			_ctCollection.getCtCollectionId());
@@ -124,9 +122,7 @@ public class PublicationUserNotificationTest {
 
 	@Test
 	public void testUserNotificationForPublicationPublisher() throws Exception {
-		_addPublicationUserGroupRole(
-			PublicationRoleConstants.NAME_PUBLISHER,
-			PublicationRoleConstants.ROLE_PUBLISHER);
+		_addPublicationUserGroupRole(PublicationRoleConstants.NAME_PUBLISHER);
 
 		CTCollectionTestUtil.publishCTCollectionWithError(
 			_ctCollection.getCtCollectionId());
@@ -142,9 +138,7 @@ public class PublicationUserNotificationTest {
 
 	@Test
 	public void testUserNotificationForPublicationViewer() throws Exception {
-		_addPublicationUserGroupRole(
-			PublicationRoleConstants.NAME_VIEWER,
-			PublicationRoleConstants.ROLE_VIEWER);
+		_addPublicationUserGroupRole(PublicationRoleConstants.NAME_VIEWER);
 
 		CTCollectionTestUtil.publishCTCollectionWithError(
 			_ctCollection.getCtCollectionId());
@@ -162,13 +156,9 @@ public class PublicationUserNotificationTest {
 	public void testUserWithMultipleRolesNotificationEventsCount()
 		throws Exception {
 
-		_addPublicationUserGroupRole(
-			PublicationRoleConstants.NAME_ADMIN,
-			PublicationRoleConstants.ROLE_ADMIN);
+		_addPublicationUserGroupRole(PublicationRoleConstants.NAME_ADMIN);
 
-		_addPublicationUserGroupRole(
-			PublicationRoleConstants.NAME_EDITOR,
-			PublicationRoleConstants.ROLE_EDITOR);
+		_addPublicationUserGroupRole(PublicationRoleConstants.NAME_EDITOR);
 
 		CTCollectionTestUtil.publishCTCollectionWithError(
 			_ctCollection.getCtCollectionId());
@@ -182,10 +172,15 @@ public class PublicationUserNotificationTest {
 			userNotificationEvents.size());
 	}
 
-	private void _addPublicationUserGroupRole(String roleName, int roleValue)
+	private void _addPublicationUserGroupRole(String roleName)
 		throws Exception {
 
-		Role role = RoleTestUtil.addRole(roleName, roleValue);
+		Role role = _roleLocalService.fetchRole(_user.getCompanyId(), roleName);
+
+		if (role == null) {
+			role = RoleTestUtil.addRole(
+				roleName, RoleConstants.TYPE_PUBLICATIONS);
+		}
 
 		_userGroupRoleLocalService.addUserGroupRole(
 			_user.getUserId(), _group.getGroupId(), role.getRoleId());
@@ -196,6 +191,9 @@ public class PublicationUserNotificationTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	private User _user;
 

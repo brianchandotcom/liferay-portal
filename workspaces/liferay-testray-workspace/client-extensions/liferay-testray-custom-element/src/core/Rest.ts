@@ -29,15 +29,12 @@ const getNestedFieldDepth = (nestedFields?: string) => {
 	if (!nestedFields) {
 		return 1;
 	}
+	const nestedFieldsDepthCount = nestedFields
+		.split(',')
+		.map((item) => item.split('.').length);
 
-	const nestedFieldsDepthArguments = nestedFields.split(',');
-
-	return Math.max(
-		...nestedFieldsDepthArguments.map((item) => item.split('.').length),
-		nestedFieldsDepthArguments.length
-	);
+	return Math.max(...nestedFieldsDepthCount);
 };
-
 interface RestContructor<
 	YupModel = any,
 	ObjectModel = any,
@@ -68,6 +65,7 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		adapter,
 		fields = '',
 		nestedFields = '',
+		nestedFieldsDepth,
 		transformData,
 		uri,
 	}: RestContructor<YupModel, ObjectModel, NestedObjectOptions>) {
@@ -78,7 +76,9 @@ class Rest<YupModel = any, ObjectModel = any, NestedObjectOptions = any> {
 		if (nestedFields || fields) {
 			this.fields = `fields=${fields}`;
 			this.nestedFields = `nestedFields=${nestedFields}`;
-			this.nestedFieldsDepth = getNestedFieldDepth(nestedFields);
+			this.nestedFieldsDepth = nestedFieldsDepth
+				? nestedFieldsDepth
+				: getNestedFieldDepth(nestedFields);
 			this.resource = `/${uri}?${this.nestedFields}&nestedFieldsDepth=${this.nestedFieldsDepth}&${this.fields}`;
 		}
 

@@ -76,8 +76,9 @@ public class CopyDataDefinitionMVCActionCommand
 			dataDefinitionResource.postDataDefinitionCopy(ddmStructureId);
 
 		dataDefinition.setDescription(
-			LocalizedValueUtil.toStringObjectMap(descriptionMap));
-		dataDefinition.setName(LocalizedValueUtil.toStringObjectMap(nameMap));
+			() -> LocalizedValueUtil.toStringObjectMap(descriptionMap));
+		dataDefinition.setName(
+			() -> LocalizedValueUtil.toStringObjectMap(nameMap));
 
 		dataDefinitionResource.putDataDefinition(
 			dataDefinition.getId(), dataDefinition);

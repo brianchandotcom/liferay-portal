@@ -173,7 +173,8 @@ public class EditFileEntryTypeMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		dataDefinition.setDefaultDataLayout(
-			DataLayout.toDTO(ParamUtil.getString(actionRequest, "dataLayout")));
+			() -> DataLayout.toDTO(
+				ParamUtil.getString(actionRequest, "dataLayout")));
 
 		DataDefinitionResource dataDefinitionResource =
 			dataDefinitionResourceBuilder.user(
@@ -297,7 +298,8 @@ public class EditFileEntryTypeMVCActionCommand
 			actionRequest, "fileEntryTypeId");
 
 		dataDefinition.setDefaultDataLayout(
-			DataLayout.toDTO(ParamUtil.getString(actionRequest, "dataLayout")));
+			() -> DataLayout.toDTO(
+				ParamUtil.getString(actionRequest, "dataLayout")));
 
 		DataDefinitionResource dataDefinitionResource =
 			dataDefinitionResourceBuilder.user(

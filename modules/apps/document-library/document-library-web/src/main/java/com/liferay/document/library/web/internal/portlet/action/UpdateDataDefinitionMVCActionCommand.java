@@ -89,7 +89,8 @@ public class UpdateDataDefinitionMVCActionCommand
 			ParamUtil.getString(actionRequest, "dataDefinition"));
 
 		dataDefinition.setDefaultDataLayout(
-			DataLayout.toDTO(ParamUtil.getString(actionRequest, "dataLayout")));
+			() -> DataLayout.toDTO(
+				ParamUtil.getString(actionRequest, "dataLayout")));
 
 		if (ArrayUtil.isEmpty(dataDefinition.getDataDefinitionFields())) {
 			throw new DataDefinitionValidationException.MustSetFields();

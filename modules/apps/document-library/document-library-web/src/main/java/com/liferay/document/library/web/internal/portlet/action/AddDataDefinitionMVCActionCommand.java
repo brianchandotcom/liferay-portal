@@ -61,7 +61,8 @@ public class AddDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "dataDefinition"));
 
 		dataDefinition.setDefaultDataLayout(
-			DataLayout.toDTO(ParamUtil.getString(actionRequest, "dataLayout")));
+			() -> DataLayout.toDTO(
+				ParamUtil.getString(actionRequest, "dataLayout")));
 
 		try {
 			if (ArrayUtil.isEmpty(dataDefinition.getDataDefinitionFields())) {

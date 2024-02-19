@@ -23,6 +23,7 @@ export interface ICreationAction extends IBaseAction {
 }
 
 export interface IItemAction extends IBaseAction {
+	confirmationMessage?: string;
 	method?: AsyncActionMethod;
 	permissionKey?: string;
 	type: ItemActionTypes;

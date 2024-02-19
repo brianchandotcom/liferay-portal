@@ -14,6 +14,7 @@ export class ActionsPage {
 	readonly newActionButton: Locator;
 	readonly newActionForm: {
 		addIconButton: Locator;
+		confirmationMessageText: Locator;
 		headlessPermissionKeyText: Locator;
 		methodSelect: Locator;
 		nameInput: Locator;
@@ -38,6 +39,9 @@ export class ActionsPage {
 		this.newActionButton = page.getByRole('button', {name: 'Add Action'});
 		this.newActionForm = {
 			addIconButton: page.getByLabel('add-icon'),
+			confirmationMessageText: page.getByLabel('Confirmation Message', {
+				exact: true,
+			}),
 			headlessPermissionKeyText: page.getByLabel(
 				'Headless Action KeyRequired',
 				{exact: true}
@@ -134,6 +138,12 @@ export class ActionsPage {
 					actionProps.permissionKey
 				);
 			}
+		}
+
+		if ('confirmationMessage' in actionProps) {
+			this.newActionForm.confirmationMessageText.fill(
+				actionProps.confirmationMessage
+			);
 		}
 
 		await this.newActionForm.saveButton.click();

@@ -26,7 +26,7 @@ export const test = mergeTests(
 );
 
 test.describe('Data Set Item Actions', () => {
-	test.skip('Create a Link Item Action', async ({
+	test('Create a Link Item Action', async ({
 		actionsPage,
 		dataSetsPage,
 		page,
@@ -224,7 +224,7 @@ test.describe('Data Set Item Actions', () => {
 		});
 	});
 
-	test.skip('Link, Modal and Side Panel Item Actions are shown in fragment', async ({
+	test('Link, Modal and Side Panel Item Actions are shown in fragment', async ({
 		actionsPage,
 		dataSetsPage,
 		fdsFragmentPage,
@@ -481,7 +481,7 @@ test.describe('Data Set Item Actions', () => {
 		});
 	});
 
-	test.skip('Async and Headless Item Actions are shown in fragment', async ({
+	test('Async and Headless Item Actions are shown in fragment', async ({
 		actionsPage,
 		dataSetsPage,
 		fdsFragmentPage,

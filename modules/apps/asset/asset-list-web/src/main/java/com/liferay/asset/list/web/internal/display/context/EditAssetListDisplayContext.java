@@ -1279,14 +1279,24 @@ public class EditAssetListDisplayContext {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getClassTypeIdUnsafeConsumer(
-				AssetRendererFactory<?> assetRendererFactory,
-				String assetEntrySubtype, long classTypeId,
-				ClassTypeReader classTypeReader)
-		throws Exception {
+		_getClassTypeIdUnsafeConsumer(
+			AssetRendererFactory<?> assetRendererFactory,
+			String assetEntrySubtype, long classTypeId,
+			ClassTypeReader classTypeReader) {
 
-		ClassType classType = classTypeReader.getClassType(
-			classTypeId, _themeDisplay.getLocale());
+		ClassType classType;
+
+		try {
+			classType = classTypeReader.getClassType(
+				classTypeId, _themeDisplay.getLocale());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
 
 		if (Validator.isNotNull(assetEntrySubtype) &&
 			!Objects.equals(

@@ -253,9 +253,10 @@ public class ObjectEntryDTOConverter
 	}
 
 	private void _addManyToOneObjectRelationshipNames(
-		Map<String, UnsafeSupplier<Object, Exception>> map, ObjectField objectField,
-		String objectFieldName, ObjectRelationship objectRelationship,
-		long primaryKey, Map<String, Serializable> values) {
+		Map<String, UnsafeSupplier<Object, Exception>> map,
+		ObjectField objectField, String objectFieldName,
+		ObjectRelationship objectRelationship, long primaryKey,
+		Map<String, Serializable> values) {
 
 		String objectRelationshipERCObjectFieldName =
 			ObjectFieldSettingUtil.getValue(
@@ -268,18 +269,21 @@ public class ObjectEntryDTOConverter
 
 		if (map.get(objectRelationship.getName()) == null) {
 			map.put(
-				objectRelationship.getName() + "ERC", () -> relatedObjectEntryERC);
+				objectRelationship.getName() + "ERC",
+				() -> relatedObjectEntryERC);
 		}
 
 		map.put(objectFieldName, () -> primaryKey);
 
-		map.put(objectRelationshipERCObjectFieldName, () -> relatedObjectEntryERC);
+		map.put(
+			objectRelationshipERCObjectFieldName, () -> relatedObjectEntryERC);
 	}
 
 	private void _addManyToOneRelatedObjectEntries(
 			DTOConverterContext dtoConverterContext,
-			Map<String, UnsafeSupplier<Object, Exception>> map, String objectFieldName,
-			ObjectRelationship objectRelationship, long primaryKey)
+			Map<String, UnsafeSupplier<Object, Exception>> map,
+			String objectFieldName, ObjectRelationship objectRelationship,
+			long primaryKey)
 		throws Exception {
 
 		String relatedObjectDefinitionName = StringUtil.replaceLast(
@@ -410,18 +414,14 @@ public class ObjectEntryDTOConverter
 			if (StringUtil.equals(
 					nestedFieldName, objectRelationship.getName())) {
 
-				map.put(
-					objectRelationship.getName(),
-					() ->  entry.getValue());
+				map.put(objectRelationship.getName(), entry::getValue);
 			}
 
 			if (nestedFieldName.contains(relatedObjectDefinitionName) ||
 				StringUtil.equals(
 					nestedFieldName, objectRelationship.getName())) {
 
-				map.put(
-					manyToOneRelationshipName,
-					() -> entry.getValue());
+				map.put(manyToOneRelationshipName, entry::getValue);
 			}
 		}
 	}
@@ -788,12 +788,12 @@ public class ObjectEntryDTOConverter
 
 											Folder folder = new Folder();
 
+											long folderId =
+												dlFileEntry.getFolderId();
+
 											folder.setExternalReferenceCode(
 												() -> {
-													if (dlFileEntry.
-															getFolderId() ==
-																0) {
-
+													if (folderId == 0) {
 														return null;
 													}
 

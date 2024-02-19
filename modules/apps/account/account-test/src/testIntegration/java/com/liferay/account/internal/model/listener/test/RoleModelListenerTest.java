@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -58,7 +57,7 @@ public class RoleModelListenerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_company = CompanyLocalServiceUtil.getCompany(
+		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 	}
 
@@ -211,10 +210,10 @@ public class RoleModelListenerTest {
 	private static Company _company;
 
 	@Inject
-	private AccountRoleLocalService _accountRoleLocalService;
+	private static CompanyLocalService _companyLocalService;
 
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

@@ -8,13 +8,13 @@ import {UseFieldArrayAppend} from 'react-hook-form';
 
 import i18n from '../../../../../../i18n';
 
-type StackHistoryProps = {
+type RunsHistoryProps = {
 	append: UseFieldArrayAppend<any>;
 	fieldsHistory: any[];
 	setFieldsHistory: (fieldHistory: any[]) => void;
 };
 
-const StackHistory: React.FC<StackHistoryProps> = ({
+const RunsHistory: React.FC<RunsHistoryProps> = ({
 	append,
 	fieldsHistory,
 	setFieldsHistory,
@@ -54,4 +54,4 @@ const StackHistory: React.FC<StackHistoryProps> = ({
 	);
 };
 
-export default StackHistory;
+export default RunsHistory;

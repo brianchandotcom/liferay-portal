@@ -8,7 +8,7 @@ import TestrayError from '../../TestrayError';
 import Rest from '../../core/Rest';
 import SearchBuilder from '../../core/SearchBuilder';
 import i18n from '../../i18n';
-import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/StackList';
+import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/RunsList';
 import yupSchema from '../../schema/yup';
 import {CaseResultStatuses} from '../../util/statuses';
 import fetcher from '../fetcher';
@@ -71,9 +71,9 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 		let runIndex = 1;
 
 		for (const run of runs) {
-			const factorOptions = (Object.values(
-				run
-			) as CategoryOptions[]).filter(Boolean);
+			const factorOptions = (
+				Object.values(run) as CategoryOptions[]
+			).filter(Boolean);
 
 			const factorOptionsList = factorOptions
 				.filter(({factorOption}) => Boolean(factorOption))
@@ -99,7 +99,8 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 					factorOption.factorOptionId
 				) {
 					await testrayFactorRest.create({
-						factorCategoryId: factorOption.factorCategoryId?.toString(),
+						factorCategoryId:
+							factorOption.factorCategoryId?.toString(),
 						factorOptionId: factorOption.factorOptionId?.toString(),
 						name: '',
 						routineId: undefined,

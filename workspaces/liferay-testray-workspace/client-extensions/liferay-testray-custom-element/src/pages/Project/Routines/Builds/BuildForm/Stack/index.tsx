@@ -5,10 +5,10 @@
 
 import {useState} from 'react';
 
-import StackHistory from './StackHistory';
-import StackList, {StackListProps} from './StackList';
+import RunsList, {RunsListProps} from './RunsList';
+import RunsHistory from './RunsHistory';
 
-type StackProps = {} & StackListProps;
+type StackProps = {} & RunsListProps;
 
 const Stack: React.FC<StackProps> = ({
 	append,
@@ -26,13 +26,13 @@ const Stack: React.FC<StackProps> = ({
 
 	return (
 		<>
-			<StackHistory
+			<RunsHistory
 				append={append}
 				fieldsHistory={fieldsHistory}
 				setFieldsHistory={setFieldsHistory}
 			/>
 
-			<StackList
+			<RunsList
 				{...stackProps}
 				append={append}
 				fields={fields}

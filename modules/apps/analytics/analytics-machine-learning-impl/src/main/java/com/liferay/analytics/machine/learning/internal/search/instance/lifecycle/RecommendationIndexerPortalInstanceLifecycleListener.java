@@ -9,7 +9,6 @@ import com.liferay.analytics.machine.learning.internal.recommendation.constants.
 import com.liferay.analytics.machine.learning.internal.recommendation.search.RecommendationIndexer;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -69,10 +68,6 @@ public class RecommendationIndexerPortalInstanceLifecycleListener
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		if (!FeatureFlagManagerUtil.isEnabled("LRAC-14771")) {
-			return;
-		}
-
 		_recommendationIndexers.add(
 			new RecommendationIndexer(
 				RecommendationIndexNames.MOST_VIEWED_CONTENT_RECOMMENDATION,

@@ -12,9 +12,9 @@ export declare function getDefaultValueFieldSettings(
 		| number
 		| boolean
 		| Partial<Liferay.Language.FullyLocalizedValue<string>>
-		| ObjectFieldPicklistSetting
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
+		| ObjectFieldPicklistSetting
 		| undefined;
 };
 export declare function getUpdatedDefaultValueFieldSettings(

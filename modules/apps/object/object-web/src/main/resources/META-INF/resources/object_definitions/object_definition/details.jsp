@@ -21,7 +21,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 
 <div id="<portlet:namespace />EditObjectDefinition">
 	<react:component
-		module="js/components/ObjectDetails/EditObjectDetails"
+		module="{EditObjectDetails} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))

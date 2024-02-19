@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
-import {API, stringUtils, openToast} from '@liferay/object-js-components-web';
+import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
 import {createResourceURL, fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 

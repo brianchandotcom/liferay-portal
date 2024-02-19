@@ -12,7 +12,7 @@ ObjectDefinitionsStateManagerDisplayContext objectDefinitionsStateManagerDisplay
 %>
 
 <react:component
-	module="js/components/EditObjectStateField"
+	module="{EditObjectStateField} from object-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"objectField", objectDefinitionsStateManagerDisplayContext.getObjectFieldJSONObject((ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD))

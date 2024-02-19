@@ -16,7 +16,7 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 %>
 
 <react:component
-	module="js/components/ObjectAction/EditObjectAction"
+	module="{EditObjectAction} from object-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"isApproved", objectDefinition.isApproved()

@@ -11,8 +11,8 @@ import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
 import {
 	FormError,
-	constantsUtils,
 	SingleSelect,
+	constantsUtils,
 	stringUtils,
 	useForm,
 } from '@liferay/object-js-components-web';

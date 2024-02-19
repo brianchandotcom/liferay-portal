@@ -22,7 +22,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="js/components/Layout/Layouts"
+		module="{Layouts} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsLayoutsDisplayContext.getAPIURL()
@@ -47,7 +47,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div id="<portlet:namespace />AddObjectLayout">
 	<react:component
-		module="js/components/ModalAddObjectLayout"
+		module="{ModalAddObjectLayout} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsLayoutsDisplayContext.getAPIURL()

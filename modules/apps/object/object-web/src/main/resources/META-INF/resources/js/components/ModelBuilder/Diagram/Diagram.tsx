@@ -33,6 +33,21 @@ import {getUnsupportedObjectRelationshipErrorMessage} from '../utils';
 
 import './Diagram.scss';
 
+let ReactFlowDefault = ReactFlow;
+
+// `react-flow-renderer` provides both a commonjs and ESM version.
+// We need this logic here so that both work. Unit tests rely on commonjs and
+// our DXP runtime uses ESM.
+
+// @ts-ignore
+
+if (ReactFlowDefault.default) {
+
+	// @ts-ignore
+
+	ReactFlowDefault = ReactFlowDefault.default;
+}
+
 const NODE_TYPES = {
 	objectDefinitionNode: ObjectDefinitionNode,
 };
@@ -258,7 +273,7 @@ function DiagramBuilder() {
 				/>
 			)}
 
-			<ReactFlow
+			<ReactFlowDefault
 				connectionLineStyle={{stroke: '#0B5FFF'}}
 				connectionLineType={ConnectionLineType.SmoothStep}
 				connectionMode={ConnectionMode.Loose}
@@ -310,7 +325,7 @@ function DiagramBuilder() {
 						/>
 					</div>
 				)}
-			</ReactFlow>
+			</ReactFlowDefault>
 		</div>
 	);
 }

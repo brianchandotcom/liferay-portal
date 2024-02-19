@@ -22,7 +22,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="js/components/ObjectAction/Actions"
+		module="{Actions} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsActionsDisplayContext.getAPIURL()
@@ -47,7 +47,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="js/components/ExpressionBuilderModal"
+		module="{ExpressionBuilderModal} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"sidebarElements", objectDefinitionsActionsDisplayContext.getObjectActionCodeEditorElements()
@@ -58,6 +58,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="js/components/ModalSelectObjectFields"
+		module="{ModalSelectObjectFields} from object-web"
 	/>
 </div>

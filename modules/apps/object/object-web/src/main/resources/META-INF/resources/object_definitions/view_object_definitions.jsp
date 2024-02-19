@@ -15,7 +15,7 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 
 <div>
 	<react:component
-		module="js/components/ViewObjectDefinitions/ViewObjectDefinitions"
+		module="{ViewObjectDefinitions} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"baseResourceURL", String.valueOf(baseResourceURL)

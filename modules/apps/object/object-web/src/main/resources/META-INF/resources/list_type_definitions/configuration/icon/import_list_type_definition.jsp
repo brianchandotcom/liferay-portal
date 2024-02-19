@@ -9,7 +9,7 @@
 
 <div>
 	<react:component
-		module="js/components/ModalImport/ModalImport"
+		module="{ModalImport} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", "/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/"

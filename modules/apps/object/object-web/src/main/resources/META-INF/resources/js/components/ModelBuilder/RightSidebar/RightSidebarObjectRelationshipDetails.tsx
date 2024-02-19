@@ -16,8 +16,8 @@ import {
 	API,
 	Input,
 	SingleSelect,
-	stringUtils,
 	openToast,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 

@@ -35,7 +35,7 @@
 			"<rootDir>/src/main/resources/META-INF/resources/js/tests/**/*.spec.tsx"
 		]
 	},
-	"main": "index.js",
+	"main": "js/index.ts",
 	"name": "@liferay/object-web",
 	"private": true,
 	"scripts": {

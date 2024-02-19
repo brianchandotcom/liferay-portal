@@ -22,7 +22,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="js/components/ObjectView/Views"
+		module="{Views} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsViewsDisplayContext.getAPIURL()
@@ -47,7 +47,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div id="<portlet:namespace />AddObjectView">
 	<react:component
-		module="js/components/ModalAddObjectCustomView"
+		module="{ModalAddObjectCustomView} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsViewsDisplayContext.getAPIURL()
@@ -58,6 +58,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="js/components/ModalSelectObjectFields"
+		module="{ModalSelectObjectFields} from object-web"
 	/>
 </div>

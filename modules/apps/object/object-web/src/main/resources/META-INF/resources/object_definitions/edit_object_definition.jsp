@@ -28,7 +28,7 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 		<c:otherwise>
 			<div>
 				<react:component
-					module="js/components/ObjectManagementToolbar"
+					module="{ObjectManagementToolbar} from object-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))

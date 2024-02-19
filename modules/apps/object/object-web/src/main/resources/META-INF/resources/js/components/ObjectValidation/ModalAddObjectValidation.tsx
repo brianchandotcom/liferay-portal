@@ -11,8 +11,8 @@ import {
 	API,
 	FormError,
 	Input,
-	constantsUtils,
 	SingleSelect,
+	constantsUtils,
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';

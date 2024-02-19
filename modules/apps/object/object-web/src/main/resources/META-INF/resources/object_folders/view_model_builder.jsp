@@ -23,7 +23,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 
 <div>
 	<react:component
-		module="js/components/ModelBuilder/index"
+		module="{ModelBuilder} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
@@ -60,6 +60,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 
 <div>
 	<react:component
-		module="js/components/ExpressionBuilderModal"
+		module="{ExpressionBuilderModal} from object-web"
 	/>
 </div>

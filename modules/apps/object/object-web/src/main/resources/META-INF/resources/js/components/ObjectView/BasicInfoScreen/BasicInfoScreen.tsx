@@ -8,8 +8,8 @@ import {
 	Card,
 	Input,
 	constantsUtils,
-	stringUtils,
 	invalidateRequired,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React from 'react';
 

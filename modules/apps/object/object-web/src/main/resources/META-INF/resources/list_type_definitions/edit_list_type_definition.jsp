@@ -14,7 +14,7 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 %>
 
 <react:component
-	module="js/components/ListTypeDefinition/EditListTypeDefinition"
+	module="{EditListTypeDefinition} from object-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"listTypeDefinitionId", listTypeDefinition.getListTypeDefinitionId()

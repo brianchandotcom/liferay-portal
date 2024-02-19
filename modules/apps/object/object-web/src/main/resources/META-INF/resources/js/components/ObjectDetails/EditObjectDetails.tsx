@@ -4,7 +4,7 @@
  */
 
 import ClayPanel from '@clayui/panel';
-import {API, stringUtils, openToast} from '@liferay/object-js-components-web';
+import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
 import {FeatureIndicator} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 

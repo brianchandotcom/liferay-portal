@@ -16,7 +16,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
 
 <react:component
-	module="js/components/ObjectField/EditObjectField"
+	module="{EditObjectField} from object-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"baseResourceURL", String.valueOf(baseResourceURL)

@@ -24,7 +24,7 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="js/components/ObjectField/Fields"
+		module="{Fields} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
@@ -51,6 +51,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="js/components/ExpressionBuilderModal"
+		module="{ExpressionBuilderModal} from object-web"
 	/>
 </div>

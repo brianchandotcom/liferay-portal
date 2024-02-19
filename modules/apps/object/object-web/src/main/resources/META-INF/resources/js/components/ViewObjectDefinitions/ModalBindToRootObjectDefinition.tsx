@@ -10,8 +10,8 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {
 	Input,
 	SingleSelect,
-	stringUtils,
 	openToast,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';

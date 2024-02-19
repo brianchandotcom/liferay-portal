@@ -13,8 +13,8 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {
 	FormError,
 	Input,
-	constantsUtils,
 	SingleSelect,
+	constantsUtils,
 	stringUtils,
 	useForm,
 } from '@liferay/object-js-components-web';

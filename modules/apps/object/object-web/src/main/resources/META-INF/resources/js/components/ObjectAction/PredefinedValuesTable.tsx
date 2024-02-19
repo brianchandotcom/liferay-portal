@@ -11,9 +11,9 @@ import {
 	Card,
 	DatePicker,
 	ExpressionBuilder,
-	stringUtils,
 	onActionDropdownItemClick,
 	openToast,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo} from 'react';
 

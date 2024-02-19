@@ -8,9 +8,9 @@ import {
 	API,
 	SidePanelForm,
 	SidebarCategory,
-	stringUtils,
 	openToast,
 	saveAndReload,
+	stringUtils,
 } from '@liferay/object-js-components-web';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';

@@ -12,9 +12,9 @@ import {
 	FormError,
 	Input,
 	constantsUtils,
-	stringUtils,
 	invalidateLocalizableLabelRequired,
 	openToast,
+	stringUtils,
 	useForm,
 } from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';

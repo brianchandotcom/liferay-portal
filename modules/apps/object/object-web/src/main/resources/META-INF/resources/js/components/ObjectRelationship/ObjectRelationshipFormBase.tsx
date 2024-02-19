@@ -7,10 +7,10 @@ import {
 	API,
 	FormError,
 	Input,
-	constantsUtils,
 	SingleSelect,
-	stringUtils,
+	constantsUtils,
 	invalidateRequired,
+	stringUtils,
 	useForm,
 } from '@liferay/object-js-components-web';
 import {createResourceURL} from 'frontend-js-web';

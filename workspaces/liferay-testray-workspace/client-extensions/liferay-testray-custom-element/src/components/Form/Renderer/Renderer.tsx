@@ -19,6 +19,7 @@ import i18n from '../../../i18n';
 import fetcher from '../../../services/fetcher';
 import {safeJSONParse} from '../../../util';
 import {AutoCompleteProps} from '../AutoComplete';
+import useSWR from 'swr';
 
 type RenderedFieldOptions = string[] | {label: string; value: string}[];
 
@@ -45,26 +46,24 @@ export type RendererFields = {
 export type FieldOptions = {[key: string]: any[]};
 
 type RendererProps = {
-	fieldOptions: FieldOptions;
 	fields: RendererFields[];
 	filter?: string;
+	filterSchema: string;
 	form: any;
 	onChange: (event: any) => void;
-	setFieldOptions: Dispatch<FieldOptions>;
 };
 
 const Renderer: React.FC<RendererProps> = ({
-	fieldOptions,
 	fields,
 	filter,
 	form,
+	filterSchema,
 	onChange,
-	setFieldOptions,
 }) => {
 	const params = useParams();
 
 	const [fieldDisabled, setFieldDisabled] = useState({});
-	const [isLoading, setIsLoading] = useState(true);
+	// const [isLoading, setIsLoading] = useState(true);
 
 	const paramsMemoized = useMemo(() => {
 		const testrayModalParams = document.getElementById(
@@ -80,13 +79,6 @@ const Renderer: React.FC<RendererProps> = ({
 
 	const fieldsMemoized = useMemo(() => fields, [fields]);
 
-	const setFieldOpt = useCallback(
-		(abc: any) => {
-			setFieldOptions(abc);
-		},
-		[setFieldOptions]
-	);
-
 	const fieldsFilteredMemoized = useMemo(
 		() =>
 			fieldsMemoized.filter(({label}) =>
@@ -97,36 +89,40 @@ const Renderer: React.FC<RendererProps> = ({
 		[fieldsMemoized, filter]
 	);
 
-	const fetchResources = useCallback(async () => {
-		const parameters = safeJSONParse(paramsMemoized);
+	const {data: filderOptions = {}, isLoading} = useSWR(
+		`/filter-${filterSchema}`,
+		async () => {
+			const parameters = safeJSONParse(paramsMemoized);
 
-		const fieldsWithResource = fieldsMemoized.filter(
-			({resource}) => resource
-		);
-
-		const _fieldOptions: any = {};
-
-		for (const field of fieldsWithResource) {
-			const result = await fetcher(
-				(typeof field.resource === 'function'
-					? field.resource(parameters)
-					: field.resource) as string
+			const fieldsWithResource = fieldsMemoized.filter(
+				({resource}) => resource
 			);
 
-			if (field.transformData) {
-				const parsedValue = field.transformData(result);
+			const _fieldOptions: any = {};
 
-				_fieldOptions[field.name] = parsedValue;
-			}
+			await Promise.all(
+				fieldsWithResource.map((field) =>
+					fetcher(
+						(typeof field.resource === 'function'
+							? field.resource(parameters)
+							: field.resource) as string
+					)
+				)
+			).then((results) =>
+				results.forEach((result, index) => {
+					const field = fieldsWithResource[index];
+
+					if (field.transformData) {
+						const parsedValue = field.transformData(result);
+
+						_fieldOptions[field.name] = parsedValue;
+					}
+				})
+			);
+
+			return _fieldOptions;
 		}
-
-		setFieldOpt(_fieldOptions);
-		setIsLoading(false);
-	}, [fieldsMemoized, paramsMemoized, setFieldOpt]);
-
-	useEffect(() => {
-		fetchResources();
-	}, [fetchResources]);
+	);
 
 	return (
 		<div className="form-renderer">
@@ -183,7 +179,7 @@ const Renderer: React.FC<RendererProps> = ({
 
 				const getOptions = () => {
 					const _options =
-						fieldOptions[name] ||
+						filderOptions[name] ||
 						(options || []).map((option) =>
 							typeof option === 'object'
 								? option

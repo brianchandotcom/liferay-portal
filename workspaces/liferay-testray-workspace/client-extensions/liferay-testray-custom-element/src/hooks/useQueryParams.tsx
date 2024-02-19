@@ -19,6 +19,7 @@ import {
 	FilterSchema as FilterSchemaType,
 	filterSchema as filterSchemas,
 } from '../schema/filter';
+import useSWR from 'swr';
 
 type Options = {
 	label: string;
@@ -37,9 +38,6 @@ const useQueryParams = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
-	const [filterWithOptions, setFilterWithOptions] = useState<FieldOptions>(
-		{}
-	);
 
 	const routeParams = useParams();
 	const page = searchParams.get('page');
@@ -56,113 +54,122 @@ const useQueryParams = () => {
 	] as FilterSchemaType;
 	const filterFields = filterSchema?.fields;
 
-	const filterKeys = useMemo(() => Object.keys(serializedFilter), [
-		serializedFilter,
-	]);
+	const filterKeys = useMemo(
+		() => Object.keys(serializedFilter),
+		[serializedFilter]
+	);
 	const filteredFields = useMemo(
 		() => filterFields?.filter((field) => filterKeys.includes(field.name)),
 		[filterFields, filterKeys]
 	);
 
-	const getFilterWithOptions = useCallback(async () => {
-		const parameters = safeJSONParse(JSON.stringify(routeParams));
-		const resourceFields =
-			filteredFields?.filter(({resource}) => resource) || {};
-		const _resourceFieldOptions: any = {};
+	const {data: filterWithOptions = {}} = useSWR<FieldOptions>(
+		`/filter-initial-${filterSchema}`,
+		async () => {
+			const parameters = safeJSONParse(JSON.stringify(routeParams));
+			const resourceFields =
+				filteredFields?.filter(({resource}) => resource) || {};
+			const _resourceFieldOptions: any = {};
 
-		for (const field of resourceFields) {
-			const resource =
-				typeof field.resource === 'function'
-					? field.resource(parameters)
-					: (field.resource as string);
+			await Promise.all(
+				resourceFields.map((field) => {
+					const resource =
+						typeof field.resource === 'function'
+							? field.resource(parameters)
+							: (field.resource as string);
 
-			const filter = SearchBuilder.eq(
-				'id',
-				serializedFilter[field.name][0]
-			);
+					const filter = SearchBuilder.in(
+						'id',
+						serializedFilter[field.name]
+					);
 
-			const resourceFilter = resource.includes('filter=')
-				? resource.replace(/(filter=.*?)(&|$)/, `$1 and ${filter}$2`)
-				: `${resource}&filter=${filter}`;
+					const resourceFilter = resource.includes('filter=')
+						? resource.replace(
+								/(filter=.*?)(&|$)/,
+								`$1 and ${filter}$2`
+						  )
+						: `${resource}&filter=${filter}`;
 
-			const response = await fetcher(resourceFilter);
+					return fetcher(resourceFilter);
+				})
+			).then((results) =>
+				results.forEach((result, index) => {
+					const field = resourceFields[index];
 
-			if (field.transformData) {
-				const parsedValue = field.transformData(response);
+					if (field.transformData) {
+						const parsedValue = field.transformData(result);
 
-				if (Array.isArray(parsedValue)) {
-					_resourceFieldOptions[field.name] = parsedValue;
-				}
-				else {
-					if (
-						filterKeys.every(
-							(key) => parsedValue && key in parsedValue
-						)
-					) {
-						const filteredObjects = parsedValue.filter(
-							(options: any) =>
-								filterKeys.every((key) =>
-									Array.isArray(serializedFilter[key])
-										? serializedFilter[key].includes(
-												options[key]
-										  )
-										: options[key] === serializedFilter[key]
+						if (Array.isArray(parsedValue)) {
+							_resourceFieldOptions[field.name] = parsedValue;
+						} else {
+							if (
+								filterKeys.every(
+									(key) => parsedValue && key in parsedValue
 								)
-						);
+							) {
+								const filteredObjects = parsedValue.filter(
+									(options: any) =>
+										filterKeys.every((key) =>
+											Array.isArray(serializedFilter[key])
+												? serializedFilter[
+														key
+												  ].includes(options[key])
+												: options[key] ===
+												  serializedFilter[key]
+										)
+								);
 
-						_resourceFieldOptions[
-							field.name
-						] = filteredObjects.length
-							? filteredObjects
-							: parsedValue;
+								_resourceFieldOptions[field.name] =
+									filteredObjects.length
+										? filteredObjects
+										: parsedValue;
+							}
+						}
+					}
+				})
+			);
+			const updatedFilterOptions: any = {...serializedFilter};
+
+			Object.keys(updatedFilterOptions).forEach((key) => {
+				if (
+					Array.isArray(updatedFilterOptions[key]) &&
+					updatedFilterOptions[key].some(
+						(item: Options) => typeof item !== 'object'
+					)
+				) {
+					updatedFilterOptions[key] = updatedFilterOptions[key].map(
+						(value: string) => ({
+							label: value,
+							value,
+						})
+					);
+				}
+			});
+
+			Object.keys(_resourceFieldOptions).forEach((key) => {
+				if (Array.isArray(serializedFilter[key])) {
+					const filteredOptions = _resourceFieldOptions[key]?.filter(
+						(option: Options) =>
+							serializedFilter[key].includes(option.value)
+					);
+
+					if (filteredOptions.length) {
+						updatedFilterOptions[key] = filteredOptions;
+					}
+				} else {
+					const matchingValues = _resourceFieldOptions[key]?.filter(
+						(options: Options) =>
+							options.value === serializedFilter[key]
+					);
+					if (matchingValues.length) {
+						updatedFilterOptions[key] = matchingValues;
 					}
 				}
-			}
+			});
+
+			return updatedFilterOptions;
 		}
-
-		const updatedFilterOptions: any = {...serializedFilter};
-
-		Object.keys(updatedFilterOptions).forEach((key) => {
-			if (
-				Array.isArray(updatedFilterOptions[key]) &&
-				updatedFilterOptions[key].some(
-					(item: Options) => typeof item !== 'object'
-				)
-			) {
-				updatedFilterOptions[key] = updatedFilterOptions[key].map(
-					(value: string) => ({
-						label: value,
-						value,
-					})
-				);
-			}
-		});
-
-		Object.keys(_resourceFieldOptions).forEach((key) => {
-			if (Array.isArray(serializedFilter[key])) {
-				const filteredOptions = _resourceFieldOptions[
-					key
-				]?.filter((option: Options) =>
-					serializedFilter[key].includes(option.value)
-				);
-
-				if (filteredOptions.length) {
-					updatedFilterOptions[key] = filteredOptions;
-				}
-			}
-			else {
-				const matchingValues = _resourceFieldOptions[key]?.filter(
-					(options: Options) =>
-						options.value === serializedFilter[key]
-				);
-				if (matchingValues.length) {
-					updatedFilterOptions[key] = matchingValues;
-				}
-			}
-		});
-
-		setFilterWithOptions(updatedFilterOptions);
-	}, [serializedFilter, filteredFields, routeParams, filterKeys]);
+	);
 
 	const updateUrlParams = (param: Params) => {
 		const existingParams = new URLSearchParams(location.search);
@@ -175,12 +182,6 @@ const useQueryParams = () => {
 
 		navigate(newUrl, {replace: true});
 	};
-
-	useEffect(() => {
-		if (serializedFilter) {
-			getFilterWithOptions();
-		}
-	}, [getFilterWithOptions, serializedFilter]);
 
 	const filterEntries = useMemo(
 		() =>

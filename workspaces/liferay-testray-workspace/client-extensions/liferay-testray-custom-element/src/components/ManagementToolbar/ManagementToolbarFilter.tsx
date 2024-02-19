@@ -64,9 +64,10 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		return () => clearTimeout(timeout);
 	}, [visible]);
 
-	const fields = useMemo(() => filterSchema?.fields as RendererFields[], [
-		filterSchema?.fields,
-	]);
+	const fields = useMemo(
+		() => filterSchema?.fields as RendererFields[],
+		[filterSchema?.fields]
+	);
 
 	useEffect(() => {
 		const container = document.querySelector('.tr-main__body__page');
@@ -100,7 +101,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		return initialValues;
 	}, [fields]);
 
-	const [fieldOptions, setFieldOptions] = useState<FieldOptions>({});
 	const formActions = useFormActions();
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 	const [form, setForm] = useState(() => ({
@@ -141,8 +141,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						(options: Option) => options.value || options
 					),
 				};
-			}
-			else {
+			} else {
 				return {
 					name: key,
 					value: filterCleaned[key],
@@ -217,12 +216,11 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			<div className="management-toolbar-body">
 				<div className="popover-filter-content">
 					<Form.Renderer
-						fieldOptions={fieldOptions}
 						fields={fields}
 						filter={filter}
+						filterSchema={filterSchema?.name as string}
 						form={form}
 						onChange={onChange}
-						setFieldOptions={setFieldOptions}
 					/>
 				</div>
 			</div>

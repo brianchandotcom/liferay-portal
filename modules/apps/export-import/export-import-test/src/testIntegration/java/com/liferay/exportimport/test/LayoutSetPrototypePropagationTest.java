@@ -14,10 +14,12 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LayoutParentLayoutIdException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -26,23 +28,30 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -56,6 +65,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
@@ -76,6 +86,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Julio Camarero
@@ -981,6 +995,86 @@ public class LayoutSetPrototypePropagationTest
 		}
 	}
 
+	private Layout _addLayout(long groupId) throws Exception {
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), groupId, true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, null,
+			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		UnicodeProperties unicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty("published", Boolean.TRUE.toString());
+
+		draftLayout.setTypeSettingsProperties(unicodeProperties);
+
+		_layoutLocalService.updateLayout(draftLayout);
+
+		return layout;
+	}
+
+	private String _addPortletToLayout(Layout layout, String portletId)
+		throws Exception {
+
+		JSONObject processAddPortletJSONObject =
+			ContentLayoutTestUtil.addPortletToLayout(layout, portletId);
+
+		JSONObject fragmentEntryLinkJSONObject =
+			processAddPortletJSONObject.getJSONObject("fragmentEntryLink");
+
+		JSONObject editableValuesJSONObject =
+			fragmentEntryLinkJSONObject.getJSONObject("editableValues");
+
+		return PortletIdCodec.encode(
+			editableValuesJSONObject.getString("portletId"),
+			editableValuesJSONObject.getString("instanceId"));
+	}
+
+	private void _registerTestPortlet(String portletName) {
+		Bundle bundle = FrameworkUtil.getBundle(
+			LayoutSetPrototypePropagationTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		bundleContext.registerService(
+			javax.portlet.Portlet.class, new MVCPortlet(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"com.liferay.portlet.instanceable", "true"
+			).put(
+				"com.liferay.portlet.preferences-owned-by-group", "true"
+			).put(
+				"javax.portlet.init-param.view-template", "/view.jsp"
+			).put(
+				"javax.portlet.name", portletName
+			).build());
+	}
+
+	private void _verifyPortletPreferenceValue(
+		Layout layout, String portletId, String key, String expectedValue) {
+
+		PortletPreferencesIds portletPreferencesIds =
+			_portletPreferencesFactory.getPortletPreferencesIds(
+				layout.getCompanyId(), layout.getGroupId(), 0, layout.getPlid(),
+				portletId);
+
+		com.liferay.portal.kernel.model.PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				portletPreferencesIds.getOwnerId(),
+				portletPreferencesIds.getOwnerType(), layout.getPlid(),
+				portletPreferencesIds.getPortletId());
+
+		PortletPreferences jxPortletPreferences =
+			_portletPreferenceValueLocalService.getPreferences(
+				portletPreferences);
+
+		Assert.assertEquals(
+			expectedValue, jxPortletPreferences.getValue(key, null));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypePropagationTest.class);
 
@@ -991,6 +1085,9 @@ public class LayoutSetPrototypePropagationTest
 	private JournalContent _journalContent;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@DeleteAfterTestRun
 	private LayoutSetPrototype _layoutSetPrototype;
@@ -1006,6 +1103,17 @@ public class LayoutSetPrototypePropagationTest
 	private Layout _layoutSetPrototypeLayout;
 
 	private String _portletId;
+
+	@Inject
+	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
+
 	private Layout _prototypeLayout;
 
 	@Inject

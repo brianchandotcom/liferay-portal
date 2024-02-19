@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -3280,13 +3279,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition3;
 
 	@Inject
@@ -3303,16 +3297,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private ObjectRelationship _objectRelationship1;
 	private ObjectRelationship _objectRelationship2;
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _siteScopedObjectDefinition1;
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _siteScopedObjectDefinition2;
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _siteScopedObjectDefinition3;
-
 	private ObjectRelationship _siteScopedObjectRelationship1;
 	private ObjectRelationship _siteScopedObjectRelationship2;
 

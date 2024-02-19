@@ -84,7 +84,7 @@ public class DSEnvelopeResourceImpl extends BaseDSEnvelopeResourceImpl {
 			}
 
 			document.setData(
-				Base64.encode(
+				() -> Base64.encode(
 					FileUtil.getBytes(dlFileEntry.getContentStream())));
 		}
 

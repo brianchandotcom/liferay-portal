@@ -284,7 +284,7 @@ public class CTPublishBackgroundTaskExecutor
 
 			for (long userId :
 					_getPublicationRolesUserIds(
-						fromCTCollectionId, showConflicts)) {
+						fromCTCollection, showConflicts)) {
 
 				if (UserNotificationManagerUtil.isDeliver(
 						userId, CTPortletKeys.PUBLICATIONS, 0,
@@ -327,20 +327,8 @@ public class CTPublishBackgroundTaskExecutor
 	}
 
 	private Set<Long> _getPublicationRolesUserIds(
-			long ctCollectionId, boolean showConflicts)
+			CTCollection ctCollection, boolean showConflicts)
 		throws PortalException {
-
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
-			ctCollectionId);
-
-		Group group = null;
-
-		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			group = _groupLocalService.fetchGroup(
-				ctCollection.getCompanyId(),
-				_portal.getClassNameId(CTCollection.class),
-				ctCollection.getCtCollectionId());
-		}
 
 		Set<Long> userIds = new HashSet<>();
 
@@ -356,6 +344,11 @@ public class CTPublishBackgroundTaskExecutor
 				userIds.add(userId);
 			}
 		}
+
+		Group group = _groupLocalService.fetchGroup(
+			ctCollection.getCompanyId(),
+			_portal.getClassNameId(CTCollection.class),
+			ctCollection.getCtCollectionId());
 
 		if (group == null) {
 			return userIds;

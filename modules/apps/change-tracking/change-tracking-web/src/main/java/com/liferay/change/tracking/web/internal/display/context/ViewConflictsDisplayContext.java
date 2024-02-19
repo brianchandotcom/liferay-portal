@@ -351,8 +351,8 @@ public class ViewConflictsDisplayContext {
 						conflictInfo.getResolutionDescription(resourceBundle),
 						LanguageUtil.get(
 							resourceBundle,
-							"deletion-conflicts-with-modifications-in-other-" +
-								"publications"))) {
+							"deletion-conflicts-with-modifications-in-" +
+								"another-publication"))) {
 
 					actionsJSONArray.put(
 						_createEditActionJSONObject(

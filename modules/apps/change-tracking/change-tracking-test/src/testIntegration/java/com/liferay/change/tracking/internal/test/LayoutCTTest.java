@@ -1076,8 +1076,8 @@ public class LayoutCTTest {
 						conflictInfo.getResourceBundle(LocaleUtil.ENGLISH)),
 					_language.get(
 						LocaleUtil.ENGLISH,
-						"deletion-conflicts-with-modifications-in-other-" +
-							"publications"))) {
+						"deletion-conflicts-with-modifications-in-another-" +
+							"publication"))) {
 
 				hasConflict = true;
 			}

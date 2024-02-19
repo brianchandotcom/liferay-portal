@@ -44,7 +44,6 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 
 		long modelClassNameId = _classNameLocalService.getClassNameId(
 			ctModel.getModelClass());
-
 		long modelClassPK = ctModel.getPrimaryKey();
 
 		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
@@ -144,7 +143,7 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 				throw new CTRequiredModelException(
 					String.format(
 						"Model %s %s cannot be deleted because it is " +
-							"currently being modified in other publication(s)",
+							"currently being modified in another publication",
 						ctModel.getModelClassName(), modelClassPK));
 			}
 

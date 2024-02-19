@@ -74,9 +74,7 @@ public abstract class BaseCTExceptionDynamicInclude extends BaseDynamicInclude {
 			writer.write(getMessage(locale));
 
 			writer.write("', title: '");
-
 			writer.write(getTitle(locale));
-
 			writer.write(":', type: 'danger',});");
 		}
 		catch (IOException ioException) {

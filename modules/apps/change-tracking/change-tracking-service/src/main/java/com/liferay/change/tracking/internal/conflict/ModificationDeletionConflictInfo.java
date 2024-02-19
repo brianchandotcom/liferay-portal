@@ -33,7 +33,7 @@ public class ModificationDeletionConflictInfo extends BaseConflictInfo {
 
 		if (_publicationConflict) {
 			message =
-				"deletion-conflicts-with-modifications-in-other-publications";
+				"deletion-conflicts-with-modifications-in-another-publication";
 		}
 
 		return LanguageUtil.get(resourceBundle, message);

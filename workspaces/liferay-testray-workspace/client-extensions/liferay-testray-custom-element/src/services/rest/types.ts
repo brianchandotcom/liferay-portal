@@ -229,6 +229,10 @@ export type TestrayFactorOption = {
 	r_factorCategoryToOptions_c_factorCategory: TestrayFactorCategory;
 };
 
+export type TestrayOptionsByCategory = {
+	[key: string]: any;
+};
+
 export type TestrayIssue = {
 	dateCreated: number;
 	dateModified: number;
@@ -283,7 +287,10 @@ export type TestrayRequirementCase = {
 };
 
 export type TestrayRun = {
+	applicationServer?: string;
+	browser?: string;
 	build?: TestrayBuild;
+	database?: string;
 	dateCreated: string;
 	dateModified: string;
 	description: string;
@@ -293,9 +300,11 @@ export type TestrayRun = {
 	externalReferenceType: string;
 	factorOption?: TestrayFactorOption;
 	id: number;
+	javaJDK?: string;
 	jenkinsJobKey: string;
 	name: string;
 	number: string;
+	operatingSystem?: string;
 	r_buildToRuns_c_build?: TestrayBuild;
 	status: string;
 } & CaseResultAggregation;

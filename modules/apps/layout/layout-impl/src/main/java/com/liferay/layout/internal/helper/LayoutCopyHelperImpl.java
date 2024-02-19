@@ -798,39 +798,83 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				fragmentStyledLayoutStructureItem =
 					(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
-			FragmentEntryLink fragmentEntryLink = fragmentEntryLinksMap.get(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+			FragmentEntryLink sourceLayoutfragmentEntryLink =
+				fragmentEntryLinksMap.get(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
-			if (fragmentEntryLink == null) {
+			if (sourceLayoutfragmentEntryLink == null) {
 				continue;
 			}
 
-			FragmentEntryLink newFragmentEntryLink =
-				(FragmentEntryLink)fragmentEntryLink.clone();
+			FragmentEntryLink newFragmentEntryLink = null;
 
-			newFragmentEntryLink.setUuid(serviceContext.getUuid());
-			newFragmentEntryLink.setFragmentEntryLinkId(
-				_counterLocalService.increment());
-			newFragmentEntryLink.setUserId(user.getUserId());
-			newFragmentEntryLink.setUserName(user.getFullName());
-			newFragmentEntryLink.setCreateDate(
-				serviceContext.getCreateDate(new Date()));
-			newFragmentEntryLink.setModifiedDate(
-				serviceContext.getModifiedDate(new Date()));
-			newFragmentEntryLink.setOriginalFragmentEntryLinkId(
-				fragmentEntryLink.getFragmentEntryLinkId());
-			newFragmentEntryLink.setSegmentsExperienceId(
-				targetSegmentsExperienceId);
-			newFragmentEntryLink.setClassNameId(
-				_portal.getClassNameId(Layout.class));
-			newFragmentEntryLink.setClassPK(targetLayout.getPlid());
-			newFragmentEntryLink.setPlid(targetLayout.getPlid());
-			newFragmentEntryLink.setLastPropagationDate(
-				serviceContext.getCreateDate(new Date()));
+			FragmentEntryLink targetLayoutFragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					targetLayout.getGroupId(),
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+					targetLayout.getPlid());
 
-			newFragmentEntryLink =
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					newFragmentEntryLink);
+			if (targetLayoutFragmentEntryLink != null) {
+				targetLayoutFragmentEntryLink.setUserId(user.getUserId());
+				targetLayoutFragmentEntryLink.setUserName(user.getFullName());
+				targetLayoutFragmentEntryLink.setModifiedDate(
+					serviceContext.getModifiedDate(new Date()));
+				targetLayoutFragmentEntryLink.setOriginalFragmentEntryLinkId(
+					sourceLayoutfragmentEntryLink.getFragmentEntryLinkId());
+				targetLayoutFragmentEntryLink.setSegmentsExperienceId(
+					targetSegmentsExperienceId);
+				targetLayoutFragmentEntryLink.setClassPK(
+					targetLayout.getPlid());
+				targetLayoutFragmentEntryLink.setPlid(targetLayout.getPlid());
+				targetLayoutFragmentEntryLink.setCss(
+					sourceLayoutfragmentEntryLink.getCss());
+				targetLayoutFragmentEntryLink.setHtml(
+					sourceLayoutfragmentEntryLink.getHtml());
+				targetLayoutFragmentEntryLink.setJs(
+					sourceLayoutfragmentEntryLink.getJs());
+				targetLayoutFragmentEntryLink.setConfiguration(
+					sourceLayoutfragmentEntryLink.getConfiguration());
+				targetLayoutFragmentEntryLink.setEditableValues(
+					sourceLayoutfragmentEntryLink.getEditableValues());
+				targetLayoutFragmentEntryLink.setLastPropagationDate(
+					serviceContext.getCreateDate(new Date()));
+
+				newFragmentEntryLink =
+					_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+						targetLayoutFragmentEntryLink);
+
+				_commentManager.deleteDiscussion(
+					FragmentEntryLink.class.getName(),
+					newFragmentEntryLink.getFragmentEntryLinkId());
+			}
+			else {
+				newFragmentEntryLink =
+					(FragmentEntryLink)sourceLayoutfragmentEntryLink.clone();
+
+				newFragmentEntryLink.setUuid(serviceContext.getUuid());
+				newFragmentEntryLink.setFragmentEntryLinkId(
+					_counterLocalService.increment());
+				newFragmentEntryLink.setUserId(user.getUserId());
+				newFragmentEntryLink.setUserName(user.getFullName());
+				newFragmentEntryLink.setCreateDate(
+					serviceContext.getCreateDate(new Date()));
+				newFragmentEntryLink.setModifiedDate(
+					serviceContext.getModifiedDate(new Date()));
+				newFragmentEntryLink.setOriginalFragmentEntryLinkId(
+					sourceLayoutfragmentEntryLink.getFragmentEntryLinkId());
+				newFragmentEntryLink.setSegmentsExperienceId(
+					targetSegmentsExperienceId);
+				newFragmentEntryLink.setClassNameId(
+					_portal.getClassNameId(Layout.class));
+				newFragmentEntryLink.setClassPK(targetLayout.getPlid());
+				newFragmentEntryLink.setPlid(targetLayout.getPlid());
+				newFragmentEntryLink.setLastPropagationDate(
+					serviceContext.getCreateDate(new Date()));
+
+				newFragmentEntryLink =
+					_fragmentEntryLinkLocalService.addFragmentEntryLink(
+						newFragmentEntryLink);
+			}
 
 			fragmentStyledLayoutStructureItem.setFragmentEntryLinkId(
 				newFragmentEntryLink.getFragmentEntryLinkId());
@@ -838,7 +882,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_commentManager.copyDiscussion(
 				user.getUserId(), targetLayout.getGroupId(),
 				FragmentEntryLink.class.getName(),
-				fragmentEntryLink.getFragmentEntryLinkId(),
+				sourceLayoutfragmentEntryLink.getFragmentEntryLinkId(),
 				newFragmentEntryLink.getFragmentEntryLinkId(),
 				className -> serviceContext);
 		}

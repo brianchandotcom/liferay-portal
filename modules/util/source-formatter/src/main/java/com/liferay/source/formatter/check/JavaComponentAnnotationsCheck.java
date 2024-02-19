@@ -304,7 +304,7 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		BNDSettings currentBNDSettings = getBNDSettings(absolutePath);
 		BNDSettings serviceBNDSettings = getBNDSettings(
-			javaFile.getAbsolutePath());
+			SourceUtil.getAbsolutePath(javaFile));
 
 		if (!Objects.equals(
 				currentBNDSettings.getFileName(),

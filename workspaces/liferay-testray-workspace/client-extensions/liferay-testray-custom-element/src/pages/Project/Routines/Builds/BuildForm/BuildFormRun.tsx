@@ -47,7 +47,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 		TestrayOptionsByCategory[]
 	>([[] as any]);
 
-	const {data: runData, loading} = useFetch<APIResponse<TestrayRun>>(
+	const {data: runsData, loading} = useFetch<APIResponse<TestrayRun>>(
 		testrayRunImpl.resource,
 		{
 			params: {
@@ -59,7 +59,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 		}
 	);
 
-	const runItems = useMemo(() => runData?.items || [], [runData?.items]);
+	const runItems = useMemo(() => runsData?.items || [], [runsData?.items]);
 
 	const {data: categories} = useFetch<APIResponse<TestrayFactorCategory>>(
 		testrayFactorCategoryRest.resource,

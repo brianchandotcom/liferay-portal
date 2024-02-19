@@ -306,7 +306,11 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 				 Objects.equals(
 					 friendlyURLResolver1.getDefaultURLSeparator(),
 					 keywordConflict) &&
-				 !Objects.equals(friendlyURLResolver1.getKey(), key))) {
+				 !Objects.equals(friendlyURLResolver1.getKey(), key)) ||
+				((friendlyURLResolver2 != null) &&
+				 Objects.equals(
+					 friendlyURLResolver2.getURLSeparator(), keywordConflict) &&
+				 !Objects.equals(friendlyURLResolver2.getKey(), key))) {
 
 				fieldsValidationErrorsJSONObject.put(
 					namespace + key,

@@ -9,14 +9,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker;
-import com.liferay.headless.batch.engine.client.resource.v1_0.ExportTaskResource;
-import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
+import com.liferay.headless.batch.engine.client.serdes.v1_0.ExportTaskSerDes;
+import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -26,12 +24,10 @@ import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Closeable;
@@ -50,6 +46,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.zip.ZipInputStream;
 
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -238,6 +235,20 @@ public class BatchExportImportPerformanceTest {
 		return batchJsonSB.toString();
 	}
 
+	private String _getHttpResponseContent(String url) throws IOException {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+		httpInvoker.path(url);
+
+		HttpInvoker.HttpResponse response = httpInvoker.invoke();
+
+		Assert.assertEquals(200, response.getStatusCode());
+
+		return response.getContent();
+	}
+
 	private Map<String, String> _splitClassName(String className) {
 		Map<String, String> classNamePartsMap = new HashMap<>();
 
@@ -283,25 +294,42 @@ public class BatchExportImportPerformanceTest {
 		Map<String, String> classNamePartsMap = _splitClassName(className);
 
 		try (Closeable closeable = _startTimer()) {
-			ExportTaskResource.Builder builder = ExportTaskResource.builder();
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			ExportTaskResource exportTaskResource = builder.authentication(
-				"test@liferay.com", "test"
-			).header(
-				HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
-			).build();
+			httpInvoker.header(
+				HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
+			httpInvoker.userNameAndPassword("test@liferay.com:test");
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-			ExportTask exportTask = exportTaskResource.postExportTask(
-				classNamePartsMap.get("className"), "json", null, null, null,
-				classNamePartsMap.get("taskItemDelegateName"));
+			StringBundler sb = new StringBundler(
+				classNamePartsMap.containsKey("taskItemDelegateName") ? 6 : 4);
+
+			sb.append("http://localhost:8080/o/headless-batch-engine/v1.0");
+			sb.append("/export-task/");
+			sb.append(classNamePartsMap.get("className"));
+			sb.append("/JSON");
+
+			if (classNamePartsMap.containsKey("taskItemDelegateName")) {
+				sb.append("?taskItemDelegateName=");
+				sb.append(classNamePartsMap.get("taskItemDelegateName"));
+			}
+
+			httpInvoker.path(sb.toString());
+
+			HttpInvoker.HttpResponse response = httpInvoker.invoke();
+
+			ExportTask exportTask = ExportTaskSerDes.toDTO(
+				response.getContent());
 
 			String externalReferenceCode =
 				exportTask.getExternalReferenceCode();
 
 			while (true) {
-				exportTask =
-					exportTaskResource.getExportTaskByExternalReferenceCode(
-						externalReferenceCode);
+				exportTask = ExportTaskSerDes.toDTO(
+					_getHttpResponseContent(
+						"http://localhost:8080/o/headless-batch-engine/v1.0" +
+							"/export-task/by-external-reference-code/" +
+								externalReferenceCode));
 
 				if (Objects.equals(
 						exportTask.getExecuteStatusAsString(), "COMPLETED")) {
@@ -315,16 +343,20 @@ public class BatchExportImportPerformanceTest {
 				}
 			}
 
-			exportTaskResource = builder.authentication(
-				"test@liferay.com", "test"
-			).header(
-				HttpHeaders.ACCEPT, ContentTypes.APPLICATION_OCTET_STREAM
-			).build();
+			httpInvoker = HttpInvoker.newHttpInvoker();
 
-			HttpInvoker.HttpResponse httpResponse =
-				exportTaskResource.
-					getExportTaskByExternalReferenceCodeContentHttpResponse(
-						externalReferenceCode);
+			httpInvoker.header(
+				HttpHeaders.ACCEPT, ContentTypes.APPLICATION_OCTET_STREAM);
+			httpInvoker.userNameAndPassword("test@liferay.com:test");
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				StringBundler.concat(
+					"http://localhost:8080/o/headless-batch-engine/v1.0",
+					"/export-task/by-external-reference-code/",
+					externalReferenceCode, "/content"));
+
+			HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
 
 			try (InputStream inputStream = new UnsyncByteArrayInputStream(
 					httpResponse.getBinaryContent())) {
@@ -343,30 +375,32 @@ public class BatchExportImportPerformanceTest {
 
 		String json = _createBatchJSON(className, _recordsCount);
 
-		JSONArray itemsJSONArray = _jsonFactory.createJSONArray(json);
-
-		ImportTaskResource importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			"test@liferay.com", "test"
-		).header(
-			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
-		).header(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON
-		).build();
-
 		try (Closeable closeable = _startTimer()) {
-			ImportTask importTask = importTaskResource.postImportTask(
-				classNamePartsMap.get("className"), null, "INSERT", null, null,
-				null, classNamePartsMap.get("taskItemDelegateName"),
-				itemsJSONArray);
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(json, "application/json");
+			httpInvoker.userNameAndPassword("test@liferay.com:test");
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+			httpInvoker.path(
+				StringBundler.concat(
+					"http://localhost:8080/o/headless-batch-engine/v1.0",
+					"/import-task/", classNamePartsMap.get("className"),
+					"?createStrategy=INSERT"));
+
+			HttpInvoker.HttpResponse response = httpInvoker.invoke();
+
+			ImportTask importTask = ImportTaskSerDes.toDTO(
+				response.getContent());
 
 			String externalReferenceCode =
 				importTask.getExternalReferenceCode();
 
 			while (true) {
-				importTask =
-					importTaskResource.getImportTaskByExternalReferenceCode(
-						externalReferenceCode);
+				importTask = ImportTaskSerDes.toDTO(
+					_getHttpResponseContent(
+						"http://localhost:8080/o/headless-batch-engine/v1.0" +
+							"/import-task/by-external-reference-code/" +
+								externalReferenceCode));
 
 				if (Objects.equals(
 						importTask.getExecuteStatusAsString(), "COMPLETED")) {
@@ -385,11 +419,5 @@ public class BatchExportImportPerformanceTest {
 	private static Map<String, String> _jsonTemplates;
 	private static Path _logFilePath;
 	private static int _recordsCount;
-
-	@Inject
-	private Http _http;
-
-	@Inject
-	private JSONFactory _jsonFactory;
 
 }

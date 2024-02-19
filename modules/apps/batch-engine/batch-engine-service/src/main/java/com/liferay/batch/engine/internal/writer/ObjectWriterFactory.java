@@ -6,13 +6,18 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
 
 import java.util.HashSet;
@@ -44,6 +49,31 @@ public class ObjectWriterFactory {
 			disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 			enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
 			setDateFormat(new ISO8601DateFormat());
+			registerModule(
+				new SimpleModule() {
+					{
+						addSerializer(
+							UnsafeSupplier.class,
+							new JsonSerializer<UnsafeSupplier>() {
+
+								@Override
+								public void serialize(
+									UnsafeSupplier unsafeSupplier,
+									JsonGenerator jsonGenerator,
+									SerializerProvider serializerProvider) {
+
+									try {
+										jsonGenerator.writeObject(
+											unsafeSupplier.get());
+									}
+									catch (Throwable throwable) {
+										throw new RuntimeException(throwable);
+									}
+								}
+
+							});
+					}
+				});
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};

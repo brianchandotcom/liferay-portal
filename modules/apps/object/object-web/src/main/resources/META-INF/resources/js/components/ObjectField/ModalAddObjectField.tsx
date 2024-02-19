@@ -34,7 +34,6 @@ export function ModalAddObjectField({
 	baseResourceURL,
 	creationLanguageId,
 	objectDefinitionExternalReferenceCode,
-	objectDefinitionName,
 	onAfterSubmit,
 	setVisibility,
 }: ModalAddObjectField) {
@@ -188,14 +187,8 @@ export function ModalAddObjectField({
 								className="lfr-objects__modal-add-object-field-form-base"
 								errors={errors}
 								handleChange={handleChange}
-								objectDefinition={objectDefinition}
-								objectDefinitionExternalReferenceCode={
-									objectDefinitionExternalReferenceCode
-								}
-								objectDefinitionName={
-									objectDefinitionName ?? objectDefinition
-										? objectDefinition?.name ?? ''
-										: ''
+								objectDefinition={
+									objectDefinition as ObjectDefinition
 								}
 								objectField={values}
 								objectFieldBusinessTypesInfo={

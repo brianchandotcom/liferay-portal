@@ -715,10 +715,23 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 
 		case TYPES.SET_ELEMENTS: {
 			const {newElements} = action.payload;
+			const {selectedObjectDefinitionNode} = state;
+
+			const updatedSelectedObjectDefinitionNode = newElements.find(
+				(element) => {
+					if (isNode(element) && element.data) {
+						return (
+							(element.data as ObjectDefinitionNodeData).id ===
+							selectedObjectDefinitionNode?.data?.id
+						);
+					}
+				}
+			) as Node<ObjectDefinitionNodeData> | null;
 
 			return {
 				...state,
 				elements: newElements,
+				selectedObjectDefinitionNode: updatedSelectedObjectDefinitionNode,
 			};
 		}
 

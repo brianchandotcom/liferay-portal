@@ -31,8 +31,6 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		).put(
 			"forbiddenNames", PropsUtil.getArray(PropsKeys.DL_NAME_BLACKLIST)
 		).put(
-			"isApproved", objectDefinition.isApproved()
-		).put(
 			"isDefaultStorageType", objectDefinition.isDefaultStorageType()
 		).put(
 			"isRootDescendantNode", objectDefinition.isRootDescendantNode()

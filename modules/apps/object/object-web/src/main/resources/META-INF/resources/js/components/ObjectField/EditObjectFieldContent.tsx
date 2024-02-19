@@ -4,7 +4,7 @@
  */
 
 import ClayTabs from '@clayui/tabs';
-import {SidebarCategory} from '@liferay/object-js-components-web';
+import {API, SidebarCategory} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {ElementType, useEffect, useState} from 'react';
@@ -22,12 +22,15 @@ interface EditObjectFieldContentProps
 		| 'forbiddenChars'
 		| 'forbiddenLastChars'
 		| 'forbiddenNames'
+		| 'objectDefinitionExternalReferenceCode'
 		| 'objectFieldId'
 	> {
 	containerWrapper: ElementType;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	modelBuilder?: boolean;
+	objectDefinitionExternalReferenceCode: string;
+	objectFieldId: number;
 	onSubmit?: (editedObjectField?: Partial<ObjectField>) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
@@ -42,12 +45,12 @@ export function EditObjectFieldContent({
 	errors,
 	filterOperators,
 	handleChange,
-	isApproved,
 	isDefaultStorageType,
 	isRootDescendantNode,
 	learnResources,
 	modelBuilder = false,
 	objectDefinitionExternalReferenceCode,
+	objectFieldId,
 	onSubmit,
 	readOnly,
 	setValues,
@@ -55,6 +58,13 @@ export function EditObjectFieldContent({
 	workflowStatuses,
 }: EditObjectFieldContentProps) {
 	const [activeIndex, setActiveIndex] = useState(0);
+
+	const [dbObjectFieldRequired, setDbObjectFieldRequired] = useState<
+		boolean
+	>();
+	const [objectDefinition, setObjectDefinition] = useState<
+		ObjectDefinition
+	>();
 	const [objectFieldBusinessTypes, setObjectFieldBusinessTypes] = useState<
 		ObjectFieldBusinessType[]
 	>([]);
@@ -72,6 +82,26 @@ export function EditObjectFieldContent({
 	) {
 		TABS.push(Liferay.Language.get('advanced'));
 	}
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const objectFieldResponse = await API.getObjectField(objectFieldId);
+
+			setDbObjectFieldRequired(objectFieldResponse.required);
+			setValues(objectFieldResponse);
+
+			if (objectDefinitionExternalReferenceCode) {
+				const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
+
+				setObjectDefinition(objectDefinitionResponse);
+			}
+		};
+
+		makeFetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -138,21 +168,22 @@ export function EditObjectFieldContent({
 							<BasicInfoTab
 								baseResourceURL={baseResourceURL}
 								containerWrapper={containerWrapper}
+								dbObjectFieldRequired={dbObjectFieldRequired}
 								errors={errors}
 								filterOperators={filterOperators}
 								handleChange={handleChange}
-								isApproved={isApproved}
 								isDefaultStorageType={isDefaultStorageType}
 								modelBuilder={modelBuilder}
-								objectDefinitionExternalReferenceCode={
-									objectDefinitionExternalReferenceCode
-								}
+								objectDefinition={objectDefinition}
 								objectFieldBusinessTypes={
 									objectFieldBusinessTypes
 								}
 								objectRelationshipId={objectRelationshipId}
 								onSubmit={onSubmit}
 								readOnly={readOnly}
+								setDbObjectFieldRequired={
+									setDbObjectFieldRequired
+								}
 								setValues={setValues}
 								sidebarElements={sidebarElements}
 								values={values}
@@ -188,19 +219,18 @@ export function EditObjectFieldContent({
 				<BasicInfoTab
 					baseResourceURL={baseResourceURL}
 					containerWrapper={containerWrapper}
+					dbObjectFieldRequired={dbObjectFieldRequired}
 					errors={errors}
 					filterOperators={filterOperators}
 					handleChange={handleChange}
-					isApproved={isApproved}
 					isDefaultStorageType={isDefaultStorageType}
 					modelBuilder={modelBuilder}
-					objectDefinitionExternalReferenceCode={
-						objectDefinitionExternalReferenceCode
-					}
+					objectDefinition={objectDefinition}
 					objectFieldBusinessTypes={objectFieldBusinessTypes}
 					objectRelationshipId={objectRelationshipId}
 					onSubmit={onSubmit}
 					readOnly={readOnly}
+					setDbObjectFieldRequired={setDbObjectFieldRequired}
 					setValues={setValues}
 					sidebarElements={sidebarElements}
 					values={values}

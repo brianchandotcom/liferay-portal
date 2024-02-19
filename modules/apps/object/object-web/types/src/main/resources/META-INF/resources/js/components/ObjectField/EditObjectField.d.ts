@@ -14,7 +14,6 @@ export interface EditObjectFieldProps {
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];
-	isApproved: boolean;
 	isDefaultStorageType: boolean;
 	isRootDescendantNode: boolean;
 	learnResources: ILearnResourceContext;
@@ -31,7 +30,6 @@ export default function EditObjectField({
 	forbiddenChars,
 	forbiddenLastChars,
 	forbiddenNames,
-	isApproved,
 	isDefaultStorageType,
 	isRootDescendantNode,
 	learnResources,

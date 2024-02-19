@@ -18,7 +18,6 @@ export declare function ModalAddObjectField({
 	baseResourceURL,
 	creationLanguageId,
 	objectDefinitionExternalReferenceCode,
-	objectDefinitionName,
 	onAfterSubmit,
 	setVisibility,
 }: ModalAddObjectField): JSX.Element;

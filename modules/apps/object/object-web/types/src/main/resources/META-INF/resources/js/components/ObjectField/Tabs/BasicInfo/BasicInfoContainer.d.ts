@@ -10,18 +10,17 @@ import '../../EditObjectFieldContent.scss';
 interface BasicInfoContainerProps {
 	baseResourceURL: string;
 	creationLanguageId2?: Liferay.Language.Locale;
+	dbObjectFieldRequired?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	isApproved: boolean;
 	modelBuilder?: boolean;
-	objectDefinition: Partial<ObjectDefinition>;
-	objectDefinitionExternalReferenceCode: string;
-	objectDefinitionName: string;
+	objectDefinition?: ObjectDefinition;
 	objectFieldBusinessTypes: ObjectFieldBusinessType[];
 	objectRelationshipId: number;
 	onSubmit?: () => void;
 	readOnly: boolean;
 	setAggregationFilters: (values: AggregationFilters[]) => void;
+	setDbObjectFieldRequired?: (value: boolean) => void;
 	setObjectDefinitionExternalReferenceCode2: (value: string) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
@@ -29,18 +28,17 @@ interface BasicInfoContainerProps {
 export declare function BasicInfoContainer({
 	baseResourceURL,
 	creationLanguageId2,
+	dbObjectFieldRequired,
 	errors,
 	handleChange,
-	isApproved,
 	modelBuilder,
 	objectDefinition,
-	objectDefinitionExternalReferenceCode,
-	objectDefinitionName,
 	objectFieldBusinessTypes,
 	objectRelationshipId,
 	onSubmit,
 	readOnly,
 	setAggregationFilters,
+	setDbObjectFieldRequired,
 	setObjectDefinitionExternalReferenceCode2,
 	setValues,
 	values,

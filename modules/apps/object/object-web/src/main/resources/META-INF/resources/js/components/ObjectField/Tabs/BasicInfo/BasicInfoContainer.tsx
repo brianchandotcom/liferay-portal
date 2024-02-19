@@ -20,18 +20,17 @@ import '../../EditObjectFieldContent.scss';
 interface BasicInfoContainerProps {
 	baseResourceURL: string;
 	creationLanguageId2?: Liferay.Language.Locale;
+	dbObjectFieldRequired?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	isApproved: boolean;
 	modelBuilder?: boolean;
-	objectDefinition: Partial<ObjectDefinition>;
-	objectDefinitionExternalReferenceCode: string;
-	objectDefinitionName: string;
+	objectDefinition?: ObjectDefinition;
 	objectFieldBusinessTypes: ObjectFieldBusinessType[];
 	objectRelationshipId: number;
 	onSubmit?: () => void;
 	readOnly: boolean;
 	setAggregationFilters: (values: AggregationFilters[]) => void;
+	setDbObjectFieldRequired?: (value: boolean) => void;
 	setObjectDefinitionExternalReferenceCode2: (value: string) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
@@ -40,24 +39,23 @@ interface BasicInfoContainerProps {
 export function BasicInfoContainer({
 	baseResourceURL,
 	creationLanguageId2,
+	dbObjectFieldRequired,
 	errors,
 	handleChange,
-	isApproved,
 	modelBuilder = false,
 	objectDefinition,
-	objectDefinitionExternalReferenceCode,
-	objectDefinitionName,
 	objectFieldBusinessTypes,
 	objectRelationshipId,
 	onSubmit,
 	readOnly,
 	setAggregationFilters,
+	setDbObjectFieldRequired,
 	setObjectDefinitionExternalReferenceCode2,
 	setValues,
 	values,
 }: BasicInfoContainerProps) {
 	const disableFieldFormBase = !!(
-		isApproved ||
+		objectDefinition?.status?.label === 'approved' ||
 		values.system ||
 		values.relationshipType
 	);
@@ -99,16 +97,13 @@ export function BasicInfoContainer({
 				creationLanguageId2={
 					creationLanguageId2 as Liferay.Language.Locale
 				}
+				dbObjectFieldRequired={dbObjectFieldRequired}
 				disabled={disableFieldFormBase}
 				editingObjectField
 				errors={errors}
 				handleChange={handleChange}
 				modelBuilder={modelBuilder}
 				objectDefinition={objectDefinition}
-				objectDefinitionExternalReferenceCode={
-					objectDefinitionExternalReferenceCode
-				}
-				objectDefinitionName={objectDefinitionName}
 				objectField={values}
 				objectFieldBusinessTypesInfo={objectFieldBusinessTypes}
 				objectRelationshipId={objectRelationshipId}
@@ -117,6 +112,7 @@ export function BasicInfoContainer({
 					setObjectDefinitionExternalReferenceCode2
 				}
 				onSubmit={onSubmit}
+				setDbObjectFieldRequired={setDbObjectFieldRequired}
 				setValues={setValues}
 			>
 				{values.businessType === 'Attachment' && (

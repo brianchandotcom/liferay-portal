@@ -276,6 +276,32 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId,
+			long targetLayoutPageTemplateCollectionId)
+		throws PortalException {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			layoutPageTemplateCollectionLocalService.
+				getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
+
+		long parentLayoutPageTemplateCollectionId =
+			layoutPageTemplateCollection.
+				getParentLayoutPageTemplateCollectionId();
+
+		if (parentLayoutPageTemplateCollectionId ==
+				targetLayoutPageTemplateCollectionId) {
+
+			return layoutPageTemplateCollection;
+		}
+
+		layoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
+			targetLayoutPageTemplateCollectionId);
+
+		return updateLayoutPageTemplateCollection(layoutPageTemplateCollection);
+	}
+
+	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name)
 		throws PortalException {

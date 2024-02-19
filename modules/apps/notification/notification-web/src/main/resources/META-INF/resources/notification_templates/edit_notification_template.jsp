@@ -31,7 +31,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "notification-template"));
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
 
 <react:component
-	module="js/components/EditNotificationTemplate"
+	module="{EditNotificationTemplate} from notification-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))

@@ -363,6 +363,72 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	public void testLayoutPropagationWithPortletPreferencesAfterRepublishingLayout()
+		throws Exception {
+
+		String portletName = "com_liferay_test_portlet_TestPortlet";
+
+		_registerTestPortlet(portletName);
+
+		Layout layoutSetPrototypePublishedLayout = _addLayout(
+			_layoutSetPrototypeGroup.getGroupId());
+
+		Layout layoutSetPrototypeDraftLayout =
+			layoutSetPrototypePublishedLayout.fetchDraftLayout();
+
+		String portletId = _addPortletToLayout(
+			layoutSetPrototypeDraftLayout, portletName);
+
+		PortletPreferencesIds portletPreferencesIds =
+			_portletPreferencesFactory.getPortletPreferencesIds(
+				layoutSetPrototypeDraftLayout.getCompanyId(),
+				layoutSetPrototypeDraftLayout.getGroupId(), 0,
+				layoutSetPrototypeDraftLayout.getPlid(), portletId);
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.fetchPreferences(
+				portletPreferencesIds);
+
+		String key = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
+
+		portletPreferences.setValue(key, value);
+
+		_portletPreferencesLocalService.updatePreferences(
+			portletPreferencesIds.getOwnerId(),
+			portletPreferencesIds.getOwnerType(),
+			portletPreferencesIds.getPlid(),
+			portletPreferencesIds.getPortletId(), portletPreferences);
+
+		ContentLayoutTestUtil.publishLayout(
+			layoutSetPrototypeDraftLayout, layoutSetPrototypePublishedLayout);
+
+		propagateChanges(group);
+
+		Layout groupPublishedLayout =
+			_layoutLocalService.fetchLayoutByFriendlyURL(
+				group.getGroupId(), false,
+				layoutSetPrototypePublishedLayout.getFriendlyURL());
+
+		_verifyPortletPreferenceValue(
+			groupPublishedLayout, portletId, key, value);
+
+		Layout groupDrafLayout = groupPublishedLayout.fetchDraftLayout();
+
+		_verifyPortletPreferenceValue(groupDrafLayout, portletId, key, value);
+
+		ContentLayoutTestUtil.publishLayout(
+			layoutSetPrototypeDraftLayout, layoutSetPrototypePublishedLayout);
+
+		propagateChanges(group);
+
+		_verifyPortletPreferenceValue(
+			groupPublishedLayout, portletId, key, value);
+
+		_verifyPortletPreferenceValue(groupDrafLayout, portletId, key, value);
+	}
+
+	@Test
 	public void testPortletDataPropagationWithLinkDisabled() throws Exception {
 		doTestPortletDataPropagation(false);
 	}

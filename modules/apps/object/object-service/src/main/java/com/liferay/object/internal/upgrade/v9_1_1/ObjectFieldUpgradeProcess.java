@@ -19,9 +19,9 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 		runSQL(
 			StringBundler.concat(
 				"update ObjectField set indexed = [$FALSE$] where ",
-				"(businessType in ('",
+				"businessType in ('",
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION, "', '",
-				ObjectFieldConstants.BUSINESS_TYPE_FORMULA, "'))"));
+				ObjectFieldConstants.BUSINESS_TYPE_FORMULA, "')"));
 	}
 
 }

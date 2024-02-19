@@ -538,13 +538,7 @@ definition {
 				productStockQuantity = 0);
 		}
 
-		task ("And try to add to the cart the SKU/Second UOM combination with quantity 6") {
-			Type(
-				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = 6);
-
-			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
-
+		task ("And try to add to the cart the SKU/Second UOM combination") {
 			task ("But the add to cart button is disabled") {
 				AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_DISABLED");
 			}
@@ -609,6 +603,12 @@ definition {
 				productSKU = "MIN55861",
 				uomKey = "UOM2KEY",
 				uomName = "UOM2");
+
+			CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+				productSku = "MIN55861",
+				quantity = 10,
+				uomKey = "UOM2KEY",
+				warehouseName = "Italy");
 		}
 
 		task ("And from the MIN55861 product configuration, multiple quantity is set as 0.01") {

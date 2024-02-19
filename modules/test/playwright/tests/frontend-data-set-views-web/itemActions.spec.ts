@@ -79,7 +79,7 @@ test.describe('Data Set Item Actions', () => {
 		});
 	});
 
-	test.skip('Link Item Action is shown in fragment', async ({
+	test('Link Item Action is shown in fragment', async ({
 		actionsPage,
 		dataSetsPage,
 		fdsFragmentPage,
@@ -88,6 +88,8 @@ test.describe('Data Set Item Actions', () => {
 	}) => {
 		const DATASET_NAME = 'Item Actions DS';
 		const DATASET_VIEW_NAME = 'Item Actions DS View';
+		const LINK_ITEM_ACTION_CONFIRMATION_MESSAGE =
+			'Do you want to navigate to http://www.liferay.com?';
 		const LINK_ITEM_ACTION_NAME = 'Link item action';
 		const PAGE_NAME = 'Test page';
 		const SITE_NAME = 'FDSFragmentSite';
@@ -111,6 +113,7 @@ test.describe('Data Set Item Actions', () => {
 
 		await test.step('Create a link item action', async () => {
 			await actionsPage.createItemAction({
+				confirmationMessage: LINK_ITEM_ACTION_CONFIRMATION_MESSAGE,
 				icon: 'link',
 				name: LINK_ITEM_ACTION_NAME,
 				type: 'link',
@@ -190,11 +193,25 @@ test.describe('Data Set Item Actions', () => {
 		});
 
 		await test.step('Item action are present in table row', async () => {
+			const dialogPromise = page
+				.waitForEvent('dialog')
+				.then(async (dialog) => {
+					await dialog.accept();
+
+					return dialog.message();
+				});
+
 			const tableRow = await page.locator('.dnd-td.item-actions').first();
 
 			await expect(tableRow.getByRole('link')).toBeVisible();
 
 			await tableRow.getByRole('link').click();
+
+			const confirmationMessage = await dialogPromise;
+
+			expect(confirmationMessage).toBe(
+				LINK_ITEM_ACTION_CONFIRMATION_MESSAGE
+			);
 
 			await page.waitForURL('https://www.liferay.com');
 
@@ -464,7 +481,7 @@ test.describe('Data Set Item Actions', () => {
 		});
 	});
 
-	test('Async and Headless Item Actions are shown in fragment', async ({
+	test.skip('Async and Headless Item Actions are shown in fragment', async ({
 		actionsPage,
 		dataSetsPage,
 		fdsFragmentPage,

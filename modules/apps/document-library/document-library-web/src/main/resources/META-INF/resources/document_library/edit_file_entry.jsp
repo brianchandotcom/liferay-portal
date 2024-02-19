@@ -538,7 +538,7 @@ renderResponse.setTitle(headerTitle);
 					</c:if>
 
 					<c:if test="<%= !RepositoryUtil.isExternalRepository(repositoryId) %>">
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="expiration-date">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") ? "schedule" : "expiration-date" %>'>
 							<liferay-ui:error exception="<%= FileEntryDisplayDateException.class %>" message="please-enter-a-valid-publish-date" />
 							<liferay-ui:error exception="<%= FileEntryExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 							<liferay-ui:error exception="<%= FileEntryReviewDateException.class %>" message="please-enter-a-valid-review-date" />

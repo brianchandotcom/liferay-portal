@@ -173,7 +173,8 @@ public class EditAssetListDisplayContext {
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassNameId(classNameId);
 
-			if (!assetRendererFactory.isActive(_themeDisplay.getCompanyId()) ||
+			if ((assetRendererFactory == null) ||
+				!assetRendererFactory.isActive(_themeDisplay.getCompanyId()) ||
 				!assetRendererFactory.isSelectable()) {
 
 				continue;

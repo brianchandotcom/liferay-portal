@@ -11,12 +11,13 @@ import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.headless.batch.engine.client.serdes.v1_0.ExportTaskSerDes;
 import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,12 +35,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -82,17 +77,6 @@ public class BatchExportImportPerformanceTest {
 		_recordsCount = GetterUtil.getInteger(
 			properties.getProperty("records.count"));
 
-		_logFilePath = Paths.get(properties.getProperty("log.file"));
-
-		Files.deleteIfExists(_logFilePath);
-
-		_writeToLogFile(
-			"Properties:",
-			StreamUtil.toString(
-				clazz.getResourceAsStream(
-					"dependencies/batch-export-import-performance.properties")),
-			"\nResults:");
-
 		_jsonTemplates = LinkedHashMapBuilder.put(
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount",
 			_createUserAccountJSONTemplate()
@@ -102,7 +86,9 @@ public class BatchExportImportPerformanceTest {
 	@Test
 	public void testImportAndExportTask() throws Exception {
 		for (String className : _jsonTemplates.keySet()) {
-			_writeToLogFile("ClassName: " + className);
+			if (_log.isInfoEnabled()) {
+				_log.info("ClassName: " + className);
+			}
 
 			_testPostImportTask(className);
 
@@ -183,12 +169,6 @@ public class BatchExportImportPerformanceTest {
 				"webUrls", JSONFactoryUtil.createJSONArray()
 			)
 		).toString();
-	}
-
-	private static void _writeToLogFile(String... contents) throws IOException {
-		Files.write(
-			_logFilePath, Arrays.asList(contents), StandardOpenOption.APPEND,
-			StandardOpenOption.CREATE, StandardOpenOption.WRITE);
 	}
 
 	private String _createBatchJSON(String className, int recordsCount) {
@@ -277,16 +257,18 @@ public class BatchExportImportPerformanceTest {
 		long startTime = System.currentTimeMillis();
 
 		return () -> {
-			long totalTimeMillis = System.currentTimeMillis() - startTime;
+			if (_log.isInfoEnabled()) {
+				long totalTimeMillis = System.currentTimeMillis() - startTime;
 
-			double speed =
-				(double)(_recordsCount * 1000) / (double)totalTimeMillis;
+				double speed =
+					(double)(_recordsCount * 1000) / (double)totalTimeMillis;
 
-			_writeToLogFile(
-				StringBundler.concat(
-					invokerName, " used ", totalTimeMillis, " ms, for ",
-					_recordsCount, " records, speed: ",
-					String.format("%.3f", speed), " records/s"));
+				_log.info(
+					StringBundler.concat(
+						invokerName, " used ", totalTimeMillis, " ms, for ",
+						_recordsCount, " records, speed: ",
+						String.format("%.3f", speed), " records/s"));
+			}
 		};
 	}
 
@@ -416,8 +398,10 @@ public class BatchExportImportPerformanceTest {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		BatchExportImportPerformanceTest.class);
+
 	private static Map<String, String> _jsonTemplates;
-	private static Path _logFilePath;
 	private static int _recordsCount;
 
 }

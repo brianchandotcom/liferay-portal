@@ -1,7 +1,7 @@
 assemble:
-    - from: build
+    - from: build/static
       into: static
 liferay-sample-fds-filter:
     name: Liferay Sample FDS Filter
     type: fdsFilter
-    url: index.js
+    url: index.*.js

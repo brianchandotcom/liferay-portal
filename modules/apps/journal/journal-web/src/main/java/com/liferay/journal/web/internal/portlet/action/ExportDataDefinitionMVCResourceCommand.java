@@ -81,21 +81,21 @@ public class ExportDataDefinitionMVCResourceCommand
 	}
 
 	private void _sanitize(DataDefinition dataDefinition) {
-		dataDefinition.setDateCreated((Date)null);
-		dataDefinition.setDateModified((Date)null);
-		dataDefinition.setId((Long)null);
-		dataDefinition.setSiteId((Long)null);
-		dataDefinition.setUserId((Long)null);
+		dataDefinition.setDateCreated(() -> (Date)null);
+		dataDefinition.setDateModified(() -> (Date)null);
+		dataDefinition.setId(() -> (Long)null);
+		dataDefinition.setSiteId(() -> (Long)null);
+		dataDefinition.setUserId(() -> (Long)null);
 
 		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
-		dataLayout.setDataDefinitionId((Long)null);
-		dataLayout.setDataLayoutKey((String)null);
-		dataLayout.setDateCreated((Date)null);
-		dataLayout.setDateModified((Date)null);
-		dataLayout.setId((Long)null);
-		dataLayout.setSiteId((Long)null);
-		dataLayout.setUserId((Long)null);
+		dataLayout.setDataDefinitionId(() -> (Long)null);
+		dataLayout.setDataLayoutKey(() -> (String)null);
+		dataLayout.setDateCreated(() -> (Date)null);
+		dataLayout.setDateModified(() -> (Date)null);
+		dataLayout.setId(() -> (Long)null);
+		dataLayout.setSiteId(() -> (Long)null);
+		dataLayout.setUserId(() -> (Long)null);
 	}
 
 	@Reference

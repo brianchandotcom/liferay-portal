@@ -68,7 +68,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				FileUtil.read(uploadPortletRequest.getFile("jsonFile")));
 
 			dataDefinition.setName(
-				HashMapBuilder.<String, Object>put(
+				() -> HashMapBuilder.<String, Object>put(
 					String.valueOf(themeDisplay.getSiteDefaultLocale()),
 					ParamUtil.getString(actionRequest, "name")
 				).build());
@@ -157,7 +157,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				_uniquifyDataDefinitionFieldset(dataDefinitionField);
 			}
 
-			dataDefinitionField.setName((String)newFieldName);
+			dataDefinitionField.setName(() -> (String)newFieldName);
 
 			_fieldNames.add(newFieldName);
 
@@ -185,7 +185,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 
 			String newFieldName = _generateFieldName(oldFieldName);
 
-			nestedDataDefinitionField.setName((String)newFieldName);
+			nestedDataDefinitionField.setName(() -> (String)newFieldName);
 
 			_fieldNames.add(newFieldName);
 

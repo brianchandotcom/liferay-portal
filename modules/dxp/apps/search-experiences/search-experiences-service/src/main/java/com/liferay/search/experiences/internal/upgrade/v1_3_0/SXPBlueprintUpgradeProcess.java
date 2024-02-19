@@ -108,11 +108,13 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 						"LIMIT_SEARCH_TO_CONTENTS_CREATED_WITHIN_A_PERIOD_OF_" +
 							"TIME")) {
 
+					ElementDefinition elementDefinition =
+						sxpElement.getElementDefinition();
+
 					sxpElement.setElementDefinition(
-						ElementDefinition.unsafeToDTO(
+						() -> ElementDefinition.unsafeToDTO(
 							_renameElementDefinitionJSON(
-								String.valueOf(
-									sxpElement.getElementDefinition()))));
+								String.valueOf(elementDefinition))));
 				}
 
 				Map<String, String> description_i18n =
@@ -127,8 +129,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			}
 
 			sxpElement.setExternalReferenceCode(
-				serviceBuilderSXPElement.getExternalReferenceCode());
-			sxpElement.setVersion(serviceBuilderSXPElement.getVersion());
+				serviceBuilderSXPElement::getExternalReferenceCode);
+			sxpElement.setVersion(serviceBuilderSXPElement::getVersion);
 		}
 
 		return Arrays.toString(elementInstances);

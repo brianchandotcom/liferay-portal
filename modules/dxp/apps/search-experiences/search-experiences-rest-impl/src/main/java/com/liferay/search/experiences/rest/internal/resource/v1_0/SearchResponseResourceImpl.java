@@ -132,7 +132,8 @@ public class SearchResponseResourceImpl extends BaseSearchResponseResourceImpl {
 						_log.warn(runtimeException);
 					}
 
-					searchResponse.setErrors(_toErrorMaps(runtimeException));
+					searchResponse.setErrors(
+						() -> _toErrorMaps(runtimeException));
 				}
 
 				return searchResponse;

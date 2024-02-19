@@ -50,7 +50,8 @@ public class ElementInstanceUtil {
 		SXPElement sxpElement = elementInstance.getSxpElement();
 
 		if (sxpElement != null) {
-			elementInstance.setSxpElement(SXPElementUtil.unpack(sxpElement));
+			elementInstance.setSxpElement(
+				() -> SXPElementUtil.unpack(sxpElement));
 		}
 
 		if (MapUtil.isNotEmpty(elementInstance.getUiConfigurationValues())) {

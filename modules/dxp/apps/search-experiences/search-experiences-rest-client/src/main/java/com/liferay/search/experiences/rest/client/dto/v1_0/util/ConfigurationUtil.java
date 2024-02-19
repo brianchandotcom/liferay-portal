@@ -7,6 +7,7 @@ package com.liferay.search.experiences.rest.client.dto.v1_0.util;
 
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -40,15 +41,18 @@ public class ConfigurationUtil {
 	}
 
 	private static void _unpack(Clause clause) {
-		if (clause.getQuery() instanceof Map) {
+		Object query = clause.getQuery();
+
+		if (query instanceof Map) {
 			clause.setQuery(
-				JSONFactoryUtil.createJSONObject((Map<?, ?>)clause.getQuery()));
+				() -> JSONFactoryUtil.createJSONObject((Map<?, ?>)query));
 		}
 		else {
 			try {
-				clause.setQuery(
-					JSONFactoryUtil.createJSONObject(
-						String.valueOf(clause.getQuery())));
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					String.valueOf(query));
+
+				clause.setQuery(() -> jsonObject);
 			}
 			catch (JSONException jsonException) {
 				if (_log.isDebugEnabled()) {

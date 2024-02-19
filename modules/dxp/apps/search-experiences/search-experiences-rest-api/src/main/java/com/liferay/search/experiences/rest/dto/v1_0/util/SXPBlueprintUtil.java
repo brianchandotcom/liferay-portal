@@ -7,6 +7,7 @@ package com.liferay.search.experiences.rest.dto.v1_0.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 
 /**
@@ -21,18 +22,21 @@ public class SXPBlueprintUtil {
 	public static SXPBlueprint toSXPBlueprint(
 		SXPBlueprint sxpBlueprint1, String configuration) {
 
-		SXPBlueprint sxpBlueprint2 = new SXPBlueprint();
+		SXPBlueprint sxpBlueprint2 = new SXPBlueprint() {
+			{
+				setDescription(sxpBlueprint1::getDescription);
+				setDescription_i18n(sxpBlueprint1::getDescription_i18n);
+				setElementInstances(sxpBlueprint1::getElementInstances);
+				setExternalReferenceCode(
+					sxpBlueprint1::getExternalReferenceCode);
+				setId(sxpBlueprint1::getId);
+				setTitle(sxpBlueprint1::getTitle);
+				setTitle_i18n(sxpBlueprint1::getTitle_i18n);
+			}
+		};
 
 		sxpBlueprint2.setConfiguration(
-			ConfigurationUtil.toConfiguration(configuration));
-		sxpBlueprint2.setDescription(sxpBlueprint1.getDescription());
-		sxpBlueprint2.setDescription_i18n(sxpBlueprint1.getDescription_i18n());
-		sxpBlueprint2.setElementInstances(sxpBlueprint1.getElementInstances());
-		sxpBlueprint2.setExternalReferenceCode(
-			sxpBlueprint1.getExternalReferenceCode());
-		sxpBlueprint2.setId(sxpBlueprint1.getId());
-		sxpBlueprint2.setTitle(sxpBlueprint1.getTitle());
-		sxpBlueprint2.setTitle_i18n(sxpBlueprint1.getTitle_i18n());
+			() -> ConfigurationUtil.toConfiguration(configuration));
 
 		return sxpBlueprint2;
 	}
@@ -42,12 +46,14 @@ public class SXPBlueprintUtil {
 
 		if (configuration != null) {
 			sxpBlueprint.setConfiguration(
-				ConfigurationUtil.unpack(configuration));
+				() -> ConfigurationUtil.unpack(configuration));
 		}
 
-		if (ArrayUtil.isNotEmpty(sxpBlueprint.getElementInstances())) {
+		ElementInstance[] elementInstances = sxpBlueprint.getElementInstances();
+
+		if (ArrayUtil.isNotEmpty(elementInstances)) {
 			sxpBlueprint.setElementInstances(
-				ElementInstanceUtil.unpack(sxpBlueprint.getElementInstances()));
+				() -> ElementInstanceUtil.unpack(elementInstances));
 		}
 
 		return sxpBlueprint;

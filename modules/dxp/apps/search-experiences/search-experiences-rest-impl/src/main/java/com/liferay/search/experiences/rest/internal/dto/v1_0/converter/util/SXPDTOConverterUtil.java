@@ -46,12 +46,12 @@ public class SXPDTOConverterUtil {
 				for (Field field : fields) {
 					if (!Validator.isBlank(field.getHelpText())) {
 						field.setHelpTextLocalized(
-							language.get(locale, field.getHelpText()));
+							() -> language.get(locale, field.getHelpText()));
 					}
 
 					if (!Validator.isBlank(field.getLabel())) {
 						field.setLabelLocalized(
-							language.get(locale, field.getLabel()));
+							() -> language.get(locale, field.getLabel()));
 					}
 				}
 			}

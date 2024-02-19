@@ -29,6 +29,7 @@ import com.liferay.search.experiences.constants.SXPActionKeys;
 import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
 import com.liferay.search.experiences.exception.SXPElementTitleException;
+import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
@@ -193,7 +194,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 						getName();
 
 				sxpElement.setActions(
-					HashMapBuilder.put(
+					() -> HashMapBuilder.put(
 						"create",
 						() -> addAction(
 							SXPActionKeys.ADD_SXP_ELEMENT, "postSXPElement",
@@ -295,15 +296,19 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 			contextAcceptLanguage.getPreferredLanguageId());
 
 		sxpElement.setDescription(
-			SXPDTOConverterUtil.translate(
+			() -> SXPDTOConverterUtil.translate(
 				sxpElement.getFallbackDescription(), _language, locale,
 				LocalizedMapUtil.getLocalizedMap(
 					sxpElement.getDescription_i18n())));
+
+		ElementDefinition elementDefinition = sxpElement.getElementDefinition();
+
 		sxpElement.setElementDefinition(
-			SXPDTOConverterUtil.translate(
-				sxpElement.getElementDefinition(), _language, locale));
+			() -> SXPDTOConverterUtil.translate(
+				elementDefinition, _language, locale));
+
 		sxpElement.setTitle(
-			SXPDTOConverterUtil.translate(
+			() -> SXPDTOConverterUtil.translate(
 				sxpElement.getFallbackTitle(), _language, locale,
 				LocalizedMapUtil.getLocalizedMap(sxpElement.getTitle_i18n())));
 
@@ -346,7 +351,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				_sxpElementService.fetchSXPElementByExternalReferenceCode(
 					externalReferenceCode, contextCompany.getCompanyId());
 
-		sxpElement.setExternalReferenceCode(externalReferenceCode);
+		sxpElement.setExternalReferenceCode(() -> externalReferenceCode);
 
 		return _putSXPElement(serviceBuilderSXPElement, sxpElement);
 	}

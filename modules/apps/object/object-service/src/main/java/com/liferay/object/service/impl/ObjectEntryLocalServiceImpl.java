@@ -3249,7 +3249,10 @@ public class ObjectEntryLocalServiceImpl
 		List<ObjectField> objectFields =
 			dynamicObjectDefinitionLocalizationTable.getObjectFields();
 
-		if (objectFields.isEmpty()) {
+		Set<Locale> locales = _getLocales(
+			objectDefinition.getCompanyId(), objectFields, values);
+
+		if (objectFields.isEmpty() || locales.isEmpty()) {
 			return;
 		}
 
@@ -3299,11 +3302,7 @@ public class ObjectEntryLocalServiceImpl
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 
-			for (Locale locale :
-					_getLocales(
-						objectDefinition.getCompanyId(), objectFields,
-						values)) {
-
+			for (Locale locale : locales) {
 				String languageId = LocaleUtil.toLanguageId(locale);
 
 				int index = 1;

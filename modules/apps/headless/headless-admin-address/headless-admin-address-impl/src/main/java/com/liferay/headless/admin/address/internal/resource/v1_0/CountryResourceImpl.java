@@ -129,7 +129,7 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 				titleMap.put(_language.getLanguageId(locale), null);
 			}
 
-			country.setTitle_i18n(titleMap);
+			country.setTitle_i18n(() -> titleMap);
 		}
 
 		_countryLocalService.updateCountryLocalizations(
@@ -163,7 +163,7 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 				titleMap.put(_language.getLanguageId(locale), null);
 			}
 
-			country.setTitle_i18n(titleMap);
+			country.setTitle_i18n(() -> titleMap);
 		}
 
 		_countryLocalService.updateCountryLocalizations(

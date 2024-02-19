@@ -136,27 +136,30 @@ public class FragmentMappedValueUtil {
 				setClassName(() -> Layout.class.getName());
 				setFields(
 					() -> {
-						Field friendlyURLField = new Field();
-
-						friendlyURLField.setFieldName("friendlyURL");
-						friendlyURLField.setFieldValue(layout.getFriendlyURL());
-
-						Field privatePageField = new Field();
-
-						privatePageField.setFieldName("privatePage");
-						privatePageField.setFieldValue(
-							String.valueOf(layout.isPrivateLayout()));
-
-						Field siteKeyField = new Field();
-
 						Group group = GroupLocalServiceUtil.getGroup(
 							layout.getGroupId());
 
-						siteKeyField.setFieldName("siteKey");
-						siteKeyField.setFieldValue(group.getGroupKey());
-
 						return new Field[] {
-							friendlyURLField, privatePageField, siteKeyField
+							new Field() {
+								{
+									setFieldName(() -> "friendlyURL");
+									setFieldValue(layout::getFriendlyURL);
+								}
+							},
+							new Field() {
+								{
+									setFieldName(() -> "privatePage");
+									setFieldValue(
+										() -> String.valueOf(
+											layout.isPrivateLayout()));
+								}
+							},
+							new Field() {
+								{
+									setFieldName(() -> "siteKey");
+									setFieldValue(group::getGroupKey);
+								}
+							}
 						};
 					});
 			}

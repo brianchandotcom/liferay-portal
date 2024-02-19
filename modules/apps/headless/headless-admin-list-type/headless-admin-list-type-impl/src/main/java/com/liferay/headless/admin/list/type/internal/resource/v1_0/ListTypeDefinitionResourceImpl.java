@@ -164,7 +164,8 @@ public class ListTypeDefinitionResourceImpl
 			String externalReferenceCode, ListTypeDefinition listTypeDefinition)
 		throws Exception {
 
-		listTypeDefinition.setExternalReferenceCode(externalReferenceCode);
+		listTypeDefinition.setExternalReferenceCode(
+			() -> externalReferenceCode);
 
 		com.liferay.list.type.model.ListTypeDefinition
 			serviceBuilderListTypeDefinition =

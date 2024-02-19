@@ -290,7 +290,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 		if (image != null) {
 			existingBlogPosting.setImage(
-				new Image() {
+				() -> new Image() {
 					{
 						setCaption(image::getCaption);
 						setImageId(image::getImageId);
@@ -303,7 +303,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 
 		if (taxonomyCategoryBriefs != null) {
 			blogPosting.setTaxonomyCategoryIds(
-				transform(
+				() -> transform(
 					taxonomyCategoryBriefs,
 					TaxonomyCategoryBrief::getTaxonomyCategoryId, Long.class));
 		}

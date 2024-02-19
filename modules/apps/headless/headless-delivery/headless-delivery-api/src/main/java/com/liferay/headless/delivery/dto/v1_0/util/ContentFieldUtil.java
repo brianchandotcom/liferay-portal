@@ -335,17 +335,21 @@ public class ContentFieldUtil {
 
 								String alt = jsonObject.getString("alt");
 
-								if (Validator.isNotNull(alt) &&
-									JSONUtil.isJSONObject(alt)) {
+								contentDocument.setDescription(
+									() -> {
+										if (Validator.isNotNull(alt) &&
+											JSONUtil.isJSONObject(alt)) {
 
-									JSONObject altJSONObject =
-										jsonObject.getJSONObject("alt");
+											JSONObject altJSONObject =
+												jsonObject.getJSONObject("alt");
 
-									alt = altJSONObject.getString(
-										LocaleUtil.toLanguageId(locale));
-								}
+											return altJSONObject.getString(
+												LocaleUtil.toLanguageId(
+													locale));
+										}
 
-								contentDocument.setDescription(alt);
+										return alt;
+									});
 
 								return contentDocument;
 							});

@@ -156,7 +156,7 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 				titleMap.put(_language.getLanguageId(locale), null);
 			}
 
-			region.setTitle_i18n(titleMap);
+			region.setTitle_i18n(() -> titleMap);
 		}
 	}
 

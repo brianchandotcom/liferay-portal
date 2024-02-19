@@ -31,13 +31,18 @@ public class DLFileEntryViewCountEntryModelListener
 
 	@Override
 	public void onAfterIncrement(ViewCountEntry viewCountEntry) {
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+			viewCountEntry.getClassPK());
+
+		if (dlFileEntry == null) {
+			return;
+		}
+
 		try {
 			Indexer<DLFileEntry> indexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
 
-			indexer.reindex(
-				_dlFileEntryLocalService.fetchDLFileEntry(
-					viewCountEntry.getClassPK()));
+			indexer.reindex(dlFileEntry);
 		}
 		catch (SearchException searchException) {
 			ReflectionUtil.throwException(searchException);

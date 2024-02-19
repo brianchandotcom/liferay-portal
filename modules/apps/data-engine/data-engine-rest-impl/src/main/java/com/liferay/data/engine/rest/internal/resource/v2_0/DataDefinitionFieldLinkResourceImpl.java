@@ -115,14 +115,14 @@ public class DataDefinitionFieldLinkResourceImpl
 					_createDataDefinitionFieldLink(
 						ddmStructureLayout.getDDMStructureId()));
 
+			DataLayout[] dataLayouts = dataDefinitionFieldLink.getDataLayouts();
+
 			dataDefinitionFieldLink.setDataLayouts(
-				ArrayUtil.append(
-					dataDefinitionFieldLink.getDataLayouts(),
+				() -> ArrayUtil.append(
+					dataLayouts,
 					new DataLayout() {
 						{
-							setId(
-								() ->
-									ddmStructureLayout.getStructureLayoutId());
+							setId(ddmStructureLayout::getStructureLayoutId);
 							setName(
 								() -> LocalizedValueUtil.toStringObjectMap(
 									ddmStructureLayout.getNameMap()));
@@ -146,15 +146,17 @@ public class DataDefinitionFieldLinkResourceImpl
 					_createDataDefinitionFieldLink(
 						deDataListView.getDdmStructureId()));
 
+			DataListView[] dataListViews =
+				dataDefinitionFieldLink.getDataListViews();
+
 			dataDefinitionFieldLink.setDataListViews(
-				ArrayUtil.append(
-					dataDefinitionFieldLink.getDataListViews(),
+				() -> ArrayUtil.append(
+					dataListViews,
 					new DataListView() {
 						{
 							setId(
-								() ->
-									deDataDefinitionFieldLink.
-										getDeDataDefinitionFieldLinkId());
+								deDataDefinitionFieldLink::
+									getDeDataDefinitionFieldLinkId);
 							setName(
 								() -> LocalizedValueUtil.toStringObjectMap(
 									deDataListView.getNameMap()));

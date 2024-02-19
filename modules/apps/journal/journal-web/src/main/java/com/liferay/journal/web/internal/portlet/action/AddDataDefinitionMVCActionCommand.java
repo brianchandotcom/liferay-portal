@@ -19,9 +19,6 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Locale;
-import java.util.Map;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
@@ -95,16 +92,15 @@ public class AddDataDefinitionMVCActionCommand
 		DataDefinition dataDefinition = DataDefinition.toDTO(
 			dataDefinitionString);
 
-		String structureKey = ParamUtil.getString(
-			actionRequest, "structureKey");
-		String dataLayout = ParamUtil.getString(actionRequest, "dataLayout");
-		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
-			actionRequest, "description");
-
-		dataDefinition.setDataDefinitionKey(structureKey);
-		dataDefinition.setDefaultDataLayout(DataLayout.toDTO(dataLayout));
+		dataDefinition.setDataDefinitionKey(
+			() -> ParamUtil.getString(actionRequest, "structureKey"));
+		dataDefinition.setDefaultDataLayout(
+			() -> DataLayout.toDTO(
+				ParamUtil.getString(actionRequest, "dataLayout")));
 		dataDefinition.setDescription(
-			LocalizedValueUtil.toStringObjectMap(descriptionMap));
+			() -> LocalizedValueUtil.toStringObjectMap(
+				_localization.getLocalizationMap(
+					actionRequest, "description")));
 
 		dataDefinitionResource.postSiteDataDefinitionByContentType(
 			groupId, "journal", dataDefinition);

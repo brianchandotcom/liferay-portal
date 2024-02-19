@@ -587,7 +587,11 @@ public class EditAssetListDisplayContext {
 			unicodeProperties.getProperty("anyAssetType", null));
 
 		if (defaultClassNameId > 0) {
-			return new long[] {defaultClassNameId};
+			if (ArrayUtil.contains(availableClassNameIds, defaultClassNameId)) {
+				return new long[] {defaultClassNameId};
+			}
+
+			return new long[0];
 		}
 
 		long[] classNameIds = GetterUtil.getLongValues(

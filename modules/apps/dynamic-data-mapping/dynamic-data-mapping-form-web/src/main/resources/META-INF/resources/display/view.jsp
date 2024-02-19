@@ -205,11 +205,22 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 						<c:if test="<%= formShared || preview %>">
 							<clay:container-fluid>
 								<div class="locale-actions">
-									<liferay-ui:language
-										formAction="<%= currentURL %>"
-										languageId="<%= languageId %>"
-										languageIds="<%= ddmFormDisplayContext.getAvailableLanguageIds() %>"
-									/>
+									<c:choose>
+										<c:when test="<%= ddmFormDisplayContext.propagateLanguageSelection() %>">
+											<liferay-ui:language
+												languageId="<%= languageId %>"
+												languageIds="<%= ddmFormDisplayContext.getAvailableLanguageIds() %>"
+												useNamespace="<%= false %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:language
+												formAction="<%= currentURL %>"
+												languageId="<%= languageId %>"
+												languageIds="<%= ddmFormDisplayContext.getAvailableLanguageIds() %>"
+											/>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</clay:container-fluid>
 						</c:if>

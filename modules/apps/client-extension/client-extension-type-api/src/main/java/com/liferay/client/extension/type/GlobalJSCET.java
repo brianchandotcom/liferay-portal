@@ -17,6 +17,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface GlobalJSCET extends CET {
 
+	@CETProperty(
+		defaultValue = "", name = "scriptElementAttributes",
+		type = CETProperty.Type.String
+	)
+	public String getScriptElementAttributes();
+
 	@CETProperty(defaultValue = "", name = "url", type = CETProperty.Type.URL)
 	public String getURL();
 

@@ -76,7 +76,6 @@ describe('SaveButtons', () => {
 		renderComponent({
 			...DEFAULT_PROPS,
 			articleId: '2611',
-			publishButtonLabel: 'publish',
 			saveButtonLabel: 'save',
 		});
 
@@ -89,7 +88,9 @@ describe('SaveButtons', () => {
 		).not.toBeInTheDocument();
 
 		userEvent.click(
-			screen.getByText('publish', {selector: '.dropdown-item'})
+			screen.getByText('publish', {
+				selector: '.dropdown-item',
+			})
 		);
 
 		expect(
@@ -115,7 +116,6 @@ describe('SaveButtons', () => {
 		renderComponent({
 			...DEFAULT_PROPS,
 			articleId: null,
-			publishButtonLabel: 'publish',
 			saveButtonLabel: 'save',
 		});
 
@@ -135,7 +135,9 @@ describe('SaveButtons', () => {
 
 		runAllTimersAndExecuteAction(() => {
 			userEvent.click(
-				screen.getByText('publish', {selector: '.dropdown-item'})
+				screen.getByText('publish-with-permissions', {
+					selector: '.dropdown-item',
+				})
 			);
 		});
 
@@ -175,7 +177,9 @@ describe('SaveButtons', () => {
 		});
 
 		userEvent.click(
-			screen.getByText('publish', {selector: '.dropdown-item'})
+			screen.getByText('publish-with-permissions', {
+				selector: '.dropdown-item',
+			})
 		);
 
 		expect(

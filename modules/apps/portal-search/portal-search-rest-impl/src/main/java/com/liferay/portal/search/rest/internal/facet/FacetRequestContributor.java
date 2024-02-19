@@ -543,13 +543,17 @@ public class FacetRequestContributor {
 
 	private void _setProperties(FacetConfiguration facetConfiguration) {
 		if (Validator.isBlank(facetConfiguration.getAggregationName())) {
-			facetConfiguration.setAggregationName(facetConfiguration.getName());
+			facetConfiguration.setAggregationName(facetConfiguration::getName);
 		}
 
+		Integer frequencyThreshold = facetConfiguration.getFrequencyThreshold();
+
 		facetConfiguration.setFrequencyThreshold(
-			_toInt(1, facetConfiguration.getFrequencyThreshold(), 0));
-		facetConfiguration.setMaxTerms(
-			_toInt(10, facetConfiguration.getMaxTerms(), 0));
+			() -> _toInt(1, frequencyThreshold, 0));
+
+		Integer maxTerms = facetConfiguration.getMaxTerms();
+
+		facetConfiguration.setMaxTerms(() -> _toInt(10, maxTerms, 0));
 	}
 
 	private int _toInt(int defaultValue, Integer value, int minValue) {

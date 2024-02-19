@@ -405,7 +405,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		if (modifiedDate != null) {
 			searchResult.setDateModified(
-				_parseDateStringFieldValue(
+				() -> _parseDateStringFieldValue(
 					document.getString(
 						com.liferay.portal.kernel.search.Field.MODIFIED_DATE)));
 		}
@@ -420,11 +420,11 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		}
 
 		if (summary != null) {
-			searchResult.setDescription(summary.getContent());
+			searchResult.setDescription(summary::getContent);
 		}
 		else {
 			searchResult.setDescription(
-				assetRenderer.getSearchSummary(
+				() -> assetRenderer.getSearchSummary(
 					contextAcceptLanguage.getPreferredLocale()));
 		}
 	}
@@ -470,7 +470,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 				}
 
 				searchResult.setEmbedded(
-					dtoConverter.toDTO(
+					() -> dtoConverter.toDTO(
 						new DefaultDTOConverterContext(
 							contextAcceptLanguage.isAcceptAllLanguages(),
 							new HashMap<>(), _dtoConverterRegistry,
@@ -481,7 +481,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			}
 			else {
 				searchResult.setEmbedded(
-					dtoConverter.toDTO(
+					() -> dtoConverter.toDTO(
 						new DefaultDTOConverterContext(
 							contextAcceptLanguage.isAcceptAllLanguages(),
 							new HashMap<>(), _dtoConverterRegistry,
@@ -508,7 +508,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			entryClassPK, contextUriInfo);
 
 		if (!Validator.isBlank(jaxRsLink)) {
-			searchResult.setItemURL(jaxRsLink);
+			searchResult.setItemURL(() -> jaxRsLink);
 		}
 	}
 
@@ -519,7 +519,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			return;
 		}
 
-		searchResult.setScore(searchHit.getScore());
+		searchResult.setScore(searchHit::getScore);
 	}
 
 	private void _setTitle(
@@ -531,11 +531,11 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		}
 
 		if (summary != null) {
-			searchResult.setTitle(summary.getTitle());
+			searchResult.setTitle(summary::getTitle);
 		}
 		else {
 			searchResult.setTitle(
-				assetRenderer.getTitle(
+				() -> assetRenderer.getTitle(
 					contextAcceptLanguage.getPreferredLocale()));
 		}
 	}

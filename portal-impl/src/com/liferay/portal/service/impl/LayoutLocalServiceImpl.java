@@ -105,6 +105,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -132,6 +133,8 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides the local service for accessing, adding, deleting, exporting,
@@ -708,10 +711,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			PropertiesParamUtil.getProperties(
+				httpServletRequest, "TypeSettingsProperties--");
+
 		Layout sourceLayout = layoutLocalService.getLayout(sourcePlid);
 
 		UnicodeProperties sourceUnicodeProperties =
 			sourceLayout.getTypeSettingsProperties();
+
+		sourceUnicodeProperties.putAll(typeSettingsUnicodeProperties);
 
 		Layout targetLayout = layoutLocalService.addLayout(
 			userId, groupId, privateLayout, sourceLayout.getParentLayoutId(),

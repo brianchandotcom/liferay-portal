@@ -35,6 +35,11 @@ public class GlobalJSCETImpl extends BaseCETImpl implements GlobalJSCET {
 	}
 
 	@Override
+	public String getScriptElementAttributes() {
+		return getString("scriptElementAttributes");
+	}
+
+	@Override
 	public String getType() {
 		return ClientExtensionEntryConstants.TYPE_GLOBAL_JS;
 	}

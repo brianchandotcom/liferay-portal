@@ -7,18 +7,23 @@ package com.liferay.asset.list.web.internal.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
+import com.liferay.asset.test.util.asset.renderer.factory.TestAssetRendererFactory;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -44,6 +49,7 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Lourdes Fernández Besada
@@ -143,6 +149,99 @@ public class EditAssetListDisplayContextTest {
 	}
 
 	@Test
+	public void testGetActionDropdownItemsWithNoAvailableSelectedSubtype()
+		throws Exception {
+
+		String className = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+		String expectedLabel = RandomTestUtil.randomString();
+
+		ClassTypeReader classTypeReader = _getClassTypeReader(
+			ListUtil.fromArray(
+				_getClassType(), _getClassType(), _getClassType()));
+
+		_setUpAssetRendererFactoryRegistryUtil(
+			className, classNameId, classTypeReader, true, expectedLabel);
+
+		long classTypeId = RandomTestUtil.randomLong();
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
+			"classNameIds", classNameId
+		).put(
+			"classTypeIds" + TestAssetRendererFactory.class.getSimpleName(),
+			classTypeId
+		).put(
+			"selectionStyle", "manual"
+		).build();
+
+		_setUpAssetListEntryLocalService(
+			StringPool.BLANK, className, unicodeProperties.toString());
+
+		EditAssetListDisplayContext editAssetListDisplayContext =
+			_getEditAssetListDisplayContext(unicodeProperties);
+
+		List<DropdownItem> dropdownItems =
+			editAssetListDisplayContext.getActionDropdownItems();
+
+		Assert.assertEquals(dropdownItems.toString(), 0, dropdownItems.size());
+
+		Mockito.verify(
+			classTypeReader
+		).getClassType(
+			classTypeId, LocaleUtil.US
+		);
+	}
+
+	@Test
+	public void testGetActionDropdownItemsWithSelectedSubtype()
+		throws Exception {
+
+		String className = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+
+		long classTypeId = RandomTestUtil.randomLong();
+		String expectedLabel = RandomTestUtil.randomString();
+
+		ClassTypeReader classTypeReader = _getClassTypeReader(
+			ListUtil.fromArray(
+				_getClassType(), _getClassType(classTypeId, expectedLabel),
+				_getClassType()));
+
+		_setUpAssetRendererFactoryRegistryUtil(
+			className, classNameId, classTypeReader, true, expectedLabel);
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.put(
+			"classNameIds", classNameId
+		).put(
+			"classTypeIds" + TestAssetRendererFactory.class.getSimpleName(),
+			classTypeId
+		).put(
+			"selectionStyle", "manual"
+		).build();
+
+		_setUpAssetListEntryLocalService(
+			StringPool.BLANK, className, unicodeProperties.toString());
+
+		EditAssetListDisplayContext editAssetListDisplayContext =
+			_getEditAssetListDisplayContext(unicodeProperties);
+
+		List<DropdownItem> dropdownItems =
+			editAssetListDisplayContext.getActionDropdownItems();
+
+		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
+
+		DropdownItem dropdownItem = dropdownItems.get(0);
+
+		Assert.assertEquals(expectedLabel, dropdownItem.get("label"));
+
+		Mockito.verify(
+			classTypeReader
+		).getClassType(
+			classTypeId, LocaleUtil.US
+		);
+	}
+
+	@Test
 	public void testGetClassNameIdsDynamicSelection() {
 		long classNameId = RandomTestUtil.randomLong();
 
@@ -186,11 +285,76 @@ public class EditAssetListDisplayContextTest {
 				}));
 	}
 
+	private ClassType _getClassType() {
+		return _getClassType(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+	}
+
+	private ClassType _getClassType(long classTypeId, String classTypeName) {
+		ClassType classType = Mockito.mock(ClassType.class);
+
+		Mockito.when(
+			classType.getClassTypeId()
+		).thenReturn(
+			classTypeId
+		);
+		Mockito.when(
+			classType.getName()
+		).thenReturn(
+			classTypeName
+		);
+
+		return classType;
+	}
+
+	private ClassTypeReader _getClassTypeReader(List<ClassType> classTypes)
+		throws Exception {
+
+		ClassTypeReader classTypeReader = Mockito.mock(ClassTypeReader.class);
+
+		Mockito.when(
+			classTypeReader.getClassType(
+				Mockito.anyLong(), Mockito.eq(LocaleUtil.US))
+		).thenAnswer(
+			(Answer<ClassType>)invocationOnMock -> {
+				Long curClassTypeId = invocationOnMock.getArgument(
+					0, Long.class);
+
+				for (ClassType classType : classTypes) {
+					if (classType.getClassTypeId() == curClassTypeId) {
+						return classType;
+					}
+				}
+
+				throw new PortalException();
+			}
+		);
+
+		Mockito.when(
+			classTypeReader.getAvailableClassTypes(null, LocaleUtil.US)
+		).thenReturn(
+			classTypes
+		);
+
+		return classTypeReader;
+	}
+
 	private EditAssetListDisplayContext _getEditAssetListDisplayContext(
 		UnicodeProperties unicodeProperties) {
 
+		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider =
+			Mockito.mock(AssetRendererFactoryClassProvider.class);
+
+		Mockito.when(
+			assetRendererFactoryClassProvider.getClass(
+				Mockito.any(AssetRendererFactory.class))
+		).thenAnswer(
+			(Answer<Class<? extends AssetRendererFactory<?>>>)
+				invocationOnMock -> TestAssetRendererFactory.class
+		);
+
 		return new EditAssetListDisplayContext(
-			Mockito.mock(AssetRendererFactoryClassProvider.class),
+			assetRendererFactoryClassProvider,
 			Mockito.mock(InfoSearchClassMapperRegistry.class),
 			Mockito.mock(ItemSelector.class), _portletRequest,
 			Mockito.mock(PortletResponse.class),
@@ -235,7 +399,8 @@ public class EditAssetListDisplayContextTest {
 	}
 
 	private void _setUpAssetRendererFactoryRegistryUtil(
-		String className, long classNameId, String typeName) {
+		String className, long classNameId, ClassTypeReader classTypeReader,
+		boolean supportsClassTypes, String typeName) {
 
 		AssetRendererFactory<?> assetRendererFactory = null;
 
@@ -258,6 +423,16 @@ public class EditAssetListDisplayContextTest {
 				true
 			);
 			Mockito.when(
+				assetRendererFactory.isSupportsClassTypes()
+			).thenReturn(
+				supportsClassTypes
+			);
+			Mockito.when(
+				assetRendererFactory.getClassTypeReader()
+			).thenReturn(
+				classTypeReader
+			);
+			Mockito.when(
 				assetRendererFactory.getTypeName(LocaleUtil.US)
 			).thenReturn(
 				typeName
@@ -271,6 +446,13 @@ public class EditAssetListDisplayContextTest {
 		).thenReturn(
 			assetRendererFactory
 		);
+	}
+
+	private void _setUpAssetRendererFactoryRegistryUtil(
+		String className, long classNameId, String typeName) {
+
+		_setUpAssetRendererFactoryRegistryUtil(
+			className, classNameId, null, false, typeName);
 	}
 
 	private void _setUpLanguageUtil() {

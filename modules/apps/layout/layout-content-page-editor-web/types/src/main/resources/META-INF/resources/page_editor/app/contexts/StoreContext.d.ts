@@ -5,7 +5,7 @@
 
 import React from 'react';
 import {Action, State} from '../reducers';
-export declare type Dispatch = (action: Action) => void;
+export declare type Dispatch = (actionOrThunk: Action | Thunk) => void;
 export declare type GetState = () => State;
 export declare type Thunk = (dispatch: Dispatch, getState: GetState) => void;
 export declare type Reducer = (state: State, action: Action) => State;

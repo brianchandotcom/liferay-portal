@@ -6,8 +6,14 @@
 import {switchSidebarPanel as switchSidebarPanelAction} from '../actions/index';
 import hideProductMenuIfPresent from '../utils/hideProductMenuIfPresent';
 
-export default function switchSidebarPanel(action) {
-	return (dispatch) => {
+interface Action {
+	itemConfigurationOpen?: boolean;
+}
+
+export default function switchSidebarPanel(action: Action) {
+	return (
+		dispatch: (action: ReturnType<typeof switchSidebarPanelAction>) => void
+	) => {
 		hideProductMenuIfPresent({
 			onHide: () => {
 				dispatch(switchSidebarPanelAction({...action}));

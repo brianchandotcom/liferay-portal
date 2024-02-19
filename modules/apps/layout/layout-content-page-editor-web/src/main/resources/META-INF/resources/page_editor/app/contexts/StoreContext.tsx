@@ -21,7 +21,7 @@ import {Action, State} from '../reducers';
 
 const DEFAULT_COMPARE_EQUAL = (a: any, b: any) => a === b;
 
-export type Dispatch = (action: Action) => void;
+export type Dispatch = (actionOrThunk: Action | Thunk) => void;
 export type GetState = () => State;
 export type Thunk = (dispatch: Dispatch, getState: GetState) => void;
 export type Reducer = (state: State, action: Action) => State;

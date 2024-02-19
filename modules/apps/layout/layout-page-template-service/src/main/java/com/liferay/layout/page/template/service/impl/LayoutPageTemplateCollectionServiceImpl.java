@@ -154,6 +154,22 @@ public class LayoutPageTemplateCollectionServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId,
+			long targetLayoutPageTemplateCollectionId)
+		throws PortalException {
+
+		_layoutPageTemplateCollectionModelResourcePermission.check(
+			getPermissionChecker(), layoutPageTemplateCollectionId,
+			ActionKeys.UPDATE);
+
+		return layoutPageTemplateCollectionLocalService.
+			moveLayoutPageTemplateCollection(
+				layoutPageTemplateCollectionId,
+				targetLayoutPageTemplateCollectionId);
+	}
+
+	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name)
 		throws PortalException {

@@ -13,6 +13,7 @@ import {
 	TestrayFactor,
 	TestrayFactorCategory,
 	TestrayFactorOption,
+	TestrayOptionsByCategory,
 } from './types';
 
 type FactorCategory = typeof yupSchema.factorCategory.__outputType;
@@ -29,6 +30,24 @@ class TestrayFactorCategoryRest extends Rest<
 			}),
 			uri: 'factorcategories',
 		});
+	}
+
+	public async getOptionsByCategoryItems(
+		optionsList: TestrayFactorCategory[]
+	) {
+		const optionsByCategory: Array<TestrayOptionsByCategory[]> = [];
+
+		for (const optionItem of optionsList) {
+			const response = await this.getFactorCategoryOptions(
+				optionItem?.id as number
+			);
+
+			if (response?.items) {
+				optionsByCategory[optionItem.name as any] = [...response.items];
+			}
+		}
+
+		return optionsByCategory;
 	}
 
 	public async getFactorCategoryItems(factorItems: TestrayFactor[]) {

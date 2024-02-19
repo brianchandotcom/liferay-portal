@@ -62,11 +62,13 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		entry.setEmailAddress(emailAddress);
 		entry.setComments(comments);
 
+		entry = entryPersistence.update(entry);
+
 		_resourceLocalService.addResources(
 			user.getCompanyId(), 0, user.getUserId(), Entry.class.getName(),
 			contactId, false, false, false);
 
-		return entryPersistence.update(entry);
+		return entry;
 	}
 
 	@Override

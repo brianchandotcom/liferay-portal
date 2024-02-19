@@ -3,5 +3,6 @@
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="INFO" name="com.liferay.headless.batch.engine.resource.v1_0.test.ExportTaskResourceTest" />
+		<Logger level="INFO" name="com.liferay.headless.batch.engine.resource.v1_0.test.BatchExportImportPerformanceTest" />
 	</Loggers>
 </Configuration>

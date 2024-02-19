@@ -200,7 +200,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			).put(
 				"state", new State()
 			).put(
-				"ui_Locals", _getLangTags(httpServletRequest)
+				"ui_locales", _getLangTags(httpServletRequest)
 			).build();
 
 		try {

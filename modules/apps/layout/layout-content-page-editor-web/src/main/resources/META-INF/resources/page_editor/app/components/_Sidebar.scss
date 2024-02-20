@@ -49,7 +49,7 @@ html#{$cadmin-selector}
 	.page-editor__item-configuration-sidebar {
 	height: unset;
 	min-height: calc(
-		100vh - (var(--control-menu-container-height) + var(--toolbar-height))
+		var(--editor-height) + var(--toolbar-height) + var(--zoom-alert-height)
 	);
 	position: absolute;
 	top: calc(var(--control-menu-container-height));
@@ -61,7 +61,7 @@ html#{$cadmin-selector}
 	.cadmin
 	.page-editor__sidebar {
 	min-height: calc(
-		100vh - (var(--control-menu-container-height) + var(--toolbar-height))
+		var(--editor-height) + var(--toolbar-height) + var(--zoom-alert-height)
 	);
 	height: unset;
 	position: absolute;
@@ -69,12 +69,20 @@ html#{$cadmin-selector}
 	z-index: $sidebarZIndex + 1;
 
 	&__buttons {
+		min-height: calc(
+			var(--editor-height) + var(--toolbar-height) +
+				var(--zoom-alert-height)
+		);
 		position: absolute;
 		top: 0;
 	}
 
 	&__content {
-		min-height: calc(100vh - var(--control-menu-container-height));
+		height: unset;
+		min-height: calc(
+			var(--editor-height) + var(--toolbar-height) +
+				var(--zoom-alert-height)
+		);
 		position: absolute;
 		top: 0;
 	}

@@ -46,8 +46,8 @@ public class CTRequiredModelExceptionDynamicInclude
 	protected String getMessage(Locale locale) {
 		return _language.get(
 			locale,
-			"item-cannot-be-deleted-because-it-is-being-modified-in-another-" +
-				"publication");
+			"item-cannot-be-deleted-because-it-is-being-modified-in-one-or-" +
+				"more-publications");
 	}
 
 	@Override

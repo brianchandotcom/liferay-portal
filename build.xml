@@ -16,9 +16,6 @@
 						includes="*-ext/**,*-ext.war/**,*-hook/**,*-hook.war/**,*-layouttpl/**,*-layouttpl.war/**,*-portlet/**,*-portlet.war/**,*-theme/**,*-theme.war/**,*-web/**,*-web.war/**"
 					/>
 					<fileset
-						dir="${app.server.lib.global.dir}"
-					/>
-					<fileset
 						dir="${liferay.home}"
 						includes=".liferay-home"
 					/>

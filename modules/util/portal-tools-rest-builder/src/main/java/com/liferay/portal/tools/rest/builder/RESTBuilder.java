@@ -1855,25 +1855,25 @@ public class RESTBuilder {
 	}
 
 	private void _invokeJSClientGenerator(
-			File baseClientDir, String clientName, File openAPIYAMLFile,
-			String targetClientType)
+			File baseClientDir, String clientName, String clientType,
+			File openAPIYAMLFile)
 		throws Exception {
 
 		String outputDirName = StringBundler.concat(
 			baseClientDir.getPath(), "/src/main/resources/META-INF/resources/",
-			targetClientType);
+			clientType);
 
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
 				"npx", "openapi-typescript-codegen@0.27.0", "--client",
-				targetClientType, "--input", openAPIYAMLFile.getPath(),
+				clientType, "--input", openAPIYAMLFile.getPath(),
 				"--name", clientName, "--output", outputDirName, "--useOptions",
 				"--useUnionTypes"));
 
 		Process process = processBuilder.start();
 
 		System.out.println(
-			"Generating " + targetClientType + " JavaScript client");
+			"Generating " + clientType + " JavaScript client");
 
 		process.waitFor();
 
@@ -1930,9 +1930,9 @@ public class RESTBuilder {
 				).build()));
 
 		_invokeJSClientGenerator(
-			baseClientDir, clientName, openAPIYAMLFile, "fetch");
+			baseClientDir, clientName, "fetch", openAPIYAMLFile);
 		_invokeJSClientGenerator(
-			baseClientDir, clientName, openAPIYAMLFile, "node");
+			baseClientDir, clientName, "node", openAPIYAMLFile);
 
 		FileUtil.delete(openAPIYAMLFile);
 	}

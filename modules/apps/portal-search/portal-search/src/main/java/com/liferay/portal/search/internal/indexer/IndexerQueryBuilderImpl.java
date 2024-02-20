@@ -138,6 +138,10 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 						searchContext)),
 			keywordsBooleanQuery, searchContext);
 
+		if (!keywordsBooleanQuery.hasClauses()) {
+			return;
+		}
+
 		try {
 			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();
 

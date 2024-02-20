@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import Form from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
@@ -13,6 +14,17 @@ import React, {useEffect, useRef, useState} from 'react';
 import togglePermission, {PermissionKey} from '../actions/togglePermission';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanSwitchEditMode from '../selectors/selectCanSwitchEditMode';
+
+interface EditModePickerProps {
+	disabled: boolean;
+	symbol?: string;
+	title?: string;
+}
+
+interface EditMode {
+	label: string;
+	value: string;
+}
 
 const EDIT_MODES = [
 	{
@@ -22,27 +34,39 @@ const EDIT_MODES = [
 	{label: Liferay.Language.get('page-design'), value: 'page-design'},
 ];
 
-const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
-	({children, className, ...otherProps}, ref) => (
+const Trigger = React.forwardRef<HTMLButtonElement, any>(
+	({children, symbol, ...otherProps}, ref) => (
 		<ClayButton
+			{...otherProps}
 			className={classNames('form-control-select', {
-				show: className.includes('show'),
+				'd-lg-block d-none':
+					Liferay.FeatureFlags['LPD-10988'] && !symbol,
+				'd-lg-none': symbol,
 			})}
 			displayType="secondary"
 			ref={ref}
 			size="sm"
-			{...otherProps}
 		>
-			{children}
+			{symbol ? <ClayIcon symbol="format" /> : children}
 		</ClayButton>
 	)
+);
+
+const EditModePicker = (props: EditModePickerProps) => (
+	<Picker UNSAFE_menuClassName="cadmin" as={Trigger} {...props}>
+		{({label, value}: EditMode) => (
+			<Option key={value} textValue={label}>
+				{label}
+			</Option>
+		)}
+	</Picker>
 );
 
 export default function EditModeSelector() {
 	const canSwitchEditMode = useSelector(selectCanSwitchEditMode);
 	const dispatch = useDispatch();
 
-	const [editMode, setEditMode] = useState(
+	const [editMode, setEditMode] = useState<EditMode>(
 		canSwitchEditMode
 			? EDIT_MODES.find(({value}) => value === 'page-design')!
 			: EDIT_MODES.find(({value}) => value === 'content-editing')!
@@ -65,40 +89,42 @@ export default function EditModeSelector() {
 		/* eslint-disable-next-line react-hooks/exhaustive-deps */
 	}, []);
 
+	const props = {
+		['aria-label']: sub(
+			Liferay.Language.get('select-edit-mode.-current-edit-mode-x'),
+			editMode.label
+		),
+		disabled: !canSwitchEditMode,
+		items: EDIT_MODES,
+		onSelectionChange: (key: React.Key) => {
+			const selectedOption = EDIT_MODES.find(({value}) => value === key)!;
+
+			setEditMode(selectedOption);
+
+			dispatch(
+				togglePermission(
+					higherUpdatePermissionRef.current,
+					selectedOption.value === 'page-design'
+				)
+			);
+		},
+		selectedKey: editMode.value,
+	};
+
 	return (
 		<Form.Group className="mb-0">
-			<Picker
-				UNSAFE_menuClassName="cadmin"
-				aria-label={sub(
-					Liferay.Language.get('page-edition-mode'),
-					editMode.label
-				)}
-				as={TriggerLabel}
-				className="btn-secondary"
-				defaultSelectedKey={editMode.value}
-				disabled={!canSwitchEditMode}
-				items={EDIT_MODES}
-				onSelectionChange={(key: React.Key) => {
-					const selectedOption = EDIT_MODES.find(
-						({value}) => value === key
-					)!;
+			<EditModePicker {...props} />
 
-					setEditMode(selectedOption);
-
-					dispatch(
-						togglePermission(
-							higherUpdatePermissionRef.current,
-							selectedOption!.value === 'page-design'
-						)
-					);
-				}}
-			>
-				{({label, value}) => (
-					<Option key={value} textValue={label}>
-						{label}
-					</Option>
-				)}
-			</Picker>
+			{Liferay.FeatureFlags['LPD-10988'] ? (
+				<EditModePicker
+					symbol="format"
+					title={sub(
+						Liferay.Language.get('select-x'),
+						Liferay.Language.get('edit-mode')
+					)}
+					{...props}
+				/>
+			) : null}
 		</Form.Group>
 	);
 }

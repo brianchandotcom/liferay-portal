@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -658,14 +657,13 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public FragmentEntryLink updateDeleted(
-			long fragmentEntryLinkId, boolean deleted)
+			long userId, long fragmentEntryLinkId, boolean deleted)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
-		_checkUnlockedLayout(
-			fragmentEntryLink.getPlid(), GuestOrUserUtil.getUserId());
+		_checkUnlockedLayout(fragmentEntryLink.getPlid(), userId);
 
 		fragmentEntryLink.setDeleted(deleted);
 
@@ -674,14 +672,13 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public FragmentEntryLink updateFragmentEntryLink(
-			long fragmentEntryLinkId, int position)
+			long userId, long fragmentEntryLinkId, int position)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(
 			fragmentEntryLinkId);
 
-		_checkUnlockedLayout(
-			fragmentEntryLink.getPlid(), GuestOrUserUtil.getUserId());
+		_checkUnlockedLayout(fragmentEntryLink.getPlid(), userId);
 
 		fragmentEntryLink.setPosition(position);
 
@@ -732,24 +729,23 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Override
 	public FragmentEntryLink updateFragmentEntryLink(
-			long fragmentEntryLinkId, String editableValues)
+			long userId, long fragmentEntryLinkId, String editableValues)
 		throws PortalException {
 
 		return updateFragmentEntryLink(
-			fragmentEntryLinkId, editableValues, true);
+			userId, fragmentEntryLinkId, editableValues, true);
 	}
 
 	@Override
 	public FragmentEntryLink updateFragmentEntryLink(
-			long fragmentEntryLinkId, String editableValues,
+			long userId, long fragmentEntryLinkId, String editableValues,
 			boolean updateClassedModel)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink = fetchFragmentEntryLink(
 			fragmentEntryLinkId);
 
-		_checkUnlockedLayout(
-			fragmentEntryLink.getPlid(), GuestOrUserUtil.getUserId());
+		_checkUnlockedLayout(fragmentEntryLink.getPlid(), userId);
 
 		fragmentEntryLink.setEditableValues(editableValues);
 

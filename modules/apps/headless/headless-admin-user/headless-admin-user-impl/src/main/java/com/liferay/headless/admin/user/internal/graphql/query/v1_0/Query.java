@@ -914,8 +914,8 @@ public class Query {
 		description = "Retrieves the portal instance's roles. Results can be paginated."
 	)
 	public RolePage roles(
-			@GraphQLName("types") Integer[] types,
 			@GraphQLName("search") String search,
+			@GraphQLName("types") Integer[] types,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -925,7 +925,7 @@ public class Query {
 			this::_populateResourceContext,
 			roleResource -> new RolePage(
 				roleResource.getRolesPage(
-					types, search, Pagination.of(page, pageSize))));
+					search, types, Pagination.of(page, pageSize))));
 	}
 
 	/**

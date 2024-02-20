@@ -182,7 +182,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	@Test
 	public void testGetKeywordsRankedPage() throws Exception {
 		Page<Keyword> page = keywordResource.getKeywordsRankedPage(
-			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), testGroup.getGroupId(), 
 			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());
@@ -193,7 +193,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			randomKeyword());
 
 		page = keywordResource.getKeywordsRankedPage(
-			testGroup.getGroupId(), null, Pagination.of(1, 2));
+			null, testGroup.getGroupId(), Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -216,14 +216,14 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			randomKeyword());
 
 		Page<Keyword> page1 = keywordResource.getKeywordsRankedPage(
-			testGroup.getGroupId(), null, Pagination.of(1, 2));
+			null, testGroup.getGroupId(), Pagination.of(1, 2));
 
 		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
 
 		Assert.assertEquals(keywords1.toString(), 2, keywords1.size());
 
 		Page<Keyword> page2 = keywordResource.getKeywordsRankedPage(
-			testGroup.getGroupId(), null, Pagination.of(2, 2));
+			null, testGroup.getGroupId(), Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -232,7 +232,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
 
 		Page<Keyword> page3 = keywordResource.getKeywordsRankedPage(
-			testGroup.getGroupId(), null, Pagination.of(1, 3));
+			null, testGroup.getGroupId(), Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(keyword1, keyword2, keyword3),

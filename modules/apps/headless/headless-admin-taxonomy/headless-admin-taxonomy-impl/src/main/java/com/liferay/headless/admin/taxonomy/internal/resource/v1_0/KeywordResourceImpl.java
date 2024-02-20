@@ -111,7 +111,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Override
 	public Page<Keyword> getKeywordsRankedPage(
-		Long siteId, String search, Pagination pagination) {
+		String search, Long siteId, Pagination pagination) {
 
 		DynamicQuery dynamicQuery = _assetTagLocalService.dynamicQuery();
 

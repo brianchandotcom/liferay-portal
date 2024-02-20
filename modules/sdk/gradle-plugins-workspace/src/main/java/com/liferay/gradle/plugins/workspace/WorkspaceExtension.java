@@ -5,8 +5,6 @@
 
 package com.liferay.gradle.plugins.workspace;
 
-import com.google.gson.annotations.SerializedName;
-
 import com.liferay.gradle.plugins.workspace.configurator.ClientExtensionProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurator.ExtProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurator.ModulesProjectConfigurator;
@@ -15,11 +13,10 @@ import com.liferay.gradle.plugins.workspace.configurator.RootProjectConfigurator
 import com.liferay.gradle.plugins.workspace.configurator.ThemesProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurator.WarsProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.internal.util.ResourceUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.ReleaseUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
-import com.liferay.workspace.bundle.url.codec.BundleURLCodec;
 
 import groovy.lang.Closure;
 import groovy.lang.MissingPropertyException;
@@ -27,14 +24,11 @@ import groovy.lang.MissingPropertyException;
 import java.io.File;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
-import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.initialization.Settings;
@@ -64,20 +58,11 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
 		_projectConfigurators.add(new WarsProjectConfigurator(settings));
 
-		_productInfoMap = ResourceUtil.readJson(
-			ProductInfoMap.class,
-			ResourceUtil.getURLResolver(_workspaceCacheDir, _PRODUCT_INFO_URL),
-			ResourceUtil.getURLResolver(
-				_workspaceCacheDir, _CDN_PRODUCT_INFO_URL),
-			ResourceUtil.getClassLoaderResolver("/.product_info.json"));
-
 		_appServerTomcatVersion = GradleUtil.getProperty(
-			settings, "app.server.tomcat.version",
-			_getDefaultAppServerVersion());
+			settings, "app.server.tomcat.version");
 		_bundleCacheDir = _getProperty(
 			settings, "bundle.cache.dir", _BUNDLE_CACHE_DIR);
-		_bundleChecksumMD5 = _getProperty(
-			settings, "bundle.checksum.md5", getDefaultBundleChecksumMD5());
+		_bundleChecksumMD5 = _getProperty(settings, "bundle.checksum.md5");
 		_bundleDistIncludeMetadata = _getProperty(
 			settings, "bundle.dist.include.metadata",
 			_BUNDLE_DIST_INCLUDE_METADATA);
@@ -95,16 +80,14 @@ public class WorkspaceExtension {
 		_bundleTokenPasswordFile = _getProperty(
 			settings, "bundle.token.password.file",
 			_BUNDLE_TOKEN_PASSWORD_FILE);
-		_bundleUrl = _getProperty(
-			settings, "bundle.url", getDefaultBundleUrl());
+		_bundleUrl = _getProperty(settings, "bundle.url");
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
 		_dirExcludesGlobs = StringUtil.split(
 			GradleUtil.toString(_getProperty(settings, "dir.excludes.globs")));
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
-		_dockerImageLiferay = _getProperty(
-			settings, "docker.image.liferay", _getDefaultDockerImage());
+		_dockerImageLiferay = _getProperty(settings, "docker.image.liferay");
 		_dockerLocalRegistryAddress = _getProperty(
 			settings, "docker.local.registry.address");
 		_dockerPullPolicy = _getProperty(
@@ -121,8 +104,7 @@ public class WorkspaceExtension {
 		_nodePackageManager = _getProperty(
 			settings, "node.package.manager", _NODE_PACKAGE_MANAGER);
 		_targetPlatformVersion = _getProperty(
-			settings, "target.platform.version",
-			_getDefaultTargetplatformVersion());
+			settings, "target.platform.version");
 
 		_gradle.projectsEvaluated(
 			new Closure<Void>(_gradle) {
@@ -137,7 +119,9 @@ public class WorkspaceExtension {
 						return;
 					}
 
-					if (_product == null) {
+					String product = getProduct();
+
+					if (product == null) {
 						logger.lifecycle(
 							"The property `liferay.workspace.product` has " +
 								"not been set. It is recommended to set this " +
@@ -152,9 +136,12 @@ public class WorkspaceExtension {
 							"value managed by the liferay.workspace.product " +
 								"setting.";
 
+					ReleaseUtil.ReleaseProperties releaseProperties =
+						ReleaseUtil.getReleaseProperties(product);
+
 					if (!Objects.equals(
 							getAppServerTomcatVersion(),
-							_getDefaultAppServerVersion())) {
+							releaseProperties.getAppServerTomcatVersion())) {
 
 						logger.lifecycle(
 							String.format(
@@ -164,7 +151,7 @@ public class WorkspaceExtension {
 
 					if (!Objects.equals(
 							getBundleChecksumMD5(),
-							getDefaultBundleChecksumMD5())) {
+							releaseProperties.getBundleChecksumSHA512())) {
 
 						logger.lifecycle(
 							String.format(
@@ -173,7 +160,7 @@ public class WorkspaceExtension {
 					}
 
 					if (!Objects.equals(
-							getBundleUrl(), getDefaultBundleUrl())) {
+							getBundleUrl(), releaseProperties.getBundleUrl())) {
 
 						logger.lifecycle(
 							String.format(
@@ -183,7 +170,7 @@ public class WorkspaceExtension {
 
 					if (!Objects.equals(
 							getDockerImageLiferay(),
-							_getDefaultDockerImage())) {
+							releaseProperties.getLiferayDockerImage())) {
 
 						logger.lifecycle(
 							String.format(
@@ -193,7 +180,7 @@ public class WorkspaceExtension {
 
 					if (!Objects.equals(
 							getTargetPlatformVersion(),
-							_getDefaultTargetplatformVersion())) {
+							releaseProperties.getTargetPlatformVersion())) {
 
 						logger.lifecycle(
 							String.format(
@@ -209,7 +196,9 @@ public class WorkspaceExtension {
 
 	public String getAppServerTomcatVersion() {
 		if (Objects.isNull(_appServerTomcatVersion)) {
-			return _getDefaultAppServerVersion();
+			return ReleaseUtil.getFromReleaseProperties(
+				getProduct(),
+				ReleaseUtil.ReleaseProperties::getAppServerTomcatVersion);
 		}
 
 		return GradleUtil.toString(_appServerTomcatVersion);
@@ -221,7 +210,9 @@ public class WorkspaceExtension {
 
 	public String getBundleChecksumMD5() {
 		if (Objects.isNull(_bundleChecksumMD5)) {
-			return getDefaultBundleChecksumMD5();
+			return ReleaseUtil.getFromReleaseProperties(
+				getProduct(),
+				ReleaseUtil.ReleaseProperties::getBundleChecksumSHA512);
 		}
 
 		return GradleUtil.toString(_bundleChecksumMD5);
@@ -246,7 +237,8 @@ public class WorkspaceExtension {
 
 	public String getBundleUrl() {
 		if (Objects.isNull(_bundleUrl)) {
-			return getDefaultBundleUrl();
+			return ReleaseUtil.getFromReleaseProperties(
+				getProduct(), ReleaseUtil.ReleaseProperties::getBundleUrl);
 		}
 
 		return GradleUtil.toString(_bundleUrl);
@@ -254,26 +246,6 @@ public class WorkspaceExtension {
 
 	public File getConfigsDir() {
 		return GradleUtil.toFile(_gradle.getRootProject(), _configsDir);
-	}
-
-	public String getDefaultBundleChecksumMD5() {
-		return Optional.ofNullable(
-			_getProductInfo(getProduct())
-		).map(
-			ProductInfo::getBundleChecksumMD5
-		).orElse(
-			null
-		);
-	}
-
-	public String getDefaultBundleUrl() {
-		return Optional.ofNullable(
-			_getProductInfo(getProduct())
-		).map(
-			this::_decodeBundleUrl
-		).orElse(
-			null
-		);
 	}
 
 	public List<String> getDirExcludesGlobs() {
@@ -294,7 +266,9 @@ public class WorkspaceExtension {
 
 	public String getDockerImageLiferay() {
 		if (Objects.isNull(_dockerImageLiferay)) {
-			return _getDefaultDockerImage();
+			return ReleaseUtil.getFromReleaseProperties(
+				getProduct(),
+				ReleaseUtil.ReleaseProperties::getLiferayDockerImage);
 		}
 
 		return GradleUtil.toString(_dockerImageLiferay);
@@ -332,10 +306,6 @@ public class WorkspaceExtension {
 		return GradleUtil.toString(_product);
 	}
 
-	public ProductInfo getProductInfo() {
-		return _getProductInfo(getProduct());
-	}
-
 	public Iterable<ProjectConfigurator> getProjectConfigurators() {
 		return Collections.unmodifiableSet(_projectConfigurators);
 	}
@@ -346,7 +316,9 @@ public class WorkspaceExtension {
 
 	public String getTargetPlatformVersion() {
 		if (Objects.isNull(_targetPlatformVersion)) {
-			return _getDefaultTargetplatformVersion();
+			return ReleaseUtil.getFromReleaseProperties(
+				getProduct(),
+				ReleaseUtil.ReleaseProperties::getTargetPlatformVersion);
 		}
 
 		return GradleUtil.toString(_targetPlatformVersion);
@@ -476,108 +448,6 @@ public class WorkspaceExtension {
 		_targetPlatformVersion = targetPlatformVersion;
 	}
 
-	public class ProductInfo {
-
-		public String getAppServerTomcatVersion() {
-			return _appServerTomcatVersion;
-		}
-
-		public String getBundleChecksumMD5() {
-			return _bundleChecksumMD5;
-		}
-
-		public String getBundleUrl() {
-			return _bundleUrl;
-		}
-
-		public String getLiferayDockerImage() {
-			return _liferayDockerImage;
-		}
-
-		public String getLiferayProductVersion() {
-			return _liferayProductVersion;
-		}
-
-		public String getReleaseDate() {
-			return _releaseDate;
-		}
-
-		public String getTargetPlatformVersion() {
-			return _targetPlatformVersion;
-		}
-
-		@SerializedName("appServerTomcatVersion")
-		private String _appServerTomcatVersion;
-
-		@SerializedName("bundleChecksumMD5")
-		private String _bundleChecksumMD5;
-
-		@SerializedName("bundleUrl")
-		private String _bundleUrl;
-
-		@SerializedName("liferayDockerImage")
-		private String _liferayDockerImage;
-
-		@SerializedName("liferayProductVersion")
-		private String _liferayProductVersion;
-
-		@SerializedName("releaseDate")
-		private String _releaseDate;
-
-		@SerializedName("targetPlatformVersion")
-		private String _targetPlatformVersion;
-
-	}
-
-	private String _decodeBundleUrl(ProductInfo productInfo) {
-		try {
-			return BundleURLCodec.decode(
-				productInfo.getBundleUrl(), productInfo.getReleaseDate());
-		}
-		catch (Exception exception) {
-			throw new GradleException(
-				"Unable to determine bundle URL", exception);
-		}
-	}
-
-	private String _getDefaultAppServerVersion() {
-		return Optional.ofNullable(
-			_getProductInfo(getProduct())
-		).map(
-			ProductInfo::getAppServerTomcatVersion
-		).orElse(
-			null
-		);
-	}
-
-	private String _getDefaultDockerImage() {
-		return Optional.ofNullable(
-			_getProductInfo(getProduct())
-		).map(
-			ProductInfo::getLiferayDockerImage
-		).orElse(
-			null
-		);
-	}
-
-	private String _getDefaultTargetplatformVersion() {
-		return Optional.ofNullable(
-			_getProductInfo(getProduct())
-		).map(
-			ProductInfo::getTargetPlatformVersion
-		).orElse(
-			null
-		);
-	}
-
-	private ProductInfo _getProductInfo(String product) {
-		if (product == null) {
-			return null;
-		}
-
-		return _productInfoMap.get(product);
-	}
-
 	private Object _getProperty(Object object, String keySuffix) {
 		return GradleUtil.getProperty(
 			object, WorkspacePlugin.PROPERTY_PREFIX + keySuffix);
@@ -632,21 +502,12 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
 
-	private static final String _CDN_PRODUCT_INFO_URL =
-		"https://releases-cdn.liferay.com/tools/workspace/.product_info.json";
-
-	private static final String _DEFAULT_WORKSPACE_CACHE_DIR_NAME =
-		".liferay/workspace";
-
 	private static final File _DOCKER_DIR = new File(
 		Project.DEFAULT_BUILD_DIR_NAME + File.separator + "docker");
 
 	private static final boolean _DOCKER_PULL_POLICY = true;
 
 	private static final String _NODE_PACKAGE_MANAGER = "yarn";
-
-	private static final String _PRODUCT_INFO_URL =
-		"https://releases.liferay.com/tools/workspace/.product_info.json";
 
 	private final Object _appServerTomcatVersion;
 	private Object _bundleCacheDir;
@@ -674,15 +535,9 @@ public class WorkspaceExtension {
 	private Object _homeDir;
 	private Object _nodePackageManager;
 	private Object _product;
-	private final ProductInfoMap _productInfoMap;
 	private final Set<ProjectConfigurator> _projectConfigurators =
 		new LinkedHashSet<>();
 	private final Plugin<Project> _rootProjectConfigurator;
 	private Object _targetPlatformVersion;
-	private final File _workspaceCacheDir = new File(
-		System.getProperty("user.home"), _DEFAULT_WORKSPACE_CACHE_DIR_NAME);
-
-	private static class ProductInfoMap extends HashMap<String, ProductInfo> {
-	}
 
 }

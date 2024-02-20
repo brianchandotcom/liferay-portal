@@ -44,7 +44,6 @@ import org.gradle.api.logging.Logger;
  */
 public class WorkspaceExtension {
 
-	@SuppressWarnings("serial")
 	public WorkspaceExtension(Settings settings) {
 		_gradle = settings.getGradle();
 

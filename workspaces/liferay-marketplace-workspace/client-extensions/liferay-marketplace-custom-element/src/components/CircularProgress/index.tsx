@@ -27,14 +27,14 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
 				strokeLinecap: 'round',
 				transition: 'all ease-in-out 0.5s',
 			},
+			root: {
+				height,
+				width,
+			},
 			trail: {
 				stroke: pathColor,
 				strokeLinecap: 'round',
 				transition: 'all ease-in-out 0.5s',
-			},
-			root: {
-				height,
-				width,
 			},
 		}}
 		value={progress}

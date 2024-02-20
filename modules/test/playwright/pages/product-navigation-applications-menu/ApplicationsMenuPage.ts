@@ -8,6 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {HomePage} from '../portal-web/HomePage';
 
 export class ApplicationsMenuPage {
+	private readonly aiCreatorLink: Locator;
 	private readonly apiBuilderMenuItem: Locator;
 	private readonly applicationsMenuTabButton: Locator;
 	private readonly clientExtensionsLink: Locator;
@@ -85,6 +86,11 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'Users and Organizations',
 		});
+
+		this.aiCreatorLink = page.getByRole('link', {
+			exact: true,
+			name: 'AI Creator',
+		});
 	}
 
 	async goto() {
@@ -102,6 +108,11 @@ export class ApplicationsMenuPage {
 	async goToApplicationsMenu() {
 		await this.goto();
 		await this.applicationsMenuTabButton.click();
+	}
+
+	async goToAICreator() {
+		await this.goToInstanceSettings();
+		await this.aiCreatorLink.click();
 	}
 
 	async goToClientExtensions() {

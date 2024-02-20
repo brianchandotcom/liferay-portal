@@ -733,115 +733,6 @@ const AddFDSEntryModalContent = ({
 	);
 };
 
-const RenameFDSEntryModalContent = ({
-	closeModal,
-	itemData,
-	loadData,
-	namespace,
-}: {
-	closeModal: Function;
-	itemData: FDSEntryType;
-	loadData: Function;
-	namespace: string;
-}) => {
-	const [fdsEntryLabel, setFDSEntryLabel] = useState(itemData.label);
-	const [labelValidationError, setLabelValidationError] = useState(false);
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
-
-	function saveFDSEntryRename() {
-		fetch(itemData.actions.update.href, {
-			body: JSON.stringify({
-				externalReferenceCode: itemData.externalReferenceCode,
-				label: fdsEntryLabel,
-			}),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			method: itemData.actions.update.method,
-		})
-			.then((response) => {
-				if (!response.ok) {
-					openDefaultFailureToast();
-
-					setSaveButtonDisabled(false);
-				}
-
-				closeModal();
-
-				openDefaultSuccessToast();
-
-				loadData();
-			})
-			.catch(() => {
-				openDefaultFailureToast();
-
-				setSaveButtonDisabled(false);
-			});
-	}
-
-	const validate = () => {
-		if (!fdsEntryLabel) {
-			setLabelValidationError(true);
-
-			return false;
-		}
-
-		return true;
-	};
-
-	return (
-		<>
-			<ClayModal.Header>
-				{Liferay.Language.get('rename-data-set')}
-			</ClayModal.Header>
-
-			<ClayModal.Body>
-				<FDSEntryLabelInput
-					labelValidationError={labelValidationError}
-					namespace={namespace}
-					onBlur={() => {
-						setLabelValidationError(!fdsEntryLabel);
-					}}
-					onChange={setFDSEntryLabel}
-					value={fdsEntryLabel}
-				/>
-			</ClayModal.Body>
-
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton
-							disabled={saveButtonDisabled}
-							onClick={() => {
-								setSaveButtonDisabled(true);
-
-								const success = validate();
-
-								if (success) {
-									saveFDSEntryRename();
-								}
-								else {
-									setSaveButtonDisabled(false);
-								}
-							}}
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-
-						<ClayButton
-							displayType="secondary"
-							onClick={() => closeModal()}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
-		</>
-	);
-};
-
 interface IFDSEntriesInterface {
 	fdsViewsURL: string;
 	namespace: string;
@@ -933,25 +824,6 @@ const FDSEntries = ({
 		});
 	};
 
-	const onRenameClick = ({
-		itemData,
-		loadData,
-	}: {
-		itemData: FDSEntryType;
-		loadData: Function;
-	}) => {
-		openModal({
-			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<RenameFDSEntryModalContent
-					closeModal={closeModal}
-					itemData={itemData}
-					loadData={loadData}
-					namespace={namespace}
-				/>
-			),
-		});
-	};
-
 	const views = [
 		{
 			contentRenderer: 'table',
@@ -966,7 +838,6 @@ const FDSEntries = ({
 						sortable: true,
 					},
 					{
-						fieldName: 'restApplication',
 						label: Liferay.Language.get('rest-application'),
 						sortable: true,
 					},
@@ -1023,18 +894,6 @@ const FDSEntries = ({
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),
 						onClick: onEditClick,
-					},
-					{
-						separator: true,
-						type: 'group',
-					},
-					{
-						data: {
-							permissionKey: 'update',
-						},
-						icon: 'blank',
-						label: Liferay.Language.get('rename'),
-						onClick: onRenameClick,
 					},
 					{
 						separator: true,

@@ -718,8 +718,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(
-			"https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/");
+		sb.append("https://storage.googleapis.com/chrome-for-testing-public/");
 		sb.append(chromeDriverVersion);
 		sb.append("/");
 

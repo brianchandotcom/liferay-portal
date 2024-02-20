@@ -240,7 +240,7 @@ function start_app_server() {
 		sleep 5
 	done
 
-	echo "${LIFERAY_PORTAL_URL} is now available"
+	echo "${LIFERAY_PORTAL_URL} is now available."
 }
 
 function stop_app_server() {
@@ -253,7 +253,7 @@ function stop_app_server() {
 		sleep 5
 	done
 
-	echo "${LIFERAY_PORTAL_URL} is no longer available"
+	echo "${LIFERAY_PORTAL_URL} is no longer available."
 }
 
 function update_portal_ext_properties() {

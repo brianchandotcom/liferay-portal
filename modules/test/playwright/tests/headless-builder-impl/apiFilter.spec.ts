@@ -6,9 +6,10 @@
 import {APIResponse, expect as baseExpect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {headlessBuilderTest} from '../../fixtures/headlessBuilderTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, loginTest);
+export const test = mergeTests(apiHelpersTest, headlessBuilderTest, loginTest);
 
 const expect = baseExpect.extend({
 	toBeSuccessful: (response: APIResponse) => ({
@@ -29,10 +30,8 @@ const expect = baseExpect.extend({
 });
 
 test('can GET with API Filter', async ({apiHelpers}) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', true);
-
 	const objectDefinition =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition('');
+		await apiHelpers.objectAdmin.postRandomObjectDefinition();
 
 	const apiApplication = await apiHelpers.apiBuilder.postApiApplication({
 		apiApplicationToAPIEndpoints: [
@@ -83,20 +82,21 @@ test('can GET with API Filter', async ({apiHelpers}) => {
 			'schemas/by-external-reference-code/SCHEMA/responseAPISchemaToAPIEndpoints/ENDPOINT'
 		)
 	).toBeSuccessful();
-
 	expect(
-		await apiHelpers.apiBuilder.postAPIFilter({
-			oDataFilter: "textField eq 'value5' or textField eq 'value24'",
-			r_apiEndpointToAPIFilters_c_apiEndpointERC: 'ENDPOINT',
-		})
+		await apiHelpers.apiBuilder.postApiResource(
+			{
+				oDataFilter: "textField eq 'value5' or textField eq 'value24'",
+				r_apiEndpointToAPIFilters_c_apiEndpointERC: 'ENDPOINT',
+			},
+			'filters'
+		)
 	).toBeSuccessful();
-
 	for (let i = 0; i <= 25; i++) {
 		expect(
 			await apiHelpers.object.postObjectDefinitionRandomObjectEntries(
-				objectDefinition.label.en_US,
 				'textField',
-				`value${i}`
+				`value${i}`,
+				objectDefinition.restContextPath
 			)
 		).toBeSuccessful();
 	}
@@ -126,5 +126,4 @@ test('can GET with API Filter', async ({apiHelpers}) => {
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 	await apiHelpers.apiBuilder.deleteApiApplication(apiApplication.id);
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-178642', false);
 });

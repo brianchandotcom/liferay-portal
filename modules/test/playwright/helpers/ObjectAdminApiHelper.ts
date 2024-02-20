@@ -48,43 +48,50 @@ export class ObjectAdminApiHelper {
 	}
 
 	async postRandomObjectDefinition(
-		objectFolderExternalReferenceCode: string
+		objectFolderExternalReferenceCode?: string
 	) {
 		const objectDefinitionExternalReferenceCode =
 			'ObjectDefinition' + getRandomInt();
 
+		const requestBody = {
+			active: true,
+			externalReferenceCode: objectDefinitionExternalReferenceCode,
+			label: {
+				en_US: objectDefinitionExternalReferenceCode,
+			},
+			name: objectDefinitionExternalReferenceCode,
+			objectFields: [
+				{
+					DBType: 'String',
+					businessType: 'Text',
+					externalReferenceCode: 'textField',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {en_US: 'textField'},
+					listTypeDefinitionId: 0,
+					name: 'textField',
+					required: false,
+					system: false,
+					type: 'String',
+				},
+			],
+			objectFolderExternalReferenceCode,
+			pluralLabel: {
+				en_US: objectDefinitionExternalReferenceCode,
+			},
+			scope: 'company',
+			status: {code: 0},
+		};
+
+		if (objectFolderExternalReferenceCode) {
+			requestBody.objectFolderExternalReferenceCode =
+				objectFolderExternalReferenceCode;
+		}
+
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions`,
-			{
-				active: true,
-				externalReferenceCode: objectDefinitionExternalReferenceCode,
-				label: {
-					en_US: objectDefinitionExternalReferenceCode,
-				},
-				name: objectDefinitionExternalReferenceCode,
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'textField',
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: '',
-						label: {en_US: 'textField'},
-						listTypeDefinitionId: 0,
-						name: 'textField',
-						required: false,
-						system: false,
-						type: 'String',
-					},
-				],
-				objectFolderExternalReferenceCode,
-				pluralLabel: {
-					en_US: objectDefinitionExternalReferenceCode,
-				},
-				scope: 'company',
-				status: {code: 0},
-			}
+			requestBody
 		);
 	}
 

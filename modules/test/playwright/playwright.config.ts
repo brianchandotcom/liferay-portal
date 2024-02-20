@@ -5,12 +5,12 @@
 
 import {defineConfig} from '@playwright/test';
 
-import {config as apiBuilderConfig} from './tests/api-builder/config';
 import {config as batchPlannerConfig} from './tests/batch-planner/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
 import {config as commerceConfig} from './tests/commerce/config';
 import {config as exportImportWebConfig} from './tests/export-import-web/config';
 import {config as frontendDataSetViewsWebConfig} from './tests/frontend-data-set-views-web/config';
+import {config as headlessBuilderImplConfig} from './tests/headless-builder-impl/config';
 import {config as headlessBuilderWebConfig} from './tests/headless-builder-web/config';
 import {config as journalWebConfig} from './tests/journal-web/config';
 import {config as knowledgeBaseWebConfig} from './tests/knowledge-base-web/config';
@@ -27,12 +27,12 @@ export default defineConfig({
 	},
 	forbidOnly: !!process.env.CI,
 	projects: [
-		apiBuilderConfig,
 		batchPlannerConfig,
 		clientExtensionWebConfig,
 		commerceConfig,
 		exportImportWebConfig,
 		frontendDataSetViewsWebConfig,
+		headlessBuilderImplConfig,
 		headlessBuilderWebConfig,
 		journalWebConfig,
 		knowledgeBaseWebConfig,

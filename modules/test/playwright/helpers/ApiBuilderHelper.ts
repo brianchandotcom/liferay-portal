@@ -20,6 +20,13 @@ export class ApiBuilderHelper {
 		);
 	}
 
+	async postApiResource(data: DataObject, url: String) {
+		return this.apiHelpers.postResponse(
+			`${this.apiHelpers.baseUrl}${this.basePath}/${url}`,
+			data
+		);
+	}
+
 	async postApiApplication(data: DataObject) {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/applications`,
@@ -37,6 +44,12 @@ export class ApiBuilderHelper {
 		return this.apiHelpers.postResponse(
 			`${this.apiHelpers.baseUrl}${this.basePath}/filters`,
 			data
+		);
+	}
+
+	async deleteApiResource(id: number, url: String) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/${url}/${id}`
 		);
 	}
 

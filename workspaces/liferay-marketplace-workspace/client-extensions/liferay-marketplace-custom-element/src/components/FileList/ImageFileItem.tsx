@@ -14,9 +14,10 @@ import {UploadedFile} from './FileList';
 import './ImageFileItem.scss';
 
 import {ClayInput} from '@clayui/form';
-import CircularProgress from '../CircularProgress';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
+
+import CircularProgress from '../CircularProgress';
 
 type ImageFileItemProps = {
 	index: number;
@@ -76,7 +77,7 @@ export function ImageFileItem({
 
 			<div>
 				{showProgress ? (
-					<div className="image-file-item-loading-container ">
+					<div className="image-file-item-loading-container">
 						<CircularProgress
 							fontSize={10}
 							height={80}
@@ -96,7 +97,6 @@ export function ImageFileItem({
 
 						{uploadedFile.uploaded && (
 							<ClayIcon
-								symbol="check"
 								className={classNames(
 									'image-file-item-icon-check',
 									{
@@ -104,6 +104,7 @@ export function ImageFileItem({
 											uploadedFile.uploaded,
 									}
 								)}
+								symbol="check"
 							/>
 						)}
 					</div>

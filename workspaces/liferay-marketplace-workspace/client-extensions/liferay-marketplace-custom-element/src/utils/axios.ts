@@ -4,6 +4,7 @@
  */
 
 import _axios from 'axios';
+
 import {Liferay} from '../liferay/liferay';
 
 const REACT_APP_LIFERAY_API =

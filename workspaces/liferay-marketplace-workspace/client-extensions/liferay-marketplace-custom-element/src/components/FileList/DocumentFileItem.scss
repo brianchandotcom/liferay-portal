@@ -1,8 +1,8 @@
 .document-file-list-item {
 	&-container {
 		align-items: center;
-		border-radius: 0.625rem;
 		border: 1px solid #e2e2e4;
+		border-radius: 0.625rem;
 		display: flex;
 		flex-direction: row;
 		height: 6.5rem;
@@ -15,19 +15,18 @@
 	&-icon-check {
 		align-items: center;
 		background-color: #5aca75;
-		background-color: #fff;
-		border-radius: 50%;
 		border: solid 2px #fff;
+		border-radius: 50%;
 		color: #fff;
 		display: flex;
 		font-size: 10px;
 		font-weight: 700;
 		height: 22px;
 		justify-content: center;
-		left: 0px;
+		left: 0;
 		padding: 3px;
 		position: relative;
-		top: 0px;
+		top: 0;
 		width: 22px;
 
 		svg {

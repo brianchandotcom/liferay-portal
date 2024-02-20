@@ -9,6 +9,7 @@ import {UploadedFile} from './FileList';
 import './DocumentFileItem.scss';
 
 import ClayIcon from '@clayui/icon';
+import {AxiosError} from 'axios';
 
 import CircularProgress from '../CircularProgress';
 
@@ -25,13 +26,16 @@ export function DocumentFileItem({
 	uploadedFile,
 	versionName,
 }: DocumentFileItemProps) {
-	const isLoading = isProcessing || !uploadedFile?.uploaded;
+	const uploadedError = (uploadedFile.error as AxiosError).message;
+
+	const showProgress =
+		isProcessing && !uploadedFile.uploaded && uploadedFile.progress > 0;
 
 	return (
 		<div className="document-file-list-item-container">
 			<div className="document-file-list-item-left-content">
 				<div className="document-file-list-item-left-content-icon-container">
-					{isLoading ? (
+					{showProgress ? (
 						<CircularProgress
 							height={50}
 							pathColor="#ffffff"
@@ -51,13 +55,32 @@ export function DocumentFileItem({
 				<div className="document-file-list-item-left-content-text-container">
 					<span className="d-flex document-file-list-item-left-content-text-file-name">
 						{uploadedFile?.fileName}
+
 						{uploadedFile.uploaded &&
 							uploadedFile.progress === 100 && (
-								<ClayIcon
-									className="document-file-list-item-icon-check ml-4"
-									symbol="check"
-								/>
+								<span>
+									<ClayIcon
+										className="ml-2"
+										color="green"
+										fontSize={12}
+										symbol="check"
+									/>
+								</span>
 							)}
+
+						{uploadedError && (
+							<span
+								aria-label={uploadedError}
+								title={uploadedError}
+							>
+								<ClayIcon
+									className="ml-2"
+									color="red"
+									fontSize={12}
+									symbol="times"
+								/>
+							</span>
+						)}
 					</span>
 
 					<span className="document-file-list-item-left-content-text-file-size">

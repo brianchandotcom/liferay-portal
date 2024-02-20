@@ -324,7 +324,8 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		} else {
+		}
+		else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -385,6 +386,24 @@ export function ProvideAppBuildPage({
 						isAppIcon: false,
 						requestFunction: createAttachmentAxios,
 						title: appPackage.fileName,
+					}).catch((error) => {
+						buildAppPackages[versionKey] = buildAppPackages[
+							versionKey
+						].map((file) => {
+							if (file.id === appPackage.id) {
+								return {
+									...file,
+									error,
+								};
+							}
+
+							return file;
+						});
+
+						dispatch({
+							payload: buildAppPackages,
+							type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+						});
 					});
 
 					await addExpandoValue({
@@ -398,7 +417,8 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			} catch (error) {
+			}
+			catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -769,7 +789,6 @@ export function ProvideAppBuildPage({
 			<NewAppPageFooterButtons
 				disableContinueButton={disableContinueButton}
 				isLoading={isProcessing}
-				loadingButtonText={i18n.translate('uploading-files')}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
 					setProcessing(true);
@@ -785,7 +804,8 @@ export function ProvideAppBuildPage({
 								bodySpecification
 							);
 						}
-					} catch (error) {
+					}
+					catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

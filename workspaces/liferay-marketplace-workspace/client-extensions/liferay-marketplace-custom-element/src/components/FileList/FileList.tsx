@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {AxiosError} from 'axios';
+
 import {DocumentFileItem} from './DocumentFileItem';
 
 import './FileList.scss';
 import {ImageFileItem} from './ImageFileItem';
 
 export type UploadedFile = {
-	error: boolean;
+	error: boolean | AxiosError;
 	file: File;
 	fileName: string;
 	id: string;
@@ -66,7 +68,6 @@ export function FileList({
 						<ImageFileItem
 							index={index}
 							isProcessing={isProcessing}
-							key={uploadedFile?.id}
 							onArrowClick={onArrowClick}
 							onDelete={onDelete}
 							position={uploadedFiles.length}

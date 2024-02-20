@@ -222,8 +222,6 @@ export default {
 		'Unable to download your license file.  Please try again and/or contact support via the manage menu on the dashboard.',
 	'upload-liferay-plugin-packages': 'Upload Liferay Plugin Packages',
 	'upload-zip-files': 'Upload ZIP Files',
-	'uploading-files': 'Uploading Files',
-	'uploading-images': 'Uploading Images',
 	'use-any-build-from-any-available-liferay-experience-cloud-account-requires-lxc-account':
 		'Use any build from any available Liferay SaaS account (requires Liferay SaaS account) ',
 	'use-any-build-from-your-computer-connecting-with-a-github-provider':

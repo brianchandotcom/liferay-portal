@@ -165,6 +165,8 @@ String kbArticleSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(r
 		module="{LockedKBArticleModal} from knowledge-base-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"isAdmin", permissionChecker.isGroupAdmin(scopeGroupId)
+			).put(
 				"open", MultiSessionErrors.contains(liferayPortletRequest, DuplicateLockException.class.getName())
 			).build()
 		%>'

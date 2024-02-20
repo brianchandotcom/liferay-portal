@@ -1052,13 +1052,6 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: types
-                  schema:
-                      items:
-                          enum: [NodeEntry, TaskAssign, TaskCompletion, TaskUpdate, Transition]
-                          type: string
-                      type: array
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -1066,6 +1059,13 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: types
+                  schema:
+                      items:
+                          enum: [NodeEntry, TaskAssign, TaskCompletion, TaskUpdate, Transition]
+                          type: string
+                      type: array
             responses:
                 200:
                     content:
@@ -1350,18 +1350,18 @@ paths:
             operationId: getWorkflowTasksAssignedToRolePage
             parameters:
                 - in: query
-                  name: roleId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
                   name: page
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
                   schema:
+                      type: integer
+                - in: query
+                  name: roleId
+                  required: true
+                  schema:
+                      format: int64
                       type: integer
             responses:
                 200:
@@ -1785,13 +1785,6 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: types
-                  schema:
-                      items:
-                          enum: [TaskAssign, TaskCompletion, TaskUpdate, Transition]
-                          type: string
-                      type: array
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -1799,6 +1792,13 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: types
+                  schema:
+                      items:
+                          enum: [TaskAssign, TaskCompletion, TaskUpdate, Transition]
+                          type: string
+                      type: array
             responses:
                 200:
                     content:

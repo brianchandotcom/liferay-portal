@@ -1961,11 +1961,11 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: keywords
+                  name: filter
                   schema:
                       type: string
                 - in: query
-                  name: filter
+                  name: keywords
                   schema:
                       type: string
                 - in: query
@@ -2559,11 +2559,11 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: keywords
+                  name: filter
                   schema:
                       type: string
                 - in: query
-                  name: filter
+                  name: keywords
                   schema:
                       type: string
                 - in: query
@@ -3247,13 +3247,13 @@ paths:
             operationId: getOrganizationsPage
             parameters:
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -3770,13 +3770,13 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -4098,13 +4098,13 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: flatten
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: page
                   schema:
@@ -4257,12 +4257,6 @@ paths:
             operationId: getRolesPage
             parameters:
                 - in: query
-                  name: types
-                  schema:
-                      items:
-                          type: integer
-                      type: array
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -4274,6 +4268,12 @@ paths:
                   name: search
                   schema:
                       type: string
+                - in: query
+                  name: types
+                  schema:
+                      items:
+                          type: integer
+                      type: array
             responses:
                 200:
                     content:

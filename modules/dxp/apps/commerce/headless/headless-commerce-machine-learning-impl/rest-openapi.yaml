@@ -1249,15 +1249,6 @@ paths:
                       type: integer
                   style: form
                 - in: query
-                  explode: true
-                  name: skus
-                  required: false
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                  style: form
-                - in: query
                   name: page
                   required: false
                   schema:
@@ -1267,6 +1258,15 @@ paths:
                   required: false
                   schema:
                       type: integer
+                - in: query
+                  explode: true
+                  name: skus
+                  required: false
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                  style: form
             responses:
                 "200":
                     content:

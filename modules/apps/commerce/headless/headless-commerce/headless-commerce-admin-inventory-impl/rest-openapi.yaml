@@ -1218,16 +1218,6 @@ paths:
                   style: form
                 - in: query
                   explode: true
-                  name: start
-                  required: false
-                  schema:
-                      description:
-                          "Starting date/time of the timespan for which to retrieve the\ndata"
-                      format: date
-                      type: string
-                  style: form
-                - in: query
-                  explode: true
                   name: page
                   required: false
                   schema:
@@ -1239,6 +1229,16 @@ paths:
                   required: false
                   schema:
                       type: integer
+                  style: form
+                - in: query
+                  explode: true
+                  name: start
+                  required: false
+                  schema:
+                      description:
+                          "Starting date/time of the timespan for which to retrieve the\ndata"
+                      format: date
+                      type: string
                   style: form
             responses:
                 "200":

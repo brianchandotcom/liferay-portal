@@ -219,12 +219,6 @@ paths:
             operationId: getCTCollectionsPage
             parameters:
                 - in: query
-                  name: status
-                  schema:
-                      items:
-                          type: integer
-                      type: array
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -240,6 +234,12 @@ paths:
                   name: sort
                   schema:
                       type: string
+                - in: query
+                  name: status
+                  schema:
+                      items:
+                          type: integer
+                      type: array
             responses:
                 200:
                     content:
@@ -546,10 +546,6 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: showHideable
-                  schema:
-                      type: boolean
-                - in: query
                   name: filter
                   schema:
                       type: string
@@ -565,6 +561,10 @@ paths:
                   name: search
                   schema:
                       type: string
+                - in: query
+                  name: showHideable
+                  schema:
+                      type: boolean
                 - in: query
                   name: sort
                   schema:
@@ -646,12 +646,6 @@ paths:
             operationId: getCTProcessesPage
             parameters:
                 - in: query
-                  name: status
-                  schema:
-                      items:
-                          type: integer
-                      type: array
-                - in: query
                   name: filter
                   schema:
                       type: string
@@ -671,6 +665,12 @@ paths:
                   name: sort
                   schema:
                       type: string
+                - in: query
+                  name: status
+                  schema:
+                      items:
+                          type: integer
+                      type: array
             responses:
                 200:
                     content:

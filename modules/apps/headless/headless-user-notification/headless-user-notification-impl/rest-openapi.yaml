@@ -69,10 +69,6 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictFields
-                  schema:
-                      type: string
-                - in: query
                   name: filter
                   schema:
                       type: string
@@ -84,6 +80,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: query
                   name: search
                   schema:
@@ -124,10 +124,6 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictFields
-                  schema:
-                      type: string
-                - in: query
                   name: filter
                   schema:
                       type: string
@@ -139,6 +135,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: query
                   name: search
                   schema:

@@ -18,6 +18,7 @@
 				<action-key>DELETE_DISCUSSION</action-key>
 				<action-key>LAYOUT_RULE_BUILDER</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>PREVIEW_DRAFT</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DISCUSSION</action-key>
 				<action-key>UPDATE_LAYOUT_ADVANCED_OPTIONS</action-key>

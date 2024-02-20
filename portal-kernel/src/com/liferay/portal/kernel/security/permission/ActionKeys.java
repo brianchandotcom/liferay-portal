@@ -215,6 +215,8 @@ public class ActionKeys {
 
 	public static final String PREFERENCES = "PREFERENCES";
 
+	public static final String PREVIEW_DRAFT = "PREVIEW_DRAFT";
+
 	public static final String PREVIEW_IN_DEVICE = "PREVIEW_IN_DEVICE";
 
 	public static final String PRINT = "PRINT";

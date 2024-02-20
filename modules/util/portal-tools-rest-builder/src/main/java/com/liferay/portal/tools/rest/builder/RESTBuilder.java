@@ -1859,38 +1859,38 @@ public class RESTBuilder {
 			String targetClientType)
 		throws Exception {
 
-		String outputDirPath = StringBundler.concat(
+		String outputDirName = StringBundler.concat(
 			baseClientDir.getPath(), "/src/main/resources/META-INF/resources/",
 			targetClientType);
 
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
 				"npx", "openapi-typescript-codegen@0.27.0", "--input",
-				openAPIYAMLFile.getPath(), "--output", outputDirPath,
+				openAPIYAMLFile.getPath(), "--output", outputDirName,
 				"--client", targetClientType, "--name", clientName,
 				"--useOptions", "--useUnionTypes"));
 
 		Process process = processBuilder.start();
 
-		System.out.printf(
-			"Invoking Typescript %s client generator%n", targetClientType);
+		System.out.println(
+			"Generating " + targetClientType + " JavaScript client");
 
 		process.waitFor();
 
 		if (process.exitValue() > 0) {
-			System.out.println("Typescript client generator failed");
+			System.out.println("Unable to generate JavaScript client:");
 
 			Scanner scanner = new Scanner(process.getErrorStream());
 
 			scanner.useDelimiter("\n");
 
 			while (scanner.hasNext()) {
-				System.out.println("[codegen] " + scanner.next());
+				System.out.println(scanner.next());
 			}
 		}
 		else {
-			System.out.printf(
-				"Typescript client generated at %s%n", outputDirPath);
+			System.out.println(
+				"Generated JavaScript client at " + outputDirName);
 		}
 	}
 

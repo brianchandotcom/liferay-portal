@@ -60,6 +60,10 @@ public interface FragmentEntryLinkService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public FragmentEntryLink updateDeleted(
+			long fragmentEntryLinkId, boolean deleted)
+		throws PortalException;
+
 	public FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues)
 		throws PortalException;

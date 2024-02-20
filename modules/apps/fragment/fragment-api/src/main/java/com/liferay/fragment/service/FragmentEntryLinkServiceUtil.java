@@ -59,6 +59,13 @@ public class FragmentEntryLinkServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static FragmentEntryLink updateDeleted(
+			long fragmentEntryLinkId, boolean deleted)
+		throws PortalException {
+
+		return getService().updateDeleted(fragmentEntryLinkId, deleted);
+	}
+
 	public static FragmentEntryLink updateFragmentEntryLink(
 			long fragmentEntryLinkId, String editableValues)
 		throws PortalException {

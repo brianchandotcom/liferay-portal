@@ -465,7 +465,7 @@ public interface FragmentEntryLinkLocalService
 	public void updateClassedModel(long plid);
 
 	public FragmentEntryLink updateDeleted(
-			long fragmentEntryLinkId, boolean deleted)
+			long userId, long fragmentEntryLinkId, boolean deleted)
 		throws PortalException;
 
 	/**
@@ -483,7 +483,7 @@ public interface FragmentEntryLinkLocalService
 		FragmentEntryLink fragmentEntryLink);
 
 	public FragmentEntryLink updateFragmentEntryLink(
-			long fragmentEntryLinkId, int position)
+			long userId, long fragmentEntryLinkId, int position)
 		throws PortalException;
 
 	public FragmentEntryLink updateFragmentEntryLink(
@@ -495,11 +495,11 @@ public interface FragmentEntryLinkLocalService
 		throws PortalException;
 
 	public FragmentEntryLink updateFragmentEntryLink(
-			long fragmentEntryLinkId, String editableValues)
+			long userId, long fragmentEntryLinkId, String editableValues)
 		throws PortalException;
 
 	public FragmentEntryLink updateFragmentEntryLink(
-			long fragmentEntryLinkId, String editableValues,
+			long userId, long fragmentEntryLinkId, String editableValues,
 			boolean updateClassedModel)
 		throws PortalException;
 

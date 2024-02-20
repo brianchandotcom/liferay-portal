@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function combine_properties_files() {
+function combine_properties_files {
 	local temp_properties_file=temp.properties
 
 	echo "" > ${temp_properties_file}
@@ -48,7 +48,7 @@ function combine_properties_files() {
 	cat ${1}
 }
 
-function deploy_client_extensions() {
+function deploy_client_extensions {
 	if [[ -n ${1} ]]
 	then
 		mkdir -p ${LIFERAY_HOME}/deploy
@@ -71,7 +71,7 @@ function deploy_client_extensions() {
 	fi
 }
 
-function deploy_deploy_folder() {
+function deploy_deploy_folder {
 	mkdir -p ${LIFERAY_HOME}/deploy
 
 	local playwright_project_dir=${1}
@@ -82,7 +82,7 @@ function deploy_deploy_folder() {
 	fi
 }
 
-function deploy_osgi_modules() {
+function deploy_osgi_modules {
 	if [[ -n ${1} ]]
 	then
 		mkdir -p ${LIFERAY_HOME}/deploy
@@ -105,7 +105,7 @@ function deploy_osgi_modules() {
 	fi
 }
 
-function deploy_parent_project_client_extensions() {
+function deploy_parent_project_client_extensions {
 	for parent_playwright_project_dir in $(get_parent_playwright_project_dirs)
 	do
 		if [[ -f ${parent_playwright_project_dir}/env/client-extensions.list ]]
@@ -115,7 +115,7 @@ function deploy_parent_project_client_extensions() {
 	done
 }
 
-function deploy_parent_project_deploy_folder() {
+function deploy_parent_project_deploy_folder {
 	mkdir -p ${LIFERAY_HOME}/deploy
 
 	for parent_playwright_project_dir in $(get_parent_playwright_project_dirs)
@@ -124,7 +124,7 @@ function deploy_parent_project_deploy_folder() {
 	done
 }
 
-function deploy_parent_project_osgi_modules() {
+function deploy_parent_project_osgi_modules {
 	for parent_playwright_project_dir in $(get_parent_playwright_project_dirs)
 	do
 		if [[ -f ${parent_playwright_project_dir}/env/osgi-modules.list ]]
@@ -134,7 +134,7 @@ function deploy_parent_project_osgi_modules() {
 	done
 }
 
-function deploy_project_client_extensions() {
+function deploy_project_client_extensions {
 	local playwright_project_dir=$(get_playwright_project_dir)
 
 	if [[ -f ${playwright_project_dir}/env/client-extensions.list ]]
@@ -143,11 +143,11 @@ function deploy_project_client_extensions() {
 	fi
 }
 
-function deploy_project_deploy_folder() {
+function deploy_project_deploy_folder {
 	deploy_deploy_folder $(get_playwright_project_dir)
 }
 
-function deploy_project_osgi_modules() {
+function deploy_project_osgi_modules {
 	local playwright_project_dir=$(get_playwright_project_dir)
 
 	if [[ -f ${playwright_project_dir}/env/osgi-modules.list ]]
@@ -156,11 +156,11 @@ function deploy_project_osgi_modules() {
 	fi
 }
 
-function get_absolute_dir() {
+function get_absolute_dir {
 	echo $(cd -- $(dirname -- $1) &> /dev/null && pwd)
 }
 
-function get_gradlew() {
+function get_gradlew {
 	if [[ -e ./gradlew ]]
 	then
 		echo "$(pwd)/gradlew"
@@ -174,7 +174,7 @@ function get_gradlew() {
 	fi
 }
 
-function get_parent_playwright_project_dirs() {
+function get_parent_playwright_project_dirs {
 	local playwright_project_dir=${1}
 
 	if [[ "${playwright_project_dir}" == "" ]]
@@ -192,15 +192,15 @@ function get_parent_playwright_project_dirs() {
 	done
 }
 
-function get_playwright_project_dir() {
+function get_playwright_project_dir {
 	find ${_PLAYWRIGHT_BASE_DIR} -name config.ts -type f -print | xargs grep "name: '${PLAYWRIGHT_PROJECT_NAME}'" | sed -n 's/\(.*\)\/config.ts.*/\1/p'
 }
 
-function get_tomcat_dir() {
+function get_tomcat_dir {
 	find ${LIFERAY_HOME} -type d -name "tomcat*"
 }
 
-function get_tomcat_portal_ext_properties_file() {
+function get_tomcat_portal_ext_properties_file {
 	find ${LIFERAY_HOME} -type f -name "portal-ext.properties"
 }
 
@@ -232,7 +232,7 @@ function main {
 	fi	
 }
 
-function start_app_server() {
+function start_app_server {
 	cd $(get_tomcat_dir)/bin
 
 	/bin/bash catalina.sh run &
@@ -245,7 +245,7 @@ function start_app_server() {
 	echo "${LIFERAY_PORTAL_URL} is now available."
 }
 
-function stop_app_server() {
+function stop_app_server {
 	cd $(get_tomcat_dir)/bin
 
 	/bin/bash shutdown.sh &
@@ -258,7 +258,7 @@ function stop_app_server() {
 	echo "${LIFERAY_PORTAL_URL} is no longer available."
 }
 
-function update_portal_ext_properties() {
+function update_portal_ext_properties {
 	local playwright_project_dir=$(get_playwright_project_dir)
 	local tomcat_portal_ext_properties_file=$(get_tomcat_portal_ext_properties_file)
 

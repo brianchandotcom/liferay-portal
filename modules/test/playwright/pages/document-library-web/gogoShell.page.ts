@@ -7,7 +7,9 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 export class GogoShellPage {
+	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly commandInput: Locator;
 	readonly page: Page;
 	readonly executeButton: Locator;
@@ -15,14 +17,13 @@ export class GogoShellPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.commandInput = this.page.getByLabel('Command');
 		this.executeButton = this.page.getByRole('button', {name: 'Execute'});
 	}
 
 	async goto() {
-		await this.page.getByLabel('Open Applications MenuCtrl+').click();
-		await this.page.getByRole('tab', {name: 'Control Panel'}).click();
-		await this.page.getByRole('menuitem', {name: 'Gogo Shell'}).click();
+		this.applicationsMenuPage.goToGogoShell();
 	}
 
 	async addCommand(command: string) {

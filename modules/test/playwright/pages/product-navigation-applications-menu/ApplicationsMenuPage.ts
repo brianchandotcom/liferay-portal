@@ -18,6 +18,7 @@ export class ApplicationsMenuPage {
 	private readonly controlPanelButton: Locator;
 	private readonly dataMigrationCenterMenuItem: Locator;
 	private readonly dataSetManagerMenuItem: Locator;
+	private readonly gogoShellItem: Locator;
 	private readonly homePage: HomePage;
 	private readonly instanceSettingsMenuItem: Locator;
 	private readonly oAuth2Administration: Locator;
@@ -86,10 +87,13 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'Users and Organizations',
 		});
-
 		this.aiCreatorLink = page.getByRole('link', {
 			exact: true,
 			name: 'AI Creator',
+		});
+		this.gogoShellItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Gogo Shell',
 		});
 	}
 
@@ -128,6 +132,11 @@ export class ApplicationsMenuPage {
 	async goToAPIBuilder() {
 		await this.goToControlPanel();
 		await this.apiBuilderMenuItem.click();
+	}
+
+	async goToGogoShell() {
+		await this.goToControlPanel();
+		await this.gogoShellItem.click();
 	}
 
 	async goToObjects() {

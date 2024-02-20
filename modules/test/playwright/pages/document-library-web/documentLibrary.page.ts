@@ -74,6 +74,6 @@ export class DocumentLibraryPage {
 	}
 
 	async addGogoShellCommand(command: string) {
-		this.gogoShellPage.addCommand(command);
+		await this.gogoShellPage.addCommand(command);
 	}
 }

@@ -669,6 +669,20 @@ public class DDMFormDisplayContextTest {
 		DDMFormDisplayContext ddmFormDisplayContext = Mockito.spy(
 			_createDDMFormDisplayContext());
 
+		DDMFormInstance ddmFormInstance = Mockito.mock(DDMFormInstance.class);
+
+		Mockito.when(
+			ddmFormInstance.getFormInstanceId()
+		).thenReturn(
+			123L
+		);
+
+		Mockito.doReturn(
+			ddmFormInstance
+		).when(
+			ddmFormDisplayContext
+		).getFormInstance();
+
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(

@@ -74,7 +74,7 @@ public class InputPermissionsTag extends IncludeTag {
 		if (showAllRoles) {
 			httpServletRequest.setAttribute(
 				"liferay-ui:input-permissions:supportedRoles",
-				_getModelResourceSupportedRoles(httpServletRequest, modelName));
+				_getSupportedRoles(httpServletRequest, modelName));
 		}
 
 		PortalIncludeUtil.include(pageContext, page);
@@ -149,7 +149,7 @@ public class InputPermissionsTag extends IncludeTag {
 		return defaultRoleTypes;
 	}
 
-	private static List<Role> _getModelResourceSupportedRoles(
+	private static List<Role> _getSupportedRoles(
 			HttpServletRequest httpServletRequest, String modelName)
 		throws Exception {
 

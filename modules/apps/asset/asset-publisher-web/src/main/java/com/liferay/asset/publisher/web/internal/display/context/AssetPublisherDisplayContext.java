@@ -354,82 +354,6 @@ public class AssetPublisherDisplayContext {
 		return _assetCategoryId;
 	}
 
-	public List<AssetEntry> getAssetEntries(
-			SearchContainer<AssetEntry> searchContainer)
-		throws Exception {
-
-		if (isSelectionStyleManual()) {
-			return _assetPublisherHelper.getAssetEntries(
-				_portletRequest, _portletPreferences,
-				_themeDisplay.getPermissionChecker(), getGroupIds(),
-				getAllAssetCategoryIds(), getAllAssetTagNames(), false,
-				isEnablePermissions());
-		}
-		else if (isSelectionStyleAssetList()) {
-			List<AssetEntry> assetEntries = Collections.emptyList();
-
-			AssetListEntry assetListEntry = fetchAssetListEntry();
-
-			if (assetListEntry != null) {
-				assetEntries = _assetListAssetEntryProvider.getAssetEntries(
-					assetListEntry, _getSegmentsEntryIds(assetListEntry), null,
-					null, StringPool.BLANK, _getSegmentsAnonymousUserId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-			}
-			else {
-				if (Validator.isNull(getInfoListProviderKey())) {
-					return Collections.emptyList();
-				}
-
-				InfoCollectionProvider<AssetEntry> infoCollectionProvider =
-					_infoItemServiceRegistry.getInfoItemService(
-						InfoCollectionProvider.class, getInfoListProviderKey());
-
-				if (infoCollectionProvider == null) {
-					return Collections.emptyList();
-				}
-
-				CollectionQuery collectionQuery = new CollectionQuery();
-
-				if (ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
-					ArrayUtil.isEmpty(getAllAssetTagNames())) {
-
-					collectionQuery.setPagination(
-						Pagination.of(
-							searchContainer.getEnd(),
-							searchContainer.getStart()));
-				}
-
-				InfoPage<AssetEntry> infoPage =
-					infoCollectionProvider.getCollectionInfoPage(
-						collectionQuery);
-
-				assetEntries = (List<AssetEntry>)infoPage.getPageItems();
-			}
-
-			if (assetEntries.isEmpty() ||
-				(ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
-				 ArrayUtil.isEmpty(getAllAssetTagNames()))) {
-
-				return assetEntries;
-			}
-
-			if (!ArrayUtil.isEmpty(getAllAssetCategoryIds())) {
-				assetEntries = _filterAssetCategoriesAssetEntries(
-					assetEntries, getAllAssetCategoryIds());
-			}
-
-			if (!ArrayUtil.isEmpty(getAllAssetTagNames())) {
-				assetEntries = _filterAssetTagNamesAssetEntries(
-					assetEntries, getAllAssetTagNames());
-			}
-
-			return assetEntries;
-		}
-
-		return Collections.emptyList();
-	}
-
 	public List<AssetEntryAction<?>> getAssetEntryActions(String className) {
 		List<AssetEntryAction<?>> assetEntryActions =
 			_stringListServiceTrackerMap.getService(className);
@@ -499,7 +423,7 @@ public class AssetPublisherDisplayContext {
 
 		SearchContainer<AssetEntry> searchContainer = getSearchContainer();
 
-		List<AssetEntry> assetEntries = getAssetEntries(searchContainer);
+		List<AssetEntry> assetEntries = _getAssetEntries(searchContainer);
 
 		if (ListUtil.isEmpty(assetEntries)) {
 			return Collections.emptyList();
@@ -2256,6 +2180,82 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return filteredAssetEntries;
+	}
+
+	private List<AssetEntry> _getAssetEntries(
+			SearchContainer<AssetEntry> searchContainer)
+		throws Exception {
+
+		if (isSelectionStyleManual()) {
+			return _assetPublisherHelper.getAssetEntries(
+				_portletRequest, _portletPreferences,
+				_themeDisplay.getPermissionChecker(), getGroupIds(),
+				getAllAssetCategoryIds(), getAllAssetTagNames(), false,
+				isEnablePermissions());
+		}
+		else if (isSelectionStyleAssetList()) {
+			List<AssetEntry> assetEntries = Collections.emptyList();
+
+			AssetListEntry assetListEntry = fetchAssetListEntry();
+
+			if (assetListEntry != null) {
+				assetEntries = _assetListAssetEntryProvider.getAssetEntries(
+					assetListEntry, _getSegmentsEntryIds(assetListEntry), null,
+					null, StringPool.BLANK, _getSegmentsAnonymousUserId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			}
+			else {
+				if (Validator.isNull(getInfoListProviderKey())) {
+					return Collections.emptyList();
+				}
+
+				InfoCollectionProvider<AssetEntry> infoCollectionProvider =
+					_infoItemServiceRegistry.getInfoItemService(
+						InfoCollectionProvider.class, getInfoListProviderKey());
+
+				if (infoCollectionProvider == null) {
+					return Collections.emptyList();
+				}
+
+				CollectionQuery collectionQuery = new CollectionQuery();
+
+				if (ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
+					ArrayUtil.isEmpty(getAllAssetTagNames())) {
+
+					collectionQuery.setPagination(
+						Pagination.of(
+							searchContainer.getEnd(),
+							searchContainer.getStart()));
+				}
+
+				InfoPage<AssetEntry> infoPage =
+					infoCollectionProvider.getCollectionInfoPage(
+						collectionQuery);
+
+				assetEntries = (List<AssetEntry>)infoPage.getPageItems();
+			}
+
+			if (assetEntries.isEmpty() ||
+				(ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
+				 ArrayUtil.isEmpty(getAllAssetTagNames()))) {
+
+				return assetEntries;
+			}
+
+			if (!ArrayUtil.isEmpty(getAllAssetCategoryIds())) {
+				assetEntries = _filterAssetCategoriesAssetEntries(
+					assetEntries, getAllAssetCategoryIds());
+			}
+
+			if (!ArrayUtil.isEmpty(getAllAssetTagNames())) {
+				assetEntries = _filterAssetTagNamesAssetEntries(
+					assetEntries, getAllAssetTagNames());
+			}
+
+			return assetEntries;
+		}
+
+		return Collections.emptyList();
 	}
 
 	private String _getAssetEntryItemSelectorPortletURL(

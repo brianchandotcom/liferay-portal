@@ -12,7 +12,14 @@ import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -23,6 +30,7 @@ import java.io.PrintWriter;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,8 +40,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ClientExtensionJSInclude {
 
-	public ClientExtensionJSInclude(CETManager cetManager) {
+	public ClientExtensionJSInclude(
+		CETManager cetManager, JSONFactory jsonFactory) {
+
 		_cetManager = cetManager;
+		_jsonFactory = jsonFactory;
 	}
 
 	public void include(
@@ -94,12 +105,70 @@ public class ClientExtensionJSInclude {
 				printWriter.print(StringPool.SPACE);
 			}
 
+			if (FeatureFlagManagerUtil.isEnabled("LPD-10981")) {
+				printWriter.print(StringPool.SPACE);
+				printWriter.print(
+					_toScriptElementAttributes(
+						globalJSCET.getScriptElementAttributesJSON()));
+			}
+
 			printWriter.print(" data-senna-track=\"temporary\" src=\"");
 			printWriter.print(globalJSCET.getURL());
 			printWriter.print("\" type=\"text/javascript\"></script>");
 		}
 	}
 
+	private String _toScriptElementAttributes(
+		String scriptElementAttributesJSON) {
+
+		StringBuilder stringBuilder = new StringBuilder();
+
+		try {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				scriptElementAttributesJSON);
+
+			Set<String> keySet = jsonObject.keySet();
+
+			int i = 0;
+
+			for (String key : keySet) {
+				Object value = jsonObject.get(key);
+
+				if (value instanceof Boolean) {
+					if (!(boolean)value) {
+						continue;
+					}
+
+					stringBuilder.append(key);
+				}
+				else {
+					stringBuilder.append(key);
+					stringBuilder.append(StringPool.EQUAL);
+					stringBuilder.append(StringPool.QUOTE);
+					stringBuilder.append(
+						HtmlUtil.escapeAttribute((String)value));
+					stringBuilder.append(StringPool.QUOTE);
+				}
+
+				if (i != (keySet.size() - 1)) {
+					stringBuilder.append(StringPool.SPACE);
+				}
+
+				i++;
+			}
+		}
+		catch (JSONException jsonException) {
+			_log.error(
+				"Unable to parse script element attributes", jsonException);
+		}
+
+		return stringBuilder.toString();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClientExtensionJSInclude.class);
+
 	private final CETManager _cetManager;
+	private final JSONFactory _jsonFactory;
 
 }

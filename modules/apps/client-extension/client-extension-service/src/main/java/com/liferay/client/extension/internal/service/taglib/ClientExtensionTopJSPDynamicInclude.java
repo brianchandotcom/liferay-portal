@@ -6,6 +6,7 @@
 package com.liferay.client.extension.internal.service.taglib;
 
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
 import java.io.IOException;
@@ -41,12 +42,16 @@ public class ClientExtensionTopJSPDynamicInclude implements DynamicInclude {
 
 	@Activate
 	protected void activate() {
-		_clientExtensionJSInclude = new ClientExtensionJSInclude(_cetManager);
+		_clientExtensionJSInclude = new ClientExtensionJSInclude(
+			_cetManager, _jsonFactory);
 	}
 
 	@Reference
 	private CETManager _cetManager;
 
 	private ClientExtensionJSInclude _clientExtensionJSInclude;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

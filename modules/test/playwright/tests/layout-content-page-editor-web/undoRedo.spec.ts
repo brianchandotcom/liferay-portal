@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
@@ -20,6 +21,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
+	isolatedSiteTest,
 	loginTest,
 	pageEditorPagesTest
 );
@@ -28,12 +30,9 @@ test('View Undo interaction state is cleared after refreshing the page', async (
 	apiHelpers,
 	page,
 	pageEditorPage,
+	site,
 }) => {
 	await page.goto('/');
-
-	// Create a site
-
-	const site = await apiHelpers.headlessSite.createSite(getRandomString());
 
 	// Create a page with a Heading fragment
 
@@ -78,22 +77,15 @@ test('View Undo interaction state is cleared after refreshing the page', async (
 	// Assert Undo button is disabled
 
 	await expect(pageEditorPage.undoButton).toBeDisabled();
-
-	// Delete the site
-
-	await apiHelpers.headlessSite.deleteSite(site.id);
 });
 
 test('Undo and Redo buttons work as expected', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
+	site,
 }) => {
 	await page.goto('/');
-
-	// Create a site
-
-	const site = await apiHelpers.headlessSite.createSite(getRandomString());
 
 	// Create a page with a Tabs fragment
 
@@ -160,22 +152,15 @@ test('Undo and Redo buttons work as expected', async ({
 
 	await expect(pageEditorPage.undoButton).toBeDisabled();
 	await expect(pageEditorPage.redoButton).toBeEnabled();
-
-	// Delete the site
-
-	await apiHelpers.headlessSite.deleteSite(site.id);
 });
 
 test('Undo history works as expected', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
+	site,
 }) => {
 	await page.goto('/');
-
-	// Create a site
-
-	const site = await apiHelpers.headlessSite.createSite(getRandomString());
 
 	// Create a page with a Heading fragment
 
@@ -260,8 +245,4 @@ test('Undo history works as expected', async ({
 	await expect(
 		pageEditorPage.undoHistory.getByRole('menuitem').nth(1)
 	).toBeDisabled();
-
-	// Delete the site
-
-	await apiHelpers.headlessSite.deleteSite(site.id);
 });

@@ -57,7 +57,7 @@ public class ViewCountEntryFinderImpl
 			}
 
 			_entityCache.putResult(
-				ViewCountEntryImpl.class, viewCountEntryPK, viewCountEntry);
+				ViewCountEntryImpl.class, viewCountEntry, false, true);
 		}
 		finally {
 			closeSession(session);

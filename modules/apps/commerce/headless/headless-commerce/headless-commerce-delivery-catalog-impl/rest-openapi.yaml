@@ -2314,6 +2314,16 @@ paths:
                       minimum: 0
                       type: integer
                 - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
                   explode: false
                   name: productOptionValueId
                   required: false
@@ -2337,16 +2347,6 @@ paths:
                       minimum: 0
                       type: integer
                   style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
             responses:
                 200:
                     content:
@@ -2446,6 +2446,16 @@ paths:
                       minimum: 0
                       type: integer
                 - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
                   explode: false
                   name: productOptionValueId
                   required: false
@@ -2469,16 +2479,6 @@ paths:
                       minimum: 0
                       type: integer
                   style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
             requestBody:
                 content:
                     application/json:
@@ -2657,13 +2657,6 @@ paths:
                       type: integer
                   style: simple
                 - in: query
-                  explode: true
-                  name: type
-                  required: false
-                  schema:
-                      type: string
-                  style: form
-                - in: query
                   name: page
                   required: false
                   schema:
@@ -2673,6 +2666,13 @@ paths:
                   required: false
                   schema:
                       type: integer
+                - in: query
+                  explode: true
+                  name: type
+                  required: false
+                  schema:
+                      type: string
+                  style: form
             responses:
                 200:
                     content:

@@ -672,10 +672,6 @@ paths:
             operationId: getProcessMetricsPage
             parameters:
                 - in: query
-                  name: title
-                  schema:
-                      type: string
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -685,6 +681,10 @@ paths:
                       type: integer
                 - in: query
                   name: sort
+                  schema:
+                      type: string
+                - in: query
+                  name: title
                   schema:
                       type: string
             responses:
@@ -906,12 +906,24 @@ paths:
                       format: date-time
                       type: string
                 - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
                   name: slaStatuses
                   schema:
                       items:
                           enum: [OnTime, Overdue, Untracked]
                           type: string
                       type: array
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
                 - in: query
                   name: statuses
                   schema:
@@ -925,18 +937,6 @@ paths:
                       items:
                           type: string
                       type: array
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
             responses:
                 200:
                     content:
@@ -1218,10 +1218,6 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: processVersion
-                  schema:
-                      type: string
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -1229,6 +1225,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: processVersion
+                  schema:
+                      type: string
                 - in: query
                   name: sort
                   schema:
@@ -1332,16 +1332,16 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: status
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
                   name: page
                   schema:
                       type: integer
                 - in: query
                   name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: status
+                  required: false
                   schema:
                       type: integer
             responses:

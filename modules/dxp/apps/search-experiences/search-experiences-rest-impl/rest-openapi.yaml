@@ -612,10 +612,6 @@ paths:
             operationId: postSearch
             parameters:
                 - in: query
-                  name: query
-                  schema:
-                      type: string
-                - in: query
                   name: page
                   schema:
                       type: integer
@@ -623,6 +619,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: query
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

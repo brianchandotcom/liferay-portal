@@ -1520,12 +1520,6 @@ paths:
                       type: integer
                   style: simple
                 - in: query
-                  name: skuId
-                  required: false
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
                   name: page
                   required: false
                   schema:
@@ -1534,6 +1528,12 @@ paths:
                   name: pageSize
                   required: false
                   schema:
+                      type: integer
+                - in: query
+                  name: skuId
+                  required: false
+                  schema:
+                      format: int64
                       type: integer
             responses:
                 200:

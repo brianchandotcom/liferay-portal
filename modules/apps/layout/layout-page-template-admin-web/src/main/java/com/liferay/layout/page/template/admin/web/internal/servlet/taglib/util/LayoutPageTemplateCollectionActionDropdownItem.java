@@ -90,6 +90,9 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 									_httpServletRequest,
 									layoutPageTemplateCollection));
 							dropdownItem.putData(
+								"layoutPageTemplateCollectionDescription",
+								layoutPageTemplateCollection.getDescription());
+							dropdownItem.putData(
 								"layoutPageTemplateCollectionName",
 								layoutPageTemplateCollection.getName());
 							dropdownItem.putData(

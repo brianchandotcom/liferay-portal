@@ -46,11 +46,12 @@ public class UpdateLayoutPageTemplateCollectionMVCActionCommand
 			actionRequest, "layoutPageTemplateCollectionId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
 
 		try {
 			_layoutPageTemplateCollectionService.
 				updateLayoutPageTemplateCollection(
-					layoutPageTemplateCollectionId, name);
+					layoutPageTemplateCollectionId, name, description);
 
 			jsonObject.put(
 				"redirectURL", ParamUtil.getString(actionRequest, "redirect"));

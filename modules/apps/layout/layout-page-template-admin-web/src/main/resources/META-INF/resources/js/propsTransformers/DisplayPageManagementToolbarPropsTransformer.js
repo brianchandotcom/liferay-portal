@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openSimpleInputModal} from 'frontend-js-web';
+import {openCreationModal} from '@liferay/layout-js-components-web';
 
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
 
@@ -47,14 +47,11 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			const data = item?.data;
 
 			if (data?.action === 'addDisplayPageCollection') {
-				openSimpleInputModal({
-					dialogTitle: Liferay.Language.get('add-folder'),
+				openCreationModal({
+					buttonLabel: Liferay.Language.get('create'),
 					formSubmitURL: data.addDisplayPageCollectionURL,
-					mainFieldLabel: Liferay.Language.get('name'),
-					mainFieldName: 'name',
-					mainFieldPlaceholder: Liferay.Language.get('name'),
-					namespace: portletNamespace,
-					size: 'sm',
+					heading: Liferay.Language.get('new-folder'),
+					portletNamespace,
 				});
 			}
 		},

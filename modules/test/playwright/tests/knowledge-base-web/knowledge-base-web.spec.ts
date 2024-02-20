@@ -9,7 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {knowledgeBasePages} from '../../fixtures/knowledgeBasePages';
 import {loginTest} from '../../fixtures/loginTest';
-import {getRandomString} from '../../utils/util';
+import getRandomString from '../../utils/getRandomString';
 
 const testFeatureFlagsEnabled = mergeTests(
 	loginTest,

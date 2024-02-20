@@ -7,7 +7,6 @@ package com.liferay.batch.engine.service;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -77,11 +76,6 @@ public interface BatchEngineImportTaskService extends BaseService {
 	public BatchEngineImportTask
 			getBatchEngineImportTaskByExternalReferenceCode(
 				String externalReferenceCode, long companyId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BatchEngineImportTaskError> getBatchEngineImportTaskErrors(
-			long batchEngineImportTaskId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

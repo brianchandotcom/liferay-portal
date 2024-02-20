@@ -110,94 +110,7 @@ public class IndividualSegmentsCheckerTest {
 
 			String guestUserUuid = StringUtil.randomString();
 
-			Context context = new Context();
-
-			context.put("segmentsAnonymousUserId", guestUserUuid);
-
-			Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(
-				_checkIndividualSegmentsSchedulerJobConfiguration,
-				"_asahFaroBackendClient");
-
-			ReflectionTestUtil.setFieldValue(
-				asahFaroBackendClient, "_http",
-				new MockHttp(
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/individual-segments",
-							() -> JSONUtil.put(
-								"_embedded",
-								JSONUtil.put(
-									"individual-segments",
-									JSONUtil.putAll(
-										JSONUtil.put(
-											"id", "1234567"
-										).put(
-											"name", "Test segment"
-										)))
-							).put(
-								"page",
-								JSONUtil.put(
-									"number", 0
-								).put(
-									"size", 100
-								).put(
-									"totalElements", 1
-								).put(
-									"totalPages", 1
-								)
-							).put(
-								"total", 0
-							).toString()
-						).put(
-							"/api/1.0/individual-segments/1234567/individuals",
-							() -> JSONUtil.put(
-								"_embedded",
-								JSONUtil.put(
-									"individuals",
-									JSONUtil.putAll(
-										JSONUtil.put(
-											"dataSourceIndividualPKs",
-											JSONUtil.putAll(
-												JSONUtil.put(
-													"dataSourceId", "123456789"
-												).put(
-													"individualPKs",
-													JSONUtil.putAll(
-														_user.getUuid())
-												))
-										).put(
-											"individualSegmentIds",
-											JSONUtil.putAll("1234567")
-										),
-										JSONUtil.put(
-											"dataSourceIndividualPKs",
-											JSONUtil.putAll(
-												JSONUtil.put(
-													"dataSourceId", "123456789"
-												).put(
-													"individualPKs",
-													JSONUtil.putAll(
-														guestUserUuid)
-												))
-										).put(
-											"individualSegmentIds",
-											JSONUtil.putAll("1234567")
-										)))
-							).put(
-								"page",
-								JSONUtil.put(
-									"number", 0
-								).put(
-									"size", 100
-								).put(
-									"totalElements", 2
-								).put(
-									"totalPages", 1
-								)
-							).put(
-								"total", 0
-							).toString()
-						).build()));
+			_prepareAsahFaroBackendClient(guestUserUuid);
 
 			UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
 				_checkIndividualSegmentsSchedulerJobConfiguration.
@@ -215,6 +128,10 @@ public class IndividualSegmentsCheckerTest {
 
 			SegmentsEntry segmentsEntry = segmentsEntries.get(0);
 
+			Context context = new Context();
+
+			context.put("segmentsAnonymousUserId", guestUserUuid);
+
 			Assert.assertArrayEquals(
 				new long[] {segmentsEntry.getSegmentsEntryId()},
 				_segmentsEntryProvider.getSegmentsEntryIds(
@@ -223,7 +140,7 @@ public class IndividualSegmentsCheckerTest {
 
 			Assert.assertEquals(StringPool.BLANK, segmentsEntry.getCriteria());
 			Assert.assertEquals(
-				"Test segment",
+				"Test segment 1",
 				segmentsEntry.getName(LocaleUtil.getSiteDefault()));
 
 			List<SegmentsEntryRel> segmentsEntryRels =
@@ -243,11 +160,11 @@ public class IndividualSegmentsCheckerTest {
 	@Test
 	public void testIndividualSegmentsDeleteSegmentsEntries() throws Exception {
 		SegmentsTestUtil.addSegmentsEntry(
-			"1234567", "Segments Entry 1", null, null,
+			"1234567", "Test segment 1", null, null,
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 		SegmentsTestUtil.addSegmentsEntry(
-			"2345678", "Segments Entry 2", null, null,
+			"2345678", "Test segment 2", null, null,
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 
@@ -283,41 +200,7 @@ public class IndividualSegmentsCheckerTest {
 						"anonymousUserSegmentsCacheExpirationTime", "60"
 					).build())) {
 
-			Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(
-				_checkIndividualSegmentsSchedulerJobConfiguration,
-				"_asahFaroBackendClient");
-
-			ReflectionTestUtil.setFieldValue(
-				asahFaroBackendClient, "_http",
-				new MockHttp(
-					HashMapBuilder.
-						<String, UnsafeSupplier<String, Exception>>put(
-							"/api/1.0/individual-segments",
-							() -> JSONUtil.put(
-								"_embedded",
-								JSONUtil.put(
-									"individual-segments",
-									JSONUtil.putAll(
-										JSONUtil.put(
-											"id", "1234567"
-										).put(
-											"name", "Segments Entry 1"
-										)))
-							).put(
-								"page",
-								JSONUtil.put(
-									"number", 0
-								).put(
-									"size", 100
-								).put(
-									"totalElements", 1
-								).put(
-									"totalPages", 1
-								)
-							).put(
-								"total", 0
-							).toString()
-						).build()));
+			_prepareAsahFaroBackendClient(StringUtil.randomString());
 
 			UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
 				_checkIndividualSegmentsSchedulerJobConfiguration.
@@ -336,9 +219,93 @@ public class IndividualSegmentsCheckerTest {
 			SegmentsEntry segmentsEntry = segmentsEntries.get(0);
 
 			Assert.assertEquals(
-				"Segments Entry 1",
+				"Test segment 1",
 				segmentsEntry.getName(LocaleUtil.getSiteDefault()));
 		}
+	}
+
+	private void _prepareAsahFaroBackendClient(String guestUserUuid) {
+		Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(
+			_checkIndividualSegmentsSchedulerJobConfiguration,
+			"_asahFaroBackendClient");
+
+		ReflectionTestUtil.setFieldValue(
+			asahFaroBackendClient, "_http",
+			new MockHttp(
+				HashMapBuilder.<String, UnsafeSupplier<String, Exception>>put(
+					"/api/1.0/individual-segments",
+					() -> JSONUtil.put(
+						"_embedded",
+						JSONUtil.put(
+							"individual-segments",
+							JSONUtil.putAll(
+								JSONUtil.put(
+									"id", "1234567"
+								).put(
+									"name", "Test segment 1"
+								)))
+					).put(
+						"page",
+						JSONUtil.put(
+							"number", 0
+						).put(
+							"size", 100
+						).put(
+							"totalElements", 1
+						).put(
+							"totalPages", 1
+						)
+					).put(
+						"total", 0
+					).toString()
+				).put(
+					"/api/1.0/individual-segments/1234567/individuals",
+					() -> JSONUtil.put(
+						"_embedded",
+						JSONUtil.put(
+							"individuals",
+							JSONUtil.putAll(
+								JSONUtil.put(
+									"dataSourceIndividualPKs",
+									JSONUtil.putAll(
+										JSONUtil.put(
+											"dataSourceId", "123456789"
+										).put(
+											"individualPKs",
+											JSONUtil.putAll(_user.getUuid())
+										))
+								).put(
+									"individualSegmentIds",
+									JSONUtil.putAll("1234567")
+								),
+								JSONUtil.put(
+									"dataSourceIndividualPKs",
+									JSONUtil.putAll(
+										JSONUtil.put(
+											"dataSourceId", "123456789"
+										).put(
+											"individualPKs",
+											JSONUtil.putAll(guestUserUuid)
+										))
+								).put(
+									"individualSegmentIds",
+									JSONUtil.putAll("1234567")
+								)))
+					).put(
+						"page",
+						JSONUtil.put(
+							"number", 0
+						).put(
+							"size", 100
+						).put(
+							"totalElements", 2
+						).put(
+							"totalPages", 1
+						)
+					).put(
+						"total", 0
+					).toString()
+				).build()));
 	}
 
 	private static Company _company;

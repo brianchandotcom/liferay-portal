@@ -443,7 +443,8 @@ public class Main {
 							structuredContent.getFriendlyUrlPath());
 
 					structuredContent.setPermissions(
-						_getPermissions(fileName, structuredContent.getId()));
+						() -> _getPermissions(
+							fileName, structuredContent.getId()));
 
 					importedStructuredContent =
 						_structuredContentResource.
@@ -1241,8 +1242,9 @@ public class Main {
 			if (!existingTaxonomyCategories.containsKey(name)) {
 				TaxonomyCategory taxonomyCategory = new TaxonomyCategory();
 
-				taxonomyCategory.setName(name);
-				taxonomyCategory.setTaxonomyVocabularyId(taxonomyVocabularyId);
+				taxonomyCategory.setName(() -> name);
+				taxonomyCategory.setTaxonomyVocabularyId(
+					() -> taxonomyVocabularyId);
 
 				if (parentTaxonomyCategoryId != null) {
 					taxonomyCategory =
@@ -1336,7 +1338,7 @@ public class Main {
 				TaxonomyVocabulary taxonomyVocabulary =
 					new TaxonomyVocabulary();
 
-				taxonomyVocabulary.setName(name);
+				taxonomyVocabulary.setName(() -> name);
 
 				taxonomyVocabulary =
 					_taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
@@ -1417,7 +1419,7 @@ public class Main {
 				japaneseFile, StandardCharsets.UTF_8);
 
 			structuredContent.setContentFields(
-				new ContentField[] {
+				() -> new ContentField[] {
 					new ContentField() {
 						{
 							setContentFieldValue(
@@ -1480,20 +1482,20 @@ public class Main {
 					}
 				});
 			structuredContent.setDescription_i18n(
-				HashMapBuilder.put(
+				() -> HashMapBuilder.put(
 					"en-US", _getDescription(englishText)
 				).put(
 					"ja-JP", _getDescription(japaneseText)
 				).build());
 
 			structuredContent.setFriendlyUrlPath_i18n(
-				HashMapBuilder.put(
+				() -> HashMapBuilder.put(
 					"en-US", _toFriendlyURLPath(englishFile)
 				).put(
 					"ja-JP", _toFriendlyURLPath(japaneseFile)
 				).build());
 			structuredContent.setTitle_i18n(
-				HashMapBuilder.put(
+				() -> HashMapBuilder.put(
 					"en-US", englishTitle
 				).put(
 					"ja-JP", _getTitle(japaneseText)
@@ -1501,7 +1503,7 @@ public class Main {
 		}
 		else {
 			structuredContent.setContentFields(
-				new ContentField[] {
+				() -> new ContentField[] {
 					new ContentField() {
 						{
 							setContentFieldValue(
@@ -1524,23 +1526,26 @@ public class Main {
 						}
 					}
 				});
-			structuredContent.setDescription(_getDescription(englishText));
+			structuredContent.setDescription(
+				() -> _getDescription(englishText));
 		}
 
-		structuredContent.setContentStructureId(_liferayContentStructureId);
-		structuredContent.setExternalReferenceCode(_getUuid(englishText));
-		structuredContent.setFriendlyUrlPath(_toFriendlyURLPath(englishFile));
+		structuredContent.setContentStructureId(
+			() -> _liferayContentStructureId);
+		structuredContent.setExternalReferenceCode(() -> _getUuid(englishText));
+		structuredContent.setFriendlyUrlPath(
+			() -> _toFriendlyURLPath(englishFile));
 		structuredContent.setTaxonomyCategoryIds(
-			_getTaxonomyCategoryIds(englishText));
+			() -> _getTaxonomyCategoryIds(englishText));
 
 		if (!_offline) {
 			structuredContent.setStructuredContentFolderId(
-				_getStructuredContentFolderId(
+				() -> _getStructuredContentFolderId(
 					FilenameUtils.getPathNoEndSeparator(
 						fileName.substring(_docsDirName.length()))));
 		}
 
-		structuredContent.setTitle(englishTitle);
+		structuredContent.setTitle(() -> englishTitle);
 
 		return structuredContent;
 	}

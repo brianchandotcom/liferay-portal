@@ -266,7 +266,7 @@ public class KoroneikiRestController extends BaseRestController {
 				}
 			}
 
-			sku.setExternalReferenceCode(koroneikiProduct.getKey());
+			sku.setExternalReferenceCode(koroneikiProduct::getKey);
 
 			_skuResource.patchSku(sku.getId(), sku);
 		}
@@ -313,7 +313,7 @@ public class KoroneikiRestController extends BaseRestController {
 			return;
 		}
 
-		order.setOrderStatus(_COMMERCE_ORDER_STATUS_PROCESSING);
+		order.setOrderStatus(() -> _COMMERCE_ORDER_STATUS_PROCESSING);
 
 		_orderResource.patchOrder(commerceOrderJSONObject.getLong("id"), order);
 
@@ -338,7 +338,7 @@ public class KoroneikiRestController extends BaseRestController {
 		if (Objects.equals(
 				productSpecificationsMap.get("price-model"), "Free")) {
 
-			order.setOrderStatus(_COMMERCE_ORDER_STATUS_COMPLETED);
+			order.setOrderStatus(() -> _COMMERCE_ORDER_STATUS_COMPLETED);
 
 			_orderResource.patchOrder(
 				commerceOrderJSONObject.getLong("id"), order);
@@ -355,7 +355,7 @@ public class KoroneikiRestController extends BaseRestController {
 			)) {
 
 			account.setExternalReferenceCode(
-				_postKoroneikiAccount(
+				() -> _postKoroneikiAccount(
 					account, jwt
 				).getKey());
 
@@ -368,7 +368,7 @@ public class KoroneikiRestController extends BaseRestController {
 					account, jwt, orderItem, productSpecificationsMap);
 			}
 
-			order.setOrderStatus(_COMMERCE_ORDER_STATUS_COMPLETED);
+			order.setOrderStatus(() -> _COMMERCE_ORDER_STATUS_COMPLETED);
 
 			_orderResource.patchOrder(
 				commerceOrderJSONObject.getLong("id"), order);

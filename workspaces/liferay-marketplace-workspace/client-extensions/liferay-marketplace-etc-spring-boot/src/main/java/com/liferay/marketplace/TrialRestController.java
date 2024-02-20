@@ -59,7 +59,7 @@ public class TrialRestController extends BaseRestController {
 			_log.info("Provision order " + classPK);
 		}
 
-		order.setId(classPK);
+		order.setId(() -> classPK);
 
 		JSONObject modelDTOOrderJSONObject = jsonObject.getJSONObject(
 			"modelDTOOrder");
@@ -70,14 +70,14 @@ public class TrialRestController extends BaseRestController {
 			_log.error(
 				"Account " + accountId + " already has a provisioned order");
 
-			order.setOrderStatus(_ORDER_STATUS_CANCELLED);
+			order.setOrderStatus(() -> _ORDER_STATUS_CANCELLED);
 
 			_orderResource.patchOrder(order.getId(), order);
 
 			return;
 		}
 
-		order.setOrderStatus(_ORDER_STATUS_PROCESSING);
+		order.setOrderStatus(() -> _ORDER_STATUS_PROCESSING);
 
 		_orderResource.patchOrder(order.getId(), order);
 
@@ -96,9 +96,9 @@ public class TrialRestController extends BaseRestController {
 
 		customFields.put("trial-virtualhost", portalInstance.getVirtualHost());
 
-		order.setCustomFields(customFields);
+		order.setCustomFields(() -> customFields);
 
-		order.setOrderStatus(_ORDER_STATUS_COMPLETED);
+		order.setOrderStatus(() -> _ORDER_STATUS_COMPLETED);
 
 		_orderResource.patchOrder(order.getId(), order);
 	}
@@ -152,7 +152,7 @@ public class TrialRestController extends BaseRestController {
 		PortalInstance portalInstance = new PortalInstance();
 
 		portalInstance.setAdmin(
-			new Admin() {
+			() -> new Admin() {
 				{
 					setEmailAddress(() -> emailAddress);
 					setFamilyName(
@@ -164,12 +164,12 @@ public class TrialRestController extends BaseRestController {
 
 		String domain = "tryitnow-" + orderId + ".us.demo.lxc.liferay.com";
 
-		portalInstance.setDomain(domain);
-		portalInstance.setPortalInstanceId(domain);
+		portalInstance.setDomain(() -> domain);
+		portalInstance.setPortalInstanceId(() -> domain);
 
 		portalInstance.setSiteInitializerKey(
-			"com.liferay.site.initializer.welcome");
-		portalInstance.setVirtualHost(domain);
+			() -> "com.liferay.site.initializer.welcome");
+		portalInstance.setVirtualHost(() -> domain);
 
 		portalInstance = _portalInstanceResource.postPortalInstance(
 			portalInstance);

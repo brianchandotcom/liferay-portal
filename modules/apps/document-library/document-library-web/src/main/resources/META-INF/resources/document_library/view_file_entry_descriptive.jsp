@@ -103,30 +103,27 @@ else {
 </c:if>
 
 <span class="file-entry-status">
-	<c:if test="<%= !latestFileVersion.isApproved() && dlViewFileVersionDisplayContext.hasApprovedVersion() %>">
-		<clay:label
-			displayType="success"
-			label="approved"
-		/>
+	<liferay-portal-workflow:status
+		showStatusLabel="<%= false %>"
+		status="<%= latestFileVersion.getStatus() %>"
+	/>
+
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && latestFileVersion.isScheduled() %>'>
+
+		<%
+		String displayDateString = StringPool.BLANK;
+
+		if (latestFileVersion.getDisplayDate() != null) {
+			displayDateString = dateTimeFormat.format(latestFileVersion.getDisplayDate());
+		}
+		%>
+
+		<span aria-label="<%= displayDateString %>" class="lfr-portal-tooltip" tabindex="0" title="<%= displayDateString %>">
+			<clay:icon
+				symbol="question-circle-full"
+			/>
+		</span>
 	</c:if>
-
-	<c:choose>
-		<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && latestFileVersion.isScheduled() %>'>
-
-			<%
-			String displayDateString = StringPool.BLANK;
-
-			if (latestFileVersion.getDisplayDate() != null) {
-				displayDateString = dateTimeFormat.format(latestFileVersion.getDisplayDate());
-			}
-			%>
-
-			<aui:workflow-status helpMessage="<%= latestFileVersion.isScheduled() ? displayDateString : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= latestFileVersion.isScheduled() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
-		</c:when>
-		<c:otherwise>
-			<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
-		</c:otherwise>
-	</c:choose>
 
 	<c:choose>
 		<c:when test="<%= fileShortcut != null %>">

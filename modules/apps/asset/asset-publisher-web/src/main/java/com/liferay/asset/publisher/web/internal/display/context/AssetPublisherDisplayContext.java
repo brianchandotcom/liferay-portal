@@ -2193,77 +2193,78 @@ public class AssetPublisherDisplayContext {
 				getAllAssetCategoryIds(), getAllAssetTagNames(), false,
 				isEnablePermissions());
 		}
-		else if (isSelectionStyleAssetList()) {
-			AssetListEntry assetListEntry = fetchAssetListEntry();
 
-			if (assetListEntry != null) {
-				long[][] assetCategoryIds = null;
-				String[][] assetTagNames = null;
+		if (!isSelectionStyleAssetList()) {
+			return Collections.emptyList();
+		}
 
-				if (ArrayUtil.isNotEmpty(getAllAssetCategoryIds())) {
-					assetCategoryIds = new long[][] {getAllAssetCategoryIds()};
-				}
+		AssetListEntry assetListEntry = fetchAssetListEntry();
 
-				if (ArrayUtil.isNotEmpty(getAllAssetTagNames())) {
-					assetTagNames = new String[][] {getAllAssetTagNames()};
-				}
+		if (assetListEntry != null) {
+			long[][] assetCategoryIds = null;
+			String[][] assetTagNames = null;
 
-				return _assetListAssetEntryProvider.getAssetEntries(
-					assetListEntry, _getSegmentsEntryIds(assetListEntry),
-					assetCategoryIds, assetTagNames, StringPool.BLANK,
-					_getSegmentsAnonymousUserId(), searchContainer.getStart(),
-					searchContainer.getEnd());
+			if (ArrayUtil.isNotEmpty(getAllAssetCategoryIds())) {
+				assetCategoryIds = new long[][] {getAllAssetCategoryIds()};
 			}
 
-			if (Validator.isNull(getInfoListProviderKey())) {
-				return Collections.emptyList();
+			if (ArrayUtil.isNotEmpty(getAllAssetTagNames())) {
+				assetTagNames = new String[][] {getAllAssetTagNames()};
 			}
 
-			InfoCollectionProvider<AssetEntry> infoCollectionProvider =
-				_infoItemServiceRegistry.getInfoItemService(
-					InfoCollectionProvider.class, getInfoListProviderKey());
+			return _assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, _getSegmentsEntryIds(assetListEntry),
+				assetCategoryIds, assetTagNames, StringPool.BLANK,
+				_getSegmentsAnonymousUserId(), searchContainer.getStart(),
+				searchContainer.getEnd());
+		}
 
-			if (infoCollectionProvider == null) {
-				return Collections.emptyList();
-			}
+		if (Validator.isNull(getInfoListProviderKey())) {
+			return Collections.emptyList();
+		}
 
-			CollectionQuery collectionQuery = new CollectionQuery();
+		InfoCollectionProvider<AssetEntry> infoCollectionProvider =
+			_infoItemServiceRegistry.getInfoItemService(
+				InfoCollectionProvider.class, getInfoListProviderKey());
 
-			if (ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
-				ArrayUtil.isEmpty(getAllAssetTagNames())) {
+		if (infoCollectionProvider == null) {
+			return Collections.emptyList();
+		}
 
-				collectionQuery.setPagination(
-					Pagination.of(
-						searchContainer.getEnd(), searchContainer.getStart()));
-			}
+		CollectionQuery collectionQuery = new CollectionQuery();
 
-			InfoPage<AssetEntry> infoPage =
-				infoCollectionProvider.getCollectionInfoPage(collectionQuery);
+		if (ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
+			ArrayUtil.isEmpty(getAllAssetTagNames())) {
 
-			List<AssetEntry> assetEntries =
-				(List<AssetEntry>)infoPage.getPageItems();
+			collectionQuery.setPagination(
+				Pagination.of(
+					searchContainer.getEnd(), searchContainer.getStart()));
+		}
 
-			if (assetEntries.isEmpty() ||
-				(ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
-				 ArrayUtil.isEmpty(getAllAssetTagNames()))) {
+		InfoPage<AssetEntry> infoPage =
+			infoCollectionProvider.getCollectionInfoPage(collectionQuery);
 
-				return assetEntries;
-			}
+		List<AssetEntry> assetEntries =
+			(List<AssetEntry>)infoPage.getPageItems();
 
-			if (!ArrayUtil.isEmpty(getAllAssetCategoryIds())) {
-				assetEntries = _filterAssetCategoriesAssetEntries(
-					assetEntries, getAllAssetCategoryIds());
-			}
-
-			if (!ArrayUtil.isEmpty(getAllAssetTagNames())) {
-				assetEntries = _filterAssetTagNamesAssetEntries(
-					assetEntries, getAllAssetTagNames());
-			}
+		if (assetEntries.isEmpty() ||
+			(ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
+			 ArrayUtil.isEmpty(getAllAssetTagNames()))) {
 
 			return assetEntries;
 		}
 
-		return Collections.emptyList();
+		if (!ArrayUtil.isEmpty(getAllAssetCategoryIds())) {
+			assetEntries = _filterAssetCategoriesAssetEntries(
+				assetEntries, getAllAssetCategoryIds());
+		}
+
+		if (!ArrayUtil.isEmpty(getAllAssetTagNames())) {
+			assetEntries = _filterAssetTagNamesAssetEntries(
+				assetEntries, getAllAssetTagNames());
+		}
+
+		return assetEntries;
 	}
 
 	private String _getAssetEntryItemSelectorPortletURL(

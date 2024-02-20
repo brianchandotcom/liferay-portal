@@ -205,6 +205,23 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 																status="<%= latestFileVersion.getStatus() %>"
 															/>
 
+															<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && latestFileVersion.isScheduled() %>'>
+
+																<%
+																String displayDateString = StringPool.BLANK;
+
+																if (latestFileVersion.getDisplayDate() != null) {
+																	displayDateString = dateTimeFormat.format(latestFileVersion.getDisplayDate());
+																}
+																%>
+
+																<span aria-label="<%= displayDateString %>" class="lfr-portal-tooltip" tabindex="0" title="<%= displayDateString %>">
+																	<clay:icon
+																		symbol="question-circle-full"
+																	/>
+																</span>
+															</c:if>
+
 															<c:choose>
 																<c:when test="<%= fileShortcut != null %>">
 																	<span class="inline-item inline-item-after state-icon">
@@ -342,11 +359,32 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 											/>
 										</c:when>
 										<c:when test='<%= curEntryColumn.equals("status") %>'>
-											<liferay-ui:search-container-column-status
+											<liferay-ui:search-container-column-text
 												cssClass="table-cell-expand-smallest"
 												name="status"
-												status="<%= latestFileVersion.getStatus() %>"
-											/>
+											>
+												<liferay-portal-workflow:status
+													showStatusLabel="<%= false %>"
+													status="<%= latestFileVersion.getStatus() %>"
+												/>
+
+												<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && latestFileVersion.isScheduled() %>'>
+
+													<%
+													String displayDateString = StringPool.BLANK;
+
+													if (latestFileVersion.getDisplayDate() != null) {
+														displayDateString = dateTimeFormat.format(latestFileVersion.getDisplayDate());
+													}
+													%>
+
+													<span aria-label="<%= displayDateString %>" class="lfr-portal-tooltip" tabindex="0" title="<%= displayDateString %>">
+														<clay:icon
+															symbol="question-circle-full"
+														/>
+													</span>
+												</c:if>
+											</liferay-ui:search-container-column-text>
 										</c:when>
 										<c:when test='<%= curEntryColumn.equals("downloads") %>'>
 											<c:if test="<%= ViewCountManagerUtil.isViewCountEnabled(PortalUtil.getClassNameId(DLFileEntryConstants.getClassName())) %>">

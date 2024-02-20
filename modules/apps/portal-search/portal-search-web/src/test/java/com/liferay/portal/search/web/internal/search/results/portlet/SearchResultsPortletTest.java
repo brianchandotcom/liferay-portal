@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -29,11 +30,11 @@ import com.liferay.portal.search.summary.Summary;
 import com.liferay.portal.search.summary.SummaryBuilder;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
-import com.liferay.portal.search.web.internal.portlet.shared.task.helper.PortletSharedRequestHelper;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PortalImpl;
 
 import java.io.IOException;
 
@@ -91,7 +92,11 @@ public class SearchResultsPortletTest {
 		_portletURLFactory = _createPortletURLFactory();
 		_renderRequest = _createRenderRequest();
 		_renderResponse = _createRenderResponse();
+
 		_searchResultsPortlet = _createSearchResultsPortlet();
+
+		ReflectionTestUtil.setFieldValue(
+			_searchResultsPortlet, "_portal", new PortalImpl());
 	}
 
 	@Test
@@ -232,8 +237,6 @@ public class SearchResultsPortletTest {
 				assetRendererFactoryLookup = Mockito.mock(
 					AssetRendererFactoryLookup.class);
 				indexerRegistry = _indexerRegistry;
-				portletSharedRequestHelper = Mockito.mock(
-					PortletSharedRequestHelper.class);
 				portletSharedSearchRequest =
 					_createPortletSharedSearchRequest();
 				resourceActions = Mockito.mock(ResourceActions.class);

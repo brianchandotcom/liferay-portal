@@ -247,6 +247,8 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
 
+		String redirect = null;
+
 		Layout signInUtilityPage =
 			LayoutUtilityPageEntryLayoutProviderUtil.
 				getDefaultLayoutUtilityPageEntryLayout(
@@ -254,34 +256,32 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
 		if (signInUtilityPage != null) {
-			actionResponse.sendRedirect(Portal.PATH_MAIN + "/portal/sign_in");
-
-			return;
+			redirect = Portal.PATH_MAIN + "/portal/sign_in";
 		}
 
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(actionRequest);
+		if (Validator.isNull(redirect)) {
+			LiferayPortletRequest liferayPortletRequest =
+				_portal.getLiferayPortletRequest(actionRequest);
 
-		String portletName = liferayPortletRequest.getPortletName();
+			String portletName = liferayPortletRequest.getPortletName();
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				actionRequest, liferayPortletRequest.getPortlet(), layout,
-				PortletRequest.RENDER_PHASE)
-		).setRedirect(
-			() -> {
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
+			PortletURL portletURL = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					actionRequest, liferayPortletRequest.getPortlet(), layout,
+					PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"saveLastPath", false
+			).buildPortletURL();
 
-				if (Validator.isNotNull(redirect)) {
-					return redirect;
-				}
-
-				return null;
+			if (portletName.equals(LoginPortletKeys.LOGIN)) {
+				portletURL.setWindowState(WindowState.MAXIMIZED);
 			}
-		).setParameter(
-			"saveLastPath", false
-		).buildPortletURL();
+			else {
+				portletURL.setWindowState(actionRequest.getWindowState());
+			}
+
+			redirect = portletURL.toString();
+		}
 
 		String login = ParamUtil.getString(actionRequest, "login");
 
@@ -289,14 +289,23 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, "login", login);
 		}
 
-		if (portletName.equals(LoginPortletKeys.LOGIN)) {
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-		}
-		else {
-			portletURL.setWindowState(actionRequest.getWindowState());
+		String loginRedirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNotNull(loginRedirect)) {
+			String loginPortletNamespace = _portal.getPortletNamespace(
+				PropsValues.AUTH_LOGIN_PORTLET_NAME);
+
+			String loginRedirectParameter = loginPortletNamespace + "redirect";
+
+			redirect = HttpComponentsUtil.setParameter(
+				redirect, "p_p_id", PropsValues.AUTH_LOGIN_PORTLET_NAME);
+			redirect = HttpComponentsUtil.setParameter(
+				redirect, "p_p_lifecycle", "0");
+			redirect = HttpComponentsUtil.setParameter(
+				redirect, loginRedirectParameter, loginRedirect);
 		}
 
-		actionResponse.sendRedirect(portletURL.toString());
+		actionResponse.sendRedirect(redirect);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

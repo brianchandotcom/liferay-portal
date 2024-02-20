@@ -153,7 +153,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@Override
 	public Page<CTCollection> getCTCollectionsPage(
-			Integer[] statuses, String search, Pagination pagination,
+			String search, Integer[] statuses, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
 
@@ -260,7 +260,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 
 	@Override
 	public Response postCTCollectionsPageExportBatch(
-		Integer[] status, String search, Sort[] sorts, String callbackURL,
+		String search, Integer[] status, Sort[] sorts, String callbackURL,
 		String contentType, String fieldNames) {
 
 		return null;

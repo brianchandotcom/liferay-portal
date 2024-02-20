@@ -10,6 +10,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
+import {fieldsPageTest} from './fixtures/fieldsPageTest';
 import {viewsPageTest} from './fixtures/viewsPageTest';
 
 export const test = mergeTests(
@@ -19,8 +20,10 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-164563': true,
 		'LPS-178052': true,
+		'LPS-186871': true,
 		'LPS-194395': true,
 	}),
+	fieldsPageTest,
 	loginTest,
 	viewsPageTest
 );
@@ -83,6 +86,7 @@ test.describe('Data Set Item Actions', () => {
 		actionsPage,
 		dataSetsPage,
 		fdsFragmentPage,
+		fieldsPage,
 		page,
 		viewsPage,
 	}) => {
@@ -102,6 +106,23 @@ test.describe('Data Set Item Actions', () => {
 		await test.step('Create Data Set View', async () => {
 			await viewsPage.goto(DATASET_NAME);
 			await viewsPage.createDataSetView({name: DATASET_VIEW_NAME});
+		});
+
+		await test.step('Open modal to add fields', async () => {
+			await fieldsPage.goto({
+				dataSetName: DATASET_NAME,
+				dataSetViewName: DATASET_VIEW_NAME,
+			});
+			await fieldsPage.openAddFieldsModal();
+		});
+
+		await test.step('Select fields in treeview', async () => {
+			await fieldsPage.addRootField('id');
+			await fieldsPage.addRootField('name');
+		});
+
+		await test.step('Save changes', async () => {
+			await fieldsPage.saveAddFieldsModal();
 		});
 
 		await test.step('Go to Actions tab', async () => {
@@ -187,12 +208,12 @@ test.describe('Data Set Item Actions', () => {
 		await test.step('Publish page with Data Set View', async () => {
 			await fdsFragmentPage.publishPage();
 
-			await fdsFragmentPage.gotoPage({...siteInfo});
+			await fdsFragmentPage.goToPage({...siteInfo});
 
 			await expect(page.locator('.data-set-wrapper')).toBeVisible();
 		});
 
-		await test.step('Item action are present in table row', async () => {
+		await test.step('Item actions are present in table row', async () => {
 			const dialogPromise = page
 				.waitForEvent('dialog')
 				.then(async (dialog) => {
@@ -200,6 +221,8 @@ test.describe('Data Set Item Actions', () => {
 
 					return dialog.message();
 				});
+
+			await page.locator('.dnd-td.item-actions').first().waitFor();
 
 			const tableRow = await page.locator('.dnd-td.item-actions').first();
 
@@ -219,6 +242,7 @@ test.describe('Data Set Item Actions', () => {
 		});
 
 		await test.step('Delete Data Set and site', async () => {
+			await fdsFragmentPage.goto();
 			await fdsFragmentPage.deleteSite(siteInfo.site.id);
 			await dataSetsPage.deleteDataSet(DATASET_NAME);
 		});
@@ -228,6 +252,7 @@ test.describe('Data Set Item Actions', () => {
 		actionsPage,
 		dataSetsPage,
 		fdsFragmentPage,
+		fieldsPage,
 		page,
 		viewsPage,
 	}) => {
@@ -267,7 +292,22 @@ test.describe('Data Set Item Actions', () => {
 			await viewsPage.createDataSetView({name: DATASET_VIEW_NAME});
 		});
 
-		// Missing (Add fields)
+		await test.step('Open modal to add fields', async () => {
+			await fieldsPage.goto({
+				dataSetName: DATASET_NAME,
+				dataSetViewName: DATASET_VIEW_NAME,
+			});
+			await fieldsPage.openAddFieldsModal();
+		});
+
+		await test.step('Select fields in treeview', async () => {
+			await fieldsPage.addRootField('id');
+			await fieldsPage.addRootField('name');
+		});
+
+		await test.step('Save changes', async () => {
+			await fieldsPage.saveAddFieldsModal();
+		});
 
 		await test.step('Go to Actions tab', async () => {
 			await actionsPage.goto({
@@ -355,7 +395,7 @@ test.describe('Data Set Item Actions', () => {
 		await test.step('Publish page with Data Set View', async () => {
 			await fdsFragmentPage.publishPage();
 
-			await fdsFragmentPage.gotoPage({...siteInfo});
+			await fdsFragmentPage.goToPage({...siteInfo});
 
 			await expect(page.locator('.data-set-wrapper')).toBeVisible();
 		});
@@ -485,6 +525,7 @@ test.describe('Data Set Item Actions', () => {
 		actionsPage,
 		dataSetsPage,
 		fdsFragmentPage,
+		fieldsPage,
 		page,
 		viewsPage,
 	}) => {
@@ -526,51 +567,22 @@ test.describe('Data Set Item Actions', () => {
 			await viewsPage.createDataSetView({name: DATASET_VIEW_NAME});
 		});
 
-		// Manually adding fields (with LPD-10735=false / visualization modes)
-
-		await test.step('Open Data Set Fields Tab', async () => {
-			await viewsPage.gotoDataSetView(DATASET_VIEW_NAME);
-
-			await page.getByRole('button', {name: 'Fields'}).first().waitFor();
-
-			await page.getByRole('button', {name: 'Fields'}).first().click();
-		});
-
-		const fieldModal =
-			await test.step('Open Data Set Fields Modal', async () => {
-				page.getByRole('button', {
-					name: 'Add Fields',
-				})
-					.first()
-					.waitFor();
-
-				page.getByRole('button', {
-					name: 'Add Fields',
-				})
-					.first()
-					.click();
-
-				page.getByRole('heading', {
-					name: 'Add Fields',
-				}).waitFor;
-
-				return page.getByRole('dialog');
+		await test.step('Open modal to add fields', async () => {
+			await fieldsPage.goto({
+				dataSetName: DATASET_NAME,
+				dataSetViewName: DATASET_VIEW_NAME,
 			});
-
-		await test.step('Select id and name fields', async () => {
-			await fieldModal.getByLabel(/id/).check();
-			await fieldModal.getByLabel(/name/).check();
-			await fieldModal.getByRole('button', {name: 'Save'}).click();
-
-			await expect(
-				page.locator('.orderable-table-row').nth(0)
-			).toContainText('id');
-			await expect(
-				page.locator('.orderable-table-row').nth(1)
-			).toContainText('name');
+			await fieldsPage.openAddFieldsModal();
 		});
 
-		// Finish manually adding fields
+		await test.step('Select fields in treeview', async () => {
+			await fieldsPage.addRootField('id');
+			await fieldsPage.addRootField('name');
+		});
+
+		await test.step('Save changes', async () => {
+			await fieldsPage.saveAddFieldsModal();
+		});
 
 		await test.step('Go to Actions tab', async () => {
 			await actionsPage.goto({
@@ -657,7 +669,7 @@ test.describe('Data Set Item Actions', () => {
 		await test.step('Publish page with Data Set View', async () => {
 			await fdsFragmentPage.publishPage();
 
-			await fdsFragmentPage.gotoPage({...siteInfo});
+			await fdsFragmentPage.goToPage({...siteInfo});
 
 			await expect(page.locator('.data-set-wrapper')).toBeVisible();
 		});
@@ -784,6 +796,7 @@ test.describe('Data Set Item Actions', () => {
 		actionsPage,
 		dataSetsPage,
 		fdsFragmentPage,
+		fieldsPage,
 		page,
 		viewsPage,
 	}) => {
@@ -821,51 +834,22 @@ test.describe('Data Set Item Actions', () => {
 			await viewsPage.createDataSetView({name: DATASET_VIEW_NAME});
 		});
 
-		// Manually adding fields (with LPD-10735=false / visualization modes)
-
-		await test.step('Open Data Set Fields Tab', async () => {
-			await viewsPage.gotoDataSetView(DATASET_VIEW_NAME);
-
-			await page.getByRole('button', {name: 'Fields'}).first().waitFor();
-
-			await page.getByRole('button', {name: 'Fields'}).first().click();
-		});
-
-		const fieldModal =
-			await test.step('Open Data Set Fields Modal', async () => {
-				page.getByRole('button', {
-					name: 'Add Fields',
-				})
-					.first()
-					.waitFor();
-
-				page.getByRole('button', {
-					name: 'Add Fields',
-				})
-					.first()
-					.click();
-
-				page.getByRole('heading', {
-					name: 'Add Fields',
-				}).waitFor;
-
-				return page.getByRole('dialog');
+		await test.step('Open modal to add fields', async () => {
+			await fieldsPage.goto({
+				dataSetName: DATASET_NAME,
+				dataSetViewName: DATASET_VIEW_NAME,
 			});
-
-		await test.step('Select id and name fields', async () => {
-			await fieldModal.getByLabel(/id/).check();
-			await fieldModal.getByLabel(/name/).check();
-			await fieldModal.getByRole('button', {name: 'Save'}).click();
-
-			await expect(
-				page.locator('.orderable-table-row').nth(0)
-			).toContainText('id');
-			await expect(
-				page.locator('.orderable-table-row').nth(1)
-			).toContainText('name');
+			await fieldsPage.openAddFieldsModal();
 		});
 
-		// Finish manually adding fields
+		await test.step('Select fields in treeview', async () => {
+			await fieldsPage.addRootField('id');
+			await fieldsPage.addRootField('name');
+		});
+
+		await test.step('Save changes', async () => {
+			await fieldsPage.saveAddFieldsModal();
+		});
 
 		await test.step('Go to Actions tab', async () => {
 			await actionsPage.goto({
@@ -934,7 +918,7 @@ test.describe('Data Set Item Actions', () => {
 		await test.step('Publish page with Data Set View', async () => {
 			await fdsFragmentPage.publishPage();
 
-			await fdsFragmentPage.gotoPage({...siteInfo});
+			await fdsFragmentPage.goToPage({...siteInfo});
 
 			await expect(page.locator('.data-set-wrapper')).toBeVisible();
 		});

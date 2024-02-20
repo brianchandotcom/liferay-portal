@@ -8,6 +8,8 @@ package com.liferay.osb.faro.admin.web.internal.portlet.action;
 import com.liferay.osb.faro.admin.web.internal.constants.FaroAdminPortletKeys;
 import com.liferay.osb.faro.admin.web.internal.constants.FaroAdminWebKeys;
 import com.liferay.osb.faro.admin.web.internal.model.FaroProjectAdminDisplay;
+import com.liferay.osb.faro.engine.client.CerebroEngineClient;
+import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -66,6 +68,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 			if (!documents.isEmpty()) {
 				faroProjectAdminDisplays.add(
 					new FaroProjectAdminDisplay(
+						_cerebroEngineClient, _contactsEngineClient,
 						_faroProjectLocalService.getFaroProject(
 							faroProjectIds[0]),
 						documents.get(0)));
@@ -79,6 +82,12 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}
+
+	@Reference
+	private CerebroEngineClient _cerebroEngineClient;
+
+	@Reference
+	private ContactsEngineClient _contactsEngineClient;
 
 	@Reference
 	private FaroProjectLocalService _faroProjectLocalService;

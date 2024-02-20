@@ -5,6 +5,8 @@
 
 package com.liferay.osb.faro.admin.web.internal.model;
 
+import com.liferay.osb.faro.engine.client.CerebroEngineClient;
+import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroUserLocalServiceUtil;
@@ -14,11 +16,15 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.text.DecimalFormat;
 
 import java.util.Date;
+
+import org.apache.commons.lang3.time.DateUtils;
 
 /**
  * @author Matthew Kong
@@ -26,6 +32,53 @@ import java.util.Date;
 public class FaroProjectAdminDisplay {
 
 	public FaroProjectAdminDisplay() {
+	}
+
+	public FaroProjectAdminDisplay(
+			CerebroEngineClient cerebroEngineClient,
+			ContactsEngineClient contactsEngineClient, FaroProject faroProject,
+			Document document)
+		throws Exception {
+
+		this(document);
+
+		if (StringUtil.equals(_subscriptionName, "Basic")) {
+			Date subscriptionModifiedDate = new Date(
+				faroProject.getSubscriptionModifiedTime());
+
+			_individualsCount =
+				contactsEngineClient.getIndividualsCreatedSinceCount(
+					faroProject, subscriptionModifiedDate);
+
+			_pageViewsCount = GetterUtil.getInteger(
+				cerebroEngineClient.getPageViews(
+					faroProject, subscriptionModifiedDate, new Date()));
+		}
+		else {
+			Date lastAnniversaryDate = _getLastAnniversaryDate(
+				new Date(faroProject.getSubscriptionModifiedTime()));
+
+			_individualsCount =
+				contactsEngineClient.getIndividualsCreatedSinceCount(
+					faroProject, lastAnniversaryDate);
+
+			_pageViewsCount = GetterUtil.getInteger(
+				cerebroEngineClient.getPageViews(
+					faroProject, lastAnniversaryDate, new Date()));
+		}
+
+		_individualsLimit = GetterUtil.getLong(
+			document.get("individualsLimit"));
+
+		_individualsUsage = _getUsage(_individualsCount, _individualsLimit);
+
+		_pageViewsLimit = GetterUtil.getLong(document.get("pageViewsLimit"));
+
+		_pageViewsUsage = _getUsage(_pageViewsCount, _pageViewsLimit);
+
+		_serverLocation = faroProject.getServerLocation();
+		_subscription = faroProject.getSubscription();
+		_weDeployKey = faroProject.getWeDeployKey();
 	}
 
 	public FaroProjectAdminDisplay(Document document) {
@@ -41,8 +94,6 @@ public class FaroProjectAdminDisplay {
 
 		_faroProjectId = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 		_groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-		_individualsUsage = _decimalFormat.format(
-			GetterUtil.getDouble(document.get("individualsUsage")));
 
 		try {
 			_lastAccessDate = document.getDate("lastAccessDate");
@@ -54,24 +105,8 @@ public class FaroProjectAdminDisplay {
 		_name = document.get(Field.NAME);
 		_offline = GetterUtil.getBoolean(document.get("offline"));
 		_owner = _getOwner();
-		_pageViewsUsage = _decimalFormat.format(
-			GetterUtil.getDouble(document.get("pageViewsUsage")));
 		_serverLocation = document.get("serverLocation");
 		_subscriptionName = document.get("subscriptionName");
-	}
-
-	public FaroProjectAdminDisplay(FaroProject faroProject, Document document) {
-		this(document);
-
-		_individualsCount = GetterUtil.getLong(
-			document.get("individualsCount"));
-		_individualsLimit = GetterUtil.getLong(
-			document.get("individualsLimit"));
-		_pageViewsCount = GetterUtil.getLong(document.get("pageViewsCount"));
-		_pageViewsLimit = GetterUtil.getLong(document.get("pageViewsLimit"));
-		_serverLocation = faroProject.getServerLocation();
-		_subscription = faroProject.getSubscription();
-		_weDeployKey = faroProject.getWeDeployKey();
 	}
 
 	public String getCorpProjectName() {
@@ -238,6 +273,17 @@ public class FaroProjectAdminDisplay {
 		_weDeployKey = weDeployKey;
 	}
 
+	private Date _getLastAnniversaryDate(Date createDate) {
+		Date lastAnniversaryDate = DateUtils.setYears(
+			createDate, DateUtil.getYear(new Date()));
+
+		if (DateUtil.compareTo(new Date(), lastAnniversaryDate) > 0) {
+			return lastAnniversaryDate;
+		}
+
+		return DateUtils.setYears(createDate, DateUtil.getYear(new Date()) - 1);
+	}
+
 	private String _getOwner() {
 		FaroUser faroUser = FaroUserLocalServiceUtil.fetchOwnerFaroUser(
 			_groupId);
@@ -253,6 +299,14 @@ public class FaroProjectAdminDisplay {
 		}
 
 		return null;
+	}
+
+	private String _getUsage(long count, long limit) {
+		if ((count == 0) || (limit == 0)) {
+			return "0";
+		}
+
+		return _decimalFormat.format(100D * count / limit);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

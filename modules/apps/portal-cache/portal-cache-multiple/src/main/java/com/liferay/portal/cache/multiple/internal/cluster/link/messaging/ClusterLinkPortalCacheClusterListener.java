@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -29,7 +28,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -152,11 +150,6 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkPortalCacheClusterListener.class);
-
-	@Reference(
-		target = "(destination.name=" + PortalCacheDestinationNames.CACHE_REPLICATION + ")"
-	)
-	private Destination _destination;
 
 	private ServiceTrackerMap
 		<String, PortalCacheManager<? extends Serializable, ?>>

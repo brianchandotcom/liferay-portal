@@ -30,7 +30,9 @@ const DropDownAction: React.FC<DropDownActionProps> = ({
 
 	return (
 		<ClayDropDown.Item
-			disabled={disabled}
+			disabled={
+				typeof disabled === 'function' ? disabled(item) : disabled
+			}
 			hidden={typeof hidden === 'function' ? hidden(item) : hidden}
 			onClick={(event) => {
 				event.preventDefault();

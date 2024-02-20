@@ -11,7 +11,7 @@ export type ActionsHookParameter = {isHeaderActions?: boolean};
 
 export type Action<T = any> = {
 	action?: (item: T, mutate: KeyedMutator<APIResponse<T> | T>) => void;
-	disabled?: boolean;
+	disabled?: ((item: T) => boolean) | boolean;
 	hidden?: ((item: T) => boolean) | boolean;
 	icon?: string;
 	name: ((item: T) => string) | string;

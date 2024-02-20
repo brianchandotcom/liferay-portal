@@ -63,12 +63,15 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			permission: 'UPDATE',
 		},
 		{
-			action: ({archived, id}, mutate) => {
-				testrayBuildImpl
-					.updateArchivedFlag(id, !archived)
-					.then(() => mutate())
-					.catch(modal.onError);
+			action: ({archived, id, promoted}, mutate) => {
+				if (!promoted) {
+					testrayBuildImpl
+						.updateArchivedFlag(id, !archived)
+						.then(() => mutate())
+						.catch(modal.onError);
+				}
 			},
+			disabled: ({promoted}) => promoted,
 			icon: 'archive',
 			name: (build) =>
 				i18n.translate(build.archived ? 'unarchive' : 'archive'),

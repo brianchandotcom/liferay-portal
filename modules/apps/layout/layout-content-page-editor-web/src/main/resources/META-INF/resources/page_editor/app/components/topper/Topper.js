@@ -217,6 +217,10 @@ function TopperContent({
 					return;
 				}
 
+				if (!isSelectionAllowed(event.target)) {
+					return;
+				}
+
 				selectItem(item.itemId);
 			}}
 			onMouseLeave={(event) => {
@@ -390,4 +394,12 @@ class TopperErrorBoundary extends React.Component {
 			this.props.children
 		);
 	}
+}
+
+function isSelectionAllowed(element) {
+	if (element.closest('.portlet-options')) {
+		return false;
+	}
+
+	return true;
 }

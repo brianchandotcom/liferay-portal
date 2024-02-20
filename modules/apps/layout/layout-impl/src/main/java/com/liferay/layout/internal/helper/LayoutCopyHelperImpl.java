@@ -292,8 +292,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			}
 
 			JSONObject dataJSONObject = _processDataJSONObject(
-				LayoutStructure.of(data), targetLayout, fragmentEntryLinksMap,
-				entry.getValue(), user);
+				LayoutStructure.of(data), sourceLayout, targetLayout,
+				fragmentEntryLinksMap, entry.getValue(), user);
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
@@ -329,7 +329,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		JSONObject dataJSONObject = _processDataJSONObject(
-			layoutStructure, targetLayout,
+			layoutStructure, sourceLayout, targetLayout,
 			_getFragmentEntryLinksMap(
 				sourceLayout, new long[] {sourceSegmentsExperienceId},
 				targetLayout),
@@ -777,7 +777,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private JSONObject _processDataJSONObject(
-			LayoutStructure layoutStructure, Layout targetLayout,
+			LayoutStructure layoutStructure, Layout sourceLayout,
+			Layout targetLayout,
 			Map<Long, FragmentEntryLink> fragmentEntryLinksMap,
 			long targetSegmentsExperienceId, User user)
 		throws Exception {
@@ -819,8 +820,18 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				targetLayoutFragmentEntryLink.setUserName(user.getFullName());
 				targetLayoutFragmentEntryLink.setModifiedDate(
 					serviceContext.getModifiedDate(new Date()));
-				targetLayoutFragmentEntryLink.setOriginalFragmentEntryLinkId(
-					sourceLayoutfragmentEntryLink.getFragmentEntryLinkId());
+
+				if (sourceLayout.getClassPK() == targetLayout.getPlid()) {
+					targetLayoutFragmentEntryLink.
+						setOriginalFragmentEntryLinkId(
+							sourceLayoutfragmentEntryLink.
+								getFragmentEntryLinkId());
+				}
+				else {
+					targetLayoutFragmentEntryLink.
+						setOriginalFragmentEntryLinkId(0);
+				}
+
 				targetLayoutFragmentEntryLink.setSegmentsExperienceId(
 					targetSegmentsExperienceId);
 				targetLayoutFragmentEntryLink.setClassPK(
@@ -860,8 +871,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					serviceContext.getCreateDate(new Date()));
 				newFragmentEntryLink.setModifiedDate(
 					serviceContext.getModifiedDate(new Date()));
-				newFragmentEntryLink.setOriginalFragmentEntryLinkId(
-					sourceLayoutfragmentEntryLink.getFragmentEntryLinkId());
+
+				if (sourceLayout.getClassPK() == targetLayout.getPlid()) {
+					newFragmentEntryLink.setOriginalFragmentEntryLinkId(
+						sourceLayoutfragmentEntryLink.getFragmentEntryLinkId());
+				}
+				else {
+					newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
+				}
+
 				newFragmentEntryLink.setSegmentsExperienceId(
 					targetSegmentsExperienceId);
 				newFragmentEntryLink.setClassNameId(

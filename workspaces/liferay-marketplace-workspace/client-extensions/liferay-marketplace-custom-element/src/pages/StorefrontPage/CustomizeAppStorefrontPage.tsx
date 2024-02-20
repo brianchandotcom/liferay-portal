@@ -19,7 +19,6 @@ import './CustomizeAppStorefrontPage.scss';
 
 import {useState} from 'react';
 
-import i18n from '../../i18n';
 import {submitBase64EncodedFile} from '../../utils/util';
 
 const ACCEPT_FILE_TYPES = {
@@ -184,7 +183,6 @@ export function CustomizeAppStorefrontPage({
 					!appStorefrontImages.length
 				}
 				isLoading={isLoading}
-				loadingButtonText={i18n.translate('uploading-images')}
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
 					setIsLoading(true);
@@ -195,10 +193,12 @@ export function CustomizeAppStorefrontPage({
 						await submitBase64EncodedFile({
 							appERC,
 							callback: (progress) => {
-								const imageIndex =
-									appStorefrontImages.indexOf(image);
-								appStorefrontImages[imageIndex].progress =
-									progress;
+								const imageIndex = appStorefrontImages.indexOf(
+									image
+								);
+								appStorefrontImages[
+									imageIndex
+								].progress = progress;
 								appStorefrontImages[imageIndex].uploaded =
 									progress === 100;
 

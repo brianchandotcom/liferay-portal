@@ -1902,11 +1902,9 @@ public class RESTBuilder {
 			StringUtil.removeLast(_configDir.getPath(), "-impl") +
 				"-client-js");
 
-		// Constructs client name from the api package path
+		StringBundler sb = new StringBundler();
 
 		String apiPackagePath = _configYAML.getApiPackagePath();
-
-		StringBundler sb = new StringBundler();
 
 		String[] parts = apiPackagePath.split("\\.");
 
@@ -1918,9 +1916,6 @@ public class RESTBuilder {
 
 		String clientName = sb.toString();
 
-		openAPIYAMLFile = _prepareForJSClientGenerator(
-			openAPIYAML, openAPIYAMLFile);
-
 		FileUtil.write(
 			new File(baseClientDir, "package.json"),
 			FreeMarkerUtil.processTemplate(
@@ -1928,6 +1923,9 @@ public class RESTBuilder {
 				HashMapBuilder.<String, Object>put(
 					"clientName", baseClientDir.getName()
 				).build()));
+
+		openAPIYAMLFile = _prepareForJSClientGenerator(
+			openAPIYAML, openAPIYAMLFile);
 
 		_invokeJSClientGenerator(
 			baseClientDir, clientName, "fetch", openAPIYAMLFile);

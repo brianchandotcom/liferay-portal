@@ -32,9 +32,15 @@ export class FieldsPage {
 		this.viewsPage = new ViewsPage(page);
 	}
 
-	async goto() {
-		await this.viewsPage.goto();
-		await this.viewsPage.gotoDataSetView();
+	async goto({
+		dataSetName,
+		dataSetViewName,
+	}: {
+		dataSetName?: string;
+		dataSetViewName?: string;
+	} = {}) {
+		await this.viewsPage.goto(dataSetName);
+		await this.viewsPage.gotoDataSetView(dataSetViewName);
 
 		await this.page
 			.getByRole('button', {exact: true, name: 'Fields'})

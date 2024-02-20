@@ -14,17 +14,17 @@ export class ActionsPage {
 	readonly newActionButton: Locator;
 	readonly newActionForm: {
 		addIconButton: Locator;
-		confirmationMessageText: Locator;
-		headlessPermissionKeyText: Locator;
+		confirmationMessageInput: Locator;
+		headlessPermissionKeyInput: Locator;
 		methodSelect: Locator;
 		nameInput: Locator;
-		permissionKeyText: Locator;
+		permissionKeyInput: Locator;
 		saveButton: Locator;
 		selectIconModal: {
 			iconsList: Locator;
 			searchInput: Locator;
 		};
-		titleText: Locator;
+		titleInput: Locator;
 		typeSelect: Locator;
 		urlText: Locator;
 	};
@@ -39,16 +39,16 @@ export class ActionsPage {
 		this.newActionButton = page.getByRole('button', {name: 'Add Action'});
 		this.newActionForm = {
 			addIconButton: page.getByLabel('add-icon'),
-			confirmationMessageText: page.getByLabel('Confirmation Message', {
+			confirmationMessageInput: page.getByLabel('Confirmation Message', {
 				exact: true,
 			}),
-			headlessPermissionKeyText: page.getByLabel(
+			headlessPermissionKeyInput: page.getByLabel(
 				'Headless Action KeyRequired',
 				{exact: true}
 			),
 			methodSelect: page.getByLabel('MethodRequired', {exact: true}),
 			nameInput: page.getByPlaceholder('Action Name'),
-			permissionKeyText: page.getByLabel('Headless Action Key', {
+			permissionKeyInput: page.getByLabel('Headless Action Key', {
 				exact: true,
 			}),
 			saveButton: page.getByRole('button', {name: 'Save'}),
@@ -56,7 +56,7 @@ export class ActionsPage {
 				iconsList: page.getByRole('listitem'),
 				searchInput: page.getByPlaceholder('Search'),
 			},
-			titleText: page.getByLabel('TitleRequired', {exact: true}),
+			titleInput: page.getByLabel('TitleRequired', {exact: true}),
 			typeSelect: page.getByLabel('TypeRequired', {exact: true}),
 			urlText: page.getByPlaceholder('Add a URL here.'),
 		};
@@ -129,19 +129,19 @@ export class ActionsPage {
 
 		if ('permissionKey' in actionProps) {
 			if (actionProps.type === 'headless') {
-				await this.newActionForm.headlessPermissionKeyText.fill(
+				await this.newActionForm.headlessPermissionKeyInput.fill(
 					actionProps.permissionKey
 				);
 			}
 			else {
-				await this.newActionForm.permissionKeyText.fill(
+				await this.newActionForm.permissionKeyInput.fill(
 					actionProps.permissionKey
 				);
 			}
 		}
 
 		if ('confirmationMessage' in actionProps) {
-			this.newActionForm.confirmationMessageText.fill(
+			this.newActionForm.confirmationMessageInput.fill(
 				actionProps.confirmationMessage
 			);
 		}

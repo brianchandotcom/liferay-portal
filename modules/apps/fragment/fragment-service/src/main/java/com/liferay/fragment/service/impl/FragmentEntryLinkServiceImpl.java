@@ -110,7 +110,8 @@ public class FragmentEntryLinkServiceImpl
 			true);
 
 		return fragmentEntryLinkLocalService.updateFragmentEntryLink(
-			fragmentEntryLinkId, editableValues, updateClassedModel);
+			getUserId(), fragmentEntryLinkId, editableValues,
+			updateClassedModel);
 	}
 
 	private void _checkPermission(

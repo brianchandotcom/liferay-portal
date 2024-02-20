@@ -91,6 +91,7 @@ public class JournalFragmentEntryProcessorEditableTest {
 			"fragment_entry_link_mapped_ddm.json");
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			StringUtil.replace(
 				editableValues, "TEMPLATE_KEY", _ddmTemplate.getTemplateKey()));

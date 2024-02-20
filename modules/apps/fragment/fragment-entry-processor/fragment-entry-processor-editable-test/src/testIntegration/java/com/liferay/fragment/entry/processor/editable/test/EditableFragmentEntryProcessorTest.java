@@ -825,6 +825,7 @@ public class EditableFragmentEntryProcessorTest {
 			});
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
 
 		int count =

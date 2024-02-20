@@ -595,6 +595,7 @@ public class EditInfoItemStrutsActionValidationTest {
 
 		inputFragmentEntryLink =
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				TestPropsValues.getUserId(),
 				inputFragmentEntryLink.getFragmentEntryLinkId(),
 				editableValuesJSONObject.toString());
 

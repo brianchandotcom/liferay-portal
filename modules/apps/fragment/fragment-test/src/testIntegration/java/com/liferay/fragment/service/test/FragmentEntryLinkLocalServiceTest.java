@@ -409,6 +409,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink));
 
 		_fragmentEntryLinkLocalService.updateDeleted(
+			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(), true);
 
 		fragmentEntryLinks =
@@ -420,6 +421,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		Assert.assertFalse(fragmentEntryLinks.contains(fragmentEntryLink));
 
 		_fragmentEntryLinkLocalService.updateDeleted(
+			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(), false);
 
 		fragmentEntryLinks =
@@ -561,6 +563,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				TestPropsValues.getUserId(),
 				fragmentEntryLink1.getFragmentEntryLinkId(), 3);
 
 		Assert.assertEquals(3, fragmentEntryLink1.getPosition());
@@ -807,6 +810,7 @@ public class FragmentEntryLinkLocalServiceTest {
 				fragmentEntry.getType(), _serviceContext);
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			_read("updated-editable-values-update-latest-changes.json"));
 

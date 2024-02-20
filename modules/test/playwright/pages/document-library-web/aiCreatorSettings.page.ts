@@ -7,9 +7,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+
 const MOCK_API_KEY = 'VALID_API_KEY';
 const STR_BLANK = '';
 export class AICreatorInstanceSettingsPage {
+	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly apiKeyInput: Locator;
 	readonly dalleCheckbox: Locator;
 	readonly page: Page;
@@ -18,6 +21,7 @@ export class AICreatorInstanceSettingsPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.apiKeyInput = this.page.getByLabel('API Key');
 		this.dalleCheckbox = this.page.getByText(
 			'Enable DALL-E to Create Images'
@@ -26,12 +30,7 @@ export class AICreatorInstanceSettingsPage {
 	}
 
 	async goto() {
-		await this.page.getByLabel('Open Applications MenuCtrl+').click();
-		await this.page.getByRole('tab', {name: 'Control Panel'}).click();
-		await this.page
-			.getByRole('menuitem', {name: 'Instance Settings'})
-			.click();
-		await this.page.getByRole('link', {name: 'AI Creator'}).click();
+		await this.applicationsMenuPage.goToAICreator();
 	}
 
 	async enableDalleCreateImages() {

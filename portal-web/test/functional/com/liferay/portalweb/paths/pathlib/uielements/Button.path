@@ -622,7 +622,7 @@
 </tr>
 <tr>
 	<td>PARENT_FOLDER_SELECT</td>
-	<td>//button[contains(@id,'selectFolderButton')]</td>
+	<td>//div[@id='basicInformationContent']//button[text()='Select']</td>
 	<td></td>
 </tr>
 <tr>

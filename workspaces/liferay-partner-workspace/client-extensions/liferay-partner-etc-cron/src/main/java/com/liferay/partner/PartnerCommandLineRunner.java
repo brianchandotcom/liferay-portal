@@ -282,44 +282,46 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 		ZonedDateTime zonedActivityExpirationDate,
 		ZonedDateTime zonedDateTime) {
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("/o/c/activities/");
-		sb.append(activityJSONObject.getLong("id"));
-		sb.append("/object-actions/notificationDueDate");
-		sb.append(plusDays);
-
-		if (plusDays == 1) {
-			sb.append("Day");
-		}
-		else {
-			sb.append("Days");
-		}
-
-		sb.append("TemplateAction");
-
-		if (zonedActivityExpirationDate.toLocalDate(
+		if (!zonedActivityExpirationDate.toLocalDate(
 			).isEqual(
 				zonedDateTime.plusDays(
 					plusDays
 				).toLocalDate()
 			)) {
 
-			try {
-				_put("", sb.toString());
+			return;
+		}
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Triggering a ", plusDays,
-							" day notification for activity ",
-							activityJSONObject.getString("id"), " with name ",
-							activityJSONObject.getString("name")));
-				}
+		try {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("/o/c/activities/");
+			sb.append(activityJSONObject.getLong("id"));
+			sb.append("/object-actions/notificationDueDate");
+			sb.append(plusDays);
+
+			if (plusDays == 1) {
+				sb.append("Day");
 			}
-			catch (Exception exception) {
-				_log.error(exception);
+			else {
+				sb.append("Days");
 			}
+
+			sb.append("TemplateAction");
+
+			_put("", sb.toString());
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Triggering a ", plusDays,
+						" day notification for activity ",
+						activityJSONObject.getString("id"), " with name ",
+						activityJSONObject.getString("name")));
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 	}
 

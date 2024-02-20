@@ -2246,27 +2246,47 @@ public class AssetPublisherDisplayContext {
 			return (List<AssetEntry>)infoPage.getPageItems();
 		}
 
-		InfoPage<AssetEntry> infoPage =
-			infoCollectionProvider.getCollectionInfoPage(new CollectionQuery());
+		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
 
-		List<AssetEntry> assetEntries =
-			(List<AssetEntry>)infoPage.getPageItems();
+		int totalCount = Integer.MAX_VALUE;
 
-		if (!assetEntries.isEmpty() &&
-			ArrayUtil.isNotEmpty(getAllAssetCategoryIds())) {
+		for (int start = 0;
+			 (filteredAssetEntries.size() < searchContainer.getDelta()) &&
+			 ((start + _INFO_COLLECTION_PROVIDER_DELTA) <= totalCount);
+			 start += _INFO_COLLECTION_PROVIDER_DELTA) {
 
-			assetEntries = _filterAssetCategoriesAssetEntries(
-				assetEntries, getAllAssetCategoryIds());
+			CollectionQuery collectionQuery = new CollectionQuery();
+
+			collectionQuery.setPagination(
+				Pagination.of(start + _INFO_COLLECTION_PROVIDER_DELTA, start));
+
+			InfoPage<AssetEntry> infoPage =
+				infoCollectionProvider.getCollectionInfoPage(collectionQuery);
+
+			totalCount = infoPage.getTotalCount();
+
+			List<AssetEntry> assetEntries =
+				(List<AssetEntry>)infoPage.getPageItems();
+
+			if (!assetEntries.isEmpty() &&
+				ArrayUtil.isNotEmpty(getAllAssetCategoryIds())) {
+
+				assetEntries = _filterAssetCategoriesAssetEntries(
+					assetEntries, getAllAssetCategoryIds());
+			}
+
+			if (!assetEntries.isEmpty() &&
+				ArrayUtil.isNotEmpty(getAllAssetTagNames())) {
+
+				assetEntries = _filterAssetTagNamesAssetEntries(
+					assetEntries, getAllAssetTagNames());
+			}
+
+			filteredAssetEntries.addAll(assetEntries);
 		}
 
-		if (!assetEntries.isEmpty() &&
-			ArrayUtil.isNotEmpty(getAllAssetTagNames())) {
-
-			assetEntries = _filterAssetTagNamesAssetEntries(
-				assetEntries, getAllAssetTagNames());
-		}
-
-		return assetEntries;
+		return ListUtil.subList(
+			filteredAssetEntries, 0, searchContainer.getDelta());
 	}
 
 	private String _getAssetEntryItemSelectorPortletURL(
@@ -2404,6 +2424,8 @@ public class AssetPublisherDisplayContext {
 	}
 
 	private static final int _DEFAULT_SUBTYPE_SELECTION_ID = -1;
+
+	private static final int _INFO_COLLECTION_PROVIDER_DELTA = 20;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetPublisherDisplayContext.class);

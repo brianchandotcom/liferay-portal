@@ -86,7 +86,7 @@ public class UpgradePartitionedConfigurationTableTest
 				}
 			});
 
-		_omniAdminUser = UserTestUtil.addOmniAdminUser();
+		_omniAdminUser = UserTestUtil.addOmniadminUser();
 
 		Group group = null;
 

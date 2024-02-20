@@ -23,15 +23,21 @@ interface EditModePickerProps {
 
 interface EditMode {
 	label: string;
+	symbol: string;
 	value: string;
 }
 
 const EDIT_MODES = [
 	{
 		label: Liferay.Language.get('content-editing'),
+		symbol: 'order-form-pencil',
 		value: 'content-editing',
 	},
-	{label: Liferay.Language.get('page-design'), value: 'page-design'},
+	{
+		label: Liferay.Language.get('page-design'),
+		symbol: 'format',
+		value: 'page-design',
+	},
 ];
 
 const Trigger = React.forwardRef<HTMLButtonElement, any>(
@@ -47,16 +53,27 @@ const Trigger = React.forwardRef<HTMLButtonElement, any>(
 			ref={ref}
 			size="sm"
 		>
-			{symbol ? <ClayIcon symbol="format" /> : children}
+			{symbol ? <ClayIcon symbol={symbol} /> : children}
 		</ClayButton>
 	)
 );
 
-const EditModePicker = (props: EditModePickerProps) => (
-	<Picker UNSAFE_menuClassName="cadmin" as={Trigger} {...props}>
-		{({label, value}: EditMode) => (
-			<Option key={value} textValue={label}>
-				{label}
+const EditModePicker = ({symbol, ...props}: EditModePickerProps) => (
+	<Picker
+		UNSAFE_menuClassName="cadmin"
+		as={Trigger}
+		symbol={symbol}
+		{...props}
+	>
+		{(item: EditMode) => (
+			<Option key={item.value} textValue={item.label}>
+				{symbol ? (
+					<span className="inline-item inline-item-before ml-1 mr-3">
+						<ClayIcon symbol={item.symbol} />
+					</span>
+				) : null}
+
+				{item.label}
 			</Option>
 		)}
 	</Picker>
@@ -117,7 +134,7 @@ export default function EditModeSelector() {
 
 			{Liferay.FeatureFlags['LPD-10988'] ? (
 				<EditModePicker
-					symbol="format"
+					symbol={editMode.symbol}
 					title={sub(
 						Liferay.Language.get('select-x'),
 						Liferay.Language.get('edit-mode')

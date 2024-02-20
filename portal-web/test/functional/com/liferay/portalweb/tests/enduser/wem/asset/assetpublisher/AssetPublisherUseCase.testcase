@@ -1434,7 +1434,7 @@ definition {
 
 		task ("View the Home is shown in selector input") {
 			AssertTextEquals.assertValue(
-				inputFieldId = "folderName",
+				inputFieldId = "resourceName",
 				locator1 = "TextInput#INPUT_ID",
 				value1 = "Home");
 		}
@@ -1498,7 +1498,7 @@ definition {
 
 		task ("View the Home is shown in selector input") {
 			AssertTextEquals.assertValue(
-				inputFieldId = "folderName",
+				inputFieldId = "resourceName",
 				locator1 = "TextInput#INPUT_ID",
 				value1 = "Home");
 		}

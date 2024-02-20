@@ -283,7 +283,7 @@ export default function Sidebar() {
 		);
 
 		if (open) {
-			sidebarContentRef.current?.focus();
+			sidebarContentRef.current?.focus({preventScroll: true});
 		}
 	};
 

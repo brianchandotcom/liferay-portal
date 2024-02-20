@@ -257,8 +257,8 @@ function stop_app_server() {
 }
 
 function update_portal_ext_properties() {
-	local tomcat_portal_ext_properties_file=$(get_tomcat_portal_ext_properties_file)
 	local playwright_project_dir=$(get_playwright_project_dir)
+	local tomcat_portal_ext_properties_file=$(get_tomcat_portal_ext_properties_file)
 
 	combine_properties_files \
 		${tomcat_portal_ext_properties_file} \

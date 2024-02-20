@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
-export default function LockedArticleModal({open, portletNamespace}) {
+export default function LockedArticleModal({isAdmin, open, portletNamespace}) {
 	const [showModal, setShowModal] = useState(open);
 
 	const handleOnClose = () => {
@@ -50,17 +50,42 @@ export default function LockedArticleModal({open, portletNamespace}) {
 
 					<ClayModal.Body>
 						<p>
-							{Liferay.Language.get(
-								'article-in-edition-description'
-							)}
+							{isAdmin
+								? Liferay.Language.get(
+										'article-in-edition-admin-description'
+								  )
+								: Liferay.Language.get(
+										'article-in-edition-description'
+								  )}
 						</p>
 					</ClayModal.Body>
 
 					<ClayModal.Footer
 						last={
-							<ClayButton displayType="primary" onClick={onClose}>
-								{Liferay.Language.get('ok')}
-							</ClayButton>
+							isAdmin ? (
+								<ClayButton.Group spaced>
+									<ClayButton
+										displayType="secondary"
+										onClick={onClose}
+									>
+										{Liferay.Language.get('cancel')}
+									</ClayButton>
+
+									<ClayButton
+										displayType="primary"
+										onClick={onClose}
+									>
+										{Liferay.Language.get('take-control')}
+									</ClayButton>
+								</ClayButton.Group>
+							) : (
+								<ClayButton
+									displayType="primary"
+									onClick={onClose}
+								>
+									{Liferay.Language.get('ok')}
+								</ClayButton>
+							)
 						}
 					/>
 				</ClayModal>

@@ -38,3 +38,25 @@ test('Assert table column labels', async ({dataSetsPage, page}) => {
 
 	await expect(tableColumnLabels).toEqual(expectedLabels);
 });
+
+test('Assert table action labels', async ({dataSetsPage, page}) => {
+	await dataSetsPage.goto();
+	await dataSetsPage.createDataSet();
+
+	await page
+		.locator('.dnd-td.item-actions')
+		.first()
+		.locator('.dropdown-toggle')
+		.click();
+
+	const tableItemActions = await page
+		.locator('.dropdown-menu')
+		.filter({has: page.locator('span.pr-2')})
+		.first()
+		.locator('.dropdown-item')
+		.allInnerTexts();
+
+	const expectedLabels = ['Edit', 'Permissions', 'Delete'];
+
+	await expect(tableItemActions).toEqual(expectedLabels);
+});

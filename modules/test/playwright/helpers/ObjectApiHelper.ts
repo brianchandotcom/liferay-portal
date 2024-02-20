@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {liferayConfig} from '../liferay.config';
 import {ApiHelpers} from './ApiHelpers';
 
 export class ObjectApiHelper {
@@ -46,18 +47,16 @@ export class ObjectApiHelper {
 	}
 
 	async postObjectDefinitionRandomObjectEntries(
-		applicationName: String,
 		fieldName: any,
-		fieldValue: String
+		fieldValue: String,
+		restContextPath: String
 	) {
 		const data = {
 			[fieldName]: fieldValue,
 		};
 
 		return this.apiHelpers.postResponse(
-			`${this.apiHelpers.baseUrl}c/${
-				applicationName.toLowerCase() + 's'
-			}`,
+			`${liferayConfig.environment.baseUrl}${restContextPath}`,
 			data
 		);
 	}

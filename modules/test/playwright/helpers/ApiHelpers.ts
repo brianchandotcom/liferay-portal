@@ -55,29 +55,29 @@ export class ApiHelpers {
 		this.page = page;
 	}
 
-	async postResponse(url: string, data: DataObject) {
-		const response = await this.page.request.post(url, {
+	async postResponse(url: string, data: DataObject | any[]) {
+		return await this.page.request.post(url, {
 			data,
 			headers: await this.getHeader(),
 		});
+	}
 
-		return response;
+	async post(url: string, data: DataObject | any[]) {
+		const response = await this.postResponse(url, data);
+
+		return response.json();
 	}
 
 	async getResponse(url: string) {
-		const response = await this.page.request.get(url, {
+		return await this.page.request.get(url, {
 			headers: await this.getHeader(),
 		});
-
-		return response;
 	}
 
 	async putResponse(url: string) {
-		const response = await this.page.request.put(url, {
+		return await this.page.request.put(url, {
 			headers: await this.getHeader(),
 		});
-
-		return response;
 	}
 
 	async delete(url: string) {
@@ -87,9 +87,7 @@ export class ApiHelpers {
 	}
 
 	async get(url: string) {
-		const response = await this.page.request.get(url, {
-			headers: await this.getHeader(),
-		});
+		const response = await this.getResponse(url);
 
 		return response.json();
 	}
@@ -105,15 +103,6 @@ export class ApiHelpers {
 		if (!text) {
 			return response;
 		}
-
-		return response.json();
-	}
-
-	async post(url: string, data: DataObject | any[]) {
-		const response = await this.page.request.post(url, {
-			data,
-			headers: await this.getHeader(),
-		});
 
 		return response.json();
 	}

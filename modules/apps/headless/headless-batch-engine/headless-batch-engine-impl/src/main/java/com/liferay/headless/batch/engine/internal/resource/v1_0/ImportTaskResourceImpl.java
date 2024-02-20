@@ -355,9 +355,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	private Response _getImportTaskFailedItemReport(long importTaskId)
 		throws Exception {
 
-		List<BatchEngineImportTaskError> batchEngineImportTaskErrors =
-			_batchEngineImportTaskService.getBatchEngineImportTaskErrors(
+		BatchEngineImportTask batchEngineImportTask =
+			_batchEngineImportTaskService.getBatchEngineImportTask(
 				importTaskId);
+
+		List<BatchEngineImportTaskError> batchEngineImportTaskErrors =
+			batchEngineImportTask.getBatchEngineImportTaskErrors();
 
 		StreamingOutput streamingOutput = outputStream -> {
 			try (CSVPrinter csvPrinter = new CSVPrinter(

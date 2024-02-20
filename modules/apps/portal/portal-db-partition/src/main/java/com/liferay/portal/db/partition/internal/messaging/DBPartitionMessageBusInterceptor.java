@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.util.PortalInstances;
 
@@ -91,8 +90,5 @@ public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 
 	private volatile Set<String> _excludedMessageBusDestinationNames;
 	private volatile Set<String> _excludedSchedulerJobNames;
-
-	@Reference
-	private Props _props;
 
 }

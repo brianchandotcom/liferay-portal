@@ -8,12 +8,13 @@ package com.liferay.search.experiences.internal.ml.embedding.text;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,17 +23,9 @@ import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfigurati
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = false,
-	property = "search.experiences.text.embedding.provider.name=txtai",
-	service = TextEmbeddingProvider.class
-)
 public class TXTAITextEmbeddingProvider
 	extends BaseTextEmbeddingProvider implements TextEmbeddingProvider {
 
@@ -84,11 +77,11 @@ public class TXTAITextEmbeddingProvider
 
 			options.setLocation(_getLocation(hostAddress, text));
 
-			String responseJSON = _http.URLtoString(options);
+			String responseJSON = HttpUtil.URLtoString(options);
 
 			if (isJSONArray(responseJSON)) {
 				List<Double> list = JSONUtil.toDoubleList(
-					_jsonFactory.createJSONArray(responseJSON));
+					JSONFactoryUtil.createJSONArray(responseJSON));
 
 				return list.toArray(new Double[0]);
 			}
@@ -111,11 +104,5 @@ public class TXTAITextEmbeddingProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TXTAITextEmbeddingProvider.class);
-
-	@Reference
-	private Http _http;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

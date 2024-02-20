@@ -7,7 +7,7 @@ package com.liferay.search.experiences.internal.ml.embedding.text;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
@@ -22,20 +23,13 @@ import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfigurati
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Petteri Karttunen
  */
-@Component(
-	enabled = false,
-	property = "search.experiences.text.embedding.provider.name=huggingFaceInferenceEndpoint",
-	service = TextEmbeddingProvider.class
-)
 public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 	extends BaseTextEmbeddingProvider implements TextEmbeddingProvider {
 
+	@Override
 	public Double[] getEmbedding(
 		EmbeddingProviderConfiguration embeddingProviderConfiguration,
 		String text) {
@@ -83,8 +77,8 @@ public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 			options.setLocation(MapUtil.getString(attributes, "hostAddress"));
 			options.setPost(true);
 
-			JSONObject responseJSONObject = _jsonFactory.createJSONObject(
-				_http.URLtoString(options));
+			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+				HttpUtil.URLtoString(options));
 
 			if (responseJSONObject.has("embeddings")) {
 				List<Double> list = JSONUtil.toDoubleList(
@@ -102,11 +96,5 @@ public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HuggingFaceInferenceEndpointTextEmbeddingProvider.class);
-
-	@Reference
-	private Http _http;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

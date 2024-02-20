@@ -5,8 +5,6 @@
 
 package com.liferay.search.experiences.internal.ml.embedding.text;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -20,13 +18,13 @@ import com.liferay.search.experiences.ml.embedding.text.TextEmbeddingRetriever;
 import com.liferay.search.experiences.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -37,7 +35,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	@Override
 	public List<String> getAvailableProviderNames() {
-		return ListUtil.fromCollection(_serviceTrackerMap.keySet());
+		return ListUtil.fromCollection(_textEmbeddingProviders.keySet());
 	}
 
 	@Override
@@ -66,7 +64,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 		try {
 			TextEmbeddingProvider textEmbeddingProvider =
-				_serviceTrackerMap.getService(providerName);
+				_textEmbeddingProviders.get(providerName);
 
 			if (textEmbeddingProvider == null) {
 				return new EmbeddingProviderStatus.
@@ -126,7 +124,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 		}
 
 		TextEmbeddingProvider textEmbeddingProvider =
-			_serviceTrackerMap.getService(providerName);
+			_textEmbeddingProviders.get(providerName);
 
 		if (textEmbeddingProvider == null) {
 			return new Double[0];
@@ -153,14 +151,13 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	protected void activate(
 		Map<String, Object> properties, BundleContext bundleContext) {
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, TextEmbeddingProvider.class,
-			"search.experiences.text.embedding.provider.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_textEmbeddingProviders.put(
+			"huggingFaceInferenceAPI",
+			new HuggingFaceInferenceAPITextEmbeddingProvider());
+		_textEmbeddingProviders.put(
+			"huggingFaceInferenceEndpoint",
+			new HuggingFaceInferenceEndpointTextEmbeddingProvider());
+		_textEmbeddingProviders.put("txtai", new TXTAITextEmbeddingProvider());
 	}
 
 	private EmbeddingProviderConfiguration _getEmbeddingProviderConfiguration(
@@ -199,6 +196,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	private SemanticSearchConfigurationProvider
 		_semanticSearchConfigurationProvider;
 
-	private ServiceTrackerMap<String, TextEmbeddingProvider> _serviceTrackerMap;
+	private final Map<String, TextEmbeddingProvider> _textEmbeddingProviders =
+		new HashMap<>();
 
 }

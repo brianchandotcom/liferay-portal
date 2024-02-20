@@ -5,6 +5,8 @@
 
 package com.liferay.login.web.internal.portlet.action;
 
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
@@ -243,12 +245,24 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
+
+		Layout utilityPage =
+			LayoutUtilityPageEntryLayoutProviderUtil.
+				getDefaultLayoutUtilityPageEntryLayout(
+					layout.getGroupId(),
+					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
+
+		if (utilityPage != null) {
+			actionResponse.sendRedirect(Portal.PATH_MAIN + "/portal/sign_in");
+
+			return;
+		}
+
 		LiferayPortletRequest liferayPortletRequest =
 			_portal.getLiferayPortletRequest(actionRequest);
 
 		String portletName = liferayPortletRequest.getPortletName();
-
-		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
 
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(

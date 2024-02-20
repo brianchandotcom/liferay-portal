@@ -247,13 +247,13 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
 
-		Layout utilityPage =
+		Layout signInUtilityPage =
 			LayoutUtilityPageEntryLayoutProviderUtil.
 				getDefaultLayoutUtilityPageEntryLayout(
 					layout.getGroupId(),
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
-		if (utilityPage != null) {
+		if (signInUtilityPage != null) {
 			actionResponse.sendRedirect(Portal.PATH_MAIN + "/portal/sign_in");
 
 			return;

@@ -1865,10 +1865,10 @@ public class RESTBuilder {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
-				"npx", "openapi-typescript-codegen@0.27.0", "--input",
-				openAPIYAMLFile.getPath(), "--output", outputDirName,
-				"--client", targetClientType, "--name", clientName,
-				"--useOptions", "--useUnionTypes"));
+				"npx", "openapi-typescript-codegen@0.27.0", "--client",
+				targetClientType, "--input", openAPIYAMLFile.getPath(),
+				"--name", clientName, "--output", outputDirName, "--useOptions",
+				"--useUnionTypes"));
 
 		Process process = processBuilder.start();
 

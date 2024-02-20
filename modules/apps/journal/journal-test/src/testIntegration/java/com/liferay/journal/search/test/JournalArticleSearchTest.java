@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -588,7 +587,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			searchContext.setGroupIds(new long[] {groupId});
 			searchContext.setSorts(new Sort(Field.MODIFIED_DATE, true));
 			searchContext.setStart(QueryUtil.ALL_POS);
-			searchContext.setUserId(GuestOrUserUtil.getUserId());
+			searchContext.setUserId(TestPropsValues.getUserId());
 
 			return indexer.search(searchContext);
 		}

@@ -182,7 +182,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	@Test
 	public void testGetKeywordsRankedPage() throws Exception {
 		Page<Keyword> page = keywordResource.getKeywordsRankedPage(
-			RandomTestUtil.randomString(), testGroup.getGroupId(), 
+			RandomTestUtil.randomString(), testGroup.getGroupId(),
 			Pagination.of(1, 2));
 
 		Assert.assertEquals(0, page.getTotalCount());

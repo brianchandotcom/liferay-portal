@@ -27,6 +27,7 @@ export {
 	useHasStyleErrors,
 } from './contexts/StyleErrorsContext';
 export {default as useControlledState} from './hooks/useControlledState';
+export {default as openCreationModal} from './components/modals/openCreationModal';
 export {default as SegmentExperience} from './types/SegmentExperience';
 export {default as convertRGBtoHex} from './utils/convertRGBtoHex';
 export {default as isNullOrUndefined} from './utils/isNullOrUndefined';

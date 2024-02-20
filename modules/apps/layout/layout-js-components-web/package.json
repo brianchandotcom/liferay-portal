@@ -11,6 +11,7 @@
 		"@clayui/label": "3.111.0",
 		"@clayui/layout": "3.111.0",
 		"@clayui/link": "3.111.0",
+		"@clayui/loading-indicator": "3.111.0",
 		"@clayui/modal": "3.111.0",
 		"@clayui/panel": "3.111.0",
 		"@clayui/toolbar": "3.111.0",

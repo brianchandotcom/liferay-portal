@@ -1877,7 +1877,10 @@ public class RESTBuilder {
 		process.waitFor();
 
 		if (process.exitValue() > 0) {
-			System.out.println("Unable to generate JavaScript client:");
+			System.out.println(
+				StringBundler.concat(
+					"Unable to generate JavaScript client using the command: ",
+					StringUtil.merge(processBuilder.command(), " "), "\n"));
 
 			Scanner scanner = new Scanner(process.getErrorStream());
 

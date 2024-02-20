@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
@@ -21,6 +22,7 @@ export const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	loginTest,
+	isolatedSiteTest,
 	pageEditorPagesTest
 );
 
@@ -60,12 +62,9 @@ test('shows correct sections on each configuration panel when viewport is not De
 	apiHelpers,
 	page,
 	pageEditorPage,
+	site,
 }) => {
 	await page.goto('/');
-
-	// Create a site
-
-	const site = await apiHelpers.headlessSite.createSite(getRandomId());
 
 	// Create a page with a Heading fragment
 
@@ -107,8 +106,4 @@ test('shows correct sections on each configuration panel when viewport is not De
 			}
 		}
 	}
-
-	// Delete the site
-
-	await apiHelpers.headlessSite.deleteSite(site.id);
 });

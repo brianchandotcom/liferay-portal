@@ -2248,14 +2248,14 @@ public class AssetPublisherDisplayContext {
 			(List<AssetEntry>)infoPage.getPageItems();
 
 		if (!assetEntries.isEmpty() &&
-			!ArrayUtil.isEmpty(getAllAssetCategoryIds())) {
+			ArrayUtil.isNotEmpty(getAllAssetCategoryIds())) {
 
 			assetEntries = _filterAssetCategoriesAssetEntries(
 				assetEntries, getAllAssetCategoryIds());
 		}
 
 		if (!assetEntries.isEmpty() &&
-			!ArrayUtil.isEmpty(getAllAssetTagNames())) {
+			ArrayUtil.isNotEmpty(getAllAssetTagNames())) {
 
 			assetEntries = _filterAssetTagNamesAssetEntries(
 				assetEntries, getAllAssetTagNames());

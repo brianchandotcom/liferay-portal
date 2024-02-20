@@ -7,7 +7,6 @@ package com.liferay.batch.engine.service.impl;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -108,19 +107,6 @@ public class BatchEngineImportTaskServiceImpl
 		_checkPermission(batchEngineImportTask);
 
 		return batchEngineImportTask;
-	}
-
-	@Override
-	public List<BatchEngineImportTaskError> getBatchEngineImportTaskErrors(
-			long batchEngineImportTaskId)
-		throws PortalException {
-
-		_checkPermission(
-			batchEngineImportTaskLocalService.getBatchEngineImportTask(
-				batchEngineImportTaskId));
-
-		return _batchEngineImportTaskErrorLocalService.
-			getBatchEngineImportTaskErrors(batchEngineImportTaskId);
 	}
 
 	@Override

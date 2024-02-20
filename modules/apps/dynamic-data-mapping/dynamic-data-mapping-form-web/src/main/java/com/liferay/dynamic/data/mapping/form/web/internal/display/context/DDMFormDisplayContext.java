@@ -777,8 +777,9 @@ public class DDMFormDisplayContext {
 	}
 
 	public boolean isSharedURL() {
-		DDMFormInstance ddmFormInstance = getFormInstance();
 		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		DDMFormInstance ddmFormInstance = getFormInstance();
 
 		if (StringUtil.contains(
 				themeDisplay.getURLCurrent(), "shared", StringPool.BLANK) &&

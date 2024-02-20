@@ -19,9 +19,23 @@
 		height: 2.5rem;
 		padding: 0.5rem 1rem;
 
+		&:disabled {
+			background: initial;
+			border: 1px solid #e2e2e4;
+			color: #e2e2e4;
+			cursor: not-allowed;
+		}
+
 		&:hover {
 			background: #2b3a4b;
 			color: #fff;
+
+			&:disabled {
+				background: initial;
+				border: 1px solid #e2e2e4;
+				color: #e2e2e4;
+				cursor: not-allowed;
+			}
 		}
 	}
 

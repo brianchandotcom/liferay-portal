@@ -2,12 +2,77 @@
 	&-container {
 		align-items: center;
 		border: 1.5px solid #e2e2e4;
-		border-radius: 0.625rem;
+		border-radius: 10px;
 		display: flex;
 		height: 8.5rem;
 		margin-bottom: 1.5rem;
 		padding: 1rem;
 		width: 37.5rem;
+	}
+
+	&-icon-check {
+		align-items: center;
+		background-color: #5aca75;
+		border-radius: 50%;
+		border: solid 2px #fff;
+		color: #fff;
+		display: flex;
+		font-size: 10px;
+		font-weight: 700;
+		height: 22px;
+		justify-content: center;
+		padding: 2px;
+		position: relative;
+		right: 13px;
+		top: -5px;
+		width: 22px;
+
+		.show {
+			opacity: 1;
+		}
+
+		.hide {
+			opacity: 0;
+		}
+
+		svg {
+			margin-top: 1px;
+		}
+
+		&-animation {
+			animation-direction: forwards;
+			animation-duration: 0.3s;
+			animation-iteration-count: 1;
+			animation-name: check;
+			animation-timing-function: linear;
+		}
+
+		@keyframes check {
+			0% {
+				opacity: 0;
+				transform: scale(0.3);
+			}
+			50% {
+				opacity: 1;
+				transform: scale(1.05);
+			}
+			70% {
+				transform: scale(0.9);
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+	}
+
+	&-loading-container {
+		align-items: center;
+		background-color: #e7efff;
+		border-radius: 0.25rem;
+		display: flex;
+		height: 104px;
+		justify-content: center;
+		width: 104px;
 	}
 
 	&-arrow {
@@ -32,9 +97,8 @@
 		background-position: 50% 50%;
 		background-repeat: 'no-repeat';
 		background-size: cover;
-		border-radius: 0.625rem;
+		border-radius: 4px;
 		height: 6.5rem;
-		margin-right: 1rem;
 		width: 6.5rem;
 	}
 
@@ -44,8 +108,9 @@
 			flex-direction: column;
 			gap: 1.25rem;
 			justify-content: center;
+			margin-left: 16px;
 			margin-top: 0.75rem;
-			width: 75%;
+			width: 100%;
 		}
 
 		&-content {

@@ -34,8 +34,11 @@ export function NewAppPageFooterButtons({
 		<div className="new-app-page-footer-button-container">
 			{showBackButton && (
 				<button
-					className="new-app-page-footer-button-back"
-					onClick={() => onClickBack && onClickBack()}
+					disabled={isLoading}
+					className="new-app-page-footer-button-back disabled"
+					onClick={() =>
+						isLoading ? () => {} : onClickBack && onClickBack()
+					}
 				>
 					{backButtonText ?? 'Back'}
 				</button>

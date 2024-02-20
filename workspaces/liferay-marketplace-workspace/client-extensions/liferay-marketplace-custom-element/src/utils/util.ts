@@ -14,6 +14,7 @@ import {
 
 type FileRequest = {
 	appERC: string;
+	callBack?: (progress: number) => void;
 	file: File | string;
 	index?: number;
 	isAppIcon: boolean;
@@ -199,11 +200,9 @@ export function getSkuPrice(appLicensePrice: LicenceTiersPrices, sku: SKU) {
 
 	if (dxpLicenseUsageTypeValue === 'standard') {
 		return appLicensePrice['standard'][0]?.value;
-	}
-	else if (dxpLicenseUsageTypeValue === 'developer') {
+	} else if (dxpLicenseUsageTypeValue === 'developer') {
 		return appLicensePrice['developer'][0]?.value;
-	}
-	else {
+	} else {
 		return 0;
 	}
 }
@@ -248,8 +247,7 @@ async function submitSpecification(
 		});
 
 		return -1;
-	}
-	else {
+	} else {
 		const {id} = await createProductSpecification({
 			body: {
 				productId,
@@ -284,6 +282,7 @@ export async function saveSpecification(
 
 export async function submitFile({
 	appERC,
+	callBack,
 	file: fileBase64,
 	index,
 	isAppIcon,
@@ -298,14 +297,16 @@ export async function submitFile({
 			tags: isAppIcon ? ['app icon'] : [],
 			title: {en_US: title},
 		},
+		callBack,
 		externalReferenceCode: appERC,
 	});
 
-	return (await response.json()) as ProductAttachment;
+	return response as ProductAttachment;
 }
 
 export async function submitBase64EncodedFile({
 	appERC,
+	callBack,
 	file,
 	index,
 	isAppIcon,
@@ -322,17 +323,14 @@ export async function submitBase64EncodedFile({
 
 				if (result?.includes('application/zip')) {
 					result = result?.substring(28);
-				}
-				else if (
+				} else if (
 					result?.includes('image/gif') ||
 					result?.includes('image/png')
 				) {
 					result = result?.substring(22);
-				}
-				else if (result?.includes('image/jpeg')) {
+				} else if (result?.includes('image/jpeg')) {
 					result = result?.substring(23);
-				}
-				else if (
+				} else if (
 					result?.includes('application/octet-stream') ||
 					result?.includes('application/java-archive')
 				) {
@@ -342,6 +340,7 @@ export async function submitBase64EncodedFile({
 				if (result) {
 					const {id} = await submitFile({
 						appERC,
+						callBack,
 						file: result,
 						index,
 						isAppIcon,

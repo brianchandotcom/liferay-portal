@@ -30,6 +30,7 @@ export type UploadedFile = {
 };
 
 interface FileListProps {
+	isProcessing: boolean;
 	onArrowClick?: (index: number, direction: string) => void;
 	onDelete: (id: string, versionName?: string) => void;
 	type: 'document' | 'image';
@@ -38,6 +39,7 @@ interface FileListProps {
 }
 
 export function FileList({
+	isProcessing,
 	onArrowClick,
 	onDelete,
 	type,
@@ -50,6 +52,7 @@ export function FileList({
 				if (type === 'document') {
 					return (
 						<DocumentFileItem
+							isProcessing={isProcessing}
 							key={uploadedFile?.id}
 							onDelete={onDelete}
 							uploadedFile={uploadedFile}
@@ -62,6 +65,7 @@ export function FileList({
 					return (
 						<ImageFileItem
 							index={index}
+							isProcessing={isProcessing}
 							key={uploadedFile?.id}
 							onArrowClick={onArrowClick}
 							onDelete={onDelete}

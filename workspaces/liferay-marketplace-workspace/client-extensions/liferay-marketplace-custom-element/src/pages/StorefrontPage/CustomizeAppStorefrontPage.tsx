@@ -13,7 +13,7 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {createImage} from '../../utils/api';
+import {createImageAxios} from '../../utils/api';
 
 import './CustomizeAppStorefrontPage.scss';
 
@@ -63,7 +63,7 @@ export function CustomizeAppStorefrontPage({
 				preview: URL.createObjectURL(file),
 				progress: 0,
 				readableSize: filesize(file.size),
-				uploaded: true,
+				uploaded: false,
 			}));
 
 			dispatch({
@@ -135,7 +135,7 @@ export function CustomizeAppStorefrontPage({
 						{`Add up to ${MAX_IMAGE_QUANTITY} images`}
 					</span>
 
-					{appStorefrontImages?.length > 0 && (
+					{!isLoading && appStorefrontImages?.length > 0 && (
 						<ClayButton
 							className="font-weight-bold"
 							displayType="link"
@@ -156,22 +156,25 @@ export function CustomizeAppStorefrontPage({
 				{appStorefrontImages?.length > 0 && (
 					<FileList
 						onArrowClick={handleArrowClick}
+						isProcessing={isLoading}
 						onDelete={handleDelete}
 						type="image"
 						uploadedFiles={appStorefrontImages}
 					/>
 				)}
 
-				<DropzoneUpload
-					acceptFileTypes={ACCEPT_FILE_TYPES}
-					buttonText="Select a file"
-					description="Only gif, jpg, png are allowed. Max file size is 5MB "
-					maxFiles={MAX_IMAGE_QUANTITY}
-					maxSize={5000000}
-					multiple={true}
-					onHandleUpload={handleUpload}
-					title="Drag and drop to upload or"
-				/>
+				{!isLoading && (
+					<DropzoneUpload
+						acceptFileTypes={ACCEPT_FILE_TYPES}
+						buttonText="Select a file"
+						description="Only gif, jpg, png are allowed. Max file size is 5MB "
+						maxFiles={MAX_IMAGE_QUANTITY}
+						maxSize={5000000}
+						multiple={true}
+						onHandleUpload={handleUpload}
+						title="Drag and drop to upload or"
+					/>
+				)}
 			</Section>
 
 			<NewAppPageFooterButtons
@@ -191,10 +194,26 @@ export function CustomizeAppStorefrontPage({
 					for (const image of appStorefrontImages) {
 						await submitBase64EncodedFile({
 							appERC,
+							callBack: (progresso) => {
+								const imageIndex =
+									appStorefrontImages.indexOf(image);
+								appStorefrontImages[imageIndex].progress =
+									progresso;
+								appStorefrontImages[imageIndex].uploaded =
+									progresso === 100;
+
+								dispatch({
+									payload: {
+										files: appStorefrontImages,
+									},
+									type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+								});
+								appStorefrontImages;
+							},
 							file: image.file,
 							index,
 							isAppIcon: false,
-							requestFunction: createImage,
+							requestFunction: createImageAxios,
 							title: image.fileName,
 						});
 						index++;

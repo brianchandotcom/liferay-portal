@@ -33,7 +33,7 @@ import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
 	addExpandoValue,
-	createAttachment,
+	createAttachmentAxios,
 	createProductSpecification,
 	getCategories,
 	getProductIdCategories,
@@ -73,12 +73,21 @@ const acceptFileTypes = {
 
 const UPLOAD_MAX_SIZE = 500000000;
 
-const UploadAppPackagesComponent = ({versionName}: {versionName: string}) => {
+type UploadAppPackagesComponentProps = {
+	isProcessing: boolean;
+	versionName: string;
+};
+
+const UploadAppPackagesComponent = ({
+	isProcessing,
+	versionName,
+}: UploadAppPackagesComponentProps) => {
 	const [{appType, buildAppPackages}, dispatch] = useAppContext();
 
 	const enableUploadFiles =
-		!buildAppPackages[versionName]?.length ||
-		buildAppPackages[versionName]?.length < 10;
+		!isProcessing &&
+		(!buildAppPackages[versionName]?.length ||
+			buildAppPackages[versionName]?.length < 10);
 
 	const handleUploadAppPackages = (files: File[], versionName?: string) => {
 		const newUploadedPackage = files.map((file) => ({
@@ -124,6 +133,7 @@ const UploadAppPackagesComponent = ({versionName}: {versionName: string}) => {
 	return (
 		<>
 			<FileList
+				isProcessing={isProcessing}
 				onDelete={handleRemoveAppPackages}
 				type="document"
 				uploadedFiles={
@@ -181,9 +191,8 @@ export function ProvideAppBuildPage({
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		string[]
 	>([]);
-	const [visibleSelectVersionModal, setVisibleSelectVersionModal] = useState(
-		false
-	);
+	const [visibleSelectVersionModal, setVisibleSelectVersionModal] =
+		useState(false);
 
 	const bodySpecification = useMemo(
 		() => [
@@ -313,8 +322,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -351,13 +359,31 @@ export function ProvideAppBuildPage({
 
 					const buildAppPackageId = await submitBase64EncodedFile({
 						appERC,
+						callBack: (progresso) => {
+							buildAppPackages[versionKey] = buildAppPackages[
+								versionKey
+							].map((file) => {
+								if (file.id === appPackage.id) {
+									return {
+										...file,
+										progress: progresso,
+										uploaded: progresso === 100,
+									};
+								}
+
+								return file;
+							});
+
+							dispatch({
+								payload: buildAppPackages,
+								type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+							});
+						},
 						file: appPackage.file,
 						isAppIcon: false,
-						requestFunction: createAttachment,
+						requestFunction: createAttachmentAxios,
 						title: appPackage.fileName,
 					});
-
-					appPackage.uploaded = true;
 
 					await addExpandoValue({
 						attributeValues: {
@@ -370,19 +396,13 @@ export function ProvideAppBuildPage({
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
 				);
 			}
 		}
-
-		dispatch({
-			payload: buildAppPackages,
-			type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
-		});
 	};
 
 	const submitAppBuildClouldResourceRequirements = async (
@@ -539,9 +559,9 @@ export function ProvideAppBuildPage({
 							<OfferingTypeCheckbox
 								handleSelectCheckbox={handleSelectCheckbox}
 								offeringTypes={
-									(offeringTypesDescription[
+									offeringTypesDescription[
 										appType.value as ProductType
-									] as unknown) as OfferingType[]
+									] as unknown as OfferingType[]
 								}
 								selectedValue={selectedCheckboxValue}
 							/>
@@ -675,6 +695,7 @@ export function ProvideAppBuildPage({
 					>
 						{appType.value === ProductType.CLOUD && (
 							<UploadAppPackagesComponent
+								isProcessing={isProcessing}
 								versionName={ProductType.CLOUD}
 							/>
 						)}
@@ -705,22 +726,28 @@ export function ProvideAppBuildPage({
 											</div>
 
 											<UploadAppPackagesComponent
+												isProcessing={isProcessing}
 												versionName={version}
 											/>
 										</div>
 									)
 								)}
 
-								<ClayButton
-									className="btn-block provide-app-build-page-add-package-button"
-									displayType="secondary"
-									onClick={() =>
-										setVisibleSelectVersionModal(true)
-									}
-								>
-									<ClayIcon className="mr-1" symbol="plus" />
-									{i18n.translate('add-packages')}
-								</ClayButton>
+								{!isProcessing && (
+									<ClayButton
+										className="btn-block provide-app-build-page-add-package-button"
+										displayType="secondary"
+										onClick={() =>
+											setVisibleSelectVersionModal(true)
+										}
+									>
+										<ClayIcon
+											className="mr-1"
+											symbol="plus"
+										/>
+										{i18n.translate('add-packages')}
+									</ClayButton>
+								)}
 							</>
 						)}
 
@@ -756,8 +783,7 @@ export function ProvideAppBuildPage({
 								bodySpecification
 							);
 						}
-					}
-					catch (error) {
+					} catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
-import {CircularProgressbarWithChildren} from 'react-circular-progressbar';
 
 import arrowNorth from '../../assets/icons/arrow_north_icon.svg';
 import arrowSouth from '../../assets/icons/arrow_south_icon.svg';
@@ -15,9 +14,13 @@ import {UploadedFile} from './FileList';
 import './ImageFileItem.scss';
 
 import {ClayInput} from '@clayui/form';
+import CircularProgress from '../CircularProgress';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 
 type ImageFileItemProps = {
 	index: number;
+	isProcessing: boolean;
 	onArrowClick?: (index: number, direction: string) => void;
 	onDelete: (id: string, versionName?: string) => void;
 	position: number;
@@ -28,6 +31,7 @@ type ImageFileItemProps = {
 
 export function ImageFileItem({
 	index,
+	isProcessing,
 	onArrowClick,
 	onDelete,
 	position,
@@ -35,13 +39,16 @@ export function ImageFileItem({
 	uploadedFile,
 	versionName,
 }: ImageFileItemProps) {
+	const showProgress =
+		isProcessing && !uploadedFile.uploaded && uploadedFile.progress > 0;
+
 	return (
 		<div className="image-file-item-container">
 			<div className="image-file-item-arrow-container">
 				{onArrowClick && (
 					<>
 						<ClayButton
-							disabled={index === 0}
+							disabled={isProcessing || index === 0}
 							displayType="unstyled"
 							onClick={() => onArrowClick(index, 'up')}
 						>
@@ -53,7 +60,7 @@ export function ImageFileItem({
 						</ClayButton>
 
 						<ClayButton
-							disabled={index === position - 1}
+							disabled={isProcessing || index === position - 1}
 							displayType="unstyled"
 							onClick={() => onArrowClick(index, 'down')}
 						>
@@ -67,49 +74,58 @@ export function ImageFileItem({
 				)}
 			</div>
 
-			{uploadedFile.uploaded && !uploadedFile.error ? (
-				<img
-					className="image-file-item-uploaded-preview"
-					style={{
-						backgroundImage: `url(${uploadedFile?.preview})`,
-					}}
-				/>
-			) : (
-				<CircularProgressbarWithChildren
-					styles={{
-						path: {stroke: '#0B5FFF'},
-						root: {
-							marginRight: 40,
-							width: 50,
-						},
-					}}
-					value={uploadedFile.progress}
-				>
-					<div
-						style={{
-							fontSize: 10,
-							marginRight: 40,
-							marginTop: 75,
-						}}
-					>
-						<strong>{uploadedFile.progress}</strong>
+			<div>
+				{showProgress ? (
+					<div className="image-file-item-loading-container ">
+						<CircularProgress
+							fontSize={10}
+							height={80}
+							pathColor="#ffffff"
+							progress={uploadedFile.progress}
+							progressColor="#0B5FFF"
+							width={80}
+						/>
 					</div>
-				</CircularProgressbarWithChildren>
-			)}
+				) : (
+					<div className="d-flex">
+						<img
+							alt=""
+							className="image-file-item-uploaded-preview"
+							src={uploadedFile?.preview}
+						/>
 
+						{uploadedFile.uploaded && (
+							<ClayIcon
+								symbol="check"
+								className={classNames(
+									'image-file-item-icon-check',
+									{
+										'image-file-item-icon-check-animation':
+											uploadedFile.uploaded,
+									}
+								)}
+							/>
+						)}
+					</div>
+				)}
+			</div>
 			<div className="image-file-item-info-container">
 				<div className="image-file-item-info-content">
 					<Text as="span" size={3} weight="normal">
 						{uploadedFile.fileName}
 					</Text>
 
-					<ClayButton
-						displayType="secondary"
-						onClick={() => onDelete(uploadedFile.id, versionName)}
-						size="sm"
-					>
-						Remove
-					</ClayButton>
+					{!isProcessing && (
+						<ClayButton
+							displayType="secondary"
+							onClick={() =>
+								onDelete(uploadedFile.id, versionName)
+							}
+							size="sm"
+						>
+							Remove
+						</ClayButton>
+					)}
 				</div>
 
 				<div className="align-items-center d-flex">

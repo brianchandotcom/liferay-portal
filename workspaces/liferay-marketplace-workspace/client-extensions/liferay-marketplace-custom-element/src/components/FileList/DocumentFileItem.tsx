@@ -9,48 +9,59 @@ import folderIcon from '../../assets/icons/folder_fill_icon.svg';
 import {UploadedFile} from './FileList';
 
 import './DocumentFileItem.scss';
+import ClayIcon from '@clayui/icon';
+import CircularProgress from '../CircularProgress';
+import classNames from 'classnames';
 
 interface DocumentFileItemProps {
+	isProcessing: boolean;
 	onDelete: (id: string, versionName?: string) => void;
 	uploadedFile: UploadedFile;
 	versionName?: string;
 }
 
 export function DocumentFileItem({
+	isProcessing,
 	onDelete,
 	uploadedFile,
 	versionName,
 }: DocumentFileItemProps) {
+	const isLoading = !isProcessing || uploadedFile?.uploaded === true;
+
 	return (
 		<div className="document-file-list-item-container">
 			<div className="document-file-list-item-left-content">
 				<div className="document-file-list-item-left-content-icon-container">
-					{!uploadedFile?.error ? (
+					{isLoading ? (
 						<img
 							alt="Folder Icon"
 							className="document-file-list-item-left-content-icon"
 							src={folderIcon}
 						/>
 					) : (
-						<CircularProgressbarWithChildren
-							styles={{
-								path: {stroke: '#0B5FFF'},
-								root: {
-									width: 50,
-								},
-							}}
-							value={uploadedFile?.progress}
-						>
-							<div style={{fontSize: 10}}>
-								<strong>{uploadedFile?.progress}</strong>
-							</div>
-						</CircularProgressbarWithChildren>
+						<CircularProgress
+							fontSize={10}
+							height={50}
+							pathColor="#ffffff"
+							progress={uploadedFile?.progress}
+							progressColor="#0B5FFF"
+							width={50}
+						/>
 					)}
 				</div>
 
 				<div className="document-file-list-item-left-content-text-container">
-					<span className="document-file-list-item-left-content-text-file-name">
+					<span className="document-file-list-item-left-content-text-file-name d-flex	">
 						{uploadedFile?.fileName}
+						{uploadedFile.uploaded &&
+							uploadedFile.progress === 100 && (
+								<ClayIcon
+									symbol="check"
+									className={classNames(
+										'document-file-list-item-icon-check ml-4'
+									)}
+								/>
+							)}
 					</span>
 
 					<span className="document-file-list-item-left-content-text-file-size">
@@ -59,12 +70,14 @@ export function DocumentFileItem({
 				</div>
 			</div>
 
-			<button
-				className="document-file-list-item-button"
-				onClick={() => onDelete(uploadedFile?.id, versionName)}
-			>
-				Remove
-			</button>
+			{!isProcessing && (
+				<button
+					className="document-file-list-item-button"
+					onClick={() => onDelete(uploadedFile?.id, versionName)}
+				>
+					Remove
+				</button>
+			)}
 		</div>
 	);
 }

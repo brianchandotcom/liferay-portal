@@ -76,7 +76,8 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 		});
 	});
 
-	test('Show Creation Action in fragment', async ({
+	test('Show mapped hierarchical Fields in fragment', async ({
+		dataSetsPage,
 		fdsFragmentPage,
 		page,
 	}) => {
@@ -175,5 +176,6 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 		});
 
 		await fdsFragmentPage.deleteSite(site.id);
+		await dataSetsPage.deleteDataSet();
 	});
 });

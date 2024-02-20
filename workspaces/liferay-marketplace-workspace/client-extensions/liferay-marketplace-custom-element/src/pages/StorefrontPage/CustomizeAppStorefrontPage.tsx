@@ -155,8 +155,8 @@ export function CustomizeAppStorefrontPage({
 
 				{appStorefrontImages?.length > 0 && (
 					<FileList
-						onArrowClick={handleArrowClick}
 						isProcessing={isLoading}
+						onArrowClick={handleArrowClick}
 						onDelete={handleDelete}
 						type="image"
 						uploadedFiles={appStorefrontImages}

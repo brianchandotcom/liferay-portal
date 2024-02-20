@@ -9,9 +9,11 @@ import folderIcon from '../../assets/icons/folder_fill_icon.svg';
 import {UploadedFile} from './FileList';
 
 import './DocumentFileItem.scss';
+
 import ClayIcon from '@clayui/icon';
-import CircularProgress from '../CircularProgress';
 import classNames from 'classnames';
+
+import CircularProgress from '../CircularProgress';
 
 interface DocumentFileItemProps {
 	isProcessing: boolean;
@@ -51,15 +53,15 @@ export function DocumentFileItem({
 				</div>
 
 				<div className="document-file-list-item-left-content-text-container">
-					<span className="document-file-list-item-left-content-text-file-name d-flex	">
+					<span className="d-flex document-file-list-item-left-content-text-file-name">
 						{uploadedFile?.fileName}
 						{uploadedFile.uploaded &&
 							uploadedFile.progress === 100 && (
 								<ClayIcon
-									symbol="check"
 									className={classNames(
 										'document-file-list-item-icon-check ml-4'
 									)}
+									symbol="check"
 								/>
 							)}
 					</span>

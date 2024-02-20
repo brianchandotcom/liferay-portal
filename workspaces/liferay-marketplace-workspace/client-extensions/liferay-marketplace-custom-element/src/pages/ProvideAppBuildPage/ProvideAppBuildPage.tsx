@@ -191,8 +191,9 @@ export function ProvideAppBuildPage({
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		string[]
 	>([]);
-	const [visibleSelectVersionModal, setVisibleSelectVersionModal] =
-		useState(false);
+	const [visibleSelectVersionModal, setVisibleSelectVersionModal] = useState(
+		false
+	);
 
 	const bodySpecification = useMemo(
 		() => [
@@ -359,15 +360,15 @@ export function ProvideAppBuildPage({
 
 					const buildAppPackageId = await submitBase64EncodedFile({
 						appERC,
-						callBack: (progresso) => {
+						callBack: (progress) => {
 							buildAppPackages[versionKey] = buildAppPackages[
 								versionKey
 							].map((file) => {
 								if (file.id === appPackage.id) {
 									return {
 										...file,
-										progress: progresso,
-										uploaded: progresso === 100,
+										progress,
+										uploaded: progress === 100,
 									};
 								}
 
@@ -559,9 +560,9 @@ export function ProvideAppBuildPage({
 							<OfferingTypeCheckbox
 								handleSelectCheckbox={handleSelectCheckbox}
 								offeringTypes={
-									offeringTypesDescription[
+									(offeringTypesDescription[
 										appType.value as ProductType
-									] as unknown as OfferingType[]
+									] as unknown) as OfferingType[]
 								}
 								selectedValue={selectedCheckboxValue}
 							/>

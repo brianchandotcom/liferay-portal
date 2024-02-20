@@ -131,6 +131,47 @@ public class FragmentEntryLinkServiceHttp {
 		}
 	}
 
+	public static com.liferay.fragment.model.FragmentEntryLink updateDeleted(
+			HttpPrincipal httpPrincipal, long fragmentEntryLinkId,
+			boolean deleted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				FragmentEntryLinkServiceUtil.class, "updateDeleted",
+				_updateDeletedParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, fragmentEntryLinkId, deleted);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.fragment.model.FragmentEntryLink)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.fragment.model.FragmentEntryLink
 			updateFragmentEntryLink(
 				HttpPrincipal httpPrincipal, long fragmentEntryLinkId,
@@ -140,7 +181,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLink",
-				_updateFragmentEntryLinkParameterTypes2);
+				_updateFragmentEntryLinkParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentEntryLinkId, editableValues);
@@ -182,7 +223,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLink",
-				_updateFragmentEntryLinkParameterTypes3);
+				_updateFragmentEntryLinkParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentEntryLinkId, editableValues,
@@ -228,9 +269,11 @@ public class FragmentEntryLinkServiceHttp {
 		};
 	private static final Class<?>[] _deleteFragmentEntryLinkParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes2 =
-		new Class[] {long.class, String.class};
+	private static final Class<?>[] _updateDeletedParameterTypes2 =
+		new Class[] {long.class, boolean.class};
 	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes3 =
+		new Class[] {long.class, String.class};
+	private static final Class<?>[] _updateFragmentEntryLinkParameterTypes4 =
 		new Class[] {long.class, String.class, boolean.class};
 
 }

@@ -194,13 +194,13 @@ export function CustomizeAppStorefrontPage({
 					for (const image of appStorefrontImages) {
 						await submitBase64EncodedFile({
 							appERC,
-							callBack: (progresso) => {
+							callback: (progress) => {
 								const imageIndex =
 									appStorefrontImages.indexOf(image);
 								appStorefrontImages[imageIndex].progress =
-									progresso;
+									progress;
 								appStorefrontImages[imageIndex].uploaded =
-									progresso === 100;
+									progress === 100;
 
 								dispatch({
 									payload: {

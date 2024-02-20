@@ -14,7 +14,7 @@ import {
 
 type FileRequest = {
 	appERC: string;
-	callBack?: (progress: number) => void;
+	callback?: (progress: number) => void;
 	file: File | string;
 	index?: number;
 	isAppIcon: boolean;
@@ -282,7 +282,7 @@ export async function saveSpecification(
 
 export async function submitFile({
 	appERC,
-	callBack,
+	callback,
 	file: fileBase64,
 	index,
 	isAppIcon,
@@ -297,7 +297,7 @@ export async function submitFile({
 			tags: isAppIcon ? ['app icon'] : [],
 			title: {en_US: title},
 		},
-		callBack,
+		callback,
 		externalReferenceCode: appERC,
 	});
 
@@ -306,7 +306,7 @@ export async function submitFile({
 
 export async function submitBase64EncodedFile({
 	appERC,
-	callBack,
+	callback,
 	file,
 	index,
 	isAppIcon,
@@ -340,7 +340,7 @@ export async function submitBase64EncodedFile({
 				if (result) {
 					const {id} = await submitFile({
 						appERC,
-						callBack,
+						callback,
 						file: result,
 						index,
 						isAppIcon,

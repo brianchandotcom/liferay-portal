@@ -12,6 +12,7 @@ import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
@@ -351,7 +352,7 @@ public class LayoutPageTemplateEntryModelListener
 		try (SafeCloseable safeCloseable =
 				UpdateLayoutStatusThreadLocal.setWithSafeCloseable(false)) {
 
-			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			_fragmentEntryLinkService.updateFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId(),
 				editableValuesJSONObject.toString());
 		}
@@ -426,6 +427,9 @@ public class LayoutPageTemplateEntryModelListener
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

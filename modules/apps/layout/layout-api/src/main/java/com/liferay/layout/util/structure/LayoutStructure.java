@@ -5,7 +5,7 @@
 
 package com.liferay.layout.util.structure;
 
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.petra.lang.HashUtil;
@@ -1105,7 +1105,7 @@ public class LayoutStructure {
 					(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
 			try {
-				FragmentEntryLinkLocalServiceUtil.updateDeleted(
+				FragmentEntryLinkServiceUtil.updateDeleted(
 					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
 					markForDeletion);
 			}

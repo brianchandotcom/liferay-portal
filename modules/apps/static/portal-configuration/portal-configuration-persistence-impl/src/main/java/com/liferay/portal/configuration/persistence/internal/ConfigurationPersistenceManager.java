@@ -15,7 +15,7 @@ import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThr
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.db.partition.DBPartitionUtil;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.dao.db.DB;

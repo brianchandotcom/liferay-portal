@@ -14,7 +14,7 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.db.partition.DBPartitionUtil;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

@@ -9,7 +9,7 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.db.partition.DBPartitionUtil;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;

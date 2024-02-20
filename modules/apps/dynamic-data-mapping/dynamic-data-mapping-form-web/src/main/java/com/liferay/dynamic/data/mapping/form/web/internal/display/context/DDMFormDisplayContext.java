@@ -777,10 +777,12 @@ public class DDMFormDisplayContext {
 	}
 
 	public boolean isSharedURL() {
+		DDMFormInstance ddmFormInstance = getFormInstance();
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		return StringUtil.contains(
-			themeDisplay.getURLCurrent(), "shared", StringPool.BLANK);
+			themeDisplay.getURLCurrent(), "shared", StringPool.BLANK) &&  StringUtil.contains(
+			themeDisplay.getURLCurrent(), Long.toString(ddmFormInstance.getFormInstanceId()), StringPool.BLANK);
 	}
 
 	public boolean isShowConfigurationIcon() throws PortalException {

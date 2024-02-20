@@ -139,13 +139,11 @@ public class InputPermissionsTag extends IncludeTag {
 		if (group == null) {
 			return defaultRoleTypes;
 		}
-
-		if (group.isOrganization()) {
-			return RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
-		}
-
-		if (group.isCompany() || group.isUser() || group.isUserGroup()) {
+		else if (group.isCompany() || group.isUser() || group.isUserGroup()) {
 			return RoleConstants.TYPES_REGULAR;
+		}
+		else if (group.isOrganization()) {
+			return RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
 		}
 
 		return defaultRoleTypes;

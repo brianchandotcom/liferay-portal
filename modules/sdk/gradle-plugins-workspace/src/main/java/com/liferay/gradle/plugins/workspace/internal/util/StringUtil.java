@@ -8,6 +8,9 @@ package com.liferay.gradle.plugins.workspace.internal.util;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -19,6 +22,16 @@ import java.util.stream.Stream;
  * @author Gregory Amerson
  */
 public class StringUtil {
+
+	public static final String BLANK = "";
+
+	public static final String COMMA = ",";
+
+	public static final String COMMA_AND_SPACE = ", ";
+
+	public static final String NEW_LINE = "\n";
+
+	public static final String STAR = "*";
 
 	public static String capitalize(String s) {
 		if ((s == null) || s.isEmpty()) {
@@ -34,6 +47,24 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String concat(Object... objects) {
+		if (objects.length == 0) {
+			return BLANK;
+		}
+
+		if (objects.length == 1) {
+			return String.valueOf(objects[0]);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (Object object : objects) {
+			sb.append(object);
+		}
+
+		return sb.toString();
+	}
+
 	public static String getDockerSafeName(String name) {
 		Matcher matcher = _camelCasePattern.matcher(name);
 
@@ -46,6 +77,22 @@ public class StringUtil {
 		}
 
 		return dockerSafeName.toLowerCase();
+	}
+
+	public static String join(String delimiter, Collection<?> objects) {
+		return join(delimiter, objects.stream());
+	}
+
+	public static String join(String delimiter, Object[] objects) {
+		return join(delimiter, Arrays.stream(objects));
+	}
+
+	public static String join(String delimiter, Stream<?> stream) {
+		return stream.map(
+			String::valueOf
+		).collect(
+			Collectors.joining(delimiter)
+		);
 	}
 
 	public static String quote(Object object) {
@@ -80,6 +127,24 @@ public class StringUtil {
 		}
 
 		return new String(buffer, 0, offset, "UTF-8");
+	}
+
+	public static List<String> split(String s) {
+		return split(s, COMMA);
+	}
+
+	public static List<String> split(String s, String delimiter) {
+		if ((s == null) || s.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		s = s.trim();
+
+		if (s.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return Arrays.asList(s.split(COMMA));
 	}
 
 	public static String toAlphaNumericLowerCase(String value) {

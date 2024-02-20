@@ -60,7 +60,7 @@ public class CTProcessResourceImpl extends BaseCTProcessResourceImpl {
 
 	@Override
 	public Page<CTProcess> getCTProcessesPage(
-			Integer[] statuses, String search, Filter filter,
+			String search, Integer[] statuses, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 

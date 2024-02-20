@@ -50,7 +50,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 
 	@Override
 	public Page<CTEntry> getCtCollectionCTEntriesPage(
-			Long ctCollectionId, Boolean showHideable, String search,
+			Long ctCollectionId, String search, Boolean showHideable,
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 

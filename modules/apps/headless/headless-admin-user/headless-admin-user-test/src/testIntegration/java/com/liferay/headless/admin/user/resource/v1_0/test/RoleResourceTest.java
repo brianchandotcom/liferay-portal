@@ -81,7 +81,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		assertValid(page);
 
 		page = roleResource.getRolesPage(
-			null, role1.getName(), Pagination.of(1, roles.size()));
+			role1.getName(), null, Pagination.of(1, roles.size()));
 
 		roles = (List<Role>)page.getItems();
 

@@ -109,7 +109,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Override
 	public Page<Role> getRolesPage(
-			Integer[] types, String search, Pagination pagination)
+			String search, Integer[] types, Pagination pagination)
 		throws Exception {
 
 		if (types == null) {

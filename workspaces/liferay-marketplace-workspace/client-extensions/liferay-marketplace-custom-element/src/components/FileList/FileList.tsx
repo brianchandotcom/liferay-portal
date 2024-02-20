@@ -29,18 +29,18 @@ export type UploadedFile = {
 	versionName?: string;
 };
 
-interface FileListProps {
+type FileListProps = {
 	isProcessing: boolean;
 	onArrowClick?: (index: number, direction: string) => void;
 	onDelete: (id: string, versionName?: string) => void;
 	type: 'document' | 'image';
 	uploadedFiles: UploadedFile[];
 	versionName?: string;
-}
+};
 
 export function FileList({
 	isProcessing,
-	onArrowClick,
+	onArrowClick = () => {},
 	onDelete,
 	type,
 	uploadedFiles,

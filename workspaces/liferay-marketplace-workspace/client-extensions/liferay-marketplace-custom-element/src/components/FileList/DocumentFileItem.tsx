@@ -3,24 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {CircularProgressbarWithChildren} from 'react-circular-progressbar';
-
 import folderIcon from '../../assets/icons/folder_fill_icon.svg';
 import {UploadedFile} from './FileList';
 
 import './DocumentFileItem.scss';
 
 import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
 
 import CircularProgress from '../CircularProgress';
 
-interface DocumentFileItemProps {
+type DocumentFileItemProps = {
 	isProcessing: boolean;
 	onDelete: (id: string, versionName?: string) => void;
 	uploadedFile: UploadedFile;
 	versionName?: string;
-}
+};
 
 export function DocumentFileItem({
 	isProcessing,
@@ -28,26 +25,25 @@ export function DocumentFileItem({
 	uploadedFile,
 	versionName,
 }: DocumentFileItemProps) {
-	const isLoading = !isProcessing || uploadedFile?.uploaded === true;
+	const isLoading = isProcessing || !uploadedFile?.uploaded;
 
 	return (
 		<div className="document-file-list-item-container">
 			<div className="document-file-list-item-left-content">
 				<div className="document-file-list-item-left-content-icon-container">
 					{isLoading ? (
-						<img
-							alt="Folder Icon"
-							className="document-file-list-item-left-content-icon"
-							src={folderIcon}
-						/>
-					) : (
 						<CircularProgress
-							fontSize={10}
 							height={50}
 							pathColor="#ffffff"
 							progress={uploadedFile?.progress}
 							progressColor="#0B5FFF"
 							width={50}
+						/>
+					) : (
+						<img
+							alt="Folder Icon"
+							className="document-file-list-item-left-content-icon"
+							src={folderIcon}
 						/>
 					)}
 				</div>
@@ -58,9 +54,7 @@ export function DocumentFileItem({
 						{uploadedFile.uploaded &&
 							uploadedFile.progress === 100 && (
 								<ClayIcon
-									className={classNames(
-										'document-file-list-item-icon-check ml-4'
-									)}
+									className="document-file-list-item-icon-check ml-4"
 									symbol="check"
 								/>
 							)}

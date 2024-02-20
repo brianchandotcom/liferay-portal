@@ -27,14 +27,6 @@
 		top: -5px;
 		width: 22px;
 
-		.show {
-			opacity: 1;
-		}
-
-		.hide {
-			opacity: 0;
-		}
-
 		svg {
 			margin-top: 1px;
 		}
@@ -52,13 +44,16 @@
 				opacity: 0;
 				transform: scale(0.3);
 			}
+
 			50% {
 				opacity: 1;
 				transform: scale(1.05);
 			}
+
 			70% {
 				transform: scale(0.9);
 			}
+
 			100% {
 				transform: scale(1);
 			}

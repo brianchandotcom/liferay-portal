@@ -36,7 +36,6 @@ import com.liferay.portal.search.web.internal.display.context.PortletURLFactoryI
 import com.liferay.portal.search.web.internal.display.context.SearchResultPreferences;
 import com.liferay.portal.search.web.internal.document.DocumentFormPermissionCheckerImpl;
 import com.liferay.portal.search.web.internal.portlet.shared.search.NullPortletURL;
-import com.liferay.portal.search.web.internal.portlet.shared.task.helper.PortletSharedRequestHelper;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
 import com.liferay.portal.search.web.internal.result.display.context.builder.SearchResultSummaryDisplayContextBuilder;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -187,9 +186,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 
 	@Reference
 	protected ObjectDefinitionLocalService objectDefinitionLocalService;
-
-	@Reference
-	protected PortletSharedRequestHelper portletSharedRequestHelper;
 
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
@@ -441,8 +437,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 		RenderRequest renderRequest, String paginationStartParameterName) {
 
 		return HttpComponentsUtil.removeParameter(
-			portletSharedRequestHelper.getCompleteURL(renderRequest),
-			paginationStartParameterName);
+			_portal.getCurrentURL(renderRequest), paginationStartParameterName);
 	}
 
 	@Reference

@@ -7,6 +7,7 @@ import {z} from 'zod';
 
 import {Liferay} from '../liferay/liferay';
 import zodSchema from '../schema/zod';
+import {axios} from './axios';
 
 const headers = {
 	'Content-Type': 'application/json',
@@ -159,6 +160,58 @@ export async function createContactSales(formData: ContactSales) {
 	});
 
 	return response.json();
+}
+
+export async function createAttachmentAxios({
+	body,
+	callBack,
+	externalReferenceCode,
+}: {
+	body: Object;
+	callBack: (progress: number) => void;
+	externalReferenceCode: string;
+}) {
+	const response = await axios.post(
+		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/attachments`,
+		body,
+		{
+			onUploadProgress: (event) => {
+				const progress = Math.round(
+					(event.loaded * 100) / Number(event.total)
+				);
+
+				callBack(progress);
+			},
+		}
+	);
+
+	return response.data;
+}
+
+export async function createImageAxios({
+	body,
+	callBack,
+	externalReferenceCode,
+}: {
+	body: Object;
+	callBack: (progress: number) => void;
+	externalReferenceCode: string;
+}) {
+	const response = await axios.post(
+		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/images`,
+		body,
+		{
+			onUploadProgress: (event) => {
+				const progress = Math.round(
+					(event.loaded * 100) / Number(event.total)
+				);
+
+				callBack(progress);
+			},
+		}
+	);
+
+	return response.data;
 }
 
 export async function createAttachment({

@@ -176,6 +176,8 @@ AUI.add(
 					const endTimePicker = instance.get('endTimePicker');
 
 					endTimePicker.selectDates([instance._endDate]);
+
+					endTimePicker.updateTime(instance._endDate);
 				},
 
 				_setStartDate() {
@@ -223,6 +225,8 @@ AUI.add(
 					const startTimePicker = instance.get('startTimePicker');
 
 					startTimePicker.selectDates([instance._startDate]);
+
+					startTimePicker.updateTime(instance._startDate);
 				},
 
 				_validate() {

@@ -51,6 +51,7 @@ import com.liferay.info.collection.provider.item.selector.criterion.InfoCollecti
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.GroupItemSelectorReturnType;
@@ -353,7 +354,10 @@ public class AssetPublisherDisplayContext {
 		return _assetCategoryId;
 	}
 
-	public List<AssetEntry> getAssetEntries() throws Exception {
+	public List<AssetEntry> getAssetEntries(
+			SearchContainer<AssetEntry> searchContainer)
+		throws Exception {
+
 		if (isSelectionStyleManual()) {
 			return _assetPublisherHelper.getAssetEntries(
 				_portletRequest, _portletPreferences,
@@ -385,9 +389,20 @@ public class AssetPublisherDisplayContext {
 					return Collections.emptyList();
 				}
 
+				CollectionQuery collectionQuery = new CollectionQuery();
+
+				if (ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
+					ArrayUtil.isEmpty(getAllAssetTagNames())) {
+
+					collectionQuery.setPagination(
+						Pagination.of(
+							searchContainer.getEnd(),
+							searchContainer.getStart()));
+				}
+
 				InfoPage<AssetEntry> infoPage =
 					infoCollectionProvider.getCollectionInfoPage(
-						new CollectionQuery());
+						collectionQuery);
 
 				assetEntries = (List<AssetEntry>)infoPage.getPageItems();
 			}
@@ -482,13 +497,13 @@ public class AssetPublisherDisplayContext {
 			return _assetEntryResults;
 		}
 
-		List<AssetEntry> assetEntries = getAssetEntries();
+		SearchContainer<AssetEntry> searchContainer = getSearchContainer();
+
+		List<AssetEntry> assetEntries = getAssetEntries(searchContainer);
 
 		if (ListUtil.isEmpty(assetEntries)) {
 			return Collections.emptyList();
 		}
-
-		SearchContainer<AssetEntry> searchContainer = getSearchContainer();
 
 		searchContainer.setResultsAndTotal(assetEntries);
 

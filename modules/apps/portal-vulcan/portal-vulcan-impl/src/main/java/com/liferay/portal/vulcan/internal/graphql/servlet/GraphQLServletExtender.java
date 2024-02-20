@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -913,10 +914,17 @@ public class GraphQLServletExtender {
 				if (StringUtil.equals(firstPath, path)) {
 					Method firstMethod = methodsTreeSet.first();
 
+					boolean deprecated = false;
+
+					if (FeatureFlagManagerUtil.isEnabled("LPD-10789")) {
+						deprecated = true;
+					}
+
 					for (Method method : methodsTreeSet) {
 						GraphQLFieldDefinition field =
 							_liferayGraphQLFieldRetriever.getField(
-								true, method, processingElementsContainer);
+								deprecated, method,
+								processingElementsContainer);
 
 						if (firstMethod == method) {
 							graphQLObjectTypeBuilder.field(field);
@@ -1666,7 +1674,9 @@ public class GraphQLServletExtender {
 		for (ServletData servletData : servletDatas) {
 			Set<String> graphQLNamespaces = new HashSet<>();
 
-			if (servletData.getPath() != null) {
+			if (FeatureFlagManagerUtil.isEnabled("LPD-10789") &&
+				(servletData.getPath() != null)) {
+
 				String path = servletData.getPath();
 
 				if (path.startsWith("/")) {
@@ -1741,7 +1751,8 @@ public class GraphQLServletExtender {
 				boolean deprecated = false;
 
 				if (StringUtil.equals(
-						graphQLNamespace, servletData.getGraphQLNamespace())) {
+						graphQLNamespace, servletData.getGraphQLNamespace()) &&
+					FeatureFlagManagerUtil.isEnabled("LPD-10789")) {
 
 					deprecated = true;
 				}

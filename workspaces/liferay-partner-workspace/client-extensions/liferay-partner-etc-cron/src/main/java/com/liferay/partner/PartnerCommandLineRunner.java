@@ -12,8 +12,6 @@ import java.net.URI;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 import org.apache.commons.logging.Log;
@@ -58,7 +56,6 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
-			List<String> activityIndicators = new ArrayList<>();
 
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
@@ -72,20 +69,17 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 					"name", "Active"
 				);
 
-				activityIndicators.add(
-					StringBundler.concat(
-						itemJSONObject.getString("name"), " (",
-						itemJSONObject.getLong("id"), ")"));
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Activating activity ",
+							itemJSONObject.getString("id"), " with name ",
+							itemJSONObject.getString("name")));
+				}
 			}
 
 			try {
 				_put(itemsJSONArray.toString(), "/o/c/activities/batch");
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"The following activities were Activated in batch: " +
-							String.join(", ", activityIndicators));
-				}
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -107,7 +101,6 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
-			List<String> activityIndicators = new ArrayList<>();
 
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
@@ -121,20 +114,17 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 					"name", "Expired"
 				);
 
-				activityIndicators.add(
-					StringBundler.concat(
-						itemJSONObject.getString("name"), " (",
-						itemJSONObject.getLong("id"), ")"));
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Expiring activity ",
+							itemJSONObject.getString("id"), " with name ",
+							itemJSONObject.getString("name")));
+				}
 			}
 
 			try {
 				_put(itemsJSONArray.toString(), "/o/c/activities/batch");
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"The following activities were Expired in batch: " +
-							String.join(", ", activityIndicators));
-				}
 			}
 			catch (Exception exception) {
 				_log.error(exception);

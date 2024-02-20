@@ -14,8 +14,8 @@ import com.liferay.gradle.plugins.workspace.configurator.ThemesProjectConfigurat
 import com.liferay.gradle.plugins.workspace.configurator.WarsProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.ReleaseUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.util.Validator;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
 
 import groovy.lang.Closure;

@@ -160,8 +160,6 @@ dependencies {
 	api(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.26") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	api group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"
-	api group: "com.liferay", name: "com.liferay.petra.string", version: "5.2.0"
 	api(group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.5") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}

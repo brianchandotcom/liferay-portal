@@ -8,6 +8,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -130,7 +131,7 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 				fragmentEntryLink.getFragmentEntryLinkId();
 
 			fragmentEntryLink =
-				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				_fragmentEntryLinkService.updateFragmentEntryLink(
 					fragmentEntryLinkId, editableValuesJSONObject.toString());
 
 			fragmentEntryLinksJSONArray.put(
@@ -167,6 +168,9 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
+
+	@Reference
+	private FragmentEntryLinkService _fragmentEntryLinkService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

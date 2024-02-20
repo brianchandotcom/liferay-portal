@@ -20,10 +20,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.taglib.util.PortalIncludeUtil;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -156,17 +154,6 @@ public class InputPermissionsTag extends IncludeTag {
 			HttpServletRequest httpServletRequest, String modelName)
 		throws Exception {
 
-		Set<String> excludedRoleNamesSet = new HashSet<String>() {
-			{
-				add(RoleConstants.ADMINISTRATOR);
-				add(RoleConstants.GUEST);
-				add(RoleConstants.OWNER);
-				add(RoleConstants.SITE_ADMINISTRATOR);
-				add(RoleConstants.SITE_MEMBER);
-				add(RoleConstants.SITE_OWNER);
-			}
-		};
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -182,8 +169,12 @@ public class InputPermissionsTag extends IncludeTag {
 
 		return RoleServiceUtil.getGroupRolesAndTeamRoles(
 			themeDisplay.getCompanyId(), null,
-			ListUtil.fromCollection(excludedRoleNamesSet), null, null,
-			_getRoleTypes(group, modelName), 0, teamGroupId, -1, -1);
+			ListUtil.fromArray(
+				RoleConstants.ADMINISTRATOR, RoleConstants.GUEST,
+				RoleConstants.OWNER, RoleConstants.SITE_ADMINISTRATOR,
+				RoleConstants.SITE_MEMBER, RoleConstants.SITE_OWNER),
+			null, null, _getRoleTypes(group, modelName), 0, teamGroupId, -1,
+			-1);
 	}
 
 	private static int[] _getRoleTypes(Group group, String modelName) {

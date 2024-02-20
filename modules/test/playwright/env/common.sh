@@ -2,8 +2,8 @@
 
 PLAYWRIGHT_ENV_DIR=$(dirname ${BASH_SOURCE[0]})
 
-export PLAYWRIGHT_BASE_DIR=$(get_absolute_dir ${PLAYWRIGHT_ENV_DIR}/../..)
-export PORTAL_PROJECT_DIR=$(get_absolute_dir ${PLAYWRIGHT_ENV_DIR}/../../../../..)
+export PLAYWRIGHT_BASE_DIR=$(cd -- $(dirname -- ${PLAYWRIGHT_ENV_DIR}/../..) &> /dev/null && pwd)
+export PORTAL_PROJECT_DIR=$(cd -- $(dirname -- ${PLAYWRIGHT_ENV_DIR}/../../../../..) &> /dev/null && pwd)
 
 if [[ "${LIFERAY_HOME}" == "" ]]
 then
@@ -180,10 +180,6 @@ function deploy_project_osgi_modules() {
 	then
 		deploy_osgi_modules $(cat ${playwright_project_dir}/env/osgi-modules.list)
 	fi
-}
-
-function get_absolute_dir() {
-	echo $(cd -- $(dirname -- $1) &> /dev/null && pwd)
 }
 
 function get_gradlew() {

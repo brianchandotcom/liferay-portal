@@ -35,23 +35,23 @@ public interface CTProcessResource {
 	}
 
 	public Page<CTProcess> getCTProcessesPage(
-			Integer[] status, String search, String filterString,
+			String search, Integer[] status, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCTProcessesPageHttpResponse(
-			Integer[] status, String search, String filterString,
+			String search, Integer[] status, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public void postCTProcessesPageExportBatch(
-			Integer[] status, String search, String filterString,
+			String search, Integer[] status, String filterString,
 			String sortString, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postCTProcessesPageExportBatchHttpResponse(
-			Integer[] status, String search, String filterString,
+			String search, Integer[] status, String filterString,
 			String sortString, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
@@ -178,13 +178,13 @@ public interface CTProcessResource {
 	public static class CTProcessResourceImpl implements CTProcessResource {
 
 		public Page<CTProcess> getCTProcessesPage(
-				Integer[] status, String search, String filterString,
+				String search, Integer[] status, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getCTProcessesPageHttpResponse(
-					status, search, filterString, pagination, sortString);
+					search, status, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -246,7 +246,7 @@ public interface CTProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse getCTProcessesPageHttpResponse(
-				Integer[] status, String search, String filterString,
+				String search, Integer[] status, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
@@ -271,14 +271,14 @@ public interface CTProcessResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
 			if (status != null) {
 				for (int i = 0; i < status.length; i++) {
 					httpInvoker.parameter("status", String.valueOf(status[i]));
 				}
-			}
-
-			if (search != null) {
-				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
 			if (filterString != null) {
@@ -308,14 +308,14 @@ public interface CTProcessResource {
 		}
 
 		public void postCTProcessesPageExportBatch(
-				Integer[] status, String search, String filterString,
+				String search, Integer[] status, String filterString,
 				String sortString, String callbackURL, String contentType,
 				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postCTProcessesPageExportBatchHttpResponse(
-					status, search, filterString, sortString, callbackURL,
+					search, status, filterString, sortString, callbackURL,
 					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
@@ -368,7 +368,7 @@ public interface CTProcessResource {
 
 		public HttpInvoker.HttpResponse
 				postCTProcessesPageExportBatchHttpResponse(
-					Integer[] status, String search, String filterString,
+					String search, Integer[] status, String filterString,
 					String sortString, String callbackURL, String contentType,
 					String fieldNames)
 			throws Exception {
@@ -396,14 +396,14 @@ public interface CTProcessResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
 			if (status != null) {
 				for (int i = 0; i < status.length; i++) {
 					httpInvoker.parameter("status", String.valueOf(status[i]));
 				}
-			}
-
-			if (search != null) {
-				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
 			if (filterString != null) {

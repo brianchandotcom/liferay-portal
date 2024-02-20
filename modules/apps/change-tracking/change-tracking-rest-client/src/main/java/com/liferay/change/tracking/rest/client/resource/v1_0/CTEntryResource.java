@@ -35,12 +35,12 @@ public interface CTEntryResource {
 	}
 
 	public Page<CTEntry> getCtCollectionCTEntriesPage(
-			Long ctCollectionId, Boolean showHideable, String search,
+			Long ctCollectionId, String search, Boolean showHideable,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCtCollectionCTEntriesPageHttpResponse(
-			Long ctCollectionId, Boolean showHideable, String search,
+			Long ctCollectionId, String search, Boolean showHideable,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -158,13 +158,13 @@ public interface CTEntryResource {
 	public static class CTEntryResourceImpl implements CTEntryResource {
 
 		public Page<CTEntry> getCtCollectionCTEntriesPage(
-				Long ctCollectionId, Boolean showHideable, String search,
+				Long ctCollectionId, String search, Boolean showHideable,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getCtCollectionCTEntriesPageHttpResponse(
-					ctCollectionId, showHideable, search, filterString,
+					ctCollectionId, search, showHideable, filterString,
 					pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -228,7 +228,7 @@ public interface CTEntryResource {
 
 		public HttpInvoker.HttpResponse
 				getCtCollectionCTEntriesPageHttpResponse(
-					Long ctCollectionId, Boolean showHideable, String search,
+					Long ctCollectionId, String search, Boolean showHideable,
 					String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
@@ -254,13 +254,13 @@ public interface CTEntryResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
 			if (showHideable != null) {
 				httpInvoker.parameter(
 					"showHideable", String.valueOf(showHideable));
-			}
-
-			if (search != null) {
-				httpInvoker.parameter("search", String.valueOf(search));
 			}
 
 			if (filterString != null) {

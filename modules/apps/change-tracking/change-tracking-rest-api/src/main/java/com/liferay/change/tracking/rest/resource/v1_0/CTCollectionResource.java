@@ -50,12 +50,12 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CTCollectionResource {
 
 	public Page<CTCollection> getCTCollectionsPage(
-			Integer[] status, String search, Pagination pagination,
+			String search, Integer[] status, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 
 	public Response postCTCollectionsPageExportBatch(
-			Integer[] status, String search, Sort[] sorts, String callbackURL,
+			String search, Integer[] status, Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
 		throws Exception;
 

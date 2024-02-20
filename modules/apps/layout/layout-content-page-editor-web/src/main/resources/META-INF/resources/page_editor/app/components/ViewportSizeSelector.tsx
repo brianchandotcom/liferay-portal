@@ -26,7 +26,9 @@ const Trigger = React.forwardRef<HTMLButtonElement, any>(
 				Liferay.Language.get('select-a-viewport.-current-viewport-x'),
 				label
 			)}
+			className="d-lg-none form-control-select"
 			displayType="secondary"
+			monospaced={false}
 			ref={ref}
 			size="sm"
 			symbol={icon}
@@ -74,7 +76,6 @@ export default function ViewportSizeSelector({
 				<Picker
 					UNSAFE_menuClassName="cadmin"
 					as={Trigger}
-					className="d-lg-none"
 					icon={availableViewportSizes[selectedSize].icon}
 					items={Object.values(availableViewportSizes)}
 					label={availableViewportSizes[selectedSize].label}

@@ -1179,10 +1179,10 @@
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
-"@clayui/pagination-bar@3.111.0":
-  version "3.111.0"
-  resolved "https://registry.yarnpkg.com/@clayui/pagination-bar/-/pagination-bar-3.111.0.tgz#0346157718cd426f69a163040a353e16eb2e991b"
-  integrity sha512-x27bhpfBR0IDTpfmsaNiB5TA6RRaYywEj7ethbHZ17fXGisigZdqTKHenMRYslzYBEI0MgSemInjWDdmhv3K8Q==
+"@clayui/pagination-bar@3.111.1":
+  version "3.111.1"
+  resolved "https://registry.yarnpkg.com/@clayui/pagination-bar/-/pagination-bar-3.111.1.tgz#5a44488bdc7b363eeba16089c98cacd548d0981d"
+  integrity sha512-u46OTpaR49T2Z8O1ImyqFKda8yo1zmBgTh10Rve15yy1WzOVDXwkEuYtWt+EcZfuFrTOPllwaiULsc3Pu+ymkg==
   dependencies:
     "@clayui/button" "^3.111.0"
     "@clayui/core" "^3.111.0"

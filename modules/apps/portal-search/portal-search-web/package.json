@@ -13,7 +13,7 @@
 		"@clayui/loading-indicator": "3.111.0",
 		"@clayui/modal": "3.111.0",
 		"@clayui/multi-select": "3.111.0",
-		"@clayui/pagination-bar": "3.111.0",
+		"@clayui/pagination-bar": "3.111.1",
 		"@clayui/table": "3.111.0",
 		"@clayui/tooltip": "3.111.0",
 		"@liferay/frontend-js-codemirror-web": "*",

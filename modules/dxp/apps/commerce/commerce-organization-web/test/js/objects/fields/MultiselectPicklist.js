@@ -259,6 +259,92 @@ describe('MultiselectPicklist object field', () => {
 			});
 		});
 
+		it('allows to remove a previously selected key by its i18n option value', async () => {
+			const onChange = jest.fn();
+
+			const props = {...BASE_PROPS, mode: 'edit', onChange, value: ''};
+
+			const {container} = render(<MultiselectPicklist {...props} />);
+
+			let element;
+
+			await waitFor(async () => {
+				expectUpdateAfterAPICall(container);
+			});
+
+			await act(async () => {
+				element = container.querySelector('input');
+
+				fireEvent.focus(element);
+			});
+
+			await act(async () => {
+				fireEvent.click(screen.getByText(I18N_VALUE_1));
+			});
+
+			await act(async () => {
+				fireEvent.focus(element);
+			});
+
+			await act(async () => {
+				fireEvent.click(screen.getByText(I18N_VALUE_2));
+			});
+
+			await act(async () => {
+				fireEvent.click(
+					screen.getByLabelText(`Remove ${I18N_VALUE_2}`)
+				);
+			});
+
+			expect(onChange).toHaveBeenCalledWith({
+				hasError: false,
+				name: BASE_PROPS.name,
+				value: `${KEY_1}`,
+			});
+		});
+
+		it('allows to remove all the previously selected keys', async () => {
+			const onChange = jest.fn();
+
+			const props = {...BASE_PROPS, mode: 'edit', onChange, value: ''};
+
+			const {container} = render(<MultiselectPicklist {...props} />);
+
+			let element;
+
+			await waitFor(async () => {
+				expectUpdateAfterAPICall(container);
+			});
+
+			await act(async () => {
+				element = container.querySelector('input');
+
+				fireEvent.focus(element);
+			});
+
+			await act(async () => {
+				fireEvent.click(screen.getByText(I18N_VALUE_1));
+			});
+
+			await act(async () => {
+				fireEvent.focus(element);
+			});
+
+			await act(async () => {
+				fireEvent.click(screen.getByText(I18N_VALUE_2));
+			});
+
+			await act(async () => {
+				fireEvent.click(screen.getByLabelText('Clear All'));
+			});
+
+			expect(onChange).toHaveBeenCalledWith({
+				hasError: false,
+				name: BASE_PROPS.name,
+				value: '',
+			});
+		});
+
 		it('strips away typed-in values if not selectable', async () => {
 			const onChange = jest.fn();
 

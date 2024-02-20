@@ -86,7 +86,7 @@ const MultiselectPicklist = ({
 
 	const onItemsChange = useCallback(
 		(updatedItems: Item[] = []) => {
-			if (updatedItems.length) {
+			if (updatedItems.length && updatedItems.length > items.length) {
 				const [lastAdded]: Item[] = updatedItems.slice(-1);
 
 				const isSelectable: boolean =

@@ -11,7 +11,7 @@
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
 %>
 
-<div class="management-bar navbar navbar-expand-md page-editor__toolbar <%= contentPageEditorDisplayContext.isMasterLayout() ? "page-editor__toolbar--master-layout" : StringPool.BLANK %>" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
+<div class="management-bar navbar navbar-expand-md page-editor__toolbar <%= FeatureFlagManagerUtil.isEnabled("LPD-10988") ? StringPool.BLANK : "page-editor__old-toolbar" %> <%= contentPageEditorDisplayContext.isMasterLayout() ? "page-editor__toolbar--master-layout" : StringPool.BLANK %>" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
 	<clay:container-fluid
 		fullWidth='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
 	>

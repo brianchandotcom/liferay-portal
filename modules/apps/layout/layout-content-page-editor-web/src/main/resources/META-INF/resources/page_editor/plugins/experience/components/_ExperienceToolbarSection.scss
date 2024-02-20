@@ -17,6 +17,10 @@ html#{$cadmin-selector} {
 				display: inline-block;
 				max-width: 100%;
 				width: 12em;
+
+				@include media-breakpoint-down(xs) {
+					width: 10em;
+				}
 			}
 		}
 

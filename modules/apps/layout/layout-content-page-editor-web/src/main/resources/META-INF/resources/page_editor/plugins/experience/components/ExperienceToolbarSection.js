@@ -69,7 +69,7 @@ export default function ExperienceToolbarSection() {
 		<div className="page-editor__toolbar-experience">
 			<span
 				aria-hidden
-				className="d-lg-block d-none font-weight-bold mr-2"
+				className="d-none d-xl-block font-weight-bold mr-2"
 			>
 				{Liferay.Language.get('experience')}
 			</span>

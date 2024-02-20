@@ -22,15 +22,23 @@ html#{$cadmin-selector} {
 
 			& > .container-fluid {
 				flex-direction: row;
-				justify-content: flex-start;
 				padding: 0;
 				white-space: nowrap;
+
+				@include media-breakpoint-down(sm) {
+					justify-content: flex-start;
+				}
 
 				> .navbar-nav {
 					display: flex;
 					flex-wrap: nowrap;
 					max-width: 100%;
 					padding: 12px;
+
+					@include media-breakpoint-down(xs) {
+						padding-left: $pageEditorSpacing;
+						padding-right: $pageEditorSpacing;
+					}
 
 					&.start {
 						align-self: flex-start;
@@ -47,13 +55,22 @@ html#{$cadmin-selector} {
 
 						> .nav-item {
 							margin-right: $pageEditorSpacing;
+
+							@include media-breakpoint-down(xs) {
+								&:last-child {
+									margin-right: 0;
+								}
+							}
 						}
 					}
 
 					&.end {
-						box-shadow: inset 0 1px 0 0
-							fade-out($cadmin-secondary-l2, 0.5);
-						flex-basis: 100%;
+						@include media-breakpoint-down(sm) {
+							box-shadow: inset 0 1px 0 0
+								fade-out($cadmin-secondary-l2, 0.5);
+							flex-basis: 100%;
+						}
+
 						justify-content: flex-end;
 
 						> .nav-item {
@@ -66,7 +83,7 @@ html#{$cadmin-selector} {
 					}
 				}
 
-				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+				@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
 					> .navbar-nav {
 						&.start > .nav-item {
 							margin-right: $pageEditorSpacing * 2;
@@ -76,7 +93,7 @@ html#{$cadmin-selector} {
 							margin-right: 0;
 						}
 
-						&.end > .nav-item {
+						&.end > .nav-item:not(:first-child) {
 							margin-left: $pageEditorSpacing * 2;
 						}
 					}
@@ -86,12 +103,28 @@ html#{$cadmin-selector} {
 	}
 }
 
+html#{$cadmin-selector} .cadmin .page-editor__old-toolbar {
+	& > .container-fluid {
+		justify-content: flex-start;
+
+		> .navbar-nav.end {
+			box-shadow: inset 0 1px 0 0 fade-out($cadmin-secondary-l2, 0.5);
+			flex-basis: 100%;
+		}
+
+		@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+			> .navbar-nav.end > .nav-item {
+				margin-left: $pageEditorSpacing * 2;
+			}
+		}
+	}
+}
+
 html#{$cadmin-selector}
 	.page-editor__small-resolution
 	.cadmin
-	.page-editor__toolbar
-	.navbar-nav.start {
-	padding-left: 48px;
+	.page-editor__toolbar {
+	padding-left: 40px;
 }
 
 html#{$cadmin-selector}

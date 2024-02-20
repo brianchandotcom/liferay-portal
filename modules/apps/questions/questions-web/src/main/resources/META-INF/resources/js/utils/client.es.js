@@ -13,15 +13,25 @@ const headers = {
 	'Content-Type': 'text/plain; charset=utf-8',
 };
 
+let memCacheDefault = memCache;
+
+// `graphql-hooks-memcache` provides both a commonjs and ESM version.
+// We need this logic here so that both work. Unit tests rely on commonjs and
+// our DXP runtime uses ESM.
+
+if (memCacheDefault.default) {
+	memCacheDefault = memCacheDefault.default;
+}
+
 export const client = new GraphQLClient({
-	cache: memCache(),
+	cache: memCacheDefault(),
 	fetch,
 	headers,
 	url: '/o/graphql',
 });
 
 export const clientNestedFields = new GraphQLClient({
-	cache: memCache(),
+	cache: memCacheDefault(),
 	fetch,
 	headers,
 	url: '/o/graphql?nestedFields=lastPostDate',

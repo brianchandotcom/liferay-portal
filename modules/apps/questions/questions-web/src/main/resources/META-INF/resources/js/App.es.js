@@ -9,22 +9,25 @@ import {BrowserRouter, HashRouter, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from './AppContext.es';
 import {ErrorBoundary} from './components/ErrorBoundary.es';
+import ForumsToQuestion from './components/ForumsToQuestion.es';
 import ProtectedRoute from './components/ProtectedRoute.es';
-import useLazy from './hooks/useLazy.es';
 import NavigationBar from './pages/NavigationBar.es';
+import EditAnswer from './pages/answers/EditAnswer.es';
+import Home from './pages/home/Home';
+import UserActivity from './pages/home/UserActivity.es';
+import UserSubscriptions from './pages/home/UserSubscriptions.es';
+import EditQuestion from './pages/questions/EditQuestion.es';
+import NewQuestion from './pages/questions/NewQuestion.es';
+import Question from './pages/questions/Question.es';
+import Questions from './pages/questions/Questions.es';
+import Tags from './pages/tags/Tags.es';
 import {client} from './utils/client.es';
 import {getFullPath} from './utils/utils.es';
 
 export default function App(props) {
 	redirectForNotifications(props);
 
-	const Component = useLazy();
-
 	const Router = props.historyRouterBasePath ? BrowserRouter : HashRouter;
-
-	const packageName = props.npmResolvedPackageName;
-
-	const questionsComponent = `${packageName}/js/pages/questions/Questions.es`;
 
 	let path = props.historyRouterBasePath;
 
@@ -50,32 +53,21 @@ export default function App(props) {
 							<Switch>
 								<Route
 									component={(props) => (
-										<Component
-											module={`${packageName}/js/pages/home/Home`}
-											props={{...props, isHomePath: true}}
-										/>
+										<Home {...props} isHomePath={true} />
 									)}
 									exact
 									path="/"
 								/>
 
 								<Route
-									component={(props) => (
-										<Component
-											module={`${packageName}/js/pages/home/Home`}
-											props={props}
-										/>
-									)}
+									component={(props) => <Home {...props} />}
 									exact
 									path="/questions"
 								/>
 
 								<Route
 									component={(props) => (
-										<Component
-											module={`${packageName}/js/components/ForumsToQuestion.es`}
-											props={props}
-										/>
+										<ForumsToQuestion {...props} />
 									)}
 									exact
 									path="/questions/question/:questionId"
@@ -83,10 +75,7 @@ export default function App(props) {
 
 								<Route
 									component={(props) => (
-										<Component
-											module={`${packageName}/js/pages/home/UserActivity.es`}
-											props={props}
-										/>
+										<UserActivity {...props} />
 									)}
 									exact
 									path="/questions/activity/:creatorId"
@@ -94,10 +83,7 @@ export default function App(props) {
 
 								<Route
 									component={(props) => (
-										<Component
-											module={`${packageName}/js/pages/home/UserSubscriptions.es`}
-											props={props}
-										/>
+										<UserSubscriptions {...props} />
 									)}
 									exact
 									path="/questions/subscriptions/:creatorId"
@@ -105,22 +91,14 @@ export default function App(props) {
 
 								<Route
 									component={(props) => (
-										<Component
-											module={questionsComponent}
-											props={props}
-										/>
+										<Questions {...props} />
 									)}
 									exact
 									path="/questions/tag/:tag"
 								/>
 
 								<Route
-									component={(props) => (
-										<Component
-											module={`${packageName}/js/pages/tags/Tags.es`}
-											props={props}
-										/>
-									)}
+									component={(props) => <Tags {...props} />}
 									exact
 									path="/tags"
 								/>
@@ -132,9 +110,8 @@ export default function App(props) {
 											<Switch>
 												<ProtectedRoute
 													component={(props) => (
-														<Component
-															module={`${packageName}/js/pages/answers/EditAnswer.es`}
-															props={props}
+														<EditAnswer
+															{...props}
 														/>
 													)}
 													exact
@@ -143,12 +120,7 @@ export default function App(props) {
 
 												<Route
 													component={(props) => (
-														<Component
-															module={
-																questionsComponent
-															}
-															props={props}
-														/>
+														<Questions {...props} />
 													)}
 													exact
 													path={`${path}/creator/:creatorId`}
@@ -156,12 +128,7 @@ export default function App(props) {
 
 												<Route
 													component={(props) => (
-														<Component
-															module={
-																questionsComponent
-															}
-															props={props}
-														/>
+														<Questions {...props} />
 													)}
 													exact
 													path={`${path}/tag/:tag`}
@@ -169,9 +136,8 @@ export default function App(props) {
 
 												<ProtectedRoute
 													component={(props) => (
-														<Component
-															module={`${packageName}/js/pages/questions/NewQuestion.es`}
-															props={props}
+														<NewQuestion
+															{...props}
 														/>
 													)}
 													exact
@@ -180,10 +146,7 @@ export default function App(props) {
 
 												<Route
 													component={(props) => (
-														<Component
-															module={`${packageName}/js/pages/questions/Question.es`}
-															props={props}
-														/>
+														<Question {...props} />
 													)}
 													exact
 													path={`${path}/:questionId`}
@@ -191,9 +154,8 @@ export default function App(props) {
 
 												<ProtectedRoute
 													component={(props) => (
-														<Component
-															module={`${packageName}/js/pages/questions/EditQuestion.es`}
-															props={props}
+														<EditQuestion
+															{...props}
 														/>
 													)}
 													exact
@@ -202,12 +164,7 @@ export default function App(props) {
 
 												<Route
 													component={(props) => (
-														<Component
-															module={
-																questionsComponent
-															}
-															props={props}
-														/>
+														<Questions {...props} />
 													)}
 													exact
 													path={`${path}/`}

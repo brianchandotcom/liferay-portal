@@ -16,7 +16,7 @@
 	%>
 
 	<react:component
-		module="js/index.es"
+		module="{Main} from questions-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"askQuestionButtonText", LocalizationUtil.getLocalization(questionsConfiguration.askQuestionButtonTextAsLocalizedXML(), themeDisplay.getLanguageId())

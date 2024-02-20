@@ -51,6 +51,10 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.Collections;
 import java.util.List;
@@ -150,6 +154,83 @@ public class CopyLayoutMVCActionCommandTest {
 			expectedResourcePermissions.toString(),
 			expectedResourcePermissions.size(),
 			actualResourcePermissions.size());
+	}
+
+	@Test
+	public void testDoProcessActionCopyLayoutWithNavigationMenu()
+		throws Exception {
+
+		Layout expectedLayout = LayoutTestUtil.addTypeContentPublishedLayout(
+			_group, "Test layout", WorkflowConstants.STATUS_APPROVED);
+
+		expectedLayout.setFriendlyURL("/test-layout");
+
+		expectedLayout = _layoutLocalService.updateLayout(expectedLayout);
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				TestPropsValues.getUserId(), _group.getGroupId(), "Menu",
+				SiteNavigationConstants.TYPE_DEFAULT, true, _serviceContext);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"groupId", String.valueOf(_group.getGroupId()));
+		mockLiferayPortletActionRequest.addParameter(
+			"privateLayout", String.valueOf(expectedLayout.isPrivateLayout()));
+		mockLiferayPortletActionRequest.addParameter(
+			"name", "Copy test layout");
+		mockLiferayPortletActionRequest.addParameter(
+			"sourcePlid", String.valueOf(expectedLayout.getPlid()));
+		mockLiferayPortletActionRequest.addParameter(
+			"TypeSettingsProperties--siteNavigationMenuId--",
+			String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()));
+
+		_addFragmentEntryLinkToLayout(
+			expectedLayout,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				expectedLayout.getPlid()));
+
+		Role role = _roleLocalService.addRole(
+			_serviceContext.getUserId(), null, 0, StringUtil.randomString(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			RoleConstants.TYPE_REGULAR, StringPool.BLANK, _serviceContext);
+
+		_addModelResources(role, expectedLayout);
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		Layout actualLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			expectedLayout.getGroupId(), expectedLayout.isPrivateLayout(),
+			"/copy-test-layout");
+
+		_validateCopiedLayout(expectedLayout, actualLayout);
+
+		List<ResourcePermission> expectedResourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				expectedLayout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(expectedLayout.getPlid()));
+
+		List<ResourcePermission> actualResourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				expectedLayout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(actualLayout.getPlid()));
+
+		Assert.assertNotEquals(
+			expectedResourcePermissions.toString(),
+			expectedResourcePermissions.size(),
+			actualResourcePermissions.size());
+
+		long navigationItemCount =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsCount(
+				siteNavigationMenu.getSiteNavigationMenuId());
+
+		Assert.assertEquals(1, navigationItemCount);
 	}
 
 	@Test
@@ -405,5 +486,12 @@ public class CopyLayoutMVCActionCommandTest {
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
+	@Inject
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

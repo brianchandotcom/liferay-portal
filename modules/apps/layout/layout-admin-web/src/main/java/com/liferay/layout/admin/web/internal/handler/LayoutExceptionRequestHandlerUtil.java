@@ -69,7 +69,7 @@ public class LayoutExceptionRequestHandlerUtil {
 				LanguageUtil.get(
 					PortalUtil.getLocale(actionRequest),
 					"item-cannot-be-deleted-because-it-is-being-modified-in-" +
-						"another-publication"));
+						"one-or-more-publications"));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

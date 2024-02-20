@@ -142,8 +142,8 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 
 				throw new CTRequiredModelException(
 					String.format(
-						"Model %s %s cannot be deleted because it is " +
-							"currently being modified in another publication",
+						"Model %s %s cannot be deleted because it is being " +
+							"modified in one or more publications",
 						ctModel.getModelClassName(), modelClassPK));
 			}
 

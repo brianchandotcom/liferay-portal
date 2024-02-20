@@ -87,7 +87,7 @@ public class EditAssetListDisplayContextTest {
 		_portletRequest = Mockito.mock(PortletRequest.class);
 
 		_setUpLanguageUtil();
-		_setUpPortal();
+		_setUpPortalUtil();
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class EditAssetListDisplayContextTest {
 			"selectionStyle", "manual"
 		).build();
 
-		_setUpAssetListEntryLocalService(
+		_setUpAssetListEntryLocalServiceUtil(
 			StringPool.BLANK, className, unicodeProperties.toString());
 
 		EditAssetListDisplayContext editAssetListDisplayContext =
@@ -135,7 +135,7 @@ public class EditAssetListDisplayContextTest {
 			"selectionStyle", "manual"
 		).build();
 
-		_setUpAssetListEntryLocalService(
+		_setUpAssetListEntryLocalServiceUtil(
 			StringPool.BLANK, RandomTestUtil.randomString(),
 			unicodeProperties.toString());
 
@@ -174,7 +174,7 @@ public class EditAssetListDisplayContextTest {
 			"selectionStyle", "manual"
 		).build();
 
-		_setUpAssetListEntryLocalService(
+		_setUpAssetListEntryLocalServiceUtil(
 			StringPool.BLANK, className, unicodeProperties.toString());
 
 		EditAssetListDisplayContext editAssetListDisplayContext =
@@ -219,7 +219,7 @@ public class EditAssetListDisplayContextTest {
 			"selectionStyle", "manual"
 		).build();
 
-		_setUpAssetListEntryLocalService(
+		_setUpAssetListEntryLocalServiceUtil(
 			StringPool.BLANK, className, unicodeProperties.toString());
 
 		EditAssetListDisplayContext editAssetListDisplayContext =
@@ -362,7 +362,7 @@ public class EditAssetListDisplayContextTest {
 			unicodeProperties);
 	}
 
-	private void _setUpAssetListEntryLocalService(
+	private void _setUpAssetListEntryLocalServiceUtil(
 		String assetEntrySubtype, String assetEntryType, String typeSettings) {
 
 		AssetListEntry assetListEntry = Mockito.mock(AssetListEntry.class);
@@ -461,7 +461,7 @@ public class EditAssetListDisplayContextTest {
 		languageUtil.setLanguage(Mockito.mock(Language.class));
 	}
 
-	private void _setUpPortal() {
+	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = Mockito.mock(Portal.class);

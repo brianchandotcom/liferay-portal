@@ -1856,7 +1856,7 @@ public class RESTBuilder {
 
 	private void _invokeJSClientGenerator(
 			File baseClientDir, String clientName, String clientType,
-			File openAPIYAMLFile)
+			File jsOpenAPIYAMLFile)
 		throws Exception {
 
 		String outputDirName = StringBundler.concat(
@@ -1866,14 +1866,13 @@ public class RESTBuilder {
 		ProcessBuilder processBuilder = new ProcessBuilder(
 			Arrays.asList(
 				"npx", "openapi-typescript-codegen@0.27.0", "--client",
-				clientType, "--input", openAPIYAMLFile.getPath(),
-				"--name", clientName, "--output", outputDirName, "--useOptions",
+				clientType, "--input", jsOpenAPIYAMLFile.getPath(), "--name",
+				clientName, "--output", outputDirName, "--useOptions",
 				"--useUnionTypes"));
 
 		Process process = processBuilder.start();
 
-		System.out.println(
-			"Generating " + clientType + " JavaScript client");
+		System.out.println("Generating " + clientType + " JavaScript client");
 
 		process.waitFor();
 
@@ -1924,15 +1923,15 @@ public class RESTBuilder {
 					"clientName", baseClientDir.getName()
 				).build()));
 
-		openAPIYAMLFile = _prepareForJSClientGenerator(
+		File jsOpenAPIYAMLFile = _prepareJSOpenAPIYAMLFile(
 			openAPIYAML, openAPIYAMLFile);
 
 		_invokeJSClientGenerator(
-			baseClientDir, clientName, "fetch", openAPIYAMLFile);
+			baseClientDir, clientName, "fetch", jsOpenAPIYAMLFile);
 		_invokeJSClientGenerator(
-			baseClientDir, clientName, "node", openAPIYAMLFile);
+			baseClientDir, clientName, "node", jsOpenAPIYAMLFile);
 
-		FileUtil.delete(openAPIYAMLFile);
+		FileUtil.delete(jsOpenAPIYAMLFile);
 	}
 
 	private OpenAPIYAML _loadOpenAPIYAML(String yamlString) {
@@ -2006,22 +2005,21 @@ public class RESTBuilder {
 		return openAPIYAML;
 	}
 
-	private File _prepareForJSClientGenerator(
+	private File _prepareJSOpenAPIYAMLFile(
 			OpenAPIYAML openAPIYAML, File openAPIYAMLFile)
 		throws Exception {
 
-		File outputOpenAPIYAMLFile = new File("openapi-js.yaml");
+		File jsOpenAPIYAMLFile = new File("jsopenapi.yaml");
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new FileReader(openAPIYAMLFile));
 			BufferedWriter bufferedWriter = new BufferedWriter(
-				new FileWriter(outputOpenAPIYAMLFile))) {
-
-			String line;
+				new FileWriter(jsOpenAPIYAMLFile))) {
 
 			Application application = _configYAML.getApplication();
-
 			Info info = openAPIYAML.getInfo();
+
+			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
 				if (line.startsWith("    \"/")) {
@@ -2042,7 +2040,7 @@ public class RESTBuilder {
 				bufferedWriter.write(line + "\n");
 			}
 
-			return outputOpenAPIYAMLFile;
+			return jsOpenAPIYAMLFile;
 		}
 	}
 

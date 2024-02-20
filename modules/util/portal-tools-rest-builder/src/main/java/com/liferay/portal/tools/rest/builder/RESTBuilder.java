@@ -1920,7 +1920,7 @@ public class RESTBuilder {
 			FreeMarkerUtil.processTemplate(
 				null, null, "package_json",
 				HashMapBuilder.<String, Object>put(
-					"clientName", baseClientDir.getName()
+					"nodePackageName", baseClientDir.getName()
 				).build()));
 
 		File jsOpenAPIYAMLFile = _prepareJSOpenAPIYAMLFile(

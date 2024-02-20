@@ -3,7 +3,7 @@
 		"@types/node-fetch": "^2.6.11",
 		"node-fetch": "^2.7.0"
 	},
-	"name": "@liferay/${clientName}",
+	"name": "@liferay/${nodePackageName}",
 	"private": true,
 	"type": "module",
 	"version": "1.0.0"

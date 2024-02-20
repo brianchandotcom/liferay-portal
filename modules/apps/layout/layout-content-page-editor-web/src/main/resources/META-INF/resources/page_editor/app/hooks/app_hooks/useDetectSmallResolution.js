@@ -6,7 +6,7 @@
 import {debounce} from 'frontend-js-web';
 import {useEffect, useState} from 'react';
 
-import {useDispatch} from '../../contexts/StoreContext';
+import {useDispatch, useSelectorRef} from '../../contexts/StoreContext';
 import switchSidebarPanel from '../../thunks/switchSidebarPanel';
 
 const ELEMENTS_SELECTORS = [
@@ -18,6 +18,7 @@ const ELEMENTS_SELECTORS = [
 export default function useDetectSmallResolution() {
 	const dispatch = useDispatch();
 
+	const sidebarRef = useSelectorRef((state) => state.sidebar);
 	const [isSmallResolution, setIsSmallResolution] = useState(false);
 
 	useEffect(() => {
@@ -46,13 +47,17 @@ export default function useDetectSmallResolution() {
 			isSmallResolution
 		);
 
+		if (sidebarRef.current?.hidden) {
+			return;
+		}
+
 		dispatch(
 			switchSidebarPanel({
 				itemConfigurationOpen: !isSmallResolution,
 				sidebarOpen: !isSmallResolution,
 			})
 		);
-	}, [dispatch, isSmallResolution]);
+	}, [dispatch, isSmallResolution, sidebarRef]);
 
 	useEffect(() => {
 		if (!isSmallResolution) {

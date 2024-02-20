@@ -28,6 +28,7 @@ import selectItemConfigurationOpen from '../selectors/selectItemConfigurationOpe
 import selectSidebarIsOpened from '../selectors/selectSidebarIsOpened';
 import switchSidebarPanel from '../thunks/switchSidebarPanel';
 import {useDropClear} from '../utils/drag_and_drop/useDragAndDrop';
+import isSmallResolution from '../utils/isSmallResolution';
 
 const {Suspense, useCallback, useEffect} = React;
 
@@ -275,8 +276,13 @@ export default function Sidebar() {
 		const open =
 			panel.sidebarPanelId === sidebarPanelId ? !sidebarOpen : true;
 
+		const smallResolution = isSmallResolution();
+
 		dispatch(
 			switchSidebarPanel({
+				itemConfigurationOpen: smallResolution
+					? false
+					: store.sidebar.itemConfigurationOpen,
 				sidebarOpen: open,
 				sidebarPanelId: panel.sidebarPanelId,
 			})

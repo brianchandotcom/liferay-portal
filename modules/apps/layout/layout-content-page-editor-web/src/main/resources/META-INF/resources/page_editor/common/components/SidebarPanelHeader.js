@@ -18,7 +18,7 @@ export default function SidebarPanelHeader({
 }) {
 	const dispatch = useDispatch();
 
-	const sidebarPanelId = useSelector((state) => state.sidebar?.panelId);
+	const sidebar = useSelector((state) => state.sidebar);
 
 	return (
 		<header
@@ -37,11 +37,17 @@ export default function SidebarPanelHeader({
 					aria-label={Liferay.Language.get('close')}
 					displayType="unstyled"
 					onClick={() => {
-						dispatch(switchSidebarPanel({sidebarOpen: false}));
+						dispatch(
+							switchSidebarPanel({
+								itemConfigurationOpen:
+									sidebar.itemConfigurationOpen,
+								sidebarOpen: false,
+							})
+						);
 
 						document
 							.querySelector(
-								`[data-panel-id="${sidebarPanelId}"]`
+								`[data-panel-id="${sidebar.panelId}"]`
 							)
 							?.focus();
 					}}

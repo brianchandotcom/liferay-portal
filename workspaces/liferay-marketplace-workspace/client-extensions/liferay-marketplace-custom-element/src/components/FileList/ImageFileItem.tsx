@@ -22,7 +22,7 @@ import CircularProgress from '../CircularProgress';
 type ImageFileItemProps = {
 	index: number;
 	isProcessing: boolean;
-	onArrowClick?: (index: number, direction: string) => void;
+	onArrowClick: (index: number, direction: string) => void;
 	onDelete: (id: string, versionName?: string) => void;
 	position: number;
 	tooltip?: string;
@@ -46,40 +46,35 @@ export function ImageFileItem({
 	return (
 		<div className="image-file-item-container">
 			<div className="image-file-item-arrow-container">
-				{onArrowClick && (
-					<>
-						<ClayButton
-							disabled={isProcessing || index === 0}
-							displayType="unstyled"
-							onClick={() => onArrowClick(index, 'up')}
-						>
-							<img
-								alt="Arrow Up"
-								className="image-file-item-arrow-icon"
-								src={arrowNorth}
-							/>
-						</ClayButton>
+				<ClayButton
+					disabled={isProcessing || index === 0}
+					displayType="unstyled"
+					onClick={() => onArrowClick(index, 'up')}
+				>
+					<img
+						alt="Arrow Up"
+						className="image-file-item-arrow-icon"
+						src={arrowNorth}
+					/>
+				</ClayButton>
 
-						<ClayButton
-							disabled={isProcessing || index === position - 1}
-							displayType="unstyled"
-							onClick={() => onArrowClick(index, 'down')}
-						>
-							<img
-								alt="Arrow South"
-								className="image-file-item-arrow-icon"
-								src={arrowSouth}
-							/>
-						</ClayButton>
-					</>
-				)}
+				<ClayButton
+					disabled={isProcessing || index === position - 1}
+					displayType="unstyled"
+					onClick={() => onArrowClick(index, 'down')}
+				>
+					<img
+						alt="Arrow South"
+						className="image-file-item-arrow-icon"
+						src={arrowSouth}
+					/>
+				</ClayButton>
 			</div>
 
 			<div>
 				{showProgress ? (
 					<div className="image-file-item-loading-container">
 						<CircularProgress
-							fontSize={10}
 							height={80}
 							pathColor="#ffffff"
 							progress={uploadedFile.progress}
@@ -110,6 +105,7 @@ export function ImageFileItem({
 					</div>
 				)}
 			</div>
+
 			<div className="image-file-item-info-container">
 				<div className="image-file-item-info-content">
 					<Text as="span" size={3} weight="normal">

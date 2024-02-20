@@ -7,7 +7,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import './NewAppPageFooterButtons.scss';
 
-interface NewAppPageFooterButtonsProps {
+type NewAppPageFooterButtonsProps = {
 	backButtonText?: string;
 	continueButtonText?: string;
 	disableContinueButton?: boolean;
@@ -17,7 +17,7 @@ interface NewAppPageFooterButtonsProps {
 	onClickContinue: () => void;
 	showBackButton?: boolean;
 	showContinueButton?: boolean;
-}
+};
 
 export function NewAppPageFooterButtons({
 	backButtonText,
@@ -36,9 +36,11 @@ export function NewAppPageFooterButtons({
 				<button
 					className="disabled new-app-page-footer-button-back"
 					disabled={isLoading}
-					onClick={() =>
-						isLoading ? () => {} : onClickBack && onClickBack()
-					}
+					onClick={() => {
+						if (onClickBack) {
+							onClickBack();
+						}
+					}}
 				>
 					{backButtonText ?? 'Back'}
 				</button>

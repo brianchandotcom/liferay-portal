@@ -61,6 +61,11 @@ type BodyProductSpecificationProps = {
 	value: number | string;
 };
 
+type UploadAppPackagesComponentProps = {
+	isProcessing: boolean;
+	versionName: string;
+};
+
 const acceptFileTypes = {
 	[ProductType.CLOUD]: {
 		'application/java-archive': ['.zip'],
@@ -71,12 +76,7 @@ const acceptFileTypes = {
 	},
 };
 
-const UPLOAD_MAX_SIZE = 500000000;
-
-type UploadAppPackagesComponentProps = {
-	isProcessing: boolean;
-	versionName: string;
-};
+const UPLOAD_MAX_SIZE = 500_000_000;
 
 const UploadAppPackagesComponent = ({
 	isProcessing,
@@ -141,6 +141,7 @@ const UploadAppPackagesComponent = ({
 				}
 				versionName={versionName}
 			/>
+
 			{enableUploadFiles && (
 				<DropzoneUpload
 					acceptFileTypes={
@@ -191,9 +192,8 @@ export function ProvideAppBuildPage({
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		string[]
 	>([]);
-	const [visibleSelectVersionModal, setVisibleSelectVersionModal] = useState(
-		false
-	);
+	const [visibleSelectVersionModal, setVisibleSelectVersionModal] =
+		useState(false);
 
 	const bodySpecification = useMemo(
 		() => [
@@ -352,7 +352,6 @@ export function ProvideAppBuildPage({
 			try {
 				for (const appPackage of appPackagesByVersion) {
 					if (appPackage.uploaded) {
-						// eslint-disable-next-line no-console
 						console.info('File already uploaded', appPackage);
 
 						continue;
@@ -360,7 +359,7 @@ export function ProvideAppBuildPage({
 
 					const buildAppPackageId = await submitBase64EncodedFile({
 						appERC,
-						callBack: (progress) => {
+						callback: (progress) => {
 							buildAppPackages[versionKey] = buildAppPackages[
 								versionKey
 							].map((file) => {
@@ -560,9 +559,9 @@ export function ProvideAppBuildPage({
 							<OfferingTypeCheckbox
 								handleSelectCheckbox={handleSelectCheckbox}
 								offeringTypes={
-									(offeringTypesDescription[
+									offeringTypesDescription[
 										appType.value as ProductType
-									] as unknown) as OfferingType[]
+									] as unknown as OfferingType[]
 								}
 								selectedValue={selectedCheckboxValue}
 							/>

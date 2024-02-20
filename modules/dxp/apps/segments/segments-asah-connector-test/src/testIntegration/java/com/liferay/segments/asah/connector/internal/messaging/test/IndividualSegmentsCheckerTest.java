@@ -140,7 +140,7 @@ public class IndividualSegmentsCheckerTest {
 
 			Assert.assertEquals(StringPool.BLANK, segmentsEntry.getCriteria());
 			Assert.assertEquals(
-				"Test segment 1",
+				"Test Segment 1",
 				segmentsEntry.getName(LocaleUtil.getSiteDefault()));
 
 			List<SegmentsEntryRel> segmentsEntryRels =
@@ -160,11 +160,11 @@ public class IndividualSegmentsCheckerTest {
 	@Test
 	public void testIndividualSegmentsDeleteSegmentsEntries() throws Exception {
 		SegmentsTestUtil.addSegmentsEntry(
-			"1234567", "Test segment 1", null, null,
+			"1234567", "Test Segment 1", null, null,
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 		SegmentsTestUtil.addSegmentsEntry(
-			"2345678", "Test segment 2", null, null,
+			"2345678", "Test Segment 2", null, null,
 			SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
 			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
 
@@ -219,7 +219,7 @@ public class IndividualSegmentsCheckerTest {
 			SegmentsEntry segmentsEntry = segmentsEntries.get(0);
 
 			Assert.assertEquals(
-				"Test segment 1",
+				"Test Segment 1",
 				segmentsEntry.getName(LocaleUtil.getSiteDefault()));
 		}
 	}
@@ -242,7 +242,7 @@ public class IndividualSegmentsCheckerTest {
 								JSONUtil.put(
 									"id", "1234567"
 								).put(
-									"name", "Test segment 1"
+									"name", "Test Segment 1"
 								)))
 					).put(
 						"page",

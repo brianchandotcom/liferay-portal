@@ -2231,18 +2231,23 @@ public class AssetPublisherDisplayContext {
 			return Collections.emptyList();
 		}
 
-		CollectionQuery collectionQuery = new CollectionQuery();
-
 		if (ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
 			ArrayUtil.isEmpty(getAllAssetTagNames())) {
+
+			CollectionQuery collectionQuery = new CollectionQuery();
 
 			collectionQuery.setPagination(
 				Pagination.of(
 					searchContainer.getEnd(), searchContainer.getStart()));
+
+			InfoPage<AssetEntry> infoPage =
+				infoCollectionProvider.getCollectionInfoPage(collectionQuery);
+
+			return (List<AssetEntry>)infoPage.getPageItems();
 		}
 
 		InfoPage<AssetEntry> infoPage =
-			infoCollectionProvider.getCollectionInfoPage(collectionQuery);
+			infoCollectionProvider.getCollectionInfoPage(new CollectionQuery());
 
 		List<AssetEntry> assetEntries =
 			(List<AssetEntry>)infoPage.getPageItems();

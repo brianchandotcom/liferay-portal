@@ -83,15 +83,6 @@ public class BatchEngineImportTaskServiceUtil {
 			externalReferenceCode, companyId);
 	}
 
-	public static List
-		<com.liferay.batch.engine.model.BatchEngineImportTaskError>
-				getBatchEngineImportTaskErrors(long batchEngineImportTaskId)
-			throws PortalException {
-
-		return getService().getBatchEngineImportTaskErrors(
-			batchEngineImportTaskId);
-	}
-
 	public static List<BatchEngineImportTask> getBatchEngineImportTasks(
 			long companyId, int start, int end)
 		throws PortalException {

@@ -237,51 +237,6 @@ public class BatchEngineImportTaskServiceHttp {
 	}
 
 	public static java.util.List
-		<com.liferay.batch.engine.model.BatchEngineImportTaskError>
-				getBatchEngineImportTaskErrors(
-					HttpPrincipal httpPrincipal, long batchEngineImportTaskId)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				BatchEngineImportTaskServiceUtil.class,
-				"getBatchEngineImportTaskErrors",
-				_getBatchEngineImportTaskErrorsParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, batchEngineImportTaskId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (java.util.List
-				<com.liferay.batch.engine.model.BatchEngineImportTaskError>)
-					returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static java.util.List
 		<com.liferay.batch.engine.model.BatchEngineImportTask>
 				getBatchEngineImportTasks(
 					HttpPrincipal httpPrincipal, long companyId, int start,
@@ -292,7 +247,7 @@ public class BatchEngineImportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineImportTaskServiceUtil.class,
 				"getBatchEngineImportTasks",
-				_getBatchEngineImportTasksParameterTypes5);
+				_getBatchEngineImportTasksParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end);
@@ -341,7 +296,7 @@ public class BatchEngineImportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineImportTaskServiceUtil.class,
 				"getBatchEngineImportTasks",
-				_getBatchEngineImportTasksParameterTypes6);
+				_getBatchEngineImportTasksParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end, orderByComparator);
@@ -384,7 +339,7 @@ public class BatchEngineImportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineImportTaskServiceUtil.class,
 				"getBatchEngineImportTasksCount",
-				_getBatchEngineImportTasksCountParameterTypes7);
+				_getBatchEngineImportTasksCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId);
@@ -425,7 +380,7 @@ public class BatchEngineImportTaskServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				BatchEngineImportTaskServiceUtil.class,
 				"openContentInputStream",
-				_openContentInputStreamParameterTypes8);
+				_openContentInputStreamParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, batchEngineImportTaskId);
@@ -481,22 +436,18 @@ public class BatchEngineImportTaskServiceHttp {
 	private static final Class<?>[]
 		_getBatchEngineImportTaskByExternalReferenceCodeParameterTypes3 =
 			new Class[] {String.class, long.class};
-	private static final Class<?>[]
-		_getBatchEngineImportTaskErrorsParameterTypes4 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getBatchEngineImportTasksParameterTypes5 =
+	private static final Class<?>[] _getBatchEngineImportTasksParameterTypes4 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getBatchEngineImportTasksParameterTypes6 =
+	private static final Class<?>[] _getBatchEngineImportTasksParameterTypes5 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[]
-		_getBatchEngineImportTasksCountParameterTypes7 = new Class[] {
+		_getBatchEngineImportTasksCountParameterTypes6 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _openContentInputStreamParameterTypes8 =
+	private static final Class<?>[] _openContentInputStreamParameterTypes7 =
 		new Class[] {long.class};
 
 }

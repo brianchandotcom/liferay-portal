@@ -88,16 +88,6 @@ public class BatchEngineImportTaskServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.batch.engine.model.BatchEngineImportTaskError>
-				getBatchEngineImportTaskErrors(long batchEngineImportTaskId)
-			throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _batchEngineImportTaskService.getBatchEngineImportTaskErrors(
-			batchEngineImportTaskId);
-	}
-
-	@Override
 	public java.util.List<com.liferay.batch.engine.model.BatchEngineImportTask>
 			getBatchEngineImportTasks(long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

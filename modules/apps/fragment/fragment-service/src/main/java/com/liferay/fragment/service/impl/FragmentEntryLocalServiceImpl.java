@@ -568,50 +568,7 @@ public class FragmentEntryLocalServiceImpl
 	public FragmentEntry publishDraft(FragmentEntry draftFragmentEntry)
 		throws PortalException {
 
-		FragmentEntry publishedFragmentEntry = fetchFragmentEntry(
-			draftFragmentEntry.getHeadId());
-
-		if ((publishedFragmentEntry == null) ||
-			!Objects.equals(
-				publishedFragmentEntry.getName(),
-				draftFragmentEntry.getName())) {
-
-			_validate(draftFragmentEntry.getName());
-		}
-
-		if (publishedFragmentEntry != null) {
-			draftFragmentEntry.setCacheable(
-				publishedFragmentEntry.isCacheable());
-			draftFragmentEntry.setPreviewFileEntryId(
-				publishedFragmentEntry.getPreviewFileEntryId());
-		}
-
-		_fragmentEntryValidator.validateConfiguration(
-			draftFragmentEntry.getConfiguration());
-		_fragmentEntryValidator.validateTypeOptions(
-			draftFragmentEntry.getType(), draftFragmentEntry.getTypeOptions());
-		_validateContent(
-			draftFragmentEntry.getHtml(),
-			draftFragmentEntry.getConfiguration());
-
-		draftFragmentEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		FragmentEntry updatedPublishedFragmentEntry = super.publishDraft(
-			draftFragmentEntry);
-
-		FragmentServiceConfiguration fragmentServiceConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				FragmentServiceConfiguration.class,
-				draftFragmentEntry.getCompanyId());
-
-		if (fragmentServiceConfiguration.propagateChanges() &&
-			!ExportImportThreadLocal.isStagingInProcess()) {
-
-			_propagateChanges(
-				updatedPublishedFragmentEntry.getFragmentEntryId());
-		}
-
-		return updatedPublishedFragmentEntry;
+		return _publishDraft(draftFragmentEntry);
 	}
 
 	@Override
@@ -718,7 +675,7 @@ public class FragmentEntryLocalServiceImpl
 			return fragmentEntry;
 		}
 
-		return publishDraft(fragmentEntry);
+		return _publishDraft(fragmentEntry);
 	}
 
 	@Override
@@ -987,6 +944,55 @@ public class FragmentEntryLocalServiceImpl
 					fragmentEntryLink.getFragmentEntryLinkId()));
 
 		actionableDynamicQuery.performActions();
+	}
+
+	private FragmentEntry _publishDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException {
+
+		FragmentEntry publishedFragmentEntry = fetchFragmentEntry(
+			draftFragmentEntry.getHeadId());
+
+		if ((publishedFragmentEntry == null) ||
+			!Objects.equals(
+				publishedFragmentEntry.getName(),
+				draftFragmentEntry.getName())) {
+
+			_validate(draftFragmentEntry.getName());
+		}
+
+		if (publishedFragmentEntry != null) {
+			draftFragmentEntry.setCacheable(
+				publishedFragmentEntry.isCacheable());
+			draftFragmentEntry.setPreviewFileEntryId(
+				publishedFragmentEntry.getPreviewFileEntryId());
+		}
+
+		_fragmentEntryValidator.validateConfiguration(
+			draftFragmentEntry.getConfiguration());
+		_fragmentEntryValidator.validateTypeOptions(
+			draftFragmentEntry.getType(), draftFragmentEntry.getTypeOptions());
+		_validateContent(
+			draftFragmentEntry.getHtml(),
+			draftFragmentEntry.getConfiguration());
+
+		draftFragmentEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		FragmentEntry updatedPublishedFragmentEntry = super.publishDraft(
+			draftFragmentEntry);
+
+		FragmentServiceConfiguration fragmentServiceConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				FragmentServiceConfiguration.class,
+				draftFragmentEntry.getCompanyId());
+
+		if (fragmentServiceConfiguration.propagateChanges() &&
+			!ExportImportThreadLocal.isStagingInProcess()) {
+
+			_propagateChanges(
+				updatedPublishedFragmentEntry.getFragmentEntryId());
+		}
+
+		return updatedPublishedFragmentEntry;
 	}
 
 	private void _validate(String name) throws PortalException {

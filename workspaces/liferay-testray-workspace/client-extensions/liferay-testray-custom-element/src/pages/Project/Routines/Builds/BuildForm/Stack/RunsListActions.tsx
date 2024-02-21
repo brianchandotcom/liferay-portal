@@ -13,6 +13,12 @@ import type {UseFieldArrayAppend} from 'react-hook-form';
 
 type RunsListActionsProps = {
 	append: UseFieldArrayAppend<any>;
+	defaultItem?: {
+		[index: string]: {
+			factorCategory: string;
+			factorCategoryId: string;
+		};
+	};
 	field: Fields;
 	index: number;
 	remove: (index: number) => void;
@@ -20,6 +26,7 @@ type RunsListActionsProps = {
 
 const RunsListActions: React.FC<RunsListActionsProps> = ({
 	append,
+	defaultItem,
 	field,
 	index,
 	remove,
@@ -30,7 +37,7 @@ const RunsListActions: React.FC<RunsListActionsProps> = ({
 				<ClayButtonWithIcon
 					aria-label={i18n.translate('add')}
 					displayType="secondary"
-					onClick={() => append({...field})}
+					onClick={() => append({...field} || (defaultItem as any))}
 					symbol="plus"
 				/>
 			)}

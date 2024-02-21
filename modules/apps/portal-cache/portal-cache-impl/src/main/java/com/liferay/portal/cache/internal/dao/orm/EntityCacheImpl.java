@@ -83,7 +83,7 @@ public class EntityCacheImpl
 
 	@Override
 	public void clearLocalCache() {
-		if (_isLocalCacheEnabled()) {
+		if (_localCache != null) {
 			_localCache.remove();
 		}
 	}

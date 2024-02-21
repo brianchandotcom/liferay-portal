@@ -47,6 +47,8 @@ test('Assert table action labels', async ({dataSetsPage, page}) => {
 	await dataSetsPage.goto();
 	await dataSetsPage.createDataSet();
 
+	await page.locator('.dnd-td.item-actions').first().waitFor();
+
 	await page
 		.locator('.dnd-td.item-actions')
 		.first()
@@ -63,4 +65,6 @@ test('Assert table action labels', async ({dataSetsPage, page}) => {
 	const expectedLabels = ['Edit', 'Permissions', 'Delete'];
 
 	await expect(tableItemActions).toEqual(expectedLabels);
+
+	await dataSetsPage.deleteDataSet();
 });

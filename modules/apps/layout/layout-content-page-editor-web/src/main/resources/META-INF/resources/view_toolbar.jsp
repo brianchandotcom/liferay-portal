@@ -36,55 +36,137 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 
 		<ul class="end navbar-nav">
 			<li class="nav-item"></li>
-			<li class="nav-item">
-				<div class="btn-group flex-nowrap" role="group">
-					<clay:button
-						disabled="<%= true %>"
-						displayType="secondary"
-						icon="undo"
-						monospaced="<%= true %>"
-						small="<%= true %>"
-						title="undo"
-					/>
 
-					<clay:button
-						disabled="<%= true %>"
-						displayType="secondary"
-						icon="redo"
-						monospaced="<%= true %>"
-						small="<%= true %>"
-						title="redo"
-					/>
-				</div>
+			<c:choose>
+				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
+					<li class="d-lg-flex d-none nav-item">
+						<div class="btn-group flex-nowrap" role="group">
+							<clay:button
+								disabled="<%= true %>"
+								displayType="secondary"
+								icon="undo"
+								monospaced="<%= true %>"
+								small="<%= true %>"
+								title="undo"
+							/>
 
-				<span class="d-none d-sm-block">
-					<div class="dropdown ml-2">
+							<clay:button
+								disabled="<%= true %>"
+								displayType="secondary"
+								icon="redo"
+								monospaced="<%= true %>"
+								small="<%= true %>"
+								title="redo"
+							/>
+						</div>
+
+						<span class="d-none d-sm-block ml-2">
+							<clay:button
+								cssClass="dropdown-toggle"
+								disabled="<%= true %>"
+								displayType="secondary"
+								icon="time"
+								monospaced="<%= true %>"
+								small="<%= true %>"
+								title="history"
+							/>
+						</span>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li class="nav-item">
+						<div class="btn-group flex-nowrap" role="group">
+							<clay:button
+								disabled="<%= true %>"
+								displayType="secondary"
+								icon="undo"
+								monospaced="<%= true %>"
+								small="<%= true %>"
+								title="undo"
+							/>
+
+							<clay:button
+								disabled="<%= true %>"
+								displayType="secondary"
+								icon="redo"
+								monospaced="<%= true %>"
+								small="<%= true %>"
+								title="redo"
+							/>
+						</div>
+
+						<span class="d-none d-sm-block">
+							<div class="dropdown ml-2">
+								<clay:button
+									cssClass="dropdown-toggle"
+									disabled="<%= true %>"
+									displayType="secondary"
+									icon="time"
+									monospaced="<%= true %>"
+									small="<%= true %>"
+									title="history"
+								/>
+							</div>
+						</span>
+					</li>
+				</c:otherwise>
+			</c:choose>
+
+			<c:choose>
+				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
+					<li class="d-lg-flex d-none nav-item">
+						<div class="dropdown">
+							<clay:button
+								cssClass="form-control-select"
+								disabled="<%= true %>"
+								displayType="secondary"
+								small="<%= true %>"
+							>
+								<liferay-ui:message key="page-design" />
+							</clay:button>
+						</div>
+					</li>
+					<li class="d-lg-none nav-item">
 						<clay:button
-							cssClass="dropdown-toggle"
+							cssClass="form-control-select"
 							disabled="<%= true %>"
 							displayType="secondary"
-							icon="time"
+							icon="format"
+							monospaced="<%= false %>"
+							small="<%= true %>"
+						/>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li class="nav-item">
+						<div class="dropdown">
+							<clay:button
+								cssClass="dropdown-toggle form-control-select page-editor__edit-mode-selector text-left"
+								disabled="<%= true %>"
+								displayType="secondary"
+								small="<%= true %>"
+							>
+								<liferay-ui:message key="page-design" />
+							</clay:button>
+						</div>
+					</li>
+				</c:otherwise>
+			</c:choose>
+
+			<c:choose>
+				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
+					<li class="d-lg-flex d-none nav-item">
+						<clay:button
+							disabled="<%= true %>"
+							displayType="secondary"
+							icon="view"
 							monospaced="<%= true %>"
 							small="<%= true %>"
-							title="history"
+							title="view"
 						/>
-					</div>
-				</span>
-			</li>
-			<li class="nav-item">
-				<div class="dropdown">
-					<clay:button
-						cssClass="dropdown-toggle form-control-select page-editor__edit-mode-selector text-left"
-						disabled="<%= true %>"
-						displayType="secondary"
-						small="<%= true %>"
-					>
-						<liferay-ui:message key="page-design" />
-					</clay:button>
-				</div>
-			</li>
-			<li class="nav-item">
-				<ul class="navbar-nav">
+					</li>
+				</c:when>
+				<c:otherwise>
 					<li class="nav-item">
 						<clay:button
 							disabled="<%= true %>"
@@ -95,17 +177,45 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 							title="view"
 						/>
 					</li>
-				</ul>
-			</li>
-			<li class="nav-item">
-				<clay:button
-					disabled="<%= true %>"
-					displayType="secondary"
-					small="<%= true %>"
-				>
-					<liferay-ui:message key="discard-draft" />
-				</clay:button>
-			</li>
+				</c:otherwise>
+			</c:choose>
+
+			<c:choose>
+				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
+					<li class="d-lg-flex d-none nav-item">
+						<clay:button
+							disabled="<%= true %>"
+							displayType="secondary"
+							small="<%= true %>"
+						>
+							<liferay-ui:message key="discard-draft" />
+						</clay:button>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li class="nav-item">
+						<clay:button
+							disabled="<%= true %>"
+							displayType="secondary"
+							small="<%= true %>"
+						>
+							<liferay-ui:message key="discard-draft" />
+						</clay:button>
+					</li>
+				</c:otherwise>
+			</c:choose>
+
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
+				<li class="d-lg-none nav-item">
+					<clay:button
+						disabled="<%= true %>"
+						displayType="secondary"
+						icon="ellipsis-v"
+						monospaced="<%= true %>"
+						small="<%= true %>"
+					/>
+				</li>
+			</c:if>
 
 			<c:if test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 				<li class="nav-item">
@@ -142,6 +252,19 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 					</c:choose>
 				</clay:button>
 			</li>
+
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
+				<li class="d-md-none nav-item">
+					<clay:button
+						cssClass="text-secondary"
+						disabled="<%= true %>"
+						displayType="unstyled"
+						icon="cog"
+						monospaced="<%= true %>"
+						small="<%= true %>"
+					/>
+				</li>
+			</c:if>
 		</ul>
 	</clay:container-fluid>
 </div>

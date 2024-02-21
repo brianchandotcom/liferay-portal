@@ -258,7 +258,7 @@ public class MBStatsUserLocalServiceImpl
 					if (_isEntityRank(
 							companyId, user, entityType, entityValue)) {
 
-						rank[1] = curRank;
+						rank[1] = entityValue;
 
 						break;
 					}

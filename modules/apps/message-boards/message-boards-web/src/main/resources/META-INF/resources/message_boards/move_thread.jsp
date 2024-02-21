@@ -79,7 +79,7 @@ if (portletTitleBasedNavigation) {
 							</aui:validator>
 						</aui:input>
 
-						<aui:field-wrapper label="body">
+						<div>
 							<c:choose>
 								<c:when test='<%= message.isFormatBBCode() || messageFormat.equals("bbcode") %>'>
 									<%@ include file="/message_boards/bbcode_editor.jspf" %>
@@ -90,7 +90,7 @@ if (portletTitleBasedNavigation) {
 							</c:choose>
 
 							<aui:input name="body" type="hidden" />
-						</aui:field-wrapper>
+						</div>
 					</div>
 				</aui:fieldset>
 			</div>

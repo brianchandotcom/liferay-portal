@@ -660,8 +660,6 @@
 						<#if isLandingPage>
 							<#include "${templatesPath}/LANDING-PAGE">
 						</#if>
-
-						<hr class="mt-4 separator solid">
 					</div>
 
 					<div class="col-md-3 d-none d-sm-block">

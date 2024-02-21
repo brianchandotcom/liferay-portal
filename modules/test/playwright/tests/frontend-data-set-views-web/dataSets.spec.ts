@@ -37,4 +37,6 @@ test('Assert table column labels', async ({dataSetsPage, page}) => {
 	];
 
 	await expect(tableColumnLabels).toEqual(expectedLabels);
+
+	await dataSetsPage.deleteDataSet();
 });

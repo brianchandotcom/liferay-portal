@@ -405,6 +405,9 @@ public interface LiferaySelenium {
 
 	public void replyToEmail(String to, String body) throws Exception;
 
+	public Map<String, Object> returnCDPCommand(
+		String commandName, Map<String, Object> commandParameters);
+
 	public void rightClick(String locator);
 
 	public void robotType(String script);

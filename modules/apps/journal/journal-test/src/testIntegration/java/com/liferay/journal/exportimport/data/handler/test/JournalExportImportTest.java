@@ -131,9 +131,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
-	/**
-	 * LPD-6808: AC15-AC16
-	 */
 	@Test
 	public void testExportImportCompanyScopeStructuredJournalArticle()
 		throws Exception {
@@ -142,10 +139,10 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	/**
-	 * LPD-6808: AC15-AC17
+	 * LPD-6808: AC15-AC16
 	 */
 	@Test
-	public void testExportImportJournalArticleWithLayoutHrefLayoutDoesNotExistOnImportSide()
+	public void testExportImportJournalArticleWithLayoutURLLayoutDoesNotExistOnImportSide()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -200,8 +197,11 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		}
 	}
 
+	/**
+	 * LPD-6808: AC15-AC17
+	 */
 	@Test
-	public void testExportImportJournalArticleWithLayoutHrefLayoutExistOnImportSide()
+	public void testExportImportJournalArticleWithLayoutURLLayoutExistOnImportSide()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(

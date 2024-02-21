@@ -22,9 +22,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -37,6 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -57,7 +56,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 import com.liferay.staging.configuration.StagingConfiguration;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -83,6 +82,12 @@ public class RemoteStagingPublishParentLayoutsByDefaultTest {
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(
+			StagingConfiguration.class.getName());
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
@@ -90,32 +95,11 @@ public class RemoteStagingPublishParentLayoutsByDefaultTest {
 		_addRemoteStagingGroups();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		try {
-			GroupLocalServiceUtil.deleteGroup(_remoteLiveGroup.getGroupId());
-		}
-		catch (NoSuchGroupException noSuchGroupException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException);
-			}
-		}
-
-		try {
-			GroupLocalServiceUtil.deleteGroup(_remoteStagingGroup.getGroupId());
-		}
-		catch (NoSuchGroupException noSuchGroupException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException);
-			}
-		}
-	}
-
 	/**
 	 * LPD-6808: AC8
 	 */
 	@Test
-	public void testRemoteStagingPublishJournalContentWithLayoutHrefLayoutDoesNotExistOnImportSide()
+	public void testRemoteStagingPublishJournalContentWithLayoutURLLayoutDoesNotExistOnImportSide()
 		throws Exception {
 
 		_configurationProvider.saveCompanyConfiguration(
@@ -153,47 +137,45 @@ public class RemoteStagingPublishParentLayoutsByDefaultTest {
 			_remoteStagingGroup.getGroupId(), content,
 			dataDefinition.getDataDefinitionKey(), null);
 
+		ThemeDisplay themeDisplay = _getThemeDisplay(_remoteStagingGroup);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, childLayout);
+
+		mockHttpServletRequest.setParameter(
+			"doAsGroupId", String.valueOf(_remoteStagingGroup.getGroupId()));
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			themeDisplay.getCompanyId(), JournalPortletKeys.JOURNAL);
+
 		_mockPortletRequest = new MockPortletRequest();
 
-		_mockPortletRequest.setParameter(
-			"groupId", String.valueOf(_remoteStagingGroup.getGroupId()));
-		_mockPortletRequest.setParameter(
-			"range", ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
-		_mockPortletRequest.setParameter("tabs3", "new-publish-process");
-		_mockPortletRequest.setParameter(
-			"exportImportConfigurationId", String.valueOf(0));
-		_mockPortletRequest.setParameter("plid", String.valueOf(1));
-		_mockPortletRequest.setParameter(
-			"portletResource", JournalPortletKeys.JOURNAL);
-		_mockPortletRequest.setParameter(
-			"_journal_web-content", Boolean.TRUE.toString());
-		_mockPortletRequest.setParameter(
-			PortletDataHandlerKeys.PORTLET_SETUP, Boolean.TRUE.toString());
+		_mockPortletRequest.setAttribute(
+			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+		_mockPortletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
 		_mockPortletRequest.setParameter(
 			PortletDataHandlerKeys.PORTLET_DATA, Boolean.TRUE.toString());
 		_mockPortletRequest.setParameter(
 			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 				JournalPortletKeys.JOURNAL,
 			Boolean.TRUE.toString());
-		_mockPortletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			_getThemeDisplay(childLayout, _remoteStagingGroup));
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			_getThemeDisplay(
-				childLayout, _remoteStagingGroup
-			).getCompanyId(),
-			JournalPortletKeys.JOURNAL);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, childLayout);
-		mockHttpServletRequest.setParameter(
-			"doAsGroupId", String.valueOf(_remoteStagingGroup.getGroupId()));
-
-		_mockPortletRequest.setAttribute(
-			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
+		_mockPortletRequest.setParameter(
+			PortletDataHandlerKeys.PORTLET_SETUP, Boolean.TRUE.toString());
+		_mockPortletRequest.setParameter(
+			"_journal_web-content", Boolean.TRUE.toString());
+		_mockPortletRequest.setParameter(
+			"exportImportConfigurationId", String.valueOf(0));
+		_mockPortletRequest.setParameter(
+			"groupId", String.valueOf(_remoteStagingGroup.getGroupId()));
+		_mockPortletRequest.setParameter("plid", String.valueOf(1));
+		_mockPortletRequest.setParameter(
+			"portletResource", JournalPortletKeys.JOURNAL);
+		_mockPortletRequest.setParameter(
+			"range", ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE);
+		_mockPortletRequest.setParameter("tabs3", "new-publish-process");
 
 		StagingUtil.addModelToChangesetCollection(article);
 
@@ -251,12 +233,10 @@ public class RemoteStagingPublishParentLayoutsByDefaultTest {
 		}
 	}
 
-	private ThemeDisplay _getThemeDisplay(Layout layout, Group group)
-		throws Exception {
-
+	private ThemeDisplay _getThemeDisplay(Group group) throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		layout = LayoutTestUtil.addTypePortletLayout(group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(group.getCompanyId()));
@@ -277,9 +257,6 @@ public class RemoteStagingPublishParentLayoutsByDefaultTest {
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		RemoteStagingPublishParentLayoutsByDefaultTest.class);
-
 	@Inject
 	private static ConfigurationProvider _configurationProvider;
 
@@ -290,7 +267,11 @@ public class RemoteStagingPublishParentLayoutsByDefaultTest {
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	private MockPortletRequest _mockPortletRequest;
+
+	@DeleteAfterTestRun
 	private Group _remoteLiveGroup;
+
+	@DeleteAfterTestRun
 	private Group _remoteStagingGroup;
 
 }

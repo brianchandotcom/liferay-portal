@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -135,6 +134,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship);
 		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition2);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition3);
 	}
 
 	@Test
@@ -317,6 +323,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationships.add(_objectRelationship);
 
 		ObjectRelationshipTestUtil.relateObjectEntries(
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
@@ -1854,33 +1862,17 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	private static final String _SYSTEM_OBJECT_FIELD_VALUE =
 		RandomTestUtil.randomString();
 
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition2;
-
-	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition3;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@DeleteAfterTestRun
 	private ObjectEntry _objectEntry1;
-
-	@DeleteAfterTestRun
 	private ObjectEntry _objectEntry2;
-
-	@DeleteAfterTestRun
 	private ObjectEntry _objectEntry3;
-
-	@DeleteAfterTestRun
 	private ObjectEntry _objectEntry4;
-
-	@DeleteAfterTestRun
-	private ObjectEntry _objectEntry5;
-
 	private ObjectRelationship _objectRelationship;
 
 	@Inject

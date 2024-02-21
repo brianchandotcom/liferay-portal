@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class DatabasePartitionUpgradeProcessTest {
+public class UpgradeProcessDBPartitionTest {
 
 	@ClassRule
 	@Rule

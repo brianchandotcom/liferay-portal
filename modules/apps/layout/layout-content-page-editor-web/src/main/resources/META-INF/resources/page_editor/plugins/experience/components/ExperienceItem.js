@@ -82,7 +82,7 @@ const ExperienceItem = ({
 		});
 	};
 
-	const itemClassName = classNames('d-flex dropdown-menu__experience', {
+	const itemClassName = classNames('d-sm-flex dropdown-menu__experience', {
 		'dropdown-menu__experience--active': active,
 	});
 
@@ -95,9 +95,9 @@ const ExperienceItem = ({
 							style={{flexShrink: 1, minWidth: 0}}
 						>
 							<ClayLayout.ContentSection>
-								<span className="text-truncate-inline">
+								<span>
 									<span
-										className="font-weight-semi-bold text-truncate"
+										className="font-weight-semi-bold"
 										data-tooltip-align="top"
 										title={experience.name}
 									>
@@ -192,7 +192,7 @@ const ExperienceActions = ({
 	return (
 		<>
 			{editable && (
-				<div className="pl-2">
+				<div className="pl-sm-2">
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get(
 							'prioritize-experience'
@@ -204,6 +204,7 @@ const ExperienceActions = ({
 						monospaced
 						onClick={handlePriorityIncrease}
 						outline
+						size="sm"
 						symbol="angle-up"
 						title={Liferay.Language.get('prioritize-experience')}
 						type="button"
@@ -220,6 +221,7 @@ const ExperienceActions = ({
 						monospaced
 						onClick={handlePriorityDecrease}
 						outline
+						size="sm"
 						symbol="angle-down"
 						title={Liferay.Language.get('deprioritize-experience')}
 						type="button"
@@ -233,6 +235,7 @@ const ExperienceActions = ({
 						monospaced
 						onClick={handleExperienceEdit}
 						outline
+						size="sm"
 						symbol="pencil"
 						title={Liferay.Language.get('edit-experience')}
 						type="button"
@@ -248,6 +251,7 @@ const ExperienceActions = ({
 						monospaced
 						onClick={handleExperienceDuplicate}
 						outline
+						size="sm"
 						symbol="copy"
 						title={Liferay.Language.get('duplicate-experience')}
 						type="button"

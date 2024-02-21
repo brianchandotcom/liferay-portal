@@ -21,6 +21,8 @@ test('Assert table column labels', async ({dataSetsPage, page}) => {
 	await dataSetsPage.goto();
 	await dataSetsPage.createDataSet();
 
+	await await page.locator('.dnd-table > .dnd-thead > .dnd-tr').waitFor();
+
 	const tableColumnLabels = await page
 		.locator('.dnd-thead > .dnd-tr')
 		.first()

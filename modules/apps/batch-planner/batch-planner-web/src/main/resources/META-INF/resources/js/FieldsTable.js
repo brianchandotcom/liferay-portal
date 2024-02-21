@@ -246,7 +246,7 @@ function FieldsTable({portletNamespace}) {
 													<span
 														className="inline-item-after"
 														title={Liferay.Language.get(
-															'exporting-this-field-type-will-be-supported-in-a-future-release'
+															'this-field-type-is-not-supported-for-csv-format.-please-select-json,-jsonl-or-jsont-format'
 														)}
 													>
 														<ClayIcon

@@ -162,7 +162,7 @@
 	</tr>
 	<tr>
 		<td>DEFAULT_SORT_ADD_BUTTON</td>
-		<td>//h3[(@class='lfr-objects__card-title') and text()='Default Sort']/../..//button[contains(@class,'nav-btn nav-btn-monospaced btn btn-monospaced btn-primary')]</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Default Sort']/../..//button[contains(@class,'btn btn-monospaced btn-primary')]</td>
 		<td></td>
 	</tr>
 	<tr>

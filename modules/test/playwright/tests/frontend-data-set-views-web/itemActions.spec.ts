@@ -742,13 +742,11 @@ test.describe('Data Set Item Actions', () => {
 
 			await page.getByRole('alert').waitFor();
 
-			const alert = await page.getByRole('alert');
+			const alert = await page.getByRole('alert').first();
 
 			await expect(alert).toHaveText(
 				'Success:Your request completed successfully.'
 			);
-
-			await alert.getByRole('button').click();
 		});
 
 		await test.step('Click in the async item action executes the action', async () => {
@@ -782,13 +780,11 @@ test.describe('Data Set Item Actions', () => {
 
 			await page.getByRole('alert').waitFor();
 
-			const alert = await page.getByRole('alert');
+			const alert = await page.getByRole('alert').first();
 
 			await expect(alert).toHaveText(
 				'Success:Your request completed successfully.'
 			);
-
-			await alert.getByRole('button').click();
 		});
 
 		await test.step('Delete Data Set and site', async () => {
@@ -939,7 +935,7 @@ test.describe('Data Set Item Actions', () => {
 
 			await page.getByRole('alert').waitFor();
 
-			const alert = await page.getByRole('alert');
+			const alert = await page.getByRole('alert').first();
 
 			await expect(alert).toHaveText(
 				'Error:An unexpected error occurred.'

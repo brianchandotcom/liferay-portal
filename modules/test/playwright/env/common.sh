@@ -48,6 +48,28 @@ function combine_properties_files {
 	cat ${1}
 }
 
+function default_set_up {
+	update_portal_ext_properties
+
+	start_app_server
+
+	deploy_parent_project_osgi_modules
+
+	deploy_project_osgi_modules
+
+	deploy_parent_project_deploy_folder
+
+	deploy_project_deploy_folder
+
+	deploy_parent_project_client_extensions
+
+	deploy_project_client_extensions
+}
+
+function default_tear_down {
+	stop_app_server
+}
+
 function deploy_client_extensions {
 	if [[ -n ${1} ]]
 	then
@@ -280,16 +302,10 @@ function reverse {
 	done
 }
 
-function start_ac() {
+function start_analytics_cloud {
 	cd ${_PORTAL_PROJECT_DIR}
 
 	ant -f build-test-analytics-cloud.xml start-analytics-cloud
-}
-
-function stop_ac() {
-	cd ${_PORTAL_PROJECT_DIR}
-
-	ant -f build-test-analytics-cloud.xml stop-analytics-cloud
 }
 
 function start_app_server {
@@ -303,6 +319,12 @@ function start_app_server {
 	done
 
 	echo "${LIFERAY_PORTAL_URL} is now available."
+}
+
+function stop_analytics_cloud {
+	cd ${_PORTAL_PROJECT_DIR}
+
+	ant -f build-test-analytics-cloud.xml stop-analytics-cloud
 }
 
 function stop_app_server {

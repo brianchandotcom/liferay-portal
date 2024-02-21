@@ -1,85 +1,5 @@
 [
 	{
-		"key": "global",
-		"name": "Global",
-		"name_i18n": {
-			"en-US": "Global"
-		},
-		"type": "string"
-	},
-	{
-		"key": "us",
-		"name": "US",
-		"name_i18n": {
-			"en-US": "US"
-		},
-		"type": "string"
-	},
-	{
-		"key": "canada",
-		"name": "Canada",
-		"name_i18n": {
-			"en-US": "Canada"
-		},
-		"type": "string"
-	},
-	{
-		"key": "mexico",
-		"name": "Mexico",
-		"name_i18n": {
-			"en-US": "Mexico"
-		},
-		"type": "string"
-	},
-	{
-		"key": "argentinaUraguayParaguay",
-		"name": "Argentina, Uraguay, Paraguay",
-		"name_i18n": {
-			"en-US": "Argentina, Uraguay, Paraguay"
-		},
-		"type": "string"
-	},
-	{
-		"key": "chilePeru",
-		"name": "Chile, Peru",
-		"name_i18n": {
-			"en-US": "Chile, Peru"
-		},
-		"type": "string"
-	},
-	{
-		"key": "colombiaEcuador",
-		"name": "Colombia, Ecuador",
-		"name_i18n": {
-			"en-US": "Colombia, Ecuador"
-		},
-		"type": "string"
-	},
-	{
-		"key": "centralAmerica",
-		"name": "Central America",
-		"name_i18n": {
-			"en-US": "Central America"
-		},
-		"type": "string"
-	},
-	{
-		"key": "latimAmerica",
-		"name": "Latim America",
-		"name_i18n": {
-			"en-US": "Latim America"
-		},
-		"type": "string"
-	},
-	{
-		"key": "middleEast",
-		"name": "Middle East",
-		"name_i18n": {
-			"en-US": "Middle East"
-		},
-		"type": "string"
-	},
-	{
 		"key": "africa",
 		"name": "Africa",
 		"name_i18n": {
@@ -96,82 +16,26 @@
 		"type": "string"
 	},
 	{
+		"key": "asean",
+		"name": "ASEAN",
+		"name_i18n": {
+			"en-US": "ASEAN"
+		},
+		"type": "string"
+	},
+	{
 		"key": "benelux",
-		"name": "BENELUX",
+		"name": "Benelux",
 		"name_i18n": {
-			"en-US": "BENELUX"
+			"en-US": "Benelux"
 		},
 		"type": "string"
 	},
 	{
-		"key": "dach",
-		"name": "DACH",
+		"key": "cee",
+		"name": "CEE",
 		"name_i18n": {
-			"en-US": "DACH"
-		},
-		"type": "string"
-	},
-	{
-		"key": "uk",
-		"name": "UK",
-		"name_i18n": {
-			"en-US": "UK"
-		},
-		"type": "string"
-	},
-	{
-		"key": "france",
-		"name": "France",
-		"name_i18n": {
-			"en-US": "France"
-		},
-		"type": "string"
-	},
-	{
-		"key": "itGrCy",
-		"name": "ItGrCy",
-		"name_i18n": {
-			"en-US": "ItGrCy"
-		},
-		"type": "string"
-	},
-	{
-		"key": "spainPortugal",
-		"name": "SpainPortugal",
-		"name_i18n": {
-			"en-US": "SpainPortugal"
-		},
-		"type": "string"
-	},
-	{
-		"key": "centralAndEasternEurope",
-		"name": "CENTRAL AND EASTERN EUROPE",
-		"name_i18n": {
-			"en-US": "CENTRAL AND EASTERN EUROPE"
-		},
-		"type": "string"
-	},
-	{
-		"key": "nordics",
-		"name": "Nordics",
-		"name_i18n": {
-			"en-US": "Nordics"
-		},
-		"type": "string"
-	},
-	{
-		"key": "india",
-		"name": "India",
-		"name_i18n": {
-			"en-US": "India"
-		},
-		"type": "string"
-	},
-	{
-		"key": "singapore",
-		"name": "Singapore",
-		"name_i18n": {
-			"en-US": "Singapore"
+			"en-US": "CEE"
 		},
 		"type": "string"
 	},
@@ -184,10 +48,106 @@
 		"type": "string"
 	},
 	{
+		"key": "dach",
+		"name": "DACH",
+		"name_i18n": {
+			"en-US": "DACH"
+		},
+		"type": "string"
+	},
+	{
+		"key": "france",
+		"name": "France",
+		"name_i18n": {
+			"en-US": "France"
+		},
+		"type": "string"
+	},
+	{
+		"key": "global",
+		"name": "Global",
+		"name_i18n": {
+			"en-US": "Global"
+		},
+		"type": "string"
+	},
+	{
+		"key": "india",
+		"name": "India",
+		"name_i18n": {
+			"en-US": "India"
+		},
+		"type": "string"
+	},
+	{
+		"key": "italy",
+		"name": "Italy",
+		"name_i18n": {
+			"en-US": "Italy"
+		},
+		"type": "string"
+	},
+	{
 		"key": "japan",
 		"name": "Japan",
 		"name_i18n": {
 			"en-US": "Japan"
+		},
+		"type": "string"
+	},
+	{
+		"key": "latinAmerica",
+		"name": "Latin America",
+		"name_i18n": {
+			"en-US": "Latin America"
+		},
+		"type": "string"
+	},
+	{
+		"key": "middleEast",
+		"name": "Middle East",
+		"name_i18n": {
+			"en-US": "Middle East"
+		},
+		"type": "string"
+	},
+	{
+		"key": "nordic",
+		"name": "Nordic",
+		"name_i18n": {
+			"en-US": "Nordic"
+		},
+		"type": "string"
+	},
+	{
+		"key": "northAmerica",
+		"name": "North America",
+		"name_i18n": {
+			"en-US": "North America"
+		},
+		"type": "string"
+	},
+	{
+		"key": "other",
+		"name": "Other",
+		"name_i18n": {
+			"en-US": "Other"
+		},
+		"type": "string"
+	},
+	{
+		"key": "spain",
+		"name": "Spain",
+		"name_i18n": {
+			"en-US": "Spain"
+		},
+		"type": "string"
+	},
+	{
+		"key": "uk",
+		"name": "UK",
+		"name_i18n": {
+			"en-US": "UK"
 		},
 		"type": "string"
 	}

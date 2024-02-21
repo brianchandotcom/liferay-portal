@@ -26,16 +26,16 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
-					"externalReferenceCode": "L_COMMERCE_RETURN_STATE",
+					"externalReferenceCode": "RETURN_STATE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Commerce Return State"
+						"en_US": "Return State"
 					},
-					"listTypeDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_STATE_PICKLIST",
+					"listTypeDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_RETURN_STATE_PICKLIST",
 					"localized": false,
-					"name": "commerceReturnState",
+					"name": "returnState",
 					"objectFieldSettings": [
 						{
 							"name": "defaultValueType",

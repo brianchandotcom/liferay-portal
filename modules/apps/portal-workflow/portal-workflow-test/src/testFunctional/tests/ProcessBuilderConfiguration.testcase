@@ -204,7 +204,7 @@ definition {
 
 		ProcessBuilderConfiguration.chooseSortOption(key_menuItem = "Resource");
 
-		Workflow.clickRevertSortDirection();
+		ProcessBuilderConfiguration.chooseSortOption(key_menuItem = "Descending");
 
 		ProcessBuilderConfiguration.viewSpecificOrder(resultsList = "Wiki Page,Web Content Article,User");
 	}

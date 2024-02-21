@@ -718,20 +718,7 @@ public class FragmentEntryLocalServiceImpl
 			return fragmentEntry;
 		}
 
-		fragmentEntry = publishDraft(fragmentEntry);
-
-		FragmentServiceConfiguration fragmentServiceConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				FragmentServiceConfiguration.class,
-				fragmentEntry.getCompanyId());
-
-		if (fragmentServiceConfiguration.propagateChanges() &&
-			!ExportImportThreadLocal.isStagingInProcess()) {
-
-			_propagateChanges(fragmentEntryId);
-		}
-
-		return fragmentEntry;
+		return publishDraft(fragmentEntry);
 	}
 
 	@Override

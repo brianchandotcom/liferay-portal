@@ -143,6 +143,13 @@ public class LiferayContextController extends ContextController {
 
 		_contextPath = contextPath;
 
+		_servletContextHelperServiceId = (long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+		_servletContextInitParams = ServiceProperties.parseInitParams(
+			serviceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX,
+			servletContextHelperDataContext.getServletContext());
+
 		_filterServiceTracker = new ServiceTracker<>(
 			bundleContext, Filter.class,
 			new ContextFilterTrackerCustomizer(
@@ -177,13 +184,6 @@ public class LiferayContextController extends ContextController {
 				bundleContext, httpServletEndpointController, this));
 
 		_servletContextAttributeListenerServiceTracker.open(true);
-
-		_servletContextHelperServiceId = (long)serviceReference.getProperty(
-			Constants.SERVICE_ID);
-		_servletContextInitParams = ServiceProperties.parseInitParams(
-			serviceReference,
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX,
-			servletContextHelperDataContext.getServletContext());
 
 		_servletContextListenerServiceTracker = new ServiceTracker<>(
 			bundleContext, ServletContextListener.class.getName(),

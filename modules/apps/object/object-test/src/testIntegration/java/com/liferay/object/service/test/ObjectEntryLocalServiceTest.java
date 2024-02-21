@@ -2502,28 +2502,6 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals(valuesList.toString(), 0, valuesList.size());
 
-		// Predicate
-
-		Column<?, Object> firstNameColumn =
-			(Column<?, Object>)_objectFieldLocalService.getColumn(
-				_objectDefinition.getObjectDefinitionId(), "firstName");
-
-		Predicate predicate = firstNameColumn.eq(
-			"Peter"
-		).or(
-			firstNameColumn.eq("John")
-		);
-
-		valuesList = _objectEntryLocalService.getValuesList(
-			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(), predicate, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(valuesList.toString(), 2, valuesList.size());
-
-		_assertObjectEntryValues(28, values1, valuesList.get(0));
-		_assertObjectEntryValues(28, values3, valuesList.get(1));
-
 		// Permissions check
 
 		User user = UserTestUtil.addUser();
@@ -2551,7 +2529,29 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertObjectEntryValues(28, values3, valuesList.get(0));
 
-		// Predicate with permissions filter
+		// Predicate
+
+		Column<?, Object> firstNameColumn =
+			(Column<?, Object>)_objectFieldLocalService.getColumn(
+				_objectDefinition.getObjectDefinitionId(), "firstName");
+
+		Predicate predicate = firstNameColumn.eq(
+			"Peter"
+		).or(
+			firstNameColumn.eq("John")
+		);
+
+		valuesList = _objectEntryLocalService.getValuesList(
+			0, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), predicate, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(valuesList.toString(), 2, valuesList.size());
+
+		_assertObjectEntryValues(28, values1, valuesList.get(0));
+		_assertObjectEntryValues(28, values3, valuesList.get(1));
+
+		// Predicate with permissions check
 
 		valuesList = _objectEntryLocalService.getValuesList(
 			0, TestPropsValues.getCompanyId(), user.getUserId(),

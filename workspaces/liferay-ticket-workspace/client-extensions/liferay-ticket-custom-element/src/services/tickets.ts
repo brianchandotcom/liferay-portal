@@ -115,8 +115,8 @@ export async function updateTicketStatus(ticket: Ticket) {
 		delete ticket.payload.r_userToJ3Y7Ticket_userId;
 	}
 
-	if (!ticket.payload.r_relatedTicket_c_j3y7TicketId){
-		delete ticket.payload.r_relatedTicket_c_j3y7TicketId;
+	if (!ticket.payload.r_j3y7TicketToJ3Y7Ticket_c_j3y7TicketId) {
+		delete ticket.payload.r_j3y7TicketToJ3Y7Ticket_c_j3y7TicketId;
 	}
 
 	const result = await request(

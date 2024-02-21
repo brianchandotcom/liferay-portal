@@ -129,7 +129,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Ticket #"
@@ -164,7 +165,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"mapping": {
 														"fieldKey": "ObjectField_subject",
@@ -232,11 +234,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -252,11 +256,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -355,11 +361,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -403,7 +411,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "ticket"
@@ -457,7 +466,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "#"
@@ -486,7 +496,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "ObjectField_subject",
@@ -517,7 +528,8 @@
 														"bottomSpacing": "1",
 														"separatorColor": "light"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"marginBottom": "4",
 														"marginTop": "4"
@@ -539,7 +551,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Status"
@@ -569,7 +582,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "ObjectField_ticketStatus",
@@ -603,7 +617,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Description"
@@ -634,7 +649,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "ObjectField_description",
@@ -668,7 +684,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Uploads"
@@ -691,7 +708,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -724,7 +742,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Related Tickets"
@@ -758,11 +777,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"collectionViewportDefinition": {},
+															"collectionViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"collectionViewportDefinition": {},
+															"collectionViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -781,7 +802,8 @@
 												"pageElements": [
 													{
 														"definition": {
-															"collectionItemConfig": {}
+															"collectionItemConfig": {
+															}
 														},
 														"pageElements": [
 															{
@@ -851,11 +873,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],

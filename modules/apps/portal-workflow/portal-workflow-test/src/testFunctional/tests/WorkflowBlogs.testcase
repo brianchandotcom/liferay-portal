@@ -218,9 +218,9 @@ definition {
 			portlet = "Blogs");
 
 		Blogs.addDraft(
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title");
+			entryContent = "Blogs Entry Content 18388",
+			entrySubtitle = "Blogs Entry Subtitle 18388",
+			entryTitle = "Blogs Entry Title 18388");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -234,14 +234,14 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		AssertElementNotPresent(
-			key_workflowAssetTitle = "Blogs Entry Title",
+			key_workflowAssetTitle = "Blogs Entry Title 18388",
 			key_workflowTask = "Review",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE");
 
 		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
 
 		AssertElementNotPresent(
-			key_workflowAssetTitle = "Blogs Entry Title",
+			key_workflowAssetTitle = "Blogs Entry Title 18388",
 			key_workflowTask = "Review",
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE");
 	}

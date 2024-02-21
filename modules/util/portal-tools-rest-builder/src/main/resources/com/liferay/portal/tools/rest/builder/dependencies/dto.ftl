@@ -201,15 +201,59 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			@JsonGetter("${propertyName}")
 		</#if>
 
-		public ${propertyType} get${capitalizedPropertyName}() {
-			if (_${propertyName}Supplier != null) {
-				${propertyName} = _${propertyName}Supplier.get();
-
-				_${propertyName}Supplier = null;
+		<#if propertySchema.isJsonMap()>
+			public Map<String, UnsafeSupplier<Object, Exception>> getLazy${capitalizedPropertyName}() {
+				return _lazy${capitalizedPropertyName};
 			}
 
-			return ${propertyName};
-		}
+			public ${propertyType} get${capitalizedPropertyName}() {
+				if (${propertyName} != null) {
+					return ${propertyName};
+				}
+
+				if (_lazy${capitalizedPropertyName} != null) {
+					${propertyName} = new HashMap<>();
+
+					_lazy${capitalizedPropertyName}.forEach((key, value) -> {
+							try {
+								${propertyName}.put(key, value.get());
+							}
+							catch (Throwable e) {
+								throw new RuntimeException(e);
+							}
+						});
+
+					_${propertyName}Supplier = null;
+
+					return ${propertyName};
+				}
+
+				if (_${propertyName}Supplier != null) {
+					${propertyName} = _${propertyName}Supplier.get();
+
+					_${propertyName}Supplier = null;
+				}
+
+				return ${propertyName};
+			}
+
+			public void setLazy${capitalizedPropertyName}(Map<String, UnsafeSupplier<Object, Exception>> lazy${capitalizedPropertyName}) {
+				this._lazy${capitalizedPropertyName} = lazy${capitalizedPropertyName};
+			}
+
+			private Map<String, UnsafeSupplier<Object, Exception>> _lazy${capitalizedPropertyName};
+
+		<#else>
+			public ${propertyType} get${capitalizedPropertyName}() {
+				if (_${propertyName}Supplier != null) {
+					${propertyName} = _${propertyName}Supplier.get();
+
+					_${propertyName}Supplier = null;
+				}
+
+				return ${propertyName};
+			}
+		</#if>
 
 		<#if enumSchemas?keys?seq_contains(propertyType)>
 			@JsonIgnore

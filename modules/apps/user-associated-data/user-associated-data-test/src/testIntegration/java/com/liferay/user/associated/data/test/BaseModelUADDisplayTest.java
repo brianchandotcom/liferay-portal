@@ -32,6 +32,7 @@ import com.liferay.user.associated.data.display.BaseModelUADDisplay;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -62,7 +63,7 @@ public class BaseModelUADDisplayTest {
 
 		_uadDisplay = new TestLayoutUADDisplay();
 
-		_uadDisplay.setSearchableFields("name", "title", "description");
+		_uadDisplay.setSearchableFields("name", "keywords", "robots");
 	}
 
 	@Test
@@ -76,16 +77,16 @@ public class BaseModelUADDisplayTest {
 		Layout layout3 = _addLayout(third, first, second);
 
 		_assertOrder("name", layout1, layout2, layout3);
-		_assertOrder("title", layout3, layout1, layout2);
-		_assertOrder("description", layout2, layout3, layout1);
+		_assertOrder("keywords", layout3, layout1, layout2);
+		_assertOrder("robots", layout2, layout3, layout1);
 
 		_uadDisplay.setOrderByComparatorBiFunction(
 			(orderByCol, orderByType) -> OrderByComparatorFactoryUtil.create(
 				"Layout", orderByCol, !Objects.equals(orderByType, "desc")));
 
 		_assertOrder("name", layout1, layout2, layout3);
-		_assertOrder("title", layout3, layout1, layout2);
-		_assertOrder("description", layout2, layout3, layout1);
+		_assertOrder("keywords", layout3, layout1, layout2);
+		_assertOrder("robots", layout2, layout3, layout1);
 	}
 
 	@Test
@@ -205,7 +206,7 @@ public class BaseModelUADDisplayTest {
 
 		Assert.assertEquals(6, _searchCountLayouts(null));
 
-		_uadDisplay.setSearchableFields("name", "title");
+		_uadDisplay.setSearchableFields("name", "keywords");
 
 		layouts = _searchLayouts(searchTerm1);
 
@@ -265,26 +266,32 @@ public class BaseModelUADDisplayTest {
 	}
 
 	private Layout _addLayout(
-			long userId, long groupId, String name, String title,
-			String description)
+			long userId, long groupId, String name, String keywords,
+			String robots)
 		throws Exception {
 
 		if (Validator.isNull(name)) {
 			name = RandomTestUtil.randomString(30);
 		}
 
-		if (Validator.isNull(title)) {
-			title = RandomTestUtil.randomString(30);
+		if (Validator.isNull(keywords)) {
+			keywords = RandomTestUtil.randomString(30);
 		}
 
-		if (Validator.isNull(description)) {
-			description = RandomTestUtil.randomString(30);
+		if (Validator.isNull(robots)) {
+			robots = RandomTestUtil.randomString(30);
 		}
 
 		Layout layout = _layoutLocalService.addLayout(
-			userId, groupId, false, 0, name.concat("name"),
-			title.concat("title"), description.concat("description"),
-			LayoutConstants.TYPE_PORTLET, false, StringPool.BLANK,
+			userId, groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0,
+			0, Collections.singletonMap(_user.getLocale(), name.concat("name")),
+			Collections.emptyMap(), Collections.emptyMap(),
+			Collections.singletonMap(
+				_user.getLocale(), keywords.concat("keywords")),
+			Collections.singletonMap(
+				_user.getLocale(), robots.concat("robots")),
+			LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false, false,
+			Collections.emptyMap(), 0,
 			ServiceContextTestUtil.getServiceContext(groupId));
 
 		_layouts.add(layout);
@@ -292,11 +299,11 @@ public class BaseModelUADDisplayTest {
 		return layout;
 	}
 
-	private Layout _addLayout(String name, String title, String description)
+	private Layout _addLayout(String name, String keywords, String robots)
 		throws Exception {
 
 		return _addLayout(
-			_user.getUserId(), _group.getGroupId(), name, title, description);
+			_user.getUserId(), _group.getGroupId(), name, keywords, robots);
 	}
 
 	private void _assertOrder(String orderByCol, Layout... layouts) {

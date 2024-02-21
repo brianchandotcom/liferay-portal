@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CHECKBOX_WITH_CUSTOM_CLASS_AND_ID</td>
-	<td>//input[@type='checkbox' and @id='customId' and contains(@class,'custom-css-class')]</td>
+	<td>//input[@type='checkbox' and @id='wdui6khbj' and contains(@class,'custom-css-class')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -61,6 +61,10 @@ export class JournalPage {
 			}),
 		});
 
+		await this.permissionsFrameLocator
+			.locator(permissionLocators[0])
+			.waitFor();
+
 		for (const permissionsLocator of permissionLocators) {
 			await expect(
 				this.permissionsFrameLocator.locator(permissionsLocator)
@@ -103,6 +107,10 @@ export class JournalPage {
 			}),
 			trigger: this.page.getByTitle('Actions', {exact: true}),
 		});
+
+		await this.permissionsFrameLocator
+			.locator(permissionLocators[0])
+			.waitFor();
 
 		for (const permissionsLocator of permissionLocators) {
 			await this.permissionsFrameLocator

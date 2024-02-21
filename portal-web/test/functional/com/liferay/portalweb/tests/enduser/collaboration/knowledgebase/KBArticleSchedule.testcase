@@ -44,7 +44,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 65000);
+		Pause(value1 = 120000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -74,7 +74,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 65000);
+		Pause(value1 = 120000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -117,7 +117,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 65000);
+		Pause(value1 = 120000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -204,7 +204,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 65000);
+		Pause(value1 = 120000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -236,7 +236,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled parent article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 120000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -252,7 +252,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled child article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 65000);
+		Pause(value1 = 120000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -287,7 +287,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled child article is not published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 60000);
+		Pause(value1 = 120000);
 
 		KBArticle.gotoChildArticleDescriptiveDetails(kbArticleTitle = "Knowledge Base Article Title");
 
@@ -297,7 +297,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled articles are published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 65000);
+		Pause(value1 = 120000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -340,7 +340,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 65000);
+		Pause(value1 = 120000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
@@ -386,7 +386,7 @@ definition {
 
 		// We need to wait for the system time to pass by 1 minute in order to verify the scheduled article is published. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-188060.
 
-		Pause(value1 = 65000);
+		Pause(value1 = 120000);
 
 		KBAdmin.openKBAdmin(siteURLKey = "site-name");
 

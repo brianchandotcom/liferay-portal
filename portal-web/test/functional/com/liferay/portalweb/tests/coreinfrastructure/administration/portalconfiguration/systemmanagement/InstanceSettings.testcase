@@ -39,7 +39,6 @@ definition {
 		}
 	}
 
-	@component-name = "portal-commerce"
 	@description = "This is a use case for LPS-108998."
 	@priority = 4
 	test AssertEmailVerificationIsRequiredByDefault {
@@ -118,7 +117,6 @@ definition {
 			userScreenName = "test");
 	}
 
-	@component-name = "portal-content-management"
 	@description = "This test asserts that a user can add additional mail host name."
 	@priority = 3
 	test CanAddAdditionalMailHostName {
@@ -234,7 +232,6 @@ definition {
 			value1 = "http://liferay.com");
 	}
 
-	@component-name = "portal-commerce"
 	@description = "This test disable the Terms of Use via UI and assert the Terms of Use not required when a new user login."
 	@priority = 3
 	test CanChangeTheTermsOfUseNotRequired {
@@ -420,7 +417,6 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "New Entry 1");
 	}
 
-	@component-name = "portal-wcm"
 	@description = "This test asserts that a user can delete site logo via portal setting."
 	@priority = 3
 	test CanDeleteSiteLogoViaAppearance {
@@ -471,7 +467,6 @@ definition {
 		Page.viewDefaultLogoPG();
 	}
 
-	@component-name = "portal-content-management"
 	@description = "This test asserts that a user can disable the account created notification. No email would send to user when the account created notification is disabled."
 	@priority = 3
 	test CanDisabledAccountCreatedNotification {
@@ -508,7 +503,6 @@ definition {
 		MockMock.viewNoMail();
 	}
 
-	@component-name = "portal-wcm"
 	@description = "This test asserts that a user can disable site admin to use their own logo."
 	@priority = 3
 	test CanDisableSiteAdminToUseTheirOwnLogo {
@@ -621,7 +615,6 @@ definition {
 		}
 	}
 
-	@component-name = "portal-commerce"
 	@description = "This test specify the Terms of Use content by web content posted in a new site and assert the Terms of Use content updated when a new user login."
 	@priority = 3
 	test CanSpecifyTheTermsofUseWebContent {
@@ -905,7 +898,6 @@ definition {
 		User.viewUserInformationRolesCP(roleTitle = "Roles Regrole Name");
 	}
 
-	@component-name = "portal-commerce"
 	@priority = 4
 	test EditDefaultUserAssociationsSites {
 		property testray.main.component.name = "Users and Organizations";
@@ -931,7 +923,6 @@ definition {
 			assigneeName = "Site Name");
 	}
 
-	@component-name = "portal-commerce"
 	@priority = 4
 	test EditDefaultUserAssociationsUserGroups {
 		property testray.main.component.name = "Users and Organizations";
@@ -1348,7 +1339,6 @@ definition {
 		PortalSettings.viewDefaultUserAssociationsCP();
 	}
 
-	@component-name = "portal-content-management"
 	@priority = 3
 	test ViewEmailNotificationsAccountCreatedNotification {
 		property testray.main.component.name = "Notifications";
@@ -1358,7 +1348,6 @@ definition {
 		PortalSettings.viewEmailNotificationsAccountCreatedNotificationCP();
 	}
 
-	@component-name = "portal-content-management"
 	@priority = 3
 	test ViewEmailNotificationsSender {
 		property testray.main.component.name = "Notifications";

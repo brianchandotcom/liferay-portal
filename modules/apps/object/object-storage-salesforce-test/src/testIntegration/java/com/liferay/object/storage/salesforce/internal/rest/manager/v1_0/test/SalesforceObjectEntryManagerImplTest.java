@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -165,6 +166,20 @@ public class SalesforceObjectEntryManagerImplTest
 				LocalizedMapUtil.getLocalizedMap("Due Date")
 			).name(
 				"dueDate"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).build());
+
+		ObjectFieldUtil.addCustomObjectField(
+			new LongIntegerObjectFieldBuilder(
+			).externalReferenceCode(
+				"Object_Definition_id__c"
+			).userId(
+				adminUser.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Object Definition Id")
+			).name(
+				"objectDefinitionId"
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
 			).build());
@@ -446,7 +461,8 @@ public class SalesforceObjectEntryManagerImplTest
 	}
 
 	private ObjectEntry _addObjectEntry(
-			String customStatus, Date date, String title)
+			String customStatus, Date date, long objectDefinitionId,
+			String title)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
@@ -459,6 +475,8 @@ public class SalesforceObjectEntryManagerImplTest
 						"dueDate",
 						(date != null) ? _simpleDateFormat.format(date) : null
 					).put(
+						"objectDefinitionId", objectDefinitionId
+					).put(
 						"title", title
 					).build();
 				}
@@ -468,6 +486,15 @@ public class SalesforceObjectEntryManagerImplTest
 		_objectEntries.add(objectEntry);
 
 		return objectEntry;
+	}
+
+	private ObjectEntry _addObjectEntry(
+			String customStatus, Date date, String title)
+		throws Exception {
+
+		return _addObjectEntry(
+			customStatus, date, _objectDefinition.getObjectDefinitionId(),
+			title);
 	}
 
 	private void _assertObjectEntry(String externalReferenceCode, String title)

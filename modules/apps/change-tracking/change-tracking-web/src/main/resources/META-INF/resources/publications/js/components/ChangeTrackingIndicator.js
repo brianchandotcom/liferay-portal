@@ -493,6 +493,7 @@ export default function ChangeTrackingIndicator({
 			return (
 				<ClayDropDown
 					alignmentPosition={Align.BottomCenter}
+					renderMenuOnClick
 					trigger={
 						<ClayButton
 							aria-controls="publication-timeline-dropdown"

@@ -162,7 +162,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 	}
 
 	public FaroUser fetchFaroUser(long groupId, long liveUserId) {
-		return faroUserPersistence.fetchByG_L(groupId, liveUserId);
+		return faroUserPersistence.fetchByG_L(groupId, liveUserId, false);
 	}
 
 	public FaroUser fetchFaroUser(long groupId, String emailAddress) {

@@ -106,7 +106,7 @@ public class UserResourceDTOConverter
 			return null;
 		}
 
-		Contact contact = user.getContact();
+		Contact contact = user.fetchContact();
 
 		return new UserAccount() {
 			{
@@ -121,7 +121,7 @@ public class UserResourceDTOConverter
 				setActions(dtoConverterContext::getActions);
 				setAdditionalName(user::getMiddleName);
 				setAlternateName(user::getScreenName);
-				setBirthDate(user::getBirthday);
+				setBirthDate(contact::getBirthday);
 				setCustomFields(
 					() -> CustomFieldsUtil.toCustomFields(
 						dtoConverterContext.isAcceptAllLanguages(),

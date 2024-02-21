@@ -262,6 +262,7 @@ if (portletTitleBasedNavigation) {
 										});
 
 										commonFileMetadataContainer.classList.remove('hide');
+										loading.classList.add('hide');
 									});
 							}
 

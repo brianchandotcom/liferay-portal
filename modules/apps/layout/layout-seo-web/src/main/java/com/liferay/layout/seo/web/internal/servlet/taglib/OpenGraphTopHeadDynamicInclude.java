@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -208,6 +209,31 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				else {
 					description = layout.getDescription(
 						themeDisplay.getLocale());
+				}
+			}
+
+			ListMergeable<String> pageDescriptionListMergeable =
+				(ListMergeable<String>)httpServletRequest.getAttribute(
+					WebKeys.PAGE_DESCRIPTION);
+
+			if (!layout.isTypeAssetDisplay() &&
+				(pageDescriptionListMergeable != null)) {
+
+				String pageDescription =
+					pageDescriptionListMergeable.mergeToString(
+						StringPool.SPACE);
+
+				if (Validator.isNotNull(description) &&
+					Validator.isNotNull(pageDescription)) {
+
+					description = StringBundler.concat(
+						pageDescription, StringPool.PERIOD, StringPool.SPACE,
+						description);
+				}
+				else if (Validator.isNull(description) &&
+						 Validator.isNotNull(pageDescription)) {
+
+					description = pageDescription;
 				}
 			}
 

@@ -2225,6 +2225,18 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		pause("3000");
 	}
 
+	public Map<String, Object> returnCDPCommand(
+		String commandName, Map<String, Object> commandParameters) {
+
+		Augmenter augmenter = new Augmenter();
+
+		WebDriver webDriver = augmenter.augment(getWebDriver());
+
+		HasCdp hasCdp = (HasCdp)webDriver;
+
+		return hasCdp.executeCdpCommand(commandName, commandParameters);
+	}
+
 	@Override
 	public void rightClick(String locator) {
 		WebElement webElement = getWebElement(locator);

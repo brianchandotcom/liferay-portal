@@ -101,8 +101,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 									layoutPageTemplateCollection, tabs1));
 							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "rename"));
+								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -240,7 +239,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 				httpServletRequest, "rename-page-template-set");
 		}
 
-		return LanguageUtil.get(httpServletRequest, "rename-folder");
+		return LanguageUtil.get(httpServletRequest, "edit-folder");
 	}
 
 	private String _getUpdateLayoutPageTemplateCollectionURL(

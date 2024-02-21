@@ -479,6 +479,10 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 	<macrodef name="print-analytics-cloud-logs">
 		<sequential>
+			<execute>
+				docker stats --no-stream
+			</execute>
+
 			<property location="${analytics.cloud.asah.dir}/docker-compose.test.yml" name="analytics.cloud.docker.test.yaml" />
 
 			<local name="container.names" />

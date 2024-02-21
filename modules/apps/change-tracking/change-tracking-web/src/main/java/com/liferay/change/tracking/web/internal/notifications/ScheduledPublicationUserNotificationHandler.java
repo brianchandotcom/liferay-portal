@@ -6,14 +6,17 @@
 package com.liferay.change.tracking.web.internal.notifications;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -42,22 +45,50 @@ public class ScheduledPublicationUserNotificationHandler
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		boolean showConflicts = jsonObject.getBoolean("showConflicts");
-
 		String body = null;
+
+		boolean showConflicts = jsonObject.getBoolean("showConflicts");
 
 		if (showConflicts) {
 			body = _language.get(
 				serviceContext.getLocale(),
 				"click-on-this-notification-to-see-the-list-of-conflicts-" +
 					"that-need-to-be-manually-resolved");
+
+			return StringUtil.replace(
+				getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
+				new String[] {
+					body,
+					_language.format(
+						serviceContext.getLocale(),
+						"x-scheduled-publication-failed",
+						new Object[] {jsonObject.getString("ctCollectionName")},
+						false)
+				});
 		}
-		else {
+
+		if (_isAdminUser(userNotificationEvent)) {
 			body = _language.get(
 				serviceContext.getLocale(),
-				"an-unexpected-error-occurred-while-publishing-the-scheduled-" +
-					"publication");
+				"click-on-this-notification-to-see-the-stack-trace");
+
+			return StringUtil.replace(
+				getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
+				new String[] {
+					body,
+					_language.format(
+						serviceContext.getLocale(),
+						"x-scheduled-publication-failed-with-an-unexpected-" +
+							"system-error",
+						new Object[] {jsonObject.getString("ctCollectionName")},
+						false)
+				});
 		}
+
+		body = _language.get(
+			serviceContext.getLocale(),
+			"an-unexpected-error-occurred-while-publishing-the-scheduled-" +
+				"publication");
 
 		return StringUtil.replace(
 			getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
@@ -75,7 +106,7 @@ public class ScheduledPublicationUserNotificationHandler
 	protected String getLink(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
@@ -100,7 +131,32 @@ public class ScheduledPublicationUserNotificationHandler
 			).buildString();
 		}
 
+		if (_isAdminUser(userNotificationEvent)) {
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					serviceContext.getRequest(), serviceContext.getScopeGroup(),
+					CTPortletKeys.PUBLICATIONS, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/change_tracking/view_stack_trace"
+			).setParameter(
+				"backgroundTaskId", jsonObject.getLong("backgroundTaskId")
+			).setParameter(
+				"ctCollectionName", jsonObject.getString("ctCollectionName")
+			).buildString();
+		}
+
 		return null;
+	}
+
+	private boolean _isAdminUser(UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
+		Role role = _roleLocalService.getRole(
+			userNotificationEvent.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		return _userLocalService.hasRoleUser(
+			role.getRoleId(), userNotificationEvent.getUserId());
 	}
 
 	@Reference
@@ -111,5 +167,11 @@ public class ScheduledPublicationUserNotificationHandler
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -298,6 +298,9 @@ public class CTPublishBackgroundTaskExecutor
 							UserNotificationDeliveryConstants.TYPE_WEBSITE,
 							false,
 							JSONUtil.put(
+								"backgroundTaskId",
+								backgroundTask.getBackgroundTaskId()
+							).put(
 								"ctCollectionId", fromCTCollectionId
 							).put(
 								"ctCollectionName",

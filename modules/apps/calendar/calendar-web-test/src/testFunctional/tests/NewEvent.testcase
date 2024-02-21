@@ -1218,6 +1218,8 @@ definition {
 
 		CalendarNavigator.gotoEditEvent(eventTitle = "Calendar Event Title");
 
+		Panel.expandPanel(panel = "Invitations");
+
 		CalendarEvent.viewRSVPAccepted(resourceName = ${siteName});
 
 		CalendarEvent.viewRSVPAccepted(resourceName = "userfn3 userln3");

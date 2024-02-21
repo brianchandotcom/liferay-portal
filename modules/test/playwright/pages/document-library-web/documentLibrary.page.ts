@@ -47,8 +47,18 @@ export class DocumentLibraryPage {
 		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
 	}
 
-	async new() {
+	async openNewButton() {
 		await this.page.getByRole('button', {name: 'New'}).click();
+	}
+
+	async openCreateAIImage() {
+		await this.openNewButton();
+
+		await this.page
+			.getByRole('menuitem', {
+				name: 'Create AI Image',
+			})
+			.click();
 	}
 
 	async openOptionsMenu() {

@@ -2347,7 +2347,7 @@ public class JournalDisplayContext {
 		if ((FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
 			 (isHighlightedDDMStructure() || isNavigationStructure())) ||
 			(FeatureFlagManagerUtil.isEnabled("LPS-202534") &&
-			 isNavigationMine())) {
+			 isNavigationRecent())) {
 
 			searchContext.setEntryClassNames(
 				new String[] {JournalArticle.class.getName()});

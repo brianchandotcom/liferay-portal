@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -83,6 +84,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -248,6 +250,40 @@ public class SitemapManagerTest {
 		_testCompanySitemapIncludePages(
 			new long[] {RandomTestUtil.randomLong()}, group.getGroupId(),
 			guestLayoutURLs);
+	}
+
+	@Test
+	public void testCompanySitemapWithGuestVirtualHostConfigured()
+		throws Exception {
+
+		Group group = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		_setUpThemeDisplay(
+			group,
+			_layoutLocalService.fetchFirstLayout(group.getGroupId(), false, 0),
+			"localhost");
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		TreeMap<String, String> originalVirtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		try {
+			_layoutSetLocalService.updateVirtualHosts(
+				group.getGroupId(), false,
+				TreeMapBuilder.put(
+					"myvirtualhost",
+					LocaleUtil.toLanguageId(
+						_portal.getSiteDefaultLocale(group.getGroupId()))
+				).build());
+
+			_testEmptyCompanySitemapIncludePages(group.getGroupId());
+		}
+		finally {
+			_layoutSetLocalService.updateVirtualHosts(
+				group.getGroupId(), false, originalVirtualHostnames);
+		}
 	}
 
 	@Test
@@ -993,6 +1029,42 @@ public class SitemapManagerTest {
 						).build())) {
 
 			_assertSitemap(guestGroupId, null, urls);
+		}
+	}
+
+	private void _testEmptyCompanySitemapIncludePages(long guestGroupId)
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_PID_SITEMAP_COMPANY_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"companySitemapGroupIds", new String[0]
+						).put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build());
+			GroupConfigurationTemporarySwapper
+				groupConfigurationTemporarySwapper =
+					new GroupConfigurationTemporarySwapper(
+						guestGroupId, _PID_SITEMAP_GROUP_CONFIGURATION,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"includeCategories", false
+						).put(
+							"includePages", true
+						).put(
+							"includeWebContent", false
+						).build())) {
+
+			Assert.assertEquals(
+				StringPool.BLANK,
+				_sitemapManager.getSitemap(
+					null, guestGroupId, false, _themeDisplay));
 		}
 	}
 

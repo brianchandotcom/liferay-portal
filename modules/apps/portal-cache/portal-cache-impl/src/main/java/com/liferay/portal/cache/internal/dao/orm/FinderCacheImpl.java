@@ -381,6 +381,11 @@ public class FinderCacheImpl
 
 			ctAwarePortalCache.destroy();
 		}
+		else {
+			String groupKey = _GROUP_KEY_PREFIX.concat(className);
+
+			_multiVMPool.removePortalCache(groupKey);
+		}
 
 		_finderPathsMap.remove(className);
 	}

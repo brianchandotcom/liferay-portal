@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
@@ -43,7 +43,7 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 		)
 		.filter({hasText: title1});
 
-	await expect(article1).toBeVisible();
+	await article1.waitFor();
 
 	await journalEditArticlePage.publishNewBasicArticle(title2);
 
@@ -53,7 +53,7 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 		)
 		.filter({hasText: title2});
 
-	await expect(article2).toBeVisible();
+	await article2.waitFor();
 
 	await journalPage.setJournalArticlePermissions(
 		[article1, article2],

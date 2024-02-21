@@ -127,7 +127,7 @@
 	</tr>
 	<tr>
 		<td>ENTRY_LONG_VALUE_FIELD</td>
-		<td>xpath=(//input[contains(@name,'_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_')])[7]</td>
+		<td>//input[contains(@class,'form-control') and contains(@name,'${key_objectFieldName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

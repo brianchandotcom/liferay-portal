@@ -357,10 +357,11 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectLongFieldEntryViaUI(entryValue = null) {
+	macro addObjectLongFieldEntryViaUI(entryValue = null, objectFieldName = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(
+			key_objectFieldName = ${objectFieldName},
 			locator1 = "ObjectAdmin#ENTRY_LONG_VALUE_FIELD",
 			value1 = ${entryValue});
 

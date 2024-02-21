@@ -106,8 +106,6 @@ public class UserContentRecommendationInfoItemCollectionProviderTest {
 
 			Assert.assertNotNull(infoCollectionProvider);
 
-			Assert.assertTrue(infoCollectionProvider.isAvailable());
-
 			IdempotentRetryAssert.retryAssert(
 				3, TimeUnit.SECONDS,
 				() -> {

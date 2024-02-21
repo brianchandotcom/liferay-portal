@@ -104,10 +104,6 @@ public abstract class BaseDBPartitionTestCase {
 		db.runSQL(getCreateIndexSQL(tableName));
 	}
 
-	protected static void createTable(String tableName) throws Exception {
-		db.runSQL(getCreateTableSQL(tableName));
-	}
-
 	protected static void createUniqueIndex(String tableName) throws Exception {
 		db.runSQL(
 			StringBundler.concat(

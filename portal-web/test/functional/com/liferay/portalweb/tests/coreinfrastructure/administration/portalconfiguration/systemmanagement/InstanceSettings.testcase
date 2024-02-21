@@ -39,11 +39,13 @@ definition {
 		}
 	}
 
+	@component-name = "portal-commerce"
 	@description = "This is a use case for LPS-108998."
 	@priority = 4
 	test AssertEmailVerificationIsRequiredByDefault {
 		property custom.properties = "company.security.strangers.verify=true${line.separator}jsonws.web.service.paths.excludes=${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
+		property testray.main.component.name = "Users and Organizations";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -116,9 +118,12 @@ definition {
 			userScreenName = "test");
 	}
 
+	@component-name = "portal-content-management"
 	@description = "This test asserts that a user can add additional mail host name."
 	@priority = 3
 	test CanAddAdditionalMailHostName {
+		property testray.main.component.name = "Notifications";
+
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
 			configurationName = "Mail Host Names",
@@ -229,10 +234,12 @@ definition {
 			value1 = "http://liferay.com");
 	}
 
+	@component-name = "portal-commerce"
 	@description = "This test disable the Terms of Use via UI and assert the Terms of Use not required when a new user login."
 	@priority = 3
 	test CanChangeTheTermsOfUseNotRequired {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property testray.main.component.name = "Users and Organizations";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
@@ -413,9 +420,12 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "New Entry 1");
 	}
 
+	@component-name = "portal-wcm"
 	@description = "This test asserts that a user can delete site logo via portal setting."
 	@priority = 3
 	test CanDeleteSiteLogoViaAppearance {
+		property testray.main.component.name = "Sites Administration";
+
 		Page.viewDefaultLogoPG();
 
 		PortalSettings.gotoConfiguration(
@@ -461,11 +471,13 @@ definition {
 		Page.viewDefaultLogoPG();
 	}
 
+	@component-name = "portal-content-management"
 	@description = "This test asserts that a user can disable the account created notification. No email would send to user when the account created notification is disabled."
 	@priority = 3
 	test CanDisabledAccountCreatedNotification {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
+		property testray.main.component.name = "Notifications";
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
@@ -496,9 +508,12 @@ definition {
 		MockMock.viewNoMail();
 	}
 
+	@component-name = "portal-wcm"
 	@description = "This test asserts that a user can disable site admin to use their own logo."
 	@priority = 3
 	test CanDisableSiteAdminToUseTheirOwnLogo {
+		property testray.main.component.name = "Sites Administration";
+
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
 			configurationName = "Appearance",
@@ -606,10 +621,12 @@ definition {
 		}
 	}
 
+	@component-name = "portal-commerce"
 	@description = "This test specify the Terms of Use content by web content posted in a new site and assert the Terms of Use content updated when a new user login."
 	@priority = 3
 	test CanSpecifyTheTermsofUseWebContent {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property testray.main.component.name = "Users and Organizations";
 
 		HeadlessSite.addSite(siteName = "Terms of Use Site");
 
@@ -888,8 +905,11 @@ definition {
 		User.viewUserInformationRolesCP(roleTitle = "Roles Regrole Name");
 	}
 
+	@component-name = "portal-commerce"
 	@priority = 4
 	test EditDefaultUserAssociationsSites {
+		property testray.main.component.name = "Users and Organizations";
+
 		Site.openSitesAdmin();
 
 		Site.addBlankCP(siteName = "Site Name");
@@ -911,8 +931,11 @@ definition {
 			assigneeName = "Site Name");
 	}
 
+	@component-name = "portal-commerce"
 	@priority = 4
 	test EditDefaultUserAssociationsUserGroups {
+		property testray.main.component.name = "Users and Organizations";
+
 		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.addCP(userGroupName = "UG UserGroup Name");
@@ -1325,15 +1348,21 @@ definition {
 		PortalSettings.viewDefaultUserAssociationsCP();
 	}
 
+	@component-name = "portal-content-management"
 	@priority = 3
 	test ViewEmailNotificationsAccountCreatedNotification {
+		property testray.main.component.name = "Notifications";
+
 		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsAccountCreatedNotificationCP();
 	}
 
+	@component-name = "portal-content-management"
 	@priority = 3
 	test ViewEmailNotificationsSender {
+		property testray.main.component.name = "Notifications";
+
 		Navigator.openURL();
 
 		PortalSettings.viewEmailNotificationsSenderCP();

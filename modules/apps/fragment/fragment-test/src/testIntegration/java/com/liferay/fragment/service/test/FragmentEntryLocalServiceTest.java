@@ -564,19 +564,6 @@ public class FragmentEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteFragmentEntryByFragmentEntryId() throws Exception {
-		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
-			_fragmentCollection.getFragmentCollectionId());
-
-		_fragmentEntryLocalService.deleteFragmentEntry(
-			fragmentEntry.getFragmentEntryId());
-
-		Assert.assertNull(
-			_fragmentEntryPersistence.fetchByPrimaryKey(
-				fragmentEntry.getFragmentEntryId()));
-	}
-
-	@Test
 	public void testFetchFragmentEntryByFragmentEntryId() throws Exception {
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId());

@@ -240,13 +240,8 @@ public class SitemapManagerImpl implements SitemapManager {
 
 		_initEntriesAndSize(rootElement);
 
-		_visitLayoutSet(
-			rootElement,
-			_layoutSetLocalService.getLayoutSet(groupId, privateLayout),
-			themeDisplay);
-
 		for (LayoutSet layoutSet :
-				_getLayoutSets(groupId, privateLayout, themeDisplay)) {
+				_getLayoutSets(groupId, null, privateLayout, themeDisplay)) {
 
 			_visitLayoutSet(rootElement, layoutSet, themeDisplay);
 		}
@@ -257,39 +252,55 @@ public class SitemapManagerImpl implements SitemapManager {
 	}
 
 	private List<LayoutSet> _getLayoutSets(
-			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
+			long groupId, String layoutUuid, boolean privateLayout,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187793")) {
-			return Collections.emptyList();
+		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+			groupId, privateLayout);
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187793") ||
+			Validator.isNotNull(layoutUuid) ||
+			!_isCompanyVirtualHostname(themeDisplay)) {
+
+			return ListUtil.fromArray(layoutSet);
 		}
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		if (!group.isGuest() || !_isCompanyVirtualHostname(themeDisplay)) {
-			return Collections.emptyList();
+		if (!group.isGuest()) {
+			return ListUtil.fromArray(layoutSet);
 		}
 
 		try {
-			return TransformUtil.transformToList(
-				_sitemapConfigurationManager.getCompanySitemapGroupIds(
-					themeDisplay.getCompanyId()),
-				curGroupId -> {
-					Group curGroup = _groupLocalService.fetchGroup(curGroupId);
+			List<LayoutSet> layoutSets = ListUtil.fromArray(layoutSet);
 
-					if ((curGroup == null) || curGroup.isGuest()) {
-						return null;
-					}
+			layoutSets.addAll(
+				TransformUtil.transformToList(
+					_sitemapConfigurationManager.getCompanySitemapGroupIds(
+						themeDisplay.getCompanyId()),
+					curGroupId -> {
+						Group curGroup = _groupLocalService.fetchGroup(
+							curGroupId);
 
-					LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-						curGroup.getGroupId(), privateLayout);
+						if ((curGroup == null) || curGroup.isGuest()) {
+							return null;
+						}
 
-					if (MapUtil.isNotEmpty(layoutSet.getVirtualHostnames())) {
-						return null;
-					}
+						LayoutSet curLayoutSet =
+							_layoutSetLocalService.getLayoutSet(
+								curGroup.getGroupId(), privateLayout);
 
-					return layoutSet;
-				});
+						if (MapUtil.isNotEmpty(
+								curLayoutSet.getVirtualHostnames())) {
+
+							return null;
+						}
+
+						return curLayoutSet;
+					}));
+
+			return layoutSets;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -322,15 +333,8 @@ public class SitemapManagerImpl implements SitemapManager {
 
 		_initEntriesAndSize(rootElement);
 
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			groupId, privateLayout);
-
-		List<LayoutSet> layoutSets = ListUtil.fromArray(layoutSet);
-
-		if (Validator.isNull(layoutUuid)) {
-			layoutSets.addAll(
-				_getLayoutSets(groupId, privateLayout, themeDisplay));
-		}
+		List<LayoutSet> layoutSets = _getLayoutSets(
+			groupId, layoutUuid, privateLayout, themeDisplay);
 
 		for (SitemapURLProvider sitemapURLProvider :
 				_getSitemapURLProviders()) {
@@ -351,7 +355,7 @@ public class SitemapManagerImpl implements SitemapManager {
 			}
 			else {
 				sitemapURLProvider.visitLayout(
-					rootElement, layoutUuid, layoutSet, themeDisplay);
+					rootElement, layoutUuid, layoutSets.get(0), themeDisplay);
 			}
 		}
 

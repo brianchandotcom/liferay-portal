@@ -37,7 +37,7 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 
 	await journalEditArticlePage.publishNewBasicArticle(title1);
 
-	const article1 = await page
+	const article1 = page
 		.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
 		)
@@ -47,7 +47,7 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 
 	await journalEditArticlePage.publishNewBasicArticle(title2);
 
-	const article2 = await page
+	const article2 = page
 		.locator(
 			'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
 		)

@@ -23,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -69,12 +70,12 @@ public class QueueListener {
 	@RabbitListener(
 		bindings = {
 			@QueueBinding(
-				exchange = @Exchange("koroneiki"), key = "account.update",
+				exchange = @Exchange(type = ExchangeTypes.TOPIC, value = "koroneiki_exchange"),
 				value = @Queue("${spring.rabbitmq.template.default-receive-queue}")
 			)
 		}
 	)
-	public void accountUpdateListener(
+	public void listener(
 		Message message, Channel channel,
 		@Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) {
 

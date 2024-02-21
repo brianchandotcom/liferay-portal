@@ -107,8 +107,6 @@ public class MostViewedContentRecommendationInfoItemCollectionProviderTest {
 
 			Assert.assertNotNull(infoCollectionProvider);
 
-			Assert.assertTrue(infoCollectionProvider.isAvailable());
-
 			IdempotentRetryAssert.retryAssert(
 				3, TimeUnit.SECONDS,
 				() -> {

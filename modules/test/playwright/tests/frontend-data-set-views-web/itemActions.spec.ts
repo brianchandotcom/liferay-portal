@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 import {actionsPageTest} from './fixtures/actionsPageTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
@@ -264,7 +265,7 @@ test.describe('Data Set Item Actions', () => {
 		const PAGE_NAME = 'Test page';
 		const SITE_NAME = 'FDSFragmentSite';
 		const SIDE_PANEL_ITEM_ACTION_NAME = 'SidePanel item action';
-		const SIDE_PANEL_ITEM_ACTION_URL = '/home';
+		const SIDE_PANEL_ITEM_ACTION_URL = liferayConfig.environment.baseUrl;
 
 		const siteInfo =
 			await test.step('Go home and create a new site and page', async () => {

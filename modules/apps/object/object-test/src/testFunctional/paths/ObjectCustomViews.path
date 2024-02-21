@@ -241,6 +241,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FILTER_ADD_BUTTON</td>
+		<td>//h3[(@class='lfr-objects__card-title') and text()='Filters']/../..//button[contains(@class,'btn btn-monospaced btn-primary')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DROPDOWN_BUTTON_ON_OBJECT_VIEW</td>
 		<td>//span[contains(@class, 'navbar-text-truncate') and contains(.,'${key_buttonName}')]</td>
 		<td></td>

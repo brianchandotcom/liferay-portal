@@ -160,13 +160,12 @@ public class PortletPreferencesConflictTest {
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 				_portlet.getPortletId());
 
-		Assert.assertNull(
-			publishedJavaxPortletPreferences.getValue(
-				_ctCollection2.getName(), null));
-
 		Assert.assertNotNull(
 			publishedJavaxPortletPreferences.getValue(
 				_ctCollection1.getName(), null));
+		Assert.assertNull(
+			publishedJavaxPortletPreferences.getValue(
+				_ctCollection2.getName(), null));
 	}
 
 	@Test

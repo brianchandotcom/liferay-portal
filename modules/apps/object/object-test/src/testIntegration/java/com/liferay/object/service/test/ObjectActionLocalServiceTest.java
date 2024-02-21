@@ -1384,19 +1384,9 @@ public class ObjectActionLocalServiceTest {
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 				RandomTestUtil.randomString(), false);
 
-			Organization organization1 =
-				_organizationLocalService.getOrganization(
-					TestPropsValues.getCompanyId(), "Organization1");
-
-			Assert.assertEquals("test1", organization1.getComments());
-
-			Map<String, Serializable> values1 =
-				_objectEntryLocalService.
-					getExtensionDynamicObjectDefinitionTableValues(
-						organizationObjectDefinition,
-						organization1.getOrganizationId());
-
-			Assert.assertEquals("Custom1", values1.get(objectField1.getName()));
+			_assertOrganization(
+				"test1", "Organization1", organizationObjectDefinition,
+				objectField1, "Custom1");
 
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
@@ -1406,22 +1396,12 @@ public class ObjectActionLocalServiceTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext());
 
-			Organization organization2 =
-				_organizationLocalService.getOrganization(
-					TestPropsValues.getCompanyId(), "Organization2");
-
-			Assert.assertEquals("test2", organization2.getComments());
-
-			Map<String, Serializable> values2 =
-				_objectEntryLocalService.
-					getExtensionDynamicObjectDefinitionTableValues(
-						organizationObjectDefinition,
-						organization2.getOrganizationId());
-
-			Assert.assertEquals("Custom2", values2.get(objectField1.getName()));
-
-			_organizationLocalService.deleteOrganization(organization1);
-			_organizationLocalService.deleteOrganization(organization2);
+			_assertOrganization(
+				"test1", "Organization1", organizationObjectDefinition,
+				objectField1, "Custom1");
+			_assertOrganization(
+				"test2", "Organization2", organizationObjectDefinition,
+				objectField1, "Custom2");
 		}
 		finally {
 			PrincipalThreadLocal.setName(originalName);
@@ -1886,6 +1866,27 @@ public class ObjectActionLocalServiceTest {
 			parametersUnicodeProperties,
 			objectAction.getParametersUnicodeProperties());
 		Assert.assertEquals(status, objectAction.getStatus());
+	}
+
+	private void _assertOrganization(
+			String comments, String name, ObjectDefinition objectDefinition,
+			ObjectField objectField, String objectFieldValue)
+		throws Exception {
+
+		Organization organization = _organizationLocalService.getOrganization(
+			TestPropsValues.getCompanyId(), name);
+
+		Assert.assertEquals(comments, organization.getComments());
+
+		Map<String, Serializable> values =
+			_objectEntryLocalService.
+				getExtensionDynamicObjectDefinitionTableValues(
+					objectDefinition, organization.getOrganizationId());
+
+		Assert.assertEquals(
+			objectFieldValue, values.get(objectField.getName()));
+
+		_organizationLocalService.deleteOrganization(organization);
 	}
 
 	private void _assertWebhookObjectAction(

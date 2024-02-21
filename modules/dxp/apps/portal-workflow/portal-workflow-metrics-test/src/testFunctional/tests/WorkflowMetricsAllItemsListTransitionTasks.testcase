@@ -619,8 +619,8 @@ definition {
 			workflowResourceValue = "Blogs Entry");
 
 		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryContent = "Blogs Entry Content 18432",
+			entryTitle = "Blogs Entry Title 18432");
 
 		Workflow.openWorkflowListView();
 
@@ -633,37 +633,33 @@ definition {
 		Button.click(button = "Update");
 
 		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title 2");
+			entryContent = "Blogs Entry Content 2 18432",
+			entryTitle = "Blogs Entry Title 2 18432");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
+			workflowAssetTitle = "Blogs Entry Title 18432",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
 		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetTitle = "Blogs Entry Title 2 18432",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "review");
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
-
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
-			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
-		}
 
 		WorkflowMetrics.goToTransitionSteps();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
 		AssertElementPresent(
-			key_taskName = "Blogs Entry Title",
+			key_taskName = "Blogs Entry Title 18432",
 			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW_TASK_1");
 
 		AssertElementPresent(
-			key_taskName = "Blogs Entry Title 2",
+			key_taskName = "Blogs Entry Title 2 18432",
 			locator1 = "WorkflowTransitionModal#TRANSITION_MODAL_ASSERT_REVIEW_TASK_2");
 	}
 

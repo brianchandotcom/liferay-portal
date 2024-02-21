@@ -3826,7 +3826,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONObject expectedJSONObject, ObjectEntry objectEntry)
 		throws Exception {
 
-		_updateAPISchemaToAPIPropertiesParameter(
+		_updateAPISchemaToAPIPropertiesJSONArray(
 			apiSchemasToAPIPropertiesJSONArray);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -3848,7 +3848,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONObject expectedJSONObject)
 		throws Exception {
 
-		_updateAPISchemaToAPIPropertiesParameter(
+		_updateAPISchemaToAPIPropertiesJSONArray(
 			apiSchemasToAPIPropertiesJSONArray);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -3864,7 +3864,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			JSONCompareMode.LENIENT);
 	}
 
-	private void _updateAPISchemaToAPIPropertiesParameter(
+	private void _updateAPISchemaToAPIPropertiesJSONArray(
 			JSONArray apiSchemaToAPIPropertiesJSONArray)
 		throws Exception {
 

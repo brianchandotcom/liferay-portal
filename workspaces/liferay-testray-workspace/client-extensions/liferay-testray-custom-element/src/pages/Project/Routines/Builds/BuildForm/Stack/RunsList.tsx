@@ -8,7 +8,11 @@ import classNames from 'classnames';
 import React from 'react';
 
 import Form from '../../../../../../components/Form';
-import {TestrayOptionsByCategory} from '../../../../../../services/rest';
+import {
+	TestrayFactor,
+	TestrayFactorOption,
+	TestrayOptionsByCategory,
+} from '../../../../../../services/rest';
 import RunsListActions from './RunsListActions';
 
 import type {
@@ -36,10 +40,12 @@ export type Fields = {
 export type RunsListProps = {
 	append: UseFieldArrayAppend<any>;
 	displayVertical?: boolean;
+	factorItems?: TestrayFactor[];
 	fields: Fields[];
+	isCreateBuildPage?: boolean;
+	optionsList: TestrayOptionsByCategory[] | TestrayFactorOption[][];
 	register: UseFormRegister<any>;
 	remove: (index: number) => void;
-	runOptionsList: TestrayOptionsByCategory[];
 	update: UseFieldArrayUpdate<any>;
 };
 
@@ -50,9 +56,9 @@ const RunsList: React.FC<RunsListProps> = ({
 	append,
 	displayVertical,
 	fields,
+	optionsList,
 	register,
 	remove,
-	runOptionsList,
 	update,
 }) => {
 	return (
@@ -88,7 +94,7 @@ const RunsList: React.FC<RunsListProps> = ({
 														: COLUMN_SIZE_SMALL
 												}
 											>
-												{runOptionsList[
+												{optionsList[
 													formatedCategoryName as any
 												] &&
 													defaultOption && (
@@ -103,8 +109,8 @@ const RunsList: React.FC<RunsListProps> = ({
 															label={
 																formatedCategoryName
 															}
-															name={`factorStacks.${index}.${optionIndex}.factorOptionId`}
-															options={runOptionsList[
+															name={`factorStacks.${index}.${optionIndex}.${optionItem}`}
+															options={optionsList[
 																formatedCategoryName as any
 															].map(
 																({

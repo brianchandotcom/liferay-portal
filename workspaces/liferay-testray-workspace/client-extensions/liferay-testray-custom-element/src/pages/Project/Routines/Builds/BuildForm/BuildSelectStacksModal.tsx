@@ -163,10 +163,11 @@ const BuildSelectStacksModal: React.FC<
 				<StackList
 					append={append as any}
 					displayVertical
+					factorItems={factorItems}
 					fields={fields}
+					optionsList={factorOptionsList}
 					register={register}
 					remove={remove}
-					runOptionsList={factorOptionsList}
 					update={update as any}
 				/>
 			)}

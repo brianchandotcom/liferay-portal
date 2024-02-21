@@ -5,14 +5,16 @@
 
 import {useState} from 'react';
 
+import FactorStackList, {FactorStackListProps} from './FactorStackList';
 import RunsHistory from './RunsHistory';
 import RunsList, {RunsListProps} from './RunsList';
 
-type StackProps = {} & RunsListProps;
+type StackProps = ({} & RunsListProps) | FactorStackListProps;
 
 const Stack: React.FC<StackProps> = ({
 	append,
 	fields,
+	isCreateBuildPage,
 	remove,
 	...stackProps
 }) => {
@@ -31,13 +33,21 @@ const Stack: React.FC<StackProps> = ({
 				fieldsHistory={fieldsHistory}
 				setFieldsHistory={setFieldsHistory}
 			/>
-
-			<RunsList
-				{...stackProps}
-				append={append}
-				fields={fields}
-				remove={onRemove}
-			/>
+			{isCreateBuildPage ? (
+				<FactorStackList
+					{...stackProps}
+					append={append}
+					fields={fields}
+					remove={onRemove}
+				/>
+			) : (
+				<RunsList
+					{...stackProps}
+					append={append}
+					fields={fields}
+					remove={onRemove}
+				/>
+			)}
 		</>
 	);
 };

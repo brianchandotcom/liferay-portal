@@ -9,9 +9,9 @@ liferay-ticket-custom-element:
     instanceable: false
     name: Liferay Ticket Custom Element
     portletCategoryName: category.client-extensions
+    properties:
+        defaultScreen: dashboard
     type: customElement
     urls:
         - "*.js"
     useESM: true
-    properties: 
-        defaultScreen: dashboard

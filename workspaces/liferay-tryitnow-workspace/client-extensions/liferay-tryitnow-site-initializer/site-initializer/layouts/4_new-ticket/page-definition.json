@@ -65,7 +65,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "New Ticket"
@@ -131,11 +132,13 @@
 								},
 								{
 									"id": "portraitMobile",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								},
 								{
 									"id": "tablet",
-									"rowViewportDefinition": {}
+									"rowViewportDefinition": {
+									}
 								}
 							],
 							"verticalAlignment": "top"
@@ -151,11 +154,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -173,11 +178,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],
@@ -190,7 +197,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -220,7 +228,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "How can we help?"
@@ -264,7 +273,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Subject"
@@ -291,7 +301,8 @@
 													"fragmentConfig": {
 														"inputFieldId": "ObjectField_wFStatus"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -305,7 +316,8 @@
 														"inputFieldId": "ObjectField_subject",
 														"inputShowLabel": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"marginBottom": "4"
@@ -327,7 +339,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Description"
@@ -354,7 +367,8 @@
 														"inputFieldId": "ObjectField_description",
 														"inputShowLabel": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"marginBottom": "4"
@@ -377,7 +391,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Priority"
@@ -402,10 +417,11 @@
 														"key": "INPUTS-select-from-list"
 													},
 													"fragmentConfig": {
-														"inputShowLabel": false,
-														"inputFieldId": "ObjectField_priority"
+														"inputFieldId": "ObjectField_priority",
+														"inputShowLabel": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"marginBottom": "4"
@@ -429,7 +445,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Region"
@@ -454,10 +471,11 @@
 														"key": "INPUTS-select-from-list"
 													},
 													"fragmentConfig": {
-														"inputShowLabel": false,
-														"inputFieldId": "ObjectField_region"
+														"inputFieldId": "ObjectField_region",
+														"inputShowLabel": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"marginBottom": "4"
@@ -481,7 +499,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Type"
@@ -506,10 +525,11 @@
 														"key": "INPUTS-select-from-list"
 													},
 													"fragmentConfig": {
-														"inputShowLabel": false,
-														"inputFieldId": "ObjectField_type"
+														"inputFieldId": "ObjectField_type",
+														"inputShowLabel": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"marginBottom": "4"
@@ -533,7 +553,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Status"
@@ -558,10 +579,11 @@
 														"key": "INPUTS-select-from-list"
 													},
 													"fragmentConfig": {
-														"inputShowLabel": false,
-														"inputFieldId": "ObjectField_ticketStatus"
+														"inputFieldId": "ObjectField_ticketStatus",
+														"inputShowLabel": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"marginBottom": "4"
@@ -584,7 +606,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Related Ticket"
@@ -608,10 +631,11 @@
 														"key": "INPUTS-select-from-list"
 													},
 													"fragmentConfig": {
-														"inputFieldId": "ObjectField_r_relatedTicket_c_j3y7TicketId",
+														"inputFieldId": "ObjectField_r_j3y7TicketToJ3Y7Ticket_c_j3y7TicketId",
 														"inputShowLabel": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"marginBottom": "4"
@@ -633,7 +657,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Uploads"
@@ -660,7 +685,8 @@
 														"inputFieldId": "ObjectField_attachment",
 														"inputShowLabel": false
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"borderColor": "colorNeutral4",
 														"marginBottom": "4"
@@ -682,7 +708,8 @@
 														{
 															"id": "submit-button-text",
 															"value": {
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -706,11 +733,13 @@
 											"id": "landscapeMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "portraitMobile"
 										},
 										{
-											"columnViewportDefinition": {},
+											"columnViewportDefinition": {
+											},
 											"id": "tablet"
 										}
 									],

@@ -340,26 +340,29 @@ public class SitemapManagerImpl implements SitemapManager {
 		List<LayoutSet> layoutSets = _getLayoutSets(
 			groupId, layoutUuid, privateLayout, themeDisplay);
 
-		for (SitemapURLProvider sitemapURLProvider :
-				_getSitemapURLProviders()) {
+		if (ListUtil.isNotEmpty(layoutSets)) {
+			for (SitemapURLProvider sitemapURLProvider :
+					_getSitemapURLProviders()) {
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-187793") &&
-				!sitemapURLProvider.isInclude(
-					themeDisplay.getCompanyId(),
-					themeDisplay.getScopeGroupId())) {
+				if (FeatureFlagManagerUtil.isEnabled("LPS-187793") &&
+					!sitemapURLProvider.isInclude(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId())) {
 
-				continue;
-			}
-
-			if (Validator.isNull(layoutUuid)) {
-				for (LayoutSet curLayoutSet : layoutSets) {
-					sitemapURLProvider.visitLayoutSet(
-						rootElement, curLayoutSet, themeDisplay);
+					continue;
 				}
-			}
-			else {
-				sitemapURLProvider.visitLayout(
-					rootElement, layoutUuid, layoutSets.get(0), themeDisplay);
+
+				if (Validator.isNull(layoutUuid)) {
+					for (LayoutSet curLayoutSet : layoutSets) {
+						sitemapURLProvider.visitLayoutSet(
+							rootElement, curLayoutSet, themeDisplay);
+					}
+				}
+				else {
+					sitemapURLProvider.visitLayout(
+						rootElement, layoutUuid, layoutSets.get(0),
+						themeDisplay);
+				}
 			}
 		}
 

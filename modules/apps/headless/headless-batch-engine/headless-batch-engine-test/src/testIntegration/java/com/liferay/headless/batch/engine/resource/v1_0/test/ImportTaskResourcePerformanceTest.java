@@ -186,11 +186,21 @@ public class ImportTaskResourcePerformanceTest
 			httpInvoker.body(json, "application/json");
 			httpInvoker.userNameAndPassword("test@liferay.com:test");
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-			httpInvoker.path(
-				StringBundler.concat(
-					"http://localhost:8080/o/headless-batch-engine/v1.0",
-					"/import-task/", classNamePartsMap.get("className"),
-					"?createStrategy=INSERT"));
+
+			StringBundler sb = new StringBundler(
+				classNamePartsMap.containsKey("taskItemDelegateName") ? 6 : 4);
+
+			sb.append("http://localhost:8080/o/headless-batch-engine/v1.0");
+			sb.append("/import-task/");
+			sb.append(classNamePartsMap.get("className"));
+			sb.append("?createStrategy=INSERT");
+
+			if (classNamePartsMap.containsKey("taskItemDelegateName")) {
+				sb.append("&taskItemDelegateName=");
+				sb.append(classNamePartsMap.get("taskItemDelegateName"));
+			}
+
+			httpInvoker.path(sb.toString());
 
 			HttpInvoker.HttpResponse response = httpInvoker.invoke();
 

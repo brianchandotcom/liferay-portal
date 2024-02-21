@@ -21,6 +21,16 @@ import {
 import {SLAFormContext} from '../SLAFormPageProvider.es';
 import {validateDuration, validateHours} from '../util/slaFormUtil.es';
 
+let MaskedInputDefault = MaskedInput;
+
+// `react-text-mask` provides both a commonjs and ESM version.
+// We need this logic here so that both work. Unit tests rely on commonjs and
+// our DXP runtime uses ESM.
+
+if (MaskedInputDefault.default) {
+	MaskedInputDefault = MaskedInputDefault.default;
+}
+
 export default function DurationSection({onChangeHandler}) {
 	const {
 		calendars,
@@ -107,7 +117,7 @@ export default function DurationSection({onChangeHandler}) {
 						htmlFor="slaDurationDays"
 						label={Liferay.Language.get('days')}
 					>
-						<MaskedInput
+						<MaskedInputDefault
 							className="form-control"
 							id="slaDurationDays"
 							mask={daysMask}
@@ -126,7 +136,7 @@ export default function DurationSection({onChangeHandler}) {
 						htmlFor="slaDurationHours"
 						label={Liferay.Language.get('hours')}
 					>
-						<MaskedInput
+						<MaskedInputDefault
 							className="form-control"
 							id="slaDurationHours"
 							mask={[/\d/, /\d/, ':', /\d/, /\d/]}

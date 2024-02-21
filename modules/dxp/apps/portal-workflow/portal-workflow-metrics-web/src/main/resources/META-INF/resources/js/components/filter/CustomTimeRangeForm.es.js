@@ -18,6 +18,16 @@ import {getMaskByDateFormat} from '../../shared/util/date.es';
 import {sub} from '../../shared/util/lang.es';
 import {useCustomTimeRange} from './hooks/useCustomTimeRange.es';
 
+let MaskedInputDefault = MaskedInput;
+
+// `react-text-mask` provides both a commonjs and ESM version.
+// We need this logic here so that both work. Unit tests rely on commonjs and
+// our DXP runtime uses ESM.
+
+if (MaskedInputDefault.default) {
+	MaskedInputDefault = MaskedInputDefault.default;
+}
+
 export default function CustomTimeRangeForm({
 	handleSelectFilter,
 	items,
@@ -94,7 +104,7 @@ export default function CustomTimeRangeForm({
 							{Liferay.Language.get('from')}
 						</label>
 
-						<MaskedInput
+						<MaskedInputDefault
 							className="form-control"
 							defaultValue={dateStart}
 							mask={dateMask}
@@ -110,7 +120,7 @@ export default function CustomTimeRangeForm({
 							{Liferay.Language.get('to')}
 						</label>
 
-						<MaskedInput
+						<MaskedInputDefault
 							className="form-control"
 							defaultValue={dateEnd}
 							mask={dateMask}

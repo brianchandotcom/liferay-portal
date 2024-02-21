@@ -22,6 +22,16 @@ import {toUppercase} from '../../../../shared/util/util.es';
 import {AppContext} from '../../../AppContext.es';
 import {ModalContext} from '../ModalProvider.es';
 
+let MaskedInputDefault = MaskedInput;
+
+// `react-text-mask` provides both a commonjs and ESM version.
+// We need this logic here so that both work. Unit tests rely on commonjs and
+// our DXP runtime uses ESM.
+
+if (MaskedInputDefault.default) {
+	MaskedInputDefault = MaskedInputDefault.default;
+}
+
 const getTimeOptions = (isAmPm) => {
 	const parse = (number) => (number < 10 ? `0${number}` : number);
 
@@ -129,7 +139,7 @@ function UpdateDueDateStep({className, dueDate = new Date()}) {
 							</span>
 						</label>
 
-						<MaskedInput
+						<MaskedInputDefault
 							className="form-control"
 							mask={dateMask}
 							onChange={({target}) => setDate(target.value)}

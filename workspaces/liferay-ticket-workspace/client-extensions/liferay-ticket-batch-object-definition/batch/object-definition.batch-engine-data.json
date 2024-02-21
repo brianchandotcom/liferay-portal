@@ -532,53 +532,15 @@
 			],
 			"objectRelationships": [
 				{
-                    "deletionType": "prevent",
-                    "label": {
-                        "en_US": "Related Ticket"
-                    },
-                    "name": "relatedTicket",
-                    "objectDefinitionExternalReferenceCode1": "J3Y7_TICKET",
-                    "objectDefinitionExternalReferenceCode2": "J3Y7_TICKET",
-                    "objectDefinitionModifiable2": true,
-                    "objectDefinitionName2": "J3Y7Ticket",
-                    "objectDefinitionSystem2": false,
-                    "objectField": {
-                        "DBType": "Long",
-                        "businessType": "Relationship",
-                        "indexed": true,
-                        "indexedAsKeyword": false,
-                        "indexedLanguageId": "",
-                        "label": {
-                            "en_US": "Related Ticket"
-                        },
-                        "listTypeDefinitionId": 0,
-                        "localized": false,
-                        "name": "r_relatedTicket_c_j3y7TicketId",
-                        "objectFieldSettings": [
-                            {
-                                "name": "objectDefinition1ShortName",
-                                "value": "J3Y7Ticket"
-                            },
-                            {
-                                "name": "objectRelationshipERCObjectFieldName",
-                                "value": "r_relatedTicket_c_j3y7TicketERC"
-                            }
-                        ],
-                        "readOnly": "false",
-                        "readOnlyConditionExpression": "",
-                        "relationshipType": "oneToMany",
-                        "required": false,
-                        "state": false,
-                        "system": false,
-                        "type": "Long",
-                        "unique": false
-                    },
-                    "parameterObjectFieldId": 0,
-                    "parameterObjectFieldName": "",
-                    "reverse": false,
-                    "system": false,
-                    "type": "oneToMany"
-                }
+					"deletionType": "prevent",
+					"label": {
+						"en_US": "J3Y7 Ticket to J3Y7 Ticket"
+					},
+					"name": "j3y7TicketToJ3Y7Ticket",
+					"objectDefinitionExternalReferenceCode1": "J3Y7_TICKET",
+					"objectDefinitionExternalReferenceCode2": "J3Y7_TICKET",
+					"type": "oneToMany"
+				}
 			],
 			"objectValidationRules": [
 			],

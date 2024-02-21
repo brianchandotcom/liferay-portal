@@ -59,7 +59,7 @@ public class JournalRecentArticlesResultRowSplitterTest {
 	}
 
 	@Test
-	public void testSplit() {
+	public void testSplitMultipleSections() {
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		LocalDateTime localDateTime = _toLocalDateTime(
@@ -108,6 +108,32 @@ public class JournalRecentArticlesResultRowSplitterTest {
 			eightDaysAgoJournalArticle, thirtyDaysAgoJournalArticle);
 		_assertResultRowSplitterEntry(
 			"older", resultRowSplitterEntries.get(3), themeDisplay,
+			thirtyOneDaysAgoJournalArticle);
+	}
+
+	@Test
+	public void testSplitSingleSection() {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		JournalArticle thirtyOneDaysAgoJournalArticle = _getJournalArticle(
+			31, _toLocalDateTime(new Date(), ZoneId.of("UTC")));
+
+		List<ResultRow> resultRows = Arrays.asList(
+			_getResultRow(thirtyOneDaysAgoJournalArticle));
+
+		JournalRecentArticlesResultRowSplitter
+			journalRecentArticlesResultRowSplitter =
+				new JournalRecentArticlesResultRowSplitter(themeDisplay);
+
+		List<ResultRowSplitterEntry> resultRowSplitterEntries =
+			journalRecentArticlesResultRowSplitter.split(resultRows);
+
+		Assert.assertEquals(
+			resultRowSplitterEntries.toString(), 1,
+			resultRowSplitterEntries.size());
+
+		_assertResultRowSplitterEntry(
+			"older", resultRowSplitterEntries.get(0), themeDisplay,
 			thirtyOneDaysAgoJournalArticle);
 	}
 

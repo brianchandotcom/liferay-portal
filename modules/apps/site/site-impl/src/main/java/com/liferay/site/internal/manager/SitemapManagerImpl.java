@@ -273,7 +273,11 @@ public class SitemapManagerImpl implements SitemapManager {
 		}
 
 		try {
-			List<LayoutSet> layoutSets = ListUtil.fromArray(layoutSet);
+			List<LayoutSet> layoutSets = new ArrayList<>();
+
+			if (MapUtil.isEmpty(layoutSet.getVirtualHostnames())) {
+				layoutSets.add(layoutSet);
+			}
 
 			layoutSets.addAll(
 				TransformUtil.transformToList(

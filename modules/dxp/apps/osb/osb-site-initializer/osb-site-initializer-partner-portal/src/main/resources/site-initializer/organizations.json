@@ -10,24 +10,16 @@
 				"name": "ANZ"
 			},
 			{
+				"externalReferenceCode": "PRM-ORG-ASEAN",
+				"name": "ASEAN"
+			},
+			{
 				"externalReferenceCode": "PRM-ORG-BENELUX",
-				"name": "BENELUX"
+				"name": "Benelux"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-CANADA",
-				"name": "Canada"
-			},
-			{
-				"externalReferenceCode": "PRM-ORG-COL-ECU-CEN-AMERICA",
-				"name": "Colombia, Ecuador, Central America"
-			},
-			{
-				"externalReferenceCode": "PRM-ORG-CEN-EAST-EUR",
-				"name": "CENTRAL AND EASTERN EUROPE"
-			},
-			{
-				"externalReferenceCode": "PRM-ORG-CH-PE-ARG-URU-PAR",
-				"name": "Chile, Peru, Argentina, Uruguay, Paraguay"
+				"externalReferenceCode": "PRM-ORG-CEE",
+				"name": "CEE"
 			},
 			{
 				"externalReferenceCode": "PRM-ORG-CHINA",
@@ -46,8 +38,8 @@
 				"name": "India"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-ITGRCY",
-				"name": "itGrCy"
+				"externalReferenceCode": "PRM-ORG-ITA",
+				"name": "Italy"
 			},
 			{
 				"externalReferenceCode": "PRM-ORG-JAPAN",
@@ -55,35 +47,31 @@
 			},
 			{
 				"externalReferenceCode": "PRM-ORG-LAT-AMERICA",
-				"name": "Latim America"
-			},
-			{
-				"externalReferenceCode": "PRM-ORG-MEXICO",
-				"name": "Mexico"
+				"name": "Latin America"
 			},
 			{
 				"externalReferenceCode": "PRM-ORG-MIDDLE-EAST",
 				"name": "Middle East"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-NORDICS",
-				"name": "Nordics"
+				"externalReferenceCode": "PRM-ORG-NORDIC",
+				"name": "Nordic"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-SINGAPORE",
-				"name": "Singapore"
+				"externalReferenceCode": "PRM-ORG-NA",
+				"name": "North America"
 			},
 			{
-				"externalReferenceCode": "PRM-ORG-SPA-POR",
-				"name": "SpainPortugal"
+				"externalReferenceCode": "PRM-ORG-OTHER",
+				"name": "Other"
+			},
+			{
+				"externalReferenceCode": "PRM-ORG-SPA",
+				"name": "Spain"
 			},
 			{
 				"externalReferenceCode": "PRM-ORG-UK",
 				"name": "UK"
-			},
-			{
-				"externalReferenceCode": "PRM-ORG-US",
-				"name": "US"
 			}
 		],
 		"externalReferenceCode": "PRM-ORG-GLOBAL",

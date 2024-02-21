@@ -5,6 +5,7 @@
 
 package com.liferay.announcements.kernel.service;
 
+import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -39,8 +40,8 @@ public class AnnouncementsDeliveryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-			updateDelivery(long userId, String type, boolean email, boolean sms)
+	public AnnouncementsDelivery updateDelivery(
+			long userId, String type, boolean email, boolean sms)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsDeliveryService.updateDelivery(

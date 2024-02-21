@@ -63,10 +63,11 @@ public class AnnouncementsDeliveryModelImpl
 	public static final String TABLE_NAME = "AnnouncementsDelivery";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"deliveryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"type_", Types.VARCHAR}, {"email", Types.BOOLEAN},
-		{"sms", Types.BOOLEAN}, {"website", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"deliveryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"type_", Types.VARCHAR},
+		{"email", Types.BOOLEAN}, {"sms", Types.BOOLEAN},
+		{"website", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -74,6 +75,7 @@ public class AnnouncementsDeliveryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("deliveryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -84,7 +86,7 @@ public class AnnouncementsDeliveryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AnnouncementsDelivery (mvccVersion LONG default 0 not null,deliveryId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
+		"create table AnnouncementsDelivery (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,deliveryId LONG not null,companyId LONG,userId LONG,type_ VARCHAR(75) null,email BOOLEAN,sms BOOLEAN,website BOOLEAN,primary key (deliveryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AnnouncementsDelivery";
@@ -249,6 +251,8 @@ public class AnnouncementsDeliveryModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", AnnouncementsDelivery::getMvccVersion);
 			attributeGetterFunctions.put(
+				"ctCollectionId", AnnouncementsDelivery::getCtCollectionId);
+			attributeGetterFunctions.put(
 				"deliveryId", AnnouncementsDelivery::getDeliveryId);
 			attributeGetterFunctions.put(
 				"companyId", AnnouncementsDelivery::getCompanyId);
@@ -284,6 +288,10 @@ public class AnnouncementsDeliveryModelImpl
 				"mvccVersion",
 				(BiConsumer<AnnouncementsDelivery, Long>)
 					AnnouncementsDelivery::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<AnnouncementsDelivery, Long>)
+					AnnouncementsDelivery::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"deliveryId",
 				(BiConsumer<AnnouncementsDelivery, Long>)
@@ -332,6 +340,21 @@ public class AnnouncementsDeliveryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -565,6 +588,7 @@ public class AnnouncementsDeliveryModelImpl
 			new AnnouncementsDeliveryImpl();
 
 		announcementsDeliveryImpl.setMvccVersion(getMvccVersion());
+		announcementsDeliveryImpl.setCtCollectionId(getCtCollectionId());
 		announcementsDeliveryImpl.setDeliveryId(getDeliveryId());
 		announcementsDeliveryImpl.setCompanyId(getCompanyId());
 		announcementsDeliveryImpl.setUserId(getUserId());
@@ -585,6 +609,8 @@ public class AnnouncementsDeliveryModelImpl
 
 		announcementsDeliveryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		announcementsDeliveryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		announcementsDeliveryImpl.setDeliveryId(
 			this.<Long>getColumnOriginalValue("deliveryId"));
 		announcementsDeliveryImpl.setCompanyId(
@@ -678,6 +704,8 @@ public class AnnouncementsDeliveryModelImpl
 
 		announcementsDeliveryCacheModel.mvccVersion = getMvccVersion();
 
+		announcementsDeliveryCacheModel.ctCollectionId = getCtCollectionId();
+
 		announcementsDeliveryCacheModel.deliveryId = getDeliveryId();
 
 		announcementsDeliveryCacheModel.companyId = getCompanyId();
@@ -761,6 +789,7 @@ public class AnnouncementsDeliveryModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _deliveryId;
 	private long _companyId;
 	private long _userId;
@@ -800,6 +829,7 @@ public class AnnouncementsDeliveryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("deliveryId", _deliveryId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("userId", _userId);
@@ -832,19 +862,21 @@ public class AnnouncementsDeliveryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("deliveryId", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("deliveryId", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("type_", 16L);
+		columnBitmasks.put("userId", 16L);
 
-		columnBitmasks.put("email", 32L);
+		columnBitmasks.put("type_", 32L);
 
-		columnBitmasks.put("sms", 64L);
+		columnBitmasks.put("email", 64L);
 
-		columnBitmasks.put("website", 128L);
+		columnBitmasks.put("sms", 128L);
+
+		columnBitmasks.put("website", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

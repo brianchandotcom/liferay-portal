@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -35,6 +37,7 @@ public class AnnouncementsDeliveryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("deliveryId", getDeliveryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -52,6 +55,12 @@ public class AnnouncementsDeliveryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long deliveryId = (Long)attributes.get("deliveryId");
@@ -110,6 +119,16 @@ public class AnnouncementsDeliveryWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this announcements delivery.
+	 *
+	 * @return the ct collection ID of this announcements delivery
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -248,6 +267,16 @@ public class AnnouncementsDeliveryWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this announcements delivery.
+	 *
+	 * @param ctCollectionId the ct collection ID of this announcements delivery
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the delivery ID of this announcements delivery.
 	 *
 	 * @param deliveryId the delivery ID of this announcements delivery
@@ -340,6 +369,20 @@ public class AnnouncementsDeliveryWrapper
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
+	}
+
+	@Override
+	public Map<String, Function<AnnouncementsDelivery, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<AnnouncementsDelivery, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

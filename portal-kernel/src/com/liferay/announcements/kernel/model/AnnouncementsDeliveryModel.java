@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,7 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AnnouncementsDeliveryModel
-	extends BaseModel<AnnouncementsDelivery>, MVCCModel, ShardedModel {
+	extends BaseModel<AnnouncementsDelivery>, CTModel<AnnouncementsDelivery>,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -38,6 +40,7 @@ public interface AnnouncementsDeliveryModel
 	 *
 	 * @return the primary key of this announcements delivery
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -45,6 +48,7 @@ public interface AnnouncementsDeliveryModel
 	 *
 	 * @param primaryKey the primary key of this announcements delivery
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -62,6 +66,22 @@ public interface AnnouncementsDeliveryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this announcements delivery.
+	 *
+	 * @return the ct collection ID of this announcements delivery
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this announcements delivery.
+	 *
+	 * @param ctCollectionId the ct collection ID of this announcements delivery
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the delivery ID of this announcements delivery.

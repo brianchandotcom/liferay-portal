@@ -5,8 +5,11 @@
 
 package com.liferay.announcements.kernel.service;
 
+import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link AnnouncementsDeliveryLocalService}.
@@ -40,18 +43,15 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	 * @return the announcements delivery that was added
 	 */
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-		addAnnouncementsDelivery(
-			com.liferay.announcements.kernel.model.AnnouncementsDelivery
-				announcementsDelivery) {
+	public AnnouncementsDelivery addAnnouncementsDelivery(
+		AnnouncementsDelivery announcementsDelivery) {
 
 		return _announcementsDeliveryLocalService.addAnnouncementsDelivery(
 			announcementsDelivery);
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-			addUserDelivery(long userId, String type)
+	public AnnouncementsDelivery addUserDelivery(long userId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsDeliveryLocalService.addUserDelivery(userId, type);
@@ -64,9 +64,7 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	 * @return the new announcements delivery
 	 */
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-		createAnnouncementsDelivery(long deliveryId) {
-
+	public AnnouncementsDelivery createAnnouncementsDelivery(long deliveryId) {
 		return _announcementsDeliveryLocalService.createAnnouncementsDelivery(
 			deliveryId);
 	}
@@ -94,10 +92,8 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	 * @return the announcements delivery that was removed
 	 */
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-		deleteAnnouncementsDelivery(
-			com.liferay.announcements.kernel.model.AnnouncementsDelivery
-				announcementsDelivery) {
+	public AnnouncementsDelivery deleteAnnouncementsDelivery(
+		AnnouncementsDelivery announcementsDelivery) {
 
 		return _announcementsDeliveryLocalService.deleteAnnouncementsDelivery(
 			announcementsDelivery);
@@ -115,8 +111,7 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	 * @throws PortalException if a announcements delivery with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-			deleteAnnouncementsDelivery(long deliveryId)
+	public AnnouncementsDelivery deleteAnnouncementsDelivery(long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsDeliveryLocalService.deleteAnnouncementsDelivery(
@@ -129,9 +124,7 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteDelivery(
-		com.liferay.announcements.kernel.model.AnnouncementsDelivery delivery) {
-
+	public void deleteDelivery(AnnouncementsDelivery delivery) {
 		_announcementsDeliveryLocalService.deleteDelivery(delivery);
 	}
 
@@ -264,9 +257,7 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-		fetchAnnouncementsDelivery(long deliveryId) {
-
+	public AnnouncementsDelivery fetchAnnouncementsDelivery(long deliveryId) {
 		return _announcementsDeliveryLocalService.fetchAnnouncementsDelivery(
 			deliveryId);
 	}
@@ -290,9 +281,8 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	 * @return the range of announcements deliveries
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-			getAnnouncementsDeliveries(int start, int end) {
+	public java.util.List<AnnouncementsDelivery> getAnnouncementsDeliveries(
+		int start, int end) {
 
 		return _announcementsDeliveryLocalService.getAnnouncementsDeliveries(
 			start, end);
@@ -317,8 +307,7 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	 * @throws PortalException if a announcements delivery with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-			getAnnouncementsDelivery(long deliveryId)
+	public AnnouncementsDelivery getAnnouncementsDelivery(long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsDeliveryLocalService.getAnnouncementsDelivery(
@@ -326,8 +315,7 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-			getDelivery(long deliveryId)
+	public AnnouncementsDelivery getDelivery(long deliveryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsDeliveryLocalService.getDelivery(deliveryId);
@@ -364,17 +352,14 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.announcements.kernel.model.AnnouncementsDelivery>
-				getUserDeliveries(long userId)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<AnnouncementsDelivery> getUserDeliveries(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsDeliveryLocalService.getUserDeliveries(userId);
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-			getUserDelivery(long userId, String type)
+	public AnnouncementsDelivery getUserDelivery(long userId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsDeliveryLocalService.getUserDelivery(userId, type);
@@ -391,18 +376,16 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	 * @return the announcements delivery that was updated
 	 */
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-		updateAnnouncementsDelivery(
-			com.liferay.announcements.kernel.model.AnnouncementsDelivery
-				announcementsDelivery) {
+	public AnnouncementsDelivery updateAnnouncementsDelivery(
+		AnnouncementsDelivery announcementsDelivery) {
 
 		return _announcementsDeliveryLocalService.updateAnnouncementsDelivery(
 			announcementsDelivery);
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery
-			updateDelivery(long userId, String type, boolean email, boolean sms)
+	public AnnouncementsDelivery updateDelivery(
+			long userId, String type, boolean email, boolean sms)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _announcementsDeliveryLocalService.updateDelivery(
@@ -412,6 +395,26 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _announcementsDeliveryLocalService.getBasePersistence();
+	}
+
+	@Override
+	public CTPersistence<AnnouncementsDelivery> getCTPersistence() {
+		return _announcementsDeliveryLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<AnnouncementsDelivery> getModelClass() {
+		return _announcementsDeliveryLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<AnnouncementsDelivery>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _announcementsDeliveryLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

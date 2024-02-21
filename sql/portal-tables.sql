@@ -32,13 +32,15 @@ create table Address (
 
 create table AnnouncementsDelivery (
 	mvccVersion LONG default 0 not null,
-	deliveryId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	deliveryId LONG not null,
 	companyId LONG,
 	userId LONG,
 	type_ VARCHAR(75) null,
 	email BOOLEAN,
 	sms BOOLEAN,
-	website BOOLEAN
+	website BOOLEAN,
+	primary key (deliveryId, ctCollectionId)
 );
 
 create table AnnouncementsEntry (

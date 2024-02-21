@@ -225,7 +225,38 @@ public class SitemapManagerImpl implements SitemapManager {
 		_serviceTrackerMap.close();
 	}
 
-	private List<LayoutSet> _getCompanySitemapGroupLayoutSets(
+	private String _getIndexSitemap(
+			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Document document = _saxReader.createDocument();
+
+		document.setXMLEncoding(StringPool.UTF8);
+
+		Element rootElement = document.addElement(
+			"sitemapindex", "http://www.sitemaps.org/schemas/sitemap/0.9");
+
+		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+
+		_initEntriesAndSize(rootElement);
+
+		_visitLayoutSet(
+			rootElement,
+			_layoutSetLocalService.getLayoutSet(groupId, privateLayout),
+			themeDisplay);
+
+		for (LayoutSet layoutSet :
+				_getLayoutSets(groupId, privateLayout, themeDisplay)) {
+
+			_visitLayoutSet(rootElement, layoutSet, themeDisplay);
+		}
+
+		_removeEntriesAndSize(rootElement);
+
+		return document.asXML();
+	}
+
+	private List<LayoutSet> _getLayoutSets(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -269,38 +300,6 @@ public class SitemapManagerImpl implements SitemapManager {
 		return Collections.emptyList();
 	}
 
-	private String _getIndexSitemap(
-			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Document document = _saxReader.createDocument();
-
-		document.setXMLEncoding(StringPool.UTF8);
-
-		Element rootElement = document.addElement(
-			"sitemapindex", "http://www.sitemaps.org/schemas/sitemap/0.9");
-
-		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
-
-		_initEntriesAndSize(rootElement);
-
-		_visitLayoutSet(
-			rootElement,
-			_layoutSetLocalService.getLayoutSet(groupId, privateLayout),
-			themeDisplay);
-
-		for (LayoutSet layoutSet :
-				_getCompanySitemapGroupLayoutSets(
-					groupId, privateLayout, themeDisplay)) {
-
-			_visitLayoutSet(rootElement, layoutSet, themeDisplay);
-		}
-
-		_removeEntriesAndSize(rootElement);
-
-		return document.asXML();
-	}
-
 	private String _getSitemap(
 			String layoutUuid, long groupId, boolean privateLayout,
 			ThemeDisplay themeDisplay)
@@ -330,8 +329,7 @@ public class SitemapManagerImpl implements SitemapManager {
 
 		if (Validator.isNull(layoutUuid)) {
 			layoutSets.addAll(
-				_getCompanySitemapGroupLayoutSets(
-					groupId, privateLayout, themeDisplay));
+				_getLayoutSets(groupId, privateLayout, themeDisplay));
 		}
 
 		for (SitemapURLProvider sitemapURLProvider :

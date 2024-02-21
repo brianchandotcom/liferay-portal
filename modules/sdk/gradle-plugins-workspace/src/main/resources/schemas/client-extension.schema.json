@@ -217,6 +217,27 @@
 					"allOf": [
 						{
 							"$ref": "#/definitions/propertySets/properties/url"
+						},
+						{
+							"properties": {
+								"scriptElementAttributes": {
+									"additionalProperties": {
+										"type": [
+											"boolean",
+											"integer",
+											"number",
+											"string"
+										]
+									},
+									"description": "A list of HTML attributes that will be added to the script element.",
+									"properties": {
+										"src": false
+									},
+									"title": "Script Element Attributes",
+									"type": "object"
+								}
+							},
+							"type": "object"
 						}
 					],
 					"description": "Description for globalJS"

@@ -967,6 +967,23 @@ public class FragmentEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateFragmentEntryWithCacheable() throws Exception {
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId());
+
+		fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), true, fragmentEntry.getConfiguration(),
+			fragmentEntry.getIcon(), fragmentEntry.getPreviewFileEntryId(),
+			fragmentEntry.isReadOnly(), fragmentEntry.getTypeOptions(),
+			fragmentEntry.getStatus());
+
+		Assert.assertTrue(fragmentEntry.isCacheable());
+	}
+
+	@Test
 	public void testUpdateFragmentEntryWithHtmlWithAmpersand()
 		throws Exception {
 
@@ -994,6 +1011,28 @@ public class FragmentEntryLocalServiceTest {
 			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(html, fragmentEntry.getHtml());
+	}
+
+	@Test
+	public void testUpdateFragmentEntryWithPreviewFileEntryId()
+		throws Exception {
+
+		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
+			_fragmentCollection.getFragmentCollectionId());
+
+		long previewFileEntryId = fragmentEntry.getPreviewFileEntryId();
+
+		fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
+			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
+			previewFileEntryId + 1, fragmentEntry.isReadOnly(),
+			fragmentEntry.getTypeOptions(), fragmentEntry.getStatus());
+
+		Assert.assertEquals(
+			previewFileEntryId + 1, fragmentEntry.getPreviewFileEntryId());
 	}
 
 	private void _assertCopyFragmentEntry(

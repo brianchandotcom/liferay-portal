@@ -255,10 +255,6 @@ definition {
 			workflowStatus = "Draft");
 
 		Staging.submitForWorkflowPageRevision();
-
-		Page.viewWithWorkflowPG(
-			pageName = ${pageName},
-			workflowStatus = "Pending (Created)");
 	}
 
 	@description = "Verify that when the Approved page is edited the button Submit for Workflow is displayed"

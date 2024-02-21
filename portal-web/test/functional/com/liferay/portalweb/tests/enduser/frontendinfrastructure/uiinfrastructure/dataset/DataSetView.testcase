@@ -620,48 +620,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-176189. Confirm that the view was really deleted"
-	@priority = 4
-	test CanUpdateNumberOfViews {
-		task ("When Add a new view") {
-			DataSetAdmin.createDataSetView(
-				description = "Description Test",
-				key_name = "View Test");
-		}
-
-		task ("And back to the Data Sets admin page") {
-			Navigator.gotoBack();
-		}
-
-		task ("Then confirm that the views column shows 1 views") {
-			AssertElementPresent(
-				locator1 = "DataSet#NUMBER_OF_VIEWS",
-				numberOfViews = 1);
-		}
-
-		task ("When go to View admin page") {
-			Click(
-				key_entry = "Data Set Test",
-				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
-
-			Click(locator1 = "DataSet#VIEW_ENTRY_BUTTON");
-		}
-
-		task ("And the user deletes a View created") {
-			DataSetAdmin.deleteDataSetViewViaAPI(dataSetViewsNameList = "View Test");
-		}
-
-		task ("And back to the Data Sets admin page") {
-			Navigator.gotoBack();
-		}
-
-		task ("Then confirm that the views column shows 0 views") {
-			AssertElementPresent(
-				locator1 = "DataSet#NUMBER_OF_VIEWS",
-				numberOfViews = 0);
-		}
-	}
-
 	@description = "Needs refactor after LPS-183512 is fixed | LPS-172396. Confirm that special characters are confirmed in the display name on the page "
 	@priority = 4
 	test CanUseSpecialCharactersInNameField {

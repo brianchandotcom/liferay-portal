@@ -82,7 +82,12 @@ definition {
 
 	@summary = "Default summary"
 	macro addNewFilterViaUI(filterValue = null, filterBy = null, filterType = null) {
-		Click(locator1 = "ObjectCustomViews#ADD_NEW_FILTER");
+		if (IsElementPresent(key_text = "No filter was created yet", locator1 = "ObjectCustomViews#ADD_NEW_FILTER")) {
+			Click(locator1 = "ObjectCustomViews#ADD_NEW_FILTER");
+		}
+		else {
+			Click(locator1 = "ObjectCustomViews#FILTER_ADD_BUTTON");
+		}
 
 		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 

@@ -160,8 +160,9 @@ updateYarnBinariesCache {
 wrapperPortal {
 	File wrapperDir = projectDir.parentFile
 
-	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-1-bin.zip"
 	dependsOn wrapperSubrepo
+
+	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-1-bin.zip"
 
 	doLast {
 		File gradlewFile = new File(wrapperDir, "gradlew")
@@ -169,11 +170,11 @@ wrapperPortal {
 		ant.replace(
 			failOnNoReplacements: true,
 			file: gradlewFile,
-			token: '# Use the maximum available, or set MAX_FD != -1 to use that value.',
+			token: '# Collect all arguments for the java command:',
 			value: '''\
 DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""
 
-# Use the maximum available, or set MAX_FD != -1 to use that value.'''
+# Collect all arguments for the java command:'''
 		)
 
 		ant.replace(
@@ -209,6 +210,8 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"
 wrapperProjectTemplates {
 	File wrapperDir = new File(projectDir.parentFile, "modules/sdk/project-templates/project-templates/src/main/resources/gradle-wrapper")
 
+	// distributionUrl = "https://releases-cdn.liferay.com/tools/gradle/gradle-${gradle.gradleVersion}-bin.zip"
+
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
 	scriptFile = new File(wrapperDir, "gradlew")
 
@@ -222,17 +225,19 @@ wrapperProjectTemplates {
 wrapperSubrepo {
 	File wrapperDir = new File(projectDir.parentFile, "tools/subrepo")
 
+	// distributionUrl = "https://releases-cdn.liferay.com/tools/gradle/gradle-${gradle.gradleVersion}-bin.zip"
+
 	doLast {
 		File gradlewFile = new File(wrapperDir, "gradlew")
 
 		ant.replace(
 			failOnNoReplacements: true,
 			file: gradlewFile,
-			token: '# Use the maximum available, or set MAX_FD != -1 to use that value.',
+			token: '# Collect all arguments for the java command:',
 			value: '''\
 DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""
 
-# Use the maximum available, or set MAX_FD != -1 to use that value.'''
+# Collect all arguments for the java command:'''
 		)
 
 		File gradlewBatFile = new File(wrapperDir, "gradlew.bat")

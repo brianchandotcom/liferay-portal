@@ -376,6 +376,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(29, 2, 2),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.headless.builder.impl"}, null));
+
+		upgradeVersionTreeMap.put(
+			new Version(29, 3, 0),
+			new CTModelUpgradeProcess("AnnouncementsDelivery"));
 	}
 
 }

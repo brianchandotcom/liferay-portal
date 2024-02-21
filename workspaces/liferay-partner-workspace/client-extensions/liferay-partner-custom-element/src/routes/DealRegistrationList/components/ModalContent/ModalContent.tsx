@@ -36,7 +36,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							General Information
 						</div>
 
-						<hr className="mt-0"/>
+						<hr className="mt-0" />
 
 						<ModalFormatedInformation
 							className="d-flex"
@@ -67,7 +67,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							Prospect Information
 						</div>
 
-						<hr className="mt-0"/>
+						<hr className="mt-0" />
 
 						<ModalFormatedInformation
 							className="d-flex mb-2"
@@ -105,7 +105,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							Primary Prospect Contact
 						</div>
 
-						<hr className="mt-0"/>
+						<hr className="mt-0" />
 
 						<ModalFormatedInformation
 							className="d-flex mb-2"
@@ -180,7 +180,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							Additional Contacts
 						</div>
 
-						<hr className="mt-0"/>
+						<hr className="mt-0" />
 
 						<ModalFormatedInformation
 							className="d-flex mb-4"
@@ -204,7 +204,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							Deal Information
 						</div>
 
-						<hr className="mt-0"/>
+						<hr className="mt-0" />
 
 						<ModalFormatedInformation
 							className="d-flex mb-4"
@@ -224,7 +224,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 							Project Information
 						</div>
 
-						<hr className="mt-0"/>
+						<hr className="mt-0" />
 
 						<ModalFormatedInformation
 							className="d-flex mb-2"

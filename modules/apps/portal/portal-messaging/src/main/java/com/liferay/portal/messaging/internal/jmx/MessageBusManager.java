@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerRegistry;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -146,9 +145,6 @@ public class MessageBusManager
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MessageBusManager.class);
-
-	@Reference
-	private MessageBus _messageBus;
 
 	@Reference
 	private MessageListenerRegistry _messageListenerRegistry;

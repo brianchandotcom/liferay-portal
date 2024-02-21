@@ -98,7 +98,8 @@ public class PendingCommerceOrderItemFDSActionProvider
 				return _modelResourcePermission.contains(
 					PermissionThreadLocal.getPermissionChecker(), commerceOrder,
 					ActionKeys.UPDATE) &&
-					   (count > 0);
+					   ((count > 0) ||
+						cpInstance.hasCPInstanceUnitOfMeasures());
 			},
 			dropdownItem -> {
 				dropdownItem.setData(

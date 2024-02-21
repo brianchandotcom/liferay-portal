@@ -43,7 +43,10 @@ function Opener() {
 				(cartItem) => cartItem.id === orderItemId
 			);
 
-			if (cartItem && hasOptions(cartItem.options)) {
+			if (
+				cartItem &&
+				(hasOptions(cartItem.options) || cartItem.skuUnitOfMeasure)
+			) {
 				setEditedItem({
 					cartItemId: orderItemId,
 					dataSetId,

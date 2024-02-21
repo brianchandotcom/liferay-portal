@@ -337,34 +337,9 @@ public class SitemapManagerImpl implements SitemapManager {
 
 		_initEntriesAndSize(rootElement);
 
-		List<LayoutSet> layoutSets = _getLayoutSets(
-			groupId, layoutUuid, privateLayout, themeDisplay);
-
-		if (ListUtil.isNotEmpty(layoutSets)) {
-			for (SitemapURLProvider sitemapURLProvider :
-					_getSitemapURLProviders()) {
-
-				if (FeatureFlagManagerUtil.isEnabled("LPS-187793") &&
-					!sitemapURLProvider.isInclude(
-						themeDisplay.getCompanyId(),
-						themeDisplay.getScopeGroupId())) {
-
-					continue;
-				}
-
-				if (Validator.isNull(layoutUuid)) {
-					for (LayoutSet curLayoutSet : layoutSets) {
-						sitemapURLProvider.visitLayoutSet(
-							rootElement, curLayoutSet, themeDisplay);
-					}
-				}
-				else {
-					sitemapURLProvider.visitLayout(
-						rootElement, layoutUuid, layoutSets.get(0),
-						themeDisplay);
-				}
-			}
-		}
+		_visitLayoutSets(
+			_getLayoutSets(groupId, layoutUuid, privateLayout, themeDisplay),
+			layoutUuid, rootElement, themeDisplay);
 
 		if (!rootElement.hasContent()) {
 			return StringPool.BLANK;
@@ -553,6 +528,39 @@ public class SitemapManagerImpl implements SitemapManager {
 						layout.isPrivateLayout()));
 
 				_removeOldestElement(element, sitemapElement);
+			}
+		}
+	}
+
+	private void _visitLayoutSets(
+			List<LayoutSet> layoutSets, String layoutUuid, Element rootElement,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (ListUtil.isEmpty(layoutSets)) {
+			return;
+		}
+
+		for (SitemapURLProvider sitemapURLProvider :
+				_getSitemapURLProviders()) {
+
+			if (FeatureFlagManagerUtil.isEnabled("LPS-187793") &&
+				!sitemapURLProvider.isInclude(
+					themeDisplay.getCompanyId(),
+					themeDisplay.getScopeGroupId())) {
+
+				continue;
+			}
+
+			if (Validator.isNull(layoutUuid)) {
+				for (LayoutSet curLayoutSet : layoutSets) {
+					sitemapURLProvider.visitLayoutSet(
+						rootElement, curLayoutSet, themeDisplay);
+				}
+			}
+			else {
+				sitemapURLProvider.visitLayout(
+					rootElement, layoutUuid, layoutSets.get(0), themeDisplay);
 			}
 		}
 	}

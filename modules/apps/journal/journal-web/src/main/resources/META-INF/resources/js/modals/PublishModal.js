@@ -129,13 +129,17 @@ function getLabels({actionButton, articleId, workflowEnabled}) {
 		return {
 			button: workflowEnabled
 				? Liferay.Language.get('submit-for-workflow')
-				: Liferay.Language.get('publish'),
+				: Liferay.Language.get('publish-with-permissions'),
 			description: Liferay.Language.get(
 				'confirm-the-web-content-visibility-before-publishing'
 			),
 			heading: workflowEnabled
-				? Liferay.Language.get('submit-for-workflow')
-				: Liferay.Language.get('publish'),
+				? articleId
+					? Liferay.Language.get('submit-for-workflow')
+					: Liferay.Language.get(
+							'submit-for-workflow-with-permissions'
+					  )
+				: Liferay.Language.get('publish-with-permissions'),
 		};
 	}
 	else if (actionButton === 'schedule') {
@@ -167,11 +171,11 @@ function getLabels({actionButton, articleId, workflowEnabled}) {
 	}
 	else {
 		return {
-			button: Liferay.Language.get('save-as-draft'),
+			button: Liferay.Language.get('save-as-draft-with-permissions'),
 			description: Liferay.Language.get(
 				'confirm-the-web-content-visibility-before-saving-as-draft'
 			),
-			heading: Liferay.Language.get('save-as-draft'),
+			heading: Liferay.Language.get('save-as-draft-with-permissions'),
 		};
 	}
 }

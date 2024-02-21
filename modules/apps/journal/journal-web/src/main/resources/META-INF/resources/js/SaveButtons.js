@@ -163,6 +163,13 @@ export default function SaveButtons({
 					displayType="secondary"
 					form={formId}
 					onClick={() => onClick('draft')}
+					title={
+						articleId
+							? null
+							: Liferay.Language.get(
+									'save-as-draft-with-permissions'
+							  )
+					}
 					type={articleId ? 'submit' : 'button'}
 				>
 					{saveButtonLabel}
@@ -173,13 +180,25 @@ export default function SaveButtons({
 				hasLeftSymbols
 				trigger={
 					<ClayButton
-						aria-label={Liferay.Language.get(
-							'select-and-confirm-publish-settings'
-						)}
+						aria-label={
+							workflowEnabled
+								? Liferay.Language.get(
+										'select-and-confirm-submit-for-workflow-settings'
+								  )
+								: Liferay.Language.get(
+										'select-and-confirm-publish-settings'
+								  )
+						}
 						disabled={saveButtonDisabled}
-						title={Liferay.Language.get(
-							'select-and-confirm-publish-settings'
-						)}
+						title={
+							workflowEnabled
+								? Liferay.Language.get(
+										'select-and-confirm-submit-for-workflow-settings'
+								  )
+								: Liferay.Language.get(
+										'select-and-confirm-publish-settings'
+								  )
+						}
 					>
 						{publishButtonLabel}
 

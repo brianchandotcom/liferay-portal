@@ -412,30 +412,35 @@ public class EditAssetListDisplayContextTest {
 			).thenReturn(
 				true
 			);
+
 			Mockito.when(
 				assetRendererFactory.getClassName()
 			).thenReturn(
 				className
 			);
-			Mockito.when(
-				assetRendererFactory.isSelectable()
-			).thenReturn(
-				true
-			);
-			Mockito.when(
-				assetRendererFactory.isSupportsClassTypes()
-			).thenReturn(
-				supportsClassTypes
-			);
+
 			Mockito.when(
 				assetRendererFactory.getClassTypeReader()
 			).thenReturn(
 				classTypeReader
 			);
+
 			Mockito.when(
 				assetRendererFactory.getTypeName(LocaleUtil.US)
 			).thenReturn(
 				typeName
+			);
+
+			Mockito.when(
+				assetRendererFactory.isSelectable()
+			).thenReturn(
+				true
+			);
+
+			Mockito.when(
+				assetRendererFactory.isSupportsClassTypes()
+			).thenReturn(
+				supportsClassTypes
 			);
 		}
 

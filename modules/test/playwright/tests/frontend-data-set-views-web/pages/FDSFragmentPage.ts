@@ -64,6 +64,11 @@ export class FDSFragmentPage {
 		await source.focus();
 		await source.press('Enter');
 		await source.press('Enter');
+
+		await this.page
+			.getByText('Select a data set view. Beta')
+			.first()
+			.waitFor();
 	}
 
 	async editPage({layout, site}) {

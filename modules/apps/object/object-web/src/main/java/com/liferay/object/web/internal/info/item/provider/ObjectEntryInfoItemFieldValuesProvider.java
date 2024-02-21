@@ -315,8 +315,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 						LocaleUtil.fromLanguageId(
 							serviceContext.getLanguageId()));
 					setSiteGroupId(serviceContext.getScopeGroupId());
-					setUser(
-						_userLocalService.getUser(serviceContext.getUserId()));
+					setUser(_getUser(serviceContext));
 				}
 			};
 		}
@@ -553,6 +552,16 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		}
 
 		return null;
+	}
+
+	private User _getUser(ServiceContext serviceContext) {
+		User user = _userLocalService.fetchUser(serviceContext.getUserId());
+
+		if (user != null) {
+			return user;
+		}
+
+		return _userLocalService.fetchGuestUser(serviceContext.getCompanyId());
 	}
 
 	private Object _getValue(

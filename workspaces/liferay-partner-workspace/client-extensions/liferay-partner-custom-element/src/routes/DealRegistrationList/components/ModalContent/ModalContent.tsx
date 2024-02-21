@@ -35,7 +35,9 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 						<div className="mb-0 text-paragraph-md">
 							General Information
 						</div>
-						<hr className="mt-0"></hr>
+
+						<hr className="mt-0"/>
+
 						<ModalFormatedInformation
 							className="d-flex"
 							information={
@@ -64,7 +66,9 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 						<div className="mb-0 text-paragraph-md">
 							Prospect Information
 						</div>
-						<hr className="mt-0"></hr>
+
+						<hr className="mt-0"/>
+
 						<ModalFormatedInformation
 							className="d-flex mb-2"
 							information={
@@ -100,7 +104,9 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 						<div className="mb-0 text-paragraph-md">
 							Primary Prospect Contact
 						</div>
-						<hr className="mt-0"></hr>
+
+						<hr className="mt-0"/>
+
 						<ModalFormatedInformation
 							className="d-flex mb-2"
 							information={
@@ -173,7 +179,9 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 						<div className="mb-0 text-paragraph-md">
 							Additional Contacts
 						</div>
-						<hr className="mt-0"></hr>
+
+						<hr className="mt-0"/>
+
 						<ModalFormatedInformation
 							className="d-flex mb-4"
 							information={
@@ -195,7 +203,9 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 						<div className="mb-0 text-paragraph-md">
 							Deal Information
 						</div>
-						<hr className="mt-0"></hr>
+
+						<hr className="mt-0"/>
+
 						<ModalFormatedInformation
 							className="d-flex mb-4"
 							information={
@@ -213,7 +223,9 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 						<div className="mb-0 text-paragraph-md">
 							Project Information
 						</div>
-						<hr className="mt-0"></hr>
+
+						<hr className="mt-0"/>
+
 						<ModalFormatedInformation
 							className="d-flex mb-2"
 							information={
@@ -246,6 +258,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 					/>
 				)}
 			</div>
+
 			<div className="d-flex justify-content-end">
 				<Button displayType="secondary" onClick={onClose}>
 					Close

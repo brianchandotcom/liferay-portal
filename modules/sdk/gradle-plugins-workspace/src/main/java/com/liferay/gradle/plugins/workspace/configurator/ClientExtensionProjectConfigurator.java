@@ -47,6 +47,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
@@ -1141,12 +1142,13 @@ public class ClientExtensionProjectConfigurator
 			_validateRequiredTypeSettingsKeys(
 				clientExtension, "oAuthApplicationHeadlessServer");
 		}
-
-		if (Objects.equals(clientExtension.type, "instanceSettings")) {
+		else if (Objects.equals(clientExtension.type, "globalJS")) {
+			_validateGlobalJSScriptElementAttributes(clientExtension);
+		}
+		else if (Objects.equals(clientExtension.type, "instanceSettings")) {
 			_validateRequiredTypeSettingsKeys(clientExtension, "pid");
 		}
-
-		if (Objects.equals(clientExtension.type, "siteInitializer")) {
+		else if (Objects.equals(clientExtension.type, "siteInitializer")) {
 			_validateRequiredDirectory(
 				clientExtension, project, "site-initializer");
 			_validateRequiredTypeSettingsKeys(
@@ -1158,6 +1160,53 @@ public class ClientExtensionProjectConfigurator
 			_validateTypeSettingsValues(
 				clientExtension, "membershipType", "open", "private",
 				"restricted");
+		}
+	}
+
+	private void _validateGlobalJSScriptElementAttributes(
+		ClientExtension clientExtension) {
+
+		Map<String, Object> typeSettings = clientExtension.typeSettings;
+
+		if (!typeSettings.containsKey("scriptElementAttributes")) {
+			return;
+		}
+
+		Object scriptElementAttributes = typeSettings.get(
+			"scriptElementAttributes");
+
+		if (!(scriptElementAttributes instanceof Map)) {
+			throw new GradleException(
+				"The property 'scriptElementAttributes' must be an object");
+		}
+
+		Map<String, Object> scriptElementAttributesMap =
+			(Map<String, Object>)scriptElementAttributes;
+
+		for (Map.Entry<String, Object> entry :
+				scriptElementAttributesMap.entrySet()) {
+
+			if (Objects.equals(entry.getKey(), "src")) {
+				throw new GradleException(
+					"Use the 'url' property instead of the script attribute " +
+						"'src'");
+			}
+
+			Object value = entry.getValue();
+
+			if (value == null) {
+				throw new GradleException(
+					StringBundler.concat(
+						"A value for the attribute '", entry.getKey(),
+						"' must be specified"));
+			}
+
+			if (value instanceof List || value instanceof Map) {
+				throw new GradleException(
+					StringBundler.concat(
+						"The value for the attribute '", entry.getKey(),
+						"' must be a scalar"));
+			}
 		}
 	}
 

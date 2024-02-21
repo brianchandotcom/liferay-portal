@@ -116,6 +116,11 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				batchType = "batch";
 			}
 
+			if (Objects.equals(clientExtension.type, "globalJS")) {
+				_mapGlobalJSScriptElementAttributesToJSONString(
+					clientExtension);
+			}
+
 			if (clientExtension.type.equals("siteInitializer")) {
 				pluginPackageProperties.put(
 					"Liferay-Client-Extension-Site-Initializer",
@@ -489,6 +494,42 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 
 		return false;
+	}
+
+	private void _mapGlobalJSScriptElementAttributesToJSONString(
+		ClientExtension clientExtension) {
+
+		Map<String, Object> typeSettings = clientExtension.typeSettings;
+
+		Map<String, Object> scriptElementAttributesMap =
+			(Map<String, Object>)typeSettings.get("scriptElementAttributes");
+
+		if (scriptElementAttributesMap == null) {
+			return;
+		}
+
+		Set<Map.Entry<String, Object>> entrySet =
+			scriptElementAttributesMap.entrySet();
+
+		ObjectNode scriptElementAttributesObjectNode =
+			_objectMapper.createObjectNode();
+
+		for (Map.Entry<String, Object> entry : entrySet) {
+			Object value = entry.getValue();
+
+			if (value instanceof Boolean) {
+				scriptElementAttributesObjectNode.put(
+					entry.getKey(), (Boolean)value);
+			}
+			else {
+				scriptElementAttributesObjectNode.put(
+					entry.getKey(), (String)value);
+			}
+		}
+
+		typeSettings.put(
+			"scriptElementAttributes",
+			scriptElementAttributesObjectNode.toString());
 	}
 
 	private void _processBatchJSONFile(File file) throws IOException {

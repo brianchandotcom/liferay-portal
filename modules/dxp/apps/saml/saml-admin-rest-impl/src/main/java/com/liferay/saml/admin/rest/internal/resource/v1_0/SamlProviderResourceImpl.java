@@ -68,25 +68,27 @@ public class SamlProviderResourceImpl extends BaseSamlProviderResourceImpl {
 	public SamlProvider getSamlProvider() throws Exception {
 		_checkPermission();
 
-		SamlProvider samlProvider = new SamlProvider();
-
 		SamlProviderConfiguration samlProviderConfiguration =
 			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
-		samlProvider.setEnabled(samlProviderConfiguration.enabled());
-		samlProvider.setEntityId(samlProviderConfiguration.entityId());
-		samlProvider.setSignMetadata(samlProviderConfiguration.signMetadata());
-		samlProvider.setSslRequired(samlProviderConfiguration.sslRequired());
+		SamlProvider samlProvider = new SamlProvider() {
+			{
+				setEnabled(samlProviderConfiguration::enabled);
+				setEntityId(samlProviderConfiguration::entityId);
+				setSignMetadata(samlProviderConfiguration::signMetadata);
+				setSslRequired(samlProviderConfiguration::sslRequired);
+			}
+		};
 
 		String role = samlProviderConfiguration.role();
 
 		if (SamlProviderConfigurationKeys.SAML_ROLE_SP.equals(role)) {
-			samlProvider.setRole(SamlProvider.Role.SP);
-			samlProvider.setSp(_getSp(samlProviderConfiguration));
+			samlProvider.setRole(() -> SamlProvider.Role.SP);
+			samlProvider.setSp(() -> _getSp(samlProviderConfiguration));
 		}
 		else if (SamlProviderConfigurationKeys.SAML_ROLE_IDP.equals(role)) {
-			samlProvider.setIdp(_getIdp(samlProviderConfiguration));
-			samlProvider.setRole(SamlProvider.Role.IDP);
+			samlProvider.setIdp(() -> _getIdp(samlProviderConfiguration));
+			samlProvider.setRole(() -> SamlProvider.Role.IDP);
 		}
 
 		return samlProvider;
@@ -186,32 +188,35 @@ public class SamlProviderResourceImpl extends BaseSamlProviderResourceImpl {
 	private Idp _getIdp(SamlProviderConfiguration samlProviderConfiguration)
 		throws Exception {
 
-		Idp idp = new Idp();
-
-		idp.setAuthnRequestSignatureRequired(
-			samlProviderConfiguration.authnRequestSignatureRequired());
-		idp.setDefaultAssertionLifetime(
-			samlProviderConfiguration.defaultAssertionLifetime());
-		idp.setSessionMaximumAge(samlProviderConfiguration.sessionMaximumAge());
-		idp.setSessionTimeout(samlProviderConfiguration.sessionTimeout());
-
-		return idp;
+		return new Idp() {
+			{
+				setAuthnRequestSignatureRequired(
+					samlProviderConfiguration::authnRequestSignatureRequired);
+				setDefaultAssertionLifetime(
+					samlProviderConfiguration::defaultAssertionLifetime);
+				setSessionMaximumAge(
+					samlProviderConfiguration::sessionMaximumAge);
+				setSessionTimeout(samlProviderConfiguration::sessionTimeout);
+			}
+		};
 	}
 
 	private Sp _getSp(SamlProviderConfiguration samlProviderConfiguration)
 		throws Exception {
 
-		Sp sp = new Sp();
-
-		sp.setAllowShowingTheLoginPortlet(
-			samlProviderConfiguration.allowShowingTheLoginPortlet());
-		sp.setAssertionSignatureRequired(
-			samlProviderConfiguration.assertionSignatureRequired());
-		sp.setClockSkew(samlProviderConfiguration.clockSkew());
-		sp.setLdapImportEnabled(samlProviderConfiguration.ldapImportEnabled());
-		sp.setSignAuthnRequest(samlProviderConfiguration.signAuthnRequest());
-
-		return sp;
+		return new Sp() {
+			{
+				setAllowShowingTheLoginPortlet(
+					samlProviderConfiguration::allowShowingTheLoginPortlet);
+				setAssertionSignatureRequired(
+					samlProviderConfiguration::assertionSignatureRequired);
+				setClockSkew(samlProviderConfiguration::clockSkew);
+				setLdapImportEnabled(
+					samlProviderConfiguration::ldapImportEnabled);
+				setSignAuthnRequest(
+					samlProviderConfiguration::signAuthnRequest);
+			}
+		};
 	}
 
 	private boolean _isIdpRoleDisabled(

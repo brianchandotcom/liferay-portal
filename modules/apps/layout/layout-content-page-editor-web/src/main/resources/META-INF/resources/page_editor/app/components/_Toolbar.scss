@@ -87,6 +87,14 @@ html#{$cadmin-selector} {
 }
 
 html#{$cadmin-selector}
+	.page-editor__small-resolution
+	.cadmin
+	.page-editor__toolbar
+	.navbar-nav.start {
+	padding-left: 48px;
+}
+
+html#{$cadmin-selector}
 	body.open
 	.cadmin
 	.page-editor__toolbar

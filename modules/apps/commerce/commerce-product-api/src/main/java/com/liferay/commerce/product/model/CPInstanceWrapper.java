@@ -977,6 +977,11 @@ public class CPInstanceWrapper
 		return model.getWidth();
 	}
 
+	@Override
+	public boolean hasCPInstanceUnitOfMeasures() {
+		return model.hasCPInstanceUnitOfMeasures();
+	}
+
 	/**
 	 * Returns <code>true</code> if this cp instance is approved.
 	 *

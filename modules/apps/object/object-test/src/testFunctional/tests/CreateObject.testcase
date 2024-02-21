@@ -4789,7 +4789,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject141616");
 
-		ObjectAdmin.addObjectLongFieldEntryViaUI(entryValue = 1234567891234567);
+		ObjectAdmin.addObjectLongFieldEntryViaUI(
+			entryValue = 1234567891234567,
+			objectFieldName = "customObjectField");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject141616");
 

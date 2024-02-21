@@ -25,9 +25,12 @@ version = subprojects.inject(null) {
 String gradleVersion = version.substring(0, version.lastIndexOf('.'))
 
 deployDistribution {
-	baseName = "gradle"
-	classifier = "bin"
-	destinationDir = rootProject.file("../tools")
+	mustRunAfter ":third-party:org-gradle:org-gradle-resources-http:jarOverwrite"
+
+	archiveBaseName = "gradle"
+	archiveClassifier = "bin"
+	archiveVersion = project.version
+	destinationDirectory = rootProject.file("../tools")
 	exclude "gradle-${gradleVersion}/lib/plugins/org-gradle-resources-http-${gradleVersion}.jar"
 
 	from {
@@ -37,6 +40,4 @@ deployDistribution {
 	into("gradle-${gradleVersion}/lib/plugins") {
 		from tasks.getByPath(":third-party:org-gradle:org-gradle-resources-http:jar")
 	}
-
-	version = project.version
 }

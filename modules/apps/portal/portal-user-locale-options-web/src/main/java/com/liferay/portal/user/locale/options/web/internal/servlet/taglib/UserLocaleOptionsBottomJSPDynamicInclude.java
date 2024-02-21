@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -102,9 +101,6 @@ public class UserLocaleOptionsBottomJSPDynamicInclude
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserLocaleOptionsBottomJSPDynamicInclude.class);
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.user.locale.options.web)"

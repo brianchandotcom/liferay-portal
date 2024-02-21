@@ -101,7 +101,7 @@
 
 <tr>
 	<td>PROCESS_BUILDER_FILTER_AND_ORDER_BUTTON</td>
-	<td>//button[contains(@class, "dropdown-toggle nav-link btn btn-unstyled")]</td>
+	<td>//button[contains(@class, "dropdown-toggle")]//span[contains(text(),'Order')]</td>
 	<td></td>
 </tr>
 <tr>

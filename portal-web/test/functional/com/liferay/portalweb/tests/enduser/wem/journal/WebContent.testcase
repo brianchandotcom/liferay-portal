@@ -714,7 +714,7 @@ definition {
 		task ("Publish Web Content and view the error message") {
 			Button.clickPublish();
 
-			Alert.viewErrorMessage(errorMessage = "Another user has made changes since you started editing. Publish this article to save this version and overwrite the recent changes.");
+			Alert.viewErrorMessage(errorMessage = "Another user has made changes since you started editing. Publish this version to save it and overwrite the recent changes.");
 		}
 	}
 

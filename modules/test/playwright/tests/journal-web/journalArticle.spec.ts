@@ -35,7 +35,7 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 	const title1 = getRandomString();
 	const title2 = getRandomString();
 
-	await journalEditArticlePage.goToCreateNewBasicArticle(title1);
+	await journalEditArticlePage.publishNewBasicArticle(title1);
 
 	const article1 = await page
 		.locator(
@@ -45,7 +45,7 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 
 	await expect(article1).toBeVisible();
 
-	await journalEditArticlePage.goToCreateNewBasicArticle(title2);
+	await journalEditArticlePage.publishNewBasicArticle(title2);
 
 	const article2 = await page
 		.locator(

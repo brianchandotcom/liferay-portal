@@ -27,7 +27,7 @@ export class JournalEditArticlePage {
 		);
 	}
 
-	async goToCreateNewBasicArticle(title: string) {
+	async goToCreateNewBasicArticle() {
 		await this.journalPage.goto();
 
 		await clickAndExpectToBeVisible({
@@ -35,6 +35,10 @@ export class JournalEditArticlePage {
 			target: this.journalPage.createBasicWebContentLink,
 			trigger: this.journalPage.newButton,
 		});
+	}
+
+	async publishNewBasicArticle(title: string) {
+		await this.goToCreateNewBasicArticle();
 
 		await this.propertiesTab.waitFor();
 

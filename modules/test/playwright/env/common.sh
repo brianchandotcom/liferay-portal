@@ -192,6 +192,16 @@ function get_parent_playwright_project_dirs {
 	done
 }
 
+function get_parent_portal_ext_properties_files {
+	for parent_playwright_project_dir in $(reverse $(get_parent_playwright_project_dirs))
+	do
+		if [[ -f ${parent_playwright_project_dir}/env/portal-ext.properties ]]
+		then
+			echo ${parent_playwright_project_dir}/env/portal-ext.properties
+		fi
+	done
+}
+
 function get_playwright_project_dir {
 	find ${_PLAYWRIGHT_BASE_DIR} -name config.ts -type f -print | xargs grep "name: '${PLAYWRIGHT_PROJECT_NAME}'" | sed -n 's/\(.*\)\/config.ts.*/\1/p'
 }
@@ -232,6 +242,15 @@ function main {
 	fi	
 }
 
+function reverse {
+	local array=(${@})
+
+	for (( i = ${#array[@]} - 1; i >= 0; i--))
+	do
+	  echo "${array[$i]}"
+	done
+}
+
 function start_app_server {
 	cd $(get_tomcat_dir)/bin
 
@@ -260,12 +279,13 @@ function stop_app_server {
 
 function update_portal_ext_properties {
 	local playwright_project_dir=$(get_playwright_project_dir)
+	local parent_portal_ext_properties_files=$(get_parent_portal_ext_properties_files)
 	local tomcat_portal_ext_properties_file=$(get_tomcat_portal_ext_properties_file)
 
 	combine_properties_files \
 		${tomcat_portal_ext_properties_file} \
 		\
-		${_PLAYWRIGHT_BASE_DIR}/env/portal-ext.properties \
+		${parent_portal_ext_properties_files} \
 		\
 		${playwright_project_dir}/env/portal-ext.properties
 }

@@ -24,6 +24,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _assetRendererURLDownload;
 	}
 
+	public long getAssetRendererURLDownloadSize() {
+		return _assetRendererURLDownloadSize;
+	}
+
 	public String getClassName() {
 		return _className;
 	}
@@ -52,10 +56,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		getDocumentFormFieldDisplayContexts() {
 
 		return _documentFormFieldDisplayContexts;
-	}
-
-	public long getDownloadSize() {
-		return _downloadSize;
 	}
 
 	public String getFieldAssetCategoryIds() {
@@ -216,6 +216,12 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		_assetRendererURLDownload = assetRendererURLDownload;
 	}
 
+	public void setAssetRendererURLDownloadSize(
+		long assetRendererURLDownloadSize) {
+
+		_assetRendererURLDownloadSize = assetRendererURLDownloadSize;
+	}
+
 	public void setAssetRendererURLDownloadVisible(
 		boolean assetRendererURLDownloadVisible) {
 
@@ -275,10 +281,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 
 	public void setDocumentFormVisible(boolean documentFormVisible) {
 		_documentFormVisible = documentFormVisible;
-	}
-
-	public void setDownloadSize(long downloadSize) {
-		_downloadSize = downloadSize;
 	}
 
 	public void setFieldAssetCategoryIds(String fieldAssetCategoryIds) {
@@ -408,6 +410,7 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private boolean _assetCategoriesOrTagsVisible;
 	private long _assetEntryUserId;
 	private String _assetRendererURLDownload;
+	private long _assetRendererURLDownloadSize;
 	private boolean _assetRendererURLDownloadVisible;
 	private String _className;
 	private long _classPK;
@@ -422,7 +425,6 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private List<SearchResultFieldDisplayContext>
 		_documentFormFieldDisplayContexts;
 	private boolean _documentFormVisible;
-	private long _downloadSize;
 	private String _fieldAssetCategoryIds;
 	private String _fieldAssetTagNames;
 	private List<SearchResultFieldDisplayContext> _fieldDisplayContexts;

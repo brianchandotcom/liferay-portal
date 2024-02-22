@@ -12,4 +12,4 @@ This tool allows to validate that all the needed conditions for a successful mig
     -t,--target-file <arg> Target file.
 
 ## Execution example
-    ./db_partition_virtual_instance_migrator_validator.sh -s "/bundles/tools/portal-tools-db-partition-virtual-instance-migration-extractor/source.json" -t "/bundles/tools/portal-tools-db-partition-virtual-instance-migration-extractor/target.json"
+    ./db_partition_virtual_instance_migration_validator.sh -s "/bundles/tools/portal-tools-db-partition-virtual-instance-migration-extractor/source.json" -t "/bundles/tools/portal-tools-db-partition-virtual-instance-migration-extractor/target.json"

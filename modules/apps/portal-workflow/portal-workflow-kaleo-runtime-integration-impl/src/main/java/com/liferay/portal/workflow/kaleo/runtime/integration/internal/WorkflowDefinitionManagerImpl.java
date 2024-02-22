@@ -29,6 +29,7 @@ import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.WorkflowLockUtil;
 import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoDefinitionOrderByComparator;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
@@ -110,7 +111,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			List<KaleoDefinition> kaleoDefinitions =
-				_kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+				_kaleoDefinitionService.getScopeKaleoDefinitions(
 					WorkflowDefinitionConstants.SCOPE_ALL, true, start, end,
 					KaleoDefinitionOrderByComparator.getOrderByComparator(
 						orderByComparator, _kaleoWorkflowModelConverter),
@@ -190,7 +191,7 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				_kaleoDefinitionLocalService.getKaleoDefinition(
+				_kaleoDefinitionService.getKaleoDefinition(
 					name, serviceContext));
 		}
 		catch (WorkflowException workflowException) {
@@ -216,7 +217,7 @@ public class WorkflowDefinitionManagerImpl
 
 			if (active == null) {
 				kaleoDefinitions =
-					_kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+					_kaleoDefinitionService.getScopeKaleoDefinitions(
 						WorkflowDefinitionConstants.SCOPE_ALL, start, end,
 						KaleoDefinitionOrderByComparator.getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
@@ -224,7 +225,7 @@ public class WorkflowDefinitionManagerImpl
 			}
 			else {
 				kaleoDefinitions =
-					_kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+					_kaleoDefinitionService.getScopeKaleoDefinitions(
 						WorkflowDefinitionConstants.SCOPE_ALL, active, start,
 						end,
 						KaleoDefinitionOrderByComparator.getOrderByComparator(
@@ -272,7 +273,7 @@ public class WorkflowDefinitionManagerImpl
 
 		try {
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				_kaleoDefinitionLocalService.getKaleoDefinition(
+				_kaleoDefinitionService.getKaleoDefinition(
 					workflowDefinitionId));
 		}
 		catch (NoSuchModelException noSuchModelException) {
@@ -512,6 +513,9 @@ public class WorkflowDefinitionManagerImpl
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Reference
+	private KaleoDefinitionService _kaleoDefinitionService;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService

@@ -383,13 +383,12 @@ public class ContentPageEditorDisplayContext {
 				() -> {
 					Group group = themeDisplay.getScopeGroup();
 
-					LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-						themeDisplay.getSiteGroupId(),
-						group.isLayoutSetPrototype());
-
 					FrontendTokenDefinition frontendTokenDefinition =
 						_frontendTokenDefinitionRegistry.
-							getFrontendTokenDefinition(layoutSet.getThemeId());
+							getFrontendTokenDefinition(
+								_layoutSetLocalService.fetchLayoutSet(
+									themeDisplay.getSiteGroupId(),
+									group.isLayoutSetPrototype()));
 
 					if (frontendTokenDefinition == null) {
 						return _jsonFactory.createJSONObject();

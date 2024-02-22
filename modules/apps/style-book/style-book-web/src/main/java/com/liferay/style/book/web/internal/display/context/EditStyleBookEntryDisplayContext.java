@@ -300,12 +300,11 @@ public class EditStyleBookEntryDisplayContext {
 
 		Group group = _themeDisplay.getScopeGroup();
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			_themeDisplay.getSiteGroupId(), group.isLayoutSetPrototype());
-
 		FrontendTokenDefinition frontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				layoutSet.getThemeId());
+				LayoutSetLocalServiceUtil.fetchLayoutSet(
+					_themeDisplay.getSiteGroupId(),
+					group.isLayoutSetPrototype()));
 
 		if (frontendTokenDefinition != null) {
 			return frontendTokenDefinition.getJSONObject(

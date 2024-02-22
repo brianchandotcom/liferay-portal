@@ -212,6 +212,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		String urlDownload = RandomTestUtil.randomString();
 
+		_whenAssetRendererFactoryHasPermission(true);
+
 		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
 
 		_whenIndexerRegistryGetIndexer(className, _createIndexer());
@@ -225,6 +227,39 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_assertTagsVisible(entryClassPK, searchResultSummaryDisplayContext);
 
 		_assertUserPortraitVisible(userId, searchResultSummaryDisplayContext);
+	}
+
+	@Test
+	public void testURLDownloadHiddenFromResult() throws Exception {
+		long userId = RandomTestUtil.randomLong();
+
+		AssetEntry assetEntry = _createAssetEntryWithTagsPresent(userId);
+
+		String className = RandomTestUtil.randomString();
+
+		long entryClassPK = RandomTestUtil.randomLong();
+
+		_whenAssetEntryLocalServiceFetchEntry(
+			className, entryClassPK, assetEntry);
+
+		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+
+		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			className);
+
+		String urlDownload = RandomTestUtil.randomString();
+
+		_whenAssetRendererFactoryHasPermission(false);
+
+		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
+
+		_whenIndexerRegistryGetIndexer(className, _createIndexer());
+
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
+			build(_createDocument(className, entryClassPK));
+
+		_assertAssetRendererURLDownloadHidden(
+			urlDownload, searchResultSummaryDisplayContext);
 	}
 
 	@Test
@@ -263,6 +298,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			className);
 
 		String rootURLDownload = RandomTestUtil.randomString();
+
+		_whenAssetRendererFactoryHasPermission(true);
 
 		_whenAssetRendererGetURLDownload(rootAssetRenderer, rootURLDownload);
 
@@ -339,11 +376,24 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	protected UserLocalService userLocalService = Mockito.mock(
 		UserLocalService.class);
 
-	private void _assertAssetRendererURLDownloadVisible(
+	private void _assertAssetRendererURLDownloadHidden(
 		String urlDownload,
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		Assert.assertFalse(
+			searchResultSummaryDisplayContext.
+				isAssetRendererURLDownloadVisible());
+
+		Assert.assertEquals(
+			urlDownload,
+			searchResultSummaryDisplayContext.getAssetRendererURLDownload());
+	}
+
+	private void _assertAssetRendererURLDownloadVisible(
+		String urlDownload,
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
+
+		Assert.assertTrue(
 			searchResultSummaryDisplayContext.
 				isAssetRendererURLDownloadVisible());
 
@@ -594,6 +644,18 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			assetRendererFactory
 		).getAssetRenderer(
 			entryClassPK
+		);
+	}
+
+	private void _whenAssetRendererFactoryHasPermission(boolean hasPermission)
+		throws Exception {
+
+		Mockito.doReturn(
+			hasPermission
+		).when(
+			assetRendererFactory
+		).hasPermission(
+			Mockito.any(), Mockito.anyLong(), Mockito.anyString()
 		);
 	}
 

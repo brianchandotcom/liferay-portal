@@ -232,7 +232,7 @@ export default function TranslationAdminSelector({
 			<ClayDropDown
 				active={selectorDropdownActive}
 				hasLeftSymbols
-				onActiveChange={(active: any) => {
+				onActiveChange={(active: boolean) => {
 					if (active) {
 						onSelectorActiveChange();
 					}

@@ -19,7 +19,7 @@
 		}
 
 		.field-label {
-			color: #9aa2a6;
+			color: #535a5e;
 			font-size: 18px;
 			margin: 32px 0 16px;
 		}
@@ -36,7 +36,7 @@
 		}
 
 		h3 {
-			color: #9aa2a6;
+			color: #474d51;
 			font-weight: 300;
 			margin: 8px 0;
 			text-align: center;
@@ -62,12 +62,12 @@
 		}
 
 		.view-form-entries-url {
-			color: #7bc4f4;
+			color: #0c5d92;
 			text-decoration: none;
 		}
 
 		.view-form-url {
-			background: #65b4f1;
+			background: #0d5b97;
 			border-radius: 4px;
 			color: #fff;
 			display: block;

@@ -73,6 +73,10 @@ public class FilePropagator {
 		_cleanUpCommand = cleanUpCommand;
 	}
 
+	public void setPostDistCommand(String postDistCommand) {
+		_postDistCommand = postDistCommand;
+	}
+
 	public void start(int threadCount) {
 		_copyFromSource();
 
@@ -252,17 +256,22 @@ public class FilePropagator {
 		sb.append(targetSlave);
 		sb.append(" '");
 
-		if ((_cleanUpCommand != null) && !_cleanUpCommand.isEmpty()) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_cleanUpCommand)) {
 			sb.append(_cleanUpCommand);
-			sb.append("; ");
+			sb.append(" ; ");
 		}
 
 		for (int i = 0; i < commands.size(); i++) {
 			sb.append(commands.get(i));
 
 			if (i < (commands.size() - 1)) {
-				sb.append(" && ");
+				sb.append(" ; ");
 			}
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_postDistCommand)) {
+			sb.append(" ; ");
+			sb.append(_postDistCommand);
 		}
 
 		sb.append("'");
@@ -287,6 +296,7 @@ public class FilePropagator {
 	private final List<FilePropagatorTask> _filePropagatorTasks =
 		new ArrayList<>();
 	private final List<String> _mirrorSlaves = new ArrayList<>();
+	private String _postDistCommand;
 	private final List<String> _targetSlaves = new ArrayList<>();
 	private int _threadsCompletedCount;
 	private long _threadsDurationTotal;

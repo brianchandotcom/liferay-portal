@@ -890,7 +890,7 @@ public class GraphQLServletExtender {
 
 				TreeSet<Method> methodsTreeSet =
 					methodsSortedMap.computeIfAbsent(
-						_getPath(servletData),
+						servletData.getPath(),
 						key -> new TreeSet<>(
 							Comparator.comparing(
 								this::_getVersion
@@ -908,10 +908,14 @@ public class GraphQLServletExtender {
 			for (Map.Entry<String, TreeSet<Method>> entry :
 					methodsSortedMap.entrySet()) {
 
-				String path = entry.getKey();
+				String versionedPath = entry.getKey();
+
+				String path = versionedPath.substring(
+					0, versionedPath.indexOf("-graphql"));
+
 				TreeSet<Method> methodsTreeSet = entry.getValue();
 
-				if (StringUtil.equals(firstPath, path)) {
+				if (StringUtil.equals(firstPath, versionedPath)) {
 					Method firstMethod = methodsTreeSet.first();
 
 					boolean deprecated = false;
@@ -923,8 +927,9 @@ public class GraphQLServletExtender {
 					for (Method method : methodsTreeSet) {
 						GraphQLFieldDefinition field =
 							_liferayGraphQLFieldRetriever.getField(
-								deprecated, method,
-								processingElementsContainer);
+								deprecated,
+								_getDefaultGraphQLNamespace(versionedPath),
+								method, processingElementsContainer);
 
 						if (firstMethod == method) {
 							graphQLObjectTypeBuilder.field(field);
@@ -1134,6 +1139,24 @@ public class GraphQLServletExtender {
 
 			return servlet;
 		}
+	}
+
+	private String _getDefaultGraphQLNamespace(String path) {
+		if (path.startsWith("/")) {
+			path = path.substring(1);
+		}
+
+		String[] pathParts = path.split("/");
+
+		String firstPathPart = StringUtil.removeLast(pathParts[0], "-graphql");
+
+		int index = firstPathPart.indexOf("-rest");
+
+		if (index != -1) {
+			firstPathPart = firstPathPart.substring(0, index);
+		}
+
+		return CamelCaseUtil.toCamelCase(firstPathPart + "_" + pathParts[1]);
 	}
 
 	private GraphQLInputObjectType _getGraphQLInputObjectType(
@@ -1674,29 +1697,13 @@ public class GraphQLServletExtender {
 		for (ServletData servletData : servletDatas) {
 			Set<String> graphQLNamespaces = new HashSet<>();
 
+			String defaultGraphQLNamespace = _getDefaultGraphQLNamespace(
+				servletData.getPath());
+
 			if (FeatureFlagManagerUtil.isEnabled("LPD-10789") &&
 				(servletData.getPath() != null)) {
 
-				String path = servletData.getPath();
-
-				if (path.startsWith("/")) {
-					path = path.substring(1);
-				}
-
-				String[] pathParts = path.split("/");
-
-				String firstPathPart = StringUtil.removeLast(
-					pathParts[0], "-graphql");
-
-				int index = firstPathPart.indexOf("-rest");
-
-				if (index != -1) {
-					firstPathPart = firstPathPart.substring(0, index);
-				}
-
-				graphQLNamespaces.add(
-					CamelCaseUtil.toCamelCase(
-						firstPathPart + "_" + pathParts[1]));
+				graphQLNamespaces.add(defaultGraphQLNamespace);
 			}
 
 			if (servletData.getGraphQLNamespace() != null) {
@@ -1762,7 +1769,8 @@ public class GraphQLServletExtender {
 
 					builder.field(
 						_liferayGraphQLFieldRetriever.getField(
-							deprecated, method, processingElementsContainer));
+							deprecated, defaultGraphQLNamespace, method,
+							processingElementsContainer));
 
 					graphQLSchemaBuilder.codeRegistry(
 						graphQLCodeRegistryBuilder.dataFetcher(
@@ -2661,17 +2669,29 @@ public class GraphQLServletExtender {
 	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
 
 		public GraphQLFieldDefinition getField(
-			boolean deprecated, Method method,
+			boolean deprecated, String graphQLNamespace, Method method,
 			ProcessingElementsContainer processingElementsContainer) {
 
 			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder =
 				_getGraphQLFieldDefinitionBuilder(
 					method, processingElementsContainer);
 
+			Class<?> clazz = method.getClass();
+
+			String canonicalName = clazz.getCanonicalName();
+
+			String fieldType = "mutation";
+
+			if (canonicalName.contains("Query")) {
+				fieldType = "query";
+			}
+
 			if (deprecated) {
 				graphQLFieldDefinitionBuilder.deprecate(
-					"This field is deprecated. Please, use the namespaced " +
-						"query/mutation");
+					StringBundler.concat(
+						"This field is deprecated. Please, access this ",
+						fieldType, " through the following path : ", fieldType,
+						"/", graphQLNamespace, "/", method.getName()));
 			}
 
 			return graphQLFieldDefinitionBuilder.build();

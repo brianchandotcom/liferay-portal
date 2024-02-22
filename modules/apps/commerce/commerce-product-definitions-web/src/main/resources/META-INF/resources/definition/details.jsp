@@ -188,13 +188,12 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 				<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/index as utilities">
 					var headers = utilities.fetchParams.headers;
-					var id = <%= cpDefinitionsDisplayContext.getCPDefinitionId() %>;
 					var productId = <%= cpDefinition.getCProductId() %>;
 
 					function selectItem(specification) {
 						return Liferay.Util.fetch(
 							'/o/headless-commerce-admin-catalog/v1.0/products/' +
-								id +
+								productId +
 								'/productSpecifications/',
 							{
 								body: JSON.stringify(

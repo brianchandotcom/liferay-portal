@@ -89,9 +89,19 @@ describe('UsageOverview', () => {
 			<WrappedComponent {...defaultProps} project={mockProject} />
 		);
 
-		expect(getByText('1,000')).toBeInTheDocument();
+		expect(getByText('KNOWN INDIVIDUALS')).toBeInTheDocument();
 
-		expect(getByText('1% Since Jul 08, 2018')).toBeInTheDocument();
+		expect(
+			getByText(
+				'Active and logged in users on DXP synced to Analytics Cloud.'
+			)
+		).toBeInTheDocument();
+
+		expect(
+			getByText('104,000 Known Individuals remaining.')
+		).toBeInTheDocument();
+
+		expect(getByText('1,000 of 105,000 - 1% used.')).toBeInTheDocument();
 	});
 
 	it('should display the limit of INDIVIDUALS and PAGE VIEWS. Also, it should render a warning if INDIVIDUALS is over the limit. Also, it should render the current plan name.', () => {
@@ -108,18 +118,6 @@ describe('UsageOverview', () => {
 		const {container, getByText} = render(
 			<WrappedComponent {...defaultProps} project={mockProject} />
 		);
-
-		expect(getByText('105,000')).toBeInTheDocument();
-
-		expect(
-			getByText('Enterprise Plan 95,000 + 5,000 Add-On (2x)')
-		).toBeInTheDocument();
-
-		expect(getByText('7,000,000')).toBeInTheDocument();
-
-		expect(
-			getByText('Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)')
-		).toBeInTheDocument();
 
 		expect(container.querySelector('.alert-warning')).toBeInTheDocument();
 
@@ -142,9 +140,21 @@ describe('UsageOverview', () => {
 			<WrappedComponent {...defaultProps} project={mockProject} />
 		);
 
-		expect(getByText('111,123')).toBeInTheDocument();
+		expect(getByText('PAGE VIEWS')).toBeInTheDocument();
 
-		expect(getByText('1.6% Since Jul 08, 2018')).toBeInTheDocument();
+		expect(
+			getByText(
+				'Non-unique visits to any of the pages synced to Analytics Cloud.'
+			)
+		).toBeInTheDocument();
+
+		expect(
+			getByText('111,123 of 7,000,000 - 1.6% used.')
+		).toBeInTheDocument();
+
+		expect(
+			getByText('6,888,877 Page Views remaining.')
+		).toBeInTheDocument();
 	});
 
 	it('should render with an overage warning if the PAGE VIEWS metric has exceeded the plan limit', () => {

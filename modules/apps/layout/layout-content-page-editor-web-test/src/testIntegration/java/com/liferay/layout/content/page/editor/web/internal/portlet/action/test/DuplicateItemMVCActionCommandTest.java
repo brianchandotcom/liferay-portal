@@ -209,21 +209,8 @@ public class DuplicateItemMVCActionCommandTest {
 				duplicatedDropZoneFragmentStyledLayoutStructureItem.
 					getFragmentEntryLinkId());
 
-		Assert.assertEquals(
-			0,
-			duplicatedDropzoneFragmentEntryLink.
-				getOriginalFragmentEntryLinkId());
-
-		Assert.assertEquals(
-			dropzoneFragmentEntryLink.getFragmentEntryId(),
-			duplicatedDropzoneFragmentEntryLink.getFragmentEntryId());
-		Assert.assertEquals(
-			dropzoneFragmentEntryLink.getHtml(),
-			duplicatedDropzoneFragmentEntryLink.getHtml());
-
-		Assert.assertNotEquals(
-			dropzoneFragmentEntryLink.getNamespace(),
-			duplicatedDropzoneFragmentEntryLink.getNamespace());
+		_assertDuplicatedFragmentEntryLink(
+			duplicatedDropzoneFragmentEntryLink, dropzoneFragmentEntryLink);
 
 		FragmentDropZoneLayoutStructureItem
 			duplicatedFragmentDropZoneLayoutStructureItem =
@@ -243,25 +230,11 @@ public class DuplicateItemMVCActionCommandTest {
 						layoutStructure,
 						duplicatedFragmentDropZoneLayoutStructureItem));
 
-		FragmentEntryLink duplicatedHeadingFragmentEntryLink =
+		_assertDuplicatedFragmentEntryLink(
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
 				duplicatedHeadingFragmentStyledLayoutStructureItem.
-					getFragmentEntryLinkId());
-
-		Assert.assertEquals(
-			0,
-			duplicatedHeadingFragmentEntryLink.
-				getOriginalFragmentEntryLinkId());
-
-		Assert.assertEquals(
-			headingFragmentEntryLink.getFragmentEntryId(),
-			duplicatedHeadingFragmentEntryLink.getFragmentEntryId());
-		Assert.assertEquals(
-			headingFragmentEntryLink.getHtml(),
-			duplicatedHeadingFragmentEntryLink.getHtml());
-		Assert.assertEquals(
-			headingFragmentEntryLink.getEditableValues(),
-			duplicatedHeadingFragmentEntryLink.getEditableValues());
+					getFragmentEntryLinkId()),
+			headingFragmentEntryLink);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -320,6 +293,24 @@ public class DuplicateItemMVCActionCommandTest {
 		Assert.assertNotNull(childLayoutStructureItem);
 
 		return childLayoutStructureItem;
+	}
+
+	private void _assertDuplicatedFragmentEntryLink(
+		FragmentEntryLink duplicatedFragmentEntryLink,
+		FragmentEntryLink fragmentEntryLink) {
+
+		Assert.assertEquals(
+			0, duplicatedFragmentEntryLink.getOriginalFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			fragmentEntryLink.getFragmentEntryId(),
+			duplicatedFragmentEntryLink.getFragmentEntryId());
+		Assert.assertEquals(
+			fragmentEntryLink.getHtml(), duplicatedFragmentEntryLink.getHtml());
+
+		Assert.assertNotEquals(
+			fragmentEntryLink.getNamespace(),
+			duplicatedFragmentEntryLink.getNamespace());
 	}
 
 	private FragmentDropZoneLayoutStructureItem

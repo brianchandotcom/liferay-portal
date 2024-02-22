@@ -1928,21 +1928,21 @@ public class ThemeDisplay
 
 	private String _getFriendlyURL(Layout layout) {
 		if (_layoutFriendlyURLs == null) {
-			if (ListUtil.isEmpty(_layouts)) {
+			int layoutManagePagesInitialChildren =
+				_getLayoutManagePagesInitialChildren();
+
+			if (ListUtil.isEmpty(_layouts) ||
+				(layoutManagePagesInitialChildren <= 0)) {
+
 				_layoutFriendlyURLs = new HashMap<>();
 			}
 			else {
-				int layoutManagePagesInitialChildren =
-					_getLayoutManagePagesInitialChildren();
-
-				if (layoutManagePagesInitialChildren != 0) {
-					_layoutFriendlyURLs =
-						LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
-							_siteGroup,
-							_getFriendlyURLLayouts(
-								layoutManagePagesInitialChildren),
-							_i18nLanguageId);
-				}
+				_layoutFriendlyURLs =
+					LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+						_siteGroup,
+						_getFriendlyURLLayouts(
+							layoutManagePagesInitialChildren),
+						_i18nLanguageId);
 			}
 		}
 

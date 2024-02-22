@@ -44,6 +44,7 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,59 +53,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CETFactory.class)
 public class CETFactoryImpl implements CETFactory {
-
-	public CETFactoryImpl() {
-		_cetImplFactories = HashMapBuilder.<String, CETImplFactory>put(
-			ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP,
-			new CommerceCheckoutStepCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
-			new CustomElementCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_EDITOR_CONFIG_CONTRIBUTOR,
-			new EditorConfigContributorCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER,
-			new FDSCellRendererCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_FDS_FILTER,
-			new FDSFilterCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
-			new GlobalCSSCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-			new GlobalJSCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_IFRAME,
-			new IFrameCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY,
-			new JSImportMapsEntryCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_STATIC_CONTENT,
-			new StaticContentCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_THEME_CSS,
-			 new ThemeCSSCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
-			 new ThemeSpritemapCETImplFactoryImpl()
-		).put(
-			ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-			new ThemeFaviconCETImplFactoryImpl()
-
-		// TODO
-
-		/*).put(
-			ClientExtensionEntryConstants.TYPE_THEME_JS,
-			new ThemeJSCETImplFactoryImpl()*/
-
-		).build();
-
-		_types = Collections.unmodifiableSortedSet(
-			new TreeSet<>(_cetImplFactories.keySet()));
-	}
 
 	@Override
 	public CET create(
@@ -279,6 +227,60 @@ public class CETFactoryImpl implements CETFactory {
 			oldCET);
 	}
 
+	@Activate
+	protected void activate() {
+		_cetImplFactories = HashMapBuilder.<String, CETImplFactory>put(
+			ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP,
+			new CommerceCheckoutStepCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
+			new CustomElementCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_EDITOR_CONFIG_CONTRIBUTOR,
+			new EditorConfigContributorCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER,
+			new FDSCellRendererCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_FDS_FILTER,
+			new FDSFilterCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
+			new GlobalCSSCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+			new GlobalJSCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_IFRAME,
+			new IFrameCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY,
+			new JSImportMapsEntryCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_STATIC_CONTENT,
+			new StaticContentCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_THEME_CSS,
+			new ThemeCSSCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
+			new ThemeSpritemapCETImplFactoryImpl()
+		).put(
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+			new ThemeFaviconCETImplFactoryImpl()
+
+		// TODO
+
+		/*).put(
+			ClientExtensionEntryConstants.TYPE_THEME_JS,
+			new ThemeJSCETImplFactoryImpl()*/
+
+		).build();
+
+		_types = Collections.unmodifiableSortedSet(
+			new TreeSet<>(_cetImplFactories.keySet()));
+	}
+
 	private CETImplFactory _getCETImplFactory(String type)
 		throws ClientExtensionEntryTypeException {
 
@@ -397,11 +399,11 @@ public class CETFactoryImpl implements CETFactory {
 		return transformedUnicodeProperties;
 	}
 
-	private final Map<String, CETImplFactory> _cetImplFactories;
+	private Map<String, CETImplFactory> _cetImplFactories;
 
 	@Reference
 	private Portal _portal;
 
-	private final Set<String> _types;
+	private Set<String> _types;
 
 }

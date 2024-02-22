@@ -366,26 +366,26 @@ public class SearchResultSummaryDisplayContextBuilder {
 			className, classPK);
 
 		_buildAssetCategoriesOrTags(
-			searchResultSummaryDisplayContext, assetEntry);
+			assetEntry, searchResultSummaryDisplayContext);
 
 		_buildAssetRendererURLDownload(
-			searchResultSummaryDisplayContext, assetRendererFactory,
-			assetRenderer, summary);
+			assetRenderer, assetRendererFactory,
+			searchResultSummaryDisplayContext, summary);
 		_buildCreationDateString(searchResultSummaryDisplayContext);
 		_buildCreatorUserName(searchResultSummaryDisplayContext);
 		_buildCreatorUserPortrait(searchResultSummaryDisplayContext);
 		_buildDocumentForm(searchResultSummaryDisplayContext);
 		_buildImage(
-			searchResultSummaryDisplayContext, assetRendererFactory,
-			assetRenderer);
+			assetRenderer, assetRendererFactory,
+			searchResultSummaryDisplayContext);
 		_buildLocaleReminder(searchResultSummaryDisplayContext, summary);
-		_buildModelResource(searchResultSummaryDisplayContext, className);
+		_buildModelResource(className, searchResultSummaryDisplayContext);
 		_buildModifiedByUserName(searchResultSummaryDisplayContext);
 		_buildModifiedByUserPortrait(searchResultSummaryDisplayContext);
 		_buildModifiedDateString(searchResultSummaryDisplayContext);
 		_buildPublishedDateString(searchResultSummaryDisplayContext);
 		_buildUserPortrait(
-			searchResultSummaryDisplayContext, assetEntry, className);
+			assetEntry, className, searchResultSummaryDisplayContext);
 		_buildViewURL(className, classPK, searchResultSummaryDisplayContext);
 
 		return searchResultSummaryDisplayContext;
@@ -508,8 +508,8 @@ public class SearchResultSummaryDisplayContextBuilder {
 	}
 
 	private void _buildAssetCategoriesOrTags(
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-		AssetEntry assetEntry) {
+		AssetEntry assetEntry,
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		if (_hasAssetCategoriesOrTags(assetEntry)) {
 			searchResultSummaryDisplayContext.setAssetCategoriesOrTagsVisible(
@@ -521,9 +521,10 @@ public class SearchResultSummaryDisplayContextBuilder {
 	}
 
 	private void _buildAssetRendererURLDownload(
-			SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
+			AssetRenderer<?> assetRenderer,
 			AssetRendererFactory<?> assetRendererFactory,
-			AssetRenderer<?> assetRenderer, Summary summary)
+			SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
+			Summary summary)
 		throws Exception {
 
 		if (_hasAssetRendererURLDownload(assetRenderer)) {
@@ -709,9 +710,9 @@ public class SearchResultSummaryDisplayContextBuilder {
 	}
 
 	private void _buildImage(
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
+		AssetRenderer<?> assetRenderer,
 		AssetRendererFactory<?> assetRendererFactory,
-		AssetRenderer<?> assetRenderer) {
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		if (!_imageRequested || (assetRendererFactory == null)) {
 			return;
@@ -763,8 +764,8 @@ public class SearchResultSummaryDisplayContextBuilder {
 	}
 
 	private void _buildModelResource(
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-		String className) {
+		String className,
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		String modelResource = _resourceActions.getModelResource(
 			_themeDisplay.getLocale(), className);
@@ -855,8 +856,8 @@ public class SearchResultSummaryDisplayContextBuilder {
 	}
 
 	private void _buildUserPortrait(
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext,
-		AssetEntry assetEntry, String className) {
+		AssetEntry assetEntry, String className,
+		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
 		AssetEntry childAssetEntry = _assetEntryLocalService.fetchEntry(
 			className, _getEntryClassPK());

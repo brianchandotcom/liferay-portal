@@ -1,0 +1,44 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-9361",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "L_COMMERCE_RETURN_RETURN_STATE_PICKLIST",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "L_COMMERCE_RETURN_RETURN_STATE_PICKLIST_DRAFT",
+					"key": "draft",
+					"name": "draft",
+					"name_i18n": {
+						"en-US": "Draft"
+					}
+				},
+				{
+					"externalReferenceCode": "L_COMMERCE_RETURN_RETURN_STATE_PICKLIST_COMPLETE",
+					"key": "complete",
+					"name": "complete",
+					"name_i18n": {
+						"en-US": "Complete"
+					}
+				}
+			],
+			"name": "L_COMMERCE_RETURN_RETURN_STATE_PICKLIST",
+			"name_i18n": {
+				"en-US": "L_COMMERCE_RETURN_RETURN_STATE_PICKLIST"
+			},
+			"system": false
+		}
+	]
+}

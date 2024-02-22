@@ -26,28 +26,19 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
+					"defaultValue": "draft",
 					"externalReferenceCode": "RETURN_STATE",
 					"indexed": true,
 					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
 					"label": {
 						"en_US": "Return State"
 					},
 					"listTypeDefinitionExternalReferenceCode": "L_COMMERCE_RETURN_RETURN_STATE_PICKLIST",
-					"localized": false,
 					"name": "returnState",
-					"objectFieldSettings": [
-						{
-							"name": "defaultValueType",
-							"value": "inputAsValue"
-						}
-					],
-					"readOnly": "false",
-					"required": false,
-					"state": false,
+					"required": true,
+					"state": true,
 					"system": false,
-					"type": "String",
-					"unique": false
+					"type": "String"
 				}
 			],
 			"panelCategoryKey": "",
@@ -71,45 +62,14 @@
 			"objectRelationships": [
 				{
 					"deletionType": "prevent",
+					"externalReferenceCode": "L_COMMERCE_ORDER_TO_COMMERCE_RETURNS",
 					"label": {
 						"en_US": "Commerce Order to Commerce Returns"
 					},
 					"name": "commerceOrderToCommerceReturns",
 					"objectDefinitionExternalReferenceCode1": "L_COMMERCE_ORDER",
 					"objectDefinitionExternalReferenceCode2": "L_COMMERCE_RETURN",
-					"objectDefinitionModifiable2": true,
 					"objectDefinitionName2": "CommerceReturn",
-					"objectDefinitionSystem2": true,
-					"objectField": {
-						"DBType": "Long",
-						"businessType": "Relationship",
-						"indexed": true,
-						"indexedAsKeyword": false,
-						"indexedLanguageId": "",
-						"label": {
-							"en_US": "Commerce Order to Commerce Returns"
-						},
-						"localized": false,
-						"name": "r_commerceOrderToCommerceReturns_commerceOrderId",
-						"objectFieldSettings": [
-							{
-								"name": "objectDefinition1ShortName",
-								"value": "CommerceOrder"
-							},
-							{
-								"name": "objectRelationshipERCObjectFieldName",
-								"value": "r_commerceOrderToCommerceReturns_commerceOrderERC"
-							}
-						],
-						"readOnly": "false",
-						"readOnlyConditionExpression": "",
-						"relationshipType": "oneToMany",
-						"required": false,
-						"state": false,
-						"system": false,
-						"type": "Long",
-						"unique": false
-					},
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
 					"reverse": false,

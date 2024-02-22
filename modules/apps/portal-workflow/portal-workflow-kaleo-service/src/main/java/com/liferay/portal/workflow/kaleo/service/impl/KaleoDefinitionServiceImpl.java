@@ -11,13 +11,17 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionServiceBaseImpl;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +48,57 @@ public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 
 		return _kaleoDefinitionLocalService.addKaleoDefinition(
 			name, title, description, content, scope, version, serviceContext);
+	}
+
+	@Override
+	public KaleoDefinition getKaleoDefinition(long kaleoDefinitionId)
+		throws PortalException {
+
+		_kaleoDefinitionModelResourcePermission.check(
+			getPermissionChecker(), null, ActionKeys.VIEW);
+
+		return _kaleoDefinitionLocalService.getKaleoDefinition(
+			kaleoDefinitionId);
+	}
+
+	@Override
+	public KaleoDefinition getKaleoDefinition(
+			String name, ServiceContext serviceContext)
+		throws PortalException {
+
+		_kaleoDefinitionModelResourcePermission.check(
+			getPermissionChecker(), null, ActionKeys.VIEW);
+
+		return _kaleoDefinitionLocalService.getKaleoDefinition(
+			name, serviceContext);
+	}
+
+	@Override
+	public List<KaleoDefinition> getScopeKaleoDefinitions(
+			String scope, boolean active, int start, int end,
+			OrderByComparator<KaleoDefinition> orderByComparator,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_kaleoDefinitionModelResourcePermission.check(
+			getPermissionChecker(), null, ActionKeys.VIEW);
+
+		return _kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+			scope, active, start, end, orderByComparator, serviceContext);
+	}
+
+	@Override
+	public List<KaleoDefinition> getScopeKaleoDefinitions(
+			String scope, int start, int end,
+			OrderByComparator<KaleoDefinition> orderByComparator,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_kaleoDefinitionModelResourcePermission.check(
+			getPermissionChecker(), null, ActionKeys.VIEW);
+
+		return _kaleoDefinitionLocalService.getScopeKaleoDefinitions(
+			scope, start, end, orderByComparator, serviceContext);
 	}
 
 	@Override
@@ -78,6 +133,12 @@ public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinition)"
+	)
+	private ModelResourcePermission<KaleoDefinition>
+		_kaleoDefinitionModelResourcePermission;
 
 	@Reference(
 		target = "(resource.name=" + WorkflowConstants.RESOURCE_NAME + ")"

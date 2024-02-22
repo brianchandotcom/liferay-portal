@@ -26,6 +26,7 @@ import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -146,8 +147,7 @@ public class EntityFieldsProvider {
 		try {
 			Date date = indexDateFormat.parse(String.valueOf(fieldValue));
 
-			DateFormat searchDateFormat =
-				DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
+			DateFormat searchDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			return searchDateFormat.format(date);
 		}

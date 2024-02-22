@@ -8,7 +8,6 @@ package com.liferay.portal.search.web.internal.suggestions.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.portlet.shared.task.helper.PortletSharedRequestHelper;
 import com.liferay.portal.search.web.internal.suggestions.constants.SuggestionsPortletKeys;
 import com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionsPortletDisplayContext;
 import com.liferay.portal.search.web.internal.suggestions.display.context.builder.SuggestionsPortletDisplayContextBuilder;
@@ -90,9 +89,6 @@ public class SuggestionsPortlet extends MVCPortlet {
 	protected Portal portal;
 
 	@Reference
-	protected PortletSharedRequestHelper portletSharedRequestHelper;
-
-	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 	private SuggestionsPortletDisplayContext _buildDisplayContext(
@@ -128,7 +124,7 @@ public class SuggestionsPortlet extends MVCPortlet {
 				suggestionsPortletPreferences.
 					isRelatedQueriesSuggestionsEnabled());
 		suggestionsPortletDisplayContextBuilder.setSearchURL(
-			portletSharedRequestHelper.getCompleteURL(renderRequest));
+			portal.getCurrentURL(renderRequest));
 
 		String spellCheckSuggestion =
 			portletSharedSearchResponse.getSpellCheckSuggestion();

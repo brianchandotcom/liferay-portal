@@ -1283,23 +1283,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		PagePermission[] expectedPagePermissions = {
-			new PagePermission() {
-				{
-					actionKeys = new String[] {
-						ActionKeys.ADD_DISCUSSION, ActionKeys.ADD_LAYOUT,
-						ActionKeys.CONFIGURE_PORTLETS, ActionKeys.CUSTOMIZE,
-						ActionKeys.DELETE, ActionKeys.DELETE_DISCUSSION,
-						ActionKeys.LAYOUT_RULE_BUILDER, ActionKeys.UPDATE,
-						ActionKeys.UPDATE_DISCUSSION,
-						ActionKeys.UPDATE_LAYOUT_ADVANCED_OPTIONS,
-						ActionKeys.UPDATE_LAYOUT_BASIC,
-						ActionKeys.UPDATE_LAYOUT_CONTENT,
-						ActionKeys.UPDATE_LAYOUT_LIMITED,
-						ActionKeys.PERMISSIONS, ActionKeys.VIEW
-					};
-					roleKey = RoleConstants.OWNER;
-				}
-			}
+			_EXPECTED_PAGE_OWNER_PERMISSIONS
 		};
 
 		PagePermission[] inputPagePermissions = {};
@@ -1312,23 +1296,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		PagePermission[] expectedPagePermissions = {
-			new PagePermission() {
-				{
-					actionKeys = new String[] {
-						ActionKeys.ADD_DISCUSSION, ActionKeys.ADD_LAYOUT,
-						ActionKeys.CONFIGURE_PORTLETS, ActionKeys.CUSTOMIZE,
-						ActionKeys.DELETE, ActionKeys.DELETE_DISCUSSION,
-						ActionKeys.LAYOUT_RULE_BUILDER, ActionKeys.UPDATE,
-						ActionKeys.UPDATE_DISCUSSION,
-						ActionKeys.UPDATE_LAYOUT_ADVANCED_OPTIONS,
-						ActionKeys.UPDATE_LAYOUT_BASIC,
-						ActionKeys.UPDATE_LAYOUT_CONTENT,
-						ActionKeys.UPDATE_LAYOUT_LIMITED,
-						ActionKeys.PERMISSIONS, ActionKeys.VIEW
-					};
-					roleKey = RoleConstants.OWNER;
-				}
-			},
+			_EXPECTED_PAGE_OWNER_PERMISSIONS,
 			new PagePermission() {
 				{
 					actionKeys = new String[] {
@@ -1385,23 +1353,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		PagePermission[] expectedPagePermissions = {
-			new PagePermission() {
-				{
-					actionKeys = new String[] {
-						ActionKeys.ADD_DISCUSSION, ActionKeys.ADD_LAYOUT,
-						ActionKeys.CONFIGURE_PORTLETS, ActionKeys.CUSTOMIZE,
-						ActionKeys.DELETE, ActionKeys.DELETE_DISCUSSION,
-						ActionKeys.LAYOUT_RULE_BUILDER, ActionKeys.UPDATE,
-						ActionKeys.UPDATE_DISCUSSION,
-						ActionKeys.UPDATE_LAYOUT_ADVANCED_OPTIONS,
-						ActionKeys.UPDATE_LAYOUT_BASIC,
-						ActionKeys.UPDATE_LAYOUT_CONTENT,
-						ActionKeys.UPDATE_LAYOUT_LIMITED,
-						ActionKeys.PERMISSIONS, ActionKeys.VIEW
-					};
-					roleKey = RoleConstants.OWNER;
-				}
-			},
+			_EXPECTED_PAGE_OWNER_PERMISSIONS,
 			new PagePermission() {
 				{
 					actionKeys = new String[] {ActionKeys.VIEW};
@@ -1949,6 +1901,25 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =
 		"com.liferay.headless.delivery.internal.resource.v1_0." +
 			"SitePageResourceImpl";
+
+	private static final PagePermission _EXPECTED_PAGE_OWNER_PERMISSIONS =
+		new PagePermission() {
+			{
+				actionKeys = new String[] {
+					ActionKeys.ADD_DISCUSSION, ActionKeys.ADD_LAYOUT,
+					ActionKeys.CONFIGURE_PORTLETS, ActionKeys.CUSTOMIZE,
+					ActionKeys.DELETE, ActionKeys.DELETE_DISCUSSION,
+					ActionKeys.LAYOUT_RULE_BUILDER, ActionKeys.PREVIEW_DRAFT,
+					ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION,
+					ActionKeys.UPDATE_LAYOUT_ADVANCED_OPTIONS,
+					ActionKeys.UPDATE_LAYOUT_BASIC,
+					ActionKeys.UPDATE_LAYOUT_CONTENT,
+					ActionKeys.UPDATE_LAYOUT_LIMITED, ActionKeys.PERMISSIONS,
+					ActionKeys.VIEW
+				};
+				roleKey = RoleConstants.OWNER;
+			}
+		};
 
 	@Inject
 	private static ExpandoColumnLocalService _expandoColumnLocalService;

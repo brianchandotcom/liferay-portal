@@ -16,7 +16,7 @@ function combine_properties_files {
 
 		while IFS='=' read -r property_name property_value || [ -n "${property_name}" ]
 		do
-			if [[ ${property_name} =~ ^\ *# || -z "${property_name}" ]]
+			if [[ ${property_name} =~ ^\ *# ]] || [[ ${property_name} =~ ^\ *\/\/ ]] || [[ -z "${property_name}" ]]
 			then
 				continue
 			fi

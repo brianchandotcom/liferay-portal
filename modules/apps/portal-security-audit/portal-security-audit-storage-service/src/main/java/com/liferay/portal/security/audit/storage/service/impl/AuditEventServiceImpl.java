@@ -36,6 +36,26 @@ import org.osgi.service.component.annotations.Reference;
 public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 
 	@Override
+	public AuditEvent getAuditEvent(long auditEventId) throws PortalException {
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		AuditEvent auditEvent = auditEventLocalService.getAuditEvent(
+			auditEventId);
+
+		if (!(permissionChecker.isCompanyAdmin() ||
+			  _userLocalService.hasRoleUser(
+				  permissionChecker.getCompanyId(),
+				  RoleConstants.ANALYTICS_ADMINISTRATOR,
+				  permissionChecker.getUserId(), true)) ||
+			(permissionChecker.getCompanyId() != auditEvent.getCompanyId())) {
+
+			throw new PrincipalException();
+		}
+
+		return auditEvent;
+	}
+
+	@Override
 	public List<AuditEvent> getAuditEvents(long companyId, int start, int end)
 		throws PortalException {
 

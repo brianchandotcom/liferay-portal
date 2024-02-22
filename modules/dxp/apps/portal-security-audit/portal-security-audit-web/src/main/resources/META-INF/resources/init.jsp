@@ -26,8 +26,8 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalClassInvoker" %><%@
 page import="com.liferay.portal.kernel.util.PortalClassLoaderUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.security.audit.AuditEvent" %><%@
-page import="com.liferay.portal.security.audit.web.internal.AuditEventManagerUtil" %><%@
+page import="com.liferay.portal.security.audit.storage.model.AuditEvent" %><%@
+page import="com.liferay.portal.security.audit.storage.service.AuditEventServiceUtil" %><%@
 page import="com.liferay.portal.security.audit.web.internal.display.context.AuditDisplayContext" %>
 
 <%@ page import="java.text.Format" %>

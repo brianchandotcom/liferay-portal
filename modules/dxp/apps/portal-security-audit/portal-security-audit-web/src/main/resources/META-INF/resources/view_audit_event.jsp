@@ -15,7 +15,7 @@ AuditEvent auditEvent = null;
 String eventTypeAction = StringPool.BLANK;
 
 if (auditEventId > 0) {
-	auditEvent = AuditEventManagerUtil.fetchAuditEvent(auditEventId);
+	auditEvent = AuditEventServiceUtil.getAuditEvent(auditEventId);
 
 	if (auditEvent != null) {
 		auditEvent = auditEvent.toEscapedModel();

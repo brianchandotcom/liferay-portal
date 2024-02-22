@@ -8,6 +8,7 @@ import ClayTabs from '@clayui/tabs';
 import React, {ComponentType, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../../FDSView';
+import Cards, {ICards} from './cards/Cards';
 import List, {IList} from './list/List';
 import Table, {ITable} from './table/Table';
 
@@ -17,7 +18,7 @@ export interface IBaseVisualizationMode<Type extends string> {
 	visualizationModeId: string;
 }
 
-type TVisualizationMode = ITable | IList;
+type TVisualizationMode = ICards | IList | ITable;
 
 const DEFAULT_VISUALIZATION_MODES: TVisualizationMode[] = [
 	{
@@ -30,11 +31,17 @@ const DEFAULT_VISUALIZATION_MODES: TVisualizationMode[] = [
 		type: 'list',
 		visualizationModeId: 'defaultList',
 	},
+	{
+		label: Liferay.Language.get('cards'),
+		type: 'cards',
+		visualizationModeId: 'defaultCards',
+	},
 ];
 
 const VISUALIZATION_MODE_COMPONENT_MAP: {
 	[key in TVisualizationMode['type']]: ComponentType<IFDSViewSectionProps>;
 } = {
+	cards: Cards,
 	list: List,
 	table: Table,
 };

@@ -5,6 +5,7 @@
 
 const API_URL = {
 	FDS_ACTIONS: '/o/data-set-manager/actions',
+	FDS_CARDS_SECTIONS: '/o/data-set-manager/cards-sections',
 	FDS_CLIENT_EXTENSION_FILTERS:
 		'/o/data-set-manager/client-extension-filters',
 	FDS_DATE_FILTERS: '/o/data-set-manager/date-filters',
@@ -24,6 +25,9 @@ const FUZZY_OPTIONS = {
 const OBJECT_RELATIONSHIP = {
 	FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship',
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
+	FDS_VIEW_FDS_CARDS_SECTION: 'fdsViewFDSCardsSectionRelationship',
+	FDS_VIEW_FDS_CARDS_SECTION_ID:
+		'r_fdsViewFDSCardsSectionRelationship_c_fdsViewId',
 	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter',
 	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID:
 		'r_fdsViewFDSClientExtensionFilter_c_fdsViewId',

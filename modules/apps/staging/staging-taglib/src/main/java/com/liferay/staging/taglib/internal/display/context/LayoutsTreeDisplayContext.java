@@ -376,6 +376,10 @@ public class LayoutsTreeDisplayContext {
 			).put(
 				"paginated",
 				() -> {
+					if (PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN <= 0) {
+						return false;
+					}
+
 					int layoutsCount = LayoutServiceUtil.getLayoutsCount(
 						_getSelectPagesGroupId(), isSelectPagesPrivateLayout(),
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);

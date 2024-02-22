@@ -367,7 +367,7 @@ public class LayoutsTreeImpl implements LayoutsTree {
 			httpServletRequest, "paginate", true);
 
 		if (paginate &&
-			(PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN > -1)) {
+			(PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN > 0)) {
 
 			return true;
 		}

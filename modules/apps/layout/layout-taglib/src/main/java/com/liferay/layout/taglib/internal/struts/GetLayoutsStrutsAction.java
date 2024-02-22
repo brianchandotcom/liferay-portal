@@ -6,6 +6,7 @@
 package com.liferay.layout.taglib.internal.struts;
 
 import com.liferay.layout.taglib.internal.util.LayoutUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutService;
@@ -61,11 +62,20 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 
 		int startEndMax = Math.max(start, end);
 
+		if (pageSize <= 0) {
+			start = QueryUtil.ALL_POS;
+			end = QueryUtil.ALL_POS;
+		}
+
 		ServletResponseUtil.write(
 			httpServletResponse,
 			JSONUtil.put(
 				"hasMoreElements",
 				() -> {
+					if (pageSize <= 0) {
+						return false;
+					}
+
 					int childLayoutsCount = _layoutService.getLayoutsCount(
 						groupId, privateLayout, parentLayoutId);
 

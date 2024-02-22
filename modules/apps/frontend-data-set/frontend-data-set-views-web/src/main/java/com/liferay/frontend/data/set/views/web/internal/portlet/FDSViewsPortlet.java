@@ -224,6 +224,48 @@ public class FDSViewsPortlet extends MVCPortlet {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
+	private void _createFDSCardsSectionObjectDefinition(
+			ObjectDefinition fdsViewObjectDefinition, Locale locale,
+			long userId)
+		throws Exception {
+
+		ObjectDefinition fdsCardsSectionObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"FDSCardsSection", userId, 0, "FDSCardsSection",
+				"FDSCardsSection", false,
+				LocalizedMapUtil.getLocalizedMap("FDS Cards Section"), true,
+				"FDSCardsSection", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("FDS Cards Sections"),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "name", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "renderer-name"), "rendererName",
+						false)));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, fdsCardsSectionObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, userId, fdsViewObjectDefinition.getObjectDefinitionId(),
+			fdsCardsSectionObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(
+				"FDSView FDSCardsSection Relationship"),
+			"fdsViewFDSCardsSectionRelationship", false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+	}
+
 	private void _createFDSClientExtensionFilterObjectDefintion(
 			ObjectDefinition fdsViewObjectDefinition, Locale locale,
 			long userId)
@@ -670,6 +712,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 		_createFDSSortObjectDefinition(fdsViewObjectDefinition, locale, userId);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
+			_createFDSCardsSectionObjectDefinition(
+				fdsViewObjectDefinition, locale, userId);
 			_createFDSListSectionObjectDefinition(
 				fdsViewObjectDefinition, locale, userId);
 		}

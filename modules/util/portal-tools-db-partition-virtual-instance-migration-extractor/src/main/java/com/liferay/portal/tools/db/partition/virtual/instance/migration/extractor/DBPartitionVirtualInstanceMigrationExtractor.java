@@ -66,14 +66,12 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 	private static Options _getOptions() {
 		Options options = new Options();
 
-		options.addOption("h", "help", false, "Print help message.");
-		options.addRequiredOption("url", "jdbc-url", true, "Set the JDBC URL.");
-		options.addRequiredOption(
-			"pass", "password", true, "Set the password.");
-		options.addRequiredOption("user", "user", true, "Set the user.");
-		options.addOption(
-			"partition", "partition-id", true, "Set the partition to extract.");
-		options.addOption("path", "path", true, "Set the output directory.");
+		options.addOption("h", "help", false, "Print help.");
+		options.addRequiredOption("j", "jdbc-url", true, "JDBC URL.");
+		options.addRequiredOption("p", "password", true, "Password.");
+		options.addRequiredOption("u", "user", true, "User.");
+		options.addOption("s", "schema-name", true, "Schema name.");
+		options.addOption("d", "output-dir", true, "Output directory.");
 
 		return options;
 	}
@@ -101,7 +99,7 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 
 			String jdbcUrl = DatabaseUtil.replaceSchemaName(
 				commandLine.getOptionValue("jdbc-url"),
-				commandLine.getOptionValue("partition-id"));
+				commandLine.getOptionValue("schema-name"));
 
 			try {
 				_connection = DriverManager.getConnection(
@@ -120,7 +118,7 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 
 			String exportFilePath = _writeToFile(
 				DatabaseUtil.exportInstanceData(_connection),
-				commandLine.getOptionValue("path"));
+				commandLine.getOptionValue("output-dir"));
 
 			System.out.println(
 				"Export file generated successfully in " + exportFilePath);

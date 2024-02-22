@@ -290,7 +290,8 @@ export function formatPlanData(subscriptionIMap) {
 						'pageViewsStatus',
 						SubscriptionStatuses.Ok
 					)
-				})
+				}),
+				usersCount: subscriptionIMap.get('usersCount')
 			},
 			name: subscriptionIMap.get('name'),
 			startDate: subscriptionIMap.get('startDate')

@@ -9,17 +9,16 @@ import {compose, withCurrentUser, withProject} from 'shared/hoc';
 import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from 'shared/util/date';
 import {
 	formatPlanData,
-	INDIVIDUALS,
 	isBasicPlan,
-	PAGEVIEWS,
 	PLAN_TYPES,
 	PLANS
 } from 'shared/util/subscriptions';
+import {KnownIndividualsSession} from 'settings/components/usage-overview/KnownIndividualsSession';
+import {PageViewsSession} from 'settings/components/usage-overview/PageViewsSession';
 import {sub} from 'shared/util/lang';
 import {SubscriptionDetails} from 'settings/components/usage-overview/SubscriptionDetails';
 import {SubscriptionStatuses} from 'shared/util/constants';
 import {Text} from '@clayui/core';
-import {UsageMetric} from '../components/usage-overview/UsageMetric';
 
 const subscriptionStatuses = admin => ({
 	[SubscriptionStatuses.Approaching]: {
@@ -136,7 +135,10 @@ export const UsageOverview = ({currentUser, groupId, project}) => {
 							</p>
 
 							{!isBasicPlan(currentPlan) && (
-								<p data-testid='next-anniversary-date'>
+								<p
+									className='mb-0'
+									data-testid='next-anniversary-date'
+								>
 									<Text color='secondary' size={3}>
 										{sub(
 											Liferay.Language.get(
@@ -159,21 +161,11 @@ export const UsageOverview = ({currentUser, groupId, project}) => {
 								</p>
 							)}
 
-							<UsageMetric
-								className='my-4'
+							<KnownIndividualsSession
 								currentPlan={currentPlan}
-								metricType={INDIVIDUALS}
-								planType={planType}
-								timeZoneId={timeZoneId}
 							/>
 
-							<UsageMetric
-								className='mt-4'
-								currentPlan={currentPlan}
-								metricType={PAGEVIEWS}
-								planType={planType}
-								timeZoneId={timeZoneId}
-							/>
+							<PageViewsSession currentPlan={currentPlan} />
 						</Card.Body>
 					</Card>
 				</ClayLayout.Col>

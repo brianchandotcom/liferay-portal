@@ -3,83 +3,42 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locale, TranslationAdminSelector} from 'frontend-js-components-web';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {
+	TranslationAdminSelector,
+	TranslationProgress,
+} from 'frontend-js-components-web';
+import React, {useCallback, useEffect} from 'react';
 
-type Field = Record<Liferay.Language.Locale, string>;
+import {Fields, TranslationsWrapper} from './TranslationsWrapper';
 
-type Fields = Record<string, Field> | null;
+interface IProps extends TranslationsWrapper {
+	getLocalizableFields: () => void;
+	setFields: (fields: Fields) => void;
+	setSelectedLanguageId: (languageId: Liferay.Language.Locale) => void;
+	setTranslations: (translations: Translation[]) => void;
+	translationProgress: TranslationProgress | null;
+	updateTranslations: (fields: Fields) => void;
+}
 
-interface Props {
-	defaultLanguageId: Liferay.Language.Locale;
-	fields: Record<string, Field>;
-	locales: Locale[];
-	selectedLanguageId: Liferay.Language.Locale;
+interface Translation {
+	fieldName: string;
+	languages: Liferay.Language.Locale[];
 }
 
 export default function TranslationManager({
 	defaultLanguageId,
-	fields: initialFields,
+	fields,
+	getLocalizableFields,
 	locales,
-	selectedLanguageId: initialSelectedLanguageId,
-}: Props) {
-	const [fields, setFields] = useState<Fields>(null);
-	const [selectedLanguageId, setSelectedLanguageId] = useState<
-		Liferay.Language.Locale
-	>(initialSelectedLanguageId);
-	const [translations, setTranslations] = useState(
-		fieldToTranslations(initialFields)
-	);
-
-	const updateTranslations = (fields: Fields) => {
-		if (!fields) {
-			return;
-		}
-
-		const newTranslations = Object.keys(fields).map((fieldName) => {
-			const languages = Array.from(
-				document.querySelectorAll<HTMLInputElement>(
-					`[type="hidden"][data-field-name="${fieldName}"]`
-				)
-			)
-				.filter((input) => input.value)
-				.map(
-					(input) =>
-						input.dataset.languageid as Liferay.Language.Locale
-				);
-
-			return {
-				fieldName,
-				languages,
-			};
-		});
-
-		setTranslations(newTranslations);
-	};
-
+	selectedLanguageId,
+	setSelectedLanguageId,
+	translationProgress,
+	updateTranslations,
+}: IProps) {
 	const updateTranslationStatus = useCallback(
 		() => updateTranslations(fields),
-		[fields]
+		[fields, updateTranslations]
 	);
-
-	const getLocalizableFields = useCallback(() => {
-		const ddmFields = Array.from(
-			document.querySelectorAll<HTMLInputElement>(
-				`[data-ddm-localizable-field-id]`
-			)
-		)
-			.map(
-				(field) =>
-					`${field.dataset.fieldName}${field.dataset.ddmLocalizableFieldId}`
-			)
-			.reduce((acc, name) => ({...acc, [name]: {}}), {});
-
-		const fields = {...initialFields, ...ddmFields};
-
-		setFields(fields);
-
-		updateTranslations(fields);
-	}, [initialFields]);
 
 	useEffect(() => {
 		if (fields) {
@@ -105,21 +64,6 @@ export default function TranslationManager({
 		});
 	}, [selectedLanguageId]);
 
-	const translatedItems = useMemo(
-		() =>
-			locales.reduce((acc, locale) => {
-				const translatedItems = translations.filter(({languages}) =>
-					languages.includes(locale.id)
-				).length;
-
-				return {
-					...acc,
-					...(translatedItems && {[locale.id]: translatedItems}),
-				};
-			}, {}),
-		[translations, locales]
-	);
-
 	return (
 		<TranslationAdminSelector
 			activeLanguageIds={locales.map(({id}) => id)}
@@ -129,32 +73,7 @@ export default function TranslationManager({
 			onSelectedLanguageIdChange={setSelectedLanguageId}
 			onSelectorActiveChange={getLocalizableFields}
 			selectedLanguageId={selectedLanguageId}
-			translationProgress={
-				Object.keys(translatedItems).length
-					? {
-							totalItems: Object.keys(fields || initialFields)
-								.length,
-							translatedItems,
-					  }
-					: null
-			}
+			translationProgress={translationProgress}
 		/>
 	);
-}
-
-export function fieldToTranslations(fields: Record<string, Field>) {
-	const translations = [];
-
-	for (const fieldName in fields) {
-		const languages = fields[fieldName]
-			? (Object.keys(fields[fieldName]) as Liferay.Language.Locale[])
-			: [];
-
-		translations.push({
-			fieldName,
-			languages,
-		});
-	}
-
-	return translations;
 }

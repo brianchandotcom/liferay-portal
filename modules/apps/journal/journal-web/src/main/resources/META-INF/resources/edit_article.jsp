@@ -59,13 +59,22 @@ journalEditArticleDisplayContext.setViewAttributes();
 					<c:choose>
 						<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-114700") %>'>
 							<div class="autofit-row sidebar-section">
-								<div class="autofit-col translation-manager">
-									<div class="inline-item px-5 py-2">
-										<span aria-hidden="true" class="loading-animation"></span>
-									</div>
+								<div class="<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") ? "autofit-col d-flex flex-row" : "autofit-col translation-manager" %>">
+									<c:choose>
+										<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") %>'>
+											<div class="inline-item px-6 py-2">
+												<span aria-hidden="true" class="loading-animation"></span>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="inline-item px-5 py-2">
+												<span aria-hidden="true" class="loading-animation"></span>
+											</div>
+										</c:otherwise>
+									</c:choose>
 
 									<react:component
-										module="js/translation_manager/TranslationManager"
+										module="js/translation_manager/TranslationsWrapper"
 										props='<%=
 											HashMapBuilder.<String, Object>put(
 												"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()

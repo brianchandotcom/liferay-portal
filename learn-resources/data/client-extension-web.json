@@ -16,5 +16,11 @@
 			"message": "Learn more about IFrame client extensions.",
 			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-iframe-type"
 		}
+	},
+	"learn-style-book-token-definitions": {
+		"en_US": {
+			"message": "Learn more about frontend token definitions.",
+			"url": "https://learn.liferay.com/w/dxp/site-building/site-appearance/style-books/developer-guide/style-book-token-definitions"
+		}
 	}
 }

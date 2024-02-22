@@ -12,7 +12,7 @@ import {userPersonalBarPagesTest} from '../../fixtures/userPersonalBarPagesTest'
 export const test = mergeTests(
 	apiHelpersTest,
 	userPersonalBarPagesTest,
-	loginTest
+	loginTest()
 );
 
 test('LPD-15423 notification badge configuration enables and disables notification badge in personal menu', async ({

@@ -11,7 +11,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest);
+export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
 
 test('LPD-15231 escape account name on admin order details page', async ({
 	apiHelpers,

@@ -20,7 +20,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
-	loginTest,
+	loginTest(),
 	pageEditorPagesTest
 );
 

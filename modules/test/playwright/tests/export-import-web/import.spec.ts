@@ -17,7 +17,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	documentLibraryPagesTest,
 	exportImportPagesTest,
-	loginTest
+	loginTest()
 );
 
 test('can import a folder with document type restrictions and workflow', async ({

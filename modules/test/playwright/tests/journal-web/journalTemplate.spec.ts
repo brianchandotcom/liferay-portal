@@ -14,7 +14,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	journalPagesTest,
-	loginTest
+	loginTest()
 );
 
 const RESERVED_VARIABLES = [

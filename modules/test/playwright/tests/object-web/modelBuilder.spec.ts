@@ -14,7 +14,7 @@ import {getRandomInt} from '../../utils/util';
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
-	loginTest,
+	loginTest(),
 	objectPagesTest
 );
 

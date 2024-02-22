@@ -62,7 +62,7 @@
 			"objectRelationships": [
 				{
 					"deletionType": "prevent",
-					"externalReferenceCode": "L_COMMERCE_ORDER_TO_COMMERCE_RETURNS",
+					"externalReferenceCode": "L_COMMERCE_ORDER_TO_L_COMMERCE_RETURNS",
 					"label": {
 						"en_US": "Commerce Order to Commerce Returns"
 					},

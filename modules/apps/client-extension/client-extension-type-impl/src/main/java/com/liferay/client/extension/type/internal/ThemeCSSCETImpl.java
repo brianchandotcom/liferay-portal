@@ -40,6 +40,11 @@ public class ThemeCSSCETImpl extends BaseCETImpl implements ThemeCSSCET {
 	}
 
 	@Override
+	public String getFrontendTokenDefinition() {
+		return getString("frontendTokenDefinition");
+	}
+
+	@Override
 	public String getMainURL() {
 		return getString("mainURL");
 	}

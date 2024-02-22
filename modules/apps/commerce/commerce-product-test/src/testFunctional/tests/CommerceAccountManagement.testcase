@@ -234,13 +234,7 @@ definition {
 		}
 
 		task ("And navigates on Minium") {
-			ScrollWebElementIntoView(
-				key_dropdownItem = "My Sites",
-				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
-
-			Click(
-				key_dropdownItem = "My Sites",
-				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
+			UserBar.gotoDropdownItem(dropdownItem = "My Sites");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

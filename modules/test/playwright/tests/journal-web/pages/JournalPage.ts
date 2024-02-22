@@ -48,6 +48,21 @@ export class JournalPage {
 		await this.newButton.click();
 	}
 
+	async goToJournalArticleAction(action: string, title: string) {
+		await this.goto();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: action,
+			}),
+			trigger: this.page.getByLabel(`Actions for ${title}`, {
+				exact: true,
+			}),
+		});
+	}
+
 	async goToTemplates() {
 		await this.templatesLink.click();
 	}
@@ -56,15 +71,7 @@ export class JournalPage {
 		title: string,
 		permissionLocators: string[]
 	) {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {
-				name: 'Permissions',
-			}),
-			trigger: this.page.getByLabel(`Actions for ${title}`, {
-				exact: true,
-			}),
-		});
+		await this.goToJournalArticleAction('Permissions', title);
 
 		await this.permissionsFrameLocator
 			.locator(permissionLocators[0])
@@ -82,15 +89,7 @@ export class JournalPage {
 	}
 
 	async deleteJournalArticle(title: string) {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {
-				name: 'Delete',
-			}),
-			trigger: this.page.getByLabel(`Actions for ${title}`, {
-				exact: true,
-			}),
-		});
+		await this.goToJournalArticleAction('Delete', title);
 	}
 
 	async setJournalArticlePermissions(

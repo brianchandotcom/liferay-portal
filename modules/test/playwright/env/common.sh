@@ -239,7 +239,7 @@ function main {
 		echo "Set the environment variable PLAYWRIGHT_PROJECT_NAME."
 
 		exit 1
-	fi	
+	fi
 }
 
 function reverse {

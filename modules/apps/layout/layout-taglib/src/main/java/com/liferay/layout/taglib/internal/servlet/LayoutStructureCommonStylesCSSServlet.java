@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -277,15 +276,13 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 			return _jsonFactory.createJSONObject();
 		}
 
-		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-			group.getGroupId(), group.isLayoutSetPrototype());
-
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
 			ServletContextUtil.getFrontendTokenDefinitionRegistry();
 
 		FrontendTokenDefinition frontendTokenDefinition =
 			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				layoutSet.getThemeId());
+				_layoutSetLocalService.fetchLayoutSet(
+					group.getGroupId(), group.isLayoutSetPrototype()));
 
 		if (frontendTokenDefinition == null) {
 			return _jsonFactory.createJSONObject();

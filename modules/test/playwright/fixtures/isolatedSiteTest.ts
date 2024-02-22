@@ -52,6 +52,6 @@ const isolatedSiteFixture = test.extend<{
 	],
 });
 
-const isolatedSiteTest = mergeTests(loginTest, isolatedSiteFixture);
+const isolatedSiteTest = mergeTests(loginTest(), isolatedSiteFixture);
 
 export {isolatedSiteTest};

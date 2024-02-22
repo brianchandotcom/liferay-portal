@@ -14,7 +14,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-164563': true,
 	}),
-	loginTest
+	loginTest()
 );
 
 test('Assert table column labels', async ({dataSetsPage, page}) => {

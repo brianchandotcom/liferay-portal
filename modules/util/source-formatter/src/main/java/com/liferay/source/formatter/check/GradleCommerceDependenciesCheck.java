@@ -18,8 +18,17 @@ import java.util.List;
 public class GradleCommerceDependenciesCheck extends BaseFileCheck {
 
 	@Override
+	public boolean isModuleSourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
+
+		if (absolutePath.contains("/commerce/")) {
+			return content;
+		}
 
 		List<String> dependenciesBlocks =
 			GradleSourceUtil.getDependenciesBlocks(content);
@@ -48,12 +57,6 @@ public class GradleCommerceDependenciesCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content,
 		String dependencies,
 		List<String> allowedCommerceDependenciesModulePathNames) {
-
-		if (!isModulesFile(absolutePath) ||
-			absolutePath.contains("/commerce/")) {
-
-			return;
-		}
 
 		for (String line : StringUtil.splitLines(dependencies)) {
 			if (Validator.isNull(line) ||

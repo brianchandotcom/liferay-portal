@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -100,14 +99,12 @@ public class ImportStyleBookEntriesMVCActionCommand
 
 			SessionMessages.add(actionRequest, "success");
 
-			LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-				themeDisplay.getSiteGroupId(), false);
-
 			Set<String> frontendTokenNames = new HashSet<>();
 
 			FrontendTokenDefinition frontendTokenDefinition =
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					layoutSet.getThemeId());
+					_layoutSetLocalService.fetchLayoutSet(
+						themeDisplay.getSiteGroupId(), false));
 
 			if (frontendTokenDefinition != null) {
 				Collection<FrontendToken> frontendTokens =

@@ -9,6 +9,8 @@ export class CommerceLayoutsPage {
 	readonly addPageButton: Locator;
 	readonly addPageModalSubmitButton: Locator;
 	readonly addPageNameInput: Locator;
+	readonly addWidgetButton: Locator;
+	readonly addWidgetLabel: (widgetName: string) => Locator;
 	readonly availableThemesFrame: FrameLocator;
 	readonly changeCurrentThemeButton: Locator;
 	readonly closeProductMenuButton: Locator;
@@ -21,6 +23,7 @@ export class CommerceLayoutsPage {
 	readonly page: Page;
 	readonly pagesMenuItem: Locator;
 	readonly saveButton: Locator;
+	readonly searchFormInput: Locator;
 	readonly siteBuilderMenuItem: Locator;
 	readonly siteHomePageLink: Locator;
 	readonly widgetPageTemplateButton: Locator;
@@ -34,6 +37,13 @@ export class CommerceLayoutsPage {
 		this.addPageNameInput = page
 			.frameLocator('#addLayoutDialog_iframe_')
 			.getByTestId('addPageNameInput');
+		this.addWidgetButton = page.getByTestId('add');
+		this.addWidgetLabel = (widgetName) => {
+			return page
+				.getByTestId('addPanelTabItem')
+				.filter({hasText: widgetName})
+				.getByRole('button', {exact: true, name: 'Add Content'});
+		};
 		this.availableThemesFrame = page.frameLocator(
 			'iframe[title="Available Themes"]'
 		);
@@ -70,6 +80,9 @@ export class CommerceLayoutsPage {
 		this.page = page;
 		this.pagesMenuItem = page.getByTestId('app').filter({hasText: 'Pages'});
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.searchFormInput = page.getByRole('textbox', {
+			name: 'Search Form',
+		});
 		this.siteBuilderMenuItem = page
 			.getByTestId('appGroup')
 			.filter({hasText: 'Site Builder'});
@@ -93,6 +106,13 @@ export class CommerceLayoutsPage {
 			.getByRole('button', {exact: true, name: themeName})
 			.click();
 		await this.saveButton.click();
+	}
+
+	async addWidgetToPage(widgetName: string) {
+		await this.addWidgetButton.click();
+		await this.searchFormInput.click();
+		await this.searchFormInput.fill(widgetName);
+		await this.addWidgetLabel(widgetName).click();
 	}
 
 	async createWidgetPage(pageName: string) {

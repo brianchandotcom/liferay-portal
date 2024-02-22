@@ -58,7 +58,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -81,16 +80,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition1);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition2);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition3);
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -145,6 +134,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship);
 		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition2);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition3);
 	}
 
 	@Test
@@ -1866,12 +1862,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	private static final String _SYSTEM_OBJECT_FIELD_VALUE =
 		RandomTestUtil.randomString();
 
-	private static ObjectDefinition _objectDefinition1;
-	private static ObjectDefinition _objectDefinition2;
-	private static ObjectDefinition _objectDefinition3;
+	private ObjectDefinition _objectDefinition1;
+	private ObjectDefinition _objectDefinition2;
+	private ObjectDefinition _objectDefinition3;
 
 	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private ObjectEntry _objectEntry1;
 	private ObjectEntry _objectEntry2;

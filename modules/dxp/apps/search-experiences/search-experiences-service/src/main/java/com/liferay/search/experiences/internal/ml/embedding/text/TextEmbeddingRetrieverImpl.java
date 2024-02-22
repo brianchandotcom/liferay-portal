@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.ml.embedding.EmbeddingProviderStatus;
@@ -151,13 +152,36 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	protected void activate(
 		Map<String, Object> properties, BundleContext bundleContext) {
 
-		_textEmbeddingProviders.put(
-			"huggingFaceInferenceAPI",
+		String[] disabledProviders = (String[])properties.get(
+			"disabledProviders");
+
+		_addProvider(
+			disabledProviders, "huggingFaceInferenceAPI",
 			new HuggingFaceInferenceAPITextEmbeddingProvider());
-		_textEmbeddingProviders.put(
-			"huggingFaceInferenceEndpoint",
+		_addProvider(
+			disabledProviders, "huggingFaceInferenceEndpoint",
 			new HuggingFaceInferenceEndpointTextEmbeddingProvider());
-		_textEmbeddingProviders.put("txtai", new TXTAITextEmbeddingProvider());
+		_addProvider(
+			disabledProviders, "txtai", new TXTAITextEmbeddingProvider());
+	}
+
+	private void _addProvider(
+		String[] disabledProviders, String name,
+		TextEmbeddingProvider textEmbeddingProvider) {
+
+		if (ArrayUtil.contains(disabledProviders, name)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Disabling " + name);
+			}
+
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Enabling " + name);
+		}
+
+		_textEmbeddingProviders.put(name, textEmbeddingProvider);
 	}
 
 	private EmbeddingProviderConfiguration _getEmbeddingProviderConfiguration(

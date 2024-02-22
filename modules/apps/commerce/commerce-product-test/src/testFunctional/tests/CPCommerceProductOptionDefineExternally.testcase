@@ -794,7 +794,7 @@ definition {
 		}
 
 		task ("Then can verify all the products in the catalog are listed as values") {
-			Pagination.viewResults(results = "Showing 1 to 10 of 46 entries.");
+			Pagination.viewResults(results = "Showing 1 to 10 of 52 entries.");
 
 			Pagination.changePagination(itemsPerPage = "60 Items");
 

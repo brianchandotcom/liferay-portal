@@ -399,6 +399,11 @@
 			},
 			{
 				"default": "",
+				"name": "frontendTokenDefinitionJSON",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
 				"name": "mainURL",
 				"type": "CETProperty.Type.URL"
 			},

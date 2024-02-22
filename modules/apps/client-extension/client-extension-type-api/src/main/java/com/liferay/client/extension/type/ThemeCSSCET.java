@@ -23,6 +23,12 @@ public interface ThemeCSSCET extends CET {
 	public String getClayURL();
 
 	@CETProperty(
+		defaultValue = "", name = "frontendTokenDefinitionJSON",
+		type = CETProperty.Type.String
+	)
+	public String getFrontendTokenDefinitionJSON();
+
+	@CETProperty(
 		defaultValue = "", name = "mainURL", type = CETProperty.Type.URL
 	)
 	public String getMainURL();

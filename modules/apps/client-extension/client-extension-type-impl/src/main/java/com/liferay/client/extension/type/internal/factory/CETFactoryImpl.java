@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -261,7 +262,7 @@ public class CETFactoryImpl implements CETFactory {
 			new StaticContentCETImplFactoryImpl()
 		).put(
 			ClientExtensionEntryConstants.TYPE_THEME_CSS,
-			new ThemeCSSCETImplFactoryImpl()
+			new ThemeCSSCETImplFactoryImpl(_jsonFactory)
 		).put(
 			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP,
 			new ThemeSpritemapCETImplFactoryImpl()
@@ -400,6 +401,9 @@ public class CETFactoryImpl implements CETFactory {
 	}
 
 	private Map<String, CETImplFactory> _cetImplFactories;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

@@ -5,11 +5,14 @@
 
 package com.liferay.frontend.token.definition;
 
+import com.liferay.portal.kernel.model.LayoutSet;
+
 /**
  * @author Iván Zaera
  */
 public interface FrontendTokenDefinitionRegistry {
 
-	public FrontendTokenDefinition getFrontendTokenDefinition(String themeId);
+	public FrontendTokenDefinition getFrontendTokenDefinition(
+		LayoutSet layoutSet);
 
 }

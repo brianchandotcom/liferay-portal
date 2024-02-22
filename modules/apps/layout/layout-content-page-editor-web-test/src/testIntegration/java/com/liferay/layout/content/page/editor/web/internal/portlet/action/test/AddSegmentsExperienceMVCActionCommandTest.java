@@ -6,6 +6,9 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -34,8 +37,11 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+
+import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -81,6 +87,12 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 	@Test
 	public void testAddSegmentsExperiment() throws Exception {
+		FragmentEntryLink sourceFragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				"{}", _layout,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()));
+
 		String name = RandomTestUtil.randomString(10);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
@@ -113,6 +125,10 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			segmentsExperience.getSegmentsEntryId());
 		Assert.assertEquals(
 			segmentsExperienceId, segmentsExperience.getSegmentsExperienceId());
+
+		_assertFragmentEntryLinks(
+			responseJSONObject.getJSONObject("fragmentEntryLinks"),
+			sourceFragmentEntryLink);
 	}
 
 	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)
@@ -123,6 +139,33 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			_getMockLiferayPortletActionRequest(name, segmentsEntryId),
 			new MockActionResponse());
+	}
+
+	private void _assertFragmentEntryLinks(
+			JSONObject fragmentEntryLinksJSONObject,
+			FragmentEntryLink sourceFragmentEntryLink)
+		throws Exception {
+
+		Assert.assertNotNull(fragmentEntryLinksJSONObject);
+		Assert.assertEquals(
+			fragmentEntryLinksJSONObject.toString(), 1,
+			fragmentEntryLinksJSONObject.length());
+
+		Iterator<String> iterator = fragmentEntryLinksJSONObject.keys();
+
+		FragmentEntryLink targetFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				GetterUtil.getLong(iterator.next()));
+
+		Assert.assertEquals(
+			0, targetFragmentEntryLink.getOriginalFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			sourceFragmentEntryLink.getFragmentEntryId(),
+			targetFragmentEntryLink.getFragmentEntryId());
+		Assert.assertEquals(
+			sourceFragmentEntryLink.getHtml(),
+			targetFragmentEntryLink.getHtml());
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
@@ -170,6 +213,9 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -182,6 +228,9 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		filter = "mvc.command.name=/layout_content_page_editor/add_segments_experience"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private SegmentsExperienceService _segmentsExperienceService;

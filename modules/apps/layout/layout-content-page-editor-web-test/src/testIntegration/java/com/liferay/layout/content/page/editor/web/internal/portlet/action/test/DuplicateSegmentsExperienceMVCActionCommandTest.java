@@ -6,6 +6,9 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -32,10 +36,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Collections;
+import java.util.Iterator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -89,6 +95,10 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 				true, new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		FragmentEntryLink sourceFragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				"{}", _layout, segmentsExperience.getSegmentsExperienceId());
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
@@ -119,6 +129,37 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 			segmentsExperienceJSONObject.getLong("segmentsEntryId"));
 		Assert.assertTrue(
 			segmentsExperienceJSONObject.getLong("segmentsExperienceId") > 0);
+
+		_assertFragmentEntryLinks(
+			jsonObject.getJSONObject("fragmentEntryLinks"),
+			sourceFragmentEntryLink);
+	}
+
+	private void _assertFragmentEntryLinks(
+			JSONObject fragmentEntryLinksJSONObject,
+			FragmentEntryLink sourceFragmentEntryLink)
+		throws Exception {
+
+		Assert.assertNotNull(fragmentEntryLinksJSONObject);
+		Assert.assertEquals(
+			fragmentEntryLinksJSONObject.toString(), 1,
+			fragmentEntryLinksJSONObject.length());
+
+		Iterator<String> iterator = fragmentEntryLinksJSONObject.keys();
+
+		FragmentEntryLink targetFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				GetterUtil.getLong(iterator.next()));
+
+		Assert.assertEquals(
+			0, targetFragmentEntryLink.getOriginalFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			sourceFragmentEntryLink.getFragmentEntryId(),
+			targetFragmentEntryLink.getFragmentEntryId());
+		Assert.assertEquals(
+			sourceFragmentEntryLink.getHtml(),
+			targetFragmentEntryLink.getHtml());
 	}
 
 	private MockLiferayPortletActionRequest
@@ -153,6 +194,9 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -165,6 +209,9 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 		filter = "mvc.command.name=/layout_content_page_editor/duplicate_segments_experience"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private SegmentsExperienceService _segmentsExperienceService;

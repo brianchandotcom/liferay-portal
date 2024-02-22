@@ -32,6 +32,7 @@ import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -45,8 +46,7 @@ import javax.ws.rs.BadRequestException;
 public class ObjectEntryEntityModel implements EntityModel {
 
 	public ObjectEntryEntityModel(
-			ObjectDefinition objectDefinition, List<ObjectField> objectFields)
-		throws Exception {
+		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
 
 		_entityFieldsMap = _getStringEntityFieldsMap(
 			objectDefinition, objectFields);
@@ -58,18 +58,26 @@ public class ObjectEntryEntityModel implements EntityModel {
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			_entityFieldsMap.put(
 				objectRelationship.getName(),
-				new ComplexEntityField(
-					objectRelationship.getName(),
-					_getRelatedObjectDefinitionEntityFields(
-						objectRelationship, objectDefinition)));
-
-			_handledObjectDefinitions.clear();
+				_getComplexField(objectDefinition, objectRelationship));
 		}
 	}
 
 	@Override
 	public Map<String, EntityField> getEntityFieldsMap() {
 		return _entityFieldsMap;
+	}
+
+	private ComplexEntityField _getComplexField(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship) {
+
+		ObjectDefinition relatedObjectDefinition =
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				objectDefinition, objectRelationship);
+
+		return new ComplexEntityField(
+			objectRelationship.getName(),
+			_getObjectDefinitionEntityFields(relatedObjectDefinition));
 	}
 
 	private EntityField _getEntityField(ObjectField objectField) {
@@ -143,60 +151,38 @@ public class ObjectEntryEntityModel implements EntityModel {
 			"Unable to get entity field for object field " + objectField);
 	}
 
-	private List<EntityField> _getRelatedObjectDefinitionEntityFields(
-			ObjectRelationship objectRelationship,
-			ObjectDefinition objectDefinition)
-		throws Exception {
+	private List<EntityField> _getObjectDefinitionEntityFields(
+		ObjectDefinition objectDefinition) {
 
-		_handledObjectDefinitions.add(objectDefinition.getObjectDefinitionId());
+		if (_objectDefinitionIdsEntityFieldsMap.containsKey(
+				objectDefinition.getObjectDefinitionId())) {
 
-		ObjectDefinition relatedObjectDefinition =
-			ObjectRelationshipUtil.getRelatedObjectDefinition(
-				objectDefinition, objectRelationship);
+			return _objectDefinitionIdsEntityFieldsMap.get(
+				objectDefinition.getObjectDefinitionId());
+		}
 
-		Map<String, EntityField> relatedObjectDefinitionEntityFieldsMap =
+		List<EntityField> entityFields = new ArrayList<>();
+
+		_objectDefinitionIdsEntityFieldsMap.put(
+			objectDefinition.getObjectDefinitionId(), entityFields);
+
+		Map<String, EntityField> stringEntityFieldsMap =
 			_getStringEntityFieldsMap(
 				objectDefinition,
 				ObjectFieldLocalServiceUtil.getObjectFields(
-					relatedObjectDefinition.getObjectDefinitionId()));
+					objectDefinition.getObjectDefinitionId()));
 
-		List<EntityField> relatedObjectDefinitionEntityFields = new ArrayList<>(
-			relatedObjectDefinitionEntityFieldsMap.values());
+		entityFields.addAll(stringEntityFieldsMap.values());
 
-		if (_handledObjectDefinitions.contains(
-				relatedObjectDefinition.getObjectDefinitionId())) {
+		for (ObjectRelationship objectRelationship :
+				ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
+					objectDefinition.getObjectDefinitionId())) {
 
-			_handledObjectDefinitions.remove(
-				objectDefinition.getObjectDefinitionId());
-
-			return relatedObjectDefinitionEntityFields;
+			entityFields.add(
+				_getComplexField(objectDefinition, objectRelationship));
 		}
 
-		List<ObjectRelationship> relatedObjectDefinitionObjectRelationships =
-			ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
-				relatedObjectDefinition.getObjectDefinitionId());
-
-		for (ObjectRelationship relatedObjectRelationship :
-				relatedObjectDefinitionObjectRelationships) {
-
-			if ((relatedObjectRelationship.getObjectRelationshipId() ==
-					objectRelationship.getObjectRelationshipId()) ||
-				_isHandledObjectDefinition(
-					relatedObjectDefinition, relatedObjectRelationship)) {
-
-				continue;
-			}
-
-			relatedObjectDefinitionEntityFields.add(
-				new ComplexEntityField(
-					relatedObjectRelationship.getName(),
-					new ArrayList<>(
-						_getRelatedObjectDefinitionEntityFields(
-							relatedObjectRelationship,
-							relatedObjectDefinition))));
-		}
-
-		return relatedObjectDefinitionEntityFields;
+		return entityFields;
 	}
 
 	private Map<String, EntityField> _getStringEntityFieldsMap(
@@ -305,21 +291,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 		return entityFieldsMap;
 	}
 
-	private boolean _isHandledObjectDefinition(
-			ObjectDefinition relatedObjectDefinition,
-			ObjectRelationship relatedObjectRelationship)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			ObjectRelationshipUtil.getRelatedObjectDefinition(
-				relatedObjectDefinition, relatedObjectRelationship);
-
-		return _handledObjectDefinitions.contains(
-			objectDefinition.getObjectDefinitionId());
-	}
-
 	private final Map<String, EntityField> _entityFieldsMap;
-	private final List<Long> _handledObjectDefinitions = new ArrayList<>();
+	private final Map<Long, List<EntityField>>
+		_objectDefinitionIdsEntityFieldsMap = new HashMap<>();
 	private final Set<String> _unsupportedBusinessTypes = SetUtil.fromArray(
 		ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION,
 		ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,

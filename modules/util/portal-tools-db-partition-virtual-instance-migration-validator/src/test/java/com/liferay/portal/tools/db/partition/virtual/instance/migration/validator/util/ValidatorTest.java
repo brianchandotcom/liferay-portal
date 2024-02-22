@@ -9,7 +9,7 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.Company;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.InstanceData;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.LiferayInstance;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.Release;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.validator.Recorder;
 
@@ -36,8 +36,8 @@ public class ValidatorTest extends Validator {
 	public void setUp() {
 		System.setOut(new PrintStream(_byteArrayOutputStream));
 
-		_init(_sourceInstanceData);
-		_init(_targetInstanceData);
+		_init(_sourceLiferayInstance);
+		_init(_targetLiferayInstance);
 	}
 
 	@After
@@ -138,8 +138,8 @@ public class ValidatorTest extends Validator {
 			}
 		}
 
-		_sourceInstanceData.setReleases(sourceReleases);
-		_targetInstanceData.setReleases(targetReleases);
+		_sourceLiferayInstance.setReleases(sourceReleases);
+		_targetLiferayInstance.setReleases(targetReleases);
 
 		_assertValidateDatabases(
 			false, true,
@@ -234,7 +234,7 @@ public class ValidatorTest extends Validator {
 		boolean hasErrors, boolean hasWarnings, List<String> messages) {
 
 		Recorder recorder = validateDatabases(
-			_sourceInstanceData, _targetInstanceData);
+			_sourceLiferayInstance, _targetLiferayInstance);
 
 		Assert.assertEquals(hasErrors, recorder.hasErrors());
 		Assert.assertEquals(hasWarnings, recorder.hasWarnings());
@@ -263,12 +263,12 @@ public class ValidatorTest extends Validator {
 			new Release(Version.parseVersion("5.1.0"), "module2", 0, true));
 	}
 
-	private void _init(InstanceData instanceData) {
-		instanceData.setCompanies(new ArrayList<>());
-		instanceData.setCompanyId(RandomTestUtil.randomLong());
-		instanceData.setDefaultPartition(true);
-		instanceData.setReleases(new ArrayList<>());
-		instanceData.setTableNames(new ArrayList<>());
+	private void _init(LiferayInstance liferayInstance) {
+		liferayInstance.setCompanies(new ArrayList<>());
+		liferayInstance.setExtractedCompanyId(RandomTestUtil.randomLong());
+		liferayInstance.setExtractedCompanyDefault(true);
+		liferayInstance.setReleases(new ArrayList<>());
+		liferayInstance.setTableNames(new ArrayList<>());
 	}
 
 	private void _testValidateCompany(
@@ -277,9 +277,10 @@ public class ValidatorTest extends Validator {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		_sourceInstanceData.setCompanies(
+		_sourceLiferayInstance.setCompanies(
 			Collections.singletonList(sourceCompany));
-		_sourceInstanceData.setCompanyId(sourceCompany.getCompanyId());
+		_sourceLiferayInstance.setExtractedCompanyId(
+			sourceCompany.getCompanyId());
 
 		Company targetCompany = new Company(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
@@ -302,7 +303,7 @@ public class ValidatorTest extends Validator {
 			targetCompany.setWebId(sourceCompany.getWebId());
 		}
 
-		_targetInstanceData.setCompanies(
+		_targetLiferayInstance.setCompanies(
 			Collections.singletonList(targetCompany));
 
 		unsafeRunnable.run();
@@ -313,8 +314,8 @@ public class ValidatorTest extends Validator {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		_sourceInstanceData.setTableNames(sourceTableNames);
-		_targetInstanceData.setTableNames(targetTableNames);
+		_sourceLiferayInstance.setTableNames(sourceTableNames);
+		_targetLiferayInstance.setTableNames(targetTableNames);
 
 		unsafeRunnable.run();
 	}
@@ -338,8 +339,8 @@ public class ValidatorTest extends Validator {
 			}
 		}
 
-		_sourceInstanceData.setReleases(sourceReleases);
-		_targetInstanceData.setReleases(targetReleases);
+		_sourceLiferayInstance.setReleases(sourceReleases);
+		_targetLiferayInstance.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -377,8 +378,8 @@ public class ValidatorTest extends Validator {
 			targetReleases.add(release);
 		}
 
-		_sourceInstanceData.setReleases(sourceReleases);
-		_targetInstanceData.setReleases(targetReleases);
+		_sourceLiferayInstance.setReleases(sourceReleases);
+		_targetLiferayInstance.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -404,8 +405,8 @@ public class ValidatorTest extends Validator {
 			targetReleases.add(release);
 		}
 
-		_sourceInstanceData.setReleases(sourceReleases);
-		_targetInstanceData.setReleases(targetReleases);
+		_sourceLiferayInstance.setReleases(sourceReleases);
+		_targetLiferayInstance.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -417,7 +418,7 @@ public class ValidatorTest extends Validator {
 
 		List<Release> sourceReleases = _getReleases();
 
-		_sourceInstanceData.setReleases(sourceReleases);
+		_sourceLiferayInstance.setReleases(sourceReleases);
 
 		List<Release> targetReleases = new ArrayList<>();
 
@@ -434,7 +435,7 @@ public class ValidatorTest extends Validator {
 			targetReleases.add(release);
 		}
 
-		_targetInstanceData.setReleases(targetReleases);
+		_targetLiferayInstance.setReleases(targetReleases);
 
 		unsafeRunnable.run();
 	}
@@ -442,7 +443,9 @@ public class ValidatorTest extends Validator {
 	private final ByteArrayOutputStream _byteArrayOutputStream =
 		new ByteArrayOutputStream();
 	private final PrintStream _originalOut = System.out;
-	private final InstanceData _sourceInstanceData = new InstanceData();
-	private final InstanceData _targetInstanceData = new InstanceData();
+	private final LiferayInstance _sourceLiferayInstance =
+		new LiferayInstance();
+	private final LiferayInstance _targetLiferayInstance =
+		new LiferayInstance();
 
 }

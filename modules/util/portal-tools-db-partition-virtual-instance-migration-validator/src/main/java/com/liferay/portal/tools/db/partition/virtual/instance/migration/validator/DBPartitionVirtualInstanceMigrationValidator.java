@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.InstanceData;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.LiferayInstance;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.validator.util.Validator;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.validator.util.VersionDeserializer;
 
@@ -79,7 +79,7 @@ public class DBPartitionVirtualInstanceMigrationValidator {
 			CommandLine commandLine = commandLineParser.parse(options, args);
 
 			try {
-				_sourceInstanceData = _readFromFile(
+				_sourceLiferayInstance = _readFromFile(
 					commandLine.getOptionValue("source-file"));
 			}
 			catch (IOException ioException) {
@@ -92,14 +92,14 @@ public class DBPartitionVirtualInstanceMigrationValidator {
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
-			if (!Validator.isSingleCompany(_sourceInstanceData)) {
+			if (!Validator.isSingleCompany(_sourceLiferayInstance)) {
 				System.err.println("Source has more than one company");
 
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
 			try {
-				_targetInstanceData = _readFromFile(
+				_targetLiferayInstance = _readFromFile(
 					commandLine.getOptionValue("target-file"));
 			}
 			catch (IOException ioException) {
@@ -112,14 +112,14 @@ public class DBPartitionVirtualInstanceMigrationValidator {
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
-			if (!_targetInstanceData.isDefaultPartition()) {
+			if (!_targetLiferayInstance.isExtractedCompanyDefault()) {
 				System.err.println("Target is not the default partition");
 
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
 			Recorder recorder = Validator.validateDatabases(
-				_sourceInstanceData, _targetInstanceData);
+				_sourceLiferayInstance, _targetLiferayInstance);
 
 			if (recorder.hasErrors() || recorder.hasWarnings()) {
 				recorder.printMessages();
@@ -145,7 +145,9 @@ public class DBPartitionVirtualInstanceMigrationValidator {
 		_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 	}
 
-	private static InstanceData _readFromFile(String path) throws IOException {
+	private static LiferayInstance _readFromFile(String path)
+		throws IOException {
+
 		ObjectMapper objectMapper = new ObjectMapper() {
 			{
 				SimpleModule simpleModule = new SimpleModule();
@@ -157,7 +159,7 @@ public class DBPartitionVirtualInstanceMigrationValidator {
 			}
 		};
 
-		return objectMapper.readValue(new File(path), InstanceData.class);
+		return objectMapper.readValue(new File(path), LiferayInstance.class);
 	}
 
 	/**
@@ -169,7 +171,7 @@ public class DBPartitionVirtualInstanceMigrationValidator {
 
 	private static final int _LIFERAY_COMMON_EXIT_CODE_OK = 0;
 
-	private static InstanceData _sourceInstanceData;
-	private static InstanceData _targetInstanceData;
+	private static LiferayInstance _sourceLiferayInstance;
+	private static LiferayInstance _targetLiferayInstance;
 
 }

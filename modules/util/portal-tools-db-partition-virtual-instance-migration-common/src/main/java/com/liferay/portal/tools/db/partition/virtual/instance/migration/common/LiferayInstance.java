@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * @author Luis Ortiz
  */
-public class InstanceData {
+public class LiferayInstance {
 
-	public InstanceData() {
+	public LiferayInstance() {
 		_date = new Date(System.currentTimeMillis());
 	}
 
@@ -21,12 +21,12 @@ public class InstanceData {
 		return _companies;
 	}
 
-	public Long getCompanyId() {
-		return _companyId;
-	}
-
 	public Date getDate() {
 		return _date;
+	}
+
+	public Long getExtractedCompanyId() {
+		return _extractedCompanyId;
 	}
 
 	public List<Release> getReleases() {
@@ -37,24 +37,24 @@ public class InstanceData {
 		return _tableNames;
 	}
 
-	public boolean isDefaultPartition() {
-		return _defaultPartition;
+	public boolean isExtractedCompanyDefault() {
+		return _extractedCompanyDefault;
 	}
 
 	public void setCompanies(List<Company> companies) {
 		_companies = companies;
 	}
 
-	public void setCompanyId(Long companyId) {
-		_companyId = companyId;
-	}
-
 	public void setDate(Date date) {
 		_date = date;
 	}
 
-	public void setDefaultPartition(boolean defaultPartition) {
-		_defaultPartition = defaultPartition;
+	public void setExtractedCompanyDefault(boolean extractedCompanyDefault) {
+		_extractedCompanyDefault = extractedCompanyDefault;
+	}
+
+	public void setExtractedCompanyId(Long companyId) {
+		_extractedCompanyId = companyId;
 	}
 
 	public void setReleases(List<Release> releases) {
@@ -66,9 +66,9 @@ public class InstanceData {
 	}
 
 	private List<Company> _companies;
-	private Long _companyId;
 	private Date _date;
-	private boolean _defaultPartition;
+	private boolean _extractedCompanyDefault;
+	private Long _extractedCompanyId;
 	private List<Release> _releases;
 	private List<String> _tableNames;
 

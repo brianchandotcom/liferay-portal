@@ -8,7 +8,7 @@ package com.liferay.portal.tools.db.partition.virtual.instance.migration.validat
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.Company;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.InstanceData;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.LiferayInstance;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.Release;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.validator.Recorder;
 
@@ -23,8 +23,8 @@ import java.util.Objects;
  */
 public class Validator {
 
-	public static boolean isSingleCompany(InstanceData instanceData) {
-		if (instanceData.getCompanyId() != null) {
+	public static boolean isSingleCompany(LiferayInstance liferayInstance) {
+		if (liferayInstance.getExtractedCompanyId() != null) {
 			return true;
 		}
 
@@ -32,24 +32,27 @@ public class Validator {
 	}
 
 	public static Recorder validateDatabases(
-		InstanceData sourceInstanceData, InstanceData targetInstanceData) {
+		LiferayInstance sourceLiferayInstance,
+		LiferayInstance targetLiferayInstance) {
 
 		Recorder recorder = new Recorder();
 
 		_validatePartitionedTables(
-			recorder, sourceInstanceData, targetInstanceData);
-		_validateRelease(recorder, sourceInstanceData, targetInstanceData);
-		_validateCompany(recorder, sourceInstanceData, targetInstanceData);
+			recorder, sourceLiferayInstance, targetLiferayInstance);
+		_validateRelease(
+			recorder, sourceLiferayInstance, targetLiferayInstance);
+		_validateCompany(
+			recorder, sourceLiferayInstance, targetLiferayInstance);
 
 		return recorder;
 	}
 
 	private static List<String> _getFailedServletContextNames(
-		InstanceData instanceData) {
+		LiferayInstance liferayInstance) {
 
 		List<String> failedServletContextNames = new ArrayList<>();
 
-		for (Release release : instanceData.getReleases()) {
+		for (Release release : liferayInstance.getReleases()) {
 			if (release.getState() != 0) {
 				failedServletContextNames.add(release.getServletContextName());
 			}
@@ -59,11 +62,11 @@ public class Validator {
 	}
 
 	private static Map<String, Release> _getReleasesMap(
-		InstanceData instanceData) {
+		LiferayInstance liferayInstance) {
 
 		Map<String, Release> releasesMap = new HashMap<>();
 
-		for (Release release : instanceData.getReleases()) {
+		for (Release release : liferayInstance.getReleases()) {
 			releasesMap.put(release.getServletContextName(), release);
 		}
 
@@ -71,15 +74,15 @@ public class Validator {
 	}
 
 	private static void _validateCompany(
-		Recorder recorder, InstanceData sourceInstanceData,
-		InstanceData targetInstanceData) {
+		Recorder recorder, LiferayInstance sourceLiferayInstance,
+		LiferayInstance targetLiferayInstance) {
 
 		Company sourceCompany = null;
 
-		for (Company company : sourceInstanceData.getCompanies()) {
+		for (Company company : sourceLiferayInstance.getCompanies()) {
 			if (Objects.equals(
 					company.getCompanyId(),
-					sourceInstanceData.getCompanyId())) {
+					sourceLiferayInstance.getExtractedCompanyId())) {
 
 				sourceCompany = company;
 
@@ -87,7 +90,7 @@ public class Validator {
 			}
 		}
 
-		for (Company company : targetInstanceData.getCompanies()) {
+		for (Company company : targetLiferayInstance.getCompanies()) {
 			if (Objects.equals(company.getWebId(), sourceCompany.getWebId())) {
 				recorder.registerWarning(
 					StringBundler.concat(
@@ -129,13 +132,13 @@ public class Validator {
 	}
 
 	private static void _validatePartitionedTables(
-		Recorder recorder, InstanceData sourceInstanceData,
-		InstanceData targetInstanceData) {
+		Recorder recorder, LiferayInstance sourceLiferayInstance,
+		LiferayInstance targetLiferayInstance) {
 
 		List<String> sourcePartitionedTableNames = new ArrayList<>(
-			sourceInstanceData.getTableNames());
+			sourceLiferayInstance.getTableNames());
 		List<String> targetPartitionedTableNames = new ArrayList<>(
-			targetInstanceData.getTableNames());
+			targetLiferayInstance.getTableNames());
 
 		for (String sourcePartitionedTableName : sourcePartitionedTableNames) {
 			if (targetPartitionedTableNames.contains(
@@ -159,10 +162,11 @@ public class Validator {
 	}
 
 	private static void _validateRelease(
-		Recorder recorder, InstanceData sourceInstanceData,
-		InstanceData targetInstanceData) {
+		Recorder recorder, LiferayInstance sourceLiferayInstance,
+		LiferayInstance targetLiferayInstance) {
 
-		_validateReleaseState(recorder, sourceInstanceData, targetInstanceData);
+		_validateReleaseState(
+			recorder, sourceLiferayInstance, targetLiferayInstance);
 
 		List<String> higherVersionModules = new ArrayList<>();
 		List<String> lowerVersionModules = new ArrayList<>();
@@ -170,11 +174,11 @@ public class Validator {
 		List<String> missingTargetModules = new ArrayList<>();
 		List<String> missingTargetServiceModules = new ArrayList<>();
 		Map<String, Release> targetReleasesMap = _getReleasesMap(
-			targetInstanceData);
+			targetLiferayInstance);
 		List<String> unverifiedSourceModules = new ArrayList<>();
 		List<String> unverifiedTargetModules = new ArrayList<>();
 
-		for (Release sourceRelease : sourceInstanceData.getReleases()) {
+		for (Release sourceRelease : sourceLiferayInstance.getReleases()) {
 			String sourceServletContextName =
 				sourceRelease.getServletContextName();
 
@@ -241,13 +245,13 @@ public class Validator {
 	}
 
 	private static void _validateReleaseState(
-		Recorder recorder, InstanceData sourceInstanceData,
-		InstanceData targetInstanceData) {
+		Recorder recorder, LiferayInstance sourceLiferayInstance,
+		LiferayInstance targetLiferayInstance) {
 
 		String message = "has a failed release state in the %s database";
 
 		List<String> failedServletContextNames = _getFailedServletContextNames(
-			sourceInstanceData);
+			sourceLiferayInstance);
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerErrors(
@@ -255,7 +259,7 @@ public class Validator {
 		}
 
 		failedServletContextNames = _getFailedServletContextNames(
-			targetInstanceData);
+			targetLiferayInstance);
 
 		if (!failedServletContextNames.isEmpty()) {
 			recorder.registerErrors(

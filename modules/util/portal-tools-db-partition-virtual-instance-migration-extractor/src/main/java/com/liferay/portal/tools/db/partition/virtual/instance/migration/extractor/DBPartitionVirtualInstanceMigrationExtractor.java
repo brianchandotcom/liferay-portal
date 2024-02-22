@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.InstanceData;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.LiferayInstance;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.extractor.util.DatabaseUtil;
 
 import java.io.File;
@@ -117,7 +117,7 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 			}
 
 			String exportFilePath = _writeToFile(
-				DatabaseUtil.exportInstanceData(_connection),
+				DatabaseUtil.exportLiferayInstance(_connection),
 				commandLine.getOptionValue("output-dir"));
 
 			System.out.println(
@@ -141,7 +141,8 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 		_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 	}
 
-	private static String _writeToFile(InstanceData instanceData, String path)
+	private static String _writeToFile(
+			LiferayInstance liferayInstance, String path)
 		throws Exception {
 
 		File exportDir = null;
@@ -177,10 +178,11 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 		File exportFile = new File(
 			exportDir,
 			StringBundler.concat(
-				simpleDateFormat.format(instanceData.getDate()), "_extraction_",
-				instanceData.getCompanyId(), ".data"));
+				simpleDateFormat.format(liferayInstance.getDate()),
+				"_extraction_", liferayInstance.getExtractedCompanyId(),
+				".data"));
 
-		objectMapper.writeValue(exportFile, instanceData);
+		objectMapper.writeValue(exportFile, liferayInstance);
 
 		return exportFile.getCanonicalPath();
 	}

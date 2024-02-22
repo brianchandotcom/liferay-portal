@@ -8,7 +8,7 @@ package com.liferay.portal.tools.db.partition.virtual.instance.migration.extract
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.Company;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.InstanceData;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.LiferayInstance;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.Release;
 
 import java.sql.SQLException;
@@ -49,27 +49,29 @@ public class DatabaseUtilTest extends DatabaseMockupUtil {
 
 		_testCompanyId(
 			companyInfoIds,
-			instanceData -> Assert.assertEquals(
-				companyInfoIds.get(0), instanceData.getCompanyId()));
+			liferayInstance -> Assert.assertEquals(
+				companyInfoIds.get(0),
+				liferayInstance.getExtractedCompanyId()));
 
 		companyInfoIds.add(RandomTestUtil.randomLong());
 
 		_testCompanyId(
 			companyInfoIds,
-			instanceData -> Assert.assertNull(instanceData.getCompanyId()));
+			liferayInstance -> Assert.assertNull(
+				liferayInstance.getExtractedCompanyId()));
 	}
 
 	@Test
 	public void testDefaultPartition() throws Exception {
 		_testDefaultPartition(
 			true,
-			instanceData -> Assert.assertTrue(
-				instanceData.isDefaultPartition()));
+			liferayInstance -> Assert.assertTrue(
+				liferayInstance.isExtractedCompanyDefault()));
 
 		_testDefaultPartition(
 			false,
-			instanceData -> Assert.assertFalse(
-				instanceData.isDefaultPartition()));
+			liferayInstance -> Assert.assertFalse(
+				liferayInstance.isExtractedCompanyDefault()));
 	}
 
 	@Test
@@ -83,9 +85,10 @@ public class DatabaseUtilTest extends DatabaseMockupUtil {
 
 		mockCompanies(Arrays.asList(company1, company2));
 
-		InstanceData instanceData = DatabaseUtil.exportInstanceData(connection);
+		LiferayInstance liferayInstance = DatabaseUtil.exportLiferayInstance(
+			connection);
 
-		List<Company> companies = instanceData.getCompanies();
+		List<Company> companies = liferayInstance.getCompanies();
 
 		Assert.assertEquals(companies.toString(), 2, companies.size());
 		Assert.assertEquals(company1, companies.get(0));
@@ -98,9 +101,10 @@ public class DatabaseUtilTest extends DatabaseMockupUtil {
 		mockTables(
 			Arrays.asList("Table1", "Company", "Table2", "Object_x_25000"));
 
-		InstanceData instanceData = DatabaseUtil.exportInstanceData(connection);
+		LiferayInstance liferayInstance = DatabaseUtil.exportLiferayInstance(
+			connection);
 
-		List<String> tableNames = instanceData.getTableNames();
+		List<String> tableNames = liferayInstance.getTableNames();
 
 		Assert.assertEquals(tableNames.toString(), 2, tableNames.size());
 		Assert.assertFalse(tableNames.contains("Company"));
@@ -118,9 +122,10 @@ public class DatabaseUtilTest extends DatabaseMockupUtil {
 
 		mockReleases(Arrays.asList(module1Release, module2Release));
 
-		InstanceData instanceData = DatabaseUtil.exportInstanceData(connection);
+		LiferayInstance liferayInstance = DatabaseUtil.exportLiferayInstance(
+			connection);
 
-		List<Release> releases = instanceData.getReleases();
+		List<Release> releases = liferayInstance.getReleases();
 
 		Assert.assertEquals(releases.toString(), 2, releases.size());
 		Assert.assertEquals(module1Release, releases.get(0));
@@ -128,21 +133,21 @@ public class DatabaseUtilTest extends DatabaseMockupUtil {
 	}
 
 	private void _testCompanyId(
-			List<Long> companyInfoIds, Consumer<InstanceData> consumer)
+			List<Long> companyInfoIds, Consumer<LiferayInstance> consumer)
 		throws Exception {
 
 		mockGetCompanyInfoIds(companyInfoIds);
 
-		consumer.accept(DatabaseUtil.exportInstanceData(connection));
+		consumer.accept(DatabaseUtil.exportLiferayInstance(connection));
 	}
 
 	private void _testDefaultPartition(
-			boolean defaultPartition, Consumer<InstanceData> consumer)
+			boolean defaultPartition, Consumer<LiferayInstance> consumer)
 		throws Exception {
 
 		mockDefaultPartition(defaultPartition);
 
-		consumer.accept(DatabaseUtil.exportInstanceData(connection));
+		consumer.accept(DatabaseUtil.exportLiferayInstance(connection));
 	}
 
 }

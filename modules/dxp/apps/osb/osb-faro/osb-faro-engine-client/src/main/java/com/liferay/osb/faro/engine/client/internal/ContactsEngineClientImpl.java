@@ -2371,6 +2371,20 @@ public class ContactsEngineClientImpl
 		return pagedModel.getResults();
 	}
 
+	public long getUsersCount(FaroProject faroProject) {
+		RestTemplate restTemplate = getRestTemplate(faroProject);
+
+		ResponseEntity<Long> responseEntity = restTemplate.exchange(
+			getTemplatedURL(faroProject, Rels.USERS_COUNT), HttpMethod.GET,
+			HttpEntity.EMPTY, Long.class, getUriVariables(faroProject));
+
+		if (responseEntity.getBody() == null) {
+			return 0L;
+		}
+
+		return responseEntity.getBody();
+	}
+
 	@Override
 	public Channel patchChannel(
 		FaroProject faroProject, String id, String name) {

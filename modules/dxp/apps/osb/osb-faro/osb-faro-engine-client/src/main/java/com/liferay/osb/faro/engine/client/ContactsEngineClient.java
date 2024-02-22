@@ -435,6 +435,8 @@ public interface ContactsEngineClient {
 		FaroProject faroProject, int cur, int delta,
 		List<OrderByField> orderByFields);
 
+	public long getUsersCount(FaroProject faroProject);
+
 	public Channel patchChannel(
 		FaroProject faroProject, String id, String name);
 

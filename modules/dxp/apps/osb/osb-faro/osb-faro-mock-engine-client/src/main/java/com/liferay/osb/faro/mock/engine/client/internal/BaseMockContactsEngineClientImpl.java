@@ -917,6 +917,11 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
+	public long getUsersCount(FaroProject faroProject) {
+		return contactsEngineClient.getUsersCount(faroProject);
+	}
+
+	@Override
 	public Channel patchChannel(
 		FaroProject faroProject, String id, String name) {
 

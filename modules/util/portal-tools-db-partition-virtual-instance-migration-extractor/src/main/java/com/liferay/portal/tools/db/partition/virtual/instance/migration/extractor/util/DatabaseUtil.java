@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.Company;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.InstanceData;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.LiferayInstance;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.Release;
 
 import java.sql.Connection;
@@ -24,22 +24,24 @@ import java.util.List;
  */
 public class DatabaseUtil {
 
-	public static InstanceData exportInstanceData(Connection connection)
+	public static LiferayInstance exportLiferayInstance(Connection connection)
 		throws Exception {
 
-		InstanceData instanceData = new InstanceData();
+		LiferayInstance liferayInstance = new LiferayInstance();
 
-		instanceData.setCompanyId(_getCompanyId(connection));
+		liferayInstance.setExtractedCompanyId(
+			_getExtractedCompanyId(connection));
 
-		instanceData.setDefaultPartition(_isDefaultPartition(connection));
+		liferayInstance.setExtractedCompanyDefault(
+			_isDefaultCompany(connection));
 
-		instanceData.setTableNames(_getPartitionedTableNames(connection));
+		liferayInstance.setTableNames(_getPartitionedTableNames(connection));
 
-		instanceData.setReleases(_getReleases(connection));
+		liferayInstance.setReleases(_getReleases(connection));
 
-		instanceData.setCompanies(_getCompanies(connection));
+		liferayInstance.setCompanies(_getCompanies(connection));
 
-		return instanceData;
+		return liferayInstance;
 	}
 
 	public static String replaceSchemaName(String jdbcUrl, String schemaName) {
@@ -88,7 +90,26 @@ public class DatabaseUtil {
 		return companies;
 	}
 
-	private static Long _getCompanyId(Connection connection) throws Exception {
+	private static List<Long> _getCompanyIds(Connection connection)
+		throws Exception {
+
+		List<Long> companyIds = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select companyId from Company");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				companyIds.add(resultSet.getLong("companyId"));
+			}
+		}
+
+		return companyIds;
+	}
+
+	private static Long _getExtractedCompanyId(Connection connection)
+		throws Exception {
+
 		Long companyId = null;
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -107,23 +128,6 @@ public class DatabaseUtil {
 		}
 
 		return companyId;
-	}
-
-	private static List<Long> _getCompanyIds(Connection connection)
-		throws Exception {
-
-		List<Long> companyIds = new ArrayList<>();
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select companyId from Company");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				companyIds.add(resultSet.getLong("companyId"));
-			}
-		}
-
-		return companyIds;
 	}
 
 	private static List<String> _getPartitionedTableNames(Connection connection)
@@ -168,7 +172,7 @@ public class DatabaseUtil {
 		return releases;
 	}
 
-	private static boolean _isDefaultPartition(Connection connection)
+	private static boolean _isDefaultCompany(Connection connection)
 		throws Exception {
 
 		DBInspector dbInspector = new DBInspector(connection);

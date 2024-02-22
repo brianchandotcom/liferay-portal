@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.InstanceData;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.LiferayInstance;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.extractor.DBPartitionVirtualInstanceMigrationExtractor;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.extractor.util.DatabaseUtil;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.validator.DBPartitionVirtualInstanceMigrationValidator;
@@ -159,8 +159,8 @@ public class VirtualInstanceMigrationToolTest extends BaseDBPartitionTestCase {
 			return ReflectionTestUtil.invoke(
 				DBPartitionVirtualInstanceMigrationExtractor.class,
 				"_writeToFile",
-				new Class<?>[] {InstanceData.class, String.class},
-				DatabaseUtil.exportInstanceData(connection),
+				new Class<?>[] {LiferayInstance.class, String.class},
+				DatabaseUtil.exportLiferayInstance(connection),
 				_outputDirectoryFile.getAbsolutePath());
 		}
 	}

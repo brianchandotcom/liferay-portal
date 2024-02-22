@@ -628,11 +628,12 @@ public class PredicateExpressionVisitorImpl
 
 		if ((Objects.equals(entityType, EntityField.Type.DATE) ||
 			 Objects.equals(entityType, EntityField.Type.DATE_TIME)) &&
-			(Objects.equals(DBManagerUtil.getDBType(), DBType.HYPERSONIC) ||
+			(Objects.equals(DBManagerUtil.getDBType(), DBType.DB2) ||
+			 Objects.equals(DBManagerUtil.getDBType(), DBType.HYPERSONIC) ||
 			 Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE)) &&
 			Validator.isNotNull(right)) {
 
-			String pattern = "dd-MMM-yyyy HH:mm:ss.SSS";
+			String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
 
 			if (Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE)) {
 				pattern = "dd-MMM-yyyy hh:mm:ss.SSS a";

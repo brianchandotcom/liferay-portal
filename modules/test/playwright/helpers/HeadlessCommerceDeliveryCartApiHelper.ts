@@ -6,10 +6,15 @@
 import {ApiHelpers} from './ApiHelpers';
 
 type TCartItem = {
-	options: string;
+	options?: string;
 	quantity: number;
-	replacedSkuId: number;
+	replacedSkuId?: number;
 	skuId: number;
+	skuUnitOfMeasure?: TCartItemUOM;
+};
+
+type TCartItemUOM = {
+	key: string;
 };
 
 type TCart = {

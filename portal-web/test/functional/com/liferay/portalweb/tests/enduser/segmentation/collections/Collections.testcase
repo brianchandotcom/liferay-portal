@@ -1,12 +1,12 @@
-@component-name = "portal-segmentation"
+@component-name = "portal-wcm"
 definition {
 
 	property ci.retries.disabled = "true";
 	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Collections,Segmentation";
-	property testray.main.component.name = "Segmentation";
+	property testray.component.names = "Collections";
+	property testray.main.component.name = "Collections";
 
 	setUp {
 		TestCase.setUpPortalInstance();

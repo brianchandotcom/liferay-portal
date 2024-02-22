@@ -21,7 +21,7 @@ export const test = mergeTests(
 		'COMMERCE-8087': true,
 		'LPS-164948': true,
 	}),
-	loginTest,
+	loginTest(),
 	dataMigrationCenterPagesTest,
 	objectPagesTest
 );

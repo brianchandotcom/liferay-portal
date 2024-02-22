@@ -10,7 +10,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {loginTest} from '../../fixtures/loginTest';
 import {UsersAdminItemSelectorPageTest} from '../../fixtures/usersAdminItemSelectorPagesTest';
 
-export const test = mergeTests(loginTest, UsersAdminItemSelectorPageTest);
+export const test = mergeTests(loginTest(), UsersAdminItemSelectorPageTest);
 
 test('LPD-1288 users item selector table clickable', async ({
 	usersAdminItemSelectorPage,

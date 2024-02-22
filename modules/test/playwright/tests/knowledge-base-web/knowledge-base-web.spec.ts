@@ -12,7 +12,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 
 const testFeatureFlagsEnabled = mergeTests(
-	loginTest,
+	loginTest(),
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-188058': true,
@@ -21,7 +21,7 @@ const testFeatureFlagsEnabled = mergeTests(
 );
 
 const testFeatureFlagsDisabled = mergeTests(
-	loginTest,
+	loginTest(),
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-188058': false,

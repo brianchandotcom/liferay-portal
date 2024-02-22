@@ -19,7 +19,7 @@ export const test = mergeTests(
 		'LPS-164563': true,
 		'LPS-194395': true,
 	}),
-	loginTest,
+	loginTest(),
 	viewsPageTest
 );
 

@@ -13,7 +13,7 @@ import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizatio
 
 export const test = mergeTests(
 	apiHelpersTest,
-	loginTest,
+	loginTest(),
 	usersAndOrganizationsPagesTest
 );
 

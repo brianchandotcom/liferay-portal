@@ -35,6 +35,16 @@ export class JournalPage {
 		await this.productMenuPage.goToJournalMenuItem();
 	}
 
+	async goToCreateNewBasicArticle() {
+		await this.goto();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.createBasicWebContentLink,
+			trigger: this.newButton,
+		});
+	}
+
 	async goToCreateNewTemplate() {
 		await this.goToTemplates();
 		await this.newButton.click();

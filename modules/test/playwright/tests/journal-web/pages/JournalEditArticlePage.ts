@@ -5,7 +5,6 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {JournalPage} from './JournalPage';
 
 export class JournalEditArticlePage {
@@ -27,18 +26,17 @@ export class JournalEditArticlePage {
 		);
 	}
 
-	async goToCreateNewBasicArticle() {
-		await this.journalPage.goto();
+	async goto() {
+		await this.journalPage.goToCreateNewBasicArticle();
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.journalPage.createBasicWebContentLink,
-			trigger: this.journalPage.newButton,
-		});
+		// Do it twice so we decrease flakiness
+
+		await this.journalPage.goto();
+		await this.journalPage.goToCreateNewBasicArticle();
 	}
 
 	async publishNewBasicArticle(title: string) {
-		await this.goToCreateNewBasicArticle();
+		await this.goto();
 
 		await this.propertiesTab.waitFor();
 

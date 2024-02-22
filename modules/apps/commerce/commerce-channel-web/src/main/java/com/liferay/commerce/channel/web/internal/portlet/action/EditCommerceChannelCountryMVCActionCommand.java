@@ -96,12 +96,11 @@ public class EditCommerceChannelCountryMVCActionCommand
 		_commerceChannelRelService.deleteCommerceChannelRel(
 			commerceChannelRelId);
 
-		int commerceChannelRelsCount =
-			_commerceChannelRelService.getCommerceChannelRelsCount(
-				Country.class.getName(), commerceChannelRel.getClassPK(),
-				StringPool.BLANK);
+		int count = _commerceChannelRelService.getCommerceChannelRelsCount(
+			Country.class.getName(), commerceChannelRel.getClassPK(),
+			StringPool.BLANK);
 
-		if (commerceChannelRelsCount > 0) {
+		if (count > 0) {
 			return;
 		}
 

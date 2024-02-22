@@ -68,6 +68,13 @@ public class GetLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 			JSONUtil.put(
 				"hasMoreElements",
 				() -> {
+					int pageSize = GetterUtil.getInteger(
+						PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
+
+					if (pageSize <= 0) {
+						return false;
+					}
+
 					int childLayoutsCount = _layoutService.getLayoutsCount(
 						themeDisplay.getScopeGroupId(), privateLayout,
 						parentLayoutId);
@@ -76,9 +83,6 @@ public class GetLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 						httpServletRequest, "start");
 
 					start = Math.max(0, start);
-
-					int pageSize = GetterUtil.getInteger(
-						PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
 
 					int end = ParamUtil.getInteger(
 						httpServletRequest, "end", start + pageSize);

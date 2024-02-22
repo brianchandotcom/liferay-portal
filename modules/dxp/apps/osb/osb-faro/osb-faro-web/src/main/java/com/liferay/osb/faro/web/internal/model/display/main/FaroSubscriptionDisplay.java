@@ -144,6 +144,10 @@ public class FaroSubscriptionDisplay {
 		return new Date(_startDate.getTime());
 	}
 
+	public long getUsersCount() {
+		return _usersCount;
+	}
+
 	public boolean isActive() {
 		return _active;
 	}
@@ -162,6 +166,8 @@ public class FaroSubscriptionDisplay {
 
 		Date subscriptionModifiedDate = new Date(
 			faroProject.getSubscriptionModifiedTime());
+
+		_usersCount = contactsEngineClient.getUsersCount(faroProject);
 
 		_individualsCount =
 			contactsEngineClient.getIndividualsCreatedSinceCount(
@@ -334,5 +340,6 @@ public class FaroSubscriptionDisplay {
 	private long _pageViewsLimit;
 	private int _pageViewsStatus;
 	private Date _startDate;
+	private long _usersCount;
 
 }

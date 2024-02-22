@@ -71,7 +71,7 @@ function refresh_liferay_sample_workspace {
 
 	popd
 
-	cat <<EOF > liferay-sample-workspace/.gitignore
+	cat << EOF > liferay-sample-workspace/.gitignore
 .DS_Store
 /bundles
 /poshi/poshi-ext.properties
@@ -117,7 +117,7 @@ EOF
 
 	mkdir -p liferay-sample-custom-element-2/src/common/components
 
-	cat <<EOF > liferay-sample-custom-element-2/src/common/components/Comic.js
+	cat << EOF > liferay-sample-custom-element-2/src/common/components/Comic.js
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -169,7 +169,7 @@ function Comic() {
 export default Comic;
 EOF
 
-	cat <<EOF > liferay-sample-custom-element-2/src/common/components/DadJoke.js
+	cat << EOF > liferay-sample-custom-element-2/src/common/components/DadJoke.js
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -214,7 +214,7 @@ function DadJoke() {
 export default DadJoke;
 EOF
 
-	cat <<EOF > liferay-sample-custom-element-2/src/index.js
+	cat << EOF > liferay-sample-custom-element-2/src/index.js
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06

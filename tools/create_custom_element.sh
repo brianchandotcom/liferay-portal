@@ -83,7 +83,7 @@ function create_angular_app {
 	rm -f README.md
 	rm -fr .vscode
 
-	cat <<EOF > build.gradle
+	cat << EOF > build.gradle
 apply plugin: "com.liferay.node"
 
 node {
@@ -150,7 +150,7 @@ function create_react_app {
 
 	mv README.md README.markdown
 
-	cat <<EOF > .env
+	cat << EOF > .env
 DISABLE_ESLINT_PLUGIN=true
 SKIP_PREFLIGHT_CHECK=true
 EOF
@@ -272,7 +272,7 @@ function write_react_app_files {
 	# common/services/liferay/api.js
 	#
 
-	cat <<EOF > common/services/liferay/api.js
+	cat << EOF > common/services/liferay/api.js
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -299,7 +299,7 @@ EOF
 	# common/services/liferay/liferay.js
 	#
 
-	cat <<EOF > common/services/liferay/liferay.js
+	cat << EOF > common/services/liferay/liferay.js
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -338,7 +338,7 @@ EOF
 	# common/styles/hello-world.scss
 	#
 
-	cat <<EOF > common/styles/hello-world.scss
+	cat << EOF > common/styles/hello-world.scss
 .hello-world {
 	h1 {
 		color: \$primary-color;
@@ -351,7 +351,7 @@ EOF
 	# common/styles/index.scss
 	#
 
-	cat <<EOF > common/styles/index.scss
+	cat << EOF > common/styles/index.scss
 ${CUSTOM_ELEMENT_NAME} {
 	@import 'variables';
 
@@ -363,7 +363,7 @@ EOF
 	# common/styles/variables.scss
 	#
 
-	cat <<EOF > common/styles/variables.scss
+	cat << EOF > common/styles/variables.scss
 \$primary-color: #295ccc;
 EOF
 
@@ -371,7 +371,7 @@ EOF
 	# index.js
 	#
 
-	cat <<EOF > index.js
+	cat << EOF > index.js
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
@@ -441,7 +441,7 @@ EOF
 	# routes/hello-bar/pages/HelloBar.js
 	#
 
-	cat <<EOF > routes/hello-bar/pages/HelloBar.js
+	cat << EOF > routes/hello-bar/pages/HelloBar.js
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -462,7 +462,7 @@ EOF
 	# routes/hello-foo/pages/HelloFoo.js
 	#
 
-	cat <<EOF > routes/hello-foo/pages/HelloFoo.js
+	cat << EOF > routes/hello-foo/pages/HelloFoo.js
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
@@ -483,7 +483,7 @@ EOF
 	# routes/hello-world/pages/HelloWorld.js
 	#
 
-	cat <<EOF > routes/hello-world/pages/HelloWorld.js
+	cat << EOF > routes/hello-world/pages/HelloWorld.js
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06

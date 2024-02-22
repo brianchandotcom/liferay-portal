@@ -188,7 +188,7 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="KaleoDefinitionVersion" remote-service="false">
+	<entity local-service="true" name="KaleoDefinitionVersion" remote-service="true">
 
 		<!-- PK fields -->
 

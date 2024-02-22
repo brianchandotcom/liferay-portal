@@ -99,6 +99,14 @@ public class SearchResultsPortletDisplayTemplateHandler
 			"document", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getHighlightedTitle()");
 		templateVariableGroup.addVariable(
+			"download-file-size", SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY,
+			"getAssetRendererURLDownloadSize()");
+		templateVariableGroup.addVariable(
+			"download-file-url", SearchResultSummaryDisplayContext.class,
+			PortletDisplayTemplateConstants.ENTRY,
+			"getAssetRendererURLDownload()");
+		templateVariableGroup.addVariable(
 			"modified-by-user-name", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY, "getModifiedByUserName()");
 		templateVariableGroup.addVariable(

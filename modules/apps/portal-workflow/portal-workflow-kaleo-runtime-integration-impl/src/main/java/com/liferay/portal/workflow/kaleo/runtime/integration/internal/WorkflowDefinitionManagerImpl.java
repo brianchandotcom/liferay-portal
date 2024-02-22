@@ -31,6 +31,7 @@ import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoDefinition
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionService;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.ArrayList;
@@ -294,7 +295,7 @@ public class WorkflowDefinitionManagerImpl
 
 		try {
 			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+				_kaleoDefinitionVersionService.getKaleoDefinitionVersion(
 					companyId, name, getVersion(version)));
 		}
 		catch (NoSuchModelException noSuchModelException) {
@@ -316,7 +317,7 @@ public class WorkflowDefinitionManagerImpl
 
 		try {
 			List<KaleoDefinitionVersion> kaleoDefinitionVersions =
-				_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersions(
+				_kaleoDefinitionVersionService.getKaleoDefinitionVersions(
 					companyId, name);
 
 			int size = kaleoDefinitionVersions.size();
@@ -520,6 +521,9 @@ public class WorkflowDefinitionManagerImpl
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
+
+	@Reference
+	private KaleoDefinitionVersionService _kaleoDefinitionVersionService;
 
 	@Reference
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;

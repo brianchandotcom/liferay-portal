@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.redirect.model.RedirectEntry;
-import com.liferay.redirect.service.RedirectEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,9 +79,6 @@ public class RedirectEntryPermissionPortalInstanceLifecycleListener
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private RedirectEntryLocalService _redirectEntryLocalService;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

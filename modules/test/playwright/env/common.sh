@@ -245,7 +245,7 @@ function main {
 function reverse {
 	local array=(${@})
 
-	for (( i = ${#array[@]} - 1; i >= 0; i--))
+	for ((i = ${#array[@]} - 1; i >= 0; i--))
 	do
 	  echo "${array[$i]}"
 	done
@@ -278,16 +278,12 @@ function stop_app_server {
 }
 
 function update_portal_ext_properties {
-	local playwright_project_dir=$(get_playwright_project_dir)
-	local parent_portal_ext_properties_files=$(get_parent_portal_ext_properties_files)
-	local tomcat_portal_ext_properties_file=$(get_tomcat_portal_ext_properties_file)
-
 	combine_properties_files \
-		${tomcat_portal_ext_properties_file} \
+		$(get_tomcat_portal_ext_properties_file) \
 		\
-		${parent_portal_ext_properties_files} \
+		$(get_parent_portal_ext_properties_files) \
 		\
-		${playwright_project_dir}/env/portal-ext.properties
+		$(get_playwright_project_dir)/env/portal-ext.properties
 }
 
 main "${@}"

@@ -15,6 +15,7 @@ import {
 	useRef,
 	useState,
 } from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
 import SearchBuilder from '~/core/SearchBuilder';
 import useFormActions from '~/hooks/useFormActions';
@@ -24,7 +25,7 @@ import {FilterSchema} from '~/schema/filter';
 
 import Form from '../Form';
 import {RendererFields} from '../Form/Renderer';
-import {FieldOptions} from '../Form/Renderer/Renderer';
+
 type ManagementToolbarFilterProps = {
 	applyFilters?: boolean;
 	filterSchema?: FilterSchema;
@@ -64,10 +65,9 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		return () => clearTimeout(timeout);
 	}, [visible]);
 
-	const fields = useMemo(
-		() => filterSchema?.fields as RendererFields[],
-		[filterSchema?.fields]
-	);
+	const fields = useMemo(() => filterSchema?.fields as RendererFields[], [
+		filterSchema?.fields,
+	]);
 
 	useEffect(() => {
 		const container = document.querySelector('.tr-main__body__page');
@@ -103,6 +103,8 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 
 	const formActions = useFormActions();
 	const [listViewContext, dispatch] = useContext(ListViewContext);
+	const location = useLocation();
+	const navigate = useNavigate();
 	const [form, setForm] = useState(() => ({
 		...initialFilters,
 		...listViewContext.filters.filter,
@@ -117,6 +119,17 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 	const clearDisabled = Object.values(form).every(
 		(value) => !value || !value.length
 	);
+
+	const handleRemoveItemFromFilter = useCallback(() => {
+		const searchParams = new URLSearchParams(location.search);
+
+		searchParams.delete('filter');
+		searchParams.delete('filterSchema');
+
+		return navigate({
+			search: `?${searchParams.toString()}`,
+		});
+	}, [location.search, navigate]);
 
 	const onApply = useCallback(() => {
 		const filterCleaned = SearchBuilder.removeEmptyFilter(form);
@@ -166,6 +179,10 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			});
 		}
 
+		if (!Object.keys(formattedFilter).length) {
+			handleRemoveItemFromFilter();
+		}
+
 		dispatch({
 			payload: {filters: {entries, filter: filterCleaned}},
 			type: ListViewTypes.SET_FILTERS,
@@ -178,6 +195,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		fields,
 		filterSchema,
 		form,
+		handleRemoveItemFromFilter,
 		setVisible,
 		updateUrlParams,
 	]);

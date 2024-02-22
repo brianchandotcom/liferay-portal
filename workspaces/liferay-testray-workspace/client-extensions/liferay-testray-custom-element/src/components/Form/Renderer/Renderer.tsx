@@ -4,22 +4,15 @@
  */
 
 import Form from '..';
-import React, {
-	Dispatch,
-	memo,
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
+import React, {memo, useMemo, useState} from 'react';
 import {useParams} from 'react-router-dom';
+import useSWR from 'swr';
 
 import {Operators} from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
 import fetcher from '../../../services/fetcher';
 import {safeJSONParse} from '../../../util';
 import {AutoCompleteProps} from '../AutoComplete';
-import useSWR from 'swr';
 
 type RenderedFieldOptions = string[] | {label: string; value: string}[];
 
@@ -43,6 +36,11 @@ export type RendererFields = {
 		| 'textarea';
 } & Partial<AutoCompleteProps>;
 
+type Options = {
+	label: string;
+	value: string;
+};
+
 export type FieldOptions = {[key: string]: any[]};
 
 type RendererProps = {
@@ -56,14 +54,13 @@ type RendererProps = {
 const Renderer: React.FC<RendererProps> = ({
 	fields,
 	filter,
-	form,
 	filterSchema,
+	form,
 	onChange,
 }) => {
 	const params = useParams();
 
 	const [fieldDisabled, setFieldDisabled] = useState({});
-	// const [isLoading, setIsLoading] = useState(true);
 
 	const paramsMemoized = useMemo(() => {
 		const testrayModalParams = document.getElementById(
@@ -234,7 +231,20 @@ const Renderer: React.FC<RendererProps> = ({
 				if (type === 'checkbox') {
 					const onCheckboxChange = (event: any) => {
 						const inputValue = event.target.value;
-						const formValue: unknown[] = form[name];
+						let formValue: unknown[] = form[name];
+
+						if (
+							Array.isArray(formValue) &&
+							formValue.some(
+								(option) => typeof option === 'object'
+							)
+						) {
+							formValue = formValue.map((option: any) =>
+								typeof option === 'object'
+									? option.value || option
+									: option
+							);
+						}
 
 						onChange({
 							target: {
@@ -260,9 +270,16 @@ const Renderer: React.FC<RendererProps> = ({
 
 								return (
 									<Form.Checkbox
-										checked={form[name]?.includes(
-											optionValue
-										)}
+										checked={
+											(Array.isArray(form[name]) &&
+												form[name]
+													.map(
+														({value}: Options) =>
+															value
+													)
+													.includes(optionValue)) ||
+											form[name].includes(optionValue)
+										}
 										disabled={disabled}
 										key={index}
 										label={

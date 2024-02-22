@@ -18,7 +18,7 @@ task downloadBundle(type: Download)
 task downloadHotFixZip(type: Download)
 task downloadNodeInfo(type: Download)
 task downloadPluginsSdk(type: Download)
-task downloadProductInfo(type: Download)
+task downloadReleasesJson(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
 File gradleTestDependenciesDir = new File(buildDir, "gradle-test-dependencies")
@@ -202,10 +202,10 @@ downloadNodeInfo {
 	src "https://nodejs.org/dist/index.json"
 }
 
-downloadProductInfo {
+downloadReleasesJson {
 	dest buildDir
 	onlyIfNewer true
-	src "https://releases-cdn.liferay.com/tools/workspace/.product_info.json"
+	src "https://releases-cdn.liferay.com/releases.json"
 }
 
 eclipse.classpath.file {
@@ -256,7 +256,7 @@ liferayOSGi {
 }
 
 processResources {
-	from downloadNodeInfo, downloadProductInfo
+	from downloadNodeInfo, downloadReleasesJson
 }
 
 updateFileVersions {

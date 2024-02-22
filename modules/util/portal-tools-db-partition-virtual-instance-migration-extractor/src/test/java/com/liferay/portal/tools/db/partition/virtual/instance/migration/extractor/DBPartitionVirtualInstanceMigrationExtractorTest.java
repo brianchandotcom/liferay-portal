@@ -96,24 +96,22 @@ public class DBPartitionVirtualInstanceMigrationExtractorTest
 		content = content.replaceAll("\r", "");
 		content = content.replaceAll(" ", "");
 
-		Assert.assertTrue(
-			content.contains(
-				"\"jdbcUrl\":\"" +
-					StringUtil.replace(_URL, "lportal", _PARTITION_ID) + "\""));
-
 		if (companyInfoIds.size() > 1) {
-			Assert.assertTrue(content.contains("\"companyId\":null"));
+			Assert.assertTrue(content.contains("\"extractedCompanyId\":null"));
 		}
 		else {
 			Assert.assertTrue(
-				content.contains("\"companyId\":" + companyInfoIds.get(0)));
+				content.contains(
+					"\"extractedCompanyId\":" + companyInfoIds.get(0)));
 		}
 
 		if (defaultPartition) {
-			Assert.assertTrue(content.contains("\"defaultPartition\":true"));
+			Assert.assertTrue(
+				content.contains("\"extractedCompanyDefault\":true"));
 		}
 		else {
-			Assert.assertTrue(content.contains("\"defaultPartition\":false"));
+			Assert.assertTrue(
+				content.contains("\"extractedCompanyDefault\":false"));
 		}
 
 		Assert.assertTrue(
@@ -138,8 +136,8 @@ public class DBPartitionVirtualInstanceMigrationExtractorTest
 
 		DBPartitionVirtualInstanceMigrationExtractor.main(
 			new String[] {
-				"-url", _URL, "-user", _USER, "-pass", _PASSWORD, "-path",
-				outputDirectory.getAbsolutePath(), "-partition", _PARTITION_ID
+				"-j", _URL, "-u", _USER, "-p", _PASSWORD, "-d",
+				outputDirectory.getAbsolutePath(), "-s", _SCHEMA_NAME
 			});
 
 		File[] files = outputDirectory.listFiles();
@@ -270,7 +268,7 @@ public class DBPartitionVirtualInstanceMigrationExtractorTest
 
 		mockCompanies(companies);
 		mockDatabaseConnection(
-			_PASSWORD, StringUtil.replace(_URL, "lportal", _PARTITION_ID),
+			_PASSWORD, StringUtil.replace(_URL, "lportal", _SCHEMA_NAME),
 			_USER);
 		mockDefaultPartition(defaultPartition);
 		mockGetCompanyIds(companyIds);
@@ -279,9 +277,9 @@ public class DBPartitionVirtualInstanceMigrationExtractorTest
 		mockTables(tableNames);
 	}
 
-	private static final String _PARTITION_ID = RandomTestUtil.randomString();
-
 	private static final String _PASSWORD = RandomTestUtil.randomString();
+
+	private static final String _SCHEMA_NAME = RandomTestUtil.randomString();
 
 	private static final String _URL =
 		"jdbc:mysql://localhost:3306/lportal?useUnicode=true";

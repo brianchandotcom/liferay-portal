@@ -255,6 +255,10 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in the body of gradle build files." />
 		</check>
+		<check name="GradleCommerceDependenciesCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks the modules that are outside of Commerce are not allowed to depend on Commerce modules." />
+		</check>
 		<check name="GradleDependenciesCheck">
 			<category name="Performance" />
 			<description name="Checks that modules are not depending on other modules." />

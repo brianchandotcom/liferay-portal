@@ -72,52 +72,9 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 				_checkPetraDependencies(fileName, content, dependencies);
 			}
-
-			_checkCommerceDependencies(
-				fileName, absolutePath, content, dependencies,
-				getAttributeValues(
-					_ALLOWED_COMMERCE_DEPENDENCIES_MODULE_PATH_NAMES,
-					absolutePath));
 		}
 
 		return content;
-	}
-
-	private void _checkCommerceDependencies(
-		String fileName, String absolutePath, String content,
-		String dependencies,
-		List<String> allowedCommerceDependenciesModulePathNames) {
-
-		if (!isModulesFile(absolutePath) ||
-			absolutePath.contains("/commerce/")) {
-
-			return;
-		}
-
-		for (String line : StringUtil.splitLines(dependencies)) {
-			if (Validator.isNull(line) ||
-				!line.matches(
-					"\\s*compileOnly project\\(\".*?:apps:commerce.+?\"\\)")) {
-
-				continue;
-			}
-
-			for (String allowedCommerceDependenciesModulePathName :
-					allowedCommerceDependenciesModulePathNames) {
-
-				if (absolutePath.contains(
-						allowedCommerceDependenciesModulePathName)) {
-
-					return;
-				}
-			}
-
-			addMessage(
-				fileName,
-				"Modules that are outside of Commerce are not allowed to " +
-					"depend on Commerce modules",
-				SourceUtil.getLineNumber(content, content.indexOf(line)));
-		}
 	}
 
 	private void _checkPetraDependencies(
@@ -270,10 +227,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 		return sb.toString();
 	}
-
-	private static final String
-		_ALLOWED_COMMERCE_DEPENDENCIES_MODULE_PATH_NAMES =
-			"allowedCommerceDependenciesModulePathNames";
 
 	private static final String _CHECK_PETRA_DEPENDENCIES_KEY =
 		"checkPetraDependencies";

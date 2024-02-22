@@ -30,6 +30,12 @@ public class AuditEventServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.security.audit.storage.service.impl.AuditEventServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static AuditEvent getAuditEvent(long auditEventId)
+		throws PortalException {
+
+		return getService().getAuditEvent(auditEventId);
+	}
+
 	public static List<AuditEvent> getAuditEvents(
 			long companyId, int start, int end)
 		throws PortalException {

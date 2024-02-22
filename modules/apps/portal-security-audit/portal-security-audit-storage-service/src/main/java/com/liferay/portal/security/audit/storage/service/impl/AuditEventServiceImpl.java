@@ -44,7 +44,8 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 		if (!(permissionChecker.isCompanyAdmin() ||
 			  _userLocalService.hasRoleUser(
 				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
-				  permissionChecker.getUserId(), true))) {
+				  permissionChecker.getUserId(), true)) ||
+			(permissionChecker.getCompanyId() != companyId)) {
 
 			throw new PrincipalException();
 		}
@@ -63,7 +64,8 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 		if (!(permissionChecker.isCompanyAdmin() ||
 			  _userLocalService.hasRoleUser(
 				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
-				  permissionChecker.getUserId(), true))) {
+				  permissionChecker.getUserId(), true)) ||
+			(permissionChecker.getCompanyId() != companyId)) {
 
 			throw new PrincipalException();
 		}
@@ -85,7 +87,8 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 		if (!(permissionChecker.isCompanyAdmin() ||
 			  _userLocalService.hasRoleUser(
 				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
-				  permissionChecker.getUserId(), true))) {
+				  permissionChecker.getUserId(), true)) ||
+			(permissionChecker.getCompanyId() != companyId)) {
 
 			throw new PrincipalException();
 		}
@@ -110,7 +113,8 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 		if (!(permissionChecker.isCompanyAdmin() ||
 			  _userLocalService.hasRoleUser(
 				  companyId, RoleConstants.ANALYTICS_ADMINISTRATOR,
-				  permissionChecker.getUserId(), true))) {
+				  permissionChecker.getUserId(), true)) ||
+			(permissionChecker.getCompanyId() != companyId)) {
 
 			throw new PrincipalException();
 		}

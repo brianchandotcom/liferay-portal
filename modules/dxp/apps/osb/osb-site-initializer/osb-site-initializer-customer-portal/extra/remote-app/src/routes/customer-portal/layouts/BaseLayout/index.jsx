@@ -37,7 +37,7 @@ const Layout = () => {
 
 					{hasSideMenu && <SideMenu />}
 				</div>
-			)}	
+			)}
 
 			<div className="mx-4 px-2 w-100">
 				<div className="mx-4 px-2 w-100">

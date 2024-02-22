@@ -19,6 +19,7 @@ export const test = mergeTests(
 	dataSetsPageTest,
 	fdsFragmentPageTest,
 	featureFlagsTest({
+		'LPD-10735': false,
 		'LPS-164563': true,
 		'LPS-178052': true,
 		'LPS-186871': true,

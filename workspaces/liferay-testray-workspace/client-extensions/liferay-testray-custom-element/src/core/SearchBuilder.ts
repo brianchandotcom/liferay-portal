@@ -110,7 +110,7 @@ export default class SearchBuilder {
 		for (const key in filter) {
 			const value = filter[key];
 
-			if (!value) {
+			if (!value || !(value as string).length) {
 				continue;
 			}
 
@@ -176,8 +176,7 @@ export default class SearchBuilder {
 				};
 
 				searchCondition = getOptionalSearchCondition();
-			}
-			else {
+			} else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,

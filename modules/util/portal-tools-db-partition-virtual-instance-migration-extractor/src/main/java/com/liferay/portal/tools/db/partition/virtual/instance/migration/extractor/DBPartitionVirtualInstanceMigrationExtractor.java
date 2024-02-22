@@ -71,7 +71,7 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 		options.addRequiredOption(
 			"pass", "password", true, "Set the password.");
 		options.addRequiredOption("user", "user", true, "Set the user.");
-		options.addRequiredOption(
+		options.addOption(
 			"partition", "partition-id", true, "Set the partition to extract.");
 		options.addOption("path", "path", true, "Set the output directory.");
 

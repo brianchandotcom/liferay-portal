@@ -7,9 +7,9 @@ This tool allows to validate that all the needed conditions for a successful mig
 
 ## Usage
     usage: Liferay Portal Tools DB Partition Virtual Instance Migration Validator
-    -h,--help Print help message.
-    -s,--source-file <arg> Set the source file.
-    -t,--target-file <arg> Set the target file.
+    -h,--help Print help.
+    -s,--source-file <arg> Source file.
+    -t,--target-file <arg> Target file.
 
 ## Execution example
-    java -jar com.liferay.portal.tools.db.partition.virtual.instance.migration.validator.jar -s "/bundles/tools/portal-tools-db-partition-virtual-instance-migration-extractor/source.json" -t "/bundles/tools/portal-tools-db-partition-virtual-instance-migration-extractor/target.json"
+    ./db_partition_virtual_instance_migrator_validator.sh -s "/bundles/tools/portal-tools-db-partition-virtual-instance-migration-extractor/source.json" -t "/bundles/tools/portal-tools-db-partition-virtual-instance-migration-extractor/target.json"

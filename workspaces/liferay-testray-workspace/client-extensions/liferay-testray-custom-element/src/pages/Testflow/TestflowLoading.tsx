@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import {Container} from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect} from 'react';
@@ -50,20 +49,9 @@ const TestflowLoading: React.FC<TestflowLoadingProps> = ({
 				<ClayLoadingIndicator displayType="secondary" size="md" />
 			</span>
 
-			<span className="tr-testflow-loading__processing">
-				<div className="tr-testflow-loading__processing__bar" />
-			</span>
-
-			<ClayButton
-				className="mt-3"
-				displayType="secondary"
-				onClick={() => mutateTask(testrayTask)}
-			>
-				{i18n.translate('refresh')}
-			</ClayButton>
-
 			<p className="tr-testflow-loading__message">
 				{i18n.translate('preparing-your-task')}
+				<span className="tr-testflow-loading__message__dots">...</span>
 			</p>
 		</Container>
 	);

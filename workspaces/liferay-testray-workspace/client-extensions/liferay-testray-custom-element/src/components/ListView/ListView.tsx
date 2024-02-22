@@ -13,6 +13,7 @@ import {
 	useMemo,
 	useRef,
 } from 'react';
+import {useSearchParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 import useQueryParams from '~/hooks/useQueryParams';
 
@@ -103,6 +104,7 @@ const ListView: React.FC<ListViewProps> = ({
 }) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 	const {updateUrlParams} = useQueryParams();
+	const [searchParams] = useSearchParams();
 
 	const onSelectRowNormalizer = useMemo(
 		() => normalizers.onSelectRow ?? noop,
@@ -161,10 +163,13 @@ const ListView: React.FC<ListViewProps> = ({
 		]
 	);
 
-	const {data: response, error, loading, mutate} = useFetch(resource, {
-		params: getURLSearchParams(),
-		transformData,
-	});
+	const {data: response, error, isValidating, loading, mutate} = useFetch(
+		resource,
+		{
+			params: getURLSearchParams(),
+			transformData,
+		}
+	);
 
 	const {
 		actions = {},
@@ -252,7 +257,7 @@ const ListView: React.FC<ListViewProps> = ({
 		tableProps,
 	]);
 
-	if (loading) {
+	if (loading || (isValidating && searchParams.get('filter'))) {
 		return <Loading />;
 	}
 

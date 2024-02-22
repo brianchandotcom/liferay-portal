@@ -6,8 +6,12 @@
 
 	&__message {
 		color: color-gray;
-		font-size: 1.5rem;
+		font-size: 2rem;
 		margin: 32px 0;
+		&__dots {
+			font-size: 2rem;
+			animation: dotsAnimation 1s infinite linear;
+		}
 	}
 
 	&__processing {
@@ -17,25 +21,18 @@
 		margin: 24px 0;
 		width: 100%;
 
-		&__bar {
-			animation: loading 15s linear infinite;
-			background-color: $color-primary;
-			height: 8px;
-			position: relative;
-			width: 0;
-		}
-
-		@keyframes loading {
+		@keyframes dotsAnimation {
 			0% {
-				width: 0;
+				opacity: 0.3;
+				transform: translateY(0);
 			}
-
-			90% {
-				width: 100%;
+			50% {
+				opacity: 1;
+				transform: translateY(-4px);
 			}
-
 			100% {
-				width: 100%;
+				opacity: 0.3;
+				transform: translateY(0);
 			}
 		}
 	}

@@ -260,7 +260,7 @@ describe('ReactFieldBase', () => {
 		);
 
 		expect(
-			getByTitle('this-field-can-not-be-localized')
+			getByTitle('this-field-cannot-be-localized')
 		).toBeInTheDocument();
 
 		expect(getByLabelText('my-label')).toHaveClass('text-muted');

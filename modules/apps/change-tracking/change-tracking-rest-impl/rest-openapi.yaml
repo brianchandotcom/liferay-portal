@@ -48,6 +48,11 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+                statusMessage:
+                    description:
+                        Info on when a publication was last published or modified.
+                    readOnly: true
+                    type: string
             type: object
         CTEntry:
             properties:

@@ -14,7 +14,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	headlessBuilderPagesTest,
 	headlessDiscoveryPagesTest,
-	loginTest
+	loginTest()
 );
 
 test('can get updated title in response after publish', async ({

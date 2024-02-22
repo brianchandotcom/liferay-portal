@@ -210,6 +210,11 @@ public class DuplicateItemMVCActionCommandTest {
 					getFragmentEntryLinkId());
 
 		Assert.assertEquals(
+			0,
+			duplicatedDropzoneFragmentEntryLink.
+				getOriginalFragmentEntryLinkId());
+
+		Assert.assertEquals(
 			dropzoneFragmentEntryLink.getFragmentEntryId(),
 			duplicatedDropzoneFragmentEntryLink.getFragmentEntryId());
 		Assert.assertEquals(
@@ -242,6 +247,11 @@ public class DuplicateItemMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
 				duplicatedHeadingFragmentStyledLayoutStructureItem.
 					getFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			0,
+			duplicatedHeadingFragmentEntryLink.
+				getOriginalFragmentEntryLinkId());
 
 		Assert.assertEquals(
 			headingFragmentEntryLink.getFragmentEntryId(),

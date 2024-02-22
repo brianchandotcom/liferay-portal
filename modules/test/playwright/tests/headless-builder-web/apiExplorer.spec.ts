@@ -14,7 +14,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	headlessBuilderTest,
 	headlessDiscoveryPagesTest,
-	loginTest
+	loginTest()
 );
 
 const application = {

@@ -11,7 +11,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../fixtures/commercePagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest);
+export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
 
 test('LPD-13490 manage channel country visibility from channel page', async ({
 	apiHelpers,

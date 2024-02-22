@@ -12,7 +12,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest);
+export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
 
 test('The download URL is present when the file entry is a file upload', async ({
 	apiHelpers,

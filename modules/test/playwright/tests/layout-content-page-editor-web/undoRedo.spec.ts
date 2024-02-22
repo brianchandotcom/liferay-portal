@@ -22,7 +22,7 @@ export const test = mergeTests(
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,
-	loginTest,
+	loginTest(),
 	pageEditorPagesTest
 );
 

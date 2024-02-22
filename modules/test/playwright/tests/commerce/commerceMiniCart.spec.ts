@@ -14,7 +14,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
-	loginTest
+	loginTest()
 );
 
 const data = [];

@@ -489,7 +489,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-198959")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-15596")) {
 			if (actionName.equals("/journal/add_article")) {
 				MultiSessionMessages.add(
 					actionRequest, "articleCreated", article.getId());

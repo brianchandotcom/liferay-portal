@@ -81,10 +81,10 @@ else {
 					<liferay-ui:message arguments="<%= articleLink %>" key="x-was-created-successfully" />
 				</c:when>
 				<c:when test='<%= MultiSessionMessages.contains(renderRequest, "articlePending") %>'>
-					<liferay-ui:message arguments="<%= new Object[] {articleLink, dateTimeFormat.format(article.getDisplayDate())} %>" key="x-will-be-published-on-x" />
+					<liferay-ui:message arguments="<%= articleLink %>" key="x-has-been-scheduled-and-submitted-for-workflow" />
 				</c:when>
 				<c:when test='<%= MultiSessionMessages.contains(renderRequest, "articleScheduled") %>'>
-					<liferay-ui:message arguments="<%= articleLink %>" key="x-has-been-scheduled-and-submitted-for-workflow" />
+					<liferay-ui:message arguments="<%= new Object[] {articleLink, dateTimeFormat.format(article.getDisplayDate())} %>" key="x-will-be-published-on-x" />
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:message arguments="<%= articleLink %>" key="x-was-updated-successfully" />

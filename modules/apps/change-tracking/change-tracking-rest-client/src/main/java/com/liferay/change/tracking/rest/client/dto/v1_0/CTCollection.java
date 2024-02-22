@@ -234,6 +234,27 @@ public class CTCollection implements Cloneable, Serializable {
 
 	protected Status status;
 
+	public String getStatusMessage() {
+		return statusMessage;
+	}
+
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
+	}
+
+	public void setStatusMessage(
+		UnsafeSupplier<String, Exception> statusMessageUnsafeSupplier) {
+
+		try {
+			statusMessage = statusMessageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String statusMessage;
+
 	@Override
 	public CTCollection clone() throws CloneNotSupportedException {
 		return (CTCollection)super.clone();

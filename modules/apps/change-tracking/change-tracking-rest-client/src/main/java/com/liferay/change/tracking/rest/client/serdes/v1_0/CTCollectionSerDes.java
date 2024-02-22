@@ -184,6 +184,20 @@ public class CTCollectionSerDes {
 			sb.append(String.valueOf(ctCollection.getStatus()));
 		}
 
+		if (ctCollection.getStatusMessage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"statusMessage\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(ctCollection.getStatusMessage()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -286,6 +300,15 @@ public class CTCollectionSerDes {
 			map.put("status", String.valueOf(ctCollection.getStatus()));
 		}
 
+		if (ctCollection.getStatusMessage() == null) {
+			map.put("statusMessage", null);
+		}
+		else {
+			map.put(
+				"statusMessage",
+				String.valueOf(ctCollection.getStatusMessage()));
+		}
+
 		return map;
 	}
 
@@ -365,6 +388,11 @@ public class CTCollectionSerDes {
 				if (jsonParserFieldValue != null) {
 					ctCollection.setStatus(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "statusMessage")) {
+				if (jsonParserFieldValue != null) {
+					ctCollection.setStatusMessage((String)jsonParserFieldValue);
 				}
 			}
 		}

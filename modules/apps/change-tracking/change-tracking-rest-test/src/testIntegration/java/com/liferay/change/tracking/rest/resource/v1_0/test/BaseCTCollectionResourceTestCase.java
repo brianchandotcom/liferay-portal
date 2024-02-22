@@ -177,6 +177,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 		ctCollection.setExternalReferenceCode(regex);
 		ctCollection.setName(regex);
 		ctCollection.setOwnerName(regex);
+		ctCollection.setStatusMessage(regex);
 
 		String json = CTCollectionSerDes.toJSON(ctCollection);
 
@@ -188,6 +189,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 		Assert.assertEquals(regex, ctCollection.getExternalReferenceCode());
 		Assert.assertEquals(regex, ctCollection.getName());
 		Assert.assertEquals(regex, ctCollection.getOwnerName());
+		Assert.assertEquals(regex, ctCollection.getStatusMessage());
 	}
 
 	@Test
@@ -1151,6 +1153,14 @@ public abstract class BaseCTCollectionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("statusMessage", additionalAssertFieldName)) {
+				if (ctCollection.getStatusMessage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1372,6 +1382,17 @@ public abstract class BaseCTCollectionResourceTestCase {
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						ctCollection1.getStatus(), ctCollection2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("statusMessage", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						ctCollection1.getStatusMessage(),
+						ctCollection2.getStatusMessage())) {
 
 					return false;
 				}
@@ -1784,6 +1805,52 @@ public abstract class BaseCTCollectionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("statusMessage")) {
+			Object object = ctCollection.getStatusMessage();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1838,6 +1905,8 @@ public abstract class BaseCTCollectionResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				ownerName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				statusMessage = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
 		};

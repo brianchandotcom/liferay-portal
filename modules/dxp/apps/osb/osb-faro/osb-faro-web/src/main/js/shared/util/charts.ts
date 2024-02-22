@@ -56,11 +56,13 @@ export const CHART_COLOR_NAMES = {
 };
 
 export const Colors = {
+	danger: '#DA1414',
 	gray: '#AEB0BB',
 	mapEmpty: '#E1E1E1',
 	mapMax: '#0065E4',
 	mapMin: '#B1D4FF',
 	mapSelected: '#4B9BFF',
+	mormont: '#FFB46E',
 	negative: '#DA1414',
 	neutral: '#AEB0BB',
 	pallete: [
@@ -76,7 +78,8 @@ export const Colors = {
 	],
 	positive: '#287D3C',
 	primary: '#4B9BFF',
-	secondary: '#CCCCCC'
+	secondary: '#CCCCCC',
+	warning: '#B95000'
 };
 
 export const dateRangeFormatter = (

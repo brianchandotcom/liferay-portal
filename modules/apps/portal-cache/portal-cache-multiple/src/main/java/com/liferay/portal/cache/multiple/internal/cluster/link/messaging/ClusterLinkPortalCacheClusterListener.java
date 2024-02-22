@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
+
 import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
@@ -173,14 +174,13 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 		}
 	}
 
-	@Reference
-	private DestinationFactory _destinationFactory;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkPortalCacheClusterListener.class);
 
-	private ServiceRegistration<Destination> _serviceRegistration;
+	@Reference
+	private DestinationFactory _destinationFactory;
 
+	private ServiceRegistration<Destination> _serviceRegistration;
 	private ServiceTrackerMap
 		<String, PortalCacheManager<? extends Serializable, ?>>
 			_serviceTrackerMap;

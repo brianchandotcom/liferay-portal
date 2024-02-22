@@ -17,10 +17,10 @@
 						</a>
 					</div>
 
-					<#if entry.isAssetRendererURLDownloadVisible() && entry.getAssetRendererURLDownload()?has_content>
+					<#if entry.isAssetRendererURLDownloadVisible()>
 						<span
 							class="lfr-portal-tooltip c-ml-1"
-							title="${languageUtil.format(locale, 'download-x', ['(' + languageUtil.formatStorageSize(entry.getDownloadSize(), locale) + ')'])}"
+							title="${languageUtil.format(locale, 'download-x', ['(' + languageUtil.formatStorageSize(entry.getAssetRendererURLDownloadSize(), locale) + ')'])}"
 						>
 							<@clay.link
 								aria\-label="${languageUtil.format(locale, 'download-x', [entry.getTitle()])}"

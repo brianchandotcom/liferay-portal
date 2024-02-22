@@ -534,7 +534,7 @@ public class SearchResultSummaryDisplayContextBuilder {
 					assetRendererFactory.hasPermission(
 						_themeDisplay.getPermissionChecker(),
 						assetRenderer.getClassPK(), ActionKeys.DOWNLOAD));
-			searchResultSummaryDisplayContext.setDownloadSize(
+			searchResultSummaryDisplayContext.setAssetRendererURLDownloadSize(
 				_getFieldValueLong("size"));
 			searchResultSummaryDisplayContext.setTitle(
 				assetRenderer.getTitle(summary.getLocale()));

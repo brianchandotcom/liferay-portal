@@ -115,6 +115,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"FDSAction", "/data-set-manager/actions"
 		).put(
+			"FDSCardsSection", "/data-set-manager/cards-sections"
+		).put(
 			"FDSClientExtensionFilter",
 			"/data-set-manager/client-extension-filters"
 		).put(

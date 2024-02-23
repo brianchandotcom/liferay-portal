@@ -224,8 +224,8 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column change-tracking-resolution-type="merge" name="userId" type="long" />
+		<column change-tracking-resolution-type="merge" name="userName" type="String" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -237,10 +237,10 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="plid" type="long" />
-		<column name="css" type="String" />
-		<column name="html" type="String" />
-		<column name="js" type="String" />
-		<column name="configuration" type="String" />
+		<column change-tracking-resolution-type="merge" name="css" type="String" />
+		<column change-tracking-resolution-type="merge" name="html" type="String" />
+		<column change-tracking-resolution-type="merge" name="js" type="String" />
+		<column change-tracking-resolution-type="merge" name="configuration" type="String" />
 		<column name="deleted" type="boolean" />
 		<column name="editableValues" type="String" />
 		<column name="namespace" type="String" />

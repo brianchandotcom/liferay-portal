@@ -93,7 +93,12 @@ $h4 liferay.workspace.product
 Set the `liferay.workspace.product` to set the `app.server.tomcat.version`,
 `liferay.workspace.bundle.url`, `liferay.workspace.docker.image.liferay`, and
 `liferay.workspace.target.platform.version` that matches your Liferay Product
-Version. To override each of these settings, set them individually.
+Version. To override each of these settings, set them individually. The value
+may either be `null`, or one of the `releaseKey` values found in
+https://releases.liferay.com/releases.json.
+
+This file is refreshed once every 30 days. To force workspace to check for new
+releases, use the system property `-Dliferay.workspace.refresh.liferay.releases`.
 
 $h4 app.server.tomcat.version
 Set this property to override the default setting provided by
@@ -195,6 +200,9 @@ to the distributable Zip/Tar. The default value is `false`.
 
 $h4 liferay.workspace.node.lts.codename
 Set this property to a Node.js LTS release codename to automatically use the latest Node version and NPM version for that LTS release. See https://github.com/nodejs/Release/blob/main/CODENAMES.md for the list of valid codenames.
+
+This file is refreshed once every 30 days. To force workspace to check for new
+releases, use the system property `-Dliferay.workspace.refresh.node.releases`.
 
 $h4 liferay.workspace.node.package.manager
 Set this property to `npm` to build Node.js-style projects using NPM. The

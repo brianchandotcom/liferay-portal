@@ -65,6 +65,12 @@ public class AddItemMVCActionCommand
 		collectionStyledLayoutStructureItem.setViewportConfiguration(
 			ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
 			JSONUtil.put("numberOfColumns", 1));
+		collectionStyledLayoutStructureItem.setViewportConfiguration(
+			ViewportSize.PORTRAIT_MOBILE.getViewportSizeId(),
+			JSONUtil.put("numberOfColumns", 1));
+		collectionStyledLayoutStructureItem.setViewportConfiguration(
+			ViewportSize.TABLET.getViewportSizeId(),
+			JSONUtil.put("numberOfColumns", 1));
 
 		return collectionStyledLayoutStructureItem;
 	}

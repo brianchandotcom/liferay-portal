@@ -80,9 +80,9 @@ const useQueryParams = () => {
 
 			const resourceFilter = resource.includes('filter=')
 				? resource.replace(/(filter=.*?)(&|$)/, `$1 and ${filter}$2`)
-				: resource.includes('?')
-				? `${resource}&filter=${filter}`
-				: `${resource}?filter=${filter}`;
+				: `${resource}${
+						resource.includes('?') ? '&' : '?'
+				  }filter=${filter}`;
 
 			const response = await fetcher(resourceFilter);
 

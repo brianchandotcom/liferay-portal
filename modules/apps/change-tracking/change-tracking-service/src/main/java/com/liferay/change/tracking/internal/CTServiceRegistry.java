@@ -14,10 +14,12 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -42,7 +44,15 @@ import org.osgi.service.component.annotations.Reference;
 public class CTServiceRegistry {
 
 	public CTService<?> getCTService(long classNameId) {
-		return _serviceTrackerMap.getService(classNameId);
+		try {
+			ClassName className = _classNameLocalService.getClassName(
+				classNameId);
+
+			return _serviceTrackerMap.getService(className.getClassName());
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	public Collection<CTTableMapperHelper> getCTTableMapperHelpers() {
@@ -174,15 +184,9 @@ public class CTServiceRegistry {
 				CTService<?> ctService = bundleContext.getService(
 					serviceReference);
 
-				try {
-					DBPartitionUtil.forEachCompanyId(
-						companyId -> emitter.emit(
-							_classNameLocalService.getClassNameId(
-								ctService.getModelClass())));
-				}
-				catch (Exception exception) {
-					throw new RuntimeException(exception);
-				}
+				emitter.emit(
+					ctService.getModelClass(
+					).getName());
 
 				bundleContext.ungetService(serviceReference);
 			});
@@ -202,6 +206,6 @@ public class CTServiceRegistry {
 	private ClassNameLocalService _classNameLocalService;
 
 	private ServiceTrackerList<CTEventListener> _serviceTrackerList;
-	private ServiceTrackerMap<Long, CTService<?>> _serviceTrackerMap;
+	private ServiceTrackerMap<String, CTService<?>> _serviceTrackerMap;
 
 }

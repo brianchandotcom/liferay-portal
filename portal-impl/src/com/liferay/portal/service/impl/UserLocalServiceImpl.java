@@ -3818,11 +3818,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new UserEmailAddressException.MustNotBeNull();
 		}
 
-		User user = userPersistence.findByC_EA(companyId, emailAddress);
-
 		sendEmailAccountCreationAttemptNotification(
-			user, companyId, fromName, fromAddress, subject, body,
-			serviceContext);
+			userPersistence.findByC_EA(companyId, emailAddress), companyId,
+			fromName, fromAddress, subject, body, serviceContext);
 
 		return false;
 	}

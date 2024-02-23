@@ -507,7 +507,7 @@ export function FieldBase({
 							{showDisabledFieldIcon && (
 								<TooltipProperty
 									tooltip={Liferay.Language.get(
-										'this-field-can-not-be-localized'
+										'this-field-cannot-be-localized'
 									)}
 								/>
 							)}

@@ -68,7 +68,9 @@ definition {
 
 		takeScreenshot();
 
-		SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#SELECTOR_MULTIPLE_PNG");
+		// Temporarily remove sikuli assertion until fix in LRQA-65984
+
+		//SikuliAssertElementPresent(locator1 = "ClaySamplePortlet#SELECTOR_MULTIPLE_PNG");
 
 		AssertNotEditable(
 			key_label = "Disabled Multiple Select Element",

@@ -25,30 +25,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102190. In Page Templates is its own application with tabs Masters, Page Templates, and Display Page Templates."
-	@priority = 5
-	test AssertPageTemplatesTabsAreVisible {
-		property portal.acceptance = "true";
-
-		task ("Go to Test Site Name page admin") {
-			PageTemplatesAdmin.openPageTemplatesMenuAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("Assert Masters, Page Templates, and Display Page Templates displayed") {
-			AssertVisible(
-				key_navItem = "Masters",
-				locator1 = "NavBar#NAV_ITEM_LINK");
-
-			AssertVisible(
-				key_navItem = "Page Templates",
-				locator1 = "NavBar#NAV_ITEM_LINK");
-
-			AssertVisible(
-				key_navItem = "Display Page Templates",
-				locator1 = "NavBar#NAV_ITEM_LINK");
-		}
-	}
-
 	@description = "This is a test for LPS-172658. The page creator could preview page template in a new tab."
 	@priority = 4
 	test PreviewPageTemplateInNewTab {

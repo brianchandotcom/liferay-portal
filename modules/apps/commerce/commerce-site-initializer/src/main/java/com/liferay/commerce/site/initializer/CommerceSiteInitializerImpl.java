@@ -377,7 +377,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 			ProductSpecification productSpecification =
 				new ProductSpecification() {
 					{
-						setProductId(cpDefinition::getCPDefinitionId);
+						setProductId(cpDefinition::getCProductId);
 						setSpecificationKey(() -> jsonObject.getString("key"));
 						setValue(
 							() -> JSONUtil.toStringMap(
@@ -387,7 +387,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				};
 
 			productSpecificationResource.postProductIdProductSpecification(
-				cpDefinition.getCPDefinitionId(), productSpecification);
+				cpDefinition.getCProductId(), productSpecification);
 		}
 	}
 

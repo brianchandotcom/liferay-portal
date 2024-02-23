@@ -57,7 +57,8 @@ public class ProductConstants {
 
 	public static final String LXC_BUSINESS_PRODUCT_ENTRY_ID = "KOR-6218594";
 
-	public static final String LXC_BUSINESS_PRODUCT_NAME = "LXC Business";
+	public static final String LXC_BUSINESS_PRODUCT_NAME =
+		"LXC - Business Plan";
 
 	public static final String LXC_CSP_1K_USERS_ENTRY_ID = "KOR-4891509";
 
@@ -138,11 +139,12 @@ public class ProductConstants {
 
 	public static final String LXC_ENTERPRISE_PRODUCT_ENTRY_ID = "KOR-6218822";
 
-	public static final String LXC_ENTERPRISE_PRODUCT_NAME = "LXC Enterprise";
+	public static final String LXC_ENTERPRISE_PRODUCT_NAME =
+		"LXC - Enterprise Plan";
 
 	public static final String LXC_PRO_PRODUCT_ENTRY_ID = "KOR-6218566";
 
-	public static final String LXC_PRO_PRODUCT_NAME = "LXC Pro";
+	public static final String LXC_PRO_PRODUCT_NAME = "LXC - Pro Plan";
 
 	public static final String LXC_SUBSCRIPTION_ENGAGE_SITE_ENTRY_ID =
 		"KOR-4891133";

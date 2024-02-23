@@ -379,13 +379,17 @@ export function FieldBase({
 					(field) => {
 						const defaultValue =
 							field.localizedValue[defaultLanguageId];
+						if (field.localizedValue?.[editingLanguageId]) {
+							delete field.localizedValue[editingLanguageId];
+						}
+						if (field.localizedValueEdited?.[editingLanguageId]) {
+							delete field.localizedValueEdited[
+								editingLanguageId
+							];
+						}
 
 						return {
 							...field,
-							localizedValue: {
-								...field.localizedValue,
-								[editingLanguageId]: '',
-							},
 							value: defaultValue,
 						};
 					},

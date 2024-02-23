@@ -562,7 +562,7 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 	@Reference
 	private RepositoryEntryLocalService _repositoryEntryLocalService;
 
-	@Reference
+	@Reference(target = "(original.bean=true)")
 	private RepositoryFactory _repositoryFactory;
 
 	@Reference

@@ -65,7 +65,7 @@ function deploy_client_extensions {
 
 				local gradlew=$(get_gradlew)
 
-				${gradlew} deploy
+				${gradlew} deploy -Pliferay.workspace.home.dir=${LIFERAY_HOME}
 			fi
 		done
 	fi

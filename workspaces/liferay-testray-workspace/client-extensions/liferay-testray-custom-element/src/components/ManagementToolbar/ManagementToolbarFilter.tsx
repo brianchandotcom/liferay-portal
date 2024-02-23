@@ -154,7 +154,8 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						(options: Option) => options.value || options
 					),
 				};
-			} else {
+			}
+			else {
 				return {
 					name: key,
 					value: filterCleaned[key],

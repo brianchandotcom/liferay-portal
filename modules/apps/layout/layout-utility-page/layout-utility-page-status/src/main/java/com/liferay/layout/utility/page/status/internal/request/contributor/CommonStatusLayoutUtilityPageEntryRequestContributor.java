@@ -46,7 +46,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"utility.page.type=" + LayoutUtilityPageEntryConstants.TYPE_SC_INTERNAL_SERVER_ERROR,
-		"utility.page.type=" + LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND
+		"utility.page.type=" + LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND,
+		"utility.page.type=" + LayoutUtilityPageEntryConstants.TYPE_SIGN_IN
 	},
 	service = StatusLayoutUtilityPageEntryRequestContributor.class
 )

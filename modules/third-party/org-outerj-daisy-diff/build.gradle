@@ -16,7 +16,6 @@ patch {
 		autoClean = false
 	}
 
-	fileNames "org/outerj/daisy/diff/helper/CleanBrokenAttributeQNamesHandler.java"
 	fileNames "org/outerj/daisy/diff/helper/NekoHtmlParser.java"
 
 	originalLibModuleName = "daisydiff"

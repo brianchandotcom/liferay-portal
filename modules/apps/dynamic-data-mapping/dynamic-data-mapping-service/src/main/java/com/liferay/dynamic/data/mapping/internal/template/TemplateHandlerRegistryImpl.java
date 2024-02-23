@@ -11,9 +11,9 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.Language;
@@ -23,12 +23,12 @@ import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistry;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -63,81 +63,54 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 	@Override
 	public long[] getClassNameIds() {
-		return ArrayUtil.toLongArray(
-			_classNameIdTemplateHandlersServiceTrackerMap.keySet());
+		return TransformUtil.transformToLongArray(
+			_serviceTrackerMap.keySet(),
+			_classNameLocalService::getClassNameId);
 	}
 
 	@Override
 	public TemplateHandler getTemplateHandler(long classNameId) {
-		return _classNameIdTemplateHandlersServiceTrackerMap.getService(
-			classNameId);
+		return _serviceTrackerMap.getService(_portal.getClassName(classNameId));
 	}
 
 	@Override
 	public TemplateHandler getTemplateHandler(String className) {
-		return _classNameTemplateHandlersServiceTrackerMap.getService(
-			className);
+		return _serviceTrackerMap.getService(className);
 	}
 
 	@Override
 	public List<TemplateHandler> getTemplateHandlers() {
-		return new ArrayList<>(
-			_classNameTemplateHandlersServiceTrackerMap.values());
+		return new ArrayList<>(_serviceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_classNameIdTemplateHandlersServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, TemplateHandler.class, null,
-				(serviceReference, emitter) -> {
-					TemplateHandler templateHandler = bundleContext.getService(
-						serviceReference);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, TemplateHandler.class, null,
+			(serviceReference, emitter) -> {
+				TemplateHandler templateHandler = bundleContext.getService(
+					serviceReference);
 
-					try {
-						DBPartitionUtil.forEachCompanyId(
-							companyId -> emitter.emit(
-								_portal.getClassNameId(
-									templateHandler.getClassName())));
-					}
-					catch (Exception exception) {
-						throw new RuntimeException(exception);
-					}
-					finally {
-						bundleContext.ungetService(serviceReference);
-					}
-				});
+				emitter.emit(templateHandler.getClassName());
 
-		_classNameTemplateHandlersServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, TemplateHandler.class, null,
-				(serviceReference, emitter) -> {
-					TemplateHandler templateHandler = bundleContext.getService(
-						serviceReference);
-
-					emitter.emit(templateHandler.getClassName());
-
-					bundleContext.ungetService(serviceReference);
-				},
-				new TemplateHandlerServiceTrackerCustomizer());
+				bundleContext.ungetService(serviceReference);
+			},
+			new TemplateHandlerServiceTrackerCustomizer());
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_classNameTemplateHandlersServiceTrackerMap.close();
-
-		_classNameIdTemplateHandlersServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 
 		_bundleContext = null;
 	}
 
 	private BundleContext _bundleContext;
-	private ServiceTrackerMap<Long, TemplateHandler>
-		_classNameIdTemplateHandlersServiceTrackerMap;
-	private ServiceTrackerMap<String, TemplateHandler>
-		_classNameTemplateHandlersServiceTrackerMap;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
@@ -153,6 +126,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 	private final Map<TemplateHandler, ServiceRegistration<?>>
 		_serviceRegistrations = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, TemplateHandler> _serviceTrackerMap;
 
 	@Reference
 	private UserLocalService _userLocalService;

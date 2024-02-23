@@ -71,7 +71,7 @@ export const PAGINATION = {
 	ellipsisBuffer: 3,
 };
 
-export const CURRENT_BUILD_PAGE = {
+export const ACTIONS = {
 	CREATE: 'CREATE',
 	UPDATE: 'UPDATE',
 };

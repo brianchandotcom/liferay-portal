@@ -9,7 +9,7 @@ import {useState} from 'react';
 import {UseFormRegister, useFieldArray, useForm} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
 import Loading from '~/components/Loading';
-import {CURRENT_BUILD_PAGE} from '~/util/constants';
+import {ACTIONS} from '~/util/constants';
 
 import Form from '../../../../../components/Form';
 import useFormModal from '../../../../../hooks/useFormModal';
@@ -36,9 +36,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 	const {buildId, routineId} = useParams();
 	const {control} = useForm({});
 
-	const operation = buildId
-		? CURRENT_BUILD_PAGE.UPDATE
-		: CURRENT_BUILD_PAGE.CREATE;
+	const action = buildId ? ACTIONS.UPDATE : ACTIONS.CREATE;
 
 	const {append, fields, remove, update} = useFieldArray({
 		control,
@@ -100,7 +98,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 						>
 							{i18n.translate('add-option')}
 						</ClayButton>
-						{operation === CURRENT_BUILD_PAGE.CREATE && (
+						{action === ACTIONS.CREATE && (
 							<ClayButton
 								className="ml-1"
 								displayType="secondary"
@@ -112,12 +110,12 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 					</ClayButton.Group>
 
 					<StackList
+						action={action}
 						append={append as any}
 						factorItems={factorItems}
 						fields={fields}
-						operation={operation}
 						optionsList={
-							operation === CURRENT_BUILD_PAGE.CREATE
+							action === ACTIONS.CREATE
 								? factorOptionsList
 								: runOptionsList
 						}

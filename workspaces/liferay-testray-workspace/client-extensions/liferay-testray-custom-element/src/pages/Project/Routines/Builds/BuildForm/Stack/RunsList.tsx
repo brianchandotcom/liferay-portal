@@ -38,11 +38,11 @@ export type Fields = {
 };
 
 export type RunsListProps = {
+	action?: string;
 	append: UseFieldArrayAppend<any>;
 	displayVertical?: boolean;
 	factorItems?: TestrayFactor[];
 	fields: Fields[];
-	operation?: string;
 	optionsList: TestrayOptionsByCategory[] | TestrayFactorOption[][];
 	register: UseFormRegister<any>;
 	remove: (index: number) => void;

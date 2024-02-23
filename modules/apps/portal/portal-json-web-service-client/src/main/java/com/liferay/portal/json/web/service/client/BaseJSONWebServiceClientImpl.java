@@ -57,6 +57,8 @@ import org.apache.http.auth.NTCredentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -247,6 +249,13 @@ public abstract class BaseJSONWebServiceClientImpl
 		log("GET", url, parameters, headers);
 
 		HttpGet httpGet = new HttpGet(url);
+
+		RequestConfig requestConfig = RequestConfig.custom(
+		).setCookieSpec(
+			CookieSpecs.STANDARD
+		).build();
+
+		httpGet.setConfig(requestConfig);
 
 		addHeaders(httpGet, headers);
 

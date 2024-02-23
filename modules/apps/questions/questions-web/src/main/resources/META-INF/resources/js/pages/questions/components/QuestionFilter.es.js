@@ -75,6 +75,7 @@ export const taggedWithOptions = [
 
 const getFilterValues = (form, tags) => {
 	const query = {
+		creatorId: '',
 		filterBy: '',
 		resultBar: [],
 		sortBy: '',
@@ -132,10 +133,22 @@ const getFilterValues = (form, tags) => {
 		} (keywords/any(x:${filterKeyword}))`;
 	}
 
+	query.creatorId = form.creatorId;
+
+	if (query.creatorId) {
+		const creatorIdFilter = `creatorId eq ${query.creatorId}`;
+
+		query.filterBy =
+			query.filterBy === undefined
+				? creatorIdFilter
+				: `${query.filterBy} and ${creatorIdFilter}`;
+	}
+
 	return query;
 };
 
 const initialState = {
+	creatorId: '',
 	filterBy: 'none',
 	selectedTags: [],
 	sortBy: 'newest',

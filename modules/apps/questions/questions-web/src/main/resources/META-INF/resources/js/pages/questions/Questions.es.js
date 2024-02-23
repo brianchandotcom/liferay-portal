@@ -98,6 +98,7 @@ export default withRouter(({history, location, match: {params}}) => {
 
 			const filteredValues = getFilterValues(
 				{
+					creatorId,
 					filterBy: params.filterBy,
 					sortBy: params.sortBy,
 					taggedWith: params.taggedWith,
@@ -162,6 +163,7 @@ export default withRouter(({history, location, match: {params}}) => {
 			setLoading(false);
 		},
 		[
+			creatorId,
 			getThreads,
 			getThreadsFiltered,
 			page,

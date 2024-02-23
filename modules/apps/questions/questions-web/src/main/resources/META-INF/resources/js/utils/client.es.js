@@ -226,6 +226,9 @@ export const getTagsOrderByDateCreatedQuery = `
 			sort: "dateCreated:desc"
 		) {
 			items {
+				creator {
+					id
+				}
 				actions
 				id
 				dateCreated

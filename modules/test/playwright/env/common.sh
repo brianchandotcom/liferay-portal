@@ -51,8 +51,6 @@ function combine_properties_files {
 function deploy_client_extensions {
 	if [[ -n ${1} ]]
 	then
-		mkdir -p ${LIFERAY_HOME}/deploy
-
 		for client_extension_name in ${@}
 		do
 			local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces -type d -name "${client_extension_name}" | grep -v .releng | grep -v .npmscripts)

@@ -254,53 +254,54 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 					SessionErrors.add(
 						actionRequest, exception.getClass(), exception);
 				}
-				else if (user.getStatus() !=
+				else if (user.getStatus() ==
 							WorkflowConstants.STATUS_INCOMPLETE) {
 
-					PortletPreferences portletPreferences =
-						actionRequest.getPreferences();
-
-					String languageId = _language.getLanguageId(actionRequest);
-
-					String emailFromName = portletPreferences.getValue(
-						"emailFromName", null);
-					String emailFromAddress = portletPreferences.getValue(
-						"emailFromAddress", null);
-					String emailToAddress = user.getEmailAddress();
-
-					String emailParam = "emailPasswordSent";
-
-					String subject = portletPreferences.getValue(
-						emailParam + "Subject_" + languageId, null);
-					String body = portletPreferences.getValue(
-						emailParam + "Body_" + languageId, null);
-
-					LoginUtil.sendEmailAccountCreationAttempt(
-						actionRequest, emailFromName, emailFromAddress,
-						emailToAddress, subject, body);
-
-					HttpServletRequest httpServletRequest =
-						_portal.getHttpServletRequest(actionRequest);
-
-					if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-						SessionMessages.add(
-							httpServletRequest, "userAdded",
-							user.getEmailAddress());
-					}
-					else {
-						SessionMessages.add(
-							httpServletRequest, "userPending",
-							user.getEmailAddress());
-					}
-
-					sendRedirect(
-						actionRequest, actionResponse, themeDisplay, user,
-						user.getPasswordUnencrypted());
-				}
-				else {
 					actionResponse.setRenderParameter(
 						"mvcPath", "/update_account.jsp");
+
+					return;
 				}
+
+				PortletPreferences portletPreferences =
+					actionRequest.getPreferences();
+
+				String languageId = _language.getLanguageId(actionRequest);
+
+				String emailFromName = portletPreferences.getValue(
+					"emailFromName", null);
+				String emailFromAddress = portletPreferences.getValue(
+					"emailFromAddress", null);
+				String emailToAddress = user.getEmailAddress();
+
+				String emailParam = "emailPasswordSent";
+
+				String subject = portletPreferences.getValue(
+					emailParam + "Subject_" + languageId, null);
+				String body = portletPreferences.getValue(
+					emailParam + "Body_" + languageId, null);
+
+				LoginUtil.sendEmailAccountCreationAttempt(
+					actionRequest, emailFromName, emailFromAddress,
+					emailToAddress, subject, body);
+
+				HttpServletRequest httpServletRequest =
+					_portal.getHttpServletRequest(actionRequest);
+
+				if (user.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					SessionMessages.add(
+						httpServletRequest, "userAdded",
+						user.getEmailAddress());
+				}
+				else {
+					SessionMessages.add(
+						httpServletRequest, "userPending",
+						user.getEmailAddress());
+				}
+
+				sendRedirect(
+					actionRequest, actionResponse, themeDisplay, user,
+					user.getPasswordUnencrypted());
 			}
 			else if (exception instanceof AddressCityException ||
 					 exception instanceof AddressStreetException ||

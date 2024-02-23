@@ -65,7 +65,6 @@ export default function TranslationOptions({
 		});
 
 		Liferay.fire('inputLocalized:localeChanged', {
-			isResetTranslation: true,
 			item: document.querySelector<HTMLInputElement>(
 				`[data-languageid="${selectedLanguageId}"][data-value="${selectedLanguageId}"]`
 			),

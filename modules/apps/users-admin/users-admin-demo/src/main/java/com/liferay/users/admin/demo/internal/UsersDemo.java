@@ -43,18 +43,18 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 			return;
 		}
 
-		_addTestCompanyAdminUser(company);
+		_addDemoCompanyAdminUser(company);
 
-		Organization organization = _addTestOrganization(
+		Organization organization = _addDemoOrganization(
 			company.getCompanyId());
 
-		_addTestOrganizationOwnerUser(company, organization);
+		_addDemoOrganizationOwnerUser(company, organization);
 
-		_addTestUnprivilegedUser(company);
+		_addDemoUnprivilegedUser(company);
 	}
 
-	private User _addTestCompanyAdminUser(Company company) throws Exception {
-		String screenName = "test-company-admin";
+	private User _addDemoCompanyAdminUser(Company company) throws Exception {
+		String screenName = "demo.company.admin";
 
 		User user = _userLocalService.fetchUserByScreenName(
 			company.getCompanyId(), screenName);
@@ -66,7 +66,9 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), GroupConstants.GUEST);
 
-		user = _addUser(company, screenName, new long[] {group.getGroupId()});
+		user = _addUser(
+			company, screenName, "Demo", "Company Admin",
+			new long[] {group.getGroupId()});
 
 		Role role = _roleLocalService.getRole(
 			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
@@ -76,8 +78,8 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		return user;
 	}
 
-	private Organization _addTestOrganization(long companyId) throws Exception {
-		String name = "test-organization";
+	private Organization _addDemoOrganization(long companyId) throws Exception {
+		String name = "Demo Organization";
 
 		Organization organization = _organizationLocalService.fetchOrganization(
 			companyId, name);
@@ -93,11 +95,11 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, name, false);
 	}
 
-	private User _addTestOrganizationOwnerUser(
+	private User _addDemoOrganizationOwnerUser(
 			Company company, Organization organization)
 		throws Exception {
 
-		String screenName = "test-organization-owner";
+		String screenName = "demo.organization.owner";
 
 		User user = _userLocalService.fetchUserByScreenName(
 			company.getCompanyId(), screenName);
@@ -107,7 +109,8 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		}
 
 		user = _addUser(
-			company, screenName, new long[] {organization.getGroupId()});
+			company, screenName, "Demo", "Organization Owner",
+			new long[] {organization.getGroupId()});
 
 		_userLocalService.addOrganizationUser(
 			organization.getOrganizationId(), user.getUserId());
@@ -122,8 +125,8 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 		return user;
 	}
 
-	private User _addTestUnprivilegedUser(Company company) throws Exception {
-		String screenName = "test-unprivileged";
+	private User _addDemoUnprivilegedUser(Company company) throws Exception {
+		String screenName = "demo.unprivileged";
 
 		User user = _userLocalService.fetchUserByScreenName(
 			company.getCompanyId(), screenName);
@@ -132,19 +135,19 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 			return user;
 		}
 
-		return _addUser(company, screenName, null);
+		return _addUser(company, screenName, "Demo", "Unprivileged", null);
 	}
 
-	private User _addUser(Company company, String screenName, long[] groupIds)
+	private User _addUser(
+			Company company, String screenName, String firstName,
+			String lastName, long[] groupIds)
 		throws Exception {
 
 		User adminUser = _getAdminUser(company.getCompanyId());
-		String firstName = screenName;
-		String lastName = screenName;
 
 		User user = _userLocalService.addUser(
-			adminUser.getUserId(), company.getCompanyId(), false, "test",
-			"test", false, screenName, screenName + "@liferay.com",
+			adminUser.getUserId(), company.getCompanyId(), false, "demo",
+			"demo", false, screenName, screenName + "@liferay.com",
 			company.getLocale(), firstName, StringPool.BLANK, lastName, 0, 0,
 			true, Calendar.JANUARY, 1970, 1970, StringPool.BLANK,
 			UserConstants.TYPE_REGULAR, groupIds, null, null, null, false,

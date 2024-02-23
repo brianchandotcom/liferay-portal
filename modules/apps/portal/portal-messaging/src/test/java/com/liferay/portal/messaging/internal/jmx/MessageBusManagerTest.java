@@ -5,9 +5,6 @@
 
 package com.liferay.portal.messaging.internal.jmx;
 
-import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.management.ManagementFactory;
@@ -36,10 +33,6 @@ public class MessageBusManagerTest {
 		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
 
 		MessageBusManager messageBusManager = new MessageBusManager();
-
-		ReflectionTestUtil.setFieldValue(
-			messageBusManager, "_messageBus",
-			ProxyFactory.newDummyInstance(MessageBus.class));
 
 		ObjectName objectName = new ObjectName(
 			"com.liferay.portal.messaging:classification=message_bus," +

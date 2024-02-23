@@ -42,7 +42,7 @@ export type RunsListProps = {
 	displayVertical?: boolean;
 	factorItems?: TestrayFactor[];
 	fields: Fields[];
-	isCreateBuildPage?: boolean;
+	operation?: string;
 	optionsList: TestrayOptionsByCategory[] | TestrayFactorOption[][];
 	register: UseFormRegister<any>;
 	remove: (index: number) => void;

@@ -4,6 +4,7 @@
  */
 
 import {useState} from 'react';
+import {CURRENT_BUILD_PAGE} from '~/util/constants';
 
 import FactorStackList, {FactorStackListProps} from './FactorStackList';
 import RunsHistory from './RunsHistory';
@@ -14,7 +15,7 @@ type StackProps = ({} & RunsListProps) | FactorStackListProps;
 const Stack: React.FC<StackProps> = ({
 	append,
 	fields,
-	isCreateBuildPage,
+	operation,
 	remove,
 	...stackProps
 }) => {
@@ -33,7 +34,7 @@ const Stack: React.FC<StackProps> = ({
 				fieldsHistory={fieldsHistory}
 				setFieldsHistory={setFieldsHistory}
 			/>
-			{isCreateBuildPage ? (
+			{operation === CURRENT_BUILD_PAGE.CREATE ? (
 				<FactorStackList
 					{...stackProps}
 					append={append}

@@ -9,6 +9,7 @@ import {useState} from 'react';
 import {UseFormRegister, useFieldArray, useForm} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
 import Loading from '~/components/Loading';
+import {CURRENT_BUILD_PAGE} from '~/util/constants';
 
 import Form from '../../../../../components/Form';
 import useFormModal from '../../../../../hooks/useFormModal';
@@ -35,7 +36,9 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 	const {buildId, routineId} = useParams();
 	const {control} = useForm({});
 
-	const isCreateBuildPage = !buildId;
+	const operation = buildId
+		? CURRENT_BUILD_PAGE.UPDATE
+		: CURRENT_BUILD_PAGE.CREATE;
 
 	const {append, fields, remove, update} = useFieldArray({
 		control,
@@ -80,14 +83,13 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 
 			<Form.Divider />
 
-			{!runItems.length ||
-				(!factorItems.length && (
-					<ClayAlert>
-						{i18n.translate(
-							'create-environment-factors-if-you-want-to-generate-runs'
-						)}
-					</ClayAlert>
-				))}
+			{!runItems.length && !factorItems.length && (
+				<ClayAlert>
+					{i18n.translate(
+						'create-environment-factors-if-you-want-to-generate-runs'
+					)}
+				</ClayAlert>
+			)}
 
 			{(!!runItems.length || !!factorItems.length) && (
 				<>
@@ -98,7 +100,7 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 						>
 							{i18n.translate('add-option')}
 						</ClayButton>
-						{isCreateBuildPage && (
+						{operation === CURRENT_BUILD_PAGE.CREATE && (
 							<ClayButton
 								className="ml-1"
 								displayType="secondary"
@@ -113,9 +115,9 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({register}) => {
 						append={append as any}
 						factorItems={factorItems}
 						fields={fields}
-						isCreateBuildPage={isCreateBuildPage}
+						operation={operation}
 						optionsList={
-							isCreateBuildPage
+							operation === CURRENT_BUILD_PAGE.CREATE
 								? factorOptionsList
 								: runOptionsList
 						}

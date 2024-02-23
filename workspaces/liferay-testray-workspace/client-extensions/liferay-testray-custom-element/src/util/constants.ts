@@ -70,3 +70,8 @@ export const PAGINATION = {
 	delta: PAGINATION_DELTA,
 	ellipsisBuffer: 3,
 };
+
+export const CURRENT_BUILD_PAGE = {
+	CREATE: 'CREATE',
+	UPDATE: 'UPDATE',
+};

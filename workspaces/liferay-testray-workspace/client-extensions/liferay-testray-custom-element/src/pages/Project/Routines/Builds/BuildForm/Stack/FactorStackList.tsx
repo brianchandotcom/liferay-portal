@@ -42,7 +42,7 @@ export type FactorStackListProps = {
 	displayVertical?: boolean;
 	factorItems?: TestrayFactor[];
 	fields: Fields[];
-	isCreateBuildPage?: boolean;
+	operation?: string;
 	optionsList: TestrayFactorOption[][] | TestrayOptionsByCategory[];
 	register: UseFormRegister<any>;
 	remove: (index: number) => void;

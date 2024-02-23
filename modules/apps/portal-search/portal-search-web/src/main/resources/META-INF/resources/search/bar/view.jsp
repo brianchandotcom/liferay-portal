@@ -54,7 +54,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 		</div>
 	</c:when>
 	<c:otherwise>
-		<form action="<%= searchBarPortletDisplayContext.getSearchURL() %>" id="<portlet:namespace />fm" method="get" name="<portlet:namespace />fm">
+		<form action="<%= searchBarPortletDisplayContext.getSearchURL() %>" id="<%= randomNamespace %>fm" method="get" name="<%= randomNamespace %>fm">
 			<c:if test="<%= !Validator.isBlank(searchBarPortletDisplayContext.getPaginationStartParameterName()) %>">
 				<input class="search-bar-reset-start-page" name="<%= searchBarPortletDisplayContext.getPaginationStartParameterName() %>" type="hidden" value="0" />
 			</c:if>
@@ -172,7 +172,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 		<liferay-frontend:component
 			context='<%=
 				HashMapBuilder.<String, Object>put(
-					"namespace", liferayPortletResponse.getNamespace()
+					"formId", randomNamespace + "fm"
 				).build()
 			%>'
 			module="{SearchBar} from portal-search-web"

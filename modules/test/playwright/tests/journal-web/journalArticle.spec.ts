@@ -32,6 +32,8 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 	journalPage,
 	page,
 }) => {
+	await journalPage.goto();
+
 	const title1 = getRandomString();
 	const title2 = getRandomString();
 

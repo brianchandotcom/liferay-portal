@@ -36,8 +36,6 @@ export class JournalPage {
 	}
 
 	async goToCreateNewBasicArticle() {
-		await this.goto();
-
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.createBasicWebContentLink,
@@ -51,7 +49,6 @@ export class JournalPage {
 	}
 
 	async goToTemplates() {
-		await this.goto();
 		await this.templatesLink.click();
 	}
 
@@ -59,8 +56,6 @@ export class JournalPage {
 		title: string,
 		permissionLocators: string[]
 	) {
-		await this.goto();
-
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {
@@ -87,8 +82,6 @@ export class JournalPage {
 	}
 
 	async deleteJournalArticle(title: string) {
-		await this.goto();
-
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {
@@ -104,8 +97,6 @@ export class JournalPage {
 		articles: Locator[],
 		permissionLocators: string[]
 	) {
-		await this.goto();
-
 		for (const article of articles) {
 			await article.getByTitle('Select').check();
 		}

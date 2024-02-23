@@ -23,7 +23,8 @@ const TABS = [
 	Liferay.Language.get('action-builder'),
 ];
 
-interface ActionProps {
+interface ObjectActionContainerProps {
+	editingObjectAction?: boolean;
 	isApproved?: boolean;
 	objectAction: Partial<ObjectAction>;
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -37,6 +38,7 @@ interface ActionProps {
 		method: 'POST' | 'PUT';
 		url: string;
 	};
+	scriptManagementEnabled: boolean;
 	successMessage: string;
 	systemObject: boolean;
 	title: string;
@@ -57,7 +59,8 @@ export type ActionError = FormError<ObjectAction & ObjectActionParameters> & {
 	predefinedValues?: {[key: string]: string};
 };
 
-export default function Action({
+export function ObjectActionContainer({
+	editingObjectAction = false,
 	isApproved,
 	objectAction: initialValues,
 	objectActionCodeEditorElements,
@@ -68,10 +71,12 @@ export default function Action({
 	objectDefinitionsRelationshipsURL,
 	readOnly,
 	requestParams: {method, url},
+	scriptManagementEnabled,
 	successMessage,
 	systemObject,
 	validateExpressionURL,
-}: ActionProps) {
+}: ObjectActionContainerProps) {
+	const [activeIndex, setActiveIndex] = useState(0);
 	const [backEndErrors, setBackEndErrors] = useState<Error>({});
 
 	const onSubmit = async (objectAction: ObjectAction) => {
@@ -145,7 +150,27 @@ export default function Action({
 		values,
 	} = useObjectActionForm({initialValues, onSubmit});
 
-	const [activeIndex, setActiveIndex] = useState(0);
+	const disableGroovyAction =
+		Liferay.FeatureFlags['LPD-11179'] &&
+		!scriptManagementEnabled &&
+		editingObjectAction &&
+		values.objectActionExecutorKey === 'groovy';
+
+	let newObjectActionExecutors = [...objectActionExecutors];
+
+	if (Liferay.FeatureFlags['LPD-11179'] && !scriptManagementEnabled) {
+		const shouldFilterGroovyExecutor =
+			!editingObjectAction ||
+			(editingObjectAction &&
+				values.objectActionExecutorKey !== 'groovy');
+
+		if (shouldFilterGroovyExecutor) {
+			newObjectActionExecutors = objectActionExecutors.filter(
+				(objectActionExecutor) =>
+					objectActionExecutor.value !== 'groovy'
+			);
+		}
+	}
 
 	return (
 		<SidePanelForm
@@ -167,6 +192,7 @@ export default function Action({
 			<ClayTabs.Content activeIndex={activeIndex} fade>
 				<ClayTabs.TabPane>
 					<BasicInfo
+						disableGroovyAction={disableGroovyAction}
 						errors={
 							Object.keys(errors).length ? errors : backEndErrors
 						}
@@ -180,6 +206,7 @@ export default function Action({
 
 				<ClayTabs.TabPane>
 					<ActionBuilder
+						disableGroovyAction={disableGroovyAction}
 						errors={
 							Object.keys(errors).length ? errors : backEndErrors
 						}
@@ -187,7 +214,7 @@ export default function Action({
 						objectActionCodeEditorElements={
 							objectActionCodeEditorElements
 						}
-						objectActionExecutors={objectActionExecutors}
+						objectActionExecutors={newObjectActionExecutors}
 						objectActionTriggers={objectActionTriggers}
 						objectDefinitionExternalReferenceCode={
 							objectDefinitionExternalReferenceCode

@@ -16,6 +16,7 @@ interface EditObjectActionProps {
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	readOnly?: boolean;
+	scriptManagementEnabled: boolean;
 	systemObject: boolean;
 	validateExpressionURL: string;
 }
@@ -29,6 +30,7 @@ export default function EditObjectAction({
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	readOnly,
+	scriptManagementEnabled,
 	systemObject,
 	validateExpressionURL,
 }: EditObjectActionProps): JSX.Element;

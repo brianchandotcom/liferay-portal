@@ -6,7 +6,8 @@
 /// <reference types="react" />
 
 import {FormError, SidebarCategory} from '@liferay/object-js-components-web';
-interface ActionProps {
+interface ObjectActionContainerProps {
+	editingObjectAction?: boolean;
 	isApproved?: boolean;
 	objectAction: Partial<ObjectAction>;
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -20,6 +21,7 @@ interface ActionProps {
 		method: 'POST' | 'PUT';
 		url: string;
 	};
+	scriptManagementEnabled: boolean;
 	successMessage: string;
 	systemObject: boolean;
 	title: string;
@@ -32,7 +34,8 @@ export declare type ActionError = FormError<
 		[key: string]: string;
 	};
 };
-export default function Action({
+export declare function ObjectActionContainer({
+	editingObjectAction,
 	isApproved,
 	objectAction: initialValues,
 	objectActionCodeEditorElements,
@@ -43,8 +46,9 @@ export default function Action({
 	objectDefinitionsRelationshipsURL,
 	readOnly,
 	requestParams: {method, url},
+	scriptManagementEnabled,
 	successMessage,
 	systemObject,
 	validateExpressionURL,
-}: ActionProps): JSX.Element;
+}: ObjectActionContainerProps): JSX.Element;
 export {};

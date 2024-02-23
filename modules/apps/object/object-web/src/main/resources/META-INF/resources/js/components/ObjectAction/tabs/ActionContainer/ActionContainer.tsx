@@ -12,7 +12,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {ActionError} from '../..';
+import {ActionError} from '../../ObjectActionContainer';
 import PredefinedValuesTable from '../../PredefinedValuesTable';
 import {
 	ObjectOptionsListItem,
@@ -22,6 +22,7 @@ import {WarningStates} from '../ActionBuilder';
 import {ThenContainer} from './ThenContainer';
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];
+	disabled: boolean;
 	errors: ActionError;
 	newObjectActionExecutors: ObjectActionTriggerExecutorItem[];
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -40,6 +41,7 @@ interface ActionContainerProps {
 
 export function ActionContainer({
 	currentObjectDefinitionFields,
+	disabled,
 	errors,
 	newObjectActionExecutors,
 	objectActionCodeEditorElements,
@@ -225,6 +227,7 @@ export function ActionContainer({
 	return (
 		<Card title={Liferay.Language.get('action')}>
 			<ThenContainer
+				disabled={disabled}
 				errors={errors}
 				isValidField={isValidField}
 				newObjectActionExecutors={newObjectActionExecutors}
@@ -327,7 +330,7 @@ export function ActionContainer({
 							},
 						})
 					}
-					readOnly={values.system}
+					readOnly={values.system || disabled}
 					sidebarElements={objectActionCodeEditorElements.filter(
 						(element) => element.label === 'Fields'
 					)}

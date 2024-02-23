@@ -29,16 +29,18 @@ export function CheckboxCard({
 	tooltip,
 }: CheckboxProps) {
 	return (
-		<div
+		<label
 			className={classNames('checkbox-container d-flex p-3 rounded', {
 				'checkbox-container-checked': checked,
 				'checkbox-container-disabled': disabled,
 			})}
+			htmlFor={label}
 		>
 			<ClayCheckbox
 				checked={checked}
 				disabled={disabled}
-				onChange={() => onChange(label)}
+				id={label}
+				onClick={() => !disabled && onChange(label)}
 			/>
 			<div className="mx-2 w-100">
 				<h4>{label}</h4>
@@ -48,6 +50,6 @@ export function CheckboxCard({
 			<div className="justify-content-end radio-card-title-tooltip">
 				<Tooltip tooltip={tooltip} />
 			</div>
-		</div>
+		</label>
 	);
 }

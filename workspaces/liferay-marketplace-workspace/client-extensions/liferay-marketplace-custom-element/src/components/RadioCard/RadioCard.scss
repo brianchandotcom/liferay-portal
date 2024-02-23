@@ -1,5 +1,8 @@
 .radio-card {
+	-ms-user-select: none;
+	-webkit-user-select: none;
 	cursor: pointer;
+	user-select: none;
 
 	&-container {
 		border: 1px solid #e2e2e4;
@@ -120,11 +123,14 @@
 	}
 
 	&-description {
+		-ms-user-select: none;
+		-webkit-user-select: none;
 		color: #54555f;
 		font-size: 0.813rem;
 		font-weight: 400;
 		line-height: 1rem;
 		margin-left: 2.5rem;
+		user-select: none;
 		word-break: break-word;
 	}
 }

@@ -1,5 +1,10 @@
 .checkbox-container {
+	-ms-user-select: none;
+	-webkit-user-select: none;
 	border: 1px solid #e2e2e4;
+	cursor: pointer;
+	user-select: none;
+
 	&:hover {
 		background-color: #e6edfb;
 		border: 1px solid #004ad7;

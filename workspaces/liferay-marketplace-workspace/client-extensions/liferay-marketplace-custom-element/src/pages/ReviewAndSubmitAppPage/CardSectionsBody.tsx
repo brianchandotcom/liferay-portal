@@ -184,12 +184,13 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 
 			<CardSection required sectionName="Storefront">
 				<div>
-					{app?.storefront?.map(({id, src, title}) => (
+					{app?.storefront?.map(({id, priority, src, title}) => (
 						<div
 							className="card-section-body-section-files"
 							key={id}
 						>
-							<div>{app?.storefront.length}</div>
+							<strong>{priority + 1}</strong>
+
 							<div className="card-section-body-section-files-container">
 								<img
 									alt="Image preview"

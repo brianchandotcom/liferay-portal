@@ -259,17 +259,6 @@ public class DBInspector {
 		return _hasElement(viewName, "VIEW");
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             DBInspector#hasView(String)}
-	 */
-	@Deprecated
-	public boolean hasView(String viewName, boolean caseSensitive)
-		throws Exception {
-
-		return _hasElement(viewName, "VIEW");
-	}
-
 	public boolean isControlTable(String tableName) {
 		if (_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
 			StringUtil.toLowerCase(

@@ -41,13 +41,11 @@ const JiraLink: React.FC<JiraLinkProps> = ({
 			({name}) => splitIssueName(name).at(0) as string
 		);
 
-		const [firstIssue] = issues;
-
 		return (
 			<div className="d-flex flex-column">
 				{displayViewInJira && (
 					<a
-						href={`${jiraBaseURL}/browse/${firstIssue}?jql=${SearchBuilder.in(
+						href={`${jiraBaseURL}/issues/?jql=${SearchBuilder.in(
 							'key',
 							issues
 						).replaceAll("'", '')}`}

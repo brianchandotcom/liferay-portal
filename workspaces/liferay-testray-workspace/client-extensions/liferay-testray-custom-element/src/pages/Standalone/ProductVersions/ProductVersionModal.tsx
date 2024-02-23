@@ -23,11 +23,17 @@ const ProductVersionModal: React.FC<ProductVersionModalProps> = ({
 		<>
 			<ListView
 				forceRefetch={formModal.forceRefetch}
+				initialContext={{
+					sort: {
+						direction: 'ASC',
+						key: 'name',
+					},
+				}}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
 					applyFilters: false,
 				}}
-				resource={`${testrayProductVersionImpl.resource}&sort=name:asc`}
+				resource={testrayProductVersionImpl.resource}
 				tableProps={{
 					actions,
 					columns: [

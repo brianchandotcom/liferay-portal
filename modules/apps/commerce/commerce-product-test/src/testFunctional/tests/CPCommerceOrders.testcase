@@ -2755,7 +2755,7 @@ definition {
 			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
 		}
 
-		task ("And an order is placed") {
+		task ("And an order is placed by another user under the same account") {
 			var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
 				accountEntryName = "Commerce Account",
 				orderItems = "MIN93015:1",
@@ -2764,37 +2764,40 @@ definition {
 				paymentStatus = 0);
 		}
 
-		task ("When a new note added via API call to the order by buyer user without permissions") {
+		task ("When a new note added via API call to the order by buyer user") {
 			var requestStatus = CommerceJSONOrdersAPI.getOrderNotePostRequestField(
 				content = "This is a Commerce Order Test Note.",
 				field = "status",
 				orderId = ${orderId},
 				restricted = "true",
 				userEmail = "buyer");
-		}
 
-		task ("Then a FORBIDDEN error is thrown") {
-			TestUtils.assertEquals(
-				actual = ${requestStatus},
-				expected = "FORBIDDEN");
-		}
-
-		task ("When Manage Order Note and Manage Order Restricted Notes permissions are given to Buyer User") {
-			for (var notePermission : list "MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES,MANAGE_COMMERCE_ORDER_NOTES") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${notePermission},
-					resourceName = "com.liferay.commerce.order",
-					roleTitle = "Buyer",
-					roleType = "account");
+			task ("Then a FORBIDDEN error is thrown") {
+				TestUtils.assertEquals(
+					actual = ${requestStatus},
+					expected = "FORBIDDEN");
 			}
 		}
 
-		task ("And a new note added via API call to the order by buyer user") {
+		task ("When an order is placed by the buyer user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+
+			var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN93015:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 0);
+		}
+
+		task ("And a new public note is added via API call to that same order by the buyer user") {
 			var orderNoteId = CommerceJSONOrdersAPI.getOrderNotePostRequestField(
 				content = "This is a Commerce Order Test Note.",
 				field = "id",
 				orderId = ${orderId},
-				restricted = "true",
+				restricted = "false",
 				userEmail = "buyer");
 		}
 

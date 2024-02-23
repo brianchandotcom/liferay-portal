@@ -4,7 +4,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "CASE-RESULTS-BLOCKED",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Case Results Blocked"
@@ -42,7 +42,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "CASE-RESULTS-DID-NOT-RUN",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Case Results Did Not Run"
@@ -80,7 +80,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "CASE-RESULTS-FAILED",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Case Results Failed"
@@ -118,7 +118,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "CASE-RESULTS-IN-PROGRESS",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Case Results In Progress"
@@ -156,7 +156,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "CASE-RESULTS-INCOMPLETE",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Case Results Incomplete"
@@ -195,7 +195,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "CASE-RESULTS-PASSED",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Case Results Passed"
@@ -233,7 +233,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "CASE-RESULTS-TEST-FIX",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Case Results Test Fix"
@@ -271,7 +271,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "CASE-RESULTS-UNTESTED",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Case Results Untested"

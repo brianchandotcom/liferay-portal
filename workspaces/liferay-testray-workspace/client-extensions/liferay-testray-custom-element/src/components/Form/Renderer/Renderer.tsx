@@ -241,7 +241,7 @@ const Renderer: React.FC<RendererProps> = ({
 						) {
 							formValue = formValue.map((option: any) =>
 								typeof option === 'object'
-									? option.value || option
+									? option.value
 									: option
 							);
 						}
@@ -271,14 +271,15 @@ const Renderer: React.FC<RendererProps> = ({
 								return (
 									<Form.Checkbox
 										checked={
-											(Array.isArray(form[name]) &&
-												form[name]
-													.map(
-														({value}: Options) =>
-															value
-													)
-													.includes(optionValue)) ||
-											form[name].includes(optionValue)
+											Array.isArray(form[name]) &&
+											form[
+												name
+											].some((option: Options | string) =>
+												typeof option === 'string'
+													? option === optionValue
+													: option.value ===
+													  optionValue
+											)
 										}
 										disabled={disabled}
 										key={index}

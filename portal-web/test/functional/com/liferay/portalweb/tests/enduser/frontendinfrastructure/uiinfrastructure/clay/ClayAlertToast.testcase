@@ -198,6 +198,7 @@ definition {
 		}
 
 		task ("Then the alert disappears after 10 secs") {
+			MouseOver(locator1 = "ApplicationsMenu#TOGGLE");
 
 			// For LPS-170577, need this pause to see if after 10 seconds, the alert is not showing anymore
 

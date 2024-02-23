@@ -13,12 +13,15 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {createImageAxios} from '../../utils/api';
+import {baseURL, createImageAxios, deleteAttachment} from '../../utils/api';
 
 import './CustomizeAppStorefrontPage.scss';
 
 import {useState} from 'react';
 
+import i18n from '../../i18n';
+import {Liferay} from '../../liferay/liferay';
+import fetcher from '../../services/fetcher';
 import {submitBase64EncodedFile} from '../../utils/util';
 
 const ACCEPT_FILE_TYPES = {
@@ -76,10 +79,20 @@ export function CustomizeAppStorefrontPage({
 		}
 	};
 
-	const handleDelete = (id: string) => {
+	const handleDelete = async (id: string) => {
+		const currentFiles = appStorefrontImages.findIndex(
+			(uploadedFile) => uploadedFile.id === id
+		);
+
 		const files = appStorefrontImages.filter(
 			(uploadedFile) => uploadedFile.id !== id
 		);
+
+		if (appStorefrontImages[currentFiles]?.uploaded) {
+			await fetcher(
+				`${baseURL}/o/headless-commerce-admin-catalog/v1.0/attachment/${id}`
+			);
+		}
 
 		dispatch({
 			payload: {
@@ -138,13 +151,39 @@ export function CustomizeAppStorefrontPage({
 						<ClayButton
 							className="font-weight-bold"
 							displayType="link"
-							onClick={() => {
-								dispatch({
-									payload: {
-										files: [],
-									},
-									type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
-								});
+							onClick={async () => {
+								try {
+									for (const image of appStorefrontImages) {
+										if (image.uploaded) {
+											deleteAttachment(image.id);
+										}
+									}
+
+									Liferay.Util.openToast({
+										message: i18n.translate(
+											'request-sent-successfully'
+										),
+										type: 'success',
+									});
+
+									dispatch({
+										payload: {
+											files: [],
+										},
+										type:
+											TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+									});
+								}
+								catch (error) {
+									console.error(error);
+
+									Liferay.Util.openToast({
+										message: i18n.translate(
+											'an-unexpected-error-occurred'
+										),
+										type: 'danger',
+									});
+								}
 							}}
 						>
 							Remove all
@@ -186,20 +225,22 @@ export function CustomizeAppStorefrontPage({
 				onClickBack={() => onClickBack()}
 				onClickContinue={async () => {
 					setIsLoading(true);
+					for (const [
+						index,
+						image,
+					] of appStorefrontImages.entries()) {
+						if (image.uploaded) {
+							// eslint-disable-next-line no-console
+							console.info('File already uploaded', image);
 
-					let index = 0;
+							continue;
+						}
 
-					for (const image of appStorefrontImages) {
-						await submitBase64EncodedFile({
+						const id = await submitBase64EncodedFile({
 							appERC,
 							callback: (progress) => {
-								const imageIndex = appStorefrontImages.indexOf(
-									image
-								);
-								appStorefrontImages[
-									imageIndex
-								].progress = progress;
-								appStorefrontImages[imageIndex].uploaded =
+								appStorefrontImages[index].progress = progress;
+								appStorefrontImages[index].uploaded =
 									progress === 100;
 
 								dispatch({
@@ -216,7 +257,15 @@ export function CustomizeAppStorefrontPage({
 							requestFunction: createImageAxios,
 							title: image.fileName,
 						});
-						index++;
+
+						appStorefrontImages[index].id = id as string;
+
+						dispatch({
+							payload: {
+								files: appStorefrontImages,
+							},
+							type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+						});
 					}
 
 					onClickContinue();

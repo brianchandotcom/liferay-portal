@@ -214,6 +214,16 @@ export async function createImageAxios({
 	return response.data;
 }
 
+export function deleteAttachment(attachmentId: string) {
+	return fetch(
+		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/attachment/${attachmentId}`,
+		{
+			headers,
+			method: 'DELETE',
+		}
+	);
+}
+
 export function createImage({
 	body,
 	externalReferenceCode,

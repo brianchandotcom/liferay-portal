@@ -95,6 +95,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.validator.JSONValidatorException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -728,6 +729,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							"x-could-not-be-imported-because-its-utility-" +
 								"page-is-invalid",
 							new String[] {zipEntry.getName()})));
+
+				continue;
+			}
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-6378") &&
+				(utilityPageTemplate.getType() ==
+					UtilityPageTemplate.Type.SIGN_IN)) {
 
 				continue;
 			}

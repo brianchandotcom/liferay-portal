@@ -13940,6 +13940,7 @@ public class FragmentEntryLinkPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -13947,8 +13948,8 @@ public class FragmentEntryLinkPersistenceImpl
 		ctStrictColumnNames.add("uuid_");
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
-		ctStrictColumnNames.add("userId");
-		ctStrictColumnNames.add("userName");
+		ctMergeColumnNames.add("userId");
+		ctMergeColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctStrictColumnNames.add("originalFragmentEntryLinkId");
@@ -13957,10 +13958,10 @@ public class FragmentEntryLinkPersistenceImpl
 		ctStrictColumnNames.add("classNameId");
 		ctStrictColumnNames.add("classPK");
 		ctStrictColumnNames.add("plid");
-		ctStrictColumnNames.add("css");
-		ctStrictColumnNames.add("html");
-		ctStrictColumnNames.add("js");
-		ctStrictColumnNames.add("configuration");
+		ctMergeColumnNames.add("css");
+		ctMergeColumnNames.add("html");
+		ctMergeColumnNames.add("js");
+		ctMergeColumnNames.add("configuration");
 		ctStrictColumnNames.add("deleted");
 		ctStrictColumnNames.add("editableValues");
 		ctStrictColumnNames.add("namespace");
@@ -13974,6 +13975,7 @@ public class FragmentEntryLinkPersistenceImpl
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK,
 			Collections.singleton("fragmentEntryLinkId"));

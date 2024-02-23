@@ -55,8 +55,8 @@ public abstract class BaseTestCase {
 					bundle.getSymbolicName(),
 					"com.liferay.headless.builder.impl")) {
 
-				_setUpProcessedFile("00.headless.builder.picklists");
-				_setUpProcessedFile("01.headless.builder");
+				_setUpProcessedFile(bundle, "00.headless.builder.picklists");
+				_setUpProcessedFile(bundle, "01.headless.builder");
 
 				CompletableFuture<Void> completableFuture =
 					_batchEngineUnitProcessor.processBatchEngineUnits(
@@ -79,7 +79,7 @@ public abstract class BaseTestCase {
 			jsonObject.getString("status"));
 	}
 
-	private void _setUpProcessedFile(String processedFileName) {
+	private void _setUpProcessedFile(Bundle bundle, String processedFileName) {
 		File processedFile = bundle.getDataFile(
 			".com.liferay.headless.builder.internal.batch." +
 				processedFileName + ".batch.engine.data.json.0.processed");

@@ -183,6 +183,8 @@ public class CTServiceRegistry {
 				catch (Exception exception) {
 					throw new RuntimeException(exception);
 				}
+
+				bundleContext.ungetService(serviceReference);
 			});
 	}
 

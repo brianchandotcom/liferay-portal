@@ -86,6 +86,8 @@ public class BasePersistenceRegistry {
 					catch (Exception exception) {
 						throw new RuntimeException(exception);
 					}
+
+					bundleContext.ungetService(serviceReference);
 				});
 
 		_transactionExecutorServiceTrackerMap =

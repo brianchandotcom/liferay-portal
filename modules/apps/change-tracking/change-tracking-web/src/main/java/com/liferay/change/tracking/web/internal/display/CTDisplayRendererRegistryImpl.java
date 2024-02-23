@@ -487,6 +487,8 @@ public class CTDisplayRendererRegistryImpl
 					emitter.emit(
 						_classNameLocalService.getClassNameId(
 							ctService.getModelClass()));
+
+					bundleContext.ungetService(serviceReference);
 				});
 
 		_defaultCTDisplayRenderer = new CTModelDisplayRendererAdapter<>(this);

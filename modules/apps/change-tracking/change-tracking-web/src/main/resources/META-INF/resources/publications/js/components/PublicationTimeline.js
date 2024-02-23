@@ -123,18 +123,14 @@ const PublicationTimeline = ({timelineItemsURL}) => {
 										<TimelineDropdownMenu
 											deleteURL={
 												timelineItem.status.code ===
-													WORKFLOW_STATUS_DRAFT ||
-												timelineItem.status.code ===
-													WORKFLOW_STATUS_PENDING
+												WORKFLOW_STATUS_DRAFT
 													? timelineItem.actions
 															.delete.href
 													: undefined
 											}
 											editURL={
 												timelineItem.status.code ===
-													WORKFLOW_STATUS_DRAFT ||
-												timelineItem.status.code ===
-													WORKFLOW_STATUS_PENDING
+												WORKFLOW_STATUS_DRAFT
 													? getEditURL(
 															timelineItem.id
 													  )
@@ -148,9 +144,14 @@ const PublicationTimeline = ({timelineItemsURL}) => {
 													  )
 													: undefined
 											}
-											reviewURL={getReviewURL(
-												timelineItem.id
-											)}
+											reviewURL={
+												timelineItem.status.code !==
+												WORKFLOW_STATUS_PENDING
+													? getReviewURL(
+															timelineItem.id
+													  )
+													: undefined
+											}
 										/>
 									</ClayLayout.ContentCol>
 								</ClayLayout.ContentRow>

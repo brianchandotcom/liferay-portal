@@ -297,7 +297,7 @@ public abstract class BaseDBProcess implements DBProcess {
 	protected boolean doHasTable(String tableName) throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 
-		return dbInspector.hasTable(tableName, true);
+		return dbInspector.hasTable(tableName);
 	}
 
 	protected List<IndexMetadata> dropIndexes(

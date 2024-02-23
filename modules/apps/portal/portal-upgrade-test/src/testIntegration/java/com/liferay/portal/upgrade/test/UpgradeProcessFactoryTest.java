@@ -131,8 +131,8 @@ public class UpgradeProcessFactoryTest {
 
 		upgradeProcess.upgrade();
 
-		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_1, false));
-		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_2, false));
+		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_1));
+		Assert.assertFalse(_dbInspector.hasTable(_TABLE_NAME_2));
 	}
 
 	@Test

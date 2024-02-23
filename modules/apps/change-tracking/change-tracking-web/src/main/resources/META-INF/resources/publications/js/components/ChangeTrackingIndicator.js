@@ -506,7 +506,10 @@ export default function ChangeTrackingIndicator({
 						</ClayButton>
 					}
 				>
-					<PublicationTimeline timelineItemsURL={timelineItemsURL} />
+					<PublicationTimeline
+						namespace={namespace}
+						timelineItemsURL={timelineItemsURL}
+					/>
 				</ClayDropDown>
 			);
 		}

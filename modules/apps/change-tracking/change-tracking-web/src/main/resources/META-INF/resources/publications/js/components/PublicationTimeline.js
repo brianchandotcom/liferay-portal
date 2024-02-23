@@ -17,9 +17,9 @@ import {
 	WorkflowStatusLabel,
 } from './WorkflowStatusLabel';
 
-const PublicationTimeline = ({timelineItemsURL}) => {
+const PublicationTimeline = ({namespace, timelineItemsURL}) => {
 	const [timelineItems, setTimelineItems] = useState([]);
-	const [itemsFetched, setItemsFetched] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const createMVCRenderCommandURL = (
 		ctCollectionId,
@@ -31,8 +31,7 @@ const PublicationTimeline = ({timelineItemsURL}) => {
 			{
 				ctCollectionId,
 				mvcRenderCommandName,
-				p_p_id:
-					'com_liferay_change_tracking_web_portlet_PublicationsPortlet',
+				p_p_id: namespace,
 				...additionalParams,
 			}
 		).toString();
@@ -70,104 +69,94 @@ const PublicationTimeline = ({timelineItemsURL}) => {
 			})
 			.then((jsonResponse) => {
 				setTimelineItems(jsonResponse.items);
-				setItemsFetched(true);
+				setLoading(false);
 			});
 	}, [timelineItemsURL]);
 
-	if (!itemsFetched) {
+	if (loading) {
 		return (
 			<>
 				<ClayLoadingIndicator displayType="secondary" size="sm" />
 			</>
 		);
 	}
-	else {
-		if (timelineItems && !!timelineItems.length) {
-			return (
-				<div className="publication-timeline">
-					{timelineItems.map((timelineItem) => (
-						<ClayPanel
-							key={timelineItem.id}
-							style={{
-								borderBottomColor: '#e7e7ed',
-								marginBottom: 0,
-							}}
-						>
-							<ClayPanel.Body>
-								<ClayLayout.ContentRow>
-									<ClayLayout.ContentCol expand>
-										<div>
-											<span
-												style={{paddingRight: '10px'}}
-											>
-												{timelineItem.name}
-											</span>
+	if (timelineItems && !!timelineItems.length) {
+		return (
+			<div className="publication-timeline">
+				{timelineItems.map((timelineItem) => (
+					<ClayPanel
+						key={timelineItem.id}
+						style={{
+							borderBottomColor: '#e7e7ed',
+							marginBottom: 0,
+						}}
+					>
+						<ClayPanel.Body>
+							<ClayLayout.ContentRow>
+								<ClayLayout.ContentCol expand>
+									<div>
+										<span style={{paddingRight: '10px'}}>
+											{timelineItem.name}
+										</span>
 
-											<WorkflowStatusLabel
-												workflowStatus={
-													timelineItem.status.code
-												}
-											/>
-										</div>
-
-										<div className="text-secondary">
-											{timelineItem.description}
-										</div>
-
-										<div className="text-secondary">
-											{timelineItem.statusMessage}
-										</div>
-									</ClayLayout.ContentCol>
-
-									<ClayLayout.ContentCol>
-										<TimelineDropdownMenu
-											deleteURL={
-												timelineItem.status.code ===
-												WORKFLOW_STATUS_DRAFT
-													? timelineItem.actions
-															.delete.href
-													: undefined
-											}
-											editURL={
-												timelineItem.status.code ===
-												WORKFLOW_STATUS_DRAFT
-													? getEditURL(
-															timelineItem.id
-													  )
-													: undefined
-											}
-											revertURL={
-												timelineItem.status.code ===
-												WORKFLOW_STATUS_APPROVED
-													? getRevertURL(
-															timelineItem.id
-													  )
-													: undefined
-											}
-											reviewURL={
-												timelineItem.status.code !==
-												WORKFLOW_STATUS_PENDING
-													? getReviewURL(
-															timelineItem.id
-													  )
-													: undefined
+										<WorkflowStatusLabel
+											workflowStatus={
+												timelineItem.status.code
 											}
 										/>
-									</ClayLayout.ContentCol>
-								</ClayLayout.ContentRow>
-							</ClayPanel.Body>
-						</ClayPanel>
-					))}
-				</div>
-			);
-		}
+									</div>
 
-		return (
-			<div className="publication-timeline timeline">
-				{Liferay.Language.get('no-publications-were-found')}
+									<div className="text-secondary">
+										{timelineItem.description}
+									</div>
+
+									<div className="text-secondary">
+										{timelineItem.statusMessage}
+									</div>
+								</ClayLayout.ContentCol>
+
+								<ClayLayout.ContentCol>
+									<TimelineDropdownMenu
+										deleteURL={
+											timelineItem.status.code ===
+											WORKFLOW_STATUS_DRAFT
+												? timelineItem.actions.delete
+														.href
+												: undefined
+										}
+										editURL={
+											timelineItem.status.code ===
+											WORKFLOW_STATUS_DRAFT
+												? getEditURL(timelineItem.id)
+												: undefined
+										}
+										revertURL={
+											timelineItem.status.code ===
+											WORKFLOW_STATUS_APPROVED
+												? getRevertURL(timelineItem.id)
+												: undefined
+										}
+										reviewURL={
+											timelineItem.status.code !==
+											WORKFLOW_STATUS_PENDING
+												? getReviewURL(timelineItem.id)
+												: undefined
+										}
+									/>
+								</ClayLayout.ContentCol>
+							</ClayLayout.ContentRow>
+						</ClayPanel.Body>
+					</ClayPanel>
+				))}
 			</div>
 		);
 	}
+
+	return (
+		<div className="publication-timeline timeline">
+			{Liferay.Language.get('no-publications-were-found')}
+		</div>
+	);
 };
 
 export default PublicationTimeline;

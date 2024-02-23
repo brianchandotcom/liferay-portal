@@ -4,7 +4,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "SUBTASK-SCORE-COMPLETED",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Subtask Score Completed"
@@ -46,7 +46,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "SUBTASK-SCORE",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Subtask Score"
@@ -74,7 +74,7 @@
 			"DBType": "String",
 			"businessType": "Aggregation",
 			"externalReferenceCode": "SUBTASK-SCORE-SELF-INCOMPLETE",
-			"indexed": true,
+			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Subtask Score Self Incomplete"

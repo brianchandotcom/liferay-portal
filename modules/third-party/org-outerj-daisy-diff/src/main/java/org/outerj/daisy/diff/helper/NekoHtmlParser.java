@@ -64,7 +64,7 @@ public class NekoHtmlParser {
                 "lower");
 
         parser.setContentHandler(new RemoveNamespacesHandler(
-            new MergeCharacterEventsHandler(new CleanBrokenAttributeQNamesHandler(consumer))));
+                new MergeCharacterEventsHandler(consumer)));
         parser.parse(is);
     }
 

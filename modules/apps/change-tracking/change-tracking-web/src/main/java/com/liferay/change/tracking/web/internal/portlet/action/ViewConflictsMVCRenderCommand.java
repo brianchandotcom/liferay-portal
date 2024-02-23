@@ -104,10 +104,18 @@ public class ViewConflictsMVCRenderCommand implements MVCRenderCommand {
 
 			Map<Long, List<ConflictInfo>> conflictInfoMap = null;
 
-			boolean hasUnapprovedChanges =
-				_ctCollectionLocalService.hasUnapprovedChanges(ctCollectionId);
+			boolean hasUnapprovedChanges = false;
 
-			if (!hasUnapprovedChanges) {
+			if (_ctCollectionLocalService.hasUnapprovedChanges(
+					ctCollectionId)) {
+
+				hasUnapprovedChanges = true;
+			}
+
+			if (!hasUnapprovedChanges ||
+				_ctSettingsConfigurationHelper.isUnapprovedChangesAllowed(
+					themeDisplay.getCompanyId())) {
+
 				conflictInfoMap = _ctCollectionLocalService.checkConflicts(
 					ctCollection);
 			}

@@ -389,7 +389,14 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		dbPartitionUpgradeProcess.upgrade();
 
-		long[] expectedCompanyIds = PortalInstancePool.getCompanyIds();
+		long[] expectedCompanyIds = null;
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PortalInstancePool.class, "_cacheEnabled", false)) {
+
+			expectedCompanyIds = PortalInstancePool.getCompanyIds();
+		}
 
 		Arrays.sort(expectedCompanyIds);
 

@@ -6,8 +6,6 @@
 package com.liferay.portal.configuration.cluster.internal.portal.profile;
 
 import com.liferay.portal.configuration.cluster.internal.ConfigurationSynchronousConfigurationListener;
-import com.liferay.portal.configuration.cluster.internal.messaging.ConfigurationClusterConfigurator;
-import com.liferay.portal.configuration.cluster.internal.messaging.ConfigurationMessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -47,8 +45,6 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 
 		init(
 			componentContext, supportedPortalProfileNames,
-			ConfigurationClusterConfigurator.class.getName(),
-			ConfigurationMessageListener.class.getName(),
 			ConfigurationSynchronousConfigurationListener.class.getName());
 	}
 

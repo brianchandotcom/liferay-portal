@@ -46,8 +46,8 @@ public class ElasticsearchDistribution implements Distribution {
 	}
 
 	private static final String _ELASTICSEARCH_CHECKSUM =
-		"3df93ce9eb35bafd4ceb11078fdcbb5e0722636b0f36eec0a55e460f05c4b34cca28" +
-			"82f9cd68570e7715ec4a5287ef97ae4fef67566828728044275feca26274";
+		"d964dabfdddc65c1584462f303f7dec922bbecbf604635fdb4dabaa097a609a92b82" +
+			"049ccc1000e461d2ffa165fb59f5ca9a7895bada0146ac06c618432dff16";
 
 	private static final String _ICU_CHECKSUM =
 		"b26d19ed528fc0658e3ac90c272e84b18893f6088e3fbb8cbe43bf0f475db37d9d6c" +

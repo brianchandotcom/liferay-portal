@@ -4,17 +4,17 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ViewportSizeSelector from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/ViewportSizeSelector';
 
-const defaultState = {
+const INITIAL_STATE = {
 	selectedViewportSize: 'desktop',
 };
 
-const renderComponent = ({onSelect = () => {}, state}) => {
+const renderComponent = ({onSelect = () => {}, state = INITIAL_STATE} = {}) => {
 	return render(
 		<ViewportSizeSelector
 			onSizeSelected={onSelect}
@@ -24,26 +24,57 @@ const renderComponent = ({onSelect = () => {}, state}) => {
 };
 
 describe('ViewportSizeSelector', () => {
-	afterEach(cleanup);
-
 	it('renders ViewportSizeSelector component', () => {
-		const {getByLabelText} = renderComponent({state: defaultState});
+		renderComponent();
 
-		expect(getByLabelText('Desktop')).toBeInTheDocument();
-		expect(getByLabelText('Mobile')).toBeInTheDocument();
-		expect(getByLabelText('Tablet')).toBeInTheDocument();
+		expect(screen.getByLabelText('Desktop')).toBeInTheDocument();
+		expect(screen.getByLabelText('Mobile')).toBeInTheDocument();
+		expect(screen.getByLabelText('Tablet')).toBeInTheDocument();
+	});
+
+	it('renders ViewportSizeSelector dropdown button and makes sure it has tooltip and aria-label', () => {
+		Liferay.FeatureFlags['LPD-10988'] = true;
+
+		renderComponent();
+
+		expect(screen.getByTitle('select-a-viewport')).toBeInTheDocument();
+		expect(
+			screen.getByLabelText('select-a-viewport.-current-viewport-x')
+		).toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPD-10988'] = false;
 	});
 
 	it('calls onSizeSelected with sizeId when a size is selected', () => {
 		const onSelect = jest.fn();
-		const {getByLabelText} = renderComponent({
+		renderComponent({
 			onSelect,
-			state: defaultState,
 		});
-		const button = getByLabelText('Mobile');
 
-		userEvent.click(button);
+		userEvent.click(screen.getByLabelText('Mobile'));
 
 		expect(onSelect).toHaveBeenLastCalledWith('mobile');
+	});
+
+	it('calls onSizeSelected with sizeId when a size is selected from the dropdown', async () => {
+		Liferay.FeatureFlags['LPD-10988'] = true;
+
+		const onSelect = jest.fn();
+
+		renderComponent({
+			onSelect,
+		});
+
+		userEvent.click(screen.getByRole('combobox'));
+
+		const option = screen.getByText('Mobile');
+
+		await waitFor(() => {
+			userEvent.click(option);
+
+			expect(onSelect).toHaveBeenLastCalledWith('mobile');
+		});
+
+		Liferay.FeatureFlags['LPD-10988'] = false;
 	});
 });

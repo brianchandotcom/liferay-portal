@@ -575,15 +575,16 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-161033")) {
-			_getTimelineData(data, httpServletRequest, themeDisplay);
+			_getTimelineData(
+				ctCollection, data, httpServletRequest, themeDisplay);
 		}
 
 		return data;
 	}
 
 	private void _getTimelineData(
-			Map<String, Object> data, HttpServletRequest httpServletRequest,
-			ThemeDisplay themeDisplay)
+			CTCollection currentCTCollection, Map<String, Object> data,
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		String className = (String)httpServletRequest.getAttribute(
@@ -603,6 +604,26 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		if ((className != null) && (classPK != 0)) {
 			long classNameId = _portal.getClassNameId(className);
+
+			if (currentCTCollection != null) {
+				ResourceURL getConflictInfoURL =
+					(ResourceURL)_portal.getControlPanelPortletURL(
+						httpServletRequest, themeDisplay.getScopeGroup(),
+						CTPortletKeys.PUBLICATIONS, 0, 0,
+						PortletRequest.RESOURCE_PHASE);
+
+				getConflictInfoURL.setParameter(
+					"classNameId", String.valueOf(classNameId));
+				getConflictInfoURL.setParameter(
+					"classPK", String.valueOf(classPK));
+				getConflictInfoURL.setParameter(
+					"currentCTCollectionId",
+					String.valueOf(currentCTCollection.getCtCollectionId()));
+				getConflictInfoURL.setResourceID(
+					"/change_tracking/get_conflict_info");
+
+				data.put("getConflictInfoURL", getConflictInfoURL.toString());
+			}
 
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");

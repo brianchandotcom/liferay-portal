@@ -96,7 +96,7 @@ public class FeatureFlagApplication extends Application {
 			if (featureFlag == null) {
 				return Response.ok(
 					HashMapBuilder.<String, Object>put(
-						"error", "Feature flag '" + key + "' cannot be found"
+						"error", "Feature flag \"" + key + "\" is not available"
 					).build(),
 					MediaType.APPLICATION_JSON
 				).build();

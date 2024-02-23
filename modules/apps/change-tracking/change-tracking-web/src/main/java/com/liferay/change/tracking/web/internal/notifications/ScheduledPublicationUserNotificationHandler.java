@@ -6,6 +6,8 @@
 package com.liferay.change.tracking.web.internal.notifications;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -17,6 +19,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -44,6 +47,18 @@ public class ScheduledPublicationUserNotificationHandler
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
+
+		long ctCollectionId = jsonObject.getLong("ctCollectionId");
+
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
+
+		if (ctCollection == null) {
+			_userNotificationEventLocalService.deleteUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId());
+
+			return null;
+		}
 
 		boolean showConflicts = jsonObject.getBoolean("showConflicts");
 
@@ -153,6 +168,9 @@ public class ScheduledPublicationUserNotificationHandler
 	}
 
 	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
@@ -166,5 +184,9 @@ public class ScheduledPublicationUserNotificationHandler
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

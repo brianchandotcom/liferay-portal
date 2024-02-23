@@ -7,15 +7,17 @@ package com.liferay.change.tracking.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.internal.test.util.CTCollectionTestUtil;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
@@ -23,14 +25,19 @@ import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -130,6 +137,19 @@ public class PublicationUserNotificationHandlerTest {
 		CTCollection ctCollection =
 			CTCollectionTestUtil.createCTCollectionwithJournalArticle();
 
+		_group = _groupLocalService.addGroup(
+			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			CTCollection.class.getName(), ctCollection.getCtCollectionId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			RandomTestUtil.randomLocaleStringMap(), null,
+			GroupConstants.TYPE_SITE_OPEN, false,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
+			null);
+
+		User user = UserTestUtil.addUser();
+
+		_addPublicationUserGroupRole(user);
+
 		Bundle journalServiceBundle = null;
 
 		try {
@@ -155,12 +175,12 @@ public class PublicationUserNotificationHandlerTest {
 			CTCollectionTestUtil.publishCTCollectionWithError(
 				ctCollection.getCtCollectionId());
 
-			List<UserNotificationEvent> userNotificationEvents =
+			List<UserNotificationEvent> userNotificationEvents1 =
 				_userNotificationEventLocalService.getUserNotificationEvents(
-					TestPropsValues.getUserId());
+					user.getUserId());
 
 			for (UserNotificationEvent userNotificationEvent :
-					userNotificationEvents) {
+					userNotificationEvents1) {
 
 				if (!Objects.equals(
 						CTPortletKeys.PUBLICATIONS,
@@ -194,6 +214,34 @@ public class PublicationUserNotificationHandlerTest {
 						"your system administrator to resolve the issue.",
 						"</div>"),
 					userNotificationFeedEntry.getBody());
+			}
+
+			List<UserNotificationEvent> userNotificationEvents2 =
+				_userNotificationEventLocalService.getUserNotificationEvents(
+					TestPropsValues.getUserId());
+
+			for (UserNotificationEvent userNotificationEvent :
+					userNotificationEvents2) {
+
+				if (!Objects.equals(
+						CTPortletKeys.PUBLICATIONS,
+						userNotificationEvent.getType())) {
+
+					continue;
+				}
+
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					userNotificationEvent.getPayload());
+
+				if (_isAdminUser(userNotificationEvent) &&
+					!jsonObject.getBoolean("showConflicts")) {
+
+					Assert.assertNotNull(userNotificationEvent);
+
+					Assert.assertEquals(
+						_getAdminUserId(userNotificationEvent.getCompanyId()),
+						userNotificationEvent.getUserId());
+				}
 			}
 		}
 		finally {
@@ -359,73 +407,18 @@ public class PublicationUserNotificationHandlerTest {
 		}
 	}
 
-	@Test
-	public void testGetUserNotificationEvent() throws Exception {
-		CTCollection ctCollection =
-			CTCollectionTestUtil.createCTCollectionwithJournalArticle();
+	private void _addPublicationUserGroupRole(User user) throws Exception {
+		Role role = _roleLocalService.fetchRole(
+			user.getCompanyId(), PublicationRoleConstants.NAME_PUBLISHER);
 
-		Bundle journalServiceBundle = null;
-
-		try {
-			Bundle bundle = FrameworkUtil.getBundle(
-				JournalArticleService.class);
-
-			BundleContext bundleContext = bundle.getBundleContext();
-
-			for (Bundle curBundle : bundleContext.getBundles()) {
-				if (Objects.equals(
-						curBundle.getSymbolicName(),
-						"com.liferay.journal.service") &&
-					(curBundle.getState() == Bundle.ACTIVE)) {
-
-					curBundle.stop();
-
-					journalServiceBundle = curBundle;
-
-					break;
-				}
-			}
-
-			CTCollectionTestUtil.publishCTCollectionWithError(
-				ctCollection.getCtCollectionId());
-
-			List<UserNotificationEvent> userNotificationEvents =
-				_userNotificationEventLocalService.getUserNotificationEvents(
-					TestPropsValues.getUserId());
-
-			for (UserNotificationEvent userNotificationEvent :
-					userNotificationEvents) {
-
-				if (!Objects.equals(
-						CTPortletKeys.PUBLICATIONS,
-						userNotificationEvent.getType())) {
-
-					continue;
-				}
-
-				JSONObject jsonObject = _jsonFactory.createJSONObject(
-					userNotificationEvent.getPayload());
-
-				if (Objects.equals(
-						userNotificationEvent.getUserId(),
-						_getAdminUserId(
-							userNotificationEvent.getCompanyId()))) {
-
-					Assert.assertNotNull(userNotificationEvent);
-
-					Assert.assertFalse(jsonObject.getBoolean("showConflicts"));
-
-					Assert.assertEquals(
-						_getAdminUserId(userNotificationEvent.getCompanyId()),
-						userNotificationEvent.getUserId());
-				}
-			}
+		if (role == null) {
+			role = RoleTestUtil.addRole(
+				PublicationRoleConstants.NAME_PUBLISHER,
+				RoleConstants.TYPE_PUBLICATIONS);
 		}
-		finally {
-			if (journalServiceBundle != null) {
-				journalServiceBundle.start();
-			}
-		}
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user.getUserId(), _group.getGroupId(), role.getRoleId());
 	}
 
 	private long _getAdminUserId(long companyId) throws Exception {
@@ -460,13 +453,23 @@ public class PublicationUserNotificationHandlerTest {
 		return serviceContext;
 	}
 
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private boolean _isAdminUser(UserNotificationEvent userNotificationEvent)
+		throws Exception {
+
+		Role role = _roleLocalService.getRole(
+			userNotificationEvent.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		return _userLocalService.hasRoleUser(
+			role.getRoleId(), userNotificationEvent.getUserId());
+	}
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;
@@ -476,6 +479,9 @@ public class PublicationUserNotificationHandlerTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

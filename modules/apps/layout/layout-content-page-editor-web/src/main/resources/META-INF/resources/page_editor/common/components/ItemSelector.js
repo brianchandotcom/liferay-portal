@@ -4,7 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
+import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
@@ -208,6 +208,7 @@ export default function ItemSelector({
 					(mappedItemsMenu.length ? (
 						<ClayInput.GroupItem shrink>
 							<ClayDropDownWithItems
+								alignmentPosition={Align.BottomRight}
 								items={mappedItemsMenu}
 								menuElementAttrs={{
 									containerProps: {
@@ -241,6 +242,7 @@ export default function ItemSelector({
 				{showEditControls && selectedItem?.title && (
 					<ClayInput.GroupItem shrink>
 						<ClayDropDownWithItems
+							alignmentPosition={Align.BottomRight}
 							items={optionsMenu}
 							menuElementAttrs={{
 								containerProps: {

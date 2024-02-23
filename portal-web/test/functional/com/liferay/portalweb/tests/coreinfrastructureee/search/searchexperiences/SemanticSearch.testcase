@@ -34,9 +34,9 @@ definition {
 			categoryLevel = "DEBUG",
 			categoryName = "com.liferay.search.experiences.internal.ml.embedding.text.TextEmbeddingRetrieverImpl");
 
-		OSGiConfig.deployOSGiConfigFile(
-			osgiConfigFileName = "com.liferay.search.experiences.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config",
-			osgiConfigs = "disabledProviders=[\"txtai\",\"huggingFaceInferenceAPI\" ]");
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		FileUtil.write("${liferayHome}/osgi/configs/com.liferay.search.experiences.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config", "disabledProviders=[\"txtai\",\"huggingFaceInferenceAPI\"]");
 
 		OSGiConfig.waitForOSGiConfig();
 

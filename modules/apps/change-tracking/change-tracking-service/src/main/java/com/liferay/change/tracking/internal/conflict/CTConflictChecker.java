@@ -203,10 +203,12 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		String constraintConflictsSQL = CTRowUtil.getConstraintConflictsSQL(
 			ctPersistence.getTableName(), primaryKeyName, columnNames,
-			_sourceCTCollectionId, _targetCTCollectionId);
+			_targetCTCollectionId);
 
 		List<Map.Entry<Long, Long>> nextPrimaryKeys =
-			_getConflictingPrimaryKeys(connection, constraintConflictsSQL);
+			_getConflictingPrimaryKeys(
+				connection, ctPersistence.getTableName(), primaryKeyName,
+				columnNames, constraintConflictsSQL);
 
 		if (nextPrimaryKeys.isEmpty()) {
 			return;
@@ -265,7 +267,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			attemptedPrimaryKeys.add(currentPrimaryKeys);
 
 			nextPrimaryKeys = _getConflictingPrimaryKeys(
-				connection, constraintConflictsSQL);
+				connection, ctPersistence.getTableName(), primaryKeyName,
+				columnNames, constraintConflictsSQL);
 
 			resolvedPrimaryKeys.addAll(nextPrimaryKeys);
 
@@ -273,7 +276,9 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		}
 
 		List<Map.Entry<Long, Long>> unresolvedPrimaryKeys =
-			_getConflictingPrimaryKeys(connection, constraintConflictsSQL);
+			_getConflictingPrimaryKeys(
+				connection, ctPersistence.getTableName(), primaryKeyName,
+				columnNames, constraintConflictsSQL);
 
 		resolvedPrimaryKeys.removeAll(unresolvedPrimaryKeys);
 
@@ -517,8 +522,10 @@ public class CTConflictChecker<T extends CTModel<T>> {
 	}
 
 	private List<Map.Entry<Long, Long>> _getConflictingPrimaryKeys(
-		Connection connection, String constraintConflictsSQL) {
+		Connection connection, String tableName, String primaryKeyName,
+		String[] columnNames, String constraintConflictsSQL) {
 
+		Set<Long> verifyPrimaryKeys = new HashSet<>();
 		Set<Long> ignorablePrimaryKeys = new HashSet<>();
 
 		for (CTEntry ctEntry :
@@ -530,41 +537,64 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 				ignorablePrimaryKeys.add(ctEntry.getModelClassPK());
 			}
+			else {
+				verifyPrimaryKeys.add(ctEntry.getModelClassPK());
+			}
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				constraintConflictsSQL);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+		if (verifyPrimaryKeys.isEmpty()) {
+			return Collections.emptyList();
+		}
 
-			List<Map.Entry<Long, Long>> primaryKeys = null;
+		String constraintEntriesSQL = CTRowUtil.getConstraintEntitiesSQL(
+			tableName, primaryKeyName, columnNames, _sourceCTCollectionId,
+			verifyPrimaryKeys);
 
-			while (resultSet.next()) {
-				long sourcePK = resultSet.getLong(1);
-				long targetPK = resultSet.getLong(2);
+		List<Map.Entry<Long, Long>> primaryKeys = new ArrayList<>();
 
-				if (ignorablePrimaryKeys.contains(sourcePK) ||
-					ignorablePrimaryKeys.contains(targetPK)) {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				constraintEntriesSQL);
+			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
-					continue;
+			while (resultSet1.next()) {
+				long sourcePK = resultSet1.getLong(1);
+
+				try (PreparedStatement preparedStatement2 =
+						connection.prepareStatement(constraintConflictsSQL)) {
+
+					preparedStatement2.setObject(1, sourcePK);
+
+					for (int i = 2; i < (columnNames.length + 2); i++) {
+						preparedStatement2.setObject(
+							i, resultSet1.getObject(i));
+					}
+
+					try (ResultSet resultSet2 =
+							preparedStatement2.executeQuery()) {
+
+						while (resultSet2.next()) {
+							long targetPK = resultSet2.getLong(1);
+
+							if (ignorablePrimaryKeys.contains(targetPK)) {
+								continue;
+							}
+
+							primaryKeys.add(
+								new AbstractMap.SimpleImmutableEntry<>(
+									sourcePK, targetPK));
+						}
+					}
 				}
-
-				if (primaryKeys == null) {
-					primaryKeys = new ArrayList<>();
+				catch (SQLException sqlException) {
+					throw new ORMException(sqlException);
 				}
-
-				primaryKeys.add(
-					new AbstractMap.SimpleImmutableEntry<>(sourcePK, targetPK));
 			}
-
-			if (primaryKeys == null) {
-				primaryKeys = Collections.emptyList();
-			}
-
-			return primaryKeys;
 		}
 		catch (SQLException sqlException) {
 			throw new ORMException(sqlException);
 		}
+
+		return primaryKeys;
 	}
 
 	private List<Long> _getDeletionModificationPKs(

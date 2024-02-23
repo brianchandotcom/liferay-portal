@@ -69,12 +69,12 @@ public class FilePropagator {
 		return _errorSlaves;
 	}
 
-	public void setCleanUpCommand(String cleanUpCommand) {
-		_cleanUpCommand = cleanUpCommand;
-	}
-
 	public void setPostDistCommand(String postDistCommand) {
 		_postDistCommand = postDistCommand;
+	}
+
+	public void setPreDistCommand(String preDistCommand) {
+		_preDistCommand = preDistCommand;
 	}
 
 	public void start(int threadCount) {
@@ -256,8 +256,8 @@ public class FilePropagator {
 		sb.append(targetSlave);
 		sb.append(" '");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(_cleanUpCommand)) {
-			sb.append(_cleanUpCommand);
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_preDistCommand)) {
+			sb.append(_preDistCommand);
 			sb.append(" ; ");
 		}
 
@@ -291,12 +291,12 @@ public class FilePropagator {
 	private static final long _TIMEOUT_DEFAULT = 15 * 60 * 1000;
 
 	private final List<String> _busySlaves = new ArrayList<>();
-	private String _cleanUpCommand;
 	private final List<String> _errorSlaves = new ArrayList<>();
 	private final List<FilePropagatorTask> _filePropagatorTasks =
 		new ArrayList<>();
 	private final List<String> _mirrorSlaves = new ArrayList<>();
 	private String _postDistCommand;
+	private String _preDistCommand;
 	private final List<String> _targetSlaves = new ArrayList<>();
 	private int _threadsCompletedCount;
 	private long _threadsDurationTotal;

@@ -145,7 +145,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 				buildDatabaseFile.getParent()),
 			topLevelBuildData.getDistPath(), topLevelBuildData.getDistNodes());
 
-		filePropagator.setCleanUpCommand(_COMMAND_FILE_PROPAGATOR_CLEAN_UP);
+		filePropagator.setPreDistCommand(
+			_COMMAND_FILE_PROPAGATOR_PRE_DIST_COMMAND);
 
 		filePropagator.start(_THREADS_FILE_PROPAGATOR_THREAD_SIZE);
 
@@ -383,7 +384,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		}
 	}
 
-	private static final String _COMMAND_FILE_PROPAGATOR_CLEAN_UP =
+	private static final String _COMMAND_FILE_PROPAGATOR_PRE_DIST_COMMAND =
 		JenkinsResultsParserUtil.combine(
 			"find ", BuildData.FILE_PATH_DIST_ROOT,
 			"/*/* -maxdepth 1 -type d -mmin +",

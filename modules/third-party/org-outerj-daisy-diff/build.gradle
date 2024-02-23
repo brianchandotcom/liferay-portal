@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	api group: "org.outerj.daisy", name: "daisydiff", version: "1.2.0-atlassian-hosted"
+	api group: "com.liferay", name: "org.outerj.daisy.daisydiff", version: "1.2"
 
 	compileOnly group: "net.sourceforge.htmlunit", name: "neko-htmlunit", transitive: false, version: "2.66.0"
 	compileOnly group: "xerces", name: "xercesImpl", transitive: false, version: "2.12.1"
@@ -21,4 +21,10 @@ patch {
 
 	originalLibModuleName = "daisydiff"
 	originalLibSrcBaseUrl = "https://packages.atlassian.com/3rdparty/org/outerj/daisy/"
+}
+
+repositories {
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/repositories/third-party"
+	}
 }

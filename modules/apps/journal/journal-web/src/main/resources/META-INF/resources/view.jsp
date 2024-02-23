@@ -26,13 +26,16 @@ else {
 
 <liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
 
-<c:if test='<%= MultiSessionMessages.contains(renderRequest, "articleCreated") || MultiSessionMessages.contains(renderRequest, "articlePending") || MultiSessionMessages.contains(renderRequest, "articleScheduled") || MultiSessionMessages.contains(renderRequest, "articleUpdated") %>'>
+<c:if test='<%= MultiSessionMessages.contains(renderRequest, "articleCreated") || MultiSessionMessages.contains(renderRequest, "articlePending") || MultiSessionMessages.contains(renderRequest, "articlePendingScheduled") || MultiSessionMessages.contains(renderRequest, "articleScheduled") || MultiSessionMessages.contains(renderRequest, "articleUpdated") %>'>
 
 	<%
 	long id = GetterUtil.getLong(MultiSessionMessages.get(renderRequest, "articleCreated"));
 
 	if (MultiSessionMessages.contains(renderRequest, "articlePending")) {
 		id = GetterUtil.getLong(MultiSessionMessages.get(renderRequest, "articlePending"));
+	}
+	else if (MultiSessionMessages.contains(renderRequest, "articlePendingScheduled")) {
+		id = GetterUtil.getLong(MultiSessionMessages.get(renderRequest, "articlePendingScheduled"));
 	}
 	else if (MultiSessionMessages.contains(renderRequest, "articleScheduled")) {
 		id = GetterUtil.getLong(MultiSessionMessages.get(renderRequest, "articleScheduled"));
@@ -81,6 +84,9 @@ else {
 					<liferay-ui:message arguments="<%= articleLink %>" key="x-was-created-successfully" />
 				</c:when>
 				<c:when test='<%= MultiSessionMessages.contains(renderRequest, "articlePending") %>'>
+					<liferay-ui:message arguments="<%= articleLink %>" key="x-has-been-submitted-for-workflow" />
+				</c:when>
+				<c:when test='<%= MultiSessionMessages.contains(renderRequest, "articlePendingScheduled") %>'>
 					<liferay-ui:message arguments="<%= articleLink %>" key="x-has-been-scheduled-and-submitted-for-workflow" />
 				</c:when>
 				<c:when test='<%= MultiSessionMessages.contains(renderRequest, "articleScheduled") %>'>

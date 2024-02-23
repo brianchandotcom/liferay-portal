@@ -455,26 +455,31 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			if (FeatureFlagManagerUtil.isEnabled("LPD-15596")) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				User user = themeDisplay.getUser();
-
-				Date displayDate = _portal.getDate(
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, user.getTimeZone(),
-					null);
-
 				if (article.isScheduled()) {
 					MultiSessionMessages.add(
 						actionRequest, "articleScheduled", article.getId());
 				}
-				else if ((workflowAction == WorkflowConstants.STATUS_PENDING) &&
-						 (displayDate != null)) {
+				else if (article.isPending()) {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)actionRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-					MultiSessionMessages.add(
-						actionRequest, "articlePending", article.getId());
+					User user = themeDisplay.getUser();
+
+					Date displayDate = _portal.getDate(
+						displayDateMonth, displayDateDay, displayDateYear,
+						displayDateHour, displayDateMinute, user.getTimeZone(),
+						null);
+
+					if (displayDate != null) {
+						MultiSessionMessages.add(
+							actionRequest, "articlePendingScheduled",
+							article.getId());
+					}
+					else {
+						MultiSessionMessages.add(
+							actionRequest, "articlePending", article.getId());
+					}
 				}
 				else {
 					if (actionName.equals("/journal/add_article")) {

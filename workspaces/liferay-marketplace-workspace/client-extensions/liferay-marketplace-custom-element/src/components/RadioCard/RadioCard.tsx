@@ -40,11 +40,12 @@ export function RadioCard({
 }: RadioCardProps) {
 	return (
 		<div
-			className={classNames('radio-card-container', {
+			className={classNames('radio-card radio-card-container', {
 				'radio-card-container-disabled': disabled,
 				'radio-card-container-selected': selected,
 				'radio-card-container-small': small,
 			})}
+			onClick={() => !disabled && onChange()}
 		>
 			<div className="radio-card-main-info">
 				<div className="radio-card-title">

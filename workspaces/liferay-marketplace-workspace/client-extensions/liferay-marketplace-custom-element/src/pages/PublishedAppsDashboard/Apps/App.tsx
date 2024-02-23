@@ -120,7 +120,7 @@ const App = () => {
 					<div>
 						<img
 							alt="App Logo"
-							className="app-details-page-app-info-logo"
+							className="app-details-page-icon"
 							src={showAppImage(thumbnail)}
 						/>
 					</div>

@@ -3,7 +3,8 @@
 	border-radius: 10px;
 
 	.object-fit-cover {
-		object-fit: cover;
+		border-radius: 8px;
+		object-fit: contain;
 	}
 
 	.price-text {

@@ -35,10 +35,8 @@ const OrderDetailsHeader: React.FC<OrderDetailsProps> = ({
 		<div className="d-flex flex-row">
 			<img
 				alt="App Icon"
-				className="rounded"
-				height="56px"
+				className="order-details-publisher-icon"
 				src={showAppImage(image)}
-				width="56px"
 			/>
 
 			<div className="align-items-center ml-4">

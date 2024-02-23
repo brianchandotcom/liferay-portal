@@ -11,9 +11,11 @@
 
 	&-logo {
 		margin-right: 1rem;
+
 		&-image {
 			border-radius: 8px;
-			height: 3.5rem;
+			max-height: 3.5rem;
+			object-fit: contain;
 			width: 3.5rem;
 		}
 	}

@@ -72,7 +72,7 @@
 										"pageElements": [
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] img {\n    height: 90px;\n    object-fit: cover;\n    width: 90px;\n}",
+													"customCSS": ".[$FRAGMENT_CLASS$] img {\n    height: 90px;\n    object-fit: contain;\n    width: 90px;\n}",
 													"fragment": {
 														"key": "image",
 														"siteKey": "[$GROUP_KEY$]"

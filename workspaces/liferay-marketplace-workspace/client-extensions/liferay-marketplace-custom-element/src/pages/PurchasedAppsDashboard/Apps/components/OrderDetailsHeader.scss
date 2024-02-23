@@ -2,6 +2,19 @@
 	color: #6c6c75;
 	font-size: 16px;
 
+	&-icon {
+		border-radius: 8px;
+		max-height: 56px;
+		object-fit: contain;
+	}
+
+	&-table-icon {
+		border-radius: 4px;
+		max-height: 36px;
+		object-fit: contain;
+		width: 36px;
+	}
+
 	.header-description {
 		color: var(--neutral-08, #54555f);
 	}

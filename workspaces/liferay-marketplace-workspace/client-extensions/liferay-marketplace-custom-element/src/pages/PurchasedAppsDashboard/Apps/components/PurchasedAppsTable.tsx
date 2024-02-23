@@ -47,9 +47,8 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 						<div style={{width: 200}}>
 							<img
 								alt="App Image"
-								height={36}
+								className="order-details-publisher-table-icon"
 								src={thumbnail}
-								width={36}
 							/>
 
 							<span className="font-weight-semi-bold ml-2">

@@ -27,6 +27,19 @@
 		}
 	}
 
+	&-icon {
+		border-radius: 8px;
+		max-height: 56px;
+		object-fit: contain;
+	}
+
+	&-table-icon {
+		border-radius: 4px;
+		max-height: 36px;
+		object-fit: contain;
+		width: 36px;
+	}
+
 	&-back-button {
 		background: none;
 		border: none;
@@ -63,7 +76,9 @@
 
 		&-logo {
 			border-radius: 0.5rem;
-			height: 3rem;
+			border-radius: 8px;
+			max-height: 3rem;
+			object-fit: contain;
 			width: 3rem;
 		}
 

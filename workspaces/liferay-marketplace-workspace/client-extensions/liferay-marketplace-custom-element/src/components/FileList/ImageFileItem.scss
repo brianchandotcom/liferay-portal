@@ -77,7 +77,7 @@
 			flex-direction: column;
 			gap: 3.5rem;
 			justify-content: center;
-			margin-right: 1.5rem;
+			margin-right: 0.95rem;
 		}
 
 		&-icon {
@@ -92,8 +92,9 @@
 		background-position: 50% 50%;
 		background-repeat: 'no-repeat';
 		background-size: cover;
-		border-radius: 4px;
-		height: 6.5rem;
+		border-radius: 10px;
+		max-height: 6.5rem;
+		object-fit: scale-down;
 		width: 6.5rem;
 	}
 

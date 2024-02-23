@@ -12,21 +12,14 @@ input[type='file'] {
 	}
 
 	&-icon {
-		height: 4.5rem;
+		border-radius: 4px;
+		max-height: 4.5rem;
+		object-fit: contain;
 		width: 4.5rem;
 	}
 
 	&-upload-label {
-		background-color: #0b5fff;
 		border-radius: 6px;
-		color: #fff;
-		font-size: 0.875rem;
-		font-weight: 600;
-		height: 2rem;
-		line-height: 1rem;
-		padding-top: 0.438rem;
-		text-align: center;
-		width: 6.75rem;
 
 		&:hover {
 			background-color: #0a58e7;
@@ -36,11 +29,8 @@ input[type='file'] {
 	}
 
 	&-delete-button {
-		background-color: transparent;
-		border: 1.5px solid #2b3a4b;
-		border-radius: 6px;
-		height: 2rem;
-		width: 3.938rem;
+		border: 1.2px solid #2b3a4b;
+		border-radius: 0.1875rem;
 
 		&-text {
 			color: #2b3a4b;
@@ -53,10 +43,8 @@ input[type='file'] {
 
 		&:hover {
 			background-color: #2b3a4b;
-
-			:first-child {
-				color: #fff;
-			}
+			border: 1.5px solid #2b3a4b;
+			color: #fff;
 		}
 
 		transition: background-color 0.3s;

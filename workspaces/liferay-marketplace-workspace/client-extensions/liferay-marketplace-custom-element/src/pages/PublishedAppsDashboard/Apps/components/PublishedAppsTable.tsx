@@ -46,11 +46,10 @@ const PublishedAppsTable: React.FC<PublishedAppsTableProps> = ({items}) => {
 						<div style={{width: 200}}>
 							<img
 								alt="App Image"
-								height={36}
+								className="app-details-page-table-icon"
 								src={showAppImage(
 									getThumbnailByProductAttachment(images)
 								)}
-								width={36}
 							/>
 
 							<span className="font-weight-semi-bold ml-2">

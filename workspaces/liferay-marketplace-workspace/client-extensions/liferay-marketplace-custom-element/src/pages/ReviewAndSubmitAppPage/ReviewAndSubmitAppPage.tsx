@@ -179,6 +179,12 @@ export function ReviewAndSubmitAppPage({
 						<div className="review-and-submit-app-page-card-header">
 							<div className="review-and-submit-app-page-card-header-left-content">
 								<div className="review-and-submit-app-page-card-header-icon-container">
+									<img
+										alt="New App logo"
+										className="review-and-submit-app-page-card-header-icon"
+										src={showAppImage(app?.thumbnail)}
+									/>
+
 									<div
 										className="upload-logo-icon"
 										style={{

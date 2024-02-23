@@ -45,7 +45,9 @@
 		margin-left: 1.438rem;
 
 		&-img {
-			height: 3rem;
+			border-radius: 4px;
+			max-height: 3rem;
+			object-fit: contain;
 			width: 3rem;
 		}
 

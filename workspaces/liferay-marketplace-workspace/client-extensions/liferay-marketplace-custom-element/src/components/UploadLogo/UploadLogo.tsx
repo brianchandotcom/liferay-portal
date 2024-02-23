@@ -28,16 +28,10 @@ export function UploadLogo({
 		<ClayTooltipProvider>
 			<div className="upload-logo-container">
 				<>
-					<div
+					<img
+						alt="New App logo"
 						className="upload-logo-icon"
-						style={{
-							backgroundImage: `url(${
-								uploadedFile?.preview ?? emptyPicture
-							})`,
-							backgroundPosition: '50% 50%',
-							backgroundRepeat: 'no-repeat',
-							backgroundSize: 'cover',
-						}}
+						src={uploadedFile?.preview ?? emptyPicture}
 					/>
 
 					<div
@@ -58,7 +52,7 @@ export function UploadLogo({
 						/>
 
 						<label
-							className="upload-logo-upload-label"
+							className="btn btn-primary btn-sm m-0"
 							htmlFor="file"
 						>
 							Upload Image
@@ -68,12 +62,10 @@ export function UploadLogo({
 
 				{uploadedFile?.uploaded && (
 					<button
-						className="upload-logo-delete-button"
+						className="btn btn-secondary btn-sm m-0 upload-logo-delete-button"
 						onClick={() => onDeleteFile(uploadedFile.id)}
 					>
-						<span className="upload-logo-delete-button-text">
-							Delete
-						</span>
+						Delete
 					</button>
 				)}
 			</div>

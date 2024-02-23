@@ -46,18 +46,20 @@
 
 		&-container {
 			align-items: center;
-			background-color: #e7efff;
+			background-color: #fff;
 			border-radius: 4px;
 			display: flex;
 			height: 128px;
+			justify-content: center;
 			width: 220px;
 
 			.preview-image {
 				background-position: 50% 50%;
 				background-size: cover;
 				border-radius: 0.625rem;
-				height: 128px;
-				width: 220px;
+				max-height: 100%;
+				max-width: 100%;
+				object-fit: contain;
 			}
 		}
 
@@ -106,6 +108,8 @@
 	}
 
 	&-tags {
+		display: flex;
+		gap: 8px;
 		margin-top: 22px;
 	}
 

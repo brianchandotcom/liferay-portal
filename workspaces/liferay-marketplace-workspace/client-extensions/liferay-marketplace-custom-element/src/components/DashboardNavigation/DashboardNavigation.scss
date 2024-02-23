@@ -32,8 +32,10 @@
 
 		&-logo {
 			border-radius: 50%;
-			height: 3rem;
+			border-radius: 8px;
 			margin-right: 0.75rem;
+			max-height: 3rem;
+			object-fit: contain;
 			width: 3rem;
 		}
 

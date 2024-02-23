@@ -14,6 +14,13 @@ import {TestrayRoutine, testrayRoutineImpl} from '../../../services/rest';
 import {getTimeFromNow} from '../../../util/date';
 import useRoutineActions from './useRoutineActions';
 
+const getBuildDate = (buildName: string) => {
+	return buildName
+		?.split(' ')
+		?.at(-1)
+		?.replace('[', ' ')
+		.replace(']', '') as string;
+};
 const Routines = () => {
 	const {actions, navigate} = useRoutineActions();
 	const {projectId} = useParams();
@@ -35,7 +42,7 @@ const Routines = () => {
 					filterSchema: 'routines',
 					title: i18n.translate('routines'),
 				}}
-				resource={testrayRoutineImpl.resource}
+				resource={`/testray-rest/project/${projectId}/routines-metrics`}
 				tableProps={{
 					actions,
 					columns: [
@@ -50,10 +57,13 @@ const Routines = () => {
 							clickable: true,
 							key: 'dateCreated',
 							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.dateCreated
+								testrayRoutine.caseResultAggregation?.buildName
 									? getTimeFromNow(
-											testrayRoutine.builds[0]
-												?.dateCreated
+											getBuildDate(
+												testrayRoutine
+													.caseResultAggregation
+													?.buildName
+											)
 									  )
 									: null,
 							value: i18n.translate('execution-date'),
@@ -62,15 +72,15 @@ const Routines = () => {
 							clickable: true,
 							key: 'untested',
 							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultUntested ??
-								0,
+								testrayRoutine.caseResultAggregation
+									?.caseResultUntested ?? 0,
 							value: i18n.translate('untested'),
 						},
 						{
 							clickable: true,
 							key: 'inprogress',
 							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]
+								testrayRoutine.caseResultAggregation
 									?.caseResultInProgress ?? 0,
 							value: i18n.translate('in-progress'),
 						},
@@ -78,30 +88,32 @@ const Routines = () => {
 							clickable: true,
 							key: 'passed',
 							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultPassed ?? 0,
+								testrayRoutine.caseResultAggregation
+									?.caseResultPassed ?? 0,
 							value: i18n.translate('passed'),
 						},
 						{
 							clickable: true,
 							key: 'failed',
 							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultFailed ?? 0,
+								testrayRoutine.caseResultAggregation
+									?.caseResultFailed ?? 0,
 							value: i18n.translate('failed'),
 						},
 						{
 							clickable: true,
 							key: 'blocked',
 							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultBlocked ??
-								0,
+								testrayRoutine.caseResultAggregation
+									?.caseResultBlocked ?? 0,
 							value: i18n.translate('blocked'),
 						},
 						{
 							clickable: true,
 							key: 'testfix',
 							render: (_, testrayRoutine: TestrayRoutine) =>
-								testrayRoutine.builds[0]?.caseResultTestFix ??
-								0,
+								testrayRoutine.caseResultAggregation
+									?.caseResultTestFix ?? 0,
 							value: i18n.translate('test-fix'),
 						},
 						{
@@ -109,13 +121,17 @@ const Routines = () => {
 							key: 'total',
 							render: (_, testrayRoutine: TestrayRoutine) =>
 								[
-									testrayRoutine.builds[0]?.caseResultBlocked,
-									testrayRoutine.builds[0]?.caseResultFailed,
-									testrayRoutine.builds[0]
+									testrayRoutine.caseResultAggregation
+										?.caseResultBlocked,
+									testrayRoutine.caseResultAggregation
+										?.caseResultFailed,
+									testrayRoutine.caseResultAggregation
 										?.caseResultInProgress,
-									testrayRoutine.builds[0]?.caseResultPassed,
-									testrayRoutine.builds[0]?.caseResultTestFix,
-									testrayRoutine.builds[0]
+									testrayRoutine.caseResultAggregation
+										?.caseResultPassed,
+									testrayRoutine.caseResultAggregation
+										?.caseResultTestFix,
+									testrayRoutine.caseResultAggregation
 										?.caseResultUntested,
 								]
 									.map((count) => (count ? Number(count) : 0))
@@ -132,19 +148,19 @@ const Routines = () => {
 								<ProgressBar
 									items={{
 										blocked: Number(
-											testrayRoutine.builds[0]
+											testrayRoutine.caseResultAggregation
 												?.caseResultBlocked
 										),
 										failed: Number(
-											testrayRoutine.builds[0]
+											testrayRoutine.caseResultAggregation
 												?.caseResultFailed
 										),
 										passed: Number(
-											testrayRoutine.builds[0]
+											testrayRoutine.caseResultAggregation
 												?.caseResultPassed
 										),
 										test_fix: Number(
-											testrayRoutine.builds[0]
+											testrayRoutine.caseResultAggregation
 												?.caseResultTestFix
 										),
 									}}

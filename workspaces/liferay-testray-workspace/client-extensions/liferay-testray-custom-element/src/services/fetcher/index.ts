@@ -24,6 +24,12 @@ function changeResource(resource: RequestInfo) {
 		return resource;
 	}
 
+	if (resource.toString().startsWith('/testray-rest')) {
+		return `${liferayHost}/o/testray-rest/v1.0${resource
+			.toString()
+			.replace('/testray-rest', '/')}`;
+	}
+
 	if (resource.toString().startsWith('/compare-runs')) {
 		return `${liferayHost}/o/osb-testray-rest/v1.0${resource}`;
 	}

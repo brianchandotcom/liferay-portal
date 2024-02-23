@@ -446,7 +446,7 @@ export type TestrayFactorCategory = {
 
 export type TestrayRoutine = {
 	actions: ObjectActionsItems;
-	builds: TestrayBuild[];
+	caseResultAggregation: CaseResultAggregation & {buildName: string};
 	dateCreated: string;
 	id: number;
 	name: string;

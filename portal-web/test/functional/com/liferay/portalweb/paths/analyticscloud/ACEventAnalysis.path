@@ -145,7 +145,7 @@
 
 <tr>
 	<td>DROPDOWN_BY_INDEX</td>
-	<td>//ul[contains(@class,'dropdown-menu')]//li[${key_index}]</td>
+	<td>//div[contains(@class,'show')]//li[${key_index}]</td>
 	<td></td>
 </tr>
 </tbody>

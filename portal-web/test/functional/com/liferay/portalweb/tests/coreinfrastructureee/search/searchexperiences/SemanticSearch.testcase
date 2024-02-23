@@ -25,14 +25,24 @@ definition {
 	@priority = 3
 	test AssertBlacklistedTextEmbeddingProvidersAreUnavailable {
 		property custom.properties = "feature.flag.LPS-122920=true";
-		property osgi.module.configuration.file.names = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config";
-		property osgi.module.configurations = "blacklistComponentNames=[\"com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider\",\"com.liferay.search.experiences.internal.ml.embedding.text.HuggingFaceInferenceAPITextEmbeddingProvider\"]";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider");
+		ServerAdministration.openServerAdmin();
 
-		WaitForConsoleTextPresent(value1 = "Disabling com.liferay.search.experiences.internal.ml.embedding.text.HuggingFaceInferenceAPITextEmbeddingProvider");
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.search.experiences.internal.ml.embedding.text.TextEmbeddingRetrieverImpl");
+
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.search.experiences.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config",
+			osgiConfigs = "disabledProviders=[\"txtai\",\"huggingFaceInferenceAPI\" ]");
+
+		OSGiConfig.waitForOSGiConfig();
+
+		WaitForConsoleTextPresent(value1 = "Disabling txtai");
+
+		WaitForConsoleTextPresent(value1 = "Disabling huggingFaceInferenceAPI");
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.search.experiences.configuration.SemanticSearchConfiguration");
 
@@ -58,11 +68,11 @@ definition {
 			key_value = "Hugging Face Inference API",
 			locator1 = "Select#GENERIC_SELECT_VALUE");
 
-		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration.config");
+		OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.search.experiences.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config");
 
-		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.search.experiences.internal.ml.embedding.text.TXTAITextEmbeddingProvider");
+		WaitForConsoleTextPresent(value1 = "Enabling txtai");
 
-		WaitForConsoleTextPresent(value1 = "Enabling com.liferay.search.experiences.internal.ml.embedding.text.HuggingFaceInferenceAPITextEmbeddingProvider");
+		WaitForConsoleTextPresent(value1 = "Enabling huggingFaceInferenceAPI");
 
 		Refresh();
 

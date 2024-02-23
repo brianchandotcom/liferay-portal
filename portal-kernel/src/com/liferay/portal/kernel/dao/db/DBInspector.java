@@ -241,23 +241,33 @@ public class DBInspector {
 	}
 
 	public boolean hasTable(String tableName) throws Exception {
-		return hasTable(tableName, false);
+		return _hasElement(tableName, "TABLE");
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             DBInspector#hasTable(String)}
+	 */
+	@Deprecated
 	public boolean hasTable(String tableName, boolean caseSensitive)
 		throws Exception {
 
-		return _hasElement(tableName, "TABLE", caseSensitive);
+		return _hasElement(tableName, "TABLE");
 	}
 
 	public boolean hasView(String viewName) throws Exception {
-		return hasView(viewName, false);
+		return _hasElement(viewName, "VIEW");
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             DBInspector#hasView(String)}
+	 */
+	@Deprecated
 	public boolean hasView(String viewName, boolean caseSensitive)
 		throws Exception {
 
-		return _hasElement(viewName, "VIEW", caseSensitive);
+		return _hasElement(viewName, "VIEW");
 	}
 
 	public boolean isControlTable(String tableName) {
@@ -402,15 +412,12 @@ public class DBInspector {
 			normalizeName(tableName, databaseMetaData), columnName);
 	}
 
-	private boolean _hasElement(
-			String elementName, String elementType, boolean caseSensitive)
+	private boolean _hasElement(String elementName, String elementType)
 		throws Exception {
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
-		if (!caseSensitive) {
-			elementName = normalizeName(elementName, databaseMetaData);
-		}
+		elementName = normalizeName(elementName, databaseMetaData);
 
 		try (ResultSet resultSet = databaseMetaData.getTables(
 				getCatalog(), getSchema(), elementName,

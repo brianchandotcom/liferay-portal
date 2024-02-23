@@ -333,18 +333,28 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
 
 		if (layoutSetBranch == null) {
-			layoutSet.setModifiedDate(new Date());
-
 			PortalUtil.updateImageId(
 				layoutSet, hasLogo, bytes, "logoId", 0, 0, 0);
+
+			long logoId = layoutSet.getLogoId();
+
+			layoutSet = layoutSetPersistence.findByG_P(groupId, privateLayout);
+
+			layoutSet.setModifiedDate(new Date());
+			layoutSet.setLogoId(logoId);
 
 			return layoutSetPersistence.update(layoutSet);
 		}
 
-		layoutSetBranch.setModifiedDate(new Date());
-
 		PortalUtil.updateImageId(
 			layoutSetBranch, hasLogo, bytes, "logoId", 0, 0, 0);
+
+		long logoId = layoutSetBranch.getLogoId();
+
+		layoutSetBranch = _getLayoutSetBranch(layoutSet);
+
+		layoutSetBranch.setModifiedDate(new Date());
+		layoutSetBranch.setLogoId(logoId);
 
 		_layoutSetBranchPersistence.update(layoutSetBranch);
 

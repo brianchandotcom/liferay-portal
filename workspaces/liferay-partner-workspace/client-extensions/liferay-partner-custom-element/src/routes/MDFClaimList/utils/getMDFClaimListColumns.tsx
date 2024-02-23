@@ -7,7 +7,7 @@ import {KeyedMutator, mutate} from 'swr';
 
 import Dropdown from '../../../common/components/Dropdown';
 import {DropdownOption} from '../../../common/components/Dropdown/Dropdown';
-import StatusBadge from '../../../common/components/StatusBadge';
+import StatusLabel from '../../../common/components/StatusLabel';
 import {MDFClaimColumnKey} from '../../../common/enums/mdfClaimColumnKey';
 import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import {PermissionActionType} from '../../../common/enums/permissionActionType';
@@ -172,7 +172,7 @@ export default function getMDFClaimListColumns(
 		{
 			columnKey: MDFClaimColumnKey.STATUS,
 			label: 'Status',
-			render: (data?: string) => <StatusBadge status={data as string} />,
+			render: (data?: string) => <StatusLabel status={data as string} />,
 		},
 		{
 			columnKey: MDFClaimColumnKey.TYPE,

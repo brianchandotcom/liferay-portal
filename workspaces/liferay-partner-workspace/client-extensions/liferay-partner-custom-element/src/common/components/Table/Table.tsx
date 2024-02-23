@@ -7,6 +7,8 @@ import ClayTable from '@clayui/table';
 
 import TableColumn from '../../interfaces/tableColumn';
 
+import './index.css';
+
 interface TableProps<T> {
 	className?: string;
 	columns: TableColumn<T>[];
@@ -37,7 +39,13 @@ const Table = <T extends unknown>({
 						key={index}
 						truncate
 					>
-						<p className="mt-4 text-neutral-10">{column.label}</p>
+						{column.label instanceof String ? (
+							<p className="mb-0 mt-4 text-neutral-10">
+								{column.label}
+							</p>
+						) : (
+							column.label
+						)}
 					</ClayTable.Cell>
 				))}
 			</ClayTable.Row>
@@ -52,10 +60,9 @@ const Table = <T extends unknown>({
 						return (
 							<ClayTable.Cell
 								align="left"
-								className="border-0 font-weight-normal py-4 text-neutral-10"
+								className="border-0 font-weight-normal py-4 text-truncate text-truncate-inline"
 								headingCell
 								key={colIndex}
-								noWrap
 								onClick={() => {
 									if (customClickOnRow) {
 										return customClickOnRow(row);

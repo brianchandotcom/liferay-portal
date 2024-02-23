@@ -18,6 +18,12 @@ export default function useGetListItemsFromMDFRequests(
 	return useMemo(
 		() =>
 			items?.map((item) => ({
+				[MDFColumnKey.BALANCE]: Number(item.totalPaidAmount)
+					? getIntlNumberFormat(item.currency).format(
+							Number(item.totalClaimedRequest) -
+								Number(item.totalPaidAmount)
+					  )
+					: '-',
 				[MDFColumnKey.ID]: String(item.id),
 				[MDFColumnKey.NAME]: item.overallCampaignName,
 				...getMDFActivityPeriod(

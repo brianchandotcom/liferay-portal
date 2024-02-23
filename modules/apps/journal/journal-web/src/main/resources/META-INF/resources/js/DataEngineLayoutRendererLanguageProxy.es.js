@@ -15,10 +15,6 @@ export default function ({currentLanguageId, namespace}) {
 			localeChangedHandler = Liferay.after(
 				'inputLocalized:localeChanged',
 				(event) => {
-					if (event.isResetTranslation) {
-						return;
-					}
-
 					const selectedLanguageId =
 						event.item.getAttribute('data-value') ||
 						event.item.getAttribute('data-languageid');

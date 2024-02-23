@@ -4,6 +4,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
 import {createPortletURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -18,6 +19,7 @@ import {
 
 const PublicationTimeline = ({timelineItemsURL}) => {
 	const [timelineItems, setTimelineItems] = useState([]);
+	const [itemsFetched, setItemsFetched] = useState(false);
 
 	const createMVCRenderCommandURL = (
 		ctCollectionId,
@@ -68,84 +70,103 @@ const PublicationTimeline = ({timelineItemsURL}) => {
 			})
 			.then((jsonResponse) => {
 				setTimelineItems(jsonResponse.items);
+				setItemsFetched(true);
 			});
 	}, [timelineItemsURL]);
 
-	if (timelineItems && !!timelineItems.length) {
+	if (!itemsFetched) {
 		return (
-			<div className="publication-timeline">
-				{timelineItems.map((timelineItem) => (
-					<ClayPanel
-						key={timelineItem.id}
-						style={{borderBottomColor: '#e7e7ed', marginBottom: 0}}
-					>
-						<ClayPanel.Body>
-							<ClayLayout.ContentRow>
-								<ClayLayout.ContentCol expand>
-									<div>
-										<span style={{paddingRight: '10px'}}>
-											{timelineItem.name}
-										</span>
+			<>
+				<ClayLoadingIndicator displayType="secondary" size="sm" />
+			</>
+		);
+	}
+	else {
+		if (timelineItems && !!timelineItems.length) {
+			return (
+				<div className="publication-timeline">
+					{timelineItems.map((timelineItem) => (
+						<ClayPanel
+							key={timelineItem.id}
+							style={{
+								borderBottomColor: '#e7e7ed',
+								marginBottom: 0,
+							}}
+						>
+							<ClayPanel.Body>
+								<ClayLayout.ContentRow>
+									<ClayLayout.ContentCol expand>
+										<div>
+											<span
+												style={{paddingRight: '10px'}}
+											>
+												{timelineItem.name}
+											</span>
 
-										<WorkflowStatusLabel
-											workflowStatus={
-												timelineItem.status.code
+											<WorkflowStatusLabel
+												workflowStatus={
+													timelineItem.status.code
+												}
+											/>
+										</div>
+
+										<div className="text-secondary">
+											{timelineItem.description}
+										</div>
+
+										<div className="text-secondary">
+											{timelineItem.statusMessage}
+										</div>
+									</ClayLayout.ContentCol>
+
+									<ClayLayout.ContentCol>
+										<TimelineDropdownMenu
+											deleteURL={
+												timelineItem.status.code ===
+													WORKFLOW_STATUS_DRAFT ||
+												timelineItem.status.code ===
+													WORKFLOW_STATUS_PENDING
+													? timelineItem.actions
+															.delete.href
+													: undefined
 											}
+											editURL={
+												timelineItem.status.code ===
+													WORKFLOW_STATUS_DRAFT ||
+												timelineItem.status.code ===
+													WORKFLOW_STATUS_PENDING
+													? getEditURL(
+															timelineItem.id
+													  )
+													: undefined
+											}
+											revertURL={
+												timelineItem.status.code ===
+												WORKFLOW_STATUS_APPROVED
+													? getRevertURL(
+															timelineItem.id
+													  )
+													: undefined
+											}
+											reviewURL={getReviewURL(
+												timelineItem.id
+											)}
 										/>
-									</div>
+									</ClayLayout.ContentCol>
+								</ClayLayout.ContentRow>
+							</ClayPanel.Body>
+						</ClayPanel>
+					))}
+				</div>
+			);
+		}
 
-									<div className="text-secondary">
-										{timelineItem.description}
-									</div>
-
-									<div className="text-secondary">
-										{timelineItem.statusMessage}
-									</div>
-								</ClayLayout.ContentCol>
-
-								<ClayLayout.ContentCol>
-									<TimelineDropdownMenu
-										deleteURL={
-											timelineItem.status.code ===
-												WORKFLOW_STATUS_DRAFT ||
-											timelineItem.status.code ===
-												WORKFLOW_STATUS_PENDING
-												? timelineItem.actions.delete
-														.href
-												: undefined
-										}
-										editURL={
-											timelineItem.status.code ===
-												WORKFLOW_STATUS_DRAFT ||
-											timelineItem.status.code ===
-												WORKFLOW_STATUS_PENDING
-												? getEditURL(timelineItem.id)
-												: undefined
-										}
-										revertURL={
-											timelineItem.status.code ===
-											WORKFLOW_STATUS_APPROVED
-												? getRevertURL(timelineItem.id)
-												: undefined
-										}
-										reviewURL={getReviewURL(
-											timelineItem.id
-										)}
-									/>
-								</ClayLayout.ContentCol>
-							</ClayLayout.ContentRow>
-						</ClayPanel.Body>
-					</ClayPanel>
-				))}
+		return (
+			<div className="publication-timeline timeline">
+				{Liferay.Language.get('no-publications-were-found')}
 			</div>
 		);
 	}
-
-	return (
-		<div className="publication-timeline timeline">
-			{Liferay.Language.get('no-publications-were-found')}
-		</div>
-	);
 };
 
 export default PublicationTimeline;

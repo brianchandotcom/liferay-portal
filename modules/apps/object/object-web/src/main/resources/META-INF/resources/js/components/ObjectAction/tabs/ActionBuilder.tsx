@@ -15,13 +15,14 @@ import {InputLocalized} from 'frontend-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../../utils/constants';
-import {ActionError} from '../index';
+import {ActionError} from '../ObjectActionContainer';
 import {ActionContainer} from './ActionContainer/ActionContainer';
 import {ConditionContainer} from './ConditionContainer';
 
 import './ActionBuilder.scss';
 
 interface ActionBuilderProps {
+	disableGroovyAction: boolean;
 	errors: ActionError;
 	isApproved: boolean;
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -52,6 +53,7 @@ const triggerKeys = [
 ];
 
 export default function ActionBuilder({
+	disableGroovyAction,
 	errors,
 	isApproved,
 	objectActionCodeEditorElements,
@@ -237,7 +239,9 @@ export default function ActionBuilder({
 					viewMode="inline"
 				>
 					<SingleSelect
-						disabled={isApproved || values.system}
+						disabled={
+							isApproved || values.system || disableGroovyAction
+						}
 						error={errors.objectActionTriggerKey}
 						items={objectActionTriggers}
 						onSelectionChange={(value) =>
@@ -272,6 +276,7 @@ export default function ActionBuilder({
 
 			{showConditionContainer && (
 				<ConditionContainer
+					disabled={disableGroovyAction}
 					errors={errors}
 					setValues={setValues}
 					validateExpressionURL={validateExpressionURL}
@@ -307,6 +312,7 @@ export default function ActionBuilder({
 
 			<ActionContainer
 				currentObjectDefinitionFields={currentObjectDefinitionFields}
+				disabled={disableGroovyAction}
 				errors={errors}
 				newObjectActionExecutors={newObjectActionExecutors}
 				objectActionCodeEditorElements={objectActionCodeEditorElements}

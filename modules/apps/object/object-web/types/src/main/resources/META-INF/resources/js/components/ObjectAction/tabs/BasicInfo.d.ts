@@ -6,6 +6,7 @@
 import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
 interface BasicInfoProps {
+	disableGroovyAction: boolean;
 	errors: FormError<ObjectAction & ObjectActionParameters>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
@@ -14,6 +15,7 @@ interface BasicInfoProps {
 	values: Partial<ObjectAction>;
 }
 export default function BasicInfo({
+	disableGroovyAction,
 	errors,
 	handleChange,
 	isApproved,

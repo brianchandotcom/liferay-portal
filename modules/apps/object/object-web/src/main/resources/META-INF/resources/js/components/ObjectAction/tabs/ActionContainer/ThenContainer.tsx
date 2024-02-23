@@ -12,7 +12,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {API, Card, SingleSelect} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {ActionError} from '../..';
+import {ActionError} from '../../ObjectActionContainer';
 import {
 	ObjectOptionsListItem,
 	ObjectsOptionsList,
@@ -23,6 +23,7 @@ import {
 import './ThenContainer.scss';
 
 interface ThenContainerProps {
+	disabled: boolean;
 	errors: ActionError;
 	isValidField: (
 		{businessType, name, objectFieldSettings, system}: ObjectField,
@@ -48,6 +49,7 @@ type NotificationTemplateAction = {
 };
 
 export function ThenContainer({
+	disabled,
 	errors,
 	isValidField,
 	newObjectActionExecutors,
@@ -126,7 +128,7 @@ export function ThenContainer({
 		<Card title={Liferay.Language.get('then[object]')} viewMode="inline">
 			<div className="lfr-object__action-builder-then">
 				<SingleSelect
-					disabled={values.system}
+					disabled={values.system || disabled}
 					error={errors.objectActionExecutorKey}
 					items={
 						Liferay.FeatureFlags['LPS-153714']

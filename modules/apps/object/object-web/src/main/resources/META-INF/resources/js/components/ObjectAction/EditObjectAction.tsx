@@ -6,7 +6,7 @@
 import {SidebarCategory} from '@liferay/object-js-components-web';
 import React from 'react';
 
-import ObjectAction from './index';
+import {ObjectActionContainer} from './ObjectActionContainer';
 
 interface EditObjectActionProps {
 	isApproved: boolean;
@@ -18,6 +18,7 @@ interface EditObjectActionProps {
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	readOnly?: boolean;
+	scriptManagementEnabled: boolean;
 	systemObject: boolean;
 	validateExpressionURL: string;
 }
@@ -32,11 +33,13 @@ export default function EditObjectAction({
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	readOnly,
+	scriptManagementEnabled,
 	systemObject,
 	validateExpressionURL,
 }: EditObjectActionProps) {
 	return (
-		<ObjectAction
+		<ObjectActionContainer
+			editingObjectAction
 			isApproved={isApproved}
 			objectAction={values}
 			objectActionCodeEditorElements={objectActionCodeEditorElements}
@@ -54,6 +57,7 @@ export default function EditObjectAction({
 				method: 'PUT',
 				url: `/o/object-admin/v1.0/object-actions/${id}`,
 			}}
+			scriptManagementEnabled={scriptManagementEnabled}
 			successMessage={Liferay.Language.get(
 				'the-object-action-was-updated-successfully'
 			)}

@@ -17,6 +17,7 @@ import {defaultLanguageId} from '../../../utils/constants';
 import {toCamelCase} from '../../../utils/string';
 
 interface BasicInfoProps {
+	disableGroovyAction: boolean;
 	errors: FormError<ObjectAction & ObjectActionParameters>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
@@ -26,6 +27,7 @@ interface BasicInfoProps {
 }
 
 export default function BasicInfo({
+	disableGroovyAction,
 	errors,
 	handleChange,
 	isApproved,
@@ -77,7 +79,7 @@ export default function BasicInfo({
 
 			<ClayForm.Group>
 				<Toggle
-					disabled={readOnly || values.system}
+					disabled={readOnly || values.system || disableGroovyAction}
 					label={Liferay.Language.get('active')}
 					name="indexed"
 					onToggle={(active) => setValues({active})}

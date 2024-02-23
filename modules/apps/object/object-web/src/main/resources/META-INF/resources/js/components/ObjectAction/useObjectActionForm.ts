@@ -13,7 +13,7 @@ import {
 import {useEffect, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
-import {ActionError} from './index';
+import {ActionError} from './ObjectActionContainer';
 
 interface UseObjectActionFormProps {
 	initialValues: Partial<ObjectAction>;

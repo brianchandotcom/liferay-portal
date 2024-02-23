@@ -6,9 +6,10 @@
 /// <reference types="react" />
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
-import {ActionError} from '../index';
+import {ActionError} from '../ObjectActionContainer';
 import './ActionBuilder.scss';
 interface ActionBuilderProps {
+	disableGroovyAction: boolean;
 	errors: ActionError;
 	isApproved: boolean;
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -27,6 +28,7 @@ export interface WarningStates {
 	requiredFields: boolean;
 }
 export default function ActionBuilder({
+	disableGroovyAction,
 	errors,
 	isApproved,
 	objectActionCodeEditorElements,

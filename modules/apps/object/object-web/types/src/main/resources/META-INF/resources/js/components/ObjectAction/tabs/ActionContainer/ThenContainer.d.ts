@@ -5,10 +5,11 @@
 
 /// <reference types="react" />
 
-import {ActionError} from '../..';
+import {ActionError} from '../../ObjectActionContainer';
 import {ObjectOptionsListItem} from '../../fetchUtil';
 import './ThenContainer.scss';
 interface ThenContainerProps {
+	disabled: boolean;
 	errors: ActionError;
 	isValidField: (
 		{businessType, name, objectFieldSettings, system}: ObjectField,
@@ -27,6 +28,7 @@ interface ThenContainerProps {
 	values: Partial<ObjectAction>;
 }
 export declare function ThenContainer({
+	disabled,
 	errors,
 	isValidField,
 	newObjectActionExecutors,

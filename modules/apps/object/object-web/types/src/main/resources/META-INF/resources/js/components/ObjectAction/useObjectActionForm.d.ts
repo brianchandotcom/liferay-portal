@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-import {ActionError} from './index';
+import {ActionError} from './ObjectActionContainer';
 interface UseObjectActionFormProps {
 	initialValues: Partial<ObjectAction>;
 	onSubmit: (field: ObjectAction) => void;

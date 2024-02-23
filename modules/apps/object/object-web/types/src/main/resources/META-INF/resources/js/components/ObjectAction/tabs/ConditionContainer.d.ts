@@ -5,14 +5,16 @@
 
 /// <reference types="react" />
 
-import {ActionError} from '..';
+import {ActionError} from '../ObjectActionContainer';
 interface ConditionContainerProps {
+	disabled: boolean;
 	errors: ActionError;
 	setValues: (values: Partial<ObjectAction>) => void;
 	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
 }
 export declare function ConditionContainer({
+	disabled,
 	errors,
 	setValues,
 	validateExpressionURL,

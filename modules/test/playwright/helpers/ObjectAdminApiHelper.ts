@@ -21,13 +21,6 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
-	async postObjectRelationship(data: DataObject, objectDefinitionId: number) {
-		return this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions/${objectDefinitionId}/object-relationships`,
-			data
-		);
-	}
-
 	async deleteObjectFolder(objectFolderId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/object-folders/${objectFolderId}`

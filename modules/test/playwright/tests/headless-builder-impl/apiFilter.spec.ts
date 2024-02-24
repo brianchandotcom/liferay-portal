@@ -9,7 +9,11 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {headlessBuilderTest} from '../../fixtures/headlessBuilderTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(apiHelpersTest, headlessBuilderTest, loginTest());
+export const test = mergeTests(
+	apiHelpersTest,
+	headlessBuilderTest,
+	loginTest()
+);
 
 const expect = baseExpect.extend({
 	toBeSuccessful: (response: APIResponse) => ({

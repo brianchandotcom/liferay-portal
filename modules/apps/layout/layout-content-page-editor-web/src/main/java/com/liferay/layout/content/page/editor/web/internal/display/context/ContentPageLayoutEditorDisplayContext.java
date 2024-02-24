@@ -163,11 +163,10 @@ public class ContentPageLayoutEditorDisplayContext
 	}
 
 	@Override
-	public Map<String, Object> getEditorContext(String npmResolvedPackageName)
+	public Map<String, Object> getEditorContext()
 		throws Exception {
 
-		Map<String, Object> editorContext = super.getEditorContext(
-			npmResolvedPackageName);
+		Map<String, Object> editorContext = super.getEditorContext();
 
 		if (!_isShowSegmentsExperiences()) {
 			return editorContext;

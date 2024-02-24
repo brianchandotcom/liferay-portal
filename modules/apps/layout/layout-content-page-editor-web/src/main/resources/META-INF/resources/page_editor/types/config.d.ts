@@ -166,7 +166,6 @@ export interface Config {
 	panels: string[][];
 	pending: boolean;
 	plid: string;
-	pluginsRootPath: string;
 	portletNamespace: string;
 	publishURL: string;
 	redirectURL: string;
@@ -203,7 +202,7 @@ export interface Config {
 
 	toolbarPlugins: Array<{
 		loadingPlaceholder: string;
-		pluginEntryPoint: string;
+		pluginClass: any;
 		toolbarPluginId: string;
 	}>;
 

@@ -233,7 +233,7 @@ public class ContentPageEditorDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getEditorContext(String npmResolvedPackageName)
+	public Map<String, Object> getEditorContext()
 		throws Exception {
 
 		return HashMapBuilder.<String, Object>put(
@@ -612,9 +612,6 @@ public class ContentPageEditorDisplayContext {
 
 					return false;
 				}
-			).put(
-				"pluginsRootPath",
-				npmResolvedPackageName + "/page_editor/plugins"
 			).put(
 				"portletNamespace", getPortletNamespace()
 			).put(

@@ -63,8 +63,8 @@ function ToolbarBody({className}) {
 	const loadingRef = useRef(() => {
 		Promise.all(
 			config.toolbarPlugins.map((toolbarPlugin) => {
-				const {pluginEntryPoint} = toolbarPlugin;
-				const promise = load(pluginEntryPoint, pluginEntryPoint);
+				const {pluginClass} = toolbarPlugin;
+				const promise = load(pluginClass, pluginClass);
 
 				const app = {
 					Actions,
@@ -73,13 +73,13 @@ function ToolbarBody({className}) {
 					store,
 				};
 
-				return register(pluginEntryPoint, promise, {
+				return register(pluginClass, promise, {
 					app,
 					toolbarPlugin,
 				}).then((plugin) => {
 					if (!plugin) {
 						throw new Error(
-							`Failed to get instance from ${pluginEntryPoint}`
+							`Failed to get instance from ${pluginClass}`
 						);
 					}
 					else if (isMounted()) {
@@ -177,9 +177,9 @@ function ToolbarBody({className}) {
 
 			<ul className="navbar-nav start" onClick={deselectItem}>
 				{config.toolbarPlugins.map(
-					({loadingPlaceholder, pluginEntryPoint}) => {
+					({loadingPlaceholder, pluginClass}) => {
 						return (
-							<li className="nav-item" key={pluginEntryPoint}>
+							<li className="nav-item" key={pluginClass}>
 								<ErrorBoundary>
 									<Suspense
 										fallback={
@@ -193,7 +193,7 @@ function ToolbarBody({className}) {
 									>
 										<ToolbarSection
 											getInstance={getInstance}
-											pluginId={pluginEntryPoint}
+											pluginId={pluginClass}
 										/>
 									</Suspense>
 								</ErrorBoundary>

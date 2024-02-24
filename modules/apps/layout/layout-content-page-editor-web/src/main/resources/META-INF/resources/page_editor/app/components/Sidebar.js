@@ -101,7 +101,7 @@ export default function Sidebar() {
 	});
 
 	const promise = panel
-		? load(sidebarPanelId, panel.pluginEntryPoint)
+		? load(sidebarPanelId, panel.pluginClass)
 		: Promise.resolve();
 
 	const app = {
@@ -403,7 +403,7 @@ export default function Sidebar() {
 								icon,
 								isLink,
 								label,
-								pluginEntryPoint,
+								pluginClass,
 								url,
 							} = panel;
 
@@ -422,10 +422,9 @@ export default function Sidebar() {
 							}
 
 							const prefetch = () =>
-								load(
-									panel.sidebarPanelId,
-									pluginEntryPoint
-								).then(...swallow);
+								load(panel.sidebarPanelId, pluginClass).then(
+									...swallow
+								);
 
 							return (
 								<ClayButtonWithIcon

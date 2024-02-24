@@ -3,6 +3,37 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore
+
+import Browser from '../../plugins/browser/index';
+
+// @ts-ignore
+
+import Comments from '../../plugins/comments/index';
+
+// @ts-ignore
+
+import Experience from '../../plugins/experience/index';
+
+// @ts-ignore
+
+import FragmentsAndWidgets from '../../plugins/fragments_and_widgets/index';
+
+// @ts-ignore
+
+import Mapping from '../../plugins/mapping/index';
+
+// @ts-ignore
+
+import PageContent from '../../plugins/page_content/index';
+
+// @ts-ignore
+
+import PageDesignOptions from '../../plugins/page_design_options/index';
+
+// @ts-ignore
+
+import PageRules from '../../plugins/page_rules/index';
 import {SidebarPanel} from '../../types/SidebarPanel';
 import {Config} from '../../types/config';
 import {LAYOUT_TYPES, LayoutType} from './constants/layoutTypes';
@@ -31,7 +62,6 @@ export function initializeConfig(backendConfig: Config) {
 	const {
 		commonStyles,
 		layoutType,
-		pluginsRootPath,
 		portletNamespace,
 		sidebarPanels,
 	} = backendConfig;
@@ -40,10 +70,7 @@ export function initializeConfig(backendConfig: Config) {
 
 	// Special items requiring augmentation, creation, or transformation.
 
-	const augmentedPanels = augmentPanelData(
-		pluginsRootPath,
-		sidebarPanels as SidebarPanel[]
-	);
+	const augmentedPanels = augmentPanelData(sidebarPanels as SidebarPanel[]);
 
 	const syntheticItems: Partial<Config> = {
 		commonStyles: getCommonStyles(commonStyles),
@@ -51,11 +78,7 @@ export function initializeConfig(backendConfig: Config) {
 		panels: generatePanels(augmentedPanels),
 		sidebarPanels: partitionPanels(augmentedPanels),
 		toolbarId,
-		toolbarPlugins: getToolbarPlugins(
-			layoutType,
-			pluginsRootPath,
-			toolbarId
-		),
+		toolbarPlugins: getToolbarPlugins(layoutType, toolbarId),
 	};
 
 	config = {
@@ -67,6 +90,17 @@ export function initializeConfig(backendConfig: Config) {
 	return config;
 }
 
+const PLUGIN_CLASS_MAP = {
+	browser: Browser,
+	comments: Comments,
+	experience: Experience,
+	fragments_and_widgets: FragmentsAndWidgets,
+	mapping: Mapping,
+	page_content: PageContent,
+	page_design_options: PageDesignOptions,
+	page_rules: PageRules,
+};
+
 /**
  * In general, we expect the sidebarPanelId to correspond with the name
  * of a plugin. Here we deal with the exceptions by mapping IDs to
@@ -74,10 +108,7 @@ export function initializeConfig(backendConfig: Config) {
  */
 const SIDEBAR_PANEL_IDS_TO_PLUGINS: Record<string, string> = {};
 
-function augmentPanelData(
-	pluginsRootPath: string,
-	sidebarPanels: SidebarPanel[]
-) {
+function augmentPanelData(sidebarPanels: SidebarPanel[]) {
 	return sidebarPanels.map((panel) => {
 		if (isSeparator(panel) || panel.isLink) {
 			return panel;
@@ -92,7 +123,9 @@ function augmentPanelData(
 
 			// https://github.com/liferay/liferay-js-toolkit/issues/324
 
-			pluginEntryPoint: `${pluginsRootPath}/${sidebarPanelId}/index`,
+			// @ts-ignore
+
+			pluginClass: PLUGIN_CLASS_MAP[sidebarPanelId],
 
 			sidebarPanelId,
 		};
@@ -149,11 +182,7 @@ function getCommonStylesFields(
  * server data. In the future we may choose to encapsulate it better and
  * deal with it inside the plugin.
  */
-function getToolbarPlugins(
-	layoutType: LayoutType,
-	pluginsRootPath: string,
-	toolbarId: string
-) {
+function getToolbarPlugins(layoutType: LayoutType, toolbarId: string) {
 	const toolbarPluginId = 'experience';
 	const selectId = `${toolbarId}_${toolbarPluginId}`;
 
@@ -178,7 +207,7 @@ function getToolbarPlugins(
 				</button>
 			</div>
 		`,
-					pluginEntryPoint: `${pluginsRootPath}/experience/index`,
+					pluginClass: Experience,
 					toolbarPluginId: 'experience',
 				},
 		  ]

@@ -3,11 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export type SidebarPanel = {
-	icon: string;
-	isLink: boolean;
-	label: string;
-	pluginClass?: string;
-	sidebarPanelId: string;
-	url?: string | null;
+module.exports = {
+	build: {
+		main: 'src/main/resources/META-INF/resources/js/index.js',
+	},
 };

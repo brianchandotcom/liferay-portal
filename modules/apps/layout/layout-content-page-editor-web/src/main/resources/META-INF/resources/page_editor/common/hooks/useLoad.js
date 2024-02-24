@@ -21,34 +21,14 @@ export default function useLoad() {
 	const isMounted = useIsMounted();
 
 	return useCallback(
-		(key, entryPoint) => {
+		(key, pluginClass) => {
 			if (!modulesRef.current.get(key)) {
-				modulesRef.current.set(
-					key,
-					new Promise((resolve, reject) => {
-						Liferay.Loader.require(
-							[entryPoint],
-							(Plugin) => {
-								if (isMounted()) {
-									resolve(Plugin.default);
-								}
-							},
-							(error) => {
-								if (isMounted()) {
-
-									// Reset to allow future retries.
-
-									modulesRef.current.delete(key);
-									reject(error);
-								}
-							}
-						);
-					})
-				);
+				modulesRef.current.set(key, pluginClass);
 			}
 
-			return modulesRef.current.get(key);
+			return Promise.resolve(modulesRef.current.get(key));
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[isMounted]
 	);
 }

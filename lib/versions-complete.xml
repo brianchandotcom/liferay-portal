@@ -632,7 +632,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.diff.impl.jar!org.outerj.daisy.diff.jar</file-name>
-				<version>1.2.0-atlassian-hosted.LIFERAY-PATCHED-3</version>
+				<version>1.2.LIFERAY-PATCHED-1</version>
 				<project-name>org.outerj.daisy.diff</project-name>
 				<licenses>
 					<license>

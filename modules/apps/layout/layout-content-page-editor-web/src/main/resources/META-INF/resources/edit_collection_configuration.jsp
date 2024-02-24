@@ -50,7 +50,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "filter-collection"));
 
 	<div>
 		<react:component
-			module="page_editor/plugins/collection_configuration/CollectionConfiguration"
+			module="{CollectionConfiguration} from layout-content-page-editor-web"
 			props="<%= editCollectionConfigurationDisplayContext.getData() %>"
 		/>
 	</div>

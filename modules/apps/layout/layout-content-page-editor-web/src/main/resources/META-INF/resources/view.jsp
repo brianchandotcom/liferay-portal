@@ -25,7 +25,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 	</div>
 
 	<react:component
-		module="page_editor/app/index"
-		props="<%= contentPageEditorDisplayContext.getEditorContext(npmResolvedPackageName) %>"
+		module="{App} from layout-content-page-editor-web"
+		props="<%= contentPageEditorDisplayContext.getEditorContext() %>"
 	/>
 </div>

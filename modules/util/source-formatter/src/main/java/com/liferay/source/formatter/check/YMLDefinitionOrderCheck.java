@@ -345,9 +345,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			value2 = matcher.group(1);
 		}
 
-		if (parameter1Type.equals(parameter2Type) &&
-			parameter1Type.equals("query")) {
-
+		if (parameter1Type.equals(parameter2Type)) {
 			return value1.compareTo(value2);
 		}
 

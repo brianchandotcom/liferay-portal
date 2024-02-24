@@ -33,15 +33,29 @@ public class CopyrightCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		String gitWorkingBranchName =
+			sourceFormatterArgs.getGitWorkingBranchName();
+
+		if (gitWorkingBranchName.matches("release-\\d{4}\\.q[1-4]")) {
+			return content;
+		}
+
 		if (!fileName.endsWith(".tpl") && !fileName.endsWith(".vm")) {
-			content = _fixCopyright(fileName, absolutePath, content);
+			content = _fixCopyright(
+				fileName, absolutePath, content, sourceFormatterArgs);
 		}
 
 		return content;
 	}
 
 	private String _fixCopyright(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, String content,
+			SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
 		int x = content.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
@@ -70,11 +84,6 @@ public class CopyrightCheck extends BaseFileCheck {
 
 			return content;
 		}
-
-		SourceProcessor sourceProcessor = getSourceProcessor();
-
-		SourceFormatterArgs sourceFormatterArgs =
-			sourceProcessor.getSourceFormatterArgs();
 
 		for (String currentBranchRenamedFileName :
 				_getCurrentBranchRenamedFileNames(sourceFormatterArgs)) {

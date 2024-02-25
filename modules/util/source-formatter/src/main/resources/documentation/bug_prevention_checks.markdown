@@ -37,6 +37,7 @@ ExceptionPrintStackTraceCheck | .java | Avoid using printStackTrace. |
 FactoryCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds cases where `*Factory` should be used when creating new instances of an object. |
 FilterStringWhitespaceCheck | .java | Finds missing and unnecessary whitespace in the value of the filter string in `ServiceTrackerFactory.open` or `WaiterUtil.waitForFilter`. |
 [GenericTypeCheck](check/generic_type_check.markdown#generictypecheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that generics are always specified to provide compile-time checking and removing the risk of `ClassCastException` during runtime. |
+GradleCommerceDependenciesCheck | .gradle | Checks the modules that are outside of Commerce are not allowed to depend on Commerce modules. |
 [GradleDependencyArtifactsCheck](check/gradle_dependency_artifacts_check.markdown#gradledependencyartifactscheck) | .gradle | Checks that value `default` is not used for attribute `version`. |
 GradleDependencyConfigurationCheck | .gradle | Validates the scope of dependencies in build gradle files. |
 GradleDependencyVersionCheck | .gradle | Checks the version for dependencies in gradle build files. |

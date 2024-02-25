@@ -291,6 +291,18 @@ public class CentralizedThreadLocalTest {
 
 		Assert.assertSame(initialValue, centralizedThreadLocal.get());
 
+		try (SafeCloseable safeCloseable =
+				centralizedThreadLocal.setWithSafeCloseable(value1)) {
+
+			Assert.assertSame(value1, centralizedThreadLocal.get());
+
+			centralizedThreadLocal.remove();
+
+			Assert.assertSame(initialValue, centralizedThreadLocal.get());
+		}
+
+		Assert.assertSame(initialValue, centralizedThreadLocal.get());
+
 		String value2 = "value2";
 
 		try (SafeCloseable safeCloseable1 =
@@ -300,6 +312,18 @@ public class CentralizedThreadLocalTest {
 					centralizedThreadLocal.setWithSafeCloseable(value2)) {
 
 				Assert.assertSame(value2, centralizedThreadLocal.get());
+			}
+
+			Assert.assertSame(value1, centralizedThreadLocal.get());
+
+			try (SafeCloseable safeCloseable3 =
+					centralizedThreadLocal.setWithSafeCloseable(value2)) {
+
+				Assert.assertSame(value2, centralizedThreadLocal.get());
+
+				centralizedThreadLocal.remove();
+
+				Assert.assertSame(initialValue, centralizedThreadLocal.get());
 			}
 
 			Assert.assertSame(value1, centralizedThreadLocal.get());

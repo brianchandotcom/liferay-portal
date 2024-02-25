@@ -179,7 +179,7 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 
 		entry._value = value;
 
-		return () -> entry._value = originalValue;
+		return () -> threadLocalMap.putEntry(this, originalValue);
 	}
 
 	public SafeCloseable setWithSafeCloseable(T value) {
@@ -197,7 +197,7 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 
 		entry._value = value;
 
-		return () -> entry._value = originalValue;
+		return () -> threadLocalMap.putEntry(this, originalValue);
 	}
 
 	@Override

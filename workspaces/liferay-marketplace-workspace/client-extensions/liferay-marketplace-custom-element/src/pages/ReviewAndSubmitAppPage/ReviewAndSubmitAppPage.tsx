@@ -51,8 +51,7 @@ export function ReviewAndSubmitAppPage({
 			productResponse.categories.forEach((category: any) => {
 				if (category.vocabulary === 'marketplace app category') {
 					productCategories.push(category.name);
-				}
-				else if (category.vocabulary === 'marketplace app tags') {
+				} else if (category.vocabulary === 'marketplace app tags') {
 					productTags.push(category.name);
 				}
 			});
@@ -61,9 +60,20 @@ export function ReviewAndSubmitAppPage({
 				productResponse.productSpecifications || [];
 			const skus = productResponse.skus || [];
 
-			const nonTrialSKU = skus.find(
-				({skuOptions: [trialOption]}) => trialOption?.value === 'no'
-			);
+			const isCloud =
+				productSpecifications?.some(
+					({specificationKey, value}) =>
+						specificationKey === 'type' &&
+						((value as unknown) as string) === 'cloud'
+				) ?? false;
+
+			let sku = skus[0];
+
+			if (isCloud) {
+				sku = skus.find(
+					({skuOptions: [trialOption]}) => trialOption?.value === 'no'
+				) as SKU;
+			}
 
 			const dataProduct = {
 				'cpu': '',
@@ -75,7 +85,7 @@ export function ReviewAndSubmitAppPage({
 				'versionDescription': '',
 			};
 
-			nonTrialSKU?.customFields?.forEach(({customValue, name}) => {
+			sku?.customFields?.forEach(({customValue, name}) => {
 				if (name === 'Version') {
 					dataProduct.version = customValue.data as string;
 				}
@@ -133,7 +143,7 @@ export function ReviewAndSubmitAppPage({
 				categories: productCategories,
 				description: productResponse.description['en_US'],
 				name: productResponse.name['en_US'],
-				price: nonTrialSKU?.price as number,
+				price: sku?.price as number,
 				resourceRequirements: {
 					cpu: dataProduct.cpu,
 					ram: dataProduct.ram,
@@ -183,18 +193,6 @@ export function ReviewAndSubmitAppPage({
 										alt="New App logo"
 										className="review-and-submit-app-page-card-header-icon"
 										src={showAppImage(app?.thumbnail)}
-									/>
-
-									<div
-										className="upload-logo-icon"
-										style={{
-											backgroundImage: `url(${showAppImage(
-												app?.thumbnail
-											)})`,
-											backgroundPosition: '50% 50%',
-											backgroundRepeat: 'no-repeat',
-											backgroundSize: 'cover',
-										}}
 									/>
 								</div>
 

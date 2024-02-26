@@ -2802,14 +2802,7 @@ definition {
 		}
 
 		task ("And buyer user logs in and goes to the Notes section of the placed orders details page") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
 
 			Button.click(button = "View");
 

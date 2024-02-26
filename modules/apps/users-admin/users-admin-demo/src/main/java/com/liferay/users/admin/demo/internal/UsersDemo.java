@@ -149,7 +149,7 @@ public class UsersDemo extends BasePortalInstanceLifecycleListener {
 			adminUser.getUserId(), company.getCompanyId(), false, "demo",
 			"demo", false, screenName, screenName + "@liferay.com",
 			company.getLocale(), firstName, StringPool.BLANK, lastName, 0, 0,
-			true, Calendar.JANUARY, 1970, 1970, StringPool.BLANK,
+			true, Calendar.JANUARY, 1, 1970, StringPool.BLANK,
 			UserConstants.TYPE_REGULAR, groupIds, null, null, null, false,
 			null);
 

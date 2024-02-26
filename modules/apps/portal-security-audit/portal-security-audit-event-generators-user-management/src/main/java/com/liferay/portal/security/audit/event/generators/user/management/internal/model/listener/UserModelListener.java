@@ -100,6 +100,7 @@ public class UserModelListener extends BaseModelListener<User> {
 		attributesBuilder.add("reminderQueryAnswer");
 		attributesBuilder.add("reminderQueryQuestion");
 		attributesBuilder.add("screenName");
+		attributesBuilder.add("timeZoneId");
 
 		List<Attribute> attributes = attributesBuilder.getAttributes();
 

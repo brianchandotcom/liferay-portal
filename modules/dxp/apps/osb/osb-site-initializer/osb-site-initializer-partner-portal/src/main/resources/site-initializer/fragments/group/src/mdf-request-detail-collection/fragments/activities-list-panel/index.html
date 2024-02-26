@@ -182,8 +182,8 @@
 
 	[#assign mdf_status = (restClient.get("/c/mdfrequests/${mdf_request_id}").mdfRequestStatus.key)! /]
 		[#list activities as activity]
-			<div class="border-brand-primary-lighten-4 panel" role="tablist">
-				<button aria-controls="mdfRequestActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled collapse-icon collapse-icon-top collapsed panel-header panel-header-link" data-target="#mdfRequestActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
+			<div class="border-brand-primary-lighten-4 form-check-card panel" role="tablist">
+				<button aria-controls="mdfRequestActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled card card-interactive card-type-template collapse-icon collapse-icon-top collapsed panel-header panel-header-link" data-target="#mdfRequestActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
 					<div class="py-2 text-dark">
 						[#if activity.endDate?has_content && activity.startDate?has_content]
 							[@range_date end_date=activity.endDate start_date=activity.startDate /]

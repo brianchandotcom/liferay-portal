@@ -113,13 +113,13 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			Layout draftLayout, Layout layout)
 		throws Exception {
 
-		LayoutStructureUtil.deleteMarkedForDeletionItems(
-			draftLayout.getGroupId(), draftLayout.getPlid());
-
 		UnicodeProperties previousLayouTypeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
+
+		LayoutStructureUtil.deleteMarkedForDeletionItems(
+			draftLayout.getGroupId(), draftLayout.getPlid());
 
 		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
 

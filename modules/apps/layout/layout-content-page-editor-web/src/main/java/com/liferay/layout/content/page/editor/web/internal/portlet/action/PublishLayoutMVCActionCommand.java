@@ -99,9 +99,6 @@ public class PublishLayoutMVCActionCommand
 			long userId)
 		throws Exception {
 
-		LayoutStructureUtil.deleteMarkedForDeletionItems(
-			draftLayout.getGroupId(), draftLayout.getPlid());
-
 		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				layout.getCompanyId(), layout.getGroupId(),
 				Layout.class.getName())) {
@@ -120,6 +117,9 @@ public class PublishLayoutMVCActionCommand
 			_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 
 			layout = _layoutLocalService.getLayout(layout.getPlid());
+
+			LayoutStructureUtil.deleteMarkedForDeletionItems(
+				draftLayout.getGroupId(), draftLayout.getPlid());
 
 			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
 

@@ -12,6 +12,7 @@ export class ListVisualizationModePage {
 	readonly fieldSelectModalContainer: Locator;
 	readonly page: Page;
 	private readonly pageContainer: Locator;
+	private readonly toastContainer: Locator;
 	private readonly viewPage: ViewPage;
 	private readonly visualizationModesPage: VisualizationModesPage;
 
@@ -21,6 +22,7 @@ export class ListVisualizationModePage {
 		);
 		this.page = page;
 		this.pageContainer = page.locator('.list-visualization-mode');
+		this.toastContainer = page.locator('.alert-container');
 		this.viewPage = new ViewPage(page);
 		this.visualizationModesPage = new VisualizationModesPage(page);
 	}
@@ -77,5 +79,19 @@ export class ListVisualizationModePage {
 				name: 'Save',
 			})
 			.click();
+
+		await this.fieldSelectModalContainer.isHidden();
+
+		await this.toastContainer.isVisible();
+
+		await this.page.getByText('Success').waitFor();
+
+		await this.toastContainer
+			.getByRole('button', {
+				name: 'Close',
+			})
+			.click();
+
+		await this.toastContainer.isHidden();
 	}
 }

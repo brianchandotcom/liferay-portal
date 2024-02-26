@@ -51,8 +51,6 @@ test('Assign a field to a list section @LPD-10735', async ({
 
 		await listVisualizationModePage.saveFieldSelection();
 
-		await listVisualizationModePage.page.getByText('Success').waitFor();
-
 		const assignedFieldLocator =
 			await listVisualizationModePage.getAssignedFieldLocator({
 				listSectionLabel,
@@ -79,8 +77,6 @@ test('Assign a field to a list section @LPD-10735', async ({
 			.check();
 
 		await listVisualizationModePage.saveFieldSelection();
-
-		await listVisualizationModePage.page.getByText('Success').waitFor();
 
 		const assignedFieldLocator =
 			await listVisualizationModePage.getAssignedFieldLocator({

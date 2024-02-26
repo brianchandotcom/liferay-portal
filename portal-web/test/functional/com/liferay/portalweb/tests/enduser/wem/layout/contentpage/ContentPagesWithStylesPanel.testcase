@@ -623,7 +623,7 @@ definition {
 				AssertTextEquals(
 					key_fieldLabel = "Text Color",
 					locator1 = "Button#COLOR_PICKER",
-					value1 = "#272833");
+					value1 = "#1C1C24");
 
 				AssertTextEquals(
 					key_text = "Background Color",
@@ -633,7 +633,7 @@ definition {
 				AssertTextEquals(
 					key_text = "Border Color",
 					locator1 = "TextInput#ANY",
-					value1 = "#272833");
+					value1 = "#1C1C24");
 			}
 
 			task ("View the tooltip shown when hover on icon of selectors") {
@@ -658,7 +658,7 @@ definition {
 					locator1 = "Button#COLOR_PICKER");
 
 				AssertVisible(
-					key_content = 272833,
+					key_content = "1C1C24",
 					locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 			}
 		}

@@ -848,8 +848,6 @@ definition {
 			entryTitle = "Potato Blog",
 			groupName = "Test Site");
 
-		var currentDate = DateUtil.getCurrentYear();
-
 		SearchPage.openSearchPage();
 
 		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
@@ -857,14 +855,12 @@ definition {
 		SearchPage.searchWidget(searchTerm = "Potato");
 
 		SearchResults.viewSearchResults(
-			entryDate = ${currentDate},
 			searchAssetSummary = "This is a blog about Potatoes",
 			searchAssetTitle = "Potato Blog",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "Potato");
 
 		SearchResults.viewSearchResults(
-			entryDate = ${currentDate},
 			searchAssetTitle = "Potato Document",
 			searchAssetType = "Document",
 			searchTerm = "Potato");
@@ -874,7 +870,6 @@ definition {
 		SearchPage.searchWidget(searchTerm = "Potato");
 
 		SearchResults.viewSearchResults(
-			entryDate = ${currentDate},
 			searchAssetTitle = "Potato Document",
 			searchAssetType = "Document",
 			searchTerm = "Potato");

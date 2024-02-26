@@ -16,6 +16,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 >
 	<clay:row>
 		<clay:content-row
+			cssClass="autofit-float-sm-down px-2 px-md-0"
 			noGutters="true"
 			verticalAlign="center"
 		>

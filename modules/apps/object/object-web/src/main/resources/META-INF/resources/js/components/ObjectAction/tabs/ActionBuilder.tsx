@@ -15,6 +15,7 @@ import {InputLocalized} from 'frontend-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../../utils/constants';
+import {DisabledGroovyScriptAlert} from '../../DisabledGroovyScriptAlert';
 import {ActionError} from '../ObjectActionContainer';
 import {ActionContainer} from './ActionContainer/ActionContainer';
 import {ConditionContainer} from './ConditionContainer';
@@ -199,6 +200,8 @@ export default function ActionBuilder({
 
 	return (
 		<>
+			{disableGroovyAction && <DisabledGroovyScriptAlert />}
+
 			{infoAlert && (
 				<ClayAlert
 					className="lfr-objects__side-panel-content-container"

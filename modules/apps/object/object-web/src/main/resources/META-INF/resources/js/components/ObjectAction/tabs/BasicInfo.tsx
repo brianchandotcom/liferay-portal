@@ -15,6 +15,9 @@ import React from 'react';
 
 import {defaultLanguageId} from '../../../utils/constants';
 import {toCamelCase} from '../../../utils/string';
+import {DisabledGroovyScriptAlert} from '../../DisabledGroovyScriptAlert';
+
+import './ActionBuilder.scss';
 
 interface BasicInfoProps {
 	disableGroovyAction: boolean;
@@ -36,56 +39,62 @@ export default function BasicInfo({
 	values,
 }: BasicInfoProps) {
 	return (
-		<Card title={Liferay.Language.get('basic-info')}>
-			<InputLocalized
-				error={errors.label}
-				label={Liferay.Language.get('action-label')}
-				name="label"
-				onChange={(label) =>
-					setValues({
-						...values,
-						...(!isApproved &&
-							!values.system && {
-								name: toCamelCase(
-									label[defaultLanguageId] ?? ''
-								),
-							}),
-						label,
-					})
-				}
-				required
-				translations={values.label ?? {[defaultLanguageId]: ''}}
-			/>
+		<>
+			{disableGroovyAction && <DisabledGroovyScriptAlert />}
 
-			<Input
-				disabled={isApproved || values.system}
-				error={errors.name}
-				label={Liferay.Language.get('action-name')}
-				name="name"
-				onChange={handleChange}
-				required
-				value={values.name}
-			/>
-
-			<Input
-				component="textarea"
-				disabled={values.system}
-				error={errors.description}
-				label={Liferay.Language.get('description')}
-				name="description"
-				onChange={handleChange}
-				value={values.description}
-			/>
-
-			<ClayForm.Group>
-				<Toggle
-					disabled={readOnly || values.system || disableGroovyAction}
-					label={Liferay.Language.get('active')}
-					name="indexed"
-					onToggle={(active) => setValues({active})}
-					toggled={values.active}
+			<Card title={Liferay.Language.get('basic-info')}>
+				<InputLocalized
+					error={errors.label}
+					label={Liferay.Language.get('action-label')}
+					name="label"
+					onChange={(label) =>
+						setValues({
+							...values,
+							...(!isApproved &&
+								!values.system && {
+									name: toCamelCase(
+										label[defaultLanguageId] ?? ''
+									),
+								}),
+							label,
+						})
+					}
+					required
+					translations={values.label ?? {[defaultLanguageId]: ''}}
 				/>
-			</ClayForm.Group>
-		</Card>
+
+				<Input
+					disabled={isApproved || values.system}
+					error={errors.name}
+					label={Liferay.Language.get('action-name')}
+					name="name"
+					onChange={handleChange}
+					required
+					value={values.name}
+				/>
+
+				<Input
+					component="textarea"
+					disabled={values.system}
+					error={errors.description}
+					label={Liferay.Language.get('description')}
+					name="description"
+					onChange={handleChange}
+					value={values.description}
+				/>
+
+				<ClayForm.Group>
+					<Toggle
+						disabled={
+							readOnly || values.system || disableGroovyAction
+						}
+						label={Liferay.Language.get('active')}
+						name="indexed"
+						onToggle={(active) => setValues({active})}
+						toggled={values.active}
+					/>
+				</ClayForm.Group>
+			</Card>
+		</>
 	);
 }

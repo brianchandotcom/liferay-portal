@@ -5,6 +5,7 @@
 
 import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
+import './ActionBuilder.scss';
 interface BasicInfoProps {
 	disableGroovyAction: boolean;
 	errors: FormError<ObjectAction & ObjectActionParameters>;

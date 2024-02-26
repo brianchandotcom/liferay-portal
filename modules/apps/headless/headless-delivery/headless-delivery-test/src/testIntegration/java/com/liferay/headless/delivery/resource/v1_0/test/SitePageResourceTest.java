@@ -1283,7 +1283,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		PagePermission[] expectedPagePermissions = {
-			_EXPECTED_PAGE_OWNER_PERMISSIONS
+			_PAGE_PERMISSIONS
 		};
 
 		PagePermission[] inputPagePermissions = {};
@@ -1296,7 +1296,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		PagePermission[] expectedPagePermissions = {
-			_EXPECTED_PAGE_OWNER_PERMISSIONS,
+			_PAGE_PERMISSIONS,
 			new PagePermission() {
 				{
 					actionKeys = new String[] {
@@ -1353,7 +1353,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		PagePermission[] expectedPagePermissions = {
-			_EXPECTED_PAGE_OWNER_PERMISSIONS,
+			_PAGE_PERMISSIONS,
 			new PagePermission() {
 				{
 					actionKeys = new String[] {ActionKeys.VIEW};
@@ -1902,7 +1902,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		"com.liferay.headless.delivery.internal.resource.v1_0." +
 			"SitePageResourceImpl";
 
-	private static final PagePermission _EXPECTED_PAGE_OWNER_PERMISSIONS =
+	private static final PagePermission _PAGE_PERMISSIONS =
 		new PagePermission() {
 			{
 				actionKeys = new String[] {

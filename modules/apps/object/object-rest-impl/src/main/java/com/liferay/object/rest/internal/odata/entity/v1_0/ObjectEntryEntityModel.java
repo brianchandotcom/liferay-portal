@@ -77,7 +77,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 		return new ComplexEntityField(
 			objectRelationship.getName(),
-			_getObjectDefinitionEntityFields(relatedObjectDefinition));
+			_getObjectDefinitionEntityFields(relatedObjectDefinition),
+			relatedObjectDefinition.getName());
 	}
 
 	private EntityField _getEntityField(ObjectField objectField) {

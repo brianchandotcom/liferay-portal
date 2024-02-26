@@ -1282,9 +1282,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPostSiteSitePageSuccessPagePermissionsEmpty()
 		throws Exception {
 
-		PagePermission[] expectedPagePermissions = {
-			_PAGE_PERMISSIONS
-		};
+		PagePermission[] expectedPagePermissions = {_PAGE_PERMISSIONS};
 
 		PagePermission[] inputPagePermissions = {};
 

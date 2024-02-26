@@ -644,6 +644,11 @@ http://www.w3.org/TR/html401/struct/global.html
 				<regexp name="anything"/>
 			</regexp-list>
 		</attribute>
+		<attribute name="sandbox">
+			<regexp-list>
+				<regexp name="anything"/>
+			</regexp-list>
+		</attribute>
 		<attribute name="scrolling">
 			<regexp-list>
 				<regexp name="anything"/>

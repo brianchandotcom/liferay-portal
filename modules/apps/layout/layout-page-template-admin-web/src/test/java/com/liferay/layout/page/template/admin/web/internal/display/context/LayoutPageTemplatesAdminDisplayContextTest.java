@@ -153,6 +153,12 @@ public class LayoutPageTemplatesAdminDisplayContextTest {
 		languageUtil.setLanguage(Mockito.mock(Language.class));
 
 		Mockito.when(
+			languageUtil.get(_httpServletRequest, "display-page-templates")
+		).thenReturn(
+			"Display Page Templates"
+		);
+
+		Mockito.when(
 			languageUtil.get(_httpServletRequest, "masters")
 		).thenReturn(
 			"Masters"
@@ -162,12 +168,6 @@ public class LayoutPageTemplatesAdminDisplayContextTest {
 			languageUtil.get(_httpServletRequest, "page-templates")
 		).thenReturn(
 			"Page Templates"
-		);
-
-		Mockito.when(
-			languageUtil.get(_httpServletRequest, "display-page-templates")
-		).thenReturn(
-			"Display Page Templates"
 		);
 	}
 

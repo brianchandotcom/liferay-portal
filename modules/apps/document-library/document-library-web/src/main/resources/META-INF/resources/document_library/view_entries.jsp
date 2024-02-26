@@ -142,6 +142,13 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 													</div>
 
 													<div class="card-detail">
+														<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && !latestFileVersion.isApproved() && dlViewEntriesDisplayContext.hasApprovedVersion(latestFileVersion.getFileEntryId()) %>'>
+															<liferay-portal-workflow:status
+																showStatusLabel="<%= false %>"
+																status="<%= WorkflowConstants.STATUS_APPROVED %>"
+															/>
+														</c:if>
+
 														<liferay-portal-workflow:status
 															showStatusLabel="<%= false %>"
 															status="<%= latestFileVersion.getStatus() %>"
@@ -305,6 +312,13 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 											cssClass="table-cell-expand-smallest"
 											name="status"
 										>
+											<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && !latestFileVersion.isApproved() && dlViewEntriesDisplayContext.hasApprovedVersion(latestFileVersion.getFileEntryId()) %>'>
+												<liferay-portal-workflow:status
+													showStatusLabel="<%= false %>"
+													status="<%= WorkflowConstants.STATUS_APPROVED %>"
+												/>
+											</c:if>
+
 											<liferay-portal-workflow:status
 												showStatusLabel="<%= false %>"
 												status="<%= latestFileVersion.getStatus() %>"

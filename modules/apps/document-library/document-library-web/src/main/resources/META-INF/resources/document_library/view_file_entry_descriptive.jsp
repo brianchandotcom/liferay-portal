@@ -103,6 +103,13 @@ else {
 </c:if>
 
 <span class="file-entry-status">
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && !latestFileVersion.isApproved() && dlViewFileVersionDisplayContext.hasApprovedVersion() %>'>
+		<liferay-portal-workflow:status
+			showStatusLabel="<%= false %>"
+			status="<%= WorkflowConstants.STATUS_APPROVED %>"
+		/>
+	</c:if>
+
 	<liferay-portal-workflow:status
 		showStatusLabel="<%= false %>"
 		status="<%= latestFileVersion.getStatus() %>"

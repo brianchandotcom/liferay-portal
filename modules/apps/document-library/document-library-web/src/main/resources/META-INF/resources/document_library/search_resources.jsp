@@ -200,6 +200,13 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 														</div>
 
 														<div class="card-detail">
+															<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && !latestFileVersion.isApproved() && dlViewFileVersionDisplayContext.hasApprovedVersion() %>'>
+																<liferay-portal-workflow:status
+																	showStatusLabel="<%= false %>"
+																	status="<%= WorkflowConstants.STATUS_APPROVED %>"
+																/>
+															</c:if>
+
 															<liferay-portal-workflow:status
 																showStatusLabel="<%= false %>"
 																status="<%= latestFileVersion.getStatus() %>"
@@ -363,6 +370,13 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 												cssClass="table-cell-expand-smallest"
 												name="status"
 											>
+												<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") && !latestFileVersion.isApproved() && dlViewFileVersionDisplayContext.hasApprovedVersion() %>'>
+													<liferay-portal-workflow:status
+														showStatusLabel="<%= false %>"
+														status="<%= WorkflowConstants.STATUS_APPROVED %>"
+													/>
+												</c:if>
+
 												<liferay-portal-workflow:status
 													showStatusLabel="<%= false %>"
 													status="<%= latestFileVersion.getStatus() %>"

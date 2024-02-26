@@ -101,7 +101,7 @@ public class SearchResultsPortletDisplayTemplateHandler
 		templateVariableGroup.addVariable(
 			"download-file-size", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY,
-			"getAssetRendererURLDownloadSize()");
+			"getAssetRendererDownloadSize()");
 		templateVariableGroup.addVariable(
 			"download-file-url", SearchResultSummaryDisplayContext.class,
 			PortletDisplayTemplateConstants.ENTRY,

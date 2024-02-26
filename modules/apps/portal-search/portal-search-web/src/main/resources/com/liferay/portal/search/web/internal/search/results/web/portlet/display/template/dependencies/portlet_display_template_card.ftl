@@ -84,7 +84,7 @@
 									<div class="autofit-col c-mr-n2">
 										<span
 											class="lfr-portal-tooltip"
-											title="${languageUtil.format(locale, 'download-x', ['(' + languageUtil.formatStorageSize(entry.getAssetRendererURLDownloadSize(), locale) + ')'])}"
+											title="${languageUtil.format(locale, 'download-x', ['(' + languageUtil.formatStorageSize(entry.getAssetRendererDownloadSize(), locale) + ')'])}"
 										>
 											<@clay.link
 												aria\-label="${languageUtil.format(locale, 'download-x', [entry.getTitle()])}"

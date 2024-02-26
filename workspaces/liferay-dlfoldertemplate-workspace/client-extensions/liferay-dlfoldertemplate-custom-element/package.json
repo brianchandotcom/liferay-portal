@@ -1,4 +1,12 @@
 {
+	"eslintConfig": {
+		"globals": {
+			"Liferay": true
+		},
+		"extends": [
+			"react-app"
+		]
+	},
 	"browserslist": {
 		"development": [
 			"last 1 chrome version",

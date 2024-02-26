@@ -125,6 +125,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		SXPBlueprint sxpBlueprintWithHighlightConfiguration = _addSXPBlueprint(
 			true);
+		SXPBlueprint sxpBlueprintWithoutHighlightConfiguration =
+			_addSXPBlueprint(false);
 
 		_testPostSearchPageWithCategoryFacetConfiguration(assetCategory);
 		_testPostSearchPageWithCategoryTreeFacetConfiguration(assetCategory);
@@ -136,6 +138,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			sxpBlueprintWithHighlightConfiguration);
 		_testPostSearchPageWithKeywords(journalArticle);
 		_testPostSearchPageWithNestedFacetConfiguration(ddmStructure);
+		_testPostSearchPageWithoutHighlightConfiguration(
+			sxpBlueprintWithoutHighlightConfiguration);
 		_testPostSearchPageWithSiteFacetConfiguration();
 		_testPostSearchPageWithTagFacetConfiguration(assetTag);
 		_testPostSearchPageWithTypeFacetConfiguration();
@@ -229,6 +233,19 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		JSONObject configurationJSONObject = JSONUtil.put(
+			"advancedConfiguration",
+			JSONUtil.put(
+				"source",
+				JSONUtil.put(
+					"fetchSource", true
+				).put(
+					"includes",
+					JSONFactoryUtil.createJSONArray(
+					).put(
+						"fullName"
+					)
+				))
+		).put(
 			"generalConfiguration",
 			JSONUtil.put(
 				"searchableAssetTypes",
@@ -639,6 +656,33 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				"path", "ddmFieldArray"
 			).build(),
 			"nested", "test", "test");
+	}
+
+	private void _testPostSearchPageWithoutHighlightConfiguration(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		SearchPage<SearchResult> page =
+			_postSearchPageWithSXPBlueprintConfiguration(
+				_user.getModelClassName(), _user.getFullName(), sxpBlueprint);
+
+		List<SearchResult> searchResults = ListUtil.fromCollection(
+			page.getItems());
+
+		Assert.assertFalse(searchResults.isEmpty());
+
+		Assert.assertTrue(
+			ListUtil.count(
+				searchResults,
+				searchResult -> Objects.equals(
+					searchResult.getTitle(), _user.getFullName())) >= 1);
+
+		Assert.assertEquals(
+			0,
+			ListUtil.count(
+				searchResults,
+				searchResult -> Objects.equals(
+					searchResult.getTitle(), _getUserHighlightedFullName())));
 	}
 
 	private void _testPostSearchPageWithSiteFacetConfiguration()

@@ -337,12 +337,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			WorkflowThreadLocal.setEnabled(false);
 
 			KBArticleImporter kbArticleImporter = new KBArticleImporter(
-				_markdownConverterFactory.create(), this, _portal, _dlURLHelper,
-				_zipReaderFactory);
+				_configurationProvider, _markdownConverterFactory.create(),
+				this, _portal, _dlURLHelper, _zipReaderFactory);
 
 			return kbArticleImporter.processZipFile(
-				_configurationProvider, userId, groupId, parentKbFolderId,
-				prioritizeByNumericalPrefix, inputStream, serviceContext);
+				userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
+				inputStream, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);

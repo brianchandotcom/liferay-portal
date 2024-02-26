@@ -46,10 +46,12 @@ import java.util.Properties;
 public class KBArticleImporter {
 
 	public KBArticleImporter(
+		ConfigurationProvider configurationProvider,
 		MarkdownConverter markdownConverter,
 		KBArticleLocalService kbArticleLocalService, Portal portal,
 		DLURLHelper dlURLHelper, ZipReaderFactory zipReaderFactory) {
 
+		_configurationProvider = configurationProvider;
 		_markdownConverter = markdownConverter;
 		_kbArticleLocalService = kbArticleLocalService;
 		_portal = portal;
@@ -58,8 +60,7 @@ public class KBArticleImporter {
 	}
 
 	public int processZipFile(
-			ConfigurationProvider configurationProvider, long userId,
-			long groupId, long parentKBFolderId,
+			long userId, long groupId, long parentKBFolderId,
 			boolean prioritizeByNumericalPrefix, InputStream inputStream,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -72,9 +73,8 @@ public class KBArticleImporter {
 			ZipReader zipReader = _zipReaderFactory.getZipReader(inputStream);
 
 			return _processKBArticleFiles(
-				configurationProvider, userId, groupId, parentKBFolderId,
-				prioritizeByNumericalPrefix, zipReader, _getMetadata(zipReader),
-				serviceContext);
+				userId, groupId, parentKBFolderId, prioritizeByNumericalPrefix,
+				zipReader, _getMetadata(zipReader), serviceContext);
 		}
 		catch (IOException ioException) {
 			throw new KBArticleImportException(ioException);
@@ -225,8 +225,7 @@ public class KBArticleImporter {
 	}
 
 	private int _processKBArticleFiles(
-			ConfigurationProvider configurationProvider, long userId,
-			long groupId, long parentKBFolderId,
+			long userId, long groupId, long parentKBFolderId,
 			boolean prioritizeByNumericalPrefix, ZipReader zipReader,
 			Map<String, String> metadata, ServiceContext serviceContext)
 		throws PortalException {
@@ -234,7 +233,7 @@ public class KBArticleImporter {
 		int importedKBArticlesCount = 0;
 
 		KBArchive kbArchive = KBArchiveFactoryUtil.createKBArchive(
-			configurationProvider, groupId, zipReader);
+			_configurationProvider, groupId, zipReader);
 
 		Map<KBArchive.File, KBArticle> introFileNameKBArticleMap =
 			new HashMap<>();
@@ -331,6 +330,7 @@ public class KBArticleImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
 
+	private final ConfigurationProvider _configurationProvider;
 	private final DLURLHelper _dlURLHelper;
 	private final KBArticleLocalService _kbArticleLocalService;
 	private final MarkdownConverter _markdownConverter;

@@ -116,33 +116,44 @@ const PublicationTimeline = ({namespace, timelineItemsURL}) => {
 								</ClayLayout.ContentCol>
 
 								<ClayLayout.ContentCol>
-									<TimelineDropdownMenu
-										deleteURL={
-											timelineItem.status.code ===
-											WORKFLOW_STATUS_DRAFT
-												? timelineItem.actions.delete
-														.href
-												: undefined
-										}
-										editURL={
-											timelineItem.status.code ===
-											WORKFLOW_STATUS_DRAFT
-												? getEditURL(timelineItem.id)
-												: undefined
-										}
-										revertURL={
-											timelineItem.status.code ===
-											WORKFLOW_STATUS_APPROVED
-												? getRevertURL(timelineItem.id)
-												: undefined
-										}
-										reviewURL={
-											timelineItem.status.code !==
-											WORKFLOW_STATUS_PENDING
-												? getReviewURL(timelineItem.id)
-												: undefined
-										}
-									/>
+									{timelineItem.actions ? (
+										<TimelineDropdownMenu
+											deleteURL={
+												timelineItem.status.code ===
+													WORKFLOW_STATUS_DRAFT &&
+												!!timelineItem.actions.delete
+													? timelineItem.actions
+															.delete.href
+													: undefined
+											}
+											editURL={
+												timelineItem.status.code ===
+													WORKFLOW_STATUS_DRAFT &&
+												!!timelineItem.actions.update
+													? getEditURL(
+															timelineItem.id
+													  )
+													: undefined
+											}
+											revertURL={
+												timelineItem.status.code ===
+												WORKFLOW_STATUS_APPROVED
+													? getRevertURL(
+															timelineItem.id
+													  )
+													: undefined
+											}
+											reviewURL={
+												timelineItem.status.code !==
+													WORKFLOW_STATUS_PENDING &&
+												!!timelineItem.actions.get
+													? getReviewURL(
+															timelineItem.id
+													  )
+													: undefined
+											}
+										/>
+									) : null}
 								</ClayLayout.ContentCol>
 							</ClayLayout.ContentRow>
 						</ClayPanel.Body>

@@ -83,6 +83,7 @@ const CustomEventList: React.FC<ICustomEventListProps> = ({
 	>(EventDefinitionsQuery, {
 		fetchPolicy: 'network-only',
 		variables: {
+			blocked: false,
 			eventType: EventTypes.Custom,
 			keyword: query,
 			page: page - 1,

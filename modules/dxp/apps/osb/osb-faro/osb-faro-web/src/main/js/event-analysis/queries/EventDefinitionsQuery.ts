@@ -9,6 +9,7 @@ export interface EventDefinitionsData {
 }
 
 export interface EventDefinitionsVariables {
+	blocked?: boolean;
 	eventType: EventTypes;
 	keyword?: string;
 	page?: number;
@@ -21,6 +22,7 @@ export interface EventDefinitionsVariables {
 
 export default gql`
 	query EventDefinitions(
+		$blocked: Boolean
 		$eventType: EventDefinitionType!
 		$hidden: Boolean
 		$keyword: String
@@ -29,6 +31,7 @@ export default gql`
 		$sort: Sort!
 	) {
 		eventDefinitions(
+			blocked: $blocked
 			eventType: $eventType
 			hidden: $hidden
 			keyword: $keyword

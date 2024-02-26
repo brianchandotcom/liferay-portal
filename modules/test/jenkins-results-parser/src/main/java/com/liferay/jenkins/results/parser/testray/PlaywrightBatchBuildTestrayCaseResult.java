@@ -96,6 +96,9 @@ public class PlaywrightBatchBuildTestrayCaseResult
 		List<TestrayAttachment> testrayAttachments =
 			super.getTestrayAttachments();
 
+		testrayAttachments.addAll(getLiferayLogTestrayAttachments());
+		testrayAttachments.addAll(getLiferayOSGiLogTestrayAttachments());
+
 		testrayAttachments.add(getPlaywrightReportTestrayAttachment());
 
 		testrayAttachments.removeAll(Collections.singleton(null));

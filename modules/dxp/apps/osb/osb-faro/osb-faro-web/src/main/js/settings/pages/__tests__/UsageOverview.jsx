@@ -93,7 +93,7 @@ describe('UsageOverview', () => {
 
 		expect(
 			getByText(
-				'Active and logged in users on DXP synced to Analytics Cloud.'
+				'Users synced to Analytics Cloud that are active and logged in on DXP since Jul 08, 2018.'
 			)
 		).toBeInTheDocument();
 
@@ -144,7 +144,7 @@ describe('UsageOverview', () => {
 
 		expect(
 			getByText(
-				'Non-unique visits to any of the pages synced to Analytics Cloud.'
+				'Non-unique visits to any of the pages synced to Analytics Cloud since Jul 08, 2018.'
 			)
 		).toBeInTheDocument();
 
@@ -328,6 +328,90 @@ describe('UsageOverview', () => {
 		);
 
 		expect(queryByText('Manage Subscriptions')).toBeInTheDocument();
+	});
+
+	it('renders current usage message for BASIC PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Basic'
+					})
+				)
+			})
+		);
+
+		const {queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(
+			queryByText(
+				'When either limit is exceeded, the current plan will have to be upgraded to Business or Enterprise.'
+			)
+		).toBeInTheDocument();
+	});
+
+	it('renders current usage message for BUSINESS PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Business'
+					})
+				)
+			})
+		);
+
+		const {queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(
+			queryByText(
+				'When either limit is exceeded, the current plan will either have to be upgraded or add-ons will have to be purchased to accommodate the overage.'
+			)
+		).toBeInTheDocument();
+	});
+
+	it('renders current usage message for ENTERPRISE PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Enterprise'
+					})
+				)
+			})
+		);
+
+		const {queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(
+			queryByText(
+				'When either limit is exceeded, the current plan will either have to be upgraded or add-ons will have to be purchased to accommodate the overage.'
+			)
+		).toBeInTheDocument();
 	});
 });
 

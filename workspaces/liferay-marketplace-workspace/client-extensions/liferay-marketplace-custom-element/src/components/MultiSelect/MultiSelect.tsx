@@ -6,10 +6,6 @@
 import Select, {MultiValue, StylesConfig} from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-import './MultiSelect.scss';
-
-import classNames from 'classnames';
-
 import {FieldBase} from '../FieldBase';
 
 type MultiSelectProps<T> = {
@@ -30,20 +26,35 @@ const colourStyles: StylesConfig<any, true> = {
 	control: (styles) =>
 		({
 			...styles,
-			border: '2px solid #B1B2B9',
-			borderRadius: '8px',
+			':focus-within': {
+				backgroundColor: '#f0f5ff',
+				border: '1px solid #80acff',
+				boxShadow: '0 0 0 0.125rem #fff, 0 0 0 0.25rem #80acff',
+				transition: 'all ease-in-out .3s',
+			},
+			':hover': {
+				background: '1px solid #f0f5ff',
+				outline: 'none',
+				transition: 'all ease-in-out .3s',
+			},
+			'border': '1px solid #B1B2B9',
+			'borderRadius': '8px',
+			'boxShadow': 'none',
+			'transition': 'all ease-in-out .3s',
 		} as any),
+
 	multiValue: (styles) =>
 		({
 			...styles,
-			backgroundColor: '#E6EBF5',
+			backgroundColor: '#f0f5ff',
+			borderRadius: '4px',
 			color: '#1C3667',
 		} as any),
 	multiValueRemove: (styles) =>
 		({
 			...styles,
 			':hover': {
-				backgroundColor: '#1C3667',
+				backgroundColor: '#80acff',
 				color: 'white',
 			},
 			'color': '#1C3667',
@@ -67,7 +78,7 @@ export function MultiSelect<T>({
 
 	return (
 		<FieldBase
-			className={classNames('multiselect-container', className)}
+			className={className}
 			helpMessage={helpMessage}
 			hideFeedback={hideFeedback}
 			label={label}
@@ -76,6 +87,7 @@ export function MultiSelect<T>({
 			tooltip={tooltip}
 		>
 			<Select
+				className="multiselect-container-form-control"
 				components={animatedComponents}
 				isMulti
 				onChange={(newValue) => newValue && onChange(newValue as T)}

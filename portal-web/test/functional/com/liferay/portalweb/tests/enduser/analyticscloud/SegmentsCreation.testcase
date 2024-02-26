@@ -1176,7 +1176,7 @@ definition {
 		task ("Define the first criteria") {
 			ACSegments.selectOperator(operator = "contains");
 
-			ACSegments.editTextCriterion(textInput = "web developer");
+			ACSegments.editTextCriterion(textInput = "QA");
 		}
 
 		task ("Define the second criteria") {
@@ -1196,7 +1196,7 @@ definition {
 		task ("View both criterias in Segment Criteria card") {
 			ACSegments.viewSegmentCriteriaIndividualAttributes(
 				attributeName = "jobTitle",
-				attributeValue = '''"web developer"''',
+				attributeValue = '''"QA"''',
 				condition = "contains",
 				conjunction = "AND");
 

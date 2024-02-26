@@ -525,7 +525,7 @@ definition {
 			UserNavigator.gotoUser(userScreenName = "ac");
 
 			User.editUserInformation(
-				userCustomField = "VIP AC",
+				userCustomField = "Premium",
 				userCustomFieldLabel = "User Custom Field");
 		}
 
@@ -566,7 +566,7 @@ definition {
 
 			ACSegments.selectOperator(operator = "contains");
 
-			ACSegments.editTextCriterion(textInput = "VIP AC");
+			ACSegments.editTextCriterion(textInput = "Premium");
 		}
 
 		task ("View the user shown on the Preview mode") {

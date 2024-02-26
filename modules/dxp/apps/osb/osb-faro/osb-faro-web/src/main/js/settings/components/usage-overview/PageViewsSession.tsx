@@ -1,18 +1,33 @@
+import moment from 'moment';
 import React from 'react';
 import {Colors} from 'shared/util/charts';
 import {CurrentUsage} from './CurrentUsage';
+import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from 'shared/util/date';
 import {STATUS_DISPLAY_MAP} from 'shared/util/subscriptions';
 import {sub} from 'shared/util/lang';
 import {UsageMetric} from './UsageMetric';
+import {useTimeZoneId} from 'shared/hooks';
 
 export const PageViewsSession = ({currentPlan}) => {
+	const timeZoneId = useTimeZoneId();
 	const {count, limit, status} = currentPlan.metrics.get('pageViews');
 
 	return (
 		<UsageMetric
-			description={Liferay.Language.get(
-				'non-unique-visits-to-any-of-the-pages-synced-to-analytics-cloud'
-			)}
+			description={
+				sub(
+					Liferay.Language.get(
+						'non-unique-visits-to-any-of-the-pages-synced-to-analytics-cloud-since-x'
+					),
+					[
+						formatDateToTimeZone(
+							moment(currentPlan.startDate),
+							CUSTOM_DATE_FORMAT,
+							timeZoneId
+						)
+					]
+				) as string
+			}
 			title={Liferay.Language.get('page-views')}
 		>
 			<CurrentUsage

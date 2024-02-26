@@ -1,23 +1,38 @@
+import moment from 'moment';
 import React from 'react';
 import {Colors} from 'shared/util/charts';
 import {CurrentUsage} from './CurrentUsage';
+import {CUSTOM_DATE_FORMAT, formatDateToTimeZone} from 'shared/util/date';
 import {STATUS_DISPLAY_MAP} from 'shared/util/subscriptions';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
 import {UsageMetric} from './UsageMetric';
 import {UsageMetricBarChart} from './UsageMetricBarChart';
+import {useTimeZoneId} from 'shared/hooks';
 
 export const KnownIndividualsSession = ({currentPlan}) => {
+	const timeZoneId = useTimeZoneId();
 	const {count, limit, status} = currentPlan.metrics.get('individuals');
 	const usersCount = currentPlan.metrics.get('usersCount') ?? 0;
 
 	return (
 		<div className='mt-4 mb-5'>
 			<UsageMetric
-				description={Liferay.Language.get(
-					'active-and-logged-in-users-on-dxp-synced-to-analytics-cloud'
-				)}
+				description={
+					sub(
+						Liferay.Language.get(
+							'users-synced-to-analytics-cloud-that-are-active-and-logged-in-on-dxp-since-x'
+						),
+						[
+							formatDateToTimeZone(
+								moment(currentPlan.startDate),
+								CUSTOM_DATE_FORMAT,
+								timeZoneId
+							)
+						]
+					) as string
+				}
 				title={Liferay.Language.get('known-individuals')}
 			>
 				<CurrentUsage

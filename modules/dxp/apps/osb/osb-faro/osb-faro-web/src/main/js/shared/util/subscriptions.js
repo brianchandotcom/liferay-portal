@@ -252,6 +252,8 @@ export function formatPlanData(subscriptionIMap) {
 		subscriptionIMap = new Map();
 	}
 
+	const basicPlan = isBasicPlan({name: subscriptionIMap.get('name')});
+
 	return new Plan(
 		fromJS({
 			addOns: {
@@ -263,11 +265,10 @@ export function formatPlanData(subscriptionIMap) {
 					}, {})
 			},
 			endDate: subscriptionIMap.get('endDate'),
-			lastAnniversaryDate: subscriptionIMap.get('lastAnniversaryDate'),
 			metrics: {
 				individuals: new Metric({
 					count: subscriptionIMap.get(
-						PLAN_TYPES[subscriptionIMap.get('name')] === 'basic'
+						basicPlan
 							? 'individualsCount'
 							: 'individualsCountSinceLastAnniversary',
 						0
@@ -280,7 +281,7 @@ export function formatPlanData(subscriptionIMap) {
 				}),
 				pageViews: new Metric({
 					count: subscriptionIMap.get(
-						PLAN_TYPES[subscriptionIMap.get('name')] === 'basic'
+						basicPlan
 							? 'pageViewsCount'
 							: 'pageViewsCountSinceLastAnniversary',
 						0
@@ -294,7 +295,9 @@ export function formatPlanData(subscriptionIMap) {
 				usersCount: subscriptionIMap.get('usersCount')
 			},
 			name: subscriptionIMap.get('name'),
-			startDate: subscriptionIMap.get('startDate')
+			startDate: basicPlan
+				? subscriptionIMap.get('startDate')
+				: subscriptionIMap.get('lastAnniversaryDate')
 		})
 	);
 }

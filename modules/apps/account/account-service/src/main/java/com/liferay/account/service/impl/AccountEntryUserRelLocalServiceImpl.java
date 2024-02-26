@@ -581,9 +581,17 @@ public class AccountEntryUserRelLocalServiceImpl
 				new EscapableObject<>(accountEntry.getName()));
 
 			mailTemplateContextBuilder.put("[$CREATE_ACCOUNT_URL$]", url);
+
+			String invitationEmailSenderName =
+				accountEntryEmailConfiguration.invitationEmailSenderName();
+
+			if (Validator.isNull(invitationEmailSenderName)) {
+				invitationEmailSenderName = inviter.getFullName();
+			}
+
 			mailTemplateContextBuilder.put(
 				"[$INVITE_SENDER_NAME$]",
-				new EscapableObject<>(inviter.getFullName()));
+				new EscapableObject<>(invitationEmailSenderName));
 
 			MailTemplateContext mailTemplateContext =
 				mailTemplateContextBuilder.build();
@@ -602,9 +610,18 @@ public class AccountEntryUserRelLocalServiceImpl
 				MailTemplateFactoryUtil.createMailTemplate(
 					bodyLocalizedValuesMap.get(inviter.getLocale()), true);
 
+			String invitationEmailSenderEmailAddress =
+				accountEntryEmailConfiguration.
+					invitationEmailSenderEmailAddress();
+
+			if (Validator.isNull(invitationEmailSenderEmailAddress)) {
+				invitationEmailSenderEmailAddress = inviter.getEmailAddress();
+			}
+
 			MailMessage mailMessage = new MailMessage(
 				new InternetAddress(
-					inviter.getEmailAddress(), inviter.getFullName()),
+					invitationEmailSenderEmailAddress,
+					invitationEmailSenderName),
 				new InternetAddress(emailAddress),
 				subjectMailTemplate.renderAsString(
 					inviter.getLocale(), mailTemplateContext),

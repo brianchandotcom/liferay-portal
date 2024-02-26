@@ -5,7 +5,7 @@
 
 import {ClayInput} from '@clayui/form';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';
@@ -180,6 +180,21 @@ const RichText = ({
 
 		return sanitizedHtml;
 	}
+
+	const resetTranslation = useCallback(() => {
+		editorRef.current.editor.setData(currentValue[defaultLocale.localeId]);
+	}, [editorRef, currentValue, defaultLocale]);
+
+	useEffect(() => {
+		Liferay.after('inputLocalized:resetTranslations', resetTranslation);
+
+		return () => {
+			Liferay.detach(
+				'inputLocalized:resetTranslations',
+				resetTranslation
+			);
+		};
+	}, [resetTranslation]);
 
 	return (
 		<FieldBase

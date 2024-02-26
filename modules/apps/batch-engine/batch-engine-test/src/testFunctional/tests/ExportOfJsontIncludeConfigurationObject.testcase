@@ -28,7 +28,7 @@ definition {
 	@priority = 3
 	test JSONTConfigurationObjectContainsCallbackURL {
 		task ("When in Import/Export: exporting DSEnvelope Entity type with JSONT format with all fields to include selected") {
-			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "DSEnvelope (v1_0 - Liferay Digital Signature REST)");
+			ImportExport.exportEntityWithAllFieldsInJsontFormat(entityType = "BlogPosting (v1_0 - Liferay Headless Delivery)");
 		}
 
 		task ("And When I download generated file") {

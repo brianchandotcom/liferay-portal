@@ -270,8 +270,9 @@ function ListSection({
 								{'text-secondary': !field}
 							)}
 						>
-							{field?.name ||
-								Liferay.Language.get('not-assigned')}
+							{field
+								? field.label || field.name
+								: Liferay.Language.get('not-assigned')}
 						</p>
 					</ClayInput.GroupItem>
 

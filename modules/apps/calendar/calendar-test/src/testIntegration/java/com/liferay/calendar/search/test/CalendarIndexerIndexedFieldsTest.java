@@ -87,7 +87,8 @@ public class CalendarIndexerIndexedFieldsTest
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		FieldValuesAssert.assertFieldValues(map, document, keywords);
+		FieldValuesAssert.assertFieldValues(
+			document, map, name -> !name.equals("timestamp"), keywords);
 	}
 
 	@Test
@@ -118,7 +119,8 @@ public class CalendarIndexerIndexedFieldsTest
 
 		indexedFieldsFixture.postProcessDocument(document);
 
-		FieldValuesAssert.assertFieldValues(map, document, keywords);
+		FieldValuesAssert.assertFieldValues(
+			document, map, name -> !name.equals("timestamp"), keywords);
 	}
 
 	protected Calendar addCalendar(

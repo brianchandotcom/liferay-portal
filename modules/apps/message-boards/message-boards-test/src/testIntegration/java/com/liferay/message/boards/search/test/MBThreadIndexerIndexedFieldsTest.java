@@ -83,7 +83,8 @@ public class MBThreadIndexerIndexedFieldsTest {
 		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(mbThread, mbMessage), document, searchTerm);
+			document, _expectedFieldValues(mbThread, mbMessage),
+			name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Rule

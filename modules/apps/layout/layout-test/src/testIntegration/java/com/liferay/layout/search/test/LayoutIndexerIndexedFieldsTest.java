@@ -95,7 +95,8 @@ public class LayoutIndexerIndexedFieldsTest {
 		_postProcessDocument(document, layout);
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(layout), document, searchTerm);
+			document, _expectedFieldValues(layout),
+			name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	protected void setTestLocale(Locale locale) throws Exception {

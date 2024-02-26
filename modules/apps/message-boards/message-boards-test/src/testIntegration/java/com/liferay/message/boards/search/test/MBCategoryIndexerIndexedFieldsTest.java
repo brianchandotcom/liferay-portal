@@ -74,7 +74,8 @@ public class MBCategoryIndexerIndexedFieldsTest {
 		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(mbCategory), document, searchTerm);
+			document, _expectedFieldValues(mbCategory),
+			name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Rule

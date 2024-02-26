@@ -691,12 +691,14 @@ definition {
 			PageEditor.gotoTab(tabName = "Page Content");
 
 			Click(locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE");
-		}
 
-		task ("Then the dropdown menu should have correct accessibility") {
 			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li");
 
+			Click(locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE");
+
 			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[2]");
+
+			Click(locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE");
 
 			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[3]");
 		}
@@ -724,16 +726,22 @@ definition {
 			AssertElementPresent(locator1 = "//button[contains(@type,'button')][@aria-label='Select a language, current language: en-US.']");
 		}
 
-		task ("When the page creator opens the dropdown menu of the language selector") {
-			Click(
+		task ("Then the dropdown menu should have correct accessibility") {
+			Click.clickNoMouseOver(
 				key_currentLocale = StringUtil.lowerCase("en-US"),
 				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
-		}
 
-		task ("Then the dropdown menu should have correct accessibility") {
 			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li");
 
+			Click.clickNoMouseOver(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+
 			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[2]");
+
+			Click.clickNoMouseOver(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
 
 			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[3]");
 		}
@@ -864,16 +872,16 @@ definition {
 				type = "content");
 		}
 
-		task ("When the page creator opens the dropdown menu of page edition mode") {
+		task ("Then the dropdown menu should have correct accessibility") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
 
 			Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
-		}
 
-		task ("Then the dropdown menu should have correct accessibility") {
 			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li");
+
+			Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
 
 			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[2]");
 		}

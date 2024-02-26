@@ -12,19 +12,24 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.test.util.BlogsTestUtil;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
@@ -41,6 +46,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -66,8 +72,10 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -323,6 +331,7 @@ public class StructuredContentResourceTest
 
 		_testGetSiteStructuredContentsPageByDefaultPriority();
 		_testGetSiteStructuredContentsPageByGivenPriority();
+		_testGetSiteStructuredContentsPageFilteredByDateField();
 		_testGetSiteStructuredContentsPageOrderedByDescendingPriority();
 	}
 
@@ -1193,6 +1202,53 @@ public class StructuredContentResourceTest
 			_read("test-structured-content-template.vm"), LocaleUtil.US);
 	}
 
+	private void _assertFilterSiteStructuredContentsPageFilteredByDateField(
+			Locale locale)
+		throws Exception {
+
+		Locale currentLocale = LocaleThreadLocal.getDefaultLocale();
+
+		try {
+			LocaleThreadLocal.setSiteDefaultLocale(locale);
+
+			DDMFormField ddmFormField = _createDDMFormField(
+				false, "Date", DDMFormFieldTypeConstants.DATE);
+
+			String date = DateUtil.getDate(
+				new Date(), "yyyy-MM-dd", LocaleUtil.US);
+
+			JournalArticle journalArticle = JournalTestUtil.addJournalArticle(
+				_dataDefinitionResourceFactory, ddmFormField,
+				_ddmFormValuesToFieldsConverter, locale, date,
+				testGroup.getGroupId(), _journalConverter);
+
+			DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+			Page<StructuredContent> page =
+				structuredContentResource.
+					getContentStructureStructuredContentsPage(
+						ddmStructure.getStructureId(), null, null,
+						"contentFields/Date eq " + date, Pagination.of(1, 10),
+						null);
+
+			Assert.assertNotNull(page);
+
+			List<StructuredContent> items =
+				(List<StructuredContent>)page.getItems();
+
+			Assert.assertEquals(items.toString(), 1, items.size());
+
+			StructuredContent structuredContent = items.get(0);
+
+			Assert.assertEquals(
+				String.valueOf(journalArticle.getResourcePrimKey()),
+				String.valueOf(structuredContent.getId()));
+		}
+		finally {
+			LocaleThreadLocal.setSiteDefaultLocale(currentLocale);
+		}
+	}
+
 	private void _assertLocalizedValue(
 		Map<String, String> localizedValues, String value, String w3cLanguageId,
 		Set<String> w3cLanguageIds) {
@@ -1246,6 +1302,25 @@ public class StructuredContentResourceTest
 		).header(
 			"X-Accept-All-Languages", "true"
 		).build();
+	}
+
+	private DDMFormField _createDDMFormField(
+		boolean localizable, String name, String type) {
+
+		DDMFormField ddmFormField = new DDMFormField(name, type);
+
+		ddmFormField.setDataType(type);
+		ddmFormField.setIndexType("text");
+		ddmFormField.setLocalizable(localizable);
+
+		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
+
+		localizedValue.addString(
+			LocaleUtil.US, RandomTestUtil.randomString(10));
+
+		ddmFormField.setLabel(localizedValue);
+
+		return ddmFormField;
 	}
 
 	private DDMForm _deserialize(String content) {
@@ -1659,6 +1734,15 @@ public class StructuredContentResourceTest
 			postStructuredContent.getId());
 	}
 
+	private void _testGetSiteStructuredContentsPageFilteredByDateField()
+		throws Exception {
+
+		_assertFilterSiteStructuredContentsPageFilteredByDateField(
+			LocaleUtil.fromLanguageId("ar_SA"));
+		_assertFilterSiteStructuredContentsPageFilteredByDateField(
+			LocaleUtil.US);
+	}
+
 	private void _testGetSiteStructuredContentsPageOrderedByDescendingPriority()
 		throws Exception {
 
@@ -1824,6 +1908,13 @@ public class StructuredContentResourceTest
 
 	private BlogsEntry _blogsEntry;
 	private DDMStructure _complexDDMStructure;
+
+	@Inject
+	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
+
+	@Inject
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;
 	private DDMStructure _depotDDMStructure;
@@ -1833,6 +1924,9 @@ public class StructuredContentResourceTest
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private JournalConverter _journalConverter;
 
 	private JournalFolder _journalFolder;
 

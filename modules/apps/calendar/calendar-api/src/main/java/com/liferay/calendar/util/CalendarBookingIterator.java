@@ -97,6 +97,10 @@ public class CalendarBookingIterator implements Iterator<CalendarBooking> {
 			jCalendar.get(Calendar.SECOND), jCalendar.get(Calendar.MILLISECOND),
 			_getTimeZone(_calendarBooking));
 
+		if (_calendarBooking.isRecurring()) {
+			return startTimeJCalendar;
+		}
+
 		int shift = JCalendarUtil.getDSTShift(
 			jCalendar, startTimeJCalendar,
 			_calendarBooking.isAllDay() ? TimeZone.getTimeZone(StringPool.UTC) :

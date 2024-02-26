@@ -6,16 +6,21 @@
 import {test} from '@playwright/test';
 
 import {JournalEditArticlePage} from '../pages/JournalEditArticlePage';
+import {JournalEditArticleTranslationsPage} from '../pages/JournalEditArticleTranslationsPage';
 import {JournalEditTemplatePage} from '../pages/JournalEditTemplatePage';
 import {JournalPage} from '../pages/JournalPage';
 
 const journalPagesTest = test.extend<{
 	journalEditArticlePage: JournalEditArticlePage;
+	journalEditArticleTranslationsPage: JournalEditArticleTranslationsPage;
 	journalEditTemplatePage: JournalEditTemplatePage;
 	journalPage: JournalPage;
 }>({
 	journalEditArticlePage: async ({page}, use) => {
 		await use(new JournalEditArticlePage(page));
+	},
+	journalEditArticleTranslationsPage: async ({page}, use) => {
+		await use(new JournalEditArticleTranslationsPage(page));
 	},
 	journalEditTemplatePage: async ({page}, use) => {
 		await use(new JournalEditTemplatePage(page));

@@ -1136,30 +1136,6 @@ public class GraphQLServletExtender {
 		}
 	}
 
-	private String _getDefaultGraphQLNamespace(ServletData servletData) {
-		String path = servletData.getPath();
-
-		if (path == null) {
-			return null;
-		}
-
-		if (path.startsWith("/")) {
-			path = path.substring(1);
-		}
-
-		String[] pathParts = path.split("/");
-
-		String firstPathPart = StringUtil.removeLast(pathParts[0], "-graphql");
-
-		int index = firstPathPart.indexOf("-rest");
-
-		if (index != -1) {
-			firstPathPart = firstPathPart.substring(0, index);
-		}
-
-		return CamelCaseUtil.toCamelCase(firstPathPart + "_" + pathParts[1]);
-	}
-
 	private GraphQLInputObjectType _getGraphQLInputObjectType(
 		GraphQLDTOContributor<?, ?> graphQLDTOContributor,
 		Map<String, GraphQLType> graphQLTypes) {
@@ -1186,6 +1162,30 @@ public class GraphQLServletExtender {
 		}
 
 		return graphQLInputObjectTypeBuilder.build();
+	}
+
+	private String _getGraphQLNamespace(ServletData servletData) {
+		String path = servletData.getPath();
+
+		if (path == null) {
+			return null;
+		}
+
+		if (path.startsWith("/")) {
+			path = path.substring(1);
+		}
+
+		String[] pathParts = path.split("/");
+
+		String firstPathPart = StringUtil.removeLast(pathParts[0], "-graphql");
+
+		int index = firstPathPart.indexOf("-rest");
+
+		if (index != -1) {
+			firstPathPart = firstPathPart.substring(0, index);
+		}
+
+		return CamelCaseUtil.toCamelCase(firstPathPart + "_" + pathParts[1]);
 	}
 
 	private GraphQLObjectType _getGraphQLObjectType(
@@ -1699,8 +1699,7 @@ public class GraphQLServletExtender {
 			Set<String> graphQLNamespaces = new HashSet<>();
 
 			if (FeatureFlagManagerUtil.isEnabled("LPD-10789")) {
-				String graphQLNamespace = _getDefaultGraphQLNamespace(
-					servletData);
+				String graphQLNamespace = _getGraphQLNamespace(servletData);
 
 				if (graphQLNamespace != null) {
 					graphQLNamespaces.add(graphQLNamespace);
@@ -2688,9 +2687,7 @@ public class GraphQLServletExtender {
 					StringBundler.concat(
 						"This field is deprecated. Please, access this ",
 						fieldType, " through the following path : ", fieldType,
-						"/",
-						_getDefaultGraphQLNamespace(
-							_servletDataMap.get(method)),
+						"/", _getGraphQLNamespace(_servletDataMap.get(method)),
 						"/", method.getName()));
 			}
 

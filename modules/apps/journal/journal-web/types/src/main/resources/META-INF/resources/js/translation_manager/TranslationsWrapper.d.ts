@@ -12,12 +12,14 @@ export interface TranslationsWrapper {
 	defaultLanguageId: Liferay.Language.Locale;
 	fields: Fields;
 	locales: Locale[];
+	namespace: string;
 	selectedLanguageId: Liferay.Language.Locale;
 }
 export default function TranslationsWrapper({
-	defaultLanguageId,
+	defaultLanguageId: currentDefaultLanguageId,
 	fields: initialFields,
 	locales,
+	namespace,
 	selectedLanguageId: initialSelectedLanguageId,
 }: TranslationsWrapper): JSX.Element;
 export declare function fieldToTranslations(

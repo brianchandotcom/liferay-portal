@@ -8,26 +8,40 @@ import {Locator, Page, expect} from '@playwright/test';
 import {ObjectDefinitionsPage} from './ObjectDefinitionsPage';
 
 export class ModelBuilderPage {
+	readonly addObjectFieldButton: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly fitViewButton: Locator;
+	readonly leftSidebarItems: Locator;
+	readonly newObjectFieldSelectBusinessType: Locator;
+	readonly newObjectFieldLabel: Locator;
+	readonly newObjectFieldName: Locator;
+	readonly newObjectFieldSaveButton: Locator;
+	readonly newObjectFieldSelectPicklist: Locator;
 	readonly modalDeleteObjectRelationshipConfirmationButton: Locator;
 	readonly modalDeleteObjectRelationshipTextField: Locator;
 	readonly newObjectRelationshipLabel: Locator;
 	readonly newObjectRelationshipTitle: Locator;
 	readonly newObjectRelationshipType: Locator;
+	readonly newObjectRelationshipSaveButton: Locator;
 	readonly objectDefinitionsPage: ObjectDefinitionsPage;
 	readonly objectDefinitionNodes: Locator;
 	readonly objectRelationshipEdges: Locator;
 	readonly page: Page;
-	readonly saveNewObjectRelationshipButton: Locator;
 	readonly toggleSidebarsButton: Locator;
 
 	constructor(page: Page) {
+		this.addObjectFieldButton = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Add Field',
+		});
 		this.deleteObjectRelationshipButton = page.getByLabel(
 			'Delete Relationship'
 		);
 		this.fitViewButton = page.locator(
 			'button.react-flow__controls-button.react-flow__controls-fitview'
+		);
+		this.leftSidebarItems = page.locator(
+			'li.treeview-item div.autofit-col'
 		);
 		this.modalDeleteObjectRelationshipConfirmationButton = page.getByRole(
 			'button',
@@ -36,6 +50,23 @@ export class ModelBuilderPage {
 		this.modalDeleteObjectRelationshipTextField = page.getByPlaceholder(
 			'Confirm Relationship Name'
 		);
+		this.newObjectFieldSelectBusinessType = page
+			.locator('div.form-group')
+			.filter({hasText: /^TypeMandatorySelect an Option$/})
+			.getByRole('combobox');
+		this.newObjectFieldLabel = page
+			.locator('div.form-group')
+			.filter({hasText: /^LabelMandatory$/})
+			.getByRole('textbox');
+		this.newObjectFieldSaveButton = page
+			.getByLabel('New Field')
+			.getByRole('button', {
+				name: 'Save',
+			});
+		this.newObjectFieldSelectPicklist = page
+			.locator('div.form-group')
+			.filter({hasText: /^PicklistSelect an Option$/})
+			.getByRole('combobox');
 		this.newObjectRelationshipLabel = page
 			.locator('div.form-group')
 			.filter({hasText: /^LabelMandatory$/})
@@ -44,13 +75,15 @@ export class ModelBuilderPage {
 			name: 'New Relationship',
 		});
 		this.newObjectRelationshipType = page.getByText('Many to Many');
+		this.newObjectRelationshipSaveButton = page
+			.getByLabel('New Relationship')
+			.getByRole('button', {
+				name: 'Save',
+			});
 		this.objectDefinitionsPage = new ObjectDefinitionsPage(page);
 		this.objectDefinitionNodes = page.locator('.react-flow__node');
 		this.objectRelationshipEdges = page.locator('.react-flow__edge');
 		this.page = page;
-		this.saveNewObjectRelationshipButton = page.getByRole('button', {
-			name: 'Save',
-		});
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
@@ -81,6 +114,48 @@ export class ModelBuilderPage {
 		this.toggleSidebarsButton.click();
 	}
 
+	async createObjectField({
+		listTypeDefinitionName,
+		mandatory,
+		objectDefinitionName,
+		objectFieldBusinessType,
+		objectFieldLabel,
+	}: createObjectField) {
+		await this.leftSidebarItems
+			.filter({hasText: objectDefinitionName})
+			.click();
+
+		await this.objectDefinitionNodes
+			.filter({hasText: objectDefinitionName})
+			.getByRole('button', {name: 'Add Field or Relationship'})
+			.click();
+
+		await this.addObjectFieldButton.click();
+
+		await this.newObjectFieldLabel.fill(objectFieldLabel);
+
+		await this.newObjectFieldSelectBusinessType.click();
+		await this.page
+			.getByRole('option', {exact: true, name: objectFieldBusinessType})
+			.click();
+
+		if (objectFieldBusinessType === 'Picklist') {
+			await this.newObjectFieldSelectPicklist.click();
+			await this.page
+				.getByRole('option', {
+					exact: true,
+					name: listTypeDefinitionName,
+				})
+				.click();
+		}
+
+		if (mandatory) {
+			await this.page.getByLabel('Mandatory', {exact: true}).check();
+		}
+
+		await this.newObjectFieldSaveButton.click();
+	}
+
 	async createObjectRelationship(
 		objectDefinitionId1: string,
 		objectDefinitionId2: string,
@@ -105,7 +180,7 @@ export class ModelBuilderPage {
 		const responsePromise = this.page.waitForResponse(
 			'**/object-relationships'
 		);
-		await this.saveNewObjectRelationshipButton.click();
+		await this.newObjectRelationshipSaveButton.click();
 		const response = await responsePromise;
 
 		return response.json();

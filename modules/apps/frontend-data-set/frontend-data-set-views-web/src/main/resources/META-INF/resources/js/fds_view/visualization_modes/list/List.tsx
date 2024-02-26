@@ -9,10 +9,13 @@ import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import {fetch, openModal} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import {fetch, openModal, sub} from 'frontend-js-web';
+import React, {ComponentProps, useEffect, useState} from 'react';
 
 import '../../../../css/ListVisualizationMode.scss';
+
+import {ClayDropDownWithItems} from '@clayui/drop-down';
+
 import {IFDSViewSectionProps} from '../../../FDSView';
 import FieldSelectModalContent from '../../../components/FieldSelectModalContent';
 import {API_URL, OBJECT_RELATIONSHIP} from '../../../utils/constants';
@@ -231,7 +234,14 @@ function ListSection({
 }: IListSectionProps) {
 	const {field, label} = listSection;
 
-	const onClick = () => {
+	const clearSeletedField = () => {
+		onSelect({
+			closeModal: () => {},
+			selectedField: null,
+		});
+	};
+
+	const openSelectFieldModal = () => {
 		openModal({
 			className: 'list-visualization-mode-field-select-modal',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
@@ -255,6 +265,48 @@ function ListSection({
 		});
 	};
 
+	let updateButton = (
+		<ClayButtonWithIcon
+			aria-label={Liferay.Language.get('assign-field')}
+			displayType="secondary"
+			onClick={openSelectFieldModal}
+			symbol="plus"
+			title={Liferay.Language.get('assign-field')}
+		/>
+	);
+
+	if (field) {
+		const buttonLabel = sub(Liferay.Language.get('view-x-options'), label);
+
+		const items: ComponentProps<typeof ClayDropDownWithItems>['items'] = [
+			{
+				label: Liferay.Language.get('change-assignment'),
+				onClick: openSelectFieldModal,
+				symbolLeft: 'change',
+			},
+			{
+				label: Liferay.Language.get('clear-assignment'),
+				onClick: clearSeletedField,
+				symbolLeft: 'times-circle',
+			},
+		];
+
+		updateButton = (
+			<ClayDropDownWithItems
+				items={items}
+				trigger={
+					<ClayButtonWithIcon
+						aria-label={buttonLabel}
+						displayType="secondary"
+						size="sm"
+						symbol="ellipsis-v"
+						title={buttonLabel}
+					/>
+				}
+			/>
+		);
+	}
+
 	return (
 		<ClayTable.Row>
 			<ClayTable.Cell className="list-section-label">
@@ -277,13 +329,7 @@ function ListSection({
 					</ClayInput.GroupItem>
 
 					<ClayInput.GroupItem shrink>
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('assign-field')}
-							displayType="secondary"
-							onClick={onClick}
-							symbol="plus"
-							title={Liferay.Language.get('assign-field')}
-						/>
+						{updateButton}
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 			</ClayTable.Cell>

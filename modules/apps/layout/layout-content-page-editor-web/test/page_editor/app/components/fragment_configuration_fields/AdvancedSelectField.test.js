@@ -228,6 +228,8 @@ describe('AdvancedSelectField', () => {
 			value: 'mystyle',
 		});
 
+		userEvent.click(screen.getByTitle('value-from-stylebook'));
+
 		userEvent.click(screen.getByText('Font Size Base'));
 
 		expect(screen.getByLabelText('font-size').tagName).toBe('SELECT');

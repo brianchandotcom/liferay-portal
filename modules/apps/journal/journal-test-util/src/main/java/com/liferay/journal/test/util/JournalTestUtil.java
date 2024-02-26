@@ -832,12 +832,11 @@ public class JournalTestUtil {
 			DataDefinitionResource.Factory dataDefinitionResourceFactory,
 			DDMFormField ddmFormField,
 			DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter,
-			String fieldValue, long groupId, JournalConverter journalConverter)
+			Locale defaultLocale, String fieldValue, long groupId,
+			JournalConverter journalConverter)
 		throws Exception {
 
-		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
-
-		String languageId = LocaleUtil.toLanguageId(locale);
+		String languageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
@@ -865,14 +864,28 @@ public class JournalTestUtil {
 			ddmStructure,
 			_createDDMFormValues(
 				ddmStructure.getDDMForm(),
-				_getDDMFormFieldValue(ddmFormField, fieldValue, locale),
-				locale));
+				_getDDMFormFieldValue(ddmFormField, fieldValue, defaultLocale),
+				defaultLocale));
 
 		String content = journalConverter.getContent(
 			ddmStructure, fields, groupId);
 
 		return addArticleWithXMLContent(
 			groupId, content, dataDefinition.getDataDefinitionKey(), null);
+	}
+
+	public static JournalArticle addJournalArticle(
+			DataDefinitionResource.Factory dataDefinitionResourceFactory,
+			DDMFormField ddmFormField,
+			DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter,
+			String fieldValue, long groupId, JournalConverter journalConverter)
+		throws Exception {
+
+		return addJournalArticle(
+			dataDefinitionResourceFactory, ddmFormField,
+			ddmFormValuesToFieldsConverter,
+			PortalUtil.getSiteDefaultLocale(groupId), fieldValue, groupId,
+			journalConverter);
 	}
 
 	public static void expireArticle(long groupId, JournalArticle article)

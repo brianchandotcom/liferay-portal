@@ -38,6 +38,65 @@ public class RecurrenceUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testExpandCalendarBooking() {
+
+		// Daylight savings, calendar timezone PST, display timezone PST
+
+		Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
+			2024, Calendar.MARCH, 9, 13, 0, 0, 0, _losAngelesTimeZone);
+
+		CalendarBooking calendarBooking = mockCalendarBooking(
+			startTimeJCalendar, "RRULE:FREQ=DAILY;COUNT=2;INTERVAL=1",
+			_losAngelesTimeZone);
+
+		List<CalendarBooking> expandedCalendarBookings =
+			RecurrenceUtil.expandCalendarBooking(
+				calendarBooking, startTimeJCalendar.getTimeInMillis(),
+				startTimeJCalendar.getTimeInMillis() + Time.DAY + Time.HOUR,
+				_losAngelesTimeZone, 0);
+
+		CalendarBooking expandedCalendarBooking = expandedCalendarBookings.get(
+			0);
+
+		Calendar calendar = JCalendarUtil.getJCalendar(
+			expandedCalendarBooking.getStartTime(), _losAngelesTimeZone);
+
+		Assert.assertEquals(9, calendar.get(Calendar.DAY_OF_MONTH));
+		Assert.assertEquals(13, calendar.get(Calendar.HOUR_OF_DAY));
+
+		expandedCalendarBooking = expandedCalendarBookings.get(1);
+
+		calendar = JCalendarUtil.getJCalendar(
+			expandedCalendarBooking.getStartTime(), _losAngelesTimeZone);
+
+		Assert.assertEquals(10, calendar.get(Calendar.DAY_OF_MONTH));
+		Assert.assertEquals(13, calendar.get(Calendar.HOUR_OF_DAY));
+
+		// Daylight savings, calendar timezone PST, display timezone UTC
+
+		expandedCalendarBookings = RecurrenceUtil.expandCalendarBooking(
+			calendarBooking, startTimeJCalendar.getTimeInMillis(),
+			startTimeJCalendar.getTimeInMillis() + Time.DAY + Time.HOUR,
+			_utcTimeZone, 0);
+
+		expandedCalendarBooking = expandedCalendarBookings.get(0);
+
+		calendar = JCalendarUtil.getJCalendar(
+			expandedCalendarBooking.getStartTime(), _utcTimeZone);
+
+		Assert.assertEquals(9, calendar.get(Calendar.DAY_OF_MONTH));
+		Assert.assertEquals(21, calendar.get(Calendar.HOUR_OF_DAY));
+
+		expandedCalendarBooking = expandedCalendarBookings.get(1);
+
+		calendar = JCalendarUtil.getJCalendar(
+			expandedCalendarBooking.getStartTime(), _utcTimeZone);
+
+		Assert.assertEquals(10, calendar.get(Calendar.DAY_OF_MONTH));
+		Assert.assertEquals(20, calendar.get(Calendar.HOUR_OF_DAY));
+	}
+
+	@Test
 	public void testGetLastCalendarBookingInstance() {
 		Calendar lastInstanceStartTimeJCalendar = getJan2016Calendar(23);
 
@@ -384,6 +443,12 @@ public class RecurrenceUtilTest {
 	protected List<CalendarBooking> getRecurringCalendarBookings(
 		Object... objects) {
 
+		return getRecurringCalendarBookings(_utcTimeZone, objects);
+	}
+
+	protected List<CalendarBooking> getRecurringCalendarBookings(
+		TimeZone timeZone, Object... objects) {
+
 		List<CalendarBooking> calendarBookings = new ArrayList<>();
 
 		for (int i = 0; i < objects.length; i += 2) {
@@ -391,7 +456,7 @@ public class RecurrenceUtilTest {
 			String recurrence = (String)objects[i + 1];
 
 			CalendarBooking calendarBooking = mockCalendarBooking(
-				startTimeJCalendar, recurrence);
+				startTimeJCalendar, recurrence, timeZone);
 
 			calendarBookings.add(calendarBooking);
 		}
@@ -400,7 +465,7 @@ public class RecurrenceUtilTest {
 	}
 
 	protected CalendarBooking mockCalendarBooking(
-		Calendar startTimeJCalendar, String recurrence) {
+		Calendar startTimeJCalendar, String recurrence, TimeZone timeZone) {
 
 		CalendarBooking calendarBooking = Mockito.mock(
 			CalendarBookingImpl.class, Mockito.CALLS_REAL_METHODS);
@@ -411,7 +476,7 @@ public class RecurrenceUtilTest {
 		calendarBooking.setRecurrence(recurrence);
 
 		Mockito.doReturn(
-			_utcTimeZone
+			timeZone
 		).when(
 			calendarBooking
 		).getTimeZone();

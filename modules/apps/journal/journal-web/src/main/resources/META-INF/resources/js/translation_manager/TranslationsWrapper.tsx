@@ -5,7 +5,7 @@
 
 import classNames from 'classnames';
 import {Locale} from 'frontend-js-components-web';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import TranslationManager from './TranslationManager';
 import TranslationOptions from './TranslationOptions';
@@ -16,15 +16,20 @@ export interface TranslationsWrapper {
 	defaultLanguageId: Liferay.Language.Locale;
 	fields: Fields;
 	locales: Locale[];
+	namespace: string;
 	selectedLanguageId: Liferay.Language.Locale;
 }
 
 export default function TranslationsWrapper({
-	defaultLanguageId,
+	defaultLanguageId: currentDefaultLanguageId,
 	fields: initialFields,
 	locales,
+	namespace,
 	selectedLanguageId: initialSelectedLanguageId,
 }: TranslationsWrapper) {
+	const [defaultLanguageId, setDeafultLanguageId] = useState(
+		currentDefaultLanguageId
+	);
 	const [fields, setFields] = useState(initialFields);
 	const [translations, setTranslations] = useState(
 		fieldToTranslations(initialFields)
@@ -92,6 +97,36 @@ export default function TranslationsWrapper({
 		  }
 		: null;
 
+	const defaultLocaleChangeHandler = (event: any) => {
+		const selectedLanguageId = event.item.getAttribute('data-value');
+
+		const defaultLanguageIdInput = document.getElementById(
+			`${namespace}defaultLanguageId`
+		) as HTMLInputElement;
+
+		if (defaultLanguageIdInput) {
+			defaultLanguageIdInput.value = selectedLanguageId;
+		}
+
+		setDeafultLanguageId(selectedLanguageId);
+		setSelectedLanguageId(selectedLanguageId);
+	};
+
+	useEffect(() => {
+		Liferay.on(
+			'inputLocalized:defaultLocaleChanged',
+			defaultLocaleChangeHandler
+		);
+
+		return () => {
+			Liferay.detach(
+				'inputLocalized:defaultLocaleChanged',
+				defaultLocaleChangeHandler as () => void
+			);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<>
 			<div
@@ -104,6 +139,7 @@ export default function TranslationsWrapper({
 					fields={fields}
 					getLocalizableFields={getLocalizableFields}
 					locales={locales}
+					namespace={namespace}
 					selectedLanguageId={selectedLanguageId}
 					setFields={setFields}
 					setSelectedLanguageId={setSelectedLanguageId}

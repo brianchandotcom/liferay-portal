@@ -83,6 +83,8 @@ journalEditArticleDisplayContext.setViewAttributes();
 											).put(
 												"locales", journalEditArticleDisplayContext.getLocales()
 											).put(
+												"namespace", liferayPortletResponse.getNamespace()
+											).put(
 												"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
 											).build()
 										%>'

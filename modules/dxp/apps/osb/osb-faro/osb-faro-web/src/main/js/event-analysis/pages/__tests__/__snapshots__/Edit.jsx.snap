@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Event Analysis Edit should render 1`] = `
-<div>
+<div
+  aria-hidden="true"
+  data-aria-hidden="true"
+>
   <div
     class="index-root create-event-analysis-root"
   >
@@ -432,7 +435,7 @@ exports[`Event Analysis Edit should render 1`] = `
                   class="dropdown"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-7"
+                    aria-controls="clay-dropdown-menu-6"
                     aria-expanded="false"
                     aria-haspopup="true"
                     aria-label="Add"
@@ -535,7 +538,7 @@ exports[`Event Analysis Edit should render 1`] = `
                 class="dropdown dropdown-range-key-root"
               >
                 <button
-                  aria-controls="clay-dropdown-menu-8"
+                  aria-controls="clay-dropdown-menu-7"
                   aria-expanded="false"
                   aria-haspopup="true"
                   class="dropdown-toggle button-root btn btn-outline-borderless btn-sm btn-outline-secondary"

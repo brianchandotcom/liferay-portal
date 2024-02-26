@@ -66,41 +66,40 @@ exports[`StringFilter should render 1`] = `
             class=""
           >
             <div
-              class="dropdown dropdown-root base-select-container"
+              class="input-group select-input-root"
             >
               <div
-                aria-controls="clay-dropdown-menu-1"
-                aria-expanded="false"
-                aria-haspopup="true"
-                class="dropdown-toggle"
+                class="input-group-item"
               >
+                <input
+                  aria-autocomplete="list"
+                  aria-controls="clay-id-1"
+                  aria-expanded="false"
+                  aria-labelledby="clay-autocomplete-label-1"
+                  autocomplete="off"
+                  autocorrect="off"
+                  class="form-control input-group-inset input-group-inset-after"
+                  id="clay-autocomplete-1"
+                  role="combobox"
+                  spellcheck="false"
+                  type="text"
+                  value=""
+                />
                 <div
-                  class="input-group base-select-input-root select-input-root"
+                  aria-label="Loading"
+                  aria-valuemax="100"
+                  aria-valuemin="0"
+                  class="input-group-inset-item input-group-inset-item-after"
+                  role="progressbar"
                 >
-                  <div
-                    class="input-group-item"
+                  <span
+                    class="inline-item inline-item-middle"
                   >
-                    <input
-                      autocomplete="off"
-                      class="input-root form-control input-group-inset input-group-inset-after"
-                      name="value"
-                      placeholder=""
-                      type="text"
-                      value=""
+                    <span
+                      aria-hidden="true"
+                      class="loading-animation loading-animation-sm"
                     />
-                    <div
-                      class="input-group-inset-item input-group-inset-item-after"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-caret-bottom icon-root"
-                        role="presentation"
-                      >
-                        <use
-                          href="#caret-bottom"
-                        />
-                      </svg>
-                    </div>
-                  </div>
+                  </span>
                 </div>
               </div>
             </div>

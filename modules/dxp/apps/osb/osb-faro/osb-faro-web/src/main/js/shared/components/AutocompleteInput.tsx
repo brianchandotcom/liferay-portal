@@ -1,4 +1,5 @@
 import ClayAutocomplete from '@clayui/autocomplete';
+import getCN from 'classnames';
 import React, {useEffect, useState} from 'react';
 import {DocumentNode} from 'graphql';
 import {NetworkStatus} from '@clayui/data-provider';
@@ -90,7 +91,7 @@ const AutocompleteInput: React.FC<IAutocompleteProps> = ({
 		<ClayAutocomplete
 			active={!!value}
 			aria-labelledby='clay-autocomplete-label-1'
-			className={className}
+			className={getCN('select-input-root', className)}
 			data-testid={testId}
 			disabled={disabled}
 			id='clay-autocomplete-1'

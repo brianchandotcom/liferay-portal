@@ -200,7 +200,7 @@ exports[`NewRequestModal renders 1`] = `
                             >
                               <input
                                 aria-autocomplete="list"
-                                aria-controls="clay-id-1"
+                                aria-controls="clay-id-2"
                                 aria-expanded="false"
                                 autocomplete="off"
                                 autocorrect="off"

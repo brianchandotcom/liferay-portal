@@ -23,7 +23,7 @@ export default {
 	'liferay.dlfoldertemplate.oauth.application.user.agent.oauth2.user.agent.client.id':
 		'id-f39269e7-1412-ea1c-30b2-8da323478c',
 	'liferay.oauth.application.external.reference.codes':
-		'liferay-dlfoldertemplate-oauth-application-server,liferay-dlfoldertemplate-oauth-application-user-agent',
+		'liferay-dlfoldertemplate-etc-node-oauth-application-server,liferay-dlfoldertemplate-oauth-application-user-agent',
 	'ready.path': '/ready',
 	'server.port': 8050,
 };

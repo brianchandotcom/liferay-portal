@@ -89,6 +89,48 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 		assertEquals(false, testDTO, jsonObject);
 	}
 
+	@FeatureFlags("LPD-10789")
+	@Test
+	public void testMutationWithGraphQLNamespace() throws Exception {
+
+		// With namespace
+
+		TestDTO testDTO = new TestDTO();
+
+		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
+			invoke(
+				new GraphQLField(
+					"testPath_v1_0",
+					new GraphQLField(
+						"createTestDTO",
+						Collections.singletonMap(
+							"testDTO", toGraphQLString(testDTO)),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string"))),
+				"mutation"),
+			"JSONObject/data", "JSONObject/testPath_v1_0",
+			"JSONObject/createTestDTO");
+
+		assertEquals(false, testDTO, jsonObject);
+
+		// Without namespace (backwards compatibility)
+
+		testDTO = new TestDTO();
+
+		jsonObject = JSONUtil.getValueAsJSONObject(
+			invoke(
+				new GraphQLField(
+					"createTestDTO",
+					Collections.singletonMap(
+						"testDTO", toGraphQLString(testDTO)),
+					new GraphQLField("id"), new GraphQLField("map"),
+					new GraphQLField("string")),
+				"mutation"),
+			"JSONObject/data", "JSONObject/createTestDTO");
+
+		assertEquals(false, testDTO, jsonObject);
+	}
+
 	@Test
 	public void testQuery() throws Exception {
 		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
@@ -270,6 +312,40 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 			0, () -> _test(-1, -1, null, -1));
 		PaginationConfigurationTestUtil.withPageSizeLimit(
 			0, () -> _test(-1, -1, null, 0));
+	}
+
+	@FeatureFlags("LPD-10789")
+	@Test
+	public void testQueryWithGraphQLNamespace() throws Exception {
+
+		// With namespace
+
+		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
+			invoke(
+				new GraphQLField(
+					"testPath_v1_0",
+					new GraphQLField(
+						"testDTO", new GraphQLField("extendedString"),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string"))),
+				"query"),
+			"JSONObject/data", "JSONObject/testPath_v1_0",
+			"JSONObject/testDTO");
+
+		assertEquals(true, _testDTO, jsonObject);
+
+		// Without namespace (backwards compatibility)
+
+		jsonObject = JSONUtil.getValueAsJSONObject(
+			invoke(
+				new GraphQLField(
+					"testDTO", new GraphQLField("extendedString"),
+					new GraphQLField("id"), new GraphQLField("map"),
+					new GraphQLField("string")),
+				"query"),
+			"JSONObject/data", "JSONObject/testDTO");
+
+		assertEquals(true, _testDTO, jsonObject);
 	}
 
 	@Test

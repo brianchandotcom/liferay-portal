@@ -7,6 +7,7 @@ import {z} from 'zod';
 
 import {Liferay} from '../liferay/liferay';
 import zodSchema from '../schema/zod';
+import fetcher from '../services/fetcher';
 import {axios} from './axios';
 
 const headers = {
@@ -215,12 +216,8 @@ export async function createImageAxios({
 }
 
 export function deleteAttachment(attachmentId: string) {
-	return fetch(
-		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/attachment/${attachmentId}`,
-		{
-			headers,
-			method: 'DELETE',
-		}
+	return fetcher.delete(
+		`/o/headless-commerce-admin-catalog/v1.0/attachment/${attachmentId}`
 	);
 }
 

@@ -40,7 +40,7 @@ export function CheckboxCard({
 				checked={checked}
 				disabled={disabled}
 				id={label}
-				onClick={() => !disabled && onChange(label)}
+				onChange={() => onChange(label)}
 			/>
 			<div className="mx-2 w-100">
 				<h4>{label}</h4>

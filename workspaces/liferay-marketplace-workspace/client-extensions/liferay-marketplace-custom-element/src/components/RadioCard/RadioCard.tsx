@@ -39,13 +39,13 @@ export function RadioCard({
 	tooltip,
 }: RadioCardProps) {
 	return (
-		<div
+		<label
 			className={classNames('radio-card radio-card-container', {
 				'radio-card-container-disabled': disabled,
 				'radio-card-container-selected': selected,
 				'radio-card-container-small': small,
 			})}
-			onClick={() => !disabled && onChange()}
+			htmlFor={title}
 		>
 			<div className="radio-card-main-info">
 				<div className="radio-card-title">
@@ -70,6 +70,7 @@ export function RadioCard({
 								className={classNames('radio-card-button', {
 									'radio-card-button-disabled': disabled,
 								})}
+								id={title}
 								onClick={() => !disabled && onChange()}
 							>
 								<img
@@ -128,6 +129,7 @@ export function RadioCard({
 				{position === 'right' &&
 					(toggle ? (
 						<ClayToggle
+							id={title}
 							onToggle={(toggleValue) => onChange(toggleValue)}
 							toggled={selected}
 						/>
@@ -152,6 +154,6 @@ export function RadioCard({
 			</div>
 
 			<span className="radio-card-description">{description}</span>
-		</div>
+		</label>
 	);
 }

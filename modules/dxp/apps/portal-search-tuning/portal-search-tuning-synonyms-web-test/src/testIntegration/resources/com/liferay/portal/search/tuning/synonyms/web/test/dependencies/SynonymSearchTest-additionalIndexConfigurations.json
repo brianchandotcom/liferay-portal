@@ -9,7 +9,8 @@
 					"custom-synonym-filter-fr",
 					"french_stemmer"
 				],
-				"tokenizer": "standard"
+				"tokenizer": "standard",
+				"type": "custom"
 			}
 		},
 		"filter": {

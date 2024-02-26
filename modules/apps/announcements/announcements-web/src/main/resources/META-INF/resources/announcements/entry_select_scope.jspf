@@ -9,7 +9,7 @@
 boolean hasDistributionScope = false;
 %>
 
-<aui:select changesContext="<%= submitOnChange %>" name="distributionScope" onChange='<%= submitOnChange ? liferayPortletResponse.getNamespace() + "selectDistributionScope(this.value);" : "" %>' showEmptyOption="<%= true %>">
+<aui:select changesContext="<%= submitOnChange %>" name="distributionScope" onChange='<%= submitOnChange ? liferayPortletResponse.getNamespace() + "selectDistributionScope(this.value);" : "" %>'>
 	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS) %>">
 
 		<%

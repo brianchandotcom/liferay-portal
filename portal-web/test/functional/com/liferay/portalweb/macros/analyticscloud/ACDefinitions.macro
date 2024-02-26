@@ -2,34 +2,17 @@ definition {
 
 	@summary = "Default summary"
 	macro addMultipleSearchQuerySuccessfully(query_list = null) {
-		var key_queryList = ${query_list};
-		var flag = 0;
-		var aux = "";
+		var index = 0;
 
-		for (var x : list ${key_queryList}) {
-			if (${flag} == 0) {
-				Click(locator1 = "Icon#PLUS");
+		for (var x : list ${query_list}) {
+			Click(locator1 = "Icon#PLUS");
 
-				Type(
-					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT",
-					value1 = ${x});
+			Type(
+				key_index = ${index},
+				locator1 = "ACDefinitions#SEARCH_QUERY_INPUT_INDEX",
+				value1 = ${x});
 
-				var flag = 1;
-			}
-			else {
-				Click(
-					key_query = ${aux},
-					locator1 = "ACDefinitions#SEARCH_QUERY_ADD_BUTTON");
-
-				Type(
-					key_index = ${flag},
-					locator1 = "ACDefinitions#SEARCH_QUERY_INPUT_INDEX",
-					value1 = ${x});
-
-				var flag = ${flag} + 1;
-			}
-
-			var aux = ${x};
+			var index = ${index} + 1;
 		}
 
 		Button.clickSave();

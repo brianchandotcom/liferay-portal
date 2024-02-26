@@ -68,6 +68,7 @@ export function FileList({
 						<ImageFileItem
 							index={index}
 							isProcessing={isProcessing}
+							key={index}
 							onArrowClick={onArrowClick}
 							onDelete={onDelete}
 							position={uploadedFiles.length}

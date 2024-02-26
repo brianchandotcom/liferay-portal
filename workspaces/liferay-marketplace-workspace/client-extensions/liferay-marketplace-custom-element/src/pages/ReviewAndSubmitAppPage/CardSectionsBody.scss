@@ -109,8 +109,13 @@
 
 	&-tags {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 8px;
 		margin-top: 22px;
+
+		.tag {
+			white-space: nowarp;
+		}
 	}
 
 	&-version {

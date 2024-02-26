@@ -243,7 +243,7 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 	const {data: product} = useDeliveryProduct(getUrlParam('productId') ?? '');
 
 	const isCloudApp =
-		product?.productSpecifications.some(
+		product?.productSpecifications?.some(
 			({specificationKey, value}) =>
 				specificationKey === 'type' && value === 'cloud'
 		) ?? false;

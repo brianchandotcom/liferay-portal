@@ -960,9 +960,16 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			</if>
 
 			<if>
-				<contains string="${suite.search.engine}" substring="opensearch" />
+				<contains string="${suite.search.engine}" substring="opensearch2" />
 				<then>
-					<ant antfile="build-test-elasticsearch7.xml" target="start-opensearch" />
+					<ant antfile="build-test-opensearch2.xml" target="start-opensearch" />
+
+					<if>
+						<contains string="${test.batch.name}" substring="unit" />
+						<then>
+							<property name="run.opensearch2.unit.tests" value="true" />
+						</then>
+					</if>
 				</then>
 			</if>
 		</sequential>
@@ -3257,9 +3264,9 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 			</if>
 
 			<if>
-				<contains string="${suite.search.engine}" substring="opensearch" />
+				<contains string="${suite.search.engine}" substring="opensearch2" />
 				<then>
-					<ant antfile="build-test-elasticsearch7.xml" target="stop-opensearch" />
+					<ant antfile="build-test-opensearch2.xml" target="stop-opensearch" />
 				</then>
 			</if>
 		</sequential>
@@ -7132,6 +7139,7 @@ information. Make sure to commit in all format-javadoc results.
 				<run-modules-junit-test test.class.group="${test.class.group}" test.task="test">
 					<arg value="--continue" />
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
+					<arg if:true="${run.opensearch2.unit.tests}" value="-Dcom.liferay.portal.search.opensearch2.test.unit.enabled=true" />
 					<arg if:true="${run.solr.unit.tests}" value="-Dcom.liferay.portal.search.solr8.test.unit.started=true" />
 					<arg value="-Djunit.code.coverage=${test.batch.code.coverage}" />
 					<arg if:set="project.templates.test.builds" value="-Dproject.templates.test.builds=${project.templates.test.builds}" />

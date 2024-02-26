@@ -7009,7 +7009,7 @@ go</echo>
 					<istrue value="${opensearch.enabled}" />
 				</or>
 				<then>
-					<ant antfile="build-test-elasticsearch7.xml" target="start-opensearch" />
+					<ant antfile="build-test-opensearch2.xml" target="start-opensearch" />
 				</then>
 			</if>
 
@@ -8333,7 +8333,7 @@ ${docker.start.error}</fail>
 					<istrue value="${opensearch.enabled}" />
 				</or>
 				<then>
-					<ant antfile="build-test-elasticsearch7.xml" target="stop-opensearch" />
+					<ant antfile="build-test-opensearch2.xml" target="stop-opensearch" />
 				</then>
 			</if>
 		</sequential>

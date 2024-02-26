@@ -30,6 +30,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -54,6 +56,8 @@ import com.liferay.portal.search.rest.pagination.SearchPage;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.search.experiences.model.SXPBlueprint;
+import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
 import java.net.URLEncoder;
 
@@ -119,12 +123,17 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		ObjectDefinition objectDefinition =
 			_addObjectDefinitionWithObjectEntry();
 
+		SXPBlueprint sxpBlueprintWithHighlightConfiguration = _addSXPBlueprint(
+			true);
+
 		_testPostSearchPageWithCategoryFacetConfiguration(assetCategory);
 		_testPostSearchPageWithCategoryTreeFacetConfiguration(assetCategory);
 		_testPostSearchPageWithCustomFacetConfiguration();
 		_testPostSearchPageWithDateRangeFacetConfiguration();
 		_testPostSearchPageWithEmbeddedNestedFields(objectDefinition);
 		_testPostSearchPageWithFolderFacetConfiguration(journalArticle);
+		_testPostSearchPageWithHighlightConfiguration(
+			sxpBlueprintWithHighlightConfiguration);
 		_testPostSearchPageWithKeywords(journalArticle);
 		_testPostSearchPageWithNestedFacetConfiguration(ddmStructure);
 		_testPostSearchPageWithSiteFacetConfiguration();
@@ -216,6 +225,32 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		return objectDefinition;
 	}
 
+	private SXPBlueprint _addSXPBlueprint(boolean highlightConfiguration)
+		throws Exception {
+
+		JSONObject configurationJSONObject = JSONUtil.put(
+			"generalConfiguration",
+			JSONUtil.put(
+				"searchableAssetTypes",
+				JSONUtil.put("com.liferay.portal.kernel.model.User"))
+		).put(
+			"queryConfiguration", JSONUtil.put("applyIndexerClauses", true)
+		);
+
+		if (highlightConfiguration) {
+			configurationJSONObject.put(
+				"highlightConfiguration",
+				_createSXPBlueprintHighlightConfigurationJSON());
+		}
+
+		return _sxpBlueprintLocalService.addSXPBlueprint(
+			null, _user.getUserId(), configurationJSONObject.toString(),
+			Collections.singletonMap(_locale, StringPool.BLANK), null,
+			StringPool.BLANK,
+			Collections.singletonMap(_locale, RandomTestUtil.randomString()),
+			_serviceContext);
+	}
+
 	private SearchPage<SearchResult> _assertFacetConfiguration(
 			boolean anyMatch, Map<String, Object> facetAttributes,
 			String facetName, Object facetValues, Object... expectedValues)
@@ -279,6 +314,34 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			anyMatch, null, facetName, facetValues, expectedValues);
 	}
 
+	private JSONObject _createSXPBlueprintHighlightConfigurationJSON() {
+		JSONObject fieldsJSONObject = JSONUtil.put(
+			"fullName",
+			JSONUtil.put(
+				"fragment_size", 100
+			).put(
+				"number_of_fragments", 10
+			));
+
+		return JSONUtil.put(
+			"fields", fieldsJSONObject
+		).put(
+			"post_tags",
+			JSONFactoryUtil.createJSONArray(
+			).put(
+				"</liferay-hl>"
+			)
+		).put(
+			"pre_tags",
+			JSONFactoryUtil.createJSONArray(
+			).put(
+				"<liferay-hl>"
+			)
+		).put(
+			"require_field_match", true
+		);
+	}
+
 	private String _getEndpointURL(
 			String entryClassNames, String filter, String keywords,
 			String nestedFields)
@@ -339,6 +402,12 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		return map;
 	}
 
+	private String _getUserHighlightedFullName() {
+		return StringBundler.concat(
+			"<liferay-hl>", _user.getFirstName(), "</liferay-hl> ",
+			"<liferay-hl>", _user.getLastName(), "</liferay-hl>");
+	}
+
 	private SearchPage<SearchResult> _postSearchPage(String keywords)
 		throws Exception {
 
@@ -385,6 +454,25 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			"groupIds/any(g:g eq " + String.valueOf(testGroup.getGroupId()) +
 				")",
 			null, null, searchRequestBody);
+	}
+
+	private SearchPage<SearchResult>
+			_postSearchPageWithSXPBlueprintConfiguration(
+				String entryClassNames, String keywords,
+				SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		SearchRequestBody searchRequestBody = new SearchRequestBody() {
+			{
+				attributes = HashMapBuilder.<String, Object>put(
+					"search.experiences.blueprint.external.reference.code",
+					sxpBlueprint.getExternalReferenceCode()
+				).build();
+			}
+		};
+
+		return _postSearchPage(
+			entryClassNames, null, keywords, null, searchRequestBody);
 	}
 
 	private void _testPostSearchPageWithCategoryFacetConfiguration(
@@ -493,6 +581,27 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		_assertFacetConfiguration(
 			false, "folder", journalArticle.getFolderId(),
 			String.valueOf(journalArticle.getFolderId()));
+	}
+
+	private void _testPostSearchPageWithHighlightConfiguration(
+			SXPBlueprint sxpBlueprint)
+		throws Exception {
+
+		SearchPage<SearchResult> page =
+			_postSearchPageWithSXPBlueprintConfiguration(
+				_user.getModelClassName(), _user.getFullName(), sxpBlueprint);
+
+		List<SearchResult> searchResults = ListUtil.fromCollection(
+			page.getItems());
+
+		Assert.assertFalse(searchResults.isEmpty());
+
+		Assert.assertTrue(
+			ListUtil.count(
+				searchResults,
+				searchResult -> Objects.equals(
+					searchResult.getTitle(), _getUserHighlightedFullName())) >=
+						1);
 	}
 
 	private void _testPostSearchPageWithKeywords(JournalArticle journalArticle)
@@ -630,6 +739,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private SearchEngineHelper _searchEngineHelper;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private SXPBlueprintLocalService _sxpBlueprintLocalService;
+
 	private User _user;
 
 }

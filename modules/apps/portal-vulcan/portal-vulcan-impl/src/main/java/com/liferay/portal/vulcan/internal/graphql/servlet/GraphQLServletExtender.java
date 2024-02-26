@@ -856,7 +856,7 @@ public class GraphQLServletExtender {
 
 	private void _collectObjectFields(
 		Function<ServletData, Object> function,
-		GraphQLObjectType.Builder graphQLObjectTypeBuilder,
+		GraphQLObjectType.Builder graphQLObjectTypeBuilder, boolean mutation,
 		ProcessingElementsContainer processingElementsContainer,
 		List<ServletData> servletDatas) {
 
@@ -890,7 +890,7 @@ public class GraphQLServletExtender {
 
 				TreeSet<Method> methodsTreeSet =
 					methodsSortedMap.computeIfAbsent(
-						servletData.getPath(),
+						_getPath(servletData),
 						key -> new TreeSet<>(
 							Comparator.comparing(
 								this::_getVersion
@@ -908,14 +908,10 @@ public class GraphQLServletExtender {
 			for (Map.Entry<String, TreeSet<Method>> entry :
 					methodsSortedMap.entrySet()) {
 
-				String versionedPath = entry.getKey();
-
-				String path = versionedPath.substring(
-					0, versionedPath.indexOf("-graphql"));
-
+				String path = entry.getKey();
 				TreeSet<Method> methodsTreeSet = entry.getValue();
 
-				if (StringUtil.equals(firstPath, versionedPath)) {
+				if (StringUtil.equals(firstPath, path)) {
 					Method firstMethod = methodsTreeSet.first();
 
 					boolean deprecated = false;
@@ -927,9 +923,8 @@ public class GraphQLServletExtender {
 					for (Method method : methodsTreeSet) {
 						GraphQLFieldDefinition field =
 							_liferayGraphQLFieldRetriever.getField(
-								deprecated,
-								_getDefaultGraphQLNamespace(versionedPath),
-								method, processingElementsContainer);
+								deprecated, method, mutation,
+								processingElementsContainer);
 
 						if (firstMethod == method) {
 							graphQLObjectTypeBuilder.field(field);
@@ -1049,7 +1044,7 @@ public class GraphQLServletExtender {
 
 			_collectObjectFields(
 				ServletData::getMutation, mutationGraphQLObjectTypeBuilder,
-				processingElementsContainer, servletDatas);
+				true, processingElementsContainer, servletDatas);
 
 			GraphQLObjectType.Builder queryGraphQLObjectTypeBuilder =
 				GraphQLObjectType.newObject();
@@ -1058,7 +1053,7 @@ public class GraphQLServletExtender {
 				GraphQLConstants.NAMESPACE_QUERY);
 
 			_collectObjectFields(
-				ServletData::getQuery, queryGraphQLObjectTypeBuilder,
+				ServletData::getQuery, queryGraphQLObjectTypeBuilder, false,
 				processingElementsContainer, servletDatas);
 
 			GraphQLSchema.Builder graphQLSchemaBuilder =
@@ -1141,7 +1136,13 @@ public class GraphQLServletExtender {
 		}
 	}
 
-	private String _getDefaultGraphQLNamespace(String path) {
+	private String _getDefaultGraphQLNamespace(ServletData servletData) {
+		String path = servletData.getPath();
+
+		if (path == null) {
+			return null;
+		}
+
 		if (path.startsWith("/")) {
 			path = path.substring(1);
 		}
@@ -1697,13 +1698,13 @@ public class GraphQLServletExtender {
 		for (ServletData servletData : servletDatas) {
 			Set<String> graphQLNamespaces = new HashSet<>();
 
-			String defaultGraphQLNamespace = _getDefaultGraphQLNamespace(
-				servletData.getPath());
+			if (FeatureFlagManagerUtil.isEnabled("LPD-10789")) {
+				String graphQLNamespace = _getDefaultGraphQLNamespace(
+					servletData);
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-10789") &&
-				(servletData.getPath() != null)) {
-
-				graphQLNamespaces.add(defaultGraphQLNamespace);
+				if (graphQLNamespace != null) {
+					graphQLNamespaces.add(graphQLNamespace);
+				}
 			}
 
 			if (servletData.getGraphQLNamespace() != null) {
@@ -1769,7 +1770,7 @@ public class GraphQLServletExtender {
 
 					builder.field(
 						_liferayGraphQLFieldRetriever.getField(
-							deprecated, defaultGraphQLNamespace, method,
+							deprecated, method, mutation,
 							processingElementsContainer));
 
 					graphQLSchemaBuilder.codeRegistry(
@@ -2669,29 +2670,28 @@ public class GraphQLServletExtender {
 	private class LiferayGraphQLFieldRetriever extends GraphQLFieldRetriever {
 
 		public GraphQLFieldDefinition getField(
-			boolean deprecated, String graphQLNamespace, Method method,
+			boolean deprecated, Method method, boolean mutation,
 			ProcessingElementsContainer processingElementsContainer) {
 
 			GraphQLFieldDefinition.Builder graphQLFieldDefinitionBuilder =
 				_getGraphQLFieldDefinitionBuilder(
 					method, processingElementsContainer);
 
-			Class<?> clazz = method.getClass();
-
-			String canonicalName = clazz.getCanonicalName();
-
-			String fieldType = "mutation";
-
-			if (canonicalName.contains("Query")) {
-				fieldType = "query";
-			}
-
 			if (deprecated) {
+				String fieldType = "query";
+
+				if (mutation) {
+					fieldType = "mutation";
+				}
+
 				graphQLFieldDefinitionBuilder.deprecate(
 					StringBundler.concat(
 						"This field is deprecated. Please, access this ",
 						fieldType, " through the following path : ", fieldType,
-						"/", graphQLNamespace, "/", method.getName()));
+						"/",
+						_getDefaultGraphQLNamespace(
+							_servletDataMap.get(method)),
+						"/", method.getName()));
 			}
 
 			return graphQLFieldDefinitionBuilder.build();

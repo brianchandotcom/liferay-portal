@@ -51,10 +51,10 @@ function combine_properties_files {
 function deploy_client_extensions {
 	if [[ -n ${1} ]]
 	then
-		for client_extension_name in ${@}
-		do
-			local client_extension_dir=$(find ${_PORTAL_PROJECT_DIR}/workspaces -type d -name "${client_extension_name}" | grep -v .releng | grep -v .npmscripts)
+		cd ${_PORTAL_PROJECT_DIR}
 
+		for client_extension_dir in ${@}
+		do
 			if [[ -d ${client_extension_dir} ]]
 			then
 				echo "Deploy '${client_extension_dir}'"
@@ -64,6 +64,8 @@ function deploy_client_extensions {
 				local gradlew=$(get_gradlew)
 
 				${gradlew} deploy -Pliferay.workspace.home.dir=${LIFERAY_HOME}
+			else
+				echo "Unable to find Client Extension directory at ${client_extension_dir}"
 			fi
 		done
 	fi
@@ -85,10 +87,10 @@ function deploy_osgi_modules {
 	then
 		mkdir -p ${LIFERAY_HOME}/deploy
 
-		for osgi_module_name in ${@}
-		do
-			local osgi_module_dir=$(find ${_PORTAL_PROJECT_DIR}/modules -type d -name "${osgi_module_name}" | grep -v .releng | grep -v .npmscripts)
+		cd ${_PORTAL_PROJECT_DIR}
 
+		for osgi_module_dir in ${@}
+		do
 			if [[ -f ${osgi_module_dir}/build.gradle ]]
 			then
 				echo "Deploying ${osgi_module_dir}"
@@ -98,6 +100,8 @@ function deploy_osgi_modules {
 				local gradlew=$(get_gradlew)
 
 				${gradlew} deploy
+			else
+				echo "Unable to find OSGi module directory at ${osgi_module_dir}"
 			fi
 		done
 	fi

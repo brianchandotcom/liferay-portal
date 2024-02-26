@@ -6,9 +6,8 @@ import React from 'react';
 import {FieldProps} from 'formik';
 
 interface FormAutocompleteInputType {
-	onChange: (value: string | number) => void;
 	required?: boolean;
-	value: string | number;
+	value: string;
 	label?: string;
 	className?: string;
 }
@@ -36,7 +35,7 @@ const FormAutocompleteInput: React.FC<
 				</Label>
 			)}
 
-			<AutocompleteInput inputName={name} {...otherProps} />
+			<AutocompleteInput {...otherProps} />
 
 			<HelpBlock name={name} />
 		</div>

@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,7 +27,6 @@ import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -147,7 +147,9 @@ public class EntityFieldsProvider {
 		try {
 			Date date = indexDateFormat.parse(String.valueOf(fieldValue));
 
-			DateFormat searchDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat searchDateFormat =
+				DateFormatFactoryUtil.getSimpleDateFormat(
+					"yyyy-MM-dd", LocaleUtil.US);
 
 			return searchDateFormat.format(date);
 		}

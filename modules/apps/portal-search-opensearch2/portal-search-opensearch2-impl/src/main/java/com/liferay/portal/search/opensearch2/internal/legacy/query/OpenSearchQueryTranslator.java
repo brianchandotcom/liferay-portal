@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch._types.FieldValue;
 import org.opensearch.client.opensearch._types.query_dsl.BoolQuery;
 import org.opensearch.client.opensearch._types.query_dsl.ChildScoreMode;
@@ -395,7 +394,6 @@ public class OpenSearchQueryTranslator
 		}
 
 		builder.field(termRangeQuery.getField());
-		builder.from(JsonData.of(termRangeQuery.getLowerTerm()));
 
 		QueryUtil.setRanges(
 			builder, termRangeQuery.includesLower(),

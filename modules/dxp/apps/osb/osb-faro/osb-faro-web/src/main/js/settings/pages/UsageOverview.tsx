@@ -126,39 +126,49 @@ export const UsageOverview = ({currentUser, groupId, project}) => {
 						</Card.Header>
 
 						<Card.Body>
-							<p>
-								<Text color='secondary' size={3}>
-									{Liferay.Language.get(
-										'when-either-limit-is-exceeded-the-current-plan-will-either-have-to-be-upgraded-or-add-ons-will-have-to-be-purchased-to-accommodate-the-overage'
-									)}
-								</Text>
-							</p>
-
-							{!isBasicPlan(currentPlan) && (
-								<p
-									className='mb-0'
-									data-testid='next-anniversary-date'
-								>
+							{isBasicPlan(currentPlan) ? (
+								<p className='mb-0'>
 									<Text color='secondary' size={3}>
-										{sub(
-											Liferay.Language.get(
-												'plan-usage-resets-on-x'
-											),
-											[
-												<b key='DATE'>
-													{formatDateToTimeZone(
-														moment(
-															currentPlan.lastAnniversaryDate
-														).add(1, 'year'),
-														CUSTOM_DATE_FORMAT,
-														timeZoneId
-													)}
-												</b>
-											],
-											false
+										{Liferay.Language.get(
+											'when-either-limit-is-exceeded-the-current-plan-will-have-to-be-upgraded-to-business-or-enterprise'
 										)}
 									</Text>
 								</p>
+							) : (
+								<>
+									<p>
+										<Text color='secondary' size={3}>
+											{Liferay.Language.get(
+												'when-either-limit-is-exceeded-the-current-plan-will-either-have-to-be-upgraded-or-add-ons-will-have-to-be-purchased-to-accommodate-the-overage'
+											)}
+										</Text>
+									</p>
+
+									<p
+										className='mb-0'
+										data-testid='next-anniversary-date'
+									>
+										<Text color='secondary' size={3}>
+											{sub(
+												Liferay.Language.get(
+													'plan-usage-resets-on-x'
+												),
+												[
+													<b key='DATE'>
+														{formatDateToTimeZone(
+															moment(
+																currentPlan.startDate
+															).add(1, 'year'),
+															CUSTOM_DATE_FORMAT,
+															timeZoneId
+														)}
+													</b>
+												],
+												false
+											)}
+										</Text>
+									</p>
+								</>
 							)}
 
 							<KnownIndividualsSession

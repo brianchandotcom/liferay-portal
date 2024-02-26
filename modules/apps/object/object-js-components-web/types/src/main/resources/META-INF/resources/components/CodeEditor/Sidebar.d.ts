@@ -16,8 +16,9 @@ export interface SidebarCategory {
 	items: SidebarElement[];
 	label: string;
 }
-interface IProps {
+interface SidebarProps {
 	CustomSidebarContent?: ReactNode;
+	disabled?: boolean;
 	editorRef: RefObject<CodeMirror.Editor>;
 	elements: SidebarCategory[];
 	elementsDisabled?: boolean;
@@ -25,8 +26,9 @@ interface IProps {
 }
 export declare function Sidebar({
 	CustomSidebarContent,
+	disabled,
 	editorRef,
 	elements,
 	elementsDisabled,
-}: IProps): JSX.Element;
+}: SidebarProps): JSX.Element;
 export {};

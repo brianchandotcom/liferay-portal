@@ -312,7 +312,7 @@ export default function ActionBuilder({
 
 			<ActionContainer
 				currentObjectDefinitionFields={currentObjectDefinitionFields}
-				disabled={disableGroovyAction}
+				disableGroovyAction={disableGroovyAction}
 				errors={errors}
 				newObjectActionExecutors={newObjectActionExecutors}
 				objectActionCodeEditorElements={objectActionCodeEditorElements}

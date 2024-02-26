@@ -4,12 +4,13 @@
  */
 
 import CodeMirror from '@liferay/frontend-js-codemirror-web';
+import classNames from 'classnames';
 import React, {useEffect, useRef} from 'react';
 
 import './CodeMirrorEditor.scss';
 
 const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
-	({mode, onChange, ...options}, ref) => {
+	({mode, onChange, readOnly, ...options}, ref) => {
 		const editorWrapperRef = useRef<HTMLDivElement>(null);
 		const codeMirrorRef = useRef<CodeMirror.Editor>();
 
@@ -26,6 +27,7 @@ const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
 					inputStyle: 'contenteditable',
 					lineNumbers: true,
 					mode: mode ?? 'freemarker',
+					readOnly: readOnly && 'nocursor',
 					...options,
 				}
 			);
@@ -51,7 +53,14 @@ const CodeMirrorEditor = React.forwardRef<CodeMirror.Editor, ICodeMirrorEditor>(
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 
-		return <div className="lfr-objects__editor" ref={editorWrapperRef} />;
+		return (
+			<div
+				className={classNames('lfr-objects__editor', {
+					'lfr-objects__editor--disabled': readOnly,
+				})}
+				ref={editorWrapperRef}
+			/>
+		);
 	}
 );
 

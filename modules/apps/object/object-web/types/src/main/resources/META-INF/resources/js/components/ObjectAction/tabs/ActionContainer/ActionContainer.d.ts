@@ -9,7 +9,7 @@ import {ActionError} from '../../ObjectActionContainer';
 import {WarningStates} from '../ActionBuilder';
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];
-	disabled: boolean;
+	disableGroovyAction: boolean;
 	errors: ActionError;
 	newObjectActionExecutors: ObjectActionTriggerExecutorItem[];
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -27,7 +27,7 @@ interface ActionContainerProps {
 }
 export declare function ActionContainer({
 	currentObjectDefinitionFields,
-	disabled,
+	disableGroovyAction,
 	errors,
 	newObjectActionExecutors,
 	objectActionCodeEditorElements,

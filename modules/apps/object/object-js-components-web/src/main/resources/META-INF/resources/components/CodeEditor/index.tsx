@@ -79,6 +79,7 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, CodeEditorProps>(
 					{sidebarElements && (
 						<Sidebar
 							CustomSidebarContent={CustomSidebarContent}
+							disabled={readOnly}
 							editorRef={editorRef}
 							elements={sidebarElements}
 							elementsDisabled={sidebarElementsDisabled}

@@ -22,7 +22,7 @@ import {WarningStates} from '../ActionBuilder';
 import {ThenContainer} from './ThenContainer';
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];
-	disabled: boolean;
+	disableGroovyAction: boolean;
 	errors: ActionError;
 	newObjectActionExecutors: ObjectActionTriggerExecutorItem[];
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -41,7 +41,7 @@ interface ActionContainerProps {
 
 export function ActionContainer({
 	currentObjectDefinitionFields,
-	disabled,
+	disableGroovyAction,
 	errors,
 	newObjectActionExecutors,
 	objectActionCodeEditorElements,
@@ -227,7 +227,7 @@ export function ActionContainer({
 	return (
 		<Card title={Liferay.Language.get('action')}>
 			<ThenContainer
-				disabled={disabled}
+				disabled={disableGroovyAction}
 				errors={errors}
 				isValidField={isValidField}
 				newObjectActionExecutors={newObjectActionExecutors}
@@ -330,7 +330,7 @@ export function ActionContainer({
 							},
 						})
 					}
-					readOnly={values.system || disabled}
+					readOnly={values.system || disableGroovyAction}
 					sidebarElements={objectActionCodeEditorElements.filter(
 						(element) => element.label === 'Fields'
 					)}

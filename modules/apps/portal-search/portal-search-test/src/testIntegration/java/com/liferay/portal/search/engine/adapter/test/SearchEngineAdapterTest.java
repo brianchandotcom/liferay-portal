@@ -171,10 +171,7 @@ public class SearchEngineAdapterTest {
 			}
 			else if (isSearchEngine("OpenSearch")) {
 				Assert.assertTrue(
-					message,
-					message.contains(
-						"[index_not_found_exception] no such index [" + index +
-							"]"));
+					message, message.contains("no such index [" + index + "]"));
 			}
 			else if (isSearchEngine("Solr")) {
 				Assert.assertTrue(

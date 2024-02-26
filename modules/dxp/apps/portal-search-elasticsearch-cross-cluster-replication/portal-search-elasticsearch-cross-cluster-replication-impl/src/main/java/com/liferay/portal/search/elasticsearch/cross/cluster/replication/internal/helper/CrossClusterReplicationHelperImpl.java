@@ -6,12 +6,13 @@
 package com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.helper;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.ccr.CrossClusterReplicationConfigurationHelper;
 import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
-import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfigurationWrapper;
+import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfiguration;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.ccr.FollowInfoCCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.FollowInfoCCRResponse;
@@ -23,13 +24,20 @@ import com.liferay.portal.search.engine.adapter.cluster.UpdateSettingsClusterReq
 import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
  */
-@Component(enabled = false, service = CrossClusterReplicationHelper.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfiguration",
+	enabled = false, service = CrossClusterReplicationHelper.class
+)
 public class CrossClusterReplicationHelperImpl
 	implements CrossClusterReplicationHelper {
 
@@ -101,8 +109,7 @@ public class CrossClusterReplicationHelperImpl
 					getLocalClusterConnectionIds()) {
 
 			follow(
-				crossClusterReplicationConfigurationWrapper.
-					getRemoteClusterAlias(),
+				_crossClusterReplicationConfiguration.remoteClusterAlias(),
 				indexName, localClusterConnectionId);
 		}
 	}
@@ -193,13 +200,17 @@ public class CrossClusterReplicationHelperImpl
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_crossClusterReplicationConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CrossClusterReplicationConfiguration.class, properties);
+	}
+
 	@Reference
 	protected CrossClusterReplicationConfigurationHelper
 		crossClusterReplicationConfigurationHelper;
-
-	@Reference
-	protected volatile CrossClusterReplicationConfigurationWrapper
-		crossClusterReplicationConfigurationWrapper;
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
@@ -296,5 +307,8 @@ public class CrossClusterReplicationHelperImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CrossClusterReplicationHelperImpl.class);
+
+	private volatile CrossClusterReplicationConfiguration
+		_crossClusterReplicationConfiguration;
 
 }

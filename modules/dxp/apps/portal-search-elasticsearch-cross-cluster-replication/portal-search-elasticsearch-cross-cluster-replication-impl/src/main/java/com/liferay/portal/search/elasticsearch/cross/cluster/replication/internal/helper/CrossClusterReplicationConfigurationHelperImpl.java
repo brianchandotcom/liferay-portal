@@ -6,21 +6,24 @@
 package com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.helper;
 
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.ccr.CrossClusterReplicationConfigurationHelper;
-import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfigurationWrapper;
+import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfiguration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Bryan Engler
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfiguration",
 	enabled = false, service = CrossClusterReplicationConfigurationHelper.class
 )
 public class CrossClusterReplicationConfigurationHelperImpl
@@ -31,8 +34,8 @@ public class CrossClusterReplicationConfigurationHelperImpl
 		List<String> connectionIds = new ArrayList<>();
 
 		String[] localClusterConnectionConfigurations =
-			crossClusterReplicationConfigurationWrapper.
-				getCCRLocalClusterConnectionConfigurations();
+			_crossClusterReplicationConfiguration.
+				ccrLocalClusterConnectionConfigurations();
 
 		for (String localClusterConnectionConfiguration :
 				localClusterConnectionConfigurations) {
@@ -51,8 +54,8 @@ public class CrossClusterReplicationConfigurationHelperImpl
 		Map<String, String> connectionIds = new HashMap<>();
 
 		String[] localClusterConnectionConfigurations =
-			crossClusterReplicationConfigurationWrapper.
-				getCCRLocalClusterConnectionConfigurations();
+			_crossClusterReplicationConfiguration.
+				ccrLocalClusterConnectionConfigurations();
 
 		for (String localClusterConnectionConfiguration :
 				localClusterConnectionConfigurations) {
@@ -72,11 +75,18 @@ public class CrossClusterReplicationConfigurationHelperImpl
 
 	@Override
 	public boolean isCrossClusterReplicationEnabled() {
-		return crossClusterReplicationConfigurationWrapper.isCCREnabled();
+		return _crossClusterReplicationConfiguration.ccrEnabled();
 	}
 
-	@Reference
-	protected volatile CrossClusterReplicationConfigurationWrapper
-		crossClusterReplicationConfigurationWrapper;
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_crossClusterReplicationConfiguration =
+			ConfigurableUtil.createConfigurable(
+				CrossClusterReplicationConfiguration.class, properties);
+	}
+
+	private volatile CrossClusterReplicationConfiguration
+		_crossClusterReplicationConfiguration;
 
 }

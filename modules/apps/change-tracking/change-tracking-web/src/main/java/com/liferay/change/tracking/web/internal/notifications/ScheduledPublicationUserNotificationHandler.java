@@ -45,20 +45,16 @@ public class ScheduledPublicationUserNotificationHandler
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		String body = null;
-
 		boolean showConflicts = jsonObject.getBoolean("showConflicts");
 
 		if (showConflicts) {
-			body = _language.get(
-				serviceContext.getLocale(),
-				"click-on-this-notification-to-see-the-list-of-conflicts-" +
-					"that-need-to-be-manually-resolved");
-
 			return StringUtil.replace(
 				getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
 				new String[] {
-					body,
+					_language.get(
+						serviceContext.getLocale(),
+						"click-on-this-notification-to-see-the-list-of-" +
+							"conflicts-that-need-to-be-manually-resolved"),
 					_language.format(
 						serviceContext.getLocale(),
 						"x-scheduled-publication-failed",
@@ -68,14 +64,12 @@ public class ScheduledPublicationUserNotificationHandler
 		}
 
 		if (_isAdminUser(userNotificationEvent)) {
-			body = _language.get(
-				serviceContext.getLocale(),
-				"click-on-this-notification-to-see-the-stack-trace");
-
 			return StringUtil.replace(
 				getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
 				new String[] {
-					body,
+					_language.get(
+						serviceContext.getLocale(),
+						"click-on-this-notification-to-see-the-stack-trace"),
 					_language.format(
 						serviceContext.getLocale(),
 						"x-scheduled-publication-failed-with-an-unexpected-" +
@@ -85,15 +79,13 @@ public class ScheduledPublicationUserNotificationHandler
 				});
 		}
 
-		body = _language.get(
-			serviceContext.getLocale(),
-			"an-unexpected-error-occurred-while-publishing-the-scheduled-" +
-				"publication");
-
 		return StringUtil.replace(
 			getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
 			new String[] {
-				body,
+				_language.get(
+					serviceContext.getLocale(),
+					"an-unexpected-error-occurred-while-publishing-the-" +
+						"scheduled-publication"),
 				_language.format(
 					serviceContext.getLocale(),
 					"x-scheduled-publication-failed",

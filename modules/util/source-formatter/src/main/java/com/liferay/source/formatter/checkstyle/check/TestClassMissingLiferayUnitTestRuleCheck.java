@@ -123,6 +123,6 @@ public class TestClassMissingLiferayUnitTestRuleCheck extends BaseCheck {
 
 	private static final String _MSG_REQUIRE_TEST_RULE = "test.rule.missing";
 
-	private static final String _PAHT_NAMES_WHITELIST = "pathNamesWhiltelist";
+	private static final String _PAHT_NAMES_WHITELIST = "pathNamesWhitelist";
 
 }

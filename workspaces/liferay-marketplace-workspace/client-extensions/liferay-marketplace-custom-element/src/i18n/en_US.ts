@@ -27,6 +27,8 @@ export default {
 	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
 	'back-to-my-apps': 'Back to My Apps',
+	'becoming-a-liferay-marketplace-customer':
+		'Becoming a Liferay Marketplace Customer',
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
 	'billing-address': 'Billing Address',
@@ -62,6 +64,7 @@ export default {
 	'deactivate': 'Deactivate',
 	'description': 'Description',
 	'details': 'Details',
+	'discover-and-customize': 'Discover and customize',
 	'download-app': 'Download App',
 	'download-key': 'Download Key',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
@@ -85,11 +88,14 @@ export default {
 	'environment': 'Environment',
 	'environment-type': 'Environment Type',
 	'expiration-date': 'Expiration Date',
+	'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster':
+		'Explore over 800 apps available in the Liferay Marketplace from a variety of publishers. Apps allow you to accelerate your Liferay development get to market faster.',
 	'extension-optional': 'Extension (optional)',
 	'first-name': 'First Name',
 	'free': 'Free',
 	'fully-managed': 'Fully-Managed',
 	'get-app': 'Get App',
+	'get-started': 'Get Started',
 	'go-back-to-marketplace': 'Go Back to Marketplace',
 	'go-to-marketplace': 'Go to Marketplace',
 	'host-name': 'Host Name',
@@ -116,14 +122,20 @@ export default {
 	'learn-more': 'Learn More',
 	'learn-more-about-app-resource-requirements':
 		'Learn more about App Resource Requirements',
+	'learn-more-about-becoming-a-liferay-customer':
+		'Learn more about becoming a Liferay Customer',
 	'license-price': 'License Price',
 	'licenses': 'Licenses',
 	'liferay-learn': 'Liferay Learn',
 	'liferay-s': 'Liferay’s',
 	'lorem-ipsum-dolor-sit-amet-consectetur':
 		'Lorem ipsum dolor sit amet consectetur.',
+
 	'mac-addresses': 'Mac Addresses',
 	'manage': 'Manage',
+	'manage-all-your-app-purchases-and-subscriptions-in-one-place-read-other-users-reviews-get-notifications-when-updates-are-available-and-get-the-most-out-of-our-apps-catalog':
+		'Manage all your app purchases and subscriptions in one place, read other users reviews, get notifications when updates are available and get the most out of our Apps catalog.',
+	'manage-all-your-apps-in-one-place': 'Manage All Your Apps in One Place',
 	'manage-license-keys': 'Manage License Key(s)',
 	'monetize-your-apps-and-solutions': 'Monetize your apps and solutions',
 	'more-info': 'More Info',
@@ -234,6 +246,8 @@ export default {
 	'via-liferay-experience-cloud-integration': 'Via Liferay SaaS Integration',
 	'via-liferay-plugin-packages': 'Via Liferay Plugin Packages',
 	'via-zip-upload': 'Via ZIP Upload',
+	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-customers-in-the-marketplace-and-access-is-invite-only-if-you-are-an-existing-liferay-customer-please-keep-an-eye-out-for-an-announcement-related-to-the-new-marketplace-in-the-coming-months':
+		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our customers in the Marketplace and access is invite only. If you are an existing Liferay customer, please keep an eye out for an announcement related to the new Marketplace in the coming months!',
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-publishers-in-the-marketplace-if-you-are-an-existing-liferay-developer-or-partner-you-can-choose-to-join-our-pilot-group-of-publishers-to-submit-apps-to-the-marketplace-continue-to-request-a-publisher-account':
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our publishers in the Marketplace.  If you are an existing Liferay developer or partner, you can choose to join our pilot group of publishers to submit apps to the Marketplace.  Continue to request a publisher account.',
 	'x-is-required': '{0} is required',

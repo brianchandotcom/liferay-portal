@@ -38,7 +38,10 @@ const WrappedComponent = props => (
 										type: 'CUSTOM'
 									})
 								],
-								{eventType: 'CUSTOM'}
+								{
+									blocked: false,
+									eventType: 'CUSTOM'
+								}
 							)
 						]}
 					>

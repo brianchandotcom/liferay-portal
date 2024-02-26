@@ -8,11 +8,14 @@ package com.liferay.portal.vulcan.internal.graphql.servlet.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -267,6 +270,204 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 			0, () -> _test(-1, -1, null, -1));
 		PaginationConfigurationTestUtil.withPageSizeLimit(
 			0, () -> _test(-1, -1, null, 0));
+	}
+
+	@Test
+	public void testSchema() throws Exception {
+
+		// Mutation fields
+
+		JSONArray mutationFieldsJSONArray = JSONUtil.getValueAsJSONArray(
+			invoke(
+				new GraphQLField(
+					"__schema",
+					new GraphQLField(
+						"mutationType",
+						new GraphQLField(
+							"fields(includeDeprecated: true)",
+							new GraphQLField("deprecationReason"),
+							new GraphQLField("isDeprecated"),
+							new GraphQLField("name"),
+							new GraphQLField(
+								"type",
+								new GraphQLField(
+									"fields",
+									new GraphQLField("deprecationReason"),
+									new GraphQLField("isDeprecated"),
+									new GraphQLField("name")))))),
+				"query"),
+			"JSONObject/data", "JSONObject/__schema", "JSONObject/mutationType",
+			"JSONArray/fields");
+
+		_assertGraphQLSchemaField(
+			false, mutationFieldsJSONArray, true, "createTestDTO");
+
+		// Query fields
+
+		JSONArray queryFieldsJSONArray = JSONUtil.getValueAsJSONArray(
+			invoke(
+				new GraphQLField(
+					"__schema",
+					new GraphQLField(
+						"queryType",
+						new GraphQLField(
+							"fields(includeDeprecated: true)",
+							new GraphQLField("deprecationReason"),
+							new GraphQLField("isDeprecated"),
+							new GraphQLField("name"),
+							new GraphQLField(
+								"type",
+								new GraphQLField(
+									"fields",
+									new GraphQLField("deprecationReason"),
+									new GraphQLField("isDeprecated"),
+									new GraphQLField("name")))))),
+				"query"),
+			"JSONObject/data", "JSONObject/__schema", "JSONObject/queryType",
+			"JSONArray/fields");
+
+		_assertGraphQLSchemaField(
+			false, queryFieldsJSONArray, false, "testDTO");
+		_assertGraphQLSchemaField(
+			false, queryFieldsJSONArray, false, "testDTOPage");
+	}
+
+	@FeatureFlags("LPD-10789")
+	@Test
+	public void testSchemaWithGraphQLNamespaces() throws Exception {
+
+		// Mutation fields
+
+		JSONArray mutationFieldsJSONArray = JSONUtil.getValueAsJSONArray(
+			invoke(
+				new GraphQLField(
+					"__schema",
+					new GraphQLField(
+						"mutationType",
+						new GraphQLField(
+							"fields(includeDeprecated: true)",
+							new GraphQLField("deprecationReason"),
+							new GraphQLField("isDeprecated"),
+							new GraphQLField("name"),
+							new GraphQLField(
+								"type",
+								new GraphQLField(
+									"fields",
+									new GraphQLField("deprecationReason"),
+									new GraphQLField("isDeprecated"),
+									new GraphQLField("name")))))),
+				"query"),
+			"JSONObject/data", "JSONObject/__schema", "JSONObject/mutationType",
+			"JSONArray/fields");
+
+		_assertGraphQLSchemaField(
+			true, mutationFieldsJSONArray, true, "createTestDTO");
+
+		_assertGraphQLSchemaField(
+			false, mutationFieldsJSONArray, true, "testPath_v1_0");
+
+		_assertGraphQLSchemaField(
+			false,
+			JSONUtil.getValueAsJSONArray(
+				_getJSONObject(mutationFieldsJSONArray, "testPath_v1_0"),
+				"JSONObject/type", "JSONArray/fields"),
+			true, "createTestDTO");
+
+		// Query fields
+
+		JSONArray queryFieldsJSONArray = JSONUtil.getValueAsJSONArray(
+			invoke(
+				new GraphQLField(
+					"__schema",
+					new GraphQLField(
+						"queryType",
+						new GraphQLField(
+							"fields(includeDeprecated: true)",
+							new GraphQLField("deprecationReason"),
+							new GraphQLField("isDeprecated"),
+							new GraphQLField("name"),
+							new GraphQLField(
+								"type",
+								new GraphQLField(
+									"fields",
+									new GraphQLField("deprecationReason"),
+									new GraphQLField("isDeprecated"),
+									new GraphQLField("name")))))),
+				"query"),
+			"JSONObject/data", "JSONObject/__schema", "JSONObject/queryType",
+			"JSONArray/fields");
+
+		_assertGraphQLSchemaField(true, queryFieldsJSONArray, false, "testDTO");
+		_assertGraphQLSchemaField(
+			true, queryFieldsJSONArray, false, "testDTOPage");
+
+		JSONArray namespacedQueryFieldsJSONArray = JSONUtil.getValueAsJSONArray(
+			_getJSONObject(queryFieldsJSONArray, "testPath_v1_0"),
+			"JSONObject/type", "JSONArray/fields");
+
+		_assertGraphQLSchemaField(
+			false, namespacedQueryFieldsJSONArray, false, "testDTO");
+		_assertGraphQLSchemaField(
+			false, namespacedQueryFieldsJSONArray, false, "testDTOPage");
+	}
+
+	private void _assertGraphQLSchemaField(
+			boolean deprecated, JSONArray fieldsJSONArray, boolean mutation,
+			String operationName)
+		throws Exception {
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"deprecationReason",
+				() -> {
+					if (!deprecated) {
+						return null;
+					}
+
+					return _getDeprecationReason(mutation, operationName);
+				}
+			).put(
+				"isDeprecated", deprecated
+			).put(
+				"name", operationName
+			).toString(),
+			String.valueOf(_getJSONObject(fieldsJSONArray, operationName)),
+			JSONCompareMode.LENIENT);
+	}
+
+	private String _getDeprecationReason(
+		boolean mutation, String operationName) {
+
+		StringBuilder sb = new StringBuilder(
+			"This field is deprecated. Please, access this ");
+
+		if (mutation) {
+			sb.append("mutation through the following path : mutation/");
+		}
+		else {
+			sb.append("query through the following path : query/");
+		}
+
+		sb.append("testPath_v1_0/");
+		sb.append(operationName);
+
+		return sb.toString();
+	}
+
+	private JSONObject _getJSONObject(
+		JSONArray jsonArray, String operationName) {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (StringUtil.equals(
+					operationName, jsonObject.getString("name"))) {
+
+				return jsonObject;
+			}
+		}
+
+		return null;
 	}
 
 	private void _test(

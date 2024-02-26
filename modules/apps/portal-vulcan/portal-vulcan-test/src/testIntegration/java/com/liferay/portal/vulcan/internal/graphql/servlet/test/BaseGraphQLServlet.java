@@ -183,7 +183,7 @@ public class BaseGraphQLServlet {
 
 		@Override
 		public String getPath() {
-			return "/test-path-graphql/v1.0";
+			return "/test-path-graphql/v1_0";
 		}
 
 		@Override

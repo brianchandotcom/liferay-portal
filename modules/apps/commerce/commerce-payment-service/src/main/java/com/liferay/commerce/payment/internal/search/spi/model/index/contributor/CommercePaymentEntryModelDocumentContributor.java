@@ -40,6 +40,9 @@ public class CommercePaymentEntryModelDocumentContributor
 			document.addNumber("classPK", commercePaymentEntry.getClassPK());
 			document.addKeyword(
 				"currencyCode", commercePaymentEntry.getCurrencyCode());
+			document.addKeyword(
+				"externalReferenceCode",
+				commercePaymentEntry.getExternalReferenceCode());
 			document.addText("note", commercePaymentEntry.getNote());
 			document.addKeyword(
 				"paymentIntegrationKey",

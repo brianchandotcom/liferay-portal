@@ -202,6 +202,15 @@ public class ObjectEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_draftObjectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
 		_irrelevantObjectDefinition = _publishCustomObjectDefinition(
 			false,
 			Arrays.asList(
@@ -412,6 +421,8 @@ public class ObjectEntryLocalServiceTest {
 		// reference a required list type entry cannot be deleted before it is
 		// unreferenced
 
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_draftObjectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
 	}
 
@@ -2111,9 +2122,34 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(0);
 
-		// Delete object entry with an inactive definition
+		// Delete object entry when definition is related to a draft object
+		// definition
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "bruce@liferay.com"
+			).put(
+				"firstName", "Bruce"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey4"
+			).build());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			_draftObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
+
+		_assertCount(0);
+
+		// Delete object entry with an inactive definition
+
+		ObjectEntry objectEntry4 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddressRequired", "john@liferay.com"
 			).put(
@@ -2141,7 +2177,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getPluralLabelMap(), _objectDefinition.getScope(),
 			_objectDefinition.getStatus());
 
-		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
+		_objectEntryLocalService.deleteObjectEntry(objectEntry4);
 
 		_assertCount(0);
 
@@ -2166,7 +2202,7 @@ public class ObjectEntryLocalServiceTest {
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())));
 
-		ObjectEntry objectEntry4 = _addObjectEntry(
+		ObjectEntry objectEntry5 = _addObjectEntry(
 			0, publishedObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddressRequired", "bruce@liferay.com"
@@ -2185,7 +2221,7 @@ public class ObjectEntryLocalServiceTest {
 			StringUtil.randomId(), false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
-		_objectEntryLocalService.deleteObjectEntry(objectEntry4);
+		_objectEntryLocalService.deleteObjectEntry(objectEntry5);
 
 		_assertCount(0);
 	}
@@ -3826,6 +3862,8 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	private ObjectDefinition _draftObjectDefinition;
 
 	@Inject
 	private Encryptor _encryptor;

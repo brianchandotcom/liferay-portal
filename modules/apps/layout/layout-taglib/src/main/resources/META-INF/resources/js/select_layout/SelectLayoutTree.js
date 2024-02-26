@@ -489,7 +489,7 @@ function SearchResults({
 		return <ClayLoadingIndicator displayType="secondary" />;
 	}
 
-	return (
+	return results.length ? (
 		<div className="pt-3">
 			{results.map((layout) => (
 				<SearchResult
@@ -501,6 +501,15 @@ function SearchResults({
 				/>
 			))}
 		</div>
+	) : (
+		<ClayEmptyState
+			description={Liferay.Language.get(
+				'try-again-with-a-different-search'
+			)}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+			small
+			title={Liferay.Language.get('no-results-found')}
+		/>
 	);
 }
 

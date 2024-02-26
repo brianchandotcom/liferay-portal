@@ -16,6 +16,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	featureFlagsTest({
+		'LPD-11253': true,
 		'LPD-16469': true,
 	}),
 	loginTest(),
@@ -26,6 +27,41 @@ const PERMISSIONS_LOCATORS = [
 	'#guest_ACTION_DELETE',
 	'#guest_ACTION_PERMISSIONS',
 ];
+
+test('LPD-17245: Add error message in Translation for concurrent users', async ({
+	journalEditArticlePage,
+	journalEditArticleTranslationsPage,
+	journalPage,
+	page,
+}) => {
+	await journalPage.goto();
+
+	const title = getRandomString();
+
+	await journalEditArticlePage.publishNewBasicArticle(title);
+
+	const article = page
+		.locator(
+			'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
+		)
+		.filter({hasText: title});
+
+	await article.waitFor();
+
+	const editBasicArticleTranslationUrl =
+		await journalEditArticleTranslationsPage.editBasicArticleTranslations(
+			title,
+			''
+		);
+
+	await journalEditArticlePage.editAndPublishExistingBasicArticle(title);
+
+	await journalEditArticleTranslationsPage.assertErrorInEditBasicArticleTranslations(
+		editBasicArticleTranslationUrl
+	);
+
+	await journalPage.deleteJournalArticle(title);
+});
 
 test('LPD-17782: This is a test for bulk permissions of web content', async ({
 	journalEditArticlePage,

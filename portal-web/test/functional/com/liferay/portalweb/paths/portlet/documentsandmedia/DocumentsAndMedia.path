@@ -153,7 +153,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_WORKFLOW_STATUS</td>
-	<td>//dd[contains(.,'${key_dmDocumentTitle}')]//span[@class='workflow-status']</td>
+	<td>//dd[contains(.,'${key_dmDocumentTitle}')]//span[@class='label-item label-item-expand']</td>
 	<td></td>
 </tr>
 <tr>

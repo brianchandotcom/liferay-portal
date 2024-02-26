@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -71,13 +72,44 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 )
 public class FDSViewsPortlet extends MVCPortlet {
 
+	public static class CompanyScopedOpenapiResource {
+
+		public CompanyScopedOpenapiResource(
+			long companyId, String openapiResourcePath) {
+
+			_companyId = companyId;
+			_openapiResourcePath = openapiResourcePath;
+		}
+
+		public long getCompanyId() {
+			return _companyId;
+		}
+
+		public String getOpenapiResourcePath() {
+			return _openapiResourcePath;
+		}
+
+		public boolean matches(long companyId) {
+			if ((_companyId == 0) || (_companyId == companyId)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		private final long _companyId;
+		private final String _openapiResourcePath;
+
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = BundleUtil.getBundle(
 			bundleContext, "com.liferay.frontend.data.set.views.web");
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, null, "(openapi.resource=true)",
-			new RESTApplicationServiceTrackerCustomizer(bundleContext));
+			new CompanyScopedRESTApplicationServiceTrackerCustomizer(
+				bundleContext));
 	}
 
 	@Deactivate
@@ -740,13 +772,17 @@ public class FDSViewsPortlet extends MVCPortlet {
 	@Reference
 	private Portal _portal;
 
-	private ServiceTrackerList<String> _serviceTrackerList;
+	private ServiceTrackerList<CompanyScopedOpenapiResource>
+		_serviceTrackerList;
 
-	private class RESTApplicationServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, String> {
+	private class CompanyScopedRESTApplicationServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<Object, CompanyScopedOpenapiResource> {
 
 		@Override
-		public String addingService(ServiceReference<Object> serviceReference) {
+		public CompanyScopedOpenapiResource addingService(
+			ServiceReference<Object> serviceReference) {
+
 			String openapiResourcePath = (String)serviceReference.getProperty(
 				"openapi.resource.path");
 
@@ -758,25 +794,31 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"api.version");
 
 			if (apiVersion != null) {
-				return openapiResourcePath + "/" + apiVersion;
+				openapiResourcePath = openapiResourcePath + "/" + apiVersion;
 			}
 
-			return openapiResourcePath;
+			long companyId = GetterUtil.getLong(
+				(String)serviceReference.getProperty("companyId"));
+
+			return new CompanyScopedOpenapiResource(
+				companyId, openapiResourcePath);
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> serviceReference, String restApplication) {
+			ServiceReference<Object> serviceReference,
+			CompanyScopedOpenapiResource companyScopedOpenapiResource) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> serviceReference, String restApplication) {
+			ServiceReference<Object> serviceReference,
+			CompanyScopedOpenapiResource companyScopedOpenapiResource) {
 
 			_bundleContext.ungetService(serviceReference);
 		}
 
-		private RESTApplicationServiceTrackerCustomizer(
+		private CompanyScopedRESTApplicationServiceTrackerCustomizer(
 			BundleContext bundleContext) {
 
 			_bundleContext = bundleContext;

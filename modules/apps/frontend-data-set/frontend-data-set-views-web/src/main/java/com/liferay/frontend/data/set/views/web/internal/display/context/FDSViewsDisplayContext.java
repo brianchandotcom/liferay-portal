@@ -8,6 +8,7 @@ package com.liferay.frontend.data.set.views.web.internal.display.context;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
+import com.liferay.frontend.data.set.views.web.internal.portlet.FDSViewsPortlet;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -20,11 +21,13 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -41,7 +44,8 @@ public class FDSViewsDisplayContext {
 		CETManager cetManager,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		RenderRequest renderRequest, RenderResponse renderResponse,
-		ServiceTrackerList<String> serviceTrackerList) {
+		ServiceTrackerList<FDSViewsPortlet.CompanyScopedOpenapiResource>
+			serviceTrackerList) {
 
 		_cetManager = cetManager;
 		_renderRequest = renderRequest;
@@ -159,12 +163,31 @@ public class FDSViewsDisplayContext {
 	public JSONArray getRESTApplicationsJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<String> restApplications = _serviceTrackerList.toList();
+		List<FDSViewsPortlet.CompanyScopedOpenapiResource>
+			companyScopedOpenapiResources = _serviceTrackerList.toList();
 
-		Collections.sort(restApplications);
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		for (String restApplication : restApplications) {
-			jsonArray.put(restApplication);
+		long companyId = themeDisplay.getCompanyId();
+
+		companyScopedOpenapiResources = ListUtil.filter(
+			companyScopedOpenapiResources,
+			companyScopedOpenapiResource ->
+				companyScopedOpenapiResource.matches(companyId));
+
+		Collections.sort(
+			companyScopedOpenapiResources,
+			Comparator.comparing(
+				FDSViewsPortlet.CompanyScopedOpenapiResource::
+					getOpenapiResourcePath,
+				String::compareTo));
+
+		for (FDSViewsPortlet.CompanyScopedOpenapiResource
+				companyScopedOpenapiResource : companyScopedOpenapiResources) {
+
+			jsonArray.put(
+				companyScopedOpenapiResource.getOpenapiResourcePath());
 		}
 
 		return jsonArray;
@@ -186,7 +209,8 @@ public class FDSViewsDisplayContext {
 	private final ObjectDefinition _fdsEntryObjectDefinition;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final ServiceTrackerList<String> _serviceTrackerList;
+	private final ServiceTrackerList
+		<FDSViewsPortlet.CompanyScopedOpenapiResource> _serviceTrackerList;
 	private final ThemeDisplay _themeDisplay;
 
 }

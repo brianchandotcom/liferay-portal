@@ -23,6 +23,7 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException;
@@ -217,7 +218,7 @@ public class ObjectEntryLocalServiceTest {
 				false,
 				ListUtil.concat(
 					_createListTypeEntries(
-						"listTypeEntryKey", "List Type Entry Key ", 3),
+						"listTypeEntryKey", "List Type Entry Key ", 4),
 					_createListTypeEntries(
 						"multipleListTypeEntryKey",
 						"Multiple List Type Entry Key ", 6)));
@@ -2084,7 +2085,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(2);
 
-		// Delete first object entry
+		// Delete object entry
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry1.getObjectEntryId());
@@ -2107,15 +2108,13 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(1);
 
-		// Delete second object entry
-
 		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
 
 		_assertCount(0);
 
 		// Delete object entry with an inactive definition
 
-		ObjectEntry objectEntry4 = _addObjectEntry(
+		ObjectEntry objectEntry3 = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddressRequired", "john@liferay.com"
 			).put(
@@ -2142,6 +2141,50 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.isPortlet(),
 			_objectDefinition.getPluralLabelMap(), _objectDefinition.getScope(),
 			_objectDefinition.getStatus());
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
+
+		_assertCount(0);
+
+		// Delete object entry with an object definition that is related to a
+		// draft object definition
+
+		ObjectDefinition draftObjectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		ObjectDefinition publishedObjectDefinition =
+			_publishCustomObjectDefinition(
+				false,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		ObjectEntry objectEntry4 = _addObjectEntry(
+			0, publishedObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "bruce@liferay.com"
+			).put(
+				"firstName", "Bruce"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey4"
+			).build());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, TestPropsValues.getUserId(),
+			publishedObjectDefinition.getObjectDefinitionId(),
+			draftObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry4);
 

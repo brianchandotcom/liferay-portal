@@ -30,9 +30,15 @@ public class ComplexEntityField extends EntityField {
 	 * @review
 	 */
 	public ComplexEntityField(String name, List<EntityField> entityFields) {
+		this(name, entityFields, name);
+	}
+
+	public ComplexEntityField(
+		String name, List<EntityField> entityFields, String typeKey) {
+
 		super(
-			name, EntityField.Type.COMPLEX, locale -> name, locale -> name,
-			fieldValue -> String.valueOf(fieldValue));
+			name, EntityField.Type.COMPLEX, typeKey, locale -> name,
+			locale -> name, fieldValue -> String.valueOf(fieldValue));
 
 		if (entityFields == null) {
 			_entityFieldsMap = Collections.emptyMap();

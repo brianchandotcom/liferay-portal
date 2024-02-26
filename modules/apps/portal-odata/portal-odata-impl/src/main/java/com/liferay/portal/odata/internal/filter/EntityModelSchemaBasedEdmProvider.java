@@ -81,7 +81,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
 		CsdlComplexType csdlComplexType = new CsdlComplexType();
 
-		csdlComplexType.setName(entityField.getName());
+		csdlComplexType.setName(entityField.getTypeKey());
 
 		Map<String, EntityField> entityFieldsMap =
 			complexEntityField.getEntityFieldsMap();
@@ -232,7 +232,7 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 
 			csdlProperty.setName(entityField.getName());
 			csdlProperty.setType(
-				new FullQualifiedName(namespace, entityField.getName()));
+				new FullQualifiedName(namespace, entityField.getTypeKey()));
 
 			return csdlProperty;
 		}

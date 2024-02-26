@@ -246,7 +246,7 @@ function FieldsTable({portletNamespace}) {
 													<span
 														className="inline-item-after"
 														title={Liferay.Language.get(
-															'This field type does not support the CSV export file format. Select JSON, JSONL, or JSONT'
+															'this-field-type-does-not-support-csv-export-file-format'
 														)}
 													>
 														<ClayIcon

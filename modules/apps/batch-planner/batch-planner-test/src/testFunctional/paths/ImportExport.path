@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>UNSUPPORT_FIELD</td>
-	<td>//td[contains(.,'${key_entryName}')]/following-sibling::td[contains(., 'Not Supported')]/span[@title='This field type is not supported for CSV format. Please select JSON, JSONL or JSONT format.']</td>
+	<td>//td[contains(.,'${key_entryName}')]/following-sibling::td[contains(., 'Not Supported')]/span[@title='This field type does not support the CSV export file format. Select JSON, JSONL or JSONT.']</td>
 	<td></td>
 </tr>
 </tbody>

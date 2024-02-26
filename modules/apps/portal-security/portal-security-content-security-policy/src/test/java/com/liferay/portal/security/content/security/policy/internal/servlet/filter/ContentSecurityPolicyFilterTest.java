@@ -30,13 +30,13 @@ public class ContentSecurityPolicyFilterTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				_HTML_CONTEXT_START,
-				String.join(" nonce=\"" + _NONCE + "\"", _HTML_CONTENT),
+				StringUtil.merge(_HTML_CONTENT, " nonce=\"" + _NONCE + "\""),
 				_HTML_CONTEXT_END),
 			_contentSecurityPolicyFilter.rewriteContent(
 				_NONCE,
 				StringBundler.concat(
 					_HTML_CONTEXT_START,
-					String.join(StringPool.BLANK, _HTML_CONTENT),
+					StringUtil.merge(_HTML_CONTENT, StringPool.BLANK),
 					_HTML_CONTEXT_END)));
 	}
 
@@ -56,7 +56,7 @@ public class ContentSecurityPolicyFilterTest {
 			StringBundler.concat(
 				_HTML_CONTEXT_START, jsObjectLiteralContextStart,
 				jsObjectLiteralContextEnd,
-				String.join(" nonce=\"" + _NONCE + "\"", _HTML_CONTENT),
+				StringUtil.merge(_HTML_CONTENT, " nonce=\"" + _NONCE + "\""),
 				jsObjectLiteralContextStart, jsObjectLiteralContextEnd,
 				_HTML_CONTEXT_END),
 			contentSecurityPolicyFilter.rewriteContent(
@@ -64,7 +64,7 @@ public class ContentSecurityPolicyFilterTest {
 				StringBundler.concat(
 					_HTML_CONTEXT_START, jsObjectLiteralContextStart,
 					jsObjectLiteralContextEnd,
-					String.join(StringPool.BLANK, _HTML_CONTENT),
+					StringUtil.merge(_HTML_CONTENT, StringPool.BLANK),
 					jsObjectLiteralContextStart, jsObjectLiteralContextEnd,
 					_HTML_CONTEXT_END)));
 	}
@@ -85,13 +85,15 @@ public class ContentSecurityPolicyFilterTest {
 			StringBundler.concat(
 				_HTML_CONTEXT_START, jsObjectLiteralContextStart,
 				_escapeJS(
-					String.join(" nonce=\"" + _NONCE + "\"", _HTML_CONTENT)),
+					StringUtil.merge(
+						_HTML_CONTENT, " nonce=\"" + _NONCE + "\"")),
 				jsObjectLiteralContextEnd, _HTML_CONTEXT_END),
 			contentSecurityPolicyFilter.rewriteContent(
 				_NONCE,
 				StringBundler.concat(
 					_HTML_CONTEXT_START, jsObjectLiteralContextStart,
-					_escapeJS(String.join(StringPool.BLANK, _HTML_CONTENT)),
+					_escapeJS(
+						StringUtil.merge(_HTML_CONTENT, StringPool.BLANK)),
 					jsObjectLiteralContextEnd, _HTML_CONTEXT_END)));
 	}
 

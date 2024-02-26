@@ -87,7 +87,8 @@ public class UserGroupIndexerIndexedFieldsTest {
 		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(userGroup), document, searchTerm);
+			document, _expectedFieldValues(userGroup),
+			name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Test
@@ -114,7 +115,8 @@ public class UserGroupIndexerIndexedFieldsTest {
 		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValuesWithExpando(userGroup), document, searchTerm);
+			document, _expectedFieldValuesWithExpando(userGroup),
+			name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Rule

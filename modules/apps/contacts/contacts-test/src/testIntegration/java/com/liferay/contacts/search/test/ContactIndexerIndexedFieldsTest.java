@@ -80,7 +80,8 @@ public class ContactIndexerIndexedFieldsTest {
 		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(
-			expectedFieldValues(contact), document, searchTerm);
+			document, expectedFieldValues(contact),
+			name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Rule

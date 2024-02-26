@@ -103,7 +103,8 @@ public class UserIndexerIndexedFieldsTest {
 
 		_populateAddressFieldValues(user2, map);
 
-		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
+		FieldValuesAssert.assertFieldValues(
+			document, map, name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Test
@@ -126,7 +127,8 @@ public class UserIndexerIndexedFieldsTest {
 		map.put(
 			"jobTitle_sortable", StringUtil.toLowerCase(user2.getJobTitle()));
 
-		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
+		FieldValuesAssert.assertFieldValues(
+			document, map, name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Test
@@ -146,7 +148,8 @@ public class UserIndexerIndexedFieldsTest {
 		indexedFieldsFixture.populateDate(
 			"lastLoginDate", user2.getLastLoginDate(), map);
 
-		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
+		FieldValuesAssert.assertFieldValues(
+			document, map, name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Test
@@ -168,7 +171,8 @@ public class UserIndexerIndexedFieldsTest {
 
 		map.put("organizationIds", _getStringValue(user.getOrganizationIds()));
 
-		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
+		FieldValuesAssert.assertFieldValues(
+			document, map, name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Test
@@ -192,7 +196,8 @@ public class UserIndexerIndexedFieldsTest {
 
 		map.put("userGroupIds", _getStringValue(user.getUserGroupIds()));
 
-		FieldValuesAssert.assertFieldValues(map, document, searchTerm);
+		FieldValuesAssert.assertFieldValues(
+			document, map, name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Rule

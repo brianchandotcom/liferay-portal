@@ -38,6 +38,16 @@ public class FieldValuesAssert {
 	}
 
 	public static void assertFieldValues(
+		com.liferay.portal.kernel.search.Document document,
+		Map<String, ?> expected, Predicate<String> keysPredicate,
+		String message) {
+
+		AssertUtils.assertEquals(
+			message, _toStringValuesMap(expected),
+			_filterOnKey(_toLegacyFieldValuesMap(document), keysPredicate));
+	}
+
+	public static void assertFieldValues(
 		Map<String, ?> expected,
 		com.liferay.portal.kernel.search.Document document, String message) {
 

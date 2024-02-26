@@ -77,8 +77,8 @@ public class ExportImportIndexedFieldsTest {
 		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(
-			_expectedFieldValues(exportImportConfiguration), document,
-			searchTerm);
+			document, _expectedFieldValues(exportImportConfiguration),
+			name -> !name.equals("timestamp"), searchTerm);
 	}
 
 	@Rule

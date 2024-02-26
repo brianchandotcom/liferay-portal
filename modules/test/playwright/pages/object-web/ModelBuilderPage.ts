@@ -54,15 +54,6 @@ export class ModelBuilderPage {
 		this.toggleSidebarsButton = page.getByLabel('Toggle Sidebars');
 	}
 
-	async deleteObjectRelationship(objectRelationshipName: string) {
-		await this.deleteObjectRelationshipButton.click();
-		await this.modalDeleteObjectRelationshipTextField.click();
-		await this.modalDeleteObjectRelationshipTextField.fill(
-			objectRelationshipName
-		);
-		await this.modalDeleteObjectRelationshipConfirmationButton.click();
-	}
-
 	async clickDeleteObjectRelationshipButton() {
 		this.deleteObjectRelationshipButton.click();
 	}
@@ -118,6 +109,15 @@ export class ModelBuilderPage {
 		const response = await responsePromise;
 
 		return response.json();
+	}
+
+	async deleteObjectRelationship(objectRelationshipName: string) {
+		await this.deleteObjectRelationshipButton.click();
+		await this.modalDeleteObjectRelationshipTextField.click();
+		await this.modalDeleteObjectRelationshipTextField.fill(
+			objectRelationshipName
+		);
+		await this.modalDeleteObjectRelationshipConfirmationButton.click();
 	}
 
 	getObjectDefinitionNodeRelationshipHandle(

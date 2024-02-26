@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,14 +51,14 @@ public class AccountEntryServiceTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_accountEntry1 = AccountEntryTestUtil.addAccountEntry();
 		_company = CompanyTestUtil.addCompany();
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		String name = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
@@ -117,23 +117,23 @@ public class AccountEntryServiceTest {
 		}
 	}
 
-	private static AccountEntry _accountEntry1;
+	private AccountEntry _accountEntry1;
 
 	@Inject
-	private static AccountEntryLocalService _accountEntryLocalService;
-
-	@Inject
-	private static AddressLocalService _addressLocalService;
-
-	private static Company _company;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
-	@Inject
-	private static ListTypeLocalService _listTypeLocalService;
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountEntryService _accountEntryService;
+
+	@Inject
+	private AddressLocalService _addressLocalService;
+
+	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ListTypeLocalService _listTypeLocalService;
 
 }

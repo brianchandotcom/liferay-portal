@@ -380,6 +380,8 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
+		LexiconEntry.gotoAdd();
+
 		Segmentation.addProperties(propertyOption = "Email Address");
 
 		Segmentation.fillTitle(titleField = "New RoleSegment Test");

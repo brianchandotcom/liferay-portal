@@ -46,8 +46,8 @@ const OBJECT_RELATIONSHIP = {
 	FDS_VIEW_FDS_ITEM_ACTION_ID:
 		'r_fdsViewFDSItemActionRelationship_c_fdsViewId',
 	FDS_VIEW_FDS_LIST_SECTION: 'fdsViewFDSListSectionRelationship',
-	FDS_VIEW_FDS_LIST_SECTION_ID:
-		'r_fdsViewFDSListSectionRelationship_c_fdsViewId',
+	FDS_VIEW_FDS_LIST_SECTION_ERC:
+		'r_fdsViewFDSListSectionRelationship_c_fdsViewERC',
 	FDS_VIEW_FDS_SORT: 'fdsViewFDSSortRelationship',
 	FDS_VIEW_FDS_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId',
 } as const;

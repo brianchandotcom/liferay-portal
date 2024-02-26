@@ -37,7 +37,7 @@ declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_VIEW_FDS_ITEM_ACTION: 'fdsViewFDSItemActionRelationship';
 	readonly FDS_VIEW_FDS_ITEM_ACTION_ID: 'r_fdsViewFDSItemActionRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_LIST_SECTION: 'fdsViewFDSListSectionRelationship';
-	readonly FDS_VIEW_FDS_LIST_SECTION_ID: 'r_fdsViewFDSListSectionRelationship_c_fdsViewId';
+	readonly FDS_VIEW_FDS_LIST_SECTION_ERC: 'r_fdsViewFDSListSectionRelationship_c_fdsViewERC';
 	readonly FDS_VIEW_FDS_SORT: 'fdsViewFDSSortRelationship';
 	readonly FDS_VIEW_FDS_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId';
 };

@@ -49,7 +49,7 @@ export default function List(props: IFDSViewSectionProps) {
 
 	const getFDSListSections = async () => {
 		const response = await fetch(
-			`${API_URL.FDS_LIST_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_LIST_SECTION_ID} eq '${fdsView.id}')`
+			`${API_URL.FDS_LIST_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_LIST_SECTION_ERC} eq '${fdsView.externalReferenceCode}')`
 		);
 
 		if (!response.ok) {
@@ -111,7 +111,8 @@ export default function List(props: IFDSViewSectionProps) {
 
 		const response = await fetch(url, {
 			body: JSON.stringify({
-				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_LIST_SECTION_ID]: fdsView.id,
+				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_LIST_SECTION_ERC]:
+					fdsView.externalReferenceCode,
 				fieldName: field.name,
 				name: listSection.name,
 			}),

@@ -37,7 +37,6 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcess
 
 					updatePreparedStatement.setString(
 						1, String.valueOf(cpdSpecificationOptionValueId));
-
 					updatePreparedStatement.setLong(
 						2, cpdSpecificationOptionValueId);
 

@@ -42,10 +42,6 @@ export function PublisherGatePage() {
 						svg: cloudUpload,
 					}}
 					label={i18n.translate('free')}
-					link={{
-						href: '#',
-						label: i18n.translate('learn-more'),
-					}}
 					title={i18n.translate(
 						'publish-apps-to-the-liferay-marketplace'
 					)}
@@ -58,10 +54,6 @@ export function PublisherGatePage() {
 					image={{
 						description: i18n.translate('cash'),
 						svg: cash,
-					}}
-					link={{
-						href: '#',
-						label: i18n.translate('learn-more'),
 					}}
 					title={i18n.translate('monetize-your-apps-and-solutions')}
 				/>

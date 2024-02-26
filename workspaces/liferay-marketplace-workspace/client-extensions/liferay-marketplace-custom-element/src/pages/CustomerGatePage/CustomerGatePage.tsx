@@ -14,6 +14,7 @@ import menu from '../../assets/images/menu.svg';
 import {GateCard} from '../../components/Card/GateCard';
 import {Header} from '../../components/Header/Header';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import i18n from '../../i18n';
 import CreateCustomerAccountForm from './CustomerForm';
 
 type Steps = {
@@ -31,26 +32,36 @@ export function CustomerGatePage() {
 			<div className="customer-gate-page-container">
 				<div className="customer-gate-page-body">
 					<Header
-						description="We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our customers in the Marketplace and access is invite only. If you are an existing Liferay customer, please keep an eye out for an announcement related to the new Marketplace in the coming months!"
-						title="Becoming a Liferay Marketplace Customer"
+						description={i18n.translate(
+							'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-customers-in-the-marketplace-and-access-is-invite-only-if-you-are-an-existing-liferay-customer-please-keep-an-eye-out-for-an-announcement-related-to-the-new-marketplace-in-the-coming-months'
+						)}
+						title={i18n.translate(
+							'becoming-a-liferay-marketplace-customer'
+						)}
 					/>
 
 					<GateCard
-						description="Explore over 800 apps available in the Liferay Marketplace from a variety of publishers. Apps allow you to accelerate your Liferay development get to market faster. "
+						description={i18n.translate(
+							'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster'
+						)}
 						image={{
 							description: 'Magnifying Glass',
 							svg: magnifyingGlass,
 						}}
-						title="Discover and customize "
+						title={i18n.translate('discover-and-customize')}
 					/>
 
 					<GateCard
-						description="Manage all your app purchases and subscriptions in one place, read other users reviews, get notifications when updates are available and get the most out of our Apps catalog."
+						description={i18n.translate(
+							'manage-all-your-app-purchases-and-subscriptions-in-one-place-read-other-users-reviews-get-notifications-when-updates-are-available-and-get-the-most-out-of-our-apps-catalog'
+						)}
 						image={{
 							description: 'Menu ',
 							svg: menu,
 						}}
-						title="Manage All Your Apps in One Place"
+						title={i18n.translate(
+							'manage-all-your-apps-in-one-place'
+						)}
 					/>
 
 					<hr className="customer-gate-page-divider" />
@@ -60,7 +71,7 @@ export function CustomerGatePage() {
 							className="customer-gate-page-button"
 							onClick={() => setStep({page: 'customerGateForm'})}
 						>
-							Get Started
+							{i18n.translate('get-started')}
 						</ClayButton>
 
 						<div>
@@ -68,7 +79,9 @@ export function CustomerGatePage() {
 								className="customer-gate-page-link"
 								href={`${origin}/c/portal/login`}
 							>
-								Learn more about becoming a Liferay Customer.
+								{i18n.translate(
+									'learn-more-about-becoming-a-liferay-customer'
+								)}
 							</ClayLink>
 						</div>
 					</div>

@@ -129,7 +129,7 @@ function getLabels({actionButton, articleId, workflowEnabled}) {
 		return {
 			button: workflowEnabled
 				? Liferay.Language.get('submit-for-workflow')
-				: Liferay.Language.get('publish-with-permissions'),
+				: Liferay.Language.get('publish'),
 			description: Liferay.Language.get(
 				'confirm-the-web-content-visibility-before-publishing'
 			),
@@ -171,7 +171,7 @@ function getLabels({actionButton, articleId, workflowEnabled}) {
 	}
 	else {
 		return {
-			button: Liferay.Language.get('save-as-draft-with-permissions'),
+			button: Liferay.Language.get('save-as-draft'),
 			description: Liferay.Language.get(
 				'confirm-the-web-content-visibility-before-saving-as-draft'
 			),

@@ -35,20 +35,30 @@ definition {
 			dmDocumentTypeFieldNames = "Grid",
 			dmDocumentTypeName = "DM Document Type Name");
 
+		DataEngine.viewField(
+			fieldFieldLabel = "Grid",
+			fieldName = "Grid");
+
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
-				fieldFieldLabel = "Grid",
 				index = ${index},
 				optionFieldLabel = "Rows",
 				optionValue = "Option ${index}");
+
+			if (${index} != 3) {
+				FormFields.clickAddOptionButton(gridOptionType = "Rows");
+			}
 		}
 
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
-				fieldFieldLabel = "Grid",
 				index = ${index},
 				optionFieldLabel = "Columns",
 				optionValue = "Option ${index}");
+
+			if (${index} != 3) {
+				FormFields.clickAddOptionButton(gridOptionType = "Columns");
+			}
 		}
 
 		WebContentStructures.saveCP();
@@ -75,11 +85,18 @@ definition {
 			dmDocumentTypeFieldNames = "Multiple Selection",
 			dmDocumentTypeName = "DM Document Type Name");
 
+		DataEngine.viewField(
+			fieldFieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
-				fieldFieldLabel = "Multiple Selection",
 				index = ${index},
 				optionValue = "Option ${index}");
+
+			if (${index} != 3) {
+				FormFields.clickAddOptionButton();
+			}
 		}
 
 		WebContentStructures.saveCP();
@@ -100,11 +117,18 @@ definition {
 			dmDocumentTypeFieldNames = "Select from List",
 			dmDocumentTypeName = "DM Document Type Name");
 
+		DataEngine.viewField(
+			fieldFieldLabel = "Select from List",
+			fieldName = "Select from List");
+
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
-				fieldFieldLabel = "Select from List",
 				index = ${index},
 				optionValue = "Option ${index}");
+
+			if (${index} != 3) {
+				FormFields.clickAddOptionButton();
+			}
 		}
 
 		WebContentStructures.saveCP();
@@ -125,11 +149,18 @@ definition {
 			dmDocumentTypeFieldNames = "Single Selection",
 			dmDocumentTypeName = "DM Document Type Name");
 
+		DataEngine.viewField(
+			fieldFieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
 		for (var index : list "1,2,3") {
 			DataEngine.addFieldOption(
-				fieldFieldLabel = "Single Selection",
 				index = ${index},
 				optionValue = "Option ${index}");
+
+			if (${index} != 3) {
+				FormFields.clickAddOptionButton();
+			}
 		}
 
 		WebContentStructures.saveCP();

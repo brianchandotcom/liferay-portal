@@ -247,7 +247,7 @@ definition {
 				rowNumber = ${optionNumber});
 
 			if (${optionNumber} != 3) {
-				FormFields.clickAddOptionButton(gridOptionType = "row");
+				FormFields.clickAddOptionButton(gridOptionType = "Rows");
 			}
 		}
 
@@ -258,7 +258,7 @@ definition {
 				rowNumber = ${optionNumber});
 
 			if (${optionNumber} != 3) {
-				FormFields.clickAddOptionButton(gridOptionType = "column");
+				FormFields.clickAddOptionButton(gridOptionType = "Columns");
 			}
 		}
 

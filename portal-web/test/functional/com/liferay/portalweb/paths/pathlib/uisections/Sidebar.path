@@ -82,22 +82,22 @@
 </tr>
 <tr>
 	<td>OPTION_INPUT</td>
-	<td>xpath=(//label[normalize-space(text())='${key_optionFieldLabel}']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'ddm-field-text')])[${index}]</td>
+	<td>xpath=(//label[normalize-space(text())='${key_optionFieldLabel}']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@id,'keyValueDisplayName')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTION_INPUT_WITHOUT_LABEL</td>
-	<td>xpath=(//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'ddm-field-text')])[${index}]</td>
+	<td>xpath=(//div[contains(@class,'ddm-option-entry')]//input[contains(@id,'keyValueDisplayName')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTION_FIELD_REFERENCE_INPUT</td>
-	<td>xpath=(//label[normalize-space(text())='${key_optionFieldLabel}']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[${index}]</td>
+	<td>xpath=(//label[normalize-space(text())='${key_optionFieldLabel}']//following-sibling::div[contains(@class,'options-container')]//div[contains(@class,'ddm-option-entry')]//input[contains(@id,'keyValueReference')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTION_WITHOUT_LABEL_FIELD_REFERENCE_INPUT</td>
-	<td>xpath=(//div[contains(@class,'ddm-option-entry')]//input[contains(@class,'key-value-reference')])[${index}]</td>
+	<td>xpath=(//div[contains(@class,'ddm-option-entry')]//input[contains(@id,'keyValueReference')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

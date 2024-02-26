@@ -55,6 +55,14 @@ definition {
 					fieldFieldLabel = ${fieldName},
 					index = ${index},
 					optionValue = "Option ${index}");
+
+				DataEngine.viewField(
+					fieldFieldLabel = ${fieldName},
+					fieldName = ${fieldName});
+
+				if (${index} != 3) {
+					FormFields.clickAddOptionButton();
+				}
 			}
 		}
 
@@ -76,6 +84,10 @@ definition {
 					fieldFieldLabel = "${fieldName} - pt-BR",
 					index = ${index},
 					optionValue = "Option ${index} - pt-BR");
+
+				DataEngine.viewField(
+					fieldFieldLabel = "${fieldName} - pt-BR",
+					fieldName = ${fieldName});
 			}
 		}
 

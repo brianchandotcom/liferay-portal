@@ -71,6 +71,15 @@ definition {
 			index = ${index});
 
 		var optionIndex = 1;
+		var javaScriptGetOptionValueListLength = '''
+	
+		const optionValueList = "${optionValueList}";
+
+		return optionValueList.split(",").length.toString();
+
+		''';
+
+		var optionValueListLength = selenium.getEval(${javaScriptGetOptionValueListLength});
 
 		for (var optionValue : list ${optionValueList}) {
 			if (isSet(optionFieldLabel)) {
@@ -85,6 +94,10 @@ definition {
 					index = ${optionIndex},
 					locator1 = "Sidebar#OPTION_INPUT_WITHOUT_LABEL",
 					value1 = ${optionValue});
+			}
+
+			if (${optionIndex} != ${optionValueListLength}) {
+				FormFields.clickAddOptionButton(gridOptionType = ${optionFieldLabel});
 			}
 
 			var optionIndex = ${optionIndex} + 1;

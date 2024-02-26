@@ -115,10 +115,10 @@ definition {
 
 	@summary = "Default summary"
 	macro clickAddOptionButton(gridOptionType = null) {
-		if (${gridOptionType} == "row") {
+		if (${gridOptionType} == "Rows") {
 			Click(locator1 = "FormFields#GRID_OPTIONS_ADD_ROW_OPTION_BUTTON");
 		}
-		else if (${gridOptionType} == "column") {
+		else if (${gridOptionType} == "Columns") {
 			Click(locator1 = "FormFields#GRID_OPTIONS_ADD_COLUMN_OPTION_BUTTON");
 		}
 		else {

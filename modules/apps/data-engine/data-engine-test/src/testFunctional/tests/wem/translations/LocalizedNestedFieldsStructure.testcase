@@ -363,6 +363,14 @@ definition {
 				index = ${index},
 				optionValue = ${optionValue});
 
+			if (${index} != 2) {
+				DataEngine.viewField(
+					fieldFieldLabel = "Multiple Selection",
+					fieldName = "Multiple Selection");
+
+				FormFields.clickAddOptionButton();
+			}
+
 			var index = ${index} + 1;
 		}
 

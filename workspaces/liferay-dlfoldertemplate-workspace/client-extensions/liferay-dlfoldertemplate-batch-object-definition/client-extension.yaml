@@ -2,7 +2,7 @@ assemble:
     - from: batch
       into: batch
 liferay-dlfoldertemplate-batch-object-definition:
-    name: Liferay DL Folder Template Object Definition
+    name: Liferay DL Folder Template Batch Object Definition
     oAuthApplicationHeadlessServer: liferay-dlfoldertemplate-batch-object-definition-oauth-application-headless-server
     type: batch
 liferay-dlfoldertemplate-batch-object-definition-oauth-application-headless-server:

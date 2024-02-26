@@ -207,16 +207,16 @@ public class BaseGraphQLServlet {
 
 		if (assertExtendedProperties) {
 			Assert.assertEquals(
-				jsonObject.get("extendedString"),
-				expectedTestDTO.getExtendedString());
+				expectedTestDTO.getExtendedString(),
+				jsonObject.get("extendedString"));
 		}
 
-		Assert.assertEquals(jsonObject.get("id"), expectedTestDTO.getId());
+		Assert.assertEquals(expectedTestDTO.getId(), jsonObject.get("id"));
 		Assert.assertEquals(
-			JSONUtil.toStringMap(jsonObject.getJSONObject("map")),
-			expectedTestDTO.getMap());
+			expectedTestDTO.getMap(),
+			JSONUtil.toStringMap(jsonObject.getJSONObject("map")));
 		Assert.assertEquals(
-			jsonObject.get("string"), expectedTestDTO.getString());
+			expectedTestDTO.getString(), jsonObject.get("string"));
 	}
 
 	protected JSONObject invoke(GraphQLField graphQLField, String type)

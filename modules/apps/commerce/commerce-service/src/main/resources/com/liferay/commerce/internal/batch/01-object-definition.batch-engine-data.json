@@ -16,6 +16,58 @@
 	"items": [
 		{
 			"enableCategorization": true,
+			"externalReferenceCode": "L_COMMERCE_RETURN_ITEM",
+			"label": {
+				"en_US": "Commerce Return Item"
+			},
+			"modifiable": true,
+			"name": "CommerceReturnItem",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "COMMERCE_ORDER_ITEM_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Commerce Order Item Id"
+					},
+					"name": "commerceOrderItemId",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "BigDecimal",
+					"businessType": "PrecisionDecimal",
+					"externalReferenceCode": "QUANTITY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Quantity"
+					},
+					"name": "quantity",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "BigDecimal"
+				}
+			],
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Commerce Return Items"
+			},
+			"portlet": false,
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"enableCategorization": true,
 			"externalReferenceCode": "L_COMMERCE_RETURN",
 			"label": {
 				"en_US": "Commerce Return"
@@ -39,6 +91,24 @@
 					"state": true,
 					"system": false,
 					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_COMMERCE_RETURN_TO_L_COMMERCE_RETURN_ITEMS",
+					"label": {
+						"en_US": "Commerce Return to Commerce Return items"
+					},
+					"name": "commerceReturnToCommerceReturnItems",
+					"objectDefinitionExternalReferenceCode1": "L_COMMERCE_RETURN",
+					"objectDefinitionExternalReferenceCode2": "L_COMMERCE_RETURN_ITEM",
+					"objectDefinitionName2": "CommerceReturnItem",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": false,
+					"type": "oneToMany"
 				}
 			],
 			"panelCategoryKey": "",

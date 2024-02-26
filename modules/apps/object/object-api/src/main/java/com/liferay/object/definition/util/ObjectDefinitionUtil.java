@@ -111,6 +111,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"CommerceReturn", "/commerce-returns"
 		).put(
+			"CommerceReturnItem", "/commerce-return-Items"
+		).put(
 			"FDSAction", "/data-set-manager/actions"
 		).put(
 			"FDSClientExtensionFilter",

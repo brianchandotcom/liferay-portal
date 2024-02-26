@@ -210,7 +210,7 @@ public class LayoutCopyHelperTest {
 	}
 
 	@Test
-	public void testCopyFragmentFragmentEntryLinksAndKeepTheSameFragmentEntryLinkId()
+	public void testCopyFragmentEntryLinksAndKeepTheSameFragmentEntryLinkId()
 		throws Exception {
 
 		Layout targetLayout = LayoutTestUtil.addTypeContentLayout(_group);

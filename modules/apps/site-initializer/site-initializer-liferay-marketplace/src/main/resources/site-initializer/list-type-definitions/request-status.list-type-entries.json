@@ -1,0 +1,38 @@
+[
+	{
+		"externalReferenceCode": "OPEN",
+		"key": "open",
+		"name": "Open",
+		"name_i18n": {
+			"en-US": "Open"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "IN-PROGRESS",
+		"key": "inProgress",
+		"name": "In Progress",
+		"name_i18n": {
+			"en-US": "In Progress"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "COMPLETED",
+		"key": "completed",
+		"name": "Completed",
+		"name_i18n": {
+			"en-US": "Completed"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "REJECTED",
+		"key": "rejected",
+		"name": "Rejected",
+		"name_i18n": {
+			"en-US": "Rejected"
+		},
+		"type": "string"
+	}
+]

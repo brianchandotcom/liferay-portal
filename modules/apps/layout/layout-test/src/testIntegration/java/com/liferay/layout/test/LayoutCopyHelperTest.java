@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -309,12 +310,14 @@ public class LayoutCopyHelperTest {
 				}));
 
 		_fragmentEntryLinkLocalService.updateDeleted(
+			TestPropsValues.getUserId(),
 			fragmentEntryLink1.getFragmentEntryLinkId(), true);
 
 		layoutStructure.deleteLayoutStructureItem(
 			fragmentStyledLayoutStructureItem1.getItemId());
 
 		_fragmentEntryLinkLocalService.updateDeleted(
+			TestPropsValues.getUserId(),
 			fragmentEntryLink4.getFragmentEntryLinkId(), true);
 
 		layoutStructure.deleteLayoutStructureItem(

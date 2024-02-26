@@ -4,7 +4,8 @@
  */
 
 export const config = {
-	'agentOauthAppId': 'liferay-dlfoldertemplate-etc-node-oauth-application-user-agent',
+	'agentOauthAppId':
+		'liferay-dlfoldertemplate-etc-node-oauth-application-user-agent',
 	'apiHost': 'http://localhost:8080',
 	'external': false,
 	'folder.generate.service.url': 'jobs/create/folder/direct',

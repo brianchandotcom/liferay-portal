@@ -1256,7 +1256,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				}
 			}
 		};
-
 		PagePermission[] inputPagePermissions = {
 			new PagePermission() {
 				{
@@ -1283,7 +1282,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		PagePermission[] expectedPagePermissions = {_PAGE_PERMISSIONS};
-
 		PagePermission[] inputPagePermissions = {};
 
 		_testPostSiteSitePageSuccessPagePermissions(
@@ -1327,7 +1325,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				}
 			}
 		};
-
 		PagePermission[] inputPagePermissions = {
 			new PagePermission() {
 				{
@@ -1359,7 +1356,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				}
 			}
 		};
-
 		PagePermission[] inputPagePermissions = {
 			new PagePermission() {
 				{

@@ -25,6 +25,18 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 public interface AccountEntryEmailConfiguration {
 
 	@Meta.AD(
+		description = "invitation-email-sender-email-address-description",
+		name = "invitation-email-sender-email-address", required = false
+	)
+	public String invitationEmailSenderEmailAddress();
+
+	@Meta.AD(
+		description = "invitation-email-sender-name-description",
+		name = "invitation-email-sender-name", required = false
+	)
+	public String invitationEmailSenderName();
+
+	@Meta.AD(
 		deflt = "${resource:com/liferay/account/dependencies/account_entry_invite_user_subject.tmpl}",
 		description = "invitation-email-subject-description",
 		name = "invitation-email-subject", required = false

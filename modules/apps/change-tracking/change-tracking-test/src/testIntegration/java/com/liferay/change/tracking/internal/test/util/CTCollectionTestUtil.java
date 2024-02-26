@@ -62,27 +62,6 @@ public class CTCollectionTestUtil {
 		return ctCollection;
 	}
 
-	public static CTCollection createCTCollectionwithJournalArticle()
-		throws Exception {
-
-		CTCollection ctCollection =
-			CTCollectionLocalServiceUtil.addCTCollection(
-				null, TestPropsValues.getCompanyId(),
-				TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
-				null);
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctCollection.getCtCollectionId())) {
-
-			JournalTestUtil.addArticle(
-				TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
-				StringPool.BLANK);
-		}
-
-		return ctCollection;
-	}
-
 	public static void publishCTCollectionWithError(long ctCollectionId)
 		throws Exception {
 

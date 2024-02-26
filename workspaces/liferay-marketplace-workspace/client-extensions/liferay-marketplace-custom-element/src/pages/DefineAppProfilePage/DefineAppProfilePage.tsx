@@ -377,10 +377,10 @@ export function DefineAppProfilePage({
 			<NewAppPageFooterButtons
 				disableContinueButton={
 					isLoading ||
-					!appCategories ||
+					!appCategories.length ||
 					!appDescription ||
 					!appName ||
-					!appTags
+					!appTags.length
 				}
 				isLoading={isLoading}
 				onClickBack={() => onClickBack()}

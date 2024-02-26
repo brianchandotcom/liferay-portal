@@ -65,11 +65,13 @@ export type PriceEntry = {priceEntryId: number; sku: {name: string}};
 
 const initialState = ({
 	appBuild: 'upload',
+	appCategories: [],
 	appLicense: {value: 'Perpetual'},
 	appLicensePrice: {
 		developer: [],
 		standard: [{key: 1, value: 0}],
 	},
+	appTags: [],
 	appType: {value: ''},
 	appVersion: '1.0',
 	buildAppPackages: {},

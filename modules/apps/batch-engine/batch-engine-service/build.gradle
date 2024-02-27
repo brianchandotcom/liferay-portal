@@ -12,7 +12,7 @@ dependencies {
 	compileOnly group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
 	compileOnly group: "commons-io", name: "commons-io", version: "2.11.0"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
-	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.21"
+	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.26.0"
 	compileOnly group: "org.apache.commons", name: "commons-csv", version: "1.9.0"
 	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"

@@ -82,7 +82,7 @@ const SearchControls = ({
 								defaultValue={searchValue}
 								disabled={disabled}
 								name={searchInputName}
-								placeholder={Liferay.Language.get('search-for')}
+								placeholder={Liferay.Language.get('search')}
 								ref={searchInputRef}
 								type="search"
 							/>
@@ -94,7 +94,7 @@ const SearchControls = ({
 									displayType="unstyled"
 									onClick={onClick}
 									symbol="search"
-									title={Liferay.Language.get('search-for')}
+									title={Liferay.Language.get('search')}
 									type="submit"
 								/>
 							</ClayInput.GroupInsetItem>

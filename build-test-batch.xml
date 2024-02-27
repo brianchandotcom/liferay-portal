@@ -7300,6 +7300,37 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="playwright-compile-jdk8">
+		<run-batch-test>
+			<test-action>
+				<trycatch>
+					<try>
+						<start-docker-playwright />
+
+						<gradle-execute dir="${playwright.dir}" task="npmInstall" />
+
+						<property name="playwright.command" value="npx playwright test --list" />
+
+						<echo>Running "${playwright.command}" from ${playwright.dir}</echo>
+
+						<docker-execute container="${playwright.docker.host}">
+							cd ${playwright.dir}
+
+							${playwright.command}
+						</docker-execute>
+					</try>
+					<finally>
+						<stop-docker-playwright />
+					</finally>
+				</trycatch>
+			</test-action>
+
+			<test-set-up>
+				<setup-test-environment />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="playwright-js-tomcat90-mysql57-jdk8">
 		<run-batch-test>
 			<test-action>

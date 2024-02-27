@@ -9,7 +9,6 @@ import com.liferay.frontend.js.components.sample.web.internal.constants.Frontend
 import com.liferay.frontend.js.components.sample.web.internal.constants.FrontendJSComponentsSampleWebPortletKeys;
 import com.liferay.frontend.js.components.sample.web.internal.display.context.TranslationManagerDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -19,7 +18,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Allegrini
@@ -52,8 +50,5 @@ public class FrontendJSComponentsSampleWebPortlet extends MVCPortlet {
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

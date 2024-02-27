@@ -527,6 +527,7 @@ exports[`Sites Dashboard Overview render 1`] = `
               >
                 <button
                   aria-activedescendant="visitors"
+                  aria-controls="clay-id-2"
                   aria-expanded="true"
                   aria-haspopup="listbox"
                   aria-owns="clay-id-2"

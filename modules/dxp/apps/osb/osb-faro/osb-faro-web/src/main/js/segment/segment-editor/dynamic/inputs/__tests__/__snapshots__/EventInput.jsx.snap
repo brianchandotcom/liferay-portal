@@ -38,7 +38,8 @@ exports[`EventInput should render 1`] = `
         data-aria-hidden="true"
       >
         <button
-          aria-activedescendant="gt"
+          aria-activedescendant="ge"
+          aria-controls="clay-id-2"
           aria-expanded="true"
           aria-haspopup="listbox"
           aria-owns="clay-id-2"
@@ -76,6 +77,7 @@ exports[`EventInput should render 1`] = `
       >
         <button
           aria-activedescendant="since"
+          aria-controls="clay-id-4"
           aria-expanded="true"
           aria-haspopup="listbox"
           aria-owns="clay-id-4"
@@ -96,6 +98,7 @@ exports[`EventInput should render 1`] = `
       >
         <button
           aria-activedescendant="last24Hours"
+          aria-controls="clay-id-6"
           aria-expanded="true"
           aria-haspopup="listbox"
           aria-owns="clay-id-6"
@@ -127,6 +130,7 @@ exports[`EventInput should render 1`] = `
       >
         <button
           aria-activedescendant="2"
+          aria-controls="clay-id-8"
           aria-expanded="true"
           aria-haspopup="listbox"
           aria-owns="clay-id-8"

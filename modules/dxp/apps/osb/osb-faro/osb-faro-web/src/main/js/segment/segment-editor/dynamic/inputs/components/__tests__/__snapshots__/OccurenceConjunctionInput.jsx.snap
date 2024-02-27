@@ -6,7 +6,8 @@ exports[`OccurenceConjunctionInput should render 1`] = `
     class="form-group-item form-group-item-shrink"
   >
     <button
-      aria-activedescendant="lt"
+      aria-activedescendant="ge"
+      aria-controls="clay-id-2"
       aria-expanded="true"
       aria-haspopup="listbox"
       aria-owns="clay-id-2"

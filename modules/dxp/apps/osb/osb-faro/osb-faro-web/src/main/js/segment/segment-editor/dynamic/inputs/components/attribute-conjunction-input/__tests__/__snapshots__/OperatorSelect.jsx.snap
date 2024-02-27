@@ -7,6 +7,7 @@ exports[`OperatorSelect should render 1`] = `
   >
     <button
       aria-activedescendant="gt"
+      aria-controls="clay-id-2"
       aria-expanded="true"
       aria-haspopup="listbox"
       aria-owns="clay-id-2"

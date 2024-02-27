@@ -90,7 +90,7 @@ public class PublicationUserNotificationHandlerTest {
 		CTCollectionTestUtil.publishCTCollectionWithError(
 			ctCollection.getCtCollectionId());
 
-		_assertUserNotifcationFeedEntryBody(
+		_assertUserNotificationFeedEntryBody(
 			ctCollection.getCtCollectionId(),
 			StringBundler.concat(
 				"<div class=\"title\">", ctCollection.getName(),
@@ -111,7 +111,7 @@ public class PublicationUserNotificationHandlerTest {
 
 		_ctCollectionLocalService.deleteCTCollection(ctCollection);
 
-		_assertUserNotifcationFeedEntryBody(
+		_assertUserNotificationFeedEntryBody(
 			ctCollection.getCtCollectionId(),
 			StringBundler.concat(
 				"<div class=\"title\">Notification no longer applies.",
@@ -145,7 +145,7 @@ public class PublicationUserNotificationHandlerTest {
 			CTCollectionTestUtil.publishCTCollectionWithError(
 				ctCollection.getCtCollectionId());
 
-			_assertUserNotifcationFeedEntryBody(
+			_assertUserNotificationFeedEntryBody(
 				ctCollection.getCtCollectionId(),
 				StringBundler.concat(
 					"<div class=\"title\">", ctCollection.getName(),
@@ -155,7 +155,7 @@ public class PublicationUserNotificationHandlerTest {
 					"administrator to resolve the issue.</div>"),
 				false, user.getUserId());
 
-			_assertUserNotifcationFeedEntryBody(
+			_assertUserNotificationFeedEntryBody(
 				ctCollection.getCtCollectionId(),
 				StringBundler.concat(
 					"<div class=\"title\">", ctCollection.getName(),
@@ -257,7 +257,7 @@ public class PublicationUserNotificationHandlerTest {
 		}
 	}
 
-	private void _assertUserNotifcationFeedEntryBody(
+	private void _assertUserNotificationFeedEntryBody(
 			long ctCollectionId, String expectedBody, boolean showConflicts,
 			long userId)
 		throws Exception {

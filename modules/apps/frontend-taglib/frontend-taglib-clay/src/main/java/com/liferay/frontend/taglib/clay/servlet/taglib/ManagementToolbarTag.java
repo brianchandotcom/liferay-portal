@@ -1089,7 +1089,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			}
 
 			jspWriter.write(" placeholder=\"");
-			jspWriter.write(LanguageUtil.get(resourceBundle, "search-for"));
+			jspWriter.write(LanguageUtil.get(resourceBundle, "search"));
 			jspWriter.write("\" type=\"text\"");
 
 			if (searchValue != null) {

@@ -160,6 +160,11 @@ public class StringUtilTest {
 	public void testGetTitleCase() {
 		Assert.assertTrue(
 			Objects.equals(
+				StringUtil.getTitleCase(
+					"a cat is going up with a letter a", false, ""),
+				"A Cat Is Going up With a Letter A"));
+		Assert.assertTrue(
+			Objects.equals(
 				StringUtil.getTitleCase("this is a title test", false, ""),
 				"This Is a Title Test"));
 		Assert.assertTrue(

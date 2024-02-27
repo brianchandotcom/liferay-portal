@@ -220,7 +220,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 		if (ArrayUtil.isEmpty(taskBulkSelection.getAssigneeIds())) {
 			taskBulkSelection.setAssigneeIds(
-				new Long[] {-1L, contextUser.getUserId()});
+				() -> new Long[] {-1L, contextUser.getUserId()});
 		}
 
 		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(

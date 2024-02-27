@@ -28,7 +28,7 @@ public class ProjectControllerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testCreateOSBAccountEntry() throws Exception {
+	public void testCreateOSBAccountEntry1() throws Exception {
 		OSBAccountEntry osbAccountEntry =
 			_projectController.createOSBAccountEntry(false);
 
@@ -45,6 +45,43 @@ public class ProjectControllerTest {
 			osbOfferingEntry.getProductEntryId());
 		Assert.assertEquals(1, osbOfferingEntry.getQuantity());
 		Assert.assertNotNull(osbOfferingEntry.getStartDate());
+	}
+
+	@Test
+	public void testCreateOSBAccountEntry2() throws Exception {
+		_assert("1-BusinessTest", ProductConstants.BUSINESS_PRODUCT_ENTRY_ID);
+		_assert(
+			"2-BusinessLXCTest",
+			ProductConstants.LXC_BUSINESS_PRODUCT_ENTRY_ID);
+		_assert(
+			"3-EnterpriseTest", ProductConstants.ENTERPRISE_PRODUCT_ENTRY_ID);
+		_assert(
+			"4-EnterpriseLXCTest",
+			ProductConstants.LXC_ENTERPRISE_PRODUCT_ENTRY_ID);
+		_assert("5-ProLXCTest", ProductConstants.LXC_PRO_PRODUCT_ENTRY_ID);
+	}
+
+	private void _assert(String corpProjectUuid, String productEntryId)
+		throws Exception {
+
+		OSBAccountEntry osbAccountEntry =
+			_projectController.createOSBAccountEntry(corpProjectUuid);
+
+		List<OSBOfferingEntry> offeringEntries =
+			osbAccountEntry.getOfferingEntries();
+
+		Assert.assertEquals(
+			offeringEntries.toString(), 1, offeringEntries.size());
+
+		OSBOfferingEntry osbOfferingEntry = offeringEntries.get(0);
+
+		Assert.assertEquals(
+			productEntryId, osbOfferingEntry.getProductEntryId());
+		Assert.assertEquals(1, osbOfferingEntry.getQuantity());
+		Assert.assertNotNull(osbOfferingEntry.getStartDate());
+		Assert.assertEquals(
+			ProductConstants.OSB_OFFERING_ENTRY_STATUS_ACTIVE,
+			osbOfferingEntry.getStatus());
 	}
 
 	private final ProjectController _projectController =

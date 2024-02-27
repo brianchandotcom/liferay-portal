@@ -14,8 +14,10 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Internal;
 
@@ -129,18 +131,6 @@ public class DirectDeployTask extends BasePortalToolsTask {
 		return jvmArgs;
 	}
 
-	@Override
-	public String getMain() {
-		String webAppType = getWebAppType();
-
-		if (webAppType.equals("layouttpl")) {
-			webAppType = "layout";
-		}
-
-		return "com.liferay.portal.tools.deploy." +
-			StringUtil.capitalize(webAppType) + "Deployer";
-	}
-
 	@Internal
 	public File getWebAppFile() {
 		return GradleUtil.toFile(project, _webAppFile);
@@ -195,6 +185,18 @@ public class DirectDeployTask extends BasePortalToolsTask {
 
 	public void setWebAppType(Object webAppType) {
 		_webAppType = webAppType;
+
+		Property<String> mainClassProperty = getMainClass();
+
+		if (Objects.equals(getWebAppType(), "layouttpl")) {
+			mainClassProperty.set(
+				"com.liferay.portal.tools.deploy.LayoutDeployer");
+		}
+		else {
+			mainClassProperty.set(
+				"com.liferay.portal.tools.deploy." +
+					StringUtil.capitalize(getWebAppType()) + "Deployer");
+		}
 	}
 
 	@Override

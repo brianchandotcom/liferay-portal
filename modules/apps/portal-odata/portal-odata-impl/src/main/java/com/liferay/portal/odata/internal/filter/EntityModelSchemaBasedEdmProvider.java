@@ -73,6 +73,10 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		Map<String, ObjectValuePair<Integer, CsdlComplexType>>
 			objectValuePairs) {
 
+		if (_csdlComplexTypes.containsKey(entityField.getTypeKey())) {
+			return _csdlComplexTypes.get(entityField.getTypeKey());
+		}
+
 		if (!Objects.equals(entityField.getType(), EntityField.Type.COMPLEX)) {
 			return null;
 		}
@@ -80,6 +84,8 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		ComplexEntityField complexEntityField = (ComplexEntityField)entityField;
 
 		CsdlComplexType csdlComplexType = new CsdlComplexType();
+
+		_csdlComplexTypes.put(entityField.getTypeKey(), csdlComplexType);
 
 		csdlComplexType.setName(entityField.getTypeKey());
 
@@ -346,5 +352,8 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 	}
 
 	private static final String _NAMESPACE = "HypermediaRestApis";
+
+	private final HashMap<String, CsdlComplexType> _csdlComplexTypes =
+		new HashMap<>();
 
 }

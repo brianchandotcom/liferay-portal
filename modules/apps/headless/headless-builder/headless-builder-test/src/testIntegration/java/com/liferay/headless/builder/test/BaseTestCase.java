@@ -55,8 +55,8 @@ public abstract class BaseTestCase {
 					bundle.getSymbolicName(),
 					"com.liferay.headless.builder.impl")) {
 
-				_setUpProcessedFile(bundle, "00.headless.builder.picklists");
-				_setUpProcessedFile(bundle, "01.headless.builder");
+				_setUpProcessedFile(bundle, "00.list.type.definition");
+				_setUpProcessedFile(bundle, "01.object.definition");
 
 				CompletableFuture<Void> completableFuture =
 					_batchEngineUnitProcessor.processBatchEngineUnits(

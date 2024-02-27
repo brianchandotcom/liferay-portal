@@ -12,17 +12,17 @@ import {UtilityPagesPage} from '../../layout-admin-web/pages/UtilityPagesPage';
 export class UtilityPageConfigurationPage {
 	readonly page: Page;
 
-	readonly htmlDescriptionPlaceholder: Locator;
-	readonly htmlTitlePlaceholder: Locator;
+	readonly descriptionInput: Locator;
 	readonly saveButton: Locator;
+	readonly titleInput: Locator;
 	readonly utilityPagesPage: UtilityPagesPage;
 
 	constructor(page: Page) {
 		this.page = page;
 
-		this.htmlDescriptionPlaceholder = page.getByPlaceholder('Description');
-		this.htmlTitlePlaceholder = page.getByPlaceholder('Title');
+		this.descriptionInput = page.getByPlaceholder('Description');
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
+		this.titleInput = page.getByPlaceholder('Title');
 		this.utilityPagesPage = new UtilityPagesPage(page);
 	}
 
@@ -38,10 +38,10 @@ export class UtilityPageConfigurationPage {
 	) {
 		await this.goto(title);
 
-		await this.htmlDescriptionPlaceholder.waitFor();
+		await this.descriptionInput.waitFor();
 
-		await this.htmlDescriptionPlaceholder.fill(htmlDescription);
-		await this.htmlTitlePlaceholder.fill(htmlTitle);
+		await this.descriptionInput.fill(htmlDescription);
+		await this.titleInput.fill(htmlTitle);
 
 		await this.saveButton.click();
 

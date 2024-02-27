@@ -7,22 +7,22 @@
 
 <%@ include file="/publications/init.jsp" %>
 
-<%
-long backgroundTaskId = GetterUtil.getLong(renderRequest.getParameter("backgroundTaskId"));
-String ctCollectionName = GetterUtil.getString(renderRequest.getParameter("ctCollectionName"));
-
-BackgroundTask backgroundTask = BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
-%>
-
 <clay:container-fluid
 	cssClass="container-view"
 >
 	<div class="sheet">
 		<h2 class="sheet-title">
-			<liferay-ui:message arguments="<%= ctCollectionName %>" key="x-scheduled-publication-failed-with-an-unexpected-system-error" />
+			<liferay-ui:message arguments="<%= renderRequest.getParameter("ctCollectionName") %>" key="x-scheduled-publication-failed-with-an-unexpected-system-error" />
 		</h2>
 
 		<div class="sheet-section">
+
+			<%
+			long backgroundTaskId = GetterUtil.getLong(renderRequest.getParameter("backgroundTaskId"));
+
+			BackgroundTask backgroundTask = BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
+			%>
+
 			<pre class="bg-light border p-2"><%= backgroundTask.getStatusMessage() %></pre>
 		</div>
 </clay:container-fluid>

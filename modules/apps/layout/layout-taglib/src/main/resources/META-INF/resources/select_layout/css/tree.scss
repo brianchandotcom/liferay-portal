@@ -12,3 +12,11 @@
 html#{$cadmin-selector} .cadmin .treeview .search-result-button {
 	font-size: 14px;
 }
+
+html#{$cadmin-selector}
+	.cadmin
+	.treeview
+	.search-results-mark-layout-name
+	mark {
+	background-color: $cadmin-gray-300;
+}

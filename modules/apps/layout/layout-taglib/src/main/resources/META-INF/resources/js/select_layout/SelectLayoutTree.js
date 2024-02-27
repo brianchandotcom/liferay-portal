@@ -493,6 +493,7 @@ function SearchResults({
 		<div className="pt-3">
 			{results.map((layout) => (
 				<SearchResult
+					filter={filter}
 					key={layout.id}
 					layout={layout}
 					multiSelection={multiSelection}
@@ -504,7 +505,25 @@ function SearchResults({
 	);
 }
 
-function SearchResult({layout, multiSelection, onSelect, selection}) {
+function SearchResult({filter, layout, multiSelection, onSelect, selection}) {
+	const getMarkedText = () => {
+		const matchLayoutName = new RegExp(filter, 'i').exec(layout.name);
+
+		return matchLayoutName ? (
+			<span className="search-results-mark-layout-name">
+				{matchLayoutName.input.substring(0, matchLayoutName.index)}
+
+				<mark className="px-0">{matchLayoutName[0]}</mark>
+
+				{matchLayoutName.input.substring(
+					matchLayoutName.index + matchLayoutName[0].length
+				)}
+			</span>
+		) : (
+			layout.name
+		);
+	};
+
 	return (
 		<div className="align-items-center d-flex pb-2">
 			{multiSelection && (
@@ -525,7 +544,11 @@ function SearchResult({layout, multiSelection, onSelect, selection}) {
 			))}
 
 			{multiSelection ? (
-				<span className="font-weight-semi-bold p-0">{layout.name}</span>
+				<span className="font-weight-semi-bold p-0">
+					{Liferay.FeatureFlags['LPD-15607']
+						? getMarkedText()
+						: layout.name}
+				</span>
 			) : (
 				<ClayButton
 					className="font-weight-semi-bold px-0 py-1 search-result-button"
@@ -533,7 +556,9 @@ function SearchResult({layout, multiSelection, onSelect, selection}) {
 					displayType="unstyled"
 					onClick={() => onSelect(layout)}
 				>
-					{layout.name}
+					{Liferay.FeatureFlags['LPD-15607']
+						? getMarkedText()
+						: layout.name}
 				</ClayButton>
 			)}
 		</div>

@@ -407,9 +407,15 @@ const ActionForm = ({
 	return (
 		<>
 			<h2 className="mb-0 p-4">
-				{editing
-					? initialValues?.label
-					: Liferay.Language.get('new-item-action')}
+				{editing && initialValues?.label}
+
+				{!editing &&
+					activeTab === 0 &&
+					Liferay.Language.get('new-item-action')}
+
+				{!editing &&
+					activeTab === 1 &&
+					Liferay.Language.get('new-creation-action')}
 			</h2>
 
 			<ClayPanel

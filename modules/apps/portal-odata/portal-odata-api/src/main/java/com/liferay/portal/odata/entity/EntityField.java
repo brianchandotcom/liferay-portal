@@ -40,17 +40,6 @@ public class EntityField {
 		Function<Locale, String> filterableFieldNameFunction,
 		Function<Object, String> filterableFieldValueFunction) {
 
-		this(
-			name, type, name, sortableFieldNameFunction,
-			filterableFieldNameFunction, filterableFieldValueFunction);
-	}
-
-	public EntityField(
-		String name, Type type, String typeKey,
-		Function<Locale, String> sortableFieldNameFunction,
-		Function<Locale, String> filterableFieldNameFunction,
-		Function<Object, String> filterableFieldValueFunction) {
-
 		if (Validator.isNull(name)) {
 			throw new IllegalArgumentException("Name is null");
 		}
@@ -76,7 +65,6 @@ public class EntityField {
 
 		_name = name;
 		_type = type;
-		_typeKey = typeKey;
 		_sortableFieldNameFunction = sortableFieldNameFunction;
 		_filterableFieldNameFunction = filterableFieldNameFunction;
 		_filterableFieldValueFunction = filterableFieldValueFunction;
@@ -135,10 +123,6 @@ public class EntityField {
 		return _type;
 	}
 
-	public String getTypeKey() {
-		return _typeKey;
-	}
-
 	@Override
 	public String toString() {
 		return StringBundler.concat(
@@ -157,6 +141,5 @@ public class EntityField {
 	private final String _name;
 	private final Function<Locale, String> _sortableFieldNameFunction;
 	private final Type _type;
-	private final String _typeKey;
 
 }

@@ -73,21 +73,21 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		Map<String, ObjectValuePair<Integer, CsdlComplexType>>
 			objectValuePairs) {
 
-		if (_csdlComplexTypes.containsKey(entityField.getTypeKey())) {
-			return _csdlComplexTypes.get(entityField.getTypeKey());
-		}
-
 		if (!Objects.equals(entityField.getType(), EntityField.Type.COMPLEX)) {
 			return null;
 		}
 
 		ComplexEntityField complexEntityField = (ComplexEntityField)entityField;
 
+		if (_csdlComplexTypes.containsKey(complexEntityField.getTypeKey())) {
+			return _csdlComplexTypes.get(complexEntityField.getTypeKey());
+		}
+
 		CsdlComplexType csdlComplexType = new CsdlComplexType();
 
-		_csdlComplexTypes.put(entityField.getTypeKey(), csdlComplexType);
+		_csdlComplexTypes.put(complexEntityField.getTypeKey(), csdlComplexType);
 
-		csdlComplexType.setName(entityField.getTypeKey());
+		csdlComplexType.setName(complexEntityField.getTypeKey());
 
 		Map<String, EntityField> entityFieldsMap =
 			complexEntityField.getEntityFieldsMap();
@@ -234,11 +234,15 @@ public class EntityModelSchemaBasedEdmProvider extends SchemaBasedEdmProvider {
 		String namespace, EntityField entityField) {
 
 		if (Objects.equals(entityField.getType(), EntityField.Type.COMPLEX)) {
+			ComplexEntityField complexEntityField =
+				(ComplexEntityField)entityField;
+
 			CsdlProperty csdlProperty = new CsdlProperty();
 
-			csdlProperty.setName(entityField.getName());
+			csdlProperty.setName(complexEntityField.getName());
 			csdlProperty.setType(
-				new FullQualifiedName(namespace, entityField.getTypeKey()));
+				new FullQualifiedName(
+					namespace, complexEntityField.getTypeKey()));
 
 			return csdlProperty;
 		}

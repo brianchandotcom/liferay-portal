@@ -37,8 +37,8 @@ public class ComplexEntityField extends EntityField {
 		String name, List<EntityField> entityFields, String typeKey) {
 
 		super(
-			name, EntityField.Type.COMPLEX, typeKey, locale -> name,
-			locale -> name, fieldValue -> String.valueOf(fieldValue));
+			name, EntityField.Type.COMPLEX, locale -> name, locale -> name,
+			fieldValue -> String.valueOf(fieldValue));
 
 		if (entityFields == null) {
 			_entityFieldsMap = Collections.emptyMap();
@@ -50,16 +50,19 @@ public class ComplexEntityField extends EntityField {
 				_entityFieldsMap.put(entityField.getName(), entityField);
 			}
 		}
+
+		_typeKey = typeKey;
 	}
 
 	public ComplexEntityField(
 		String name, Map<String, EntityField> entityFieldsMap, String typeKey) {
 
 		super(
-			name, EntityField.Type.COMPLEX, typeKey, locale -> name,
-			locale -> name, fieldValue -> String.valueOf(fieldValue));
+			name, EntityField.Type.COMPLEX, locale -> name, locale -> name,
+			fieldValue -> String.valueOf(fieldValue));
 
 		_entityFieldsMap = entityFieldsMap;
+		_typeKey = typeKey;
 	}
 
 	/**
@@ -70,6 +73,10 @@ public class ComplexEntityField extends EntityField {
 	 */
 	public Map<String, EntityField> getEntityFieldsMap() {
 		return _entityFieldsMap;
+	}
+
+	public String getTypeKey() {
+		return _typeKey;
 	}
 
 	@Override
@@ -84,5 +91,6 @@ public class ComplexEntityField extends EntityField {
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;
+	private final String _typeKey;
 
 }

@@ -33,7 +33,8 @@ html#{$cadmin-selector} .cadmin .page-editor__item-configuration-sidebar {
 	background: $cadmin-white;
 	border-left: 1px solid $cadmin-secondary-l3;
 	right: 0;
-	transition: transform ease $defaultTransitionDuration;
+	transition: transform ease $defaultTransitionDuration,
+		width ease $defaultTransitionDuration;
 	width: $defaultSidebarContentWidth;
 
 	transform: translateX(100%);
@@ -47,12 +48,20 @@ html#{$cadmin-selector}
 	.page-editor__small-resolution
 	.cadmin
 	.page-editor__item-configuration-sidebar {
+	&--open {
+		border-left: 1px solid $cadmin-secondary-l3;
+		overflow: unset;
+		width: $defaultSidebarContentWidth;
+	}
+	border: none;
 	height: unset;
 	min-height: calc(
 		var(--editor-height) + var(--toolbar-height) + var(--zoom-alert-height)
 	);
+	overflow: hidden;
 	position: absolute;
 	top: calc(var(--control-menu-container-height));
+	width: 0;
 	z-index: $sidebarZIndex + 1;
 }
 

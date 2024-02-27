@@ -127,7 +127,6 @@ exports[`FilterOptions should render 1`] = `
                   <input
                     aria-autocomplete="list"
                     aria-controls="clay-id-1"
-                    aria-expanded="false"
                     aria-labelledby="clay-autocomplete-label-1"
                     autocomplete="off"
                     autocorrect="off"

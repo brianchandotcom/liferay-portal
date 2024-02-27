@@ -29,7 +29,6 @@ exports[`StringInput should render 1`] = `
             <input
               aria-autocomplete="list"
               aria-controls="clay-id-1"
-              aria-expanded="false"
               aria-labelledby="clay-autocomplete-label-1"
               autocomplete="off"
               autocorrect="off"
@@ -73,21 +72,14 @@ exports[`StringInput should render with data 1`] = `
       class="form-group form-group-autofit"
     >
       <div
-        aria-hidden="true"
         class="form-group-item entity-name form-group-item-label form-group-item-shrink"
-        data-aria-hidden="true"
       />
       <div
-        aria-hidden="true"
         class="form-group-item display-value form-group-item-label form-group-item-shrink"
-        data-aria-hidden="true"
       >
         Name
       </div>
-      <div
-        aria-hidden="true"
-        data-aria-hidden="true"
-      >
+      <div>
         operator
       </div>
       <div
@@ -95,16 +87,13 @@ exports[`StringInput should render with data 1`] = `
       >
         <div
           class="input-group select-input-root"
-          style=""
         >
           <div
             class="input-group-item"
           >
             <input
-              aria-activedescendant=""
               aria-autocomplete="list"
               aria-controls="clay-id-3"
-              aria-expanded="true"
               aria-labelledby="clay-autocomplete-label-1"
               autocomplete="off"
               autocorrect="off"

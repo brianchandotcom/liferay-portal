@@ -59,6 +59,7 @@ exports[`CriteriaRow should render 1`] = `
               >
                 <button
                   aria-activedescendant="ne"
+                  aria-controls="clay-id-2"
                   aria-expanded="true"
                   aria-haspopup="listbox"
                   aria-owns="clay-id-2"
@@ -84,8 +85,7 @@ exports[`CriteriaRow should render 1`] = `
                   >
                     <input
                       aria-autocomplete="list"
-                      aria-controls="clay-id-1"
-                      aria-expanded="false"
+                      aria-controls="clay-id-3"
                       aria-labelledby="clay-autocomplete-label-1"
                       autocomplete="off"
                       autocorrect="off"

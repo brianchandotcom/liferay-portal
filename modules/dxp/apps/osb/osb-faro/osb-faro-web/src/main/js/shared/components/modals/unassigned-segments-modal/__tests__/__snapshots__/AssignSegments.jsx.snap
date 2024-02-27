@@ -99,6 +99,7 @@ exports[`AssignSegments should render 1`] = `
                 <td>
                   <button
                     aria-activedescendant=""
+                    aria-controls="clay-id-2"
                     aria-expanded="true"
                     aria-haspopup="listbox"
                     aria-owns="clay-id-2"

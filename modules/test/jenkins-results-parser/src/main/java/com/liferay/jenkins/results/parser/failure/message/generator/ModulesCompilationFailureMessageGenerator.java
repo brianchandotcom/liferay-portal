@@ -17,9 +17,9 @@ public class ModulesCompilationFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(Build build) {
-		String jobName = build.getJobName();
+		String jobVariant = build.getJobVariant();
 
-		if (!jobName.contains("modules-compile")) {
+		if (!jobVariant.contains("modules-compile")) {
 			return null;
 		}
 

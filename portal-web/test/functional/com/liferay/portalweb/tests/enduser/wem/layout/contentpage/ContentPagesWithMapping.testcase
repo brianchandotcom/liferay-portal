@@ -2713,6 +2713,12 @@ definition {
 				layoutName = "Test Widget Page Name");
 		}
 
+		task ("Clear content cached across the cluster") {
+			ServerAdministration.openServerAdmin();
+
+			ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear content cached across the cluster.");
+		}
+
 		task ("Navigate to content page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",

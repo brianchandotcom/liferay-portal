@@ -5,7 +5,6 @@
 
 package com.liferay.frontend.js.web.internal.servlet.taglib;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.web.internal.configuration.CustomDialogsSettingsConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -83,9 +82,6 @@ public class CustomDialogsBottomJSPDynamicInclude implements DynamicInclude {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

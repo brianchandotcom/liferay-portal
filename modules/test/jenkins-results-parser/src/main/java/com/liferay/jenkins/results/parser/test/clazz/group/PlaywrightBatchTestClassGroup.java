@@ -25,6 +25,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -245,9 +247,33 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private List<TestClass> _getTestClasses(String projectName) {
-		List<TestClass> testClasses = new ArrayList<>();
-
 		JSONObject playwrightJSONObject = _getPlaywrightJSONObject();
+
+		JSONArray errorsJSONArray = playwrightJSONObject.optJSONArray("errors");
+
+		if ((errorsJSONArray != null) && (errorsJSONArray.length() > 0)) {
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < errorsJSONArray.length(); i++) {
+				JSONObject errorJSONObject = errorsJSONArray.getJSONObject(i);
+
+				sb.append(errorJSONObject.getString("stack"));
+
+				sb.append("\n");
+
+				sb.append(
+					StringEscapeUtils.unescapeJava(
+						errorJSONObject.getString("snippet")));
+
+				sb.append("\n\n");
+			}
+
+			System.out.println(sb.toString());
+
+			throw new RuntimeException(sb.toString());
+		}
+
+		List<TestClass> testClasses = new ArrayList<>();
 
 		JSONObject configJSONObject = playwrightJSONObject.getJSONObject(
 			"config");

@@ -13,7 +13,7 @@ const MOCKED_IMAGE_PATH =
 	'USER_IMAGES_URL_https://images.freeimages.com/images/large-previews/83f/paris-1213603.jpg';
 
 export const test = mergeTests(
-	loginTest,
+	loginTest(),
 	featureFlagsTest({
 		'LPD-10793': true,
 	}),

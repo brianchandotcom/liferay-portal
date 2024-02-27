@@ -7,14 +7,14 @@ liferay-dlfoldertemplate-oauth-application-server:
     .serviceScheme: http
     name: Liferay DL Folder Template Etc Node OAuth Application Server
     scopes:
-        - Liferay.Object.Admin.REST.everything
-        - Liferay.Headless.Admin.User.everything.read
-        - Liferay.Headless.Delivery.everything
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Object.Admin.REST.everything.write
-        - Liferay.Object.Admin.REST.everything.read
         - C_T4T14FolderTemplate.everything
         - C_T4T14FolderTemplateNode.everything
+        - Liferay.Headless.Admin.User.everything.read
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Headless.Delivery.everything
+        - Liferay.Object.Admin.REST.everything
+        - Liferay.Object.Admin.REST.everything.read
+        - Liferay.Object.Admin.REST.everything.write
     type: oAuthApplicationHeadlessServer
 liferay-dlfoldertemplate-oauth-application-user-agent:
     .serviceAddress: localhost:8050

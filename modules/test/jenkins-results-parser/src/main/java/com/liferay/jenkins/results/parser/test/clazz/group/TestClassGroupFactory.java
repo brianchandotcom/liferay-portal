@@ -346,6 +346,18 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
+			else if (batchName.startsWith("playwright-compile-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new PlaywrightCompileBatchTestClassGroup(
+							jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup =
+						new PlaywrightCompileBatchTestClassGroup(
+							batchName, portalTestClassJob);
+				}
+			}
 			else if (batchName.startsWith("playwright-js-")) {
 				if (jsonObject != null) {
 					batchTestClassGroup = new PlaywrightBatchTestClassGroup(

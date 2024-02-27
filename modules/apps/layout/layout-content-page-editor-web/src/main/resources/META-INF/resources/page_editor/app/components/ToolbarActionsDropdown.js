@@ -10,9 +10,10 @@ import React from 'react';
 import {useSelector} from '../contexts/StoreContext';
 import {onDiscardDraft, useDisabledDiscardDraft} from './DiscardDraftButton';
 import {useOnToggleSidebars} from './HideSidebarButton';
-import {useDisabledRedo, useDisabledUndo, useUndoRedo} from './undo/Undo';
+import {useDisabledRedo, useDisabledUndo} from './undo/Undo';
 import {useHistoryItems, useOnHistoryItemClick} from './undo/UndoHistory';
 import UndoOverlay from './undo/UndoOverlay';
+import useUndoRedoActions from './undo/useUndoRedoActions';
 
 export default function ToolbarActionsDropdown({discardDraftFormRef}) {
 	const disabledDiscardDraft = useDisabledDiscardDraft();
@@ -20,7 +21,7 @@ export default function ToolbarActionsDropdown({discardDraftFormRef}) {
 	const disabledUndo = useDisabledUndo();
 	const historyItems = useHistoryItems();
 	const {loadingHistory, onHistoryItemClick} = useOnHistoryItemClick();
-	const {onRedo, onUndo} = useUndoRedo();
+	const {onRedo, onUndo} = useUndoRedoActions();
 	const onToggleSidebars = useOnToggleSidebars();
 	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
 	const undoHistory = useSelector((state) => state.undoHistory);

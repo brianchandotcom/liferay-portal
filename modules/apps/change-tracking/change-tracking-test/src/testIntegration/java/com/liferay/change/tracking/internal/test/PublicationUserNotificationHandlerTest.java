@@ -101,6 +101,26 @@ public class PublicationUserNotificationHandlerTest {
 	}
 
 	@Test
+	public void testGetBodyForDeletedPublication() throws Exception {
+		CTCollection ctCollection =
+			CTCollectionTestUtil.createCTCollectionWithConflict(
+				TestPropsValues.getUser());
+
+		CTCollectionTestUtil.publishCTCollectionWithError(
+			ctCollection.getCtCollectionId());
+
+		_ctCollectionLocalService.deleteCTCollection(ctCollection);
+
+		_assertUserNotifcationFeedEntryBody(
+			ctCollection.getCtCollectionId(),
+			StringBundler.concat(
+				"<div class=\"title\">Notification no longer applies.",
+				"</div><div class=\"body\">Notification for Publications was ",
+				"deleted.</div>"),
+			true, TestPropsValues.getUserId());
+	}
+
+	@Test
 	public void testGetBodyForStoppedService() throws Exception {
 		User user = UserTestUtil.addUser();
 

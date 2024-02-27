@@ -134,6 +134,10 @@ public class InetAddressUtil {
 
 		if (domain.charAt(0) == '[') {
 			if (domain.charAt(domain.length() - 1) == ']') {
+				if (domain.length() == 2) {
+					return null;
+				}
+
 				domain = domain.substring(1, domain.length() - 1);
 			}
 			else {
@@ -142,9 +146,8 @@ public class InetAddressUtil {
 			}
 		}
 
-		if ((domain.length() == 0) ||
-			((Character.digit(domain.charAt(0), 16) == -1) &&
-			 (domain.charAt(0) != ':'))) {
+		if ((Character.digit(domain.charAt(0), 16) == -1) &&
+			(domain.charAt(0) != ':')) {
 
 			return null;
 		}

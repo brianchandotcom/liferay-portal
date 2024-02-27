@@ -7,63 +7,40 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import {SWITCH_SIDEBAR_PANEL} from '../../../../src/main/resources/META-INF/resources/page_editor/app/actions/types';
 import HideSidebarButton from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/HideSidebarButton';
+import useOnToggleSidebars from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/useOnToggleSidebars';
 import StoreMother from '../../../../src/main/resources/META-INF/resources/page_editor/test_utils/StoreMother';
 
-const DEFAULT_STATE = {
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/components/useOnToggleSidebars',
+	() => {
+		const onToggleSidebars = jest.fn();
+
+		return () => onToggleSidebars;
+	}
+);
+
+const INITIAL_STATE = {
 	sidebar: {},
 };
 
-const renderComponent = ({dispatch = () => {}, state = DEFAULT_STATE} = {}) =>
+const renderComponent = () =>
 	render(
-		<StoreMother.Component dispatch={dispatch} getState={() => state}>
+		<StoreMother.Component getState={() => INITIAL_STATE}>
 			<HideSidebarButton />
 		</StoreMother.Component>
 	);
 
 describe('HideSidebarButton', () => {
-	it('triggers hide sidebar action', () => {
-		const mockDispatch = jest.fn((a) => {
-			if (typeof a === 'function') {
-				return a(mockDispatch);
-			}
-		});
+	it('calls onToggleSidebars when the Toggle Sidebars button is pressed', () => {
+		renderComponent();
 
-		renderComponent({dispatch: mockDispatch});
+		const onToggleSidebars = useOnToggleSidebars();
 
 		userEvent.click(
 			screen.getByLabelText('toggle-sidebars', {exact: false})
 		);
 
-		expect(mockDispatch).toBeCalledWith(
-			expect.objectContaining({hidden: true, type: SWITCH_SIDEBAR_PANEL})
-		);
-	});
-
-	it('triggers show sidebar action when sidebar is hidden', () => {
-		const mockDispatch = jest.fn((a) => {
-			if (typeof a === 'function') {
-				return a(mockDispatch);
-			}
-		});
-
-		renderComponent({
-			dispatch: mockDispatch,
-			state: {
-				...DEFAULT_STATE,
-				sidebar: {
-					hidden: true,
-				},
-			},
-		});
-
-		userEvent.click(
-			screen.getByLabelText('toggle-sidebars', {exact: false})
-		);
-
-		expect(mockDispatch).toBeCalledWith(
-			expect.objectContaining({hidden: false, type: SWITCH_SIDEBAR_PANEL})
-		);
+		expect(onToggleSidebars).toBeCalled();
 	});
 });

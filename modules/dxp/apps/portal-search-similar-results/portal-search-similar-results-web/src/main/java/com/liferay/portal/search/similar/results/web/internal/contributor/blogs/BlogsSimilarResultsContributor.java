@@ -10,7 +10,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
+import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperUtil;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaBuilder;
@@ -35,7 +35,7 @@ public class BlogsSimilarResultsContributor
 	public void detectRoute(
 		RouteBuilder routeBuilder, RouteHelper routeHelper) {
 
-		String[] parameters = _httpHelper.getFriendlyURLParameters(
+		String[] parameters = HttpHelperUtil.getFriendlyURLParameters(
 			HttpComponentsUtil.decodePath(routeHelper.getURLString()));
 
 		SearchStringUtil.requireEquals("blogs", parameters[0]);
@@ -89,9 +89,6 @@ public class BlogsSimilarResultsContributor
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Reference
-	private HttpHelper _httpHelper;
 
 	@Reference
 	private UIDFactory _uidFactory;

@@ -14,7 +14,7 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.AssetTypeUtil;
-import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
+import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperUtil;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaBuilder;
@@ -42,7 +42,7 @@ public class MessageBoardsSimilarResultsContributor
 	public void detectRoute(
 		RouteBuilder routeBuilder, RouteHelper routeHelper) {
 
-		String[] parameters = _httpHelper.getFriendlyURLParameters(
+		String[] parameters = HttpHelperUtil.getFriendlyURLParameters(
 			HttpComponentsUtil.decodePath(routeHelper.getURLString()));
 
 		SearchStringUtil.requireEquals("message_boards", parameters[0]);
@@ -142,9 +142,6 @@ public class MessageBoardsSimilarResultsContributor
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private HttpHelper _httpHelper;
 
 	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;

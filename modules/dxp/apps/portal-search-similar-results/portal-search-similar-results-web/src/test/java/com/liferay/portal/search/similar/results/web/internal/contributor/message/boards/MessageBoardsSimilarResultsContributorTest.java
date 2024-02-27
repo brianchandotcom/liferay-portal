@@ -48,10 +48,6 @@ public class MessageBoardsSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		ReflectionTestUtil.setFieldValue(
-			_messageBoardsSimilarResultsContributor, "_httpHelper",
-			setUpHttpHelper());
-
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () ->

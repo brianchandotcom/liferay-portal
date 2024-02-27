@@ -8,7 +8,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.url.p
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
+import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaBuilder;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaHelper;
@@ -20,7 +20,6 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Rout
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -44,10 +43,11 @@ public class ClassNameClassPKSimilarResultsContributor
 		routeBuilder.addAttribute(
 			CLASS_NAME,
 			Objects.requireNonNull(
-				_httpHelper.getPortletIdParameter(urlString, CLASS_NAME))
+				HttpHelperUtil.getPortletIdParameter(urlString, CLASS_NAME))
 		).addAttribute(
 			CLASS_PK,
-			Long.valueOf(_httpHelper.getPortletIdParameter(urlString, CLASS_PK))
+			Long.valueOf(
+				HttpHelperUtil.getPortletIdParameter(urlString, CLASS_PK))
 		);
 	}
 
@@ -74,8 +74,5 @@ public class ClassNameClassPKSimilarResultsContributor
 			CLASS_PK, String.valueOf(assetEntry.getClassPK())
 		);
 	}
-
-	@Reference
-	private HttpHelper _httpHelper;
 
 }

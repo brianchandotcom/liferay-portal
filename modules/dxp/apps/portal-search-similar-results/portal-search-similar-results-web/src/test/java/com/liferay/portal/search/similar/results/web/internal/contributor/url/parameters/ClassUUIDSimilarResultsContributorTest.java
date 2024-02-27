@@ -44,10 +44,6 @@ public class ClassUUIDSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		ReflectionTestUtil.setFieldValue(
-			_classUUIDSimilarResultsContributor, "_httpHelper",
-			setUpHttpHelper());
-
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () ->

@@ -41,10 +41,6 @@ public class EntryIdSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		ReflectionTestUtil.setFieldValue(
-			_entryIdSimilarResultsContributor, "_httpHelper",
-			setUpHttpHelper());
-
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () -> "http://localhost:8080?entryId=1234";

@@ -43,10 +43,6 @@ public class AssetPublisherSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		ReflectionTestUtil.setFieldValue(
-			_assetPublisherSimilarResultsContributor, "_httpHelper",
-			setUpHttpHelper());
-
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () -> StringBundler.concat(

@@ -46,9 +46,6 @@ public class BlogsSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		ReflectionTestUtil.setFieldValue(
-			_blogsSimilarResultsContributor, "_httpHelper", setUpHttpHelper());
-
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () -> StringBundler.concat(

@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.similar.results.web.internal.builder.AssetTypeUtil;
-import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
+import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperUtil;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaBuilder;
@@ -49,13 +49,14 @@ public class AssetPublisherSimilarResultsContributor
 		String urlString = HttpComponentsUtil.decodePath(
 			routeHelper.getURLString());
 
-		String[] parameters = _httpHelper.getFriendlyURLParameters(urlString);
+		String[] parameters = HttpHelperUtil.getFriendlyURLParameters(
+			urlString);
 
 		SearchStringUtil.requireEquals("asset_publisher", parameters[0]);
 
 		_putAttribute(parameters[2], "type", routeBuilder);
 
-		String assetEntryId = _httpHelper.getPortletIdParameter(
+		String assetEntryId = HttpHelperUtil.getPortletIdParameter(
 			urlString,
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "assetEntryId");
 
@@ -149,9 +150,6 @@ public class AssetPublisherSimilarResultsContributor
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Reference
-	private HttpHelper _httpHelper;
 
 	@Reference
 	private UIDFactory _uidFactory;

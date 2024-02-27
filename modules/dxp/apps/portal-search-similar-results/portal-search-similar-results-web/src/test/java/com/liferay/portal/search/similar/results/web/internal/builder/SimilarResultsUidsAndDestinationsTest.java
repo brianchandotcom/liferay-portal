@@ -37,7 +37,6 @@ import com.liferay.portal.search.similar.results.web.internal.contributor.url.pa
 import com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters.EntryIdSimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters.UIDSimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.internal.contributor.wiki.WikiDisplaySimilarResultsContributor;
-import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperImpl;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.Criteria;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.portlet.shared.search.CriteriaHelperImpl;
@@ -85,8 +84,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 	@Before
 	public void setUp() {
-		_httpHelperImpl = new HttpHelperImpl();
-
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
@@ -739,9 +736,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 			assetPublisherSimilarResultsContributor, "_assetEntryLocalService",
 			_assetEntryLocalService);
 		ReflectionTestUtil.setFieldValue(
-			assetPublisherSimilarResultsContributor, "_httpHelper",
-			_httpHelperImpl);
-		ReflectionTestUtil.setFieldValue(
 			assetPublisherSimilarResultsContributor, "_uidFactory",
 			_uidFactory);
 
@@ -761,8 +755,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 			blogsSimilarResultsContributor, "_blogsEntryLocalService",
 			_blogsEntryLocalService);
 		ReflectionTestUtil.setFieldValue(
-			blogsSimilarResultsContributor, "_httpHelper", _httpHelperImpl);
-		ReflectionTestUtil.setFieldValue(
 			blogsSimilarResultsContributor, "_uidFactory", _uidFactory);
 
 		_serviceRegistrations.add(
@@ -779,10 +771,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 		ClassNameClassPKSimilarResultsContributor
 			classNameClassPKSimilarResultsContributor =
 				new ClassNameClassPKSimilarResultsContributor();
-
-		ReflectionTestUtil.setFieldValue(
-			classNameClassPKSimilarResultsContributor, "_httpHelper",
-			_httpHelperImpl);
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -802,9 +790,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 		ReflectionTestUtil.setFieldValue(
 			classNameIdClassPKSimilarResultsContributor,
 			"_assetEntryLocalService", _assetEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
-			classNameIdClassPKSimilarResultsContributor, "_httpHelper",
-			_httpHelperImpl);
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -823,8 +808,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 		ReflectionTestUtil.setFieldValue(
 			classUUIDSimilarResultsContributor, "_assetEntryLocalService",
 			_assetEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
-			classUUIDSimilarResultsContributor, "_httpHelper", _httpHelperImpl);
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -850,9 +833,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 		ReflectionTestUtil.setFieldValue(
 			documentLibrarySimilarResultsContributor, "_dlFolderLocalService",
 			_dlFolderLocalService);
-		ReflectionTestUtil.setFieldValue(
-			documentLibrarySimilarResultsContributor, "_httpHelper",
-			_httpHelperImpl);
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -871,8 +851,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 		ReflectionTestUtil.setFieldValue(
 			entryIdSimilarResultsContributor, "_assetEntryLocalService",
 			_assetEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
-			entryIdSimilarResultsContributor, "_httpHelper", _httpHelperImpl);
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -898,9 +876,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 		ReflectionTestUtil.setFieldValue(
 			messageBoardsSimilarResultsContributor, "_mbMessageLocalService",
 			_mbMessageLocalService);
-		ReflectionTestUtil.setFieldValue(
-			messageBoardsSimilarResultsContributor, "_httpHelper",
-			_httpHelperImpl);
 
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
@@ -946,9 +921,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 		UIDSimilarResultsContributor uidSimilarResultsContributor =
 			new UIDSimilarResultsContributor();
 
-		ReflectionTestUtil.setFieldValue(
-			uidSimilarResultsContributor, "_httpHelper", _httpHelperImpl);
-
 		_serviceRegistrations.add(
 			_bundleContext.registerService(
 				SimilarResultsContributor.class, uidSimilarResultsContributor,
@@ -965,9 +937,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 		ReflectionTestUtil.setFieldValue(
 			wikiDisplaySimilarResultsContributor, "_assetEntryLocalService",
 			_assetEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
-			wikiDisplaySimilarResultsContributor, "_httpHelper",
-			_httpHelperImpl);
 		ReflectionTestUtil.setFieldValue(
 			wikiDisplaySimilarResultsContributor, "_uidFactory", _uidFactory);
 		ReflectionTestUtil.setFieldValue(
@@ -1155,7 +1124,6 @@ public class SimilarResultsUidsAndDestinationsTest {
 	private final DLFolderLocalService _dlFolderLocalService = Mockito.mock(
 		DLFolderLocalService.class);
 	private long _groupId;
-	private HttpHelperImpl _httpHelperImpl;
 	private final MBCategoryLocalService _mbCategoryLocalService = Mockito.mock(
 		MBCategoryLocalService.class);
 	private final MBMessageLocalService _mbMessageLocalService = Mockito.mock(

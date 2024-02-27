@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
@@ -41,9 +40,6 @@ public class UIDSimilarResultsContributorTest
 
 	@Test
 	public void testDetectRoute() {
-		ReflectionTestUtil.setFieldValue(
-			_uidSimilarResultsContributor, "_httpHelper", setUpHttpHelper());
-
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () -> "http://localhost:8080?uid=theUid";

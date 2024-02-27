@@ -68,9 +68,7 @@ public class QueueListener {
 					routingKey));
 		}
 
-		if (!routingKey.equals("koroneiki.account.create") &&
-			!routingKey.equals("koroneiki.account.update")) {
-
+		if (!routingKey.equals("koroneiki.account.update")) {
 			return;
 		}
 
@@ -85,7 +83,7 @@ public class QueueListener {
 			String salesforceAccountKey = _getSalesforceKey(
 				koroneikiAccountJSONObject);
 
-			if (salesforceAccountKey == null) {
+			if (salesforceAccountKey.equals("")) {
 				channel.basicReject(deliveryTag, false);
 
 				return;
@@ -245,6 +243,28 @@ public class QueueListener {
 	}
 
 	private String _getSalesforceKey(JSONObject koroneikiAccountJSONObject) {
+		JSONArray entitlementsJSONArray =
+			koroneikiAccountJSONObject.getJSONArray("entitlements");
+
+		boolean partner = false;
+
+		for (int i = 0; i < entitlementsJSONArray.length(); i++) {
+			JSONObject entitlementJSONObject =
+				entitlementsJSONArray.getJSONObject(i);
+
+			if (StringUtil.equalsIgnoreCase(
+					entitlementJSONObject.getString("name"), "Partner")) {
+
+				partner = true;
+
+				break;
+			}
+		}
+
+		if (!partner) {
+			return "";
+		}
+
 		JSONArray externalLinksJSONArray =
 			koroneikiAccountJSONObject.getJSONArray("externalLinks");
 

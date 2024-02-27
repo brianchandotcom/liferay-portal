@@ -5,7 +5,7 @@
 
 // @ts-ignore
 
-import {Page, expect} from '@playwright/test';
+import {Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {StaticPagesPage} from '../../layout-admin-web/pages/StaticPagesPage';
@@ -41,18 +41,17 @@ export class UtilityPagesPage {
 	async goToEdit(title: string) {
 		await this.goto();
 
-		await expect(this.page.getByTitle(title)).toBeVisible();
+		await this.page.getByTitle(title).waitFor();
 
-		const linkElement = this.page
+		const href = await this.page
 			.locator('div.card-row', {has: this.page.getByTitle(title)})
-			.getByRole('link');
-
-		const href = await linkElement.getAttribute('href');
+			.getByRole('link')
+			.getAttribute('href');
 
 		await this.page.goto(href);
 
-		await expect(
-			this.page.getByRole('button', {exact: true, name: 'Publish'})
-		).toBeVisible();
+		await this.page
+			.getByRole('button', {exact: true, name: 'Publish'})
+			.waitFor();
 	}
 }

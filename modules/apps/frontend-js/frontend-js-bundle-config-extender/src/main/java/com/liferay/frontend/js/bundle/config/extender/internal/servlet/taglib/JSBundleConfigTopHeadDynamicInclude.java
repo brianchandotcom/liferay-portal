@@ -9,7 +9,6 @@ import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigReg
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -191,10 +190,6 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSBundleConfigTopHeadDynamicInclude.class);
-
-	@Reference
-	private ContentSecurityPolicyNonceProvider
-		_contentSecurityPolicyNonceProvider;
 
 	@Reference
 	private JSONFactory _jsonFactory;

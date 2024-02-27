@@ -390,7 +390,7 @@ definition {
 		task ("Then the fields description, name*, objectFieldERC*, objectRelationshipNames are present in the APIProperty schema") {
 			APIExplorer.assertSchemaFieldsPresent(
 				schemaEntity = "APIProperty",
-				schemaFields = "description,name*,objectFieldERC*,objectRelationshipNames");
+				schemaFields = "description,name*,objectFieldERC,objectRelationshipNames");
 		}
 	}
 

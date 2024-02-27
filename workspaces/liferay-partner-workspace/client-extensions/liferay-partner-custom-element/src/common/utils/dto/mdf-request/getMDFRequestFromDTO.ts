@@ -127,11 +127,18 @@ export function getMDFRequestFromDTO(mdfRequest: MDFRequestDTO): MDFRequest {
 					activityStatus,
 					budgets:
 						actToBgts?.map((budgetIem) => {
-							const {cost, expense} = budgetIem;
+							const {
+								cost,
+								expense,
+								externalReferenceCode,
+								id,
+							} = budgetIem;
 
 							return {
 								cost: cost ? cost : 0,
 								expense: expense ? expense : {},
+								externalReferenceCode,
+								id,
 							};
 						}) || [],
 					claimPercent: mdfRequest.claimPercent,

@@ -118,9 +118,10 @@ public class HistogramMetricResourceImpl
 			dateHistogramAggregationResult.getBuckets(), endLocalDateTime,
 			startLocalDateTime, unit);
 
-		histogramMetric.setHistograms(histograms.toArray(new Histogram[0]));
+		histogramMetric.setHistograms(
+			() -> histograms.toArray(new Histogram[0]));
 		histogramMetric.setValue(
-			_getMetricValue(
+			() -> _getMetricValue(
 				bucket, histograms,
 				TimeUnit.DAYS.convert(
 					dateEnd.getTime() - dateStart.getTime(),
@@ -173,8 +174,8 @@ public class HistogramMetricResourceImpl
 
 			Histogram histogram = histograms.get(localDateTime.toString());
 
-			histogram.setKey(localDateTime.toString());
-			histogram.setValue((double)bucket.getDocCount());
+			histogram.setKey(localDateTime::toString);
+			histogram.setValue(() -> (double)bucket.getDocCount());
 
 			histograms.put(localDateTime.toString(), histogram);
 		}

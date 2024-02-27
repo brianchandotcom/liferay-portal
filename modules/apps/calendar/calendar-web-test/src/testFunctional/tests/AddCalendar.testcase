@@ -326,13 +326,15 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Display Settings");
 
-		PortalSettings.configureTimeZone(timeZone = "(UTC -02:00) Fernando de Noronha Time");
+		Click.clickNoMouseOver(locator1 = "//option[@value='America/Noronha']");
+
+		PortalSettings._saveDisplaySettings();
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		CalendarNavigator.gotoAddMyCalendars();
 
-		Calendar.viewSelectedTimeZone(timeZone = "(UTC -02:00) Fernando de Noronha Time");
+		AssertElementPresent(locator1 = "//option[@value='America/Noronha' and @selected]");
 	}
 
 	@description = "LRQA-71360 - Verify that the name field is required"

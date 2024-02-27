@@ -25,6 +25,11 @@ GlobalJSCET globalJSCET = editClientExtensionEntryDisplayContext.getCET();
 	<aui:field-wrapper cssClass="form-group">
 		<react:component
 			module="{ScriptElementAttributesFormField} from client-extension-web"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"attributes", globalJSCET.getScriptElementAttributesJSON()
+				).build()
+			%>'
 		/>
 	</aui:field-wrapper>
 </c:if>

@@ -5,6 +5,7 @@
 
 package com.liferay.partner;
 
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
 
@@ -33,7 +34,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -127,12 +127,17 @@ public class QueueListener {
 			).accept(
 				MediaType.APPLICATION_JSON
 			).header(
-				HttpHeaders.AUTHORIZATION,
-				"Bearer " + _oAuth2AccessToken.getTokenValue()
+				HttpHeaders.AUTHORIZATION, _getAuthorization()
 			).retrieve(
 			).bodyToMono(
 				String.class
 			).block());
+	}
+
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
+				"server");
 	}
 
 	private String _getCountryISOCode(JSONObject koroneikiAccountJSONObject) {
@@ -314,8 +319,7 @@ public class QueueListener {
 		).contentType(
 			MediaType.APPLICATION_JSON
 		).header(
-			HttpHeaders.AUTHORIZATION,
-			"Bearer " + _oAuth2AccessToken.getTokenValue()
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
 		).bodyValue(
 			bodyValue
 		).retrieve(
@@ -336,8 +340,7 @@ public class QueueListener {
 		).contentType(
 			MediaType.APPLICATION_JSON
 		).header(
-			HttpHeaders.AUTHORIZATION,
-			"Bearer " + _oAuth2AccessToken.getTokenValue()
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
 		).bodyValue(
 			bodyValue
 		).retrieve(
@@ -359,8 +362,7 @@ public class QueueListener {
 			).contentType(
 				MediaType.APPLICATION_JSON
 			).header(
-				HttpHeaders.AUTHORIZATION,
-				"Bearer " + _oAuth2AccessToken.getTokenValue()
+				HttpHeaders.AUTHORIZATION, _getAuthorization()
 			).bodyValue(
 				bodyValue
 			).retrieve(
@@ -467,13 +469,13 @@ public class QueueListener {
 
 	private static final Log _log = LogFactory.getLog(QueueListener.class);
 
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _lxcDXPMainDomain;
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
-
-	@Autowired
-	private OAuth2AccessToken _oAuth2AccessToken;
 
 }

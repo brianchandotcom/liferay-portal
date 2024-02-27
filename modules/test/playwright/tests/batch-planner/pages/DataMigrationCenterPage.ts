@@ -75,7 +75,7 @@ export class DataMigrationCenterPage {
 		updateStrategy: string
 	) {
 		await this.selectFile(filePath);
-		await this.selectImportEntityType(entitType);
+		await this.selectEntityType(entitType);
 		await this.importStrategySelector.selectOption(importStrategy);
 		await this.updateStrategySelector.selectOption(updateStrategy);
 
@@ -91,11 +91,7 @@ export class DataMigrationCenterPage {
 		await this.startImportButton.click();
 	}
 
-	async selectImportEntityType(entityTypeName: string) {
-		await this.entityTypeSelector.selectOption(entityTypeName);
-	}
-
-	async selectExportEntityType(entityTypeName: string) {
+	async selectEntityType(entityTypeName: string) {
 		await this.entityTypeSelector.selectOption(entityTypeName);
 	}
 
@@ -117,7 +113,7 @@ export class DataMigrationCenterPage {
 		checkedFields: Array<String> = null
 	) {
 		await this.selectExportFileFormat(exportFileFormat);
-		await this.selectExportEntityType(entitType);
+		await this.selectEntityType(entitType);
 
 		if (checkedFields !== null) {
 			await this.attributeCodeCheckBox.click();

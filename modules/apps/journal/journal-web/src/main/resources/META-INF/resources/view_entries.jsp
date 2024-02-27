@@ -303,7 +303,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									value="<%= curArticle.getDisplayDate() %>"
 								/>
 
-								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11218") %>'>
 									<liferay-ui:search-container-column-date
 										cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 										name="create-date"
@@ -332,7 +332,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									value="<%= curArticle.getDisplayDate() %>"
 								/>
 
-								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11218") %>'>
 									<liferay-ui:search-container-column-date
 										cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 										name="create-date"
@@ -548,7 +548,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							value="--"
 						/>
 
-						<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-202534") %>'>
+						<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11218") %>'>
 							<liferay-ui:search-container-column-date
 								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 								name="create-date"

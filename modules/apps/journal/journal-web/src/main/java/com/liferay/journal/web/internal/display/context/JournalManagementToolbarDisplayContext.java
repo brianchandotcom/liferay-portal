@@ -735,7 +735,7 @@ public class JournalManagementToolbarDisplayContext
 							"orderByCol",
 							() -> {
 								if (FeatureFlagManagerUtil.isEnabled(
-										"LPS-202534")) {
+										"LPD-11218")) {
 
 									return "create-date";
 								}
@@ -746,7 +746,7 @@ public class JournalManagementToolbarDisplayContext
 							"orderByType",
 							() -> {
 								if (FeatureFlagManagerUtil.isEnabled(
-										"LPS-202534")) {
+										"LPD-11218")) {
 
 									return "desc";
 								}
@@ -811,9 +811,7 @@ public class JournalManagementToolbarDisplayContext
 					).setParameter(
 						"orderByCol",
 						() -> {
-							if (FeatureFlagManagerUtil.isEnabled(
-									"LPS-202534")) {
-
+							if (FeatureFlagManagerUtil.isEnabled("LPD-11218")) {
 								return "create-date";
 							}
 
@@ -822,9 +820,7 @@ public class JournalManagementToolbarDisplayContext
 					).setParameter(
 						"orderByType",
 						() -> {
-							if (FeatureFlagManagerUtil.isEnabled(
-									"LPS-202534")) {
-
+							if (FeatureFlagManagerUtil.isEnabled("LPD-11218")) {
 								return "desc";
 							}
 

@@ -280,7 +280,7 @@ public class JournalDisplayContext {
 	}
 
 	public String getArticleSubtitle(JournalArticle article) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-202534") &&
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11218") &&
 			isNavigationMine()) {
 
 			Date createDate = article.getCreateDate();
@@ -935,7 +935,7 @@ public class JournalDisplayContext {
 	public String[] getOrderColumns() {
 		String[] orderColumns = {"display-date", "modified-date", "title"};
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-202534")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11218")) {
 			orderColumns = new String[] {
 				"display-date", "modified-date", "create-date", "title"
 			};
@@ -1015,7 +1015,7 @@ public class JournalDisplayContext {
 
 	public ResultRowSplitter getResultRowSplitter() {
 		if (isNavigationRecent() &&
-			FeatureFlagManagerUtil.isEnabled("LPS-202534")) {
+			FeatureFlagManagerUtil.isEnabled("LPD-11218")) {
 
 			return new JournalRecentArticlesResultRowSplitter(_themeDisplay);
 		}
@@ -2346,7 +2346,7 @@ public class JournalDisplayContext {
 
 		if ((FeatureFlagManagerUtil.isEnabled("LPS-196768") &&
 			 (isHighlightedDDMStructure() || isNavigationStructure())) ||
-			(FeatureFlagManagerUtil.isEnabled("LPS-202534") &&
+			(FeatureFlagManagerUtil.isEnabled("LPD-11218") &&
 			 isNavigationRecent())) {
 
 			searchContext.setEntryClassNames(

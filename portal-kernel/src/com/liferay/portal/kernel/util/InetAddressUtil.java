@@ -5,11 +5,10 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
+import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.concurrent.AbortPolicy;
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
-import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,7 +20,9 @@ import java.net.UnknownHostException;
 
 import java.util.Enumeration;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -46,16 +47,17 @@ public class InetAddressUtil {
 				_log.debug(
 					StringBundler.concat(
 						"Get internet address for domain ", domain,
-						" has active count ", _executor.getActiveCount(),
+						" has active count ",
+						_noticeableThreadPoolExecutor.getActiveCount(),
 						" and pending tasking count ",
-						_executor.getPendingTaskCount()));
+						_noticeableThreadPoolExecutor.getPendingTaskCount()));
 			}
 
 			DefaultNoticeableFuture<InetAddress> defaultNoticeableFuture =
 				new DefaultNoticeableFuture<>(
 					() -> InetAddress.getByName(domain));
 
-			_executor.submit(defaultNoticeableFuture);
+			_noticeableThreadPoolExecutor.submit(defaultNoticeableFuture);
 
 			return defaultNoticeableFuture.get(
 				_DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS, TimeUnit.SECONDS);
@@ -269,13 +271,15 @@ public class InetAddressUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		InetAddressUtil.class);
 
-	private static final ThreadPoolExecutor _executor = new ThreadPoolExecutor(
-		1, _DNS_SECURITY_THREAD_LIMIT, 300, TimeUnit.SECONDS, false,
-		_DNS_SECURITY_THREAD_QUEUE_LIMIT, new AbortPolicy(),
-		new NamedThreadFactory(
-			InetAddressUtil.class.getSimpleName(), Thread.NORM_PRIORITY,
-			PortalClassLoaderUtil.getClassLoader()),
-		new ThreadPoolHandlerAdapter());
+	private static final NoticeableThreadPoolExecutor
+		_noticeableThreadPoolExecutor = new NoticeableThreadPoolExecutor(
+			1, _DNS_SECURITY_THREAD_LIMIT, 300, TimeUnit.SECONDS,
+			new LinkedBlockingDeque<>(_DNS_SECURITY_THREAD_QUEUE_LIMIT),
+			new NamedThreadFactory(
+				InetAddressUtil.class.getName(), Thread.NORM_PRIORITY,
+				InetAddressUtil.class.getClassLoader()),
+			new ThreadPoolExecutor.AbortPolicy(),
+			new ThreadPoolHandlerAdapter());
 
 	private static class LocalHostNameHolder {
 

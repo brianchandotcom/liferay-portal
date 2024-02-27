@@ -162,7 +162,7 @@ public class PublicationUserNotificationHandlerTest {
 
 		ServiceContext serviceContext = _getServiceContext();
 
-		_assertUserNotificationLink(
+		_assertUserNotificationFeedEntryLink(
 			ctCollection.getCtCollectionId(),
 			PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
@@ -204,7 +204,7 @@ public class PublicationUserNotificationHandlerTest {
 
 			ServiceContext serviceContext = _getServiceContext();
 
-			_assertUserNotificationLink(
+			_assertUserNotificationFeedEntryLink(
 				ctCollection.getCtCollectionId(), StringPool.BLANK,
 				serviceContext, false, user.getUserId());
 
@@ -213,7 +213,7 @@ public class PublicationUserNotificationHandlerTest {
 
 			CTProcess ctProcess = ctProcesses.get(0);
 
-			_assertUserNotificationLink(
+			_assertUserNotificationFeedEntryLink(
 				ctCollection.getCtCollectionId(),
 				PortletURLBuilder.create(
 					_portal.getControlPanelPortletURL(
@@ -248,11 +248,10 @@ public class PublicationUserNotificationHandlerTest {
 					ctCollectionId, showConflicts, userId),
 				_getServiceContext());
 
-		Assert.assertNotNull(userNotificationFeedEntry);
 		Assert.assertEquals(expectedBody, userNotificationFeedEntry.getBody());
 	}
 
-	private void _assertUserNotificationLink(
+	private void _assertUserNotificationFeedEntryLink(
 			long ctCollectionId, String expectedLink,
 			ServiceContext serviceContext, boolean showConflicts, long userId)
 		throws Exception {
@@ -263,7 +262,6 @@ public class PublicationUserNotificationHandlerTest {
 					ctCollectionId, showConflicts, userId),
 				serviceContext);
 
-		Assert.assertNotNull(userNotificationFeedEntry);
 		Assert.assertEquals(expectedLink, userNotificationFeedEntry.getLink());
 	}
 

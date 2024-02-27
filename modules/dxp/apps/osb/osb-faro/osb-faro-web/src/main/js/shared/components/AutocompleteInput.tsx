@@ -89,7 +89,7 @@ const AutocompleteInput: React.FC<IAutocompleteProps> = ({
 
 	return (
 		<ClayAutocomplete
-			active={!!value}
+			allowsCustomValue
 			aria-labelledby='clay-autocomplete-label-1'
 			className={getCN('select-input-root', className)}
 			data-testid={testId}

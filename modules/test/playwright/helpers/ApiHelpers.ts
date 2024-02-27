@@ -10,6 +10,7 @@ import {Page} from '@playwright/test';
 import {liferayConfig} from '../liferay.config';
 import {ApiBuilderHelper} from './ApiBuilderHelper';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
+import {HeadlessAdminContentApiHelper} from './HeadlessAdminContentApiHelper';
 import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
 import {HeadlessCommerceAdminCatalogApiHelper} from './HeadlessCommerceAdminCatalogApiHelper';
 import {HeadlessCommerceAdminChannelApiHelper} from './HeadlessCommerceAdminChannelApiHelper';
@@ -19,11 +20,18 @@ import {HeadlessDeliveryApiHelper} from './HeadlessDeliveryApiHelper';
 import {HeadlessSiteApiHelper} from './HeadlessSiteApiHelper';
 import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
 import {ObjectApiHelper} from './ObjectApiHelper';
+import {JSONWebServicesClassNameApiHelper} from './json-web-services/JSONWebServicesClassNameApiHelper';
+import {JSONWebServicesCompanyApiHelper} from './json-web-services/JSONWebServicesCompanyApiHelper';
+import {JSONWebServicesDDMApiHelper} from './json-web-services/JSONWebServicesDDMApiHelper';
+import {JSONWebServicesGroupApiHelper} from './json-web-services/JSONWebServicesGroupApiHelper';
+import {JSONWebServicesJournalApiHelper} from './json-web-services/JSONWebServicesJournalApiHelper';
+import {JSONWebServicesLayoutApiHelper} from './json-web-services/JSONWebServicesLayoutApiHelper';
 
 export class ApiHelpers {
 	readonly apiBuilder: ApiBuilderHelper;
 	readonly baseUrl: string;
 	readonly featureFlag: FeatureFlagApiHelper;
+	readonly headlessAdminContent: HeadlessAdminContentApiHelper;
 	readonly headlessAdminUser: HeadlessAdminUserApiHelper;
 	readonly headlessCommerceAdminCatalog: HeadlessCommerceAdminCatalogApiHelper;
 	readonly headlessCommerceAdminChannel: HeadlessCommerceAdminChannelApiHelper;
@@ -31,6 +39,12 @@ export class ApiHelpers {
 	readonly headlessCommerceDeliveryCart: HeadlessCommerceDeliveryCartApiHelper;
 	readonly headlessDelivery: HeadlessDeliveryApiHelper;
 	readonly headlessSite: HeadlessSiteApiHelper;
+	readonly jsonWebServicesClassName: JSONWebServicesClassNameApiHelper;
+	readonly jsonWebServicesCompany: JSONWebServicesCompanyApiHelper;
+	readonly jsonWebServicesDDM: JSONWebServicesDDMApiHelper;
+	readonly jsonWebServicesGroup: JSONWebServicesGroupApiHelper;
+	readonly jsonWebServicesJournal: JSONWebServicesJournalApiHelper;
+	readonly jsonWebServicesLayout: JSONWebServicesLayoutApiHelper;
 	readonly object: ObjectApiHelper;
 	readonly objectAdmin: ObjectAdminApiHelper;
 	readonly page: Page;
@@ -43,6 +57,7 @@ export class ApiHelpers {
 		this.apiBuilder = new ApiBuilderHelper(this);
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
+		this.headlessAdminContent = new HeadlessAdminContentApiHelper(this);
 		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);
 		this.headlessCommerceAdminCatalog =
 			new HeadlessCommerceAdminCatalogApiHelper(this);
@@ -54,6 +69,14 @@ export class ApiHelpers {
 			new HeadlessCommerceDeliveryCartApiHelper(this);
 		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
 		this.headlessSite = new HeadlessSiteApiHelper(this);
+		this.jsonWebServicesClassName = new JSONWebServicesClassNameApiHelper(
+			this
+		);
+		this.jsonWebServicesCompany = new JSONWebServicesCompanyApiHelper(this);
+		this.jsonWebServicesDDM = new JSONWebServicesDDMApiHelper(this);
+		this.jsonWebServicesGroup = new JSONWebServicesGroupApiHelper(this);
+		this.jsonWebServicesJournal = new JSONWebServicesJournalApiHelper(this);
+		this.jsonWebServicesLayout = new JSONWebServicesLayoutApiHelper(this);
 		this.object = new ObjectApiHelper(this);
 		this.objectAdmin = new ObjectAdminApiHelper(this);
 		this.page = page;

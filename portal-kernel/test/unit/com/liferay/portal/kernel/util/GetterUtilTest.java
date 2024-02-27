@@ -78,7 +78,7 @@ public class GetterUtilTest {
 		// Locale aware
 
 		Assert.assertEquals(
-			4.7, GetterUtil.getDouble("4,7", LocaleUtil.PORTUGAL),
+			4.7, GetterUtil.getDouble("4,7", LocaleUtil.BRAZIL),
 			GetterUtil.DEFAULT_DOUBLE);
 
 		Assert.assertEquals(

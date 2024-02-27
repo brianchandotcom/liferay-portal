@@ -16,6 +16,7 @@ export default interface MDFClaim extends Partial<LiferayObject> {
 	mdfClaimStatus: LiferayPicklist;
 	partial?: boolean;
 	r_mdfReqToMDFClms_c_mdfRequestId: number;
+	r_usrToMDFClms_userId: number;
 	reimbursementInvoice?: LiferayFile & number;
 	submitDate?: string;
 	submitted?: boolean;

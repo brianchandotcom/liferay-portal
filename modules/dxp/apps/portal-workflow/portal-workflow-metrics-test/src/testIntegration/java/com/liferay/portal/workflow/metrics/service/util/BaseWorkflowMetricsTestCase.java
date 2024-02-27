@@ -276,7 +276,10 @@ public abstract class BaseWorkflowMetricsTestCase {
 	@Inject
 	protected Queries queries;
 
-	@Inject(blocking = false, filter = "search.engine.impl=Elasticsearch")
+	@Inject(
+		blocking = false,
+		filter = "|(search.engine.impl=Elasticsearch)(search.engine.impl=OpenSearch)"
+	)
 	protected SearchEngineAdapter searchEngineAdapter;
 
 	protected WorkflowDefinition workflowDefinition;

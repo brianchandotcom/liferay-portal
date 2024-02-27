@@ -1580,7 +1580,9 @@ public class WorkflowMetricsRESTTestHelper {
 	@Reference
 	private Queries _queries;
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
+	@Reference(
+		target = "(|(search.engine.impl=Elasticsearch)(search.engine.impl=OpenSearch))"
+	)
 	private volatile SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference

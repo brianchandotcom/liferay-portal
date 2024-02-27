@@ -40,11 +40,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.gradle.StartParameter;
-import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileType;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
@@ -56,8 +56,9 @@ import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.api.tasks.incremental.IncrementalTaskInputs;
-import org.gradle.api.tasks.incremental.InputFileDetails;
+import org.gradle.work.ChangeType;
+import org.gradle.work.FileChange;
+import org.gradle.work.InputChanges;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.dto.BundleDTO;
@@ -172,9 +173,7 @@ public class WatchTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public void watch(IncrementalTaskInputs incrementalTaskInputs)
-		throws IOException {
-
+	public void watch(InputChanges inputChanges) throws IOException {
 		Project project = getProject();
 
 		Gradle gradle = project.getGradle();
@@ -194,15 +193,13 @@ public class WatchTask extends DefaultTask {
 		try (GogoShellClient gogoShellClient = new GogoShellClient()) {
 			installedBundleId = _getInstalledBundleId(gogoShellClient);
 
-			if ((installedBundleId < 1) ||
-				!incrementalTaskInputs.isIncremental()) {
-
+			if ((installedBundleId < 1) || !inputChanges.isIncremental()) {
 				_installOrUpdateBundle(installedBundleId, gogoShellClient);
 
 				return;
 			}
 
-			List<File> modifiedFiles = _getModifiedFiles(incrementalTaskInputs);
+			List<File> modifiedFiles = _getModifiedFiles(inputChanges);
 
 			if (_isManifestChanged(modifiedFiles)) {
 				_installOrUpdateBundle(installedBundleId, gogoShellClient);
@@ -349,36 +346,26 @@ public class WatchTask extends DefaultTask {
 		return _getBundleId(bundleSymbolicName, gogoShellClient);
 	}
 
-	private List<File> _getModifiedFiles(
-		IncrementalTaskInputs incrementalTaskInputs) {
+	private List<File> _getModifiedFiles(InputChanges inputChanges) {
+		List<File> modifiedFiles = new ArrayList<>();
 
-		final List<File> modifiedFiles = new ArrayList<>();
+		Iterable<FileChange> fileChanges = inputChanges.getFileChanges(
+			getFragments());
 
-		incrementalTaskInputs.outOfDate(
-			new Action<InputFileDetails>() {
+		for (FileChange fileChange : fileChanges) {
+			FileType fileType = fileChange.getFileType();
 
-				@Override
-				public void execute(InputFileDetails inputFileDetails) {
-					if (inputFileDetails.isAdded() ||
-						inputFileDetails.isModified()) {
+			if (fileType == FileType.FILE) {
+				ChangeType changeType = fileChange.getChangeType();
 
-						modifiedFiles.add(inputFileDetails.getFile());
-					}
+				if ((changeType == ChangeType.ADDED) ||
+					(changeType == ChangeType.MODIFIED) ||
+					(changeType == ChangeType.REMOVED)) {
+
+					modifiedFiles.add(fileChange.getFile());
 				}
-
-			});
-
-		incrementalTaskInputs.removed(
-			new Action<InputFileDetails>() {
-
-				@Override
-				public void execute(InputFileDetails inputFileDetails) {
-					if (inputFileDetails.isRemoved()) {
-						modifiedFiles.add(inputFileDetails.getFile());
-					}
-				}
-
-			});
+			}
+		}
 
 		return modifiedFiles;
 	}

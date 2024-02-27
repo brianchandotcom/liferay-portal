@@ -260,8 +260,8 @@ definition {
 			ACUtils.waitForSendingRequest();
 		}
 
-		task ("Get the time of the last update of the first identity event sent") {
-			var identityLastUpdateDate1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		task ("Get the channelID of the first identity event sent") {
+			var identityLastUpdateDate1 = ACUtils.getLocalStorageItem(keyName = "ac_client_channel_id");
 		}
 
 		task ("Go to the second site and interact with it") {
@@ -274,11 +274,11 @@ definition {
 			ACUtils.waitForSendingRequest();
 		}
 
-		task ("Get the time of the last update of the second identity event sent") {
-			var identityLastUpdateDate2 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		task ("Get the channelID of the second identity event sent") {
+			var identityLastUpdateDate2 = ACUtils.getLocalStorageItem(keyName = "ac_client_channel_id");
 		}
 
-		task ("Check that the times in milliseconds that the events were sent are different") {
+		task ("Check that the channelID is different and this indicates that a new identity event was sent") {
 			TestUtils.assertNotEquals(
 				actual = ${identityLastUpdateDate2},
 				expected = ${identityLastUpdateDate1});
@@ -323,8 +323,8 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Get the time of the last update of the identity event") {
-			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		task ("Get the identityID of the identity event") {
+			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity");
 		}
 
 		task ("Visit the document") {
@@ -335,14 +335,18 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Get the time of the last update of the identity event") {
-			var localStorageItem2 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		task ("Get the identityID of the identity event") {
+			var localStorageItem2 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity");
 		}
 
-		task ("Check that the time of the last update of the identity event has not changed") {
+		task ("Check that the identityID has not changed after a new interaction with the site") {
 			TestUtils.assertEquals(
 				actual = ${localStorageItem2},
 				expected = ${localStorageItem1});
+		}
+
+		task ("Get the userID of the identity event") {
+			var localStorageItem3 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
 		}
 
 		task ("Navigate to the connected site") {
@@ -351,14 +355,14 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Get the time of the last update of the identity event") {
-			var localStorageItem3 = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
+		task ("Get the userID of the identity event") {
+			var localStorageItem4 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
 		}
 
-		task ("Check that the time of the last update of the identity event has not changed") {
+		task ("Check that the userID has not changed after a new interaction with the site") {
 			TestUtils.assertEquals(
-				actual = ${localStorageItem3},
-				expected = ${localStorageItem1});
+				actual = ${localStorageItem4},
+				expected = ${localStorageItem3});
 		}
 	}
 

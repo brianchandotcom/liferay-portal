@@ -7,6 +7,7 @@ import {switchSidebarPanel as switchSidebarPanelAction} from '../actions/index';
 import hideProductMenuIfPresent from '../utils/hideProductMenuIfPresent';
 
 interface Action {
+	hidden?: boolean;
 	itemConfigurationOpen?: boolean;
 }
 

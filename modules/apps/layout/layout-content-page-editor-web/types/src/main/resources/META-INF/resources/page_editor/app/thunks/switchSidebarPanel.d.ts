@@ -5,6 +5,7 @@
 
 import {switchSidebarPanel as switchSidebarPanelAction} from '../actions/index';
 interface Action {
+	hidden?: boolean;
 	itemConfigurationOpen?: boolean;
 }
 export default function switchSidebarPanel(

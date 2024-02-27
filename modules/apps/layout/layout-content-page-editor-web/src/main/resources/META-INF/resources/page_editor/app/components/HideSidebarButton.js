@@ -8,20 +8,8 @@ import {ReactDOMServer} from '@liferay/frontend-js-react-web';
 import {useId} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
-import {useDispatch, useSelector} from '../contexts/StoreContext';
-import switchSidebarPanel from '../thunks/switchSidebarPanel';
-
-export function useOnToggleSidebars() {
-	const dispatch = useDispatch();
-	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
-
-	return () =>
-		dispatch(
-			switchSidebarPanel({
-				hidden: !sidebarHidden,
-			})
-		);
-}
+import {useSelector} from '../contexts/StoreContext';
+import useOnToggleSidebars from './useOnToggleSidebars';
 
 export default function HideSidebarButton() {
 	const id = useId();

@@ -15,7 +15,7 @@
 			"deploy": false
 		}
 	},
-	"id": "liferaydlfoldertemplateetcnode",
+	"id": "__PROJECT_ID__",
 	"kind": "Deployment",
 	"livenessProbe": {
 		"httpGet": {

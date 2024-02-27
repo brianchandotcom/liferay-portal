@@ -221,6 +221,9 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 	private static void _setUpDeepPagination(int pointInTimeKeepAliveSeconds)
 		throws Exception {
 
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
 		DeepPaginationConfiguration deepPaginationConfiguration = Mockito.mock(
 			DeepPaginationConfiguration.class);
 
@@ -235,9 +238,6 @@ public class ElasticsearchIndexSearcherSearchAfterTest {
 		).thenReturn(
 			pointInTimeKeepAliveSeconds
 		);
-
-		ConfigurationProvider configurationProvider = Mockito.mock(
-			ConfigurationProvider.class);
 
 		Mockito.when(
 			configurationProvider.getSystemConfiguration(

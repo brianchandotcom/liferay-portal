@@ -2435,7 +2435,7 @@ definition {
 			locator1 = "FrontendDataSet#COLUMN_NAME");
 
 		AssertElementPresent(
-			key_index = "Commerce_Black (1).jpg",
+			key_index = "Commerce_Black.jpg",
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		AssertTextEquals(

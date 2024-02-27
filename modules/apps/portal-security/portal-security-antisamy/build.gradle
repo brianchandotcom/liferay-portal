@@ -179,6 +179,11 @@ private String _filterBlogsSanitizer(String line) {
 		|				<regexp name="anything"/>
 		|			</regexp-list>
 		|		</attribute>
+		|		<attribute name="sandbox">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
 		|		<attribute name="scrolling">
 		|			<regexp-list>
 		|				<regexp name="anything"/>
@@ -445,6 +450,11 @@ private String _filterKnowledgeBaseSanitizer(String line) {
 		|		</attribute>
 		|		<attribute name="height"/>
 		|		<attribute name="mozallowfullscreen">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="sandbox">
 		|			<regexp-list>
 		|				<regexp name="anything"/>
 		|			</regexp-list>

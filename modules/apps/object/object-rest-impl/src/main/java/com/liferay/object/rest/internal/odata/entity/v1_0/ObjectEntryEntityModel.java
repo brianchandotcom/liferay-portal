@@ -140,7 +140,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 		}
 
 		throw new BadRequestException(
-			"Unable to get entity field for bject field " + objectField);
+			"Unable to get entity field for object field " + objectField);
 	}
 
 	private List<EntityField> _getRelatedObjectDefinitionEntityFields(

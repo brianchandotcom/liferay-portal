@@ -6,12 +6,9 @@
 package com.liferay.portal.vulcan.internal.jaxrs.context.resolver;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -22,6 +19,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONObjectStdSerializer;
+import com.liferay.portal.vulcan.serializer.UnsafeSupplierSerializer;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -54,26 +52,7 @@ public class ObjectMapperContextResolver
 						addSerializer(
 							(Class<UnsafeSupplier<Object, Exception>>)
 								(Class<?>)UnsafeSupplier.class,
-							new JsonSerializer
-								<UnsafeSupplier<Object, Exception>>() {
-
-								@Override
-								public void serialize(
-									UnsafeSupplier<Object, Exception>
-										unsafeSupplier,
-									JsonGenerator jsonGenerator,
-									SerializerProvider serializerProvider) {
-
-									try {
-										jsonGenerator.writeObject(
-											unsafeSupplier.get());
-									}
-									catch (Throwable throwable) {
-										throw new RuntimeException(throwable);
-									}
-								}
-
-							});
+							new UnsafeSupplierSerializer());
 					}
 				});
 			setDateFormat(new ISO8601DateFormat());

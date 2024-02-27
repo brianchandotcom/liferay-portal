@@ -11,7 +11,6 @@ import com.liferay.gradle.util.hash.HashValue;
 
 import groovy.lang.Closure;
 
-import groovy.util.AntBuilder;
 import groovy.util.CharsetToolkit;
 
 import java.io.File;
@@ -29,6 +28,7 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.internal.project.DefaultAntBuilder;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
@@ -215,7 +215,7 @@ public class InstallCacheTask extends DefaultTask {
 			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
-				public void doCall(AntBuilder antBuilder) {
+				public void doCall(DefaultAntBuilder defaultAntBuilder) {
 					Map<String, Object> args = new HashMap<>();
 
 					args.put("encoding", charset.name());
@@ -224,7 +224,7 @@ public class InstallCacheTask extends DefaultTask {
 					args.put("fixlast", false);
 					args.put("outputencoding", StandardCharsets.UTF_8);
 
-					antBuilder.invokeMethod("fixcrlf", args);
+					defaultAntBuilder.invokeMethod("fixcrlf", args);
 				}
 
 			});

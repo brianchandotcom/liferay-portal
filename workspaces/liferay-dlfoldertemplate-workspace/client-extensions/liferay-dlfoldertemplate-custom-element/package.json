@@ -43,7 +43,7 @@
 		"react-scripts": "5.0.1",
 		"react-to-webcomponent": "^2.0.0"
 	},
-	"name": "liferay-dlfoldertemplate-custom-element",
+	"name": "@liferay/liferay-dlfoldertemplate-custom-element",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",

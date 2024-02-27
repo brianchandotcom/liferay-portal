@@ -14,23 +14,23 @@ export type LoginScreenName =
 const userData = {
 	'demo.company.admin': {
 		name: 'Demo',
-		surname: 'Company Admin',
 		password: 'demo',
+		surname: 'Company Admin',
 	},
 	'demo.organization.owner': {
 		name: 'Demo',
-		surname: 'Organization Owner',
 		password: 'demo',
+		surname: 'Organization Owner',
 	},
 	'demo.unprivileged': {
 		name: 'Demo',
-		surname: 'Unprivileged',
 		password: 'demo',
+		surname: 'Unprivileged',
 	},
 	'test': {
 		name: 'Test',
-		surname: 'Test',
 		password: 'test',
+		surname: 'Test',
 	},
 };
 
@@ -38,7 +38,7 @@ async function performLogin(
 	page: Page,
 	screenName: LoginScreenName
 ): Promise<Cookie[]> {
-	const {name, surname, password} = userData[screenName];
+	const {name, password, surname} = userData[screenName];
 
 	await page.goto('/');
 

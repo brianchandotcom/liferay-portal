@@ -5,7 +5,7 @@
 
 // @ts-ignore
 
-import {expect, mergeTests} from '@playwright/test';
+import {expect} from '@playwright/test';
 
 import {LoginOptions, loginTest} from '../../fixtures/loginTest';
 

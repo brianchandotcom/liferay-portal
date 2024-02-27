@@ -898,9 +898,7 @@ test('can map all imported fields', async ({
 	await dataMigrationCenterPage.goto();
 	await dataMigrationCenterPage.goToImportFile();
 
-	await dataMigrationCenterPage.selectImportEntityType(
-		OBJECT_ENTRY_ENTITY_TYPE
-	);
+	await dataMigrationCenterPage.selectEntityType(OBJECT_ENTRY_ENTITY_TYPE);
 
 	await expect(page.getByText('externalReferenceCode')).toBeVisible();
 	await expect(page.getByText('keywords', {exact: true})).toBeVisible();
@@ -934,9 +932,7 @@ test('can preview CSV file', async ({
 		path.join(__dirname, '/dependencies/object_entries.csv')
 	);
 
-	await dataMigrationCenterPage.selectImportEntityType(
-		OBJECT_ENTRY_ENTITY_TYPE
-	);
+	await dataMigrationCenterPage.selectEntityType(OBJECT_ENTRY_ENTITY_TYPE);
 
 	await page.waitForTimeout(2000);
 
@@ -1070,9 +1066,7 @@ test('cannot import CSV file with empty headers row', async ({
 		)
 	);
 
-	await dataMigrationCenterPage.selectImportEntityType(
-		OBJECT_ENTRY_ENTITY_TYPE
-	);
+	await dataMigrationCenterPage.selectEntityType(OBJECT_ENTRY_ENTITY_TYPE);
 
 	await page.waitForTimeout(2000);
 
@@ -1131,9 +1125,7 @@ test('cannot import empty CSV file', async ({
 		path.join(__dirname, '/dependencies/empty_object_entries.csv')
 	);
 
-	await dataMigrationCenterPage.selectImportEntityType(
-		OBJECT_ENTRY_ENTITY_TYPE
-	);
+	await dataMigrationCenterPage.selectEntityType(OBJECT_ENTRY_ENTITY_TYPE);
 
 	await page.waitForTimeout(2000);
 

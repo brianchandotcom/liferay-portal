@@ -53,12 +53,15 @@ public class ObjectWriterFactory {
 				new SimpleModule() {
 					{
 						addSerializer(
-							UnsafeSupplier.class,
-							new JsonSerializer<UnsafeSupplier>() {
+							(Class<UnsafeSupplier<Object, Exception>>)
+								(Class<?>)UnsafeSupplier.class,
+							new JsonSerializer
+								<UnsafeSupplier<Object, Exception>>() {
 
 								@Override
 								public void serialize(
-									UnsafeSupplier unsafeSupplier,
+									UnsafeSupplier<Object, Exception>
+										unsafeSupplier,
 									JsonGenerator jsonGenerator,
 									SerializerProvider serializerProvider) {
 

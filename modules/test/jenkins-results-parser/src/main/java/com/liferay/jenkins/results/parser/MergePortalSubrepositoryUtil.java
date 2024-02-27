@@ -10,7 +10,8 @@ import java.io.IOException;
 
 import java.net.URL;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -115,8 +116,9 @@ public class MergePortalSubrepositoryUtil {
 	private static void _checkPassingTestSuites(
 		URL jenkinsBuildURL, PullRequest portalPullRequest) {
 
-		List<String> requiredPassingTestSuiteNames = Arrays.asList(
-			"relevant", "sf");
+		List<String> requiredPassingTestSuiteNames = new ArrayList<>();
+
+		Collections.addAll(requiredPassingTestSuiteNames, "relevant", "sf");
 
 		requiredPassingTestSuiteNames.removeAll(
 			portalPullRequest.getPassingTestSuiteNames());

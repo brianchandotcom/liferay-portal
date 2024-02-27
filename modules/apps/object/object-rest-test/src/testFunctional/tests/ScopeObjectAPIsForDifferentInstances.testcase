@@ -98,8 +98,8 @@ definition {
 
 		task ("When I use postScopeScopeKey and scopeKey to create an object entry in default instance") {
 			var defaultInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
-				resourceCheckList = "C_Test.everything,liferay-json-web-services.everything",
-				resourcePanels = "C_Test,Portal Services");
+				resourceCheckList = "c_test.everything,liferay-json-web-services.everything",
+				resourcePanels = "c_test,Portal Services");
 
 			CustomObjectAPI.createObjectEntryWithFields(
 				en_US_plural_label = "tests",
@@ -132,8 +132,8 @@ definition {
 		task ("When I use postTest to create an object entry in www.able.com instance") {
 			var virtualInstanceToken = OAuth2ForObject.createTokenWithOAuth2Scopes(
 				baseURL = "http://www.able.com:8080",
-				resourceCheckList = "C_Test.everything",
-				resourcePanels = "C_Test");
+				resourceCheckList = "c_test.everything",
+				resourcePanels = "c_test");
 
 			CustomObjectAPI.createObjectEntryWithFields(
 				en_US_plural_label = "tests",

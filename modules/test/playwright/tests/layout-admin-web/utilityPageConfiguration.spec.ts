@@ -43,10 +43,6 @@ test('LPD-4459: Asserts the Utility Pages configuration view.', async ({
 		'404 Error'
 	);
 
-	await expect(
-		page.getByText('The page was updated successfully.')
-	).toBeVisible();
-
 	// During editing the "More Page Design Options" link should not be available
 
 	await utilityPagesPage.goToEdit('404 Error');

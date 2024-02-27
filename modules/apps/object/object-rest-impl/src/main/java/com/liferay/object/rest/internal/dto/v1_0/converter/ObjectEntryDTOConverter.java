@@ -888,13 +888,11 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
-				ListEntry listEntry = _getListEntry(
-					dtoConverterContext, (String)serializable,
-					objectField.getListTypeDefinitionId());
-
-				if (listEntry != null) {
-					map.put(objectFieldName, () -> listEntry);
-				}
+				map.put(
+					objectFieldName,
+					() -> _getListEntry(
+						dtoConverterContext, (String)serializable,
+						objectField.getListTypeDefinitionId()));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {

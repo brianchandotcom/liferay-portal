@@ -44,5 +44,9 @@ export class UtilityPageConfigurationPage {
 		await this.htmlTitlePlaceholder.fill(htmlTitle);
 
 		await this.saveButton.click();
+
+		await this.page
+			.getByText('The page was updated successfully.')
+			.waitFor();
 	}
 }

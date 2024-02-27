@@ -19,6 +19,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.ConfigurableFileCollection;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -107,11 +108,17 @@ public class JspCPlugin implements Plugin<Project> {
 
 		dependencyHandler.add(CONFIGURATION_NAME, configurableFileCollection);
 
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, CONFIGURATION_NAME);
+
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		dependencyHandler.add(
-			CONFIGURATION_NAME, sourceSet.getCompileClasspath());
+		Configuration compileClasspathConfiguration =
+			GradleUtil.getConfiguration(
+				project, sourceSet.getCompileClasspathConfigurationName());
+
+		configuration.extendsFrom(compileClasspathConfiguration);
 	}
 
 	private JavaCompile _addTaskCompileJSP(
@@ -189,8 +196,11 @@ public class JspCPlugin implements Plugin<Project> {
 
 		compileJSPTask.dependsOn(javaCompile);
 
-		if (compileJSPTask.getDestinationDir() == null) {
-			compileJSPTask.setDestinationDir(compileJSPTask.getTemporaryDir());
+		DirectoryProperty directoryProperty =
+			compileJSPTask.getDestinationDirectory();
+
+		if (directoryProperty.getOrNull() == null) {
+			directoryProperty.set(compileJSPTask.getTemporaryDir());
 		}
 	}
 

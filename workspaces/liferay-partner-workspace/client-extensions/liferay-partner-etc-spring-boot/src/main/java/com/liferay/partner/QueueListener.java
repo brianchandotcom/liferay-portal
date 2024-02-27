@@ -80,7 +80,13 @@ public class QueueListener {
 			JSONObject koroneikiAccountJSONObject = jsonObject.getJSONObject(
 				"account");
 
-			String salesforceAccountKey = _getSalesforceKey(
+			if (_isPartner(koroneikiAccountJSONObject)) {
+				channel.basicReject(deliveryTag, false);
+
+				return;
+			}
+
+			String salesforceAccountKey = _getSalesforceAccountKey(
 				koroneikiAccountJSONObject);
 
 			if (salesforceAccountKey.equals("")) {
@@ -247,28 +253,8 @@ public class QueueListener {
 		return 0;
 	}
 
-	private String _getSalesforceKey(JSONObject koroneikiAccountJSONObject) {
-		JSONArray entitlementsJSONArray =
-			koroneikiAccountJSONObject.getJSONArray("entitlements");
-
-		boolean partner = false;
-
-		for (int i = 0; i < entitlementsJSONArray.length(); i++) {
-			JSONObject entitlementJSONObject =
-				entitlementsJSONArray.getJSONObject(i);
-
-			if (StringUtil.equalsIgnoreCase(
-					entitlementJSONObject.getString("name"), "Partner")) {
-
-				partner = true;
-
-				break;
-			}
-		}
-
-		if (!partner) {
-			return "";
-		}
+	private String _getSalesforceAccountKey(
+		JSONObject koroneikiAccountJSONObject) {
 
 		JSONArray externalLinksJSONArray =
 			koroneikiAccountJSONObject.getJSONArray("externalLinks");
@@ -305,6 +291,24 @@ public class QueueListener {
 				)
 			).build()
 		).build();
+	}
+
+	private boolean _isPartner(JSONObject koroneikiAccountJSONObject) {
+		JSONArray entitlementsJSONArray =
+			koroneikiAccountJSONObject.getJSONArray("entitlements");
+
+		for (int i = 0; i < entitlementsJSONArray.length(); i++) {
+			JSONObject entitlementJSONObject =
+				entitlementsJSONArray.getJSONObject(i);
+
+			if (StringUtil.equalsIgnoreCase(
+					entitlementJSONObject.getString("name"), "Partner")) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _patch(String bodyValue, String path) {

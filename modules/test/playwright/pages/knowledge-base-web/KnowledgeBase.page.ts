@@ -6,7 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenu.page';
+import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenuPage';
 
 export class KnowledgeBasePage {
 	readonly basicArticleMenuItem: Locator;

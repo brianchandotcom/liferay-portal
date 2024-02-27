@@ -5,10 +5,8 @@
 
 package com.liferay.portal.search.opensearch2.internal.query.function.score;
 
-import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
-import com.liferay.portal.search.query.FunctionScoreQuery.FilterQueryScoreFunctionHolder;
 import com.liferay.portal.search.query.MultiValueMode;
 import com.liferay.portal.search.query.function.score.ExponentialDecayScoreFunction;
 import com.liferay.portal.search.query.function.score.FieldValueFactorScoreFunction;
@@ -20,53 +18,32 @@ import com.liferay.portal.search.query.function.score.ScoreFunctionTranslator;
 import com.liferay.portal.search.query.function.score.ScriptScoreFunction;
 import com.liferay.portal.search.query.function.score.WeightScoreFunction;
 
-import java.util.function.Consumer;
-
 import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch._types.query_dsl.DecayFunction;
 import org.opensearch.client.opensearch._types.query_dsl.DecayPlacement;
 import org.opensearch.client.opensearch._types.query_dsl.FieldValueFactorModifier;
 import org.opensearch.client.opensearch._types.query_dsl.FunctionScore;
+import org.opensearch.client.opensearch._types.query_dsl.FunctionScore.Builder.ContainerBuilder;
 import org.opensearch.client.opensearch._types.query_dsl.FunctionScoreBuilders;
-import org.opensearch.client.opensearch._types.query_dsl.FunctionScoreVariant;
-import org.opensearch.client.opensearch._types.query_dsl.Query;
 
 /**
  * @author Michael C. Han
  * @author Petteri Karttunen
  */
 public class OpenSearchScoreFunctionTranslator
-	implements ScoreFunctionTranslator<FunctionScoreVariant> {
-
-	public OpenSearchScoreFunctionTranslator(
-		FilterQueryScoreFunctionHolder filterQueryScoreFunctionHolder,
-		OpenSearchQueryTranslator openSearchQueryTranslator) {
-
-		_filterQueryScoreFunctionHolder = filterQueryScoreFunctionHolder;
-		_openSearchQueryTranslator = openSearchQueryTranslator;
-	}
-
-	public FunctionScore translate() {
-		ScoreFunction scoreFunction =
-			_filterQueryScoreFunctionHolder.getScoreFunction();
-
-		if (scoreFunction == null) {
-			return null;
-		}
-
-		return new FunctionScore(scoreFunction.accept(this));
-	}
+	implements ScoreFunctionTranslator<ContainerBuilder> {
 
 	@Override
-	public FunctionScoreVariant translate(
+	public ContainerBuilder translate(
 		ExponentialDecayScoreFunction exponentialDecayScoreFunction) {
+
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
 		DecayFunction.Builder decayFunctionBuilder =
 			FunctionScoreBuilders.exp();
 
 		decayFunctionBuilder.field(exponentialDecayScoreFunction.getField());
-
-		_addFilterQuery(decayFunctionBuilder::filter);
 
 		decayFunctionBuilder.multiValueMode(
 			_translateMultiValueMode(
@@ -92,49 +69,57 @@ public class OpenSearchScoreFunctionTranslator
 			decayFunctionBuilder::weight,
 			exponentialDecayScoreFunction.getWeight());
 
-		return decayFunctionBuilder.build();
+		return functionScoreBuilder.exp(decayFunctionBuilder.build());
 	}
 
 	@Override
-	public FunctionScoreVariant translate(
+	public ContainerBuilder translate(
 		FieldValueFactorScoreFunction fieldValueFactorScoreFunction) {
 
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
+
 		org.opensearch.client.opensearch._types.query_dsl.
-			FieldValueFactorScoreFunction.Builder builder =
-				FunctionScoreBuilders.fieldValueFactor();
+			FieldValueFactorScoreFunction.Builder
+				fieldValueFactorScoreFunctionBuilder =
+					FunctionScoreBuilders.fieldValueFactor();
 
 		SetterUtil.setNotNullFloatAsDouble(
-			builder::factor, fieldValueFactorScoreFunction.getFactor());
+			fieldValueFactorScoreFunctionBuilder::factor,
+			fieldValueFactorScoreFunction.getFactor());
 
-		builder.field(fieldValueFactorScoreFunction.getField());
-
-		_addFilterQuery(builder::filter);
+		fieldValueFactorScoreFunctionBuilder.field(
+			fieldValueFactorScoreFunction.getField());
 
 		SetterUtil.setNotNullDouble(
-			builder::missing, fieldValueFactorScoreFunction.getMissing());
+			fieldValueFactorScoreFunctionBuilder::missing,
+			fieldValueFactorScoreFunction.getMissing());
 
 		if (fieldValueFactorScoreFunction.getModifier() != null) {
-			builder.modifier(
+			fieldValueFactorScoreFunctionBuilder.modifier(
 				_translateModifier(
 					fieldValueFactorScoreFunction.getModifier()));
 		}
 
 		SetterUtil.setNotNullFloatAsDouble(
-			builder::weight, fieldValueFactorScoreFunction.getWeight());
+			fieldValueFactorScoreFunctionBuilder::weight,
+			fieldValueFactorScoreFunction.getWeight());
 
-		return builder.build();
+		return functionScoreBuilder.fieldValueFactor(
+			fieldValueFactorScoreFunctionBuilder.build());
 	}
 
 	@Override
-	public FunctionScoreVariant translate(
+	public ContainerBuilder translate(
 		GaussianDecayScoreFunction gaussianDecayScoreFunction) {
+
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
 		DecayFunction.Builder decayFunctionBuilder =
 			FunctionScoreBuilders.gauss();
 
 		decayFunctionBuilder.field(gaussianDecayScoreFunction.getField());
-
-		_addFilterQuery(decayFunctionBuilder::filter);
 
 		decayFunctionBuilder.multiValueMode(
 			_translateMultiValueMode(
@@ -160,19 +145,20 @@ public class OpenSearchScoreFunctionTranslator
 			decayFunctionBuilder::weight,
 			gaussianDecayScoreFunction.getWeight());
 
-		return decayFunctionBuilder.build();
+		return functionScoreBuilder.gauss(decayFunctionBuilder.build());
 	}
 
 	@Override
-	public FunctionScoreVariant translate(
+	public ContainerBuilder translate(
 		LinearDecayScoreFunction linearDecayScoreFunction) {
+
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
 		DecayFunction.Builder decayFunctionBuilder =
 			FunctionScoreBuilders.linear();
 
 		decayFunctionBuilder.field(linearDecayScoreFunction.getField());
-
-		_addFilterQuery(decayFunctionBuilder::filter);
 
 		decayFunctionBuilder.multiValueMode(
 			_translateMultiValueMode(
@@ -196,62 +182,62 @@ public class OpenSearchScoreFunctionTranslator
 		SetterUtil.setNotNullFloatAsDouble(
 			decayFunctionBuilder::weight, linearDecayScoreFunction.getWeight());
 
-		return decayFunctionBuilder.build();
+		return functionScoreBuilder.linear(decayFunctionBuilder.build());
 	}
 
 	@Override
-	public FunctionScoreVariant translate(
-		RandomScoreFunction randomScoreFunction) {
+	public ContainerBuilder translate(RandomScoreFunction randomScoreFunction) {
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
 		org.opensearch.client.opensearch._types.query_dsl.RandomScoreFunction.
-			Builder builder = FunctionScoreBuilders.randomScore();
+			Builder randomScoreFunctionBuilder =
+				FunctionScoreBuilders.randomScore();
 
 		SetterUtil.setNotBlankString(
-			builder::field, randomScoreFunction.getField());
-
-		_addFilterQuery(builder::filter);
-
+			randomScoreFunctionBuilder::field, randomScoreFunction.getField());
 		SetterUtil.setNotBlankString(
-			builder::seed, String.valueOf(randomScoreFunction.getSeed()));
-
+			randomScoreFunctionBuilder::seed,
+			String.valueOf(randomScoreFunction.getSeed()));
 		SetterUtil.setNotNullFloatAsDouble(
-			builder::weight, randomScoreFunction.getWeight());
+			randomScoreFunctionBuilder::weight,
+			randomScoreFunction.getWeight());
 
-		return builder.build();
+		return functionScoreBuilder.randomScore(
+			randomScoreFunctionBuilder.build());
+	}
+
+	public ContainerBuilder translate(ScoreFunction scoreFunction) {
+		if (scoreFunction == null) {
+			return null;
+		}
+
+		return scoreFunction.accept(this);
 	}
 
 	@Override
-	public FunctionScoreVariant translate(
-		ScriptScoreFunction scriptScoreFunction) {
+	public ContainerBuilder translate(ScriptScoreFunction scriptScoreFunction) {
+		FunctionScore.Builder functionScoreBuilder =
+			new FunctionScore.Builder();
 
 		org.opensearch.client.opensearch._types.query_dsl.ScriptScoreFunction.
-			Builder builder = FunctionScoreBuilders.scriptScore();
+			Builder scriptScoreFunctionBuilder =
+				FunctionScoreBuilders.scriptScore();
 
-		_addFilterQuery(builder::filter);
-
-		builder.script(
+		scriptScoreFunctionBuilder.script(
 			_scriptTranslator.translate(scriptScoreFunction.getScript()));
 
 		SetterUtil.setNotNullFloatAsDouble(
-			builder::weight, scriptScoreFunction.getWeight());
+			scriptScoreFunctionBuilder::weight,
+			scriptScoreFunction.getWeight());
 
-		return builder.build();
+		return functionScoreBuilder.scriptScore(
+			scriptScoreFunctionBuilder.build());
 	}
 
 	@Override
-	public FunctionScoreVariant translate(
-		WeightScoreFunction weightScoreFunction) {
-
+	public ContainerBuilder translate(WeightScoreFunction weightScoreFunction) {
 		throw new UnsupportedOperationException();
-	}
-
-	private void _addFilterQuery(Consumer<Query> consumer) {
-		if (_filterQueryScoreFunctionHolder.getFilterQuery() != null) {
-			consumer.accept(
-				new Query(
-					_openSearchQueryTranslator.translate(
-						_filterQueryScoreFunctionHolder.getFilterQuery())));
-		}
 	}
 
 	private FieldValueFactorModifier _translateModifier(
@@ -317,9 +303,6 @@ public class OpenSearchScoreFunctionTranslator
 			"Invalid multi value mode " + multiValueMode);
 	}
 
-	private final FilterQueryScoreFunctionHolder
-		_filterQueryScoreFunctionHolder;
-	private final OpenSearchQueryTranslator _openSearchQueryTranslator;
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

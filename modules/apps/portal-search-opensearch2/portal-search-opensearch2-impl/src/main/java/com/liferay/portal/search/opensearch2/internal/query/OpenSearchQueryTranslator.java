@@ -79,7 +79,7 @@ import org.opensearch.client.opensearch._types.query_dsl.BoolQuery;
 import org.opensearch.client.opensearch._types.query_dsl.ChildScoreMode;
 import org.opensearch.client.opensearch._types.query_dsl.FieldLookup;
 import org.opensearch.client.opensearch._types.query_dsl.FunctionBoostMode;
-import org.opensearch.client.opensearch._types.query_dsl.FunctionScore;
+import org.opensearch.client.opensearch._types.query_dsl.FunctionScore.Builder.ContainerBuilder;
 import org.opensearch.client.opensearch._types.query_dsl.FunctionScoreMode;
 import org.opensearch.client.opensearch._types.query_dsl.GeoPolygonPoints;
 import org.opensearch.client.opensearch._types.query_dsl.GeoShapeFieldQuery;
@@ -298,16 +298,24 @@ public class OpenSearchQueryTranslator
 		ListUtil.isNotEmptyForEach(
 			functionScoreQuery.getFilterQueryScoreFunctionHolders(),
 			filterQueryScoreFunctionHolder -> {
-				OpenSearchScoreFunctionTranslator scoreFunctionTranslator =
-					new OpenSearchScoreFunctionTranslator(
-						filterQueryScoreFunctionHolder, this);
+				ContainerBuilder containerBuilder =
+					_openSearchScoreFunctionTranslator.translate(
+						filterQueryScoreFunctionHolder.getScoreFunction());
 
-				FunctionScore functionScore =
-					scoreFunctionTranslator.translate();
-
-				if (functionScore != null) {
-					builder.functions(functionScore);
+				if (containerBuilder == null) {
+					return;
 				}
+
+				if (filterQueryScoreFunctionHolder.getFilterQuery() != null) {
+					containerBuilder.filter(
+						new org.opensearch.client.opensearch._types.query_dsl.
+							Query(
+								translate(
+									filterQueryScoreFunctionHolder.
+										getFilterQuery())));
+				}
+
+				builder.functions(containerBuilder.build());
 			});
 
 		SetterUtil.setNotNullFloatAsDouble(
@@ -1378,6 +1386,9 @@ public class OpenSearchQueryTranslator
 	}
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();
+	private final OpenSearchScoreFunctionTranslator
+		_openSearchScoreFunctionTranslator =
+			new OpenSearchScoreFunctionTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

@@ -32,10 +32,11 @@ test('Create AI Image option in Management Toolbar without API Key opens an aler
 });
 
 test('Create AI Image option is hidden when disabled from Instance Settings', async ({
+	aiCreatorInstanceSettingsPage,
 	documentLibraryPage,
 	page,
 }) => {
-	await documentLibraryPage.disableAICreator();
+	await aiCreatorInstanceSettingsPage.disableDalleCreateImages();
 
 	await documentLibraryPage.goto();
 
@@ -45,7 +46,7 @@ test('Create AI Image option is hidden when disabled from Instance Settings', as
 		page.getByRole('menuitem', {name: 'Create AI Image'})
 	).not.toBeVisible();
 
-	await documentLibraryPage.enableAICreator();
+	await aiCreatorInstanceSettingsPage.enableDalleCreateImages();
 });
 
 test('Can add images to DM when API Key is provided', async ({

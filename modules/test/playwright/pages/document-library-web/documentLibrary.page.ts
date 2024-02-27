@@ -67,14 +67,6 @@ export class DocumentLibraryPage {
 			.click();
 	}
 
-	async enableAICreator() {
-		await this.aiCreatorPageSettingsPage.enableDalleCreateImages();
-	}
-
-	async disableAICreator() {
-		await this.aiCreatorPageSettingsPage.disableDalleCreateImages();
-	}
-
 	async addApiKey() {
 		await this.aiCreatorPageSettingsPage.addApiKey();
 	}

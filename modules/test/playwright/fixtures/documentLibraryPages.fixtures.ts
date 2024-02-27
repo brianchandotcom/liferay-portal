@@ -7,13 +7,18 @@
 
 import {test} from '@playwright/test';
 
+import {AICreatorInstanceSettingsPage} from '../pages/document-library-web/aiCreatorSettings.page';
 import {DocumentLibraryPage} from '../pages/document-library-web/documentLibrary.page';
 import {DocumentLibraryEditFolderPage} from '../pages/document-library-web/documentLibraryEditFolder.page';
 
 const documentLibraryPagesTest = test.extend<{
+	aiCreatorInstanceSettingsPage: AICreatorInstanceSettingsPage;
 	documentLibraryEditFolderPage: DocumentLibraryEditFolderPage;
 	documentLibraryPage: DocumentLibraryPage;
 }>({
+	aiCreatorInstanceSettingsPage: async ({page}, use) => {
+		await use(new AICreatorInstanceSettingsPage(page));
+	},
 	documentLibraryEditFolderPage: async ({page}, use) => {
 		await use(new DocumentLibraryEditFolderPage(page));
 	},

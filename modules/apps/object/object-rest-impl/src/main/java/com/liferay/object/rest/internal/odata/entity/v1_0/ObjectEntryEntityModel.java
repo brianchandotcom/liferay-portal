@@ -31,7 +31,6 @@ import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +76,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 		return new ComplexEntityField(
 			objectRelationship.getName(),
-			_getObjectDefinitionEntityFields(relatedObjectDefinition),
+			_getObjectDefinitionEntityFieldsMap(relatedObjectDefinition),
 			relatedObjectDefinition.getName());
 	}
 
@@ -152,7 +151,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 			"Unable to get entity field for object field " + objectField);
 	}
 
-	private List<EntityField> _getObjectDefinitionEntityFields(
+	private Map<String, EntityField> _getObjectDefinitionEntityFieldsMap(
 		ObjectDefinition objectDefinition) {
 
 		if (_objectDefinitionIdsEntityFieldsMap.containsKey(
@@ -162,25 +161,22 @@ public class ObjectEntryEntityModel implements EntityModel {
 				objectDefinition.getObjectDefinitionId());
 		}
 
-		List<EntityField> entityFields = new ArrayList<>();
+		Map<String, EntityField> entityFields = _getStringEntityFieldsMap(
+			objectDefinition,
+			ObjectFieldLocalServiceUtil.getObjectFields(
+				objectDefinition.getObjectDefinitionId()));
 
 		_objectDefinitionIdsEntityFieldsMap.put(
 			objectDefinition.getObjectDefinitionId(), entityFields);
-
-		Map<String, EntityField> stringEntityFieldsMap =
-			_getStringEntityFieldsMap(
-				objectDefinition,
-				ObjectFieldLocalServiceUtil.getObjectFields(
-					objectDefinition.getObjectDefinitionId()));
-
-		entityFields.addAll(stringEntityFieldsMap.values());
 
 		for (ObjectRelationship objectRelationship :
 				ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
 					objectDefinition.getObjectDefinitionId())) {
 
-			entityFields.add(
-				_getComplexField(objectDefinition, objectRelationship));
+			ComplexEntityField complexEntityField = _getComplexField(
+				objectDefinition, objectRelationship);
+
+			entityFields.put(complexEntityField.getName(), complexEntityField);
 		}
 
 		return entityFields;
@@ -293,7 +289,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;
-	private final Map<Long, List<EntityField>>
+	private final Map<Long, Map<String, EntityField>>
 		_objectDefinitionIdsEntityFieldsMap = new HashMap<>();
 	private final Set<String> _unsupportedBusinessTypes = SetUtil.fromArray(
 		ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION,

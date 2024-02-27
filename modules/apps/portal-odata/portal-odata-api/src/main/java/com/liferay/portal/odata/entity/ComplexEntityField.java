@@ -87,7 +87,7 @@ public class ComplexEntityField extends EntityField {
 
 		return StringBundler.concat(
 			"{entityFields: ", entityFieldsMap.keySet(), ", name: ", getName(),
-			", type: ", type.name(), "}");
+			", type: ", type.name(), ", typeKey: ", getTypeKey(), "}");
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

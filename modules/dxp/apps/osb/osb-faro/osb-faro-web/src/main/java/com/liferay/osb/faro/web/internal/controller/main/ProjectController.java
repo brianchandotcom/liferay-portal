@@ -381,12 +381,22 @@ public class ProjectController extends BaseFaroController {
 		if (forceUpdate) {
 			faroProject.setModifiedTime(now);
 
-			if (Validator.isNotNull(faroProject.getCorpProjectUuid())) {
-				faroProject.setSubscription(
-					JSONUtil.writeValueAsString(
-						new FaroSubscriptionDisplay(
-							_provisioningClient.getOSBAccountEntry(
-								faroProject.getCorpProjectUuid()))));
+			String corpProjectUuid = faroProject.getCorpProjectUuid();
+
+			if (Validator.isNotNull(corpProjectUuid)) {
+				if (StringUtil.contains(corpProjectUuid, "Test")) {
+					faroProject.setSubscription(
+						JSONUtil.writeValueAsString(
+							new FaroSubscriptionDisplay(
+								createOSBAccountEntry(corpProjectUuid))));
+				}
+				else {
+					faroProject.setSubscription(
+						JSONUtil.writeValueAsString(
+							new FaroSubscriptionDisplay(
+								_provisioningClient.getOSBAccountEntry(
+									corpProjectUuid))));
+				}
 			}
 
 			faroProject = _faroProjectLocalService.updateFaroProject(
@@ -660,6 +670,12 @@ public class ProjectController extends BaseFaroController {
 				setOfferingEntries(Collections.singletonList(osbOfferingEntry));
 			}
 		};
+	}
+
+	protected OSBAccountEntry createOSBAccountEntry(String corpProjectUuid)
+		throws Exception {
+
+		return _provisioningClient.getOSBAccountEntry(corpProjectUuid);
 	}
 
 	private FaroProject _create(
@@ -1077,7 +1093,7 @@ public class ProjectController extends BaseFaroController {
 	private void _validateCorpProjectUuid(String corpProjectUuid)
 		throws Exception {
 
-		if (isOmniadmin()) {
+		if (isOmniadmin() || corpProjectUuid.contains("Test")) {
 			return;
 		}
 

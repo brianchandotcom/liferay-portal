@@ -55,15 +55,28 @@ export class ApiHelpers {
 		this.page = page;
 	}
 
-	async postResponse(url: string, data: DataObject | any[]) {
+	async postResponse(
+		url: string,
+		data: DataObject | any[] | string,
+		headers?: {[key: string]: string}
+	) {
 		return await this.page.request.post(url, {
 			data,
-			headers: await this.getHeader(),
+			headers: headers || (await this.getHeader()),
 		});
 	}
 
-	async post(url: string, data: DataObject | any[]) {
-		const response = await this.postResponse(url, data);
+	async post(
+		url: string,
+		data: DataObject | any[] | string,
+		failOnStatusCode?: boolean,
+		headers?: {[key: string]: string}
+	) {
+		const response = await this.postResponse(
+			url,
+			data,
+			headers
+		);
 
 		return response.json();
 	}

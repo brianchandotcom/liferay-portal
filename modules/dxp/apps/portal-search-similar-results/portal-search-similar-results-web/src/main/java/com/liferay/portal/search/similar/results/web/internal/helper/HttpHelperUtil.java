@@ -17,17 +17,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@Component(service = HttpHelper.class)
-public class HttpHelperImpl implements HttpHelper {
+public class HttpHelperUtil {
 
-	@Override
-	public String[] getFriendlyURLParameters(String urlString) {
+	public static String[] getFriendlyURLParameters(String urlString) {
 		try {
 			String[] subpath = StringUtil.split(
 				HttpComponentsUtil.getPath(urlString),
@@ -45,8 +41,7 @@ public class HttpHelperImpl implements HttpHelper {
 		}
 	}
 
-	@Override
-	public String getPortletIdParameter(
+	public static String getPortletIdParameter(
 		String urlString, String parameterName) {
 
 		try {
@@ -76,6 +71,6 @@ public class HttpHelperImpl implements HttpHelper {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(HttpHelperImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(HttpHelperUtil.class);
 
 }

@@ -6,7 +6,7 @@
 package com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters;
 
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
+import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaBuilder;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaHelper;
@@ -18,7 +18,6 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Rout
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -34,7 +33,7 @@ public class UIDSimilarResultsContributor implements SimilarResultsContributor {
 		routeBuilder.addAttribute(
 			UID,
 			Objects.requireNonNull(
-				_httpHelper.getPortletIdParameter(
+				HttpHelperUtil.getPortletIdParameter(
 					HttpComponentsUtil.decodePath(routeHelper.getURLString()),
 					UID)));
 	}
@@ -55,8 +54,5 @@ public class UIDSimilarResultsContributor implements SimilarResultsContributor {
 	}
 
 	protected static final String UID = "uid";
-
-	@Reference
-	private HttpHelper _httpHelper;
 
 }

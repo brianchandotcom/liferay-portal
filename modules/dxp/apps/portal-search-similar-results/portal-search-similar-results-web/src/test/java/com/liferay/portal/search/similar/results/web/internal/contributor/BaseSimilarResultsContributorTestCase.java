@@ -11,8 +11,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelper;
-import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperImpl;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.CriteriaHelper;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.DestinationHelper;
 import com.liferay.portal.util.PortalImpl;
@@ -186,10 +184,6 @@ public abstract class BaseSimilarResultsContributorTestCase {
 		).getRouteParameter(
 			Mockito.eq(parameterName)
 		);
-	}
-
-	protected HttpHelper setUpHttpHelper() {
-		return new HttpHelperImpl();
 	}
 
 	protected void setUpPortalUtil() {

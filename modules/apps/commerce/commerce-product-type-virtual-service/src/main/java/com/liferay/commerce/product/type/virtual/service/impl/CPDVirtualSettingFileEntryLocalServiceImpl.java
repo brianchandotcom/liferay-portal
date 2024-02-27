@@ -209,7 +209,7 @@ public class CPDVirtualSettingFileEntryLocalServiceImpl
 
 	private void _deleteFileEntry(long cpdVirtualSettingFileEntryFileEntryId) {
 		try {
-			if(cpdVirtualSettingFileEntryFileEntryId <= 0) {
+			if (cpdVirtualSettingFileEntryFileEntryId <= 0) {
 				return;
 			}
 

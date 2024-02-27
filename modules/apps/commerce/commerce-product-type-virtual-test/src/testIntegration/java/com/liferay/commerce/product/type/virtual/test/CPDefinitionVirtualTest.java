@@ -12,6 +12,13 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
+import com.liferay.commerce.product.type.virtual.model.CPDVirtualSettingFileEntry;
+import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
+import com.liferay.commerce.product.type.virtual.test.util.VirtualCPTypeTestUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -101,6 +108,99 @@ public class CPDefinitionVirtualTest {
 
 		Assert.assertEquals("virtual", cpDefinition.getProductTypeName());
 		Assert.assertFalse(cpDefinition.isShippable());
+	}
+
+	@Test
+	public void testCreateCPDVirtualSettingFileEntry() throws Exception {
+		frutillaRule.scenario(
+			"Add product definition"
+		).given(
+			"I add a virtual product definition"
+		).when(
+			"adding file entries"
+		).and(
+			"deleting the file entries"
+		).then(
+			"when the last file entry is deleted the DLFileEntry gets deleted"
+		);
+
+		DLFolder dlFolder = DLTestUtil.addDLFolder(
+			_commerceCatalog.getGroupId());
+
+		DLFileEntry dlFileEntry1 = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME);
+
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting1 =
+			VirtualCPTypeTestUtil.addCPDefinitionVirtualSetting(
+				_commerceCatalog.getGroupId(),
+				cpDefinition1.getModelClassName(),
+				cpDefinition1.getCPDefinitionId(),
+				dlFileEntry1.getFileEntryId(), 1, 0, 0, 0);
+
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry1 =
+			cpDefinitionVirtualSetting1.getCPDVirtualSettingFileEntries(
+			).get(
+				0
+			);
+
+		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME);
+
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting2 =
+			VirtualCPTypeTestUtil.addCPDefinitionVirtualSetting(
+				_commerceCatalog.getGroupId(),
+				cpDefinition2.getModelClassName(),
+				cpDefinition2.getCPDefinitionId(),
+				dlFileEntry1.getFileEntryId(), 1, 0, 0, 0);
+
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry2 =
+			cpDefinitionVirtualSetting2.getCPDVirtualSettingFileEntries(
+			).get(
+				0
+			);
+
+		DLFileEntry dlFileEntry2 = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		VirtualCPTypeTestUtil.updateCPDVirtualSettingFileEntry(
+			cpdVirtualSettingFileEntry1.
+				getCPDefinitionVirtualSettingFileEntryId(),
+			dlFileEntry2.getFileEntryId(), cpdVirtualSettingFileEntry1.getUrl(),
+			cpdVirtualSettingFileEntry1.getVersion());
+
+		VirtualCPTypeTestUtil.updateCPDVirtualSettingFileEntry(
+			cpdVirtualSettingFileEntry2.
+				getCPDefinitionVirtualSettingFileEntryId(),
+			dlFileEntry2.getFileEntryId(), cpdVirtualSettingFileEntry2.getUrl(),
+			cpdVirtualSettingFileEntry2.getVersion());
+
+		Assert.assertTrue(
+			"The DLFileEntry did not get deleted",
+			DLFileEntryLocalServiceUtil.fetchDLFileEntry(
+				dlFileEntry1.getFileEntryId()) == null);
+
+		CPDefinition cpDefinition3 = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME);
+
+		DLFileEntry dlFileEntry3 = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		VirtualCPTypeTestUtil.addCPDefinitionVirtualSetting(
+			_commerceCatalog.getGroupId(), cpDefinition3.getModelClassName(),
+			cpDefinition3.getCPDefinitionId(), dlFileEntry3.getFileEntryId(), 1,
+			0, 0, 0);
+
+		VirtualCPTypeTestUtil.deleteCPDefinitionVirtualSetting(
+			cpDefinition3.getModelClassName(),
+			cpDefinition3.getCPDefinitionId());
+
+		Assert.assertTrue(
+			"The DLFileEntry did not get deleted",
+			DLFileEntryLocalServiceUtil.fetchDLFileEntry(
+				dlFileEntry1.getFileEntryId()) == null);
 	}
 
 	@Test

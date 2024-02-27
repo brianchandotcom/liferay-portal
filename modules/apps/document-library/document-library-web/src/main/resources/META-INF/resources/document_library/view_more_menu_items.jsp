@@ -73,22 +73,3 @@ DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLView
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="aui-base">
-	var Util = Liferay.Util;
-
-	A.one('#<portlet:namespace />addMenuItemFm').delegate(
-		'click',
-		(event) => {
-			Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(dlViewMoreMenuItemsDisplayContext.getEventName()) %>',
-				{
-					fileEntryTypeId: event.currentTarget.attr(
-						'data-fileEntryTypeId'
-					),
-				}
-			);
-		},
-		'.selector-button'
-	);
-</aui:script>

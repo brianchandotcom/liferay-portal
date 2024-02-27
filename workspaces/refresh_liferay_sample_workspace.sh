@@ -73,6 +73,7 @@ function refresh_liferay_sample_workspace {
 
 	cat << EOF > liferay-sample-workspace/.gitignore
 .DS_Store
+/.idea
 /bundles
 /poshi/poshi-ext.properties
 /poshi/test-results

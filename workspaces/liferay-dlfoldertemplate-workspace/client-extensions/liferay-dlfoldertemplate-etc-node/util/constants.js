@@ -5,9 +5,9 @@
 
 export const applicationExternalReferenceCodes = {
 	OAUTH_AGENT_EXTERNAL_REFERENCE_CODE:
-		'liferay-dlfoldertemplate-oauth-application-user-agent',
+		'liferay-dlfoldertemplate-etc-node-oauth-application-user-agent',
 	OAUTH_SERVER_EXTERNAL_REFERENCE_CODE:
-		'liferay-dlfoldertemplate-oauth-application-server',
+		'liferay-dlfoldertemplate-etc-node-oauth-application-server',
 };
 
 export const applicationSpecificConfigKeys = {

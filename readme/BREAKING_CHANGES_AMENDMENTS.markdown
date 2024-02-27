@@ -363,3 +363,21 @@ We're trying to replace all ServiceProxyFactory usages in portal with class Snap
 Use com.liferay.portal.kernel.module.service.Snapshot instead.
 ----
 ```
+----
+
+# 169322529677c73dbd060ea11b64a9eee56415c9
+
+Missing breaking change
+
+Correct message should be:
+```
+LPD-16492 Object fields with aggregation and formula business type should not be indexable
+    
+# breaking
+## What modules/apps/object/object-service/src/main/java/com/liferay/object/service/impl/ObjectFieldLocalServiceImpl.java
+Adding new validation for aggregation and formula object field, preventing them to be indexed.
+## Why
+Since these types of object fields have their values got by runtime calculation, we have no proper support for them in the Elasticsearch.
+Preventing the attribute indexed from being true avoids misinterpretation.
+----
+```

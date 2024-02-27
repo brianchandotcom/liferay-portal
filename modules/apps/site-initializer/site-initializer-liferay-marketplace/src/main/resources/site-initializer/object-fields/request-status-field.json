@@ -1,0 +1,19 @@
+{
+	"object-fields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "REQUEST-STATUS",
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Request Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:RequestStatus$]",
+			"name": "requestStatus",
+			"required": false,
+			"state": false
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:RequestPublisherAccount$]"
+}

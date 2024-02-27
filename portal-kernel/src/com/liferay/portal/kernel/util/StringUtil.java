@@ -801,7 +801,7 @@ public class StringUtil {
 				}
 			}
 
-			if ((i != 0) && (i != words.length)) {
+			if ((i != 0) && (i != words.length - 1)) {
 				String lowerCaseWord = toLowerCase(word);
 
 				if (ArrayUtil.contains(_ARTICLES, lowerCaseWord) ||

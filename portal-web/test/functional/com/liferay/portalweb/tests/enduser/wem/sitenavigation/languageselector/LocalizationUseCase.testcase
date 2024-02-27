@@ -85,8 +85,8 @@ definition {
 			LanguagePortlet.viewCurrentLanguage(locale = "en-US");
 
 			LanguagePortlet.viewLanguages(
-				availableLanguageList = "العربية-السعودية,català-Espanya,中文-中国,nederlands-Nederland,suomi-Suomi,français-France,deutsch-Deutschland,magyar-Magyarország,日本語-日本,português-Brasil,español-España,svenska-Sverige",
-				displayTemplate = "Icon Menu");
+				availableLanguageList = "السعودية,català-Espanya,中文-中国,nederlands-Nederland,suomi-Suomi,français-France,deutsch-Deutschland,magyar-Magyarország,日本語-日本,português-Brasil,español-España,svenska-Sverige",
+				displayTemplate = "Icon Menu Partial Match");
 		}
 
 		task ("Define Icon as display template in Language Selector") {

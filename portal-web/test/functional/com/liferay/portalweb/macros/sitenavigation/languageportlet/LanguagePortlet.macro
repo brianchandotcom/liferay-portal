@@ -122,6 +122,19 @@ definition {
 				MenuItem.viewNotPresent(menuItem = ${unavailableLanguage});
 			}
 		}
+		else if (${displayTemplate} == "Icon Menu Partial Match") {
+			Click(
+				key_portletName = "LanguagePortlet",
+				locator1 = "Language#DROPDOWN");
+
+			for (var availableLanguage : list ${availableLanguageList}) {
+				MenuItem.viewPresentPartialMatch(menuItem = ${availableLanguage});
+			}
+
+			for (var unavailableLanguage : list ${unavailableLanguageList}) {
+				MenuItem.viewNotPresentPartialMatch(menuItem = ${unavailableLanguage});
+			}
+		}
 		else if (${displayTemplate} == "Long Text") {
 			for (var availableLanguage : list ${availableLanguageList}) {
 				AssertTextEquals(

@@ -50,6 +50,13 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro viewNotPresentPartialMatch(menuItem = null) {
+		AssertElementNotPresent(
+			key_menuItem = ${menuItem},
+			locator1 = "MenuItem#ANY_MENU_ITEM_PARTIAL_MATCH");
+	}
+
+	@summary = "Default summary"
 	macro viewNotVisible(menuItem = null) {
 		AssertNotVisible(
 			key_menuItem = ${menuItem},
@@ -75,6 +82,13 @@ definition {
 		AssertElementPresent(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
+	@summary = "Default summary"
+	macro viewPresentPartialMatch(menuItem = null) {
+		AssertElementPresent(
+			key_menuItem = ${menuItem},
+			locator1 = "MenuItem#ANY_MENU_ITEM_PARTIAL_MATCH");
 	}
 
 	@summary = "Default summary"

@@ -58,6 +58,13 @@ public class DefaultCommerceOrderValidatorImpl
 			return new CommerceOrderValidatorResult(false);
 		}
 
+		if (!commerceOrder.isOpen()) {
+			return new CommerceOrderValidatorResult(
+				false,
+				_getLocalizedMessage(
+					locale, "this-order-has-already-been-checked-out", null));
+		}
+
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(

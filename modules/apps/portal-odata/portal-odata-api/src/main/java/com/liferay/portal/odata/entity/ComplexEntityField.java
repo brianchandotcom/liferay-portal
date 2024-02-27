@@ -52,6 +52,16 @@ public class ComplexEntityField extends EntityField {
 		}
 	}
 
+	public ComplexEntityField(
+		String name, Map<String, EntityField> entityFieldsMap, String typeKey) {
+
+		super(
+			name, EntityField.Type.COMPLEX, typeKey, locale -> name,
+			locale -> name, fieldValue -> String.valueOf(fieldValue));
+
+		_entityFieldsMap = entityFieldsMap;
+	}
+
 	/**
 	 * Returns a Map with all the entity fields of this entity fields.
 	 *

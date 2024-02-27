@@ -207,12 +207,12 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
 
+		_whenAssetRendererFactoryHasPermission(true);
+
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
 
 		String urlDownload = RandomTestUtil.randomString();
-
-		_whenAssetRendererFactoryHasPermission(true);
 
 		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
 
@@ -244,12 +244,12 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 
 		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
 
+		_whenAssetRendererFactoryHasPermission(false);
+
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
 
 		String urlDownload = RandomTestUtil.randomString();
-
-		_whenAssetRendererFactoryHasPermission(false);
 
 		_whenAssetRendererGetURLDownload(assetRenderer, urlDownload);
 
@@ -294,12 +294,12 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_whenAssetRendererFactoryGetAssetRenderer(
 			rootEntryClassPK, rootAssetRenderer);
 
+		_whenAssetRendererFactoryHasPermission(true);
+
 		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
 			className);
 
 		String rootURLDownload = RandomTestUtil.randomString();
-
-		_whenAssetRendererFactoryHasPermission(true);
 
 		_whenAssetRendererGetURLDownload(rootAssetRenderer, rootURLDownload);
 

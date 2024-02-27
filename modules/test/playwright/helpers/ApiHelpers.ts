@@ -58,10 +58,12 @@ export class ApiHelpers {
 	async postResponse(
 		url: string,
 		data: DataObject | any[] | string,
+		failOnStatusCode?: boolean,
 		headers?: {[key: string]: string}
 	) {
 		return await this.page.request.post(url, {
 			data,
+			failOnStatusCode: failOnStatusCode || false,
 			headers: headers || (await this.getHeader()),
 		});
 	}
@@ -75,6 +77,7 @@ export class ApiHelpers {
 		const response = await this.postResponse(
 			url,
 			data,
+			failOnStatusCode,
 			headers
 		);
 

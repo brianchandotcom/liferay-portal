@@ -9,6 +9,9 @@ import com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsEx
 import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.internal.GlobalJSCETImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -16,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -25,8 +29,10 @@ import javax.portlet.PortletRequest;
 public class GlobalJSCETImplFactoryImpl
 	extends BaseCETImplFactoryImpl<GlobalJSCET> {
 
-	public GlobalJSCETImplFactoryImpl() {
+	public GlobalJSCETImplFactoryImpl(JSONFactory jsonFactory) {
 		super(GlobalJSCET.class);
+
+		_jsonFactory = jsonFactory;
 	}
 
 	@Override
@@ -49,6 +55,9 @@ public class GlobalJSCETImplFactoryImpl
 		return UnicodePropertiesBuilder.create(
 			true
 		).put(
+			"scriptElementAttributesJSON",
+			ParamUtil.getString(portletRequest, "scriptElementAttributesJSON")
+		).put(
 			"url", ParamUtil.getString(portletRequest, "url")
 		).build();
 	}
@@ -64,6 +73,24 @@ public class GlobalJSCETImplFactoryImpl
 				"Invalid JavaScript URL: " + url, "javascript-url-x-is-invalid",
 				url);
 		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10981")) {
+			return;
+		}
+
+		JSONObject scriptElementAttributesJSONObject =
+			_jsonFactory.createJSONObject(
+				newGlobalJSCET.getScriptElementAttributesJSON());
+
+		Set<String> keySet = scriptElementAttributesJSONObject.keySet();
+
+		if (keySet.contains("src")) {
+			throw new ClientExtensionEntryTypeSettingsException(
+				"Use the 'JavaScript URL' field instead of the attribute 'src'",
+				"use-the-javascript-url-field-instead-of-the-attribute-src");
+		}
 	}
+
+	private final JSONFactory _jsonFactory;
 
 }

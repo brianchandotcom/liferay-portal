@@ -250,7 +250,7 @@ public class CETFactoryImpl implements CETFactory {
 			new GlobalCSSCETImplFactoryImpl()
 		).put(
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
-			new GlobalJSCETImplFactoryImpl()
+			new GlobalJSCETImplFactoryImpl(_jsonFactory)
 		).put(
 			ClientExtensionEntryConstants.TYPE_IFRAME,
 			new IFrameCETImplFactoryImpl()

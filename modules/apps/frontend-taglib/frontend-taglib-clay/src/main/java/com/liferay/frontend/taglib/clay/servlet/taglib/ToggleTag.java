@@ -194,7 +194,9 @@ public class ToggleTag extends BaseContainerTag {
 			props.put("type", _type);
 		}
 
-		props.put("value", _value);
+		if (Validator.isNotNull(_value)) {
+			props.put("value", _value);
+		}
 
 		if (Validator.isNotNull(_offSymbol) || Validator.isNotNull(_onSymbol)) {
 			JSONObject symbolJSONObject = JSONFactoryUtil.createJSONObject();

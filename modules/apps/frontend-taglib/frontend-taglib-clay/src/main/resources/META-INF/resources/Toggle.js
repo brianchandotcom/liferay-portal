@@ -17,11 +17,13 @@ export default function Toggle({
 	helpText,
 	label,
 	locale: _locale,
+	name,
 	offLabel,
 	onLabel,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
 	toggled: _initialToggled,
+	value,
 	...otherProps
 }) {
 	const [toggled, setToggled] = useState(_initialToggled);
@@ -45,8 +47,10 @@ export default function Toggle({
 					)}
 				</>
 			}
+			name={_portletNamespace + name}
 			onToggle={setToggled}
 			toggled={toggled}
+			value={value ?? toggled ? 'on' : undefined}
 			{...otherProps}
 		/>
 	);

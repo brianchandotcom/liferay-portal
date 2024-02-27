@@ -5,7 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-import {ProductMenuPage} from '../../../pages/product-navigation-product-menu/ProductMenu.page';
+import {ProductMenuPage} from '../../../pages/product-navigation-product-menu/ProductMenuPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 
 export class JournalPage {

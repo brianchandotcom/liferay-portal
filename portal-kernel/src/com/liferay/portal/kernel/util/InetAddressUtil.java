@@ -132,8 +132,8 @@ public class InetAddressUtil {
 			return null;
 		}
 
-		if (domain.startsWith("[")) {
-			if (domain.endsWith("]")) {
+		if (domain.charAt(0) == '[') {
+			if (domain.charAt(domain.length() - 1) == ']') {
 				domain = domain.substring(1, domain.length() - 1);
 			}
 			else {

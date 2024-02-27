@@ -81,6 +81,8 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
+import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
@@ -226,6 +228,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		TaskProvider<JavaCompile> compileJSPTaskProvider =
 			GradleUtil.getTaskProvider(
 				project, JspCPlugin.COMPILE_JSP_TASK_NAME, JavaCompile.class);
+		TaskProvider<JavaCompile> compileTestJavaTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, JavaPlugin.COMPILE_TEST_JAVA_TASK_NAME,
+				JavaCompile.class);
 		TaskProvider<Copy> deployTaskProvider = GradleUtil.getTaskProvider(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
 		TaskProvider<Jar> jarTaskProvider = GradleUtil.getTaskProvider(
@@ -353,6 +359,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					_configureExtensionBundleAfterEvaluate(
 						bundleExtension, liferayOSGiExtension,
 						compileIncludeConfiguration);
+					_configureTaskCompileTestJavaProviderAfterEvaluate(
+						project, compileTestJavaTaskProvider);
 					_configureTaskDeployDependenciesProviderAfterEvaluate(
 						deployDependenciesTaskProvider);
 				}
@@ -1094,6 +1102,38 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					};
 
 					cleanDelete.dependsOn(c);
+				}
+
+			});
+	}
+
+	private void _configureTaskCompileTestJavaProviderAfterEvaluate(
+		Project project,
+		TaskProvider<JavaCompile> compileTestJavaTaskProvider) {
+
+		compileTestJavaTaskProvider.configure(
+			new Action<JavaCompile>() {
+
+				@Override
+				public void execute(JavaCompile javaCompile) {
+					Configuration testImplementationConfiguration =
+						GradleUtil.getConfiguration(
+							project,
+							JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME);
+
+					DependencySet dependencySet =
+						testImplementationConfiguration.getDependencies();
+
+					for (ProjectDependency projectDependency :
+							dependencySet.withType(ProjectDependency.class)) {
+
+						Project dependencyProject =
+							projectDependency.getDependencyProject();
+
+						javaCompile.mustRunAfter(
+							dependencyProject.getPath() + ":" +
+								JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+					}
 				}
 
 			});

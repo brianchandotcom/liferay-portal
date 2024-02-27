@@ -35,7 +35,6 @@ import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcriptionSender;
 import com.liferay.sharing.security.permission.SharingEntryAction;
-import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
 
 import java.text.Format;
@@ -363,9 +362,6 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 	@Reference
 	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
-
-	@Reference
-	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

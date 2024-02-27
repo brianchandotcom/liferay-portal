@@ -1033,7 +1033,10 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"displayDate",
 			() -> {
-				if ((_article != null) && _article.isScheduled()) {
+				if ((_article != null) &&
+					(_article.isScheduled() || _article.isPending()) &&
+					(_article.getDisplayDate() != null)) {
+
 					Format format =
 						FastDateFormatFactoryUtil.getSimpleDateFormat(
 							"yyyy-MM-dd HH:mm", _themeDisplay.getLocale(),

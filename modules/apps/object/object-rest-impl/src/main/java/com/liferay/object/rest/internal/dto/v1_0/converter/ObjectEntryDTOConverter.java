@@ -426,6 +426,91 @@ public class ObjectEntryDTOConverter
 		}
 	}
 
+	private FileEntry _getAttachmentField(
+			ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectEntry objectEntry,
+			ObjectField objectField, long fileEntryId, String objectFieldName)
+		throws Exception {
+
+		FileEntry fileEntry = new FileEntry();
+
+		DLFileEntry dlFileEntry = _dLFileEntryLocalService.fetchDLFileEntry(
+			fileEntryId);
+
+		if (dlFileEntry != null) {
+			if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPS-174455")) {
+				fileEntry.setFileBase64(
+					() -> (String)NestedFieldsSupplier.supply(
+						objectFieldName + ".fileBase64",
+						fieldName -> Base64.encode(
+							_file.getBytes(dlFileEntry.getContentStream()))));
+				fileEntry.setFolder(
+					() -> (Folder)NestedFieldsSupplier.supply(
+						objectFieldName + ".folder",
+						fieldName -> {
+							if (!Objects.equals(
+									ObjectFieldSettingConstants.
+										VALUE_DOCS_AND_MEDIA,
+									ObjectFieldSettingUtil.getValue(
+										ObjectFieldSettingConstants.
+											NAME_FILE_SOURCE,
+										objectField))) {
+
+								return null;
+							}
+
+							Folder folder = new Folder();
+
+							long folderId = dlFileEntry.getFolderId();
+
+							folder.setExternalReferenceCode(
+								() -> {
+									if (folderId == 0) {
+										return null;
+									}
+
+									DLFolder dlFolder = dlFileEntry.getFolder();
+
+									return dlFolder.getExternalReferenceCode();
+								});
+
+							folder.setSiteId(dlFileEntry::getGroupId);
+
+							return folder;
+						}));
+			}
+
+			fileEntry.setId(dlFileEntry::getFileEntryId);
+			fileEntry.setLink(
+				() -> LinkUtil.toLink(
+					_dlAppService, dlFileEntry, _dlURLHelper,
+					objectDefinition.getExternalReferenceCode(),
+					objectEntry.getExternalReferenceCode(), _portal));
+			fileEntry.setName(dlFileEntry::getFileName);
+		}
+
+		return fileEntry;
+	}
+
+	private String _getDateTimeField(
+		ObjectField objectField, Timestamp timestamp) {
+
+		String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+
+		if (StringUtil.equals(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_TIME_STORAGE, objectField),
+				ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
+
+			pattern += "'Z'";
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		return simpleDateFormat.format(timestamp);
+	}
+
 	private DTOConverterContext _getDTOConverterContext(
 		DTOConverterContext dtoConverterContext, long objectEntryId) {
 
@@ -463,6 +548,17 @@ public class ObjectEntryDTOConverter
 						listTypeEntry.getNameMap()));
 			}
 		};
+	}
+
+	private List<ListEntry> _getMultiselectPiclistField(
+		DTOConverterContext dtoConverterContext, ObjectField objectField,
+		String serializable) {
+
+		return TransformUtil.transformToList(
+			StringUtil.split(serializable, StringPool.COMMA_AND_SPACE),
+			key -> _getListEntry(
+				dtoConverterContext, key,
+				objectField.getListTypeDefinitionId()));
 	}
 
 	private Map<String, UnsafeSupplier<Object, Exception>>
@@ -752,74 +848,11 @@ public class ObjectEntryDTOConverter
 					continue;
 				}
 
-				FileEntry fileEntry = new FileEntry();
-
 				map.put(
 					objectFieldName,
-					() -> {
-						DLFileEntry dlFileEntry =
-							_dLFileEntryLocalService.fetchDLFileEntry(
-								fileEntryId);
-
-						if (dlFileEntry != null) {
-							if (FeatureFlagManagerUtil.isEnabled(
-								objectDefinition.getCompanyId(), "LPS-174455")) {
-
-						fileEntry.setFileBase64(
-							() -> (String)NestedFieldsSupplier.supply(
-								objectFieldName + ".fileBase64",
-								fieldName -> Base64.encode(
-									_file.getBytes(
-										dlFileEntry.getContentStream()))));
-						fileEntry.setFolder(
-							() -> (Folder)NestedFieldsSupplier.supply(
-								objectFieldName + ".folder",
-								fieldName -> {
-									if (!Objects.equals(
-											ObjectFieldSettingConstants.
-												VALUE_DOCS_AND_MEDIA,
-											ObjectFieldSettingUtil.getValue(
-												ObjectFieldSettingConstants.
-													NAME_FILE_SOURCE,
-												objectField))) {
-
-												return null;
-											}
-
-											Folder folder = new Folder();
-
-											long folderId =
-												dlFileEntry.getFolderId();
-
-											folder.setExternalReferenceCode(
-												() -> {
-													if (folderId == 0) {
-														return null;
-													}
-
-													DLFolder dlFolder =
-														dlFileEntry.getFolder();
-
-											return dlFolder.
-												getExternalReferenceCode();
-										});
-									folder.setSiteId(dlFileEntry::getGroupId);
-
-											return folder;
-										}));
-							}
-
-					fileEntry.setId(dlFileEntry::getFileEntryId);
-					fileEntry.setLink(
-						() -> LinkUtil.toLink(
-							_dlAppService, dlFileEntry, _dlURLHelper,
-							objectDefinition.getExternalReferenceCode(),
-							objectEntry.getExternalReferenceCode(), _portal));
-					fileEntry.setName(dlFileEntry::getFileName);
-				}
-
-						return fileEntry;
-					});
+					() -> _getAttachmentField(
+						objectDefinition, objectEntry, objectField, fileEntryId,
+						objectFieldName));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
@@ -832,25 +865,7 @@ public class ObjectEntryDTOConverter
 
 				map.put(
 					objectFieldName,
-					() -> {
-						String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
-
-						if (StringUtil.equals(
-								ObjectFieldSettingUtil.getValue(
-									ObjectFieldSettingConstants.
-										NAME_TIME_STORAGE,
-									objectField),
-								ObjectFieldSettingConstants.
-									VALUE_CONVERT_TO_UTC)) {
-
-							pattern += "'Z'";
-						}
-
-						SimpleDateFormat simpleDateFormat =
-							new SimpleDateFormat(pattern);
-
-						return simpleDateFormat.format(timestamp);
-					});
+					() -> _getDateTimeField(objectField, timestamp));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.
@@ -862,12 +877,9 @@ public class ObjectEntryDTOConverter
 
 				map.put(
 					objectFieldName,
-					() -> TransformUtil.transformToList(
-						StringUtil.split(
-							(String)serializable, StringPool.COMMA_AND_SPACE),
-						key -> _getListEntry(
-							dtoConverterContext, key,
-							objectField.getListTypeDefinitionId())));
+					() -> _getMultiselectPiclistField(
+						dtoConverterContext, objectField,
+						(String)serializable));
 			}
 			else if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {

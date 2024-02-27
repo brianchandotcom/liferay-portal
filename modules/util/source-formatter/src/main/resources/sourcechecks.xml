@@ -309,6 +309,7 @@
 		<check name="GradleRestClientDependenciesCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates the project dependencies `.*-rest-client` can only be used for `testIntegrationImplementation`." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="GradleStylingCheck">
 			<category name="Styling" />

@@ -1,7 +1,6 @@
 assemble:
-    - from: assets
-      into: static
+    - include: static/*.css
 liferay-sample-global-css:
     name: Liferay Sample Global CSS
     type: globalCSS
-    url: global.css
+    url: global.*.css

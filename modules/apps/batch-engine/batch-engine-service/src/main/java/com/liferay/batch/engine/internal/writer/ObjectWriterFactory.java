@@ -6,19 +6,17 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
+import com.liferay.portal.vulcan.serializer.UnsafeSupplierSerializer;
 
 import java.util.HashSet;
 import java.util.List;
@@ -55,26 +53,7 @@ public class ObjectWriterFactory {
 						addSerializer(
 							(Class<UnsafeSupplier<Object, Exception>>)
 								(Class<?>)UnsafeSupplier.class,
-							new JsonSerializer
-								<UnsafeSupplier<Object, Exception>>() {
-
-								@Override
-								public void serialize(
-									UnsafeSupplier<Object, Exception>
-										unsafeSupplier,
-									JsonGenerator jsonGenerator,
-									SerializerProvider serializerProvider) {
-
-									try {
-										jsonGenerator.writeObject(
-											unsafeSupplier.get());
-									}
-									catch (Throwable throwable) {
-										throw new RuntimeException(throwable);
-									}
-								}
-
-							});
+							new UnsafeSupplierSerializer());
 					}
 				});
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);

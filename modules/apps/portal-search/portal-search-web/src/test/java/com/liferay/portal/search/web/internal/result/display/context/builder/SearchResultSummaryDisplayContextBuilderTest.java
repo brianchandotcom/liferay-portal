@@ -199,7 +199,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		AssetEntry assetEntry = _createAssetEntryWithTagsPresent(userId);
 
 		String className = RandomTestUtil.randomString();
-
 		long entryClassPK = RandomTestUtil.randomLong();
 
 		_whenAssetEntryLocalServiceFetchEntry(
@@ -236,7 +235,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		AssetEntry assetEntry = _createAssetEntryWithTagsPresent(userId);
 
 		String className = RandomTestUtil.randomString();
-
 		long entryClassPK = RandomTestUtil.randomLong();
 
 		_whenAssetEntryLocalServiceFetchEntry(
@@ -258,8 +256,12 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext =
 			build(_createDocument(className, entryClassPK));
 
-		_assertAssetRendererURLDownloadHidden(
-			urlDownload, searchResultSummaryDisplayContext);
+		Assert.assertEquals(
+			urlDownload,
+			searchResultSummaryDisplayContext.getAssetRendererURLDownload());
+		Assert.assertFalse(
+			searchResultSummaryDisplayContext.
+				isAssetRendererURLDownloadVisible());
 	}
 
 	@Test
@@ -375,19 +377,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 	protected User user = Mockito.mock(User.class);
 	protected UserLocalService userLocalService = Mockito.mock(
 		UserLocalService.class);
-
-	private void _assertAssetRendererURLDownloadHidden(
-		String urlDownload,
-		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
-
-		Assert.assertFalse(
-			searchResultSummaryDisplayContext.
-				isAssetRendererURLDownloadVisible());
-
-		Assert.assertEquals(
-			urlDownload,
-			searchResultSummaryDisplayContext.getAssetRendererURLDownload());
-	}
 
 	private void _assertAssetRendererURLDownloadVisible(
 		String urlDownload,

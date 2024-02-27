@@ -33,6 +33,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.search.engine.ConnectionInformation;
+import com.liferay.portal.search.engine.NodeInformation;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -57,6 +61,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
@@ -424,21 +429,15 @@ public class UserIndexerTest {
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE, middleName,
 				StringPool.SPACE, lastName),
 			user.getUserId());
+
+		String expectedFullNameHighlight = _getExpectedFullNameHighlight(
+			firstName, middleName, lastName);
+
 		assertSummary(
 			StringUtil.toLowerCase(firstName + " " + lastName),
-			StringBundler.concat(
-				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE, middleName,
-				StringPool.SPACE, HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE),
-			user.getUserId());
+			expectedFullNameHighlight, user.getUserId());
 		assertSummary(
-			lastName + " " + firstName,
-			StringBundler.concat(
-				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE, middleName,
-				StringPool.SPACE, HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE),
+			lastName + " " + firstName, expectedFullNameHighlight,
 			user.getUserId());
 	}
 
@@ -856,6 +855,45 @@ public class UserIndexerTest {
 	@Inject
 	protected UserLocalService userLocalService;
 
+	private Version _getElasticsearchVersion() {
+		ConnectionInformation connectionInformation =
+			_searchEngineInformation.getConnectionInformationList(
+			).get(
+				0
+			);
+
+		NodeInformation nodeInformation =
+			connectionInformation.getNodeInformationList(
+			).get(
+				0
+			);
+
+		return Version.parseVersion(nodeInformation.getVersion());
+	}
+
+	private String _getExpectedFullNameHighlight(
+		String firstName, String middleName, String lastName) {
+
+		String expectedTitleHighlight = StringBundler.concat(
+			HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE, middleName,
+			StringPool.SPACE, HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
+
+		if (Objects.equals(
+				_searchEngineInformation.getVendorString(), "Elasticsearch") &&
+			(_getElasticsearchVersion().compareTo(
+				Version.parseVersion("8.10.2")) >= 0)) {
+
+			expectedTitleHighlight = StringBundler.concat(
+				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName, StringPool.SPACE,
+				middleName, StringPool.SPACE, lastName,
+				HighlightUtil.HIGHLIGHT_TAG_CLOSE);
+		}
+
+		return expectedTitleHighlight;
+	}
+
 	private Long[] _toArrayOfLong(List<Long> list) {
 		return list.toArray(new Long[0]);
 	}
@@ -871,6 +909,9 @@ public class UserIndexerTest {
 	private List<Organization> _organizations;
 
 	private OrganizationSearchFixture _organizationSearchFixture;
+
+	@Inject
+	private SearchEngineInformation _searchEngineInformation;
 
 	@DeleteAfterTestRun
 	private List<UserGroup> _userGroups;

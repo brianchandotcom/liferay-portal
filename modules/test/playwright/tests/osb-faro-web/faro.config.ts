@@ -7,7 +7,7 @@ const faroConfig = {
 	environment: {
 		baseUrl: process.env.FARO_URL
 			? process.env.FARO_URL
-			: 'http://localhost:8080',
+			: 'http://osbfarofrontend:8080',
 	},
 	user: {
 		login: process.env.FARO_USER_LOGIN || liferayConfig.user.login,

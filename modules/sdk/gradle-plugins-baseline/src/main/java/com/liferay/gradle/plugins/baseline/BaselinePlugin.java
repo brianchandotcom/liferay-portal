@@ -28,6 +28,7 @@ import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaLibraryPlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.ReportingBasePlugin;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
@@ -105,10 +106,15 @@ public class BaselinePlugin implements Plugin<Project> {
 	private void _addDependenciesBaseline(AbstractArchiveTask newJarTask) {
 		Project project = newJarTask.getProject();
 
+		Property<String> archiveBaseNameProperty =
+			newJarTask.getArchiveBaseName();
+		Property<String> archiveVersionProperty =
+			newJarTask.getArchiveVersion();
+
 		GradleUtil.addDependency(
 			project, BASELINE_CONFIGURATION_NAME,
-			String.valueOf(project.getGroup()), newJarTask.getBaseName(),
-			"(," + newJarTask.getVersion() + ")", false);
+			String.valueOf(project.getGroup()), archiveBaseNameProperty.get(),
+			"(," + archiveVersionProperty.get() + ")", false);
 	}
 
 	private BaselineTask _addTaskBaseline(AbstractArchiveTask newJarTask) {
@@ -211,8 +217,18 @@ public class BaselinePlugin implements Plugin<Project> {
 
 		VersionNumber lowestBaselineVersionNumber = VersionNumber.parse(
 			baselineConfigurationExtension.getLowestBaselineVersion());
-		VersionNumber versionNumber = VersionNumber.parse(
-			newJarTask.getVersion());
+		VersionNumber versionNumber = null;
+
+		Property<String> archiveVersionProperty =
+			newJarTask.getArchiveVersion();
+
+		if (archiveVersionProperty != null) {
+			String archiveVersion = archiveVersionProperty.getOrNull();
+
+			if (Validator.isNotNull(archiveVersion)) {
+				versionNumber = VersionNumber.parse(archiveVersion);
+			}
+		}
 
 		if (lowestBaselineVersionNumber.compareTo(versionNumber) >= 0) {
 			baselineTask.setEnabled(false);

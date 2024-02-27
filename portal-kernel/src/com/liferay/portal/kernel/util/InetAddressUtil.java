@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.string.StringBundler;
@@ -20,6 +19,7 @@ import java.net.UnknownHostException;
 
 import java.util.Enumeration;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -53,13 +53,10 @@ public class InetAddressUtil {
 						_noticeableThreadPoolExecutor.getPendingTaskCount()));
 			}
 
-			DefaultNoticeableFuture<InetAddress> defaultNoticeableFuture =
-				new DefaultNoticeableFuture<>(
-					() -> InetAddress.getByName(domain));
+			Future<InetAddress> future = _noticeableThreadPoolExecutor.submit(
+				() -> InetAddress.getByName(domain));
 
-			_noticeableThreadPoolExecutor.submit(defaultNoticeableFuture);
-
-			return defaultNoticeableFuture.get(
+			return future.get(
 				_DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS, TimeUnit.SECONDS);
 		}
 		catch (RejectedExecutionException rejectedExecutionException) {

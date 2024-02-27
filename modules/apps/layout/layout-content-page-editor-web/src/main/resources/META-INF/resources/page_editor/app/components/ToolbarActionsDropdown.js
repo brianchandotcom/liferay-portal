@@ -9,11 +9,11 @@ import React from 'react';
 
 import {useSelector} from '../contexts/StoreContext';
 import {onDiscardDraft, useDisabledDiscardDraft} from './DiscardDraftButton';
-import {useOnToggleSidebars} from './HideSidebarButton';
 import {useDisabledRedo, useDisabledUndo} from './undo/Undo';
 import {useHistoryItems, useOnHistoryItemClick} from './undo/UndoHistory';
 import UndoOverlay from './undo/UndoOverlay';
 import useUndoRedoActions from './undo/useUndoRedoActions';
+import useOnToggleSidebars from './useOnToggleSidebars';
 
 export default function ToolbarActionsDropdown({discardDraftFormRef}) {
 	const disabledDiscardDraft = useDisabledDiscardDraft();

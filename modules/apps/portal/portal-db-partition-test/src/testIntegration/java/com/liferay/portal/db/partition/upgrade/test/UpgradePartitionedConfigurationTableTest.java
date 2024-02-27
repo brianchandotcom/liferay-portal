@@ -6,30 +6,39 @@
 package com.liferay.portal.db.partition.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.impl.ResourceActionLocalServiceImpl;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,6 +52,8 @@ import javax.sql.DataSource;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,28 +62,44 @@ import org.osgi.framework.Bundle;
 /**
  * @author Luis Ortiz
  */
+@DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
 public class UpgradePartitionedConfigurationTableTest
 	extends BaseDBPartitionTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		BaseDBPartitionTestCase.setUpClass();
 
-		BaseDBPartitionTestCase.setUpDBPartitions();
+		_companyId = PortalInstancePool.getDefaultCompanyId();
 
-		_companyId = TestPropsValues.getCompanyId();
+		_resourceActions = ReflectionTestUtil.getFieldValue(
+			ResourceActionLocalServiceImpl.class, "_resourceActions");
+
+		_regenerateResourceActions();
 
 		_dataSource = InfrastructureUtil.getDataSource();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		BaseDBPartitionTestCase.tearDownDBPartitions();
+		_regenerateResourceActions();
 	}
 
 	@Test
 	public void testUpgradeProcess() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		PortalInstancePool.add(_company);
+
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> {
 				if (companyId != _companyId) {
@@ -85,17 +112,8 @@ public class UpgradePartitionedConfigurationTableTest
 				}
 			});
 
-		_omniAdminUser = UserTestUtil.addOmniadminUser();
-
-		Group group = null;
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
-
-			group = GroupTestUtil.addGroup(
-				COMPANY_IDS[0], _omniAdminUser.getUserId(),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID);
-		}
+		Group group = GroupLocalServiceUtil.getGroup(
+			_company.getCompanyId(), GroupConstants.GUEST);
 
 		Map<Long, ConfigurationEntry> validConfigurationEntries =
 			HashMapBuilder.<Long, ConfigurationEntry>put(
@@ -108,14 +126,15 @@ public class UpgradePartitionedConfigurationTableTest
 					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 					RandomTestUtil.randomLong())
 			).put(
-				COMPANY_IDS[0],
+				_company.getCompanyId(),
 				new ConfigurationEntry(
 					ExtendedObjectClassDefinition.Scope.GROUP,
 					group.getGroupId())
 			).put(
-				COMPANY_IDS[1],
+				_company.getCompanyId(),
 				new ConfigurationEntry(
-					ExtendedObjectClassDefinition.Scope.COMPANY, COMPANY_IDS[1])
+					ExtendedObjectClassDefinition.Scope.COMPANY,
+					_company.getCompanyId())
 			).build();
 
 		long randomCompanyId = RandomTestUtil.randomLong();
@@ -257,6 +276,13 @@ public class UpgradePartitionedConfigurationTableTest
 		}
 	}
 
+	private static void _regenerateResourceActions() throws Exception {
+		_resourceActions.clear();
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> _resourceActionLocalService.checkResourceActions());
+	}
+
 	private String _convertDictionaryValue(Object value) {
 		if (value instanceof Long) {
 			return StringBundler.concat("L\"", value, StringPool.QUOTE);
@@ -272,8 +298,13 @@ public class UpgradePartitionedConfigurationTableTest
 	private static long _companyId;
 	private static DataSource _dataSource;
 
+	@Inject
+	private static ResourceActionLocalService _resourceActionLocalService;
+
+	private static Map<String, ResourceAction> _resourceActions;
+
 	@DeleteAfterTestRun
-	private User _omniAdminUser;
+	private Company _company;
 
 	private class ConfigurationEntry {
 

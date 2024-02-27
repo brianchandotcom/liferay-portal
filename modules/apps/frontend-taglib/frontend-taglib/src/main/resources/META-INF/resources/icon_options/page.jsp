@@ -8,13 +8,15 @@
 <%@ include file="/icon_options/init.jsp" %>
 
 <%
+String cssClass = (String)request.getAttribute("liferay-frontend:icon-options:cssClass");
+
 List<PortletConfigurationIcon> portletConfigurationIcons = (List<PortletConfigurationIcon>)request.getAttribute("liferay-frontend:icon-options:portletConfigurationIcons");
 %>
 
 <clay:dropdown-menu
 	aria-label='<%= LanguageUtil.get(request, "options") %>'
 	borderless="<%= true %>"
-	cssClass="component-action portlet-options"
+	cssClass='<%= cssClass + " component-action portlet-options" %>'
 	displayType="secondary"
 	dropdownItems='<%= (List<DropdownItem>)request.getAttribute("liferay-frontend:icon-options:dropdownItems") %>'
 	icon="ellipsis-v"

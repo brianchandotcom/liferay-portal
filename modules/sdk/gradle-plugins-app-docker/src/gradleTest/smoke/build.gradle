@@ -9,7 +9,7 @@ apply plugin: "com.liferay.app.docker"
 task removeUbuntuDockerImage(type: DockerRemoveImage)
 task runGradleTest(type: DockerListImages)
 
-List<DockerRemoveImage> removeAppDockerImageTasks = (0 .. 2).collect {
+List<DockerRemoveImage> removeAppDockerImageTasks = (0 .. 3).collect {
 	tasks.create name: "removeAppDockerImage${it}", type: DockerRemoveImage
 }
 

@@ -5,6 +5,7 @@
 
 import * as os from 'node:os'; // eslint-disable-line @liferay/no-extraneous-dependencies
 import * as path from 'path';
+import {open} from 'yauzl';
 import {zip} from 'zip-a-folder';
 
 export async function zipFolder(folderPath: string) {
@@ -12,4 +13,33 @@ export async function zipFolder(folderPath: string) {
 	await zip(folderPath, tempFilePath);
 
 	return tempFilePath;
+}
+
+export async function unzipFile(
+	callback: any,
+	filePath: string,
+	id: string,
+	json: JSON
+) {
+	open(filePath, {lazyEntries: true}, async (error, zip) => {
+		zip.readEntry();
+		zip.on('entry', (entry) => {
+			if (/\/$/.test(entry.fileName)) {
+				zip.readEntry();
+			}
+			else {
+				zip.openReadStream(entry, callback(id, json, zip));
+			}
+		});
+	});
+}
+
+export async function streamToJson(stream) {
+	const chunks = [];
+
+	for await (const chunk of stream) {
+		chunks.push(Buffer.from(chunk));
+	}
+
+	return JSON.parse(Buffer.concat(chunks).toString());
 }

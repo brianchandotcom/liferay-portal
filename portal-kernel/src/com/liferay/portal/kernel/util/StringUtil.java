@@ -5046,20 +5046,8 @@ public class StringUtil {
 	private static final String[] _EMPTY_STRING_ARRAY = new String[0];
 
 	private static final String[] _PREPOSITIONS = {
-		"a", "abaft", "aboard", "about", "above", "absent", "across", "afore",
-		"after", "against", "along", "alongside", "amid", "amidst", "among",
-		"amongst", "an", "apropos", "apud", "around", "as", "aside", "astride",
-		"at", "athwart", "atop", "barring", "before", "behind", "below",
-		"beneath", "beside", "besides", "between", "beyond", "but", "by",
-		"circa", "concerning", "despite", "down", "during", "except",
-		"excluding", "failing", "for", "from", "given", "in", "including",
-		"inside", "into", "lest", "mid", "midst", "modulo", "near", "next",
-		"notwithstanding", "of", "off", "on", "onto", "opposite", "out",
-		"outside", "over", "pace", "past", "per", "plus", "pro", "qua",
-		"regarding", "sans", "since", "through", "throughout", "thru",
-		"thruout", "till", "to", "toward", "towards", "under", "underneath",
-		"unlike", "until", "unto", "up", "upon", "v", "versus", "via", "vice",
-		"vs", "with", "within", "without", "worth"
+		"a", "an", "as", "at", "but", "by", "for", "in", "of", "off", "on",
+		"per", "to", "up", "via", "vs"
 	};
 
 	private static final char[] _RANDOM_STRING_CHAR_TABLE = {

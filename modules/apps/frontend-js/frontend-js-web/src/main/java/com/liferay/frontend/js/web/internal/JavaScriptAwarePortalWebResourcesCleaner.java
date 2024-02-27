@@ -9,8 +9,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMJavaScriptLastModi
 
 import java.util.ResourceBundle;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -19,7 +17,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -53,10 +50,5 @@ public class JavaScriptAwarePortalWebResourcesCleaner {
 	}
 
 	private ServiceListener _serviceListener;
-
-	@Reference(
-		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"
-	)
-	private ServletContext _servletContext;
 
 }

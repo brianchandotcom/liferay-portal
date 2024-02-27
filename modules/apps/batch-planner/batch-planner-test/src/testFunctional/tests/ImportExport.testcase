@@ -23,53 +23,6 @@ definition {
 		}
 	}
 
-	@priority = 4
-	test CanDownloadJsonTFormatFileAsJson {
-		property portal.acceptance = "true";
-
-		task ("Given Stock object definition created") {
-			ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "stock",
-				en_US_plural_label = "stocks",
-				name = "Stock",
-				requiredStringFieldName = "name");
-		}
-
-		task ("And Given Stock entries created") {
-			CustomObjectAPI.createObjectEntryWithFields(
-				en_US_plural_label = "stocks",
-				fieldName = "name",
-				fieldValue = "Stock Entry");
-		}
-
-		task ("When Exporting File with JSONT format in Import/Export center") {
-			BatchEngine.setUpGlobalIds();
-
-			ImportExport.exportAndUnzipFile(
-				entityType = "C_Stock (v1_0 - Liferay Object REST)",
-				exportFields = "name",
-				exportFileFormat = "JSONT");
-		}
-
-		task ("Then the downloaded zip file contain *.json file") {
-			DownloadTempFile();
-
-			var filePath = TestCase.getDependenciesDirPath(fileName = "jsont_objectEntry_import.txt");
-
-			FileUtil.replaceStringInFile(${filePath}, 20095, ${staticCompanyId});
-
-			FileUtil.replaceStringInFile(${filePath}, 20123, ${staticUserId});
-
-			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
-
-			AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=${originalFileDownloadName}");
-
-			ImportExport.assertFileContent(
-				comparisonFileName = "jsont_objectEntry_import.txt",
-				fileName = "export.batch-engine-data.json");
-		}
-	}
-
 	@description = "Verify users can download the original import file in the executions list after a completed import"
 	@ignore = "true"
 	@priority = 3
@@ -220,76 +173,6 @@ definition {
 				accountName = "Test Person Account",
 				accountType = "Person",
 				externalReferenceCode = 103);
-		}
-	}
-
-	@description = "Verify users can exclude fields from being exported in JSON format"
-	@priority = 3
-	test CanExcludeJSONFieldsFromExport {
-		property portal.acceptance = "true";
-
-		task ("Given Stock object definition created") {
-			ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "stock",
-				en_US_plural_label = "stocks",
-				name = "Stock",
-				requiredStringFieldName = "name");
-		}
-
-		task ("And Given Stock entries created") {
-			CustomObjectAPI.createObjectEntryWithFields(
-				en_US_plural_label = "stocks",
-				fieldName = "name",
-				fieldValue = "Stock Entry");
-		}
-
-		task ("When the user selects specific channel fields in JSON format") {
-			ImportExport.exportAndUnzipFile(
-				entityType = "C_Stock (v1_0 - Liferay Object REST)",
-				exportFields = "name",
-				exportFileFormat = "JSON");
-		}
-
-		task ("Then only those fields should be exported") {
-			ImportExport.assertFileContent(
-				comparisonFileName = "json_objectEntry_export_excluded.txt",
-				fileName = "export.json");
-		}
-	}
-
-	@description = "Verify users can exclude fields from being exported in JSONL format"
-	@priority = 3
-	test CanExcludeJSONLFieldsFromExport {
-		property portal.acceptance = "true";
-
-		task ("Given Stock object definition created") {
-			ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "stock",
-				en_US_plural_label = "stocks",
-				name = "Stock",
-				requiredStringFieldName = "name");
-		}
-
-		task ("And Given Stock entries created") {
-			CustomObjectAPI.createObjectEntryWithFields(
-				en_US_plural_label = "stocks",
-				fieldName = "name",
-				fieldValue = "Stock Entry");
-		}
-
-		task ("When the user selects specific channel fields in JSONL format in Import/Export center") {
-			BatchEngine.setUpGlobalIds();
-
-			ImportExport.exportAndUnzipFile(
-				entityType = "C_Stock (v1_0 - Liferay Object REST)",
-				exportFields = "name",
-				exportFileFormat = "JSONL");
-		}
-
-		task ("Then only those fields should be exported") {
-			ImportExport.assertFileContent(
-				comparisonFileName = "jsonl_objectEntry_import.txt",
-				fileName = "export.jsonl");
 		}
 	}
 

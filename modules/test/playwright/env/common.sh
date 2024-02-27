@@ -51,10 +51,10 @@ function combine_properties_files {
 function deploy_client_extensions {
 	if [[ -n ${1} ]]
 	then
-		cd ${_PORTAL_PROJECT_DIR}
-
 		for client_extension_dir in ${@}
 		do
+			client_extension_dir=${_PORTAL_PROJECT_DIR}/${client_extension_dir}
+
 			if [[ -d ${client_extension_dir} ]]
 			then
 				echo "Deploy '${client_extension_dir}'"
@@ -87,10 +87,10 @@ function deploy_osgi_modules {
 	then
 		mkdir -p ${LIFERAY_HOME}/deploy
 
-		cd ${_PORTAL_PROJECT_DIR}
-
 		for osgi_module_dir in ${@}
 		do
+			osgi_module_dir=${_PORTAL_PROJECT_DIR}/${osgi_module_dir}
+
 			if [[ -f ${osgi_module_dir}/build.gradle ]]
 			then
 				echo "Deploying ${osgi_module_dir}"

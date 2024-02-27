@@ -68,63 +68,51 @@ definition {
 
 			AssertElementPresent(
 				key_flagID = "ar-sa",
-				key_languageID = "العربية-السعودية",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "ca-es",
-				key_languageID = "català-Espanya",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "zh-cn",
-				key_languageID = "中文-中国",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "nl-nl",
-				key_languageID = "nederlands-Nederland",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "fi-fi",
-				key_languageID = "suomi-Suomi",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "fr-fr",
-				key_languageID = "français-France",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "de-de",
-				key_languageID = "deutsch-Deutschland",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "hu-hu",
-				key_languageID = "magyar-Magyarország",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "ja-jp",
-				key_languageID = "日本語-日本",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "pt-br",
-				key_languageID = "português-Brasil",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "es-es",
-				key_languageID = "español-España",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			AssertElementPresent(
 				key_flagID = "sv-se",
-				key_languageID = "svenska-Sverige",
-				locator1 = "Icon#FLAG_AND_LANGUAGE");
+				locator1 = "Icon#FLAG_SPECIFIC");
 
 			takeScreenshot();
 		}

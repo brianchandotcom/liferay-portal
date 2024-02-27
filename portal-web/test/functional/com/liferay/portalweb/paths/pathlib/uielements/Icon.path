@@ -266,11 +266,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FLAG_AND_LANGUAGE</td>
-	<td>//*[name()='svg']//*[contains(@href,'${key_flagID}')]//..//..//following-sibling::span[contains(text(),'${key_languageID}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FLIP_DISABLED</td>
 	<td>//button[contains(@class,'btn') and .//*[contains(@class,'lexicon-icon-change')]][@disabled]</td>
 	<td></td>

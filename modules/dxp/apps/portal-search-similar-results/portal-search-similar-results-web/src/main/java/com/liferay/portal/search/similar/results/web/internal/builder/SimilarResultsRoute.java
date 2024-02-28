@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.similar.results.web.internal.builder;
 
-import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
+import com.liferay.portal.search.similar.results.web.internal.contributor.SimilarResultsContributor;
 
 /**
  * @author André de Oliveira

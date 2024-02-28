@@ -6,6 +6,7 @@
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.DuplicateCPOptionExternalReferenceCodeException;
 import com.liferay.commerce.product.exception.NoSuchCPOptionException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPOptionLocalService;
@@ -45,7 +46,9 @@ public class EditCPOptionExternalReferenceCodeMVCActionCommand
 			_updateCPOptionExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchCPOptionException ||
+			if (exception instanceof
+					DuplicateCPOptionExternalReferenceCodeException ||
+				exception instanceof NoSuchCPOptionException ||
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());

@@ -27,6 +27,7 @@ page import="com.liferay.commerce.product.exception.CPOptionCategoryKeyException
 page import="com.liferay.commerce.product.exception.CPOptionKeyException" %><%@
 page import="com.liferay.commerce.product.exception.CPOptionValueKeyException" %><%@
 page import="com.liferay.commerce.product.exception.CPSpecificationOptionKeyException" %><%@
+page import="com.liferay.commerce.product.exception.DuplicateCPOptionExternalReferenceCodeException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionCategoryException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionException" %><%@
 page import="com.liferay.commerce.product.exception.NoSuchCPOptionValueException" %><%@

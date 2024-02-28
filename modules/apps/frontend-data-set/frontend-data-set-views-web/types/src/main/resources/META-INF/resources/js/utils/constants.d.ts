@@ -23,7 +23,7 @@ declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship';
 	readonly FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId';
 	readonly FDS_VIEW_FDS_CARDS_SECTION: 'fdsViewFDSCardsSectionRelationship';
-	readonly FDS_VIEW_FDS_CARDS_SECTION_ID: 'r_fdsViewFDSCardsSectionRelationship_c_fdsViewId';
+	readonly FDS_VIEW_FDS_CARDS_SECTION_ERC: 'r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC';
 	readonly FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter';
 	readonly FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID: 'r_fdsViewFDSClientExtensionFilter_c_fdsViewId';
 	readonly FDS_VIEW_FDS_CREATION_ACTION: 'fdsViewFDSCreationActionRelationship';

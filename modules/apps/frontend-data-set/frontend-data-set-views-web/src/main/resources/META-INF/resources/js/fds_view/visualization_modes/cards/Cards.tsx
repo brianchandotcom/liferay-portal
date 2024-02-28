@@ -50,7 +50,7 @@ export default function Cards(props: IFDSViewSectionProps) {
 
 	const getFDSCardsSections = async () => {
 		const response = await fetch(
-			`${API_URL.FDS_CARDS_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CARDS_SECTION_ID} eq '${fdsView.id}')`
+			`${API_URL.FDS_CARDS_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CARDS_SECTION_ERC} eq '${fdsView.externalReferenceCode}')`
 		);
 
 		if (!response.ok) {
@@ -113,7 +113,8 @@ export default function Cards(props: IFDSViewSectionProps) {
 
 		const response = await fetch(url, {
 			body: JSON.stringify({
-				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CARDS_SECTION_ID]: fdsView.id,
+				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CARDS_SECTION_ERC]:
+					fdsView.externalReferenceCode,
 				fieldName: field.name,
 				name: cardsSection.name,
 			}),

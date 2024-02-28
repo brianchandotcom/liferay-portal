@@ -170,8 +170,6 @@ public class CompanyThreadLocal {
 	public static SafeCloseable setWithSafeCloseable(
 		Long companyId, Long ctCollectionId) {
 
-		boolean[] changed = {false};
-
 		List<SafeCloseable> safeCloseables = new ArrayList<>();
 
 		if (!companyId.equals(_companyId.get())) {
@@ -200,8 +198,6 @@ public class CompanyThreadLocal {
 				TimeZoneThreadLocal.setDefaultTimeZoneWithSafeCloseable(null));
 
 			_clearUserThreadLocals();
-
-			changed[0] = true;
 		}
 
 		safeCloseables.add(
@@ -209,7 +205,7 @@ public class CompanyThreadLocal {
 				ctCollectionId));
 
 		return () -> {
-			if (changed[0]) {
+			if (safeCloseables.size() > 1) {
 				_syncLastDBPartitionSessionState();
 			}
 

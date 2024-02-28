@@ -8,5 +8,4 @@ export declare function onDiscardDraft(
 	event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
 	form?: HTMLFormElement
 ): void;
-export declare function useDisabledDiscardDraft(): boolean;
 export default function DiscardDraftButton(): JSX.Element;

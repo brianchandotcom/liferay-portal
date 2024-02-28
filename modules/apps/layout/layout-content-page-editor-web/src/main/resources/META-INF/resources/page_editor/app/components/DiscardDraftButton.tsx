@@ -5,11 +5,10 @@
 
 import ClayButton from '@clayui/button';
 import {openConfirmModal} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
-import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 import {config} from '../config/index';
-import {useSelector} from '../contexts/StoreContext';
+import useDisabledDiscardDraft from './useDisabledDiscardDraft';
 
 export function onDiscardDraft(
 	event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -28,23 +27,6 @@ export function onDiscardDraft(
 			}
 		},
 	});
-}
-
-export function useDisabledDiscardDraft() {
-	const [enableDiscard, setEnableDiscard] = useState(false);
-	const store = useSelector((state) => state);
-
-	const {network} = store;
-
-	useEffect(() => {
-		setEnableDiscard(
-			network.status === SERVICE_NETWORK_STATUS_TYPES.draftSaved ||
-				store.draft ||
-				config.isConversionDraft
-		);
-	}, [network, store.draft]);
-
-	return !enableDiscard;
 }
 
 export default function DiscardDraftButton() {

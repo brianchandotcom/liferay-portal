@@ -139,8 +139,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			Assert.assertArrayEquals(
-				companyIds, PortalInstancePool.getCompanyIds());
+			Assert.assertArrayEquals(companyIds, _getCompanyIdsBySQL());
 			Assert.assertEquals(dbPartitionsCount, _getDBPartitionsCount());
 		}
 		finally {
@@ -178,8 +177,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			Assert.assertArrayEquals(
-				companyIds, PortalInstancePool.getCompanyIds());
+			Assert.assertArrayEquals(companyIds, _getCompanyIdsBySQL());
 			Assert.assertEquals(dbPartitionsCount, _getDBPartitionsCount());
 		}
 		finally {

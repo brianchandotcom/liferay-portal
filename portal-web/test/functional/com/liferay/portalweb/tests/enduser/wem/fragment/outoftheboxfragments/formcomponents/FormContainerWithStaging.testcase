@@ -120,7 +120,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 		}
@@ -160,16 +160,16 @@ definition {
 		task ("When the page designer publishes the content page with mapped Form Container") {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 
 			PageEditor.editInput(
 				field = "Region",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Submit Button",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 
 			PageEditor.publish();
 		}
@@ -182,7 +182,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Region",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 
 			Button.viewPresent(button = "Submit");
 		}
@@ -201,7 +201,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Region",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 
 			Button.viewPresent(button = "Submit");
 		}

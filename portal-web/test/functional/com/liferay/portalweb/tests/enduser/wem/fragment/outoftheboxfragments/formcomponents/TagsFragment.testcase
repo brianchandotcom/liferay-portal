@@ -113,13 +113,13 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Name",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PageEditor.addFragmentToFormContainer(
 					collectionName = "Form Components",
 					fragmentName = "Tags",
-					targetFragmentName = "Text Input");
+					targetFragmentName = "Text");
 			}
 
 			PageEditor.publish();
@@ -255,12 +255,12 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Name",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Tags",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 
 			MastersPageTemplates.publishMaster();
 		}
@@ -400,12 +400,12 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Name",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Tags",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 
 			PageEditor.publish();
 		}
@@ -545,14 +545,14 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Name",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 
 			PageEditor.viewFragmentNotPresent(fragmentName = "Tags");
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Tags",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 
 			PageEditor.publish();
 		}
@@ -729,14 +729,14 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Name",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 
 			PageEditor.viewFragmentNotPresent(fragmentName = "Tags");
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Tags",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 
 			PageEditor.publish();
 		}
@@ -889,7 +889,7 @@ definition {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Tags",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 		}
 
 		task ("Then a warning message is shown") {

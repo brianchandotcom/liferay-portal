@@ -207,7 +207,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Favorite",
 				showLabel = "true",
-				type = "multiselect-list");
+				type = "multiselect");
 		}
 
 		task ("When the page designer enables the Show Help Text") {
@@ -220,7 +220,7 @@ definition {
 			PageEditor.viewInputStyle(
 				helpText = "Add your help text here.",
 				showHelpText = "true",
-				type = "multiselect-list");
+				type = "multiselect");
 		}
 
 		task ("When the pages designer types a new label") {
@@ -233,7 +233,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Preferences",
 				showLabel = "true",
-				type = "multiselect-list");
+				type = "multiselect");
 		}
 
 		task ("When the page designer marks the Multiselect List as required") {
@@ -246,7 +246,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Preferences",
 				markAsRequired = "true",
-				type = "multiselect-list");
+				type = "multiselect");
 		}
 	}
 

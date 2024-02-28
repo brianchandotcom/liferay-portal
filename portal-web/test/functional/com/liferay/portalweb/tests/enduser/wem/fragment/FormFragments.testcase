@@ -452,7 +452,7 @@ definition {
 		task ("Then the site designer can see the Form Components fragment set") {
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
 
-			for (var fragmentName : list "CAPTCHA,Checkbox,Date,File Upload,Numeric Input,Select from List,Submit Button,Text Input") {
+			for (var fragmentName : list "CAPTCHA,Checkbox,Date,File Upload,Numeric,Select,Submit Button,Text") {
 				FragmentsAdmin.viewEntryPresent(entry = ${fragmentName});
 			}
 		}
@@ -512,7 +512,7 @@ definition {
 			AssertVisible(
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
-				type = "numeric-input");
+				type = "numeric");
 
 			ScrollBy(value1 = "0, 300");
 
@@ -525,14 +525,14 @@ definition {
 			AssertVisible(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			ScrollBy(value1 = "0, 300");
 
 			AssertVisible(
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
-				type = "text-input");
+				type = "text");
 
 			ScrollBy(value1 = "0, 300");
 

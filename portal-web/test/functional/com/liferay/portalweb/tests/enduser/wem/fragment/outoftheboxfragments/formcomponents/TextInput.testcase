@@ -59,7 +59,7 @@ definition {
 
 		task ("When the pages designer adds a custom name in Text Input fields") {
 			PageEditor.editInput(
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				helpText = "Custom Help Text",
 				hideHelpText = "false",
 				label = "Custom Content Field",
@@ -73,7 +73,7 @@ definition {
 				placeholder = "Custom Placeholder",
 				showHelpText = "true",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -91,7 +91,7 @@ definition {
 				placeholder = "Custom Placeholder",
 				showHelpText = "true",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 		}
 
 		task ("When the pages designer hides the label and help text fields") {
@@ -100,7 +100,7 @@ definition {
 				siteName = "Test Site Name");
 
 			PageEditor.editInput(
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				hideHelpText = "true",
 				hideLabel = "true");
 		}
@@ -111,7 +111,7 @@ definition {
 				label = "Custom Content Field",
 				showHelpText = "false",
 				showLabel = "false",
-				type = "text-input");
+				type = "text");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -128,7 +128,7 @@ definition {
 				label = "Custom Content Field",
 				showHelpText = "false",
 				showLabel = "false",
-				type = "text-input");
+				type = "text");
 		}
 	}
 
@@ -165,7 +165,7 @@ definition {
 
 		task ("When the pages designer adds a custom name in Text Input fields") {
 			PageEditor.editInput(
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				helpText = "Custom Help Text",
 				hideHelpText = "false",
 				label = "Custom Content Field",
@@ -179,7 +179,7 @@ definition {
 				placeholder = "Custom Placeholder",
 				showHelpText = "true",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 		}
 
 		task ("When the pages designer adds a Spanish translation in Text Input fields") {
@@ -188,7 +188,7 @@ definition {
 				locale = "es-ES");
 
 			PageEditor.editInput(
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				helpText = "Texto de ayuda personalizado",
 				label = "Campo de contenido personalizado",
 				placeholder = "Marcador de posición personalizado");
@@ -201,7 +201,7 @@ definition {
 				placeholder = "Marcador de posición personalizado",
 				showHelpText = "true",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -219,7 +219,7 @@ definition {
 				placeholder = "Custom Placeholder",
 				showHelpText = "true",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 		}
 
 		task ("When the pages designer changes the user language to Spanish") {
@@ -235,7 +235,7 @@ definition {
 				placeholder = "Marcador de posición personalizado",
 				showHelpText = "true",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 		}
 	}
 
@@ -268,12 +268,12 @@ definition {
 		task ("Then the page designer could not view the hide icon on structure tree") {
 			AssertElementNotPresent(
 				key_index = 1,
-				key_nodeName = "Text Input",
+				key_nodeName = "Text",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_HIDE_INDEX");
 		}
 
 		task ("When the page designer accesses to the General panel of Text Input fragment") {
-			PageEditor.clickConfigurableField(fragmentName = "Text Input");
+			PageEditor.clickConfigurableField(fragmentName = "Text");
 		}
 
 		task ("Then the page designer could not view the Hide fragment checkbox on general tab") {
@@ -284,7 +284,7 @@ definition {
 
 		task ("When the page designer opens the dropdown menu of Text Input fragment's topper bar") {
 			Click.waitForMenuToggleJSClick(
-				key_fragmentName = "Text Input",
+				key_fragmentName = "Text",
 				locator1 = "Fragment#FRAGMENT_HEADER_ELLIPSIS");
 		}
 
@@ -333,7 +333,7 @@ definition {
 		task ("Then the pages designer sees alert message below the Text Input field") {
 			PageEditor.viewInputStyle(
 				charactersCount = "Maximum Number of Characters Exceeded: 281 / 280",
-				type = "text-input");
+				type = "text");
 		}
 
 		task ("When the pages designer removes one character from Text Input") {
@@ -351,7 +351,7 @@ definition {
 			AssertTextNotEquals.assertNotPartialMatch(
 				index = 1,
 				locator1 = "Fragment#INPUT_LENGTH_INFO",
-				type = "text-input",
+				type = "text",
 				value1 = "Maximum Number of Characters Exceeded");
 		}
 	}
@@ -391,7 +391,7 @@ definition {
 		}
 
 		task ("When the page creator accesses to the General panel of Text Input") {
-			PageEditor.gotoConfiguration(fragmentName = "Text Input");
+			PageEditor.gotoConfiguration(fragmentName = "Text");
 		}
 
 		task ("Then the page creator sees the asterisk symbol of Text field in mapping field selector") {
@@ -427,7 +427,7 @@ definition {
 
 			task ("Mark the Text Input fragment as required") {
 				PageEditor.editInput(
-					fragmentName = "Text Input",
+					fragmentName = "Text",
 					markAsRequired = "true");
 
 				PageEditor.publish();
@@ -501,7 +501,7 @@ definition {
 					panel = "General");
 
 				PageEditor.editInput(
-					fragmentName = "Text Input",
+					fragmentName = "Text",
 					showCharactersCount = "true");
 
 				PageEditor.publish();
@@ -515,7 +515,7 @@ definition {
 
 			PageEditor.viewInputStyle(
 				charactersCount = ": 0 / 20",
-				type = "text-input");
+				type = "text");
 
 			Type(
 				key_text = "Region",
@@ -530,7 +530,7 @@ definition {
 
 			PageEditor.viewInputStyle(
 				charactersCount = "Maximum Number of Characters Exceeded: 33 / 20",
-				type = "text-input");
+				type = "text");
 		}
 
 		task ("When the user removes charactors to 20") {
@@ -553,7 +553,7 @@ definition {
 		task ("Then the page designer cannot see the alert message") {
 			PageEditor.viewInputStyle(
 				charactersCount = ": 20 / 20",
-				type = "text-input");
+				type = "text");
 		}
 	}
 

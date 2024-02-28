@@ -3051,12 +3051,12 @@ definition {
 
 			if (${successMessage} == "Stay in Page") {
 				Select(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Stay in Page");
 
 				AssertSelectedLabel(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Stay in Page");
 
@@ -3064,12 +3064,12 @@ definition {
 			}
 			else if (${successMessage} == "Show Embedded Message") {
 				Select(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Show Embedded Message");
 
 				AssertSelectedLabel(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Show Embedded Message");
 
@@ -3088,12 +3088,12 @@ definition {
 			}
 			else if (${successMessage} == "Go to Page") {
 				Select(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Go to Page");
 
 				AssertSelectedLabel(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Go to Page");
 
@@ -3139,12 +3139,12 @@ definition {
 			}
 			else if (${successMessage} == "Go to External URL") {
 				Select(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Go to External URL");
 
 				AssertSelectedLabel(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Go to External URL");
 
@@ -3163,12 +3163,12 @@ definition {
 			}
 			else if (${successMessage} == "Go to Entry Display Page") {
 				Select(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Go to Entry Display Page");
 
 				AssertSelectedLabel(
-					key_fieldLabel = "Success Interaction",
+					key_fieldLabel = "Success Action",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Go to Entry Display Page");
 

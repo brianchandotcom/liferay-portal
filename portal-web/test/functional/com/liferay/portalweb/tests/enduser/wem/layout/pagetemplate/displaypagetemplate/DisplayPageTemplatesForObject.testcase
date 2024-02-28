@@ -194,7 +194,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Count",
 				showLabel = "true",
-				type = "numeric-input");
+				type = "numeric");
 
 			PageEditor.viewFragmentEditableText(
 				className = "button",
@@ -439,7 +439,7 @@ definition {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Content Display",
 				fragmentName = "Collection Display",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
@@ -981,7 +981,7 @@ definition {
 			AssertTextEquals(
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
-				type = "select-from-list",
+				type = "select",
 				value1 = "Apple");
 		}
 
@@ -989,7 +989,7 @@ definition {
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			MenuItem.click(menuItem = "Pineapple");
 
@@ -1123,7 +1123,7 @@ definition {
 
 			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
 
-			PageEditor.removeFragment(fragmentName = "Text Input");
+			PageEditor.removeFragment(fragmentName = "Text");
 
 			PageEditor.publish();
 
@@ -1240,7 +1240,7 @@ definition {
 
 			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
 
-			PageEditor.removeFragment(fragmentName = "Text Input");
+			PageEditor.removeFragment(fragmentName = "Text");
 
 			PageEditor.publish(objectName = "Purchase Order");
 
@@ -1513,7 +1513,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Favorite Fruit",
 				showLabel = "true",
-				type = "multiselect-list");
+				type = "multiselect");
 		}
 	}
 
@@ -1656,7 +1656,7 @@ definition {
 
 			PageEditor.viewInputStyle(
 				placeholder = "Choose an Option",
-				type = "select-from-list");
+				type = "select");
 		}
 	}
 

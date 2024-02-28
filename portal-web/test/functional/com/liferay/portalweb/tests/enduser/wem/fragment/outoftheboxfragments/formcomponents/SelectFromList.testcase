@@ -73,7 +73,7 @@ definition {
 				panel = "General");
 
 			PageEditor.editInput(
-				fragmentName = "Select from List",
+				fragmentName = "Select",
 				helpText = "Just one type of ticket can be selected",
 				hideHelpText = "false",
 				label = "Select your ticket");
@@ -91,12 +91,12 @@ definition {
 				label = "Select your ticket",
 				showHelpText = "true",
 				showLabel = "true",
-				type = "select-from-list");
+				type = "select");
 
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
 		}
@@ -175,7 +175,7 @@ definition {
 				panel = "General");
 
 			PageEditor.editInput(
-				fragmentName = "Select from List",
+				fragmentName = "Select",
 				label = "Select your lunch");
 
 			PageEditor.publish(objectName = "Purchase Order");
@@ -189,7 +189,7 @@ definition {
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			MenuItem.viewOrder(menuItemList = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta,Rice");
 		}
@@ -198,7 +198,7 @@ definition {
 			Type.sendKeys(
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
-				type = "select-from-list",
+				type = "select",
 				value1 = "Non-Existing");
 		}
 
@@ -252,7 +252,7 @@ definition {
 				panel = "General");
 
 			PageEditor.editInput(
-				fragmentName = "Select from List",
+				fragmentName = "Select",
 				label = "Select your account");
 
 			PageEditor.publish(objectName = "Purchase Order");
@@ -266,7 +266,7 @@ definition {
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			MenuItem.viewOrder(menuItemList = "Assets,Equity,Expenses,Free");
 		}
@@ -287,7 +287,7 @@ definition {
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			MenuItem.viewOrder(menuItemList = "Assets,Equity,Expenses,Free,Liabilities,Nominal,Personal,Real,Revenue,Saving");
 
@@ -333,7 +333,7 @@ definition {
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			SetElementAttribute(
 				attribute1 = "data-option-value",
@@ -407,7 +407,7 @@ definition {
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			AssertCssValue(
 				locator1 = "//div[contains(@class,'dropdown-menu') and contains(@class,'show')]",
@@ -481,7 +481,7 @@ definition {
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			MenuItem.viewOrder(menuItemList = "Adapt Media,Analystics Cloud,Collections,Clay,Content Dashboard,Control Menu,Forms,Data Engine,Categories,Item Selector,Page Templates");
 		}

@@ -59,7 +59,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-155169. The page creator could configure the Numeric Input framgent."
+	@description = "This is a test for LPS-155169. The page creator could configure the Numeric framgent."
 	@priority = 4
 	test ConfigureNumericInput {
 		task ("Given a page creator has a Form Container mapped to an entity with Integer field") {
@@ -87,11 +87,11 @@ definition {
 			task ("Remove the automatic added fragments") {
 				for (var index : list "4,3,2") {
 					PageEditor.removeFragment(
-						fragmentName = "Numeric Input",
+						fragmentName = "Numeric",
 						index = ${index});
 				}
 
-				for (var fragmentName : list "Numeric Input,Submit Button") {
+				for (var fragmentName : list "Numeric,Submit Button") {
 					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}
@@ -100,73 +100,73 @@ definition {
 		task ("When the page creator adds a Numeric Input fragment into the Form Container") {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Numeric Input");
+				fragmentName = "Numeric");
 		}
 
 		task ("Then the page creator could configure the Numeric Input fragment") {
 			task ("Mark the Numeric Input as required") {
 				PageEditor.editInput(
 					field = "Ticket Number",
-					fragmentName = "Numeric Input",
+					fragmentName = "Numeric",
 					markAsRequired = "true");
 
 				PageEditor.viewInputStyle(
 					label = "Ticket Number",
 					markAsRequired = "true",
-					type = "numeric-input");
+					type = "numeric");
 			}
 
 			task ("Rename the label") {
 				PageEditor.editInput(
-					fragmentName = "Numeric Input",
+					fragmentName = "Numeric",
 					label = "Purchase Ticket Number");
 
 				PageEditor.viewInputStyle(
 					label = "Purchase Ticket Number",
 					showLabel = "true",
-					type = "numeric-input");
+					type = "numeric");
 			}
 
 			task ("Hide the label") {
 				PageEditor.editInput(
-					fragmentName = "Numeric Input",
+					fragmentName = "Numeric",
 					hideLabel = "true");
 
 				PageEditor.viewInputStyle(
 					label = "Purchase Ticket Number",
 					showLabel = "false",
-					type = "numeric-input");
+					type = "numeric");
 			}
 
 			task ("Show the Help Text") {
 				PageEditor.editInput(
-					fragmentName = "Numeric Input",
+					fragmentName = "Numeric",
 					hideHelpText = "false");
 
 				PageEditor.viewInputStyle(
 					helpText = "Add your help text here.",
 					showHelpText = "true",
-					type = "numeric-input");
+					type = "numeric");
 			}
 
 			task ("Clear the Help Text") {
 				PageEditor.editInput(
-					fragmentName = "Numeric Input",
+					fragmentName = "Numeric",
 					helpText = "");
 
 				PageEditor.viewInputStyle(
 					showHelpText = "false",
-					type = "numeric-input");
+					type = "numeric");
 			}
 
 			task ("Add a placeholder to Numeric Input") {
 				PageEditor.editInput(
-					fragmentName = "Numeric Input",
+					fragmentName = "Numeric",
 					placeholder = "Type your ticket number");
 
 				PageEditor.viewInputStyle(
 					placeholder = "Type your ticket number",
-					type = "numeric-input");
+					type = "numeric");
 			}
 		}
 	}
@@ -484,11 +484,11 @@ definition {
 			task ("Remove the automatic added fragments") {
 				for (var index : list "4,3,2") {
 					PageEditor.removeFragment(
-						fragmentName = "Numeric Input",
+						fragmentName = "Numeric",
 						index = ${index});
 				}
 
-				for (var fragmentName : list "Numeric Input,Submit Button") {
+				for (var fragmentName : list "Numeric,Submit Button") {
 					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}
@@ -496,12 +496,12 @@ definition {
 			task ("Add a Numeric Input fragment into the Form Container") {
 				PageEditor.addFragmentToFormContainer(
 					collectionName = "Form Components",
-					fragmentName = "Numeric Input");
+					fragmentName = "Numeric");
 			}
 		}
 
 		task ("When the page creator accesses to the General panel of Numeric Input") {
-			PageEditor.gotoConfiguration(fragmentName = "Numeric Input");
+			PageEditor.gotoConfiguration(fragmentName = "Numeric");
 		}
 
 		task ("Then the page creator could see mappable fields in mapping field selector") {

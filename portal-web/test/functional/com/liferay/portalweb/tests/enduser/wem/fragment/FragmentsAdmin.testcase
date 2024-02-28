@@ -1001,7 +1001,7 @@ definition {
 				FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
 
 				FragmentsAdminNavigator.gotoEntryEllipsisItem(
-					entry = "Text Input",
+					entry = "Text",
 					item = "Copy To",
 					specificFormFragment = "true");
 
@@ -1038,7 +1038,7 @@ definition {
 
 				LexiconCard.clickCardTitle(card = "Fragment Set Name");
 
-				LexiconCard.clickCard(card = "Text Input (Copy)");
+				LexiconCard.clickCard(card = "Text (Copy)");
 			}
 		}
 
@@ -1048,7 +1048,7 @@ definition {
 
 				FragmentsAdmin.viewFormFragementForEachFieldType(
 					fieldType = "Text",
-					formFragmentName = "Text Input (Copy)");
+					formFragmentName = "Text (Copy)");
 			}
 
 			task ("Save and back to fragment admin configuration") {
@@ -1062,7 +1062,7 @@ definition {
 			task ("View the copy of fragment is shown in Form Fragment selector for Text field type") {
 				FragmentsAdmin.viewFormFragementForEachFieldType(
 					fieldType = "Text",
-					formFragmentName = "Text Input (Copy)");
+					formFragmentName = "Text (Copy)");
 			}
 		}
 	}
@@ -1085,7 +1085,7 @@ definition {
 				FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
 
 				FragmentsAdminNavigator.gotoEntryEllipsisItem(
-					entry = "Text Input",
+					entry = "Text",
 					item = "Copy To",
 					specificFormFragment = "true");
 
@@ -1100,7 +1100,7 @@ definition {
 
 			task ("View the default form fragment displayed by default for each field type") {
 				var fieldTypeList = "Boolean,Date,File,HTML,Long Text,Multiselect,Number,Relationship,Select,Text,Submit Button";
-				var formFragmentNameList = "Checkbox,Date,File Upload,Rich Text Input,Textarea,Multiselect List,Numeric Input,Select from List,Select from List,Text Input,Submit Button";
+				var formFragmentNameList = "Checkbox,Date,File Upload,Rich Text,Textarea,Multiselect,Numeric,Select,Text,Submit Button";
 				var i = 0;
 				var list1 = ListUtil.newListFromString(${fieldTypeList});
 				var list2 = ListUtil.newListFromString(${formFragmentNameList});
@@ -1144,7 +1144,7 @@ definition {
 
 				LexiconCard.clickCardTitle(card = "Fragment Set Name");
 
-				LexiconCard.clickCard(card = "Text Input (Copy)");
+				LexiconCard.clickCard(card = "Text (Copy)");
 			}
 		}
 
@@ -1154,7 +1154,7 @@ definition {
 
 				FragmentsAdmin.viewFormFragementForEachFieldType(
 					fieldType = "Text",
-					formFragmentName = "Text Input (Copy)");
+					formFragmentName = "Text (Copy)");
 			}
 
 			task ("Save and back to fragment admin configuration") {
@@ -1168,7 +1168,7 @@ definition {
 			task ("View the copy of fragment is shown in Form Fragment selector for Text field type") {
 				FragmentsAdmin.viewFormFragementForEachFieldType(
 					fieldType = "Text",
-					formFragmentName = "Text Input (Copy)");
+					formFragmentName = "Text (Copy)");
 			}
 		}
 	}
@@ -1290,7 +1290,7 @@ definition {
 				FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
 
 				FragmentsAdminNavigator.gotoEntryEllipsisItem(
-					entry = "Text Input",
+					entry = "Text",
 					item = "Copy To",
 					specificFormFragment = "true");
 
@@ -1300,7 +1300,7 @@ definition {
 
 		task ("When go to edit the copy of fragment's configuration") {
 			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Text Input (Copy)",
+				entry = "Text (Copy)",
 				item = "Edit");
 
 			FragmentsEditor.gotoConfigurationTab();
@@ -1368,7 +1368,7 @@ definition {
 				FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
 
 				FragmentsAdminNavigator.gotoEntryEllipsisItem(
-					entry = "Text Input",
+					entry = "Text",
 					item = "Copy To",
 					specificFormFragment = "true");
 
@@ -1424,7 +1424,7 @@ definition {
 
 				LexiconCard.clickCardTitle(card = "Fragment Set Name");
 
-				LexiconCard.viewCardPresent(card = "Text Input (Copy)");
+				LexiconCard.viewCardPresent(card = "Text (Copy)");
 
 				LexiconCard.viewCardNotPresent(card = "Draft Form Fragment Name");
 
@@ -1455,7 +1455,7 @@ definition {
 				FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
 
 				FragmentsAdminNavigator.gotoEntryEllipsisItem(
-					entry = "Text Input",
+					entry = "Text",
 					item = "Copy To",
 					specificFormFragment = "true");
 
@@ -1492,7 +1492,7 @@ definition {
 
 				LexiconCard.clickCardTitle(card = "Fragment Set Name");
 
-				LexiconCard.viewCardPresent(card = "Text Input (Copy)");
+				LexiconCard.viewCardPresent(card = "Text (Copy)");
 
 				LexiconCard.viewCardNotPresent(card = "Checkbox (Copy)");
 			}
@@ -1717,7 +1717,7 @@ if (layoutMode === 'edit') {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			PageEditor.removeFragment(fragmentName = "Text Input");
+			PageEditor.removeFragment(fragmentName = "Text");
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Fragment Set Name",

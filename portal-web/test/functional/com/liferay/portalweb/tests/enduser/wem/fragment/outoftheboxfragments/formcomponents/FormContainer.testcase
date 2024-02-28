@@ -90,7 +90,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -143,7 +143,7 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_collectionName = "Form Components",
-				key_fragmentName = "Text Input",
+				key_fragmentName = "Text",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
 		}
@@ -151,7 +151,7 @@ definition {
 		task ("Then the page creator should see an error message") {
 			Alert.viewErrorMessage(errorMessage = "Form components can only be placed inside a mapped form container.");
 
-			PageEditor.viewFragmentNotPresent(fragmentName = "Text Input");
+			PageEditor.viewFragmentNotPresent(fragmentName = "Text");
 		}
 	}
 
@@ -394,7 +394,7 @@ definition {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Date",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 
 			PageEditor.editInput(
 				field = "Purchase Date",
@@ -518,7 +518,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Region",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 
 			PageEditor.viewFragmentEditableText(
 				className = "button",
@@ -528,7 +528,7 @@ definition {
 		}
 
 		task ("Then the page creator could remove automatically added input fragments") {
-			for (var fragmentName : list "Text Input,Textarea,Submit Button") {
+			for (var fragmentName : list "Text,Textarea,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -542,18 +542,18 @@ definition {
 		task ("When the page creator adds a Text Input fragment into Form Container") {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 		}
 
 		task ("Then the page creator could map the Text Input to the Text field") {
 			PageEditor.editInput(
 				field = "Region",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 
 			PageEditor.viewInputStyle(
 				label = "Region",
 				showLabel = "true",
-				type = "text-input");
+				type = "text");
 		}
 	}
 
@@ -592,7 +592,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 		}
@@ -632,16 +632,16 @@ definition {
 		task ("When the page designer publishes the content page with mapped Form Container") {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 
 			PageEditor.editInput(
 				field = "Region",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Submit Button",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 
 			PageEditor.publish();
 		}
@@ -1354,7 +1354,7 @@ definition {
 			Click(
 				index = 1,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			MenuItem.click(menuItem = "Fish");
 
@@ -1371,7 +1371,7 @@ definition {
 			Click(
 				index = 2,
 				locator1 = "Fragment#INPUT_TOGGLE",
-				type = "select-from-list");
+				type = "select");
 
 			MenuItem.click(menuItem = "First Class");
 
@@ -1529,7 +1529,7 @@ definition {
 
 				Button.clickSave();
 
-				//MastersPageTemplates.deselectAllowedFragments(fragmentNameList = "Date,Numeric Input,Submit Button,Text Input");
+				//MastersPageTemplates.deselectAllowedFragments(fragmentNameList = "Date,Numeric,Submit Button,Text");
 
 				MastersPageTemplates.publishMaster();
 			}
@@ -1709,7 +1709,7 @@ definition {
 
 			PageEditor.editInput(
 				field = "-- Unmapped --",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 		}
 
 		task ("When the page designer publishes the content page") {
@@ -2258,12 +2258,12 @@ definition {
 				panel = "General");
 
 			PageEditor.editInput(
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				markAsRequired = "true");
 		}
 
 		task ("When the page designer removes the Text Input fragment") {
-			PageEditor.removeFragment(fragmentName = "Text Input");
+			PageEditor.removeFragment(fragmentName = "Text");
 		}
 
 		task ("Then the page designer could see a warning message") {
@@ -2368,7 +2368,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2378,12 +2378,12 @@ definition {
 
 			PageEditor.addElementToContainer(
 				collectionName = "Form Components",
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				navTab = "Fragments");
 
 			PageEditor.editInput(
 				field = "Region",
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				markAsRequired = "true");
 		}
 
@@ -2486,7 +2486,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2497,12 +2497,12 @@ definition {
 			PageEditor.addElementToColumn(
 				collectionName = "Form Components",
 				columnNumber = 1,
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				navTab = "Fragments");
 
 			PageEditor.editInput(
 				field = "Region",
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				markAsRequired = "true");
 		}
 
@@ -2546,7 +2546,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2562,12 +2562,12 @@ definition {
 
 			PageEditor.addElementToContainer(
 				collectionName = "Form Components",
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				navTab = "Fragments");
 
 			PageEditor.editInput(
 				field = "Name*",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 
 			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
 		}
@@ -2616,7 +2616,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2633,12 +2633,12 @@ definition {
 			PageEditor.addElementToColumn(
 				collectionName = "Form Components",
 				columnNumber = 1,
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				navTab = "Fragments");
 
 			PageEditor.editInput(
 				field = "Name*",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 
 			PageEditor.hideFragmentViaHeader(fragmentName = "Grid");
 		}
@@ -2687,7 +2687,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2703,12 +2703,12 @@ definition {
 
 			PageEditor.addElementToContainer(
 				collectionName = "Form Components",
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				navTab = "Fragments");
 
 			PageEditor.editInput(
 				field = "Region",
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				markAsRequired = "true");
 
 			PageEditor.hideFragmentViaHeader(fragmentName = "Container");
@@ -2758,7 +2758,7 @@ definition {
 				contentType = "Purchase Order",
 				panel = "General");
 
-			for (var fragmentName : list "Text Input,Submit Button") {
+			for (var fragmentName : list "Text,Submit Button") {
 				PageEditor.removeFragment(fragmentName = ${fragmentName});
 			}
 
@@ -2775,12 +2775,12 @@ definition {
 			PageEditor.addElementToColumn(
 				collectionName = "Form Components",
 				columnNumber = 1,
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				navTab = "Fragments");
 
 			PageEditor.editInput(
 				field = "Region",
-				fragmentName = "Text Input",
+				fragmentName = "Text",
 				markAsRequired = "true");
 
 			PageEditor.hideFragmentViaHeader(fragmentName = "Grid");
@@ -2851,7 +2851,7 @@ definition {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Layout Elements",
 				fragmentName = "Container",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 
 			PageEditor.addElementToContainer(
 				collectionName = "Form Components",
@@ -2907,7 +2907,7 @@ definition {
 
 			PageEditor.editInput(
 				field = "-- Unmapped --",
-				fragmentName = "Text Input");
+				fragmentName = "Text");
 		}
 
 		task ("When the page creator publishes the content page") {

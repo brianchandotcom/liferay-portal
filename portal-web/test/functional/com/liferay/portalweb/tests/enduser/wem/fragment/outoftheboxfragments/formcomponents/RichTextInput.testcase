@@ -65,12 +65,12 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Description",
 				showLabel = "true",
-				type = "rich-text-input");
+				type = "rich-text");
 		}
 
 		task ("When the page designer enables the Show Help Text") {
 			PageEditor.editInput(
-				fragmentName = "Rich Text Input",
+				fragmentName = "Rich Text",
 				hideHelpText = "false");
 		}
 
@@ -78,12 +78,12 @@ definition {
 			PageEditor.viewInputStyle(
 				helpText = "Add your help text here.",
 				showHelpText = "true",
-				type = "rich-text-input");
+				type = "rich-text");
 		}
 
 		task ("When the pages designer types a new label") {
 			PageEditor.editInput(
-				fragmentName = "Rich Text Input",
+				fragmentName = "Rich Text",
 				label = "Details");
 		}
 
@@ -91,7 +91,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Details",
 				showLabel = "true",
-				type = "rich-text-input");
+				type = "rich-text");
 
 			AssertElementNotPresent(
 				key_text = "Placeholder",

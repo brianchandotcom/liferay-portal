@@ -547,7 +547,7 @@ definition {
 		task ("Then assert there's only Submit Button displayed") {
 			LexiconCard.viewCardPresent(card = "Submit Button");
 
-			for (var fragmentName : list "CAPTCHA,Checkbox,Date,File Upload,Multiselect List,Numeric Input,Rich Text Input,Select from List,Text Input,Textarea") {
+			for (var fragmentName : list "CAPTCHA,Checkbox,Date,File Upload,Multiselect,Numeric,Rich Text,Select,Text,Textarea") {
 				LexiconCard.viewCardNotPresent(card = ${fragmentName});
 			}
 		}
@@ -1034,7 +1034,7 @@ definition {
 			}
 
 			task ("Delete the Text Input fragment") {
-				PageEditor.removeFragment(fragmentName = "Text Input");
+				PageEditor.removeFragment(fragmentName = "Text");
 			}
 
 			task ("Hide the Submit Button") {

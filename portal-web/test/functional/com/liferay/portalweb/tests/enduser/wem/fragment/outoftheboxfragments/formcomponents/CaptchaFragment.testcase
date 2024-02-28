@@ -68,7 +68,7 @@ definition {
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "CAPTCHA",
-				targetFragmentName = "Text Input");
+				targetFragmentName = "Text");
 		}
 
 		task ("Then the page creator cannot type text verification and reload simple captcha") {
@@ -121,7 +121,7 @@ definition {
 				PageEditor.addFragmentToFormContainer(
 					collectionName = "Form Components",
 					fragmentName = "CAPTCHA",
-					targetFragmentName = "Text Input");
+					targetFragmentName = "Text");
 
 				PageEditor.publish();
 			}
@@ -185,7 +185,7 @@ definition {
 					contentType = "Purchase Order",
 					panel = "General");
 
-				for (var fragmentName : list "Text Input,Submit Button") {
+				for (var fragmentName : list "Text,Submit Button") {
 					PageEditor.removeFragment(fragmentName = ${fragmentName});
 				}
 			}
@@ -290,7 +290,7 @@ definition {
 				PageEditor.addFragmentToFormContainer(
 					collectionName = "Form Components",
 					fragmentName = "CAPTCHA",
-					targetFragmentName = "Text Input");
+					targetFragmentName = "Text");
 
 				AssertElementPresent(locator1 = "IFrame#RECAPTCHA");
 

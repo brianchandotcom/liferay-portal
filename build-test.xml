@@ -7515,24 +7515,50 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<property name="docker.start.script" value="docker_start.sh" />
 
-			<echo file="${docker.start.script}">
-				<![CDATA[
-					docker run \
-						--detach \
-						--hostname=@{name} \
-						--interactive \
-						--name=@{name} \
-						--tty \
-						${docker.network.run.option} \
-						@{run.options} \
-						\
-						@{image} \
-						\
-						@{options}
+			<if>
+				<contains string="@{name}" contains="orcllinux" /> 
+				<then>
+					<echo file="${docker.start.script}">
+						<![CDATA[
+							docker run \
+								--detach \
+								--hostname=@{name} \
+								--interactive \
+								--name=@{name} \
+								--tty \
+								--privileged \
+								${docker.network.run.option} \
+								@{run.options} \
+								\
+								@{image} \
+								\
+								@{options}
 
-					docker ps --filter "name=@{name}" --format "Started container [ID: '{{.ID}}', name: '{{.Names}}'] from image '{{.Image}}'"
-				]]>
-			</echo>
+							docker ps --filter "name=@{name}" --format "Started container [ID: '{{.ID}}', name: '{{.Names}}'] from image '{{.Image}}'"
+						]]>
+					</echo>
+				</then>
+				<else>
+					<echo file="${docker.start.script}">
+						<![CDATA[
+							docker run \
+								--detach \
+								--hostname=@{name} \
+								--interactive \
+								--name=@{name} \
+								--tty \
+								${docker.network.run.option} \
+								@{run.options} \
+								\
+								@{image} \
+								\
+								@{options}
+
+							docker ps --filter "name=@{name}" --format "Started container [ID: '{{.ID}}', name: '{{.Names}}'] from image '{{.Image}}'"
+						]]>
+					</echo>
+				</else>
+			</if>
 
 			<chmod
 				perm="a+x"

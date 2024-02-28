@@ -1,7 +1,7 @@
 {
 	"cacheable": false,
 	"fragmentEntryKey": "textarea",
-	"icon": "custom-field",
+	"icon": "field-area",
 	"name": "textarea",
 	"type": "input",
 	"typeOptions": {

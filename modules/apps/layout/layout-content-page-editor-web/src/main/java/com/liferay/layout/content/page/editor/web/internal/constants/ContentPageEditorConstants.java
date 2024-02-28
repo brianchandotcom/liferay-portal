@@ -58,7 +58,7 @@ public class ContentPageEditorConstants {
 					HashMapBuilder.<String, Object>put(
 						"fragmentEntryKey", "form"
 					).put(
-						"icon", "container"
+						"icon", "forms"
 					).put(
 						"itemType", "form"
 					).put(

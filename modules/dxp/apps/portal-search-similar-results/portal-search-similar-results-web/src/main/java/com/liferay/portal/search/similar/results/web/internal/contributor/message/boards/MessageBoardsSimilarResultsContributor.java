@@ -27,16 +27,22 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Rout
 import java.util.Arrays;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@Component(service = SimilarResultsContributor.class)
 public class MessageBoardsSimilarResultsContributor
 	implements SimilarResultsContributor {
+
+	public MessageBoardsSimilarResultsContributor(
+		AssetEntryLocalService assetEntryLocalService,
+		MBCategoryLocalService mbCategoryLocalService,
+		MBMessageLocalService mbMessageLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+		_mbCategoryLocalService = mbCategoryLocalService;
+		_mbMessageLocalService = mbMessageLocalService;
+	}
 
 	@Override
 	public void detectRoute(
@@ -140,13 +146,8 @@ public class MessageBoardsSimilarResultsContributor
 		routeBuilder.addAttribute(name, value);
 	}
 
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
-
-	@Reference
-	private MBMessageLocalService _mbMessageLocalService;
+	private final AssetEntryLocalService _assetEntryLocalService;
+	private final MBCategoryLocalService _mbCategoryLocalService;
+	private final MBMessageLocalService _mbMessageLocalService;
 
 }

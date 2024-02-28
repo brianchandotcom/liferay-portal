@@ -29,16 +29,22 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Rout
 import java.util.Arrays;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@Component(service = SimilarResultsContributor.class)
 public class DocumentLibrarySimilarResultsContributor
 	implements SimilarResultsContributor {
+
+	public DocumentLibrarySimilarResultsContributor(
+		AssetEntryLocalService assetEntryLocalService,
+		DLFileEntryLocalService dlFileEntryLocalService,
+		DLFolderLocalService dlFolderLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+		_dlFolderLocalService = dlFolderLocalService;
+	}
 
 	@Override
 	public void detectRoute(
@@ -162,13 +168,8 @@ public class DocumentLibrarySimilarResultsContributor
 		return null;
 	}
 
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Reference
-	private DLFolderLocalService _dlFolderLocalService;
+	private final AssetEntryLocalService _assetEntryLocalService;
+	private final DLFileEntryLocalService _dlFileEntryLocalService;
+	private final DLFolderLocalService _dlFolderLocalService;
 
 }

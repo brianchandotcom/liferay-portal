@@ -19,13 +19,10 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Rout
 
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@Component(service = SimilarResultsContributor.class)
 public class ClassNameClassPKSimilarResultsContributor
 	implements SimilarResultsContributor {
 

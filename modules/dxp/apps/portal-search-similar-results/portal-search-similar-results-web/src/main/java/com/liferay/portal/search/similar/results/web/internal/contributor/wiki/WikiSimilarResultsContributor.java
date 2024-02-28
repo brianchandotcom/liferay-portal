@@ -8,7 +8,6 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.wiki;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.similar.results.web.internal.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.internal.helper.HttpHelperUtil;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.RouteBuilder;
@@ -16,16 +15,23 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Rout
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@Component(service = SimilarResultsContributor.class)
 public class WikiSimilarResultsContributor
 	extends BaseWikiSimilarResultsContributor {
+
+	public WikiSimilarResultsContributor(
+		AssetEntryLocalService assetEntryLocalService, UIDFactory uidFactory,
+		WikiNodeLocalService wikiNodeLocalService,
+		WikiPageLocalService wikiPageLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+		_uidFactory = uidFactory;
+		_wikiNodeLocalService = wikiNodeLocalService;
+		_wikiPageLocalService = wikiPageLocalService;
+	}
 
 	@Override
 	public void detectRoute(
@@ -64,16 +70,9 @@ public class WikiSimilarResultsContributor
 		return _wikiPageLocalService;
 	}
 
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private UIDFactory _uidFactory;
-
-	@Reference
-	private WikiNodeLocalService _wikiNodeLocalService;
-
-	@Reference
-	private WikiPageLocalService _wikiPageLocalService;
+	private final AssetEntryLocalService _assetEntryLocalService;
+	private final UIDFactory _uidFactory;
+	private final WikiNodeLocalService _wikiNodeLocalService;
+	private final WikiPageLocalService _wikiPageLocalService;
 
 }

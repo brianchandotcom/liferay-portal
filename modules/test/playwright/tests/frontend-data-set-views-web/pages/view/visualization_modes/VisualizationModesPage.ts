@@ -8,14 +8,39 @@ import {Locator, Page} from '@playwright/test';
 import {ViewPage} from '../ViewPage';
 
 export class VisualizationModesPage {
+	readonly cardsVisualizationModeContainer: Locator;
 	private readonly container: Locator;
+	readonly fieldSelectModalContainer: Locator;
+	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;
+	private readonly toastContainer: Locator;
 	private readonly viewPage: ViewPage;
 
 	constructor(page: Page) {
+		this.cardsVisualizationModeContainer = page.locator(
+			'.cards-visualization-mode'
+		);
 		this.container = page.locator('.visualization-modes');
+		this.listVisualizationModeContainer = page.locator(
+			'.list-visualization-mode'
+		);
+		this.fieldSelectModalContainer = page.locator('.field-select-modal');
 		this.page = page;
+		this.toastContainer = page.locator('.alert-container');
 		this.viewPage = new ViewPage(page);
+	}
+
+	async getAssignedFieldLocator({
+		container,
+		sectionLabel,
+	}: {
+		container: Locator;
+		sectionLabel: string;
+	}) {
+		return container
+			.locator('tr')
+			.filter({has: this.page.getByText(sectionLabel)})
+			.locator('td.field-name');
 	}
 
 	async goto({
@@ -33,6 +58,24 @@ export class VisualizationModesPage {
 		await this.viewPage.selectTab('Visualization Modes');
 	}
 
+	async openAssignFieldModal({
+		container,
+		sectionLabel,
+	}: {
+		container: Locator;
+		sectionLabel: string;
+	}) {
+		await container
+			.locator('tr')
+			.filter({has: this.page.getByText(sectionLabel)})
+			.getByTitle('Assign Field')
+			.click();
+
+		await this.fieldSelectModalContainer
+			.getByPlaceholder('Search')
+			.waitFor();
+	}
+
 	async selectTab(tabLabel: string) {
 		const tab = this.container.getByRole('tab', {
 			exact: true,
@@ -40,7 +83,31 @@ export class VisualizationModesPage {
 		});
 
 		await tab.click();
+	}
 
-		await tab.and(this.page.locator('.active')).waitFor();
+	async saveFieldSelection() {
+
+		// Modal for field selection must be open.
+
+		await this.page
+			.getByRole('button', {
+				exact: true,
+				name: 'Save',
+			})
+			.click();
+
+		await this.fieldSelectModalContainer.isHidden();
+
+		await this.toastContainer.isVisible();
+
+		await this.page.getByText('Success').waitFor();
+
+		await this.toastContainer
+			.getByRole('button', {
+				name: 'Close',
+			})
+			.click();
+
+		await this.toastContainer.isHidden();
 	}
 }

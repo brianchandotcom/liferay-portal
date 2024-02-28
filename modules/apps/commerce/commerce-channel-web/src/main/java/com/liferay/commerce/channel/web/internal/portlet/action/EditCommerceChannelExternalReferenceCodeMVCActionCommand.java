@@ -6,6 +6,7 @@
 package com.liferay.commerce.channel.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.DuplicateCommerceChannelExternalReferenceCodeException;
 import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -42,7 +43,9 @@ public class EditCommerceChannelExternalReferenceCodeMVCActionCommand
 			_updateCommerceOrderExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchChannelException ||
+			if (exception instanceof
+					DuplicateCommerceChannelExternalReferenceCodeException ||
+				exception instanceof NoSuchChannelException ||
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());

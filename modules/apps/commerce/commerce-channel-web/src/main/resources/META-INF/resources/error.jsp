@@ -9,6 +9,7 @@
 
 <liferay-ui:error-header />
 
+<liferay-ui:error exception="<%= DuplicateCommerceChannelExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
 <liferay-ui:error exception="<%= NoSuchChannelException.class %>" message="that-channel-could-not-be-found" />
 
 <liferay-ui:error-principal />

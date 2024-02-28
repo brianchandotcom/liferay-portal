@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
@@ -32,11 +33,17 @@ public class TimeZoneThreadLocal {
 		_defaultTimeZone.set(timeZone);
 	}
 
+	public static SafeCloseable setDefaultTimeZoneWithSafeCloseable(
+		TimeZone timeZone) {
+
+		return _defaultTimeZone.setWithSafeCloseable(timeZone);
+	}
+
 	public static void setThemeDisplayTimeZone(TimeZone timeZone) {
 		_themeDisplayTimeZone.set(timeZone);
 	}
 
-	private static final ThreadLocal<TimeZone> _defaultTimeZone =
+	private static final CentralizedThreadLocal<TimeZone> _defaultTimeZone =
 		new CentralizedThreadLocal<>(
 			TimeZoneThreadLocal.class + "._defaultTimeZone",
 			() -> {

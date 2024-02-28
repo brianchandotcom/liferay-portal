@@ -65,6 +65,7 @@ function getAvailableFields(item, fields, fragmentEntryLinks, viewportSize) {
 
 export function FieldSet({
 	description,
+	embedInCollapsableSection = true,
 	fragmentEntryLinks,
 	selectedViewportSize,
 	isCustomStylesFieldSet = false,
@@ -82,7 +83,7 @@ export function FieldSet({
 		selectedViewportSize
 	);
 
-	return !!availableFields.length && label ? (
+	return !!availableFields.length && label && embedInCollapsableSection ? (
 		<ClayPanel
 			collapsable
 			defaultExpanded

@@ -140,9 +140,33 @@ public class CompanyThreadLocal {
 	}
 
 	public static void setCompanyId(Long companyId) {
-		if (_setCompanyId(companyId)) {
-			CTCollectionThreadLocal.removeCTCollectionId();
+		if (companyId.equals(_companyId.get())) {
+			return;
 		}
+
+		if (isLocked()) {
+			throw new UnsupportedOperationException(
+				"CompanyThreadLocal modification is not allowed");
+		}
+
+		_syncLastDBPartitionSessionState();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("setCompanyId " + companyId);
+		}
+
+		if (companyId > 0) {
+			_companyId.set(companyId);
+
+			_clearUserThreadLocals();
+		}
+		else {
+			_companyId.set(CompanyConstants.SYSTEM);
+
+			_clearUserThreadLocals();
+		}
+
+		CTCollectionThreadLocal.removeCTCollectionId();
 	}
 
 	public static SafeCloseable setInitializingCompanyIdWithSafeCloseable(
@@ -218,36 +242,6 @@ public class CompanyThreadLocal {
 	private static void _clearUserThreadLocals() {
 		LocaleThreadLocal.removeDefaultLocale();
 		TimeZoneThreadLocal.removeDefaultTimeZone();
-	}
-
-	private static boolean _setCompanyId(Long companyId) {
-		if (companyId.equals(_companyId.get())) {
-			return false;
-		}
-
-		if (isLocked()) {
-			throw new UnsupportedOperationException(
-				"CompanyThreadLocal modification is not allowed");
-		}
-
-		_syncLastDBPartitionSessionState();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("setCompanyId " + companyId);
-		}
-
-		if (companyId > 0) {
-			_companyId.set(companyId);
-
-			_clearUserThreadLocals();
-		}
-		else {
-			_companyId.set(CompanyConstants.SYSTEM);
-
-			_clearUserThreadLocals();
-		}
-
-		return true;
 	}
 
 	private static void _syncLastDBPartitionSessionState() {

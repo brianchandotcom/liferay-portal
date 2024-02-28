@@ -129,7 +129,7 @@ definition {
 			PageEditor.gotoConfiguration(fragmentName = "Form Container");
 
 			AssertSelectedLabel(
-				key_fieldLabel = "Success Interaction",
+				key_fieldLabel = "Success Action",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Show Embedded Message");
 
@@ -139,7 +139,7 @@ definition {
 				value1 = "Thank you. Your information was successfully received.");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Preview Embedded Message",
+				key_toggleSwitchLabel = "Preview Successs Message",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			AssertVisible(

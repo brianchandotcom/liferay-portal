@@ -1713,7 +1713,7 @@ definition {
 				id = "action");
 		}
 
-		task ("Then the page creator could select the Go to Entry Display Page as success interaction via keyboard") {
+		task ("Then the page creator could select the Go to Entry Display Page as success action via keyboard") {
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = ${objectEntryId},
 				navItem = "Students",

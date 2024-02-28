@@ -443,7 +443,7 @@ definition {
 
 		task ("Then the page creator cannot see the Success Notification Text and Preview Success Notification fields") {
 			AssertNotChecked.assertNotCheckedNotVisible(
-				checkboxName = "Show Notification when Form Is Submitted",
+				checkboxName = "Show Notification After Submit",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
 			AssertElementNotPresent(
@@ -601,7 +601,7 @@ definition {
 			PageEditor.gotoConfiguration(fragmentName = "Form Container");
 
 			AssertSelectedLabel(
-				key_fieldLabel = "Success Interaction",
+				key_fieldLabel = "Success Action",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Show Embedded Message");
 
@@ -611,7 +611,7 @@ definition {
 				value1 = "Thank you. Your information was successfully received.");
 
 			AssertNotChecked.assertNotCheckedNotVisible(
-				key_toggleSwitchLabel = "Preview Embedded Message",
+				key_toggleSwitchLabel = "Preview Success Message",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			AssertVisible(
@@ -737,7 +737,7 @@ definition {
 					url = "https://www.liferay.com");
 
 				AssertElementNotPresent(
-					checkboxName = "Show Notification when Form Is Submitted",
+					checkboxName = "Show Notification After Submit",
 					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				PageEditor.publish();

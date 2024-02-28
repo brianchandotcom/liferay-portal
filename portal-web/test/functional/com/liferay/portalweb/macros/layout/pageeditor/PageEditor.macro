@@ -3182,7 +3182,7 @@ definition {
 
 			if (${showNotificationWhenFormIsSubmitted} == "true") {
 				Check.checkNotVisible(
-					checkboxName = "Show Notification when Form Is Submitted",
+					checkboxName = "Show Notification After Submit",
 					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				if (isSet(successNotificationText)) {
@@ -4841,7 +4841,7 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 	@summary = "Default summary"
 	macro previewEmbeddedMessage() {
 		Check.checkNotVisible(
-			checkboxName = "Preview Embedded Message",
+			checkboxName = "Preview Success Message",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 

@@ -1388,6 +1388,52 @@ public class ObjectEntryResourceTest {
 					_objectRelationship1.getName(),
 					_objectEntry1.getObjectEntryId() - 1)),
 			_objectDefinition3);
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship1);
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			_objectRelationship2);
+
+		// One to many relationships with two paths to the same destination
+
+		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition1, _objectDefinition2,
+			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationship2 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationship3 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition3, _objectDefinition4,
+			_objectEntry3.getPrimaryKey(), _objectEntry4.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectRelationship4 = _addObjectRelationshipAndRelateObjectEntries(
+			_objectDefinition2, _objectDefinition3,
+			_objectEntry2.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/%s eq '%s'", _objectRelationship1.getName(),
+					_objectRelationship2.getName(),
+					_objectRelationship3.getName(), _OBJECT_FIELD_NAME_4,
+					_OBJECT_FIELD_VALUE_4)),
+			_objectDefinition1);
+		_assertFilterString(
+			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
+			_escape(
+				String.format(
+					"%s/%s/%s/%s eq '%s'", _objectRelationship1.getName(),
+					_objectRelationship4.getName(),
+					_objectRelationship3.getName(), _OBJECT_FIELD_NAME_4,
+					_OBJECT_FIELD_VALUE_4)),
+			_objectDefinition1);
 	}
 
 	@Test

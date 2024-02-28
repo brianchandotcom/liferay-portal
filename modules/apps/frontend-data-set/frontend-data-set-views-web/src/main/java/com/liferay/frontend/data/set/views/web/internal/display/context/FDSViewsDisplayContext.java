@@ -169,12 +169,11 @@ public class FDSViewsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
 		companyScopedOpenAPIResources = ListUtil.filter(
 			companyScopedOpenAPIResources,
 			companyScopedOpenAPIResource ->
-				companyScopedOpenAPIResource.matches(companyId));
+				companyScopedOpenAPIResource.matches(
+					themeDisplay.getCompanyId()));
 
 		Collections.sort(
 			companyScopedOpenAPIResources,

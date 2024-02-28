@@ -6,6 +6,7 @@
 package com.liferay.commerce.catalog.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.DuplicateCommerceCatalogExternalReferenceCodeException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.portal.kernel.log.Log;
@@ -44,7 +45,9 @@ public class EditCommerceCatalogExternalReferenceCodeMVCActionCommand
 			_updateCommerceCatalogExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchCatalogException ||
+			if (exception instanceof
+					DuplicateCommerceCatalogExternalReferenceCodeException ||
+				exception instanceof NoSuchCatalogException ||
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());

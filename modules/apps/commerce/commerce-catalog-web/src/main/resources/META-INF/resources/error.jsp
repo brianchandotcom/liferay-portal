@@ -9,6 +9,7 @@
 
 <liferay-ui:error-header />
 
+<liferay-ui:error exception="<%= DuplicateCommerceCatalogExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
 <liferay-ui:error exception="<%= NoSuchCatalogException.class %>" message="that-catalog-could-not-be-found" />
 
 <liferay-ui:error-principal />

@@ -412,6 +412,14 @@
 					}
 				},
 				{
+					"externalReferenceCode": "mergeCentralSubrepository",
+					"key": "mergeCentralSubrepository",
+					"name": "Merge Central Subrepository",
+					"name_i18n": {
+						"en-US": "Merge Central Subrepository"
+					}
+				},
+				{
 					"externalReferenceCode": "mergePortalSubrepository",
 					"key": "mergePortalSubrepository",
 					"name": "Merge Portal Subrepository",

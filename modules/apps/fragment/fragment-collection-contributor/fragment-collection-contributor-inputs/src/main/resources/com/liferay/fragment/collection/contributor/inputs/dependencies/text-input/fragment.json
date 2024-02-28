@@ -2,7 +2,7 @@
 	"cacheable": false,
 	"fragmentEntryKey": "text-input",
 	"icon": "custom-field",
-	"name": "text-input",
+	"name": "text",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

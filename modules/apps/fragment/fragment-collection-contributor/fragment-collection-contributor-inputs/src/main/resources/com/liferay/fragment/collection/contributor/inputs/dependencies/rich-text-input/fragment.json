@@ -2,7 +2,7 @@
 	"cacheable": false,
 	"fragmentEntryKey": "rich-text-input",
 	"icon": "field-area",
-	"name": "rich-text-input",
+	"name": "rich-text",
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [

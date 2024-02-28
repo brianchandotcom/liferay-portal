@@ -1,0 +1,81 @@
+diff --git a/freemarker/ext/jsp/internal/WriterFactory.java b/freemarker/ext/jsp/internal/WriterFactory.java
+new file mode 100644
+index 0000000..00d7d5d
+--- /dev/null
++++ b/freemarker/ext/jsp/internal/WriterFactory.java
+@@ -0,0 +1,27 @@
++/**
++ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
++ *
++ * This library is free software; you can redistribute it and/or modify it under
++ * the terms of the GNU Lesser General Public License as published by the Free
++ * Software Foundation; either version 2.1 of the License, or (at your option)
++ * any later version.
++ *
++ * This library is distributed in the hope that it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
++ * details.
++ */
++
++package freemarker.ext.jsp.internal;
++
++import java.io.Writer;
++
++/**
++ * @author Preston Crary
++ */
++public interface WriterFactory {
++
++	public Writer createWriter();
++
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/freemarker/ext/jsp/internal/WriterFactoryUtil.java b/freemarker/ext/jsp/internal/WriterFactoryUtil.java
+new file mode 100644
+index 0000000..eab1b08
+--- /dev/null
++++ b/freemarker/ext/jsp/internal/WriterFactoryUtil.java
+@@ -0,0 +1,40 @@
++/**
++ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
++ *
++ * This library is free software; you can redistribute it and/or modify it under
++ * the terms of the GNU Lesser General Public License as published by the Free
++ * Software Foundation; either version 2.1 of the License, or (at your option)
++ * any later version.
++ *
++ * This library is distributed in the hope that it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
++ * details.
++ */
++
++package freemarker.ext.jsp.internal;
++
++import java.io.CharArrayWriter;
++import java.io.Writer;
++
++/**
++ * @author Preston Crary
++ */
++public class WriterFactoryUtil {
++
++	public static Writer createWriter() {
++		if (_writerFactory == null) {
++			return new CharArrayWriter();
++		}
++
++		return _writerFactory.createWriter();
++	}
++
++	public static void setWriterFactory(WriterFactory writerFactory) {
++		_writerFactory = writerFactory;
++	}
++
++	private static WriterFactory _writerFactory;
++
++}
++/* @generated */
+\ No newline at end of file

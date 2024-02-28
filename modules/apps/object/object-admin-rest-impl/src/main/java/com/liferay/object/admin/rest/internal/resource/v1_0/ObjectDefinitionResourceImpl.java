@@ -923,9 +923,25 @@ public class ObjectDefinitionResourceImpl
 				continue;
 			}
 
-			com.liferay.object.model.ObjectDefinition objectDefinition2 =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
+			com.liferay.object.model.ObjectDefinition objectDefinition2 = null;
+
+			long objectDefinitionId2 = GetterUtil.getLong(
+				objectRelationship.getObjectDefinitionId2());
+
+			if (objectDefinitionId2 > 0) {
+				objectDefinition2 =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						objectRelationship.getObjectDefinitionId2());
+			}
+
+			if (objectDefinition2 == null) {
+				objectDefinition2 =
+					_objectDefinitionLocalService.
+						fetchObjectDefinitionByExternalReferenceCode(
+							objectRelationship.
+								getObjectDefinitionExternalReferenceCode2(),
+							contextCompany.getCompanyId());
+			}
 
 			if ((objectDefinition2 == null) ||
 				!objectDefinition2.isAccountEntryRestricted()) {

@@ -233,7 +233,6 @@ function ListSection({
 
 	const onClick = () => {
 		openModal({
-			className: 'list-visualization-mode-field-select-modal',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<FieldSelectModalContent
 					{...modalProps}

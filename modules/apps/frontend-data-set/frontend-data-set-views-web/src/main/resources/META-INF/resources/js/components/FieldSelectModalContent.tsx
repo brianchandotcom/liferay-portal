@@ -215,7 +215,7 @@ const FieldSelectModalContent = ({
 	};
 
 	return (
-		<>
+		<div className="field-select-modal">
 			<ClayModal.Header>
 				{sub(
 					Liferay.Language.get('select-x'),
@@ -357,7 +357,7 @@ const FieldSelectModalContent = ({
 					</ClayButton.Group>
 				}
 			/>
-		</>
+		</div>
 	);
 };
 

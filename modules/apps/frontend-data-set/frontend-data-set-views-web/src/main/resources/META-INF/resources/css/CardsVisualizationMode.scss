@@ -1,12 +1,12 @@
 @import 'cadmin-variables';
 
-html#{$cadmin-selector} .cadmin .table-autofit {
-	.cards-visualization-mode-label-cell {
+html#{$cadmin-selector} .cadmin .cards-visualization-mode {
+	.cards-section-label {
 		min-width: 20ch;
 		width: 30%;
 	}
 
-	.cards-visualization-mode-value-cell {
+	.field-name {
 		border-left: none;
 		width: auto;
 	}

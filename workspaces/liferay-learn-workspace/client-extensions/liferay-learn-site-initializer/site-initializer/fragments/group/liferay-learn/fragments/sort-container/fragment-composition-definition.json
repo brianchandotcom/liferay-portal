@@ -1,0 +1,27 @@
+{
+	"definition": {
+		"fragmentStyle": {"width": "100%"},
+		"indexed": true,
+		"layout": {}
+	},
+	"id": "111b86cf-b12f-9208-7eda-feec5aa30ee2",
+	"pageElements": [
+		{
+			"definition": {
+				"customCSS": ".[$FRAGMENT_CLASS$] {\nfloat: right;\n}",
+				"fragmentStyle": {"width": "200px"},
+				"widgetInstance": {
+					"widgetConfig": {
+						"displayStyle": "ddmTemplate_LEARN_SEARCH_SORT",
+						"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"modified-\",\"label\":\"Modified Date\"}]",
+						"displayStyleGroupId": "31584"
+					},
+					"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
+				}
+			},
+			"id": "59b185b9-7e6e-b0bc-3e64-7f47db77dcbe",
+			"type": "Widget"
+		}
+	],
+	"type": "Section"
+}

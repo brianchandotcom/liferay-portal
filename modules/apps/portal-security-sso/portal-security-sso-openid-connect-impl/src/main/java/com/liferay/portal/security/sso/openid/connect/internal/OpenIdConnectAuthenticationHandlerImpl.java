@@ -28,6 +28,7 @@ import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnec
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil;
 
 import com.nimbusds.jwt.JWT;
+import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.langtag.LangTag;
 import com.nimbusds.langtag.LangTagException;
 import com.nimbusds.oauth2.sdk.ErrorObject;
@@ -137,8 +138,35 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			_getLoginRedirectURI(httpServletRequest),
 			oAuthClientEntry.getTokenRequestParametersJSON());
 
-		String userInfoJSON = _requestUserInfoJSON(
-			oidcTokens.getAccessToken(), oidcProviderMetadata);
+		URI userInfoURI = oidcProviderMetadata.getUserInfoEndpointURI();
+
+		String userInfoJSON = null;
+
+		if (Validator.isNull(userInfoURI)) {
+			JWT idToken = oidcTokens.getIDToken();
+
+			JWTClaimsSet userInfoClaimSet = idToken.getJWTClaimsSet();
+
+			List<String> emails = userInfoClaimSet.getStringListClaim("emails");
+
+			String email = emails.get(0);
+			String familyName = userInfoClaimSet.getStringClaim("family_name");
+			String givenName = userInfoClaimSet.getStringClaim("given_name");
+
+			JSONObject userInfoJSONObject = userInfoClaimSet.toJSONObject();
+
+			userInfoJSONObject.put("email", email);
+			userInfoJSONObject.put("family_name", familyName);
+			userInfoJSONObject.put("given_name", givenName);
+
+			UserInfo userInfo = new UserInfo(userInfoJSONObject);
+
+			userInfoJSON = userInfo.toJSONString();
+		}
+		else {
+			userInfoJSON = _requestUserInfoJSON(
+				oidcTokens.getAccessToken(), oidcProviderMetadata);
+		}
 
 		long userId = _oidcUserInfoProcessor.processUserInfo(
 			_portal.getCompanyId(httpServletRequest),

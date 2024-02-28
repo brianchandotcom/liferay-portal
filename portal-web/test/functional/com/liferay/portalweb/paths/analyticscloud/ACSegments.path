@@ -348,7 +348,7 @@
 </tr>
 <tr>
 	<td>SEGMENT_AUTOCOMPLETE_DROPDOWN_BY_INDEX</td>
-	<td>xpath=(//ul[contains(@class,'dropdown-menu')]/li)[${key_index}]</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu-select')]//li)[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

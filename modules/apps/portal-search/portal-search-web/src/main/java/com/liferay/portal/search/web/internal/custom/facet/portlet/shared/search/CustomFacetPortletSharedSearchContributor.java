@@ -134,14 +134,23 @@ public class CustomFacetPortletSharedSearchContributor
 		String[] ddmFieldArrayParts = StringUtil.split(
 			fieldToAggregate, StringPool.PERIOD);
 
-		if (ddmFieldArrayParts.length != 3) {
-			return;
-		}
+		if ((ddmFieldArrayParts.length == 4) &&
+			ddmFieldArrayParts[3].equals("keyword_lowercase")) {
 
-		_contributeWithNestedFieldFacet(
-			customFacetPortletPreferences, ddmFieldArrayParts[2],
-			DDMIndexer.DDM_FIELD_NAME, ddmFieldArrayParts[1],
-			DDMIndexer.DDM_FIELD_ARRAY, portletSharedSearchSettings);
+			_contributeWithNestedFieldFacet(
+				customFacetPortletPreferences,
+				StringBundler.concat(
+					ddmFieldArrayParts[2], StringPool.PERIOD,
+					ddmFieldArrayParts[3]),
+				DDMIndexer.DDM_FIELD_NAME, ddmFieldArrayParts[1],
+				DDMIndexer.DDM_FIELD_ARRAY, portletSharedSearchSettings);
+		}
+		else if (ddmFieldArrayParts.length == 3) {
+			_contributeWithNestedFieldFacet(
+				customFacetPortletPreferences, ddmFieldArrayParts[2],
+				DDMIndexer.DDM_FIELD_NAME, ddmFieldArrayParts[1],
+				DDMIndexer.DDM_FIELD_ARRAY, portletSharedSearchSettings);
+		}
 	}
 
 	private void _contributeWithNestedFieldArray(

@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.warehouse.web.internal.portlet.action;
 
+import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryWarehouseExternalReferenceCodeException;
 import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
@@ -58,7 +59,10 @@ public class EditCommerceInventoryWarehouseExternalReferenceCodeMVCActionCommand
 						getCommerceInventoryWarehouseId());
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchInventoryWarehouseException) {
+			if (exception instanceof
+					DuplicateCommerceInventoryWarehouseExternalReferenceCodeException ||
+				exception instanceof NoSuchInventoryWarehouseException) {
+
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");

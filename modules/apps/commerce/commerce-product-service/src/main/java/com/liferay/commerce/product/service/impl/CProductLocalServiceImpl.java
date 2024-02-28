@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.commerce.product.exception.DuplicateCProductException;
+import com.liferay.commerce.product.exception.DuplicateCProductExternalReferenceCodeException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
@@ -174,7 +174,7 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 			externalReferenceCode, companyId);
 
 		if (cProduct != null) {
-			throw new DuplicateCProductException(
+			throw new DuplicateCProductExternalReferenceCodeException(
 				"There is another commerce product with external reference " +
 					"code " + externalReferenceCode);
 		}

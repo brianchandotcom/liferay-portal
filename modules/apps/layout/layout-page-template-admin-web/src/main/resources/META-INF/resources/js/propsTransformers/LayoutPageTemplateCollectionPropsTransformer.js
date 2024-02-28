@@ -4,7 +4,14 @@
  */
 
 import {openCreationModal} from '@liferay/layout-js-components-web';
-import {openModal} from 'frontend-js-web';
+import {
+	fetch,
+	objectToFormData,
+	openModal,
+	openSelectionModal,
+	openToast,
+	sub,
+} from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
 
@@ -21,6 +28,53 @@ const ACTIONS = {
 				);
 			},
 			title: dialogTitle,
+		});
+	},
+
+	moveLayoutPageTemplateCollection(
+		{
+			itemSelectorURL,
+			layoutPageTemplateCollectionName,
+			moveLayoutPageTemplateCollectionURL,
+		},
+		portletNamespace
+	) {
+		openSelectionModal({
+			height: '70vh',
+			onSelect: (selectedItems) => {
+				fetch(moveLayoutPageTemplateCollectionURL, {
+					body: objectToFormData({
+						[`${portletNamespace}targetLayoutPageTemplateCollectionId`]: selectedItems.resourceid,
+					}),
+					method: 'POST',
+				})
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error();
+						}
+
+						window.location.reload();
+					})
+					.catch(
+						({
+							message = Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						}) => {
+							openToast({
+								message,
+								type: 'danger',
+							});
+						}
+					);
+			},
+			selectEventName: 'selectFolder',
+			size: 'md',
+			title: sub(
+				Liferay.Language.get('move-x-to'),
+				`"${layoutPageTemplateCollectionName}"`
+			),
+			url: itemSelectorURL,
 		});
 	},
 

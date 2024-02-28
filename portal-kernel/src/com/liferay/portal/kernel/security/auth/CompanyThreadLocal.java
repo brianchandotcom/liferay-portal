@@ -188,15 +188,18 @@ public class CompanyThreadLocal {
 
 			if (companyId > 0) {
 				safeCloseables.add(_companyId.setWithSafeCloseable(companyId));
-
-				_clearUserThreadLocals();
 			}
 			else {
 				safeCloseables.add(
 					_companyId.setWithSafeCloseable(CompanyConstants.SYSTEM));
-
-				_clearUserThreadLocals();
 			}
+
+			safeCloseables.add(
+				LocaleThreadLocal.setDefaultLocaleWithSafeCloseable(null));
+			safeCloseables.add(
+				TimeZoneThreadLocal.setDefaultTimeZoneWithSafeCloseable(null));
+
+			_clearUserThreadLocals();
 
 			changed[0] = true;
 		}
@@ -213,8 +216,6 @@ public class CompanyThreadLocal {
 			for (SafeCloseable safeCloseable : safeCloseables) {
 				safeCloseable.close();
 			}
-
-			_clearUserThreadLocals();
 		};
 	}
 

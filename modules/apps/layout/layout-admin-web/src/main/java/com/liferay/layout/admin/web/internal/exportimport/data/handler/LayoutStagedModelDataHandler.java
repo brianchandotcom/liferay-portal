@@ -678,7 +678,7 @@ public class LayoutStagedModelDataHandler
 
 		layoutPlids.put(layout.getPlid(), importedLayout.getPlid());
 
-		layouts.put(oldLayoutId, importedLayout);
+		layouts.put(layout.getPlid(), importedLayout);
 
 		portletDataContext.setPlid(importedLayout.getPlid());
 
@@ -702,7 +702,7 @@ public class LayoutStagedModelDataHandler
 
 			Layout draftLayout = layouts.get(
 				GetterUtil.getLong(
-					layoutElement.attributeValue("draft-layout-id")));
+					layoutElement.attributeValue("draft-layout-plid")));
 
 			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
 
@@ -807,7 +807,7 @@ public class LayoutStagedModelDataHandler
 			}
 
 			if (importedParentLayout == null) {
-				importedParentLayout = layouts.get(parentLayoutId);
+				importedParentLayout = layouts.get(parentPlid);
 			}
 
 			parentPlid = importedParentLayout.getPlid();
@@ -1325,6 +1325,8 @@ public class LayoutStagedModelDataHandler
 				"draft-layout-uuid", draftLayout.getUuid());
 			layoutElement.addAttribute(
 				"draft-layout-id", String.valueOf(draftLayout.getLayoutId()));
+			layoutElement.addAttribute(
+				"draft-layout-plid", String.valueOf(draftLayout.getPlid()));
 		}
 	}
 

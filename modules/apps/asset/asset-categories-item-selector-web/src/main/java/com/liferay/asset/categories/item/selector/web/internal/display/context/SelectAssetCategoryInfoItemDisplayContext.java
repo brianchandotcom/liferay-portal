@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -70,7 +72,19 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 
 	public Map<String, Object> getData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"addCategoryURL", _getAddCategoryURL()
+			"addCategoryURL",
+			() -> {
+				try {
+					return _getAddCategoryURL();
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
+
+				return null;
+			}
 		).put(
 			"itemSelectedEventName", _itemSelectedEventName
 		).put(
@@ -283,6 +297,9 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SelectAssetCategoryInfoItemDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemItemSelectorCriterion _infoItemItemSelectorCriterion;

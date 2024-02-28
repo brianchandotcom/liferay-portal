@@ -6,7 +6,7 @@
 		}
 	},
 	"id": "database",
-	"image": "liferaycloud/database:4.2.6",
+	"image": "liferaycloud/database:5.1.6",
 	"kind": "Deployment",
 	"livenessProbe": {
 		"failureThreshold": 3,

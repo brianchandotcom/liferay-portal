@@ -14,7 +14,7 @@
 		}
 	},
 	"id": "backup",
-	"image": "liferaycloud/backup:4.3.12",
+	"image": "liferaycloud/backup:5.13.0",
 	"kind": "Deployment",
 	"livenessProbe": {
 		"failureThreshold": 5,

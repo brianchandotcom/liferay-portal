@@ -15,7 +15,7 @@
 		}
 	},
 	"id": "webserver",
-	"image": "liferaycloud/nginx:1.20.1-4.1.4",
+	"image": "liferaycloud/nginx:1.21.6-5.3.0",
 	"kind": "Deployment",
 	"livenessProbe": {
 		"failureThreshold": 3,

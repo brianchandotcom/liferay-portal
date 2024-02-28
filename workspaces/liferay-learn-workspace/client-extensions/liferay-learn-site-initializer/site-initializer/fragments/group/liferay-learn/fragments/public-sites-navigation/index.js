@@ -292,3 +292,13 @@ function getBreadcrumbFromURL(url) {
 document.getElementById('searchIcon').addEventListener('click', changeFocus);
 
 fragmentElement.querySelector('.public-sites-navigation').style.zIndex = '4';
+
+window.addEventListener('keyup', (e) => {
+	if (e.key === '/') {
+		document
+					.getElementsByClassName('search-wrapper')[0]
+					.classList.contains('search-open')
+			? changeFocus()
+			: document.getElementById('searchIcon').click();
+	}
+});

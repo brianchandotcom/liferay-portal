@@ -11,7 +11,7 @@ const DEVELOPMENT = process.env.NODE_ENV === 'development';
 module.exports = {
 	devtool: DEVELOPMENT ? 'source-map' : false,
 	entry: {
-		'index.js': './assets/index.js',
+		index: './assets/index.js',
 	},
 	mode: DEVELOPMENT ? 'development' : 'production',
 	module: {

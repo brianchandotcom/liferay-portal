@@ -3,7 +3,7 @@ task runGradleTest
 Object error = ""
 
 gradle.liferayWorkspace {
-	product = "portal-7.1-ga3"
+	product = "portal-7.1-ga4"
 }
 
 gradle.taskGraph.afterTask {

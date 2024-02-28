@@ -48,6 +48,10 @@ public interface GitBranchEntity extends Entity {
 
 	public String getRepositoryName();
 
+	public String getShortBranchSHA();
+
+	public String getShortUpstreamBranchSHA();
+
 	public Type getType();
 
 	public String getUpstreamBranchName();

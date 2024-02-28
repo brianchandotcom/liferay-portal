@@ -132,6 +132,28 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
+	public String getShortBranchSHA() {
+		String branchSHA = getBranchSHA();
+
+		if (StringUtil.isNullOrEmpty(branchSHA)) {
+			return null;
+		}
+
+		return branchSHA.substring(0, 7);
+	}
+
+	@Override
+	public String getShortUpstreamBranchSHA() {
+		String upstreamBranchSHA = getUpstreamBranchSHA();
+
+		if (StringUtil.isNullOrEmpty(upstreamBranchSHA)) {
+			return null;
+		}
+
+		return upstreamBranchSHA.substring(0, 7);
+	}
+
+	@Override
 	public Type getType() {
 		return _type;
 	}

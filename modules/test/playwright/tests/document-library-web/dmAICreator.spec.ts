@@ -5,7 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {documentLibraryPages} from '../../fixtures/documentLibraryPages';
+import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 
@@ -17,7 +17,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-10793': true,
 	}),
-	documentLibraryPages
+	documentLibraryPagesTest
 );
 
 test('Create AI Image option in Management Toolbar without API Key opens an alert', async ({
@@ -50,14 +50,16 @@ test('Create AI Image option is hidden when disabled from Instance Settings', as
 });
 
 test('Can add images to DM when API Key is provided', async ({
+	aiCreatorInstanceSettingsPage,
 	documentLibraryPage,
+	gogoShellPage,
 	page,
 }) => {
-	await documentLibraryPage.addGogoShellCommand(
+	await gogoShellPage.addCommand(
 		'scr:enable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient'
 	);
 
-	await documentLibraryPage.addApiKey();
+	await aiCreatorInstanceSettingsPage.addApiKey();
 
 	await documentLibraryPage.goto();
 
@@ -87,9 +89,9 @@ test('Can add images to DM when API Key is provided', async ({
 
 	// TODO remove that generated image
 
-	await documentLibraryPage.removeApiKey();
+	await aiCreatorInstanceSettingsPage.removeApiKey();
 
-	await documentLibraryPage.addGogoShellCommand(
+	await gogoShellPage.addCommand(
 		'scr:disable com.liferay.ai.creator.openai.web.internal.client.MockAICreatorOpenAIClient'
 	);
 });

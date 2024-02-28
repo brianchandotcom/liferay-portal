@@ -6,6 +6,7 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.exception.DuplicateCommerceOrderTypeExternalReferenceCodeException;
 import com.liferay.commerce.exception.NoSuchOrderTypeException;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.service.CommerceOrderTypeService;
@@ -57,7 +58,10 @@ public class EditCommerceOrderTypeExternalReferenceCodeMVCActionCommand
 					commerceOrderType.getCommerceOrderTypeId());
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchOrderTypeException) {
+			if (exception instanceof
+					DuplicateCommerceOrderTypeExternalReferenceCodeException ||
+				exception instanceof NoSuchOrderTypeException) {
+
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");

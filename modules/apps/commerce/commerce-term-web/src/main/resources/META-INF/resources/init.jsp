@@ -28,6 +28,7 @@ page import="com.liferay.commerce.term.exception.CommerceTermEntryExpirationDate
 page import="com.liferay.commerce.term.exception.CommerceTermEntryNameException" %><%@
 page import="com.liferay.commerce.term.exception.CommerceTermEntryPriorityException" %><%@
 page import="com.liferay.commerce.term.exception.CommerceTermEntryTypeException" %><%@
+page import="com.liferay.commerce.term.exception.DuplicateCommerceTermEntryExternalReferenceCodeException" %><%@
 page import="com.liferay.commerce.term.exception.DuplicateCommerceTermEntryRelException" %><%@
 page import="com.liferay.commerce.term.exception.NoSuchTermEntryException" %><%@
 page import="com.liferay.commerce.term.model.CommerceTermEntry" %><%@

@@ -6,6 +6,7 @@
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
+import com.liferay.commerce.pricing.exception.DuplicateCommercePricingClassExternalReferenceCodeException;
 import com.liferay.commerce.pricing.exception.NoSuchPricingClassException;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
@@ -45,7 +46,9 @@ public class EditCommercePricingClassExternalReferenceCodeMVCActionCommand
 			_updateCommercePricingClassExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchPricingClassException ||
+			if (exception instanceof
+					DuplicateCommercePricingClassExternalReferenceCodeException ||
+				exception instanceof NoSuchPricingClassException ||
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());

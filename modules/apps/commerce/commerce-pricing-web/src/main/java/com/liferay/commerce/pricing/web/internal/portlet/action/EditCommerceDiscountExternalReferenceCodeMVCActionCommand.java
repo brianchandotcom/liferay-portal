@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.discount.exception.DuplicateCommerceDiscountExternalReferenceCodeException;
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
@@ -45,7 +46,9 @@ public class EditCommerceDiscountExternalReferenceCodeMVCActionCommand
 			_updateCommerceDiscountExternalReferenceCode(actionRequest);
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchDiscountException ||
+			if (exception instanceof
+					DuplicateCommerceDiscountExternalReferenceCodeException ||
+				exception instanceof NoSuchDiscountException ||
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());

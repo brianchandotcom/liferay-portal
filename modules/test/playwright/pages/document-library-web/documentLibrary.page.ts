@@ -28,6 +28,13 @@ export class DocumentLibraryPage {
 		await this.page.waitForLoadState();
 	}
 
+	async deleteAllFileEntries() {
+		await this.page
+			.locator('input[data-modelclassname="FileEntry"]')
+			.check();
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+	}
+
 	async editEntry(entryTitle: string) {
 		await this.page
 			.locator(`.card-body:has-text('${entryTitle}')`)

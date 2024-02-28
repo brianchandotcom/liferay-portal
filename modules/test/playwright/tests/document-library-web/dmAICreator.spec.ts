@@ -87,7 +87,7 @@ test('Can add images to DM when API Key is provided', async ({
 		page.getByRole('link').filter({hasText: 'AI-image-'})
 	).toHaveCount(1);
 
-	// TODO remove that generated image
+	await documentLibraryPage.deleteAllFileEntries();
 
 	await aiCreatorInstanceSettingsPage.removeApiKey();
 

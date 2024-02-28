@@ -29,7 +29,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.exception.CPDefinitionSubscriptionLengthException;
-import com.liferay.commerce.product.exception.DuplicateCProductException;
+import com.liferay.commerce.product.exception.DuplicateCProductExternalReferenceCodeException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
@@ -3233,7 +3233,7 @@ public class CPDefinitionLocalServiceImpl
 			externalReferenceCode, companyId);
 
 		if (cProduct != null) {
-			throw new DuplicateCProductException(
+			throw new DuplicateCProductExternalReferenceCodeException(
 				"There is another commerce product with external reference " +
 					"code " + externalReferenceCode);
 		}

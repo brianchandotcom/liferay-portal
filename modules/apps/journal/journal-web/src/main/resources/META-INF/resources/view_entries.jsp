@@ -110,6 +110,15 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										</span>
 									</c:otherwise>
 								</c:choose>
+
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10626") && !journalDisplayContext.hasGuestViewPermission(curArticle) %>'>
+									<clay:icon
+										aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+										cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
+										data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+										symbol="lock"
+									/>
+								</c:if>
 							</div>
 
 							<span class="c-pb-1 c-pt-1 text-secondary">
@@ -218,6 +227,15 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 											href="<%= editURL %>"
 											label="<%= title %>"
 										/>
+
+										<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10626") && !journalDisplayContext.hasGuestViewPermission(curArticle) %>'>
+											<clay:icon
+												aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+												cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"
+												data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+												symbol="lock"
+											/>
+										</c:if>
 									</div>
 								</div>
 							</div>

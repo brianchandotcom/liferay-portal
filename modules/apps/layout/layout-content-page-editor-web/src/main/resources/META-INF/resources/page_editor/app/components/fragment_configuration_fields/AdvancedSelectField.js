@@ -195,7 +195,7 @@ export function AdvancedSelectField({
 				) : (
 					<ClayDropDown
 						active={active}
-						alignmentPosition={Align.TopRight}
+						alignmentPosition={Align.BottomRight}
 						className="flex-shrink-0 ml-2"
 						menuElementAttrs={{
 							containerProps: {
@@ -203,7 +203,6 @@ export function AdvancedSelectField({
 							},
 						}}
 						onActiveChange={setActive}
-						renderMenuOnClick
 						trigger={
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(

@@ -5,7 +5,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Text} from '@clayui/core';
-import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayDropDown from '@clayui/drop-down';
 import Layout from '@clayui/layout';
 import ClayTooltip from '@clayui/tooltip';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
@@ -205,7 +205,6 @@ function SpacingSelectorButton({
 	return (
 		<ClayDropDown
 			active={active}
-			alignmentPosition={Align.BottomRight}
 			className={classNames(
 				`${DROPDOWN_CLASSNAME} ${DROPDOWN_CLASSNAME}--${type} ${DROPDOWN_CLASSNAME}--${type}-${position} align-items-stretch d-flex text-center`,
 				{disabled}

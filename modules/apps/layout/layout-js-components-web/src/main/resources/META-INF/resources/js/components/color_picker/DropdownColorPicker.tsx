@@ -4,7 +4,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import DropDown, {Align} from '@clayui/drop-down';
+import DropDown from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import classNames from 'classnames';
 import React, {
@@ -187,7 +187,6 @@ export function DropdownColorPicker({
 			<DropDown.Menu
 				active={active}
 				alignElementRef={triggerElementRef}
-				alignmentPosition={Align.TopRight}
 				className="clay-color-dropdown-menu px-0"
 				containerProps={{
 					className: 'cadmin',

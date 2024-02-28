@@ -86,6 +86,14 @@ public abstract class BaseDBPartitionTestCase {
 
 			for (long companyId : COMPANY_IDS) {
 				DBPartitionUtil.addDBPartition(companyId);
+
+				PortalInstancePool.add(
+					new CompanyImpl() {
+						{
+							setCompanyId(companyId);
+							setWebId("Test" + companyId);
+						}
+					});
 			}
 
 			_clearCaches(COMPANY_IDS);
@@ -343,6 +351,9 @@ public abstract class BaseDBPartitionTestCase {
 
 		_executeOnDBPartitions(companyIds, DBPartitionUtil::removeDBPartition);
 
+		for (long companyId : companyIds) {
+			PortalInstancePool.remove(companyId);
+		}
 
 		_clearCaches(companyIds);
 	}

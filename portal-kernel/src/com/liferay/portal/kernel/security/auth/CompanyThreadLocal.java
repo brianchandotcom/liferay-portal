@@ -195,16 +195,6 @@ public class CompanyThreadLocal {
 
 	private static boolean _setCompanyId(Long companyId) {
 		if (companyId.equals(_companyId.get())) {
-			if (!isLocked()) {
-				return false;
-			}
-
-			if ((LocaleThreadLocal.getDefaultLocale() == null) ||
-				(TimeZoneThreadLocal.getDefaultTimeZone() == null)) {
-
-				_clearUserThreadLocals();
-			}
-
 			return false;
 		}
 

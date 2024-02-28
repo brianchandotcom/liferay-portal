@@ -41,7 +41,7 @@ import org.w3c.dom.Node;
 public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 	public LiferayObjectWrapper() {
-		super(Configuration.VERSION_2_3_30);
+		super(Configuration.VERSION_2_3_32);
 
 		try {
 			_cacheClassNamesField.set(

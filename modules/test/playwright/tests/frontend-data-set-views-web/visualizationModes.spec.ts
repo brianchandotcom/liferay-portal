@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
@@ -13,10 +12,6 @@ import {DEFAULT_LABEL} from './utils/constants';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
-	featureFlagsTest({
-		'LPD-10735': true,
-		'LPS-164563': true,
-	}),
 	visualizationModesPageTest,
 	loginTest()
 );

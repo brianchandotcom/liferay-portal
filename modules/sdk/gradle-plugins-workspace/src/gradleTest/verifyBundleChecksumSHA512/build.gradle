@@ -1,8 +1,8 @@
 task runGradleTest
 
 gradle.liferayWorkspace {
-	bundleChecksumSHA512 = "ef4fcaac5910613955ea1104613dbfe6"
-	product = "portal-7.1-ga3"
+	bundleChecksumSHA512 = "cfd68cd8dbf935efadcd66630d535e05fcd9816d1f97eff6bc38fc5bf6d44216530493887e1d86ab0368525a6c4b856a51a309769227494e4aeb7b72828dea7a"
+	product = "portal-7.1-ga4"
 }
 
 runGradleTest {

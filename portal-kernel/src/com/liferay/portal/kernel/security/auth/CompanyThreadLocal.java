@@ -157,14 +157,12 @@ public class CompanyThreadLocal {
 
 		if (companyId > 0) {
 			_companyId.set(companyId);
-
-			_clearUserThreadLocals();
 		}
 		else {
 			_companyId.set(CompanyConstants.SYSTEM);
-
-			_clearUserThreadLocals();
 		}
+
+		_clearUserThreadLocals();
 
 		CTCollectionThreadLocal.removeCTCollectionId();
 	}

@@ -6,6 +6,7 @@
 package com.liferay.commerce.term.web.internal.portlet.action;
 
 import com.liferay.commerce.term.constants.CommerceTermEntryPortletKeys;
+import com.liferay.commerce.term.exception.DuplicateCommerceTermEntryExternalReferenceCodeException;
 import com.liferay.commerce.term.exception.NoSuchTermEntryException;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryService;
@@ -57,7 +58,10 @@ public class EditCommerceTermEntryExternalReferenceCodeMVCActionCommand
 					commerceTermEntry.getCommerceTermEntryId());
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchTermEntryException) {
+			if (exception instanceof
+					DuplicateCommerceTermEntryExternalReferenceCodeException ||
+				exception instanceof NoSuchTermEntryException) {
+
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");

@@ -9,6 +9,7 @@
 
 <liferay-ui:error-header />
 
+<liferay-ui:error exception="<%= DuplicateCommerceTermEntryExternalReferenceCodeException.class %>" message="please-enter-a-unique-external-reference-code" />
 <liferay-ui:error exception="<%= NoSuchTermEntryException.class %>" message="the-term-could-not-be-found" />
 
 <liferay-ui:error-principal />

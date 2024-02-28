@@ -32,6 +32,18 @@ public class DocumentCreationHelpers {
 		return field(fieldArray);
 	}
 
+	public static DocumentCreationHelper oneSortableDDMStringField(
+		String fieldName, String valueFieldName, Object value) {
+
+		FieldArray fieldArray = new FieldArray("ddmFieldArray");
+
+		fieldArray.addField(
+			NestedDDMFieldArrayUtil.createSortableStringField(
+				fieldName, valueFieldName, value));
+
+		return field(fieldArray);
+	}
+
 	public static DocumentCreationHelper singleDate(
 		String fieldName, Date value) {
 

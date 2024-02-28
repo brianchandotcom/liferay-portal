@@ -33,6 +33,24 @@ public class NestedDDMFieldArrayUtil {
 		return field;
 	}
 
+	public static Field createSortableStringField(
+		String name, String valueFieldName, Object value) {
+
+		Field field = createField(name, valueFieldName, value);
+
+		String sortableValueFieldName = Field.getSortableFieldName(
+			valueFieldName + "_String");
+
+		if (value instanceof String) {
+			field.addField(new Field(sortableValueFieldName, (String)value));
+		}
+		else {
+			field.addField(new Field(sortableValueFieldName, (String[])value));
+		}
+
+		return field;
+	}
+
 	public static Object getFieldValue(
 		String name, List<Map<String, Object>> maps) {
 

@@ -88,7 +88,7 @@ public abstract class BaseDBPartitionTestCase {
 				DBPartitionUtil.addDBPartition(companyId);
 			}
 
-			_clearCaches();
+			_clearCaches(COMPANY_IDS);
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -336,14 +336,15 @@ public abstract class BaseDBPartitionTestCase {
 
 	protected static void removeDBPartitions() throws Exception {
 		removeDBPartitions(COMPANY_IDS);
-
-		_clearCaches();
 	}
 
 	protected static void removeDBPartitions(long[] companyIds)
 		throws Exception {
 
 		_executeOnDBPartitions(companyIds, DBPartitionUtil::removeDBPartition);
+
+
+		_clearCaches(companyIds);
 	}
 
 	protected static void setUpClass() throws Exception {
@@ -426,11 +427,11 @@ public abstract class BaseDBPartitionTestCase {
 	@Inject
 	protected static Portal portal;
 
-	private static void _clearCaches() throws Exception {
+	private static void _clearCaches(long[] companyIds) throws Exception {
 		EntityCacheUtil.clearCache(CompanyImpl.class);
 		EntityCacheUtil.clearCache(VirtualHostImpl.class);
 
-		for (long companyId : COMPANY_IDS) {
+		for (long companyId : companyIds) {
 			PortalCacheHelperUtil.removePortalCaches(
 				PortalCacheManagerNames.MULTI_VM, companyId);
 		}

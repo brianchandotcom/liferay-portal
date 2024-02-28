@@ -82,6 +82,17 @@ function deploy_deploy_folder {
 	fi
 }
 
+function deploy_osgi_configs {
+	mkdir -p ${LIFERAY_HOME}/osgi/configs
+
+	local playwright_project_dir=${1}
+
+	if [[ -d ${playwright_project_dir}/env/osgi/configs ]]
+	then
+		cp -r ${playwright_project_dir}/env/osgi/configs/. ${LIFERAY_HOME}/osgi/configs
+	fi
+}
+
 function deploy_osgi_modules {
 	if [[ -n ${1} ]]
 	then
@@ -126,6 +137,15 @@ function deploy_parent_project_deploy_folder {
 	done
 }
 
+function deploy_parent_project_osgi_configs {
+	mkdir -p ${LIFERAY_HOME}/osgi/configs
+
+	for parent_playwright_project_dir in $(get_parent_playwright_project_dirs)
+	do
+		deploy_osgi_configs ${parent_playwright_project_dir}
+	done
+}
+
 function deploy_parent_project_osgi_modules {
 	for parent_playwright_project_dir in $(get_parent_playwright_project_dirs)
 	do
@@ -147,6 +167,10 @@ function deploy_project_client_extensions {
 
 function deploy_project_deploy_folder {
 	deploy_deploy_folder $(get_playwright_project_dir)
+}
+
+function deploy_project_osgi_configs {
+	deploy_osgi_configs $(get_playwright_project_dir)
 }
 
 function deploy_project_osgi_modules {

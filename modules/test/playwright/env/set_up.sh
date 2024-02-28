@@ -22,6 +22,10 @@ else
 
 	deploy_project_deploy_folder
 
+	deploy_parent_project_osgi_configs
+
+	deploy_project_osgi_configs
+
 	deploy_parent_project_client_extensions
 
 	deploy_project_client_extensions

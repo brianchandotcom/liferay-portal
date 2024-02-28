@@ -265,9 +265,9 @@ public class FMParser implements FMParserConstants {
 
         this.outputFormat = outputFormat;
         recalculateAutoEscapingField();
-        if (incompatibleImprovements < _TemplateAPI.VERSION_INT_2_3_24) {
+        if (incompatibleImprovements < _VersionInts.V_2_3_24) {
             // Emulate bug, where the string literal parser haven't inherited the IcI:
-            incompatibleImprovements = _TemplateAPI.VERSION_INT_2_3_0;
+            incompatibleImprovements = _VersionInts.V_2_3_0;
         }
 
         // So that loop variable built-ins, like ?index, works inside the interpolations in the string literal:
@@ -2823,11 +2823,11 @@ if (catchAllParamName != null) {
 // To prevent parser check loopholes like <#list ...><#macro ...><#break></#macro></#list>.
         lastIteratorBlockContexts = iteratorBlockContexts;
         iteratorBlockContexts = null;
-        if (incompatibleImprovements >= _TemplateAPI.VERSION_INT_2_3_23) {
-                lastBreakableDirectiveNesting = breakableDirectiveNesting;
-                lastContinuableDirectiveNesting = continuableDirectiveNesting;
-                breakableDirectiveNesting = 0;
-                continuableDirectiveNesting = 0;
+        if (incompatibleImprovements >= _VersionInts.V_2_3_23) {
+            lastBreakableDirectiveNesting = breakableDirectiveNesting;
+            lastContinuableDirectiveNesting = continuableDirectiveNesting;
+            breakableDirectiveNesting = 0;
+            continuableDirectiveNesting = 0;
         } else {
             lastBreakableDirectiveNesting = 0; // Just to prevent uninitialized local variable error later
             lastContinuableDirectiveNesting = 0;
@@ -2850,7 +2850,7 @@ if (!isFunction) {if (true) throw new ParseException("Expected macro end tag her
       throw new ParseException();
     }
 iteratorBlockContexts = lastIteratorBlockContexts;
-        if (incompatibleImprovements >= _TemplateAPI.VERSION_INT_2_3_23) {
+        if (incompatibleImprovements >= _VersionInts.V_2_3_23) {
             breakableDirectiveNesting = lastBreakableDirectiveNesting;
             continuableDirectiveNesting = lastContinuableDirectiveNesting;
         }
@@ -3885,7 +3885,7 @@ buf.append(t.image);
     }
 buf.setLength(buf.length() - t.image.length());
         if (!t.image.endsWith(";")
-                && _TemplateAPI.getTemplateLanguageVersionAsInt(template) >= _TemplateAPI.VERSION_INT_2_3_21) {
+                && _TemplateAPI.getTemplateLanguageVersionAsInt(template) >= _VersionInts.V_2_3_21) {
             {if (true) throw new ParseException("Unclosed \"" + start.image + "\"", template, start);}
         }
         {if ("" != null) return t;}
@@ -4809,12 +4809,6 @@ TemplateElement root = children.asSingleElement();
     try { return !jj_3_17(); }
     catch(LookaheadSuccess ls) { return true; }
     finally { jj_save(16, xla); }
-  }
-
-  private boolean jj_3R_67()
- {
-    if (jj_3R_82()) return true;
-    return false;
   }
 
   private boolean jj_3R_66()
@@ -5829,6 +5823,12 @@ TemplateElement root = children.asSingleElement();
   private boolean jj_3R_68()
  {
     if (jj_3R_83()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_67()
+ {
+    if (jj_3R_82()) return true;
     return false;
   }
 

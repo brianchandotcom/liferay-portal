@@ -121,6 +121,11 @@ export class JournalPage {
 		await this.permissionsFrameLocator
 			.getByRole('button', {name: 'Save'})
 			.click();
+
+		for (const permissionsLocator of permissionLocators) {
+			await this.permissionsFrameLocator.locator(permissionsLocator);
+		}
+
 		await this.permissionsFrameLocator
 			.getByRole('button', {name: 'Cancel'})
 			.click();

@@ -135,7 +135,7 @@ export default function Cards(props: IFDSViewSectionProps) {
 
 		const fdsCardsSection: IFDSCardsSection = await response.json();
 
-		openDefaultSuccessToast();
+		closeModal();
 
 		setCardsSections(
 			cardsSections.map((cardsSection) => {
@@ -154,7 +154,7 @@ export default function Cards(props: IFDSViewSectionProps) {
 			})
 		);
 
-		closeModal();
+		openDefaultSuccessToast();
 	};
 
 	useEffect(() => {

@@ -20,7 +20,7 @@ export const test = mergeTests(
 	documentLibraryPagesTest
 );
 
-test('Create AI Image option in Management Toolbar without API Key opens an alert', async ({
+test('LPD-6717 Create AI Image option in Management Toolbar without API Key opens an alert', async ({
 	documentLibraryPage,
 	page,
 }) => {
@@ -31,7 +31,7 @@ test('Create AI Image option in Management Toolbar without API Key opens an aler
 	await expect(page.getByText('Configure OpenAI')).toBeVisible();
 });
 
-test('Create AI Image option is hidden when disabled from Instance Settings', async ({
+test('LPD-6717 and LPD-6691 Create AI Image option is hidden when disabled from Instance Settings', async ({
 	aiCreatorInstanceSettingsPage,
 	documentLibraryPage,
 	page,
@@ -49,7 +49,7 @@ test('Create AI Image option is hidden when disabled from Instance Settings', as
 	await aiCreatorInstanceSettingsPage.enableDalleCreateImages();
 });
 
-test('Can add images to DM when API Key is provided', async ({
+test('LPD-6677 Can add images to DM when API Key is provided', async ({
 	aiCreatorInstanceSettingsPage,
 	documentLibraryPage,
 	gogoShellPage,

@@ -331,8 +331,10 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register("7.1.2", "7.2.0", new DummyUpgradeStep());
 
+		registry.register("7.2.0", "7.2.1", new DummyUpgradeStep());
+
 		registry.register(
-			"7.2.0", "8.0.0",
+			"7.2.1", "8.0.0",
 			new com.liferay.object.internal.upgrade.v8_0_0.
 				ObjectFolderItemUpgradeProcess());
 
@@ -380,8 +382,10 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register("8.6.2", "8.7.0", new DummyUpgradeStep());
 
+		registry.register("8.7.0", "8.7.1", new DummyUpgradeStep());
+
 		registry.register(
-			"8.7.0", "8.8.0",
+			"8.7.1", "8.8.0",
 			new BaseExternalReferenceCodeUpgradeProcess() {
 
 				@Override

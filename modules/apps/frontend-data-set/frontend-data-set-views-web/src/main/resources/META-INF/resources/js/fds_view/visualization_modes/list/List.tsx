@@ -93,6 +93,38 @@ export default function List(props: IFDSViewSectionProps) {
 		);
 	};
 
+	const clearFDSListSection = async (listSection: IListSection) => {
+		setSaveButtonDisabled(true);
+
+		const response = await fetch(
+			`${API_URL.FDS_LIST_SECTIONS}/by-external-reference-code/${listSection.externalReferenceCode}`,
+			{method: 'DELETE'}
+		);
+
+		setSaveButtonDisabled(false);
+
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
+		setListSections(
+			listSections.map((section) => {
+				if (section.name !== listSection.name) {
+					return section;
+				}
+
+				const nextListSection = {...listSection};
+
+				delete nextListSection.externalReferenceCode;
+				delete nextListSection.field;
+
+				return nextListSection;
+			})
+		);
+	};
+
 	const saveFDSListSection = async ({
 		closeModal,
 		field,
@@ -197,6 +229,9 @@ export default function List(props: IFDSViewSectionProps) {
 							key={listSection.name}
 							listSection={listSection}
 							modalProps={props}
+							onClearSelection={() => {
+								clearFDSListSection(listSection);
+							}}
 							onSelect={({closeModal, selectedField}) => {
 								saveFDSListSection({
 									closeModal,
@@ -216,6 +251,7 @@ export default function List(props: IFDSViewSectionProps) {
 interface IListSectionProps {
 	listSection: IListSection;
 	modalProps: IFDSViewSectionProps;
+	onClearSelection: () => void;
 	onSelect: ({
 		closeModal,
 		selectedField,
@@ -229,17 +265,11 @@ interface IListSectionProps {
 function ListSection({
 	listSection,
 	modalProps,
+	onClearSelection,
 	onSelect,
 	saveButtonDisabled,
 }: IListSectionProps) {
 	const {field, label} = listSection;
-
-	const clearSeletedField = () => {
-		onSelect({
-			closeModal: () => {},
-			selectedField: null,
-		});
-	};
 
 	const openSelectFieldModal = () => {
 		openModal({
@@ -286,7 +316,7 @@ function ListSection({
 			},
 			{
 				label: Liferay.Language.get('clear-assignment'),
-				onClick: clearSeletedField,
+				onClick: onClearSelection,
 				symbolLeft: 'times-circle',
 			},
 		];

@@ -169,14 +169,40 @@ public class CompanyThreadLocal {
 
 		long currentCompanyId = _companyId.get();
 
-		boolean changed = _setCompanyId(companyId);
+		boolean[] changed = {false};
+
+		if (!companyId.equals(currentCompanyId)) {
+			if (isLocked()) {
+				throw new UnsupportedOperationException(
+					"CompanyThreadLocal modification is not allowed");
+			}
+
+			_syncLastDBPartitionSessionState();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("setCompanyId " + companyId);
+			}
+
+			if (companyId > 0) {
+				_companyId.set(companyId);
+
+				_clearUserThreadLocals();
+			}
+			else {
+				_companyId.set(CompanyConstants.SYSTEM);
+
+				_clearUserThreadLocals();
+			}
+
+			changed[0] = true;
+		}
 
 		SafeCloseable ctCollectionSafeCloseable =
 			CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 				ctCollectionId);
 
 		return () -> {
-			if (changed) {
+			if (changed[0]) {
 				_syncLastDBPartitionSessionState();
 			}
 

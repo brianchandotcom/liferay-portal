@@ -21,8 +21,9 @@
 
 	.adt-apps-search-results .cards-container .app-search-results-card .card-image-title-container .image-container .app-search-image {
 		height: 3rem;
+		max-width: 155px;
 		min-width: 3rem;
-		object-fit: cover;
+		object-fit: contain;
 	}
 
 	.adt-apps-search-results .labels .category-label-remainder:hover .category-names {

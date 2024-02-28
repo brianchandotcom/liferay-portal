@@ -16,7 +16,6 @@ import {
 
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
-import {getThumbnailByProductAttachment} from '../../../../utils/util';
 import OrderDetailsHeader from '../components/OrderDetailsHeader';
 
 import './App.scss';
@@ -72,8 +71,6 @@ const AppOutlet = () => {
 
 	const {data, error, isLoading} = useGetProductByOrderId(orderId as string);
 
-	const appImage = getThumbnailByProductAttachment(data?.product?.images);
-
 	const productCreatorAccountName = data?.product?.catalogName || '';
 
 	if (isLoading) {
@@ -102,7 +99,7 @@ const AppOutlet = () => {
 			<OrderDetailsHeader
 				className="d-flex flex-row justify-content-between pb-3 pt-5"
 				hasOrderDetails
-				image={appImage}
+				image={placedOrderItems[0]?.thumbnail}
 				name={data?.product?.name}
 				order={data?.placedOrder}
 				productOwner={productCreatorAccountName}

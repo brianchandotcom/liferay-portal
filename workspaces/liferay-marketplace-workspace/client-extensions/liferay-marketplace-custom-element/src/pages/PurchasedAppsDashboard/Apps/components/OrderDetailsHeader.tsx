@@ -5,8 +5,6 @@
 
 import React from 'react';
 
-import {showAppImage} from '../../../../utils/util';
-
 import './OrderDetailsHeader.scss';
 import OrderDetailsStatusDescription from './OrderDetailsStatusDescription';
 
@@ -36,7 +34,7 @@ const OrderDetailsHeader: React.FC<OrderDetailsProps> = ({
 			<img
 				alt="App Icon"
 				className="order-details-publisher-icon"
-				src={showAppImage(image)}
+				src={image}
 			/>
 
 			<div className="align-items-center ml-4">

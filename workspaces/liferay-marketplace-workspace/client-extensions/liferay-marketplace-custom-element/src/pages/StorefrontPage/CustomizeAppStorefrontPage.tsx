@@ -252,7 +252,7 @@ export function CustomizeAppStorefrontPage({
 								appStorefrontImages;
 							},
 							file: image.file,
-							index,
+							index: index + 1,
 							isAppIcon: false,
 							requestFunction: createImageAxios,
 							title: image.fileName,

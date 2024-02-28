@@ -189,7 +189,7 @@ export function CardSectionsBody({app, readonly}: CardSectionsBodyProps) {
 							className="card-section-body-section-files"
 							key={id}
 						>
-							<strong>{priority + 1}</strong>
+							<strong>{priority}</strong>
 
 							<div className="card-section-body-section-files-container">
 								<img

@@ -12,6 +12,7 @@ import com.liferay.jethr0.event.github.user.GitHubUser;
 import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.MergeCentralSubrepositoryJobEntity;
 import com.liferay.jethr0.job.RepositoryArchiveJobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
@@ -22,6 +23,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Date;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -35,6 +39,8 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 		_updateUpstreamGitBranchEntity();
 		_updateUpstreamGitBranchMirror();
 
+		_syncCentralSubrepository();
+
 		return null;
 	}
 
@@ -42,6 +48,38 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
+	}
+
+	private JobEntity _createMergeCentralSubrepositoryJobEntity()
+		throws InvalidJSONException {
+
+		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+
+		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
+
+		String jobName = StringUtil.combine(
+			"Merge Central Subrepository (",
+			gitBranchEntity.getRepositoryName(), "/",
+			gitBranchEntity.getBranchName(), "[",
+			gitBranchEntity.getShortBranchSHA(), "])");
+
+		JobEntity jobEntity = jobEntityRepository.create(
+			jobName, 3, null, JobEntity.State.OPENED,
+			JobEntity.Type.MERGE_CENTRAL_SUBREPOSITORY);
+
+		if (!(jobEntity instanceof MergeCentralSubrepositoryJobEntity)) {
+			throw new RuntimeException("Invalid job type");
+		}
+
+		MergeCentralSubrepositoryJobEntity mergeCentralSubrepositoryJobEntity =
+			(MergeCentralSubrepositoryJobEntity)jobEntity;
+
+		mergeCentralSubrepositoryJobEntity.setPortalUpstreamBranchName(
+			gitBranchEntity.getUpstreamBranchName());
+
+		jobEntityRepository.update(mergeCentralSubrepositoryJobEntity);
+
+		return mergeCentralSubrepositoryJobEntity;
 	}
 
 	private GitBranchEntity _getGitBranchEntity() throws InvalidJSONException {
@@ -119,6 +157,32 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 		return true;
 	}
 
+	private void _syncCentralSubrepository() throws InvalidJSONException {
+		GitBranchEntity gitBranchEntity = _getGitBranchEntity();
+
+		Matcher matcher = _pattern.matcher(gitBranchEntity.getBranchName());
+
+		if (!matcher.matches()) {
+			return;
+		}
+
+		GitHubRepository gitHubRepository = getGitHubRepository();
+
+		String gitHubRepositoryName = gitHubRepository.getName();
+
+		if (!gitHubRepositoryName.startsWith("com-liferay-")) {
+			return;
+		}
+
+		GitHubUser gitHubUser = gitHubRepository.getGitHubUser();
+
+		if (!Objects.equals(gitHubUser.getName(), "liferay")) {
+			return;
+		}
+
+		_createMergeCentralSubrepositoryJobEntity();
+	}
+
 	private void _updateUpstreamGitBranchEntity() throws InvalidJSONException {
 		if (!_isUpstreamGitBranchEntity()) {
 			return;
@@ -168,5 +232,7 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 		invokeJobEntity(repositoryArchiveJobEntity);
 	}
+
+	private static final Pattern _pattern = Pattern.compile("7\\.\\d\\.x");
 
 }

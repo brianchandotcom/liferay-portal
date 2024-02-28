@@ -10,8 +10,8 @@ const faroConfig = {
 			: 'http://osbfarofrontend:8080',
 	},
 	user: {
-		login: process.env.FARO_USER_LOGIN || liferayConfig.user.login,
-		password: process.env.FARO_PASSWORD || liferayConfig.user.password,
+		login: process.env.FARO_USER_LOGIN || 'test@liferay.com',
+		password: process.env.FARO_PASSWORD || 'test',
 	},
 };
 

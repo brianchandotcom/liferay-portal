@@ -20,16 +20,19 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Dest
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.RouteBuilder;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.RouteHelper;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@Component(service = SimilarResultsContributor.class)
 public class BlogsSimilarResultsContributor
 	implements SimilarResultsContributor {
+
+	public BlogsSimilarResultsContributor(
+		BlogsEntryLocalService blogsEntryLocalService, UIDFactory uidFactory) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+		_uidFactory = uidFactory;
+	}
 
 	@Override
 	public void detectRoute(
@@ -87,10 +90,7 @@ public class BlogsSimilarResultsContributor
 		return "-/blogs/" + parameterValue + "?";
 	}
 
-	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Reference
-	private UIDFactory _uidFactory;
+	private final BlogsEntryLocalService _blogsEntryLocalService;
+	private final UIDFactory _uidFactory;
 
 }

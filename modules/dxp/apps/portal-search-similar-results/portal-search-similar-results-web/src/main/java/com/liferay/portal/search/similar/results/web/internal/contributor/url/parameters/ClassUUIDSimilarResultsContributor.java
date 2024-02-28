@@ -20,18 +20,20 @@ import com.liferay.portal.search.similar.results.web.spi.contributor.helper.Rout
 
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@Component(service = SimilarResultsContributor.class)
 public class ClassUUIDSimilarResultsContributor
 	implements SimilarResultsContributor {
 
 	public static final String CLASS_UUID = "classUuid";
+
+	public ClassUUIDSimilarResultsContributor(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
 
 	@Override
 	public void detectRoute(
@@ -74,7 +76,6 @@ public class ClassUUIDSimilarResultsContributor
 			CLASS_UUID, assetEntry.getClassUuid());
 	}
 
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
+	private final AssetEntryLocalService _assetEntryLocalService;
 
 }

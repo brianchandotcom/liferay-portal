@@ -31,16 +31,23 @@ import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@Component(service = SimilarResultsContributor.class)
 public class AssetPublisherSimilarResultsContributor
 	implements SimilarResultsContributor {
+
+	public AssetPublisherSimilarResultsContributor(
+		AssetEntryLocalService assetEntryLocalService,
+		BlogsEntryLocalService blogsEntryLocalService, UIDFactory uidFactory,
+		WikiPageLocalService wikiPageLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+		_blogsEntryLocalService = blogsEntryLocalService;
+		_uidFactory = uidFactory;
+		_wikiPageLocalService = wikiPageLocalService;
+	}
 
 	@Override
 	public void detectRoute(
@@ -145,16 +152,9 @@ public class AssetPublisherSimilarResultsContributor
 		routeBuilder.addAttribute(name, value);
 	}
 
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Reference
-	private UIDFactory _uidFactory;
-
-	@Reference
-	private WikiPageLocalService _wikiPageLocalService;
+	private final AssetEntryLocalService _assetEntryLocalService;
+	private final BlogsEntryLocalService _blogsEntryLocalService;
+	private final UIDFactory _uidFactory;
+	private final WikiPageLocalService _wikiPageLocalService;
 
 }

@@ -104,11 +104,26 @@ export function FormGeneralPanel({item}) {
 		<>
 			<FormOptions item={item} onValueSelect={onValueSelect} />
 
-			<CommonStyles
-				commonStylesValues={item.config.styles || {}}
-				item={item}
-				role={COMMON_STYLES_ROLES.general}
-			/>
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle={Liferay.Language.get('frame')}
+				displayType="unstyled"
+				showCollapseIcon
+			>
+				<ClayPanel.Body>
+					{formIsMapped(item) ? (
+						<ContainerDisplayOptions item={item} />
+					) : null}
+
+					<CommonStyles
+						commonStylesValues={item.config.styles || {}}
+						embedInCollapsableSection={false}
+						item={item}
+						role={COMMON_STYLES_ROLES.general}
+					/>
+				</ClayPanel.Body>
+			</ClayPanel>
 		</>
 	);
 }
@@ -130,14 +145,10 @@ function FormOptions({item, onValueSelect}) {
 					/>
 
 					{formIsMapped(item) && (
-						<>
-							<SuccessInteractionOptions
-								item={item}
-								onValueSelect={onValueSelect}
-							/>
-
-							<ContainerDisplayOptions item={item} />
-						</>
+						<SuccessInteractionOptions
+							item={item}
+							onValueSelect={onValueSelect}
+						/>
 					)}
 				</ClayPanel.Body>
 			</ClayPanel>

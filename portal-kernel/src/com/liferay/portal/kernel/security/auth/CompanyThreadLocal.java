@@ -25,6 +25,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -167,11 +170,11 @@ public class CompanyThreadLocal {
 	public static SafeCloseable setWithSafeCloseable(
 		Long companyId, Long ctCollectionId) {
 
-		long currentCompanyId = _companyId.get();
-
 		boolean[] changed = {false};
 
-		if (!companyId.equals(currentCompanyId)) {
+		List<SafeCloseable> safeCloseables = new ArrayList<>();
+
+		if (!companyId.equals(_companyId.get())) {
 			if (isLocked()) {
 				throw new UnsupportedOperationException(
 					"CompanyThreadLocal modification is not allowed");
@@ -184,12 +187,13 @@ public class CompanyThreadLocal {
 			}
 
 			if (companyId > 0) {
-				_companyId.set(companyId);
+				safeCloseables.add(_companyId.setWithSafeCloseable(companyId));
 
 				_clearUserThreadLocals();
 			}
 			else {
-				_companyId.set(CompanyConstants.SYSTEM);
+				safeCloseables.add(
+					_companyId.setWithSafeCloseable(CompanyConstants.SYSTEM));
 
 				_clearUserThreadLocals();
 			}
@@ -197,20 +201,20 @@ public class CompanyThreadLocal {
 			changed[0] = true;
 		}
 
-		SafeCloseable ctCollectionSafeCloseable =
+		safeCloseables.add(
 			CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-				ctCollectionId);
+				ctCollectionId));
 
 		return () -> {
 			if (changed[0]) {
 				_syncLastDBPartitionSessionState();
 			}
 
-			_companyId.set(currentCompanyId);
+			for (SafeCloseable safeCloseable : safeCloseables) {
+				safeCloseable.close();
+			}
 
 			_clearUserThreadLocals();
-
-			ctCollectionSafeCloseable.close();
 		};
 	}
 

@@ -110,14 +110,36 @@ Listen ${test.app.server.leading.port.number}8]]></echo>
 	</target>
 
 	<target name="start-httpd-server">
-		<exec executable="systemctl">
-			<arg line="start httpd.service" />
-		</exec>
+		<trycatch>
+			<try>
+				<exec executable="systemctl" failonerror="true">
+					<arg line="start httpd.service" />
+				</exec>
+			</try>
+			<catch>
+				<echo>Unable to start httpd using systemctl. Starting httpd directly</echo>
+
+				<exec executable="httpd" failonerror="true" />
+
+				<echo>httpd has started</echo>
+			</catch>
+		</trycatch>
 	</target>
 
 	<target name="stop-httpd-server">
-		<exec executable="systemctl">
-			<arg line="stop httpd.service" />
-		</exec>
+		<trycatch>
+			<try>
+				<exec executable="systemctl" failonerror="true">
+					<arg line="stop httpd.service" />
+				</exec>
+			</try>
+			<catch>
+				<echo>Unable to stop httpd using systemctl. httpd processes will be killed via pkill</echo>
+
+				<exec executable="pkill">
+					<arg line="-f httpd" />
+				</exec>
+			</catch>
+		</trycatch>
 	</target>
 </project>

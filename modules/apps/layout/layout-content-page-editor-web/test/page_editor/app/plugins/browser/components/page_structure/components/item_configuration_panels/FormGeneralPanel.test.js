@@ -142,23 +142,21 @@ describe('FormGeneralPanel', () => {
 		updateFormItemConfig.mockClear();
 	});
 
-	it('renders success interaction options if the form is mapped', async () => {
+	it('renders success action options if the form is mapped', async () => {
 		await act(async () => {
 			renderComponent();
 		});
 
-		expect(
-			screen.getByLabelText('success-interaction')
-		).toBeInTheDocument();
+		expect(screen.getByLabelText('success-action')).toBeInTheDocument();
 	});
 
-	it('does not renders success interaction options if the form is not mapped', async () => {
+	it('does not renders success action options if the form is not mapped', async () => {
 		await act(async () => {
 			renderComponent({item: UNMAPPED_FORM_ITEM});
 		});
 
 		expect(
-			screen.queryByLabelText('success-interaction')
+			screen.queryByLabelText('success-action')
 		).not.toBeInTheDocument();
 	});
 

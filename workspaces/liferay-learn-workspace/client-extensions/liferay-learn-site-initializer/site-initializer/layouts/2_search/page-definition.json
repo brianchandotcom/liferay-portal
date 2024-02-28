@@ -140,8 +140,7 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {
-														},
+														"fragmentLink": {},
 														"text": {
 															"value_i18n": {
 																"en_US": "Search"
@@ -312,6 +311,33 @@
 							}
 						},
 						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {"width": "100%"},
+									"indexed": true,
+									"layout": {}
+								},
+								"id": "111b86cf-b12f-9208-7eda-feec5aa30ee2",
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\nfloat: right;\n}",
+											"fragmentStyle": {"width": "200px"},
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_SORT",
+													"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"modified-\",\"label\":\"Modified Date\"}]",
+													"displayStyleGroupId": "31584"
+												},
+												"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
+											}
+										},
+										"id": "59b185b9-7e6e-b0bc-3e64-7f47db77dcbe",
+										"type": "Widget"
+									}
+								],
+								"type": "Section"
+							},
 							{
 								"definition": {
 									"customCSS": ".[$FRAGMENT_CLASS$] {\nmin-width: 850px;\n}\n\ndiv.c-empty-state-image.taglib-empty-state {\ndisplay: none;\n}\n\ndiv.sheet {\nborder-width: 0px;\n}\n\ndiv.taglib-empty-result-message.c-empty-state-animation {\nalign-items: flex-start;\ndisplay: flex;\nflex-direction: column;\nmargin: 0px;\n}\n\nh1.taglib-empty-result-message-title {\ncolor: var(--neutral-10, #282934);\nmargin: 0px !important;\nfont-family: 'Source Sans Pro', sans-serif;\nfont-size: 28px !important;\nfont-style: normal;\nfont-weight: 700 !important;\nline-height: 32px;\n}\n\np.taglib-empty-result-message-description {\ncolor: var(--neutral-08, #54555F) !important;\nfont-family: 'Source Sans Pro', sans-serif;\nfont-size: 16px !important;\nfont-style: normal;\nfont-weight: 400;\nline-height: 24px;\ntext-align: left !important;\nwidth: max-content;\n}",

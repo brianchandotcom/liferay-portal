@@ -1,0 +1,65 @@
+<#if themeDisplay?has_content && (AssetCategory_vocabulary.getData())??>
+	<#assign quarterlyReleaseVocabularyId = (request.getAttribute("INFO_ITEM").vocabularyId)! />
+
+	<#if quarterlyReleaseVocabularyId?has_content>
+		<#assign releaseCategories = (restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${quarterlyReleaseVocabularyId}/taxonomy-categories?pageSize=4&sort=dateCreated:desc").items)! />
+	</#if>
+</#if>
+
+<style>
+	#dropdownReleaseNotes {
+		font-size: var(--h2-font-size, 1.375rem) !important;
+	font-weight: var(--h2-font-weight) !important;
+	}
+</style>
+
+<div class="dropdown">
+	<button
+		aria-expanded="false"
+		aria-haspopup="true"
+		class="btn p-0 text-neutral-0 dropdown-toggle"
+		data-toggle="liferay-dropdown"
+		id="dropdownReleaseNotes"
+		type="button"
+	>
+		<#if (AssetCategory_name.getData())??>
+			${AssetCategory_name.getData()}
+		</#if>
+
+		<@clay["icon"] symbol="caret-bottom" />
+	</button>
+
+	<ul
+		aria-labelledby="dropdownReleaseNotes"
+		class="dropdown-menu"
+		x-placement="bottom-start"
+		style="top: 0px; transform: translate3d(0px, 40px, 0px);"
+	>
+		<#if releaseCategories?has_content>
+			<#list releaseCategories as releaseCategory>
+				<#assign friendlyURL = (releaseCategory.taxonomyCategoryProperties?filter(taxonomyCategoryProperty -> stringUtil.equals(taxonomyCategoryProperty.key, "friendlyURL"))?first.value)! />
+
+			<li>
+					<a class="dropdown-item" href="${releaseCategory.id}?r=${releaseCategory.id}">
+						${releaseCategory.name}
+
+						<#if (AssetCategory_name.getData())?? && releaseCategory.name == AssetCategory_name.getData()>
+							<span class="dropdown-item-indicator-end">
+								<@clay["icon"] symbol="check" />
+							</span>
+						</#if>
+					</a>
+				</li>
+			</#list>
+			<li>
+				<a class="dropdown-item" href="#1">
+					Previous Release
+
+					<span class="dropdown-item-indicator-end">
+						<@clay["icon"] symbol="shortcut" />
+					</span>
+				</a>
+			</li>
+		</#if>
+	</ul>
+</div>

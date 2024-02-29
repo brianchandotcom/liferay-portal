@@ -61,7 +61,9 @@ const Card = ({item, schema, spritemap}) => {
 		selectedItemsValue,
 	} = useContext(FrontendDataSetContext);
 
-	const actionsRef = useRef(itemsActions || item.actionDropdownItems);
+	const actionsRef = useRef(
+		(itemsActions?.length && itemsActions) || item.actionDropdownItems
+	);
 
 	return (
 		<ClayCardWithInfo
@@ -76,6 +78,8 @@ const Card = ({item, schema, spritemap}) => {
 							itemData: item,
 							loadData,
 							openSidePanel,
+							spritemap,
+							symbolLeft: action.icon,
 						});
 					}
 				},

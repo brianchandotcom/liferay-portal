@@ -53,6 +53,10 @@ public class ObjectActionThreadLocal {
 		return _clearObjectEntryIdsMapThreadLocal.get();
 	}
 
+	public static boolean isSkipObjectActionExecution() {
+		return _skipObjectActionExecutionThreadLocal.get();
+	}
+
 	public static void setClearObjectEntryIdsMap(
 		boolean clearObjectEntryIdsMap) {
 
@@ -63,6 +67,12 @@ public class ObjectActionThreadLocal {
 		HttpServletRequest httpServletRequest) {
 
 		_httpServletRequestThreadLocal.set(httpServletRequest);
+	}
+
+	public static void setSkipObjectActionExecution(
+		boolean skipObjectActionExecution) {
+
+		_skipObjectActionExecutionThreadLocal.set(skipObjectActionExecution);
 	}
 
 	private static final ThreadLocal<Boolean>
@@ -79,5 +89,10 @@ public class ObjectActionThreadLocal {
 			ObjectActionThreadLocal.class.getName() +
 				"._objectEntryIdsMapThreadLocal",
 			HashMap::new);
+	private static final ThreadLocal<Boolean>
+		_skipObjectActionExecutionThreadLocal = new CentralizedThreadLocal<>(
+			ObjectActionThreadLocal.class +
+				"._skipObjectActionExecutionThreadLocal",
+			() -> false);
 
 }

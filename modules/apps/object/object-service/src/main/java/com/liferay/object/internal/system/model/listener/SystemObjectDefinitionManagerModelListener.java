@@ -7,6 +7,7 @@ package com.liferay.object.internal.system.model.listener;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.action.engine.ObjectActionEngine;
+import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -82,9 +84,18 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 
 	@Override
 	public void onAfterCreate(T baseModel) throws ModelListenerException {
+		ObjectActionThreadLocal.setSkipObjectActionExecution(true);
+
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
 			(T)baseModel.clone());
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				ObjectActionThreadLocal.setSkipObjectActionExecution(false);
+
+				return null;
+			});
 	}
 
 	@Override
@@ -97,6 +108,10 @@ public class SystemObjectDefinitionManagerModelListener<T extends BaseModel<T>>
 	@Override
 	public void onAfterUpdate(T originalBaseModel, T baseModel)
 		throws ModelListenerException {
+
+		if (ObjectActionThreadLocal.isSkipObjectActionExecution()) {
+			return;
+		}
 
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, originalBaseModel,

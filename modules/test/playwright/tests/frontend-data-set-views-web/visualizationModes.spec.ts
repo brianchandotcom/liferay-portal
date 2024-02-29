@@ -51,7 +51,7 @@ test('Assign field to a cards section @LPD-10735', async ({
 
 		await visualizationModesPage.fieldSelectModalContainer
 			.getByLabel(fieldName)
-			.check();
+			.click();
 
 		await visualizationModesPage.saveFieldSelection();
 
@@ -83,7 +83,7 @@ test('Assign field to a cards section @LPD-10735', async ({
 
 		await visualizationModesPage.fieldSelectModalContainer
 			.getByLabel(newFieldName)
-			.check();
+			.click();
 
 		await visualizationModesPage.saveFieldSelection();
 
@@ -126,7 +126,7 @@ test('Assign field to a list section @LPD-10735', async ({
 
 		await visualizationModesPage.fieldSelectModalContainer
 			.getByLabel(fieldName)
-			.check();
+			.click();
 
 		await visualizationModesPage.saveFieldSelection();
 
@@ -157,7 +157,7 @@ test('Assign field to a list section @LPD-10735', async ({
 
 		await visualizationModesPage.fieldSelectModalContainer
 			.getByLabel(newFieldName)
-			.check();
+			.click();
 
 		await visualizationModesPage.saveFieldSelection();
 

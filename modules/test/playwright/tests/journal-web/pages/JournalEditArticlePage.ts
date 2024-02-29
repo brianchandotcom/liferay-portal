@@ -42,6 +42,8 @@ export class JournalEditArticlePage {
 
 		await this.titlePlaceholder.fill(title);
 
+		await this.publishButton.waitFor();
+
 		await this.publishButton.click();
 	}
 
@@ -51,6 +53,8 @@ export class JournalEditArticlePage {
 		await this.propertiesTab.waitFor();
 
 		await this.titlePlaceholder.fill(title);
+
+		await this.publishButton.waitFor();
 
 		await this.publishButton.click();
 	}

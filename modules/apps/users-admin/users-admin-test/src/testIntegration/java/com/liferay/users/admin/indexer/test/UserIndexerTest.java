@@ -874,24 +874,22 @@ public class UserIndexerTest {
 	private String _getExpectedFullNameHighlight(
 		String firstName, String middleName, String lastName) {
 
-		String expectedTitleHighlight = StringBundler.concat(
-			HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
-			HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE, middleName,
-			StringPool.SPACE, HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
-			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
-
 		if (Objects.equals(
 				_searchEngineInformation.getVendorString(), "Elasticsearch") &&
 			(_getElasticsearchVersion().compareTo(
 				Version.parseVersion("8.10.2")) >= 0)) {
 
-			expectedTitleHighlight = StringBundler.concat(
+			return StringBundler.concat(
 				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName, StringPool.SPACE,
 				middleName, StringPool.SPACE, lastName,
 				HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 		}
 
-		return expectedTitleHighlight;
+		return StringBundler.concat(
+			HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE, middleName,
+			StringPool.SPACE, HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 	}
 
 	private Long[] _toArrayOfLong(List<Long> list) {

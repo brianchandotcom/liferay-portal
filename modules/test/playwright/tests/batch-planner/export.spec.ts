@@ -339,30 +339,16 @@ test('verify users can exclude fields from being exported in JSONL format', asyn
 
 	const exportPath = path.resolve(__dirname, '../../tmp/Export.zip');
 
-	await unzipFile(
-		handleUnzipFile,
-		exportPath,
-		'jsonl_objectEntry_import',
-		require('./dependencies/jsonl_objectEntry_import.json')
+	expect(JSON.parse(await unzipFile(exportPath))).toEqual(
+		_getExpectedValue(
+			'jsonl_objectEntry_import',
+			require('./dependencies/jsonl_objectEntry_import.json')
+		)
 	);
 
 	fs.unlinkSync(exportPath);
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });
-
-function handleUnzipFile(id, json, zip) {
-	return async function (error, readStream) {
-		if (error) {
-			throw error;
-		}
-		readStream.on('end', () => {
-			zip.readEntry();
-		});
-		const unzippedJson = await streamToJson(readStream);
-
-		expect(json).toEqual(_getExpectedValue(id, unzippedJson));
-	};
-}
 
 function _getExpectedValue(id: string, unzipFile: any) {
 	let expectedValue: {};
@@ -385,14 +371,11 @@ function _getExpectedValue(id: string, unzipFile: any) {
 				},
 			},
 		];
-	}
-	else if (id === 'json_objectEntry_export_excluded') {
+	} else if (id === 'json_objectEntry_export_excluded') {
 		expectedValue = unzipFile;
-	}
-	else if (id === 'jsonl_objectEntry_import') {
+	} else if (id === 'jsonl_objectEntry_import') {
 		expectedValue = unzipFile;
-	}
-	else if (id === 'jsont_objectEntry_import') {
+	} else if (id === 'jsont_objectEntry_import') {
 		expectedValue = {
 			actions: unzipFile.actions,
 			configuration: {

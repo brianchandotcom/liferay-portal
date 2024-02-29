@@ -21,6 +21,7 @@ import com.liferay.knowledge.base.exception.KBArticleSourceURLException;
 import com.liferay.knowledge.base.exception.KBArticleStatusException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
 import com.liferay.knowledge.base.exception.KBArticleUrlTitleException;
+import com.liferay.knowledge.base.exception.LockedKBArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
@@ -32,7 +33,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -1629,8 +1629,8 @@ public class KBArticleLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (DuplicateLockException duplicateLockException) {
-			Lock duplicateLock = duplicateLockException.getLock();
+		catch (LockedKBArticleException lockedKBArticleException) {
+			Lock duplicateLock = lockedKBArticleException.getLock();
 
 			Assert.assertEquals(duplicateLock.getLockId(), lock.getLockId());
 		}

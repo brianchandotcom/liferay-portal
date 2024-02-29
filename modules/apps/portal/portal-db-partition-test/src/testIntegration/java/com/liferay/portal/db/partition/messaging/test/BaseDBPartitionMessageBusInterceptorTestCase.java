@@ -6,7 +6,9 @@
 package com.liferay.portal.db.partition.messaging.test;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -20,12 +22,17 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.ArrayList;
@@ -42,7 +49,10 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import org.osgi.framework.Bundle;
@@ -53,8 +63,22 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Alberto Chaparro
  */
-public abstract class BaseDBPartitionMessageBusInterceptorTestCase
-	extends BaseDBPartitionTestCase {
+public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	public static void assume() {
+		Assume.assumeTrue(DBPartition.isPartitionEnabled());
+
+		DB db = DBManagerUtil.getDB();
+
+		Assume.assumeTrue(db.isSupportsDBPartition());
+	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
@@ -66,7 +90,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 		_serviceRegistrations.clear();
 
-		companyLocalService.deleteCompany(_company);
+		_companyLocalService.deleteCompany(_company);
 
 		PrincipalThreadLocal.setName(_originalName);
 	}
@@ -245,7 +269,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 		Set<Long> companyIds = new TreeSet<>();
 
-		companyLocalService.forEachCompany(
+		_companyLocalService.forEachCompany(
 			company -> {
 				if (company.isActive()) {
 					companyIds.add(company.getCompanyId());
@@ -280,6 +304,10 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 	private static Long[] _activeCompanyIds;
 	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	private static volatile CountDownLatch _countDownLatch;
 
 	@Inject(

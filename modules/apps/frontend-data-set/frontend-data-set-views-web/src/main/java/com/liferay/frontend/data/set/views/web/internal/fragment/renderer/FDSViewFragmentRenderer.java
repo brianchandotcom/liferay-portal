@@ -312,7 +312,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				"views",
 				_getFDSViewsJSONArray(
 					fragmentEntryLink.getCompanyId(), fdsCardObjectEntries,
-					fdsListObjectEntries, fdsFieldObjectEntries)
+					fdsListObjectEntries, fdsFieldObjectEntries,
+					httpServletRequest)
 			).build(),
 			httpServletRequest, writer);
 
@@ -415,7 +416,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSCardsViewJSONObject(
-			Collection<ObjectEntry> fdsViewObjectEntries)
+			Collection<ObjectEntry> fdsViewObjectEntries,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return JSONUtil.put(
@@ -423,7 +425,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		).put(
 			"default", false
 		).put(
-			"label", "Cards"
+			"label", _language.get(httpServletRequest, "cards")
 		).put(
 			"name", "cards"
 		).put(
@@ -457,7 +459,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSListViewJSONObject(
-			Collection<ObjectEntry> fdsViewObjectEntries)
+			Collection<ObjectEntry> fdsViewObjectEntries,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return JSONUtil.put(
@@ -465,7 +468,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		).put(
 			"default", false
 		).put(
-			"label", "List"
+			"label", _language.get(httpServletRequest, "list")
 		).put(
 			"name", "list"
 		).put(
@@ -476,7 +479,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSTableViewJSONObject(
-			long companyId, Set<ObjectEntry> fdsFieldObjectEntries)
+			long companyId, Set<ObjectEntry> fdsFieldObjectEntries,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return JSONUtil.put(
@@ -484,7 +488,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		).put(
 			"default", !FeatureFlagManagerUtil.isEnabled("LPD-10735")
 		).put(
-			"label", "Table"
+			"label", _language.get(httpServletRequest, "table")
 		).put(
 			"name", "table"
 		).put(
@@ -499,7 +503,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	private JSONArray _getFDSViewsJSONArray(
 			long companyId, Collection<ObjectEntry> fdsCardObjectEntries,
 			Collection<ObjectEntry> fdsListObjectEntries,
-			Set<ObjectEntry> fdsFieldObjectEntries)
+			Set<ObjectEntry> fdsFieldObjectEntries,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		JSONArray viewsJSONArray = _jsonFactory.createJSONArray();
@@ -507,18 +512,20 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
 			if (!fdsCardObjectEntries.isEmpty()) {
 				viewsJSONArray.put(
-					_getFDSCardsViewJSONObject(fdsCardObjectEntries));
+					_getFDSCardsViewJSONObject(
+						fdsCardObjectEntries, httpServletRequest));
 			}
 
 			if (!fdsListObjectEntries.isEmpty()) {
 				viewsJSONArray.put(
-					_getFDSListViewJSONObject(fdsListObjectEntries));
+					_getFDSListViewJSONObject(
+						fdsListObjectEntries, httpServletRequest));
 			}
 
 			if (!fdsFieldObjectEntries.isEmpty()) {
 				viewsJSONArray.put(
 					_getFDSTableViewJSONObject(
-						companyId, fdsFieldObjectEntries));
+						companyId, fdsFieldObjectEntries, httpServletRequest));
 			}
 		}
 
@@ -527,7 +534,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			 fdsFieldObjectEntries.isEmpty())) {
 
 			viewsJSONArray.put(
-				_getFDSTableViewJSONObject(companyId, fdsFieldObjectEntries));
+				_getFDSTableViewJSONObject(
+					companyId, fdsFieldObjectEntries, httpServletRequest));
 		}
 
 		return viewsJSONArray;

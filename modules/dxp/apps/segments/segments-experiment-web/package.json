@@ -28,6 +28,7 @@
 			"<rootDir>/test/js/[^/]+\\.js"
 		]
 	},
+	"main": "js/index.js",
 	"name": "segments-experiment-web",
 	"private": true,
 	"scripts": {

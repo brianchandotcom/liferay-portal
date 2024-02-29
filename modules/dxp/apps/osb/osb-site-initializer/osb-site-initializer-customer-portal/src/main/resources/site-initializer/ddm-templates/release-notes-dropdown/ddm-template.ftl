@@ -9,7 +9,7 @@
 <style>
 	#dropdownReleaseNotes {
 		font-size: var(--h2-font-size, 1.375rem) !important;
-	font-weight: var(--h2-font-weight) !important;
+		font-weight: var(--h2-font-weight) !important;
 	}
 </style>
 
@@ -17,7 +17,7 @@
 	<button
 		aria-expanded="false"
 		aria-haspopup="true"
-		class="btn p-0 text-neutral-0 dropdown-toggle"
+		class="btn dropdown-toggle p-0 text-neutral-0"
 		data-toggle="liferay-dropdown"
 		id="dropdownReleaseNotes"
 		type="button"
@@ -32,14 +32,14 @@
 	<ul
 		aria-labelledby="dropdownReleaseNotes"
 		class="dropdown-menu"
-		x-placement="bottom-start"
 		style="top: 0px; transform: translate3d(0px, 40px, 0px);"
+		x-placement="bottom-start"
 	>
 		<#if releaseCategories?has_content>
 			<#list releaseCategories as releaseCategory>
 				<#assign friendlyURL = (releaseCategory.taxonomyCategoryProperties?filter(taxonomyCategoryProperty -> stringUtil.equals(taxonomyCategoryProperty.key, "friendlyURL"))?first.value)! />
 
-			<li>
+				<li>
 					<a class="dropdown-item" href="${releaseCategory.id}?r=${releaseCategory.id}">
 						${releaseCategory.name}
 
@@ -51,6 +51,7 @@
 					</a>
 				</li>
 			</#list>
+
 			<li>
 				<a class="dropdown-item" href="#1">
 					Previous Release

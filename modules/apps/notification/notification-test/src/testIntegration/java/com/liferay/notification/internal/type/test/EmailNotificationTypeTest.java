@@ -365,7 +365,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					createNotificationRecipientSetting(
 						"singleRecipient", String.valueOf(singleRecipient)),
 					createNotificationRecipientSetting("to", to)),
-				ListUtil.toString(getTermNames(), StringPool.BLANK),
+				ListUtil.toString(
+					getTermNames(), StringPool.BLANK, StringPool.SEMICOLON),
 				NotificationConstants.TYPE_EMAIL,
 				Collections.singletonList(objectField.getObjectFieldId())));
 	}
@@ -382,11 +383,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		assertTermValues(
 			getTermValues(),
 			ListUtil.fromString(
-				notificationQueueEntry.getBody(), StringPool.COMMA));
+				notificationQueueEntry.getBody(), StringPool.SEMICOLON));
 		assertTermValues(
 			getTermValues(),
 			ListUtil.fromString(
-				notificationQueueEntry.getSubject(), StringPool.COMMA));
+				notificationQueueEntry.getSubject(), StringPool.SEMICOLON));
 
 		Map<String, Object> notificationRecipientSettingsMap =
 			NotificationRecipientSettingUtil.
@@ -521,7 +522,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		_executeNotificationObjectAction(
 			fileEntry.getFileEntryId(),
 			_addNotificationTemplate(
-				ListUtil.toString(getTermNames(), StringPool.BLANK),
+				ListUtil.toString(
+					getTermNames(), StringPool.BLANK, StringPool.SEMICOLON),
 				NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
 				singleRecipient, Collections.singletonMap(LocaleUtil.US, to)));
 

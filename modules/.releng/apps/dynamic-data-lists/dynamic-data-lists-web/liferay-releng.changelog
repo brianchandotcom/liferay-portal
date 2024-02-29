@@ -492,3 +492,8 @@ bf7973b5b0ce5811a84bf46c5198f2609acd5ced^..aae6a539e5ddd8550c1f23e52e0aaf92c54fc
 # Bundle Version 6.0.89
 #
 aae6a539e5ddd8550c1f23e52e0aaf92c54fceb4^..ba4a4f9ea5dbbbcb5a028dbb405eb5ec7e48e217=LPD-8493 LPS-205913
+
+#
+# Bundle Version 6.0.90
+#
+ba4a4f9ea5dbbbcb5a028dbb405eb5ec7e48e217^..2e91d4edc28ba359f65643c1ba4a3326d3c75138=LPD-17434

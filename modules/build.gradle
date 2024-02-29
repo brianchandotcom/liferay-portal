@@ -501,8 +501,22 @@ gradle.beforeProject {
 				mustRunAfter "formatSource"
 			}
 
-			jarSources {
-				mustRunAfter buildPluginDescriptor
+			if (tasks.findByName("generateJSPJava")) {
+				generateJSPJava {
+					mustRunAfter "generatePomFileForMavenPublication"
+				}
+			}
+
+			if (tasks.findByName("jarSources")) {
+				jarSources {
+					mustRunAfter "buildPluginDescriptor"
+				}
+			}
+
+			if (tasks.findByName("javadoc")) {
+				javadoc {
+					mustRunAfter "generatePomFileForMavenPublication"
+				}
 			}
 		}
 
@@ -576,7 +590,7 @@ gradle.beforeProject {
 						return
 					}
 
-					FileTree fileTree = fileTree(dir: reports.junitXml.destination, exclude: "TEST-*-*.xml", include: "TEST-*.xml")
+					FileTree fileTree = fileTree(dir: reports.junitXml.outputLocation.get().getAsFile(), exclude: "TEST-*-*.xml", include: "TEST-*.xml")
 
 					ant.taskdef classname: "com.oopsconsultancy.xmltask.ant.XmlTask", classpath: configurations.xmltask.asPath, name: "xmltask"
 

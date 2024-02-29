@@ -23,6 +23,10 @@ deploy {
 	}
 }
 
+jarSources {
+	mustRunAfter processSanitizerConfiguration
+}
+
 liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.lang.sanitizer/lib"
 }

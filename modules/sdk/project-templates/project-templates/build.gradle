@@ -183,7 +183,7 @@ test {
 }
 
 testAPIJar {
-	classifier = "tests"
+	archiveClassifier = "tests"
 	from sourceSets.test.output
 }
 

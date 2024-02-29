@@ -83,3 +83,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 }
+
+jarSources {
+	mustRunAfter buildIBMS3Store
+}

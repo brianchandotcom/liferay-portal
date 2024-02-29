@@ -7,6 +7,12 @@ task processKnowledgeBaseSanitizerConfiguration(type: Copy)
 File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
 String sanitizerConfigurationUrl = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/owaspantisamy/antisamy-ebay-1.4.4.xml"
 
+copyCSS {
+	mustRunAfter processBlogsSanitizerConfiguration
+	mustRunAfter processDefaultSanitizerConfiguration
+	mustRunAfter processKnowledgeBaseSanitizerConfiguration
+}
+
 dependencies {
 	compileInclude group: "org.apache.httpcomponents.client5", name: "httpclient5", version: "5.2"
 	compileInclude group: "org.apache.httpcomponents.core5", name: "httpcore5", version: "5.2"
@@ -32,6 +38,12 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+}
+
+jarSources {
+	mustRunAfter processBlogsSanitizerConfiguration
+	mustRunAfter processDefaultSanitizerConfiguration
+	mustRunAfter processKnowledgeBaseSanitizerConfiguration
 }
 
 processDefaultSanitizerConfiguration {
@@ -88,6 +100,7 @@ processBlogsSanitizerConfiguration {
 
 processKnowledgeBaseSanitizerConfiguration {
 	dependsOn processDefaultSanitizerConfiguration
+	mustRunAfter processBlogsSanitizerConfiguration
 
 	File knowledgeBaseSanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/knowledge-base-sanitizer-configuration.xml")
 

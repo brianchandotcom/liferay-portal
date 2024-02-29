@@ -25,6 +25,10 @@ configurations {
 	testThemes
 }
 
+copyCSS {
+	mustRunAfter buildPluginDescriptor
+}
+
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"
 	compileInclude group: "net.coobird", name: "thumbnailator", version: "0.4.8"
@@ -73,7 +77,7 @@ test {
 	systemProperty "maven.debug", System.properties["maven.debug"]
 	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
 	systemProperty "repository.url", System.properties["repository.url"]
-	systemProperty "theme.builder.version", jar.version
+	systemProperty "theme.builder.version", jar.archiveVersion
 }
 
 updateFileVersions {

@@ -29,7 +29,7 @@ distributions {
 }
 
 jar {
-	archiveName "$baseName" + ".jar"
+	archiveFileName = archiveBaseName.get() + ".jar"
 }
 
 liferayOSGi {

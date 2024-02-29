@@ -11,15 +11,21 @@ testIntegrationClasses {
 }
 
 zipPortlet {
-	archiveName "exploded-test-portlet.zip"
-	destinationDir = project.file("test-classes/integration")
+	mustRunAfter compileTestIntegrationJava
+	mustRunAfter processTestIntegrationResources
+
+	archiveFileName = "exploded-test-portlet.zip"
+	destinationDirectory = project.file("test-classes/integration")
 	from "test-classes/integration/exploded-test-portlet"
 	include '**/*'
 }
 
 zipTheme {
-	archiveName "exploded-test-theme.zip"
-	destinationDir = project.file("test-classes/integration")
+	mustRunAfter compileTestIntegrationJava
+	mustRunAfter processTestIntegrationResources
+
+	archiveFileName = "exploded-test-theme.zip"
+	destinationDirectory = project.file("test-classes/integration")
 	from "test-classes/integration/exploded-test-theme"
 	include '**/*'
 }

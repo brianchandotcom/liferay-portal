@@ -6,7 +6,7 @@ classes {
 
 copyPackageJson {
 	from new File(projectDir, "package.json")
-	into new File(sourceSets.main.java.outputDir, "com/liferay/frontend/taglib/clay/internal/js/importmaps/extender/dependencies")
+	into new File(sourceSets.main.java.destinationDirectory.get().getAsFile(), "com/liferay/frontend/taglib/clay/internal/js/importmaps/extender/dependencies")
 }
 
 dependencies {
@@ -37,4 +37,8 @@ dependencies {
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
+}
+
+generateJSPJava {
+	mustRunAfter copyPackageJson
 }

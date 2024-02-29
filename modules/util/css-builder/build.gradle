@@ -82,7 +82,7 @@ test {
 
 	forkEvery = 1
 
-	systemProperty "css.builder.version", jar.version
+	systemProperty "css.builder.version", jar.archiveVersion
 	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
 	systemProperty "maven.debug", System.properties["maven.debug"]

@@ -45,7 +45,7 @@ test {
 		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
 	}
 
-	systemProperty "db.support.version", jar.version
+	systemProperty "db.support.version", jar.archiveVersion
 	systemProperty "h2.version", h2Version
 	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]

@@ -16,6 +16,14 @@ dependencies {
 	api group: "org.json", name: "json", version: "20231013"
 }
 
+generateJenkinsPluginClassManifest {
+	mustRunAfter processResources
+}
+
+generateJenkinsSupportDynamicLoadingManifest {
+	mustRunAfter processResources
+}
+
 jenkinsPlugin {
 	configurePublishing = false
 	jenkinsVersion = "2.164.2"

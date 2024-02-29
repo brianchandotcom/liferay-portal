@@ -18,8 +18,8 @@ processTestIntegrationResources {
 }
 
 upgradeTestResources {
-	archiveName = "test-resources.zip"
-	destinationDir = temporaryDir
+	archiveFileName = "test-resources.zip"
+	destinationDirectory = temporaryDir
 
 	doLast {
 		delete jasperFile

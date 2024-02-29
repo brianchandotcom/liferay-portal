@@ -4183,7 +4183,7 @@ public class ServiceBuilder {
 					dbNames.add("ctCollectionId");
 				}
 
-				if (_optimizeDBIndexes) {
+				if (_optimizeDBIndexes && !unique) {
 					for (String highCardinalityColumnName :
 							_highCardinalityColumnNames) {
 
@@ -4193,8 +4193,6 @@ public class ServiceBuilder {
 							dbNames.clear();
 
 							dbNames.add(highCardinalityColumnName);
-
-							unique = false;
 
 							break;
 						}

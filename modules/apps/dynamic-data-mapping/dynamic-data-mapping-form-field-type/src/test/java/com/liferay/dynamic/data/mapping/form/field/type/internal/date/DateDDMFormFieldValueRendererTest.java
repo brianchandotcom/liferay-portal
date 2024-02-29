@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -87,13 +88,27 @@ public class DateDDMFormFieldValueRendererTest {
 			).put(
 				LocaleUtil.GERMANY, "25.01.2015"
 			).put(
-				LocaleUtil.HUNGARY, "2015.01.25."
+				LocaleUtil.HUNGARY,
+				() -> {
+					if (_isCLDRAndJDK21InUse()) {
+						return "2015. 01. 25.";
+					}
+
+					return "2015.01.25.";
+				}
 			).put(
 				LocaleUtil.JAPAN, "2015/01/25"
 			).put(
 				LocaleUtil.NETHERLANDS, "25-01-2015"
 			).put(
-				LocaleUtil.SIMPLIFIED_CHINESE, "2015-01-25"
+				LocaleUtil.SIMPLIFIED_CHINESE,
+				() -> {
+					if (_isCLDRAndJDK21InUse()) {
+						return "2015/01/25";
+					}
+
+					return "2015-01-25";
+				}
 			).put(
 				LocaleUtil.SPAIN, "25/01/2015"
 			).put(
@@ -102,6 +117,7 @@ public class DateDDMFormFieldValueRendererTest {
 				LocaleUtil.US, "01/25/2015"
 			).build(),
 			"2015-01-25");
+
 		_assertRenderValues(
 			HashMapBuilder.put(
 				new Locale.Builder(
@@ -112,31 +128,79 @@ public class DateDDMFormFieldValueRendererTest {
 				).setExtension(
 					Locale.UNICODE_LOCALE_EXTENSION, "nu-arab"
 				).build(),
-				"٢٥\u200F/٠١\u200F/٢٠١٥ ٠١:٠٠ ص"
+				() -> {
+					if (JavaDetector.isJDK8()) {
+						return "٢٥\u200F/٠١\u200F/٢٠١٥ ٠١:٠٠ ص";
+					}
+
+					return "٢٥\u200F/٠١\u200F/٢٠١٥، ٠١:٠٠ ص";
+				}
 			).put(
 				LocaleUtil.BRAZIL, "25/01/2015 01:00"
 			).put(
 				new Locale("ca", "ES"), "25/01/2015 01:00"
 			).put(
-				new Locale("fi", "FI"), "25.01.2015 01:00"
+				new Locale("fi", "FI"),
+				() -> {
+					if (_isCLDRInUse()) {
+						return "25.01.2015 01.00";
+					}
+
+					return "25.01.2015 01:00";
+				}
 			).put(
 				LocaleUtil.FRANCE, "25/01/2015 01:00"
 			).put(
-				LocaleUtil.GERMANY, "25.01.2015 01:00"
+				LocaleUtil.GERMANY,
+				() -> {
+					if (_isCLDRAndJDK21InUse()) {
+						return "25.01.2015, 01:00";
+					}
+
+					return "25.01.2015 01:00";
+				}
 			).put(
-				LocaleUtil.HUNGARY, "2015.01.25. 01:00"
+				LocaleUtil.HUNGARY,
+				() -> {
+					if (_isCLDRAndJDK21InUse()) {
+						return "2015. 01. 25. 01:00";
+					}
+
+					return "2015.01.25. 01:00";
+				}
 			).put(
 				LocaleUtil.JAPAN, "2015/01/25 01:00"
 			).put(
 				LocaleUtil.NETHERLANDS, "25-01-2015 01:00"
 			).put(
-				LocaleUtil.SIMPLIFIED_CHINESE, "2015-01-25 上午01:00"
+				LocaleUtil.SIMPLIFIED_CHINESE,
+				() -> {
+					if (_isCLDRAndJDK21InUse()) {
+						return "2015/01/25 01:00";
+					}
+
+					return "2015-01-25 上午01:00";
+				}
 			).put(
-				LocaleUtil.SPAIN, "25/01/2015 01:00"
+				LocaleUtil.SPAIN,
+				() -> {
+					if (_isCLDRAndJDK21InUse()) {
+						return "25/01/2015, 01:00";
+					}
+
+					return "25/01/2015 01:00";
+				}
 			).put(
 				new Locale("sv", "SE"), "2015-01-25 01:00"
 			).put(
-				LocaleUtil.US, "01/25/2015 01:00 AM"
+				LocaleUtil.US,
+				() -> {
+					if (_isCLDRAndJDK21InUse()) {
+						return "01/25/2015, 01:00\u202fAM";
+					}
+
+					return "01/25/2015 01:00 AM";
+				}
 			).build(),
 			"2015-01-25 1:00");
 		_assertRenderValues(
@@ -152,9 +216,17 @@ public class DateDDMFormFieldValueRendererTest {
 
 		_assertRenderValues(
 			_getSingleValueExpectedValuesMap("01/25/2015"), "2015-01-25");
-		_assertRenderValues(
-			_getSingleValueExpectedValuesMap("01/25/2015 01:00 AM"),
-			"2015-01-25 1:00");
+
+		if (_isCLDRAndJDK21InUse()) {
+			_assertRenderValues(
+				_getSingleValueExpectedValuesMap("01/25/2015, 01:00\u202fAM"),
+				"2015-01-25 1:00");
+		}
+		else {
+			_assertRenderValues(
+				_getSingleValueExpectedValuesMap("01/25/2015 01:00 AM"),
+				"2015-01-25 1:00");
+		}
 	}
 
 	protected static void setUpFastDateFormatFactoryUtil() {
@@ -218,6 +290,29 @@ public class DateDDMFormFieldValueRendererTest {
 		).put(
 			LocaleUtil.US, expectedValue
 		).build();
+	}
+
+	// TODO Clean up after CLDR update is finished
+
+	private boolean _isCLDRAndJDK21InUse() {
+		if (_isCLDRInUse() && JavaDetector.isJDK21()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	// TODO Clean up after CLDR update is finished
+
+	private boolean _isCLDRInUse() {
+		String javaLocaleProviders = System.getProperty(
+			"java.locale.providers");
+
+		if (javaLocaleProviders.equals("CLDR")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final ThreadLocal<Locale> _themeDisplayLocale =

@@ -277,7 +277,7 @@ public class FilePropagator {
 		sb.append("'");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			_timeout, sb.toString());
+			_timeout * 60 * 1000, sb.toString());
 
 		return process.exitValue();
 	}

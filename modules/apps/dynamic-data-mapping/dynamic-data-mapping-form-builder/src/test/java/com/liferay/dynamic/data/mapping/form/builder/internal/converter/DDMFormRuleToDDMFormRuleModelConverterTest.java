@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -317,6 +318,27 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 		_assertConversionToModel(
 			"ddm-form-rules-jump-to-page-actions.json",
 			"ddm-form-rules-model-jump-to-page-actions.json");
+	}
+
+	@Test
+	public void testNullCondition() {
+		List<DDMFormRule> ddmFormRules = new ArrayList<>();
+
+		ddmFormRules.add(
+			new DDMFormRule(
+				ListUtil.fromArray("setVisible('Text1', true)"), " null "));
+		ddmFormRules.add(
+			new DDMFormRule(
+				ListUtil.fromArray("setVisible('Text2', true)"),
+				"equals(getValue('Text1'), 'Bob')"));
+
+		List<DDMFormRule> newDDMFormRules = _ddmFormRuleConverterImpl.convert(
+			_ddmFormRuleConverterImpl.convert(ddmFormRules),
+			_spiDDMFormRuleSerializerContext);
+
+		Assert.assertEquals(
+			newDDMFormRules.toString(), 1, newDDMFormRules.size());
+		Assert.assertEquals(ddmFormRules.get(1), newDDMFormRules.get(0));
 	}
 
 	protected List<DDMFormRule> convert(String fileName) throws Exception {

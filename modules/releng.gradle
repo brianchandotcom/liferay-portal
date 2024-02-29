@@ -56,7 +56,7 @@ buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 
 	dependencies {
-		classpath group: "com.github.jengelman.gradle.plugins", name: "shadow", version: "2.0.4"
+		classpath group: "com.github.johnrengelman", name: "shadow", version: "8.1.1"
 		classpath group: "de.undercouch", name: "gradle-download-task", version: "5.4.0"
 		classpath group: "org.ajoberstar", name: "gradle-git", version: "1.6.0"
 	}
@@ -214,11 +214,11 @@ portalArtifactsJar {
 		relengProjectDirs = null
 	}
 
-	baseName = "portal"
-	classifier = null
+	archiveBaseName = "portal"
+	archiveClassifier = null
+	archiveVersion = _getReleaseInfoVersion()
 	duplicatesStrategy = "exclude"
 	includeEmptyDirs = false
-	version = _getReleaseInfoVersion()
 	zip64 = true
 
 	doFirst {
@@ -297,11 +297,11 @@ portalJavadoc {
 portalJavadocJar {
 	dependsOn portalJavadoc
 
-	baseName = "portal"
-	classifier = "javadoc"
+	archiveBaseName = "portal"
+	archiveClassifier = "javadoc"
+	archiveVersion = _getReleaseInfoVersion()
 	from portalJavadoc
 	includeEmptyDirs = false
-	version = _getReleaseInfoVersion()
 
 	doLast {
 		println "Created jar " + archivePath
@@ -319,11 +319,11 @@ portalJavadocJar {
 portalSourcesJar {
 	dependsOn portalArtifactsJar
 
-	baseName = "portal"
-	classifier = "sources"
+	archiveBaseName = "portal"
+	archiveClassifier = "sources"
+	archiveVersion = _getReleaseInfoVersion()
 	duplicatesStrategy = "exclude"
 	includeEmptyDirs = false
-	version = _getReleaseInfoVersion()
 
 	doFirst {
 		ConfigurationContainer configurationContainer = project.getConfigurations()

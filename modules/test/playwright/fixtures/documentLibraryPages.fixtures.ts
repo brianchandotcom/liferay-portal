@@ -7,10 +7,10 @@
 
 import {test} from '@playwright/test';
 
-import {DocumentLibraryPage} from '../pages/document-library-web/documentLibrary.page';
-import {DocumentLibraryEditFolderPage} from '../pages/document-library-web/documentLibraryEditFolder.page';
-import {AICreatorInstanceSettingsPage} from '../pages/product-navigation-applications-menu/aiCreatorSettings.page';
-import {GogoShellPage} from '../pages/product-navigation-applications-menu/gogoShell.page';
+import {DocumentLibraryPage} from '../pages/document-library-web/DocumentLibraryPage';
+import {DocumentLibraryEditFolderPage} from '../pages/document-library-web/DocumentLibraryEditFolderPage';
+import {AICreatorInstanceSettingsPage} from '../pages/product-navigation-applications-menu/AICreatorSettingsPage';
+import {GogoShellPage} from '../pages/product-navigation-applications-menu/GogoShellPage';
 
 const documentLibraryPagesTest = test.extend<{
 	aiCreatorInstanceSettingsPage: AICreatorInstanceSettingsPage;

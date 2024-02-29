@@ -6,7 +6,7 @@
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
-import {createPortletURL, fetch} from 'frontend-js-web';
+import {createPortletURL, fetch, getPortletId} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import TimelineDropdownMenu from './TimelineDropdownMenu';
@@ -31,7 +31,7 @@ const PublicationTimeline = ({namespace, timelineItemsURL}) => {
 			{
 				ctCollectionId,
 				mvcRenderCommandName,
-				p_p_id: namespace,
+				p_p_id: getPortletId(namespace),
 				...additionalParams,
 			}
 		).toString();

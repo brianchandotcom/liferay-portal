@@ -75,20 +75,10 @@ PortletURL portletURL = PortletURLBuilder.create(
 						property="createDate"
 					/>
 
-					<%
-					DispatchTriggerMetadata dispatchTriggerMetadata = dispatchTriggerDisplayContext.getDispatchTriggerMetadata(dispatchTrigger.getDispatchTriggerId());
-
-					String nextFireDateString = LanguageUtil.get(request, "not-scheduled");
-
-					if (dispatchTriggerMetadata.isDispatchTaskExecutorReady() && (dispatchTrigger.getNextFireDate() != null)) {
-						nextFireDateString = fastDateTimeFormat.format(dispatchTrigger.getNextFireDate());
-					}
-					%>
-
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-ws-nowrap"
 						name="next-fire-date"
-						value="<%= nextFireDateString %>"
+						value="<%= dispatchTriggerDisplayContext.getNextFireDateString(dispatchTrigger) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -104,6 +94,10 @@ PortletURL portletURL = PortletURLBuilder.create(
 							<liferay-ui:message key="<%= dispatchTaskStatus.getLabel() %>" />
 						</div>
 					</liferay-ui:search-container-column-text>
+
+					<%
+					DispatchTriggerMetadata dispatchTriggerMetadata = dispatchTriggerDisplayContext.getDispatchTriggerMetadata(dispatchTrigger.getDispatchTriggerId());
+					%>
 
 					<c:choose>
 						<c:when test="<%= dispatchTriggerMetadata.isDispatchTaskExecutorReady() %>">

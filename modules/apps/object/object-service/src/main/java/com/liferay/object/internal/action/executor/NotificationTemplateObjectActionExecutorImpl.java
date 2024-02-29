@@ -21,9 +21,11 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -127,6 +129,32 @@ public class NotificationTemplateObjectActionExecutorImpl
 				termValues.put(
 					objectField.getName(),
 					simpleDateFormat.format(new Date(timestamp.getTime())));
+			}
+			else if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.
+							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				termValues.put(
+					objectField.getName(),
+					StringUtil.merge(
+						TransformUtil.transform(
+							StringUtil.split(
+								String.valueOf(
+									termValues.get(objectField.getName())),
+								StringPool.COMMA_AND_SPACE),
+							listTypeEntryKey -> {
+								ListTypeEntry listTypeEntry =
+									_listTypeEntryLocalService.
+										fetchListTypeEntry(
+											objectField.
+												getListTypeDefinitionId(),
+											listTypeEntryKey);
+
+								return listTypeEntry.getNameCurrentValue();
+							},
+							String.class),
+						StringPool.COMMA_AND_SPACE));
 			}
 			else if (Objects.equals(
 						objectField.getBusinessType(),

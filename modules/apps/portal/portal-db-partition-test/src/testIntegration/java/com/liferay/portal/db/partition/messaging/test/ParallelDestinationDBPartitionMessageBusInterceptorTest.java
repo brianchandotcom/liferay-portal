@@ -7,6 +7,7 @@ package com.liferay.portal.db.partition.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Luis Ortiz
  */
+@DataGuard(scope = DataGuard.Scope.NONE)
 @RunWith(Arquillian.class)
 public class ParallelDestinationDBPartitionMessageBusInterceptorTest
 	extends BaseDBPartitionMessageBusInterceptorTestCase {

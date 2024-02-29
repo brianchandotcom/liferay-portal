@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>CHECKBOX_SELECTABLE_IMAGE_CARD</td>
-	<td>//h4[contains(text(), '${key_header}')]//following::div[contains(@id,'image-card-icon-block')]//input[contains(@type,'checkbox')]</td>
+	<td>//h4[contains(text(), '${key_header}')]//following::div[contains(@data-qa-id,'image-card-icon-block')]//input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>KEBAB_DROPDOWN_CARD_OPTION</td>
-	<td>//h4[contains(text(), '${key_header}')]//following::div[contains(@id,'image-card-icon-block')]//button[contains(@class, 'dropdown-toggle')]</td>
+	<td>//h4[contains(text(), '${key_header}')]//following::div[contains(@data-qa-id,'image-card-icon-block')]//button[contains(@class, 'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

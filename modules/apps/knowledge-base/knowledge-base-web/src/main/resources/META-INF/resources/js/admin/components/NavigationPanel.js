@@ -91,7 +91,11 @@ export default function NavigationPanel({
 					Liferay.componentReady(
 						`${portletNamespace}LockedKBArticleModal`
 					).then((component) => {
-						component.open();
+						component.open(
+							response.actionLabel,
+							response.actionURL,
+							response.userName
+						);
 					});
 
 					return;

@@ -8,22 +8,26 @@ package com.liferay.knowledge.base.web.internal.portlet.action;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.exception.LockedKBArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
@@ -59,27 +63,33 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean dragAndDrop = ParamUtil.getBoolean(
 			actionRequest, "dragAndDrop");
+		long parentResourceClassNameId = ParamUtil.getLong(
+			actionRequest, "parentResourceClassNameId",
+			_portal.getClassNameId(KBFolderConstants.getClassName()));
+		long parentResourcePrimKey = ParamUtil.getLong(
+			actionRequest, "parentResourcePrimKey",
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		long resourceClassNameId = ParamUtil.getLong(
+			actionRequest, "resourceClassNameId");
+		long resourcePrimKey = ParamUtil.getLong(
+			actionRequest, "resourcePrimKey");
+		int position = ParamUtil.getInteger(actionRequest, "position");
+		double priority = ParamUtil.getDouble(actionRequest, "priority");
+
+		if (ParamUtil.getBoolean(actionRequest, "forceLock")) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_kbArticleService.forceLockKBArticle(
+				themeDisplay.getScopeGroupId(), resourcePrimKey);
+		}
 
 		try {
-			long resourceClassNameId = ParamUtil.getLong(
-				actionRequest, "resourceClassNameId");
-			long resourcePrimKey = ParamUtil.getLong(
-				actionRequest, "resourcePrimKey");
-			long parentResourceClassNameId = ParamUtil.getLong(
-				actionRequest, "parentResourceClassNameId",
-				_portal.getClassNameId(KBFolderConstants.getClassName()));
-			long parentResourcePrimKey = ParamUtil.getLong(
-				actionRequest, "parentResourcePrimKey",
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
 			long kbArticleClassNameId = _portal.getClassNameId(
 				KBArticleConstants.getClassName());
 
 			if (resourceClassNameId == kbArticleClassNameId) {
 				if (!dragAndDrop) {
-					double priority = ParamUtil.getDouble(
-						actionRequest, "priority");
-
 					_kbArticleService.moveKBArticle(
 						resourcePrimKey, parentResourceClassNameId,
 						parentResourcePrimKey, priority);
@@ -87,18 +97,17 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 				else {
 					KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 						resourcePrimKey, WorkflowConstants.STATUS_ANY);
-					int position = ParamUtil.getInteger(
-						actionRequest, "position");
 
 					if ((kbArticle.getParentResourcePrimKey() !=
 							parentResourcePrimKey) ||
 						(position != -1)) {
 
+						priority = _getPriority(
+							kbArticle, parentResourcePrimKey, position);
+
 						_kbArticleService.moveKBArticle(
 							resourcePrimKey, parentResourceClassNameId,
-							parentResourcePrimKey,
-							_getPriority(
-								kbArticle, parentResourcePrimKey, position));
+							parentResourcePrimKey, priority);
 					}
 				}
 			}
@@ -140,13 +149,31 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (PortalException portalException) {
-			if (portalException instanceof DuplicateLockException) {
+			if (portalException instanceof LockedKBArticleException) {
+				LockedKBArticleException lockedKBArticleException =
+					(LockedKBArticleException)portalException;
+
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse,
 					JSONUtil.put(
+						"actionLabel",
+						_language.get(
+							_portal.getHttpServletRequest(actionRequest),
+							Constants.MOVE)
+					).put(
+						"actionURL",
+						KnowledgeBaseUtil.getKBArticleMoveURL(
+							_portal.getLiferayPortletResponse(actionResponse),
+							false, true, parentResourceClassNameId,
+							parentResourcePrimKey, position, priority,
+							KnowledgeBaseUtil.getRedirect(actionRequest),
+							resourceClassNameId, resourcePrimKey)
+					).put(
 						"lockException", Boolean.TRUE
 					).put(
 						"success", Boolean.FALSE
+					).put(
+						"userName", lockedKBArticleException.getUserName()
 					));
 
 				return;

@@ -42,6 +42,13 @@ public class AssetCategoryDocumentContributor
 	public void contribute(
 		Document document, BaseModel<AssetCategory> baseModel) {
 
+		String className = document.get(Field.ENTRY_CLASS_NAME);
+		long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
+
+		if(Validator.isNull(className) || (classPK <= 0)) {
+			return;
+		}
+
 		_addAssetCategoriesFields(
 			document, Field.ASSET_CATEGORY_IDS, Field.ASSET_CATEGORY_TITLES,
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);

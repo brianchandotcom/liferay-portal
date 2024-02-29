@@ -10,6 +10,9 @@ package com.liferay.login.web.constants;
  */
 public class LoginPortletKeys {
 
+	public static final String CREATE_ACCOUNT =
+		"com_liferay_login_web_portlet_CreateAccountPortlet";
+
 	public static final String FAST_LOGIN =
 		"com_liferay_login_web_portlet_FastLoginPortlet";
 

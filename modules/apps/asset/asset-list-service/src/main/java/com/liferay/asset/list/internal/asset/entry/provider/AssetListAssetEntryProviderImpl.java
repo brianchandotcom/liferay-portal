@@ -34,6 +34,8 @@ import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.info.pagination.InfoPage;
+import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -87,7 +89,7 @@ public class AssetListAssetEntryProviderImpl
 	implements AssetListAssetEntryProvider {
 
 	@Override
-	public List<AssetEntry> getAssetEntries(
+	public InfoPage<AssetEntry> getAssetEntriesInfoPage(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
 		String userId, int start, int end) {
@@ -104,26 +106,6 @@ public class AssetListAssetEntryProviderImpl
 		return _getDynamicAssetEntries(
 			assetListEntry, segmentsEntryIds, assetCategoryIds, assetTagNames,
 			keywords, userId, start, end);
-	}
-
-	@Override
-	public int getAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
-		String userId) {
-
-		if (Objects.equals(
-				assetListEntry.getType(),
-				AssetListEntryTypeConstants.TYPE_MANUAL)) {
-
-			return _getManualAssetEntriesCount(
-				assetListEntry, segmentsEntryIds, assetCategoryIds,
-				assetTagNames, keywords);
-		}
-
-		return _getDynamicAssetEntriesCount(
-			assetListEntry, segmentsEntryIds, assetCategoryIds, assetTagNames,
-			keywords, userId);
 	}
 
 	@Override
@@ -269,14 +251,14 @@ public class AssetListAssetEntryProviderImpl
 		return assetEntryQuery;
 	}
 
-	private List<AssetEntry> _dynamicSearch(
+	private InfoPage<AssetEntry> _dynamicSearch(
 		long companyId, long[][] assetCategoryIds,
 		List<AssetEntryQuery> assetEntryQueries, String[][] assetTagNames,
 		String keywords) {
 
 		try {
 			if (ListUtil.isEmpty(assetEntryQueries)) {
-				return Collections.emptyList();
+				return InfoPage.of(Collections.emptyList());
 			}
 
 			AssetEntryQuery assetEntryQuery = assetEntryQueries.get(0);
@@ -289,7 +271,11 @@ public class AssetListAssetEntryProviderImpl
 					assetEntryQuery, assetEntryQuery.getStart(),
 					assetEntryQuery.getEnd());
 
-				return _assetHelper.getAssetEntries(hits);
+				return InfoPage.of(
+					_assetHelper.getAssetEntries(hits),
+					Pagination.of(
+						assetEntryQuery.getEnd(), assetEntryQuery.getStart()),
+					hits.getLength());
 			}
 
 			SearchHits searchHits = _assetHelper.search(
@@ -299,51 +285,19 @@ public class AssetListAssetEntryProviderImpl
 				assetEntryQueries, assetEntryQuery.getStart(),
 				assetEntryQuery.getEnd());
 
-			return _assetHelper.getAssetEntries(searchHits);
+			Long totalHits = searchHits.getTotalHits();
+
+			return InfoPage.of(
+				_assetHelper.getAssetEntries(searchHits),
+				Pagination.of(
+					assetEntryQuery.getEnd(), assetEntryQuery.getStart()),
+				totalHits.intValue());
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get asset entries", exception);
 		}
 
-		return Collections.emptyList();
-	}
-
-	private int _dynamicSearchCount(
-		long companyId, long[][] assetCategoryIds,
-		List<AssetEntryQuery> assetEntryQueries, String[][] assetTagNames,
-		String keywords) {
-
-		try {
-			if (ListUtil.isEmpty(assetEntryQueries)) {
-				return 0;
-			}
-
-			AssetEntryQuery assetEntryQuery = assetEntryQueries.get(0);
-
-			if (assetEntryQueries.size() == 1) {
-				Long count = _assetHelper.searchCount(
-					_getDynamicSearchContext(
-						companyId, assetCategoryIds, assetEntryQuery,
-						assetTagNames, keywords),
-					assetEntryQuery);
-
-				return count.intValue();
-			}
-
-			Long count = _assetHelper.searchCount(
-				_getDynamicSearchContext(
-					companyId, assetCategoryIds, assetEntryQuery, assetTagNames,
-					keywords),
-				assetEntryQueries, assetEntryQuery.getStart(),
-				assetEntryQuery.getEnd());
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get asset entries count", exception);
-		}
-
-		return 0;
+		return InfoPage.of(Collections.emptyList());
 	}
 
 	private long[] _filterAssetCategoryIds(long[] assetCategoryIds) {
@@ -708,7 +662,7 @@ public class AssetListAssetEntryProviderImpl
 		return combinedSegmentsEntryIds;
 	}
 
-	private List<AssetEntry> _getDynamicAssetEntries(
+	private InfoPage<AssetEntry> _getDynamicAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
 		String userId, int start, int end) {
@@ -729,32 +683,6 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		return _dynamicSearch(
-			assetListEntry.getCompanyId(), assetCategoryIds,
-			TransformUtil.transformToList(
-				_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds),
-				segmentsEntryId -> getAssetEntryQuery(
-					assetListEntry, segmentsEntryId, userId)),
-			assetTagNames, keywords);
-	}
-
-	private int _getDynamicAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
-		String userId) {
-
-		if (!_assetListConfiguration.combineAssetsFromAllSegmentsDynamic()) {
-			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-				assetListEntry,
-				_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
-				userId);
-
-			return _dynamicSearchCount(
-				assetListEntry.getCompanyId(), assetCategoryIds,
-				Collections.singletonList(assetEntryQuery), assetTagNames,
-				keywords);
-		}
-
-		return _dynamicSearchCount(
 			assetListEntry.getCompanyId(), assetCategoryIds,
 			TransformUtil.transformToList(
 				_getCombinedSegmentsEntryIds(assetListEntry, segmentsEntryIds),
@@ -868,7 +796,7 @@ public class AssetListAssetEntryProviderImpl
 		return allKeywords;
 	}
 
-	private List<AssetEntry> _getManualAssetEntries(
+	private InfoPage<AssetEntry> _getManualAssetEntries(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds,
 		long[][] assetCategoryIds, String[][] assetTagNames, String keywords,
 		int start, int end) {
@@ -877,7 +805,7 @@ public class AssetListAssetEntryProviderImpl
 			_getAssetListEntryAssetEntryRels(assetListEntry, segmentsEntryIds);
 
 		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
-			return Collections.emptyList();
+			return InfoPage.of(Collections.emptyList());
 		}
 
 		List<Long> assetEntryIds = ListUtil.toList(
@@ -900,44 +828,15 @@ public class AssetListAssetEntryProviderImpl
 					assetEntry -> assetEntryIds.indexOf(
 						assetEntry.getEntryId())));
 
-			return ListUtil.subList(assetEntries, start, end);
+			return InfoPage.of(
+				ListUtil.subList(assetEntries, start, end),
+				Pagination.of(end, start), hits.getLength());
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get asset entries", exception);
 		}
 
-		return Collections.emptyList();
-	}
-
-	private int _getManualAssetEntriesCount(
-		AssetListEntry assetListEntry, long[] segmentsEntryIds,
-		long[][] assetCategoryIds, String[][] assetTagNames, String keywords) {
-
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
-			_getAssetListEntryAssetEntryRels(assetListEntry, segmentsEntryIds);
-
-		if (ListUtil.isEmpty(assetListEntryAssetEntryRels)) {
-			return 0;
-		}
-
-		List<Long> assetEntryIds = ListUtil.toList(
-			assetListEntryAssetEntryRels,
-			AssetListEntryAssetEntryRelModel::getAssetEntryId);
-
-		try {
-			Long count = _assetHelper.searchCount(
-				_getManualSearchContext(
-					assetCategoryIds, assetEntryIds, assetTagNames,
-					assetListEntry.getCompanyId(), keywords),
-				_getManualAssetEntryQuery(assetListEntry));
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get asset entries count", exception);
-		}
-
-		return 0;
+		return InfoPage.of(Collections.emptyList());
 	}
 
 	private AssetEntryQuery _getManualAssetEntryQuery(

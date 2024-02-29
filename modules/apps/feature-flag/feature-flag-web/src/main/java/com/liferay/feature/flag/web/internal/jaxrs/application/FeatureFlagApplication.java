@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -96,7 +97,9 @@ public class FeatureFlagApplication extends Application {
 			if (featureFlag == null) {
 				return Response.ok(
 					HashMapBuilder.<String, Object>put(
-						"error", "Feature flag \"" + key + "\" is not available"
+						"error",
+						"Feature flag \"" + HtmlUtil.escape(key) +
+							"\" is not available"
 					).build(),
 					MediaType.APPLICATION_JSON
 				).build();
@@ -134,8 +137,8 @@ public class FeatureFlagApplication extends Application {
 		if (featureFlag == null) {
 			_log.error(
 				StringBundler.concat(
-					"Feature flag ", key, " does not exist for company ",
-					companyId));
+					"Feature flag ", HtmlUtil.escape(key),
+					" does not exist for company ", companyId));
 
 			return new ArrayList<>();
 		}

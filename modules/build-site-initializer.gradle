@@ -177,8 +177,8 @@ zipExtraRemoteApp {
 	if (!System.getenv("JENKINS_HOME")) {
 		dependsOn buildExtraRemoteApp
 
-		archiveName "extra-remote-app.zip"
-		destinationDir new File(buildDir, "dist")
+		archiveFileName = "extra-remote-app.zip"
+		destinationDirectory = new File(buildDir, "dist")
 
 		into("remote-app/" + webContextPath) {
 			File viteConfigJSFile = new File(extraRemoteAppDir, "vite.config.js")

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -140,24 +141,26 @@ public class AssetCategoryDocumentContributor
 		Document document, String assetVocabularyCategoryIdsFieldName,
 		Map<Long, List<AssetCategory>> assetVocabularyMap) {
 
-		List<String> filteredAssetVocabularyCategoryStrings = new ArrayList<>();
+		String[] filteredAssetVocabularyCategories = {};
 
 		if (MapUtil.isNotEmpty(assetVocabularyMap)) {
 			for (Map.Entry<Long, List<AssetCategory>> entry :
 					assetVocabularyMap.entrySet()) {
 
-				filteredAssetVocabularyCategoryStrings.addAll(
-					TransformUtil.transform(
+				filteredAssetVocabularyCategories = ArrayUtil.append(
+					filteredAssetVocabularyCategories,
+					TransformUtil.transformToArray(
 						entry.getValue(),
 						assetCategory ->
 							assetCategory.getVocabularyId() + StringPool.DASH +
-								assetCategory.getCategoryId()));
+								assetCategory.getCategoryId(),
+						String.class));
 			}
 		}
 
 		document.addKeyword(
 			assetVocabularyCategoryIdsFieldName,
-			filteredAssetVocabularyCategoryStrings.toArray(new String[0]));
+			filteredAssetVocabularyCategories);
 	}
 
 	private Map<Integer, Map<Long, List<AssetCategory>>>

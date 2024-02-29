@@ -9,6 +9,7 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationRecipientSetting;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
@@ -25,6 +26,7 @@ import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
@@ -39,6 +41,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
@@ -95,7 +98,11 @@ public class BaseNotificationTypeTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		ListTypeEntry listTypeEntry = ListTypeEntryUtil.createListTypeEntry(
+		ListTypeEntry listTypeEntry1 = ListTypeEntryUtil.createListTypeEntry(
+			RandomTestUtil.randomString(),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()));
+		ListTypeEntry listTypeEntry2 = ListTypeEntryUtil.createListTypeEntry(
 			RandomTestUtil.randomString(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
@@ -105,7 +112,7 @@ public class BaseNotificationTypeTest {
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				false, Collections.singletonList(listTypeEntry));
+				false, Arrays.asList(listTypeEntry1, listTypeEntry2));
 
 		childObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
 			"booleanObjectField", RandomTestUtil.randomBoolean()
@@ -132,11 +139,26 @@ public class BaseNotificationTypeTest {
 		).put(
 			"integerObjectField", RandomTestUtil.nextInt()
 		).put(
+			"multiselectPicklistObjectField",
+			Arrays.asList(
+				new ListEntry() {
+					{
+						key = listTypeEntry1.getKey();
+						name = listTypeEntry1.getName(LocaleUtil.US);
+					}
+				},
+				new ListEntry() {
+					{
+						key = listTypeEntry2.getKey();
+						name = listTypeEntry2.getName(LocaleUtil.US);
+					}
+				})
+		).put(
 			"picklistObjectField",
 			new ListEntry() {
 				{
-					key = listTypeEntry.getKey();
-					name = listTypeEntry.getName(LocaleUtil.US);
+					key = listTypeEntry1.getKey();
+					name = listTypeEntry1.getName(LocaleUtil.US);
 				}
 			}
 		).put(
@@ -253,6 +275,15 @@ public class BaseNotificationTypeTest {
 							RandomTestUtil.randomString())
 					).name(
 						"integerObjectField"
+					).build(),
+					new MultiselectPicklistObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"multiselectPicklistObjectField"
+					).listTypeDefinitionId(
+						_listTypeDefinition.getListTypeDefinitionId()
 					).build(),
 					new PicklistObjectFieldBuilder(
 					).labelMap(
@@ -408,7 +439,18 @@ public class BaseNotificationTypeTest {
 			Object expectedTermValue = expectedTermValues.get(i);
 			Object actualTermValue = actualTermValues.get(i);
 
-			if (expectedTermValue instanceof ListEntry) {
+			if (expectedTermValue instanceof List) {
+				List<ListEntry> listTypeEntries =
+					(List<ListEntry>)expectedTermValue;
+
+				Assert.assertEquals(
+					StringUtil.merge(
+						TransformUtil.transform(
+							listTypeEntries, ListEntry::getName),
+						StringPool.COMMA_AND_SPACE),
+					actualTermValue);
+			}
+			else if (expectedTermValue instanceof ListEntry) {
 				ListEntry listEntry = (ListEntry)expectedTermValue;
 
 				Assert.assertEquals(listEntry.getName(), actualTermValue);
@@ -477,6 +519,7 @@ public class BaseNotificationTypeTest {
 				getTermName("dateTimeObjectField"),
 				getTermName("emailTextObjectField"),
 				getTermName("integerObjectField"),
+				getTermName("multiselectPicklistObjectField"),
 				getTermName("picklistObjectField"),
 				getTermName("textObjectField"),
 				getTermName(true, "systemObjectField"),
@@ -564,6 +607,9 @@ public class BaseNotificationTypeTest {
 	@Inject
 	private static ListTypeDefinitionLocalService
 		_listTypeDefinitionLocalService;
+
+	@Inject
+	private static ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
 	private static ListTypeLocalService _listTypeLocalService;

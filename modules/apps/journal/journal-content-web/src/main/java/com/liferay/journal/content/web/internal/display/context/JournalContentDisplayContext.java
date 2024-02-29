@@ -424,9 +424,27 @@ public class JournalContentDisplayContext {
 				liferayRenderResponse.getNamespace() + "selectedItem",
 				itemSelectorCriterion)
 		).setParameter(
-			"groupType", "site"
+			"groupType",
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
+
+				if (group.isLayoutPrototype()) {
+					return null;
+				}
+
+				return "site";
+			}
 		).setParameter(
-			"scopeGroupType", true
+			"scopeGroupType",
+			() -> {
+				Group group = _themeDisplay.getScopeGroup();
+
+				if (group.isLayoutPrototype()) {
+					return null;
+				}
+
+				return true;
+			}
 		).buildPortletURL();
 	}
 

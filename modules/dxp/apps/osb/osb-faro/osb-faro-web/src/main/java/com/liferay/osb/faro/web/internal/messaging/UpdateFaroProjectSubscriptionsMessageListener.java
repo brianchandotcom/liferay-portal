@@ -5,6 +5,9 @@
 
 package com.liferay.osb.faro.web.internal.messaging;
 
+import com.liferay.osb.faro.constants.FaroProjectConstants;
+import com.liferay.osb.faro.engine.client.CerebroEngineClient;
+import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.provisioning.client.ProvisioningClient;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
@@ -102,17 +105,37 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 				continue;
 			}
 
-			_faroProjectLocalService.updateSubscription(
-				faroProject.getFaroProjectId(),
-				JSONUtil.writeValueAsString(
-					new FaroSubscriptionDisplay(
-						_provisioningClient.getOSBAccountEntry(
-							faroProject.getCorpProjectUuid()))));
+			FaroSubscriptionDisplay faroSubscriptionDisplay =
+				new FaroSubscriptionDisplay(
+					_provisioningClient.getOSBAccountEntry(
+						faroProject.getCorpProjectUuid()));
+
+			try {
+				faroSubscriptionDisplay.setCounts(
+					faroProject, _cerebroEngineClient, _contactsEngineClient);
+
+				_faroProjectLocalService.updateSubscription(
+					faroProject.getFaroProjectId(),
+					JSONUtil.writeValueAsString(faroSubscriptionDisplay));
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+
+				_faroProjectLocalService.updateState(
+					faroProject.getFaroProjectId(),
+					FaroProjectConstants.STATE_UNAVAILABLE);
+			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateFaroProjectSubscriptionsMessageListener.class);
+
+	@Reference
+	private CerebroEngineClient _cerebroEngineClient;
+
+	@Reference
+	private ContactsEngineClient _contactsEngineClient;
 
 	private DestinationCreator _destinationCreator = new DestinationCreator();
 

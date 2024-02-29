@@ -57,7 +57,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			_entityFieldsMap.put(
 				objectRelationship.getName(),
-				_getComplexField(objectDefinition, objectRelationship));
+				_getComplexEntityField(objectDefinition, objectRelationship));
 		}
 	}
 
@@ -66,7 +66,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 		return _entityFieldsMap;
 	}
 
-	private ComplexEntityField _getComplexField(
+	private ComplexEntityField _getComplexEntityField(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship) {
 
@@ -173,7 +173,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 				ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
 					objectDefinition.getObjectDefinitionId())) {
 
-			ComplexEntityField complexEntityField = _getComplexField(
+			ComplexEntityField complexEntityField = _getComplexEntityField(
 				objectDefinition, objectRelationship);
 
 			entityFields.put(complexEntityField.getName(), complexEntityField);

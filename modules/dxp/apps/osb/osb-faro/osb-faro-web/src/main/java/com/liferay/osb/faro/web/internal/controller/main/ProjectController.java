@@ -300,9 +300,7 @@ public class ProjectController extends BaseFaroController {
 				corpProjectUuid);
 
 		if (faroProject != null) {
-			return new ProjectDisplay(
-				faroProject, cerebroEngineClient, contactsEngineClient,
-				_provisioningClient);
+			return new ProjectDisplay(faroProject);
 		}
 
 		return _createUnprovisioned(
@@ -438,9 +436,7 @@ public class ProjectController extends BaseFaroController {
 				_provisioningClient.getOSBAccountEntry(corpProjectUuid));
 		}
 
-		return new ProjectDisplay(
-			faroProject, cerebroEngineClient, contactsEngineClient,
-			_provisioningClient);
+		return new ProjectDisplay(faroProject);
 	}
 
 	@GET

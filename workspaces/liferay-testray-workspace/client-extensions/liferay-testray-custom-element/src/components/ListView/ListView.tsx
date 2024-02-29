@@ -273,12 +273,16 @@ const ListView: React.FC<ListViewProps> = ({
 				selectPerPageItems: i18n.translate('x-items'),
 			}}
 			onDeltaChange={(delta) => {
-				updateUrlParams({pageSize: delta});
+				if (managementToolbarProps.applyFilters) {
+					updateUrlParams({pageSize: delta});
+				}
 
 				dispatch({payload: delta, type: ListViewTypes.SET_PAGE_SIZE});
 			}}
 			onPageChange={(page) => {
-				updateUrlParams({page});
+				if (managementToolbarProps.applyFilters) {
+					updateUrlParams({page});
+				}
 
 				dispatch({payload: page, type: ListViewTypes.SET_PAGE});
 			}}

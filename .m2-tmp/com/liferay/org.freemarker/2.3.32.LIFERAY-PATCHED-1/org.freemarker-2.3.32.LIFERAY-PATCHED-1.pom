@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>org.freemarker</artifactId>
-  <version>2.3.30.LIFERAY-PATCHED-2</version>
+  <version>2.3.32.LIFERAY-PATCHED-1</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -30,6 +30,30 @@
   </scm>
   <dependencies>
     <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>org.apache.logging.log4j</artifactId>
+      <version>2.17.1.LIFERAY-PATCHED-1</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>org.apache.logging.log4j.core</artifactId>
+      <version>2.17.1.LIFERAY-PATCHED-1</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
       <groupId>javax.servlet.jsp</groupId>
       <artifactId>javax.servlet.jsp-api</artifactId>
       <version>2.3.2-b01</version>
@@ -44,7 +68,19 @@
     <dependency>
       <groupId>org.freemarker</groupId>
       <artifactId>freemarker</artifactId>
-      <version>2.3.30</version>
+      <version>2.3.32</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.26</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>

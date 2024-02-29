@@ -20,6 +20,9 @@ import LiferayItems from '../../../common/services/liferay/common/interfaces/lif
 import deleteObjectEntry from '../../../common/services/liferay/object/deleteObjectEntry/deleteObjectEntry';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import {Status} from '../../../common/utils/constants/status';
+import patchRequestStatus from '../../MDFRequestManagerStatus/util/patchRequestStatus';
+import useGet from '../../../common/services/liferay/object/useGet';
+import { LiferayAPIs } from '../../../common/services/liferay/common/enums/apis';
 
 export default function getMDFListColumns(
 	hasUserAccountSameAccountEntryCurrentMDFRequest: (
@@ -80,6 +83,47 @@ export default function getMDFListColumns(
 									PRMPageRoute.EDIT_MDF_REQUEST
 								}/#/${row[MDFColumnKey.ID]}`
 							),
+					});
+				}
+
+				if (currentValue === PermissionActionType.CANCEL && row[MDFColumnKey.STATUS] === Status.APPROVED.name) {
+					const {data: mdfRequest} = useGet<
+						MDFRequestDTO
+					>(
+						row[MDFColumnKey.ID] &&
+							`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${row[MDFColumnKey.ID]}?nestedFields=mdfReqToActs%2C%20mdfReqToMDFClms`
+					);
+					previousValue.push({
+						icon: 'block',
+						key: Status.CANCELED.key,
+						label: ' Cancel',
+						onClick: () => {
+							Liferay.Util.openConfirmModal({
+								message:
+									'Are you sure to cancel the MDF request?',
+								onConfirm: async (isConfirmed: boolean) => {
+									if (isConfirmed) {
+										const newRequestStatus = await patchRequestStatus(
+											Status.CANCELED,
+											String(row[MDFColumnKey.ID]),
+											mdfRequest?.mdfReqToActs,
+											mdfRequest?.mdfReqToMDFClms
+										);
+
+										if(newRequestStatus) {
+											Liferay.Util.openToast({
+												message:
+													'MDF Request successfully canceled!',
+												title: 'Success',
+												type: 'success',
+											});
+										}
+
+										mutate(mutated);
+									}
+								},
+							});
+						},
 					});
 				}
 

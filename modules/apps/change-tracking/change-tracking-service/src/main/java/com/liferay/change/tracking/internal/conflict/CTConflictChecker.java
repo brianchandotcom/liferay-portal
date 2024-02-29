@@ -1084,12 +1084,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				CTEntry ctEntry = _modificationCTEntries.get(pk);
 
 				if (ctEntry != null) {
-					long mvccVersion = resultSet.getLong(2);
-
-					ctEntry.setModifiedDate(ctEntry.getModifiedDate());
-					ctEntry.setModelMvccVersion(mvccVersion);
-
-					_ctEntryLocalService.updateCTEntry(ctEntry);
+					_ctEntryLocalService.updateModelMvccVersion(
+						ctEntry.getCtEntryId(), resultSet.getLong(2));
 				}
 			}
 		}

@@ -15,9 +15,9 @@ export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
 
 test('LPD-13559 bulk actions for product relations', async ({
 	apiHelpers,
-	commerceProductAdminDetailsPage,
-	commerceProductAdminDetailsProductRelationsPage,
-	commerceProductAdminPage,
+	commerceAdminProductDetailsPage,
+	commerceAdminProductDetailsProductRelationsPage,
+	commerceAdminProductPage,
 	page,
 }) => {
 	await page.goto('/');
@@ -46,13 +46,13 @@ test('LPD-13559 bulk actions for product relations', async ({
 	]);
 
 	try {
-		await commerceProductAdminPage.gotoProduct(product1.name['en_US']);
+		await commerceAdminProductPage.gotoProduct(product1.name['en_US']);
 
-		await commerceProductAdminDetailsPage.goToProductRelations();
+		await commerceAdminProductDetailsPage.goToProductRelations();
 
 		await expect(
 			(
-				await commerceProductAdminDetailsProductRelationsPage.tableRow(
+				await commerceAdminProductDetailsProductRelationsPage.tableRow(
 					2,
 					product2.name['en_US'],
 					true
@@ -61,7 +61,7 @@ test('LPD-13559 bulk actions for product relations', async ({
 		).toBeVisible();
 		await expect(
 			(
-				await commerceProductAdminDetailsProductRelationsPage.tableRow(
+				await commerceAdminProductDetailsProductRelationsPage.tableRow(
 					2,
 					product3.name['en_US'],
 					true
@@ -69,16 +69,16 @@ test('LPD-13559 bulk actions for product relations', async ({
 			).row
 		).toBeVisible();
 
-		await commerceProductAdminDetailsProductRelationsPage.selectItemsInput.check();
+		await commerceAdminProductDetailsProductRelationsPage.selectItemsInput.check();
 
 		await expect(
-			commerceProductAdminDetailsProductRelationsPage.deleteBulkButton
+			commerceAdminProductDetailsProductRelationsPage.deleteBulkButton
 		).toBeVisible();
 
-		await commerceProductAdminDetailsProductRelationsPage.deleteBulkButton.click();
+		await commerceAdminProductDetailsProductRelationsPage.deleteBulkButton.click();
 
 		await expect(
-			commerceProductAdminDetailsProductRelationsPage.emptyTableMessage
+			commerceAdminProductDetailsProductRelationsPage.emptyTableMessage
 		).toBeVisible();
 	}
 	finally {

@@ -7,7 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {CommerceDNDTablePage} from './commerceDNDTablePage';
 
-export class CommerceProductAdminDetailsProductRelationsPage extends CommerceDNDTablePage {
+export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDNDTablePage {
 	readonly deleteBulkButton: Locator;
 	readonly page: Page;
 	readonly selectItemsInput: Locator;

@@ -15,11 +15,11 @@ import {CommerceAdminChannelDetailsPage} from '../pages/commerce/commerceAdminCh
 import {CommerceAdminChannelsPage} from '../pages/commerce/commerceAdminChannelsPage';
 import {CommerceAdminOrderDetailsPage} from '../pages/commerce/commerceAdminOrderDetailsPage';
 import {CommerceAdminOrdersPage} from '../pages/commerce/commerceAdminOrdersPage';
+import {CommerceAdminProductDetailsPage} from '../pages/commerce/commerceAdminProductDetailsPage';
+import {CommerceAdminProductDetailsProductRelationsPage} from '../pages/commerce/commerceAdminProductDetailsProductRelationsPage';
+import {CommerceAdminProductPage} from '../pages/commerce/commerceAdminProductPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
-import {CommerceProductAdminDetailsPage} from '../pages/commerce/commerceProductAdminDetailsPage';
-import {CommerceProductAdminDetailsProductRelationsPage} from '../pages/commerce/commerceProductAdminDetailsProductRelationsPage';
-import {CommerceProductAdminPage} from '../pages/commerce/commerceProductAdminPage';
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
@@ -28,11 +28,11 @@ const commercePagesTest = test.extend<{
 	commerceAdminChannelsPage: CommerceAdminChannelsPage;
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
 	commerceAdminOrdersPage: CommerceAdminOrdersPage;
+	commerceAdminProductDetailsPage: CommerceAdminProductDetailsPage;
+	commerceAdminProductDetailsProductRelationsPage: CommerceAdminProductDetailsProductRelationsPage;
+	commerceAdminProductPage: CommerceAdminProductPage;
 	commerceLayoutsPage: CommerceLayoutsPage;
 	commerceMiniCartPage: CommerceMiniCartPage;
-	commerceProductAdminDetailsPage: CommerceProductAdminDetailsPage;
-	commerceProductAdminDetailsProductRelationsPage: CommerceProductAdminDetailsProductRelationsPage;
-	commerceProductAdminPage: CommerceProductAdminPage;
 	pendingOrdersPage: PendingOrdersPage;
 	specificationFacetsPage: SpecificationFacetsPage;
 }>({
@@ -54,20 +54,20 @@ const commercePagesTest = test.extend<{
 	commerceAdminOrdersPage: async ({page}, use) => {
 		await use(new CommerceAdminOrdersPage(page));
 	},
+	commerceAdminProductDetailsPage: async ({page}, use) => {
+		await use(new CommerceAdminProductDetailsPage(page));
+	},
+	commerceAdminProductDetailsProductRelationsPage: async ({page}, use) => {
+		await use(new CommerceAdminProductDetailsProductRelationsPage(page));
+	},
+	commerceAdminProductPage: async ({page}, use) => {
+		await use(new CommerceAdminProductPage(page));
+	},
 	commerceLayoutsPage: async ({page}, use) => {
 		await use(new CommerceLayoutsPage(page));
 	},
 	commerceMiniCartPage: async ({page}, use) => {
 		await use(new CommerceMiniCartPage(page));
-	},
-	commerceProductAdminDetailsPage: async ({page}, use) => {
-		await use(new CommerceProductAdminDetailsPage(page));
-	},
-	commerceProductAdminDetailsProductRelationsPage: async ({page}, use) => {
-		await use(new CommerceProductAdminDetailsProductRelationsPage(page));
-	},
-	commerceProductAdminPage: async ({page}, use) => {
-		await use(new CommerceProductAdminPage(page));
 	},
 	pendingOrdersPage: async ({page}, use) => {
 		await use(new PendingOrdersPage(page));

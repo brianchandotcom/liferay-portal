@@ -59,9 +59,9 @@ test.afterEach(async ({apiHelpers}) => {
 test('mini cart bundle with UOM', async ({
 	apiHelpers,
 	applicationsMenuPage,
+	commerceAdminProductPage,
 	commerceLayoutsPage,
 	commerceMiniCartPage,
-	commerceProductAdminPage,
 	page,
 }) => {
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', true);
@@ -191,14 +191,14 @@ test('mini cart bundle with UOM', async ({
 
 	await applicationsMenuPage.goToProducts();
 
-	await commerceProductAdminPage.managementToolbarSearchInput.fill(
+	await commerceAdminProductPage.managementToolbarSearchInput.fill(
 		'ProductBundle'
 	);
-	await commerceProductAdminPage.managementToolbarSearchInput.press('Enter');
+	await commerceAdminProductPage.managementToolbarSearchInput.press('Enter');
 
 	await page.getByRole('link', {exact: true, name: 'ProductBundle'}).click();
 
-	await commerceProductAdminPage.generateSkus();
+	await commerceAdminProductPage.generateSkus();
 
 	await expect(page.getByText('Showing 1 to 5 of 5 entries.')).toBeVisible();
 

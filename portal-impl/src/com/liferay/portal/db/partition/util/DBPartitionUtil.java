@@ -395,7 +395,7 @@ public class DBPartitionUtil {
 				while (resultSet.next()) {
 					String tableName = resultSet.getString("TABLE_NAME");
 
-					if (dbInspector.isControlTable(tableName)) {
+					if (!dbInspector.isControlTable(tableName)) {
 						continue;
 					}
 

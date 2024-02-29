@@ -250,12 +250,6 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 					cpAttachmentFileEntry.getType(), serviceContext);
 		}
 
-		importedCPAttachmentFileEntry.setFileEntryId(fileEntryId);
-
-		importedCPAttachmentFileEntry =
-			_cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
-				importedCPAttachmentFileEntry);
-
 		if ((existingCPAttachmentFileEntry != null) &&
 			(existingCPAttachmentFileEntry.getFileEntryId() != 0) &&
 			(cpAttachmentFileEntry.getFileEntryId() == 0)) {

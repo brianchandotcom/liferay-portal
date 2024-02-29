@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchContextTestUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
@@ -100,7 +98,7 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 		_addJournalArticle(assetCategory, keyword);
 
 		_assertSearchInternalFields(
-			keyword, _getAssetCategoryIds(assetCategory),
+			keyword, Arrays.asList(assetCategory.getCategoryId()),
 			_getAssetCategoryTitles(assetCategory),
 			Arrays.asList(assetCategory.getVocabularyId()));
 		_assertSearchPublicFields(
@@ -121,7 +119,7 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 			keyword, Collections.emptyList(), Collections.emptyList(),
 			Collections.emptyList());
 		_assertSearchPublicFields(
-			keyword, _getAssetCategoryIds(assetCategory),
+			keyword, Arrays.asList(assetCategory.getCategoryId()),
 			_getAssetCategoryTitles(assetCategory),
 			Arrays.asList(assetCategory.getVocabularyId()));
 	}
@@ -215,7 +213,7 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 			String assetCategoryTitlesFieldName,
 			List<String> expectedAssetCategoryTitles,
 			List<Long> expectedAssetVocabularyIds)
-		throws Exception, SearchException {
+		throws Exception {
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
 			_group.getGroupId());
@@ -248,7 +246,7 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 	private void _assertSearchInternalFields(
 			String keyword, List<Long> assetCategoryIds,
 			List<String> assetCategoryTitles, List<Long> assetVocabularyIds)
-		throws Exception, SearchException {
+		throws Exception {
 
 		_assertSearch(
 			keyword, Field.ASSET_INTERNAL_CATEGORY_IDS,
@@ -261,17 +259,13 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 	private void _assertSearchPublicFields(
 			String keyword, List<Long> assetCategoryIds,
 			List<String> assetCategoryTitles, List<Long> assetVocabularyIds)
-		throws Exception, SearchException {
+		throws Exception {
 
 		_assertSearch(
 			keyword, Field.ASSET_CATEGORY_IDS, Field.ASSET_VOCABULARY_IDS,
 			assetCategoryIds,
 			Field.getLocalizedName(LocaleUtil.US, Field.ASSET_CATEGORY_TITLES),
 			assetCategoryTitles, assetVocabularyIds);
-	}
-
-	private List<Long> _getAssetCategoryIds(AssetCategory assetCategory) {
-		return Arrays.asList(assetCategory.getCategoryId());
 	}
 
 	private List<String> _getAssetCategoryTitles(AssetCategory assetCategory) {
@@ -312,8 +306,5 @@ public class AssetCategoryVocabularyVisibilitySearchTest {
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
-
-	@Inject
-	private SearchLocalizationHelper _searchLocalizationHelper;
 
 }

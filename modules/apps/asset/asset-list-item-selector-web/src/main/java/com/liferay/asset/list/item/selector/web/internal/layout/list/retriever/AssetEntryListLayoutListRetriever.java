@@ -81,39 +81,25 @@ public class AssetEntryListLayoutListRetriever
 			pagination = Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, segmentsEntryIds,
 				_getAssetCategoryIds(layoutListRetrieverContext),
 				_getAssetTagNames(layoutListRetrieverContext),
 				_getKeywords(layoutListRetrieverContext), StringPool.BLANK,
 				pagination.getStart(), pagination.getEnd());
 
-		long[] finalSegmentsEntryIds = segmentsEntryIds;
-
 		if (Objects.equals(
 				AssetEntry.class.getName(),
 				assetListEntry.getAssetEntryType())) {
 
-			return InfoPage.of(
-				Collections.unmodifiableList(assetEntries),
-				layoutListRetrieverContext.getPagination(),
-				() -> _assetListAssetEntryProvider.getAssetEntriesCount(
-					assetListEntry, finalSegmentsEntryIds,
-					_getAssetCategoryIds(layoutListRetrieverContext),
-					_getAssetTagNames(layoutListRetrieverContext),
-					_getKeywords(layoutListRetrieverContext),
-					StringPool.BLANK));
+			return infoPage;
 		}
 
 		return InfoPage.of(
-			_toAssetObjects(assetEntries),
+			_toAssetObjects((List<AssetEntry>)infoPage.getPageItems()),
 			layoutListRetrieverContext.getPagination(),
-			() -> _assetListAssetEntryProvider.getAssetEntriesCount(
-				assetListEntry, finalSegmentsEntryIds,
-				_getAssetCategoryIds(layoutListRetrieverContext),
-				_getAssetTagNames(layoutListRetrieverContext),
-				_getKeywords(layoutListRetrieverContext), StringPool.BLANK));
+			infoPage.getTotalCount());
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebC
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -309,9 +310,13 @@ public class AssetEntriesCheckerHelper {
 				}
 			}
 
-			assetEntries = _assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
-				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			InfoPage<AssetEntry> infoPage =
+				_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+					assetListEntry, segmentsEntryIds, null, null,
+					StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+			assetEntries = (List<AssetEntry>)infoPage.getPageItems();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

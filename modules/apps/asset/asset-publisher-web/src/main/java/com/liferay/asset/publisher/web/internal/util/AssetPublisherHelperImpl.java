@@ -26,6 +26,7 @@ import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSele
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -337,9 +338,13 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				portletRequest.getAttribute(
 					SegmentsWebKeys.SEGMENTS_ANONYMOUS_USER_ID));
 
-			return _assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
-				acClientUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			InfoPage<AssetEntry> infoPage =
+				_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+					assetListEntry, segmentsEntryIds, null, null,
+					StringPool.BLANK, acClientUserId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+			return (List<AssetEntry>)infoPage.getPageItems();
 		}
 
 		List<AssetEntry> assetEntries = getAssetEntries(

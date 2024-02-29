@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.info.pagination.InfoPage;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -141,12 +142,15 @@ public class AssetListAssetEntryProviderTest {
 			segmentsEntry2.getSegmentsEntryId()
 		};
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
 				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
+		Assert.assertEquals(3, infoPage.getTotalCount());
+
+		List<AssetEntry> assetEntries =
+			(List<AssetEntry>)infoPage.getPageItems();
 
 		AssetEntry assetEntry = assetEntries.get(0);
 
@@ -229,14 +233,17 @@ public class AssetListAssetEntryProviderTest {
 			segmentsEntry2.getSegmentsEntryId()
 		};
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, segmentsEntryIds,
 				new long[][] {{globalAssetCategory.getCategoryId()}}, null,
 				StringPool.BLANK, StringPool.BLANK, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 1, assetEntries.size());
+		Assert.assertEquals(1, infoPage.getTotalCount());
+
+		List<AssetEntry> assetEntries =
+			(List<AssetEntry>)infoPage.getPageItems();
 
 		AssetEntry assetEntry = assetEntries.get(0);
 
@@ -286,12 +293,15 @@ public class AssetListAssetEntryProviderTest {
 			segmentsEntry2.getSegmentsEntryId()
 		};
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
 				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
+		Assert.assertEquals(3, infoPage.getTotalCount());
+
+		List<AssetEntry> assetEntries =
+			(List<AssetEntry>)infoPage.getPageItems();
 
 		AssetEntry assetEntry = assetEntries.get(0);
 
@@ -321,22 +331,22 @@ public class AssetListAssetEntryProviderTest {
 				RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
+		Assert.assertEquals(3, infoPage.getTotalCount());
 
-		assetEntries = _assetListAssetEntryProvider.getAssetEntries(
+		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
 			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 			new long[0][], null, "title1",
 			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 1, assetEntries.size());
+		Assert.assertEquals(1, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -371,8 +381,8 @@ public class AssetListAssetEntryProviderTest {
 				RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
 					{assetCategory1.getCategoryId()},
@@ -382,7 +392,7 @@ public class AssetListAssetEntryProviderTest {
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
+		Assert.assertEquals(2, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -413,8 +423,8 @@ public class AssetListAssetEntryProviderTest {
 				RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
 					{
@@ -426,7 +436,7 @@ public class AssetListAssetEntryProviderTest {
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
+		Assert.assertEquals(2, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -457,14 +467,14 @@ public class AssetListAssetEntryProviderTest {
 				RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {{assetCategory1.getCategoryId()}}, null,
 				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 1, assetEntries.size());
+		Assert.assertEquals(1, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -498,14 +508,14 @@ public class AssetListAssetEntryProviderTest {
 		AssetCategory assetCategory4 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {{assetCategory4.getCategoryId()}}, null,
 				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 0, assetEntries.size());
+		Assert.assertEquals(0, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -541,11 +551,13 @@ public class AssetListAssetEntryProviderTest {
 				).buildString(),
 				_serviceContext);
 
-		Assert.assertEquals(
-			3,
-			_assetListAssetEntryProvider.getAssetEntriesCount(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				null, null, StringPool.BLANK, StringPool.BLANK));
+				null, null, StringPool.BLANK, StringPool.BLANK,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(3, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -598,11 +610,13 @@ public class AssetListAssetEntryProviderTest {
 				).buildString(),
 				_serviceContext);
 
-		Assert.assertEquals(
-			3,
-			_assetListAssetEntryProvider.getAssetEntriesCount(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-				null, null, StringPool.BLANK, StringPool.BLANK));
+				null, null, StringPool.BLANK, StringPool.BLANK,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(3, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -643,16 +657,16 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
+		Assert.assertEquals(3, infoPage.getTotalCount());
 
-		for (AssetEntry assetEntry : assetEntries) {
+		for (AssetEntry assetEntry : infoPage.getPageItems()) {
 			Assert.assertTrue(
 				ArrayUtil.contains(assetEntryIds, assetEntry.getEntryId()));
 		}
@@ -699,22 +713,22 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				null, null, StringPool.BLANK,
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
+		Assert.assertEquals(3, infoPage.getTotalCount());
 
-		assetEntries = _assetListAssetEntryProvider.getAssetEntries(
+		infoPage = _assetListAssetEntryProvider.getAssetEntriesInfoPage(
 			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 			new long[0][], null, "title1",
 			String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 1, assetEntries.size());
+		Assert.assertEquals(1, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -769,8 +783,8 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
 					{assetCategory1.getCategoryId()},
@@ -780,9 +794,9 @@ public class AssetListAssetEntryProviderTest {
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
+		Assert.assertEquals(2, infoPage.getTotalCount());
 
-		for (AssetEntry assetEntry : assetEntries) {
+		for (AssetEntry assetEntry : infoPage.getPageItems()) {
 			Assert.assertTrue(
 				ArrayUtil.contains(assetEntryIds, assetEntry.getEntryId()));
 		}
@@ -837,8 +851,8 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
 					{
@@ -850,7 +864,10 @@ public class AssetListAssetEntryProviderTest {
 				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
+		Assert.assertEquals(2, infoPage.getTotalCount());
+
+		List<AssetEntry> assetEntries =
+			(List<AssetEntry>)infoPage.getPageItems();
 
 		for (AssetEntry assetEntry : assetEntries) {
 			Assert.assertTrue(
@@ -907,14 +924,14 @@ public class AssetListAssetEntryProviderTest {
 			assetListEntry.getAssetListEntryId(), assetEntryIds,
 			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {{assetCategory1.getCategoryId()}}, null,
 				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 1, assetEntries.size());
+		Assert.assertEquals(1, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -969,14 +986,14 @@ public class AssetListAssetEntryProviderTest {
 		AssetCategory assetCategory4 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {{assetCategory4.getCategoryId()}}, null,
 				StringPool.BLANK, String.valueOf(TestPropsValues.getUserId()),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 0, assetEntries.size());
+		Assert.assertEquals(0, infoPage.getTotalCount());
 	}
 
 	@Test
@@ -1027,12 +1044,15 @@ public class AssetListAssetEntryProviderTest {
 			_group.getGroupId(), assetListEntry,
 			segmentsEntry2.getSegmentsEntryId(), _getTypeSettings(userName));
 
-		List<AssetEntry> assetEntries =
-			_assetListAssetEntryProvider.getAssetEntries(
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
 				assetListEntry, segmentsEntryIds, null, null, StringPool.BLANK,
 				StringPool.BLANK, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
+		Assert.assertEquals(2, infoPage.getTotalCount());
+
+		List<AssetEntry> assetEntries =
+			(List<AssetEntry>)infoPage.getPageItems();
 
 		AssetEntry assetEntry = assetEntries.get(0);
 

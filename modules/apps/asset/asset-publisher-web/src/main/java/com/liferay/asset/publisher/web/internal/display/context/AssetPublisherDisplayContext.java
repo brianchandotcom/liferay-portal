@@ -2215,18 +2215,11 @@ public class AssetPublisherDisplayContext {
 				assetTagNames = new String[][] {getAllAssetTagNames()};
 			}
 
-			return InfoPage.of(
-				_assetListAssetEntryProvider.getAssetEntries(
-					assetListEntry, _getSegmentsEntryIds(assetListEntry),
-					assetCategoryIds, assetTagNames, StringPool.BLANK,
-					_getSegmentsAnonymousUserId(), searchContainer.getStart(),
-					searchContainer.getEnd()),
-				Pagination.of(
-					searchContainer.getEnd(), searchContainer.getStart()),
-				_assetListAssetEntryProvider.getAssetEntriesCount(
-					assetListEntry, _getSegmentsEntryIds(assetListEntry),
-					assetCategoryIds, assetTagNames, StringPool.BLANK,
-					_getSegmentsAnonymousUserId()));
+			return _assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, _getSegmentsEntryIds(assetListEntry),
+				assetCategoryIds, assetTagNames, StringPool.BLANK,
+				_getSegmentsAnonymousUserId(), searchContainer.getStart(),
+				searchContainer.getEnd());
 		}
 
 		if (Validator.isNull(getInfoListProviderKey())) {

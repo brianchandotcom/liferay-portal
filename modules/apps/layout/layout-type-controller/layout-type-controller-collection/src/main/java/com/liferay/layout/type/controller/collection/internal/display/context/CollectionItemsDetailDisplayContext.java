@@ -5,6 +5,7 @@
 
 package com.liferay.layout.type.controller.collection.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
@@ -18,6 +19,7 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
@@ -155,9 +157,13 @@ public class CollectionItemsDetailDisplayContext {
 			return 0;
 		}
 
-		return _assetListAssetEntryProvider.getAssetEntriesCount(
-			assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
-			null, null, StringPool.BLANK, StringPool.BLANK);
+		InfoPage<AssetEntry> infoPage =
+			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null, null, StringPool.BLANK, StringPool.BLANK,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		return infoPage.getTotalCount();
 	}
 
 	private long _getInfoCollectionProviderItemCount(String collectionPK) {

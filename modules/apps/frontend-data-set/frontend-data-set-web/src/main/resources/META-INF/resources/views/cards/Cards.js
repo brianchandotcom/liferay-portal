@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useRef} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
+import {SPRITEMAP} from '../../constants';
 import isLink from '../../utils/isLink';
 
 const Cards = ({items, schema}) => {
@@ -29,7 +30,11 @@ const Cards = ({items, schema}) => {
 							className="col-md-3"
 							key={item[selectedItemsKey] || index}
 						>
-							<Card item={item} schema={schema} />
+							<Card
+								item={item}
+								schema={schema}
+								spritemap={SPRITEMAP}
+							/>
 						</div>
 					);
 				})}
@@ -44,7 +49,7 @@ const Cards = ({items, schema}) => {
 	);
 };
 
-const Card = ({item, schema}) => {
+const Card = ({item, schema, spritemap}) => {
 	const {
 		itemsActions,
 		loadData,

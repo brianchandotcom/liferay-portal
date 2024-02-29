@@ -5,8 +5,11 @@
 
 package com.liferay.document.library.internal.search.spi.model.query.contributor;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -60,10 +63,9 @@ public class DLFileEntryKeywordQueryContributor
 			booleanQuery, searchContext, "extension", false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "fileEntryTypeId", false);
-		_queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, Field.CONTENT, false);
-		_queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, Field.TITLE, false);
+
+		_addSearchLocalizedTerm(booleanQuery, Field.CONTENT, searchContext);
+		_addSearchLocalizedTerm(booleanQuery, Field.TITLE, searchContext);
 
 		if (Validator.isNotNull(keywords)) {
 			try {
@@ -125,6 +127,42 @@ public class DLFileEntryKeywordQueryContributor
 		}
 	}
 
+	private void _addSearchLocalizedTerm(
+		BooleanQuery booleanQuery, String fieldName,
+		SearchContext searchContext) {
+
+		String value = searchContext.getKeywords();
+
+		if (Validator.isBlank(value)) {
+			return;
+		}
+
+		String[] localizedFieldNames =
+			_searchLocalizationHelper.getLocalizedFieldNames(
+				new String[] {fieldName}, searchContext);
+
+		for (String localizedFieldName : localizedFieldNames) {
+			_addTerm(booleanQuery, localizedFieldName, value);
+		}
+	}
+
+	private void _addTerm(
+		BooleanQuery booleanQuery, String field, String value) {
+
+		try {
+			booleanQuery.addTerm(field, value, false);
+		}
+		catch (ParseException parseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to add search term to query field:", field,
+						" value:", value, " like:", false),
+					parseException);
+			}
+		}
+	}
+
 	private MatchQuery _getMatchQuery(
 		String field, String keywords, MatchQuery.Type phrase) {
 
@@ -148,6 +186,9 @@ public class DLFileEntryKeywordQueryContributor
 
 		return booleanQuery;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFileEntryKeywordQueryContributor.class);
 
 	@Reference
 	private QueryHelper _queryHelper;

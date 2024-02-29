@@ -1,12 +1,15 @@
+create unique index IX_42B0A0C3 on LayoutPageTemplateCollection (groupId, ctCollectionId, uuid_[$COLUMN_LENGTH:75$]);
 create index IX_5A1F4BFC on LayoutPageTemplateCollection (groupId, parentLPTCollectionId);
 create unique index IX_F074765 on LayoutPageTemplateCollection (groupId, type_, ctCollectionId, lptCollectionKey[$COLUMN_LENGTH:75$]);
 create unique index IX_E6EE511F on LayoutPageTemplateCollection (groupId, type_, ctCollectionId, name[$COLUMN_LENGTH:75$]);
+create index IX_D2A97D41 on LayoutPageTemplateCollection (groupId, type_, name[$COLUMN_LENGTH:75$]);
 create index IX_A17F0EBD on LayoutPageTemplateCollection (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_E4BCB00E on LayoutPageTemplateEntry (ctCollectionId, plid);
 create index IX_A6459477 on LayoutPageTemplateEntry (groupId, classNameId, classTypeId, defaultTemplate);
 create index IX_F2B223DD on LayoutPageTemplateEntry (groupId, classNameId, status, classTypeId, defaultTemplate);
 create unique index IX_246C8117 on LayoutPageTemplateEntry (groupId, ctCollectionId, layoutPageTemplateEntryKey[$COLUMN_LENGTH:75$]);
+create unique index IX_92540951 on LayoutPageTemplateEntry (groupId, ctCollectionId, uuid_[$COLUMN_LENGTH:75$]);
 create index IX_E7CC5585 on LayoutPageTemplateEntry (groupId, layoutPageTemplateCollectionId);
 create index IX_FFE79984 on LayoutPageTemplateEntry (groupId, name[$COLUMN_LENGTH:75$], layoutPageTemplateCollectionId);
 create index IX_DB1B076B on LayoutPageTemplateEntry (groupId, status, layoutPageTemplateCollectionId);
@@ -20,8 +23,8 @@ create index IX_9C2D0C95 on LayoutPageTemplateEntry (groupId, type_, status, def
 create index IX_A185457E on LayoutPageTemplateEntry (layoutPrototypeId);
 create index IX_2D68D26F on LayoutPageTemplateEntry (uuid_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_D822FD2D on LayoutPageTemplateStructure (groupId, plid, ctCollectionId);
-create index IX_542ECD0E on LayoutPageTemplateStructure (uuid_[$COLUMN_LENGTH:75$]);
+create unique index IX_350C34AD on LayoutPageTemplateStructure (groupId, ctCollectionId, plid);
+create unique index IX_8455EF92 on LayoutPageTemplateStructure (groupId, ctCollectionId, uuid_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_AFE18D91 on LayoutPageTemplateStructureRel (segmentsExperienceId, layoutPageTemplateStructureId, ctCollectionId);
-create index IX_E86D94F5 on LayoutPageTemplateStructureRel (uuid_[$COLUMN_LENGTH:75$]);
+create unique index IX_73B7C395 on LayoutPageTemplateStructureRel (ctCollectionId, segmentsExperienceId, layoutPageTemplateStructureId);
+create unique index IX_CAC45FB3 on LayoutPageTemplateStructureRel (ctCollectionId, uuid_[$COLUMN_LENGTH:75$], groupId);

@@ -26,6 +26,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
@@ -282,14 +283,20 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 		SPIDDMFormRule spiDDMFormRule,
 		SPIDDMFormRuleSerializerContext spiDDMFormRuleSerializerContext) {
 
+		List<SPIDDMFormRuleCondition> spiDDMFormRuleConditions =
+			spiDDMFormRule.getSPIDDMFormRuleConditions();
+
+		if (ListUtil.isEmpty(spiDDMFormRuleConditions)) {
+			return null;
+		}
+
 		return new DDMFormRule(
 			TransformUtil.transform(
 				spiDDMFormRule.getSPIDDMFormRuleActions(),
 				spiDDMFormRuleAction -> spiDDMFormRuleAction.serialize(
 					spiDDMFormRuleSerializerContext)),
 			_convertConditions(
-				spiDDMFormRule.getLogicalOperator(),
-				spiDDMFormRule.getSPIDDMFormRuleConditions(),
+				spiDDMFormRule.getLogicalOperator(), spiDDMFormRuleConditions,
 				spiDDMFormRuleSerializerContext),
 			spiDDMFormRule.getName());
 	}

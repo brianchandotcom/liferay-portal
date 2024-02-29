@@ -60,11 +60,13 @@ public class AssetCategoryDocumentContributor
 
 		_addAssetCategoriesFields(
 			document, Field.ASSET_CATEGORY_IDS, Field.ASSET_CATEGORY_TITLES,
+			Field.ASSET_VOCABULARY_IDS,
 			assetVocabularyVisibilityTypeMap.get(
 				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC));
 		_addAssetCategoriesFields(
 			document, Field.ASSET_INTERNAL_CATEGORY_IDS,
 			Field.ASSET_INTERNAL_CATEGORY_TITLES,
+			Field.ASSET_INTERNAL_VOCABULARY_IDS,
 			assetVocabularyVisibilityTypeMap.get(
 				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
 		_addAssetVocabularyCategoriesFields(
@@ -75,16 +77,20 @@ public class AssetCategoryDocumentContributor
 
 	private void _addAssetCategoriesFields(
 		Document document, String assetCategoryIdsFieldName,
-		String assetCategoryTitlesFieldName,
+		String assetCategoryTitlesFieldName, String assetVocabularyIdsFieldName,
 		Map<Long, List<AssetCategory>> assetVocabularyMap) {
 
 		List<AssetCategory> assetCategories = new ArrayList<>();
+		long[] assetVocabularyIds = {};
 
 		if (MapUtil.isNotEmpty(assetVocabularyMap)) {
 			for (Map.Entry<Long, List<AssetCategory>> entry :
 					assetVocabularyMap.entrySet()) {
 
 				assetCategories.addAll(entry.getValue());
+
+				assetVocabularyIds = ArrayUtil.append(
+					assetVocabularyIds, entry.getKey());
 			}
 		}
 
@@ -92,6 +98,8 @@ public class AssetCategoryDocumentContributor
 			assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
 
 		document.addKeyword(assetCategoryIdsFieldName, assetCategoryIds);
+
+		document.addKeyword(assetVocabularyIdsFieldName, assetVocabularyIds);
 
 		_addAssetCategoryTitles(
 			document, assetCategoryTitlesFieldName, assetCategories);

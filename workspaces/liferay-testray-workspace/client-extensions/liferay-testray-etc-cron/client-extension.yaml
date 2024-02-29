@@ -1,0 +1,7 @@
+assemble:
+    - fromTask: fatJar
+liferay-testray-etc-cron-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Testray Etc Cron Oauth Application Headless Server
+    type: oAuthApplicationHeadlessServer

@@ -260,6 +260,20 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			fragmentEntryLink.getCompanyId(), fdsEntryObjectEntryERC,
 			fdsEntryObjectDefinition);
 
+		Collection<ObjectEntry> fdsCardObjectEntries = null;
+
+		Collection<ObjectEntry> fdsListObjectEntries = null;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
+			fdsCardObjectEntries = _getRelatedObjectEntries(
+				fdsViewObjectDefinition, fdsViewObjectEntry,
+				"fdsViewFDSCardsSectionRelationship");
+
+			fdsListObjectEntries = _getRelatedObjectEntries(
+				fdsViewObjectDefinition, fdsViewObjectEntry,
+				"fdsViewFDSListSectionRelationship");
+		}
+
 		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
 			fdsViewObjectDefinition, fdsViewObjectEntry);
 
@@ -296,19 +310,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				"style", "fluid"
 			).put(
 				"views",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"contentRenderer", "table"
-					).put(
-						"name", "table"
-					).put(
-						"schema",
-						JSONUtil.put(
-							"fields",
-							_getFieldsJSONArray(
-								fragmentEntryLink.getCompanyId(),
-								fdsFieldObjectEntries))
-					))
+				_getFDSViewsJSONArray(
+					fragmentEntryLink.getCompanyId(), fdsCardObjectEntries,
+					fdsListObjectEntries, fdsFieldObjectEntries)
 			).build(),
 			httpServletRequest, writer);
 
@@ -410,6 +414,25 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		);
 	}
 
+	private JSONObject _getFDSCardsViewJSONObject(
+			Collection<ObjectEntry> fdsViewObjectEntries)
+		throws Exception {
+
+		return JSONUtil.put(
+			"contentRenderer", "cards"
+		).put(
+			"default", false
+		).put(
+			"label", "Cards"
+		).put(
+			"name", "cards"
+		).put(
+			"schema", _getViewSchemaJSONObject(fdsViewObjectEntries)
+		).put(
+			"thumbnail", "cards2"
+		);
+	}
+
 	private Set<ObjectEntry> _getFDSFieldObjectEntries(
 			ObjectDefinition fdsViewObjectDefinition,
 			ObjectEntry fdsViewObjectEntry)
@@ -431,6 +454,83 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				"fdsViewFDSFieldRelationship"));
 
 		return fdsFieldObjectEntries;
+	}
+
+	private JSONObject _getFDSListViewJSONObject(
+			Collection<ObjectEntry> fdsViewObjectEntries)
+		throws Exception {
+
+		return JSONUtil.put(
+			"contentRenderer", "list"
+		).put(
+			"default", false
+		).put(
+			"label", "List"
+		).put(
+			"name", "list"
+		).put(
+			"schema", _getViewSchemaJSONObject(fdsViewObjectEntries)
+		).put(
+			"thumbnail", "list"
+		);
+	}
+
+	private JSONObject _getFDSTableViewJSONObject(
+			long companyId, Set<ObjectEntry> fdsFieldObjectEntries)
+		throws Exception {
+
+		return JSONUtil.put(
+			"contentRenderer", "table"
+		).put(
+			"default", !FeatureFlagManagerUtil.isEnabled("LPD-10735")
+		).put(
+			"label", "Table"
+		).put(
+			"name", "table"
+		).put(
+			"schema",
+			JSONUtil.put(
+				"fields", _getFieldsJSONArray(companyId, fdsFieldObjectEntries))
+		).put(
+			"thumbnail", "table"
+		);
+	}
+
+	private JSONArray _getFDSViewsJSONArray(
+			long companyId, Collection<ObjectEntry> fdsCardObjectEntries,
+			Collection<ObjectEntry> fdsListObjectEntries,
+			Set<ObjectEntry> fdsFieldObjectEntries)
+		throws Exception {
+
+		JSONArray viewsJSONArray = _jsonFactory.createJSONArray();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
+			if (!fdsCardObjectEntries.isEmpty()) {
+				viewsJSONArray.put(
+					_getFDSCardsViewJSONObject(fdsCardObjectEntries));
+			}
+
+			if (!fdsListObjectEntries.isEmpty()) {
+				viewsJSONArray.put(
+					_getFDSListViewJSONObject(fdsListObjectEntries));
+			}
+
+			if (!fdsFieldObjectEntries.isEmpty()) {
+				viewsJSONArray.put(
+					_getFDSTableViewJSONObject(
+						companyId, fdsFieldObjectEntries));
+			}
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10735") ||
+			(fdsCardObjectEntries.isEmpty() && fdsListObjectEntries.isEmpty() &&
+			 fdsFieldObjectEntries.isEmpty())) {
+
+			viewsJSONArray.put(
+				_getFDSTableViewJSONObject(companyId, fdsFieldObjectEntries));
+		}
+
+		return viewsJSONArray;
 	}
 
 	private JSONArray _getFieldsJSONArray(
@@ -887,6 +987,25 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		}
 
 		return String.valueOf(fdsFieldProperties.get(fallbackKey));
+	}
+
+	private JSONObject _getViewSchemaJSONObject(
+			Collection<ObjectEntry> fdsViewObjectEntries)
+		throws Exception {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		for (int i = 0; i < fdsViewObjectEntries.size(); i++) {
+			for (ObjectEntry objectEntry : fdsViewObjectEntries) {
+				Map<String, Object> properties = objectEntry.getProperties();
+
+				jsonObject.put(
+					String.valueOf(properties.get("name")),
+					String.valueOf(properties.get("fieldName")));
+			}
+		}
+
+		return jsonObject;
 	}
 
 	private String _interpolateURL(

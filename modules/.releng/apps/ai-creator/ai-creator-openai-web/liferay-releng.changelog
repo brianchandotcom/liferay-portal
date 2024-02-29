@@ -77,3 +77,8 @@ a3ad7ee4a87a6db82cf9c0b3ec40a2ff90d180f0^..88d1bf950217feb6b7eecc853e52b7a484f78
 # Bundle Version 1.0.16
 #
 be49bcfd853f3c1ce83fe2a18d39defa6b8ce448^..345c1303e0d7a9c65c9e8ccaaa1ceec2b67bbdb8=LPD-15169 LPD-15575 LPS-206269
+
+#
+# Bundle Version 1.0.17
+#
+345c1303e0d7a9c65c9e8ccaaa1ceec2b67bbdb8^..303c51bb7f05b7c44f8be03adc7aa49b74b1dd30=LPD-6960 LPD-17968

@@ -42,7 +42,7 @@ export class UserPersonalBarPage {
 			.locator(
 				'#_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet_fm_search'
 			)
-			.getByPlaceholder('Search for');
+			.getByPlaceholder(/^Search/);
 		this.searchResultText = page.getByTestId('searchResultText');
 		this.searchSubmit = page
 			.locator(

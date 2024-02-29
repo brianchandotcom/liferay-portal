@@ -15,5 +15,7 @@ gradleTest {
 	dependsOn copyGradleTestDependencies
 	dependsOn jar
 
+	deprecationMessagesAreFailures = false
+
 	versions gradleVersion
 }

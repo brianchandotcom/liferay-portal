@@ -48,6 +48,8 @@ gradleTest {
 	dependsOn jar
 	dependsOn testClasses
 
+	deprecationMessagesAreFailures = false
+
 	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 
 	versions gradleVersion

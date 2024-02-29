@@ -18,7 +18,7 @@ runGradleTest {
 	doLast {
 		XmlSlurper xmlSlurper = new XmlSlurper()
 
-		File xmlFile = new File(testIntegration.reports.junitXml.destination, "TEST-com.example.sample.GreetingBuilderTest.xml")
+		File xmlFile = new File(testIntegration.reports.junitXml.outputLocation.get().getAsFile(), "TEST-com.example.sample.GreetingBuilderTest.xml")
 
 		def testsuiteNode = xmlSlurper.parse(xmlFile)
 

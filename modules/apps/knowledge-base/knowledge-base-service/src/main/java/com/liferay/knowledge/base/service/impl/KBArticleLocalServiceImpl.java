@@ -31,6 +31,7 @@ import com.liferay.knowledge.base.exception.KBArticleSourceURLException;
 import com.liferay.knowledge.base.exception.KBArticleStatusException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
 import com.liferay.knowledge.base.exception.KBArticleUrlTitleException;
+import com.liferay.knowledge.base.exception.LockedKBArticleException;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.internal.configuration.KBServiceConfiguration;
 import com.liferay.knowledge.base.internal.helper.KBArticleLocalSiblingNavigationHelper;
@@ -72,6 +73,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
@@ -1163,10 +1165,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return null;
 		}
 
-		return _lockManager.lock(
-			userId, KBArticleConstants.getClassName(), resourcePrimKey,
-			String.valueOf(userId), false,
-			KBArticleConstants.LOCK_EXPIRATION_TIME);
+		try {
+			return _lockManager.lock(
+				userId, KBArticleConstants.getClassName(), resourcePrimKey,
+				String.valueOf(userId), false,
+				KBArticleConstants.LOCK_EXPIRATION_TIME);
+		}
+		catch (DuplicateLockException duplicateLockException) {
+			throw new LockedKBArticleException(duplicateLockException);
+		}
 	}
 
 	@Override

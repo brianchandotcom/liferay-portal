@@ -24,12 +24,16 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +52,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -112,6 +117,115 @@ public class KnowledgeBaseUtil {
 			"resourcePrimKey", resourcePrimKey
 		).setParameter(
 			"selectedItemId", resourcePrimKey
+		).buildString();
+	}
+
+	public static String getKBArticleDeleteURL(
+		LiferayPortletResponse liferayPortletResponse, String cmd,
+		boolean forceLock, String redirectURL, long resourcePrimKey) {
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/knowledge_base/delete_kb_article"
+		).setCMD(
+			cmd
+		).setRedirect(
+			redirectURL
+		).setParameter(
+			"forceLock", forceLock
+		).setParameter(
+			"resourcePrimKey", resourcePrimKey
+		).buildString();
+	}
+
+	public static String getKBArticleEditURL(
+		LiferayPortletRequest liferayPortletRequest, boolean forceLock,
+		String redirectURL, long resourcePrimKey) {
+
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/knowledge_base/edit_kb_article"
+		).setRedirect(
+			redirectURL
+		).setParameter(
+			"forceLock", forceLock
+		).setParameter(
+			"resourcePrimKey", resourcePrimKey
+		).buildString();
+	}
+
+	public static String getKBArticleExpireURL(
+		LiferayPortletResponse liferayPortletResponse, boolean forceLock,
+		String redirectURL, long resourcePrimKey) {
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/knowledge_base/expire_kb_article"
+		).setRedirect(
+			redirectURL
+		).setParameter(
+			"forceLock", forceLock
+		).setParameter(
+			"resourcePrimKey", resourcePrimKey
+		).buildString();
+	}
+
+	public static String getKBArticleMoveURL(
+		LiferayPortletResponse liferayPortletResponse, boolean dragAndDrop,
+		boolean forceLock, long parentResourceClassNameId,
+		long parentResourcePrimKey, int position, double priority,
+		String redirectURL, long resourceClassNameId, long resourcePrimKey) {
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/knowledge_base/move_kb_object"
+		).setRedirect(
+			redirectURL
+		).setParameter(
+			"dragAndDrop", dragAndDrop
+		).setParameter(
+			"forceLock", forceLock
+		).setParameter(
+			"parentResourceClassNameId", parentResourceClassNameId
+		).setParameter(
+			"parentResourcePrimKey", parentResourcePrimKey
+		).setParameter(
+			"position", position
+		).setParameter(
+			"priority", priority
+		).setParameter(
+			"resourceClassNameId", resourceClassNameId
+		).setParameter(
+			"resourcePrimKey", resourcePrimKey
+		).buildString();
+	}
+
+	public static String getKBArticleRevertURL(
+		LiferayPortletResponse liferayPortletResponse, boolean forceLock,
+		String redirectURL, long resourcePrimKey, int version) {
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/knowledge_base/update_kb_article"
+		).setCMD(
+			Constants.REVERT
+		).setRedirect(
+			redirectURL
+		).setParameter(
+			"forceLock", forceLock
+		).setParameter(
+			"resourcePrimKey", resourcePrimKey
+		).setParameter(
+			"version", version
+		).setParameter(
+			"workflowAction", WorkflowConstants.ACTION_PUBLISH
 		).buildString();
 	}
 
@@ -248,6 +362,20 @@ public class KnowledgeBaseUtil {
 				params, DBManagerUtil.getDBMaxParameters(), params.length),
 			ArrayUtil.subset(params, 0, DBManagerUtil.getDBMaxParameters())
 		};
+	}
+
+	public static String getRedirect(ActionRequest actionRequest) {
+		String redirect = (String)actionRequest.getAttribute(WebKeys.REDIRECT);
+
+		if (Validator.isNull(redirect)) {
+			redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (!Validator.isBlank(redirect)) {
+				redirect = PortalUtil.escapeRedirect(redirect);
+			}
+		}
+
+		return redirect;
 	}
 
 	public static String getUrlTitle(long id, String title) {

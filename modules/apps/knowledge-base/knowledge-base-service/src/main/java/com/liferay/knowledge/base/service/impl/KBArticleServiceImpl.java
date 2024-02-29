@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -279,6 +280,25 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public Lock forceLockKBArticle(long groupId, long resourcePrimKey)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isGroupAdmin(groupId)) {
+			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+		}
+
+		_kbArticleModelResourcePermission.check(
+			permissionChecker, resourcePrimKey, KBActionKeys.UPDATE);
+
+		kbArticleLocalService.unlockKBArticle(resourcePrimKey);
+
+		return kbArticleLocalService.lockKBArticle(
+			getUserId(), resourcePrimKey);
 	}
 
 	@Override

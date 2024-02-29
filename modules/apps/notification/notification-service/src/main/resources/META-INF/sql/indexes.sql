@@ -12,5 +12,5 @@ create index IX_2ADCE1A0 on NotificationRecipient (uuid_[$COLUMN_LENGTH:75$]);
 create index IX_B6D4DBB0 on NotificationRecipientSetting (notificationRecipientId, name[$COLUMN_LENGTH:75$]);
 create index IX_5B9A04C on NotificationRecipientSetting (uuid_[$COLUMN_LENGTH:75$]);
 
-create index IX_EBE10BB2 on NotificationTemplate (externalReferenceCode[$COLUMN_LENGTH:75$]);
+create unique index IX_66991536 on NotificationTemplate (externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
 create index IX_7256D229 on NotificationTemplate (uuid_[$COLUMN_LENGTH:75$]);

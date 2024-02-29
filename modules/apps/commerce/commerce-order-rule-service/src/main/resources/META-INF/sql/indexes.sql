@@ -1,5 +1,5 @@
+create unique index IX_4BD0EB07 on COREntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_E66CD64A on COREntry (companyId, type_[$COLUMN_LENGTH:75$], active_);
-create index IX_134EA18B on COREntry (externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_8599BE68 on COREntry (status, displayDate);
 create index IX_4AFDBD89 on COREntry (status, expirationDate);
 create index IX_DD753A02 on COREntry (uuid_[$COLUMN_LENGTH:75$]);

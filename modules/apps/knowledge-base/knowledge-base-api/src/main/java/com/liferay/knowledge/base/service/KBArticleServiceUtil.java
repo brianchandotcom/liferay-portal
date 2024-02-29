@@ -152,6 +152,13 @@ public class KBArticleServiceUtil {
 			groupId, kbFolderId, urlTitle, status);
 	}
 
+	public static com.liferay.portal.kernel.lock.Lock forceLockKBArticle(
+			long groupId, long resourcePrimKey)
+		throws PortalException {
+
+		return getService().forceLockKBArticle(groupId, resourcePrimKey);
+	}
+
 	public static List<KBArticle> getAllDescendantKBArticles(
 			long groupId, long resourcePrimKey, int status,
 			OrderByComparator<KBArticle> orderByComparator)

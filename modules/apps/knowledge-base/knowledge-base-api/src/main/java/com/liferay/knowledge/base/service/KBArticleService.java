@@ -118,6 +118,9 @@ public interface KBArticleService extends BaseService {
 			long groupId, long kbFolderId, String urlTitle, int status)
 		throws PortalException;
 
+	public Lock forceLockKBArticle(long groupId, long resourcePrimKey)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getAllDescendantKBArticles(
 			long groupId, long resourcePrimKey, int status,

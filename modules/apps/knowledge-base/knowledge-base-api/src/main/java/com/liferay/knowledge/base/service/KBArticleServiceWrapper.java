@@ -162,6 +162,14 @@ public class KBArticleServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.lock.Lock forceLockKBArticle(
+			long groupId, long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbArticleService.forceLockKBArticle(groupId, resourcePrimKey);
+	}
+
+	@Override
 	public java.util.List<KBArticle> getAllDescendantKBArticles(
 			long groupId, long resourcePrimKey, int status,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>

@@ -30,6 +30,7 @@ import {DragAndDropContextProvider} from '../utils/drag_and_drop/useDragAndDrop'
 import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreviewWrapper from './DragPreviewWrapper';
+import FocusManager from './FocusManager';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
 import {LayoutBreadcrumbs} from './LayoutBreadcrumbs';
 import LayoutViewport from './LayoutViewport';
@@ -59,6 +60,8 @@ export default function App({state}) {
 									<DisplayPagePreviewItemSelector dark />
 
 									<DragPreviewWrapper />
+
+									<FocusManager />
 
 									<WidgetsManager />
 

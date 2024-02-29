@@ -81,8 +81,8 @@ export default function propsTransformer({
 				formSubmitURL: data?.addStyleBookEntryURL,
 				mainFieldLabel: Liferay.Language.get('name'),
 				mainFieldName: 'name',
+				mainFieldPlaceholder: Liferay.Language.get('name'),
 				namespace: `${portletNamespace}`,
-				placeholder: Liferay.Language.get('name'),
 			});
 		},
 	};

@@ -33,11 +33,11 @@ const SimpleInputModal = ({
 	mainFieldComponent,
 	mainFieldLabel,
 	mainFieldName,
+	mainFieldPlaceholder,
 	mainFieldValue = '',
 	method = 'POST',
 	namespace,
 	onFormSuccess,
-	placeholder,
 	required = true,
 	size = 'md',
 }) => {
@@ -188,7 +188,7 @@ const SimpleInputModal = ({
 
 									setInputValue(event.target.value);
 								}}
-								placeholder={placeholder}
+								placeholder={mainFieldPlaceholder}
 								ref={handleMainFieldRef}
 								required={required}
 								type="text"

@@ -45,11 +45,11 @@ function openSimpleInputModalImplementation({
 	mainFieldComponent,
 	mainFieldLabel,
 	mainFieldName,
+	mainFieldPlaceholder,
 	mainFieldValue,
 	method,
 	namespace,
 	onFormSuccess,
-	placeholder,
 	required,
 	size,
 }) {
@@ -72,11 +72,11 @@ function openSimpleInputModalImplementation({
 			mainFieldComponent={mainFieldComponent}
 			mainFieldLabel={mainFieldLabel}
 			mainFieldName={mainFieldName}
+			mainFieldPlaceholder={mainFieldPlaceholder}
 			mainFieldValue={mainFieldValue}
 			method={method}
 			namespace={namespace}
 			onFormSuccess={onFormSuccess}
-			placeholder={placeholder}
 			required={required}
 			size={size}
 		/>,

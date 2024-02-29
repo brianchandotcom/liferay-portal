@@ -23,9 +23,9 @@ export function WorkflowTaskAction({
 			mainFieldComponent: 'textarea',
 			mainFieldLabel: Liferay.Language.get('comment'),
 			mainFieldName: 'comment',
+			mainFieldPlaceholder: Liferay.Language.get('comment'),
 			namespace: portletNamespace,
 			onFormSuccess: () => window.location.reload(),
-			placeholder: Liferay.Language.get('comment'),
 			required: false,
 			size: 'lg',
 		});

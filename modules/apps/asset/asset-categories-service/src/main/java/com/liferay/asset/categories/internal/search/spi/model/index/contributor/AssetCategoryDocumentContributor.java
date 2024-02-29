@@ -78,24 +78,23 @@ public class AssetCategoryDocumentContributor
 		String assetCategoryTitlesFieldName,
 		Map<Long, List<AssetCategory>> assetVocabularyMap) {
 
-		List<AssetCategory> filteredAssetCategories = new ArrayList<>();
+		List<AssetCategory> assetCategories = new ArrayList<>();
 
 		if (MapUtil.isNotEmpty(assetVocabularyMap)) {
 			for (Map.Entry<Long, List<AssetCategory>> entry :
 					assetVocabularyMap.entrySet()) {
 
-				filteredAssetCategories.addAll(entry.getValue());
+				assetCategories.addAll(entry.getValue());
 			}
 		}
 
-		long[] filteredAssetCategoryIds = ListUtil.toLongArray(
-			filteredAssetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
+		long[] assetCategoryIds = ListUtil.toLongArray(
+			assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
 
-		document.addKeyword(
-			assetCategoryIdsFieldName, filteredAssetCategoryIds);
+		document.addKeyword(assetCategoryIdsFieldName, assetCategoryIds);
 
 		_addAssetCategoryTitles(
-			document, assetCategoryTitlesFieldName, filteredAssetCategories);
+			document, assetCategoryTitlesFieldName, assetCategories);
 	}
 
 	private void _addAssetCategoryTitles(
@@ -141,14 +140,14 @@ public class AssetCategoryDocumentContributor
 		Document document, String assetVocabularyCategoryIdsFieldName,
 		Map<Long, List<AssetCategory>> assetVocabularyMap) {
 
-		String[] filteredAssetVocabularyCategories = {};
+		String[] assetVocabularyCategories = {};
 
 		if (MapUtil.isNotEmpty(assetVocabularyMap)) {
 			for (Map.Entry<Long, List<AssetCategory>> entry :
 					assetVocabularyMap.entrySet()) {
 
-				filteredAssetVocabularyCategories = ArrayUtil.append(
-					filteredAssetVocabularyCategories,
+				assetVocabularyCategories = ArrayUtil.append(
+					assetVocabularyCategories,
 					TransformUtil.transformToArray(
 						entry.getValue(),
 						assetCategory ->
@@ -159,8 +158,7 @@ public class AssetCategoryDocumentContributor
 		}
 
 		document.addKeyword(
-			assetVocabularyCategoryIdsFieldName,
-			filteredAssetVocabularyCategories);
+			assetVocabularyCategoryIdsFieldName, assetVocabularyCategories);
 	}
 
 	private Map<Integer, Map<Long, List<AssetCategory>>>

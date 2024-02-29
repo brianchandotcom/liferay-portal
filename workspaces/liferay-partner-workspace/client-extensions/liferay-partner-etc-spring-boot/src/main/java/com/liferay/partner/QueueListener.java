@@ -91,7 +91,35 @@ public class QueueListener {
 				return;
 			}
 
-			if (routingKey.equals("koroneiki.account.update")) {
+			if (routingKey.equals("koroneiki.account.contactrole.assigned")) {
+				JSONObject contactJSONObject = jsonObject.getJSONObject(
+					"contact");
+
+				JSONObject contactRoleJSONObject = jsonObject.getJSONObject(
+					"contactRole");
+
+				_assignUser(
+					koroneikiAccountJSONObject.getString("name"),
+					contactJSONObject.optString("emailAddress"),
+					contactRoleJSONObject.getString("name"),
+					salesforceAccountKey);
+			}
+			else if (routingKey.equals(
+						"koroneiki.account.contactrole.unassigned")) {
+
+				JSONObject contactJSONObject = jsonObject.getJSONObject(
+					"contact");
+
+				JSONObject contactRoleJSONObject = jsonObject.getJSONObject(
+					"contactRole");
+
+				_unassignUser(
+					koroneikiAccountJSONObject.getString("name"),
+					contactJSONObject.optString("emailAddress"),
+					contactRoleJSONObject.getString("name"),
+					salesforceAccountKey);
+			}
+			else if (routingKey.equals("koroneiki.account.update")) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
@@ -107,38 +135,6 @@ public class QueueListener {
 					salesforceAccountKey,
 					koroneikiAccountJSONObject.getString("name"),
 					countryISOCode);
-			}
-
-			if (routingKey.equals("koroneiki.account.contactrole.assigned")) {
-				JSONObject contactRoleJSONObject = jsonObject.getJSONObject(
-					"contactRole");
-
-				String contactRoleName = contactRoleJSONObject.getString(
-					"name");
-
-				JSONObject contactJSONObject = jsonObject.getJSONObject(
-					"contact");
-
-				_assignUser(
-					koroneikiAccountJSONObject.getString("name"),
-					contactJSONObject.optString("emailAddress"),
-					contactRoleName, salesforceAccountKey);
-			}
-
-			if (routingKey.equals("koroneiki.account.contactrole.unassigned")) {
-				JSONObject contactRoleJSONObject = jsonObject.getJSONObject(
-					"contactRole");
-
-				String contactRoleName = contactRoleJSONObject.getString(
-					"name");
-
-				JSONObject contactJSONObject = jsonObject.getJSONObject(
-					"contact");
-
-				_unassignUser(
-					koroneikiAccountJSONObject.getString("name"),
-					contactJSONObject.optString("emailAddress"),
-					contactRoleName, salesforceAccountKey);
 			}
 
 			channel.basicAck(deliveryTag, false);
@@ -160,31 +156,29 @@ public class QueueListener {
 			String contactRoleName, String externalReferenceCode)
 		throws Exception {
 
-		if (contactRoleName.equals("Partner Manager")) {
-			String pmRoleName = "Partner Manager (PM)";
-
+		if (contactRoleName.equals(_KORONEIKI_ROLE_PARTNER_MANAGER_NAME)) {
 			_assignUserToAccount(
 				accountName, contactEmailAddress, externalReferenceCode);
 			_assignUserToAccountRole(
 				externalReferenceCode, contactEmailAddress,
-				"[Account] " + pmRoleName);
-			_assignUserToRegularRole(contactEmailAddress, pmRoleName);
+				_ACCOUNT_ROLE_PARTNER_MANAGER_NAME);
+			_assignUserToRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_MANAGER_NAME);
 		}
 
-		if (contactRoleName.equals("Partner Member")) {
-			String pmuRoleName = "Partner Marketing User (PMU)";
-			String psuRoleName = "Partner Sales User (PSU)";
-
+		if (contactRoleName.equals(_KORONEIKI_ROLE_PARTNER_MEMBER_NAME)) {
 			_assignUserToAccount(
 				accountName, contactEmailAddress, externalReferenceCode);
 			_assignUserToAccountRole(
 				externalReferenceCode, contactEmailAddress,
-				"[Account] " + pmuRoleName);
+				_ACCOUNT_ROLE_PARTNER_MARKETING_USER_NAME);
 			_assignUserToAccountRole(
 				externalReferenceCode, contactEmailAddress,
-				"[Account] " + psuRoleName);
-			_assignUserToRegularRole(contactEmailAddress, pmuRoleName);
-			_assignUserToRegularRole(contactEmailAddress, psuRoleName);
+				_ACCOUNT_ROLE_PARTNER_SALES_USER_NAME);
+			_assignUserToRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_MARKETING_USER_NAME);
+			_assignUserToRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_SALES_USER_NAME);
 		}
 	}
 
@@ -208,11 +202,9 @@ public class QueueListener {
 	}
 
 	private void _assignUserToAccountRole(
-		String externalReferenceCode, String contactEmailAddress,
-		String accountRoleName) {
+		String externalReferenceCode, String contactEmailAddress, String name) {
 
-		long accountRolesId = _getAccountRolesId(
-			externalReferenceCode, accountRoleName);
+		long accountRolesId = _getAccountRoleId(externalReferenceCode, name);
 
 		if (accountRolesId <= 0) {
 			return;
@@ -222,7 +214,7 @@ public class QueueListener {
 			_log.info(
 				StringBundler.concat(
 					"Assigning user ", contactEmailAddress, " to account role ",
-					accountRoleName));
+					name));
 		}
 
 		_post(
@@ -235,7 +227,7 @@ public class QueueListener {
 	}
 
 	private void _assignUserToRegularRole(
-		String contactEmailAddress, String regularRoleName) {
+		String contactEmailAddress, String name) {
 
 		JSONObject userAccountJSONObject = _get(
 			uriBuilder -> uriBuilder.path(
@@ -249,7 +241,7 @@ public class QueueListener {
 			return;
 		}
 
-		long regularRoleId = _getRegularRoleId(regularRoleName);
+		long regularRoleId = _getRegularRoleId(name);
 
 		if (regularRoleId <= 0) {
 			return;
@@ -259,7 +251,7 @@ public class QueueListener {
 			_log.info(
 				StringBundler.concat(
 					"Assigning user ", contactEmailAddress, " to regular role ",
-					regularRoleName));
+					name));
 		}
 
 		_post(
@@ -302,7 +294,7 @@ public class QueueListener {
 			).block());
 	}
 
-	private long _getAccountRolesId(
+	private long _getAccountRoleId(
 		String accountExternalReferenceCode, String accountRoleName) {
 
 		JSONObject accountRolesResponseJSONObject = _get(
@@ -314,10 +306,6 @@ public class QueueListener {
 			).queryParam(
 				"pageSize", "-1"
 			).build());
-
-		if (accountRolesResponseJSONObject.getInt("totalCount") <= 0) {
-			return 0;
-		}
 
 		JSONArray accountRolesJSONArray =
 			accountRolesResponseJSONObject.getJSONArray("items");
@@ -605,30 +593,27 @@ public class QueueListener {
 			String contactRoleName, String externalReferenceCode)
 		throws Exception {
 
-		if (contactRoleName.equals("Partner Manager")) {
-			String pmRoleName = "Partner Manager (PM)";
-
-			_unassignUserFromRegularRole(contactEmailAddress, pmRoleName);
+		if (contactRoleName.equals(_KORONEIKI_ROLE_PARTNER_MANAGER_NAME)) {
+			_unassignUserFromRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_MANAGER_NAME);
 			_unassignUserFromAccountRole(
 				externalReferenceCode, contactEmailAddress,
-				"[Account] " + pmRoleName);
-
+				_ACCOUNT_ROLE_PARTNER_MANAGER_NAME);
 			_unassignUserFromAccount(
 				accountName, contactEmailAddress, externalReferenceCode);
 		}
 
-		if (contactRoleName.equals("Partner Member")) {
-			String pmuRoleName = "Partner Marketing User (PMU)";
-			String psuRoleName = "Partner Sales User (PSU)";
-
-			_unassignUserFromRegularRole(contactEmailAddress, pmuRoleName);
-			_unassignUserFromRegularRole(contactEmailAddress, psuRoleName);
+		if (contactRoleName.equals(_KORONEIKI_ROLE_PARTNER_MEMBER_NAME)) {
+			_unassignUserFromRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_MARKETING_USER_NAME);
+			_unassignUserFromRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_SALES_USER_NAME);
 			_unassignUserFromAccountRole(
 				externalReferenceCode, contactEmailAddress,
-				"[Account] " + pmuRoleName);
+				_ACCOUNT_ROLE_PARTNER_MARKETING_USER_NAME);
 			_unassignUserFromAccountRole(
 				externalReferenceCode, contactEmailAddress,
-				"[Account] " + psuRoleName);
+				_ACCOUNT_ROLE_PARTNER_SALES_USER_NAME);
 			_unassignUserFromAccount(
 				accountName, contactEmailAddress, externalReferenceCode);
 		}
@@ -656,7 +641,7 @@ public class QueueListener {
 		String externalReferenceCode, String contactEmailAddress,
 		String accountRoleName) {
 
-		long accountRolesId = _getAccountRolesId(
+		long accountRolesId = _getAccountRoleId(
 			externalReferenceCode, accountRoleName);
 
 		if (accountRolesId <= 0) {
@@ -807,6 +792,30 @@ public class QueueListener {
 			}
 		}
 	}
+
+	private static final String _ACCOUNT_ROLE_PARTNER_MANAGER_NAME =
+		"[Account] Partner Manager (PM)";
+
+	private static final String _ACCOUNT_ROLE_PARTNER_MARKETING_USER_NAME =
+		"[Account] Partner Marketing User (PMU)";
+
+	private static final String _ACCOUNT_ROLE_PARTNER_SALES_USER_NAME =
+		"[Account] Partner Sales User (PSU)";
+
+	private static final String _KORONEIKI_ROLE_PARTNER_MANAGER_NAME =
+		"Partner Manager";
+
+	private static final String _KORONEIKI_ROLE_PARTNER_MEMBER_NAME =
+		"Partner Member";
+
+	private static final String _ROLE_PARTNER_MANAGER_NAME =
+		"Partner Manager (PM)";
+
+	private static final String _ROLE_PARTNER_MARKETING_USER_NAME =
+		"Partner Marketing User (PMU)";
+
+	private static final String _ROLE_PARTNER_SALES_USER_NAME =
+		"Partner Sales User (PSU)";
 
 	private static final Log _log = LogFactory.getLog(QueueListener.class);
 

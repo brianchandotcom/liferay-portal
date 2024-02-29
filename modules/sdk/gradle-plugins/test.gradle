@@ -1,0 +1,54 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+import de.undercouch.gradle.tasks.download.Download
+
+apply plugin: "de.undercouch.download"
+apply plugin: "org.ysb33r.gradletest"
+
+task copyBundle(type: Copy)
+task copyGradleTestDependencies(type: Copy)
+task downloadBundle(type: Download)
+
+String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
+String gradleVersion = "8.5"
+
+if (System.properties["http.proxyHost"] == "squid.lax.liferay.com") {
+	bundleUrl = "http://mirrors.liferay.com/releases.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
+}
+
+copyBundle {
+	dependsOn downloadBundle
+	eachFile new StripPathSegmentsAction(1)
+
+	from {
+		tarTree(downloadBundle.dest)
+	}
+
+	includeEmptyDirs = false
+	into new File(buildDir, "bundle")
+}
+
+copyGradleTestDependencies {
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+	from configurations.compileClasspath
+	into jar.destinationDirectory
+}
+
+downloadBundle {
+	dest new File(buildDir, "bundle.tar.gz")
+	onlyIfModified true
+	src bundleUrl
+}
+
+gradleTest {
+	dependsOn copyBundle
+	dependsOn copyGradleTestDependencies
+	dependsOn jar
+	dependsOn testClasses
+
+	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
+
+	versions gradleVersion
+}

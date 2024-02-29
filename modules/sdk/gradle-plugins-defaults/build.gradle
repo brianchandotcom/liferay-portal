@@ -1,21 +1,13 @@
 import com.liferay.gradle.util.GradleUtil
-import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
-
-apply plugin: "org.ysb33r.gradletest"
-
-task copyGradleTestDependencies(type: Copy)
 
 String gradleVersion = "8.5"
 
-tasks.eclipse {
-	ext.gradleVersion = gradleVersion
+if (Boolean.getBoolean("gradle.test.enabled")) {
+	apply from: "test.gradle"
 }
 
-copyGradleTestDependencies {
-	duplicatesStrategy = DuplicatesStrategy.INCLUDE
-
-	from configurations.compileClasspath
-	into jar.destinationDir
+tasks.eclipse {
+	ext.gradleVersion = gradleVersion
 }
 
 dependencies {
@@ -39,13 +31,6 @@ dependencies {
 	api group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.18"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
-}
-
-gradleTest {
-	dependsOn copyGradleTestDependencies
-	dependsOn jar
-
-	versions gradleVersion
 }
 
 processResources {

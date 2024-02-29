@@ -1,0 +1,19 @@
+apply plugin: "org.ysb33r.gradletest"
+
+task copyGradleTestDependencies(type: Copy)
+
+String gradleVersion = "8.5"
+
+copyGradleTestDependencies {
+	duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+	from configurations.compileClasspath
+	into jar.destinationDirectory
+}
+
+gradleTest {
+	dependsOn copyGradleTestDependencies
+	dependsOn jar
+
+	versions gradleVersion
+}

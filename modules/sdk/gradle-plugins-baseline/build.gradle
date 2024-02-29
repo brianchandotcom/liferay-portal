@@ -1,21 +1,13 @@
 apply plugin: "com.gradle.plugin-publish"
-apply plugin: "org.ysb33r.gradletest"
-
-task copyGradleTestDependencies(type: Copy)
-task installGradleTestSmokeSample100(type: GradleBuild)
 
 String gradleVersion = "8.5"
-File userMavenRepoLocalDir = new File(System.getProperty("user.home"), ".m2/repository")
+
+if (Boolean.getBoolean("gradle.test.enabled")) {
+	apply from: "test.gradle"
+}
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion
-}
-
-copyGradleTestDependencies {
-	duplicatesStrategy = DuplicatesStrategy.INCLUDE
-
-	from configurations.compileClasspath
-	into jar.destinationDir
 }
 
 dependencies {
@@ -23,22 +15,6 @@ dependencies {
 	api group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.49"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
-}
-
-gradleTest {
-	dependsOn copyGradleTestDependencies
-	dependsOn installGradleTestSmokeSample100
-	dependsOn jar
-
-	deprecationMessagesAreFailures = false
-
-	versions gradleVersion
-}
-
-installGradleTestSmokeSample100 {
-	dir = "src/gradleTest/smoke/dependencies/sample-100"
-	startParameter.systemPropertiesArgs = ["maven.repo.local": userMavenRepoLocalDir.absolutePath]
-	tasks = ["publishToMavenLocal"]
 }
 
 pluginBundle {

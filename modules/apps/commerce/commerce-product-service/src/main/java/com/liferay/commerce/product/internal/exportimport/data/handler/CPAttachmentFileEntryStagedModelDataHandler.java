@@ -175,6 +175,13 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 					cpAttachmentFileEntry.getUuid(),
 					portletDataContext.getScopeGroupId());
 
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FileEntry.class);
+
+		long fileEntryId = MapUtil.getLong(
+			fileEntryIds, cpAttachmentFileEntry.getFileEntryId(), 0);
+
 		if (existingCPAttachmentFileEntry == null) {
 			if (portletDataContext.isDataStrategyMirror()) {
 				serviceContext.setUuid(cpAttachmentFileEntry.getUuid());
@@ -213,8 +220,7 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 					externalReferenceCode, cpAttachmentFileEntry.getUserId(),
 					portletDataContext.getScopeGroupId(),
 					cpAttachmentFileEntry.getClassNameId(), classPK,
-					cpAttachmentFileEntry.getFileEntryId(),
-					cpAttachmentFileEntry.isCDNEnabled(),
+					fileEntryId, cpAttachmentFileEntry.isCDNEnabled(),
 					cpAttachmentFileEntry.getCDNURL(), displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -231,8 +237,7 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 				_cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(
 					cpAttachmentFileEntry.getUserId(),
 					existingCPAttachmentFileEntry.getCPAttachmentFileEntryId(),
-					cpAttachmentFileEntry.getFileEntryId(),
-					cpAttachmentFileEntry.isCDNEnabled(),
+					fileEntryId, cpAttachmentFileEntry.isCDNEnabled(),
 					cpAttachmentFileEntry.getCDNURL(), displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -245,13 +250,7 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 					cpAttachmentFileEntry.getType(), serviceContext);
 		}
 
-		Map<Long, Long> fileEntryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FileEntry.class);
-
-		importedCPAttachmentFileEntry.setFileEntryId(
-			MapUtil.getLong(
-				fileEntryIds, cpAttachmentFileEntry.getFileEntryId(), 0));
+		importedCPAttachmentFileEntry.setFileEntryId(fileEntryId);
 
 		importedCPAttachmentFileEntry =
 			_cpAttachmentFileEntryLocalService.updateCPAttachmentFileEntry(

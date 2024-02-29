@@ -11,6 +11,6 @@ export default function useGetObjectIdBySlash() {
 	return useMemo(() => {
 		const hrefLocation = window.location.href;
 
-		return hrefLocation.split('/l/')[ID_POSITION];
+		return hrefLocation.split('/l/')[ID_POSITION].split('?')[0];
 	}, []);
 }

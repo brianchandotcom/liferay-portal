@@ -569,9 +569,7 @@ const ActionForm = ({
 									}
 									options={
 										activeTab === 0
-											? Liferay.FeatureFlags['LPS-194395']
-												? ITEM_ACTION_TYPES
-												: ACTION_TYPES.slice(0, 1)
+											? ITEM_ACTION_TYPES
 											: ACTION_TYPES
 									}
 									placeholder={Liferay.Language.get(

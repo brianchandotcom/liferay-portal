@@ -21,7 +21,6 @@ export const test = mergeTests(
 		'LPS-164563': true,
 		'LPS-178052': true,
 		'LPS-186871': true,
-		'LPS-194395': true,
 	}),
 	loginTest(),
 	viewsPageTest

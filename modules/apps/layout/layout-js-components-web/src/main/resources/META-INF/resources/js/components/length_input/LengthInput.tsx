@@ -101,19 +101,19 @@ export default function LengthInput({
 	const [nextUnit, setNextUnit] = useState(initialValue.unit);
 	const triggerId = useId();
 
-	const handleUnitSelect = (unit: Unit) => {
+	const onSelectUnit = (selectedUnit: Unit) => {
 		setActive(false);
-		setNextUnit(unit);
+		setNextUnit(selectedUnit);
 
 		document.getElementById(triggerId)!.focus();
 
-		if (!value || unit === nextUnit) {
+		if (!value || selectedUnit === nextUnit) {
 			return;
 		}
 
-		let valueWithUnits = `${value}${unit}`;
+		let valueWithUnits = `${value}${selectedUnit}`;
 
-		if (unit === CUSTOM) {
+		if (selectedUnit === CUSTOM) {
 			inputRef.current!.focus();
 
 			setValue('');
@@ -296,7 +296,7 @@ export default function LengthInput({
 							{UNITS.map((unit) => (
 								<ClayDropDown.Item
 									key={unit}
-									onClick={() => handleUnitSelect(unit)}
+									onClick={() => onSelectUnit(unit)}
 								>
 									{unit.toUpperCase()}
 								</ClayDropDown.Item>

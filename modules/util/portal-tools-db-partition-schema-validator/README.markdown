@@ -1,4 +1,4 @@
-# DB Partition Schema Validator Tool
+# Database Partition Schema Validator Tool
 This tool validates a partition in a database partitioned environment to ensure
 that they only contain data associated with their proper company ID.
 

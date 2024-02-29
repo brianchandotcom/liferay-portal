@@ -1,4 +1,4 @@
-# DB Partition Virtual Instance Migration Extractor Tool
+# Database Partition Virtual Instance Migration Extractor Tool
 This tool extracts the database information needed to validate that all the conditions for a successful virtual instance migration are met.
 
 ## Requirements

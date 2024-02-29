@@ -66,7 +66,7 @@ public class DBPartitionVirtualInstanceMigrationValidator {
 			HelpFormatter helpFormatter = new HelpFormatter();
 
 			helpFormatter.printHelp(
-				"Liferay Portal Tools DB Partition Virtual Instance " +
+				"Liferay Portal Tools Database Partition Virtual Instance " +
 					"Migration Validator",
 				options);
 
@@ -135,7 +135,7 @@ public class DBPartitionVirtualInstanceMigrationValidator {
 			HelpFormatter helpFormatter = new HelpFormatter();
 
 			helpFormatter.printHelp(
-				"Liferay Portal Tools DB Partition Virtual Instance " +
+				"Liferay Portal Tools Database Partition Virtual Instance " +
 					"Migration Validator",
 				options);
 

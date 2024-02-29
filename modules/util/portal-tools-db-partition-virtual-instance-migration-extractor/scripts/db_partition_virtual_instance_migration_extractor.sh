@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Ignore SIGHUP to avoid stopping migration when terminal disconnects.
+# Ignore SIGHUP to avoid stopping the process when terminal disconnects.
 #
 
 trap '' 1
@@ -19,7 +19,7 @@ fi
 cd "$(dirname "${DB_PARTITION_MIGRATION_EXTRACTOR_PATH}")"
 
 #
-# Run database virtual instance migration extractor tool.
+# Run database partition virtual instance migration extractor tool.
 #
 
 java -jar com.liferay.portal.tools.db.partition.virtual.instance.migration.extractor.jar "$@"

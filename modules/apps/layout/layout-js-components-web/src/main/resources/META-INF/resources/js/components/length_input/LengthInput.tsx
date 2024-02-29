@@ -51,15 +51,15 @@ const getInitialValue = (value: string | undefined): Value => {
 	const match = value.toString().toLowerCase().match(REGEX);
 
 	if (match) {
-		const [, number, unit] = match;
+		const [, nextNumber, nextUnit] = match;
 
-		if (!isUnit(unit)) {
-			throw new Error(`Invalid unit "${unit}"`);
+		if (!isUnit(nextUnit)) {
+			throw new Error(`Invalid unit "${nextUnit}"`);
 		}
 
 		return {
-			unit,
-			value: number,
+			unit: nextUnit,
+			value: nextNumber,
 		};
 	}
 
@@ -142,11 +142,11 @@ export default function LengthInput({
 		let valueWithUnits = value;
 
 		if (match) {
-			const [, number, unit] = match;
+			const [, nextNumber, nextUnit] = match;
 
-			valueWithUnits = `${number}${unit}`;
+			valueWithUnits = `${nextNumber}${nextUnit}`;
 
-			setValue(number);
+			setValue(nextNumber);
 		}
 		else if (nextUnit !== CUSTOM && value) {
 			valueWithUnits = `${value}${nextUnit}`;
@@ -160,11 +160,11 @@ export default function LengthInput({
 					valueWithUnits.toString()
 				))
 		) {
-			const [, number, unit] =
+			const [, nextNumber, nextUnit] =
 				currentValue?.toLowerCase().match(REGEX) || [];
 
-			setValue(number || currentValue || '');
-			setNextUnit(isUnit(unit) ? unit : CUSTOM);
+			setValue(nextNumber || currentValue || '');
+			setNextUnit(isUnit(nextUnit) ? nextUnit : CUSTOM);
 			setError(true);
 
 			setTimeout(() => setError(false), 1000);
@@ -196,10 +196,10 @@ export default function LengthInput({
 			return;
 		}
 
-		const [, , unit] =
+		const [, , nextUnit] =
 			currentValue.toString().toLowerCase().match(REGEX) || [];
 
-		setNextUnit(isUnit(unit) ? unit : CUSTOM);
+		setNextUnit(isUnit(nextUnit) ? nextUnit : CUSTOM);
 	}, [currentValue]);
 
 	return (

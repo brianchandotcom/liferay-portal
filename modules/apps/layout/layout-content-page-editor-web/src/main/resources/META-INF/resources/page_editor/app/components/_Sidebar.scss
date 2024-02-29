@@ -233,6 +233,8 @@ html#{$cadmin-selector} body {
 }
 
 .page-editor__old-sidebar {
+	--toolbar-height: #{$toolbarHeight};
+
 	@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {
 		--toolbar-height: #{$desktopToolbarHeight};
 	}

@@ -23,11 +23,17 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FastDateFormatConstants;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.text.Format;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -118,6 +124,35 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 
 		return _dispatchTriggerMetadataProvider.getDispatchTriggerMetadata(
 			dispatchTriggerId);
+	}
+
+	public String getNextFireDateString(DispatchTrigger dispatchTrigger) {
+		DispatchTriggerMetadata dispatchTriggerMetadata =
+			getDispatchTriggerMetadata(dispatchTrigger.getDispatchTriggerId());
+
+		if (!dispatchTriggerMetadata.isDispatchTaskExecutorReady() ||
+			(dispatchTrigger.getNextFireDate() == null)) {
+
+			return LanguageUtil.get(
+				dispatchRequestHelper.getRequest(), "not-scheduled");
+		}
+
+		TimeZone timeZone = null;
+
+		String timeZoneId = dispatchTrigger.getTimeZoneId();
+
+		if (Validator.isNotNull(timeZoneId)) {
+			timeZone = TimeZone.getTimeZone(timeZoneId);
+		}
+		else {
+			timeZone = TimeZoneUtil.getDefault();
+		}
+
+		Format fastDateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG,
+			dispatchRequestHelper.getLocale(), timeZone);
+
+		return fastDateTimeFormat.format(dispatchTrigger.getNextFireDate());
 	}
 
 	public String getOrderByCol() {

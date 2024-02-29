@@ -7,18 +7,17 @@ package com.liferay.change.tracking.internal.background.task;
 
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.exception.CTPublishConflictException;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
 import com.liferay.change.tracking.internal.helper.CTTableMapperHelper;
+import com.liferay.change.tracking.internal.helper.CTUserNotificationHelper;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
@@ -36,25 +35,19 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
@@ -62,7 +55,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -275,45 +267,29 @@ public class CTPublishBackgroundTaskExecutor
 			showConflicts = true;
 		}
 
-		try {
-			long fromCTCollectionId = MapUtil.getLong(
-				backgroundTask.getTaskContextMap(), "fromCTCollectionId");
+		long fromCTCollectionId = MapUtil.getLong(
+			backgroundTask.getTaskContextMap(), "fromCTCollectionId");
 
+		try {
 			CTCollection fromCTCollection =
 				_ctCollectionLocalService.getCTCollection(fromCTCollectionId);
 
-			for (long userId :
-					_getPublicationRolesUserIds(
-						fromCTCollection, showConflicts)) {
-
-				if (UserNotificationManagerUtil.isDeliver(
-						userId, CTPortletKeys.PUBLICATIONS, 0,
-						UserNotificationDefinition.
-							NOTIFICATION_TYPE_REVIEW_ENTRY,
-						UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
-
-					_userNotificationEventLocalService.
-						sendUserNotificationEvents(
-							userId, CTPortletKeys.PUBLICATIONS,
-							UserNotificationDeliveryConstants.TYPE_WEBSITE,
-							false,
-							JSONUtil.put(
-								"backgroundTaskId",
-								backgroundTask.getBackgroundTaskId()
-							).put(
-								"ctCollectionId", fromCTCollectionId
-							).put(
-								"ctCollectionName",
-								HtmlUtil.escape(fromCTCollection.getName())
-							).put(
-								"notificationType",
-								UserNotificationDefinition.
-									NOTIFICATION_TYPE_REVIEW_ENTRY
-							).put(
-								"showConflicts", showConflicts
-							));
-				}
-			}
+			_ctUserNotificationHelper.sendUserNotificationEvents(
+				fromCTCollection,
+				JSONUtil.put(
+					"backgroundTaskId", backgroundTask.getBackgroundTaskId()
+				).put(
+					"ctCollectionId", fromCTCollectionId
+				).put(
+					"ctCollectionName",
+					HtmlUtil.escape(fromCTCollection.getName())
+				).put(
+					"notificationType",
+					UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY
+				).put(
+					"showConflicts", showConflicts
+				),
+				_getPublicationRolesUserIds(fromCTCollection, showConflicts));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -329,16 +305,17 @@ public class CTPublishBackgroundTaskExecutor
 		_backgroundTaskExecutor = (BackgroundTaskExecutor)aopProxy;
 	}
 
-	private Set<Long> _getPublicationRolesUserIds(
-			CTCollection ctCollection, boolean showConflicts)
-		throws PortalException {
+	private long[] _getPublicationRolesUserIds(
+		CTCollection ctCollection, boolean showConflicts) {
 
-		Set<Long> userIds = new HashSet<>();
-
-		userIds.add(ctCollection.getUserId());
+		Set<Long> userIds = SetUtil.fromArray(
+			_ctUserNotificationHelper.getPublicationRoleUserIds(
+				ctCollection, true, PublicationRoleConstants.NAME_ADMIN,
+				PublicationRoleConstants.NAME_EDITOR,
+				PublicationRoleConstants.NAME_PUBLISHER));
 
 		if (!showConflicts) {
-			Role role = _roleLocalService.getRole(
+			Role role = _roleLocalService.fetchRole(
 				ctCollection.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 			for (long userId :
@@ -348,37 +325,7 @@ public class CTPublishBackgroundTaskExecutor
 			}
 		}
 
-		Group group = _groupLocalService.fetchGroup(
-			ctCollection.getCompanyId(),
-			_portal.getClassNameId(CTCollection.class),
-			ctCollection.getCtCollectionId());
-
-		if (group == null) {
-			return userIds;
-		}
-
-		String[] roleNames = {
-			PublicationRoleConstants.NAME_ADMIN,
-			PublicationRoleConstants.NAME_EDITOR,
-			PublicationRoleConstants.NAME_PUBLISHER
-		};
-
-		for (String roleName : roleNames) {
-			Role role = _roleLocalService.fetchRole(
-				group.getCompanyId(), roleName);
-
-			if (role == null) {
-				continue;
-			}
-
-			userIds.addAll(
-				TransformUtil.transform(
-					_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
-						group.getGroupId(), role.getRoleId()),
-					UserGroupRole::getUserId));
-		}
-
-		return userIds;
+		return ArrayUtil.toLongArray(userIds);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -399,25 +346,15 @@ public class CTPublishBackgroundTaskExecutor
 	private CTServiceRegistry _ctServiceRegistry;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private CTUserNotificationHelper _ctUserNotificationHelper;
 
 	@Reference
 	private MultiVMPool _multiVMPool;
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
 	private RoleLocalService _roleLocalService;
 
 	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
 
 }

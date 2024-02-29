@@ -20,3 +20,7 @@ dependencies {
 pluginBundle {
 	tags = ["docker", "subprojects"]
 }
+
+updateFileVersions {
+	match(/classpath group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.app\.docker", version: "(\d.+)"/, "../../../modules/dxp/apps/osb/osb-faro/build.gradle")
+}

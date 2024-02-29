@@ -9,11 +9,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Charles May
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@ProviderType
 public interface LayoutPermission {
 
 	public void check(

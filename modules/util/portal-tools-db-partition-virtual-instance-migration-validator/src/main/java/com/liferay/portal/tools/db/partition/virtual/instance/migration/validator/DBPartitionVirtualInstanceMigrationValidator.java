@@ -50,7 +50,7 @@ public class DBPartitionVirtualInstanceMigrationValidator {
 	private static Options _getOptions() {
 		Options options = new Options();
 
-		options.addOption("h", "help", false, "Print help.");
+		options.addOption("h", "help", false, "Display options.");
 		options.addRequiredOption("s", "source-file", true, "Source file.");
 		options.addRequiredOption("t", "target-file", true, "Target file.");
 

@@ -66,12 +66,14 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 	private static Options _getOptions() {
 		Options options = new Options();
 
-		options.addOption("h", "help", false, "Print help.");
-		options.addRequiredOption("j", "jdbc-url", true, "JDBC URL.");
-		options.addRequiredOption("p", "password", true, "Password.");
-		options.addRequiredOption("u", "user", true, "User.");
-		options.addOption("s", "schema-name", true, "Schema name.");
 		options.addOption("d", "output-dir", true, "Output directory.");
+		options.addOption("h", "help", false, "Display options.");
+		options.addRequiredOption("j", "jdbc-url", true, "JDBC URL.");
+		options.addRequiredOption(
+			"p", "password", true, "Database user password.");
+		options.addOption(
+			"s", "schema-name", true, "Database schema name to be extracted.");
+		options.addRequiredOption("u", "user", true, "Database user name.");
 
 		return options;
 	}
@@ -148,7 +150,7 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 		File exportDir = null;
 
 		if (path == null) {
-			exportDir = new File(".", "exports");
+			exportDir = new File(".", "extractions");
 
 			if (!exportDir.exists()) {
 				exportDir.mkdirs();

@@ -62,6 +62,8 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
+				ObjectActionThreadLocal.setSkipObjectActionExecution(false);
+
 				_execute(
 					objectActionId, objectDefinition,
 					GetterUtil.getLong(payloadJSONObject.getLong("classPK")),

@@ -5,10 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {ApplicationsMenuPage} from './ApplicationsMenuPage';
 
 const MOCK_API_KEY = 'VALID_API_KEY';
 const STR_BLANK = '';
+
 export class AICreatorInstanceSettingsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly apiKeyInput: Locator;

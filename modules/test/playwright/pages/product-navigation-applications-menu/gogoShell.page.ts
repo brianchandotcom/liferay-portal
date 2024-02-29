@@ -5,7 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {ApplicationsMenuPage} from './ApplicationsMenuPage';
+
 export class GogoShellPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly commandInput: Locator;

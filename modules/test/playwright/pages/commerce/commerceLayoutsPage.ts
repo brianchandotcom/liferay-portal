@@ -4,7 +4,8 @@
  */
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
-import { liferayConfig } from '../../liferay.config';
+
+import {liferayConfig} from '../../liferay.config';
 
 export class CommerceLayoutsPage {
 	readonly addPageButton: Locator;

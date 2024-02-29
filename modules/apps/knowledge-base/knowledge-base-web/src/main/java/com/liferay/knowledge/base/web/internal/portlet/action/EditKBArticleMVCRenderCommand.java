@@ -6,17 +6,21 @@
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.exception.LockedKBArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -55,6 +59,21 @@ public class EditKBArticleMVCRenderCommand implements MVCRenderCommand {
 			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		if (kbArticle != null) {
+			if (ParamUtil.getBoolean(renderRequest, "forceLock")) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				try {
+					_kbArticleService.forceLockKBArticle(
+						themeDisplay.getScopeGroupId(),
+						kbArticle.getResourcePrimKey());
+				}
+				catch (PortalException portalException) {
+					throw new PortletException(portalException);
+				}
+			}
+
 			try {
 				_kbArticleService.lockKBArticle(kbArticle.getResourcePrimKey());
 			}
@@ -63,12 +82,24 @@ public class EditKBArticleMVCRenderCommand implements MVCRenderCommand {
 					_portal.getOriginalServletRequest(
 						_portal.getHttpServletRequest(renderRequest));
 
-				if (portalException instanceof DuplicateLockException) {
+				if (portalException instanceof LockedKBArticleException) {
 					_hideDefaultErrorMessage(httpServletRequest);
+
+					LockedKBArticleException lockedKBArticleException =
+						(LockedKBArticleException)portalException;
+
+					lockedKBArticleException.setActionURL(
+						KnowledgeBaseUtil.getKBArticleEditURL(
+							_portal.getLiferayPortletRequest(renderRequest),
+							true,
+							ParamUtil.getString(renderRequest, "redirect"),
+							kbArticle.getResourcePrimKey()));
+					lockedKBArticleException.setCmd(Constants.EDIT);
 				}
 
 				SessionErrors.add(
-					httpServletRequest, portalException.getClass());
+					httpServletRequest, portalException.getClass(),
+					portalException);
 
 				_sendRedirect(renderRequest, renderResponse);
 

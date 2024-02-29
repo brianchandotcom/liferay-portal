@@ -6,13 +6,18 @@
 package com.liferay.knowledge.base.web.internal.portlet.action;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.exception.LockedKBArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
-import com.liferay.portal.kernel.lock.DuplicateLockException;
+import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -37,23 +42,41 @@ public class ExpireKBArticleMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			long resourcePrimKey = ParamUtil.getLong(
-				actionRequest, "resourcePrimKey");
+		long resourcePrimKey = ParamUtil.getLong(
+			actionRequest, "resourcePrimKey");
 
+		if (ParamUtil.getBoolean(actionRequest, "forceLock")) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_kbArticleService.forceLockKBArticle(
+				themeDisplay.getScopeGroupId(), resourcePrimKey);
+		}
+
+		try {
 			_kbArticleService.expireKBArticle(
 				resourcePrimKey,
 				ServiceContextFactory.getInstance(
 					KBArticle.class.getName(), actionRequest));
 		}
-		catch (DuplicateLockException duplicateLockException) {
+		catch (LockedKBArticleException lockedKBArticleException) {
 			hideDefaultErrorMessage(actionRequest);
 
-			throw duplicateLockException;
+			lockedKBArticleException.setActionURL(
+				KnowledgeBaseUtil.getKBArticleExpireURL(
+					_portal.getLiferayPortletResponse(actionResponse), true,
+					KnowledgeBaseUtil.getRedirect(actionRequest),
+					resourcePrimKey));
+			lockedKBArticleException.setCmd(Constants.EXPIRE);
+
+			throw lockedKBArticleException;
 		}
 	}
 
 	@Reference
 	private KBArticleService _kbArticleService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -12,11 +12,12 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.KBArticleDisplayDateException;
 import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
 import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
+import com.liferay.knowledge.base.exception.LockedKBArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
@@ -94,6 +95,15 @@ public class UpdateKBArticleMVCActionCommand
 			sendRedirect(actionRequest, actionResponse);
 		}
 		else if (cmd.equals(Constants.REVERT)) {
+			if (ParamUtil.getBoolean(actionRequest, "forceLock")) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				_kbArticleService.forceLockKBArticle(
+					themeDisplay.getScopeGroupId(), resourcePrimKey);
+			}
+
 			int version = ParamUtil.getInteger(
 				actionRequest, "version", KBArticleConstants.DEFAULT_VERSION);
 
@@ -101,10 +111,17 @@ public class UpdateKBArticleMVCActionCommand
 				_kbArticleService.revertKBArticle(
 					resourcePrimKey, version, serviceContext);
 			}
-			catch (DuplicateLockException duplicateLockException) {
+			catch (LockedKBArticleException lockedKBArticleException) {
 				hideDefaultErrorMessage(actionRequest);
 
-				throw duplicateLockException;
+				lockedKBArticleException.setActionURL(
+					KnowledgeBaseUtil.getKBArticleRevertURL(
+						_portal.getLiferayPortletResponse(actionResponse), true,
+						KnowledgeBaseUtil.getRedirect(actionRequest),
+						resourcePrimKey, version));
+				lockedKBArticleException.setCmd(Constants.REVERT);
+
+				throw lockedKBArticleException;
 			}
 		}
 	}

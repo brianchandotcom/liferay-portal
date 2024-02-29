@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {newEditorConfigContributorPageTest} from './fixtures/newEditorConfigContributorPageTest';
@@ -13,32 +14,17 @@ import {newEditorConfigContributorPageTest} from './fixtures/newEditorConfigCont
 export const test = mergeTests(
 	apiHelpersTest,
 	clientExtensionsPageTest,
+	featureFlagsTest({
+		'LPS-186870': true,
+	}),
 	loginTest(),
 	newEditorConfigContributorPageTest
 );
 
-test('Editor config contributor client extension is disabled if FF is set to false', async ({
-	apiHelpers,
-	clientExtensionsPage,
-}) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-186870', false);
-
-	await clientExtensionsPage.goto();
-
-	await clientExtensionsPage.newClientExtensionButton.click();
-
-	await expect(
-		clientExtensionsPage.editorConfigContributorMenuItem
-	).not.toBeAttached();
-});
-
 test('Create, edit and delete editor config contributor client extension', async ({
-	apiHelpers,
 	clientExtensionsPage,
 	newEditorConfigContributorPage,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-186870', true);
-
 	await clientExtensionsPage.goto();
 
 	await clientExtensionsPage.newClientExtensionButton.click();
@@ -93,11 +79,8 @@ test('Create, edit and delete editor config contributor client extension', async
 });
 
 test('Add a toolbar button to a CKEditor, by applying editor config contributor client extension', async ({
-	apiHelpers,
 	newEditorConfigContributorPage,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPS-186870', true);
-
 	await newEditorConfigContributorPage.goto();
 
 	await expect(

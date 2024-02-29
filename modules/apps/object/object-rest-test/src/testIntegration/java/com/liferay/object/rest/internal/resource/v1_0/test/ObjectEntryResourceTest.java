@@ -7010,7 +7010,6 @@ public class ObjectEntryResourceTest {
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertNull(jsonObject.get("title"));
-
 		Assert.assertNull(jsonObject.get("status"));
 
 		Assert.assertEquals(1, itemsJSONArray.length());

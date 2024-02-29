@@ -98,16 +98,16 @@ export default function LengthInput({
 	]);
 
 	const [value, setValue] = useControlledState(initialValue.value);
-	const [nextUnit, setNextUnit] = useState(initialValue.unit);
+	const [unit, setUnit] = useState(initialValue.unit);
 	const triggerId = useId();
 
 	const onSelectUnit = (selectedUnit: Unit) => {
 		setActive(false);
-		setNextUnit(selectedUnit);
+		setUnit(selectedUnit);
 
 		document.getElementById(triggerId)!.focus();
 
-		if (!value || selectedUnit === nextUnit) {
+		if (!value || selectedUnit === unit) {
 			return;
 		}
 
@@ -148,8 +148,8 @@ export default function LengthInput({
 
 			setValue(nextNumber);
 		}
-		else if (nextUnit !== CUSTOM && value) {
-			valueWithUnits = `${value}${nextUnit}`;
+		else if (unit !== CUSTOM && value) {
+			valueWithUnits = `${value}${unit}`;
 		}
 
 		if (
@@ -164,7 +164,7 @@ export default function LengthInput({
 				currentValue?.toLowerCase().match(REGEX) || [];
 
 			setValue(nextNumber || currentValue || '');
-			setNextUnit(isUnit(nextUnit) ? nextUnit : CUSTOM);
+			setUnit(isUnit(nextUnit) ? nextUnit : CUSTOM);
 			setError(true);
 
 			setTimeout(() => setError(false), 1000);
@@ -178,7 +178,7 @@ export default function LengthInput({
 	};
 
 	const handleKeyUp = (event: KeyboardEvent) => {
-		if (nextUnit !== CUSTOM && KEYS_NOT_ALLOWED.has(event.key)) {
+		if (unit !== CUSTOM && KEYS_NOT_ALLOWED.has(event.key)) {
 			event.preventDefault();
 		}
 
@@ -199,7 +199,7 @@ export default function LengthInput({
 		const [, , nextUnit] =
 			currentValue.toString().toLowerCase().match(REGEX) || [];
 
-		setNextUnit(isUnit(nextUnit) ? nextUnit : CUSTOM);
+		setUnit(isUnit(nextUnit) ? nextUnit : CUSTOM);
 	}, [currentValue]);
 
 	return (
@@ -231,9 +231,7 @@ export default function LengthInput({
 						ref={inputRef}
 						sizing="sm"
 						type={
-							!defaultUnit && nextUnit === CUSTOM
-								? 'text'
-								: 'number'
+							!defaultUnit && unit === CUSTOM ? 'text' : 'number'
 						}
 						value={value}
 					/>
@@ -274,7 +272,7 @@ export default function LengthInput({
 								aria-haspopup="true"
 								aria-label={sub(
 									Liferay.Language.get('select-a-unit'),
-									nextUnit
+									unit
 								)}
 								className="layout__length-input__button p-1"
 								disabled={Boolean(defaultUnit)}
@@ -284,10 +282,10 @@ export default function LengthInput({
 								title={Liferay.Language.get('select-units')}
 							>
 								{defaultUnit ||
-									(nextUnit === CUSTOM ? (
+									(unit === CUSTOM ? (
 										<ClayIcon symbol="code" />
 									) : (
-										nextUnit.toUpperCase()
+										unit.toUpperCase()
 									))}
 							</ClayButton>
 						}

@@ -4,7 +4,8 @@
  */
 
 import {Locator, Page} from '@playwright/test';
-import { liferayConfig } from '../../liferay.config';
+
+import {liferayConfig} from '../../liferay.config';
 export class HomePage {
 	readonly page: Page;
 

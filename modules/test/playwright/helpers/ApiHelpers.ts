@@ -133,10 +133,16 @@ export class ApiHelpers {
 	}
 
 	async getHeader() {
+		return {
+			'Content-Type': 'application/json',
+			...(await this._getCSRFTokenHeader()),
+		};
+	}
+
+	async _getCSRFTokenHeader() {
 		const authToken = await this.page.evaluate(() => Liferay.authToken);
 
 		return {
-			'Content-Type': 'application/json',
 			'x-csrf-token': authToken,
 		};
 	}

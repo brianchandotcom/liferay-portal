@@ -18,6 +18,10 @@ dependencies {
 	compileOnly group: "org.jenkins-ci.main", name: jenkinsCoreName, version: jenkinsCoreVersion
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false
@@ -35,12 +39,11 @@ repositories {
 }
 
 war {
-	baseName = "jenkins-war"
+	archiveBaseName = "jenkins-war"
+	archiveExtension = "war"
 
 	exclude "META-INF/JENKINS.RSA"
 	exclude "WEB-INF/lib/${jenkinsCoreName}-${jenkinsCoreVersion}.jar"
-
-	extension = "war"
 
 	from {
 		zipTree(FileUtil.get(project, "https://repo.jenkins-ci.org/releases/org/jenkins-ci/main/jenkins-war/${jenkinsCoreVersion}/jenkins-war-${jenkinsCoreVersion}.war"))

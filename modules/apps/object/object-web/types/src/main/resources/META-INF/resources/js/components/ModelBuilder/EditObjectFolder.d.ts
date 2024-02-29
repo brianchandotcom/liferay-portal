@@ -11,10 +11,12 @@ interface EditObjectFolder {
 	companies: Scope[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	sites: Scope[];
+	viewObjectDefinitionsURL: string;
 }
 export default function EditObjectFolder({
 	companies,
 	objectRelationshipDeletionTypes,
 	sites,
+	viewObjectDefinitionsURL,
 }: EditObjectFolder): JSX.Element;
 export {};

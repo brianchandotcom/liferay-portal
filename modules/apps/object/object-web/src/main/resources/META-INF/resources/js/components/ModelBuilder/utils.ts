@@ -369,20 +369,24 @@ export function getUnsupportedObjectRelationshipErrorMessage(
 	}
 }
 
-export function updatePreviousURLParam(paramType: string, paramValue: string) {
-	const previousPath = document.referrer;
+interface updatePreviousURLParam {
+	paramType: string;
+	paramURL: string;
+	paramValue: string;
+}
 
-	const newPreviousURL = new URL(previousPath);
+export function updatePreviousURLParam({
+	paramType,
+	paramURL,
+	paramValue,
+}: updatePreviousURLParam) {
+	const newPreviousURL = new URL(paramURL);
 
-	const objectFolderNameParam = newPreviousURL.searchParams.get(paramType);
+	newPreviousURL.searchParams.set(paramType, paramValue);
 
-	if (objectFolderNameParam) {
-		newPreviousURL.searchParams.set(paramType, paramValue);
+	window.history.pushState(null, '', newPreviousURL.toString());
 
-		window.history.pushState(null, '', newPreviousURL.toString());
-
-		window.location.href = newPreviousURL.toString();
-	}
+	window.location.href = newPreviousURL.toString();
 }
 
 export function updateURLParam(paramType: string, paramValue: string) {

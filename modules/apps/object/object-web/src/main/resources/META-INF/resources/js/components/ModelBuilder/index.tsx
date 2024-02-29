@@ -24,6 +24,7 @@ interface CustomObjectFolderWrapperProps {
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	sites: Scope[];
+	viewObjectDefinitionsURL: string;
 	workflowStatuses: LabelValueObject[];
 }
 
@@ -40,6 +41,7 @@ export default function CustomObjectFolderWrapper({
 	objectDefinitionsStorageTypes,
 	objectRelationshipDeletionTypes,
 	sites,
+	viewObjectDefinitionsURL,
 	workflowStatuses,
 }: CustomObjectFolderWrapperProps) {
 	return (
@@ -64,6 +66,7 @@ export default function CustomObjectFolderWrapper({
 						objectRelationshipDeletionTypes
 					}
 					sites={sites}
+					viewObjectDefinitionsURL={viewObjectDefinitionsURL}
 				/>
 			</ObjectFolderContextProvider>
 		</ReactFlowProvider>

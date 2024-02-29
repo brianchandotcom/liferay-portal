@@ -52,6 +52,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 			).put(
 				"viewApiURL", "/o/object-admin/v1.0/object-definitions"
 			).put(
+				"viewObjectDefinitionsURL", backURL
+			).put(
 				"workflowStatuses", LocalizedJSONArrayUtil.getWorkflowStatusJSONArray(locale)
 			).build()
 		%>'

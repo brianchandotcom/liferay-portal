@@ -49,12 +49,14 @@ interface EditObjectFolder {
 	companies: Scope[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	sites: Scope[];
+	viewObjectDefinitionsURL: string;
 }
 
 export default function EditObjectFolder({
 	companies,
 	objectRelationshipDeletionTypes,
 	sites,
+	viewObjectDefinitionsURL,
 }: EditObjectFolder) {
 	const [
 		{
@@ -244,11 +246,19 @@ export default function EditObjectFolder({
 	}, [selectedObjectFolder.objectFolderItems?.length]);
 
 	Liferay.on('beforeNavigate', () => {
-		updatePreviousURLParam('objectFolderName', objectFolderName);
+		updatePreviousURLParam({
+			paramType: 'objectFolderName',
+			paramURL: viewObjectDefinitionsURL,
+			paramValue: objectFolderName,
+		});
 	});
 
 	window.addEventListener('popstate', () => {
-		updatePreviousURLParam('objectFolderName', objectFolderName);
+		updatePreviousURLParam({
+			paramType: 'objectFolderName',
+			paramURL: viewObjectDefinitionsURL,
+			paramValue: objectFolderName,
+		});
 	});
 
 	return (

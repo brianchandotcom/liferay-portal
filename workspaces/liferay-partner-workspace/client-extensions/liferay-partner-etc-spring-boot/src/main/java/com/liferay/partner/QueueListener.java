@@ -418,10 +418,6 @@ public class QueueListener {
 				"pageSize", "-1"
 			).build());
 
-		if (organizationsJSONObject.getLong("totalCount") <= 0) {
-			return 0;
-		}
-
 		JSONArray organizationsJSONArray = organizationsJSONObject.getJSONArray(
 			"items");
 
@@ -444,10 +440,6 @@ public class QueueListener {
 			).queryParam(
 				"pageSize", "-1"
 			).build());
-
-		if (regularRolesResponseJSONObject.getInt("totalCount") <= 0) {
-			return 0;
-		}
 
 		JSONArray regularRolesJSONArray =
 			regularRolesResponseJSONObject.getJSONArray("items");

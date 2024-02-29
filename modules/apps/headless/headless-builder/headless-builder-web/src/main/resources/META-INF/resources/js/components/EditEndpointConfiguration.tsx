@@ -53,7 +53,13 @@ export default function EditEndpointConfiguration({
 				: [];
 
 			if (options.length) {
-				setSchemaOptions(options);
+				setSchemaOptions([
+					{
+						label: Liferay.Language.get('not-selected'),
+						value: '0',
+					},
+					...options,
+				]);
 			}
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,7 +67,10 @@ export default function EditEndpointConfiguration({
 
 	useEffect(() => {
 		if (schemaOptions.length) {
-			if (data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId) {
+			if (
+				data.r_responseAPISchemaToAPIEndpoints_c_apiSchemaId !==
+				undefined
+			) {
 				setSelectedResponseBodySchema(
 					schemaOptions.find(
 						(option) =>
@@ -70,7 +79,10 @@ export default function EditEndpointConfiguration({
 					)
 				);
 			}
-			if (data.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId) {
+			if (
+				data.r_requestAPISchemaToAPIEndpoints_c_apiSchemaId !==
+				undefined
+			) {
 				setSelectedRequestBodySchema(
 					schemaOptions.find(
 						(option) =>

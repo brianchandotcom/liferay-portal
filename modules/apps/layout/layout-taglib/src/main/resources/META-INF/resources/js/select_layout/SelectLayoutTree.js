@@ -457,33 +457,43 @@ function SearchResults({
 	selection,
 }) {
 	const [results, setResults] = useState([]);
+	const [loadMore, setLoadMore] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	const onFindLayouts = useCallback((layouts) => {
+	const onFindLayouts = useCallback((layouts, hasMoreElements) => {
 		setLoading(false);
 
-		setResults(layouts);
+		setResults((prevResults) => prevResults.concat(layouts));
+
+		setLoadMore(hasMoreElements);
 	}, []);
+
+	const onLoadMore = useCallback(
+		(start) =>
+			debouncedFindLayouts(
+				findLayoutsURL,
+				checkDisplayPage,
+				groupId,
+				itemSelectorReturnType,
+				filter,
+				onFindLayouts,
+				start
+			),
+		[
+			checkDisplayPage,
+			filter,
+			findLayoutsURL,
+			groupId,
+			itemSelectorReturnType,
+			onFindLayouts,
+		]
+	);
 
 	useEffect(() => {
 		setLoading(true);
-
-		debouncedFindLayouts(
-			findLayoutsURL,
-			checkDisplayPage,
-			groupId,
-			itemSelectorReturnType,
-			filter,
-			onFindLayouts
-		);
-	}, [
-		checkDisplayPage,
-		filter,
-		findLayoutsURL,
-		groupId,
-		itemSelectorReturnType,
-		onFindLayouts,
-	]);
+		setResults([]);
+		onLoadMore(0);
+	}, [onLoadMore]);
 
 	if (loading) {
 		return <ClayLoadingIndicator displayType="secondary" />;
@@ -501,6 +511,16 @@ function SearchResults({
 					selection={selection}
 				/>
 			))}
+
+			{loadMore && (
+				<ClayButton
+					className="mb-5"
+					displayType="secondary"
+					onClick={() => onLoadMore(results.length)}
+				>
+					{Liferay.Language.get('load-more-results')}
+				</ClayButton>
+			)}
 		</div>
 	) : (
 		<ClayEmptyState
@@ -580,7 +600,8 @@ function findLayouts(
 	groupId,
 	itemSelectorReturnType,
 	keywords,
-	onFindLayouts
+	onFindLayouts,
+	start
 ) {
 	fetch(url, {
 		body: Liferay.Util.objectToURLSearchParams({
@@ -588,12 +609,13 @@ function findLayouts(
 			[`groupId`]: groupId,
 			[`itemSelectorReturnType`]: itemSelectorReturnType,
 			[`keywords`]: keywords,
+			[`start`]: start,
 		}),
 		method: 'post',
 	})
 		.then((response) => response.json())
-		.then(({layouts}) => {
-			onFindLayouts(layouts);
+		.then(({hasMoreElements, layouts}) => {
+			onFindLayouts(layouts, hasMoreElements);
 		})
 		.catch(() =>
 			openToast({
@@ -604,4 +626,4 @@ function findLayouts(
 		);
 }
 
-const debouncedFindLayouts = debounce(findLayouts, 300);
+const debouncedFindLayouts = debounce(findLayouts, 600);

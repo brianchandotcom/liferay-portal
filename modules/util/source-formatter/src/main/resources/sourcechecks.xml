@@ -258,7 +258,6 @@
 		<check name="GradleDependenciesCheck">
 			<category name="Performance" />
 			<description name="Checks that modules are not depending on other modules." />
-			<property name="checkPetraDependencies" value="true" />
 			<property name="checkTestIntegrationCompileDependencies" value="false" />
 		</check>
 		<check name="GradleDependencyArtifactsCheck">
@@ -345,6 +344,10 @@
 		<check name="GradleCommerceDependenciesCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks the modules that are outside of Commerce are not allowed to depend on Commerce modules." />
+		</check>
+		<check name="GradlePetraModuleDependenciesCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that dependencies in `petra` moudule can only contains `petra` dependencies." />
 		</check>
 	</source-processor>
 	<source-processor name="GroovySourceProcessor">

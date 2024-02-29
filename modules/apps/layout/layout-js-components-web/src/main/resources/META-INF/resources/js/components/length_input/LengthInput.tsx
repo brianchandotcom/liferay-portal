@@ -97,7 +97,7 @@ export default function LengthInput({
 		currentValue,
 	]);
 
-	const [nextValue, setNextValue] = useControlledState(initialValue.value);
+	const [value, setValue] = useControlledState(initialValue.value);
 	const [nextUnit, setNextUnit] = useState(initialValue.unit);
 	const triggerId = useId();
 
@@ -107,26 +107,26 @@ export default function LengthInput({
 
 		document.getElementById(triggerId)!.focus();
 
-		if (!nextValue || unit === nextUnit) {
+		if (!value || unit === nextUnit) {
 			return;
 		}
 
-		let valueWithUnits = `${nextValue}${unit}`;
+		let valueWithUnits = `${value}${unit}`;
 
 		if (unit === CUSTOM) {
 			inputRef.current!.focus();
 
-			setNextValue('');
+			setValue('');
 
 			return;
 		}
-		else if (typeof nextValue !== 'number' || isNaN(nextValue)) {
+		else if (typeof value !== 'number' || isNaN(value)) {
 			valueWithUnits = '';
 
 			inputRef.current!.focus();
 
 			if (field.typeOptions?.showLengthField) {
-				setNextValue(valueWithUnits);
+				setValue(valueWithUnits);
 
 				return;
 			}
@@ -138,18 +138,18 @@ export default function LengthInput({
 	};
 
 	const handleValueSelect = () => {
-		const match = nextValue.toString().toLowerCase().match(REGEX);
-		let valueWithUnits = nextValue;
+		const match = value.toString().toLowerCase().match(REGEX);
+		let valueWithUnits = value;
 
 		if (match) {
 			const [, number, unit] = match;
 
 			valueWithUnits = `${number}${unit}`;
 
-			setNextValue(number);
+			setValue(number);
 		}
-		else if (nextUnit !== CUSTOM && nextValue) {
-			valueWithUnits = `${nextValue}${nextUnit}`;
+		else if (nextUnit !== CUSTOM && value) {
+			valueWithUnits = `${value}${nextUnit}`;
 		}
 
 		if (
@@ -163,7 +163,7 @@ export default function LengthInput({
 			const [, number, unit] =
 				currentValue?.toLowerCase().match(REGEX) || [];
 
-			setNextValue(number || currentValue || '');
+			setValue(number || currentValue || '');
 			setNextUnit(isUnit(unit) ? unit : CUSTOM);
 			setError(true);
 
@@ -220,12 +220,12 @@ export default function LengthInput({
 						id={inputId}
 						insetBefore={Boolean(field.icon)}
 						onBlur={() => {
-							if (nextValue !== currentValue) {
+							if (value !== currentValue) {
 								handleValueSelect();
 							}
 						}}
 						onChange={(event) => {
-							setNextValue(event.target.value);
+							setValue(event.target.value);
 						}}
 						onKeyUp={handleKeyUp}
 						ref={inputRef}
@@ -235,7 +235,7 @@ export default function LengthInput({
 								? 'text'
 								: 'number'
 						}
-						value={nextValue}
+						value={value}
 					/>
 
 					{field.icon ? (

@@ -5,6 +5,8 @@
 
 package com.liferay.friendly.url.service.impl;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
@@ -28,7 +30,9 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -144,6 +148,10 @@ public class FriendlyURLEntryLocalServiceImpl
 			friendlyURLEntry, classNameId,
 			_merge(urlTitleMap, existingUrlTitleMap));
 
+		// Asset
+
+		_updateAsset(friendlyURLEntry, serviceContext);
+
 		return friendlyURLEntry;
 	}
 
@@ -174,9 +182,11 @@ public class FriendlyURLEntryLocalServiceImpl
 				friendlyURLEntry.getClassNameId(),
 				friendlyURLEntry.getClassPK());
 
+		long friendlyURLEntryId = friendlyURLEntry.getFriendlyURLEntryId();
+
 		if ((friendlyURLEntryMapping != null) &&
 			(friendlyURLEntryMapping.getFriendlyURLEntryId() ==
-				friendlyURLEntry.getFriendlyURLEntryId())) {
+				friendlyURLEntryId)) {
 
 			friendlyURLEntry = friendlyURLEntryPersistence.fetchByG_C_C_Last(
 				friendlyURLEntry.getGroupId(),
@@ -190,11 +200,25 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 			else {
 				friendlyURLEntryMapping.setFriendlyURLEntryId(
-					friendlyURLEntry.getFriendlyURLEntryId());
+					friendlyURLEntryId);
 
 				_friendlyURLEntryMappingPersistence.update(
 					friendlyURLEntryMapping);
 			}
+		}
+
+		// Asset
+
+		try {
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				FriendlyURLEntry.class.getName(), friendlyURLEntryId);
+
+			if (assetEntry != null) {
+				_assetEntryLocalService.deleteEntry(assetEntry.getEntryId());
+			}
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 
 		return deletedFriendlyURLEntry;
@@ -237,6 +261,20 @@ public class FriendlyURLEntryLocalServiceImpl
 		}
 
 		_friendlyURLEntryMappingPersistence.remove(friendlyURLEntryMapping);
+
+		// Asset
+
+		try {
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				classNameId, classPK);
+
+			if (assetEntry != null) {
+				_assetEntryLocalService.deleteEntry(assetEntry.getEntryId());
+			}
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	@Override
@@ -263,6 +301,20 @@ public class FriendlyURLEntryLocalServiceImpl
 
 			friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 				friendlyURLEntryId);
+		}
+
+		// Asset
+
+		try {
+			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+				FriendlyURLEntry.class.getName(), friendlyURLEntryId);
+
+			if (assetEntry != null) {
+				_assetEntryLocalService.deleteEntry(assetEntry.getEntryId());
+			}
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 
@@ -296,6 +348,21 @@ public class FriendlyURLEntryLocalServiceImpl
 
 					_friendlyURLEntryMappingPersistence.remove(
 						friendlyURLEntryMapping);
+				}
+
+				// Asset
+
+				try {
+					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+						classNameId, friendlyURLEntry.getFriendlyURLEntryId());
+
+					if (assetEntry != null) {
+						_assetEntryLocalService.deleteEntry(
+							assetEntry.getEntryId());
+					}
+				}
+				catch (PortalException portalException) {
+					throw new RuntimeException(portalException);
 				}
 			});
 
@@ -500,6 +567,18 @@ public class FriendlyURLEntryLocalServiceImpl
 			String defaultLanguageId, Map<String, String> urlTitleMap)
 		throws PortalException {
 
+		return updateFriendlyURLEntry(
+			friendlyURLEntryId, classNameId, classPK, defaultLanguageId,
+			urlTitleMap, null);
+	}
+
+	@Override
+	public FriendlyURLEntry updateFriendlyURLEntry(
+			long friendlyURLEntryId, long classNameId, long classPK,
+			String defaultLanguageId, Map<String, String> urlTitleMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		FriendlyURLEntry friendlyURLEntry =
 			friendlyURLEntryPersistence.findByPrimaryKey(friendlyURLEntryId);
 
@@ -514,6 +593,10 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		_updateFriendlyURLEntryLocalizations(
 			friendlyURLEntry, classNameId, urlTitleMap);
+
+		// Asset
+
+		_updateAsset(friendlyURLEntry, serviceContext);
 
 		return friendlyURLEntry;
 	}
@@ -718,6 +801,28 @@ public class FriendlyURLEntryLocalServiceImpl
 		return sortedUrlTitleMap;
 	}
 
+	private void _updateAsset(
+			FriendlyURLEntry friendlyURLEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (serviceContext == null) {
+			return;
+		}
+
+		_assetEntryLocalService.updateEntry(
+			serviceContext.getUserId(), friendlyURLEntry.getGroupId(),
+			friendlyURLEntry.getCreateDate(),
+			friendlyURLEntry.getModifiedDate(),
+			FriendlyURLEntry.class.getName(),
+			friendlyURLEntry.getFriendlyURLEntryId(),
+			friendlyURLEntry.getUuid(), 0,
+			GetterUtil.getLongValues(
+				serviceContext.getAttribute("friendlyURLAssetCategoryIds")),
+			new String[0], true, false, null, null, null, null,
+			ContentTypes.TEXT_PLAIN, null, null, null, null, null, 0, 0,
+			serviceContext.getAssetPriority());
+	}
+
 	private void _updateFriendlyURLEntryLocalizations(
 			FriendlyURLEntry friendlyURLEntry, long classNameId,
 			Map<String, String> urlTitleMap)
@@ -779,6 +884,9 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 		}
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

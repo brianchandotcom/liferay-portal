@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class CommerceProductAdminDetailsPage {
+export class CommerceAdminProductDetailsPage {
 	readonly productRelationsTab: Locator;
 	readonly page: Page;
 

@@ -7,7 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
-export class CommerceProductAdminPage {
+export class CommerceAdminProductPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly creationMenuNewButton: Locator;
 	readonly generateSkusMenuItem: Locator;

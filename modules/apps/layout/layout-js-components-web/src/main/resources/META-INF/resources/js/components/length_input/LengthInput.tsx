@@ -69,6 +69,16 @@ const getInitialValue = (value: string | undefined): Value => {
 	};
 };
 
+const getNextValue = (value: number | string | undefined, unit: Unit) => {
+	const [, nextNumber, nextUnit] =
+		value?.toString().toLowerCase().match(REGEX) || [];
+
+	return {
+		nextNumber: nextNumber || value || '',
+		nextUnit: isUnit(nextUnit) ? nextUnit : unit,
+	};
+};
+
 interface Props {
 	className?: string;
 	defaultUnit?: Unit;
@@ -138,6 +148,10 @@ export default function LengthInput({
 	};
 
 	const handleValueSelect = () => {
+		if (value === currentValue && unit !== CUSTOM) {
+			return;
+		}
+
 		const match = value.toString().toLowerCase().match(REGEX);
 		let valueWithUnits = value;
 
@@ -147,6 +161,7 @@ export default function LengthInput({
 			valueWithUnits = `${nextNumber}${nextUnit}`;
 
 			setValue(nextNumber);
+			setUnit(nextUnit as Unit);
 		}
 		else if (unit !== CUSTOM && value) {
 			valueWithUnits = `${value}${unit}`;
@@ -160,11 +175,10 @@ export default function LengthInput({
 					valueWithUnits.toString()
 				))
 		) {
-			const [, nextNumber, nextUnit] =
-				currentValue?.toLowerCase().match(REGEX) || [];
+			const {nextNumber, nextUnit} = getNextValue(currentValue, unit);
 
-			setValue(nextNumber || currentValue || '');
-			setUnit(isUnit(nextUnit) ? nextUnit : CUSTOM);
+			setValue(nextNumber);
+			setUnit(nextUnit);
 			setError(true);
 
 			setTimeout(() => setError(false), 1000);
@@ -196,10 +210,11 @@ export default function LengthInput({
 			return;
 		}
 
-		const [, , nextUnit] =
-			currentValue.toString().toLowerCase().match(REGEX) || [];
+		setUnit((previousUnit) => {
+			const {nextUnit} = getNextValue(currentValue, previousUnit);
 
-		setUnit(isUnit(nextUnit) ? nextUnit : CUSTOM);
+			return nextUnit;
+		});
 	}, [currentValue]);
 
 	return (
@@ -219,11 +234,7 @@ export default function LengthInput({
 						aria-label={field.label}
 						id={inputId}
 						insetBefore={Boolean(field.icon)}
-						onBlur={() => {
-							if (value !== currentValue) {
-								handleValueSelect();
-							}
-						}}
+						onBlur={() => handleValueSelect()}
 						onChange={(event) => {
 							setValue(event.target.value);
 						}}

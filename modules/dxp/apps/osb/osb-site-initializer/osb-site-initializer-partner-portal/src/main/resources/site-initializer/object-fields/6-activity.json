@@ -404,6 +404,9 @@
 								"objectStateTransitions": [
 									{
 										"key": "active"
+									},
+									{
+										"key": "canceled"
 									}
 								]
 							},
@@ -418,6 +421,14 @@
 							{
 								"key": "expired",
 								"objectStateTransitions": [
+								]
+							},
+							{
+								"key": "canceled",
+								"objectStateTransitions": [
+									{
+										"key": "approved"
+									}
 								]
 							}
 						]

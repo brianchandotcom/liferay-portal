@@ -30,5 +30,13 @@
 			"en-US": "Expired"
 		},
 		"type": "string"
+	},
+	{
+		"key": "canceled",
+		"name": "Canceled",
+		"name_i18n": {
+			"en-US": "Canceled"
+		},
+		"type": "string"
 	}
 ]

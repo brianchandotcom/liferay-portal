@@ -290,7 +290,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				String body = portletPreferences.getValue(
 					emailParam + "Body_" + languageId, null);
 
-				LoginUtil.sendEmailAccountCreationAttempt(
+				LoginUtil.sendEmailUserCreationAttempt(
 					actionRequest, emailFromName, emailFromAddress,
 					emailToAddress, subject, body);
 

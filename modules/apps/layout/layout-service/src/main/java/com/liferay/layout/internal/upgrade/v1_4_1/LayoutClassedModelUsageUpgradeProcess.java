@@ -234,8 +234,8 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select 1 from LayoutClassedModelUsage where classNameId ",
 					"= ", classNameId, " and classPK = ", classPK,
-					" and containerKey = ", fragmentEntryLinkId,
-					" and containerType = ", _fragmentEntryLinkClassNameId,
+					" and containerKey = '", fragmentEntryLinkId,
+					"' and containerType = ", _fragmentEntryLinkClassNameId,
 					" and plid = ", plid));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 

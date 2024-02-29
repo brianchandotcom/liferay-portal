@@ -137,6 +137,38 @@ public class AssetCategoryDocumentContributor
 			filteredAssetVocabularyCategoryStrings.toArray(new String[0]));
 	}
 
+	private Map<Integer, Map<Long, List<AssetCategory>>> _getAssetVocabularyVisibilityTypeMap(
+		List<AssetCategory> assetCategories) {
+
+		Map<Integer, Map<Long, List<AssetCategory>>>
+			assetVocabularyVisibilityTypeMap = new HashMap<>();
+		Map<Long, Integer> assetVocabularyMap = new HashMap<>();
+
+		for (AssetCategory assetCategory : assetCategories) {
+			Integer visibilityType = assetVocabularyMap.computeIfAbsent(
+				assetCategory.getVocabularyId(),
+				vocabularyId -> {
+					AssetVocabulary assetVocabulary =
+						_assetVocabularyLocalService.fetchAssetVocabulary(
+							assetCategory.getVocabularyId());
+
+					return assetVocabulary.getVisibilityType();
+				});
+
+			Map<Long, List<AssetCategory>> assetVocabularyAssetCategoriesMap =
+				assetVocabularyVisibilityTypeMap.computeIfAbsent(
+					visibilityType, key -> new HashMap<>());
+
+			List<AssetCategory> assetVocabularyAssetCategories =
+				assetVocabularyAssetCategoriesMap.computeIfAbsent(
+					assetCategory.getVocabularyId(), key -> new ArrayList<>());
+
+			assetVocabularyAssetCategories.add(assetCategory);
+		}
+
+		return assetVocabularyVisibilityTypeMap;
+	}
+
 	private <T> void _populate(
 		Document document, List<T> list, int visibilityType,
 		Function<AssetCategory, T> function) {

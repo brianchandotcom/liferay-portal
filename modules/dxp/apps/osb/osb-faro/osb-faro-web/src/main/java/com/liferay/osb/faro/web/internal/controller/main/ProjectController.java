@@ -383,26 +383,19 @@ public class ProjectController extends BaseFaroController {
 		if (forceUpdate) {
 			faroProject.setModifiedTime(now);
 
-			String corpProjectUuid = faroProject.getCorpProjectUuid();
+			if (Validator.isNotNull(faroProject.getCorpProjectUuid())) {
+				FaroSubscriptionDisplay faroSubscriptionDisplay =
+					new FaroSubscriptionDisplay(
+						_provisioningClient.getOSBAccountEntry(
+							faroProject.getCorpProjectUuid()));
 
-			if (Validator.isNotNull(corpProjectUuid)) {
-				String subscription = null;
+				faroSubscriptionDisplay.setCounts(
+					faroProject, cerebroEngineClient, contactsEngineClient);
 
-				if (StringUtil.contains(corpProjectUuid, "Test")) {
-					subscription = JSONUtil.writeValueAsString(
-						new FaroSubscriptionDisplay(
-							getOSBAccountEntry(corpProjectUuid)));
+				String subscription = JSONUtil.writeValueAsString(
+					faroSubscriptionDisplay);
 
-					faroProject.setSubscription(subscription);
-				}
-				else {
-					subscription = JSONUtil.writeValueAsString(
-						new FaroSubscriptionDisplay(
-							_provisioningClient.getOSBAccountEntry(
-								corpProjectUuid)));
-
-					faroProject.setSubscription(subscription);
-				}
+				faroProject.setSubscription(subscription);
 
 				if (_isSubscriptionPlanChanged(
 						faroProject,

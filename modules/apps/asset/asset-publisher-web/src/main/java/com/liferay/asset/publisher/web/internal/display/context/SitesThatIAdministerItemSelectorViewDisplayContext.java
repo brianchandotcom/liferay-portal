@@ -78,7 +78,7 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		boolean filterManageableGroups = permissionChecker.isCompanyAdmin();
+		boolean filterManageableGroups = !permissionChecker.isCompanyAdmin();
 
 		_groupParams = LinkedHashMapBuilder.<String, Object>put(
 			"actionId",

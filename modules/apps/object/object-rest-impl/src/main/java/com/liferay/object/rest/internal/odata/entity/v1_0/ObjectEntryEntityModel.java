@@ -154,20 +154,20 @@ public class ObjectEntryEntityModel implements EntityModel {
 	private Map<String, EntityField> _getObjectDefinitionEntityFieldsMap(
 		ObjectDefinition objectDefinition) {
 
-		if (_objectDefinitionIdsEntityFieldsMap.containsKey(
+		if (_entityFieldsMaps.containsKey(
 				objectDefinition.getObjectDefinitionId())) {
 
-			return _objectDefinitionIdsEntityFieldsMap.get(
+			return _entityFieldsMaps.get(
 				objectDefinition.getObjectDefinitionId());
 		}
 
-		Map<String, EntityField> entityFields = _getStringEntityFieldsMap(
+		Map<String, EntityField> entityFieldsMap = _getStringEntityFieldsMap(
 			objectDefinition,
 			ObjectFieldLocalServiceUtil.getObjectFields(
 				objectDefinition.getObjectDefinitionId()));
 
-		_objectDefinitionIdsEntityFieldsMap.put(
-			objectDefinition.getObjectDefinitionId(), entityFields);
+		_entityFieldsMaps.put(
+			objectDefinition.getObjectDefinitionId(), entityFieldsMap);
 
 		for (ObjectRelationship objectRelationship :
 				ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
@@ -176,10 +176,10 @@ public class ObjectEntryEntityModel implements EntityModel {
 			ComplexEntityField complexEntityField = _getComplexEntityField(
 				objectDefinition, objectRelationship);
 
-			entityFields.put(complexEntityField.getName(), complexEntityField);
+			entityFieldsMap.put(complexEntityField.getName(), complexEntityField);
 		}
 
-		return entityFields;
+		return entityFieldsMap;
 	}
 
 	private Map<String, EntityField> _getStringEntityFieldsMap(
@@ -289,8 +289,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;
-	private final Map<Long, Map<String, EntityField>>
-		_objectDefinitionIdsEntityFieldsMap = new HashMap<>();
+	private final Map<Long, Map<String, EntityField>> _entityFieldsMaps =
+		new HashMap<>();
 	private final Set<String> _unsupportedBusinessTypes = SetUtil.fromArray(
 		ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION,
 		ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,

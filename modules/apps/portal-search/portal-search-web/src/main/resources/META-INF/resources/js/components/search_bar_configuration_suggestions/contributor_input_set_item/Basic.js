@@ -5,6 +5,7 @@
 
 import React from 'react';
 
+import {CONTRIBUTOR_TYPES} from '../../../utils/types/contributorTypes';
 import InputSetItemHeader from './InputSetItemHeader';
 import CharacterThresholdInput from './inputs/CharacterThresholdInput';
 import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
@@ -20,17 +21,37 @@ function Basic({index, onBlur, onInputSetItemChange, touched, value}) {
 		});
 	};
 
-	return (
-		<>
+	const _handleLabelChange = (value) => {
+		let title = '';
+		let description = '';
+
+		if (value.contributorName === CONTRIBUTOR_TYPES.COMMERCE) {
+			title = Liferay.Language.get('commerce-suggestions-contributor');
+			description = Liferay.Language.get(
+				'commerce-suggestions-contributor-help'
+			);
+		}
+		else {
+			title = Liferay.Language.get('basic-suggestions-contributor');
+			description = Liferay.Language.get(
+				'basic-suggestions-contributor-help'
+			);
+		}
+
+		return (
 			<InputSetItemHeader>
-				<InputSetItemHeader.Title>
-					{Liferay.Language.get('basic-suggestions-contributor')}
-				</InputSetItemHeader.Title>
+				<InputSetItemHeader.Title>{title}</InputSetItemHeader.Title>
 
 				<InputSetItemHeader.Description>
-					{Liferay.Language.get('basic-suggestions-contributor-help')}
+					{description}
 				</InputSetItemHeader.Description>
 			</InputSetItemHeader>
+		);
+	};
+
+	return (
+		<>
+			{_handleLabelChange(value)}
 
 			<div className="c-mb-3 form-group-autofit">
 				<DisplayGroupNameInput

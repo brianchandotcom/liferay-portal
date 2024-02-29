@@ -2358,7 +2358,7 @@ public class UserLocalServiceUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().sendEmailAccountCreationAttempt(
+		return getService().sendEmailUserCreationAttempt(
 			companyId, emailAddress, fromName, fromAddress, subject, body,
 			serviceContext);
 	}

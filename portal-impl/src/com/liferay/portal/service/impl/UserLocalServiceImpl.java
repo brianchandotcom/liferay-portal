@@ -3805,26 +3805,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return searchUsers(searchContext);
 	}
 
-	@Override
-	public boolean sendEmailAccountCreationAttempt(
-			long companyId, String emailAddress, String fromName,
-			String fromAddress, String subject, String body,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		emailAddress = StringUtil.toLowerCase(StringUtil.trim(emailAddress));
-
-		if (Validator.isNull(emailAddress)) {
-			throw new UserEmailAddressException.MustNotBeNull();
-		}
-
-		sendEmailAccountCreationAttemptNotification(
-			userPersistence.findByC_EA(companyId, emailAddress), companyId,
-			fromName, fromAddress, subject, body, serviceContext);
-
-		return false;
-	}
-
 	/**
 	 * Sends an email address verification to the user.
 	 *
@@ -3930,6 +3910,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		_sendNotificationEmail(
 			fromAddress, fromName, emailAddress, user, subject, body,
 			mailTemplateContextBuilder.build());
+	}
+
+	@Override
+	public boolean sendEmailUserCreationAttempt(
+			long companyId, String emailAddress, String fromName,
+			String fromAddress, String subject, String body,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		emailAddress = StringUtil.toLowerCase(StringUtil.trim(emailAddress));
+
+		if (Validator.isNull(emailAddress)) {
+			throw new UserEmailAddressException.MustNotBeNull();
+		}
+
+		sendEmailUserCreationAttemptNotification(
+			userPersistence.findByC_EA(companyId, emailAddress), companyId,
+			fromName, fromAddress, subject, body, serviceContext);
+
+		return false;
 	}
 
 	/**
@@ -6524,7 +6524,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void sendEmailAccountCreationAttemptNotification(
+	protected void sendEmailUserCreationAttemptNotification(
 			User user, long companyId, String fromName, String fromAddress,
 			String subject, String body, ServiceContext serviceContext)
 		throws PortalException {
@@ -6545,7 +6545,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(companyId);
 
-		String prefix = "adminEmailAccountCreationAttempt";
+		String prefix = "adminEmailUserCreationAttempt";
 
 		String localizedBody = body;
 
@@ -6553,7 +6553,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Map<Locale, String> localizedBodyMap =
 				LocalizationUtil.getLocalizationMap(
 					companyPortletPreferences, prefix + "Body",
-					PropsKeys.ADMIN_EMAIL_ACCOUNT_CREATION_ATTEMPT_BODY);
+					PropsKeys.ADMIN_EMAIL_USER_CREATION_ATTEMPT_BODY);
 
 			localizedBody = _getLocalizedValue(
 				localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
@@ -6563,7 +6563,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (Validator.isNull(subject)) {
 			String subjectProperty =
-				PropsKeys.ADMIN_EMAIL_ACCOUNT_CREATION_ATTEMPT_SUBJECT;
+				PropsKeys.ADMIN_EMAIL_USER_CREATION_ATTEMPT_SUBJECT;
 
 			Map<Locale, String> localizedSubjectMap =
 				LocalizationUtil.getLocalizationMap(

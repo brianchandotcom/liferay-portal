@@ -2599,13 +2599,13 @@ public class UserLocalServiceWrapper
 	}
 
 	@Override
-	public boolean sendEmailAccountCreationAttempt(
+	public boolean sendEmailUserCreationAttempt(
 			long companyId, String emailAddress, String fromName,
 			String fromAddress, String subject, String body,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _userLocalService.sendEmailAccountCreationAttempt(
+		return _userLocalService.sendEmailUserCreationAttempt(
 			companyId, emailAddress, fromName, fromAddress, subject, body,
 			serviceContext);
 	}

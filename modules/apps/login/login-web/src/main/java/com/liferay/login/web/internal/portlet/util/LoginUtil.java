@@ -201,7 +201,7 @@ public class LoginUtil {
 		).buildPortletURL();
 	}
 
-	public static void sendEmailAccountCreationAttempt(
+	public static void sendEmailUserCreationAttempt(
 			ActionRequest actionRequest, String fromName, String fromAddress,
 			String toAddress, String subject, String body)
 		throws Exception {
@@ -218,7 +218,7 @@ public class LoginUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
-		UserLocalServiceUtil.sendEmailAccountCreationAttempt(
+		UserLocalServiceUtil.sendEmailUserCreationAttempt(
 			company.getCompanyId(), toAddress, fromName, fromAddress, subject,
 			body, serviceContext);
 	}

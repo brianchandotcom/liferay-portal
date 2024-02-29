@@ -117,7 +117,7 @@ Listen ${test.app.server.leading.port.number}8]]></echo>
 				</exec>
 			</try>
 			<catch>
-				<echo>Unable to start httpd using systemctl. Starting httpd directly</echo>
+				<echo>Unable to start httpd using systemctl. Starting httpd directly.</echo>
 
 				<exec executable="httpd" failonerror="true" />
 
@@ -134,7 +134,7 @@ Listen ${test.app.server.leading.port.number}8]]></echo>
 				</exec>
 			</try>
 			<catch>
-				<echo>Unable to stop httpd using systemctl. httpd processes will be killed via pkill</echo>
+				<echo>Unable to stop httpd using systemctl. httpd processes will be killed via pkill.</echo>
 
 				<exec executable="pkill">
 					<arg line="-f httpd" />

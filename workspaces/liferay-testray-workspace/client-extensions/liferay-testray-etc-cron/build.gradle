@@ -1,0 +1,56 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+	}
+
+	repositories {
+		maven {
+			url new File(rootProject.projectDir, "../../.m2-tmp")
+		}
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "application"
+apply plugin: "com.liferay.source.formatter"
+apply plugin: "java-library"
+
+dependencies {
+	implementation group: "com.liferay", name: "com.liferay.petra.lang", version: "latest.release"
+	implementation group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
+	implementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
+}
+
+mainClassName = "com.liferay.testray.Main"
+
+repositories {
+	maven {
+		url new File(rootProject.projectDir, "../../.m2-tmp")
+	}
+
+	maven {
+		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}
+
+task fatJar(type: Jar)
+
+fatJar {
+	baseName = project.name + '-all'
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+	from {
+		configurations.runtimeClasspath.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+
+	manifest {
+		attributes 'Main-Class': 'com.liferay.testray.Main'
+	}
+
+	with jar
+}

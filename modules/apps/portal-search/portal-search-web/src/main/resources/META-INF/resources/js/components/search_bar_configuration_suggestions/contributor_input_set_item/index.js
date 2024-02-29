@@ -51,6 +51,16 @@ function ContributorInputSetItem({index, onInputSetItemChange, value = {}}) {
 				/>
 			)}
 
+			{value.contributorName === CONTRIBUTOR_TYPES.COMMERCE && (
+				<BasicAttributes
+					index={index}
+					onBlur={_handleBlur}
+					onInputSetItemChange={onInputSetItemChange}
+					touched={touched}
+					value={value}
+				/>
+			)}
+
 			{value.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT && (
 				<SXPBlueprintAttributes
 					index={index}

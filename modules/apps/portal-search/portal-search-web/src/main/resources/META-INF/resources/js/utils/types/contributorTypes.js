@@ -11,6 +11,7 @@ export const CONTRIBUTOR_TYPES = {
 	ASAH_RECENT_SITES_USER_ACTIVITY: 'recentSitesUserActivity',
 	ASAH_TOP_SEARCH_SITE_ACTIVITY: 'topSearchSiteActivity',
 	BASIC: 'basic',
+	COMMERCE: 'commerce',
 	SXP_BLUEPRINT: 'sxpBlueprint',
 };
 
@@ -25,6 +26,9 @@ export const CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES = {
 
 export const CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES = {
 	[CONTRIBUTOR_TYPES.BASIC]: {
+		characterThreshold: '',
+	},
+	[CONTRIBUTOR_TYPES.COMMERCE]: {
 		characterThreshold: '',
 	},
 	[CONTRIBUTOR_TYPES.SXP_BLUEPRINT]: {

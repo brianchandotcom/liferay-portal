@@ -6,6 +6,8 @@
 package com.liferay.layout.taglib.internal.struts;
 
 import com.liferay.layout.taglib.internal.util.LayoutUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -18,10 +20,12 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.List;
@@ -77,7 +81,37 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 				LayoutConstants.TYPE_PORTLET, LayoutConstants.TYPE_URL
 			});
 
+		boolean hasMoreElements = false;
+
 		if (layoutsCount > 0) {
+			int start = ParamUtil.getInteger(
+				httpServletRequest, "start", QueryUtil.ALL_POS);
+
+			if (start != QueryUtil.ALL_POS) {
+				start = Math.max(0, start);
+			}
+
+			int pageSize = GetterUtil.getInteger(
+				PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
+
+			int end = ParamUtil.getInteger(
+				httpServletRequest, "end", start + pageSize);
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-15607") ||
+				(start == QueryUtil.ALL_POS) || (pageSize <= 0)) {
+
+				start = QueryUtil.ALL_POS;
+				end = QueryUtil.ALL_POS;
+			}
+
+			int startEndMax = Math.max(start, end);
+
+			if ((startEndMax != QueryUtil.ALL_POS) && (pageSize > 0) &&
+				(layoutsCount > startEndMax)) {
+
+				hasMoreElements = true;
+			}
+
 			List<Layout> layouts = _layoutLocalService.getLayouts(
 				groupId, privateLayout, keywords,
 				new String[] {
@@ -88,7 +122,7 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
 					LayoutConstants.TYPE_URL
 				},
-				0, layoutsCount, null);
+				start, end, null);
 
 			boolean checkDisplayPage = ParamUtil.getBoolean(
 				httpServletRequest, "checkDisplayPage");
@@ -145,7 +179,11 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 			}
 		}
 
-		jsonObject.put("layouts", jsonArray);
+		jsonObject.put(
+			"hasMoreElements", hasMoreElements
+		).put(
+			"layouts", jsonArray
+		);
 
 		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
 

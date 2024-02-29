@@ -548,19 +548,6 @@
 													"indexed": true
 												},
 												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "cancel-button-mdf-request"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-													],
-													"indexed": true
-												},
-												"type": "Fragment"
 											}
 										],
 										"type": "Section"

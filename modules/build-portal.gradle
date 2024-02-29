@@ -19,9 +19,13 @@ classes {
 	dependsOn = []
 }
 
+compileJava {
+	enabled = false
+}
+
 jar {
-	archiveName = "${project.name}.jar"
-	destinationDir = projectDir
+	archiveFileName = "${project.name}.jar"
+	destinationDirectory = projectDir
 	enabled = false
 }
 

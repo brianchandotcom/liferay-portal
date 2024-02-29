@@ -16,30 +16,37 @@ export async function zipFolder(folderPath: string) {
 }
 
 export async function unzipFile(
-	callback: any,
 	filePath: string,
-	id: string,
-	json: JSON
 ) {
-	open(filePath, {lazyEntries: true}, async (error, zip) => {
-		zip.readEntry();
-		zip.on('entry', (entry) => {
-			if (/\/$/.test(entry.fileName)) {
-				zip.readEntry();
-			}
-			else {
-				zip.openReadStream(entry, callback(id, json, zip));
-			}
+	return new Promise((resolve, reject) => {
+		open(filePath, {lazyEntries: true}, async (error, zip) => {
+			zip.readEntry();
+			zip.on('entry', (entry) => {
+				if (/\/$/.test(entry.fileName)) {
+					zip.readEntry();
+				}
+				else {
+					zip.openReadStream(entry, async function (error, stream) {
+						if (error) {
+							reject(error);
+						}
+						stream.on('end', () => {
+							zip.readEntry();
+						});
+						resolve(await streamToString(stream));
+					});
+				}
+			});
 		});
-	});
-}
+	})
+	}
 
-export async function streamToJson(stream) {
+async function streamToString(stream) {
 	const chunks = [];
 
 	for await (const chunk of stream) {
 		chunks.push(Buffer.from(chunk));
 	}
 
-	return JSON.parse(Buffer.concat(chunks).toString());
+	return Buffer.concat(chunks).toString();
 }

@@ -7,10 +7,26 @@ import com.bmuschko.gradle.docker.tasks.container.extras.DockerWaitHealthyContai
 buildscript {
 	dependencies {
 		classpath group: "com.bmuschko", name: "gradle-docker-plugin", version: "6.7.0"
-		classpath group: "gradle.plugin.com.liferay", name: "gradle-plugins-app-docker", version: "latest.release"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.app.docker", version: "1.0.14"
 	}
 
 	repositories {
+		File dir = rootProject.projectDir
+
+		while (dir != null) {
+			File tmpMavenRepositoryDir = new File(dir, ".m2-tmp")
+
+			if (tmpMavenRepositoryDir.exists()) {
+				maven {
+					url tmpMavenRepositoryDir
+
+					println tmpMavenRepositoryDir
+				}
+			}
+
+			dir = dir.getParentFile();
+		}
+
 		maven {
 			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
@@ -41,6 +57,10 @@ appDocker {
 	onlyIf {
 		false
 	}
+}
+
+buildAppDockerImage {
+	mustRunAfter copyDockerResources
 }
 
 checkDocker {

@@ -1177,6 +1177,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		jar.setDescription(
 			"Assembles a jar archive containing the Javascript API " +
 				"documentation files for this project.");
+		jar.setDuplicatesStrategy(DuplicatesStrategy.INCLUDE);
 		jar.eachFile(new StripPathSegmentsAction(2));
 		jar.setGroup(BasePlugin.BUILD_GROUP);
 		jar.setIncludeEmptyDirs(false);

@@ -1,0 +1,99 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+// @ts-ignore
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {commercePagesTest} from '../../fixtures/commercePagesTest';
+import {loginTest} from '../../fixtures/loginTest';
+
+export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
+
+test('LPD-13559 bulk actions for product relations', async ({
+	apiHelpers,
+	commerceProductAdminDetailsPage,
+	commerceProductAdminDetailsProductRelationsPage,
+	commerceProductAdminPage,
+	page,
+}) => {
+	await page.goto('/');
+
+	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+	});
+	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+	});
+	const product3 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+	});
+
+	await Promise.all([
+		apiHelpers.headlessCommerceAdminCatalog.postProductRelatedProduct(
+			product1.productId,
+			{productId: product2.productId}
+		),
+		apiHelpers.headlessCommerceAdminCatalog.postProductRelatedProduct(
+			product1.productId,
+			{productId: product3.productId}
+		),
+	]);
+
+	try {
+		await commerceProductAdminPage.gotoProduct(product1.name['en_US']);
+
+		await commerceProductAdminDetailsPage.goToProductRelations();
+
+		await expect(
+			(
+				await commerceProductAdminDetailsProductRelationsPage.tableRow(
+					2,
+					product2.name['en_US'],
+					true
+				)
+			).row
+		).toBeVisible();
+		await expect(
+			(
+				await commerceProductAdminDetailsProductRelationsPage.tableRow(
+					2,
+					product3.name['en_US'],
+					true
+				)
+			).row
+		).toBeVisible();
+
+		await commerceProductAdminDetailsProductRelationsPage.selectItemsInput.check();
+
+		await expect(
+			commerceProductAdminDetailsProductRelationsPage.deleteBulkButton
+		).toBeVisible();
+
+		await commerceProductAdminDetailsProductRelationsPage.deleteBulkButton.click();
+
+		await expect(
+			commerceProductAdminDetailsProductRelationsPage.emptyTableMessage
+		).toBeVisible();
+	}
+	finally {
+		await Promise.all([
+			apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
+				product1.productId
+			),
+			apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
+				product2.productId
+			),
+			apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
+				product3.productId
+			),
+		]);
+
+		await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
+	}
+});

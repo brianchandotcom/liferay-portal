@@ -8,7 +8,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
-import {searchTableRowByValue} from './commerceAdminOrdersPage';
+import {searchTableRowByValue} from './commerceDNDTablePage';
 
 export class CommerceAdminChannelsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;

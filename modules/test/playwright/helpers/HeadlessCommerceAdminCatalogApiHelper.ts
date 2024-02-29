@@ -10,6 +10,7 @@ type TCatalog = {
 	accountId?: number;
 	currencyCode?: string;
 	defaultLanguageId?: string;
+	id?: number;
 	name?: string;
 };
 
@@ -25,6 +26,14 @@ type TProduct = {
 	productStatus?: number;
 	productType?: string;
 	skus?: TSku[];
+};
+
+type TRelatedProduct = {
+	id?: number;
+	priority?: number;
+	productExternalReferenceCode?: string;
+	productId?: number;
+	type?: string;
 };
 
 type TSku = {
@@ -225,6 +234,20 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 					},
 				],
 				...product,
+			}
+		);
+	}
+
+	async postProductRelatedProduct(
+		productId: number,
+		relatedProduct: TRelatedProduct
+	): Promise<TRelatedProduct> {
+		return await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/relatedProducts`,
+			{
+				priority: 1,
+				type: 'cross-sell',
+				...relatedProduct,
 			}
 		);
 	}

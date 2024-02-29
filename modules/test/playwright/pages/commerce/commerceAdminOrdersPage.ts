@@ -8,33 +8,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
-
-export const searchTableRowByValue = async function (
-	tableLocator: Locator,
-	colPosition: number,
-	value: string,
-	strictEqual: boolean = false
-) {
-	await tableLocator.elementHandle();
-
-	const rows = await tableLocator.locator('div.dnd-tr').all();
-
-	for await (const row of rows) {
-		const column = row.locator('div.dnd-td').nth(colPosition).first();
-
-		const colValue = (await column.allInnerTexts()).join('');
-
-		if (
-			(strictEqual && colValue === value) ||
-			(!strictEqual &&
-				colValue.toLowerCase().indexOf(value.toLowerCase()) >= 0)
-		) {
-			return {column, row};
-		}
-	}
-
-	throw new Error(`Cannot locate table row with value ${value}`);
-};
+import {searchTableRowByValue} from './commerceDNDTablePage';
 
 export class CommerceAdminOrdersPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;

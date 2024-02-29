@@ -5,14 +5,19 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+
 export class CommerceProductAdminPage {
+	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly creationMenuNewButton: Locator;
 	readonly generateSkusMenuItem: Locator;
 	readonly managementToolbarSearchInput: Locator;
 	readonly page: Page;
 	readonly productSkusLink: Locator;
+	readonly productsTableRowLink: (productName: string) => Locator;
 
 	constructor(page: Page) {
+		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.creationMenuNewButton = page.getByLabel('New', {exact: true});
 		this.generateSkusMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -25,6 +30,8 @@ export class CommerceProductAdminPage {
 			exact: true,
 			name: 'SKUs',
 		});
+		this.productsTableRowLink = (productName: string) =>
+			page.getByRole('link', {exact: true, name: productName});
 	}
 
 	async generateSkus() {
@@ -36,5 +43,16 @@ export class CommerceProductAdminPage {
 
 		await this.creationMenuNewButton.click();
 		await this.generateSkusMenuItem.click();
+	}
+
+	async goto() {
+		await this.applicationsMenuPage.goToProducts();
+	}
+
+	async gotoProduct(productName: string) {
+		await this.goto();
+		await this.managementToolbarSearchInput.fill(productName);
+		await this.managementToolbarSearchInput.press('Enter');
+		await this.productsTableRowLink(productName).click();
 	}
 }

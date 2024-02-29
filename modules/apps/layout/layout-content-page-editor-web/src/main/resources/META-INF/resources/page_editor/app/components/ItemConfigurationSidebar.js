@@ -32,6 +32,7 @@ export default function ItemConfigurationSidebar() {
 						[`page-editor__item-configuration-sidebar--open`]: itemConfigurationOpen,
 					}
 				)}
+				tabIndex={activeItemId ? null : 0}
 			>
 				{Liferay.FeatureFlags['LPD-10988'] ? (
 					<div className="d-flex d-md-none justify-content-end mr-2 mt-3">

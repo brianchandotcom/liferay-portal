@@ -122,3 +122,8 @@ b5a5bba75482c5b50bade5f437e29f12bb3fa229^..9164ed836d51ce0ebc71756305fdaddc0579f
 # Bundle Version 13.0.4
 #
 9164ed836d51ce0ebc71756305fdaddc0579fc98^..e5f2ab5ccaf05104ea8553c0deb20b9f36518daf=LPS-190729 LPS-192837
+
+#
+# Bundle Version 13.1.0
+#
+e5f2ab5ccaf05104ea8553c0deb20b9f36518daf^..babf1f867ee87dc76284d3ff4fa721af54ebb171=LPD-18328

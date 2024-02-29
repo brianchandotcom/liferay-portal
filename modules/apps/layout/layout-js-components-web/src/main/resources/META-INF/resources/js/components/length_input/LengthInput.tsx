@@ -86,14 +86,16 @@ export default function LengthInput({
 	onEnter,
 	onValueSelect,
 	showLabel = true,
-	value,
+	value: currentValue,
 }: Props) {
 	const [active, setActive] = useState(false);
 	const [error, setError] = useState(false);
 	const inputId = useId();
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const initialValue = useMemo(() => getInitialValue(value), [value]);
+	const initialValue = useMemo(() => getInitialValue(currentValue), [
+		currentValue,
+	]);
 
 	const [nextValue, setNextValue] = useControlledState(initialValue.value);
 	const [nextUnit, setNextUnit] = useState(initialValue.unit);
@@ -130,7 +132,7 @@ export default function LengthInput({
 			}
 		}
 
-		if (valueWithUnits !== value) {
+		if (valueWithUnits !== currentValue) {
 			onValueSelect(field.name, valueWithUnits);
 		}
 	};
@@ -158,9 +160,10 @@ export default function LengthInput({
 					valueWithUnits.toString()
 				))
 		) {
-			const [, number, unit] = value?.toLowerCase().match(REGEX) || [];
+			const [, number, unit] =
+				currentValue?.toLowerCase().match(REGEX) || [];
 
-			setNextValue(number || value || '');
+			setNextValue(number || currentValue || '');
 			setNextUnit(isUnit(unit) ? unit : CUSTOM);
 			setError(true);
 
@@ -169,7 +172,7 @@ export default function LengthInput({
 			return;
 		}
 
-		if (valueWithUnits !== value) {
+		if (valueWithUnits !== currentValue) {
 			onValueSelect(field.name, valueWithUnits.toString());
 		}
 	};
@@ -189,14 +192,15 @@ export default function LengthInput({
 	};
 
 	useEffect(() => {
-		if (!value) {
+		if (!currentValue) {
 			return;
 		}
 
-		const [, , unit] = value.toString().toLowerCase().match(REGEX) || [];
+		const [, , unit] =
+			currentValue.toString().toLowerCase().match(REGEX) || [];
 
 		setNextUnit(isUnit(unit) ? unit : CUSTOM);
-	}, [value]);
+	}, [currentValue]);
 
 	return (
 		<ClayForm.Group
@@ -216,7 +220,7 @@ export default function LengthInput({
 						id={inputId}
 						insetBefore={Boolean(field.icon)}
 						onBlur={() => {
-							if (nextValue !== value) {
+							if (nextValue !== currentValue) {
 								handleValueSelect();
 							}
 						}}

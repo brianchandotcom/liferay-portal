@@ -25,6 +25,6 @@ export default function LengthInput({
 	onEnter,
 	onValueSelect,
 	showLabel,
-	value,
+	value: currentValue,
 }: Props): JSX.Element;
 export {};

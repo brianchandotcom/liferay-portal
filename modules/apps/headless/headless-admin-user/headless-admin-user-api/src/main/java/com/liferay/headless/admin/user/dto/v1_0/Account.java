@@ -65,6 +65,53 @@ public class Account implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Account.class, json);
 	}
 
+	@Schema(description = "The account's contact information.")
+	@Valid
+	public AccountContactInformation getAccountContactInformation() {
+		if (_accountContactInformationSupplier != null) {
+			accountContactInformation =
+				_accountContactInformationSupplier.get();
+
+			_accountContactInformationSupplier = null;
+		}
+
+		return accountContactInformation;
+	}
+
+	public void setAccountContactInformation(
+		AccountContactInformation accountContactInformation) {
+
+		this.accountContactInformation = accountContactInformation;
+
+		_accountContactInformationSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAccountContactInformation(
+		UnsafeSupplier<AccountContactInformation, Exception>
+			accountContactInformationUnsafeSupplier) {
+
+		_accountContactInformationSupplier = () -> {
+			try {
+				return accountContactInformationUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The account's contact information.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected AccountContactInformation accountContactInformation;
+
+	@JsonIgnore
+	private Supplier<AccountContactInformation>
+		_accountContactInformationSupplier;
+
 	@Schema(description = "The users linked to the account")
 	@Valid
 	public UserAccount[] getAccountUserAccounts() {
@@ -981,6 +1028,19 @@ public class Account implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		AccountContactInformation accountContactInformation =
+			getAccountContactInformation();
+
+		if (accountContactInformation != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountContactInformation\": ");
+
+			sb.append(String.valueOf(accountContactInformation));
+		}
 
 		UserAccount[] accountUserAccounts = getAccountUserAccounts();
 

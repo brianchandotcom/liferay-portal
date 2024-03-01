@@ -9,7 +9,6 @@ import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -88,7 +87,7 @@ public abstract class BaseTaskResourcePerformanceTestCase {
 		return classNamePartsMap;
 	}
 
-	protected Closeable startTimer() {
+	protected Closeable startTimer(Log log) {
 		Thread thread = Thread.currentThread();
 
 		StackTraceElement stackTraceElement = thread.getStackTrace()[3];
@@ -100,24 +99,21 @@ public abstract class BaseTaskResourcePerformanceTestCase {
 		long startTime = System.currentTimeMillis();
 
 		return () -> {
-			if (_log.isInfoEnabled()) {
+			if (log.isInfoEnabled()) {
 				long totalTimeMillis = System.currentTimeMillis() - startTime;
 
 				double speed =
 					(double)(recordsCount * 1000) / (double)totalTimeMillis;
 
-				_log.info(
+				log.info(
 					StringBundler.concat(
 						invokerName, " used ", totalTimeMillis, " ms, for ",
 						recordsCount, " records, speed: ",
-						String.format("%.3f", speed), " records/s"));
+						String.format("%.2f", speed), " records/s"));
 			}
 		};
 	}
 
 	protected static int recordsCount;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseTaskResourcePerformanceTestCase.class);
 
 }

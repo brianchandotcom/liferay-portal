@@ -100,10 +100,6 @@ public class FaroSubscriptionDisplay {
 		}
 	}
 
-	public long getIndividualsCount() {
-		return _individualsCount;
-	}
-
 	public long getIndividualsCountSinceLastAnniversary() {
 		return _individualsCountSinceLastAnniversary;
 	}
@@ -122,10 +118,6 @@ public class FaroSubscriptionDisplay {
 
 	public String getName() {
 		return _name;
-	}
-
-	public long getPageViewsCount() {
-		return _pageViewsCount;
 	}
 
 	public long getPageViewsCountSinceLastAnniversary() {
@@ -167,10 +159,6 @@ public class FaroSubscriptionDisplay {
 		Date subscriptionModifiedDate = new Date(
 			faroProject.getSubscriptionModifiedTime());
 
-		_individualsCount =
-			contactsEngineClient.getIndividualsCreatedSinceCount(
-				faroProject, subscriptionModifiedDate);
-
 		if (_startDate == null) {
 			_startDate = new Date(faroProject.getCreateTime());
 		}
@@ -180,26 +168,14 @@ public class FaroSubscriptionDisplay {
 		_individualsCountSinceLastAnniversary =
 			contactsEngineClient.getIndividualsCreatedSinceCount(
 				faroProject, _lastAnniversaryDate);
-
-		_pageViewsCount = GetterUtil.getInteger(
-			cerebroEngineClient.getPageViews(
-				faroProject, subscriptionModifiedDate, new Date()));
-
 		_pageViewsCountSinceLastAnniversary = GetterUtil.getInteger(
 			cerebroEngineClient.getPageViews(
 				faroProject, _lastAnniversaryDate, new Date()));
 
-		if (_isBasicSubscription(faroProject.getSubscription())) {
-			_individualsStatus = getStatus(
-				_individualsCount, _individualsLimit);
-			_pageViewsStatus = getStatus(_pageViewsCount, _pageViewsLimit);
-		}
-		else {
-			_individualsStatus = getStatus(
-				_individualsCountSinceLastAnniversary, _individualsLimit);
-			_pageViewsStatus = getStatus(
-				_pageViewsCountSinceLastAnniversary, _pageViewsLimit);
-		}
+		_individualsStatus = getStatus(
+			_individualsCountSinceLastAnniversary, _individualsLimit);
+		_pageViewsStatus = getStatus(
+			_pageViewsCountSinceLastAnniversary, _pageViewsLimit);
 
 		_usersCount = contactsEngineClient.getUsersCount(faroProject);
 	}
@@ -329,13 +305,11 @@ public class FaroSubscriptionDisplay {
 	private boolean _active;
 	private final List<AddOn> _addOns = new ArrayList<>();
 	private Date _endDate;
-	private long _individualsCount;
 	private long _individualsCountSinceLastAnniversary;
 	private long _individualsLimit;
 	private int _individualsStatus;
 	private Date _lastAnniversaryDate;
 	private String _name;
-	private long _pageViewsCount;
 	private long _pageViewsCountSinceLastAnniversary;
 	private long _pageViewsLimit;
 	private int _pageViewsStatus;

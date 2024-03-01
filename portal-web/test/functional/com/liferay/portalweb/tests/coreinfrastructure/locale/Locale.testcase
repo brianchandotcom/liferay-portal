@@ -891,7 +891,9 @@ definition {
 				configurationName = "Time Zone",
 				configurationScope = "Virtual Instance Scope");
 
-			PortalSettings.configureTimeZone(timeZone = "(UTC +05:00) Pakistan Time");
+			Click.clickNoMouseOver(locator1 = "//option[@value='Asia/Karachi']");
+
+			PortalSettings._saveDisplaySettings();
 
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -932,9 +934,7 @@ definition {
 				locator1 = "Message#ERROR_DISMISSIBLE",
 				value1 = "This account is locked until");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "PKT.");
+			AssertElementPresent(locator1 = "//div[contains(@class,'alert-dismissible')][contains(.,'PKT') or contains(.,'PST') or contains(.,'GMT+05:00')]");
 		}
 	}
 

@@ -26,6 +26,7 @@ module.exports = {
 		minimize: !DEVELOPMENT,
 	},
 	output: {
+		clean: true,
 		filename: '[name].[contenthash].js',
 		path: path.resolve('build', 'static'),
 	},

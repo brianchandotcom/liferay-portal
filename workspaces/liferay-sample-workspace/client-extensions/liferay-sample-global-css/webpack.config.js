@@ -27,6 +27,7 @@ module.exports = {
 		minimize: !DEVELOPMENT,
 	},
 	output: {
+		clean: true,
 		path: path.resolve('static'),
 	},
 	plugins: [

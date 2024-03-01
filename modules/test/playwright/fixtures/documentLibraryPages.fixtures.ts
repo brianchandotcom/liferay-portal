@@ -7,8 +7,8 @@
 
 import {test} from '@playwright/test';
 
-import {DocumentLibraryPage} from '../pages/document-library-web/DocumentLibraryPage';
 import {DocumentLibraryEditFolderPage} from '../pages/document-library-web/DocumentLibraryEditFolderPage';
+import {DocumentLibraryPage} from '../pages/document-library-web/DocumentLibraryPage';
 import {AICreatorInstanceSettingsPage} from '../pages/product-navigation-applications-menu/AICreatorSettingsPage';
 import {GogoShellPage} from '../pages/product-navigation-applications-menu/GogoShellPage';
 

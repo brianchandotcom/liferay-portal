@@ -384,8 +384,7 @@ public class ProjectController extends BaseFaroController {
 			if (Validator.isNotNull(faroProject.getCorpProjectUuid())) {
 				FaroSubscriptionDisplay faroSubscriptionDisplay =
 					new FaroSubscriptionDisplay(
-						_provisioningClient.getOSBAccountEntry(
-							faroProject.getCorpProjectUuid()));
+						getOSBAccountEntry(faroProject.getCorpProjectUuid()));
 
 				faroSubscriptionDisplay.setCounts(
 					faroProject, cerebroEngineClient, contactsEngineClient);
@@ -432,8 +431,7 @@ public class ProjectController extends BaseFaroController {
 				corpProjectUuid);
 
 		if (faroProject == null) {
-			return new ProjectDisplay(
-				_provisioningClient.getOSBAccountEntry(corpProjectUuid));
+			return new ProjectDisplay(getOSBAccountEntry(corpProjectUuid));
 		}
 
 		return new ProjectDisplay(faroProject);
@@ -649,7 +647,7 @@ public class ProjectController extends BaseFaroController {
 		}
 
 		return _getProjectDisplay(
-			faroProjectLocalService.updateFaroProject(faroProject), true);
+			faroProjectLocalService.updateFaroProject(faroProject));
 	}
 
 	protected OSBAccountEntry createOSBAccountEntry(boolean trial) {
@@ -691,8 +689,7 @@ public class ProjectController extends BaseFaroController {
 		_validateIncidentReportEmailAddresses(incidentReportEmailAddresses);
 		_validateTimeZoneId(timeZoneId);
 
-		OSBAccountEntry osbAccountEntry =
-			_provisioningClient.getOSBAccountEntry(corpProjectUuid);
+		OSBAccountEntry osbAccountEntry = getOSBAccountEntry(corpProjectUuid);
 
 		FaroSubscriptionDisplay faroSubscriptionDisplay =
 			new FaroSubscriptionDisplay(osbAccountEntry);

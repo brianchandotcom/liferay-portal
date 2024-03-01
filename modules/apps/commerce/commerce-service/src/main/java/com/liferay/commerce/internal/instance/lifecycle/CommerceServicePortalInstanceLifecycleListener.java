@@ -6,12 +6,24 @@
 package com.liferay.commerce.internal.instance.lifecycle;
 
 import com.liferay.commerce.helper.CommerceSAPHelper;
+import com.liferay.commerce.payment.configuration.CommercePaymentEntryRefundTypeConfiguration;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
+import java.io.IOException;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -28,10 +40,77 @@ public class CommerceServicePortalInstanceLifecycleListener
 
 		_commerceSAPHelper.addCommerceDefaultSAPEntries(
 			company.getCompanyId(), user.getUserId());
+
+		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-12754")) {
+			_createDefaultCommercePaymentEntryRefundTypeConfiguration(company);
+		}
+	}
+
+	private void _createDefaultCommercePaymentEntryRefundTypeConfiguration(
+		Company company) {
+
+		try {
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(
+					StringBundler.concat(
+						"(&(companyId=", company.getCompanyId(),
+						")(service.pid=",
+						CommercePaymentEntryRefundTypeConfiguration.class.
+							getName(),
+						"*))"));
+
+			if (ArrayUtil.isEmpty(configurations)) {
+				_updateCommercePaymentEntryRefundTypeConfiguration(
+					_configurationAdmin.createFactoryConfiguration(
+						CommercePaymentEntryRefundTypeConfiguration.class.
+							getName(),
+						StringPool.QUESTION),
+					CommercePaymentEntryRefundTypeConfiguration.class.getName(),
+					"damaged-in-transit", "Damaged in Transit", company);
+
+				_updateCommercePaymentEntryRefundTypeConfiguration(
+					_configurationAdmin.createFactoryConfiguration(
+						CommercePaymentEntryRefundTypeConfiguration.class.
+							getName(),
+						StringPool.QUESTION),
+					CommercePaymentEntryRefundTypeConfiguration.class.getName(),
+					"product-defect", "Product Defect", company);
+			}
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	private void _updateCommercePaymentEntryRefundTypeConfiguration(
+			Configuration configuration, String factoryPid, String key,
+			String name, Company company)
+		throws IOException {
+
+		configuration.update(
+			HashMapDictionaryBuilder.<String, Object>put(
+				ConfigurationAdmin.SERVICE_FACTORYPID, factoryPid
+			).put(
+				"enabled", true
+			).put(
+				"key", key
+			).put(
+				"name", name
+			).put(
+				"priority", "0"
+			).put(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				company.getCompanyId()
+			).put(
+				"configuration.cleaner.ignore", "true"
+			).build());
 	}
 
 	@Reference
 	private CommerceSAPHelper _commerceSAPHelper;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private UserLocalService _userLocalService;

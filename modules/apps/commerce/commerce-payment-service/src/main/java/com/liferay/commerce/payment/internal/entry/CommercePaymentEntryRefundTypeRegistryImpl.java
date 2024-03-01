@@ -10,10 +10,10 @@ import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry
 import com.liferay.commerce.payment.internal.entry.comparator.CommercePaymentEntryRefundTypeOrderComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Alessio Antonio Rendina
@@ -69,8 +70,15 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 			new ArrayList<>();
 
 		try {
-			commercePaymentEntryRefundTypes = ListUtil.fromCollection(
-				_serviceTrackerMap.values());
+			commercePaymentEntryRefundTypes = TransformUtil.transform(
+				_serviceTrackerMap.values(),
+				commercePaymentEntryRefundType -> {
+					if (commercePaymentEntryRefundType.getEnabled()) {
+						return commercePaymentEntryRefundType;
+					}
+
+					return null;
+				});
 
 			commercePaymentEntryRefundTypes.sort(
 				_commercePaymentEntryRefundTypeOrderComparator);
@@ -85,6 +93,7 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 	}
 
 	@Activate
+	@Modified
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, CommercePaymentEntryRefundType.class, null,
@@ -114,7 +123,7 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 	private final Comparator<CommercePaymentEntryRefundType>
 		_commercePaymentEntryRefundTypeOrderComparator =
 			new CommercePaymentEntryRefundTypeOrderComparator();
-	private ServiceTrackerMap<String, CommercePaymentEntryRefundType>
+	private volatile ServiceTrackerMap<String, CommercePaymentEntryRefundType>
 		_serviceTrackerMap;
 
 }

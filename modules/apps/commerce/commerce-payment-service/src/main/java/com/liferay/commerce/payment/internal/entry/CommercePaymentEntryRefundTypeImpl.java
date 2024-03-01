@@ -37,6 +37,11 @@ public class CommercePaymentEntryRefundTypeImpl
 	implements CommercePaymentEntryRefundType {
 
 	@Override
+	public boolean getEnabled() {
+		return _commercePaymentEntryRefundTypeConfiguration.enabled();
+	}
+
+	@Override
 	public String getKey() {
 		return _commercePaymentEntryRefundTypeConfiguration.key();
 	}

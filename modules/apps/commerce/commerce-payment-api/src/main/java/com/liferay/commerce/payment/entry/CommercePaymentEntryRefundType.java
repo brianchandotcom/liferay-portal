@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public interface CommercePaymentEntryRefundType {
 
+	public boolean getEnabled();
+
 	public String getKey();
 
 	public String getName(Locale locale);

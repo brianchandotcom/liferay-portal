@@ -9,6 +9,7 @@ import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useOutletContext, useParams, useSearchParams} from 'react-router-dom';
 import {withPagePermission} from '~/hoc/withPagePermission';
+import {ACTIONS} from '~/util/constants';
 import {BuildStatuses} from '~/util/statuses';
 
 import Form from '../../../../../components/Form';
@@ -24,13 +25,18 @@ import {Liferay} from '../../../../../services/liferay';
 import {
 	APIResponse,
 	TestrayBuild,
+	TestrayOptionsByCategory,
 	TestrayProductVersion,
 	TestrayRoutine,
+	TestrayRun,
 	testrayBuildImpl,
+	testrayRunImpl,
 } from '../../../../../services/rest';
 import ProductVersionFormModal from '../../../../Standalone/ProductVersions/ProductVersionFormModal';
 import BuildFormCases from './BuildFormCases';
 import BuildFormRun, {BuildFormType} from './BuildFormRun';
+import BuildFormStacks from './BuildFormStacks';
+import useGetRunsData from './hooks/useGetRunsData';
 
 import type {KeyedMutator} from 'swr';
 
@@ -46,6 +52,12 @@ const BuildForm = () => {
 	const [fetchingNewCaseIds, setFetchingNewCaseIds] = useState(false);
 	const [totalCases, setTotalCases] = useState(0);
 	const {buildId, buildTemplateId, projectId, routineId} = useParams();
+
+	const [runOptionsList, setRunOptionsList] = useState<
+		TestrayOptionsByCategory[]
+	>([[] as any]);
+
+	const action = buildId ? ACTIONS.UPDATE : ACTIONS.CREATE;
 
 	const [searchParams] = useSearchParams();
 
@@ -105,6 +117,7 @@ const BuildForm = () => {
 	} = useFormActions();
 
 	const {
+		control,
 		formState: {errors},
 		handleSubmit,
 		register,
@@ -120,6 +133,7 @@ const BuildForm = () => {
 					productVersionId: String(testrayBuild.productVersion?.id),
 					projectId: Number(projectId),
 					routineId: String(testrayBuild.routine?.id || routineId),
+					runOptions: [],
 					template: testrayBuild.template,
 					templateTestrayBuildId: buildTemplateId ?? '',
 			  }
@@ -128,6 +142,7 @@ const BuildForm = () => {
 					factorStacks: [{}],
 					projectId: Number(projectId),
 					routineId,
+					runOptions: [],
 					template: false,
 					templateTestrayBuildId: buildTemplateId ?? '',
 			  },
@@ -135,6 +150,12 @@ const BuildForm = () => {
 			buildTemplate ? yupSchema.buildTemplate : yupSchema.build
 		),
 	});
+
+	const {loading: loadingRuns, runItems} = useGetRunsData(
+		buildId,
+		setValue,
+		setRunOptionsList
+	);
 
 	useHeader({
 		tabs: [],
@@ -155,34 +176,55 @@ const BuildForm = () => {
 	}
 
 	const _onSubmit = async (data: BuildFormType) => {
-		const hasFactorStacks = data.factorStacks.some((factorStack: any) =>
-			Object.keys(factorStack).some(
-				(key) => !!Object.keys(factorStack[key]).length
-			)
-		);
+		const runsIds = data.runOptions.map((run: TestrayRun) => run.runId);
 
-		if (!hasFactorStacks) {
-			return Liferay.Util.openToast({
-				message: i18n.translate(
-					'at-least-one-environment-stack-is-required'
-				),
-				type: 'danger',
-			});
+		const runsIdsToRemove = runItems
+			?.filter((run: TestrayRun) => !runsIds.includes(run.id))
+			.map((run: TestrayRun) => run.id);
+
+		if (runsIdsToRemove?.length) {
+			await testrayRunImpl.removeBatch(
+				runsIdsToRemove.map((id: any) => id)
+			);
+		}
+
+		if (action === ACTIONS.CREATE) {
+			const hasFactorStacks = data.factorStacks.some((factorStack: any) =>
+				Object.keys(factorStack).some(
+					(key) => !!Object.keys(factorStack[key]).length
+				)
+			);
+
+			if (!hasFactorStacks) {
+				return Liferay.Util.openToast({
+					message: i18n.translate(
+						'at-least-one-environment-stack-is-required'
+					),
+					type: 'danger',
+				});
+			}
+		} else {
+			if (!data.runOptions) {
+				return Liferay.Util.openToast({
+					message: i18n.translate(
+						'at-least-one-environment-stack-is-required'
+					),
+					type: 'danger',
+				});
+			}
 		}
 
 		data.caseIds = caseIds;
-
 		if (testrayBuild) {
 			data.id = testrayBuild.id.toString();
 		}
-
 		const response = await onSubmit(data, {
 			create: (data) => testrayBuildImpl.create(data),
-			update: (id, data) => testrayBuildImpl.update(id, data),
+			update: (id, data) =>
+				testrayBuildImpl.updateBuild(id, data, runItems),
 		})
 			.then(onSave)
 			.catch(onError);
-
 		if (testrayBuild) {
 			mutateBuild(response);
 		}
@@ -251,7 +293,26 @@ const BuildForm = () => {
 					type="textarea"
 				/>
 
-				<BuildFormRun register={register} />
+				{action === ACTIONS.UPDATE && (
+					<BuildFormRun
+						action={action}
+						control={control}
+						loadingRuns={loadingRuns}
+						register={register}
+						runItems={runItems}
+						runOptionsList={runOptionsList}
+						setValue={setValue}
+					/>
+				)}
+
+				{action === ACTIONS.CREATE && (
+					<BuildFormStacks
+						action={action}
+						control={control}
+						register={register}
+						setValue={setValue}
+					/>
+				)}
 
 				<BuildFormCases
 					buildId={buildId}

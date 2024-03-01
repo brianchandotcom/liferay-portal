@@ -68,6 +68,7 @@ const buildStructure = {
 	projectId: yup.number(),
 	promoted: yup.boolean(),
 	routineId: yup.string().required(),
+	runOptions: yup.mixed(),
 	template: yup.boolean(),
 	templateTestrayBuildId: yup.string(),
 };

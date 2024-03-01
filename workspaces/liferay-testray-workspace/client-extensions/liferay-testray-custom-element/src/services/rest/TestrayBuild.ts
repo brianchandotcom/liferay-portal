@@ -16,7 +16,12 @@ import {testrayCaseResultImpl} from './TestrayCaseResult';
 import {testrayFactorRest} from './TestrayFactor';
 import {testrayRunImpl} from './TestrayRun';
 
-import type {APIResponse, TestrayBuild, TestrayRoutine} from './types';
+import type {
+	APIResponse,
+	TestrayBuild,
+	TestrayRoutine,
+	TestrayRun,
+} from './types';
 
 type Build = typeof yupSchema.build.__outputType & {projectId: number};
 
@@ -79,7 +84,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 				.filter(({factorOption}) => Boolean(factorOption))
 				.map(({factorOption}) => factorOption);
 
-			const testrayRunName = factorOptionsList.join(' | ');
+			const testrayRunName = factorOptionsList.join('|');
 
 			if (!testrayRunName) {
 				continue;
@@ -215,6 +220,55 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 			) || [];
 
 		return caseIds;
+	}
+
+	public async updateBuild(
+		id: any,
+		data: Partial<Build>,
+		runItems: TestrayRun[]
+	): Promise<TestrayBuild> {
+		const getLastRunNumber = () => {
+			const runs = runItems?.map((item: TestrayRun) => item.number) || [];
+
+			return runs[runs?.length - 1];
+		};
+
+		let runNumber = (getLastRunNumber() as unknown) as number;
+
+		for (const run of data.runOptions) {
+			const runId = run?.runId;
+			const fieldId = run?.id;
+
+			const runName = Object.values(run)
+				.filter((key, _) => key !== runId && key !== id)
+				.join('|');
+
+			if (!runName) {
+				continue;
+			}
+
+			if (!runId) {
+				await testrayRunImpl.create({
+					buildId: id,
+					description: undefined,
+					environmentHash: runName,
+					name: runName,
+					number: runNumber + 1,
+				});
+
+				runNumber++;
+			}
+
+			if (fieldId && runId) {
+				await testrayRunImpl.update(runId, {
+					...run,
+					environmentHash: runName,
+					name: runName,
+				});
+			}
+		}
+
+		return this.update(id, data);
 	}
 
 	public async updateArchivedFlag(id: number, archived: boolean) {

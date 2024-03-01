@@ -123,6 +123,8 @@ export type TestrayBuild = {
 	r_projectToBuilds_c_project?: TestrayProject;
 	r_routineToBuilds_c_routine?: TestrayRoutine;
 	routine?: TestrayRoutine;
+	runId?: number;
+	runsData?: TestrayRun;
 	tasks: TestrayTask[];
 	template: boolean;
 	templateTestrayBuildId: string;
@@ -298,6 +300,7 @@ export type TestrayRun = {
 	externalReferenceCode: string;
 	externalReferencePK: string;
 	externalReferenceType: string;
+	factorCategory?: TestrayFactorCategory;
 	factorOption?: TestrayFactorOption;
 	id: number;
 	javaJDK?: string;
@@ -306,6 +309,7 @@ export type TestrayRun = {
 	number: string;
 	operatingSystem?: string;
 	r_buildToRuns_c_build?: TestrayBuild;
+	runId?: number;
 	status: string;
 } & CaseResultAggregation;
 

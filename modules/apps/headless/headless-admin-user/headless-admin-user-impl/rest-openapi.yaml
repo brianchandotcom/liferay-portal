@@ -5,6 +5,61 @@ components:
             description:
                 An account represents an external account, for example a customer business.
             properties:
+                accountContactInformation:
+                    description:
+                        The account's contact information.
+                    properties:
+                        emailAddresses:
+                            description:
+                                A list of the account's email addresses, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/EmailAddress"
+                            type: array
+                        facebook:
+                            description:
+                                The account's Facebook account.
+                            type: string
+                        id:
+                            description:
+                                The ID of the `contactInformation`.
+                            format: int64
+                            readOnly: true
+                            type: integer
+                        jabber:
+                            description:
+                                The account's Jabber handle.
+                            type: string
+                        postalAddresses:
+                            description:
+                                A list of account's postal addresses, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/PostalAddress"
+                            type: array
+                        skype:
+                            description:
+                                The account's Skype handle.
+                            type: string
+                        sms:
+                            description:
+                                The account's SMS number.
+                            type: string
+                        telephones:
+                            description:
+                                A list of the account's phone numbers, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/Phone"
+                            type: array
+                        twitter:
+                            description:
+                                The account's Twitter handle.
+                            type: string
+                        webUrls:
+                            description:
+                                A list of the account's web URLs, with one optionally marked as primary.
+                            items:
+                                $ref: "#/components/schemas/WebUrl"
+                            type: array
+                    type: object
                 accountUserAccounts:
                     description:
                         The users linked to the account
@@ -1264,7 +1319,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.57'."
+        'com.liferay.headless.admin.user.client', and version '4.0.58'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

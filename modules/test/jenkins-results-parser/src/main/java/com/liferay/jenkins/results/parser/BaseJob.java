@@ -1218,7 +1218,7 @@ public abstract class BaseJob implements Job {
 		"unit-jdk8"
 	};
 
-	private static final Integer _THREAD_COUNT = 20;
+	private static final Integer _THREAD_COUNT = 10;
 
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);

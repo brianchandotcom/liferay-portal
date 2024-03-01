@@ -180,7 +180,7 @@ const Popover = ({tooltip}) => {
 const FIELDSET_REGEX = /Fieldset\d+/g;
 const FIELDSET_REPEAT_INDEX_REGEX = /\$(\d+)(?:#|\$|$)/g;
 
-export function FieldBase({
+export default function FieldBase({
 	accessible = true,
 	children,
 	displayErrors,

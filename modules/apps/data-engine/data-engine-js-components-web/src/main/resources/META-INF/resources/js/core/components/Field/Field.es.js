@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {loadModule} from 'frontend-js-web';
 import React, {
 	Suspense,
 	lazy,
@@ -30,23 +31,6 @@ const getModule = (fieldTypes, fieldType) => {
 	return field;
 };
 
-const load = (fieldModule) => {
-	return new Promise((resolve, reject) => {
-		Liferay.Loader.require(
-			[fieldModule],
-			(Field) => resolve(Field),
-			(error) => reject({error, network: true})
-		);
-	});
-};
-
-/**
- * @see https://github.com/metal/metal.js/blob/master/packages/metal-component/src/Component.js#L517-L519
- */
-const isMetalComponentConstructor = (fn) => {
-	return fn && fn.prototype && fn.prototype['__metal_component__'];
-};
-
 const useLazy = () => {
 	const {components} = useStorage();
 
@@ -54,19 +38,14 @@ const useLazy = () => {
 		(fieldModule) => {
 			if (!components.has(fieldModule)) {
 				const Component = lazy(() => {
-					return load(fieldModule)
+					return loadModule(fieldModule)
 						.then((instance) => {
-							if (!(instance && instance.default)) {
+							if (!instance) {
 								return null;
 							}
 
-							if (isMetalComponentConstructor(instance.default)) {
-								console.error(
-									'Metal is no longer supported',
-									instance
-								);
-
-								return null;
+							if (!instance.default) {
+								return {default: instance};
 							}
 
 							return instance;

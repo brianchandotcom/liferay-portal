@@ -24,9 +24,8 @@ import org.osgi.service.component.annotations.Component;
 public class NumericInputMaskDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
-	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/NumericInputMask" +
-			"/NumericInputMask";
+	public String getESModule() {
+		return "{NumericInputMask} from dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

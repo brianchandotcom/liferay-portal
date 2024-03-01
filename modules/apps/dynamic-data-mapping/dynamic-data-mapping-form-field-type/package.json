@@ -42,7 +42,7 @@
 			"<rootDir>/jest-setup.config.js"
 		]
 	},
-	"main": "index.js",
+	"main": "index.ts",
 	"name": "dynamic-data-mapping-form-field-type",
 	"private": true,
 	"scripts": {

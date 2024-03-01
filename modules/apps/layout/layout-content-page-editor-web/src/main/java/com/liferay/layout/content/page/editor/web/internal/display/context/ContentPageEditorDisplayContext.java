@@ -233,9 +233,7 @@ public class ContentPageEditorDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getEditorContext()
-		throws Exception {
-
+	public Map<String, Object> getEditorContext() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			HashMapBuilder.<String, Object>put(

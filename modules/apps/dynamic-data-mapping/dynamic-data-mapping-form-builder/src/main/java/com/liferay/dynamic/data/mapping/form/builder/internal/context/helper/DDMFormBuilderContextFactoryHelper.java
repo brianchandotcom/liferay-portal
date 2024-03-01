@@ -25,7 +25,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -34,11 +36,14 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -409,9 +414,18 @@ public class DDMFormBuilderContextFactoryHelper {
 				"label", LanguageUtil.get(_httpServletRequest, "builder")
 			).put(
 				"pluginEntryPoint",
-				_npmResolver.resolveModuleName(
-					"data-engine-taglib/data_layout_builder/js/plugins" +
-						"/fields-sidebar/index")
+				() -> {
+					ESImport esImport = ESImportUtil.getESImport(
+						_absolutePortalURLBuilderFactorySnapshot.get(
+						).getAbsolutePortalURLBuilder(
+							_httpServletRequest
+						),
+						"{FieldsSidebar} from data-engine-taglib");
+
+					return StringBundler.concat(
+						"{", esImport.getSymbol(), "} from ",
+						esImport.getModule());
+				}
 			).put(
 				"sidebarPanelId", "fields"
 			).build()
@@ -465,6 +479,11 @@ public class DDMFormBuilderContextFactoryHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormBuilderContextFactoryHelper.class);
+
+	private static final Snapshot<AbsolutePortalURLBuilderFactory>
+		_absolutePortalURLBuilderFactorySnapshot = new Snapshot<>(
+			DDMFormBuilderContextFactoryHelper.class,
+			AbsolutePortalURLBuilderFactory.class);
 
 	private final DDMFormFieldTypeServicesRegistry
 		_ddmFormFieldTypeServicesRegistry;

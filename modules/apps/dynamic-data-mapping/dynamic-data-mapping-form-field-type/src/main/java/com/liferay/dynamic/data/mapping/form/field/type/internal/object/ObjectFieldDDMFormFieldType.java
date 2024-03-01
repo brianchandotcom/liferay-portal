@@ -24,8 +24,8 @@ import org.osgi.service.component.annotations.Component;
 public class ObjectFieldDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
-	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/ObjectField/ObjectField";
+	public String getESModule() {
+		return "{ObjectField} from dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

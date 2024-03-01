@@ -370,6 +370,35 @@ export function FieldBase({
 		};
 	}, []);
 
+	const markAsTranslated = useCallback(() => {
+		const pagesVisitor = new PagesVisitor(pages);
+
+		dispatch({
+			payload: pagesVisitor.mapFields(
+				(field) => {
+					if (!field.localizedValue) {
+						return;
+					}
+
+					return {
+						...field,
+						localizedValue: {
+							...field.localizedValue,
+							[editingLanguageId]: field.value,
+						},
+						localizedValueEdited: {
+							...field.localizedValueEdited,
+							[editingLanguageId]: true,
+						},
+					};
+				},
+				false,
+				true
+			),
+			type: CORE_EVENT_TYPES.PAGE.UPDATE,
+		});
+	}, [dispatch, editingLanguageId, pages]);
+
 	const resetTranslations = useCallback(
 		({defaultLanguageId}) => {
 			const pagesVisitor = new PagesVisitor(pages);
@@ -404,14 +433,16 @@ export function FieldBase({
 
 	useEffect(() => {
 		Liferay.on('inputLocalized:resetTranslations', resetTranslations);
+		Liferay.on('inputLocalized:markAsTranslated', markAsTranslated);
 
 		return () => {
 			Liferay.detach(
 				'inputLocalized:resetTranslations',
 				resetTranslations
 			);
+			Liferay.detach('inputLocalized:markAsTranslated', markAsTranslated);
 		};
-	}, [resetTranslations]);
+	}, [resetTranslations, markAsTranslated]);
 
 	return (
 		<ClayForm.Group

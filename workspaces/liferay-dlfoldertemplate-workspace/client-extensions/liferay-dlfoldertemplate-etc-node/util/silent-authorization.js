@@ -5,36 +5,20 @@
 
 import axios from 'axios';
 import cache from 'memory-cache';
+import {applicationExternalReferenceCodes} from './constants.js';
+import {lxcConfig, lookupConfig} from '@rotty3000/config-node';
 
-import {getConfigByKey, getOAuthConfigByKey} from './config-util.js';
-import {
-	applicationExternalReferenceCodes,
-	environmentConfigKeys,
-	oauthServerConfigKeys,
-} from './constants.js';
+let serverOauthApp = lxcConfig.oauthApplication(applicationExternalReferenceCodes.OAUTH_SERVER_EXTERNAL_REFERENCE_CODE);
 
-const clientId = getOAuthConfigByKey(
-	applicationExternalReferenceCodes.OAUTH_SERVER_EXTERNAL_REFERENCE_CODE,
-	oauthServerConfigKeys._OAUTH2_HEADLESS_SERVER_CLIENT_ID
-);
+const clientId = serverOauthApp.clientId();
 
-const clientSecret = getOAuthConfigByKey(
-	applicationExternalReferenceCodes.OAUTH_SERVER_EXTERNAL_REFERENCE_CODE,
-	oauthServerConfigKeys._OAUTH2_HEADLESS_SERVER_CLIENT_SECRET
-);
+const clientSecret = serverOauthApp.clientSecret();
 
-const lxcDXPMainDomain = getConfigByKey(
-	environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN
-);
+const lxcDXPMainDomain = lxcConfig.dxpMainDomain();
 
-const lxcDXPServerProtocol = getConfigByKey(
-	environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL
-);
+const lxcDXPServerProtocol = lxcConfig.dxpProtocol();
 
-const uri = getOAuthConfigByKey(
-	applicationExternalReferenceCodes.OAUTH_SERVER_EXTERNAL_REFERENCE_CODE,
-	oauthServerConfigKeys._OAUTH2_TOKEN_URI
-);
+const uri = serverOauthApp.jwksUri();
 
 const tokenEndpoint = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}${uri}`;
 

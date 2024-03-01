@@ -41,6 +41,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -49,9 +52,12 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -94,7 +100,9 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		String itemSelectedEventName,
 		JournalArticleItemSelectorView journalArticleItemSelectorView,
 		JournalWebConfiguration journalWebConfiguration, PortletURL portletURL,
-		boolean search, StagingGroupHelper stagingGroupHelper) {
+		ResourcePermissionLocalService resourcePermissionLocalService,
+		RoleLocalService roleLocalService, boolean search,
+		StagingGroupHelper stagingGroupHelper) {
 
 		_httpServletRequest = httpServletRequest;
 		_infoItemItemSelectorCriterion = infoItemItemSelectorCriterion;
@@ -102,6 +110,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		_journalArticleItemSelectorView = journalArticleItemSelectorView;
 		_journalWebConfiguration = journalWebConfiguration;
 		_portletURL = portletURL;
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+		_roleLocalService = roleLocalService;
 		_search = search;
 		_stagingGroupHelper = stagingGroupHelper;
 
@@ -416,6 +426,21 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 	public int getStatus() {
 		return _infoItemItemSelectorCriterion.getStatus();
+	}
+
+	public boolean hasGuestViewPermission(JournalArticle journalArticle)
+		throws PortalException {
+
+		if (_guestRole == null) {
+			_guestRole = _roleLocalService.getRole(
+				journalArticle.getCompanyId(), RoleConstants.GUEST);
+		}
+
+		return _resourcePermissionLocalService.hasResourcePermission(
+			journalArticle.getCompanyId(), JournalArticle.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(journalArticle.getResourcePrimKey()),
+			_guestRole.getRoleId(), ActionKeys.VIEW);
 	}
 
 	public boolean isMultiSelection() {
@@ -741,6 +766,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	private JournalFolder _folder;
 	private Long _folderId;
 	private Long _groupId;
+	private Role _guestRole;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemItemSelectorCriterion _infoItemItemSelectorCriterion;
 	private final String _itemSelectedEventName;
@@ -754,6 +780,9 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	private final PortletRequest _portletRequest;
 	private final PortletResponse _portletResponse;
 	private final PortletURL _portletURL;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+	private final RoleLocalService _roleLocalService;
 	private final boolean _search;
 	private Boolean _searchEverywhere;
 	private final StagingGroupHelper _stagingGroupHelper;

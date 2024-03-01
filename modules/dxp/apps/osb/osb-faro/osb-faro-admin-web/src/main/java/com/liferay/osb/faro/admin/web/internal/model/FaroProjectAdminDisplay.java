@@ -66,8 +66,10 @@ public class FaroProjectAdminDisplay {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			faroProject.getSubscription());
 
-		_individualsCount = jsonObject.getLong("individualsCount");
-		_pageViewsCount = jsonObject.getLong("pageViewsCount");
+		_individualsCount = jsonObject.getLong(
+			"individualsCountSinceLastAnniversary");
+		_pageViewsCount = jsonObject.getLong(
+			"pageViewsCountSinceLastAnniversary");
 
 		_individualsLimit = GetterUtil.getLong(
 			document.get("individualsLimit"));

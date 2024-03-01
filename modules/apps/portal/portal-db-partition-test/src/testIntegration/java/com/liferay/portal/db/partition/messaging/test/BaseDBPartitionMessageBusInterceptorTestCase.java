@@ -6,9 +6,7 @@
 package com.liferay.portal.db.partition.messaging.test;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -49,7 +47,6 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -73,11 +70,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	public static void assume() {
-		Assume.assumeTrue(DBPartition.isPartitionEnabled());
-
-		DB db = DBManagerUtil.getDB();
-
-		Assume.assumeTrue(db.isSupportsDBPartition());
+		BaseDBPartitionTestCase.assume();
 	}
 
 	@AfterClass

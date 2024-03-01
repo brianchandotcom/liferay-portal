@@ -68,7 +68,9 @@ public abstract class BaseDBPartitionTestCase {
 	public static void assume() {
 		Assume.assumeTrue(DBPartition.isPartitionEnabled());
 
-		db = DBManagerUtil.getDB();
+		if (db == null) {
+			db = DBManagerUtil.getDB();
+		}
 
 		Assume.assumeTrue(db.isSupportsDBPartition());
 	}

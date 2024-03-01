@@ -375,9 +375,9 @@ LPD-16492 Object fields with aggregation and formula business type should not be
     
 # breaking
 ## What modules/apps/object/object-service/src/main/java/com/liferay/object/service/impl/ObjectFieldLocalServiceImpl.java
-Adding new validation for aggregation and formula object field, preventing them to be indexed.
+Added new validation for aggregation and formula object field types, preventing them from being indexed.
 ## Why
-Since these types of object fields have their values got by runtime calculation, we have no proper support for them in the Elasticsearch.
-Preventing the attribute indexed from being true avoids misinterpretation.
+Because these object fields types have their values obtained by runtime calculation, we do not have proper support for them in Elasticsearch.
+Preventing the indexed attribute from being true avoids misinterpretation.
 ----
 ```

@@ -672,7 +672,7 @@ public class ProjectController extends BaseFaroController {
 		};
 	}
 
-	protected OSBAccountEntry createOSBAccountEntry(String corpProjectUuid)
+	protected OSBAccountEntry getOSBAccountEntry(String corpProjectUuid)
 		throws Exception {
 
 		return _provisioningClient.getOSBAccountEntry(corpProjectUuid);

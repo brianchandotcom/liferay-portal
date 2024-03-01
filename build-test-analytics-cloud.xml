@@ -3,6 +3,130 @@
 <project basedir="." name="portal-test-analytics-cloud" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="build-analytics-cloud-images">
+		<sequential>
+			<create-analytics-cloud-docker-compose start.analytics.cloud="false" />
+
+			<if>
+				<equals arg1="${analytics.cloud.service.images.available}" arg2="true" />
+				<then>
+					<for list="${analytics.cloud.service.image.names}" param="analytics.cloud.service.image.name">
+						<sequential>
+							<local name="analytics.cloud.service.name" />
+
+							<propertyregex
+								input="@{analytics.cloud.service.image.name}"
+								override="true"
+								property="analytics.cloud.service.name"
+								regexp="([^=]+)=([^=]+)"
+								replace="\1"
+							/>
+
+							<execute dir="${project.dir}">
+								docker load --input dist/liferay-docker-${analytics.cloud.service.name}.tar
+							</execute>
+						</sequential>
+					</for>
+				</then>
+				<else>
+					<download-gradle-wrapper-binary />
+
+					<pull-docker-image-dependencies
+						analytics.cloud.image.names.excludes="${analytics.cloud.faro.image.names.excludes}"
+						analytics.cloud.repository.dir="${analytics.cloud.faro.dir}"
+					/>
+
+					<local name="portal.gradlew" />
+
+					<property location="${project.dir}/gradlew" name="portal.gradlew" />
+
+					<loadfile
+						property="analytics.cloud.docker.test.yaml.content"
+						srcfile="${analytics.cloud.docker.test.yaml}"
+					/>
+
+					<propertyregex
+						input="${analytics.cloud.docker.test.yaml.content}"
+						override="true"
+						property="analytics.cloud.faro.tag.name"
+						regexp="[\S\s]*image: (liferay\/com-liferay-osb-faro\:[^\s]+)[\S\s]*"
+						replace="\1"
+					/>
+
+					<execute dir="${analytics.cloud.faro.dir}">
+						${portal.gradlew} createDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
+
+						docker tag ${analytics.cloud.faro.image.name} ${analytics.cloud.faro.tag.name}
+
+						docker rm ${analytics.cloud.faro.container.name}
+
+						docker save --output ${project.dir}/dist/liferay-docker-${analytics.cloud.faro.service.name}.tar ${analytics.cloud.faro.image.name}
+					</execute>
+
+					<pull-docker-image-dependencies
+						analytics.cloud.image.names.excludes="${analytics.cloud.asah.image.names.excludes}"
+						analytics.cloud.repository.dir="${analytics.cloud.asah.dir}"
+					/>
+
+					<execute dir="${analytics.cloud.asah.dir}">
+						./gradlew jar -Dliferay.ci=true
+
+						./gradlew clean assemble -Dliferay.ci=true
+
+						docker compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} build
+
+						docker images
+					</execute>
+
+					<for list="${analytics.cloud.service.image.names}" param="analytics.cloud.service.image.name">
+						<sequential>
+							<local name="analytics.cloud.image.name" />
+							<local name="analytics.cloud.service.name" />
+
+							<propertyregex
+								input="@{analytics.cloud.service.image.name}"
+								override="true"
+								property="analytics.cloud.image.name"
+								regexp="([^=]+)=([^=]+)"
+								replace="\2"
+							/>
+
+							<propertyregex
+								input="@{analytics.cloud.service.image.name}"
+								override="true"
+								property="analytics.cloud.service.name"
+								regexp="([^=]+)=([^=]+)"
+								replace="\1"
+							/>
+
+							<if>
+								<not>
+									<matches pattern=".*com-liferay-osb-.*" string="${analytics.cloud.image.name}" />
+								</not>
+								<then>
+									<execute dir="${project.dir}">
+										docker pull ${analytics.cloud.image.name}
+									</execute>
+								</then>
+							</if>
+
+							<if>
+								<not>
+									<contains string="${analytics.cloud.service.name}" substring="osbfaro" />
+								</not>
+								<then>
+									<execute dir="${project.dir}">
+										docker save --output ${project.dir}/dist/liferay-docker-${analytics.cloud.service.name}.tar ${analytics.cloud.image.name}
+									</execute>
+								</then>
+							</if>
+						</sequential>
+					</for>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="create-analytics-cloud-docker-compose">
 		<attribute default="false" name="start.analytics.cloud" />
 
@@ -43,10 +167,9 @@
 						sb.append(getDistNode());
 						sb.append(":");
 						sb.append(distPath);
-						sb.append("/liferay-docker-*.tar");
-						sb.append(" ");
+						sb.append("/liferay-docker-*.tar ");
 						sb.append(project.getProperty("project.dir"));
-						sb.append("/dist);
+						sb.append("/dist");
 
 						Process process = JenkinsResultsParserUtil.executeBashCommands(false, new File("."), 20 * 60 * 1000, new String[] {sb.toString()});
 
@@ -480,107 +603,13 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 		<sequential>
 			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
 
-			<create-analytics-cloud-docker-compose />
+			<build-analytics-cloud-images />
 
-			<property location="${analytics.cloud.asah.dir}/docker-compose.test.yml" name="analytics.cloud.docker.test.yaml" />
-
-			<local name="analytics.cloud.faro.build.gradle" />
-
-			<condition else="${analytics.cloud.faro.dir}/build.gradle" property="analytics.cloud.faro.build.gradle" value="${analytics.cloud.faro.dir}/build-ext.gradle">
-				<available file="${analytics.cloud.faro.dir}/build-ext.gradle" />
-			</condition>
-
-			<replaceregexp
-				file="${analytics.cloud.faro.build.gradle}"
-				match="def dockerContainerId = \&quot;([^\&quot;]+)\&quot;"
-				replace="def dockerContainerId = \&quot;${analytics.cloud.faro.container.name}\&quot;"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.faro.build.gradle}"
-				match="network \&quot;([^\&quot;]+)\&quot;"
-				replace="network \&quot;${analytics.cloud.project.name}_default\&quot;"
-			/>
-
-			<replaceregexp
-				file="${analytics.cloud.faro.dir}/osb-faro-docker/local/Dockerfile"
-				match="FARO_URL=http://localhost:8080"
-				replace="FARO_URL=${analytics.cloud.faro.frontend.url}"
-			/>
-
-			<echo file="${analytics.cloud.asah.dir}/local.env">OSB_ASAH_BACKEND_URL=${analytics.cloud.asah.backend.url}
-OSB_ASAH_POSTGRESQL_ENABLED=false
-OSB_ASAH_PUBLISHER_URL=${analytics.cloud.asah.publisher.url}
-OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
-
-			<if>
-				<isset property="test.portal.license.url" />
-				<then>
-					<mkdir dir="${analytics.cloud.faro.dir}/osb-faro-docker/common/license/" />
-
-					<mirrors-get
-						dest="${analytics.cloud.faro.dir}/osb-faro-docker/common/license/"
-						src="${test.portal.license.url}"
-					/>
-				</then>
-			</if>
-
-			<download-gradle-wrapper-binary />
-
-			<if>
-				<equals arg1="${analytics.cloud.asah.build}" arg2="true" />
-				<then>
-					<pull-docker-image-dependencies
-						analytics.cloud.image.names.excludes="${analytics.cloud.asah.image.names.excludes}"
-						analytics.cloud.repository.dir="${analytics.cloud.asah.dir}"
-					/>
-
-					<execute dir="${analytics.cloud.asah.dir}">
-						./gradlew jar -Dliferay.ci=true
-
-						./gradlew clean assemble -Dliferay.ci=true
-
-						docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} build
-					</execute>
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${analytics.cloud.faro.build}" arg2="true" />
-				<then>
-					<pull-docker-image-dependencies
-						analytics.cloud.image.names.excludes="${analytics.cloud.faro.image.names.excludes}"
-						analytics.cloud.repository.dir="${analytics.cloud.faro.dir}"
-					/>
-
-					<local name="portal.gradlew" />
-
-					<property location="${project.dir}/gradlew" name="portal.gradlew" />
-
-					<loadfile
-						property="analytics.cloud.docker.test.yaml.content"
-						srcfile="${analytics.cloud.docker.test.yaml}"
-					/>
-
-					<propertyregex
-						input="${analytics.cloud.docker.test.yaml.content}"
-						override="true"
-						property="analytics.cloud.faro.tag.name"
-						regexp="[\S\s]*image: (liferay\/com-liferay-osb-faro\:[^\s]+)[\S\s]*"
-						replace="\1"
-					/>
-
-					<execute dir="${analytics.cloud.faro.dir}">
-						${portal.gradlew} createDocker -Pcom.liferay.osb.faro.environment.name=local -Dliferay.ci=true
-
-						docker tag ${analytics.cloud.faro.image.name} ${analytics.cloud.faro.tag.name}
-
-						docker rm ${analytics.cloud.faro.container.name}
-					</execute>
-				</then>
-			</if>
+			<create-analytics-cloud-docker-compose start.analytics.cloud="true" />
 
 			<property location="${analytics.cloud.asah.dir}/start_analytics_cloud.sh" name="analytics.cloud.start.sh" />
+
+			<print-file file.name="${analytics.cloud.docker.test.yaml}" />
 
 			<echo file="${analytics.cloud.start.sh}">
 				#!/bin/bash
@@ -750,7 +779,7 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 		<sequential>
 			<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
 
-			<create-analytics-cloud-docker-compose />
+			<create-analytics-cloud-docker-compose start.analytics.cloud="true" />
 
 			<property location="${analytics.cloud.asah.dir}/docker-compose.test.yml" name="analytics.cloud.docker.test.yaml" />
 
@@ -779,6 +808,10 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 			</execute>
 		</sequential>
 	</macrodef>
+
+	<target name="build-analytics-cloud-images">
+		<build-analytics-cloud-images />
+	</target>
 
 	<target name="start-analytics-cloud">
 		<stop-analytics-cloud />

@@ -77,6 +77,7 @@
 /development/sling-commons-osgi.jar
 /development/sling-testing-osgi-mock-core.jar
 /development/smtp.jar
+/development/snakeyaml.jar
 /development/spring-instrument-tomcat.jar
 /development/spring-instrument.jar
 /development/spring-test.jar

@@ -7457,6 +7457,8 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 
+		Map<Long, FileEntry> fileEntryMap = new HashMap<>();
+
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			if (ListUtil.isNotEmpty(
 					ddmFormFieldValue.getNestedDDMFormFieldValues())) {
@@ -7502,15 +7504,29 @@ public class JournalArticleLocalServiceImpl
 					if (oldFileEntry.getRepositoryId() ==
 							portletRepository.getRepositoryId()) {
 
-						newFileEntry =
-							_portletFileRepository.addPortletFileEntry(
-								null, groupId, article.getUserId(),
-								JournalArticle.class.getName(),
-								article.getResourcePrimKey(),
-								JournalConstants.SERVICE_NAME, folderId,
-								oldFileEntry.getContentStream(),
-								oldFileEntry.getFileName(),
-								oldFileEntry.getMimeType(), false);
+						newFileEntry = fileEntryMap.computeIfAbsent(
+							oldFileEntry.getFileEntryId(),
+							key -> {
+								try {
+									return _portletFileRepository.
+										addPortletFileEntry(
+											null, groupId, article.getUserId(),
+											JournalArticle.class.getName(),
+											article.getResourcePrimKey(),
+											JournalConstants.SERVICE_NAME,
+											folderId,
+											oldFileEntry.getContentStream(),
+											oldFileEntry.getFileName(),
+											oldFileEntry.getMimeType(), false);
+								}
+								catch (PortalException portalException) {
+									if (_log.isDebugEnabled()) {
+										_log.debug(portalException);
+									}
+
+									throw new RuntimeException(portalException);
+								}
+							});
 					}
 
 					String previewURL = _dlURLHelper.getPreviewURL(

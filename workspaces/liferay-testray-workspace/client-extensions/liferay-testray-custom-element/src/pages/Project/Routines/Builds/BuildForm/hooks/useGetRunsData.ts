@@ -15,9 +15,9 @@ import {
 } from '~/services/rest';
 
 const useGetRunsData = (
-	setRunOptionsList: any,
-	update: any,
-	buildId?: string
+	buildId?: string,
+	setValue?: any,
+	setRunOptionsList?: any
 ) => {
 	const {data: runsData, loading} = useFetch<APIResponse<TestrayRun>>(
 		testrayRunImpl.resource,
@@ -52,17 +52,21 @@ const useGetRunsData = (
 				.then(setRunOptionsList)
 				.catch(console.error);
 		}
+		const runOptions: any = [];
 
-		runItems.forEach((item, index) => {
-			update(index, {
+		runItems?.forEach((item) => {
+			runOptions.push({
 				applicationServer: item?.applicationServer as string,
 				browser: item?.browser as string,
 				database: item?.database as string,
 				javaJDK: item?.javaJDK as string,
 				operatingSystem: item?.operatingSystem as string,
+				runId: item?.id,
 			});
 		});
-	}, [categoryItems, runItems, setRunOptionsList, update]);
+
+		setValue('runOptions', runOptions);
+	}, [categoryItems, runItems, setRunOptionsList, setValue]);
 
 	return {
 		loading,

@@ -37,7 +37,11 @@ const RunsListActions: React.FC<RunsListActionsProps> = ({
 				<ClayButtonWithIcon
 					aria-label={i18n.translate('add')}
 					displayType="secondary"
-					onClick={() => append({...field} || (defaultItem as any))}
+					onClick={() =>
+						append(
+							{...field, runId: undefined} || (defaultItem as any)
+						)
+					}
 					symbol="plus"
 				/>
 			)}

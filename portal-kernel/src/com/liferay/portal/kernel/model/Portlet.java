@@ -325,6 +325,13 @@ public interface Portlet extends PersistedModel, PortletModel {
 	public String getDefaultPreferences();
 
 	/**
+	 * Returns the names of the category that display the portlet
+	 *
+	 * @return the names of the category that display the portlet
+	 */
+	public java.util.Set<String> getDisplayCategories();
+
+	/**
 	 * Returns the display name of the portlet.
 	 *
 	 * @return the display name of the portlet
@@ -1746,6 +1753,14 @@ public interface Portlet extends PersistedModel, PortletModel {
 	 * @param defaultPreferences the default preferences of the portlet
 	 */
 	public void setDefaultPreferences(String defaultPreferences);
+
+	/**
+	 * Sets the names of the category that display the portlet
+	 *
+	 * @param displayCategories the names of the category that display the
+	 portlet
+	 */
+	public void setDisplayCategories(java.util.Set<String> displayCategories);
 
 	/**
 	 * Sets the display name of the portlet.

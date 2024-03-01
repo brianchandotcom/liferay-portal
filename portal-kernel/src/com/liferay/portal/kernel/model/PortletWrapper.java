@@ -470,6 +470,16 @@ public class PortletWrapper
 	}
 
 	/**
+	 * Returns the names of the category that display the portlet
+	 *
+	 * @return the names of the category that display the portlet
+	 */
+	@Override
+	public java.util.Set<String> getDisplayCategories() {
+		return model.getDisplayCategories();
+	}
+
+	/**
 	 * Returns the display name of the portlet.
 	 *
 	 * @return the display name of the portlet
@@ -2550,6 +2560,17 @@ public class PortletWrapper
 	@Override
 	public void setDefaultPreferences(String defaultPreferences) {
 		model.setDefaultPreferences(defaultPreferences);
+	}
+
+	/**
+	 * Sets the names of the category that display the portlet
+	 *
+	 * @param displayCategories the names of the category that display the
+	 portlet
+	 */
+	@Override
+	public void setDisplayCategories(java.util.Set<String> displayCategories) {
+		model.setDisplayCategories(displayCategories);
 	}
 
 	/**

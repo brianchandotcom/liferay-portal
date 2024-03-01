@@ -593,7 +593,7 @@ definition {
 			AssertAttributeValue(
 				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
 				value1 = "aria-label",
-				value2 = "Page Edition Mode");
+				value2 = "Select edit mode, current edit mode: Page Design.");
 		}
 	}
 

@@ -190,7 +190,7 @@ if (portletTitleBasedNavigation) {
 			).put(
 				"actionURL", (lockedKBArticleException != null) ? lockedKBArticleException.getActionURL() : null
 			).put(
-				"isAdmin", permissionChecker.isGroupAdmin(scopeGroupId)
+				"groupAdmin", permissionChecker.isGroupAdmin(scopeGroupId)
 			).put(
 				"open", lockedKBArticleException != null
 			).put(

@@ -260,16 +260,16 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			fragmentEntryLink.getCompanyId(), fdsEntryObjectEntryERC,
 			fdsEntryObjectDefinition);
 
-		Collection<ObjectEntry> fdsCardObjectEntries = null;
+		Collection<ObjectEntry> fdsCardsSectionObjectEntries = null;
 
-		Collection<ObjectEntry> fdsListObjectEntries = null;
+		Collection<ObjectEntry> fdsListSectionObjectEntries = null;
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
-			fdsCardObjectEntries = _getRelatedObjectEntries(
+			fdsCardsSectionObjectEntries = _getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSCardsSectionRelationship");
 
-			fdsListObjectEntries = _getRelatedObjectEntries(
+			fdsListSectionObjectEntries = _getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSListSectionRelationship");
 		}
@@ -311,9 +311,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			).put(
 				"views",
 				_getFDSViewsJSONArray(
-					fragmentEntryLink.getCompanyId(), fdsCardObjectEntries,
-					fdsListObjectEntries, fdsFieldObjectEntries,
-					httpServletRequest)
+					fragmentEntryLink.getCompanyId(),
+					fdsCardsSectionObjectEntries, fdsListSectionObjectEntries,
+					fdsFieldObjectEntries, httpServletRequest)
 			).build(),
 			httpServletRequest, writer);
 
@@ -416,7 +416,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSCardsViewJSONObject(
-			Collection<ObjectEntry> fdsCardsViewObjectEntries,
+			Collection<ObjectEntry> fdsCardsSectionObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -429,7 +429,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		).put(
 			"name", "cards"
 		).put(
-			"schema", _getViewSchemaJSONObject(fdsCardsViewObjectEntries)
+			"schema", _getViewSchemaJSONObject(fdsCardsSectionObjectEntries)
 		).put(
 			"thumbnail", "cards2"
 		);
@@ -459,7 +459,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSListViewJSONObject(
-			Collection<ObjectEntry> fdsListViewObjectEntries,
+			Collection<ObjectEntry> fdsListSectionObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -472,7 +472,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		).put(
 			"name", "list"
 		).put(
-			"schema", _getViewSchemaJSONObject(fdsListViewObjectEntries)
+			"schema", _getViewSchemaJSONObject(fdsListSectionObjectEntries)
 		).put(
 			"thumbnail", "list"
 		);
@@ -501,8 +501,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONArray _getFDSViewsJSONArray(
-			long companyId, Collection<ObjectEntry> fdsCardObjectEntries,
-			Collection<ObjectEntry> fdsListObjectEntries,
+			long companyId,
+			Collection<ObjectEntry> fdsCardsSectionObjectEntries,
+			Collection<ObjectEntry> fdsListSectionObjectEntries,
 			Set<ObjectEntry> fdsFieldObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -510,16 +511,16 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		JSONArray viewsJSONArray = _jsonFactory.createJSONArray();
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
-			if (!fdsCardObjectEntries.isEmpty()) {
+			if (!fdsCardsSectionObjectEntries.isEmpty()) {
 				viewsJSONArray.put(
 					_getFDSCardsViewJSONObject(
-						fdsCardObjectEntries, httpServletRequest));
+						fdsCardsSectionObjectEntries, httpServletRequest));
 			}
 
-			if (!fdsListObjectEntries.isEmpty()) {
+			if (!fdsListSectionObjectEntries.isEmpty()) {
 				viewsJSONArray.put(
 					_getFDSListViewJSONObject(
-						fdsListObjectEntries, httpServletRequest));
+						fdsListSectionObjectEntries, httpServletRequest));
 			}
 
 			if (!fdsFieldObjectEntries.isEmpty()) {
@@ -530,7 +531,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-10735") ||
-			(fdsCardObjectEntries.isEmpty() && fdsListObjectEntries.isEmpty() &&
+			(fdsCardsSectionObjectEntries.isEmpty() &&
+			 fdsListSectionObjectEntries.isEmpty() &&
 			 fdsFieldObjectEntries.isEmpty())) {
 
 			viewsJSONArray.put(

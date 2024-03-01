@@ -12,6 +12,8 @@ import com.liferay.journal.web.internal.display.context.JournalEditArticleDispla
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.trash.TrashHelper;
@@ -43,7 +45,8 @@ public class EditArticleMVCRenderCommand implements MVCRenderCommand {
 		JournalDisplayContext journalDisplayContext =
 			JournalDisplayContext.create(
 				_assetDisplayPageFriendlyURLProvider, renderRequest,
-				renderResponse, _trashHelper);
+				renderResponse, _resourcePermissionLocalService,
+				_roleLocalService, _trashHelper);
 
 		try {
 			renderRequest.setAttribute(
@@ -78,6 +81,12 @@ public class EditArticleMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private TrashHelper _trashHelper;

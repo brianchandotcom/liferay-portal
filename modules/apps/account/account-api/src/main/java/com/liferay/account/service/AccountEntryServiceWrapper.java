@@ -69,6 +69,16 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry addOrUpdateContact(
+			long accountEntryId, String facebookSn, String jabberSn,
+			String skypeSn, String smsSn, String twitterSn)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.addOrUpdateContact(
+			accountEntryId, facebookSn, jabberSn, skypeSn, smsSn, twitterSn);
+	}
+
+	@Override
 	public void deactivateAccountEntries(long[] accountEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -180,6 +190,15 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateAddresses(
+			long accountEntryId,
+			java.util.List<com.liferay.portal.kernel.model.Address> addresses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.updateAddresses(accountEntryId, addresses);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateDefaultBillingAddressId(
 			long accountEntryId, long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -206,6 +225,17 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateEmailAddresses(
+			long accountEntryId,
+			java.util.List<com.liferay.portal.kernel.model.EmailAddress>
+				emailAddresses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.updateEmailAddresses(
+			accountEntryId, emailAddresses);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateExternalReferenceCode(
 			long accountEntryId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -215,12 +245,30 @@ public class AccountEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updatePhones(
+			long accountEntryId,
+			java.util.List<com.liferay.portal.kernel.model.Phone> phones)
+		throws Exception {
+
+		return _accountEntryService.updatePhones(accountEntryId, phones);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateRestrictMembership(
 			long accountEntryId, boolean restrictMembership)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryService.updateRestrictMembership(
 			accountEntryId, restrictMembership);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry updateWebsites(
+			long accountEntryId,
+			java.util.List<com.liferay.portal.kernel.model.Website> websites)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryService.updateWebsites(accountEntryId, websites);
 	}
 
 	@Override

@@ -15,8 +15,12 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -95,6 +99,11 @@ public interface AccountEntryLocalService
 			String[] domains, String emailAddress, byte[] logoBytes,
 			String taxIdNumber, String type, int status,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public AccountEntry addOrUpdateContact(
+			AccountEntry accountEntry, String facebookSn, String jabberSn,
+			String skypeSn, String smsSn, String twitterSn)
 		throws PortalException;
 
 	/**
@@ -407,6 +416,10 @@ public interface AccountEntryLocalService
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	public AccountEntry updateAddresses(
+			AccountEntry accountEntry, List<Address> addresses)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountEntry updateDefaultBillingAddressId(
 			long accountEntryId, long addressId)
@@ -421,6 +434,10 @@ public interface AccountEntryLocalService
 	public AccountEntry updateDomains(long accountEntryId, String[] domains)
 		throws PortalException;
 
+	public AccountEntry updateEmailAddresses(
+			AccountEntry accountEntry, List<EmailAddress> emailAddresses)
+		throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountEntry updateExternalReferenceCode(
 			AccountEntry accountEntry, String externalReferenceCode)
@@ -430,6 +447,10 @@ public interface AccountEntryLocalService
 	public AccountEntry updateExternalReferenceCode(
 			long accountEntryId, String externalReferenceCode)
 		throws PortalException;
+
+	public AccountEntry updatePhones(
+			AccountEntry accountEntry, List<Phone> phones)
+		throws Exception;
 
 	public AccountEntry updateRestrictMembership(
 			long accountEntryId, boolean restrictMembership)
@@ -448,6 +469,10 @@ public interface AccountEntryLocalService
 			long userId, long accountEntryId, int status,
 			ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
+		throws PortalException;
+
+	public AccountEntry updateWebsites(
+			AccountEntry accountEntry, List<Website> websites)
 		throws PortalException;
 
 }

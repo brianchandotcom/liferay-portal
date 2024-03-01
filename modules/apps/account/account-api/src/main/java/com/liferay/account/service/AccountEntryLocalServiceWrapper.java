@@ -97,6 +97,17 @@ public class AccountEntryLocalServiceWrapper
 			status, serviceContext);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountEntry addOrUpdateContact(
+			com.liferay.account.model.AccountEntry accountEntry,
+			String facebookSn, String jabberSn, String skypeSn, String smsSn,
+			String twitterSn)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.addOrUpdateContact(
+			accountEntry, facebookSn, jabberSn, skypeSn, smsSn, twitterSn);
+	}
+
 	/**
 	 * Creates a new account entry with the primary key. Does not add the account entry to the database.
 	 *
@@ -601,6 +612,16 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateAddresses(
+			com.liferay.account.model.AccountEntry accountEntry,
+			java.util.List<com.liferay.portal.kernel.model.Address> addresses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateAddresses(
+			accountEntry, addresses);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateDefaultBillingAddressId(
 			long accountEntryId, long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -627,6 +648,17 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountEntry updateEmailAddresses(
+			com.liferay.account.model.AccountEntry accountEntry,
+			java.util.List<com.liferay.portal.kernel.model.EmailAddress>
+				emailAddresses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateEmailAddresses(
+			accountEntry, emailAddresses);
+	}
+
+	@Override
 	public com.liferay.account.model.AccountEntry updateExternalReferenceCode(
 			com.liferay.account.model.AccountEntry accountEntry,
 			String externalReferenceCode)
@@ -643,6 +675,15 @@ public class AccountEntryLocalServiceWrapper
 
 		return _accountEntryLocalService.updateExternalReferenceCode(
 			accountEntryId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry updatePhones(
+			com.liferay.account.model.AccountEntry accountEntry,
+			java.util.List<com.liferay.portal.kernel.model.Phone> phones)
+		throws Exception {
+
+		return _accountEntryLocalService.updatePhones(accountEntry, phones);
 	}
 
 	@Override
@@ -679,6 +720,15 @@ public class AccountEntryLocalServiceWrapper
 
 		return _accountEntryLocalService.updateStatus(
 			userId, accountEntryId, status, serviceContext, workflowContext);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountEntry updateWebsites(
+			com.liferay.account.model.AccountEntry accountEntry,
+			java.util.List<com.liferay.portal.kernel.model.Website> websites)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.updateWebsites(accountEntry, websites);
 	}
 
 	@Override

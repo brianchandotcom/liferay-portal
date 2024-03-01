@@ -68,6 +68,15 @@ public class AccountEntryServiceUtil {
 			status, serviceContext);
 	}
 
+	public static AccountEntry addOrUpdateContact(
+			long accountEntryId, String facebookSn, String jabberSn,
+			String skypeSn, String smsSn, String twitterSn)
+		throws PortalException {
+
+		return getService().addOrUpdateContact(
+			accountEntryId, facebookSn, jabberSn, skypeSn, smsSn, twitterSn);
+	}
+
 	public static void deactivateAccountEntries(long[] accountEntryIds)
 		throws PortalException {
 
@@ -160,6 +169,14 @@ public class AccountEntryServiceUtil {
 			serviceContext);
 	}
 
+	public static AccountEntry updateAddresses(
+			long accountEntryId,
+			List<com.liferay.portal.kernel.model.Address> addresses)
+		throws PortalException {
+
+		return getService().updateAddresses(accountEntryId, addresses);
+	}
+
 	public static AccountEntry updateDefaultBillingAddressId(
 			long accountEntryId, long addressId)
 		throws PortalException {
@@ -183,6 +200,15 @@ public class AccountEntryServiceUtil {
 		return getService().updateDomains(accountEntryId, domains);
 	}
 
+	public static AccountEntry updateEmailAddresses(
+			long accountEntryId,
+			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses)
+		throws PortalException {
+
+		return getService().updateEmailAddresses(
+			accountEntryId, emailAddresses);
+	}
+
 	public static AccountEntry updateExternalReferenceCode(
 			long accountEntryId, String externalReferenceCode)
 		throws PortalException {
@@ -191,12 +217,28 @@ public class AccountEntryServiceUtil {
 			accountEntryId, externalReferenceCode);
 	}
 
+	public static AccountEntry updatePhones(
+			long accountEntryId,
+			List<com.liferay.portal.kernel.model.Phone> phones)
+		throws Exception {
+
+		return getService().updatePhones(accountEntryId, phones);
+	}
+
 	public static AccountEntry updateRestrictMembership(
 			long accountEntryId, boolean restrictMembership)
 		throws PortalException {
 
 		return getService().updateRestrictMembership(
 			accountEntryId, restrictMembership);
+	}
+
+	public static AccountEntry updateWebsites(
+			long accountEntryId,
+			List<com.liferay.portal.kernel.model.Website> websites)
+		throws PortalException {
+
+		return getService().updateWebsites(accountEntryId, websites);
 	}
 
 	public static AccountEntryService getService() {

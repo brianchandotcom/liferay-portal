@@ -416,7 +416,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSCardsViewJSONObject(
-			Collection<ObjectEntry> fdsViewObjectEntries,
+			Collection<ObjectEntry> fdsCardsViewObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -429,7 +429,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		).put(
 			"name", "cards"
 		).put(
-			"schema", _getViewSchemaJSONObject(fdsViewObjectEntries)
+			"schema", _getViewSchemaJSONObject(fdsCardsViewObjectEntries)
 		).put(
 			"thumbnail", "cards2"
 		);
@@ -459,7 +459,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSListViewJSONObject(
-			Collection<ObjectEntry> fdsViewObjectEntries,
+			Collection<ObjectEntry> fdsListViewObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -472,7 +472,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		).put(
 			"name", "list"
 		).put(
-			"schema", _getViewSchemaJSONObject(fdsViewObjectEntries)
+			"schema", _getViewSchemaJSONObject(fdsListViewObjectEntries)
 		).put(
 			"thumbnail", "list"
 		);

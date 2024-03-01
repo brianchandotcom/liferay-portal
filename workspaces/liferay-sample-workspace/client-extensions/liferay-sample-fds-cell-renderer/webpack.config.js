@@ -36,6 +36,7 @@ module.exports = {
 		minimize: !DEVELOPMENT,
 	},
 	output: {
+		clean: true,
 		environment: {
 			dynamicImport: true,
 			module: true,

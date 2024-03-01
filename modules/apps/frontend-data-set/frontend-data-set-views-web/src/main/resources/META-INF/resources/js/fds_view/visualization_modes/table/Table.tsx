@@ -26,6 +26,7 @@ import {IFDSViewSectionProps} from '../../../FDSView';
 import {FDSViewType} from '../../../FDSViews';
 import {getFields} from '../../../api';
 import OrderableTable from '../../../components/OrderableTable';
+import SearchResultsMessage from '../../../components/SearchResultsMessage';
 import {
 	API_URL,
 	FUZZY_OPTIONS,
@@ -299,6 +300,10 @@ const SaveFDSFieldsModalContent = ({
 								</ManagementToolbar.Item>
 
 								<ManagementToolbar.Item className="nav-item-expand">
+									<SearchResultsMessage
+										numberOfResults={visibleFields.length}
+									/>
+
 									<ClayInput.Group>
 										<ClayInput.GroupItem>
 											{!focused && (

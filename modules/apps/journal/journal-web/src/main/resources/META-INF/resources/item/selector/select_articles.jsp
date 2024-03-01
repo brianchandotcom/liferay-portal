@@ -92,6 +92,14 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 
 								<p class="font-weight-bold h5">
 									<%= HtmlUtil.escape(curArticle.getTitle(locale, true)) %>
+									<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10626") && !journalArticleItemSelectorViewDisplayContext.hasGuestViewPermission(curArticle) %>'>
+										<clay:icon
+											aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+											cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"
+											data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+											symbol="lock"
+										/>
+									</c:if>
 								</p>
 
 								<c:if test="<%= journalArticleItemSelectorViewDisplayContext.isSearchEverywhere() %>">
@@ -153,8 +161,17 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								name="title"
-								value="<%= curArticle.getTitle(locale, true) %>"
-							/>
+							>
+								<%= HtmlUtil.escape(curArticle.getTitle(locale, true)) %>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10626") && !journalArticleItemSelectorViewDisplayContext.hasGuestViewPermission(curArticle) %>'>
+									<clay:icon
+										aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+										cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"
+										data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+										symbol="lock"
+									/>
+								</c:if>
+							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand table-cell-minw-200 text-truncate"

@@ -20,9 +20,10 @@ interface IProps {
 		error?: string[];
 		touched: boolean;
 	};
+	resourceName: ResourceName;
 }
 
-const ListFiles = ({arrayHelpers, files, meta}: IProps) => {
+const ListFiles = ({arrayHelpers, files, meta, resourceName}: IProps) => {
 	return (
 		<div>
 			{files.map((file, index) => (
@@ -64,10 +65,10 @@ const ListFiles = ({arrayHelpers, files, meta}: IProps) => {
 									arrayHelpers.remove(index);
 								}
 
-								if (file.activityDocumentId) {
+								if (file.objectId) {
 									await deleteObjectEntry(
-										ResourceName.MDF_CLAIM_ACTIVITY_DOCUMENTS,
-										file.activityDocumentId
+										resourceName,
+										file.objectId
 									);
 								}
 							}}

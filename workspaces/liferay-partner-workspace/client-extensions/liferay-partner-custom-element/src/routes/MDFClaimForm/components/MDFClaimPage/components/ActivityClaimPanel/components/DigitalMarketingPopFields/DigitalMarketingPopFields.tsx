@@ -12,6 +12,7 @@ import PRMFormik from '../../../../../../../../common/components/PRMFormik';
 import LiferayFile from '../../../../../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../../../common/interfaces/mdfClaimActivity';
+import {ResourceName} from '../../../../../../../../common/services/liferay/object/enum/resourceName';
 
 interface IProps {
 	activity: MDFClaimActivity;
@@ -49,6 +50,7 @@ const DigitalMarketingPopFields = ({
 					)
 				}
 				required={activity.selected}
+				resourceName={ResourceName.MDF_CLAIM_ACTIVITY_DOCUMENTS}
 				value={activity.proofOfPerformance?.allContents}
 			/>
 		</>

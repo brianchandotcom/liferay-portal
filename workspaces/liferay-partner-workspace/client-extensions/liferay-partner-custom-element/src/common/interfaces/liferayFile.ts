@@ -4,8 +4,8 @@
  */
 
 export default interface LiferayFile extends Partial<File> {
-	activityDocumentId?: number;
 	documentId?: number;
 	id?: number;
 	link?: Object;
+	objectId?: number;
 }

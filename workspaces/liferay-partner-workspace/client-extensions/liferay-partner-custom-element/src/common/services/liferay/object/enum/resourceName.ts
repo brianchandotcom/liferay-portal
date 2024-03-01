@@ -4,18 +4,19 @@
  */
 
 export enum ResourceName {
-	MDF_REQUEST_DXP = 'mdfrequests',
-	MDF_REQUEST_SALESFORCE = 'mdfrequestsfs',
 	ACTIVITY_DXP = 'activities',
-	BUDGET = 'budgets',
 	ACTIVITY_SALESFORCE = 'activitysfs',
+	BUDGET = 'budgets',
 	DEAL_REGISTRATION_DXP = 'dealregistrations',
-	MDF_CLAIM_DXP = 'mdfclaims',
-	MDF_CLAIM_ACTIVITY_DOCUMENTS = 'mdfclaimactivitydocuments',
-	MDF_CLAIM_SALESFORCE = 'mdfclaimsfs',
 	LEAD_NOTIFICATION = 'leadnotifications',
 	LEADS_SALESFORCE = 'leadsfs',
-	OPPORTUNITIES_SALESFORCE = 'opportunitysfs',
+	MDF_CLAIM_ACTIVITY_DOCUMENTS = 'mdfclaimactivitydocuments',
+	MDF_CLAIM_DOCUMENTS = 'mdfclaimdocuments',
+	MDF_CLAIM_DXP = 'mdfclaims',
+	MDF_CLAIM_SALESFORCE = 'mdfclaimsfs',
+	MDF_REQUEST_DXP = 'mdfrequests',
+	MDF_REQUEST_SALESFORCE = 'mdfrequestsfs',
 	OPPORTUNITIES_PARTNER_ROLE_SALESFORCE = 'opportunitypartnerrolesfs',
+	OPPORTUNITIES_SALESFORCE = 'opportunitysfs',
 	PROJECT_SALESFORCE = 'projectsfs',
 }

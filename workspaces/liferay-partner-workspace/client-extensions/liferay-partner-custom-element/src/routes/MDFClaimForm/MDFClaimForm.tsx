@@ -57,7 +57,7 @@ const MDFClaimForm = () => {
 		MDFClaimDTO
 	>(
 		mdfClaimId &&
-			`/o/${LiferayAPIs.OBJECT}/mdfclaims/${mdfClaimId}?nestedFields=mdfClmToMDFClmActs,mdfClmActToMDFClmBgts,mdfClmActToMDFActDocs&nestedFieldsDepth=2`
+			`/o/${LiferayAPIs.OBJECT}/mdfclaims/${mdfClaimId}?nestedFields=mdfClmToMDFClmActs,mdfClmActToMDFClmBgts,mdfClmActToMDFActDocs,mdfClmToMDFClmDocs&nestedFieldsDepth=2`
 	);
 
 	const actions = usePermissionActions(ObjectActionName.MDF_CLAIM);

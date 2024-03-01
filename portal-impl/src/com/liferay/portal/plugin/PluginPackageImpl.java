@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
 /**
  * @author Jorge Ferrer
  */
@@ -166,11 +164,9 @@ public class PluginPackageImpl
 
 	@Override
 	public int hashCode() {
-		HashCodeBuilder hashCodeBuilder = new HashCodeBuilder();
+		String moduleId = getModuleId();
 
-		hashCodeBuilder.append(getModuleId());
-
-		return hashCodeBuilder.hashCode();
+		return moduleId.hashCode();
 	}
 
 	@Override

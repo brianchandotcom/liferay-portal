@@ -223,7 +223,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 	}
 
 	public async updateBuild(
-		id: any,
+		id: number,
 		data: Partial<Build>,
 		runItems: TestrayRun[]
 	): Promise<TestrayBuild> {

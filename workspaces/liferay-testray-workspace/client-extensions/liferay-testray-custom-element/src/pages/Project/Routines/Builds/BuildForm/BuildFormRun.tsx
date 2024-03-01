@@ -5,7 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {useFieldArray} from 'react-hook-form';
+import {Control, UseFormRegister, useFieldArray} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
 import Loading from '~/components/Loading';
 
@@ -13,7 +13,10 @@ import Form from '../../../../../components/Form';
 import useFormModal from '../../../../../hooks/useFormModal';
 import i18n from '../../../../../i18n';
 import yupSchema from '../../../../../schema/yup';
-import {TestrayRun} from '../../../../../services/rest';
+import {
+	TestrayOptionsByCategory,
+	TestrayRun,
+} from '../../../../../services/rest';
 import FactorOptionsFormModal from '../../../../Standalone/FactorOptions/FactorOptionsFormModal';
 import StackList from './Stack';
 import useGetFactorsData from './hooks/useGetFactorsData';
@@ -21,13 +24,12 @@ import useGetFactorsData from './hooks/useGetFactorsData';
 export type BuildFormType = typeof yupSchema.build.__outputType;
 
 type BuildFormRunProps = {
-	action: any;
-	control: any;
+	action: string;
+	control: Control<any>;
 	loadingRuns: boolean;
-	register: any;
+	register: UseFormRegister<BuildFormType>;
 	runItems: TestrayRun[];
-	runOptionsList: any;
-	setValue: any;
+	runOptionsList: TestrayOptionsByCategory[];
 };
 
 const BuildFormRun: React.FC<BuildFormRunProps> = ({
@@ -37,7 +39,6 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({
 	register,
 	runItems,
 	runOptionsList,
-	setValue,
 }) => {
 	const {modal: optionModal} = useFormModal();
 	const {routineId} = useParams();
@@ -86,7 +87,6 @@ const BuildFormRun: React.FC<BuildFormRunProps> = ({
 						optionsList={runOptionsList}
 						register={register}
 						remove={remove}
-						setValue={setValue}
 						update={update as any}
 					/>
 				</>

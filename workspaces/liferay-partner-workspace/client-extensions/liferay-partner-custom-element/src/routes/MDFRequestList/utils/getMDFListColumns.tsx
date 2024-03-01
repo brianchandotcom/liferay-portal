@@ -100,7 +100,7 @@ export default function getMDFListColumns(
 						onClick: () => {
 							Liferay.Util.openConfirmModal({
 								message:
-									'Are you sure to cancel the MDF request?',
+									'Are you sure you want to cancel the MDF request?',
 								onConfirm: async (isConfirmed: boolean) => {
 									if (isConfirmed) {
 										const newRequestStatus = await patchRequestStatus(

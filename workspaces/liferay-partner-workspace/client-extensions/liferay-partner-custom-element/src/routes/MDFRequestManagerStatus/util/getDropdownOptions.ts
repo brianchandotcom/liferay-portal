@@ -15,7 +15,7 @@ export default function getDropdownOptions(
 	updateRequestStatus: (status: LiferayPicklist) => Promise<void>
 ) {
 	const callConfirmCancelMDFRequestModal = () => Liferay.Util.openConfirmModal({
-		message: 'Are you sure to cancel the MDF request?',
+		message: 'Are you sure you want to cancel the MDF request?',
 		onConfirm: (isConfirmed: boolean) => {
 			if (isConfirmed) {
 				updateRequestStatus(Status.CANCELED);

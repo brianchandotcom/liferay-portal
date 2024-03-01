@@ -120,6 +120,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -7450,6 +7451,12 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle article, List<DDMFormFieldValue> ddmFormFieldValues,
 		long groupId, long folderId) {
 
+		Repository portletRepository = _getRepository(groupId);
+
+		if (portletRepository == null) {
+			return;
+		}
+
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			if (ListUtil.isNotEmpty(
 					ddmFormFieldValue.getNestedDDMFormFieldValues())) {
@@ -7490,15 +7497,21 @@ public class JournalArticleLocalServiceImpl
 						continue;
 					}
 
-					FileEntry newFileEntry =
-						_portletFileRepository.addPortletFileEntry(
-							null, groupId, article.getUserId(),
-							JournalArticle.class.getName(),
-							article.getResourcePrimKey(),
-							JournalConstants.SERVICE_NAME, folderId,
-							oldFileEntry.getContentStream(),
-							oldFileEntry.getFileName(),
-							oldFileEntry.getMimeType(), false);
+					FileEntry newFileEntry = oldFileEntry;
+
+					if (oldFileEntry.getRepositoryId() ==
+							portletRepository.getRepositoryId()) {
+
+						newFileEntry =
+							_portletFileRepository.addPortletFileEntry(
+								null, groupId, article.getUserId(),
+								JournalArticle.class.getName(),
+								article.getResourcePrimKey(),
+								JournalConstants.SERVICE_NAME, folderId,
+								oldFileEntry.getContentStream(),
+								oldFileEntry.getFileName(),
+								oldFileEntry.getMimeType(), false);
+					}
 
 					String previewURL = _dlURLHelper.getPreviewURL(
 						newFileEntry, newFileEntry.getFileVersion(), null,
@@ -7807,6 +7820,31 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
+	}
+
+	private Repository _getRepository(long groupId) {
+		try {
+			Repository repository =
+				_portletFileRepository.fetchPortletRepository(
+					groupId, JournalConstants.SERVICE_NAME);
+
+			if (repository != null) {
+				return repository;
+			}
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+
+			return _portletFileRepository.addPortletRepository(
+				groupId, JournalConstants.SERVICE_NAME, serviceContext);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return null;
 	}
 
 	private int _getSmallImageSource(boolean smallImage, String smallImageURL) {

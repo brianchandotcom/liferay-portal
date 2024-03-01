@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -89,6 +90,7 @@ import org.junit.runner.RunWith;
  * @author Almir Ferreira
  * @author Petteri Karttunen
  */
+@FeatureFlags("LPS-179669")
 @RunWith(Arquillian.class)
 public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
@@ -98,53 +100,264 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		super.setUp();
 
 		_locale = LocaleUtil.getSiteDefault();
-		_searchEngine = _searchEngineHelper.getSearchEngine();
 
 		_user = TestPropsValues.getUser();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testGroup, _user.getUserId());
+
+		_assetCategory = _addAssetCategory();
+		_assetTag = _addAssetTag();
+		_ddmStructure = _addJournalArticleDDMStructure();
+		_journalArticle = _addJournalArticle(_assetCategory, _assetTag);
+		_searchEngine = _searchEngineHelper.getSearchEngine();
+
+		_addJournalArticleWithDDMStructure(_ddmStructure);
 	}
 
-	@FeatureFlags("LPS-179669")
 	@Override
 	@Test
 	public void testPostSearchPage() throws Exception {
-		AssetCategory assetCategory = _addAssetCategory();
-		AssetTag assetTag = _addAssetTag();
+		SearchPage<SearchResult> page = _postSearchPage(
+			_journalArticle.getArticleId());
 
-		DDMStructure ddmStructure = _addJournalArticleDDMStructure();
+		Assert.assertEquals(1L, page.getTotalCount());
+		Assert.assertEquals(1L, page.getPage());
+	}
 
-		_addJournalArticleWithDDMStructure(ddmStructure);
+	@Test
+	public void testPostSearchPageWithCategoryFacetConfiguration()
+		throws Exception {
 
-		JournalArticle journalArticle = _addJournalArticle(
-			assetCategory, assetTag);
+		_assertFacetConfiguration(
+			false, "category", _assetCategory.getCategoryId(),
+			String.valueOf(_assetCategory.getCategoryId()));
+	}
 
+	@Test
+	public void testPostSearchPageWithCategoryTreeFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			false,
+			HashMapBuilder.<String, Object>put(
+				"mode", "tree"
+			).put(
+				"vocabularyIds",
+				new String[] {String.valueOf(_assetCategory.getVocabularyId())}
+			).build(),
+			"category", _assetCategory.getCategoryId(),
+			String.valueOf(_assetCategory.getCategoryId()));
+	}
+
+	@Test
+	public void testPostSearchPageWithCustomFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			false,
+			HashMapBuilder.<String, Object>put(
+				"field", Field.COMPANY_ID
+			).build(),
+			"custom", testCompany.getCompanyId(),
+			String.valueOf(testCompany.getCompanyId()));
+	}
+
+	@Test
+	public void testPostSearchPageWithDateRangeFacetConfiguration()
+		throws Exception {
+
+		LocalDateTime startOfDay = LocalDateTime.of(
+			LocalDate.now(), LocalTime.MIN);
+
+		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
+
+		String range = StringBundler.concat(
+			DateFormatUtils.format(
+				Date.from(startOfDay.toInstant(ZoneOffset.ofHours(0))),
+				"yyyyMMddHHmmss"),
+			" TO ", DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"));
+
+		rangesJSONArray.put(
+			JSONUtil.put(
+				"label", "1"
+			).put(
+				"range", range
+			));
+
+		SearchPage<SearchResult> page = _assertFacetConfiguration(
+			false,
+			HashMapBuilder.<String, Object>put(
+				"field", "modified"
+			).put(
+				"format", "yyyyMMddHHmmss"
+			).put(
+				"ranges", rangesJSONArray
+			).build(),
+			"date-range", range, range);
+
+		Map<String, Object> facetsMap =
+			(Map<String, Object>)page.getSearchFacets();
+
+		JSONArray termJSONArray = (JSONArray)facetsMap.get("date-range");
+
+		Assert.assertEquals(
+			"1",
+			_jsonFactory.createJSONObject(
+				termJSONArray.getString(0)
+			).getString(
+				"displayName"
+			));
+	}
+
+	@Test
+	public void testPostSearchPageWithEmbeddedNestedFields() throws Exception {
 		ObjectDefinition objectDefinition =
 			_addObjectDefinitionWithObjectEntry();
 
-		SXPBlueprint sxpBlueprintWithHighlightConfiguration = _addSXPBlueprint(
-			true);
-		SXPBlueprint sxpBlueprintWithoutHighlightConfiguration =
-			_addSXPBlueprint(false);
+		SearchPage<SearchResult> page = _postSearchPage(
+			objectDefinition.getClassName(), null,
+			objectDefinition.getUserName(), "embedded",
+			new SearchRequestBody());
 
-		_testPostSearchPageWithCategoryFacetConfiguration(assetCategory);
-		_testPostSearchPageWithCategoryTreeFacetConfiguration(assetCategory);
-		_testPostSearchPageWithCustomFacetConfiguration();
-		_testPostSearchPageWithDateRangeFacetConfiguration();
-		_testPostSearchPageWithEmbeddedNestedFields(objectDefinition);
-		_testPostSearchPageWithFolderFacetConfiguration(journalArticle);
-		_testPostSearchPageWithHighlightConfiguration(
-			sxpBlueprintWithHighlightConfiguration);
-		_testPostSearchPageWithKeywords(journalArticle);
-		_testPostSearchPageWithNestedFacetConfiguration(ddmStructure);
-		_testPostSearchPageWithoutHighlightConfiguration(
-			sxpBlueprintWithoutHighlightConfiguration);
-		_testPostSearchPageWithSiteFacetConfiguration();
-		_testPostSearchPageWithTagFacetConfiguration(assetTag);
-		_testPostSearchPageWithTypeFacetConfiguration();
-		_testPostSearchPageWithUserFacetConfiguration();
-		_testPostSearchPageZeroResults();
+		Collection<SearchResult> items = page.getItems();
+
+		Assert.assertFalse(items.isEmpty());
+
+		for (SearchResult item : items) {
+			Assert.assertNotNull(item.getEmbedded());
+		}
+	}
+
+	@Test
+	public void testPostSearchPageWithFolderFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			false, "folder", _journalArticle.getFolderId(),
+			String.valueOf(_journalArticle.getFolderId()));
+	}
+
+	@Test
+	public void testPostSearchPageWithHighlightConfiguration()
+		throws Exception {
+
+		SearchPage<SearchResult> page =
+			_postSearchPageWithSXPBlueprintConfiguration(
+				_user.getModelClassName(), _user.getFullName(),
+				_addSXPBlueprint(true));
+
+		List<SearchResult> searchResults = ListUtil.fromCollection(
+			page.getItems());
+
+		Assert.assertFalse(searchResults.isEmpty());
+
+		Assert.assertTrue(
+			ListUtil.count(
+				searchResults,
+				searchResult -> Objects.equals(
+					searchResult.getTitle(), _getUserHighlightedFullName())) >=
+						1);
+	}
+
+	@Test
+	public void testPostSearchPageWithNestedFacetConfiguration()
+		throws Exception {
+
+		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
+			return;
+		}
+
+		_assertFacetConfiguration(
+			false,
+			HashMapBuilder.<String, Object>put(
+				"field",
+				"ddmFieldArray.ddmFieldValueKeyword_" +
+					LocaleUtil.toLanguageId(_locale)
+			).put(
+				"filterField", "ddmFieldArray.ddmFieldName"
+			).put(
+				"filterValue",
+				StringBundler.concat(
+					"ddm__keyword__", _ddmStructure.getStructureId(), "__name_",
+					LocaleUtil.toLanguageId(_locale))
+			).put(
+				"path", "ddmFieldArray"
+			).build(),
+			"nested", "test", "test");
+	}
+
+	@Test
+	public void testPostSearchPageWithoutHighlightConfiguration()
+		throws Exception {
+
+		SearchPage<SearchResult> page =
+			_postSearchPageWithSXPBlueprintConfiguration(
+				_user.getModelClassName(), _user.getFullName(),
+				_addSXPBlueprint(false));
+
+		List<SearchResult> searchResults = ListUtil.fromCollection(
+			page.getItems());
+
+		Assert.assertFalse(searchResults.isEmpty());
+
+		Assert.assertTrue(
+			ListUtil.count(
+				searchResults,
+				searchResult -> Objects.equals(
+					searchResult.getTitle(), _user.getFullName())) >= 1);
+
+		Assert.assertEquals(
+			0,
+			ListUtil.count(
+				searchResults,
+				searchResult -> Objects.equals(
+					searchResult.getTitle(), _getUserHighlightedFullName())));
+	}
+
+	@Test
+	public void testPostSearchPageWithSiteFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			true, "site", testGroup.getGroupId(),
+			String.valueOf(testGroup.getGroupId()));
+	}
+
+	@Test
+	public void testPostSearchPageWithTagFacetConfiguration() throws Exception {
+		_assertFacetConfiguration(
+			true, "tag", _assetTag.getName(), _assetTag.getName());
+	}
+
+	@Test
+	public void testPostSearchPageWithTypeFacetConfiguration()
+		throws Exception {
+
+		Class<JournalArticle> journalArticleClass = JournalArticle.class;
+		Class<JournalFolder> journalFolderClass = JournalFolder.class;
+		Class<User> userClass = User.class;
+
+		_assertFacetConfiguration(
+			false, "type", StringPool.BLANK, journalArticleClass.getName(),
+			journalFolderClass.getName(), userClass.getName());
+	}
+
+	@Test
+	public void testPostSearchPageWithUserFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			true, "user", StringUtil.toLowerCase(_user.getFullName()),
+			String.valueOf(_user.getUserId()));
+	}
+
+	@Test
+	public void testPostSearchPageZeroResults() throws Exception {
+		SearchPage<SearchResult> page = _postSearchPage(
+			"shouldnotmatchanything");
+
+		Assert.assertEquals(0L, page.getTotalCount());
 	}
 
 	private AssetCategory _addAssetCategory() throws Exception {
@@ -229,7 +442,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		return objectDefinition;
 	}
 
-	private SXPBlueprint _addSXPBlueprint(boolean highlightConfiguration)
+	private SXPBlueprint _addSXPBlueprint(boolean highlightingEnabled)
 		throws Exception {
 
 		JSONObject configurationJSONObject = JSONUtil.put(
@@ -254,7 +467,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			"queryConfiguration", JSONUtil.put("applyIndexerClauses", true)
 		);
 
-		if (highlightConfiguration) {
+		if (highlightingEnabled) {
 			configurationJSONObject.put(
 				"highlightConfiguration",
 				_createSXPBlueprintHighlightConfigurationJSON());
@@ -287,6 +500,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		Map<String, Object> facetsMap =
 			(Map<String, Object>)page.getSearchFacets();
+
+		Assert.assertNotNull(facetsMap);
 
 		Assert.assertTrue(facetsMap.containsKey(facetName));
 
@@ -332,16 +547,15 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	private JSONObject _createSXPBlueprintHighlightConfigurationJSON() {
-		JSONObject fieldsJSONObject = JSONUtil.put(
-			"fullName",
-			JSONUtil.put(
-				"fragment_size", 100
-			).put(
-				"number_of_fragments", 10
-			));
-
 		return JSONUtil.put(
-			"fields", fieldsJSONObject
+			"fields",
+			JSONUtil.put(
+				"fullName",
+				JSONUtil.put(
+					"fragment_size", 100
+				).put(
+					"number_of_fragments", 10
+				))
 		).put(
 			"post_tags",
 			JSONFactoryUtil.createJSONArray(
@@ -406,14 +620,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		}
 
 		HashMap<String, JSONArray> map = new HashMap<>();
+
 		Iterator<String> iterator = searchFacetsJSONObject.keys();
 
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
-			JSONArray valueJSONArray = searchFacetsJSONObject.getJSONArray(key);
-
-			map.put(key, valueJSONArray);
+			map.put(key, searchFacetsJSONObject.getJSONArray(key));
 		}
 
 		return map;
@@ -421,8 +634,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 	private String _getUserHighlightedFullName() {
 		return StringBundler.concat(
-			"<liferay-hl>", _user.getFirstName(), "</liferay-hl> ",
-			"<liferay-hl>", _user.getLastName(), "</liferay-hl>");
+			HighlightUtil.HIGHLIGHT_TAG_OPEN, _user.getFirstName(),
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE,
+			HighlightUtil.HIGHLIGHT_TAG_OPEN, _user.getLastName(),
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 	}
 
 	private SearchPage<SearchResult> _postSearchPage(String keywords)
@@ -440,12 +655,12 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			String nestedFields, SearchRequestBody searchRequestBody)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			searchRequestBody.toString(),
-			_getEndpointURL(entryClassNames, filter, keywords, nestedFields),
-			Http.Method.POST);
-
-		return _toSearchPage(jsonObject);
+		return _toSearchPage(
+			HTTPTestUtil.invokeToJSONObject(
+				searchRequestBody.toString(),
+				_getEndpointURL(
+					entryClassNames, filter, keywords, nestedFields),
+				Http.Method.POST));
 	}
 
 	private SearchPage<SearchResult> _postSearchPageWithFacetConfiguration(
@@ -492,267 +707,36 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			entryClassNames, null, keywords, null, searchRequestBody);
 	}
 
-	private void _testPostSearchPageWithCategoryFacetConfiguration(
-			AssetCategory assetCategory)
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false, "category", assetCategory.getCategoryId(),
-			String.valueOf(assetCategory.getCategoryId()));
-	}
-
-	private void _testPostSearchPageWithCategoryTreeFacetConfiguration(
-			AssetCategory assetCategory)
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false,
-			HashMapBuilder.<String, Object>put(
-				"mode", "tree"
-			).put(
-				"vocabularyIds",
-				new String[] {String.valueOf(assetCategory.getVocabularyId())}
-			).build(),
-			"category", assetCategory.getCategoryId(),
-			String.valueOf(assetCategory.getCategoryId()));
-	}
-
-	private void _testPostSearchPageWithCustomFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false,
-			HashMapBuilder.<String, Object>put(
-				"field", Field.COMPANY_ID
-			).build(),
-			"custom", testCompany.getCompanyId(),
-			String.valueOf(testCompany.getCompanyId()));
-	}
-
-	private void _testPostSearchPageWithDateRangeFacetConfiguration()
-		throws Exception {
-
-		LocalDateTime startOfDay = LocalDateTime.of(
-			LocalDate.now(), LocalTime.MIN);
-
-		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
-
-		String range = StringBundler.concat(
-			DateFormatUtils.format(
-				Date.from(startOfDay.toInstant(ZoneOffset.ofHours(0))),
-				"yyyyMMddHHmmss"),
-			" TO ", DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"));
-
-		rangesJSONArray.put(
-			JSONUtil.put(
-				"label", "1"
-			).put(
-				"range", range
-			));
-
-		SearchPage<SearchResult> page = _assertFacetConfiguration(
-			false,
-			HashMapBuilder.<String, Object>put(
-				"field", "modified"
-			).put(
-				"format", "yyyyMMddHHmmss"
-			).put(
-				"ranges", rangesJSONArray
-			).build(),
-			"date-range", range, range);
-
-		Map<String, Object> facetsMap =
-			(Map<String, Object>)page.getSearchFacets();
-
-		JSONArray termJSONArray = (JSONArray)facetsMap.get("date-range");
-
-		JSONObject termJSONObject = _jsonFactory.createJSONObject(
-			termJSONArray.getString(0));
-
-		Assert.assertEquals("1", termJSONObject.getString("displayName"));
-	}
-
-	private void _testPostSearchPageWithEmbeddedNestedFields(
-			ObjectDefinition objectDefinition)
-		throws Exception {
-
-		String entryClassName = objectDefinition.getClassName();
-
-		SearchPage<SearchResult> page = _postSearchPage(
-			entryClassName, null, objectDefinition.getUserName(), "embedded",
-			new SearchRequestBody());
-
-		Collection<SearchResult> items = page.getItems();
-
-		Assert.assertFalse(items.isEmpty());
-
-		for (SearchResult item : items) {
-			Assert.assertNotNull(item.getEmbedded());
-		}
-	}
-
-	private void _testPostSearchPageWithFolderFacetConfiguration(
-			JournalArticle journalArticle)
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false, "folder", journalArticle.getFolderId(),
-			String.valueOf(journalArticle.getFolderId()));
-	}
-
-	private void _testPostSearchPageWithHighlightConfiguration(
-			SXPBlueprint sxpBlueprint)
-		throws Exception {
-
-		SearchPage<SearchResult> page =
-			_postSearchPageWithSXPBlueprintConfiguration(
-				_user.getModelClassName(), _user.getFullName(), sxpBlueprint);
-
-		List<SearchResult> searchResults = ListUtil.fromCollection(
-			page.getItems());
-
-		Assert.assertFalse(searchResults.isEmpty());
-
-		Assert.assertTrue(
-			ListUtil.count(
-				searchResults,
-				searchResult -> Objects.equals(
-					searchResult.getTitle(), _getUserHighlightedFullName())) >=
-						1);
-	}
-
-	private void _testPostSearchPageWithKeywords(JournalArticle journalArticle)
-		throws Exception {
-
-		SearchPage<SearchResult> page = _postSearchPage(
-			journalArticle.getArticleId());
-
-		Assert.assertEquals(1L, page.getTotalCount());
-		Assert.assertEquals(1L, page.getPage());
-	}
-
-	private void _testPostSearchPageWithNestedFacetConfiguration(
-			DDMStructure ddmStructure)
-		throws Exception {
-
-		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
-			return;
-		}
-
-		_assertFacetConfiguration(
-			false,
-			HashMapBuilder.<String, Object>put(
-				"field",
-				"ddmFieldArray.ddmFieldValueKeyword_" +
-					LocaleUtil.toLanguageId(_locale)
-			).put(
-				"filterField", "ddmFieldArray.ddmFieldName"
-			).put(
-				"filterValue",
-				StringBundler.concat(
-					"ddm__keyword__", ddmStructure.getStructureId(), "__name_",
-					LocaleUtil.toLanguageId(_locale))
-			).put(
-				"path", "ddmFieldArray"
-			).build(),
-			"nested", "test", "test");
-	}
-
-	private void _testPostSearchPageWithoutHighlightConfiguration(
-			SXPBlueprint sxpBlueprint)
-		throws Exception {
-
-		SearchPage<SearchResult> page =
-			_postSearchPageWithSXPBlueprintConfiguration(
-				_user.getModelClassName(), _user.getFullName(), sxpBlueprint);
-
-		List<SearchResult> searchResults = ListUtil.fromCollection(
-			page.getItems());
-
-		Assert.assertFalse(searchResults.isEmpty());
-
-		Assert.assertTrue(
-			ListUtil.count(
-				searchResults,
-				searchResult -> Objects.equals(
-					searchResult.getTitle(), _user.getFullName())) >= 1);
-
-		Assert.assertEquals(
-			0,
-			ListUtil.count(
-				searchResults,
-				searchResult -> Objects.equals(
-					searchResult.getTitle(), _getUserHighlightedFullName())));
-	}
-
-	private void _testPostSearchPageWithSiteFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			true, "site", testGroup.getGroupId(),
-			String.valueOf(testGroup.getGroupId()));
-	}
-
-	private void _testPostSearchPageWithTagFacetConfiguration(AssetTag assetTag)
-		throws Exception {
-
-		_assertFacetConfiguration(
-			true, "tag", assetTag.getName(), assetTag.getName());
-	}
-
-	private void _testPostSearchPageWithTypeFacetConfiguration()
-		throws Exception {
-
-		Class<JournalArticle> journalArticleClass = JournalArticle.class;
-		Class<JournalFolder> journalFolderClass = JournalFolder.class;
-		Class<User> userClass = User.class;
-
-		_assertFacetConfiguration(
-			false, "type", StringPool.BLANK, journalArticleClass.getName(),
-			journalFolderClass.getName(), userClass.getName());
-	}
-
-	private void _testPostSearchPageWithUserFacetConfiguration()
-		throws Exception {
-
-		String userFullName = StringUtil.toLowerCase(_user.getFullName());
-
-		_assertFacetConfiguration(
-			true, "user", userFullName, String.valueOf(_user.getUserId()));
-	}
-
-	private void _testPostSearchPageZeroResults() throws Exception {
-		SearchPage<SearchResult> page = _postSearchPage(
-			"shouldnotmatchanything");
-
-		Assert.assertEquals(0L, page.getTotalCount());
-	}
-
 	private SearchPage<SearchResult> _toSearchPage(JSONObject jsonObject) {
-		Pagination pagination = Pagination.of(
-			jsonObject.getInt("page"), jsonObject.getInt("pageSize"));
-
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		if (itemsJSONArray == null) {
+			itemsJSONArray = JSONFactoryUtil.createJSONArray();
+		}
 
 		List<SearchResult> searchResults = new ArrayList<>();
 
 		for (int i = 0; i < itemsJSONArray.length(); i++) {
-			Object item = itemsJSONArray.get(i);
-
-			SearchResult searchResult = SearchResult.toDTO(item.toString());
-
-			searchResults.add(searchResult);
+			searchResults.add(
+				SearchResult.toDTO(
+					itemsJSONArray.get(
+						i
+					).toString()));
 		}
 
-		long totalCount = jsonObject.getLong("totalCount");
-
 		return SearchPage.of(
-			null, null, _getSearchFacets(jsonObject), searchResults, pagination,
-			totalCount);
+			null, null, _getSearchFacets(jsonObject), searchResults,
+			Pagination.of(
+				jsonObject.getInt("page"), jsonObject.getInt("pageSize")),
+			jsonObject.getLong("totalCount"));
 	}
+
+	private AssetCategory _assetCategory;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	private AssetTag _assetTag;
 
 	@Inject
 	private AssetTagLocalService _assetTagLocalService;
@@ -760,8 +744,12 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
+	private DDMStructure _ddmStructure;
+
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	private JournalArticle _journalArticle;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;

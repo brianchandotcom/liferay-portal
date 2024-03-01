@@ -6,9 +6,11 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {ClayResultsBar} from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
 import {
 	FDS_INTERNAL_CELL_RENDERERS,
@@ -130,6 +132,7 @@ const SaveFDSFieldsModalContent = ({
 	saveFDSFieldsURL,
 }: ISaveFDSFieldsModalContentProps) => {
 	const [fields, setFields] = useState<Array<IField> | null>(null);
+	const [focused, setFocused] = useState(false);
 	const [query, setQuery] = useState('');
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
 		false
@@ -236,16 +239,22 @@ const SaveFDSFieldsModalContent = ({
 		});
 	}, [fdsFields, fdsView]);
 
+	const getSelectedFieldsCount = () => {
+		if (!fields) {
+			return 0;
+		}
+
+		const selectedFields = fields.filter((field) => field.selected);
+
+		return selectedFields?.length || 0;
+	};
+
 	const isSelectAllChecked = () => {
 		if (!fields) {
 			return false;
 		}
 
-		const selectedFields = fields.filter((field) => field.selected);
-
-		const selectedFieldsCount = selectedFields?.length || 0;
-
-		return selectedFieldsCount === fields.length;
+		return getSelectedFieldsCount() === fields.length;
 	};
 
 	const isSelectAllIndeterminate = () => {
@@ -292,11 +301,27 @@ const SaveFDSFieldsModalContent = ({
 								<ManagementToolbar.Item className="nav-item-expand">
 									<ClayInput.Group>
 										<ClayInput.GroupItem>
+											{!focused && (
+												<ClayInput.GroupInsetItem
+													before
+													tag="span"
+												>
+													<ClayIcon
+														className="inline-item inline-item-before"
+														focusable="false"
+														role="presentation"
+														symbol="search"
+													/>
+												</ClayInput.GroupInsetItem>
+											)}
+
 											<ClayInput
-												insetAfter
+												insetAfter={Boolean(focused)}
+												insetBefore={!focused}
 												onChange={(event) =>
 													onSearch(event.target.value)
 												}
+												onFocus={() => setFocused(true)}
 												placeholder={Liferay.Language.get(
 													'search'
 												)}
@@ -304,25 +329,73 @@ const SaveFDSFieldsModalContent = ({
 												value={query}
 											/>
 
-											<ClayInput.GroupInsetItem
-												after
-												tag="span"
-											>
-												<ClayButtonWithIcon
-													aria-label={Liferay.Language.get(
-														'search'
-													)}
-													displayType="unstyled"
-													symbol="search"
-												/>
-											</ClayInput.GroupInsetItem>
+											{focused && (
+												<ClayInput.GroupInsetItem
+													after
+													tag="span"
+												>
+													<ClayButtonWithIcon
+														aria-label={Liferay.Language.get(
+															'clear-search'
+														)}
+														borderless
+														displayType="secondary"
+														monospaced={false}
+														onClick={() => {
+															setQuery('');
+															onSearch('');
+															setFocused(false);
+														}}
+														size="sm"
+														symbol="times"
+														title={Liferay.Language.get(
+															'clear-search'
+														)}
+													/>
+												</ClayInput.GroupInsetItem>
+											)}
 										</ClayInput.GroupItem>
 									</ClayInput.Group>
 								</ManagementToolbar.Item>
 							</ManagementToolbar.ItemList>
 						</ManagementToolbar.Container>
 
-						<div className="bg-light fields pb-2 pt-2">
+						{getSelectedFieldsCount() > 0 && (
+							<ClayResultsBar>
+								<ClayResultsBar.Item expand>
+									<span className="component-text text-truncate-inline">
+										<span className="text-truncate">
+											{getSelectedFieldsCount() > 1
+												? `${getSelectedFieldsCount()} ${Liferay.Language.get(
+														'items-selected'
+												  )}`
+												: `${getSelectedFieldsCount()} ${Liferay.Language.get(
+														'item-selected'
+												  )}`}
+										</span>
+									</span>
+								</ClayResultsBar.Item>
+
+								<ClayResultsBar.Item>
+									<ClayButton
+										className="component-link tbar-link"
+										displayType="unstyled"
+										onClick={() =>
+											setFields(
+												fields.map((field) => ({
+													...field,
+													selected: false,
+												}))
+											)
+										}
+									>
+										{Liferay.Language.get('deselect-all')}
+									</ClayButton>
+								</ClayResultsBar.Item>
+							</ClayResultsBar>
+						)}
+
+						<div className="bg-light fields mt-3 pb-2 pt-2 py-2">
 							{visibleFields.length ? (
 								visibleFields.map(({name, selected}) => (
 									<div

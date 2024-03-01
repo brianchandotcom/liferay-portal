@@ -15,6 +15,7 @@ export const PLAN_TYPES = {
 	['Liferay Analytics Cloud Enterprise']: 'enterprise',
 	['Liferay Analytics Cloud Enterprise Contacts']: INDIVIDUALS,
 	['Liferay Analytics Cloud Enterprise Tracked Pages']: PAGEVIEWS,
+	['LXC - Business Plan']: 'lxcBusiness',
 	['LXC - CSP - Custom User Tier']: 'lxcCspCustomUserTier',
 	['LXC - CSP - Custom User Tier - Extra User']:
 		'lxcCspCustomUserTierExtraUser',
@@ -30,9 +31,8 @@ export const PLAN_TYPES = {
 	['LXC - CSP - Up to 500 Users - Extra User']: 'lxcCspUpTo500UsersExtraUser',
 	['LXC - CSP - Up to 5K Users']: 'lxcCspUpTo5kUsers',
 	['LXC - CSP - Up to 5K Users - Extra User']: 'lxcCspUpTo5kUsersExtraUser',
-	['LXC Business']: 'lxcBusiness',
-	['LXC Enterprise']: 'lxcEnterprise',
-	['LXC Pro']: 'lxcPro',
+	['LXC - Enterprise Plan']: 'lxcEnterprise',
+	['LXC - Pro Plan']: 'lxcPro',
 	['LXC Subscription - Engage Site']: 'lxcSubscriptionEngageSite',
 	['LXC Subscription - Support Site']: 'lxcSubscriptionSupportSite',
 	['LXC Subscription - Transact Site']: 'lxcSubscriptionTransactSite'

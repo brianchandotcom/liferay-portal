@@ -5,3 +5,4 @@
 
 export {default as ModalImportClientExtensionEntry} from './components/ModalImportClientExtensionEntry';
 export {default as remoteProtocol} from './remote_protocol/bridge';
+export {default as ScriptElementAttributesFormField} from './components/ScriptElementAttributesFormField';

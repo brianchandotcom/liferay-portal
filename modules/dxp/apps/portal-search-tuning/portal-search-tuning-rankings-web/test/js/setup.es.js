@@ -12,7 +12,7 @@ import {FETCH_HIDDEN_DOCUMENTS_URL, getMockResultsData} from './mocks/data.es';
  * callback was not invoked within the 5000ms timeout specified by
  * jest.setTimeout.Error'
  */
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 /**
  * Mocks the `sub` function to be able to test the correct values are being

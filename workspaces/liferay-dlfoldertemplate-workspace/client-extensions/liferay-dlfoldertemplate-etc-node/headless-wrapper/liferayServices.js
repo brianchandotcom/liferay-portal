@@ -5,22 +5,17 @@
 
 import fetch from 'node-fetch';
 
-import {getConfigByKey} from '../util/config-util.js';
-import {
-	applicationSpecificConfigKeys,
-	environmentConfigKeys,
-} from '../util/constants.js';
+import {lxcConfig, lookupConfig} from '@rotty3000/config-node';
+
 import {getServerToken} from '../util/silent-authorization.js';
 
-const lxcDXPMainDomain = getConfigByKey(
-	environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN
-);
+const lxcDXPMainDomain = lxcConfig.dxpMainDomain();
 
-const lxcDXPServerProtocol = getConfigByKey(
-	environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL
-);
+const lxcDXPServerProtocol = lxcConfig.dxpProtocol();
 
 const oauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}`;
+
+const folderTemplateNodesEndPoint= lookupConfig("folder.template.nodes.end.point");
 
 export async function getFolderTemplateNodesPage(templateID) {
 	const token = await getServerToken();
@@ -37,9 +32,7 @@ export async function getFolderTemplateNodesPage(templateID) {
 		};
 
 		fetch(
-			`${oauth2JWKSURI}${getConfigByKey(
-				applicationSpecificConfigKeys.FOLDER_TEMPLATE_NODES_END_POINT
-			)}?filter=templateId eq ${templateID}&page=0`,
+			`${oauth2JWKSURI}${folderTemplateNodesEndPoint}?filter=templateId eq ${templateID}&page=0`,
 			requestOptions
 		)
 			.then((response) => response.json())

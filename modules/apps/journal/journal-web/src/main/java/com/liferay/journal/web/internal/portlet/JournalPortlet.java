@@ -57,6 +57,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
 import com.liferay.journal.web.internal.helper.JournalDDMTemplateHelper;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -194,6 +195,11 @@ public class JournalPortlet extends MVCPortlet {
 				JournalWebConfiguration.class.getName(),
 				_configurationProvider.getSystemConfiguration(
 					JournalWebConfiguration.class));
+			renderRequest.setAttribute(
+				JournalDisplayContext.class.getName(),
+				JournalDisplayContext.create(
+					_assetDisplayPageFriendlyURLProvider, renderRequest,
+					renderResponse, _trashHelper));
 		}
 		catch (ConfigurationException configurationException) {
 			throw new PortletException(configurationException);
@@ -221,6 +227,11 @@ public class JournalPortlet extends MVCPortlet {
 		resourceRequest.setAttribute(
 			TranslationURLProvider.class.getName(), _translationURLProvider);
 		resourceRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
+		resourceRequest.setAttribute(
+			JournalDisplayContext.class.getName(),
+			JournalDisplayContext.create(
+				_assetDisplayPageFriendlyURLProvider, resourceRequest,
+				resourceResponse, _trashHelper));
 
 		try {
 			resourceRequest.setAttribute(

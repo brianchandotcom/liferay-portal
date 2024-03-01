@@ -10,7 +10,7 @@ import ClayLayout from '@clayui/layout';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {fetch, openModal, sub} from 'frontend-js-web';
-import React, {ComponentProps, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import '../../../../css/ListVisualizationMode.scss';
 
@@ -295,48 +295,6 @@ function ListSection({
 		});
 	};
 
-	let updateButton = (
-		<ClayButtonWithIcon
-			aria-label={Liferay.Language.get('assign-field')}
-			displayType="secondary"
-			onClick={openSelectFieldModal}
-			symbol="plus"
-			title={Liferay.Language.get('assign-field')}
-		/>
-	);
-
-	if (field) {
-		const buttonLabel = sub(Liferay.Language.get('view-x-options'), label);
-
-		const items: ComponentProps<typeof ClayDropDownWithItems>['items'] = [
-			{
-				label: Liferay.Language.get('change-assignment'),
-				onClick: openSelectFieldModal,
-				symbolLeft: 'change',
-			},
-			{
-				label: Liferay.Language.get('clear-assignment'),
-				onClick: onClearSelection,
-				symbolLeft: 'times-circle',
-			},
-		];
-
-		updateButton = (
-			<ClayDropDownWithItems
-				items={items}
-				trigger={
-					<ClayButtonWithIcon
-						aria-label={buttonLabel}
-						displayType="secondary"
-						size="sm"
-						symbol="ellipsis-v"
-						title={buttonLabel}
-					/>
-				}
-			/>
-		);
-	}
-
 	return (
 		<ClayTable.Row>
 			<ClayTable.Cell className="list-section-label">
@@ -359,10 +317,66 @@ function ListSection({
 					</ClayInput.GroupItem>
 
 					<ClayInput.GroupItem shrink>
-						{updateButton}
+						<UpdateButton
+							field={field}
+							label={label}
+							onClearSelection={onClearSelection}
+							openSelectFieldModal={openSelectFieldModal}
+						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 			</ClayTable.Cell>
 		</ClayTable.Row>
+	);
+}
+
+interface IUpdateButtonProps {
+	field?: IField;
+	label: string;
+	onClearSelection: () => void;
+	openSelectFieldModal: () => void;
+}
+
+function UpdateButton({
+	field,
+	label,
+	onClearSelection,
+	openSelectFieldModal,
+}: IUpdateButtonProps) {
+	return field ? (
+		<ClayDropDownWithItems
+			items={[
+				{
+					label: Liferay.Language.get('change-assignment'),
+					onClick: openSelectFieldModal,
+					symbolLeft: 'change',
+				},
+				{
+					label: Liferay.Language.get('clear-assignment'),
+					onClick: onClearSelection,
+					symbolLeft: 'times-circle',
+				},
+			]}
+			trigger={
+				<ClayButtonWithIcon
+					aria-label={sub(
+						Liferay.Language.get('view-x-options'),
+						label
+					)}
+					displayType="secondary"
+					size="sm"
+					symbol="ellipsis-v"
+					title={sub(Liferay.Language.get('view-x-options'), label)}
+				/>
+			}
+		/>
+	) : (
+		<ClayButtonWithIcon
+			aria-label={Liferay.Language.get('assign-field')}
+			displayType="secondary"
+			onClick={openSelectFieldModal}
+			symbol="plus"
+			title={Liferay.Language.get('assign-field')}
+		/>
 	);
 }

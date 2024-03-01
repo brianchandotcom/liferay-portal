@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
+import {DEFAULT_LABEL} from './utils/constants';
 
 export const test = mergeTests(
 	dataSetsPageTest,
@@ -41,6 +42,36 @@ test('Assert table column labels', async ({dataSetsPage, page}) => {
 	await expect(tableColumnLabels).toEqual(expectedLabels);
 
 	await dataSetsPage.deleteDataSet();
+});
+
+test('Assert table cell content', async ({dataSetsPage, page}) => {
+	const dataSetConfig = {
+		name: DEFAULT_LABEL.DATA_SET,
+		restApplication: '/data-set-manager/fields',
+		restEndpoint: '/',
+		restSchema: 'FDSField',
+	};
+
+	await dataSetsPage.goto();
+	await dataSetsPage.createDataSet(dataSetConfig);
+
+	await page.locator('.dnd-table > .dnd-tbody > .dnd-tr').first().waitFor();
+
+	const tableRowContent = await page
+		.locator('.dnd-tbody > .dnd-tr')
+		.first()
+		.locator('.dnd-td');
+
+	const expectedRowContent = [
+		dataSetConfig.name,
+		dataSetConfig.restApplication,
+		dataSetConfig.restSchema,
+		dataSetConfig.restEndpoint,
+	];
+
+	await expect(tableRowContent).toContainText(expectedRowContent);
+
+	await dataSetsPage.deleteDataSet(dataSetConfig.name);
 });
 
 test('Assert table action labels', async ({dataSetsPage, page}) => {

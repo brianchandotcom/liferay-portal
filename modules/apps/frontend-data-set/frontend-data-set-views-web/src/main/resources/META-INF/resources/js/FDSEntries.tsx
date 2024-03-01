@@ -838,6 +838,7 @@ const FDSEntries = ({
 						sortable: true,
 					},
 					{
+						fieldName: 'restApplication',
 						label: Liferay.Language.get('rest-application'),
 						sortable: true,
 					},

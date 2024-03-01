@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -1568,6 +1569,58 @@ public class ObjectActionLocalServiceTest {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 		}
+
+		_objectActionLocalService.deleteObjectAction(objectAction5);
+		_objectActionLocalService.deleteObjectAction(objectAction6);
+
+		// Add object action to execute groovy after adding a user
+
+		objectAction5 = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			userObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"script", "println \"Hello World 1\""
+			).build(),
+			false);
+
+		// Add object action to execute groovy after updating a user
+
+		objectAction6 = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			userObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"script", "println \"Hello World 2\""
+			).build(),
+			false);
+
+		// While adding a user, the user is updated and it cannot trigger
+		// object actions
+
+		User user = UserTestUtil.addUser();
+
+		Assert.assertEquals(1, _argumentsList.size());
+
+		Object[] arguments = _argumentsList.poll();
+
+		Map<String, Object> inputObjects = (Map<String, Object>)arguments[0];
+
+		Assert.assertEquals(
+			user.getUserId(), GetterUtil.getLong(inputObjects.get("id")));
+
+		Assert.assertEquals(Collections.emptySet(), arguments[1]);
+		Assert.assertEquals("println \"Hello World 1\"", arguments[2]);
 
 		_objectActionLocalService.deleteObjectAction(objectAction1);
 		_objectActionLocalService.deleteObjectAction(objectAction2);

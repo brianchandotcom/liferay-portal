@@ -9,4 +9,4 @@
  * jest.setTimeout.Error'
  */
 
-jest.setTimeout(10000);
+jest.setTimeout(30000);

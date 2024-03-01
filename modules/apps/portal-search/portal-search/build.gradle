@@ -30,11 +30,11 @@ dependencies {
 	compileOnly project(":core:petra:petra-executor")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testImplementation project(":core:petra:petra-memory")
 	testImplementation project(":core:petra:petra-process")
-	testImplementation project(":core:petra:petra-reflect")
 	testImplementation project(":core:petra:petra-sql-dsl-api")
 }

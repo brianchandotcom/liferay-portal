@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {WidgetPage} from '../pages/WidgetPage';
+import {WidgetPage} from '../pages/layout-admin-web/WidgetPage';
 
 const widgetPagesTest = test.extend<{
 	widgetPage: WidgetPage;

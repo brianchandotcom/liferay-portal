@@ -22,6 +22,8 @@ dependencies {
 	implementation group: "com.liferay", name: "com.liferay.petra.lang", version: "latest.release"
 	implementation group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
 	implementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
+	implementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
+	implementation group: "org.json", name: "json", version: "20231013"
 }
 
 mainClassName = "com.liferay.testray.Main"

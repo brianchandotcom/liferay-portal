@@ -891,6 +891,8 @@ definition {
 				configurationName = "Time Zone",
 				configurationScope = "Virtual Instance Scope");
 
+			// TODO Clean up after CLDR update is finished
+
 			Click.clickNoMouseOver(locator1 = "//option[@value='Asia/Karachi']");
 
 			PortalSettings._saveDisplaySettings();
@@ -933,6 +935,8 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_DISMISSIBLE",
 				value1 = "This account is locked until");
+
+			// TODO Clean up after CLDR update is finished
 
 			AssertElementPresent(locator1 = "//div[contains(@class,'alert-dismissible')][contains(.,'PKT') or contains(.,'PST') or contains(.,'GMT+05:00')]");
 		}

@@ -184,7 +184,7 @@ const BuildForm = () => {
 
 		if (runsIdsToRemove?.length) {
 			await testrayRunImpl.removeBatch(
-				runsIdsToRemove.map((id: any) => id)
+				runsIdsToRemove.map((id: number) => id)
 			);
 		}
 
@@ -206,9 +206,7 @@ const BuildForm = () => {
 		} else {
 			if (!data.runOptions) {
 				return Liferay.Util.openToast({
-					message: i18n.translate(
-						'at-least-one-environment-stack-is-required'
-					),
+					message: i18n.translate('at-least-one-run-is-required'),
 					type: 'danger',
 				});
 			}
@@ -301,7 +299,6 @@ const BuildForm = () => {
 						register={register}
 						runItems={runItems}
 						runOptionsList={runOptionsList}
-						setValue={setValue}
 					/>
 				)}
 
@@ -310,7 +307,6 @@ const BuildForm = () => {
 						action={action}
 						control={control}
 						register={register}
-						setValue={setValue}
 					/>
 				)}
 

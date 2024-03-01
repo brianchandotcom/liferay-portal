@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {useState} from 'react';
-import {useFieldArray} from 'react-hook-form';
+import {Control, UseFormRegister, useFieldArray} from 'react-hook-form';
 import {useParams} from 'react-router-dom';
 import Loading from '~/components/Loading';
 
@@ -23,10 +23,9 @@ import useGetFactorsData from './hooks/useGetFactorsData';
 export type BuildFormType = typeof yupSchema.build.__outputType;
 
 type BuildFormRunProps = {
-	action: any;
-	control: any;
-	register: any;
-	setValue: any;
+	action: string;
+	control: Control<any>;
+	register: UseFormRegister<BuildFormType>;
 };
 
 const BuildFormStacks: React.FC<BuildFormRunProps> = ({

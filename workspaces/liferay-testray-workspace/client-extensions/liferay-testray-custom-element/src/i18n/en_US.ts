@@ -49,6 +49,7 @@ export default {
 	'associated-requirements': 'Associated Requirements',
 	'at-least-one-environment-stack-is-required':
 		'At least one environment stack is required.',
+	'at-least-one-run-is-required': 'At least one run is required',
 	'attachment': 'Attachment',
 	'attachments': 'Attachments',
 	'attachments-x': 'Attachments ({0})',

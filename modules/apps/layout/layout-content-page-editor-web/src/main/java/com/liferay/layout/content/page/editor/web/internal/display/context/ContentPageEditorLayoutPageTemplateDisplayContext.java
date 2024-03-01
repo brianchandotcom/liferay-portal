@@ -129,9 +129,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	}
 
 	@Override
-	public Map<String, Object> getEditorContext()
-		throws Exception {
-
+	public Map<String, Object> getEditorContext() throws Exception {
 		Map<String, Object> editorContext = super.getEditorContext();
 
 		if (!_pageIsDisplayPage) {

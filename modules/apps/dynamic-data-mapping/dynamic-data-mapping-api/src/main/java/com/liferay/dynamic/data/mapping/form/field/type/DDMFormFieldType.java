@@ -15,6 +15,10 @@ public interface DDMFormFieldType {
 	public Class<? extends DDMFormFieldTypeSettings>
 		getDDMFormFieldTypeSettings();
 
+	public default String getESModule() {
+		return null;
+	}
+
 	public default String getModuleName() {
 		return StringPool.BLANK;
 	}

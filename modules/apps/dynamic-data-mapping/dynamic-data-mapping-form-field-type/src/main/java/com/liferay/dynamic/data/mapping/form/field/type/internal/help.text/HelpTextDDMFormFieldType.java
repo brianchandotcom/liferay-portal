@@ -24,8 +24,8 @@ import org.osgi.service.component.annotations.Component;
 public class HelpTextDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
-	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/HelpText/HelpText.es";
+	public String getESModule() {
+		return "{HelpText} from dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

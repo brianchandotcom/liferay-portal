@@ -37,9 +37,8 @@ public class SearchLocationDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
-	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/SearchLocation" +
-			"/SearchLocation.es";
+	public String getESModule() {
+		return "{SearchLocation} from dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

@@ -38,9 +38,8 @@ public class ColorDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
-	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/ColorPicker" +
-			"/ColorPicker.es";
+	public String getESModule() {
+		return "{ColorPicker} from dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

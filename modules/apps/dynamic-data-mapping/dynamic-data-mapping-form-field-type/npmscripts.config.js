@@ -5,8 +5,7 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			ignore: ['!**/*.scss.js', '**/__tests__/*.js'],
-		},
+		exports: ['leaflet/dist/leaflet.css'],
+		main: 'src/main/resources/META-INF/resources/index.ts',
 	},
 };

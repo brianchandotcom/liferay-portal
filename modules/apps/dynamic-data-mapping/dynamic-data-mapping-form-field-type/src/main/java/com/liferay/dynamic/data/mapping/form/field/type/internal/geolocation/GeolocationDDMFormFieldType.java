@@ -37,9 +37,8 @@ public class GeolocationDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
-	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/Geolocation" +
-			"/Geolocation.es";
+	public String getESModule() {
+		return "{Geolocation} from dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

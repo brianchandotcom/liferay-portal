@@ -150,6 +150,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			List<String> emails = userInfoClaimSet.getStringListClaim("emails");
 
 			String email = emails.get(0);
+
 			String familyName = userInfoClaimSet.getStringClaim("family_name");
 			String givenName = userInfoClaimSet.getStringClaim("given_name");
 

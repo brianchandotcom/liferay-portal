@@ -3,7 +3,7 @@ assemble:
           - "**/*.js"
           - package.json
 liferay-dlfoldertemplate-etc-node-oauth-application-server:
-    .serviceAddress: localhost:8050
+    .serviceAddress: localhost:3001
     .serviceScheme: http
     name: Liferay DL Folder Template Etc Node OAuth Application Server
     scopes:
@@ -17,7 +17,7 @@ liferay-dlfoldertemplate-etc-node-oauth-application-server:
         - Liferay.Object.Admin.REST.everything.write
     type: oAuthApplicationHeadlessServer
 liferay-dlfoldertemplate-etc-node-oauth-application-user-agent:
-    .serviceAddress: localhost:8050
+    .serviceAddress: localhost:3001
     .serviceScheme: http
     name: Liferay DL Folder Template Etc Node OAuth Application User Agent
     scopes:

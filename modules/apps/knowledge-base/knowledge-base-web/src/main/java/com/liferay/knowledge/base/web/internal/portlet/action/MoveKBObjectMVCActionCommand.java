@@ -148,37 +148,31 @@ public class MoveKBObjectMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, actionResponse, jsonObject);
 			}
 		}
+		catch (LockedKBArticleException lockedKBArticleException) {
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"actionLabel",
+					_language.get(
+						_portal.getHttpServletRequest(actionRequest),
+						Constants.MOVE)
+				).put(
+					"actionURL",
+					KnowledgeBaseUtil.getKBArticleMoveURL(
+						_portal.getLiferayPortletResponse(actionResponse),
+						false, true, parentResourceClassNameId,
+						parentResourcePrimKey, position, priority,
+						KnowledgeBaseUtil.getRedirect(actionRequest),
+						resourceClassNameId, resourcePrimKey)
+				).put(
+					"lockException", Boolean.TRUE
+				).put(
+					"success", Boolean.FALSE
+				).put(
+					"userName", lockedKBArticleException.getUserName()
+				));
+		}
 		catch (PortalException portalException) {
-			if (portalException instanceof LockedKBArticleException) {
-				LockedKBArticleException lockedKBArticleException =
-					(LockedKBArticleException)portalException;
-
-				JSONPortletResponseUtil.writeJSON(
-					actionRequest, actionResponse,
-					JSONUtil.put(
-						"actionLabel",
-						_language.get(
-							_portal.getHttpServletRequest(actionRequest),
-							Constants.MOVE)
-					).put(
-						"actionURL",
-						KnowledgeBaseUtil.getKBArticleMoveURL(
-							_portal.getLiferayPortletResponse(actionResponse),
-							false, true, parentResourceClassNameId,
-							parentResourcePrimKey, position, priority,
-							KnowledgeBaseUtil.getRedirect(actionRequest),
-							resourceClassNameId, resourcePrimKey)
-					).put(
-						"lockException", Boolean.TRUE
-					).put(
-						"success", Boolean.FALSE
-					).put(
-						"userName", lockedKBArticleException.getUserName()
-					));
-
-				return;
-			}
-
 			if (!dragAndDrop) {
 				throw portalException;
 			}

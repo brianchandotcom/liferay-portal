@@ -267,9 +267,7 @@ export function formatPlanData(subscriptionIMap) {
 			metrics: {
 				individuals: new Metric({
 					count: subscriptionIMap.get(
-						PLAN_TYPES[subscriptionIMap.get('name')] === 'basic'
-							? 'individualsCount'
-							: 'individualsCountSinceLastAnniversary',
+						'individualsCountSinceLastAnniversary',
 						0
 					),
 					limit: subscriptionIMap.get('individualsLimit', 0),
@@ -280,9 +278,7 @@ export function formatPlanData(subscriptionIMap) {
 				}),
 				pageViews: new Metric({
 					count: subscriptionIMap.get(
-						PLAN_TYPES[subscriptionIMap.get('name')] === 'basic'
-							? 'pageViewsCount'
-							: 'pageViewsCountSinceLastAnniversary',
+						'pageViewsCountSinceLastAnniversary',
 						0
 					),
 					limit: subscriptionIMap.get('pageViewsLimit', 0),

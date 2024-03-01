@@ -7,10 +7,12 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
 import {DEFAULT_LABEL} from './utils/constants';
 
 export const test = mergeTests(
+	dataSetManagerApiHelpersTest,
 	dataSetsPageTest,
 	featureFlagsTest({
 		'LPS-164563': true,
@@ -18,84 +20,173 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('Assert table column labels', async ({dataSetsPage, page}) => {
-	await dataSetsPage.goto();
-	await dataSetsPage.createDataSet();
+const dataSetConfig = {
+	name: DEFAULT_LABEL.DATA_SET,
+	restApplication: '/data-set-manager/fields',
+	restEndpoint: '/',
+	restSchema: 'FDSField',
+};
 
-	await page.locator('.dnd-table > .dnd-thead > .dnd-tr').waitFor();
+const DEFAULT_DATA_SET_ERC = 'sampleDataSetERC';
 
-	const tableColumnLabels = await page
-		.locator('.dnd-thead > .dnd-tr')
-		.first()
-		.locator('.dnd-th')
-		.allInnerTexts();
+test.describe('Data Set Table', () => {
+	test('Data Set created via UI', async ({dataSetsPage, page}) => {
+		await test.step('Create Data Set', async () => {
+			await dataSetsPage.goto();
+			await dataSetsPage.createDataSet(dataSetConfig);
+		});
 
-	const expectedLabels = [
-		'Name',
-		'REST Application',
-		'REST Schema',
-		'REST Endpoint',
-		'Modified Date',
-		'',
-	];
+		await test.step('Assert table column labels', async () => {
+			await page.locator('.dnd-table > .dnd-thead > .dnd-tr').waitFor();
 
-	await expect(tableColumnLabels).toEqual(expectedLabels);
+			const tableColumnLabels = await page
+				.locator('.dnd-thead > .dnd-tr')
+				.first()
+				.locator('.dnd-th')
+				.allInnerTexts();
 
-	await dataSetsPage.deleteDataSet();
-});
+			const expectedLabels = [
+				'Name',
+				'REST Application',
+				'REST Schema',
+				'REST Endpoint',
+				'Modified Date',
+				'',
+			];
 
-test('Assert table cell content', async ({dataSetsPage, page}) => {
-	const dataSetConfig = {
-		name: DEFAULT_LABEL.DATA_SET,
-		restApplication: '/data-set-manager/fields',
-		restEndpoint: '/',
-		restSchema: 'FDSField',
-	};
+			await expect(tableColumnLabels).toEqual(expectedLabels);
+		});
 
-	await dataSetsPage.goto();
-	await dataSetsPage.createDataSet(dataSetConfig);
+		await test.step('Assert table cell content', async () => {
+			await page
+				.locator('.dnd-table > .dnd-tbody > .dnd-tr')
+				.first()
+				.waitFor();
 
-	await page.locator('.dnd-table > .dnd-tbody > .dnd-tr').first().waitFor();
+			const tableRowContent = await page
+				.locator('.dnd-tbody > .dnd-tr')
+				.first()
+				.locator('.dnd-td');
 
-	const tableRowContent = await page
-		.locator('.dnd-tbody > .dnd-tr')
-		.first()
-		.locator('.dnd-td');
+			const expectedRowContent = [
+				dataSetConfig.name,
+				dataSetConfig.restApplication,
+				dataSetConfig.restSchema,
+				dataSetConfig.restEndpoint,
+			];
 
-	const expectedRowContent = [
-		dataSetConfig.name,
-		dataSetConfig.restApplication,
-		dataSetConfig.restSchema,
-		dataSetConfig.restEndpoint,
-	];
+			await expect(tableRowContent).toContainText(expectedRowContent);
+		});
 
-	await expect(tableRowContent).toContainText(expectedRowContent);
+		await test.step('Assert table action labels', async () => {
+			await page.locator('.dnd-td.item-actions').first().waitFor();
 
-	await dataSetsPage.deleteDataSet(dataSetConfig.name);
-});
+			await page
+				.locator('.dnd-td.item-actions')
+				.first()
+				.locator('.dropdown-toggle')
+				.click();
 
-test('Assert table action labels', async ({dataSetsPage, page}) => {
-	await dataSetsPage.goto();
-	await dataSetsPage.createDataSet();
+			const tableItemActions = await page
+				.locator('.dropdown-menu')
+				.filter({has: page.locator('span.pr-2')})
+				.first()
+				.locator('.dropdown-item')
+				.allInnerTexts();
 
-	await page.locator('.dnd-td.item-actions').first().waitFor();
+			const expectedLabels = ['Edit', 'Permissions', 'Delete'];
 
-	await page
-		.locator('.dnd-td.item-actions')
-		.first()
-		.locator('.dropdown-toggle')
-		.click();
+			await expect(tableItemActions).toEqual(expectedLabels);
+		});
 
-	const tableItemActions = await page
-		.locator('.dropdown-menu')
-		.filter({has: page.locator('span.pr-2')})
-		.first()
-		.locator('.dropdown-item')
-		.allInnerTexts();
+		await test.step('Delete Data Set', async () => {
+			await dataSetsPage.deleteDataSet(dataSetConfig.name);
+		});
+	});
 
-	const expectedLabels = ['Edit', 'Permissions', 'Delete'];
+	test('Data Set created via API', async ({
+		dataSetManagerApiHelpers,
+		dataSetsPage,
+		page,
+	}) => {
+		await test.step('Create Data Set', async () => {
+			await dataSetManagerApiHelpers.createDataSet({
+				...dataSetConfig,
+				erc: DEFAULT_DATA_SET_ERC,
+			});
+		});
 
-	await expect(tableItemActions).toEqual(expectedLabels);
+		await test.step('Navigate to Data Sets page', async () => {
+			await dataSetsPage.goto();
+		});
 
-	await dataSetsPage.deleteDataSet();
+		await test.step('Assert table column labels', async () => {
+			await page.locator('.dnd-table > .dnd-thead > .dnd-tr').waitFor();
+
+			const tableColumnLabels = await page
+				.locator('.dnd-thead > .dnd-tr')
+				.first()
+				.locator('.dnd-th')
+				.allInnerTexts();
+
+			const expectedLabels = [
+				'Name',
+				'REST Application',
+				'REST Schema',
+				'REST Endpoint',
+				'Modified Date',
+				'',
+			];
+
+			await expect(tableColumnLabels).toEqual(expectedLabels);
+		});
+
+		await test.step('Assert table cell content', async () => {
+			await page
+				.locator('.dnd-table > .dnd-tbody > .dnd-tr')
+				.first()
+				.waitFor();
+
+			const tableRowContent = await page
+				.locator('.dnd-tbody > .dnd-tr')
+				.first()
+				.locator('.dnd-td');
+
+			const expectedRowContent = [
+				dataSetConfig.name,
+				dataSetConfig.restApplication,
+				dataSetConfig.restSchema,
+				dataSetConfig.restEndpoint,
+			];
+
+			await expect(tableRowContent).toContainText(expectedRowContent);
+		});
+
+		await test.step('Assert table action labels', async () => {
+			await page.locator('.dnd-td.item-actions').first().waitFor();
+
+			await page
+				.locator('.dnd-td.item-actions')
+				.first()
+				.locator('.dropdown-toggle')
+				.click();
+
+			const tableItemActions = await page
+				.locator('.dropdown-menu')
+				.filter({has: page.locator('span.pr-2')})
+				.first()
+				.locator('.dropdown-item')
+				.allInnerTexts();
+
+			const expectedLabels = ['Edit', 'Permissions', 'Delete'];
+
+			await expect(tableItemActions).toEqual(expectedLabels);
+		});
+
+		await test.step('Delete Data Set', async () => {
+			await dataSetManagerApiHelpers.deleteDataSet({
+				erc: DEFAULT_DATA_SET_ERC,
+			});
+		});
+	});
 });

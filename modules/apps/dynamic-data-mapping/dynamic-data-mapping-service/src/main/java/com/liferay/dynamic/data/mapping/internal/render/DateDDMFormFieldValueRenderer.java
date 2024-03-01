@@ -64,9 +64,12 @@ public class DateDDMFormFieldValueRenderer
 
 			String pattern = simpleDateFormat.toPattern();
 
+			pattern = pattern.replaceAll("\\byy\\b", "yyyy");
+			pattern = pattern.replaceAll("\\by\\b", "yyyy");
+
 			return DateUtil.getDate(
 				DateUtil.parseDate("yyyy-MM-dd", value.toString(), locale),
-				pattern.replaceAll("\\byy\\b", "yyyy"), locale);
+				pattern, locale);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

@@ -369,6 +369,14 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 								value="<%= HtmlUtil.escape(PortalUtil.getUserName(curFolder)) %>"
 							/>
 
+							<c:if test="<%= journalArticleItemSelectorViewDisplayContext.getStatus() == WorkflowConstants.STATUS_ANY %>">
+								<liferay-ui:search-container-column-text
+									cssClass="text-nowrap"
+									name="status"
+									value="--"
+								/>
+							</c:if>
+
 							<liferay-ui:search-container-column-date
 								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 								name="modified-date"

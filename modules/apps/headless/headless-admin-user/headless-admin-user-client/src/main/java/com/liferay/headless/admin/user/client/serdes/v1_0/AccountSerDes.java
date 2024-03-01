@@ -53,6 +53,16 @@ public class AccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (account.getAccountContactInformation() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountContactInformation\": ");
+
+			sb.append(String.valueOf(account.getAccountContactInformation()));
+		}
+
 		if (account.getAccountUserAccounts() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -371,6 +381,15 @@ public class AccountSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (account.getAccountContactInformation() == null) {
+			map.put("accountContactInformation", null);
+		}
+		else {
+			map.put(
+				"accountContactInformation",
+				String.valueOf(account.getAccountContactInformation()));
+		}
+
 		if (account.getAccountUserAccounts() == null) {
 			map.put("accountUserAccounts", null);
 		}
@@ -557,7 +576,18 @@ public class AccountSerDes {
 			Account account, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "accountUserAccounts")) {
+			if (Objects.equals(
+					jsonParserFieldName, "accountContactInformation")) {
+
+				if (jsonParserFieldValue != null) {
+					account.setAccountContactInformation(
+						AccountContactInformationSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "accountUserAccounts")) {
+
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;

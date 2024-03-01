@@ -24,8 +24,6 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
-import org.apache.commons.lang.ClassUtils;
-
 /**
  * @author Rafael Praxedes
  */
@@ -119,9 +117,9 @@ public interface MapToDDMFormValuesConverterStrategy {
 			return createLocalizedValue(locale, value);
 		}
 
-		if (!(value instanceof String) &&
-			(ClassUtils.wrapperToPrimitive(value.getClass()) == null)) {
+		Class<?> clazz = value.getClass();
 
+		if ((clazz != String.class) && !clazz.isPrimitive()) {
 			throw new IllegalArgumentException(
 				"Field's value must be a primitive value");
 		}

@@ -180,7 +180,7 @@ public class ImportTaskResourcePerformanceTest
 
 		String json = _createBatchJSON(className, recordsCount);
 
-		try (Closeable closeable = startTimer()) {
+		try (Closeable closeable = startTimer(_log)) {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.body(json, "application/json");

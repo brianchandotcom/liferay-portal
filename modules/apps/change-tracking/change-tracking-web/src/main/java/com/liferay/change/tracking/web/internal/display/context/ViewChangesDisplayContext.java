@@ -390,6 +390,10 @@ public class ViewChangesDisplayContext {
 		for (Map.Entry<Long, Set<Long>> entry :
 				classNameIdClassPKsMap.entrySet()) {
 
+			if (entry.getKey() == 0) {
+				continue;
+			}
+
 			_populateEntryValues(
 				modelInfoMap, entry.getKey(), entry.getValue(),
 				typeNameCacheMap);

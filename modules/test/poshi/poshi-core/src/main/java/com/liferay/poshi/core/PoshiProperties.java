@@ -81,6 +81,9 @@ public class PoshiProperties extends Properties {
 	public static final String POSHI_FILE_READ_THREAD_POOL =
 		"poshi.file.read.thread.pool";
 
+	public static final String POSHI_FILE_READ_TIMEOUT =
+		"poshi.file.read.timeout";
+
 	public static final String PRINT_JAVA_PROCESS_ON_FAIL =
 		"print.java.process.on.fail";
 
@@ -363,6 +366,8 @@ public class PoshiProperties extends Properties {
 	public String portalURL = getProperty(PORTAL_URL);
 	public int poshiFileReadThreadPool = GetterUtil.getInteger(
 		getProperty(POSHI_FILE_READ_THREAD_POOL));
+	public int poshiFileReadTimeout = GetterUtil.getInteger(
+		getProperty(POSHI_FILE_READ_TIMEOUT));
 	public String printJavaProcessOnFail = getProperty(
 		PRINT_JAVA_PROCESS_ON_FAIL);
 	public String projectDir = getProperty(PROJECT_DIR);

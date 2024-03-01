@@ -734,7 +734,11 @@ public class PoshiContext {
 
 		executorService.shutdown();
 
-		if (!executorService.awaitTermination(3, TimeUnit.MINUTES)) {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if (!executorService.awaitTermination(
+				poshiProperties.poshiFileReadTimeout, TimeUnit.MINUTES)) {
+
 			throw new TimeoutException(
 				"Timed out while loading " + poshiFileType + " Poshi files");
 		}

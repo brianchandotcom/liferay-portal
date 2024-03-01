@@ -29,6 +29,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -97,6 +99,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	public static void setUpClass() throws Exception {
 		BaseNotificationTypeTest.setUpClass();
 
+		_siteGroup = GroupTestUtil.addGroup();
+
 		_freeMarkerTermValues = LinkedHashMapBuilder.<String, Object>put(
 			"${ObjectField_booleanObjectField.getData()}",
 			childObjectEntryValues.get("booleanObjectField")
@@ -154,12 +158,74 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				return _portal.getPortalURL(httpServletRequest);
 			}
 		).build();
+
+		_freeMarkerTermValuesSiteScope =
+			LinkedHashMapBuilder.<String, Object>put(
+				"${ObjectField_booleanObjectField.getData()}",
+				siteScopeObjectEntryValues.get("booleanObjectField")
+			).put(
+				"${ObjectField_dateObjectField.getData()}",
+				() -> {
+					SimpleDateFormat dateInfoFieldSimpleDateFormat =
+						new SimpleDateFormat("M/d/yy hh:mm a");
+					SimpleDateFormat dateObjectFieldSimpleDateFormat =
+						new SimpleDateFormat("yyyy-MM-dd");
+
+					return dateInfoFieldSimpleDateFormat.format(
+						dateObjectFieldSimpleDateFormat.parse(
+							(String)siteScopeObjectEntryValues.get(
+								"dateObjectField")));
+				}
+			).put(
+				"${ObjectField_dateTimeObjectField.getData()}",
+				() -> {
+					SimpleDateFormat dateTimeObjectFieldSimpleDateFormat =
+						new SimpleDateFormat("yyyy-MM-dd 00:00:00.0");
+					SimpleDateFormat defaultInfoFieldSimpleDateFormat =
+						new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+					return defaultInfoFieldSimpleDateFormat.format(
+						dateTimeObjectFieldSimpleDateFormat.parse(
+							(String)siteScopeObjectEntryValues.get(
+								"dateTimeObjectField")));
+				}
+			).put(
+				"${ObjectField_emailTextObjectField.getData()}",
+				siteScopeObjectEntryValues.get("emailTextObjectField")
+			).put(
+				"${ObjectField_integerObjectField.getData()}",
+				siteScopeObjectEntryValues.get("integerObjectField")
+			).put(
+				"${ObjectField_textObjectField.getData()}",
+				siteScopeObjectEntryValues.get("textObjectField")
+			).put(
+				"${portalURL}",
+				() -> {
+					_originalHttpServletRequest =
+						ObjectActionThreadLocal.getHttpServletRequest();
+
+					HttpServletRequest httpServletRequest =
+						_originalHttpServletRequest;
+
+					if (httpServletRequest == null) {
+						httpServletRequest = new MockHttpServletRequest(
+							null, StringPool.BLANK,
+							RandomTestUtil.randomString());
+
+						ObjectActionThreadLocal.setHttpServletRequest(
+							httpServletRequest);
+					}
+
+					return _portal.getPortalURL(httpServletRequest);
+				}
+			).build();
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws PortalException {
 		ObjectActionThreadLocal.setHttpServletRequest(
 			_originalHttpServletRequest);
+		_groupLocalService.deleteGroup(_siteGroup);
 	}
 
 	@Test
@@ -235,6 +301,50 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		assertTermValues(
 			Arrays.asList(listEntry.getName()),
+			Arrays.asList(
+				StringUtil.split(
+					notificationQueueEntry.getBody(), StringPool.COMMA)));
+	}
+
+	@Test
+	public void testFreeMarkerNotificationSiteScope() throws Exception {
+		String body = LocalizationUtil.updateLocalization(
+			LocalizedMapUtil.getLocalizedMap(
+				HashMapBuilder.put(
+					LanguageUtil.getLanguageId(LocaleUtil.US),
+					StringUtil.merge(
+						_freeMarkerTermValuesSiteScope.keySet(),
+						StringPool.COMMA)
+				).build()),
+			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
+
+		_executeNotificationObjectActionOnSiteScope(
+			_addNotificationTemplateOnSiteScope(
+				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
+				false,
+				Collections.singletonMap(
+					LocaleUtil.US, user1.getEmailAddress())));
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		notificationQueueEntry = notificationQueueEntries.get(0);
+
+		assertTermValues(
+			Arrays.asList(
+				_freeMarkerTermValuesSiteScope.values(
+				).stream(
+				).map(
+					Object::toString
+				).toArray(
+					String[]::new
+				)),
 			Arrays.asList(
 				StringUtil.split(
 					notificationQueueEntry.getBody(), StringPool.COMMA)));
@@ -371,6 +481,40 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				Collections.singletonList(objectField.getObjectFieldId())));
 	}
 
+	private NotificationTemplate _addNotificationTemplateOnSiteScope(
+			String body, String editorType, boolean singleRecipient,
+			Map<Locale, String> to)
+		throws Exception {
+
+		ObjectField objectField = objectFieldLocalService.getObjectField(
+			siteScopeObjectDefinition.getObjectDefinitionId(),
+			"attachmentObjectField");
+
+		return notificationTemplateLocalService.addNotificationTemplate(
+			NotificationTemplateUtil.createNotificationContext(
+				TestPropsValues.getUser(),
+				siteScopeObjectDefinition.getObjectDefinitionId(), body,
+				RandomTestUtil.randomString(), editorType,
+				Arrays.asList(
+					createNotificationRecipientSetting(
+						"bcc",
+						"[%CURRENT_USER_EMAIL_ADDRESS%],bcc@liferay.com"),
+					createNotificationRecipientSetting(
+						"cc", "[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
+					createNotificationRecipientSetting(
+						"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
+					createNotificationRecipientSetting(
+						"fromName",
+						Collections.singletonMap(
+							LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
+					createNotificationRecipientSetting(
+						"singleRecipient", String.valueOf(singleRecipient)),
+					createNotificationRecipientSetting("to", to)),
+				ListUtil.toString(getTermNames(), StringPool.BLANK),
+				NotificationConstants.TYPE_EMAIL,
+				Collections.singletonList(objectField.getObjectFieldId())));
+	}
+
 	private void _assertNotificationQueueEntry(
 			String expectedFileName, boolean expectedSingleRecipient,
 			String expectedToEmailAddress,
@@ -489,6 +633,38 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			objectAction.getObjectActionId());
 	}
 
+	private void _executeNotificationObjectActionOnSiteScope(
+			NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		ObjectAction objectAction = objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			siteScopeObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_NOTIFICATION,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
+			UnicodePropertiesBuilder.put(
+				"notificationTemplateId",
+				notificationTemplate.getNotificationTemplateId()
+			).build(),
+			false);
+
+		objectEntryManager.addObjectEntry(
+			dtoConverterContext, siteScopeObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = siteScopeObjectEntryValues;
+				}
+			},
+			String.valueOf(_siteGroup.getGroupId()));
+
+		objectActionLocalService.deleteObjectAction(
+			objectAction.getObjectActionId());
+	}
+
 	private Folder _getFolder(NotificationQueueEntry notificationQueueEntry)
 		throws Exception {
 
@@ -590,13 +766,17 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	private static CompanyLocalService _companyLocalService;
 
 	private static Map<String, Object> _freeMarkerTermValues;
+	private static Map<String, Object> _freeMarkerTermValuesSiteScope;
+
+	@Inject
+	private static GroupLocalService _groupLocalService;
+
 	private static HttpServletRequest _originalHttpServletRequest;
 
 	@Inject
 	private static Portal _portal;
 
-	@Inject
-	private GroupLocalService _groupLocalService;
+	private static Group _siteGroup;
 
 	@Inject
 	private NotificationQueueEntryAttachmentLocalService

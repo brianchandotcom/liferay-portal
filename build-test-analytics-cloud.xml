@@ -103,10 +103,15 @@ networks:
 						]]>
 					</beanshell>
 
-					<mirrors-get
-						dest="${analytics.cloud.asah.dir}/gradle/wrapper/${gradle.wrapper.bin.file.name}"
-						src="${gradle.wrapper.bin.file.url}"
-					/>
+					<if>
+						<matches pattern="https?://.+" string="${gradle.wrapper.bin.file.url}" />
+						<then>
+							<mirrors-get
+								dest="${analytics.cloud.asah.dir}/gradle/wrapper/${gradle.wrapper.bin.file.name}"
+								src="${gradle.wrapper.bin.file.url}"
+							/>
+						</then>
+					</if>
 
 					<beanshell>
 						<![CDATA[

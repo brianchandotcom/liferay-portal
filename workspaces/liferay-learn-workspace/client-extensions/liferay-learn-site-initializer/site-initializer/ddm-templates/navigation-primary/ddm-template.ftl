@@ -98,28 +98,53 @@
 	}
 </style>
 
-<#assign
-	taxonomyVocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/by-external-reference-code/CAPABILITY?fields=id").id
-	taxonomyVocabulary = {}
-/>
+<#assign taxonomyVocabulary = {} />
+<#assign siteId = themeDisplay.getSiteGroupId() />
+<#assign taxonomyVocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${siteId}/taxonomy-vocabularies/by-external-reference-code/CAPABILITY").id />
 
-<#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories?fields=description%2Cid%2Cname%2CtaxonomyCategoryProperties").items as taxonomyCategory>
-	<#assign icons = taxonomyCategory.taxonomyCategoryProperties?filter(property -> stringUtil.equals(property.key, "icon")) />
+<script>
+    let taxonomyVocabulary = {};
 
-	<#if icons?size != 0>
-		<#assign icon = icons[0].value />
-	</#if>
+    function getData() {			
+		const url = "http://localhost:8080/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories??fields=description%2C%20name%2C%20taxonomyCategoryProperties"
+        const requestOptions = {
+            method: "GET",
+            headers: {
+			       'Accept': 'application/json',
+			       'Content-Type': 'application/json',
+			       'x-csrf-token': Liferay.authToken,
+		        },
+					  redirect: "follow"
+        };
 
-	<#assign taxonomyVocabulary = taxonomyVocabulary + {
-			taxonomyCategory.name:
-				{
-					"description": taxonomyCategory.description,
-					"icon": icon!"documents/d${themeDisplay.getScopeGroup().getFriendlyURL()}/blank_icon",
-					"id": taxonomyCategory.id
-				}
-		}
-	>
-</#list>
+        return fetch(url, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result);
+                return result.items;
+            })
+            .catch((error) => console.error(error));
+        }
+
+       function handleDataLoaded(taxonomyCategories) {
+
+        taxonomyCategories.map(taxonomyCategory => {
+
+            taxonomyVocabulary[taxonomyCategory.name] = {
+                "description": taxonomyCategory.description,
+                "icon": taxonomyCategory.taxonomyCategoryProperties[0].value,
+                "id": taxonomyCategory.id
+            };
+        });
+
+        console.log("Vocabulary:", taxonomyVocabulary);
+    }
+
+    getData()
+        .then(handleDataLoaded)
+        .catch(error => console.error(error));
+</script>
+
 
 <div class="adt-navigation">
 	<#assign groupFriendlyURL = portalUtil.getGroupFriendlyURL(themeDisplay.getLayoutSet(), themeDisplay, true, false) />
@@ -153,7 +178,6 @@
 							id=${navPrimaryItem.getName()}
 						>
 							${navPrimaryItem.getName()}
-
 							<svg class="lexicon-icon lexicon-icon-caret-bottom" role="presentation" viewBox="0 0 512 512">
 								<use xlink:href="/o/admin-theme/images/clay/icons.svg#caret-bottom"></use>
 							</svg>
@@ -164,64 +188,51 @@
 				<div
 					aria-labelledby=${navPrimaryItem.getName()}
 					class="dropdown-menu"
-				>
-					<div class="row">
-						<#list navPrimaryItem.getChildren() as navSecondaryItem>
-							<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
-								<#if taxonomyVocabulary[navSecondaryItem.getName()]?has_content>
-									<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
-										<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
+				>			
+				<div class="row">
+					<#list navPrimaryItem.getChildren() as navSecondaryItem>
+						<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES") && taxonomyVocabulary[navSecondaryItem.getName()]?has_content>
+							<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
+								<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
 
-										<a class="d-flex dropdown-item p-3 text-decoration-none" href="${groupFriendlyURL}/search?category=${capabilityFields['id']}" tabindex="4">
-											<img
-												alt="${navSecondaryItem.getName()} icon"
-												class="icon mr-3"
-												src="${capabilityFields["icon"]}"
-											/>
-
-											<div>
-												<h5 class="responsive-text title">
-													${navSecondaryItem.getName()}
-												</h5>
-
-												<#if capabilityFields["description"]?has_content>
-													<p class="pt-2 responsive-text subtitle">
-														${capabilityFields["description"]}
-													</p>
-												</#if>
-											</div>
-										</a>
-									</div>
-								</#if>
-							<#else>
-								<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
-									<#assign
-										customFields = navSecondaryItem.getExpandoAttributes()!{}
-										navItemDescription = customFields["Description"]!""
-										navItemIcon = customFields["Icon URL"]!""
+								<a class="d-flex dropdown-item p-3 text-decoration-none" href="${groupFriendlyURL}/search?category=${capabilityFields['id']}" tabindex="4">
+									<img
+										alt="${navSecondaryItem.getName()} icon"
+										class="icon mr-3"
+										src="${capabilityFields["icon"]?if_exists}"
 									/>
 
-									<a class="d-flex dropdown-item maxh-90 p-3 text-decoration-none" href="${groupFriendlyURL}${navSecondaryItem.getRegularURL()}" tabindex="4">
-										<img
-											alt="${navSecondaryItem.getName()} icon"
-											class="icon mr-3"
-											src="${navItemIcon}"
-										/>
+									<div>
+										<h5 class="responsive-text title">${navSecondaryItem.getName()}</h5>
 
-										<div>
-											<h5 class="responsive-text title">
-												${navSecondaryItem.getName()}
-											</h5>
+										<#if capabilityFields["description"]?has_content>
+											<p class="pt-2 responsive-text subtitle">${capabilityFields["description"]}</p>
+										</#if>
+									</div>
+								</a>
+							</div>
+						<#else>
+							<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
+								<#assign customFields = navSecondaryItem.getExpandoAttributes()!{} />
+								<#assign navItemDescription = customFields["Description"]!"" />
+								<#assign navItemIcon = customFields["Icon URL"]!"" />
 
-											<p class="pt-2 responsive-text subtitle">
-												${navItemDescription}
-											</p>
-										</div>
-									</a>
-								</div>
-							</#if>
-						</#list>
-					</div>
+								<a class="d-flex dropdown-item maxh-90 p-3 text-decoration-none" href="${groupFriendlyURL}${navSecondaryItem.getRegularURL()}" tabindex="4">
+									<img
+										alt="${navSecondaryItem.getName()} icon"
+										class="icon mr-3"
+										src="${navItemIcon}"
+									/>
+
+									<div>
+										<h5 class="responsive-text title">${navSecondaryItem.getName()}</h5>
+										<p class="pt-2 responsive-text subtitle">${navItemDescription}</p>
+									</div>
+								</a>
+							</div>
+						</#if>
+					</#list>
+				</div>	
 				</div>
 			</div>
 		<#else>

@@ -82,6 +82,7 @@ public class TalendDispatchTaskExecutorTest {
 		DispatchLog dispatchLog = dispatchLogs.get(0);
 
 		Assert.assertEquals(
+			dispatchLog.getError(),
 			DispatchTaskStatus.SUCCESSFUL,
 			DispatchTaskStatus.valueOf(dispatchLog.getStatus()));
 	}

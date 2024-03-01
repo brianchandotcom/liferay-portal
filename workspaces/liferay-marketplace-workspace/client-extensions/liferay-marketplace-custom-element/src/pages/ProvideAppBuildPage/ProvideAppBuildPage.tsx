@@ -181,7 +181,6 @@ export function ProvideAppBuildPage({
 		{
 			appBuild,
 			appERC,
-			appId,
 			appProductId,
 			appType,
 			buildAppPackages,
@@ -428,7 +427,7 @@ export function ProvideAppBuildPage({
 	};
 
 	const submitAppBuildClouldResourceRequirements = async (
-		appId: string,
+		appId: number,
 		productSpecifications: BodyProductSpecificationProps[]
 	) => {
 		const dataSpecificationList = await getProductSpecifications({
@@ -476,7 +475,7 @@ export function ProvideAppBuildPage({
 				specificationKey: dataSpecification.key,
 				value: {en_US: appType.value},
 			},
-			id: appId,
+			id: appProductId,
 		});
 
 		dispatch({
@@ -800,7 +799,7 @@ export function ProvideAppBuildPage({
 
 						if (isCloud) {
 							await submitAppBuildClouldResourceRequirements(
-								appId,
+								appProductId,
 								bodySpecification
 							);
 						}

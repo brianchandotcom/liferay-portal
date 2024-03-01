@@ -42,7 +42,6 @@ export function InformLicensingTermsPage({
 }: InformLicensingTermsPageProps) {
 	const [
 		{
-			appId,
 			appLicense,
 			appLicensePrice,
 			appNotes,
@@ -87,7 +86,7 @@ export function InformLicensingTermsPage({
 				specificationKey: dataSpecification.key,
 				value,
 			},
-			id: appId,
+			id: appProductId,
 		});
 
 		dispatch({

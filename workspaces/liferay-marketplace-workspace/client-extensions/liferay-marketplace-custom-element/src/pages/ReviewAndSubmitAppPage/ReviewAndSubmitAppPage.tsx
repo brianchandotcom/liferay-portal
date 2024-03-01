@@ -57,18 +57,19 @@ export function ReviewAndSubmitAppPage({
 				}
 			});
 
+			
 			const productSpecifications =
-				productResponse.productSpecifications || [];
+			productResponse.productSpecifications || [];
 			const skus = productResponse.skus || [];
-
+			
 			const isCloud =
-				productSpecifications?.some(
-					({specificationKey, value}) =>
-						specificationKey === 'type' &&
-						((value as unknown) as string) === 'cloud'
+			productSpecifications?.some(
+				({specificationKey, value}) =>
+				specificationKey === 'type' &&
+				value.en_US  === 'cloud'
 				) ?? false;
-
-			let sku = skus[0];
+				
+				let sku = skus[0];
 
 			if (isCloud) {
 				sku = skus.find(

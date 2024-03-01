@@ -28,7 +28,6 @@ export function ProvideAppSupportAndHelpPage({
 	const [
 		{
 			appDocumentationURL,
-			appId,
 			appInstallationGuideURL,
 			appProductId,
 			appUsageTermsURL,
@@ -136,11 +135,9 @@ export function ProvideAppSupportAndHelpPage({
 				onClickContinue={async () => {
 					setProcessing(true);
 					const supportURLSpecificationId = await saveSpecification(
-						appId,
 						appProductId,
 						supportURL?.id,
 						'supportURL',
-						'Support URL',
 						supportURL?.value
 					);
 
@@ -165,11 +162,9 @@ export function ProvideAppSupportAndHelpPage({
 
 					if (publisherWebsiteURL?.value) {
 						const publisherWebsiteURLSpecificationId = await saveSpecification(
-							appId,
 							appProductId,
 							publisherWebsiteURL?.id,
 							'publisherWebsiteURL',
-							'Publisher Web site URL',
 							publisherWebsiteURL?.value
 						);
 
@@ -194,11 +189,9 @@ export function ProvideAppSupportAndHelpPage({
 					}
 					if (appUsageTermsURL?.value) {
 						const appUsageTermsURLSpecificationId = await saveSpecification(
-							appId,
 							appProductId,
 							appUsageTermsURL?.id,
 							'appUsageTermsURL',
-							'App Usage Terms URL',
 							appUsageTermsURL?.value
 						);
 
@@ -223,11 +216,9 @@ export function ProvideAppSupportAndHelpPage({
 					}
 					if (appDocumentationURL?.value) {
 						const appDocumentationURLSpecificationId = await saveSpecification(
-							appId,
 							appProductId,
 							appDocumentationURL?.id,
 							'appDocumentationURL',
-							'App Documentation URL',
 							appDocumentationURL?.value
 						);
 
@@ -252,11 +243,9 @@ export function ProvideAppSupportAndHelpPage({
 					}
 					if (appInstallationGuideURL?.value) {
 						const appInstallationGuideURLSpecificationId = await saveSpecification(
-							appId,
 							appProductId,
 							appInstallationGuideURL?.id,
 							'appInstallationGuideURL',
-							'App Installation Guide URL',
 							appInstallationGuideURL?.value
 						);
 

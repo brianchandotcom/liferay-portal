@@ -225,11 +225,9 @@ export function removeProtocolURL(url: string) {
 }
 
 async function submitSpecification(
-	appId: string,
 	productId: number,
 	productSpecificationId: number,
 	key: string,
-	title: string,
 	value: string
 ): Promise<number> {
 	const specifications = await getSpecifications();
@@ -258,7 +256,7 @@ async function submitSpecification(
 				specificationKey: key,
 				value: {en_US: value},
 			},
-			id: appId,
+			id: productId,
 		});
 
 		return id;
@@ -266,19 +264,15 @@ async function submitSpecification(
 }
 
 export async function saveSpecification(
-	appId: string,
 	productId: number,
 	productSpecificationId: number,
 	key: string,
-	title: string,
 	value: string
 ) {
 	return await submitSpecification(
-		appId,
 		productId,
 		productSpecificationId,
 		key,
-		title,
 		value
 	);
 }

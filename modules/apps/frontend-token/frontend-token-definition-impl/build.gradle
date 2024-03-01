@@ -5,10 +5,12 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:frontend-css:frontend-css-variables-api")
 	compileOnly project(":apps:frontend-token:frontend-token-definition-api")
+	compileOnly project(":apps:portal:portal-json-validator")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 
+	testImplementation group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 }

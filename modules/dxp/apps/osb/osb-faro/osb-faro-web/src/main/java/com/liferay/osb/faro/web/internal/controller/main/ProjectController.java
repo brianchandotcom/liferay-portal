@@ -44,6 +44,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -384,18 +386,29 @@ public class ProjectController extends BaseFaroController {
 			String corpProjectUuid = faroProject.getCorpProjectUuid();
 
 			if (Validator.isNotNull(corpProjectUuid)) {
+				String subscription = null;
+
 				if (StringUtil.contains(corpProjectUuid, "Test")) {
-					faroProject.setSubscription(
-						JSONUtil.writeValueAsString(
-							new FaroSubscriptionDisplay(
-								createOSBAccountEntry(corpProjectUuid))));
+					subscription = JSONUtil.writeValueAsString(
+						new FaroSubscriptionDisplay(
+							getOSBAccountEntry(corpProjectUuid)));
+
+					faroProject.setSubscription(subscription);
 				}
 				else {
-					faroProject.setSubscription(
-						JSONUtil.writeValueAsString(
-							new FaroSubscriptionDisplay(
-								_provisioningClient.getOSBAccountEntry(
-									corpProjectUuid))));
+					subscription = JSONUtil.writeValueAsString(
+						new FaroSubscriptionDisplay(
+							_provisioningClient.getOSBAccountEntry(
+								corpProjectUuid)));
+
+					faroProject.setSubscription(subscription);
+				}
+
+				if (_isSubscriptionPlanChanged(
+						faroProject,
+						_jsonFactory.createJSONObject(subscription))) {
+
+					faroProject.setSubscriptionModifiedTime(now);
 				}
 			}
 
@@ -1016,6 +1029,22 @@ public class ProjectController extends BaseFaroController {
 		}
 	}
 
+	private boolean _isSubscriptionPlanChanged(
+			FaroProject faroProject, JSONObject newSubscriptionJSONObject)
+		throws Exception {
+
+		JSONObject oldSubscriptionJSONObject = _jsonFactory.createJSONObject(
+			faroProject.getSubscription());
+
+		if (oldSubscriptionJSONObject.get("name") !=
+				newSubscriptionJSONObject.get("name")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isWorkspaceHealthy(FaroProject faroProject) {
 		try {
 			contactsEngineClient.getIndividuals(
@@ -1177,6 +1206,9 @@ public class ProjectController extends BaseFaroController {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

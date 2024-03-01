@@ -29,9 +29,23 @@ export default function TranslationOptions({
 	selectedLanguageId,
 	translationProgress,
 }: Props) {
-	const {observer, onOpenChange, open} = useModal();
+	const {
+		observer: resetTranslationObserver,
+		onOpenChange: onOpenChangeResetTranslation,
+		open: openResetTranslation,
+	} = useModal();
+
+	const {
+		observer: markTranslatedObserver,
+		onOpenChange: onOpenChangeMarkAsTranslated,
+		open: openMarkTranslated,
+	} = useModal();
 
 	const [dropdownActive, setDropdownActive] = useState(false);
+
+	const markAsTranslatedHandler = () => {
+		Liferay.fire('inputLocalized:markAsTranslated', {selectedLanguageId});
+	};
 
 	const resetButtonHandler = () => {
 		const fields = getAllLocalizableFields(initialFields);
@@ -73,6 +87,19 @@ export default function TranslationOptions({
 		Liferay.fire('inputLocalized:updateTranslationStatus');
 	};
 
+	const disabledResetButton =
+		selectedLanguageId === defaultLanguageId ||
+		(translationProgress &&
+			!translationProgress.translatedItems[selectedLanguageId]) ||
+		(translationProgress &&
+			translationProgress.translatedItems[selectedLanguageId] === 0);
+
+	const disabledMarkTranslatedButton =
+		selectedLanguageId === defaultLanguageId ||
+		(translationProgress &&
+			translationProgress.translatedItems[selectedLanguageId] ===
+				translationProgress.totalItems);
+
 	return (
 		<>
 			<ClayDropDown
@@ -101,14 +128,9 @@ export default function TranslationOptions({
 					<ClayDropDown.Item>
 						<ClayButton
 							className="font-weight-normal text-secondary"
-							disabled={
-								selectedLanguageId === defaultLanguageId ||
-								!translationProgress?.translatedItems[
-									selectedLanguageId
-								]
-							}
+							disabled={!!disabledResetButton}
 							displayType="unstyled"
-							onClick={() => onOpenChange(true)}
+							onClick={() => onOpenChangeResetTranslation(true)}
 							size="sm"
 						>
 							<ClayIcon className="c-mt-0" symbol="trash" />
@@ -118,11 +140,30 @@ export default function TranslationOptions({
 							</span>
 						</ClayButton>
 					</ClayDropDown.Item>
+
+					<ClayDropDown.Item>
+						<ClayButton
+							className="font-weight-normal text-secondary"
+							disabled={!!disabledMarkTranslatedButton}
+							displayType="unstyled"
+							onClick={() => onOpenChangeMarkAsTranslated(true)}
+							size="sm"
+						>
+							<ClayIcon
+								className="c-mt-0"
+								symbol="question-circle-full"
+							/>
+
+							<span className="c-ml-3">
+								{Liferay.Language.get('mark-as-translated')}
+							</span>
+						</ClayButton>
+					</ClayDropDown.Item>
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 
-			{open && (
-				<ClayModal observer={observer} status="danger">
+			{openResetTranslation && (
+				<ClayModal observer={resetTranslationObserver} status="danger">
 					<ClayModal.Header>
 						{sub(
 							Liferay.Language.get('delete-x-translation'),
@@ -145,7 +186,9 @@ export default function TranslationOptions({
 							<ClayButton.Group spaced>
 								<ClayButton
 									displayType="secondary"
-									onClick={() => onOpenChange(false)}
+									onClick={() =>
+										onOpenChangeResetTranslation(false)
+									}
 								>
 									{Liferay.Language.get('cancel')}
 								</ClayButton>
@@ -153,11 +196,57 @@ export default function TranslationOptions({
 								<ClayButton
 									displayType="danger"
 									onClick={() => {
-										onOpenChange(false);
+										onOpenChangeResetTranslation(false);
 										resetButtonHandler();
 									}}
 								>
 									{Liferay.Language.get('delete')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
+				</ClayModal>
+			)}
+			{openMarkTranslated && (
+				<ClayModal observer={markTranslatedObserver} status="info">
+					<ClayModal.Header>
+						{sub(
+							Liferay.Language.get('mark-x-as-translated'),
+							selectedLanguageId
+						)}
+					</ClayModal.Header>
+
+					<ClayModal.Body>
+						<p>
+							{sub(
+								Liferay.Language.get(
+									'mark-as-translated-for-x-language'
+								),
+								selectedLanguageId
+							)}
+						</p>
+					</ClayModal.Body>
+
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={() =>
+										onOpenChangeMarkAsTranslated(false)
+									}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+
+								<ClayButton
+									displayType="info"
+									onClick={() => {
+										onOpenChangeMarkAsTranslated(false);
+										markAsTranslatedHandler();
+									}}
+								>
+									{Liferay.Language.get('mark-as-translated')}
 								</ClayButton>
 							</ClayButton.Group>
 						}

@@ -1,0 +1,38 @@
+@component-name = "portal-search-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.suite.search.engine = "opensearch2";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Elasticsearch Impl";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 5
+	test SSLSmokeTest {
+		property opensearch.security.enabled = "true";
+		property remote.elasticsearch.enabled = "true";
+		property search.environment.suite.exclude = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		SearchPage.searchEmbedded(searchTerm = "test");
+
+		AssertElementPresent(
+			key_searchAssetTitle = "Test Test",
+			locator1 = "SearchPage#RESULT_TITLE");
+	}
+
+}

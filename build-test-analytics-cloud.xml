@@ -182,33 +182,15 @@ networks:
 
 					<beanshell>
 						<![CDATA[
-							public int getRetryCount() {
-								String retryCount = project.getProperty("analytics.cloud.retry.count");
+							String containerFileName = "@{container.name}.log";
 
-								if (retryCount.matches("\\d+")) {
-									return Integer.valueOf(retryCount);
-								}
+							File containerFile = new File(project.getProperty("docker.logs.dir"), containerFileName);
 
-								return 3;
+							if (containerFile.exists()) {
+								continue;
 							}
 
-							for (int i = 0; i < getRetryCount(); i++) {
-								String containerFileName = "@{container.name}.log";
-
-								if (i > 0) {
-									containerFileName = "@{container.name}." + i + ".log";
-								}
-
-								File containerFile = new File(project.getProperty("docker.logs.dir"), containerFileName);
-
-								if (containerFile.exists()) {
-									continue;
-								}
-
-								project.setProperty("container.file.name", containerFileName);
-
-								break;
-							}
+							project.setProperty("container.file.name", containerFileName);
 						]]>
 					</beanshell>
 

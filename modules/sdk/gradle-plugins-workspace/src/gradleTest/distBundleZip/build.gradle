@@ -69,22 +69,7 @@ runGradleTest {
 
 			// Bundle
 
-			String bundleFileName = downloadBundle.src.toString()
-
-			bundleFileName = bundleFileName.substring(bundleFileName.lastIndexOf('/') + 1)
-
-			File bundleFile = new File(downloadBundle.dest, bundleFileName)
-
-			FileTree bundleFileTree
-
-			if (bundleFileName.endsWith(".tar.gz")) {
-				bundleFileTree = tarTree(bundleFile)
-			}
-			else {
-				bundleFileTree = zipTree(bundleFile)
-			}
-
-			bundleFileTree.visit {
+			fileTree(distBundleInitBundle.destinationDir).visit {
 
 				// Skip root directory
 
@@ -94,7 +79,7 @@ runGradleTest {
 					return
 				}
 
-				String zipEntryName = zipEntryRootName + it.path.substring(pos + 1)
+				String zipEntryName = zipEntryRootName + it.relativePath
 
 				if (it.directory) {
 					zipEntryName += "/"
@@ -113,7 +98,7 @@ runGradleTest {
 				assert zipFile.getEntry(zipEntryName) != null : zipEntryName
 			}
 
-			String setEnvTomcatEntryName = zipEntryRootName + "tomcat-9.0.10/bin/setEnv1.sh"
+			String setEnvTomcatEntryName = zipEntryRootName + "tomcat-9.0.17/bin/setEnv1.sh"
 
 			assert zipFile.getEntry(setEnvTomcatEntryName) != null : setEnvTomcatEntryName
 

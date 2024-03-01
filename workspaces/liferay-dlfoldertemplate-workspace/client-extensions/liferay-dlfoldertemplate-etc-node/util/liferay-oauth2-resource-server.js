@@ -4,43 +4,25 @@
  */
 
 import cors from 'cors';
-import {verify} from 'jsonwebtoken';
-import jwktopem from 'jwk-to-pem';
 import fetch from 'node-fetch';
+import jwktopem from 'jwk-to-pem';
+import {applicationExternalReferenceCodes} from './constants.js';
+import {lxcConfig, lookupConfig} from '@rotty3000/config-node';
+import {verify} from 'jsonwebtoken';
 
-import {getConfigByKey, getOAuthConfigByKey} from './config-util.js';
-import config from './configTreePath.js';
-import {
-	applicationExternalReferenceCodes,
-	environmentConfigKeys,
-	oauthAgentConfigKeys,
-} from './constants.js';
+let agentOauthApp = lxcConfig.oauthApplication(applicationExternalReferenceCodes.OAUTH_AGENT_EXTERNAL_REFERENCE_CODE);
 
-const agentUriPath = getOAuthConfigByKey(
-	applicationExternalReferenceCodes.OAUTH_AGENT_EXTERNAL_REFERENCE_CODE,
-	oauthAgentConfigKeys._OAUTH2_JWKS_URI
-);
+const agentUriPath = agentOauthApp.jwksUri();
 
-const domains = getConfigByKey(
-	environmentConfigKeys.COM_LIFERAY_LXC_DXP_DOMAINS
-);
+const domains = lxcConfig.dxpDomains();
 
-const lxcDXPMainDomain = getConfigByKey(
-	environmentConfigKeys.COM_LIFERAY_LXC_DXP_MAIN_DOMAIN
-);
+const lxcDXPMainDomain = lxcConfig.dxpMainDomain();
 
-const lxcDXPServerProtocol = getConfigByKey(
-	environmentConfigKeys.COM_LIFERAY_LXC_DXP_SERVER_PROTOCOL
-);
+const lxcDXPServerProtocol = lxcConfig.dxpProtocol();
 
-const oauthAgentClientId = getOAuthConfigByKey(
-	applicationExternalReferenceCodes.OAUTH_AGENT_EXTERNAL_REFERENCE_CODE,
-	oauthAgentConfigKeys._OAUTH2_USER_AGENT_CLIENT_ID
-);
+const oauthAgentClientId = agentOauthApp.clientId();
 
-const allowList = domains
-	? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`)
-	: '';
+const allowList = domains ? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`) : '';
 
 const corsOptions = {
 	origin(origin, callback) {
@@ -49,7 +31,7 @@ const corsOptions = {
 };
 
 export async function corsWithReady(req, res, next) {
-	if (req.originalUrl === config.readyPath) {
+	if (req.originalUrl === lookupConfig("ready.path")) {
 		return next();
 	}
 
@@ -116,7 +98,7 @@ async function clientLiferayJWT(req, res, next) {
 }
 
 export async function liferayJWT(req, res, next) {
-	if (req.path === config.readyPath) {
+	if (req.path === lookupConfig("ready.path")) {
 		return next();
 	}
 	else {

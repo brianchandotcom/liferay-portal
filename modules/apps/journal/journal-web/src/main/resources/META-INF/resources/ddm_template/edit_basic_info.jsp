@@ -22,7 +22,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 		<liferay-ui:message key="structure" />
 	</label>
 
-	<span class="icon-help lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "journal-template-cacheable-help") %>">
+	<span class="icon-help lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "structure-help") %>">
 		<clay:icon
 			symbol="question-circle-full"
 		/>

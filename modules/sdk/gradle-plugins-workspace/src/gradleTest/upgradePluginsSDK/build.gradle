@@ -1,7 +1,7 @@
 task runGradleTest
 
 gradle.liferayWorkspace {
-	product = "portal-7.4-ga8"
+	product = "dxp-2023.q4.6"
 }
 
 runGradleTest {

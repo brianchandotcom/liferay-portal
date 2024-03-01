@@ -48,10 +48,8 @@ function LayoutKeyboardContextProvider({children}) {
 
 			const nextId = itemList[nextIndex];
 
-			if (nextId) {
-				setTargetId(nextId);
-				setTargetIndex(null);
-			}
+			setTargetId(nextId || null);
+			setTargetIndex(null);
 		}
 	}, [itemList, setTargetId, targetId, targetIndex]);
 

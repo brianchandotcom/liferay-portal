@@ -89,11 +89,20 @@ public class ObjectFieldSettingUtil {
 		if (serviceBuilderObjectFieldSetting.compareName(
 				ObjectFieldSettingConstants.NAME_STATE_FLOW)) {
 
+			ObjectStateFlow objectStateFlow = null;
+
+			if (objectFieldSetting.getValue() instanceof ObjectStateFlow) {
+				objectStateFlow =
+					(ObjectStateFlow)objectFieldSetting.getValue();
+			}
+			else {
+				objectStateFlow = ObjectMapperUtil.readValue(
+					ObjectStateFlow.class, objectFieldSetting.getValue());
+			}
+
 			serviceBuilderObjectFieldSetting.setObjectStateFlow(
 				ObjectStateFlowUtil.toObjectStateFlow(
-					listTypeDefinitionId,
-					ObjectMapperUtil.readValue(
-						ObjectStateFlow.class, objectFieldSetting.getValue())));
+					listTypeDefinitionId, objectStateFlow));
 		}
 
 		serviceBuilderObjectFieldSetting.setValue(

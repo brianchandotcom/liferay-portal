@@ -1,7 +1,7 @@
 task runGradleTest
 
 gradle.liferayWorkspace {
-	product = "portal-7.1-ga3"
+	product = "portal-7.1-ga4"
 }
 
 runGradleTest {
@@ -12,6 +12,6 @@ runGradleTest {
 			include "**/setEnv1.sh"
 		}.getSingleFile()
 
-		assert file.path.endsWith("tomcat-9.0.10/bin/setEnv1.sh")
+		assert file.path.endsWith("tomcat-9.0.17/bin/setEnv1.sh")
 	}
 }

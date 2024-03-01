@@ -2,7 +2,7 @@ task runGradleTest
 
 gradle.liferayWorkspace {
 	environment = "production"
-	product = "portal-7.1-ga3"
+	product = "portal-7.1-ga4"
 }
 
 runGradleTest {
@@ -30,7 +30,7 @@ runGradleTest {
 			assert expectedFile.text.normalize() == generatedFile.text.normalize()
 		}
 
-		File bundleTomcatDir = new File(initBundle.destinationDir, "tomcat-9.0.10");
+		File bundleTomcatDir = new File(initBundle.destinationDir, "tomcat-9.0.17");
 
 		File bundleTomcatBinDir = new File(bundleTomcatDir, "bin");
 

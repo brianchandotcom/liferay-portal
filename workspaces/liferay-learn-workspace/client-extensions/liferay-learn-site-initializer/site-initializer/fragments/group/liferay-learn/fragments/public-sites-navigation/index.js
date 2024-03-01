@@ -100,10 +100,6 @@ const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
 	'a'
 );
 
-function changeFocus() {
-	document.getElementById('searchInput').focus();
-}
-
 function updateSearch() {
 	searchSuggestions.innerHTML = '';
 
@@ -289,16 +285,32 @@ function getBreadcrumbFromURL(url) {
 		.join(' ');
 }
 
+function changeFocus(event) {
+	event.target.focus();
+}
+
 document.getElementById('searchIcon').addEventListener('click', changeFocus);
 
-fragmentElement.querySelector('.public-sites-navigation').style.zIndex = '4';
+const searchInput = document.getElementById('searchInput');
+const siteSearchWrapper = document.getElementById('siteSearchWrapper');
 
-window.addEventListener('keyup', (e) => {
-	if (e.key === '/') {
-		document
-					.getElementsByClassName('search-wrapper')[0]
-					.classList.contains('search-open')
-			? changeFocus()
-			: document.getElementById('searchIcon').click();
+window.addEventListener('keyup', (event) => {
+	if (event.code === 'Escape') {
+		if (!siteSearchWrapper.classList.contains('search-open')) {
+			return;
+		}
+
+		searchInput.blur();
+		siteSearchWrapper.classList.remove('search-open');
+	}
+
+	if (event.code === 'Slash') {
+		searchInput.focus();
+
+		if (siteSearchWrapper.classList.contains('search-open')) {
+			return;
+		}
+
+		siteSearchWrapper.classList.add('search-open');
 	}
 });

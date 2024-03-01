@@ -21,6 +21,7 @@ import {InputLocalized, ManagementToolbar} from 'frontend-js-components-web';
 import {fetch, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
+import {sub} from 'frontend-js-web';
 
 import {IFDSViewSectionProps} from '../../../FDSView';
 import {FDSViewType} from '../../../FDSViews';
@@ -322,7 +323,7 @@ const SaveFDSFieldsModalContent = ({
 
 											<ClayInput
 												insetAfter={Boolean(focused)}
-												insetBefore={!focused}
+												insetBefore={!Boolean(focused)}
 												onChange={(event) =>
 													onSearch(event.target.value)
 												}
@@ -347,7 +348,6 @@ const SaveFDSFieldsModalContent = ({
 														displayType="secondary"
 														monospaced={false}
 														onClick={() => {
-															setQuery('');
 															onSearch('');
 															setFocused(false);
 														}}
@@ -371,12 +371,15 @@ const SaveFDSFieldsModalContent = ({
 									<span className="component-text text-truncate-inline">
 										<span className="text-truncate">
 											{getSelectedFieldsCount() > 1
-												? `${getSelectedFieldsCount()} ${Liferay.Language.get(
-														'items-selected'
-												  )}`
-												: `${getSelectedFieldsCount()} ${Liferay.Language.get(
-														'item-selected'
-												  )}`}
+												? 	sub(
+														Liferay.Language.get('x-items-selected'),
+														getSelectedFieldsCount()
+													)
+												: 	sub(
+														Liferay.Language.get('x-item-selected'),
+														getSelectedFieldsCount()
+													)
+												}
 										</span>
 									</span>
 								</ClayResultsBar.Item>

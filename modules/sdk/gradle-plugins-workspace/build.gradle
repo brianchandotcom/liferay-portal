@@ -237,6 +237,7 @@ gradleTest {
 
 	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"
+	gradleArguments "--system-prop", "org.gradle.jvmargs=-Xmx8g"
 
 	versions gradleVersion
 

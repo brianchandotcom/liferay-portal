@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 /**
@@ -50,11 +50,7 @@ public class PluginPackageImpl
 
 		PluginPackage pluginPackage = (PluginPackage)object;
 
-		EqualsBuilder equalsBuilder = new EqualsBuilder();
-
-		equalsBuilder.append(getModuleId(), pluginPackage.getModuleId());
-
-		return equalsBuilder.isEquals();
+		return Objects.equals(getModuleId(), pluginPackage.getModuleId());
 	}
 
 	@Override

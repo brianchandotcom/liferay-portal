@@ -439,6 +439,22 @@ AUI.add(
 						);
 				},
 
+				_onMarkAsTranslated(event) {
+					const instance = this;
+
+					const languageId = event.selectedLanguageId;
+
+					const translatedLanguages = instance.get(
+						'translatedLanguages'
+					);
+
+					translatedLanguages.add(languageId);
+
+					this.updateInputLanguage(this.getValue(), languageId);
+
+					instance._updateTranslationStatus(languageId);
+				},
+
 				_onSelectFlag(event) {
 					const instance = this;
 
@@ -774,6 +790,10 @@ AUI.add(
 						Liferay.on(
 							'inputLocalized:localeChanged',
 							A.bind('_onLocaleChanged', instance)
+						),
+						Liferay.on(
+							'inputLocalized:markAsTranslated',
+							A.bind('_onMarkAsTranslated', instance)
 						),
 						Liferay.on(
 							'submitForm',

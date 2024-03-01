@@ -118,6 +118,10 @@ definition {
 		}
 
 		task ("When the page creator selects an existing token on Padding Left of Spacing") {
+			Click(
+				ariaLabel = "Padding Left",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
 			DropdownMenuItem.click(menuItem = "Spacer 2");
 
 			PageEditor.waitForAutoSave();
@@ -361,6 +365,10 @@ definition {
 		}
 
 		task ("Then the page designer can see the reset button on the dropdown list") {
+			Click(
+				ariaLabel = "Padding Top",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
 			AssertVisible(
 				key_text = "restore",
 				locator1 = "MenuItem#ANY_ICON");

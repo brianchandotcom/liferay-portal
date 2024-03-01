@@ -217,14 +217,16 @@ export default function TranslationOptions({
 					</ClayModal.Header>
 
 					<ClayModal.Body>
-						<p>
-							{sub(
-								Liferay.Language.get(
-									'mark-as-translated-for-x-language'
+						<p
+							dangerouslySetInnerHTML={{
+								__html: sub(
+									Liferay.Language.get(
+										'mark-as-translated-for-x-language'
+									),
+									`<strong>${selectedLanguageId}</strong>`
 								),
-								selectedLanguageId
-							)}
-						</p>
+							}}
+						/>
 					</ClayModal.Body>
 
 					<ClayModal.Footer

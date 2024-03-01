@@ -63,6 +63,17 @@ public class ScheduledPublicationUserNotificationHandler
 		boolean showConflicts = jsonObject.getBoolean("showConflicts");
 
 		if (showConflicts) {
+			boolean scheduled = jsonObject.getBoolean("scheduled");
+
+			String title = null;
+
+			if (scheduled) {
+				title = "x-scheduled-publication-has-conflicts-with-production";
+			}
+			else {
+				title = "x-scheduled-publication-failed";
+			}
+
 			return StringUtil.replace(
 				getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},
 				new String[] {
@@ -71,8 +82,7 @@ public class ScheduledPublicationUserNotificationHandler
 						"click-on-this-notification-to-see-the-list-of-" +
 							"conflicts-that-need-to-be-manually-resolved"),
 					_language.format(
-						serviceContext.getLocale(),
-						"x-scheduled-publication-failed",
+						serviceContext.getLocale(), title,
 						new Object[] {jsonObject.getString("ctCollectionName")},
 						false)
 				});

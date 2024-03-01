@@ -7,7 +7,9 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal.servlet;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.json.JSONObjectImpl;
@@ -18,9 +20,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -93,7 +97,8 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 			jsonArray = JSONUtil.toJSONArray(
 				_ddmFormFieldTypeServicesRegistry.getDDMFormFieldTypeNames(),
 				ddmFormFieldTypeName -> _getFieldTypeMetadataJSONObject(
-					ddmFormFieldTypeName, Collections.emptyMap()));
+					ddmFormFieldTypeName, Collections.emptyMap(),
+					httpServletRequest));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -106,7 +111,8 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 	protected NPMResolver npmResolver;
 
 	private JSONObject _getFieldTypeMetadataJSONObject(
-		String ddmFormFieldName, Map<String, Object> configuration) {
+		String ddmFormFieldName, Map<String, Object> configuration,
+		HttpServletRequest httpServletRequest) {
 
 		JSONObject jsonObject = new JSONObjectImpl();
 
@@ -123,13 +129,29 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 			"javaScriptModule",
 			_resolveModuleName(
 				_ddmFormFieldTypeServicesRegistry.getDDMFormFieldType(
-					ddmFormFieldName))
+					ddmFormFieldName),
+				httpServletRequest)
 		).put(
 			"name", ddmFormFieldName
 		);
 	}
 
-	private String _resolveModuleName(DDMFormFieldType ddmFormFieldType) {
+	private String _resolveModuleName(
+		DDMFormFieldType ddmFormFieldType,
+		HttpServletRequest httpServletRequest) {
+
+		String esModule = ddmFormFieldType.getESModule();
+
+		if (Validator.isNotNull(esModule)) {
+			ESImport esImport = ESImportUtil.getESImport(
+				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+					httpServletRequest),
+				esModule);
+
+			return StringBundler.concat(
+				"{", esImport.getSymbol(), "} from ", esImport.getModule());
+		}
+
 		if (Validator.isNull(ddmFormFieldType.getModuleName())) {
 			return StringPool.BLANK;
 		}
@@ -143,6 +165,9 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormFieldTypesServlet.class);
+
+	@Reference
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	@Reference
 	private DDMFormFieldTypeServicesRegistry _ddmFormFieldTypeServicesRegistry;

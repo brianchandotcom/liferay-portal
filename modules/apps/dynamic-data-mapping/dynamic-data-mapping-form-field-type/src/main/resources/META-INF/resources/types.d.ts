@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import './FieldBase/ReactFieldBase.es';
 export type Direction = Liferay.Language.Direction;
 export type FieldChangeEventHandler<T> = (event: {target: {value: T}}) => void;
 export type Locale = Liferay.Language.Locale;

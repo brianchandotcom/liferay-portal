@@ -37,8 +37,8 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
-	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/Select/Select";
+	public String getESModule() {
+		return "{Select} from dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

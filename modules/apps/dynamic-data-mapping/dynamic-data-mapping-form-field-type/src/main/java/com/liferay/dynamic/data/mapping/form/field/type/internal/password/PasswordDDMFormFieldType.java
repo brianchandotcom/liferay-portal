@@ -35,8 +35,8 @@ public class PasswordDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
-	public String getModuleName() {
-		return "dynamic-data-mapping-form-field-type/Password/Password.es";
+	public String getESModule() {
+		return "{Password} from dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.web.internal.list.type.portlet.action.test;
+package com.liferay.object.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
-import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
-import com.liferay.object.web.internal.BaseExportImportTestCase;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -26,11 +25,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Guilherme Sa
+ * @author Gabriel Albuquerque
  */
 @RunWith(Arquillian.class)
-public class ListTypeDefinitionExportImportTest
-	extends BaseExportImportTestCase {
+public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 
 	@ClassRule
 	@Rule
@@ -41,26 +39,42 @@ public class ListTypeDefinitionExportImportTest
 	public void setUp() throws Exception {
 		user = TestPropsValues.getUser();
 
-		ListTypeDefinitionResource.Builder builder =
-			_listTypeDefinitionResourceFactory.create();
+		ObjectDefinitionResource.Builder builder =
+			_objectDefinitionResourceFactory.create();
 
-		_listTypeDefinitionResource = builder.user(
+		_objectDefinitionResource = builder.user(
 			user
 		).build();
 	}
 
 	@Test
 	public void testExportImportObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition = _getObjectDefinition(
+			"AccountEntry");
+
 		testExportImport(
-			"test-list-type-definition.portuguese-locale.json",
-			"test-list-type-definition.site-default-locale.json",
-			"TESTLISTTYPEDEFINITIONPORTUGUESE",
-			"TestListTypeDefinitionPortuguese");
+			"test-account-entry-system-object-definition.json",
+			"test-account-entry-system-object-definition.json",
+			objectDefinition.getExternalReferenceCode(), "AccountEntry");
+
+		testExportImport(
+			"test-object-definition.json", "test-object-definition.json", null,
+			"TestObjectDefinition");
+
+		testExportImport(
+			"test-object-definition.portuguese-locale.json",
+			"test-object-definition.site-default-locale.json",
+			"TESTOBJECTDEFINITIONPORTUGUESE", "TestObjectDefinitionPortuguese");
+
+		testExportImport(
+			"test-object-definition-state-manager.json",
+			"test-object-definition-state-manager.json", null,
+			"Testobjectdefinitionstatemanager");
 	}
 
 	@Override
 	protected ClassLoader getClassLoader() {
-		return ListTypeDefinitionExportImportTest.class.getClassLoader();
+		return ObjectDefinitionExportImportTest.class.getClassLoader();
 	}
 
 	@Override
@@ -70,19 +84,19 @@ public class ListTypeDefinitionExportImportTest
 
 	@Override
 	protected long getId(String name) throws Exception {
-		ListTypeDefinition listTypeDefinition = _getListTypeDefinition(name);
+		ObjectDefinition objectDefinition = _getObjectDefinition(name);
 
-		return listTypeDefinition.getId();
+		return objectDefinition.getId();
 	}
 
 	@Override
 	protected String getIdentifierName() {
-		return "listTypeDefinitionId";
+		return "objectDefinitionId";
 	}
 
 	@Override
 	protected String getJSONName() {
-		return "listTypeDefinitionJSON";
+		return "objectDefinitionJSON";
 	}
 
 	@Override
@@ -95,33 +109,31 @@ public class ListTypeDefinitionExportImportTest
 		return _mvcResourceCommand;
 	}
 
-	private ListTypeDefinition _getListTypeDefinition(String name)
+	private ObjectDefinition _getObjectDefinition(String name)
 		throws Exception {
 
-		Page<ListTypeDefinition> page =
-			_listTypeDefinitionResource.getListTypeDefinitionsPage(
+		Page<ObjectDefinition> page =
+			_objectDefinitionResource.getObjectDefinitionsPage(
 				name, null, null, Pagination.of(1, 1), null);
 
-		List<ListTypeDefinition> items =
-			(List<ListTypeDefinition>)page.getItems();
+		List<ObjectDefinition> items = (List<ObjectDefinition>)page.getItems();
 
 		return items.get(0);
 	}
 
-	private ListTypeDefinitionResource _listTypeDefinitionResource;
-
-	@Inject
-	private ListTypeDefinitionResource.Factory
-		_listTypeDefinitionResourceFactory;
-
 	@Inject(
-		filter = "mvc.command.name=/list_type_definitions/import_list_type_definition"
+		filter = "mvc.command.name=/object_definitions/import_object_definition"
 	)
 	private MVCActionCommand _mvcActionCommand;
 
 	@Inject(
-		filter = "mvc.command.name=/list_type_definitions/export_list_type_definition"
+		filter = "mvc.command.name=/object_definitions/export_object_definition"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
+
+	private ObjectDefinitionResource _objectDefinitionResource;
+
+	@Inject
+	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 }

@@ -6,7 +6,12 @@
 package com.liferay.portal.search.similar.results.web.internal.portlet;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -21,6 +26,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.legacy.document.DocumentBuilderFactory;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsContributorsRegistry;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsDocumentDisplayContextBuilder;
@@ -31,6 +37,8 @@ import com.liferay.portal.search.similar.results.web.internal.display.context.Si
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.service.WikiPageLocalService;
 
 import java.io.IOException;
 
@@ -44,6 +52,7 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -85,9 +94,15 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Reference
-	protected SimilarResultsContributorsRegistry
-		similarResultsContributorsRegistry;
+	@Activate
+	protected void activate() {
+		_similarResultsContributorsRegistry =
+			new SimilarResultsContributorsRegistry(
+				_assetEntryLocalService, _blogsEntryLocalService,
+				_dlFileEntryLocalService, _dlFolderLocalService,
+				_mbCategoryLocalService, _mbMessageLocalService, _uidFactory,
+				_wikiNodeLocalService, _wikiPageLocalService);
+	}
 
 	private SimilarResultsDisplayContext _buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
@@ -129,7 +144,7 @@ public class SimilarResultsPortlet extends MVCPortlet {
 		similarResultsDisplayContext.setSimilarResultsDocumentDisplayContexts(
 			_buildSimilarResultsDocumentDisplayContexts(
 				legacyDocuments,
-				similarResultsContributorsRegistry.detectRoute(
+				_similarResultsContributorsRegistry.detectRoute(
 					_portal.getCurrentURL(renderRequest)),
 				renderRequest, renderResponse,
 				portletSharedSearchResponse.getThemeDisplay(renderRequest)));
@@ -283,6 +298,15 @@ public class SimilarResultsPortlet extends MVCPortlet {
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
 
 	@Reference
@@ -290,6 +314,12 @@ public class SimilarResultsPortlet extends MVCPortlet {
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
 	private Portal _portal;
@@ -300,7 +330,19 @@ public class SimilarResultsPortlet extends MVCPortlet {
 	@Reference
 	private ResourceActions _resourceActions;
 
+	private SimilarResultsContributorsRegistry
+		_similarResultsContributorsRegistry;
+
 	@Reference
 	private SummaryBuilderFactory _summaryBuilderFactory;
+
+	@Reference
+	private UIDFactory _uidFactory;
+
+	@Reference
+	private WikiNodeLocalService _wikiNodeLocalService;
+
+	@Reference
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

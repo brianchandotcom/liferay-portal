@@ -885,7 +885,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 		return messageBoardsSimilarResultsContributor;
 	}
 
-	private SimilarResultsContributorsRegistryImpl
+	private SimilarResultsContributorsRegistry
 		_createSimilarResultsContributorsRegistry() {
 
 		_createAssetPublisherSimilarResultsContributor();
@@ -908,9 +908,9 @@ public class SimilarResultsUidsAndDestinationsTest {
 
 		_createWikiSimilarResultsContributor();
 
-		SimilarResultsContributorsRegistryImpl
+		SimilarResultsContributorsRegistry
 			similarResultsContributorsRegistryImpl =
-				new SimilarResultsContributorsRegistryImpl();
+				new SimilarResultsContributorsRegistry();
 
 		similarResultsContributorsRegistryImpl.activate(_bundleContext);
 
@@ -1130,7 +1130,7 @@ public class SimilarResultsUidsAndDestinationsTest {
 		MBMessageLocalService.class);
 	private final List<ServiceRegistration<SimilarResultsContributor>>
 		_serviceRegistrations = new ArrayList<>();
-	private SimilarResultsContributorsRegistryImpl
+	private SimilarResultsContributorsRegistry
 		_similarResultsContributorsRegistryImpl;
 	private final UIDFactory _uidFactory = Mockito.mock(UIDFactory.class);
 	private final WikiNodeLocalService _wikiNodeLocalService = Mockito.mock(

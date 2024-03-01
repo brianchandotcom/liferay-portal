@@ -12,7 +12,7 @@ import React, {useEffect, useState} from 'react';
 export default function LockedArticleModal({
 	actionLabel: initialActionLabel,
 	actionURL: initialActionURL,
-	isAdmin,
+	groupAdmin,
 	open,
 	portletNamespace,
 	userName: initialUserName,
@@ -65,7 +65,7 @@ export default function LockedArticleModal({
 
 					<ClayModal.Body>
 						<p>
-							{isAdmin
+							{groupAdmin
 								? sub(
 										Liferay.Language.get(
 											'article-in-edition-by-user-x-description'
@@ -80,7 +80,7 @@ export default function LockedArticleModal({
 
 					<ClayModal.Footer
 						last={
-							isAdmin ? (
+							groupAdmin ? (
 								<ClayButton.Group spaced>
 									<ClayButton
 										displayType="secondary"

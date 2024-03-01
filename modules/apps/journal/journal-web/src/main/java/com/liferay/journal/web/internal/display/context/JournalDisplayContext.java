@@ -76,6 +76,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -105,6 +108,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -153,7 +158,8 @@ public class JournalDisplayContext {
 	public static JournalDisplayContext create(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		PortletRequest portletRequest, PortletResponse portletResponse,
-		TrashHelper trashHelper) {
+		ResourcePermissionLocalService resourcePermissionLocalService,
+		RoleLocalService roleLocalService, TrashHelper trashHelper) {
 
 		JournalDisplayContext journalDisplayContext =
 			(JournalDisplayContext)portletRequest.getAttribute(
@@ -162,7 +168,8 @@ public class JournalDisplayContext {
 		if (journalDisplayContext == null) {
 			journalDisplayContext = new JournalDisplayContext(
 				assetDisplayPageFriendlyURLProvider, portletRequest,
-				portletResponse, trashHelper);
+				portletResponse, resourcePermissionLocalService,
+				roleLocalService, trashHelper);
 
 			portletRequest.setAttribute(
 				JournalWebConstants.JOURNAL_DISPLAY_CONTEXT,
@@ -1292,6 +1299,21 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean hasGuestViewPermission(JournalArticle journalArticle)
+		throws PortalException {
+
+		if (_guestRole == null) {
+			_guestRole = _roleLocalService.getRole(
+				journalArticle.getCompanyId(), RoleConstants.GUEST);
+		}
+
+		return _resourcePermissionLocalService.hasResourcePermission(
+			journalArticle.getCompanyId(), JournalArticle.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(journalArticle.getResourcePrimKey()),
+			_guestRole.getRoleId(), ActionKeys.VIEW);
+	}
+
 	public boolean hasResults() throws PortalException {
 		if (getTotalItems() > 0) {
 			return true;
@@ -1514,10 +1536,13 @@ public class JournalDisplayContext {
 	private JournalDisplayContext(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		PortletRequest portletRequest, PortletResponse portletResponse,
-		TrashHelper trashHelper) {
+		ResourcePermissionLocalService resourcePermissionLocalService,
+		RoleLocalService roleLocalService, TrashHelper trashHelper) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+		_roleLocalService = roleLocalService;
 		_trashHelper = trashHelper;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
@@ -2402,6 +2427,7 @@ public class JournalDisplayContext {
 	private String _displayStyle;
 	private JournalFolder _folder;
 	private Long _folderId;
+	private Role _guestRole;
 	private Long _highlightedDDMStructureId;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
@@ -2418,7 +2444,10 @@ public class JournalDisplayContext {
 	private String _orderByType;
 	private Long _parentFolderId;
 	private final PortalPreferences _portalPreferences;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
 	private Integer _restrictionType;
+	private final RoleLocalService _roleLocalService;
 	private SearchContainer<?> _searchContainer;
 	private String _searchIn;
 	private String _searchLocation;

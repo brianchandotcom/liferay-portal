@@ -72,6 +72,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
@@ -199,7 +201,8 @@ public class JournalPortlet extends MVCPortlet {
 				JournalDisplayContext.class.getName(),
 				JournalDisplayContext.create(
 					_assetDisplayPageFriendlyURLProvider, renderRequest,
-					renderResponse, _trashHelper));
+					renderResponse, _resourcePermissionLocalService,
+					_roleLocalService, _trashHelper));
 		}
 		catch (ConfigurationException configurationException) {
 			throw new PortletException(configurationException);
@@ -231,7 +234,8 @@ public class JournalPortlet extends MVCPortlet {
 			JournalDisplayContext.class.getName(),
 			JournalDisplayContext.create(
 				_assetDisplayPageFriendlyURLProvider, resourceRequest,
-				resourceResponse, _trashHelper));
+				resourceResponse, _resourcePermissionLocalService,
+				_roleLocalService, _trashHelper));
 
 		try {
 			resourceRequest.setAttribute(
@@ -418,6 +422,12 @@ public class JournalPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.journal.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;

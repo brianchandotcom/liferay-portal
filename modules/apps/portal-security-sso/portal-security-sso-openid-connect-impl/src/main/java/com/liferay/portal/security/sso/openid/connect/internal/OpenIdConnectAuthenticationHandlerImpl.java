@@ -142,7 +142,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		String userInfoJSON = null;
 
-		if (Validator.isNull(userInfoURI)) {
+		if (userInfoURI == null) {
 			JWT idToken = oidcTokens.getIDToken();
 
 			JWTClaimsSet userInfoClaimSet = idToken.getJWTClaimsSet();

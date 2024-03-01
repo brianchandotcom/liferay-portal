@@ -6,7 +6,6 @@
 import UserAccount from '../interfaces/userAccount';
 import {LiferayAPIs} from '../services/liferay/common/enums/apis';
 import useGet from '../services/liferay/object/useGet';
-
 export default function useIsChannel() {
 	const {data: userAccount} = useGet<UserAccount>(
 		`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`

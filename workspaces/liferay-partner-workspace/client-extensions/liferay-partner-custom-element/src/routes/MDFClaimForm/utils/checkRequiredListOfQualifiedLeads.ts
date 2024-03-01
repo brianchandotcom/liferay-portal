@@ -8,11 +8,11 @@ import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 
 export default function checkRequiredListOfQualifiedLeads(
 	selected: boolean,
-	typeActivity: LiferayPicklist
+	typeActivity?: LiferayPicklist
 ) {
 	return (
-		(typeActivity.key === TypeActivityKey.EVENT ||
-			typeActivity.key === TypeActivityKey.MISCELLANEOUS_MARKETING) &&
+		(typeActivity?.key === TypeActivityKey.EVENT ||
+			typeActivity?.key === TypeActivityKey.MISCELLANEOUS_MARKETING) &&
 		selected
 	);
 }

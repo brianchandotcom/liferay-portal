@@ -5,6 +5,7 @@
 
 import PRMForm from '../../..';
 import LiferayFile from '../../../../../interfaces/liferayFile';
+import {ResourceName} from '../../../../../services/liferay/object/enum/resourceName';
 import PRMFormik from '../../../../PRMFormik';
 import PRMFormFieldProps from '../common/interfaces/prmFormFieldProps';
 
@@ -14,6 +15,7 @@ interface IProps {
 	label: string;
 	name: string;
 	onAccept: (liferayFiles: LiferayFile[]) => void;
+	resourceName: ResourceName;
 	value?: LiferayFile[] | Object[];
 }
 
@@ -24,6 +26,7 @@ const InputMultipleFilesListing = ({
 	name,
 	onAccept,
 	required,
+	resourceName,
 	value,
 }: PRMFormFieldProps & IProps) => (
 	<PRMFormik.Field
@@ -34,6 +37,7 @@ const InputMultipleFilesListing = ({
 		name={name}
 		onAccept={onAccept}
 		required={required}
+		resourceName={resourceName}
 		value={value}
 	/>
 );

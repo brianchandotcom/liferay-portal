@@ -11,12 +11,9 @@ const submitDocuments = async (
 	mdfClaim: MDFClaim,
 	claimParentFolderId: number
 ) => {
-	if (
-		mdfClaim.reimbursementInvoice &&
-		!mdfClaim.reimbursementInvoice.documentId
-	) {
-		mdfClaim.reimbursementInvoice.documentId = await uploadDocument(
-			mdfClaim.reimbursementInvoice,
+	if (mdfClaim.reimbursementInvoices?.length) {
+		mdfClaim.reimbursementInvoices = await uploadDocuments(
+			mdfClaim.reimbursementInvoices,
 			claimParentFolderId
 		);
 	}

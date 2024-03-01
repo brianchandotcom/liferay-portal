@@ -9,6 +9,10 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
@@ -67,6 +71,11 @@ public interface AccountEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public AccountEntry addOrUpdateContact(
+			long accountEntryId, String facebookSn, String jabberSn,
+			String skypeSn, String smsSn, String twitterSn)
+		throws PortalException;
+
 	public void deactivateAccountEntries(long[] accountEntryIds)
 		throws PortalException;
 
@@ -120,6 +129,10 @@ public interface AccountEntryService extends BaseService {
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	public AccountEntry updateAddresses(
+			long accountEntryId, List<Address> addresses)
+		throws PortalException;
+
 	public AccountEntry updateDefaultBillingAddressId(
 			long accountEntryId, long addressId)
 		throws PortalException;
@@ -131,12 +144,23 @@ public interface AccountEntryService extends BaseService {
 	public AccountEntry updateDomains(long accountEntryId, String[] domains)
 		throws PortalException;
 
+	public AccountEntry updateEmailAddresses(
+			long accountEntryId, List<EmailAddress> emailAddresses)
+		throws PortalException;
+
 	public AccountEntry updateExternalReferenceCode(
 			long accountEntryId, String externalReferenceCode)
 		throws PortalException;
 
+	public AccountEntry updatePhones(long accountEntryId, List<Phone> phones)
+		throws Exception;
+
 	public AccountEntry updateRestrictMembership(
 			long accountEntryId, boolean restrictMembership)
+		throws PortalException;
+
+	public AccountEntry updateWebsites(
+			long accountEntryId, List<Website> websites)
 		throws PortalException;
 
 }

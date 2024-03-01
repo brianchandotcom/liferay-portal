@@ -57,7 +57,7 @@ public class ExportTaskResourcePerformanceTest
 
 		Map<String, String> classNamePartsMap = splitClassName(className);
 
-		try (Closeable closeable = startTimer()) {
+		try (Closeable closeable = startTimer(_log)) {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(

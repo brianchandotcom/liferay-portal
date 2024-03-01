@@ -136,7 +136,6 @@ const FactorStackList: React.FC<FactorStackListProps> = ({
 														]?.text;
 
 													const dataToUpdate = {
-														...field,
 														[factorIndex]: {
 															...(field as any)[
 																factorIndex

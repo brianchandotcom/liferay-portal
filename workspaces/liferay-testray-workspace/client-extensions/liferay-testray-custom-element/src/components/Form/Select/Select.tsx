@@ -63,7 +63,7 @@ const InputSelect: React.FC<InputSelectProps> = ({
 				{isLoading ? (
 					<option value="">Loading...</option>
 				) : (
-					options.map(({label, value}, index) => (
+					options?.map(({label, value}, index) => (
 						<option
 							key={index}
 							label={label}

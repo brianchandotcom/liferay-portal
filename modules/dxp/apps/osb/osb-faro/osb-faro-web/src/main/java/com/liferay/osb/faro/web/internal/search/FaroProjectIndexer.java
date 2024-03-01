@@ -55,9 +55,8 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.NAME, Field.UID, Field.USER_ID,
 			"corpProjectName", "corpProjectUuid", "createDate",
-			"individualsCount", "individualsLimit", "individualsUsage",
-			"lastAccessDate", "offline", "pageViewsCount", "pageViewsLimit",
-			"pageViewsUsage", "subscriptionName");
+			"individualsLimit", "individualsUsage", "lastAccessDate", "offline",
+			"pageViewsLimit", "pageViewsUsage", "subscriptionName");
 	}
 
 	@Override

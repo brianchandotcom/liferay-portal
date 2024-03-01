@@ -225,7 +225,7 @@ AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider = (Asset
 
 JournalWebConfiguration journalWebConfiguration = (JournalWebConfiguration)request.getAttribute(JournalWebConfiguration.class.getName());
 
-JournalDisplayContext journalDisplayContext = JournalDisplayContext.create(request, liferayPortletRequest, liferayPortletResponse, assetDisplayPageFriendlyURLProvider, trashHelper);
+JournalDisplayContext journalDisplayContext = (JournalDisplayContext)request.getAttribute(JournalDisplayContext.class.getName());
 
 JournalGroupServiceConfiguration journalGroupServiceConfiguration = journalDisplayContext.getJournalGroupServiceConfiguration();
 

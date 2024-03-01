@@ -139,6 +139,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -149,23 +151,20 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalDisplayContext {
 
 	public static JournalDisplayContext create(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		PortletRequest portletRequest, PortletResponse portletResponse,
 		TrashHelper trashHelper) {
 
 		JournalDisplayContext journalDisplayContext =
-			(JournalDisplayContext)liferayPortletRequest.getAttribute(
+			(JournalDisplayContext)portletRequest.getAttribute(
 				JournalWebConstants.JOURNAL_DISPLAY_CONTEXT);
 
 		if (journalDisplayContext == null) {
 			journalDisplayContext = new JournalDisplayContext(
-				httpServletRequest, liferayPortletRequest,
-				liferayPortletResponse, assetDisplayPageFriendlyURLProvider,
-				trashHelper);
+				assetDisplayPageFriendlyURLProvider, portletRequest,
+				portletResponse, trashHelper);
 
-			liferayPortletRequest.setAttribute(
+			portletRequest.setAttribute(
 				JournalWebConstants.JOURNAL_DISPLAY_CONTEXT,
 				journalDisplayContext);
 		}
@@ -1513,30 +1512,31 @@ public class JournalDisplayContext {
 	}
 
 	private JournalDisplayContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		PortletRequest portletRequest, PortletResponse portletResponse,
 		TrashHelper trashHelper) {
 
-		_httpServletRequest = httpServletRequest;
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_trashHelper = trashHelper;
 
-		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
+		_httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
+		_liferayPortletRequest = PortalUtil.getLiferayPortletRequest(
+			portletRequest);
+		_liferayPortletResponse = PortalUtil.getLiferayPortletResponse(
+			portletResponse);
+
+		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
 			ItemSelector.class.getName());
-		_journalHelper = (JournalHelper)httpServletRequest.getAttribute(
+		_journalHelper = (JournalHelper)_httpServletRequest.getAttribute(
 			JournalHelper.class.getName());
 		_journalWebConfiguration =
-			(JournalWebConfiguration)httpServletRequest.getAttribute(
+			(JournalWebConfiguration)_httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			httpServletRequest);
+			_httpServletRequest);
 
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(

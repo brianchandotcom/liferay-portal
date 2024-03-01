@@ -11,7 +11,6 @@ import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
 import com.liferay.journal.web.internal.display.context.JournalEditArticleDisplayContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
@@ -20,8 +19,6 @@ import com.liferay.trash.TrashHelper;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,24 +40,17 @@ public class EditArticleMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(renderResponse);
-
 		JournalDisplayContext journalDisplayContext =
 			JournalDisplayContext.create(
-				httpServletRequest,
-				_portal.getLiferayPortletRequest(renderRequest),
-				liferayPortletResponse, _assetDisplayPageFriendlyURLProvider,
-				_trashHelper);
+				_assetDisplayPageFriendlyURLProvider, renderRequest,
+				renderResponse, _trashHelper);
 
 		try {
 			renderRequest.setAttribute(
 				JournalEditArticleDisplayContext.class.getName(),
 				new JournalEditArticleDisplayContext(
-					httpServletRequest, liferayPortletResponse,
+					_portal.getHttpServletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse),
 					journalDisplayContext.getArticle()));
 
 			return "/edit_article.jsp";

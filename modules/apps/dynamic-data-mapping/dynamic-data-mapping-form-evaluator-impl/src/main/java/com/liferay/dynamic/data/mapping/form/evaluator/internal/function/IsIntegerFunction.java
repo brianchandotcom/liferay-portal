@@ -6,8 +6,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-
-import org.apache.commons.lang.math.NumberUtils;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Leonardo Barros
@@ -19,10 +18,8 @@ public class IsIntegerFunction
 
 	@Override
 	public Boolean apply(Object parameter) {
-		Integer value = NumberUtils.toInt(
-			parameter.toString(), Integer.MIN_VALUE);
-
-		return value != Integer.MIN_VALUE;
+		return GetterUtil.getInteger(parameter.toString(), Integer.MIN_VALUE) !=
+			Integer.MIN_VALUE;
 	}
 
 	@Override

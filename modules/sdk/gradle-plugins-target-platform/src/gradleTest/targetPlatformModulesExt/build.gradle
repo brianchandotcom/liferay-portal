@@ -34,7 +34,7 @@ task runGradleTest
 dependencies {
 	originalModule group: "com.liferay", name: "com.liferay.login.web"
 
-	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.4.3.99"
+	targetPlatformBoms group: "com.liferay.portal", name: "release.dxp.bom", version: "2023.q4.6"
 }
 
 repositories {
@@ -45,6 +45,6 @@ repositories {
 
 runGradleTest {
 	doLast {
-		assert configurations.originalModule.singleFile.name.equals("com.liferay.login.web-6.0.46.jar")
+		assert configurations.originalModule.singleFile.name.equals("com.liferay.login.web-6.0.48.jar")
 	}
 }

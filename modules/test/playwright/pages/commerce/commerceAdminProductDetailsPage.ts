@@ -8,15 +8,23 @@ import {Locator, Page} from '@playwright/test';
 export class CommerceAdminProductDetailsPage {
 	readonly productRelationsTab: Locator;
 	readonly page: Page;
+	readonly visibilityTab: Locator;
 
 	constructor(page: Page) {
 		this.productRelationsTab = page.getByRole('link', {
 			name: 'Product Relations',
 		});
 		this.page = page;
+		this.visibilityTab = page.getByRole('link', {
+			name: 'Visibility',
+		});
 	}
 
 	async goToProductRelations() {
 		await this.productRelationsTab.click();
+	}
+
+	async goToVisibility() {
+		await this.visibilityTab.click();
 	}
 }

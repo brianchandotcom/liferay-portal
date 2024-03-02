@@ -21,6 +21,7 @@ import {CommerceAdminProductPage} from '../pages/commerce/commerceAdminProductPa
 import {CommerceLayoutsPage} from '../pages/commerce/commerceLayoutsPage';
 import {CommerceMiniCartPage} from '../pages/commerce/commerceMiniCartPage';
 import {CommercePaymentsPage} from '../pages/commerce/commercePaymentsPage';
+import {SearchBarPortletPage} from '../pages/portal-search-web/searchBarPortletPage';
 
 const commercePagesTest = test.extend<{
 	attachmentsPage: AttachmentsPage;
@@ -36,6 +37,7 @@ const commercePagesTest = test.extend<{
 	commerceMiniCartPage: CommerceMiniCartPage;
 	commercePaymentsPage: CommercePaymentsPage;
 	pendingOrdersPage: PendingOrdersPage;
+	searchBarPortletPage: SearchBarPortletPage;
 	specificationFacetsPage: SpecificationFacetsPage;
 }>({
 	attachmentsPage: async ({page}, use) => {
@@ -76,6 +78,9 @@ const commercePagesTest = test.extend<{
 	},
 	pendingOrdersPage: async ({page}, use) => {
 		await use(new PendingOrdersPage(page));
+	},
+	searchBarPortletPage: async ({page}, use) => {
+		await use(new SearchBarPortletPage(page));
 	},
 	specificationFacetsPage: async ({page}, use) => {
 		await use(new SpecificationFacetsPage(page));

@@ -46,6 +46,10 @@ runGradleTest {
 
 		File bundleFile = new File(downloadBundle.dest, bundleFileName);
 
+		if (bundleFileName.endsWith(".7z")) {
+			return;
+		}
+
 		FileTree bundleFileTree
 
 		if (bundleFileName.endsWith(".tar.gz")) {

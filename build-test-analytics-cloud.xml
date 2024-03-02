@@ -155,16 +155,17 @@
 							return;
 						}
 
+						String distNode = getDistNode();
 						String distPath = getDistPath();
 
-						if (JenkinsResultsParserUtil.isNullOrEmpty(distPath)) {
+						if (JenkinsResultsParserUtil.isNullOrEmpty(distNode) || JenkinsResultsParserUtil.isNullOrEmpty(distPath)) {
 							return;
 						}
 
 						StringBuilder sb = new StringBuilder();
 
 						sb.append("time timeout 1200 rsync -qs ");
-						sb.append(getDistNode());
+						sb.append(distNode);
 						sb.append(":");
 						sb.append(distPath);
 						sb.append("/liferay-docker-*.tar ");
@@ -229,6 +230,10 @@
 
 					public String getDistNode() {
 						String distNodes = project.getProperty("env.DIST_NODES");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(distNodes)) {
+							return null;
+						}
 
 						return JenkinsResultsParserUtil.getRandomString(Arrays.asList(distNodes.split(",")));
 					}

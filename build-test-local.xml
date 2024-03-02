@@ -305,6 +305,212 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<antcall target="database-reset-container" />
 	</target>
 
+	<target name="setup-custom-suite">
+		<if>
+			<not>
+				<isset property="custom.suite" />
+			</not>
+			<then>
+				<fail message="Please set property custom.suite, which contains the name of the *.txt file of the list of testcases to add to the custom suite" />
+			</then>
+			<else>
+				<loadfile
+					property="custom.suite.testcases"
+					srcFile="${project.dir}\${custom.suite}.txt"
+				/>
+			</else>
+		</if>
+
+		<replaceregexp
+			file="${project.dir}/test.properties"
+			flags="g"
+			match="(test\.batch\.names\[acceptance-ce\]=\\)(\n.*?)*\sunit-jdk8"
+			replace="\1{temp.batches}"
+		/>
+
+		<replace
+			file="${project.dir}/test.properties"
+		>
+			<replacetoken><![CDATA[{temp.batches}]]></replacetoken>
+			<replacevalue><![CDATA[
+		functional-tomcat90-mysql57-chrome100-jdk8,\
+		js-unit-jdk8,\
+		modules-integration-mysql57-jdk8,\
+		unit-jdk8]]></replacevalue>
+		</replace>
+
+		<replaceregexp
+			file="${project.dir}/test.properties"
+			flags="g"
+			match="(test\.batch\.dist\.app\.servers=)\\(\n*.*?)*wildfly"
+			replace="\1tomcat"
+		/>
+
+		<replaceregexp
+			file="${project.dir}/test.properties"
+			flags="g"
+			match="(test\.batch\.run\.property\.query\[functional-tomcat90-mysql57-jdk8\]=\\)((\n.*?)*)(portal\.acceptance == )(true)"
+			replace="\1\2\4${custom.suite}"
+		/>
+
+		<replaceregexp
+			file="${project.dir}/test.properties"
+			flags="g"
+			match="(test\.batch\.names\[acceptance-dxp\]=)\\(\n.*?)*portal-license-smoke-mysql57-jdk8"
+			replace="\1{test.batch.names[acceptance-ce]}"
+		/>
+
+		<replace
+			file="${project.dir}/test.properties"
+		>
+			<replacetoken><![CDATA[{test.batch.names[acceptance-ce]}]]></replacetoken>
+			<replacevalue><![CDATA[${test.batch.names[acceptance-ce]}]]></replacevalue>
+		</replace>
+
+		<replaceregexp
+			file="${project.dir}/test.properties"
+			flags="g"
+			match="(test\.batch\.dist\.app\.servers\[bundles\]=)\\(\n.*?)*wildfly"
+			replace="\1tomcat"
+		/>
+
+		<replaceregexp
+			file="${project.dir}/test.properties"
+			flags="g"
+			match="(test\.batch\.class\.names\.includes=\\\n)(.*?\n)*?(\n)"
+			replace="\1\3"
+		/>
+
+		<replaceregexp
+			file="${project.dir}/test.properties"
+			flags="g"
+			match="(test\.batch\.class\.names\.includes\[modules-integration-\*-jdk8\]=)(.*?\n)*?\n"
+			replace="\1\\\\${line.separator}${line.separator}"
+		/>
+
+		<for delimiter="${line.separator}" list="${custom.suite.testcases}" param="custom.suite.testcase">
+			<sequential>
+				<echo>Working on: @{custom.suite.testcase}, </echo>
+				<if>
+					<matches pattern=".*?#.*" string="@{custom.suite.testcase}" />
+					<then>
+						<echo>a Functional Test</echo>
+
+						<propertyregex
+							input="@{custom.suite.testcase}"
+							override="true"
+							property="testcase.file.name"
+							regexp="(.*?)#(.*)"
+							select="\1"
+						/>
+
+						<propertyregex
+							input="@{custom.suite.testcase}"
+							override="true"
+							property="testcase.name"
+							regexp="(.*?)#(.*)"
+							select="\2"
+						/>
+
+						<path id="search.path">
+							<fileset
+								dir="${project.dir}/portal-web/test/functional"
+							/>
+							<fileset
+								dir="${project.dir}/modules/apps"
+							/>
+						</path>
+
+						<pathconvert property="@{custom.suite.testcase}.path" refid="search.path">
+							<globmapper
+								from="*/${testcase.file.name}.testcase"
+								to="*/${testcase.file.name}.testcase"
+							/>
+						</pathconvert>
+
+						<loadfile
+							property="@{custom.suite.testcase}.contents"
+							srcFile="${@{custom.suite.testcase}.path}"
+						/>
+
+						<propertyregex
+							input="${@{custom.suite.testcase}.contents}"
+							override="true"
+							property="testcase.contents"
+							regexp="(test ${testcase.name} \{)((\n.*?)*?)(test .*? \{)"
+							select="\1\2"
+						/>
+
+						<if>
+							<matches pattern="property portal\.acceptance = &quot;.*?&quot;;" string="${testcase.contents}" />
+							<then>
+								<replaceregexp
+									file="${@{custom.suite.testcase}.path}"
+									flags="g"
+									match="(test ${testcase.name} \{)((\n.*?)*)(property portal\.acceptance = &quot;.*?&quot;;)((\n.*?)*)(test .*? \{)"
+									replace="\1\2property portal.acceptance = &quot;${custom.suite}&quot;;\5\7"
+								/>
+							</then>
+							<else>
+								<replaceregexp
+									file="${@{custom.suite.testcase}.path}"
+									flags="g"
+									match="(test ${testcase.name} \{(\n\s*))(.*?)((\n.*?)*)(test .*? \{)"
+									replace="\1property portal.acceptance = &quot;${custom.suite}&quot;;\2\3\4\6"
+								/>
+							</else>
+						</if>
+					</then>
+					<elseif>
+						<matches pattern=".*?\..*" string="@{custom.suite.testcase}" />
+						<then>
+							<echo>an Integration Test</echo>
+
+							<propertyregex
+								input="@{custom.suite.testcase}"
+								override="true"
+								property="testcase.file.name"
+								regexp="(.*?)\.(.*)"
+								select="\1"
+							/>
+
+							<replaceregexp
+								file="${project.dir}/test.properties"
+								flags="g"
+								match="(test\.batch\.class\.names\.includes=\\\n)"
+								replace="\1        **/testIntegration/**/${testcase.file.name}.java,\\\\${line.separator}"
+							/>
+
+							<replaceregexp
+								file="${project.dir}/test.properties"
+								flags="g"
+								match="(test\.batch\.class\.names\.includes\[modules-integration-\*-jdk8\]=\\\n)"
+								replace="\1        **/testIntegration/**/${testcase.file.name}.java,\\\\${line.separator}"
+							/>
+						</then>
+					</elseif>
+					<else>
+						<fail message="Failing, detected invalid test format: @{custom.suite.testcase}" />
+					</else>
+				</if>
+			</sequential>
+		</for>
+
+		<replaceregexp
+			file="${project.dir}/test.properties"
+			flags="g"
+			match="(test\.batch\.class\.names\.includes=\\\n.*?)((\n.*?)*)(,\\)(\n\n)"
+			replace="\1\2\5${line.separator}"
+		/>
+
+		<replaceregexp
+			file="${project.dir}/test.properties"
+			flags="g"
+			match="(test\.batch\.class\.names\.includes\[modules-integration-\*-jdk8\]=\\\n.*?)((\n.*?)*)(,\\)(\n\n)"
+			replace="\1\2\5${line.separator}"
+		/>
+	</target>
+
 	<target name="setup-portal-cluster">
 		<if>
 			<isset property="node.count" />

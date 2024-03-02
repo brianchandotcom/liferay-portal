@@ -180,6 +180,22 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		return new AbstractMap.SimpleEntry<>(key, value);
 	}
 
+	@Override
+	protected boolean testAnalyticsCloud() {
+		Properties poshiProperties = getPoshiProperties();
+
+		String analyticsCloudEnabled = poshiProperties.getProperty(
+			"analytics.cloud.enabled");
+
+		if ((analyticsCloudEnabled != null) &&
+			analyticsCloudEnabled.equals("true")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _getWorkspaceName() {
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 

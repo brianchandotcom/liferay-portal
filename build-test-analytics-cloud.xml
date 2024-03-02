@@ -210,7 +210,7 @@
 							Map serviceMap = servicesMap.get(serviceName);
 
 							String imageName = serviceMap.get("image");
-							
+
 							if (JenkinsResultsParserUtil.isNullOrEmpty(imageName)) {
 								imageName = "com-liferay-osb-asah-private-" + serviceName;
 							}

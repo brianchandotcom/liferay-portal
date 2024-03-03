@@ -5,8 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from './apiHelpersTest';
-import {featureFlagsTest} from './featureFlagsTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 
 export const headlessBuilderTest = mergeTests(
 	featureFlagsTest({

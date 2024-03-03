@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Hugo Huijswer
+ * @author Hugo Huijser
  */
 public class UpgradeSourceProcessor extends BaseSourceProcessor {
 

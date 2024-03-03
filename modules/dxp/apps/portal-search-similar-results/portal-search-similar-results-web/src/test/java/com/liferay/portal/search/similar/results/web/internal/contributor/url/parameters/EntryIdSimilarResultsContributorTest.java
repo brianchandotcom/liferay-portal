@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
@@ -36,7 +35,7 @@ public class EntryIdSimilarResultsContributorTest
 	@Before
 	public void setUp() throws Exception {
 		_entryIdSimilarResultsContributor =
-			new EntryIdSimilarResultsContributor();
+			new EntryIdSimilarResultsContributor(assetEntryLocalService);
 	}
 
 	@Test
@@ -58,10 +57,6 @@ public class EntryIdSimilarResultsContributorTest
 
 	@Test
 	public void testResolveCriteria() {
-		ReflectionTestUtil.setFieldValue(
-			_entryIdSimilarResultsContributor, "_assetEntryLocalService",
-			assetEntryLocalService);
-
 		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
 
 		setUpAssetEntryLocalServiceFetchAssetEntry(

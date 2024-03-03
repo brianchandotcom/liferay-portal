@@ -8,6 +8,11 @@ package com.liferay.portal.search.similar.results.web.internal.contributor;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
@@ -193,8 +198,6 @@ public abstract class BaseSimilarResultsContributorTestCase {
 	}
 
 	protected UIDFactory setUpUIDFactory(String uid) {
-		UIDFactory uidFactory = Mockito.mock(UIDFactory.class);
-
 		Mockito.doReturn(
 			uid
 		).when(
@@ -259,10 +262,21 @@ public abstract class BaseSimilarResultsContributorTestCase {
 
 	protected AssetEntryLocalService assetEntryLocalService = Mockito.mock(
 		AssetEntryLocalService.class);
+	protected BlogsEntryLocalService blogsEntryLocalService = Mockito.mock(
+		BlogsEntryLocalService.class);
 	protected CriteriaHelper criteriaHelper = Mockito.mock(
 		CriteriaHelper.class);
 	protected DestinationHelper destinationHelper = Mockito.mock(
 		DestinationHelper.class);
+	protected DLFileEntryLocalService dlFileEntryLocalService = Mockito.mock(
+		DLFileEntryLocalService.class);
+	protected DLFolderLocalService dlFolderLocalService = Mockito.mock(
+		DLFolderLocalService.class);
+	protected MBCategoryLocalService mbCategoryLocalService = Mockito.mock(
+		MBCategoryLocalService.class);
+	protected MBMessageLocalService mbMessageLocalService = Mockito.mock(
+		MBMessageLocalService.class);
+	protected UIDFactory uidFactory = Mockito.mock(UIDFactory.class);
 	protected WikiNodeLocalService wikiNodeLocalService = Mockito.mock(
 		WikiNodeLocalService.class);
 	protected WikiPageLocalService wikiPageLocalService = Mockito.mock(

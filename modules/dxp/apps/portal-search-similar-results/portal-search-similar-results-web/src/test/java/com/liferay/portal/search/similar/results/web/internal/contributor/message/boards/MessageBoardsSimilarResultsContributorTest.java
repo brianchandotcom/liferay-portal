@@ -7,10 +7,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.messa
 
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
@@ -43,7 +40,9 @@ public class MessageBoardsSimilarResultsContributorTest
 	@Before
 	public void setUp() throws Exception {
 		_messageBoardsSimilarResultsContributor =
-			new MessageBoardsSimilarResultsContributor();
+			new MessageBoardsSimilarResultsContributor(
+				assetEntryLocalService, mbCategoryLocalService,
+				mbMessageLocalService);
 	}
 
 	@Test
@@ -69,13 +68,6 @@ public class MessageBoardsSimilarResultsContributorTest
 
 	@Test
 	public void testResolveCriteria() {
-		ReflectionTestUtil.setFieldValue(
-			_messageBoardsSimilarResultsContributor, "_assetEntryLocalService",
-			assetEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
-			_messageBoardsSimilarResultsContributor, "_mbMessageLocalService",
-			_mbMessageLocalService);
-
 		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
 
 		MBMessage mbMessage = Mockito.mock(MBMessage.class);
@@ -89,7 +81,7 @@ public class MessageBoardsSimilarResultsContributorTest
 		Mockito.doReturn(
 			mbMessage
 		).when(
-			_mbMessageLocalService
+			mbMessageLocalService
 		).fetchMBMessage(
 			Mockito.anyLong()
 		);
@@ -109,10 +101,6 @@ public class MessageBoardsSimilarResultsContributorTest
 		Assert.assertEquals(
 			"assetEntryClassName_PORTLET_1234", criteria.getUID());
 
-		ReflectionTestUtil.setFieldValue(
-			_messageBoardsSimilarResultsContributor, "_mbCategoryLocalService",
-			_mbCategoryLocalService);
-
 		criteriaBuilderImpl = new CriteriaBuilderImpl();
 
 		MBCategory mbCategory = Mockito.mock(MBCategory.class);
@@ -126,7 +114,7 @@ public class MessageBoardsSimilarResultsContributorTest
 		Mockito.doReturn(
 			mbCategory
 		).when(
-			_mbCategoryLocalService
+			mbCategoryLocalService
 		).fetchMBCategory(
 			Mockito.anyLong()
 		);
@@ -174,10 +162,6 @@ public class MessageBoardsSimilarResultsContributorTest
 			destinationBuilderImpl.build());
 	}
 
-	private final MBCategoryLocalService _mbCategoryLocalService = Mockito.mock(
-		MBCategoryLocalService.class);
-	private final MBMessageLocalService _mbMessageLocalService = Mockito.mock(
-		MBMessageLocalService.class);
 	private MessageBoardsSimilarResultsContributor
 		_messageBoardsSimilarResultsContributor;
 

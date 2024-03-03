@@ -6,7 +6,6 @@
 package com.liferay.portal.search.similar.results.web.internal.contributor.wiki;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
@@ -40,7 +39,9 @@ public class WikiSimilarResultsContributorTest
 
 	@Before
 	public void setUp() throws Exception {
-		_wikiSimilarResultsContributor = new WikiSimilarResultsContributor();
+		_wikiSimilarResultsContributor = new WikiSimilarResultsContributor(
+			assetEntryLocalService, uidFactory, wikiNodeLocalService,
+			wikiPageLocalService);
 	}
 
 	@Test
@@ -70,18 +71,7 @@ public class WikiSimilarResultsContributorTest
 
 	@Test
 	public void testResolveCriteria() {
-		ReflectionTestUtil.setFieldValue(
-			_wikiSimilarResultsContributor, "_assetEntryLocalService",
-			assetEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
-			_wikiSimilarResultsContributor, "_uidFactory",
-			setUpUIDFactory("uid"));
-		ReflectionTestUtil.setFieldValue(
-			_wikiSimilarResultsContributor, "_wikiNodeLocalService",
-			wikiNodeLocalService);
-		ReflectionTestUtil.setFieldValue(
-			_wikiSimilarResultsContributor, "_wikiPageLocalService",
-			wikiPageLocalService);
+		setUpUIDFactory("uid");
 
 		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
 

@@ -6,7 +6,6 @@
 package com.liferay.portal.search.similar.results.web.internal.contributor.asset.publisher;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
@@ -38,7 +37,9 @@ public class AssetPublisherSimilarResultsContributorTest
 	@Before
 	public void setUp() throws Exception {
 		_assetPublisherSimilarResultsContributor =
-			new AssetPublisherSimilarResultsContributor();
+			new AssetPublisherSimilarResultsContributor(
+				assetEntryLocalService, blogsEntryLocalService, uidFactory,
+				wikiPageLocalService);
 	}
 
 	@Test
@@ -66,10 +67,6 @@ public class AssetPublisherSimilarResultsContributorTest
 
 	@Test
 	public void testResolveCriteria() {
-		ReflectionTestUtil.setFieldValue(
-			_assetPublisherSimilarResultsContributor, "_assetEntryLocalService",
-			assetEntryLocalService);
-
 		CriteriaBuilderImpl criteriaBuilderImpl = new CriteriaBuilderImpl();
 
 		setUpAssetEntryLocalServiceFetchAssetEntry(

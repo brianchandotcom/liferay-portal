@@ -8,12 +8,9 @@ package com.liferay.portal.search.similar.results.web.spi.contributor.helper;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author André de Oliveira
  */
-@ProviderType
 public interface DestinationHelper {
 
 	public AssetEntry getAssetEntry();

@@ -6,7 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {headlessBuilderPagesTest} from '../../fixtures/headlessBuilderPagesTest';
+import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 

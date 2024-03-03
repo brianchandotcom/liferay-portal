@@ -370,7 +370,7 @@
 
 <tr>
 	<td>EXPERIENCE_ACTIVE_LABEL</td>
-	<td>//*[contains(@class, 'text-truncate-inline')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Active')]</td>
+	<td>//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Active')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -425,7 +425,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_INACTIVE_LABEL</td>
-	<td>//*[contains(@class, 'text-truncate-inline')]//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Inactive')]</td>
+	<td>//*[contains(text(),'${key_experienceName}')]/parent::span//span[contains(text(),'Inactive')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -465,7 +465,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_VALUES</td>
-	<td>//span[contains(@class,'text-truncate-inline')]//span[text()='${key_experienceName}']/parent::span/following-sibling::span[text()='${key_segmentName}']</td>
+	<td>//span[text()='${key_experienceName}']/parent::span/following-sibling::span[text()='${key_segmentName}']</td>
 	<td></td>
 </tr>
 <tr>

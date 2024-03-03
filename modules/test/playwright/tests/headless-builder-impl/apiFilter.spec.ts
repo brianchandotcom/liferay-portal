@@ -6,8 +6,8 @@
 import {APIResponse, expect as baseExpect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {headlessBuilderTest} from '../headless-builder-web/fixtures/headlessBuilderTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {headlessBuilderTest} from '../headless-builder-web/fixtures/headlessBuilderTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

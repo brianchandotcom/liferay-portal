@@ -7,7 +7,7 @@
 
 import {Page} from '@playwright/test';
 
-import {zipFolder} from '../../utils/zipFolder';
+import {zipFolder} from '../../../utils/zipFolder';
 
 export class ExportImportFramePage {
 	readonly page: Page;

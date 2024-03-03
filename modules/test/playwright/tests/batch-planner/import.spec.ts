@@ -8,7 +8,7 @@ import * as path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {dataMigrationCenterPagesTest} from '../../fixtures/dataMigrationCenterPages';
+import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPages';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';

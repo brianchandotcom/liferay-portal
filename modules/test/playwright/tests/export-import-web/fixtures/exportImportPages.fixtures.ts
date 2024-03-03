@@ -7,7 +7,7 @@
 
 import {test} from '@playwright/test';
 
-import {ExportImportFramePage} from '../pages/export-import-web/exportImportFrame.page';
+import {ExportImportFramePage} from '../pages/exportImportFrame.page';
 
 const exportImportPagesTest = test.extend<{
 	exportImportFramePage: ExportImportFramePage;

@@ -6,7 +6,7 @@
 import {mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {headlessBuilderTest} from '../../fixtures/headlessBuilderTest';
+import {headlessBuilderTest} from './fixtures/headlessBuilderTest';
 import {headlessDiscoveryPagesTest} from '../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 

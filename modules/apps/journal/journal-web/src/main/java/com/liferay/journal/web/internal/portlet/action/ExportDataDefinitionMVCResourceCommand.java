@@ -81,7 +81,6 @@ public class ExportDataDefinitionMVCResourceCommand
 	}
 
 	private void _sanitize(DataDefinition dataDefinition) {
-		dataDefinition.setDataDefinitionKey((String)null);
 		dataDefinition.setDateCreated((Date)null);
 		dataDefinition.setDateModified((Date)null);
 		dataDefinition.setId((Long)null);

@@ -8051,7 +8051,8 @@ public class ServiceBuilder {
 
 		content = header + "\n\n" + content;
 
-		String fileName = file.toString();
+		String fileName = StringUtil.replace(
+			file.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 
 		int startIndex = 0;
 

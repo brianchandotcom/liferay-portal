@@ -16,7 +16,7 @@ import org.apache.cxf.message.Message;
 /**
  * @author Ivica Cardic
  */
-public class NestedFieldsContext {
+public class NestedFieldsContext implements Cloneable {
 
 	public NestedFieldsContext(int depth, List<String> fieldNames) {
 		this(depth, fieldNames, null, null, null, null);
@@ -37,6 +37,11 @@ public class NestedFieldsContext {
 
 	public void addFieldName(String fieldName) {
 		_fieldNames.add(fieldName);
+	}
+
+	@Override
+	public NestedFieldsContext clone() throws CloneNotSupportedException {
+		return (NestedFieldsContext)super.clone();
 	}
 
 	public void decrementCurrentDepth() {

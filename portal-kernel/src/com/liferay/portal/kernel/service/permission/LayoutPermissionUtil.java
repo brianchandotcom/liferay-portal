@@ -110,6 +110,22 @@ public class LayoutPermissionUtil {
 		return _layoutPermission.contains(permissionChecker, plid, actionId);
 	}
 
+	public static boolean containsLayoutPreviewDraftPermission(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		return _layoutPermission.containsLayoutPreviewDraftPermission(
+			permissionChecker, layout);
+	}
+
+	public static boolean containsLayoutPreviewDraftPermission(
+			PermissionChecker permissionChecker, long plid)
+		throws PortalException {
+
+		return _layoutPermission.containsLayoutPreviewDraftPermission(
+			permissionChecker, plid);
+	}
+
 	public static boolean containsLayoutRestrictedUpdatePermission(
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException {

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.change.tracking.internal.spi.reference;
+package com.liferay.announcements.web.internal.change.tracking.spi.reference;
 
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.model.AnnouncementsEntryTable;
-import com.liferay.announcements.kernel.model.AnnouncementsFlagTable;
-import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
+import com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
@@ -21,40 +21,39 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class AnnouncementsFlagTableReferenceDefinition
-	implements TableReferenceDefinition<AnnouncementsFlagTable> {
+public class AnnouncementsEntryTableReferenceDefinition
+	implements TableReferenceDefinition<AnnouncementsEntryTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<AnnouncementsFlagTable>
+		ChildTableReferenceInfoBuilder<AnnouncementsEntryTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.resourcePermissionReference(
+			AnnouncementsEntryTable.INSTANCE.entryId, AnnouncementsEntry.class);
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<AnnouncementsFlagTable>
+		ParentTableReferenceInfoBuilder<AnnouncementsEntryTable>
 			parentTableReferenceInfoBuilder) {
 
 		parentTableReferenceInfoBuilder.singleColumnReference(
-			AnnouncementsFlagTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			AnnouncementsFlagTable.INSTANCE.entryId,
-			AnnouncementsEntryTable.INSTANCE.entryId
-		);
+			AnnouncementsEntryTable.INSTANCE.companyId,
+			CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _announcementsFlagPersistence;
+		return _announcementsEntryPersistence;
 	}
 
 	@Override
-	public AnnouncementsFlagTable getTable() {
-		return AnnouncementsFlagTable.INSTANCE;
+	public AnnouncementsEntryTable getTable() {
+		return AnnouncementsEntryTable.INSTANCE;
 	}
 
 	@Reference
-	private AnnouncementsFlagPersistence _announcementsFlagPersistence;
+	private AnnouncementsEntryPersistence _announcementsEntryPersistence;
 
 }

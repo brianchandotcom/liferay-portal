@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.internal.upgrade.v1_4_4.test;
+package com.liferay.friendly.url.internal.upgrade.v3_4_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
@@ -169,11 +169,11 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.layout.internal.upgrade.v1_4_4." +
+		"com.liferay.friendly.url.internal.upgrade.v3_4_1." +
 			"LayoutFriendlyURLEntryUpgradeProcess";
 
 	@Inject(
-		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
+		filter = "(&(component.name=com.liferay.friendly.url.internal.upgrade.registry.FriendlyURLServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 

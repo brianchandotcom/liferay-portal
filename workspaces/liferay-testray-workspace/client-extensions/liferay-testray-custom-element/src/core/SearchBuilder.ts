@@ -181,7 +181,8 @@ export default class SearchBuilder {
 				};
 
 				searchCondition = getOptionalSearchCondition();
-			} else {
+			}
+			else {
 				searchCondition = Array.isArray(value)
 					? SearchBuilder.in(
 							key,

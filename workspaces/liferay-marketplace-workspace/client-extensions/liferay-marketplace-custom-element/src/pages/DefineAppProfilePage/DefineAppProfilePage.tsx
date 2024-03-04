@@ -66,6 +66,7 @@ export function DefineAppProfilePage({
 		const file = files[0];
 
 		const newUploadedFile: UploadedFile = {
+			changed: false,
 			error: false,
 			file,
 			fileName: file.name,

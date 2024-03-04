@@ -7,13 +7,22 @@ import ClayButton from '@clayui/button';
 import {filesize} from 'filesize';
 
 import {DropzoneUpload} from '../../components/DropzoneUpload/DropzoneUpload';
-import {FileList, UploadedFile} from '../../components/FileList/FileList';
+import {
+	FileList,
+	UploadedFile,
+	UploadedImage,
+} from '../../components/FileList/FileList';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {baseURL, createImageAxios, deleteAttachment} from '../../utils/api';
+import {
+	baseURL,
+	createImageAxios,
+	deleteAttachment,
+	putProductImages,
+} from '../../utils/api';
 
 import './CustomizeAppStorefrontPage.scss';
 
@@ -57,6 +66,7 @@ export function CustomizeAppStorefrontPage({
 			MAX_IMAGE_QUANTITY
 		) {
 			const newUploadedFiles: UploadedFile[] = files.map((file) => ({
+				changed: false,
 				error: false,
 				file,
 				fileName: file.name,
@@ -89,7 +99,7 @@ export function CustomizeAppStorefrontPage({
 		);
 
 		if (appStorefrontImages[currentFiles]?.uploaded) {
-			await fetcher(
+			await fetcher.delete(
 				`${baseURL}/o/headless-commerce-admin-catalog/v1.0/attachment/${id}`
 			);
 		}
@@ -120,6 +130,11 @@ export function CustomizeAppStorefrontPage({
 			index,
 			direction === 'up' ? index - 1 : index + 1
 		);
+
+		direction === 'up'
+			? (files[index - 1].changed = true) && (files[index].changed = true)
+			: (files[index + 1].changed = true) &&
+			  (files[index].changed = true);
 
 		dispatch({
 			payload: {
@@ -229,43 +244,66 @@ export function CustomizeAppStorefrontPage({
 						index,
 						image,
 					] of appStorefrontImages.entries()) {
-						if (image.uploaded) {
-							// eslint-disable-next-line no-console
-							console.info('File already uploaded', image);
+						if (image.uploaded && image.changed) {
+							const {uploadedImage} = appStorefrontImages[index];
 
-							continue;
+							uploadedImage!.priority = index + 1;
+
+							uploadedImage!.title!.en_US = image.imageDescription as string;
+
+							await putProductImages(
+								appERC,
+								uploadedImage as UploadedImage
+							);
+
+							appStorefrontImages[index].changed = false;
+
+							dispatch({
+								payload: {
+									files: appStorefrontImages,
+								},
+								type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+							});
 						}
 
-						const id = await submitBase64EncodedFile({
-							appERC,
-							callback: (progress) => {
-								appStorefrontImages[index].progress = progress;
-								appStorefrontImages[index].uploaded =
-									progress === 100;
+						if (!image.uploaded) {
+							const uploadedFile = await submitBase64EncodedFile({
+								appERC,
+								callback: (progress) => {
+									appStorefrontImages[
+										index
+									].progress = progress;
+									appStorefrontImages[index].uploaded =
+										progress === 100;
 
-								dispatch({
-									payload: {
-										files: appStorefrontImages,
-									},
-									type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
-								});
-								appStorefrontImages;
-							},
-							file: image.file,
-							index: index + 1,
-							isAppIcon: false,
-							requestFunction: createImageAxios,
-							title: image.fileName,
-						});
+									dispatch({
+										payload: {
+											files: appStorefrontImages,
+										},
+										type:
+											TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+									});
+									appStorefrontImages;
+								},
+								file: image.file,
+								index: index + 1,
+								isAppIcon: false,
+								requestFunction: createImageAxios,
+								title: image.imageDescription ?? image.fileName,
+							});
 
-						appStorefrontImages[index].id = id as string;
+							appStorefrontImages[
+								index
+							].uploadedImage = uploadedFile as UploadedImage;
+							appStorefrontImages[index].changed = false;
 
-						dispatch({
-							payload: {
-								files: appStorefrontImages,
-							},
-							type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
-						});
+							dispatch({
+								payload: {
+									files: appStorefrontImages,
+								},
+								type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+							});
+						}
 					}
 
 					onClickContinue();

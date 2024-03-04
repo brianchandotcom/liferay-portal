@@ -318,8 +318,8 @@ export async function submitBase64EncodedFile({
 	title,
 }: FileRequest) {
 	return new Promise((resolve, reject) => {
-		let attachmentId;
 		const reader = new FileReader();
+
 		reader.addEventListener(
 			'load',
 			async () => {
@@ -357,8 +357,7 @@ export async function submitBase64EncodedFile({
 						reject(error);
 					});
 
-					attachmentId = response?.id;
-					resolve(attachmentId);
+					resolve(response);
 				}
 			},
 			false

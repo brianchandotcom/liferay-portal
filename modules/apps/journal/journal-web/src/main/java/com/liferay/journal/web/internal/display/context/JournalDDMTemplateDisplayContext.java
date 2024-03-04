@@ -326,6 +326,17 @@ public class JournalDDMTemplateDisplayContext {
 				return null;
 			}
 		).setParameter(
+			"classPK",
+			() -> {
+				long classPK = ParamUtil.getLong(_renderRequest, "classPK");
+
+				if (classPK > 0) {
+					return classPK;
+				}
+
+				return null;
+			}
+		).setParameter(
 			"orderByCol",
 			() -> {
 				String orderByCol = getOrderByCol();

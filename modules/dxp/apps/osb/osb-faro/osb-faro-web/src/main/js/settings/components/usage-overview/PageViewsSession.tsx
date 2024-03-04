@@ -11,6 +11,7 @@ import {useTimeZoneId} from 'shared/hooks';
 export const PageViewsSession = ({currentPlan}) => {
 	const timeZoneId = useTimeZoneId();
 	const {count, limit, status} = currentPlan.metrics.get('pageViews');
+	const available = limit - count;
 
 	return (
 		<UsageMetric
@@ -40,8 +41,8 @@ export const PageViewsSession = ({currentPlan}) => {
 					}
 				}}
 				legendText={sub(
-					Liferay.Language.get('x-page-views-remaining'),
-					[(limit - count).toLocaleString()]
+					Liferay.Language.get('x-page-views-available'),
+					[(available > 0 ? available : 0).toLocaleString()]
 				)}
 				limit={limit}
 			/>

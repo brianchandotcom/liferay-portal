@@ -5,6 +5,7 @@
 
 package com.liferay.portal.odata.internal.sort;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -77,7 +78,7 @@ public class SortParserImpl implements SortParser {
 	protected EntityField getEntityField(
 		Map<String, EntityField> entityFieldsMap, String fieldName) {
 
-		if (fieldName.contains(StringPool.FORWARD_SLASH)) {
+		if (_isComplexFieldName(fieldName)) {
 			List<String> list = StringUtil.split(fieldName, '/');
 
 			String complexTypeName = list.get(0);
@@ -139,6 +140,13 @@ public class SortParserImpl implements SortParser {
 				"Unable to sort by property: " + fieldName);
 		}
 
+		if (_isComplexFieldName(fieldName)) {
+			return new SortField(
+				ascending, entityField,
+				_getParentEntityFields(
+					_entityModel.getEntityFieldsMap(), fieldName));
+		}
+
 		return new SortField(entityField, ascending);
 	}
 
@@ -162,6 +170,33 @@ public class SortParserImpl implements SortParser {
 		}
 
 		return _ASC_DEFAULT;
+	}
+
+	private List<EntityField> _getParentEntityFields(
+		Map<String, EntityField> entityFields, String fieldName) {
+
+		List<EntityField> parentEntityFields = new ArrayList<>();
+
+		List<String> fieldNameParts = StringUtil.split(
+			fieldName, CharPool.FORWARD_SLASH);
+
+		Map<String, EntityField> currentEntityFields = entityFields;
+
+		for (int i = 0; i < (fieldNameParts.size() - 1); i++) {
+			ComplexEntityField complexEntityField =
+				(ComplexEntityField)currentEntityFields.get(
+					fieldNameParts.get(i));
+
+			parentEntityFields.add(complexEntityField);
+
+			currentEntityFields = complexEntityField.getEntityFieldsMap();
+		}
+
+		return parentEntityFields;
+	}
+
+	private boolean _isComplexFieldName(String fieldName) {
+		return fieldName.contains(StringPool.FORWARD_SLASH);
 	}
 
 	private static final boolean _ASC_DEFAULT = true;

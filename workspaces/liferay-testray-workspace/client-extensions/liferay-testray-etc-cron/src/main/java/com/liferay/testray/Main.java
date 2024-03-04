@@ -21,6 +21,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -44,6 +45,7 @@ public class Main {
 			new URL(System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_URL")));
 
 		main.deleteTestrayArchivedBuilds();
+		main.autoArchiveTestrayBuilds();
 	}
 
 	public Main(
@@ -54,6 +56,34 @@ public class Main {
 		_liferayOAuthClientId = liferayOAuthClientId;
 		_liferayOAuthClientSecret = liferayOAuthClientSecret;
 		_liferayURL = liferayURL;
+	}
+
+	public void autoArchiveTestrayBuilds() throws Exception {
+		String oAuthAuthorization = _getOAuthAuthorization();
+
+		JSONArray testrayBuildsJSONArray = _getTestrayBuildsJSONArray(
+			oAuthAuthorization,
+			"archived eq false and promoted eq false and dateCreated lt " +
+				_currentDateTime.minusDays(60));
+
+		if ((testrayBuildsJSONArray == null) ||
+			(testrayBuildsJSONArray.length() == 0)) {
+
+			return;
+		}
+
+		JSONArray jsonArray = new JSONArray();
+
+		for (int i = 0; i < testrayBuildsJSONArray.length(); i++) {
+			JSONObject jsonObject = (JSONObject)testrayBuildsJSONArray.get(i);
+
+			jsonObject.put("archived", true);
+			jsonObject.put("dateArchived", _currentDateTime);
+
+			jsonArray.put(jsonObject);
+		}
+
+		_putTestrayBuilds(oAuthAuthorization, jsonArray);
 	}
 
 	public void deleteTestrayArchivedBuilds() throws Exception {
@@ -174,6 +204,31 @@ public class Main {
 			).getJSONArray(
 				"items"
 			);
+		}
+	}
+
+	private JSONObject _putTestrayBuilds(
+			String authorization, JSONArray jsonArray)
+		throws Exception {
+		
+		HttpPut httpPut = new HttpPut(_liferayURL + "/o/c/builds/batch");
+
+		httpPut.setHeader("accept", "application/json");
+		httpPut.setHeader("Authorization", authorization);
+		httpPut.setHeader("Content-Type", "application/json");
+		httpPut.setEntity(new StringEntity(jsonArray.toString()));
+
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		try (CloseableHttpClient closeableHttpClient =
+				httpClientBuilder.build();
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpPut)) {
+
+			return new JSONObject(
+				EntityUtils.toString(
+					closeableHttpResponse.getEntity(),
+					Charset.defaultCharset()));
 		}
 	}
 

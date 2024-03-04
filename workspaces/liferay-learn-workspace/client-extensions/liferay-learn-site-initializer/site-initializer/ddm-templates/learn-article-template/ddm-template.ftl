@@ -624,6 +624,22 @@
 							</a>
 						</div>
 					</div>
+				</div>
+			</div>
+
+			<div
+				class="col-12 doc-content mt-0 ${isLandingPage?then("landing-page-container", "")}"
+				id="docContent"
+			>
+				<div class="overflow-hidden row">
+					<div class="article-body col-12 col-md-9 language-log">
+						<#if (content.getData())??>
+							${content.getData()}
+						</#if>
+
+						<#if isLandingPage>
+							<#include "${templatesPath}/LANDING-PAGE">
+						</#if>
 					<#list taxonomyVocabularies as vocabulary>
 						<div class="align-items-baseline col-10 d-flex mt-2 pl-0">
 							<div class="align-items-baseline d-flex flex-wrap mr-2">
@@ -644,22 +660,6 @@
 							</div>
 						</div>
 					</#list>
-				</div>
-			</div>
-
-			<div
-				class="col-12 doc-content mt-0 ${isLandingPage?then("landing-page-container", "")}"
-				id="docContent"
-			>
-				<div class="overflow-hidden row">
-					<div class="article-body col-12 col-md-9 language-log">
-						<#if (content.getData())??>
-							${content.getData()}
-						</#if>
-
-						<#if isLandingPage>
-							<#include "${templatesPath}/LANDING-PAGE">
-						</#if>
 					</div>
 
 					<div class="col-md-3 d-none d-sm-block">

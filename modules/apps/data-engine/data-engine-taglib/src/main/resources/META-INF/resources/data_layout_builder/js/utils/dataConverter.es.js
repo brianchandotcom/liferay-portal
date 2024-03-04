@@ -133,9 +133,10 @@ export function getFieldSetDDMForm({
 		})),
 	}));
 
-	const {description, id, name} = dataDefinition;
+	const {dataDefinitionKey, description, id, name} = dataDefinition;
 
 	return {
+		ddmStructureKey: dataDefinitionKey,
 		description:
 			description[editingLanguageId] ?? description[defaultLanguageId],
 		id,

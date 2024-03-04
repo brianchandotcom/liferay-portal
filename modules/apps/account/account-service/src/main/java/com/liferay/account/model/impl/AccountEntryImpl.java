@@ -15,13 +15,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
+import com.liferay.portal.kernel.service.AddressServiceUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ContactServiceUtil;
+import com.liferay.portal.kernel.service.EmailAddressServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.PhoneServiceUtil;
+import com.liferay.portal.kernel.service.WebsiteServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -31,6 +40,20 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class AccountEntryImpl extends AccountEntryBaseImpl {
+
+	@Override
+	public Contact fetchContact() throws PortalException {
+		List<Contact> contacts = ContactServiceUtil.getContacts(
+			ClassNameLocalServiceUtil.getClassNameId(
+				AccountEntry.class.getName()),
+			getAccountEntryId(), 0, 1, null);
+
+		if (contacts.isEmpty()) {
+			return null;
+		}
+
+		return contacts.get(0);
+	}
 
 	@Override
 	public List<Organization> fetchOrganizations() {
@@ -103,6 +126,32 @@ public class AccountEntryImpl extends AccountEntryBaseImpl {
 	@Override
 	public String[] getDomainsArray() {
 		return StringUtil.split(getDomains());
+	}
+
+	@Override
+	public List<EmailAddress> getEmailAddresses() throws PortalException {
+		return EmailAddressServiceUtil.getEmailAddresses(
+			AccountEntry.class.getName(), getAccountEntryId());
+	}
+
+	@Override
+	public List<Address> getListTypeAddresses(long[] listTypeIds)
+		throws PortalException {
+
+		return AddressServiceUtil.getListTypeAddresses(
+			AccountEntry.class.getName(), getAccountEntryId(), listTypeIds);
+	}
+
+	@Override
+	public List<Phone> getPhones() throws PortalException {
+		return PhoneServiceUtil.getPhones(
+			AccountEntry.class.getName(), getAccountEntryId());
+	}
+
+	@Override
+	public List<Website> getWebsites() throws PortalException {
+		return WebsiteServiceUtil.getWebsites(
+			AccountEntry.class.getName(), getAccountEntryId());
 	}
 
 	@Override

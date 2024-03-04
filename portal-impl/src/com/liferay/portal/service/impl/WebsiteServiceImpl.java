@@ -14,6 +14,7 @@ import com.liferay.portal.service.base.WebsiteServiceBaseImpl;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,8 +27,16 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 			boolean primary, ServiceContext serviceContext)
 		throws PortalException {
 
+		String actionId = ActionKeys.UPDATE;
+
+		if (Objects.equals(
+				className, "com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
+
 		CommonPermissionUtil.check(
-			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
+			getPermissionChecker(), className, classPK, actionId);
 
 		return websiteLocalService.addWebsite(
 			getUserId(), className, classPK, url, typeId, primary,
@@ -36,11 +45,19 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 
 	@Override
 	public void deleteWebsite(long websiteId) throws PortalException {
+		String actionId = ActionKeys.UPDATE;
 		Website website = websitePersistence.findByPrimaryKey(websiteId);
+
+		if (Objects.equals(
+				website.getClassName(),
+				"com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), website.getClassNameId(),
-			website.getClassPK(), ActionKeys.UPDATE);
+			website.getClassPK(), actionId);
 
 		websiteLocalService.deleteWebsite(website);
 	}
@@ -74,11 +91,19 @@ public class WebsiteServiceImpl extends WebsiteServiceBaseImpl {
 			long websiteId, String url, long typeId, boolean primary)
 		throws PortalException {
 
+		String actionId = ActionKeys.UPDATE;
 		Website website = websitePersistence.findByPrimaryKey(websiteId);
+
+		if (Objects.equals(
+				website.getClassName(),
+				"com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), website.getClassNameId(),
-			website.getClassPK(), ActionKeys.UPDATE);
+			website.getClassPK(), actionId);
 
 		return websiteLocalService.updateWebsite(
 			websiteId, url, typeId, primary);

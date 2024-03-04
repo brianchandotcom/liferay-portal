@@ -18,6 +18,7 @@ public class WebUrlUtil {
 		return new WebUrl() {
 			{
 				setId(website::getWebsiteId);
+				setPrimary(website::isPrimary);
 				setUrl(website::getUrl);
 				setUrlType(
 					() -> {

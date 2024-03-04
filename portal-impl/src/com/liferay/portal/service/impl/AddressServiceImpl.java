@@ -15,6 +15,7 @@ import com.liferay.portal.service.base.AddressServiceBaseImpl;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,10 +32,17 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 			String phoneNumber, ServiceContext serviceContext)
 		throws PortalException {
 
+		String actionId = ActionKeys.UPDATE;
 		PermissionChecker permissionChecker = getPermissionChecker();
 
+		if (Objects.equals(
+				className, "com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
+
 		CommonPermissionUtil.check(
-			permissionChecker, className, classPK, ActionKeys.UPDATE);
+			permissionChecker, className, classPK, actionId);
 
 		return addressLocalService.addAddress(
 			externalReferenceCode, permissionChecker.getUserId(), className,
@@ -45,11 +53,19 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 
 	@Override
 	public void deleteAddress(long addressId) throws PortalException {
+		String actionId = ActionKeys.UPDATE;
 		Address address = addressPersistence.findByPrimaryKey(addressId);
+
+		if (Objects.equals(
+				address.getClassName(),
+				"com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), address.getClassNameId(),
-			address.getClassPK(), ActionKeys.UPDATE);
+			address.getClassPK(), actionId);
 
 		addressLocalService.deleteAddress(address);
 	}
@@ -79,6 +95,20 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 	}
 
 	@Override
+	public List<Address> getListTypeAddresses(
+			String className, long classPK, long[] listTypeIds)
+		throws PortalException {
+
+		CommonPermissionUtil.check(
+			getPermissionChecker(), className, classPK, ActionKeys.VIEW);
+
+		User user = getUser();
+
+		return addressLocalService.getListTypeAddresses(
+			user.getCompanyId(), className, classPK, listTypeIds);
+	}
+
+	@Override
 	public Address updateAddress(
 			long addressId, String name, String description, String street1,
 			String street2, String street3, String city, String zip,
@@ -86,11 +116,19 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 			boolean primary, String phoneNumber)
 		throws PortalException {
 
+		String actionId = ActionKeys.UPDATE;
 		Address address = addressPersistence.findByPrimaryKey(addressId);
+
+		if (Objects.equals(
+				address.getClassName(),
+				"com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), address.getClassNameId(),
-			address.getClassPK(), ActionKeys.UPDATE);
+			address.getClassPK(), actionId);
 
 		return addressLocalService.updateAddress(
 			addressId, name, description, street1, street2, street3, city, zip,

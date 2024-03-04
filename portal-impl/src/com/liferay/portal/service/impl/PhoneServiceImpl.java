@@ -14,6 +14,7 @@ import com.liferay.portal.service.base.PhoneServiceBaseImpl;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,8 +27,16 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 			long typeId, boolean primary, ServiceContext serviceContext)
 		throws PortalException {
 
+		String actionId = ActionKeys.UPDATE;
+
+		if (Objects.equals(
+				className, "com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
+
 		CommonPermissionUtil.check(
-			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
+			getPermissionChecker(), className, classPK, actionId);
 
 		return phoneLocalService.addPhone(
 			getUserId(), className, classPK, number, extension, typeId, primary,
@@ -36,11 +45,19 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 
 	@Override
 	public void deletePhone(long phoneId) throws PortalException {
+		String actionId = ActionKeys.UPDATE;
 		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
+
+		if (Objects.equals(
+				phone.getClassName(),
+				"com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), phone.getClassNameId(), phone.getClassPK(),
-			ActionKeys.UPDATE);
+			actionId);
 
 		phoneLocalService.deletePhone(phone);
 	}
@@ -75,11 +92,19 @@ public class PhoneServiceImpl extends PhoneServiceBaseImpl {
 			boolean primary)
 		throws PortalException {
 
+		String actionId = ActionKeys.UPDATE;
 		Phone phone = phonePersistence.findByPrimaryKey(phoneId);
+
+		if (Objects.equals(
+				phone.getClassName(),
+				"com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
 
 		CommonPermissionUtil.check(
 			getPermissionChecker(), phone.getClassNameId(), phone.getClassPK(),
-			ActionKeys.UPDATE);
+			actionId);
 
 		return phoneLocalService.updatePhone(
 			phoneId, number, extension, typeId, primary);

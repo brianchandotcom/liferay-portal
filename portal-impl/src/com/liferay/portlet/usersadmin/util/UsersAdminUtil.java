@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.AddressServiceUtil;
+import com.liferay.portal.kernel.service.ContactServiceUtil;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressServiceUtil;
@@ -299,6 +300,31 @@ public class UsersAdminUtil {
 			}
 
 		};
+
+	public static void addOrUpdateContact(
+			long contactId, long userId, String className, long classPK,
+			String emailAddress, String firstName, String middleName,
+			String lastName, long prefixListTypeId, long suffixListTypeId,
+			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
+			String smsSn, String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle)
+		throws PortalException {
+
+		if (contactId == 0) {
+			ContactServiceUtil.addContact(
+				userId, className, classPK, emailAddress, firstName, middleName,
+				lastName, prefixListTypeId, suffixListTypeId, male,
+				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
+				jabberSn, skypeSn, twitterSn, jobTitle);
+		}
+		else {
+			ContactServiceUtil.updateContact(
+				contactId, emailAddress, firstName, middleName, lastName,
+				prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+				birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+				twitterSn, jobTitle);
+		}
+	}
 
 	public static void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest httpServletRequest,

@@ -15,12 +15,41 @@ import com.liferay.portal.service.base.ContactServiceBaseImpl;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Vilmos Papp
  */
 public class ContactServiceImpl extends ContactServiceBaseImpl {
+
+	@Override
+	public Contact addContact(
+			long userId, String className, long classPK, String emailAddress,
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
+			String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle)
+		throws PortalException {
+
+		String actionId = ActionKeys.UPDATE;
+
+		if (Objects.equals(
+				className, "com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
+
+		CommonPermissionUtil.check(
+			getPermissionChecker(), className, classPK, actionId);
+
+		return contactLocalService.addContact(
+			userId, className, classPK, emailAddress, firstName, middleName,
+			lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, jobTitle);
+	}
 
 	@Override
 	public List<Contact> getCompanyContacts(long companyId, int start, int end)
@@ -72,6 +101,36 @@ public class ContactServiceImpl extends ContactServiceBaseImpl {
 			getPermissionChecker(), classNameId, classPK, ActionKeys.VIEW);
 
 		return contactPersistence.countByC_C(classNameId, classPK);
+	}
+
+	@Override
+	public Contact updateContact(
+			long contactId, String emailAddress, String firstName,
+			String middleName, String lastName, long prefixListTypeId,
+			long suffixListTypeId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String smsSn, String facebookSn,
+			String jabberSn, String skypeSn, String twitterSn, String jobTitle)
+		throws PortalException {
+
+		String actionId = ActionKeys.UPDATE;
+		Contact contact = contactPersistence.findByPrimaryKey(contactId);
+
+		if (Objects.equals(
+				contact.getClassName(),
+				"com.liferay.account.model.AccountEntry")) {
+
+			actionId = "MANAGE_ADDRESSES";
+		}
+
+		CommonPermissionUtil.check(
+			getPermissionChecker(), contact.getClassName(),
+			contact.getClassPK(), actionId);
+
+		return contactLocalService.updateContact(
+			contactId, emailAddress, firstName, middleName, lastName,
+			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, jobTitle);
 	}
 
 }

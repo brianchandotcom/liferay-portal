@@ -15,6 +15,7 @@ export const KnownIndividualsSession = ({currentPlan}) => {
 	const timeZoneId = useTimeZoneId();
 	const {count, limit, status} = currentPlan.metrics.get('individuals');
 	const usersCount = currentPlan.metrics.get('usersCount') ?? 0;
+	const available = limit - count;
 
 	return (
 		<div className='mt-4 mb-5'>
@@ -45,8 +46,8 @@ export const KnownIndividualsSession = ({currentPlan}) => {
 						}
 					}}
 					legendText={sub(
-						Liferay.Language.get('x-known-individuals-remaining'),
-						[(limit - count).toLocaleString()]
+						Liferay.Language.get('x-known-individuals-available'),
+						[(available > 0 ? available : 0).toLocaleString()]
 					)}
 					limit={limit}
 				/>

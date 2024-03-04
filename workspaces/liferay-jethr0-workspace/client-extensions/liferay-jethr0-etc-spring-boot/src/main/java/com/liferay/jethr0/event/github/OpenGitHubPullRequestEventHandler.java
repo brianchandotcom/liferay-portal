@@ -15,8 +15,10 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -33,7 +35,8 @@ public class OpenGitHubPullRequestEventHandler
 	@Override
 	public String process() throws InvalidJSONException, IOException {
 		if (checkLiferayGitHubUser() ||
-			closeInvalidUpstreamGitHubBranchName()) {
+			closeInvalidUpstreamGitHubBranchName() ||
+			_skipCISenderBlacklistGitHubUser()) {
 
 			return null;
 		}
@@ -293,6 +296,46 @@ public class OpenGitHubPullRequestEventHandler
 		for (JobEntity jobEntity : jobEntities) {
 			invokeJobEntity(jobEntity);
 		}
+	}
+
+	private boolean _skipCISenderBlacklistGitHubUser()
+		throws InvalidJSONException, IOException {
+
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		if (gitHubPullRequest == null) {
+			return false;
+		}
+
+		GitHubUser senderGitHubUser = gitHubPullRequest.getSenderGitHubUser();
+
+		String senderGitHubUserName = senderGitHubUser.getName();
+
+		List<String> ciTestAutoSendersBlacklist = new ArrayList<>();
+
+		String ciTestAutoSendersBlacklistString =
+			getSenderBranchCIPropertyValue("ci.test.auto.senders.blacklist");
+
+		if (!StringUtil.isNullOrEmpty(ciTestAutoSendersBlacklistString)) {
+			Collections.addAll(
+				ciTestAutoSendersBlacklist,
+				ciTestAutoSendersBlacklistString.split(","));
+		}
+
+		ciTestAutoSendersBlacklistString = getUpstreamBranchCIPropertyValue(
+			"ci.test.auto.senders.blacklist");
+
+		if (!StringUtil.isNullOrEmpty(ciTestAutoSendersBlacklistString)) {
+			Collections.addAll(
+				ciTestAutoSendersBlacklist,
+				ciTestAutoSendersBlacklistString.split(","));
+		}
+
+		if (!ciTestAutoSendersBlacklist.contains(senderGitHubUserName)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Pattern _branchSHAPattern = Pattern.compile(

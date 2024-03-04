@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {UploadedImage} from '../../components/FileList/FileList';
 import fetcher from '../fetcher';
 
 class HeadlessCommerceAdminCatalog {
@@ -98,6 +99,16 @@ class HeadlessCommerceAdminCatalog {
 				description: {en_US: description},
 				name: {en_US: name},
 			}
+		);
+	}
+
+	async addOrUpdateProductImageByExternalReferenceCode(
+		externalReferenceCode: string,
+		image: UploadedImage
+	) {
+		return fetcher.post(
+			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/images`,
+			image
 		);
 	}
 }

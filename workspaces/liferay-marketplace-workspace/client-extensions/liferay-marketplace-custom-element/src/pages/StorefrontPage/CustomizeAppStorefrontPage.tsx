@@ -17,12 +17,7 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {
-	baseURL,
-	createImageAxios,
-	deleteAttachment,
-	putProductImages,
-} from '../../utils/api';
+import {baseURL, createImageAxios, deleteAttachment} from '../../utils/api';
 
 import './CustomizeAppStorefrontPage.scss';
 
@@ -31,6 +26,7 @@ import {useState} from 'react';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
 import fetcher from '../../services/fetcher';
+import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
 import {submitBase64EncodedFile} from '../../utils/util';
 
 const ACCEPT_FILE_TYPES = {
@@ -125,16 +121,12 @@ export function CustomizeAppStorefrontPage({
 	};
 
 	const handleArrowClick = (index: number, direction: string) => {
-		const files = swapImageElements(
-			appStorefrontImages,
-			index,
-			direction === 'up' ? index - 1 : index + 1
-		);
+		const newIndex = direction === 'up' ? index - 1 : index + 1;
 
-		direction === 'up'
-			? (files[index - 1].changed = true) && (files[index].changed = true)
-			: (files[index + 1].changed = true) &&
-			  (files[index].changed = true);
+		const files = swapImageElements(appStorefrontImages, index, newIndex);
+
+		files[index].changed = true;
+		files[newIndex].changed = true;
 
 		dispatch({
 			payload: {
@@ -245,15 +237,17 @@ export function CustomizeAppStorefrontPage({
 						image,
 					] of appStorefrontImages.entries()) {
 						if (image.uploaded && image.changed) {
-							const {uploadedImage} = appStorefrontImages[index];
+							const {uploadedImage} = (appStorefrontImages[
+								index
+							] as unknown) as UploadedImage;
 
-							uploadedImage!.priority = index + 1;
+							uploadedImage.priority = index + 1;
 
-							uploadedImage!.title!.en_US = image.imageDescription as string;
+							uploadedImage.title.en_US = image.imageDescription as string;
 
-							await putProductImages(
+							await HeadlessCommerceAdminCatalogImpl.addOrUpdateProductImageByExternalReferenceCode(
 								appERC,
-								uploadedImage as UploadedImage
+								(uploadedImage as unknown) as UploadedImage
 							);
 
 							appStorefrontImages[index].changed = false;

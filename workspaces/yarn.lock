@@ -1399,10 +1399,10 @@
     source-map "^0.7.3"
     webpack "^5.11.1"
 
-"@liferay/npm-scripts@49.0.0":
-  version "49.0.0"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-49.0.0.tgz#fcc90387ddbff80fe520f6cca2526f7d4432c221"
-  integrity sha512-5uTYoczAAVVlsHbpXeQO+6EfLl/GLap+zJaFgpCnwe+HIv3URu1+uTQGPLBslsSCI7zLMYVj4XsIwBy7jGsdTA==
+"@liferay/npm-scripts@49.2.1":
+  version "49.2.1"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-49.2.1.tgz#a92582f9b88ca9acee31d2d6b15c2ec873e03bdd"
+  integrity sha512-/su176UMtQmSL78RJSmdOQ8/5E/13Q16kgbAfnQW6zCBcMb9JVRrO/Of5uxv6YW6md8o6F0RQlUYCqbC1XWCaA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

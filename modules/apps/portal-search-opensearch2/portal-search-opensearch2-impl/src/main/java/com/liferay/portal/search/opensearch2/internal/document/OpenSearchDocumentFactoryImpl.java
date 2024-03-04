@@ -6,6 +6,7 @@
 package com.liferay.portal.search.opensearch2.internal.document;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
@@ -17,6 +18,8 @@ import java.io.IOException;
 
 import java.math.BigDecimal;
 
+import java.text.Format;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -24,8 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.apache.commons.lang.time.FastDateFormat;
 
 import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch._types.GeoLocation;
@@ -42,10 +43,11 @@ import org.osgi.service.component.annotations.Component;
 public class OpenSearchDocumentFactoryImpl
 	implements OpenSearchDocumentFactory {
 
-	public static final FastDateFormat DATE_FORMAT = FastDateFormat.getInstance(
-		"yyyyMMddHHmmss");
-
 	public static final String DATE_MAX_VALUE = "99950812133000";
+
+	public static final Format FORMAT =
+		FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss", null, null);
 
 	/**
 	 * @deprecated As of Mueller (7.2.x)
@@ -320,7 +322,7 @@ public class OpenSearchDocumentFactoryImpl
 				value = DATE_MAX_VALUE;
 			}
 			else {
-				value = DATE_FORMAT.format(date);
+				value = FORMAT.format(date);
 			}
 
 			values.add(value);

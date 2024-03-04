@@ -5,6 +5,7 @@
 
 import {z} from 'zod';
 
+import {UploadedImage} from '../components/FileList/FileList';
 import {Liferay} from '../liferay/liferay';
 import zodSchema from '../schema/zod';
 import fetcher from '../services/fetcher';
@@ -785,6 +786,22 @@ export async function postProduct(product: any) {
 	);
 
 	return (await response.json()) as Product;
+}
+
+export async function putProductImages(
+	productERC: string,
+	image: UploadedImage
+) {
+	const response = await fetch(
+		`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${productERC}/images`,
+		{
+			body: JSON.stringify(image),
+			headers,
+			method: 'POST',
+		}
+	);
+
+	return (await response.json()) as any;
 }
 
 export async function postOption(optionBody: any) {

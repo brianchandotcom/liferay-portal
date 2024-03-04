@@ -8,6 +8,7 @@ import {useEffect, useRef, useState} from 'react';
 
 export default function FocusManager() {
 	const shiftRef = useRef(false);
+	const tabRef = useRef(false);
 
 	const [breadcrumbs, setBreadcrumbs] = useState(null);
 	const [configSidebar, setConfigSidebar] = useState(null);
@@ -23,6 +24,9 @@ export default function FocusManager() {
 			if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
 				shiftRef.current = true;
 			}
+			else if (event.code === 'Tab') {
+				tabRef.current = true;
+			}
 		},
 		true,
 		window
@@ -34,6 +38,9 @@ export default function FocusManager() {
 			if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
 				shiftRef.current = false;
 			}
+			else if (event.code === 'Tab') {
+				tabRef.current = false;
+			}
 		},
 		true,
 		window
@@ -44,7 +51,7 @@ export default function FocusManager() {
 	useEventListener(
 		'focusout',
 		(event) => {
-			if (breadcrumbs.contains(event.relatedTarget)) {
+			if (breadcrumbs.contains(event.relatedTarget) || !tabRef.current) {
 				return;
 			}
 
@@ -62,7 +69,10 @@ export default function FocusManager() {
 	useEventListener(
 		'focusout',
 		(event) => {
-			if (configSidebar.contains(event.relatedTarget)) {
+			if (
+				configSidebar.contains(event.relatedTarget) ||
+				!tabRef.current
+			) {
 				return;
 			}
 
@@ -77,7 +87,7 @@ export default function FocusManager() {
 	useEventListener(
 		'focusout',
 		(event) => {
-			if (layout.contains(event.relatedTarget)) {
+			if (layout.contains(event.relatedTarget) || !tabRef.current) {
 				return;
 			}
 
@@ -95,7 +105,7 @@ export default function FocusManager() {
 	useEventListener(
 		'focusout',
 		(event) => {
-			if (sidebar.contains(event.relatedTarget)) {
+			if (sidebar.contains(event.relatedTarget) || !tabRef.current) {
 				return;
 			}
 
@@ -113,7 +123,7 @@ export default function FocusManager() {
 	useEventListener(
 		'focusout',
 		(event) => {
-			if (toolbar.contains(event.relatedTarget)) {
+			if (toolbar.contains(event.relatedTarget) || !tabRef.current) {
 				return;
 			}
 

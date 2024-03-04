@@ -571,13 +571,12 @@ public class ObjectEntryLocalServiceUtil {
 			long groupId, long companyId, long userId, long objectDefinitionId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
 			String search, int start, int end,
-			com.liferay.petra.sql.dsl.query.sort.OrderByExpression[]
-				orderByExpressions)
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws PortalException {
 
 		return getService().getValuesList(
 			groupId, companyId, userId, objectDefinitionId, predicate, search,
-			start, end, orderByExpressions);
+			start, end, sorts);
 	}
 
 	public static int getValuesListCount(

@@ -659,13 +659,12 @@ public class ObjectEntryLocalServiceWrapper
 				long objectDefinitionId,
 				com.liferay.petra.sql.dsl.expression.Predicate predicate,
 				String search, int start, int end,
-				com.liferay.petra.sql.dsl.query.sort.OrderByExpression[]
-					orderByExpressions)
+				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getValuesList(
 			groupId, companyId, userId, objectDefinitionId, predicate, search,
-			start, end, orderByExpressions);
+			start, end, sorts);
 	}
 
 	@Override

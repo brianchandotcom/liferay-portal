@@ -19,6 +19,7 @@ import {
 import React, {useMemo} from 'react';
 
 import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
+import {DisabledGroovyScriptAlert} from '../DisabledGroovyScriptAlert';
 import {ErrorMessage} from './ErrorMessage';
 import {TabProps} from './useObjectValidationForm';
 
@@ -80,6 +81,8 @@ export function Conditions({
 
 	return (
 		<>
+			{disabledGroovyValidation && <DisabledGroovyScriptAlert />}
+
 			<ClayAlert
 				className="lfr-objects__side-panel-content-container"
 				displayType="info"

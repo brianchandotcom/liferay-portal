@@ -15,6 +15,7 @@ import {InputLocalized} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
 import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
+import {DisabledGroovyScriptAlert} from '../DisabledGroovyScriptAlert';
 import {TabProps} from './useObjectValidationForm';
 
 export interface BasicInfoProps extends TabProps {
@@ -68,6 +69,8 @@ export function BasicInfo({
 
 	return (
 		<>
+			{disabledGroovyValidation && <DisabledGroovyScriptAlert />}
+
 			<Card title={componentLabel}>
 				<InputLocalized
 					disabled={disabled}

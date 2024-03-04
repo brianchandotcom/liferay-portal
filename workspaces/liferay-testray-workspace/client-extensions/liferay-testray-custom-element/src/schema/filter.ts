@@ -267,7 +267,7 @@ const filterSchema = {
 			overrides(baseFilters.priority, {
 				name: 'caseToCaseResult/priority',
 				removeQuoteMark: true,
-				type: 'select',
+				type: 'multiselect',
 			}),
 			overrides(baseFilters.team, {
 				name: 'componentToCaseResult/r_teamToComponents_c_teamId',
@@ -539,7 +539,7 @@ const filterSchema = {
 		fields: [
 			overrides(baseFilters.priority, {
 				removeQuoteMark: true,
-				type: 'select',
+				type: 'multiselect',
 			}),
 			overrides(baseFilters.caseType, {
 				name: 'r_caseTypeToCases_c_caseTypeId',
@@ -573,7 +573,7 @@ const filterSchema = {
 			overrides(baseFilters.priority, {
 				name: 'priority',
 				removeQuoteMark: true,
-				type: 'select',
+				type: 'multiselect',
 			}),
 			overrides(baseFilters.team, {
 				disabled: true,

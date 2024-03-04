@@ -5,13 +5,9 @@
 
 import Form from '..';
 import React, {memo, useMemo, useState} from 'react';
-import {useParams} from 'react-router-dom';
-import useSWR from 'swr';
 
 import {Operators} from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
-import fetcher from '../../../services/fetcher';
-import {safeJSONParse} from '../../../util';
 import {AutoCompleteProps} from '../AutoComplete';
 
 type RenderedFieldOptions = string[] | {label: string; value: string}[];
@@ -36,7 +32,7 @@ export type RendererFields = {
 		| 'textarea';
 } & Partial<AutoCompleteProps>;
 
-type Options = {
+export type Options = {
 	label: string;
 	value: string;
 };
@@ -44,35 +40,24 @@ type Options = {
 export type FieldOptions = {[key: string]: any[]};
 
 type RendererProps = {
+	fieldOptions?: FieldOptions;
 	fields: RendererFields[];
 	filter?: string;
 	filterSchema: string;
 	form: any;
+	isLoading?: boolean;
 	onChange: (event: any) => void;
 };
 
 const Renderer: React.FC<RendererProps> = ({
+	fieldOptions = {},
 	fields,
 	filter,
-	filterSchema,
 	form,
+	isLoading = false,
 	onChange,
 }) => {
-	const params = useParams();
-
 	const [fieldDisabled, setFieldDisabled] = useState({});
-
-	const paramsMemoized = useMemo(() => {
-		const testrayModalParams = document.getElementById(
-			'testray-modal-params'
-		);
-
-		if (testrayModalParams) {
-			return testrayModalParams.textContent!;
-		}
-
-		return JSON.stringify(params);
-	}, [params]);
 
 	const fieldsMemoized = useMemo(() => fields, [fields]);
 
@@ -84,41 +69,6 @@ const Renderer: React.FC<RendererProps> = ({
 					: true
 			),
 		[fieldsMemoized, filter]
-	);
-
-	const {data: fieldOptions = {}, isLoading} = useSWR(
-		`/filter-${filterSchema}`,
-		async () => {
-			const parameters = safeJSONParse(paramsMemoized);
-
-			const fieldsWithResource = fieldsMemoized.filter(
-				({resource}) => resource
-			);
-
-			const _fieldOptions: any = {};
-
-			await Promise.all(
-				fieldsWithResource.map((field) =>
-					fetcher(
-						(typeof field.resource === 'function'
-							? field.resource(parameters)
-							: field.resource) as string
-					)
-				)
-			).then((results) =>
-				results.forEach((result, index) => {
-					const field = fieldsWithResource[index];
-
-					if (field.transformData) {
-						const parsedValue = field.transformData(result);
-
-						_fieldOptions[field.name] = parsedValue;
-					}
-				})
-			);
-
-			return _fieldOptions;
-		}
 	);
 
 	return (
@@ -217,7 +167,7 @@ const Renderer: React.FC<RendererProps> = ({
 					return (
 						<Form.Select
 							disabled={disabled}
-							isLoading={isLoading}
+							isLoading={field.resource ? isLoading : false}
 							key={index}
 							label={label}
 							name={name}
@@ -313,7 +263,7 @@ const Renderer: React.FC<RendererProps> = ({
 						<div className="mb-2" key={index}>
 							<Form.MultiSelect
 								disabled={disabled}
-								isLoading={isLoading}
+								isLoading={field.resource ? isLoading : false}
 								label={label}
 								name={name}
 								onChange={onChange}

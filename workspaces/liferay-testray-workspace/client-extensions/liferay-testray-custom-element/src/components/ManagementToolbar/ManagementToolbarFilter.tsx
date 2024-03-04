@@ -25,10 +25,13 @@ import {FilterSchema} from '~/schema/filter';
 
 import Form from '../Form';
 import {RendererFields} from '../Form/Renderer';
+import {FieldOptions} from '../Form/Renderer/Renderer';
 
 type ManagementToolbarFilterProps = {
 	applyFilters?: boolean;
+	fieldOptions?: FieldOptions;
 	filterSchema?: FilterSchema;
+	isLoading?: boolean;
 };
 
 type Option = {label: string; value: string};
@@ -36,7 +39,9 @@ type Option = {label: string; value: string};
 type FilterBodyProps = {
 	applyFilters?: boolean;
 	buttonRef: React.RefObject<HTMLButtonElement>;
+	fieldOptions?: FieldOptions;
 	filterSchema: FilterSchema | undefined;
+	isLoading?: boolean;
 	setPosition: React.Dispatch<React.SetStateAction<number>>;
 	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 	visible: boolean;
@@ -45,7 +50,9 @@ type FilterBodyProps = {
 const FilterBody: React.FC<FilterBodyProps> = ({
 	applyFilters = true,
 	buttonRef,
+	fieldOptions = {},
 	filterSchema,
+	isLoading = false,
 	setPosition,
 	setVisible,
 	visible,
@@ -154,8 +161,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						(options: Option) => options.value || options
 					),
 				};
-			}
-			else {
+			} else {
 				return {
 					name: key,
 					value: filterCleaned[key],
@@ -235,10 +241,12 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			<div className="management-toolbar-body">
 				<div className="popover-filter-content">
 					<Form.Renderer
+						fieldOptions={fieldOptions}
 						fields={fields}
 						filter={filter}
 						filterSchema={filterSchema?.name as string}
 						form={form}
+						isLoading={isLoading}
 						onChange={onChange}
 					/>
 				</div>
@@ -266,7 +274,9 @@ const MENU_POPOVER_HEIGHT = 580;
 
 const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	applyFilters = true,
+	fieldOptions = {},
 	filterSchema,
+	isLoading = false,
 }) => {
 	const [visible, setVisible] = useState(false);
 	const ref = useRef<HTMLButtonElement>(null);
@@ -309,7 +319,9 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 			<FilterBody
 				applyFilters={applyFilters}
 				buttonRef={ref}
+				fieldOptions={fieldOptions}
 				filterSchema={filterSchema}
+				isLoading={isLoading}
 				setPosition={setPosition}
 				setVisible={setVisible}
 				visible={visible}

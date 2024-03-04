@@ -16,7 +16,7 @@ const PanelHeader = ({children, expanded, onClick}: IProps) => (
 	<ClayPanel.Title
 		aria-expanded={expanded}
 		className={classNames(
-			'panel-header panel-header-link align-items-center d-flex pl-4 pr-5 py-4 card-interactive',
+			'align-items-center card-interactive card-type-template collapse-icon collapse-icon-top d-flex panel-header panel-header-link pl-4 pr-5 py-4',
 			{
 				collapsed: !expanded,
 				show: expanded,

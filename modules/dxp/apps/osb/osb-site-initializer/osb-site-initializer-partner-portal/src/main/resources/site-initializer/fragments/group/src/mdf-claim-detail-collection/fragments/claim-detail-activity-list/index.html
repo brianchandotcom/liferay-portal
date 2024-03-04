@@ -5,8 +5,8 @@
 [/#function]
 
 [#macro activity_panel activity]
-	<div class="panel panel-secondary" role="tablist">
-		<button aria-controls="mdfClaimActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed panel-header panel-header-link" data-target="#mdfClaimActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
+	<div class="border-brand-primary-lighten-4 form-check-card panel" role="tablist">
+		<button aria-controls="mdfClaimActivitiesPanel-${activity.id}" aria-expanded="false" class="btn btn-unstyled card card-interactive card-type-template collapse-icon collapse-icon-top collapsed panel-header panel-header-link" data-target="#mdfClaimActivitiesPanel-${activity.id}" data-toggle="liferay-collapse" role="tab">
 			<div>
 				<div class="d-flex">
 					<div class="w-100">
@@ -24,6 +24,13 @@
 					</div>
 				</div>
 			</div>
+
+			<span class="collapse-icon-closed mt-2">
+				[@clay["icon"] symbol="angle-down"/]
+			</span>
+			<span class="collapse-icon-open mt-2">
+				[@clay["icon"] symbol="angle-up"/]
+			</span>
 		</button>
 
 		<div class="collapse panel-collapse" id="mdfClaimActivitiesPanel-${activity.id}" role="tabpanel">

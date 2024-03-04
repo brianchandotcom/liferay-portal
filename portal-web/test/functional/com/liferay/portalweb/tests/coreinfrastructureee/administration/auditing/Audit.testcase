@@ -945,12 +945,7 @@ definition {
 
 			UserNavigator.gotoDisplaySettings();
 
-			Select(
-				key_fieldLabel = "Time Zone",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "(UTC +01:00) Central European Time");
-
-			Click(locator1 = "Select#TIME_ZONE");
+			Click.clickNoMouseOver(locator1 = "//option[@value='Europe/Paris']");
 
 			PortletEntry.save();
 		}

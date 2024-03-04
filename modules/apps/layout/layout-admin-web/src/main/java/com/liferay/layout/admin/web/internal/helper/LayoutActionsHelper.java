@@ -226,10 +226,8 @@ public class LayoutActionsHelper {
 	public boolean isShowPreviewDraftActions(Layout layout)
 		throws PortalException {
 
-		if (!layout.isTypeContent() ||
-			!LayoutPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.UPDATE)) {
+		if (!LayoutPermissionUtil.containsLayoutPreviewDraftPermission(
+				_themeDisplay.getPermissionChecker(), layout)) {
 
 			return false;
 		}

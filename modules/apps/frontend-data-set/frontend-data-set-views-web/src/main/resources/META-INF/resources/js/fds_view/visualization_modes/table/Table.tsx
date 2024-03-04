@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
@@ -18,14 +17,14 @@ import {
 	IInternalRenderer,
 } from '@liferay/frontend-data-set-web';
 import {InputLocalized, ManagementToolbar} from 'frontend-js-components-web';
-import {fetch, openModal} from 'frontend-js-web';
+import {fetch, openModal, sub} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
-import {sub} from 'frontend-js-web';
 
 import {IFDSViewSectionProps} from '../../../FDSView';
 import {FDSViewType} from '../../../FDSViews';
 import {getFields} from '../../../api';
+import AutoSearch from '../../../components/AutoSearch';
 import OrderableTable from '../../../components/OrderableTable';
 import SearchResultsMessage from '../../../components/SearchResultsMessage';
 import {
@@ -134,7 +133,6 @@ const SaveFDSFieldsModalContent = ({
 	saveFDSFieldsURL,
 }: ISaveFDSFieldsModalContentProps) => {
 	const [fields, setFields] = useState<Array<IField> | null>(null);
-	const [focused, setFocused] = useState(false);
 	const [query, setQuery] = useState('');
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>(
 		false
@@ -305,62 +303,10 @@ const SaveFDSFieldsModalContent = ({
 										numberOfResults={visibleFields.length}
 									/>
 
-									<ClayInput.Group>
-										<ClayInput.GroupItem>
-											{!focused && (
-												<ClayInput.GroupInsetItem
-													before
-													tag="span"
-												>
-													<ClayIcon
-														className="inline-item inline-item-before"
-														focusable="false"
-														role="presentation"
-														symbol="search"
-													/>
-												</ClayInput.GroupInsetItem>
-											)}
-
-											<ClayInput
-												insetAfter={Boolean(focused)}
-												insetBefore={!Boolean(focused)}
-												onChange={(event) =>
-													onSearch(event.target.value)
-												}
-												onFocus={() => setFocused(true)}
-												placeholder={Liferay.Language.get(
-													'search'
-												)}
-												type="text"
-												value={query}
-											/>
-
-											{focused && (
-												<ClayInput.GroupInsetItem
-													after
-													tag="span"
-												>
-													<ClayButtonWithIcon
-														aria-label={Liferay.Language.get(
-															'clear-search'
-														)}
-														borderless
-														displayType="secondary"
-														monospaced={false}
-														onClick={() => {
-															onSearch('');
-															setFocused(false);
-														}}
-														size="sm"
-														symbol="times"
-														title={Liferay.Language.get(
-															'clear-search'
-														)}
-													/>
-												</ClayInput.GroupInsetItem>
-											)}
-										</ClayInput.GroupItem>
-									</ClayInput.Group>
+									<AutoSearch
+										onSearch={onSearch}
+										query={query}
+									/>
 								</ManagementToolbar.Item>
 							</ManagementToolbar.ItemList>
 						</ManagementToolbar.Container>
@@ -371,15 +317,18 @@ const SaveFDSFieldsModalContent = ({
 									<span className="component-text text-truncate-inline">
 										<span className="text-truncate">
 											{getSelectedFieldsCount() > 1
-												? 	sub(
-														Liferay.Language.get('x-items-selected'),
+												? sub(
+														Liferay.Language.get(
+															'x-items-selected'
+														),
 														getSelectedFieldsCount()
-													)
-												: 	sub(
-														Liferay.Language.get('x-item-selected'),
+												  )
+												: sub(
+														Liferay.Language.get(
+															'x-item-selected'
+														),
 														getSelectedFieldsCount()
-													)
-												}
+												  )}
 										</span>
 									</span>
 								</ClayResultsBar.Item>

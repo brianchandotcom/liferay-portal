@@ -9,8 +9,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
+import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
@@ -19,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -78,9 +84,43 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 
 		_deleteFriendlyURLEntries(draftLayout2, layout2);
 
-		_runUpgrade();
+		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
+	}
 
-		_assertFriendlyURLEntries(draftLayout1, draftLayout2, layout1, layout2);
+	@Test
+	public void testUpgradeProcessNoFriendlyURLEntryLocalization()
+		throws Exception {
+
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout1 = layout1.fetchDraftLayout();
+
+		_assertFriendlyURLEntries(draftLayout1, layout1);
+
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout2 = layout2.fetchDraftLayout();
+
+		_deleteFriendlyURLEntryLocalizations(draftLayout2, layout2);
+
+		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
+	}
+
+	@Test
+	public void testUpgradeProcessNoFriendlyURLEntryMapping() throws Exception {
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout1 = layout1.fetchDraftLayout();
+
+		_assertFriendlyURLEntries(draftLayout1, layout1);
+
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout2 = layout2.fetchDraftLayout();
+
+		_deleteFriendlyURLEntryMappings(draftLayout2, layout2);
+
+		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
 	}
 
 	private void _assertFriendlyURLEntries(Layout... layouts) throws Exception {
@@ -110,6 +150,12 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		}
 	}
 
+	private void _assertUpgrade(Layout... layouts) throws Exception {
+		_runUpgrade();
+
+		_assertFriendlyURLEntries(layouts);
+	}
+
 	private void _deleteFriendlyURLEntries(Layout... layouts) throws Exception {
 		for (Layout layout : layouts) {
 			_deleteFriendlyURLEntry(layout);
@@ -132,6 +178,68 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 			friendlyURLEntries.toString(), 0, friendlyURLEntries.size());
 	}
 
+	private void _deleteFriendlyURLEntryLocalization(Layout layout)
+		throws Exception {
+
+		FriendlyURLEntry friendlyURLEntry = _getFriendlyURLEntry(layout);
+
+		String[] availableLanguageIds =
+			friendlyURLEntry.getAvailableLanguageIds();
+
+		Assert.assertTrue(ArrayUtil.isNotEmpty(availableLanguageIds));
+
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
+			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+				friendlyURLEntry.getFriendlyURLEntryId());
+
+		Assert.assertEquals(
+			friendlyURLEntryLocalizations.toString(),
+			availableLanguageIds.length, friendlyURLEntryLocalizations.size());
+
+		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+				friendlyURLEntryLocalizations) {
+
+			_runSQL(
+				StringBundler.concat(
+					"delete from FriendlyURLEntryLocalization where ",
+					"friendlyURLEntryLocalizationId = ",
+					friendlyURLEntryLocalization.
+						getFriendlyURLEntryLocalizationId()));
+		}
+	}
+
+	private void _deleteFriendlyURLEntryLocalizations(Layout... layouts)
+		throws Exception {
+
+		for (Layout layout : layouts) {
+			_deleteFriendlyURLEntryLocalization(layout);
+		}
+
+		_multiVMPool.clear();
+	}
+
+	private void _deleteFriendlyURLEntryMapping(Layout layout)
+		throws Exception {
+
+		FriendlyURLEntry friendlyURLEntry = _getFriendlyURLEntry(layout);
+
+		_runSQL(
+			StringBundler.concat(
+				"delete from FriendlyURLEntryMapping where friendlyURLEntryId ",
+				"= ", friendlyURLEntry.getFriendlyURLEntryId()));
+	}
+
+	private void _deleteFriendlyURLEntryMappings(Layout... layouts)
+		throws Exception {
+
+		for (Layout layout : layouts) {
+			_deleteFriendlyURLEntryLocalization(layout);
+			_deleteFriendlyURLEntryMapping(layout);
+		}
+
+		_multiVMPool.clear();
+	}
+
 	private FriendlyURLEntry _getFriendlyURLEntry(Layout layout)
 		throws Exception {
 
@@ -141,14 +249,19 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 			classNameId = _privateLayoutClassNameId;
 		}
 
-		List<FriendlyURLEntry> friendlyURLEntries =
-			_friendlyURLEntryLocalService.getFriendlyURLEntries(
-				layout.getGroupId(), classNameId, layout.getPlid());
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				classNameId, layout.getPlid());
 
-		Assert.assertEquals(
-			friendlyURLEntries.toString(), 1, friendlyURLEntries.size());
+		Assert.assertNotNull(friendlyURLEntry);
 
-		return friendlyURLEntries.get(0);
+		return friendlyURLEntry;
+	}
+
+	private void _runSQL(String sql) throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL(sql);
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -181,7 +294,15 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
+	private FriendlyURLEntryLocalizationPersistence
+		_friendlyURLEntryLocalizationPersistence;
+
+	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Inject
+	private FriendlyURLEntryMappingPersistence
+		_friendlyURLEntryMappingPersistence;
 
 	@DeleteAfterTestRun
 	private Group _group;

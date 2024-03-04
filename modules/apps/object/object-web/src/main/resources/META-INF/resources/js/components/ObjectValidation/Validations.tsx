@@ -35,6 +35,7 @@ const language = Liferay.ThemeDisplay.getBCP47LanguageId();
 
 interface ValidationsProps extends IFDSTableProps {
 	objectValidationRuleEngines: LabelKeyObject[];
+	scriptManagementEnabled: boolean;
 }
 
 export default function Validations({
@@ -44,6 +45,7 @@ export default function Validations({
 	id,
 	items,
 	objectValidationRuleEngines,
+	scriptManagementEnabled,
 	style,
 	url,
 }: ValidationsProps) {
@@ -175,6 +177,7 @@ export default function Validations({
 					objectValidationRuleEngines={
 						objectValidationRuleEnginesItems
 					}
+					scriptManagementEnabled={scriptManagementEnabled}
 					setShowAddObjectRelationshipModal={
 						setShowAddObjectRelationshipModal
 					}

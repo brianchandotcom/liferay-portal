@@ -8,6 +8,7 @@
 import {IFDSTableProps} from '../../utils/fds';
 interface ValidationsProps extends IFDSTableProps {
 	objectValidationRuleEngines: LabelKeyObject[];
+	scriptManagementEnabled: boolean;
 }
 export default function Validations({
 	apiURL,
@@ -16,6 +17,7 @@ export default function Validations({
 	id,
 	items,
 	objectValidationRuleEngines,
+	scriptManagementEnabled,
 	style,
 	url,
 }: ValidationsProps): JSX.Element;

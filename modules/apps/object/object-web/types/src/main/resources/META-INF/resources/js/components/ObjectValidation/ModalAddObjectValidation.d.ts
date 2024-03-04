@@ -8,11 +8,13 @@
 interface ModalAddObjectValidationProps {
 	apiURL: string;
 	objectValidationRuleEngines: LabelValueObject[];
+	scriptManagementEnabled: boolean;
 	setShowAddObjectRelationshipModal: (value: boolean) => void;
 }
 export declare function ModalAddObjectValidation({
 	apiURL,
 	objectValidationRuleEngines,
+	scriptManagementEnabled,
 	setShowAddObjectRelationshipModal,
 }: ModalAddObjectValidationProps): JSX.Element;
 export {};

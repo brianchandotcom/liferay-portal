@@ -57,7 +57,6 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 		>
 			<liferay-ui:search-container
 				compactEmptyResultsMessage="<%= true %>"
-				headerNames="null,site-name,null"
 				id="groupsSearchContainer"
 				searchContainer="<%= sitemapCompanyConfigurationDisplayContext.getSearchContainer() %>"
 			>
@@ -68,9 +67,11 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 					modelVar="group"
 					rowIdProperty="groupId"
 				>
-					<liferay-ui:search-container-column-icon
-						icon="sites"
-					/>
+					<liferay-ui:search-container-column-text>
+						<clay:icon
+							symbol="sites"
+						/>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						name="site-name"

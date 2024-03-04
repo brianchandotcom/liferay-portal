@@ -17,20 +17,22 @@ export type ImageCustomField = {
 };
 
 export type UploadedImage = {
-	cdnEnabled: boolean;
-	cdnURL: string;
-	customFields: ImageCustomField[];
-	displayDate: string;
-	externalReferenceCode: string;
-	fileEntryId: number;
-	galleryEnabled: boolean;
-	id: number;
-	options: {};
-	priority: number;
-	src: string;
-	tags: any[];
-	title: {en_US: string};
-	type: number;
+	uploadedImage: {
+		cdnEnabled: boolean;
+		cdnURL: string;
+		customFields: ImageCustomField[];
+		displayDate: string;
+		externalReferenceCode: string;
+		fileEntryId: number;
+		galleryEnabled: boolean;
+		id: number;
+		options: {};
+		priority: number;
+		src: string;
+		tags: any[];
+		title: {en_US: string};
+		type: number;
+	};
 };
 
 export type UploadedFile = {

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -116,15 +117,17 @@ public class CollectionAppliedFiltersFragmentRendererDisplayContext {
 			for (String filterValue : entry.getValue()) {
 				appliedFilters.add(
 					HashMapBuilder.put(
-						"filterFragmentEntryLinkId", parameterData.get(2)
+						"filterFragmentEntryLinkId",
+						HtmlUtil.escapeAttribute(parameterData.get(2))
 					).put(
 						"filterLabel",
-						fragmentCollectionFilter.getFilterValueLabel(
-							filterValue, _locale)
+						HtmlUtil.escape(
+							fragmentCollectionFilter.getFilterValueLabel(
+								filterValue, _locale))
 					).put(
 						"filterType", parameterData.get(1)
 					).put(
-						"filterValue", filterValue
+						"filterValue", HtmlUtil.escapeAttribute(filterValue)
 					).build());
 			}
 		}

@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 import java.sql.Connection;
@@ -71,15 +72,22 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 		public void update(Connection connection) throws Exception {
 			for (String[] foreignNames : _foreignNamesArray) {
 				runSQL(
-					connection,
-					getUpdateSQL(connection, foreignNames[0], foreignNames[1]));
+					getUpdateSQLMap(
+						connection, foreignNames[0], foreignNames[1]));
 			}
 		}
 
-		protected String getSelectSQL(
+		protected String getUpdateSQL(String selectSQL) {
+			return StringBundler.concat(
+				"update ", _tableName, " set companyId = (", selectSQL, ")");
+		}
+
+		protected DBTypeToSQLMap getUpdateSQLMap(
 				Connection connection, String foreignTableName,
 				String foreignColumnName)
 			throws SQLException {
+
+			DBTypeToSQLMap dbTypeToSQLMap = null;
 
 			List<Long> companyIds = new ArrayList<>();
 
@@ -94,28 +102,32 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			}
 
 			if (companyIds.size() == 1) {
-				return String.valueOf(companyIds.get(0));
+				dbTypeToSQLMap = new DBTypeToSQLMap(
+					getUpdateSQL(String.valueOf(companyIds.get(0))));
+			}
+			else {
+				dbTypeToSQLMap = new DBTypeToSQLMap(
+					getUpdateSQL(
+						StringBundler.concat(
+							"select max(companyId) from ", foreignTableName,
+							" where ", foreignTableName, ".", foreignColumnName,
+							" > 0 and ", foreignTableName, ".",
+							foreignColumnName, " = ", _tableName, ".",
+							_columnName)));
+
+				dbTypeToSQLMap.add(
+					DBType.POSTGRESQL,
+					getUpdateSQL(
+						StringBundler.concat(
+							"select ", foreignTableName, ".companyId from ",
+							foreignTableName, " where ", foreignTableName, ".",
+							foreignColumnName, " > 0 and ", foreignTableName,
+							".", foreignColumnName, " = ", _tableName, ".",
+							_columnName, " ORDER BY ", foreignTableName,
+							".companyId DESC LIMIT 1")));
 			}
 
-			return StringBundler.concat(
-				"select max(companyId) from ", foreignTableName, " where ",
-				foreignTableName, ".", foreignColumnName, " > 0 and ",
-				foreignTableName, ".", foreignColumnName, " = ", _tableName,
-				".", _columnName);
-		}
-
-		protected String getUpdateSQL(
-				Connection connection, String foreignTableName,
-				String foreignColumnName)
-			throws SQLException {
-
-			return getUpdateSQL(
-				getSelectSQL(connection, foreignTableName, foreignColumnName));
-		}
-
-		protected String getUpdateSQL(String selectSQL) {
-			return StringBundler.concat(
-				"update ", _tableName, " set companyId = (", selectSQL, ")");
+			return dbTypeToSQLMap;
 		}
 
 		private final String _columnName;

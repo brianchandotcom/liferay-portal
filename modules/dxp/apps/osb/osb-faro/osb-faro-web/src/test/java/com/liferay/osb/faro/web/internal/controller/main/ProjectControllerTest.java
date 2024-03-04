@@ -6,6 +6,7 @@
 package com.liferay.osb.faro.web.internal.controller.main;
 
 import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
+import com.liferay.osb.faro.provisioning.client.internal.ProvisioningClientImpl;
 import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
 import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -13,9 +14,12 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author Marcos Martins
@@ -26,6 +30,13 @@ public class ProjectControllerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		ReflectionTestUtils.setField(
+			_projectController, "_provisioningClient",
+			new ProvisioningClientImpl());
+	}
 
 	@Test
 	public void testCreateOSBAccountEntry1() throws Exception {

@@ -386,20 +386,17 @@ public class ProjectController extends BaseFaroController {
 					new FaroSubscriptionDisplay(
 						getOSBAccountEntry(faroProject.getCorpProjectUuid()));
 
-				faroSubscriptionDisplay.setCounts(
-					faroProject, cerebroEngineClient, contactsEngineClient);
-
-				String subscription = JSONUtil.writeValueAsString(
-					faroSubscriptionDisplay);
-
-				faroProject.setSubscription(subscription);
-
 				if (_isSubscriptionPlanChanged(
-						faroProject,
-						_jsonFactory.createJSONObject(subscription))) {
+						faroProject, faroSubscriptionDisplay.getName())) {
 
 					faroProject.setSubscriptionModifiedTime(now);
 				}
+
+				faroSubscriptionDisplay.setCounts(
+					faroProject, cerebroEngineClient, contactsEngineClient);
+
+				faroProject.setSubscription(
+					JSONUtil.writeValueAsString(faroSubscriptionDisplay));
 			}
 
 			faroProject = _faroProjectLocalService.updateFaroProject(
@@ -1006,14 +1003,14 @@ public class ProjectController extends BaseFaroController {
 	}
 
 	private boolean _isSubscriptionPlanChanged(
-			FaroProject faroProject, JSONObject newSubscriptionJSONObject)
+			FaroProject faroProject, String subscriptionName)
 		throws Exception {
 
-		JSONObject oldSubscriptionJSONObject = _jsonFactory.createJSONObject(
+		JSONObject subscriptionJSONObject = _jsonFactory.createJSONObject(
 			faroProject.getSubscription());
 
-		if (oldSubscriptionJSONObject.get("name") !=
-				newSubscriptionJSONObject.get("name")) {
+		if (!Objects.equals(
+				subscriptionJSONObject.get("name"), subscriptionName)) {
 
 			return true;
 		}

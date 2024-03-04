@@ -56,7 +56,8 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			Field.GROUP_ID, Field.NAME, Field.UID, Field.USER_ID,
 			"corpProjectName", "corpProjectUuid", "createDate",
 			"individualsLimit", "individualsUsage", "lastAccessDate", "offline",
-			"pageViewsLimit", "pageViewsUsage", "subscriptionName");
+			"pageViewsLimit", "pageViewsUsage", "subscription",
+			"subscriptionName");
 	}
 
 	@Override
@@ -196,6 +197,9 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 			"lastAccessDate", new Date(faroProject.getLastAccessTime()));
 		document.addNumber(
 			"pageViewsLimit", faroSubscriptionDisplay.getPageViewsLimit());
+		document.addKeyword(
+			"subscription",
+			JSONUtil.writeValueAsString(faroSubscriptionDisplay));
 		document.addKeyword(
 			"subscriptionName",
 			StringUtil.removeSubstring(

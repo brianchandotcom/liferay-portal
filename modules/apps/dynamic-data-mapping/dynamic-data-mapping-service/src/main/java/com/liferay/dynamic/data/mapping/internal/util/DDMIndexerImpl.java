@@ -827,8 +827,16 @@ public class DDMIndexerImpl implements DDMIndexer {
 					ddmFormFieldLocale, sb, ddmFormFieldValue.getValue());
 			}
 			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception);
+					_log.warn(
+						StringBundler.concat(
+							"Unable to index field ", ddmFormField.getName(),
+							" because it was deleted from the DDM structure ID",
+							ddmStructure.getStructureId()));
 				}
 			}
 

@@ -4,7 +4,7 @@
 		"serve": "^14.2.0"
 	},
 	"description": "Liferay Sample Commerce Checkout Step",
-	"name": "@liferayliferay-sample-commerce-checkout-step",
+	"name": "@liferay/liferay-sample-commerce-checkout-step",
 	"type": "module",
 	"version": "1.0.0",
 	"workspaces": [

@@ -85,7 +85,7 @@ public class MySQLDB extends BaseDB {
 		}
 
 		List<IndexMetadata> uniqueIndexes = getIndexes(
-			connection, tableName, columnName, true);
+			connection, tableName, columnName, false);
 
 		for (IndexMetadata uniqueIndex : uniqueIndexes) {
 			String[] columnNames = uniqueIndex.getColumnNames();

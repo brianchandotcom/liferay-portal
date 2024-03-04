@@ -803,27 +803,6 @@ export function mockEvent(seed = 0) {
 	};
 }
 
-export function mockAddOns() {
-	return [
-		{
-			baseSubscriptionPlan: 'Liferay Analytics Cloud Enterprise',
-			limits: {
-				individuals: 5000,
-				pageViews: 0
-			},
-			name: 'Liferay Analytics Cloud Enterprise Contacts'
-		},
-		{
-			baseSubscriptionPlan: 'Liferay Analytics Cloud Enterprise',
-			limits: {
-				individuals: 0,
-				pageViews: 5000000
-			},
-			name: 'Liferay Analytics Cloud Enterprise Tracked Pages'
-		}
-	];
-}
-
 export function mockBlockedCustomEventDefinition(seed = 0, data = {}) {
 	return {
 		hidden: false,
@@ -899,7 +878,24 @@ export function mockProject(seed = 1, data = {}) {
 	return {
 		accountKey: `accountKey${seed}`,
 		accountName: `accountName${seed}`,
-		addOnsIList: new Map(mockAddOns()),
+		addOnsIList: new Map([
+			{
+				baseSubscriptionPlan: 'Liferay Analytics Cloud Enterprise',
+				limits: {
+					individuals: 5000,
+					pageViews: 0
+				},
+				name: 'Liferay Analytics Cloud Enterprise Contacts'
+			},
+			{
+				baseSubscriptionPlan: 'Liferay Analytics Cloud Enterprise',
+				limits: {
+					individuals: 0,
+					pageViews: 5000000
+				},
+				name: 'Liferay Analytics Cloud Enterprise Tracked Pages'
+			}
+		]),
 		corpProjectName: `corpProjectName${seed}`,
 		corpProjectUuid: `corpProjectUuid${seed}`,
 		faroSubscription: new Map(),

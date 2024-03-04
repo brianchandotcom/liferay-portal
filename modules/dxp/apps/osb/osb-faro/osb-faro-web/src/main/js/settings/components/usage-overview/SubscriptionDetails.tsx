@@ -6,7 +6,6 @@ import {
 	getPropLabel,
 	INDIVIDUALS,
 	PAGEVIEWS,
-	PLAN_TYPES,
 	PLANS
 } from 'shared/util/subscriptions';
 import {Text} from '@clayui/core';
@@ -24,14 +23,7 @@ const ItemRenderer = ({name, value}) => (
 );
 
 export const SubscriptionDetails = ({currentPlan, planType}) => {
-	const addOns = getPlanAddOns(currentPlan).reduce((prevVal, curVal) => {
-		const name = PLAN_TYPES[curVal.name];
-
-		return {
-			...prevVal,
-			[name]: curVal.limits[name]
-		};
-	}, {});
+	const addOns = getPlanAddOns(currentPlan);
 
 	const showAddOns = !!Object.keys(addOns).length;
 
@@ -97,12 +89,12 @@ export const SubscriptionDetails = ({currentPlan, planType}) => {
 
 						<ItemRenderer
 							name={Liferay.Language.get('individuals')}
-							value={addOns[INDIVIDUALS]?.toLocaleString() ?? '-'}
+							value={addOns[INDIVIDUALS]}
 						/>
 
 						<ItemRenderer
 							name={Liferay.Language.get('page-views')}
-							value={addOns[PAGEVIEWS]?.toLocaleString() ?? '-'}
+							value={addOns[PAGEVIEWS]}
 						/>
 					</Card.Body>
 				</>

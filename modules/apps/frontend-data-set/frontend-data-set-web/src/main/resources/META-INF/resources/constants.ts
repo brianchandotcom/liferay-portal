@@ -5,6 +5,3 @@
 
 export const FDS_NESTED_FIELD_NAME_DELIMITER: string = '.';
 export const FDS_NESTED_FIELD_NAME_PARENT_SUFFIX: string = `${FDS_NESTED_FIELD_NAME_DELIMITER}*`;
-
-const IMAGES_PATH = Liferay.ThemeDisplay.getPathThemeImages();
-export const SPRITEMAP = IMAGES_PATH + '/clay/icons.svg';

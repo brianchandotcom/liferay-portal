@@ -5,4 +5,3 @@
 
 export declare const FDS_NESTED_FIELD_NAME_DELIMITER: string;
 export declare const FDS_NESTED_FIELD_NAME_PARENT_SUFFIX: string;
-export declare const SPRITEMAP: string;

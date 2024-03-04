@@ -15,7 +15,6 @@ const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPD-11003': true,
-		'LPS-180328': true,
 	}),
 	lockedItemsPagesTest
 );

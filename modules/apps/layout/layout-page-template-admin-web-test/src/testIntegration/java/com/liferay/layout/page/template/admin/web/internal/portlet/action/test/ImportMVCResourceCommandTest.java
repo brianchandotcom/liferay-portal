@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -216,7 +215,6 @@ public class ImportMVCResourceCommandTest {
 			expectedLayout.getTypeSettings(), actualLayout.getTypeSettings());
 	}
 
-	@FeatureFlags("LPS-180328")
 	@Test
 	public void testImportFileWithOverwriteStrategyAndWithExistingLockedLayoutPageTemplateEntry()
 		throws Exception {

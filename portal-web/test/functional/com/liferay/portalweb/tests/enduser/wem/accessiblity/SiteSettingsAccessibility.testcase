@@ -25,8 +25,6 @@ definition {
 	@description = "This is a test for LPS-194241. The Locked Pages of Site Settings should comply with WCAG 2.1 AA standard."
 	@priority = 3
 	test ViewAccessibilityOfLockedPages {
-		property custom.properties = "feature.flag.LPS-180328=true";
-
 		task ("Given a site administrator accesses to the site settings") {
 			Site.openSiteSettingsAdmin(siteURLKey = "Test Site Name");
 		}

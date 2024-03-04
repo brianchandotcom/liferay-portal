@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Group;
@@ -91,9 +90,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public void getLock(Layout layout, long userId) throws PortalException {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
-			(layout == null) || !layout.isDraftLayout()) {
-
+		if ((layout == null) || !layout.isDraftLayout()) {
 			return;
 		}
 
@@ -250,10 +247,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				redirectUnsafeSupplier)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
-			return String.valueOf(redirectUnsafeSupplier.get());
-		}
-
 		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse
 		).setActionName(
@@ -265,9 +258,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public void unlock(Layout layout, long userId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
-			(layout == null) || !layout.isDraftLayout()) {
-
+		if ((layout == null) || !layout.isDraftLayout()) {
 			return;
 		}
 

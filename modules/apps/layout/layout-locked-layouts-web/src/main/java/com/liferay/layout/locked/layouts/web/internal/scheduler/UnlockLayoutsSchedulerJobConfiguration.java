@@ -10,7 +10,6 @@ import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
@@ -49,10 +48,6 @@ public class UnlockLayoutsSchedulerJobConfiguration
 		_getCompanyJobExecutorUnsafeConsumer() {
 
 		return companyId -> {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
-				return;
-			}
-
 			LockedLayoutsCompanyConfiguration
 				lockedLayoutsCompanyConfiguration =
 					_configurationProvider.getCompanyConfiguration(

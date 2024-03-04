@@ -9,7 +9,6 @@ import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayo
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.locked.items.renderer.BaseJSPLockedItemsRenderer;
 import com.liferay.locked.items.renderer.LockedItemsRenderer;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -49,15 +48,6 @@ public class LayoutLockedItemsRenderer extends BaseJSPLockedItemsRenderer {
 	@Override
 	public String getName(Locale locale) {
 		return _language.get(locale, "pages");
-	}
-
-	@Override
-	public boolean isVisible() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

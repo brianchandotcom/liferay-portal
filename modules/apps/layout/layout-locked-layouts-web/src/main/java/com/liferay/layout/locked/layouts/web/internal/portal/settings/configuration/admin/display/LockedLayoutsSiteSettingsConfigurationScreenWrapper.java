@@ -15,9 +15,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -101,17 +99,6 @@ public class LockedLayoutsSiteSettingsConfigurationScreenWrapper
 		@Override
 		public ServletContext getServletContext() {
 			return _servletContext;
-		}
-
-		@Override
-		public boolean isVisible(Group group) {
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
-				group.isCompany()) {
-
-				return false;
-			}
-
-			return true;
 		}
 
 		@Override

@@ -43,6 +43,8 @@ public class FaroProjectAdminDisplay {
 
 		_faroProjectId = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 		_groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+		_individualsLimit = GetterUtil.getLong(
+			document.get("individualsLimit"));
 
 		try {
 			_lastAccessDate = document.getDate("lastAccessDate");
@@ -54,31 +56,31 @@ public class FaroProjectAdminDisplay {
 		_name = document.get(Field.NAME);
 		_offline = GetterUtil.getBoolean(document.get("offline"));
 		_owner = _getOwner();
+		_pageViewsLimit = GetterUtil.getLong(document.get("pageViewsLimit"));
 		_serverLocation = document.get("serverLocation");
 		_subscriptionName = document.get("subscriptionName");
+
+		try {
+			JSONObject subscriptionJSONObject =
+				JSONFactoryUtil.createJSONObject(document.get("subscription"));
+
+			_individualsCount = subscriptionJSONObject.getLong(
+				"individualsCountSinceLastAnniversary");
+
+			_individualsUsage = _getUsage(_individualsCount, _individualsLimit);
+
+			_pageViewsCount = subscriptionJSONObject.getLong(
+				"pageViewsCountSinceLastAnniversary");
+
+			_pageViewsUsage = _getUsage(_pageViewsCount, _pageViewsLimit);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
-	public FaroProjectAdminDisplay(FaroProject faroProject, Document document)
-		throws Exception {
-
+	public FaroProjectAdminDisplay(FaroProject faroProject, Document document) {
 		this(document);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			faroProject.getSubscription());
-
-		_individualsCount = jsonObject.getLong(
-			"individualsCountSinceLastAnniversary");
-		_pageViewsCount = jsonObject.getLong(
-			"pageViewsCountSinceLastAnniversary");
-
-		_individualsLimit = GetterUtil.getLong(
-			document.get("individualsLimit"));
-
-		_individualsUsage = _getUsage(_individualsCount, _individualsLimit);
-
-		_pageViewsLimit = GetterUtil.getLong(document.get("pageViewsLimit"));
-
-		_pageViewsUsage = _getUsage(_pageViewsCount, _pageViewsLimit);
 
 		_serverLocation = faroProject.getServerLocation();
 		_subscription = faroProject.getSubscription();

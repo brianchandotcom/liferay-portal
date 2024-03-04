@@ -21,6 +21,7 @@ Main-Class: com.liferay.portal.tools.db.partition.virtual.instance.migration.ext
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/LogSanitizerException.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/LogWrapper.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/SanitizerLogWrapper.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/ArrayUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/EnvPropertiesUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\

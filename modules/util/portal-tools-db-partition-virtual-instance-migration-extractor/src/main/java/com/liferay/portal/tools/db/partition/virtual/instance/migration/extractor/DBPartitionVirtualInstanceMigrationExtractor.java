@@ -10,10 +10,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.LiferayInstance;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.extractor.util.DatabaseUtil;
 
 import java.io.File;
+import java.io.PrintWriter;
 
 import java.nio.file.Files;
 
@@ -27,6 +29,8 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
@@ -48,51 +52,8 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 		}
 	}
 
-	private static void _exit(int code) {
-		try {
-			if (_connection != null) {
-				_connection.close();
-			}
-		}
-		catch (SQLException sqlException) {
-			System.err.println(sqlException);
-		}
-
-		if (code != _LIFERAY_COMMON_EXIT_CODE_OK) {
-			System.exit(code);
-		}
-	}
-
-	private static Options _getOptions() {
-		Options options = new Options();
-
-		options.addOption("d", "output-dir", true, "Output directory.");
-		options.addOption("h", "help", false, "Display options.");
-		options.addRequiredOption("j", "jdbc-url", true, "JDBC URL.");
-		options.addRequiredOption(
-			"p", "password", true, "Database user password.");
-		options.addOption(
-			"s", "schema-name", true, "Database schema name to be extracted.");
-		options.addRequiredOption("u", "user", true, "Database user name.");
-
-		return options;
-	}
-
-	private static void _main(String[] args) throws Exception {
-		Options options = _getOptions();
-
-		if ((args.length != 0) &&
-			(args[0].equals("-h") || args[0].endsWith("help"))) {
-
-			HelpFormatter helpFormatter = new HelpFormatter();
-
-			helpFormatter.printHelp(
-				"Liferay Portal Tools Database Partition Virtual Instance " +
-					"Migration Extractor",
-				options);
-
-			return;
-		}
+	private static void _executeDataExtraction(String[] args) throws Exception {
+		Options options = _getExtractionOptions();
 
 		try {
 			CommandLineParser commandLineParser = new DefaultParser();
@@ -130,17 +91,153 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 
 			parseException.printStackTrace();
 
-			HelpFormatter helpFormatter = new HelpFormatter();
-
-			helpFormatter.printHelp(
-				"Liferay Portal Tools Database Partition Virtual Instance " +
-					"Migration Extractor",
-				options);
+			_printHelp();
 
 			_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 		}
+	}
+
+	private static void _executeDataValidation(String[] args) throws Exception {
+		Options options = _getValidationOptions();
+
+		try {
+			CommandLineParser commandLineParser = new DefaultParser();
+
+			CommandLine commandLine = commandLineParser.parse(options, args);
+		}
+		catch (ParseException parseException) {
+			System.err.println("Unable to parse command line properties:");
+
+			parseException.printStackTrace();
+
+			_printHelp();
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
+		}
+	}
+
+	private static void _exit(int code) {
+		try {
+			if (_connection != null) {
+				_connection.close();
+			}
+		}
+		catch (SQLException sqlException) {
+			System.err.println(sqlException);
+		}
+
+		if (code != _LIFERAY_COMMON_EXIT_CODE_OK) {
+			System.exit(code);
+		}
+	}
+
+	private static Options _getExtractionOptions() {
+		Options options = new Options();
+
+		options.addOption("d", "output-dir", true, "Output directory.");
+		options.addRequiredOption("j", "jdbc-url", true, "JDBC URL.");
+		options.addRequiredOption(
+			"p", "password", true, "Database user password.");
+		options.addOption(
+			"s", "schema-name", true, "Database schema name to be extracted.");
+		options.addRequiredOption("u", "user", true, "Database user name.");
+
+		return options;
+	}
+
+	private static Options _getMainOptions() {
+		OptionGroup optionGroup = new OptionGroup();
+
+		optionGroup.addOption(
+			new Option("e", "extract", false, "Execute data extraction."));
+		optionGroup.addOption(
+			new Option("v", "validate", false, "Execute data validation."));
+
+		Options options = new Options();
+
+		options.addOption("h", "help", false, "Display options.");
+		options.addOptionGroup(optionGroup);
+
+		return options;
+	}
+
+	private static Options _getValidationOptions() {
+		Options options = new Options();
+
+		options.addRequiredOption("s", "source-file", true, "Source file.");
+		options.addRequiredOption("t", "target-file", true, "Target file.");
+
+		return options;
+	}
+
+	private static void _main(String[] args) throws Exception {
+		if ((args.length != 0) &&
+			(args[0].equals("-h") || args[0].equals("-help") ||
+			 args[0].equals("--help"))) {
+
+			_printHelp();
+
+			return;
+		}
+
+		boolean toolExecuted = false;
+
+		for (String arg : args) {
+			if (arg.equals("-e") || arg.equals("-extract") ||
+				arg.equals("--extract")) {
+
+				_executeDataExtraction(ArrayUtil.remove(args, arg));
+				toolExecuted = true;
+
+				break;
+			}
+			else if (arg.equals("-v") || arg.equals("-validate") ||
+					 arg.equals("--validate")) {
+
+				_executeDataValidation(ArrayUtil.remove(args, arg));
+				toolExecuted = true;
+
+				break;
+			}
+		}
+
+		if (!toolExecuted) {
+			_printHelp();
+
+			return;
+		}
 
 		_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
+	}
+
+	private static void _printHelp() {
+		HelpFormatter helpFormatter = new HelpFormatter();
+
+		PrintWriter printWriter = new PrintWriter(System.out);
+
+		helpFormatter.printUsage(
+			printWriter, _HELP_WIDTH,
+			"./db_partition_virtual_instance_migration.sh OPERATION_MODE " +
+				"[OPERATION_PARAMETERS]");
+		helpFormatter.printWrapped(
+			printWriter, _HELP_WIDTH, "\nMain operation mode:");
+		helpFormatter.printOptions(
+			printWriter, _HELP_WIDTH, _getMainOptions(), _HELP_LEFT_PAD,
+			_HELP_DESC_PAD);
+		helpFormatter.printWrapped(
+			printWriter, _HELP_WIDTH, _HELP_DESC_PAD,
+			"\nData Extraction parameters:");
+		helpFormatter.printOptions(
+			printWriter, _HELP_WIDTH, _getExtractionOptions(), _HELP_LEFT_PAD,
+			_HELP_DESC_PAD);
+		helpFormatter.printWrapped(
+			printWriter, _HELP_WIDTH, "\nData Validation parameters:");
+		helpFormatter.printOptions(
+			printWriter, _HELP_WIDTH, _getValidationOptions(), _HELP_LEFT_PAD,
+			_HELP_DESC_PAD);
+
+		printWriter.flush();
+		printWriter.close();
 	}
 
 	private static String _writeToFile(
@@ -188,6 +285,12 @@ public class DBPartitionVirtualInstanceMigrationExtractor {
 
 		return exportFile.getCanonicalPath();
 	}
+
+	private static final int _HELP_DESC_PAD = 5;
+
+	private static final int _HELP_LEFT_PAD = 2;
+
+	private static final int _HELP_WIDTH = 80;
 
 	/**
 	 * https://github.com/liferay/liferay-docker/blob/master/_liferay_common.sh

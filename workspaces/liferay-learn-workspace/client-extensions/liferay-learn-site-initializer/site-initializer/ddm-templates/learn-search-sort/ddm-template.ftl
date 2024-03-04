@@ -56,6 +56,7 @@
 	   font-weight: 600;
        font-size: 13px;
 	   line-height: 16px;
+	   margin-top:1px;
 	}
 	
 	.form-group-autofit > .form-group-item:not(:last-child) {

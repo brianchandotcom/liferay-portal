@@ -200,7 +200,6 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-11127 | Automation ID: LRAC-12154 | Test Summary: Check if the identity event is sent when the user interacts with sites that have different channels ids"
-	@ignore = "true"
 	@priority = 3
 	test CheckEventSentWhenUserInteractsWithSitesWithDifferentChannelId {
 		property proxy.server.enabled = "true";

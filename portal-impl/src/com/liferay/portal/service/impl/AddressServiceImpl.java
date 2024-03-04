@@ -79,6 +79,20 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 	}
 
 	@Override
+	public List<Address> getListTypeAddresses(
+			String className, long classPK, long[] listTypeIds)
+		throws PortalException {
+
+		CommonPermissionUtil.check(
+			getPermissionChecker(), className, classPK, ActionKeys.VIEW);
+
+		User user = getUser();
+
+		return addressLocalService.getListTypeAddresses(
+			user.getCompanyId(), className, classPK, listTypeIds);
+	}
+
+	@Override
 	public Address updateAddress(
 			long addressId, String name, String description, String street1,
 			String street2, String street3, String city, String zip,

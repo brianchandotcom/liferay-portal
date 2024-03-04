@@ -5,12 +5,16 @@
 
 package com.liferay.headless.admin.user.internal.dto.v1_0.util;
 
+import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.HashMap;
@@ -21,6 +25,27 @@ import java.util.Map;
  * @author Javier Gamarra
  */
 public class PostalAddressUtil {
+
+	public static long[] getAccountEntryContactAddressListTypeIds(
+		long companyId, ListTypeLocalService listTypeLocalService) {
+
+		String[] keys = {
+			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_BILLING,
+			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_OTHER,
+			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_P_O_BOX,
+			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_SHIPPING
+		};
+
+		return TransformUtil.transformToLongArray(
+			ListUtil.fromArray(keys),
+			key -> {
+				ListType listType = listTypeLocalService.getListType(
+					companyId, key,
+					AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS);
+
+				return listType.getListTypeId();
+			});
+	}
 
 	public static PostalAddress toPostalAddress(
 		boolean acceptAllLanguages, Address address, long companyId,

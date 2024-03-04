@@ -6,6 +6,7 @@
 package com.liferay.account.admin.web.internal.dao.search;
 
 import com.liferay.account.admin.web.internal.display.AddressDisplay;
+import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -64,7 +65,22 @@ public class AccountEntryAddressDisplaySearchContainerFactory {
 
 		if (Validator.isNotNull(type) && !type.equals("all")) {
 			params.put(
-				"typeNames", new String[] {type, "billing-and-shipping"});
+				"typeNames",
+				new String[] {
+					type,
+					AccountListTypeConstants.
+						ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING
+				});
+		}
+		else {
+			params.put(
+				"typeNames",
+				new String[] {
+					AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
+					AccountListTypeConstants.
+						ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING,
+					AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING
+				});
 		}
 
 		ThemeDisplay themeDisplay =

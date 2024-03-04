@@ -15,17 +15,27 @@ import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.AccountContactInformation;
+import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderAddressUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderEmailAddressUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderPhoneUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderWebsiteUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -37,6 +47,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.File;
@@ -292,6 +303,62 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					Arrays.asList(userAccounts), UserAccount::getId));
 		}
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10855")) {
+			AccountContactInformation accountContactInformation =
+				account.getAccountContactInformation();
+
+			if (accountContactInformation != null) {
+				accountEntry = _accountEntryService.updateAddresses(
+					accountEntry.getAccountEntryId(),
+					_getContactAddresses(account, accountEntry));
+				accountEntry = _accountEntryService.updateEmailAddresses(
+					accountEntry.getAccountEntryId(),
+					_getEmailAddresses(account, accountEntry));
+				accountEntry = _accountEntryService.updatePhones(
+					accountEntry.getAccountEntryId(),
+					_getPhones(account, accountEntry));
+				accountEntry = _accountEntryService.updateWebsites(
+					accountEntry.getAccountEntryId(),
+					_getWebsites(account, accountEntry));
+
+				Contact contact = accountEntry.fetchContact();
+
+				if (contact == null) {
+					accountEntry = _accountEntryService.addOrUpdateContact(
+						accountEntry.getAccountEntryId(),
+						GetterUtil.getString(
+							accountContactInformation.getFacebook()),
+						GetterUtil.getString(
+							accountContactInformation.getJabber()),
+						GetterUtil.getString(
+							accountContactInformation.getSkype()),
+						GetterUtil.getString(
+							accountContactInformation.getSms()),
+						GetterUtil.getString(
+							accountContactInformation.getTwitter()));
+				}
+				else {
+					accountEntry = _accountEntryService.addOrUpdateContact(
+						accountEntry.getAccountEntryId(),
+						GetterUtil.getString(
+							accountContactInformation.getFacebook(),
+							contact.getFacebookSn()),
+						GetterUtil.getString(
+							accountContactInformation.getJabber(),
+							contact.getJabberSn()),
+						GetterUtil.getString(
+							accountContactInformation.getSkype(),
+							contact.getSkypeSn()),
+						GetterUtil.getString(
+							accountContactInformation.getSms(),
+							contact.getSmsSn()),
+						GetterUtil.getString(
+							accountContactInformation.getTwitter(),
+							contact.getTwitterSn()));
+				}
+			}
+		}
+
 		return _toAccount(accountEntry);
 	}
 
@@ -363,6 +430,36 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				_createServiceContext(account));
 		}
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10855")) {
+			AccountContactInformation accountContactInformation =
+				account.getAccountContactInformation();
+
+			if (accountContactInformation != null) {
+				accountEntry = _accountEntryService.updateAddresses(
+					accountEntry.getAccountEntryId(),
+					_getContactAddresses(account, null));
+				accountEntry = _accountEntryService.updateEmailAddresses(
+					accountEntry.getAccountEntryId(),
+					_getEmailAddresses(account, null));
+				accountEntry = _accountEntryService.updatePhones(
+					accountEntry.getAccountEntryId(),
+					_getPhones(account, null));
+				accountEntry = _accountEntryService.updateWebsites(
+					accountEntry.getAccountEntryId(),
+					_getWebsites(account, null));
+
+				accountEntry = _accountEntryService.addOrUpdateContact(
+					accountEntry.getAccountEntryId(),
+					GetterUtil.getString(
+						accountContactInformation.getFacebook()),
+					GetterUtil.getString(accountContactInformation.getJabber()),
+					GetterUtil.getString(accountContactInformation.getSkype()),
+					GetterUtil.getString(accountContactInformation.getSms()),
+					GetterUtil.getString(
+						accountContactInformation.getTwitter()));
+			}
+		}
+
 		return _toAccount(accountEntry);
 	}
 
@@ -416,16 +513,50 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				_createServiceContext(account));
 		}
 
-		return _toAccount(
-			_accountEntryService.updateAccountEntry(
-				accountId, _getParentAccountId(account), account.getName(),
-				account.getDescription(), _isDeleteLogo(account, null),
-				_getDomains(account), null,
-				_getLogoBytes(
-					account, _accountEntryService.fetchAccountEntry(accountId),
-					false),
-				account.getTaxId(), _getStatus(account),
-				_createServiceContext(account)));
+		AccountEntry accountEntry = _accountEntryService.updateAccountEntry(
+			accountId, _getParentAccountId(account), account.getName(),
+			account.getDescription(), _isDeleteLogo(account, null),
+			_getDomains(account), null,
+			_getLogoBytes(
+				account, _accountEntryService.fetchAccountEntry(accountId),
+				false),
+			account.getTaxId(), _getStatus(account),
+			_createServiceContext(account));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10855")) {
+			accountEntry = _accountEntryService.updateAddresses(
+				accountEntry.getAccountEntryId(),
+				_getContactAddresses(account, null));
+			accountEntry = _accountEntryService.updateEmailAddresses(
+				accountEntry.getAccountEntryId(),
+				_getEmailAddresses(account, null));
+			accountEntry = _accountEntryService.updatePhones(
+				accountEntry.getAccountEntryId(), _getPhones(account, null));
+			accountEntry = _accountEntryService.updateWebsites(
+				accountEntry.getAccountEntryId(), _getWebsites(account, null));
+
+			AccountContactInformation accountContactInformation =
+				account.getAccountContactInformation();
+
+			if (accountContactInformation != null) {
+				accountEntry = _accountEntryService.addOrUpdateContact(
+					accountEntry.getAccountEntryId(),
+					GetterUtil.getString(
+						accountContactInformation.getFacebook()),
+					GetterUtil.getString(accountContactInformation.getJabber()),
+					GetterUtil.getString(accountContactInformation.getSkype()),
+					GetterUtil.getString(accountContactInformation.getSms()),
+					GetterUtil.getString(
+						accountContactInformation.getTwitter()));
+			}
+			else {
+				accountEntry = _accountEntryService.addOrUpdateContact(
+					accountEntry.getAccountEntryId(), null, null, null, null,
+					null);
+			}
+		}
+
+		return _toAccount(accountEntry);
 	}
 
 	@Override
@@ -433,7 +564,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			String externalReferenceCode, Account account)
 		throws Exception {
 
-		return _toAccount(
+		AccountEntry accountEntry =
 			_accountEntryService.addOrUpdateAccountEntry(
 				externalReferenceCode, contextUser.getUserId(),
 				_getParentAccountId(account), account.getName(),
@@ -445,7 +576,42 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 							contextUser.getCompanyId(), externalReferenceCode),
 					false),
 				null, _getType(account), _getStatus(account),
-				_createServiceContext(account)));
+				_createServiceContext(account));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10855")) {
+			accountEntry = _accountEntryService.updateAddresses(
+				accountEntry.getAccountEntryId(),
+				_getContactAddresses(account, null));
+			accountEntry = _accountEntryService.updateEmailAddresses(
+				accountEntry.getAccountEntryId(),
+				_getEmailAddresses(account, null));
+			accountEntry = _accountEntryService.updatePhones(
+				accountEntry.getAccountEntryId(), _getPhones(account, null));
+			accountEntry = _accountEntryService.updateWebsites(
+				accountEntry.getAccountEntryId(), _getWebsites(account, null));
+
+			AccountContactInformation accountContactInformation =
+				account.getAccountContactInformation();
+
+			if (accountContactInformation != null) {
+				accountEntry = _accountEntryService.addOrUpdateContact(
+					accountEntry.getAccountEntryId(),
+					GetterUtil.getString(
+						accountContactInformation.getFacebook()),
+					GetterUtil.getString(accountContactInformation.getJabber()),
+					GetterUtil.getString(accountContactInformation.getSkype()),
+					GetterUtil.getString(accountContactInformation.getSms()),
+					GetterUtil.getString(
+						accountContactInformation.getTwitter()));
+			}
+			else {
+				accountEntry = _accountEntryService.addOrUpdateContact(
+					accountEntry.getAccountEntryId(), null, null, null, null,
+					null);
+			}
+		}
+
+		return _toAccount(accountEntry);
 	}
 
 	private ServiceContext _createServiceContext(Account account)
@@ -493,6 +659,36 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					ServiceBuilderAddressUtil.toServiceBuilderAddress(
 						contextCompany.getCompanyId(), _postalAddress,
 						AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS)),
+			Objects::nonNull);
+	}
+
+	private List<Address> _getContactAddresses(
+			Account account, AccountEntry accountEntry)
+		throws Exception {
+
+		AccountContactInformation accountContactInformation =
+			account.getAccountContactInformation();
+
+		if ((accountContactInformation == null) ||
+			(accountContactInformation.getPostalAddresses() == null)) {
+
+			if (accountEntry != null) {
+				return accountEntry.getListTypeAddresses(
+					PostalAddressUtil.getAccountEntryContactAddressListTypeIds(
+						accountEntry.getCompanyId(), _listTypeLocalService));
+			}
+
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				accountContactInformation.getPostalAddresses(),
+				_postalAddress ->
+					ServiceBuilderAddressUtil.toServiceBuilderAddress(
+						contextCompany.getCompanyId(), _postalAddress,
+						AccountListTypeConstants.
+							ACCOUNT_ENTRY_CONTACT_ADDRESS)),
 			Objects::nonNull);
 	}
 
@@ -595,6 +791,33 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			contextUser);
 	}
 
+	private List<com.liferay.portal.kernel.model.EmailAddress>
+			_getEmailAddresses(Account account, AccountEntry accountEntry)
+		throws Exception {
+
+		AccountContactInformation accountContactInformation =
+			account.getAccountContactInformation();
+
+		if ((accountContactInformation == null) ||
+			(accountContactInformation.getEmailAddresses() == null)) {
+
+			if (accountEntry != null) {
+				return accountEntry.getEmailAddresses();
+			}
+
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				accountContactInformation.getEmailAddresses(),
+				emailAddress ->
+					ServiceBuilderEmailAddressUtil.toServiceBuilderEmailAddress(
+						contextCompany.getCompanyId(), emailAddress,
+						AccountListTypeConstants.ACCOUNT_ENTRY_EMAIL_ADDRESS)),
+			Objects::nonNull);
+	}
+
 	private byte[] _getLogoBytes(
 			Account account, AccountEntry accountEntry,
 			boolean useAccountEntryDefault)
@@ -658,6 +881,32 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		return parentAccountId;
 	}
 
+	private List<com.liferay.portal.kernel.model.Phone> _getPhones(
+			Account account, AccountEntry accountEntry)
+		throws Exception {
+
+		AccountContactInformation accountContactInformation =
+			account.getAccountContactInformation();
+
+		if ((accountContactInformation == null) ||
+			(accountContactInformation.getTelephones() == null)) {
+
+			if (accountEntry != null) {
+				return accountEntry.getPhones();
+			}
+
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				accountContactInformation.getTelephones(),
+				telephone -> ServiceBuilderPhoneUtil.toServiceBuilderPhone(
+					contextCompany.getCompanyId(), telephone,
+					AccountListTypeConstants.ACCOUNT_ENTRY_PHONE)),
+			Objects::nonNull);
+	}
+
 	private int _getStatus(Account account) {
 		Integer status = account.getStatus();
 
@@ -676,6 +925,32 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		}
 
 		return type;
+	}
+
+	private List<Website> _getWebsites(
+			Account account, AccountEntry accountEntry)
+		throws Exception {
+
+		AccountContactInformation accountContactInformation =
+			account.getAccountContactInformation();
+
+		if ((accountContactInformation == null) ||
+			(accountContactInformation.getWebUrls() == null)) {
+
+			if (accountEntry != null) {
+				return accountEntry.getWebsites();
+			}
+
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			transformToList(
+				accountContactInformation.getWebUrls(),
+				webUrl -> ServiceBuilderWebsiteUtil.toServiceBuilderWebsite(
+					contextCompany.getCompanyId(),
+					AccountListTypeConstants.ACCOUNT_ENTRY_WEBSITE, webUrl)),
+			Objects::nonNull);
 	}
 
 	private boolean _isDeleteLogo(Account account, AccountEntry accountEntry) {
@@ -739,6 +1014,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private File _file;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference(
 		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER

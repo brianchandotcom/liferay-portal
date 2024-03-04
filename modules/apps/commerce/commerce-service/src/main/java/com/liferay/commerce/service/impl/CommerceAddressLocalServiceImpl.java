@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -579,7 +578,19 @@ public class CommerceAddressLocalServiceImpl
 
 		BaseModelSearchResult<Address> addressBaseModelSearchResult =
 			_addressLocalService.searchAddresses(
-				companyId, className, classPK, keywords, new LinkedHashMap<>(),
+				companyId, className, classPK, keywords,
+				LinkedHashMapBuilder.<String, Object>put(
+					"listTypeIds",
+					new long[] {
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.ADDRESS_TYPE_BILLING),
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.
+								ADDRESS_TYPE_BILLING_AND_SHIPPING),
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.ADDRESS_TYPE_SHIPPING)
+					}
+				).build(),
 				start, end, sort);
 
 		return new BaseModelSearchResult<>(
@@ -597,7 +608,19 @@ public class CommerceAddressLocalServiceImpl
 
 		BaseModelSearchResult<Address> addressBaseModelSearchResult =
 			_addressLocalService.searchAddresses(
-				companyId, className, classPK, keywords, new LinkedHashMap<>(),
+				companyId, className, classPK, keywords,
+				LinkedHashMapBuilder.<String, Object>put(
+					"listTypeIds",
+					new long[] {
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.ADDRESS_TYPE_BILLING),
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.
+								ADDRESS_TYPE_BILLING_AND_SHIPPING),
+						CommerceAddressImpl.toAddressTypeId(
+							CommerceAddressConstants.ADDRESS_TYPE_SHIPPING)
+					}
+				).build(),
 				start, end, sort);
 
 		return new BaseModelSearchResult<>(

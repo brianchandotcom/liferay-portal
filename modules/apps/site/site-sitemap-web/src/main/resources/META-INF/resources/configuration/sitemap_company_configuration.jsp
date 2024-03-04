@@ -85,8 +85,17 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 					<liferay-ui:search-container-column-text
 						name="site-name"
 						truncate="<%= true %>"
-						value="<%= HtmlUtil.escape(group.getDescriptiveName()) %>"
-					/>
+					>
+						<%= HtmlUtil.escape(group.getDescriptiveName()) %>
+
+						<c:if test="<%= sitemapCompanyConfigurationDisplayContext.hasVirtualHost(group) %>">
+							<clay:icon
+								aria-label='<%= LanguageUtil.get(request, "this-site-is-not-included-in-the-companys-xml-sitemap-because-it-already-has-a-virtual-host") %>'
+								cssClass="text-warning"
+								symbol="warning-full"
+							/>
+						</c:if>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text>
 						<c:if test="<%= !group.isGuest() %>">

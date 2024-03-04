@@ -16,7 +16,8 @@ import React, {ComponentProps, useEffect, useState} from 'react';
 
 import {FDSViewType} from '../../../../FDSViews';
 import {getFields} from '../../../../api';
-import Search from '../../../../components/Search';
+import AutoSearch from '../../../../components/AutoSearch';
+import SearchResultsMessage from '../../../../components/SearchResultsMessage';
 import openDefaultFailureToast from '../../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../../utils/openDefaultSuccessToast';
 import {IFDSField, IField} from '../../../../utils/types';
@@ -193,7 +194,6 @@ const AddFieldsModalContent = ({
 	);
 	const [query, setQuery] = useState<string>('');
 	const [expandedKeys, setExpandedKeys] = useState<Array<React.Key>>([]);
-	const [searchCounter, setSearchCounter] = useState<number>(0);
 
 	const saveFDSFields = async () => {
 		setSaveButtonDisabled(true);
@@ -277,14 +277,13 @@ const AddFieldsModalContent = ({
 	const onSearch = (query: string) => {
 		setQuery(query);
 
-		const {counter, filteredItems, filteredKeys} = applyFilter({
+		const {filteredItems, filteredKeys} = applyFilter({
 			fields: initialFields ?? [],
 			query,
 		});
 
 		setFields(filteredItems);
 		setExpandedKeys(filteredKeys);
-		setSearchCounter(counter);
 	};
 
 	return (
@@ -300,24 +299,26 @@ const AddFieldsModalContent = ({
 					<>
 						<ClayManagementToolbar>
 							<ClayManagementToolbar.Search>
-								<Search onSearch={onSearch} query={query} />
+								<AutoSearch onSearch={onSearch} query={query} />
 							</ClayManagementToolbar.Search>
 						</ClayManagementToolbar>
 
-						{query && (
+						<SearchResultsMessage numberOfResults={fields.length} />
+
+						{selectedKeys.size > 0 && (
 							<ClayResultsBar>
 								<ClayResultsBar.Item expand>
 									<span className="component-text text-truncate-inline">
 										<span className="text-truncate">
 											{sub(
-												searchCounter === 1
+												selectedKeys.size === 1
 													? Liferay.Language.get(
 															'x-result-for-x'
 													  )
 													: Liferay.Language.get(
 															'x-results-for-x'
 													  ),
-												searchCounter,
+												selectedKeys.size,
 												query
 											)}
 										</span>
@@ -329,11 +330,11 @@ const AddFieldsModalContent = ({
 										className="component-link tbar-link"
 										displayType="unstyled"
 										onClick={() => {
-											setQuery('');
-											setFields(initialFields);
+											selectedKeys.clear();
+											onSearch('');
 										}}
 									>
-										{Liferay.Language.get('clear')}
+										{Liferay.Language.get('deselect-all')}
 									</ClayButton>
 								</ClayResultsBar.Item>
 							</ClayResultsBar>

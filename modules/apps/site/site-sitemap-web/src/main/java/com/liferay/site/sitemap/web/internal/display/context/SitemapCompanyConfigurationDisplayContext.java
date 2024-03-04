@@ -11,6 +11,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
@@ -110,6 +112,18 @@ public class SitemapCompanyConfigurationDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
+	}
+
+	public boolean hasVirtualHost(Group group) {
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		if ((layoutSet != null) &&
+			MapUtil.isNotEmpty(layoutSet.getVirtualHostnames())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean includeCategories() throws ConfigurationException {

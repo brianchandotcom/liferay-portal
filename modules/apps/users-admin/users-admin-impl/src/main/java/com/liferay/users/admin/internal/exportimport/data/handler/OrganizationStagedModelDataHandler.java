@@ -121,7 +121,7 @@ public class OrganizationStagedModelDataHandler
 			}
 
 			_exportAddresses(portletDataContext, exportedOrganization);
-			_exportCountries(portletDataContext, exportedOrganization);
+			_exportCountry(portletDataContext, exportedOrganization);
 			_exportEmailAddresses(portletDataContext, exportedOrganization);
 			_exportOrgLabors(portletDataContext, exportedOrganization);
 			_exportPasswordPolicyRel(portletDataContext, exportedOrganization);
@@ -171,7 +171,7 @@ public class OrganizationStagedModelDataHandler
 
 		Organization importedOrganization = null;
 
-		organization = _updateCountryId(portletDataContext, organization);
+		organization = _importCountry(portletDataContext, organization);
 
 		if (existingOrganization == null) {
 			serviceContext.setUuid(organization.getUuid());
@@ -240,7 +240,7 @@ public class OrganizationStagedModelDataHandler
 		}
 	}
 
-	private void _exportCountries(
+	private void _exportCountry(
 			PortletDataContext portletDataContext, Organization organization)
 		throws Exception {
 
@@ -363,6 +363,33 @@ public class OrganizationStagedModelDataHandler
 		UsersAdminUtil.updateAddresses(
 			Organization.class.getName(),
 			importedOrganization.getOrganizationId(), addresses);
+	}
+
+	private Organization _importCountry(
+			PortletDataContext portletDataContext, Organization organization)
+		throws Exception {
+
+		List<Element> countryElements =
+			portletDataContext.getReferenceDataElements(
+				organization, Country.class);
+
+		if (!countryElements.isEmpty()) {
+			Element countryElement = countryElements.get(0);
+
+			String countryPath = countryElement.attributeValue("path");
+
+			Country country = (Country)portletDataContext.getZipEntryAsObject(
+				countryPath);
+
+			if (country != null) {
+				organization.setCountryId(
+					_countryLocalService.getCountryByA2(
+						portletDataContext.getCompanyId(), country.getA2()
+					).getCountryId());
+			}
+		}
+
+		return organization;
 	}
 
 	private void _importEmailAddresses(
@@ -533,33 +560,6 @@ public class OrganizationStagedModelDataHandler
 		UsersAdminUtil.updateWebsites(
 			Organization.class.getName(),
 			importedOrganization.getOrganizationId(), websites);
-	}
-
-	private Organization _updateCountryId(
-			PortletDataContext portletDataContext, Organization organization)
-		throws PortalException {
-
-		List<Element> countryElements =
-			portletDataContext.getReferenceDataElements(
-				organization, Country.class);
-
-		if (!countryElements.isEmpty()) {
-			Element countryElement = countryElements.get(0);
-
-			String countryPath = countryElement.attributeValue("path");
-
-			Country country = (Country)portletDataContext.getZipEntryAsObject(
-				countryPath);
-
-			if (country != null) {
-				organization.setCountryId(
-					_countryLocalService.getCountryByA2(
-						portletDataContext.getCompanyId(), country.getA2()
-					).getCountryId());
-			}
-		}
-
-		return organization;
 	}
 
 	@Reference

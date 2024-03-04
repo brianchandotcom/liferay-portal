@@ -8,6 +8,7 @@ package com.liferay.headless.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.site.client.dto.v1_0.Site;
 import com.liferay.headless.site.client.problem.Problem;
+import com.liferay.headless.site.client.resource.v1_0.SiteResource;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -147,6 +148,26 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testPostSiteSuccessMembershipTypePrivate();
 		_testPostSiteSuccessSiteInitializer();
 		_testPostSiteSuccessSiteTemplate();
+	}
+
+	@Test
+	public void testPostSiteWithoutAuthentication() throws Exception {
+		SiteResource.Builder builder = SiteResource.builder();
+
+		SiteResource curSiteResource = builder.build();
+
+		try {
+			Site randomSite = randomSite();
+
+			curSiteResource.postSite(randomSite);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("403", problem.getStatus());
+		}
 	}
 
 	@Override

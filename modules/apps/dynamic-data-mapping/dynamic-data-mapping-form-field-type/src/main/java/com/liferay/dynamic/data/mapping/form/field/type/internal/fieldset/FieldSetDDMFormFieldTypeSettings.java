@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 		@DDMFormRule(
 			actions = {
 				"setVisible('ddmStructureId', FALSE)",
+				"setVisible('ddmStructureKey, FALSE)",
 				"setVisible('ddmStructureLayoutId', FALSE)",
 				"setVisible('name', FALSE)",
 				"setVisible('normalizedStructure', FALSE)",
@@ -45,8 +46,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 							value = {
 								"label", "collapsible", "labelAtStructureLevel",
 								"repeatable", "showLabel", "rows", "type",
-								"ddmStructureId", "ddmStructureLayoutId",
-								"upgradedStructure", "normalizedStructure"
+								"ddmStructureId", "ddmStructureKey",
+								"ddmStructureLayoutId", "upgradedStructure",
+								"normalizedStructure"
 							}
 						)
 					}
@@ -78,6 +80,9 @@ public interface FieldSetDDMFormFieldTypeSettings
 
 	@DDMFormField(dataType = "numeric")
 	public long ddmStructureId();
+
+	@DDMFormField(dataType = "string")
+	public String ddmStructureKey();
 
 	@DDMFormField(dataType = "numeric")
 	public long ddmStructureLayoutId();

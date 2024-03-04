@@ -83,6 +83,8 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		).put(
 			"ddmStructureId", ddmFormField.getProperty("ddmStructureId")
 		).put(
+			"ddmStructureKey", ddmFormField.getProperty("ddmStructureKey")
+		).put(
 			"ddmStructureLayoutId",
 			ddmFormField.getProperty("ddmStructureLayoutId")
 		).put(

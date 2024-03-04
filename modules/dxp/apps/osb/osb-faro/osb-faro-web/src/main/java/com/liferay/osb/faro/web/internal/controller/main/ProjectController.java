@@ -1012,8 +1012,9 @@ public class ProjectController extends BaseFaroController {
 		JSONObject oldSubscriptionJSONObject = _jsonFactory.createJSONObject(
 			faroProject.getSubscription());
 
-		if (oldSubscriptionJSONObject.get("name") !=
-				newSubscriptionJSONObject.get("name")) {
+		if (!Objects.equals(
+				oldSubscriptionJSONObject.get("name"),
+				newSubscriptionJSONObject.get("name"))) {
 
 			return true;
 		}

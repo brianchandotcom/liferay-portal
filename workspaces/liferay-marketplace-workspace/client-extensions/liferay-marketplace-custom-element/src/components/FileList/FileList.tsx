@@ -10,11 +10,36 @@ import {DocumentFileItem} from './DocumentFileItem';
 import './FileList.scss';
 import {ImageFileItem} from './ImageFileItem';
 
+export type ImageCustomField = {
+	customValue: {data: string[]};
+	dataType: string;
+	name: string;
+};
+
+export type UploadedImage = {
+	cdnEnabled: boolean;
+	cdnURL: string;
+	customFields: ImageCustomField[];
+	displayDate: string;
+	externalReferenceCode: string;
+	fileEntryId: number;
+	galleryEnabled: boolean;
+	id: number;
+	options: {};
+	priority: number;
+	src: string;
+	tags: any[];
+	title: {en_US: string};
+	type: number;
+};
+
 export type UploadedFile = {
+	changed: boolean;
 	error: boolean | AxiosError;
 	file: File;
 	fileName: string;
 	id: string;
+	imageDescription?: string;
 	preview?: string;
 	progress: number;
 	readableSize:
@@ -28,6 +53,7 @@ export type UploadedFile = {
 				value: any;
 		  };
 	uploaded: boolean;
+	uploadedImage?: UploadedImage;
 	versionName?: string;
 };
 

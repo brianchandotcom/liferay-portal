@@ -1290,44 +1290,6 @@ public abstract class BaseAssetSearchTestCase {
 		}
 	}
 
-	protected void testOrderByCreateDate(
-			AssetEntryQuery assetEntryQuery, String orderByType,
-			String[] titles, String[] orderedTitles)
-		throws Exception {
-
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
-
-		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
-
-		for (String title : titles) {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
-
-			serviceContext.setCreateDate(new Date());
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-			try {
-				addBaseModel(
-					getParentBaseModel(_group1, serviceContext), title,
-					serviceContext);
-			}
-			finally {
-				ServiceContextThreadLocal.popServiceContext();
-			}
-		}
-
-		assetEntryQuery.setOrderByCol1("createDate");
-		assetEntryQuery.setOrderByType1(orderByType);
-
-		List<AssetEntry> assetEntries = search(assetEntryQuery, searchContext);
-
-		Assert.assertEquals(
-			ArrayUtils.toString(orderedTitles),
-			ArrayUtils.toString(
-				getTitles(assetEntries, LocaleUtil.getDefault())));
-	}
-
 	protected void testOrderByExpirationDate(
 			AssetEntryQuery assetEntryQuery, String orderByType,
 			Date[] expirationDates)

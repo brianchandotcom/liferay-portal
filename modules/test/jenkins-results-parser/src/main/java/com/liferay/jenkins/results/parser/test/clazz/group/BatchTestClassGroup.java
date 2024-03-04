@@ -354,6 +354,26 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return sb.toString();
 	}
 
+	public boolean testAnalyticsCloud() {
+		if (_testAnalyticsCloud != null) {
+			return _testAnalyticsCloud;
+		}
+
+		for (SegmentTestClassGroup segmentTestClassGroup :
+				getSegmentTestClassGroups()) {
+
+			if (segmentTestClassGroup.testAnalyticsCloud()) {
+				_testAnalyticsCloud = true;
+
+				return _testAnalyticsCloud;
+			}
+		}
+
+		_testAnalyticsCloud = false;
+
+		return _testAnalyticsCloud;
+	}
+
 	protected BatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
@@ -1177,5 +1197,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private final List<JobProperty> _jobProperties = new ArrayList<>();
 	private final List<SegmentTestClassGroup> _segmentTestClassGroups =
 		new ArrayList<>();
+	private Boolean _testAnalyticsCloud;
 
 }

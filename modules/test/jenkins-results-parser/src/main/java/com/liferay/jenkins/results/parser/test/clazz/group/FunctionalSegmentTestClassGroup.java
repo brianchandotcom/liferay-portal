@@ -144,6 +144,30 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		return sb.toString();
 	}
 
+	@Override
+	public boolean testAnalyticsCloud() {
+		if (_testAnalyticsCloud != null) {
+			return _testAnalyticsCloud;
+		}
+
+		Properties poshiProperties = getPoshiProperties();
+
+		String analyticsCloudEnabled = poshiProperties.getProperty(
+			"analytics.cloud.enabled");
+
+		if ((analyticsCloudEnabled != null) &&
+			analyticsCloudEnabled.equals("true")) {
+
+			_testAnalyticsCloud = true;
+
+			return _testAnalyticsCloud;
+		}
+
+		_testAnalyticsCloud = false;
+
+		return _testAnalyticsCloud;
+	}
+
 	protected FunctionalSegmentTestClassGroup(
 		BatchTestClassGroup batchTestClassGroup) {
 
@@ -180,22 +204,6 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		return new AbstractMap.SimpleEntry<>(key, value);
 	}
 
-	@Override
-	protected boolean testAnalyticsCloud() {
-		Properties poshiProperties = getPoshiProperties();
-
-		String analyticsCloudEnabled = poshiProperties.getProperty(
-			"analytics.cloud.enabled");
-
-		if ((analyticsCloudEnabled != null) &&
-			analyticsCloudEnabled.equals("true")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private String _getWorkspaceName() {
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
@@ -228,5 +236,6 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 	}
 
 	private final BatchTestClassGroup _batchTestClassGroup;
+	private Boolean _testAnalyticsCloud;
 
 }

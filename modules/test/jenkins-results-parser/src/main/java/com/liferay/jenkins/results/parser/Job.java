@@ -85,6 +85,8 @@ public interface Job {
 
 	public boolean isValidationRequired();
 
+	public boolean testAnalyticsCloud();
+
 	public boolean testHotfixChanges();
 
 	public boolean testJaCoCoCodeCoverage();

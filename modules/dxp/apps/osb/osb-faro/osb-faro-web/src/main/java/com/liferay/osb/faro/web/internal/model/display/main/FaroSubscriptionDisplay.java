@@ -156,7 +156,10 @@ public class FaroSubscriptionDisplay {
 			return;
 		}
 
-		if (_startDate == null) {
+		if ((_startDate == null) ||
+			(faroProject.getSubscriptionModifiedTime() >
+				_startDate.getTime())) {
+
 			_startDate = new Date(faroProject.getSubscriptionModifiedTime());
 		}
 

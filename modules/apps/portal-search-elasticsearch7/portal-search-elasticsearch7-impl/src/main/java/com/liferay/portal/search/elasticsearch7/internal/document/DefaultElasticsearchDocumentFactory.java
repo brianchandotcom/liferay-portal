@@ -40,12 +40,6 @@ import org.osgi.service.component.annotations.Component;
 public class DefaultElasticsearchDocumentFactory
 	implements ElasticsearchDocumentFactory {
 
-	public static final String DATE_MAX_VALUE = "99950812133000";
-
-	public static final Format FORMAT =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss", null, null);
-
 	/**
 	 * @deprecated As of Mueller (7.2.x)
 	 */
@@ -115,10 +109,10 @@ public class DefaultElasticsearchDocumentFactory
 			String value;
 
 			if (date.getTime() == Long.MAX_VALUE) {
-				value = DATE_MAX_VALUE;
+				value = _DATE_MAX_VALUE;
 			}
 			else {
-				value = FORMAT.format(date);
+				value = _FORMAT.format(date);
 			}
 
 			xContentBuilder.value(value);
@@ -362,5 +356,11 @@ public class DefaultElasticsearchDocumentFactory
 
 		return Double.valueOf(value);
 	}
+
+	private static final String _DATE_MAX_VALUE = "99950812133000";
+
+	private static final Format _FORMAT =
+		FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss", null, null);
 
 }

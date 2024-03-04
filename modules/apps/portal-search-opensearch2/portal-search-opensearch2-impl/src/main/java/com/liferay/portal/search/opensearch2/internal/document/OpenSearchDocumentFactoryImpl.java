@@ -43,12 +43,6 @@ import org.osgi.service.component.annotations.Component;
 public class OpenSearchDocumentFactoryImpl
 	implements OpenSearchDocumentFactory {
 
-	public static final String DATE_MAX_VALUE = "99950812133000";
-
-	public static final Format FORMAT =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss", null, null);
-
 	/**
 	 * @deprecated As of Mueller (7.2.x)
 	 */
@@ -319,10 +313,10 @@ public class OpenSearchDocumentFactoryImpl
 			String value;
 
 			if (date.getTime() == Long.MAX_VALUE) {
-				value = DATE_MAX_VALUE;
+				value = _DATE_MAX_VALUE;
 			}
 			else {
-				value = FORMAT.format(date);
+				value = _FORMAT.format(date);
 			}
 
 			values.add(value);
@@ -370,6 +364,12 @@ public class OpenSearchDocumentFactoryImpl
 
 		return value;
 	}
+
+	private static final String _DATE_MAX_VALUE = "99950812133000";
+
+	private static final Format _FORMAT =
+		FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss", null, null);
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();
 

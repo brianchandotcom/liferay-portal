@@ -148,7 +148,7 @@ else {
 		%>
 
 		<c:choose>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-194763") && ListUtil.isNotEmpty(ddmStructureVerticalNavItemList) %>'>
+			<c:when test="<%= ListUtil.isNotEmpty(ddmStructureVerticalNavItemList) %>">
 				<clay:row>
 					<clay:col
 						lg="3"

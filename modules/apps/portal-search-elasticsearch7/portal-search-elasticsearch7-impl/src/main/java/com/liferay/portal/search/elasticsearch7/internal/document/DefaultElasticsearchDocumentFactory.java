@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.document;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
@@ -15,14 +16,14 @@ import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.io.IOException;
 
+import java.text.Format;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.apache.commons.lang.time.FastDateFormat;
 
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.geo.GeoPoint;
@@ -39,10 +40,11 @@ import org.osgi.service.component.annotations.Component;
 public class DefaultElasticsearchDocumentFactory
 	implements ElasticsearchDocumentFactory {
 
-	public static final FastDateFormat DATE_FORMAT = FastDateFormat.getInstance(
-		"yyyyMMddHHmmss");
-
 	public static final String DATE_MAX_VALUE = "99950812133000";
+
+	public static final Format FORMAT =
+		FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss", null, null);
 
 	/**
 	 * @deprecated As of Mueller (7.2.x)
@@ -116,7 +118,7 @@ public class DefaultElasticsearchDocumentFactory
 				value = DATE_MAX_VALUE;
 			}
 			else {
-				value = DATE_FORMAT.format(date);
+				value = FORMAT.format(date);
 			}
 
 			xContentBuilder.value(value);

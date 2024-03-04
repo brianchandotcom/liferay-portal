@@ -44,6 +44,8 @@ public class OpenGitHubPullRequestEventHandler
 		if (_checkForwardedPullRequest() ||
 			_checkMergeSubrepositoryPullRequest()) {
 
+			_commentDefaultMessage();
+
 			return null;
 		}
 
@@ -189,6 +191,41 @@ public class OpenGitHubPullRequestEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		gitHubPullRequest.comment(broadcastMessage);
+	}
+
+	private void _commentDefaultMessage() throws InvalidJSONException {
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		GitHubUser senderGitHubUser = gitHubPullRequest.getSenderGitHubUser();
+
+		if (!senderGitHubUser.isLiferayUser()) {
+			return;
+		}
+
+		GitHubUser receiverGitHubUser =
+			gitHubPullRequest.getReceiverGitHubUser();
+
+		String receiverGitHubUserName = receiverGitHubUser.getName();
+
+		String baseRepositoryName = gitHubPullRequest.getBaseRepositoryName();
+
+		if (receiverGitHubUserName.equals("liferay") &&
+			!baseRepositoryName.startsWith("com-liferay") &&
+			!baseRepositoryName.equals("liferay-portal-ee")) {
+
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("To conserve resources, the PR Tester does not ");
+		sb.append("automatically run for every pull.\n\nIf your code changes ");
+		sb.append("were already tested in another pull, reference that pull ");
+		sb.append("in this pull so the test results can be analyzed.\n\nIf ");
+		sb.append("your pull was never tested, comment &quot;ci:test&quot; ");
+		sb.append("to run the PR Tester for this pull.");
+
+		gitHubPullRequest.comment(sb.toString());
 	}
 
 	private Set<JobEntity> _createJobEntities()

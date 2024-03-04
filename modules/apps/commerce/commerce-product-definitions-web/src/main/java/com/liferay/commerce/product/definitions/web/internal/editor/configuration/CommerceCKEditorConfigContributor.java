@@ -10,6 +10,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.document.library.kernel.processor.AudioProcessorUtil;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -50,7 +51,7 @@ public class CommerceCKEditorConfigContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		if (!_isAICreatorChatGPTGroupEnabled(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
 
 			return;
 		}
@@ -64,7 +65,7 @@ public class CommerceCKEditorConfigContributor
 			() -> PortletURLBuilder.create(
 				requestBackedPortletURLFactory.createControlPanelRenderURL(
 					"com_liferay_ai_creator_openai_web_internal_portlet_" +
-					"AICreatorOpenAIPortlet",
+						"AICreatorOpenAIPortlet",
 					themeDisplay.getScopeGroup(),
 					themeDisplay.getRefererGroupId(), 0)
 			).setMVCPath(
@@ -78,7 +79,7 @@ public class CommerceCKEditorConfigContributor
 			"aiCreatorPortletNamespace",
 			() -> _portal.getPortletNamespace(
 				"com_liferay_ai_creator_openai_web_internal_portlet_" +
-				"AICreatorOpenAIPortlet")
+					"AICreatorOpenAIPortlet")
 		).put(
 			"extraPlugins", extraPlugins.concat(",aicreator")
 		).put(
@@ -86,10 +87,10 @@ public class CommerceCKEditorConfigContributor
 			() -> {
 				try {
 					if (Validator.isNotNull(
-						_aiCreatorOpenAIConfigurationManager.
-							getAICreatorOpenAIGroupAPIKey(
-								themeDisplay.getCompanyId(),
-								themeDisplay.getScopeGroupId()))) {
+							_aiCreatorOpenAIConfigurationManager.
+								getAICreatorOpenAIGroupAPIKey(
+									themeDisplay.getCompanyId(),
+									themeDisplay.getScopeGroupId()))) {
 
 						return true;
 					}
@@ -176,7 +177,8 @@ public class CommerceCKEditorConfigContributor
 
 		try {
 			if (_aiCreatorOpenAIConfigurationManager.
-					isAICreatorChatGPTGroupEnabled(companyId, groupId)) {
+					isAICreatorChatGPTGroupEnabled(companyId, groupId) &&
+				FeatureFlagManagerUtil.isEnabled("LPD-10862")) {
 
 				return true;
 			}

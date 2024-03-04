@@ -30,7 +30,6 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
-import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
@@ -441,10 +440,7 @@ public class DefaultObjectEntryManagerImpl
 				objectEntryLocalService.getValuesList(
 					groupId, companyId, dtoConverterContext.getUserId(),
 					objectDefinition.getObjectDefinitionId(), predicate, search,
-					start, end,
-					OrderByExpressionUtil.getOrderByExpressions(
-						objectDefinition.getObjectDefinitionId(),
-						objectFieldLocalService, sorts)),
+					start, end, sorts),
 				values -> _getObjectEntry(
 					dtoConverterContext, objectDefinition, values)),
 			pagination,

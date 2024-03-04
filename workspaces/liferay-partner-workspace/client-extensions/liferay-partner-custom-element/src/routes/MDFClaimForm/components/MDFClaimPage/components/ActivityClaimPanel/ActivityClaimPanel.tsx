@@ -28,7 +28,6 @@ import MiscellaneousMarketingPopFields from './components/MiscellaneousMarketing
 import PanelBody from './components/PanelBody';
 import PanelHeader from './components/PanelHeader';
 import useBudgetsAmount from './hooks/useBudgetsAmount';
-import classNames from 'classnames';
 
 interface IProps {
 	activity: MDFClaimActivity;
@@ -217,11 +216,13 @@ const ActivityClaimPanel = ({
 						</div>
 					</div>
 
-					{!expanded && activity.selected && <span className="collapse-icon-closed mt-2">
-						<ClayIcon symbol={"angle-down"}></ClayIcon>
-					</span>}
+					{!expanded && activity.selected && (
+						<span className="collapse-icon-closed mt-2">
+							<ClayIcon symbol="angle-down"></ClayIcon>
+						</span>
+					)}
 					<span className="collapse-icon-open mt-2">
-						<ClayIcon symbol={"angle-up"}></ClayIcon>
+						<ClayIcon symbol="angle-up"></ClayIcon>
 					</span>
 				</PanelHeader>
 

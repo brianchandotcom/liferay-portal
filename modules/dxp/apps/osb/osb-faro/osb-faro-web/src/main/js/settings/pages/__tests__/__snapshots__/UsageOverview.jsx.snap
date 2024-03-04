@@ -194,7 +194,7 @@ exports[`Subscription Details renders subscription details for BUSINESS PLAN 1`]
       <span
         class="text-3 text-secondary"
       >
-        5,000
+        10,000
       </span>
     </div>
     <div
@@ -330,7 +330,7 @@ exports[`Subscription Details renders subscription details for ENTERPRISE PLAN 1
       <span
         class="text-3 text-secondary"
       >
-        5,000
+        10,000
       </span>
     </div>
     <div
@@ -676,7 +676,7 @@ exports[`UsageOverview should render 1`] = `
                 <span
                   class="text-3 text-secondary"
                 >
-                  5,000
+                  10,000
                 </span>
               </div>
               <div

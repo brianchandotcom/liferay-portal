@@ -191,16 +191,14 @@ export default function getDropdownOptions(
 			}
 		}
 
-		if (mdfRequestStatus?.key === Status.APPROVED.key) {
-			if (currentValue === PermissionActionType.CANCEL) {
-				previousValue.push({
-					key: Status.CANCELED.key,
-					label: Status.CANCELED.name,
-					onClick: () => {
-						callConfirmCancelMDFRequestModal();
-					},
-				});
-			}
+		if (mdfRequestStatus?.key === Status.APPROVED.key && currentValue === PermissionActionType.CANCEL) {
+			previousValue.push({
+				key: Status.CANCELED.key,
+				label: Status.CANCELED.name,
+				onClick: () => {
+					callConfirmCancelMDFRequestModal();
+				},
+			});
 		}
 
 		if (mdfRequestStatus?.key === Status.CANCELED.key) {

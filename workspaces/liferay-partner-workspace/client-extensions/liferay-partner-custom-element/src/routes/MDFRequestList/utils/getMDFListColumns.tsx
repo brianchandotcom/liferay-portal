@@ -91,7 +91,7 @@ export default function getMDFListColumns(
 						MDFRequestDTO
 					>(
 						row[MDFColumnKey.ID] &&
-							`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${row[MDFColumnKey.ID]}?nestedFields=mdfReqToActs%2C%20mdfReqToMDFClms`
+							`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${row[MDFColumnKey.ID]}?nestedFields=mdfReqToActs,mdfReqToMDFClms`
 					);
 					previousValue.push({
 						icon: 'block',

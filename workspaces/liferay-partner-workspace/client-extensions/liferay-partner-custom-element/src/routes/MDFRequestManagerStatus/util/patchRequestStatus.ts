@@ -34,26 +34,26 @@ const patchRequestStatus = async (
 			) {
 				for (const activity of mdfReqToActs) {
 					if (activity.id && (activity.activityStatus?.key === Status.SUBMITTED.key || activity.activityStatus?.key === Status.CANCELED.key)) {
-						(await patchObjectEntry(
+						await patchObjectEntry(
 							ResourceName.ACTIVITY_DXP,
 							activity.id,
 							{
 								activityStatus: Status.APPROVED,
 							}
-						));
+						);
 					}
 				}
 
 				if (mdfReqToMDFClms?.length) {
 					for (const claim of mdfReqToMDFClms) {
 						if (claim.id && claim.mdfClaimStatus?.key === Status.CANCELED.key) {
-							(await patchObjectEntry(
+							await patchObjectEntry(
 								ResourceName.MDF_CLAIM_DXP,
 								claim.id,
 								{
 									mdfClaimStatus: Status.APPROVED,
 								}
-							));
+							);
 						}
 					}
 				}
@@ -66,26 +66,26 @@ const patchRequestStatus = async (
 			) {
 				for (const activity of mdfReqToActs) {
 					if (activity.id && activity.activityStatus?.key === Status.APPROVED.key) {
-						(await patchObjectEntry(
+						await patchObjectEntry(
 							ResourceName.ACTIVITY_DXP,
 							activity.id,
 							{
 								activityStatus: Status.CANCELED,
 							}
-						));
+						);
 					}
 				}
 
 				if (mdfReqToMDFClms?.length) {
 					for (const claim of mdfReqToMDFClms) {
 						if (claim.id && (claim.mdfClaimStatus?.key === Status.APPROVED.key || claim.mdfClaimStatus?.key === Status.DRAFT.key)) {
-							(await patchObjectEntry(
+							await patchObjectEntry(
 								ResourceName.MDF_CLAIM_DXP,
 								claim.id,
 								{
 									mdfClaimStatus: Status.CANCELED,
 								}
-							));
+							);
 						}
 					}
 				}

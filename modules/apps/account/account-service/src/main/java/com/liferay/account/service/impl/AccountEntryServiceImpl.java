@@ -11,6 +11,10 @@ import com.liferay.account.service.base.AccountEntryServiceBaseImpl;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -115,6 +119,21 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 			externalReferenceCode, userId, parentAccountEntryId, name,
 			description, _getManageableDomains(accountEntryId, domains),
 			emailAddress, logoBytes, taxIdNumber, type, status, serviceContext);
+	}
+
+	@Override
+	public AccountEntry addOrUpdateContact(
+			long accountEntryId, String facebookSn, String jabberSn,
+			String skypeSn, String smsSn, String twitterSn)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_ADDRESSES);
+
+		return accountEntryLocalService.addOrUpdateContact(
+			accountEntryLocalService.getAccountEntry(accountEntryId),
+			facebookSn, jabberSn, skypeSn, smsSn, twitterSn);
 	}
 
 	@Override
@@ -288,6 +307,20 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AccountEntry updateAddresses(
+			long accountEntryId, List<Address> addresses)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_ADDRESSES);
+
+		return accountEntryLocalService.updateAddresses(
+			accountEntryLocalService.getAccountEntry(accountEntryId),
+			addresses);
+	}
+
+	@Override
 	public AccountEntry updateDefaultBillingAddressId(
 			long accountEntryId, long addressId)
 		throws PortalException {
@@ -325,6 +358,20 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AccountEntry updateEmailAddresses(
+			long accountEntryId, List<EmailAddress> emailAddresses)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_ADDRESSES);
+
+		return accountEntryLocalService.updateEmailAddresses(
+			accountEntryLocalService.getAccountEntry(accountEntryId),
+			emailAddresses);
+	}
+
+	@Override
 	public AccountEntry updateExternalReferenceCode(
 			long accountEntryId, String externalReferenceCode)
 		throws PortalException {
@@ -334,6 +381,18 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 		return accountEntryLocalService.updateExternalReferenceCode(
 			accountEntryId, externalReferenceCode);
+	}
+
+	@Override
+	public AccountEntry updatePhones(long accountEntryId, List<Phone> phones)
+		throws Exception {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_ADDRESSES);
+
+		return accountEntryLocalService.updatePhones(
+			accountEntryLocalService.getAccountEntry(accountEntryId), phones);
 	}
 
 	@Override
@@ -347,6 +406,19 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 		return accountEntryLocalService.updateRestrictMembership(
 			accountEntryId, restrictMembership);
+	}
+
+	@Override
+	public AccountEntry updateWebsites(
+			long accountEntryId, List<Website> websites)
+		throws PortalException {
+
+		_accountEntryModelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.MANAGE_ADDRESSES);
+
+		return accountEntryLocalService.updateWebsites(
+			accountEntryLocalService.getAccountEntry(accountEntryId), websites);
 	}
 
 	private String[] _getManageableDomains(

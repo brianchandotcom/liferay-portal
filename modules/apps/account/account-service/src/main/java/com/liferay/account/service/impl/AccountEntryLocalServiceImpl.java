@@ -39,13 +39,18 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
+import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -56,12 +61,16 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ContactLocalService;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -269,6 +278,30 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setExternalReferenceCode(externalReferenceCode);
 
 		return accountEntryPersistence.update(accountEntry);
+	}
+
+	@Override
+	public AccountEntry addOrUpdateContact(
+			AccountEntry accountEntry, String facebookSn, String jabberSn,
+			String skypeSn, String smsSn, String twitterSn)
+		throws PortalException {
+
+		Contact contact = accountEntry.fetchContact();
+
+		if (contact == null) {
+			_contactLocalService.addContact(
+				accountEntry.getUserId(), AccountEntry.class.getName(),
+				accountEntry.getAccountEntryId(), null, null, null, null, 0, 0,
+				true, 0, 1, 1970, smsSn, facebookSn, jabberSn, skypeSn,
+				twitterSn, null);
+		}
+		else {
+			_contactLocalService.updateContact(
+				contact.getContactId(), null, null, null, null, 0, 0, true, 0,
+				1, 1970, smsSn, facebookSn, jabberSn, skypeSn, twitterSn, null);
+		}
+
+		return accountEntry;
 	}
 
 	@Override
@@ -681,6 +714,64 @@ public class AccountEntryLocalServiceImpl
 		return accountEntry;
 	}
 
+	@Override
+	public AccountEntry updateAddresses(
+			AccountEntry accountEntry, List<Address> addresses)
+		throws PortalException {
+
+		Set<Long> addressIds = new HashSet<>();
+
+		for (Address address : addresses) {
+			long addressId = address.getAddressId();
+
+			String name = address.getName();
+			String description = address.getDescription();
+			String street1 = address.getStreet1();
+			String street2 = address.getStreet2();
+			String street3 = address.getStreet3();
+			String city = address.getCity();
+			String zip = address.getZip();
+			long regionId = address.getRegionId();
+			long countryId = address.getCountryId();
+			long listTypeId = address.getListTypeId();
+			boolean mailing = address.isMailing();
+			boolean primary = address.isPrimary();
+			String phoneNumber = address.getPhoneNumber();
+
+			if (addressId <= 0) {
+				address = _addressLocalService.addAddress(
+					address.getExternalReferenceCode(),
+					accountEntry.getUserId(), AccountEntry.class.getName(),
+					accountEntry.getAccountEntryId(), name, description,
+					street1, street2, street3, city, zip, regionId, countryId,
+					listTypeId, mailing, primary, phoneNumber,
+					new ServiceContext());
+
+				addressId = address.getAddressId();
+			}
+			else {
+				_addressLocalService.updateAddress(
+					addressId, name, description, street1, street2, street3,
+					city, zip, regionId, countryId, listTypeId, mailing,
+					primary, phoneNumber);
+			}
+
+			addressIds.add(addressId);
+		}
+
+		addresses = _addressLocalService.getAddresses(
+			accountEntry.getCompanyId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
+
+		for (Address address : addresses) {
+			if (!addressIds.contains(address.getAddressId())) {
+				_addressLocalService.deleteAddress(address.getAddressId());
+			}
+		}
+
+		return accountEntry;
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AccountEntry updateDefaultBillingAddressId(
@@ -725,6 +816,50 @@ public class AccountEntryLocalServiceImpl
 		return updateAccountEntry(accountEntry);
 	}
 
+	@Override
+	public AccountEntry updateEmailAddresses(
+			AccountEntry accountEntry, List<EmailAddress> emailAddresses)
+		throws PortalException {
+
+		Set<Long> emailAddressIds = new HashSet<>();
+
+		for (EmailAddress emailAddress : emailAddresses) {
+			long emailAddressId = emailAddress.getEmailAddressId();
+
+			String address = emailAddress.getAddress();
+			long listTypeId = emailAddress.getListTypeId();
+			boolean primary = emailAddress.isPrimary();
+
+			if (emailAddressId <= 0) {
+				emailAddress = _emailAddressLocalService.addEmailAddress(
+					accountEntry.getUserId(), AccountEntry.class.getName(),
+					accountEntry.getAccountEntryId(), address, listTypeId,
+					primary, new ServiceContext());
+
+				emailAddressId = emailAddress.getEmailAddressId();
+			}
+			else {
+				_emailAddressLocalService.updateEmailAddress(
+					emailAddressId, address, listTypeId, primary);
+			}
+
+			emailAddressIds.add(emailAddressId);
+		}
+
+		emailAddresses = _emailAddressLocalService.getEmailAddresses(
+			accountEntry.getCompanyId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
+
+		for (EmailAddress emailAddress : emailAddresses) {
+			if (!emailAddressIds.contains(emailAddress.getEmailAddressId())) {
+				_emailAddressLocalService.deleteEmailAddress(
+					emailAddress.getEmailAddressId());
+			}
+		}
+
+		return accountEntry;
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AccountEntry updateExternalReferenceCode(
@@ -751,6 +886,50 @@ public class AccountEntryLocalServiceImpl
 
 		return updateExternalReferenceCode(
 			getAccountEntry(accountEntryId), externalReferenceCode);
+	}
+
+	@Override
+	public AccountEntry updatePhones(
+			AccountEntry accountEntry, List<Phone> phones)
+		throws Exception {
+
+		Set<Long> phoneIds = new HashSet<>();
+
+		for (Phone phone : phones) {
+			long phoneId = phone.getPhoneId();
+
+			String number = phone.getNumber();
+			String extension = phone.getExtension();
+			long listTypeId = phone.getListTypeId();
+			boolean primary = phone.isPrimary();
+
+			if (phoneId <= 0) {
+				phone = _phoneLocalService.addPhone(
+					accountEntry.getUserId(), AccountEntry.class.getName(),
+					accountEntry.getAccountEntryId(), number, extension,
+					listTypeId, primary, new ServiceContext());
+
+				phoneId = phone.getPhoneId();
+			}
+			else {
+				_phoneLocalService.updatePhone(
+					phoneId, number, extension, listTypeId, primary);
+			}
+
+			phoneIds.add(phoneId);
+		}
+
+		phones = _phoneLocalService.getPhones(
+			accountEntry.getCompanyId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
+
+		for (Phone phone : phones) {
+			if (!phoneIds.contains(phone.getPhoneId())) {
+				_phoneLocalService.deletePhone(phone.getPhoneId());
+			}
+		}
+
+		return accountEntry;
 	}
 
 	@Override
@@ -828,6 +1007,49 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setStatusDate(serviceContext.getModifiedDate(new Date()));
 
 		return updateAccountEntry(accountEntry);
+	}
+
+	@Override
+	public AccountEntry updateWebsites(
+			AccountEntry accountEntry, List<Website> websites)
+		throws PortalException {
+
+		Set<Long> websiteIds = new HashSet<>();
+
+		for (Website website : websites) {
+			long websiteId = website.getWebsiteId();
+
+			String url = website.getUrl();
+			long listTypeId = website.getListTypeId();
+			boolean primary = website.isPrimary();
+
+			if (websiteId <= 0) {
+				website = _websiteLocalService.addWebsite(
+					accountEntry.getUserId(), AccountEntry.class.getName(),
+					accountEntry.getAccountEntryId(), url, listTypeId, primary,
+					new ServiceContext());
+
+				websiteId = website.getWebsiteId();
+			}
+			else {
+				_websiteLocalService.updateWebsite(
+					websiteId, url, listTypeId, primary);
+			}
+
+			websiteIds.add(websiteId);
+		}
+
+		websites = _websiteLocalService.getWebsites(
+			accountEntry.getCompanyId(), AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId());
+
+		for (Website website : websites) {
+			if (!websiteIds.contains(website.getWebsiteId())) {
+				_websiteLocalService.deleteWebsite(website.getWebsiteId());
+			}
+		}
+
+		return accountEntry;
 	}
 
 	private void _checkStatus(int oldStatus, int newStatus) {
@@ -1260,7 +1482,13 @@ public class AccountEntryLocalServiceImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private ContactLocalService _contactLocalService;
+
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private EmailAddressLocalService _emailAddressLocalService;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;
@@ -1270,6 +1498,9 @@ public class AccountEntryLocalServiceImpl
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private PhoneLocalService _phoneLocalService;
 
 	@Reference
 	private Portal _portal;
@@ -1294,6 +1525,9 @@ public class AccountEntryLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private WebsiteLocalService _websiteLocalService;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

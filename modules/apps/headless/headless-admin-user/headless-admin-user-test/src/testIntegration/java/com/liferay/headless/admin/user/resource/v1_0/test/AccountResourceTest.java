@@ -13,6 +13,11 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountContactInformation;
+import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
+import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -26,11 +31,13 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -41,6 +48,7 @@ import org.junit.runner.RunWith;
  * @author Drew Brokke
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
+@FeatureFlags("LPD-10855")
 @RunWith(Arquillian.class)
 public class AccountResourceTest extends BaseAccountResourceTestCase {
 
@@ -163,6 +171,14 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Override
 	@Test
+	public void testPatchAccount() throws Exception {
+		super.testPatchAccount();
+
+		_testPatchAccountWithContactInformation();
+	}
+
+	@Override
+	@Test
 	public void testPatchOrganizationMoveAccounts() throws Exception {
 		List<AccountEntry> accountEntries = Arrays.asList(
 			_addAccountEntry(), _addAccountEntry(), _addAccountEntry());
@@ -266,32 +282,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	public void testPostAccount() throws Exception {
 		super.testPostAccount();
 
-		Account account1 = randomAccount();
-
-		Account postAccount = accountResource.postAccount(account1);
-
-		Assert.assertEquals(
-			account1.getExternalReferenceCode(),
-			postAccount.getExternalReferenceCode());
-
-		try {
-			Account account2 = randomAccount();
-
-			account2.setExternalReferenceCode(
-				postAccount.getExternalReferenceCode());
-
-			_postAccount(account2);
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals(
-				DuplicateAccountEntryExternalReferenceCodeException.class.
-					getSimpleName(),
-				problem.getType());
-		}
+		_testPostAccountDuplicateExternalReferenceCode();
+		_testPostAccountWithContactInformation();
 	}
 
 	@Override
@@ -352,6 +344,22 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 						accountEntry.getAccountEntryId(),
 						organization.getOrganizationId()));
 		}
+	}
+
+	@Override
+	@Test
+	public void testPutAccount() throws Exception {
+		super.testPutAccount();
+
+		_testPutAccountWithContactInformation();
+	}
+
+	@Override
+	@Test
+	public void testPutAccountByExternalReferenceCode() throws Exception {
+		super.testPutAccountByExternalReferenceCode();
+
+		_testPutAccountByExternalReferenceCodeWithContactInformation();
 	}
 
 	@Override
@@ -489,12 +497,241 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		return _accountEntryLocalService.updateAccountEntry(accountEntry);
 	}
 
+	private void _assertEquals(
+		AccountContactInformation accountContactInformation1,
+		AccountContactInformation accountContactInformation2) {
+
+		_assertEquals(
+			accountContactInformation1.getEmailAddresses(),
+			accountContactInformation2.getEmailAddresses());
+		Assert.assertEquals(
+			accountContactInformation1.getFacebook(),
+			accountContactInformation2.getFacebook());
+		Assert.assertEquals(
+			accountContactInformation1.getJabber(),
+			accountContactInformation2.getJabber());
+		_assertEquals(
+			accountContactInformation1.getPostalAddresses(),
+			accountContactInformation2.getPostalAddresses());
+		Assert.assertEquals(
+			accountContactInformation1.getSkype(),
+			accountContactInformation2.getSkype());
+		Assert.assertEquals(
+			accountContactInformation1.getSms(),
+			accountContactInformation2.getSms());
+		_assertEquals(
+			accountContactInformation1.getTelephones(),
+			accountContactInformation2.getTelephones());
+		Assert.assertEquals(
+			accountContactInformation1.getTwitter(),
+			accountContactInformation2.getTwitter());
+		_assertEquals(
+			accountContactInformation1.getWebUrls(),
+			accountContactInformation2.getWebUrls());
+	}
+
+	private void _assertEquals(
+		EmailAddress[] emailAddresses1, EmailAddress[] emailAddresses2) {
+
+		Assert.assertEquals(
+			Arrays.toString(emailAddresses1) + " does not equal " +
+				Arrays.toString(emailAddresses2),
+			emailAddresses1.length, emailAddresses2.length);
+
+		for (int i = 0; i < emailAddresses1.length; i++) {
+			Assert.assertTrue(
+				emailAddresses1[i] + " does not equal " + emailAddresses2[i],
+				_equals(emailAddresses1[i], emailAddresses2[i]));
+		}
+	}
+
+	private void _assertEquals(Phone[] phones1, Phone[] phones2) {
+		Assert.assertEquals(
+			Arrays.toString(phones1) + " does not equal " +
+				Arrays.toString(phones2),
+			phones1.length, phones2.length);
+
+		for (int i = 0; i < phones1.length; i++) {
+			Assert.assertTrue(
+				phones1[i] + " does not equal " + phones2[i],
+				_equals(phones1[i], phones2[i]));
+		}
+	}
+
+	private void _assertEquals(
+		PostalAddress[] postalAddresses1, PostalAddress[] postalAddresses2) {
+
+		Assert.assertEquals(
+			Arrays.toString(postalAddresses1) + " does not equal " +
+				Arrays.toString(postalAddresses2),
+			postalAddresses1.length, postalAddresses2.length);
+
+		for (int i = 0; i < postalAddresses1.length; i++) {
+			Assert.assertTrue(
+				postalAddresses1[i] + " does not equal " + postalAddresses2[i],
+				_equals(postalAddresses1[i], postalAddresses2[i]));
+		}
+	}
+
+	private void _assertEquals(WebUrl[] webUrls1, WebUrl[] webUrls2) {
+		Assert.assertEquals(
+			Arrays.toString(webUrls1) + " does not equal " +
+				Arrays.toString(webUrls2),
+			webUrls1.length, webUrls2.length);
+
+		for (int i = 0; i < webUrls1.length; i++) {
+			Assert.assertTrue(
+				webUrls1[i] + " does not equal " + webUrls2[i],
+				_equals(webUrls1[i], webUrls2[i]));
+		}
+	}
+
+	private boolean _equals(
+		EmailAddress emailAddress1, EmailAddress emailAddress2) {
+
+		if (emailAddress1 == emailAddress2) {
+			return true;
+		}
+
+		if (!Objects.equals(
+				emailAddress1.getEmailAddress(),
+				emailAddress2.getEmailAddress()) ||
+			!Objects.equals(emailAddress1.getType(), emailAddress2.getType())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _equals(Phone phone1, Phone phone2) {
+		if (phone1 == phone2) {
+			return true;
+		}
+
+		if (!Objects.equals(phone1.getExtension(), phone2.getExtension()) ||
+			!Objects.equals(phone1.getPhoneNumber(), phone2.getPhoneNumber()) ||
+			!Objects.equals(phone1.getPhoneType(), phone2.getPhoneType())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _equals(
+		PostalAddress postalAddress1, PostalAddress postalAddress2) {
+
+		if (postalAddress1 == postalAddress2) {
+			return true;
+		}
+
+		if (!Objects.equals(
+				postalAddress1.getAddressCountry(),
+				postalAddress2.getAddressCountry()) ||
+			!Objects.equals(
+				postalAddress1.getAddressLocality(),
+				postalAddress2.getAddressLocality()) ||
+			!Objects.equals(
+				postalAddress1.getAddressRegion(),
+				postalAddress2.getAddressRegion()) ||
+			!Objects.equals(
+				postalAddress1.getAddressType(),
+				postalAddress2.getAddressType()) ||
+			!Objects.equals(
+				postalAddress1.getPostalCode(),
+				postalAddress2.getPostalCode()) ||
+			!Objects.equals(
+				postalAddress1.getStreetAddressLine1(),
+				postalAddress2.getStreetAddressLine1())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _equals(WebUrl webUrl1, WebUrl webUrl2) {
+		if (webUrl1 == webUrl2) {
+			return true;
+		}
+
+		if (!Objects.equals(webUrl1.getUrl(), webUrl2.getUrl()) ||
+			!Objects.equals(webUrl1.getUrlType(), webUrl2.getUrlType())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private Account _postAccount() throws Exception {
 		return _postAccount(randomAccount());
 	}
 
 	private Account _postAccount(Account account) throws Exception {
 		return accountResource.postAccount(account);
+	}
+
+	private AccountContactInformation _randomAccountContactInformation() {
+		return new AccountContactInformation() {
+			{
+				emailAddresses = new EmailAddress[] {
+					_randomEmailAddress(), _randomEmailAddress()
+				};
+				facebook = RandomTestUtil.randomString();
+				jabber = RandomTestUtil.randomString();
+				postalAddresses = new PostalAddress[] {
+					_randomPostalAddress(), _randomPostalAddress()
+				};
+				skype = RandomTestUtil.randomString();
+				sms = RandomTestUtil.randomString();
+				telephones = new Phone[] {_randomPhone(), _randomPhone()};
+				twitter = RandomTestUtil.randomString();
+				webUrls = new WebUrl[] {_randomWebUrl(), _randomWebUrl()};
+			}
+		};
+	}
+
+	private EmailAddress _randomEmailAddress() {
+		return new EmailAddress() {
+			{
+				emailAddress = RandomTestUtil.randomString() + "@liferay.com";
+				type = "email-address";
+			}
+		};
+	}
+
+	private Phone _randomPhone() {
+		return new Phone() {
+			{
+				extension = String.valueOf(RandomTestUtil.randomInt());
+				phoneNumber = String.valueOf(RandomTestUtil.randomInt());
+				phoneType = "fax";
+			}
+		};
+	}
+
+	private PostalAddress _randomPostalAddress() {
+		return new PostalAddress() {
+			{
+				addressCountry = "United States";
+				addressLocality = RandomTestUtil.randomString();
+				addressRegion = "California";
+				addressType = "other";
+				postalCode = String.valueOf(RandomTestUtil.randomInt());
+				streetAddressLine1 = RandomTestUtil.randomString();
+			}
+		};
+	}
+
+	private WebUrl _randomWebUrl() {
+		return new WebUrl() {
+			{
+				url = "https://liferay" + StringUtil.randomString() + ".com";
+				urlType = "intranet";
+			}
+		};
 	}
 
 	private void _testGetAccountsPage(
@@ -530,6 +767,110 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			expectedAccountEntries.contains(
 				_accountEntryLocalService.getAccountEntry(account.getId()));
 		}
+	}
+
+	private void _testPatchAccountWithContactInformation() throws Exception {
+		Account postAccount = testPatchAccount_addAccount();
+
+		Account randomPatchAccount = randomPatchAccount();
+
+		AccountContactInformation accountContactInformation =
+			_randomAccountContactInformation();
+
+		randomPatchAccount.setAccountContactInformation(
+			accountContactInformation);
+
+		Account patchAccount = accountResource.patchAccount(
+			postAccount.getId(), randomPatchAccount);
+
+		_assertEquals(
+			accountContactInformation,
+			patchAccount.getAccountContactInformation());
+	}
+
+	private void _testPostAccountDuplicateExternalReferenceCode()
+		throws Exception {
+
+		Account account1 = randomAccount();
+
+		Account postAccount = accountResource.postAccount(account1);
+
+		Assert.assertEquals(
+			account1.getExternalReferenceCode(),
+			postAccount.getExternalReferenceCode());
+
+		try {
+			Account account2 = randomAccount();
+
+			account2.setExternalReferenceCode(
+				postAccount.getExternalReferenceCode());
+
+			_postAccount(account2);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(
+				DuplicateAccountEntryExternalReferenceCodeException.class.
+					getSimpleName(),
+				problem.getType());
+		}
+	}
+
+	private void _testPostAccountWithContactInformation() throws Exception {
+		Account account = randomAccount();
+
+		AccountContactInformation accountContactInformation =
+			_randomAccountContactInformation();
+
+		account.setAccountContactInformation(accountContactInformation);
+
+		Account postAccount = accountResource.postAccount(account);
+
+		_assertEquals(
+			accountContactInformation,
+			postAccount.getAccountContactInformation());
+	}
+
+	private void _testPutAccountByExternalReferenceCodeWithContactInformation()
+		throws Exception {
+
+		Account postAccount =
+			testPutAccountByExternalReferenceCode_addAccount();
+
+		Account randomAccount = randomAccount();
+
+		AccountContactInformation accountContactInformation =
+			_randomAccountContactInformation();
+
+		randomAccount.setAccountContactInformation(accountContactInformation);
+
+		Account putAccount = accountResource.putAccountByExternalReferenceCode(
+			postAccount.getExternalReferenceCode(), randomAccount);
+
+		_assertEquals(
+			accountContactInformation,
+			putAccount.getAccountContactInformation());
+	}
+
+	private void _testPutAccountWithContactInformation() throws Exception {
+		Account postAccount = testPutAccount_addAccount();
+
+		Account randomAccount = randomAccount();
+
+		AccountContactInformation accountContactInformation =
+			_randomAccountContactInformation();
+
+		randomAccount.setAccountContactInformation(accountContactInformation);
+
+		Account putAccount = accountResource.putAccount(
+			postAccount.getId(), randomAccount);
+
+		_assertEquals(
+			accountContactInformation,
+			putAccount.getAccountContactInformation());
 	}
 
 	@Inject

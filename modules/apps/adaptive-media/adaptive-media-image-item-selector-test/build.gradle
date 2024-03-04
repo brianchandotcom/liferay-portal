@@ -1,6 +1,6 @@
 dependencies {
-	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-api");
-	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-image-api");
+	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-api")
+	testIntegrationImplementation project(":apps:adaptive-media:adaptive-media-image-api")
 	testIntegrationImplementation project(":apps:document-library:document-library-api")
 	testIntegrationImplementation project(":apps:item-selector:item-selector-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")

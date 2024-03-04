@@ -6,6 +6,7 @@
 package com.liferay.portal.vulcan.fields;
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.HashMap;
@@ -80,6 +81,31 @@ public class NestedFieldsSupplier<T> {
 		nestedFieldsContext.decrementCurrentDepth();
 
 		return nestedFieldValues;
+	}
+
+	public static <T> UnsafeSupplier<T, Exception> supply(
+			UnsafeSupplier<T, Exception> unsafeSupplier)
+		throws Exception {
+
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		NestedFieldsContext clonedNestedFieldsContext =
+			nestedFieldsContext.clone();
+
+		return () -> {
+			NestedFieldsContext oldNestedFieldsContext =
+				NestedFieldsContextThreadLocal.getAndSetNestedFieldsContext(
+					clonedNestedFieldsContext);
+
+			try {
+				return unsafeSupplier.get();
+			}
+			finally {
+				NestedFieldsContextThreadLocal.setNestedFieldsContext(
+					oldNestedFieldsContext);
+			}
+		};
 	}
 
 	private static boolean _mustProcessNestedFields(

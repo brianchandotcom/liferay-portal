@@ -623,27 +623,28 @@ public class ObjectEntryDTOConverter
 					() -> TransformUtil.transformToArray(
 						relatedModels,
 						relatedModel -> _toExtendedEntity(
-							(BaseModel<?>)relatedModel, dtoConverterContext,
+							(BaseModel<?>) relatedModel, dtoConverterContext,
 							relatedObjectDefinition,
 							systemObjectDefinitionManager),
 						Object.class));
+			} else {
+
+				nestedFieldValues.put(
+					nestedFieldName,
+					() -> TransformUtil.transformToArray(
+						relatedModels,
+						relatedModel -> {
+							com.liferay.object.model.ObjectEntry objectEntry =
+								(com.liferay.object.model.ObjectEntry) relatedModel;
+
+							return toDTO(
+								_getDTOConverterContext(
+									dtoConverterContext,
+									objectEntry.getObjectEntryId()),
+								objectEntry);
+						},
+						ObjectEntry.class));
 			}
-
-			nestedFieldValues.put(
-				nestedFieldName,
-				() -> TransformUtil.transformToArray(
-					relatedModels,
-					relatedModel -> {
-						com.liferay.object.model.ObjectEntry objectEntry =
-							(com.liferay.object.model.ObjectEntry)relatedModel;
-
-						return toDTO(
-							_getDTOConverterContext(
-								dtoConverterContext,
-								objectEntry.getObjectEntryId()),
-							objectEntry);
-					},
-					ObjectEntry.class));
 		}
 
 		return nestedFieldValues;

@@ -1,4 +1,3 @@
-import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import EmptyState from 'shared/components/workspaces/EmptyState';
 import getCN from 'classnames';
@@ -9,7 +8,6 @@ import WorkspacesBasePage, {
 	BasePageContext
 } from 'shared/components/workspaces/BasePage';
 import {clearStore} from 'shared/actions/store';
-import {close, modalTypes, open} from 'shared/actions/modals';
 import {
 	compose,
 	redirectIf,
@@ -59,9 +57,7 @@ const filterProjects = projects =>
 const Workspaces = ({
 	className,
 	clearStore,
-	close,
 	joinableProjects = [],
-	open,
 	projects
 }) => {
 	const client = useApolloClient();
@@ -75,19 +71,6 @@ const Workspaces = ({
 
 	const renderButtons = () => (
 		<div className='mt-4'>
-			<ClayButton
-				className='button-root mr-2'
-				displayType='primary'
-				onClick={() =>
-					open(modalTypes.CONTACT_SALES_MODAL, {
-						onClose: close
-					})
-				}
-				size='sm'
-			>
-				{Liferay.Language.get('buy-paid-tier')}
-			</ClayButton>
-
 			{!PROD_MODE && (
 				<ClayLink
 					button
@@ -188,5 +171,5 @@ export default compose(
 	WithJoinableProjects,
 	withProjects,
 	redirectIf(routingFn),
-	connect(null, {clearStore, close, open})
+	connect(null, {clearStore})
 )(Workspaces);

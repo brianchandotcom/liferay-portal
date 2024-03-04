@@ -160,6 +160,62 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
+	public void testExportImportLayoutAndDraftLayoutMappingOnImportSide()
+		throws Exception {
+
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
+		Layout layout3 = LayoutTestUtil.addTypeContentLayout(group);
+		Layout layout4 = LayoutTestUtil.addTypeContentLayout(group);
+
+		exportImportLayouts(
+			ExportImportHelperUtil.getLayoutIds(
+				LayoutLocalServiceUtil.getLayouts(group.getGroupId(), false)),
+			getExportParameterMap());
+
+		Assert.assertEquals(
+			LayoutLocalServiceUtil.getLayoutsCount(group, false),
+			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
+
+		Layout importedLayout1 =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout1.getUuid(), importedGroup.getGroupId(), false);
+
+		Layout importedLayout2 =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout2.getUuid(), importedGroup.getGroupId(), false);
+
+		Layout importedLayout3 =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout3.getUuid(), importedGroup.getGroupId(), false);
+
+		Layout importedLayout4 =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout4.getUuid(), importedGroup.getGroupId(), false);
+
+		Layout importedDraftLayout1 = importedLayout1.fetchDraftLayout();
+		Layout importedDraftLayout2 = importedLayout2.fetchDraftLayout();
+		Layout importedDraftLayout3 = importedLayout3.fetchDraftLayout();
+		Layout importedDraftLayout4 = importedLayout4.fetchDraftLayout();
+
+		Assert.assertTrue(importedDraftLayout1.isDraftLayout());
+		Assert.assertEquals(
+			importedLayout1.getName(), importedDraftLayout1.getName());
+
+		Assert.assertTrue(importedDraftLayout2.isDraftLayout());
+		Assert.assertEquals(
+			importedLayout2.getName(), importedDraftLayout2.getName());
+
+		Assert.assertTrue(importedDraftLayout3.isDraftLayout());
+		Assert.assertEquals(
+			importedLayout3.getName(), importedDraftLayout3.getName());
+
+		Assert.assertTrue(importedDraftLayout4.isDraftLayout());
+		Assert.assertEquals(
+			importedLayout4.getName(), importedDraftLayout4.getName());
+	}
+
+	@Test
 	public void testExportImportLayoutPrototypeInvalidLARType()
 		throws Exception {
 

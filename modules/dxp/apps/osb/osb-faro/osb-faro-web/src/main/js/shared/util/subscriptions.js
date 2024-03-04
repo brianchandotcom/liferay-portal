@@ -110,12 +110,24 @@ export const DEFAULT_ADDONS = {
 
 export function getPlanAddOns(currentPlan) {
 	if (isBasicPlan(currentPlan)) {
-		return [];
+		return {};
 	}
 
 	const planType = PLAN_TYPES[currentPlan.name];
 
-	return [ADD_ONS[INDIVIDUALS][planType], ADD_ONS[PAGEVIEWS][planType]];
+	return [ADD_ONS[INDIVIDUALS][planType], ADD_ONS[PAGEVIEWS][planType]]
+		.filter(Boolean)
+		.reduce((acc, plan) => {
+			const name = PLAN_TYPES[plan.name];
+			const quantity = currentPlan.getIn(['addOns', name, 'quantity']);
+			const limit = plan.limits[name];
+			const totalLimit = quantity ? limit * quantity : null;
+
+			return {
+				...acc,
+				[name]: totalLimit ? totalLimit.toLocaleString() : '-'
+			};
+		}, {});
 }
 
 export function getPlanLabel(name) {

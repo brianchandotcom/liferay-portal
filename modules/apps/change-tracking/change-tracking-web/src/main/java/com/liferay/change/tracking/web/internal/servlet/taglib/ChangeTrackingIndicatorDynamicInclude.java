@@ -17,17 +17,13 @@ import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
-import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -43,7 +39,6 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -75,7 +70,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -226,34 +220,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			"com.liferay.product.navigation.taglib#/page.jsp#pre");
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<CTCollectionHistoryProvider<?>>)
-				(Class<?>)CTCollectionHistoryProvider.class,
-			null,
-			(serviceReference, emitter) -> {
-				CTCollectionHistoryProvider<?> ctCollectionHistoryProvider =
-					bundleContext.getService(serviceReference);
-
-				try {
-					DBPartitionUtil.forEachCompanyId(
-						companyId -> emitter.emit(
-							_classNameLocalService.getClassNameId(
-								ctCollectionHistoryProvider.getModelClass())));
-				}
-				catch (Exception exception) {
-					throw new RuntimeException(exception);
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-
-				bundleContext.ungetService(serviceReference);
-			});
 	}
 
 	@Activate
@@ -649,9 +615,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		ChangeTrackingIndicatorDynamicInclude.class);
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
@@ -682,9 +645,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private ReactRenderer _reactRenderer;
-
-	private ServiceTrackerMap<Long, CTCollectionHistoryProvider<?>>
-		_serviceTrackerMap;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.change.tracking.web)"

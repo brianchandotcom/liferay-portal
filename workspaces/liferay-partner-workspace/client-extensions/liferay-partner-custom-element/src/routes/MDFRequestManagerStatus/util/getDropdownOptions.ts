@@ -6,7 +6,7 @@
 import {DropdownOption} from '../../../common/components/Dropdown/Dropdown';
 import {PermissionActionType} from '../../../common/enums/permissionActionType';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
-import { Liferay } from '../../../common/services/liferay';
+import {Liferay} from '../../../common/services/liferay';
 import {Status} from '../../../common/utils/constants/status';
 
 export default function getDropdownOptions(
@@ -14,14 +14,15 @@ export default function getDropdownOptions(
 	mdfRequestStatus: LiferayPicklist,
 	updateRequestStatus: (status: LiferayPicklist) => Promise<void>
 ) {
-	const callConfirmCancelMDFRequestModal = () => Liferay.Util.openConfirmModal({
-		message: 'Are you sure you want to cancel the MDF request?',
-		onConfirm: (isConfirmed: boolean) => {
-			if (isConfirmed) {
-				updateRequestStatus(Status.CANCELED);
-			}
-		},
-	});
+	const callConfirmCancelMDFRequestModal = () =>
+		Liferay.Util.openConfirmModal({
+			message: 'Are you sure you want to cancel the MDF request?',
+			onConfirm: (isConfirmed: boolean) => {
+				if (isConfirmed) {
+					updateRequestStatus(Status.CANCELED);
+				}
+			},
+		});
 
 	return actions?.reduce<DropdownOption[]>((previousValue, currentValue) => {
 		if (mdfRequestStatus?.key === Status.PENDING.key) {
@@ -191,7 +192,10 @@ export default function getDropdownOptions(
 			}
 		}
 
-		if (mdfRequestStatus?.key === Status.APPROVED.key && currentValue === PermissionActionType.CANCEL) {
+		if (
+			mdfRequestStatus?.key === Status.APPROVED.key &&
+			currentValue === PermissionActionType.CANCEL
+		) {
 			previousValue.push({
 				key: Status.CANCELED.key,
 				label: Status.CANCELED.name,

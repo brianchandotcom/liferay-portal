@@ -63,7 +63,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 		.put("fieldTypes", FieldMappingConstants.getFieldTypes())
 		.put("locale", locale.toString())
 		.put("pagination", FaroPaginationConstants.getConstants())
-		.put("pathThemeImages", themeDisplay.getPathThemeImages())
+		.put("pathThemeRoot", themeDisplay.getPathThemeRoot())
 		.put("portletNamespace", PortalUtil.getPortletNamespace(FaroPortletKeys.FARO))
 		.put("preferencesScopes", FaroPreferencesConstants.getScopes())
 		.put("projectLocations", LCPProjectConstants.getLocations())

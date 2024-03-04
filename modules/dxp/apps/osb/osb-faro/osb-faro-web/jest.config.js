@@ -219,7 +219,6 @@ module.exports = {
 				orderDefault: 'asc',
 				orderDescending: 'desc'
 			},
-			pathThemeImages: '/images',
 			preferencesScopes: {
 				group: 'group',
 				user: 'user'

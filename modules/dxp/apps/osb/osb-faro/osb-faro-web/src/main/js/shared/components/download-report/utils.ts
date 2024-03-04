@@ -1,3 +1,4 @@
+import FaroConstants, {LanguageIds} from 'shared/util/constants';
 import html2canvas from 'html2canvas';
 import JsPDF from 'jspdf';
 import moment from 'moment';
@@ -7,11 +8,41 @@ import {INDIVIDUALS} from 'shared/util/router';
 import {TransformedContainer} from './DownloadPDFReport';
 import {useParams} from 'react-router-dom';
 
+const {pathThemeRoot} = FaroConstants;
+
 const PRIMARY_COLOR = '#0B5FFF';
 
 export function formatDate(date) {
 	return moment(date).format(DEFAULT_DATE_FORMAT);
 }
+
+/**
+ * Support extra fonts for PDF report.
+ */
+
+export const fontMapper: {
+	[key: string]: {
+		path: string;
+		test: (value: string) => boolean;
+		style: string[];
+	};
+} = {
+	[LanguageIds.Japanese]: {
+		path: `${pathThemeRoot}/fonts/noto-sans-jp-bold.ttf`,
+		style: ['NotoSansJP', 'bold'],
+		test: value => /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(value)
+	}
+};
+
+const setExtraFonts = (doc, value) => {
+	Object.keys(fontMapper).forEach(key => {
+		const {style, test} = fontMapper[key];
+
+		if (test(value)) {
+			doc.setFont(style[0], style[1]);
+		}
+	});
+};
 
 export function generateReport({
 	containers,
@@ -63,6 +94,12 @@ export function generateReport({
 	return Promise.all(promises).then(() => {
 		// Generate PDF Header
 
+		Object.keys(fontMapper).forEach(key => {
+			const {path, style} = fontMapper[key];
+
+			doc.addFont(path, style[0], style[1]);
+		});
+
 		doc.setFillColor(241, 242, 245);
 		doc.rect(0, 0, docWidth, docHeight, 'F');
 
@@ -75,11 +112,13 @@ export function generateReport({
 		doc.text('Analytics Cloud', paddingX, paddingY - 7);
 
 		doc.setFont('Helvetica', 'bold');
+
+		setExtraFonts(doc, title);
+
 		doc.setTextColor('#000');
 		doc.setFontSize(16);
 		doc.text(title, paddingX, paddingY);
 
-		doc.setFont('Helvetica', 'normal');
 		doc.setTextColor('#6B6C7E');
 		doc.setFontSize(8);
 
@@ -88,9 +127,15 @@ export function generateReport({
 			doc.textWithLink(url, paddingX, paddingY + 5, {url});
 		}
 
+		doc.setFont('Helvetica', 'normal');
+
 		if (subtitle) {
+			setExtraFonts(doc, subtitle);
+
 			doc.text(subtitle, paddingX, paddingY + (url ? 9 : 5));
 		}
+
+		doc.setFont('Helvetica', 'normal');
 
 		doc.setFontSize(8);
 		doc.setTextColor(PRIMARY_COLOR);

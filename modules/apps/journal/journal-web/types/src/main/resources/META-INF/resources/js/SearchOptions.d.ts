@@ -17,7 +17,6 @@ declare type Props = {
 	searchLocation: Key;
 	searchLocationOptions: Option[];
 	searchResults: Key;
-	searchResultsOptions: Option[];
 	searchURL: string;
 };
 declare const SearchOptions: ({
@@ -28,7 +27,6 @@ declare const SearchOptions: ({
 	searchLocation: initialLocation,
 	searchLocationOptions,
 	searchResults: initialResults,
-	searchResultsOptions,
 	searchURL,
 }: Props) => JSX.Element;
 export default SearchOptions;

@@ -78,8 +78,6 @@ definition {
 	@description = "This is a test for LPS-197159. Check the accessibility when filtering categories and tags filter for Web Content."
 	@priority = 3
 	test ViewAccessibilityOfFilterWebContentsByCategoriesAndTags {
-		property custom.properties = "feature.flag.LPS-196768=true";
-
 		task ("Given a site administrator has web contents") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

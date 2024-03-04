@@ -76,6 +76,7 @@ const Card = ({item, schema}) => {
 						});
 					}
 				},
+				symbolLeft: action.icon,
 			}))}
 			description={schema.description && item[schema.description]}
 			href={(schema.href && item[schema.href]) || null}

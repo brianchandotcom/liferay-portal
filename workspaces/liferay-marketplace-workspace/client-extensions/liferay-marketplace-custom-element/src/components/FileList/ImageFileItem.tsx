@@ -17,6 +17,8 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
+import {useAppContext} from '../../manage-app-state/AppManageState';
+import {TYPES} from '../../manage-app-state/actionTypes';
 import CircularProgress from '../CircularProgress';
 
 type ImageFileItemProps = {
@@ -40,6 +42,8 @@ export function ImageFileItem({
 	uploadedFile,
 	versionName,
 }: ImageFileItemProps) {
+	const [{appStorefrontImages}, dispatch] = useAppContext();
+
 	const showProgress =
 		isProcessing && !uploadedFile.uploaded && uploadedFile.progress > 0;
 
@@ -126,7 +130,23 @@ export function ImageFileItem({
 				</div>
 
 				<div className="align-items-center d-flex">
-					<ClayInput placeholder="Image description" />
+					<ClayInput
+						onChange={({target}) => {
+							appStorefrontImages[index].imageDescription =
+								target.value;
+
+							appStorefrontImages[index].changed = true;
+
+							dispatch({
+								payload: {
+									files: appStorefrontImages,
+								},
+								type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+							});
+						}}
+						placeholder="Image description"
+						value={appStorefrontImages[index].imageDescription}
+					/>
 
 					{tooltip && (
 						<div style={{marginLeft: '-40px'}}>

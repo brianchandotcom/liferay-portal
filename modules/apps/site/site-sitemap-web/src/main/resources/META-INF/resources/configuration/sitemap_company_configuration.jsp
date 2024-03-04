@@ -55,6 +55,16 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 		<clay:content-col
 			expand="<%= true %>"
 		>
+			<clay:alert
+				message="the-companys-xml-sitemap-only-includes-sites-without-virtual-hosts"
+			/>
+		</clay:content-col>
+	</clay:content-row>
+
+	<clay:content-row>
+		<clay:content-col
+			expand="<%= true %>"
+		>
 			<liferay-ui:search-container
 				compactEmptyResultsMessage="<%= true %>"
 				id="groupsSearchContainer"

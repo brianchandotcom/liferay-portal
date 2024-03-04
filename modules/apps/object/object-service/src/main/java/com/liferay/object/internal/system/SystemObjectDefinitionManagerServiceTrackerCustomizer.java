@@ -113,6 +113,10 @@ public class SystemObjectDefinitionManagerServiceTrackerCustomizer
 			_serviceRegistrationsMap.remove(
 				systemObjectDefinitionManager.getModelClass());
 
+		if (serviceRegistrations == null) {
+			return;
+		}
+
 		for (ServiceRegistration<?> serviceRegistration :
 				serviceRegistrations) {
 

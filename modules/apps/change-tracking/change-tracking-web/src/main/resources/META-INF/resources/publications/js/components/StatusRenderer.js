@@ -14,6 +14,7 @@ function StatusRenderer(props) {
 				return 'label-danger';
 			case 'in-progress':
 			case 'pending':
+			case 'queued':
 				return 'label-info';
 			case 'approved':
 			case 'published':

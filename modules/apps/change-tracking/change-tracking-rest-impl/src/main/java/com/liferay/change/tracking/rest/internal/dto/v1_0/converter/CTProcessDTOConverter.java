@@ -92,6 +92,9 @@ public class CTProcessDTOConverter
 		else if (status == BackgroundTaskConstants.STATUS_IN_PROGRESS) {
 			statusLabel = "in-progress";
 		}
+		else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
+			statusLabel = "queued";
+		}
 		else if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 			statusLabel = "published";
 		}

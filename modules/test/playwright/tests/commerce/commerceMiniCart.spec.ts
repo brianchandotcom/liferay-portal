@@ -303,7 +303,7 @@ test('mini cart bundle with UOM', async ({
 	).toBeVisible();
 
 	await page.getByLabel('Size').selectOption({label: 'XS'});
-	await page.getByLabel('Color').selectOption({label: 'Black'});
+	await page.getByLabel('Color').selectOption({label: 'Black - $ 10.00'});
 
 	await expect(page.getByText('Price as Configured$ 40.00')).toBeVisible();
 
@@ -311,7 +311,7 @@ test('mini cart bundle with UOM', async ({
 	await expect(commerceMiniCartPage.unitOfMeasureTableLabel).toBeHidden();
 	await expect(commerceMiniCartPage.miniCartSaveButton).toBeEnabled();
 
-	await page.getByLabel('Size').selectOption({label: 'XL'});
+	await page.getByLabel('Size').selectOption({label: 'XL + $ 10.00'});
 
 	await expect(page.getByText('Price as Configured$ 50.00')).toBeVisible();
 	await expect(
@@ -337,7 +337,7 @@ test('mini cart bundle with UOM', async ({
 	await expect(page.getByText('Black', {exact: true})).toBeVisible();
 	await expect(page.getByText('XL', {exact: true})).toBeVisible();
 	await expect(
-		page.getByText('$ 50.00', {exact: true}).first()
+		page.getByText('$ 100.00', {exact: true}).first()
 	).toBeVisible();
 
 	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', false);

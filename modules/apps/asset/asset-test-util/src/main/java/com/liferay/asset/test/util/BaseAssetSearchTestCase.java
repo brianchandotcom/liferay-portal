@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -52,8 +51,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1321,12 +1318,9 @@ public abstract class BaseAssetSearchTestCase {
 
 		List<AssetEntry> assetEntries = search(assetEntryQuery, searchContext);
 
-		Assert.assertEquals(
-			ArrayUtils.toString(format(expirationDates, dateFormat)),
-			ArrayUtils.toString(
-				format(
-					getExpirationDates(assetEntries, orderByType),
-					dateFormat)));
+		Assert.assertArrayEquals(
+			format(expirationDates, dateFormat),
+			format(getExpirationDates(assetEntries, orderByType), dateFormat));
 	}
 
 	protected void testOrderByTitle(
@@ -1358,9 +1352,9 @@ public abstract class BaseAssetSearchTestCase {
 			List<AssetEntry> assetEntries = search(
 				assetEntryQuery, searchContext);
 
-			Assert.assertEquals(
-				ArrayUtils.toString(getOrderedTitles(orderedTitleMaps, locale)),
-				ArrayUtils.toString(getTitles(assetEntries, locale)));
+			Assert.assertArrayEquals(
+				getOrderedTitles(orderedTitleMaps, locale),
+				getTitles(assetEntries, locale));
 		}
 	}
 

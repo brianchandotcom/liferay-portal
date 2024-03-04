@@ -1733,6 +1733,8 @@ public class DefaultObjectEntryManagerImplTest
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
+							"longIntegerObjectFieldName", 21394167160L
+						).put(
 							"textObjectFieldName", "Able"
 						).put(
 							"textObjectFieldNameExtension", "Baker"
@@ -1887,6 +1889,13 @@ public class DefaultObjectEntryManagerImplTest
 			).build());
 
 		// Equals expression
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildEqualsExpressionFilterString(
+					"longIntegerObjectFieldName", 21394167160L)
+			).build());
 
 		testGetObjectEntries(
 			HashMapBuilder.put(

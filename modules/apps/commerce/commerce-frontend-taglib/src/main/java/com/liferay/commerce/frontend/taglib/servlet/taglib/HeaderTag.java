@@ -49,6 +49,10 @@ public class HeaderTag extends IncludeTag {
 		return _cssClasses;
 	}
 
+	public String getDisplayBeanId() {
+		return _displayBeanId;
+	}
+
 	public List<DropdownItem> getDropdownItems() {
 		return _dropdownItems;
 	}
@@ -117,6 +121,10 @@ public class HeaderTag extends IncludeTag {
 		_cssClasses = cssClasses;
 	}
 
+	public void setDisplayBeanId(String displayBeanId) {
+		_displayBeanId = displayBeanId;
+	}
+
 	public void setDropdownItems(List<DropdownItem> dropdownItems) {
 		_dropdownItems = dropdownItems;
 	}
@@ -183,6 +191,7 @@ public class HeaderTag extends IncludeTag {
 		_bean = null;
 		_beanIdLabel = null;
 		_cssClasses = null;
+		_displayBeanId = null;
 		_dropdownItems = null;
 		_externalReferenceCode = null;
 		_externalReferenceCodeEditUrl = null;
@@ -224,6 +233,8 @@ public class HeaderTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:header:cssClasses", _cssClasses);
 		httpServletRequest.setAttribute(
+			"liferay-commerce:header:displayBeanId", _displayBeanId);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:dropdownItems", _dropdownItems);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:header:externalReferenceCode",
@@ -261,6 +272,7 @@ public class HeaderTag extends IncludeTag {
 	private Object _bean;
 	private String _beanIdLabel;
 	private String _cssClasses;
+	private String _displayBeanId;
 	private List<DropdownItem> _dropdownItems;
 	private String _externalReferenceCode;
 	private String _externalReferenceCodeEditUrl;

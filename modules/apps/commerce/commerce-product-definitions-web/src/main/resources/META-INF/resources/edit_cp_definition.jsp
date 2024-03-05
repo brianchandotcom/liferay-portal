@@ -38,6 +38,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	actions="<%= cpDefinitionsDisplayContext.getHeaderActionModels() %>"
 	bean="<%= cpDefinition %>"
 	beanIdLabel="id"
+	displayBeanId="<%= String.valueOf(cpDefinition.getCProductId()) %>"
 	dropdownItems="<%= cpDefinitionsDisplayContext.getDropdownItems() %>"
 	externalReferenceCode="<%= (cProduct == null) ? StringPool.BLANK : cProduct.getExternalReferenceCode() %>"
 	externalReferenceCodeEditUrl="<%= (cProduct == null) ? StringPool.BLANK : editCProductExternalReferenceCodeURL %>"

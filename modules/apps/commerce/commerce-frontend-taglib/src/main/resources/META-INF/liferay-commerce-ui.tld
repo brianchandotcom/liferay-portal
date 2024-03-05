@@ -189,6 +189,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>displayBeanId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>dropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -145,6 +145,8 @@ public class OrganizationStagedModelDataHandler
 			PortletDataContext portletDataContext, Organization organization)
 		throws Exception {
 
+		organization = _importCountry(portletDataContext, organization);
+
 		long userId = portletDataContext.getUserId(organization.getUserUuid());
 
 		Map<Long, Long> organizationIds =
@@ -170,8 +172,6 @@ public class OrganizationStagedModelDataHandler
 		}
 
 		Organization importedOrganization = null;
-
-		organization = _importCountry(portletDataContext, organization);
 
 		if (existingOrganization == null) {
 			serviceContext.setUuid(organization.getUuid());
@@ -373,19 +373,17 @@ public class OrganizationStagedModelDataHandler
 			portletDataContext.getReferenceDataElements(
 				organization, Country.class);
 
-		if (!countryElements.isEmpty()) {
-			Element countryElement = countryElements.get(0);
-
+		for (Element countryElement : countryElements) {
 			String countryPath = countryElement.attributeValue("path");
 
 			Country country = (Country)portletDataContext.getZipEntryAsObject(
 				countryPath);
 
 			if (country != null) {
-				organization.setCountryId(
-					_countryLocalService.getCountryByA2(
-						portletDataContext.getCompanyId(), country.getA2()
-					).getCountryId());
+				Country existingCountry = _countryLocalService.getCountryByA2(
+					portletDataContext.getCompanyId(), country.getA2());
+
+				organization.setCountryId(existingCountry.getCountryId());
 			}
 		}
 

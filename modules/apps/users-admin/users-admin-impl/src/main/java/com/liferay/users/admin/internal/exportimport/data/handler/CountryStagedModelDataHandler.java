@@ -84,15 +84,15 @@ public class CountryStagedModelDataHandler
 			PortletDataContext portletDataContext, Country country)
 		throws Exception {
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			country);
-
 		Country existingCountry = _countryLocalService.fetchCountryByA2(
 			country.getCompanyId(), country.getA2());
 
 		Country importedCountry = null;
 
 		if (existingCountry == null) {
+			ServiceContext serviceContext =
+				portletDataContext.createServiceContext(country);
+
 			serviceContext.setUuid(country.getUuid());
 
 			importedCountry = _countryLocalService.addCountry(

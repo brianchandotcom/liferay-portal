@@ -206,33 +206,50 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-8109 | Test Summary: Create Suppress Request"
-	@ignore = "true"
 	@priority = 5
 	test CanCreateSuppressRequest {
-
-		// The Suppressed User card was hidden after this ticket: LRAC-13620
-
 		property test.run.type = "single";
 
 		var userEmail = "dcp3@liferay.com";
 		var userName = "dcp3";
 
-		JSONUser.addUser(
-			userEmailAddress = ${userEmail},
-			userFirstName = ${userName},
-			userLastName = ${userName},
-			userScreenName = ${userName});
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = ${userEmail},
+				userFirstName = ${userName},
+				userLastName = ${userName},
+				userScreenName = ${userName});
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = ${userEmail});
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = ${userEmail});
+		}
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud();
+		}
 
-		ACUtils.launchAC();
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = ${userEmail},
+				userLoginFullName = ${userName});
+		}
 
-		task ("Go to settings and create a suppress request") {
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				documentTitleList = "View WC,View WC",
+				pageName = "Home",
+				siteName = "guest");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Go to AC > Settings > Create a suppress request") {
+			ACUtils.launchAC();
+
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(

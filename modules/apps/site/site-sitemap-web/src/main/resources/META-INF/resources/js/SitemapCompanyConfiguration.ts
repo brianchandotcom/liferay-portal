@@ -81,7 +81,19 @@ export default function ({
 							'text-warning'
 						);
 
-						siteName = `<span class="text-truncate">${entityName}&nbsp;${warningIcon}</span>`;
+						const warningTitle = Liferay.Language.get(
+							'this-site-is-not-included-in-the-companys-xml-sitemap-because-it-already-has-a-virtual-host'
+						);
+
+						siteName = `<span class="text-truncate">
+							${entityName}
+							<span
+								class="c-ml-2 d-inline lfr-portal-tooltip"
+								title="${warningTitle}"
+							>
+								${warningIcon}
+							</span>
+						</span>`;
 					}
 					else {
 						siteName = `<span class="text-truncate">${entityName}</span>`;

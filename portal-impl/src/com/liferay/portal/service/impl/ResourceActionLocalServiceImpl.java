@@ -296,10 +296,10 @@ public class ResourceActionLocalServiceImpl
 				}
 			});
 
+		resourceActionPersistence.remove(resourceAction);
+
 		_resourceActions.remove(
 			encodeKey(resourceAction.getName(), resourceAction.getActionId()));
-
-		resourceActionPersistence.remove(resourceAction);
 
 		PermissionCacheUtil.clearCache();
 

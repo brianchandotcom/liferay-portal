@@ -10,6 +10,7 @@ import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
+import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -37,8 +38,8 @@ public class RankingIndexWriterImplTest extends BaseRankingsIndexTestCase {
 		_rankingIndexWriterImpl = new RankingIndexWriterImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_rankingIndexWriterImpl, "_rankingToDocumentTranslator",
-			_rankingToDocumentTranslator);
+			_rankingIndexWriterImpl, "_documentBuilderFactory",
+			new DocumentBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			_rankingIndexWriterImpl, "_searchEngineAdapter",
 			searchEngineAdapter);
@@ -91,7 +92,5 @@ public class RankingIndexWriterImplTest extends BaseRankingsIndexTestCase {
 	}
 
 	private RankingIndexWriterImpl _rankingIndexWriterImpl;
-	private final RankingToDocumentTranslator _rankingToDocumentTranslator =
-		Mockito.mock(RankingToDocumentTranslator.class);
 
 }

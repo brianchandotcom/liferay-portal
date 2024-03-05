@@ -31,7 +31,7 @@ import org.junit.Test;
 /**
  * @author André de Oliveira
  */
-public class RankingToDocumentTranslatorTest {
+public class RankingToDocumentTranslatorUtilTest {
 
 	@ClassRule
 	@Rule
@@ -40,7 +40,6 @@ public class RankingToDocumentTranslatorTest {
 
 	@Before
 	public void setUp() {
-		_rankingToDocumentTranslator = _createRankingToDocumentTranslator();
 		ReflectionTestUtil.setFieldValue(
 			_documentToRankingTranslator, "_rankingBuilderFactory",
 			_rankingBuilderFactory);
@@ -147,20 +146,8 @@ public class RankingToDocumentTranslatorTest {
 	}
 
 	protected Document translate(Ranking ranking) {
-		return _rankingToDocumentTranslator.translate(ranking);
-	}
-
-	private RankingToDocumentTranslatorImpl
-		_createRankingToDocumentTranslator() {
-
-		RankingToDocumentTranslatorImpl rankingToDocumentTranslatorImpl =
-			new RankingToDocumentTranslatorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			rankingToDocumentTranslatorImpl, "_documentBuilderFactory",
-			new DocumentBuilderFactoryImpl());
-
-		return rankingToDocumentTranslatorImpl;
+		return RankingToDocumentTranslatorUtil.translate(
+			new DocumentBuilderFactoryImpl(), ranking);
 	}
 
 	private String _toString(List<Ranking.Pin> pins) {
@@ -176,6 +163,5 @@ public class RankingToDocumentTranslatorTest {
 	private final RankingHelper _rankingHelper = new RankingHelperImpl();
 	private final RankingPinBuilderFactory _rankingPinBuilderFactory =
 		new RankingPinBuilderFactoryImpl();
-	private RankingToDocumentTranslator _rankingToDocumentTranslator;
 
 }

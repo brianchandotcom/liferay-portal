@@ -260,9 +260,7 @@ definition {
 	@priority = 3
 	test CanUnsuppressUser {
 
-		// AC Refactor: Timing issues may happen on this test case
-		// AC Refactor ticket: LRAC-9439
-		// The Suppressed User card was hidden after this ticket: LRAC-13620
+		// AC Disabled: Timing issues may happen on this test case. The Suppress and Unsuppress requests takes 90 minutes to execute
 
 		var userEmail = "dcp4@liferay.com";
 		var userName = "dcp4";
@@ -336,9 +334,7 @@ definition {
 	@priority = 5
 	test SuppressedUserAppearsInSuppressedUserList {
 
-		// AC Refactor: Timing issues may happen on this test case
-		// AC Refactor ticket: LRAC-9438
-		// The Suppressed User card was hidden after this ticket: LRAC-13620
+		// AC Disabled: Timing issues may happen on this test case. The Suppress request takes 90 minutes to execute
 
 		var userEmail = "dcp5@liferay.com";
 		var userName = "dcp5";

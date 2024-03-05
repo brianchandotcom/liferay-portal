@@ -7,6 +7,8 @@ package com.liferay.jethr0.job;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.net.URL;
+
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -20,12 +22,20 @@ public class GenerateTestrayCSVJobEntity extends BaseJobEntity {
 		return getParameterValue("jenkinsSlaveLabel");
 	}
 
+	public URL getPortalPullRequestURL() {
+		return getParameterValueURL("portalPullRequestURL");
+	}
+
 	public Long getTestrayBuildID() {
 		return getParameterValueLong("testrayBuildID");
 	}
 
 	public void setJenkinsSlaveLabel(String jenkinsSlaveLabel) {
 		setParameterValue("jenkinsSlaveLabel", jenkinsSlaveLabel);
+	}
+
+	public void setPortalPullRequestURL(URL portalPullRequestURL) {
+		setParameterValueURL("portalPullRequestURL", portalPullRequestURL);
 	}
 
 	public void setTestrayBuildID(Long testrayBuildID) {
@@ -42,6 +52,8 @@ public class GenerateTestrayCSVJobEntity extends BaseJobEntity {
 			"BUILD_PRIORITY", String.valueOf(getPriority())
 		).put(
 			"JENKINS_GITHUB_URL", String.valueOf(getJenkinsBranchURL())
+		).put(
+			"PULL_REQUEST_URL", String.valueOf(getPortalPullRequestURL())
 		).put(
 			"SLAVE_LABEL", getJenkinsSlaveLabel()
 		).put(

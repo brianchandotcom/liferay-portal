@@ -60,6 +60,10 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 						return new ReopenGitHubCommentEventHandler(
 							eventHandlerContext, messageJSONObject);
 					}
+					else if (body.startsWith("ci:report")) {
+						return new ReportGitHubCommentEventHandler(
+							eventHandlerContext, messageJSONObject);
+					}
 					else if (body.startsWith("ci:stop")) {
 						return new StopGitHubCommentEventHandler(
 							eventHandlerContext, messageJSONObject);

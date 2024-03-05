@@ -29,7 +29,7 @@ window.Liferay = {
 			zh_CN: 'Chinese (China)',
 		},
 
-		direction: {en_US: 'rtl'},
+		direction: {en_US: 'ltr'},
 	},
 	ThemeDisplay: {
 		...(window.Liferay.ThemeDisplay || {}),

@@ -170,6 +170,10 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 		addSearchLocalizedTerm(
 			keywordsBooleanQuery, searchContext, Field.TITLE, false);
 
+		if (!keywordsBooleanQuery.hasClauses()) {
+			return;
+		}
+
 		try {
 			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();
 

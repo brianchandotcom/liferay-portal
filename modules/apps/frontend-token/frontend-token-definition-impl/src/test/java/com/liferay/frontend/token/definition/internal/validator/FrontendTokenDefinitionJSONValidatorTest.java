@@ -40,7 +40,7 @@ public class FrontendTokenDefinitionJSONValidatorTest {
 			URLUtil.toString(
 				FrontendTokenDefinitionRegistryImplTest.class.getResource(
 					"dependencies/frontend-token-definition-empty-" +
-						"categories.json")));
+						"frontend-token-categories.json")));
 
 		try {
 			_frontendTokenDefinitionJSONValidator.validate(

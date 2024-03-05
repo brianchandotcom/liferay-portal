@@ -3693,8 +3693,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	private SearchContext _buildSearchContext(
 			long groupId, long userId, Boolean privateLayout, String keywords,
-			String[] types, int[] statuses, int start, int end,
-			OrderByComparator<Layout> orderByComparator)
+			boolean searchOnlyByTitle, String[] types, int[] statuses,
+			int start, int end, OrderByComparator<Layout> orderByComparator)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -3706,6 +3706,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		searchContext.setAttribute(Field.TITLE, keywords);
 		searchContext.setAttribute(Field.TYPE, types);
 		searchContext.setAttribute("paginationType", "more");
+		searchContext.setAttribute("searchOnlyByTitle", searchOnlyByTitle);
 
 		if (privateLayout != null) {
 			searchContext.setAttribute(
@@ -3736,6 +3737,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		queryConfig.setScoreEnabled(false);
 
 		return searchContext;
+	}
+
+	private SearchContext _buildSearchContext(
+			long groupId, long userId, Boolean privateLayout, String keywords,
+			String[] types, int[] statuses, int start, int end,
+			OrderByComparator<Layout> orderByComparator)
+		throws PortalException {
+
+		return _buildSearchContext(
+			groupId, userId, privateLayout, keywords, false, types, statuses,
+			start, end, orderByComparator);
 	}
 
 	private void _deleteLayouts(

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 export class CommerceLayoutsPage {
 	readonly addPageButton: Locator;
@@ -18,12 +18,18 @@ export class CommerceLayoutsPage {
 	readonly createPageMenuItem: Locator;
 	readonly deleteLayoutModal: Locator;
 	readonly deletePageButton: Locator;
+	readonly designMenuItem: Locator;
+	readonly displayPageTemplatesLink: Locator;
 	readonly openProductMenuButton: Locator;
 	readonly optionsButton: Locator;
 	readonly page: Page;
 	readonly pagesMenuItem: Locator;
+	readonly pageTemplatesMenuItem: Locator;
+	readonly previewItemSelectorButton: Locator;
 	readonly saveButton: Locator;
 	readonly searchFormInput: Locator;
+	readonly selectOtherItemDropdownItem: Locator;
+	readonly showLabelInput: Locator;
 	readonly siteBuilderMenuItem: Locator;
 	readonly siteHomePageLink: Locator;
 	readonly widgetPageTemplateButton: Locator;
@@ -72,6 +78,13 @@ export class CommerceLayoutsPage {
 				exact: true,
 				name: 'Delete',
 			});
+		this.designMenuItem = page
+			.getByTestId('appGroup')
+			.filter({hasText: 'Design'});
+		this.displayPageTemplatesLink = page.getByRole('link', {
+			exact: true,
+			name: 'Display Page Templates',
+		});
 		this.openProductMenuButton = page.getByRole('tab', {
 			exact: true,
 			name: 'Open Product Menu',
@@ -79,10 +92,20 @@ export class CommerceLayoutsPage {
 		this.optionsButton = page.getByLabel('Options', {exact: true});
 		this.page = page;
 		this.pagesMenuItem = page.getByTestId('app').filter({hasText: 'Pages'});
+		this.pageTemplatesMenuItem = page
+			.getByTestId('app')
+			.filter({hasText: 'Page Templates'});
+		this.previewItemSelectorButton = page.getByTestId(
+			'previewItemSelectorButton'
+		);
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 		this.searchFormInput = page.getByRole('textbox', {
 			name: 'Search Form',
 		});
+		this.selectOtherItemDropdownItem = page.getByTestId(
+			'selectOtherItemDropdownItem'
+		);
+		this.showLabelInput = page.getByLabel('Show Label', {exact: true});
 		this.siteBuilderMenuItem = page
 			.getByTestId('appGroup')
 			.filter({hasText: 'Site Builder'});
@@ -98,6 +121,26 @@ export class CommerceLayoutsPage {
 			});
 	}
 
+	async addProductFragment(itemName: string) {
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'Product'})
+			.click();
+
+		const source = await this.page.getByRole('menuitem', {
+			name: itemName,
+		});
+
+		await source.focus();
+		await source.press('Enter');
+		await source.press('Enter');
+	}
+
+	async addWidgetToPage(widgetName: string) {
+		await this.addWidgetButton.click();
+		await this.searchFormInput.fill(widgetName);
+		await this.addWidgetLabel(widgetName).click();
+	}
+
 	async changeCurrentTheme(themeName: string) {
 		await this.optionsButton.click();
 		await this.configurationMenuItem.click();
@@ -108,11 +151,28 @@ export class CommerceLayoutsPage {
 		await this.saveButton.click();
 	}
 
-	async addWidgetToPage(widgetName: string) {
-		await this.addWidgetButton.click();
-		await this.searchFormInput.click();
-		await this.searchFormInput.fill(widgetName);
-		await this.addWidgetLabel(widgetName).click();
+	async createDisplayPageTemplate(
+		displayPageTemplateName: string,
+		contentTypeLabel: string = 'Product'
+	) {
+		await this.page
+			.getByRole('link', {exact: true, name: 'Display Page Template'})
+			.click();
+		await this.page
+			.getByRole('button', {exact: true, name: 'Blank'})
+			.click();
+		await this.page.getByLabel('Name').fill(displayPageTemplateName);
+		await this.page
+			.getByLabel('Content Type')
+			.selectOption({label: contentTypeLabel});
+		await Promise.all([
+			this.page.getByRole('button', {exact: true, name: 'Save'}).click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp.url().includes('specification-fragment-site')
+			),
+		]);
 	}
 
 	async createWidgetPage(pageName: string) {
@@ -140,6 +200,59 @@ export class CommerceLayoutsPage {
 
 	async goto() {
 		await this.page.goto('/');
+	}
+
+	async goToDisplayPageTemplates(navigation: boolean = false) {
+		if (navigation) {
+			await this.goto();
+		}
+
+		if (
+			(await this.closeProductMenuButton.isVisible()) &&
+			(await this.pageTemplatesMenuItem.isHidden())
+		) {
+			await this.designMenuItem.click();
+		}
+		else if (await this.openProductMenuButton.isVisible()) {
+			await this.openProductMenuButton.click();
+
+			const promise = new Promise(() => {
+				if (this.pageTemplatesMenuItem.isHidden()) {
+					this.designMenuItem.click();
+				}
+			});
+
+			Promise.race([
+				promise,
+				expect(this.pageTemplatesMenuItem).toBeVisible(),
+			]).catch((error) => console.error(error));
+		}
+
+		await Promise.all([
+			this.pageTemplatesMenuItem.click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp
+						.url()
+						.includes(
+							'p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet'
+						)
+			),
+		]);
+
+		await Promise.all([
+			this.displayPageTemplatesLink.click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp
+						.url()
+						.includes(
+							'p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet'
+						)
+			),
+		]);
 	}
 
 	async goToPages(navigation: boolean = true) {
@@ -173,5 +286,18 @@ export class CommerceLayoutsPage {
 						)
 			),
 		]);
+	}
+
+	async selectDisplayPageTemplatePreviewItem(itemName: string) {
+		await this.previewItemSelectorButton.click();
+		await this.selectOtherItemDropdownItem.click();
+
+		const itemButton = await this.page
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('button', {name: itemName});
+
+		await expect(itemButton).toBeVisible();
+
+		await itemButton.click();
 	}
 }

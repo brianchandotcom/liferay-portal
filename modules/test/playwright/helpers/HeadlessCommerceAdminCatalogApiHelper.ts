@@ -215,7 +215,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 
 	async postProduct(product: TProduct): Promise<TProduct> {
 		return await this.apiHelpers.post(
-			`${this.apiHelpers.baseUrl}${this.basePath}/products?nestedFields=skus`,
+			`${this.apiHelpers.baseUrl}${this.basePath}/products?nestedFields=productSpecifications,skus`,
 			{
 				active: true,
 				catalogId: 0,

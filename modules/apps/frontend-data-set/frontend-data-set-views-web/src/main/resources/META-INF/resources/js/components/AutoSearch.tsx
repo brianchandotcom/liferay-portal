@@ -31,7 +31,7 @@ const AutoSearch = ({onSearch, query}: ISearchInterface) => {
 				)}
 
 				<ClayInput
-					insetAfter={Boolean(focused)}
+					insetAfter={focused}
 					insetBefore={!focused}
 					onChange={(event) => onSearch(event.target.value)}
 					onFocus={() => setFocused(true)}

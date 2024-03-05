@@ -6,8 +6,6 @@
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import isNullOrUndefined from './isNullOrUndefined';
-
 export default function SearchResultsMessage({
 	numberOfResults = null,
 	resultType = Liferay.Language.get('results'),
@@ -18,7 +16,7 @@ export default function SearchResultsMessage({
 	const [text, setText] = useState('');
 
 	useEffect(() => {
-		if (!isNullOrUndefined(numberOfResults)) {
+		if (numberOfResults !== null) {
 			const timeout = setTimeout(() => {
 				const message = numberOfResults
 					? sub(Liferay.Language.get('showing-x-x'), [

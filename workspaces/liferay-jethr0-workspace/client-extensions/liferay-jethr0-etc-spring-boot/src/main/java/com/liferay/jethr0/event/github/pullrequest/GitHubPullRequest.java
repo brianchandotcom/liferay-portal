@@ -144,6 +144,23 @@ public class GitHubPullRequest {
 		return _gitHubFactory.getGitHubClient();
 	}
 
+	public List<GitHubComment> getGitHubComments() {
+		List<GitHubComment> gitHubComments = new ArrayList<>();
+
+		GitHubClient gitHubClient = getGitHubClient();
+
+		JSONArray commentsJSONArray = new JSONArray(
+			gitHubClient.requestGet(getCommentsURL()));
+
+		for (int i = 0; i < commentsJSONArray.length(); i++) {
+			gitHubComments.add(
+				_gitHubFactory.newGitHubComment(
+					commentsJSONArray.getJSONObject(i)));
+		}
+
+		return gitHubComments;
+	}
+
 	public List<GitHubFile> getGitHubFiles() {
 		if (_gitHubFiles != null) {
 			return _gitHubFiles;

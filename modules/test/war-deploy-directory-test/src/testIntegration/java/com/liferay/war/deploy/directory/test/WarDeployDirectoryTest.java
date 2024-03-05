@@ -68,7 +68,7 @@ public class WarDeployDirectoryTest {
 		}
 
 		File portalWarDir = new File(
-			PropsUtil.get("module.framework.portal-war.dir"));
+			PropsUtil.get("module.framework.portal.war.dir"));
 
 		Assert.assertTrue(portalWarDir.exists());
 		Assert.assertTrue(portalWarDir.isDirectory());
@@ -130,7 +130,7 @@ public class WarDeployDirectoryTest {
 
 		try {
 			File portalWarDir = new File(
-				PropsUtil.get("module.framework.portal-war.dir"));
+				PropsUtil.get("module.framework.portal.war.dir"));
 
 			File[] files = portalWarDir.listFiles();
 

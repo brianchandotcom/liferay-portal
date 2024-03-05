@@ -652,7 +652,7 @@ public class ObjectRelationshipLocalServiceImpl
 	@Override
 	public ObjectRelationship getObjectRelationshipByObjectDefinitionId(
 			long objectDefinitionId, String name)
-		throws Exception {
+		throws PortalException {
 
 		List<ObjectRelationship> objectRelationships = dslQuery(
 			DSLQueryFactoryUtil.select(

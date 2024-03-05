@@ -78,6 +78,7 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -286,34 +287,92 @@ public class AssetPublisherExportImportTest
 	}
 
 	@Test
-	public void testDynamicExportImportAssetCategoryFiltering()
+	public void testDynamicExportImportAssetCategoryContainsFiltering()
 		throws Exception {
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			group.getGroupId());
 
-		AssetCategory assetCategory = AssetTestUtil.addCategory(
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
 			group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			group.getGroupId(), assetVocabulary.getVocabularyId());
 
-		serviceContext.setAssetCategoryIds(
-			new long[] {assetCategory.getCategoryId()});
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			group.getGroupId(), 0,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId(),
+				new long[] {assetCategory1.getCategoryId()}));
 
-		List<AssetEntry> expectedAssetEntries = addAssetEntries(
-			group, 2, new ArrayList<AssetEntry>(), serviceContext);
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			group.getGroupId(), 0,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId(),
+				new long[] {
+					assetCategory1.getCategoryId(),
+					assetCategory2.getCategoryId()
+				}));
 
 		testDynamicExportImport(
 			HashMapBuilder.put(
-				"queryContains0", new String[] {"true"}
+				"queryAndOperator0", new String[] {Boolean.TRUE.toString()}
+			).put(
+				"queryContains0", new String[] {Boolean.TRUE.toString()}
 			).put(
 				"queryName0", new String[] {"assetCategories"}
 			).put(
 				"queryValues0",
-				new String[] {String.valueOf(assetCategory.getCategoryId())}
+				new String[] {String.valueOf(assetCategory1.getCategoryId())}
 			).build(),
-			expectedAssetEntries, true);
+			Arrays.asList(
+				getAssetEntry(journalArticle1), getAssetEntry(journalArticle2)),
+			true);
+	}
+
+	@Test
+	public void testDynamicExportImportAssetCategoryDoesNotContainsFiltering()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			group.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalTestUtil.addArticle(
+			group.getGroupId(), 0,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId(),
+				new long[] {assetCategory1.getCategoryId()}));
+
+		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
+			group.getGroupId(), 0,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId(),
+				new long[] {
+					assetCategory1.getCategoryId(),
+					assetCategory2.getCategoryId()
+				}));
+
+		testDynamicExportImport(
+			HashMapBuilder.put(
+				"queryAndOperator0", new String[] {Boolean.TRUE.toString()}
+			).put(
+				"queryContains0", new String[] {Boolean.FALSE.toString()}
+			).put(
+				"queryName0", new String[] {"assetCategories"}
+			).put(
+				"queryValues0",
+				new String[] {
+					String.valueOf(assetCategory1.getCategoryId()),
+					String.valueOf(assetCategory2.getCategoryId())
+				}
+			).build(),
+			Collections.singletonList(getAssetEntry(journalArticle2)), false);
 	}
 
 	@Test

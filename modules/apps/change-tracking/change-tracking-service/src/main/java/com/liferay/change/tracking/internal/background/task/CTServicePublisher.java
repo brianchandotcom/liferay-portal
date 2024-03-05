@@ -77,6 +77,45 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		_ctService.updateWithUnsafeFunction(this::_publish);
 	}
 
+	private void _copyCTRow(
+			Connection connection, CTPersistence<?> ctPersistence,
+			String tableName, String primaryKeyName, Serializable primaryKey,
+			long tempCTCollectionId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		Map<String, Integer> tableColumnsMap =
+			ctPersistence.getTableColumnsMap();
+
+		sb.append("select ");
+
+		for (String name : tableColumnsMap.keySet()) {
+			if (name.equals("ctCollectionId")) {
+				sb.append(_targetCTCollectionId);
+				sb.append(" as ");
+			}
+			else if (name.equals("mvccVersion")) {
+				sb.append("(mvccVersion + 1) ");
+			}
+
+			sb.append(name);
+			sb.append(", ");
+		}
+
+		sb.setStringAt(" from ", sb.index() - 1);
+
+		sb.append(tableName);
+		sb.append(" where ");
+		sb.append(primaryKeyName);
+		sb.append(" = ");
+		sb.append(primaryKey);
+		sb.append(" and ctCollectionId = ");
+		sb.append(tempCTCollectionId);
+
+		CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());
+	}
+
 	private int _getPredeletedRowCount(
 			Connection connection, String tableName, String primaryKeyName)
 		throws Exception {
@@ -186,46 +225,13 @@ public class CTServicePublisher<T extends CTModel<T>> {
 		}
 
 		if (_modificationCTEntries != null) {
-			StringBundler sb = new StringBundler();
-
-			Map<String, Integer> tableColumnsMap =
-				ctPersistence.getTableColumnsMap();
-
-			sb.append("select ");
-
-			for (String name : tableColumnsMap.keySet()) {
-				if (name.equals("ctCollectionId")) {
-					sb.append(_targetCTCollectionId);
-					sb.append(" as ");
-				}
-				else if (name.equals("mvccVersion")) {
-					sb.append("(t1.mvccVersion + 1) ");
-				}
-				else {
-					sb.append("t1.");
-				}
-
-				sb.append(name);
-				sb.append(", ");
+			for (Serializable primaryKey : _modificationCTEntries.keySet()) {
+				_copyCTRow(
+					connection, ctPersistence, tableName, primaryKeyName,
+					primaryKey, tempCTCollectionId);
 			}
 
-			sb.setStringAt(" from ", sb.index() - 1);
-
-			sb.append(tableName);
-			sb.append(" t1, ");
-			sb.append(tableName);
-			sb.append(" t2 where t1.");
-			sb.append(primaryKeyName);
-			sb.append(" = t2.");
-			sb.append(primaryKeyName);
-			sb.append(" and t1.ctCollectionId = ");
-			sb.append(tempCTCollectionId);
-			sb.append(" and t2.ctCollectionId = ");
-			sb.append(_sourceCTCollectionId);
-
-			CTRowUtil.copyCTRows(ctPersistence, connection, sb.toString());
-
-			sb.setIndex(0);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append("delete from ");
 			sb.append(tableName);

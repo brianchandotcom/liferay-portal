@@ -81,10 +81,10 @@ export default function ({
 							'text-warning'
 						);
 
-						siteName = `${entityName}&nbsp;${warningIcon}`;
+						siteName = `<span class="text-truncate">${entityName}&nbsp;${warningIcon}</span>`;
 					}
 					else {
-						siteName = entityName;
+						siteName = `<span class="text-truncate">${entityName}</span>`;
 					}
 
 					const removeButton = `<button

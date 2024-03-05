@@ -8,7 +8,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+String backURL = ParamUtil.getString(
+	request, "backURL",
+	URLBuilder.create(
+		String.valueOf(renderResponse.createRenderURL())
+	).setParameter(
+		"objectFolderName", "Default"
+	).build());
 ObjectDefinitionsDetailsDisplayContext objectDefinitionsDetailsDisplayContext = (ObjectDefinitionsDetailsDisplayContext)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITIONS_DETAILS_DISPLAY_CONTEXT);
 ObjectDefinitionsFieldsDisplayContext objectDefinitionsFieldsDisplayContext = (ObjectDefinitionsFieldsDisplayContext)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITIONS_FIELD_DISPLAY_CONTEXT);
 ObjectDefinitionsRelationshipsDisplayContext objectDefinitionsRelationshipsDisplayContext = (ObjectDefinitionsRelationshipsDisplayContext)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITIONS_RELATIONSHIP_DISPLAY_CONTEXT);

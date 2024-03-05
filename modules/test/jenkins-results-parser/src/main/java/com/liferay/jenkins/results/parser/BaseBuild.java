@@ -1217,6 +1217,13 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getTestrayBuildDateString() {
+		return JenkinsResultsParserUtil.toDateString(
+			new Date(getStartTime()), "yyyy-MM-dd HH:mm:ss",
+			"America/Los_Angeles");
+	}
+
+	@Override
 	public synchronized List<URL> getTestrayS3AttachmentURLs() {
 		if (_testrayS3AttachmentURLs != null) {
 			return _testrayS3AttachmentURLs;

@@ -57,6 +57,14 @@ public class AddressServiceUtil {
 		return getService().getAddresses(className, classPK);
 	}
 
+	public static List<Address> getListTypeAddresses(
+			String className, long classPK, long[] listTypeIds)
+		throws PortalException {
+
+		return getService().getListTypeAddresses(
+			className, classPK, listTypeIds);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

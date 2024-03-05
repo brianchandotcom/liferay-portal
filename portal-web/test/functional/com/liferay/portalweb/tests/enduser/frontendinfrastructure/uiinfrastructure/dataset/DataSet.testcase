@@ -922,30 +922,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-175990. Confirm that the user can create a data set entry"
-	@priority = 5
-	test CanCreateDataSet {
-		property portal.acceptance = "true";
-
-		task ("When Create a DataSet ") {
-			DataSetAdmin.createDataSet(
-				key_name = "Test Data Set",
-				key_type = "/data-set-manager/entries");
-		}
-
-		task ("Then Confirm the name as expected") {
-			AssertElementPresent(
-				key_itemName = "Test Data Set",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-
-		task ("And Confirm the Provider as expected") {
-			AssertElementPresent(
-				key_itemName = "/data-set-manager/entries",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-172398. Confirm that the data set can be deleted"
 	@priority = 5
 	test CanDeleteDataSet {

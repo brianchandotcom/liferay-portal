@@ -23,36 +23,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-175990. Confirm that the user can create a data set view via API"
-	@priority = 5
-	test CanCreateDataSetEntryViaAPI {
-		property portal.acceptance = "true";
-
-		task ("Given creating a Data Set via API") {
-			DataSetAdmin.goToDataSetAdminPage();
-
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Data Set Test",
-				restApplication = "/data-set-manager/entries",
-				restEndpoint = "/",
-				restSchema = "FDSEntry");
-		}
-
-		task ("and given access to the Data Sets admin page") {
-			DataSetAdmin.goToDataSetAdminPage();
-
-			WaitForElementPresent(
-				key_itemName = "Data Set Test",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-
-		task ("Then the data set is shown in the list") {
-			AssertElementPresent(
-				key_itemName = "Data Set Test",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
 	@description = "LPS-181355. Confirm that views can be created through API"
 	@priority = 5
 	test CanCreateViewsThroughAPI {

@@ -39,7 +39,7 @@ public class SignInLayoutUtilityPageEntryViewRenderer
 
 	@Override
 	public String getType() {
-		return LayoutUtilityPageEntryConstants.TYPE_SIGN_IN;
+		return LayoutUtilityPageEntryConstants.TYPE_LOGIN;
 	}
 
 	@Override

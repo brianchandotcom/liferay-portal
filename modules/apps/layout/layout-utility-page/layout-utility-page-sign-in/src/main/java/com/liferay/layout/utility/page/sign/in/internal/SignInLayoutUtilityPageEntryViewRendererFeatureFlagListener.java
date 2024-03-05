@@ -46,7 +46,7 @@ public class SignInLayoutUtilityPageEntryViewRendererFeatureFlagListener
 				_language, _servletContext),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"utility.page.type",
-				LayoutUtilityPageEntryConstants.TYPE_SIGN_IN
+				LayoutUtilityPageEntryConstants.TYPE_LOGIN
 			).build());
 	}
 
@@ -63,7 +63,7 @@ public class SignInLayoutUtilityPageEntryViewRendererFeatureFlagListener
 	private ServiceRegistration<?> _serviceRegistration;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.utility.page.sign.in)"
+		target = "(osgi.web.symbolicname=com.liferay.layout.utility.page.login)"
 	)
 	private ServletContext _servletContext;
 

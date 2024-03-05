@@ -37,11 +37,6 @@ public class CommercePaymentEntryRefundTypeImpl
 	implements CommercePaymentEntryRefundType {
 
 	@Override
-	public boolean isEnabled() {
-		return _commercePaymentEntryRefundTypeConfiguration.enabled();
-	}
-
-	@Override
 	public String getKey() {
 		return _commercePaymentEntryRefundTypeConfiguration.key();
 	}
@@ -84,6 +79,11 @@ public class CommercePaymentEntryRefundTypeImpl
 	@Override
 	public int getPriority() {
 		return _commercePaymentEntryRefundTypeConfiguration.priority();
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return _commercePaymentEntryRefundTypeConfiguration.enabled();
 	}
 
 	@Activate

@@ -13,8 +13,6 @@ import java.util.Map;
  */
 public interface CommercePaymentEntryRefundType {
 
-	public boolean isEnabled();
-
 	public String getKey();
 
 	public String getName(Locale locale);
@@ -22,5 +20,7 @@ public interface CommercePaymentEntryRefundType {
 	public Map<Locale, String> getNameMap();
 
 	public int getPriority();
+
+	public boolean isEnabled();
 
 }

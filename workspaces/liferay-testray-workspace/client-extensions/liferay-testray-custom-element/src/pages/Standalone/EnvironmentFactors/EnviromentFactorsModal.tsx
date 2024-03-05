@@ -93,12 +93,11 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 						(item) => Number(item?.id) === Number(factorCategory.id)
 					)
 			) || [];
-
 		setState([
 			availableItems.map(onMapAvailable) as any,
 			selectedItems
 				.map(onMapAvailable as any)
-				.sort((a: any, b: any) => a.label.localeCompare(b.label)),
+				.sort((a: any, b: any) => a.label?.localeCompare(b.label)),
 		]);
 	}, [factorCategoryResponse?.items, factors, setState]);
 

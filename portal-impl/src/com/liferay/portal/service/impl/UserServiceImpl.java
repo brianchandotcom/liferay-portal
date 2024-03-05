@@ -2146,6 +2146,18 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			userId, externalReferenceCode);
 	}
 
+	@Override
+	public User updateExternalReferenceCode(
+			User user, String externalReferenceCode)
+		throws PortalException {
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.UPDATE);
+
+		return userLocalService.updateExternalReferenceCode(
+			user, externalReferenceCode);
+	}
+
 	/**
 	 * Updates a user account that was automatically created when a guest user
 	 * participated in an action (e.g. posting a comment) and only provided his

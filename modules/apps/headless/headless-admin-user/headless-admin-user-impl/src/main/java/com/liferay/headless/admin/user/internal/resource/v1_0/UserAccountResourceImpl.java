@@ -884,7 +884,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				serviceContext);
 		}
 
-		_userService.updatePortrait(
+		user = _userService.updateExternalReferenceCode(
+			user, userAccount.getExternalReferenceCode());
+
+		user = _userService.updatePortrait(
 			user.getUserId(), _getPortraitBytes(false, null, userAccount));
 
 		UserAccountContactInformation userAccountContactInformation =

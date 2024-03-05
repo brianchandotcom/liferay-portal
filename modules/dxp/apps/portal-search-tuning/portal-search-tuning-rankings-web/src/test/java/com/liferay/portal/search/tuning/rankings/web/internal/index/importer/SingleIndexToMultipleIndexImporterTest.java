@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index.importer;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -35,7 +34,7 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao, Joshua Cords
  */
-public class SingleIndexToMultipleIndexImporterImplTest
+public class SingleIndexToMultipleIndexImporterTest
 	extends BaseRankingsWebTestCase {
 
 	@ClassRule
@@ -46,19 +45,9 @@ public class SingleIndexToMultipleIndexImporterImplTest
 	@Before
 	public void setUp() throws Exception {
 		_singleIndexToMultipleIndexImporterImpl =
-			new SingleIndexToMultipleIndexImporterImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_singleIndexToMultipleIndexImporterImpl, "_indexNameBuilder",
-			_indexNameBuilder);
-		ReflectionTestUtil.setFieldValue(
-			_singleIndexToMultipleIndexImporterImpl, "_queries", queries);
-		ReflectionTestUtil.setFieldValue(
-			_singleIndexToMultipleIndexImporterImpl, "_rankingIndexReader",
-			_rankingIndexReader);
-		ReflectionTestUtil.setFieldValue(
-			_singleIndexToMultipleIndexImporterImpl, "_searchEngineAdapter",
-			searchEngineAdapter);
+			new SingleIndexToMultipleIndexImporter(
+				_indexNameBuilder, queries, _rankingIndexReader,
+				searchEngineAdapter);
 	}
 
 	@After
@@ -173,7 +162,7 @@ public class SingleIndexToMultipleIndexImporterImplTest
 			RankingIndexCreatorUtil.class);
 	private final RankingIndexReader _rankingIndexReader = Mockito.mock(
 		RankingIndexReader.class);
-	private SingleIndexToMultipleIndexImporterImpl
+	private SingleIndexToMultipleIndexImporter
 		_singleIndexToMultipleIndexImporterImpl;
 
 }

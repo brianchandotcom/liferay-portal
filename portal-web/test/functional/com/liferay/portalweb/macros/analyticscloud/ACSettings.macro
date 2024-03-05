@@ -535,8 +535,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createRequestLogByEmail(fieldType = null, email = null) {
-		var key_fieldType = ${fieldType};
+	macro createRequestLogByEmail(jobType, email) {
+		var key_fieldType = ${jobType};
 
 		ACSettings.goToDataControlAndPrivacy();
 
@@ -548,13 +548,11 @@ definition {
 
 		Click(locator1 = "ACDataControlAndPrivacy#JOB_TYPE");
 
-		Type(
-			locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD",
-			value1 = ${email});
-
 		Click(locator1 = "ACDataControlAndPrivacy#FIND_BY_EMAIL_FIELD");
 
-		Click(locator1 = "ACDataControlAndPrivacy#SELECT_USER");
+		Click(
+			key_optionName = ${email},
+			locator1 = "ACDataControlAndPrivacy#SELECT_USER");
 
 		Button.clickSave();
 

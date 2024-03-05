@@ -5,29 +5,25 @@
 
 package com.liferay.testray;
 
-import java.net.URL;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.nio.charset.Charset;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import java.nio.charset.StandardCharsets;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
 
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,15 +38,17 @@ public class Main {
 			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID"),
 			System.getenv(
 				"LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
-			new URL(System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_URL")));
+			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_URL"));
 
-		main.deleteTestrayArchivedBuilds();
-		main.autoArchiveTestrayBuilds();
+		String oAuthAuthorization = main.getOAuthAuthorization();
+
+		main.deleteTestrayArchivedBuilds(oAuthAuthorization);
+		main.autoArchiveTestrayBuilds(oAuthAuthorization);
 	}
 
 	public Main(
 			String liferayOAuthClientId, String liferayOAuthClientSecret,
-			URL liferayURL)
+			String liferayURL)
 		throws Exception {
 
 		_liferayOAuthClientId = liferayOAuthClientId;
@@ -58,8 +56,8 @@ public class Main {
 		_liferayURL = liferayURL;
 	}
 
-	public void autoArchiveTestrayBuilds() throws Exception {
-		String oAuthAuthorization = _getOAuthAuthorization();
+	public void autoArchiveTestrayBuilds(String oAuthAuthorization)
+		throws Exception {
 
 		JSONArray testrayBuildsJSONArray = _getTestrayBuildsJSONArray(
 			oAuthAuthorization,
@@ -67,7 +65,7 @@ public class Main {
 				_currentDateTime.minusDays(60));
 
 		if ((testrayBuildsJSONArray == null) ||
-			(testrayBuildsJSONArray.length() == 0)) {
+			testrayBuildsJSONArray.isEmpty()) {
 
 			return;
 		}
@@ -77,17 +75,21 @@ public class Main {
 		for (int i = 0; i < testrayBuildsJSONArray.length(); i++) {
 			JSONObject jsonObject = (JSONObject)testrayBuildsJSONArray.get(i);
 
-			jsonObject.put("archived", true);
-			jsonObject.put("dateArchived", _currentDateTime);
-
-			jsonArray.put(jsonObject);
+			jsonArray.put(
+				jsonObject.put(
+					"archived", true
+				).put(
+					"dateArchived", _currentDateTime
+				));
 		}
 
-		_putTestrayBuilds(oAuthAuthorization, jsonArray);
+		_sendRequest(
+			oAuthAuthorization, jsonArray.toString(), "application/json", "PUT",
+			URI.create(_liferayURL + "/o/c/builds/batch"));
 	}
 
-	public void deleteTestrayArchivedBuilds() throws Exception {
-		String oAuthAuthorization = _getOAuthAuthorization();
+	public void deleteTestrayArchivedBuilds(String oAuthAuthorization)
+		throws Exception {
 
 		JSONArray testrayBuildsJSONArray = _getTestrayBuildsJSONArray(
 			oAuthAuthorization,
@@ -95,7 +97,7 @@ public class Main {
 				_currentDateTime.minusDays(30));
 
 		if ((testrayBuildsJSONArray == null) ||
-			(testrayBuildsJSONArray.length() == 0)) {
+			testrayBuildsJSONArray.isEmpty()) {
 
 			return;
 		}
@@ -109,146 +111,105 @@ public class Main {
 				Collections.singletonMap("id", jsonObject.getLong("id")));
 		}
 
-		_deleteTestrayBuilds(oAuthAuthorization, jsonArray);
+		_sendRequest(
+			oAuthAuthorization, jsonArray.toString(), "application/json",
+			"DELETE", URI.create(_liferayURL + "/o/c/builds/batch"));
 	}
 
-	private JSONObject _deleteTestrayBuilds(
-			String authorization, JSONArray jsonArray)
-		throws Exception {
+	public String getOAuthAuthorization() throws Exception {
+		String urlEncoded = "";
 
-		HttpDeleteBatch httpDelete = new HttpDeleteBatch(
-			_liferayURL + "/o/c/builds/batch");
+		for (Map.Entry<String, String> entry :
+				HashMapBuilder.put(
+					"client_id", _liferayOAuthClientId
+				).put(
+					"client_secret", _liferayOAuthClientSecret
+				).put(
+					"grant_type", "client_credentials"
+				).build(
+				).entrySet()) {
 
-		httpDelete.setHeader("Authorization", authorization);
-		httpDelete.setHeader("accept", "application/json");
-		httpDelete.setHeader("Content-Type", "application/json");
-		httpDelete.setEntity(new StringEntity(jsonArray.toString()));
-
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build();
-			CloseableHttpResponse closeableHttpResponse =
-				closeableHttpClient.execute(httpDelete)) {
-
-			return new JSONObject(
-				EntityUtils.toString(
-					closeableHttpResponse.getEntity(),
-					Charset.defaultCharset()));
-		}
-	}
-
-	private String _getOAuthAuthorization() throws Exception {
-		HttpPost httpPost = new HttpPost(_liferayURL + "/o/oauth2/token");
-
-		httpPost.setEntity(
-			new UrlEncodedFormEntity(
-				Arrays.asList(
-					new BasicNameValuePair("client_id", _liferayOAuthClientId),
-					new BasicNameValuePair(
-						"client_secret", _liferayOAuthClientSecret),
-					new BasicNameValuePair(
-						"grant_type", "client_credentials"))));
-		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
-
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build();
-			CloseableHttpResponse closeableHttpResponse =
-				closeableHttpClient.execute(httpPost)) {
-
-			StatusLine statusLine = closeableHttpResponse.getStatusLine();
-
-			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-				JSONObject jsonObject = new JSONObject(
-					EntityUtils.toString(
-						closeableHttpResponse.getEntity(),
-						Charset.defaultCharset()));
-
-				return jsonObject.getString("token_type") + " " +
-					jsonObject.getString("access_token");
+			if (Validator.isNotNull(urlEncoded)) {
+				urlEncoded += "&";
 			}
 
-			throw new Exception("Unable to get OAuth authorization");
+			urlEncoded +=
+				URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) +
+					"=" +
+						URLEncoder.encode(
+							entry.getValue(), StandardCharsets.UTF_8);
 		}
+
+		HttpResponse<String> httpResponse = _sendRequest(
+			null, urlEncoded, "application/x-www-form-urlencoded", "POST",
+			URI.create(_liferayURL + "/o/oauth2/token"));
+
+		if (httpResponse.statusCode() == 200) {
+			JSONObject jsonObject = new JSONObject(httpResponse.body());
+
+			return jsonObject.getString("token_type") + " " +
+				jsonObject.getString("access_token");
+		}
+
+		throw new Exception("Unable to get OAuth authorization");
 	}
 
 	private JSONArray _getTestrayBuildsJSONArray(
 			String authorization, String filterString)
 		throws Exception {
 
-		URIBuilder uriBuilder = new URIBuilder(_liferayURL + "/o/c/builds");
+		HttpResponse<String> httpResponse = _sendRequest(
+			authorization, null, "application/json", "GET",
+			new URIBuilder(
+				_liferayURL + "/o/c/builds"
+			).addParameter(
+				"filter", filterString
+			).addParameter(
+				"pageSize", "-1"
+			).build());
 
-		if (filterString != null) {
-			uriBuilder.addParameter("filter", filterString);
-		}
-
-		uriBuilder.addParameter("pageSize", "500");
-
-		HttpGet httpGet = new HttpGet(uriBuilder.build());
-
-		httpGet.setHeader("Authorization", authorization);
-		httpGet.setHeader("accept", "application/json");
-
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build();
-			CloseableHttpResponse closeableHttpResponse =
-				closeableHttpClient.execute(httpGet)) {
-
-			return new JSONObject(
-				EntityUtils.toString(
-					closeableHttpResponse.getEntity(), Charset.defaultCharset())
-			).getJSONArray(
-				"items"
-			);
-		}
+		return new JSONObject(
+			httpResponse.body()
+		).getJSONArray(
+			"items"
+		);
 	}
 
-	private JSONObject _putTestrayBuilds(
-			String authorization, JSONArray jsonArray)
+	private HttpResponse<String> _sendRequest(
+			String authorization, String body, String contentType,
+			String method, URI uri)
 		throws Exception {
-		
-		HttpPut httpPut = new HttpPut(_liferayURL + "/o/c/builds/batch");
 
-		httpPut.setHeader("accept", "application/json");
-		httpPut.setHeader("Authorization", authorization);
-		httpPut.setHeader("Content-Type", "application/json");
-		httpPut.setEntity(new StringEntity(jsonArray.toString()));
+		HttpRequest.Builder httpRequest = HttpRequest.newBuilder(
+		).uri(
+			uri
+		).header(
+			"accept", "application/json"
+		);
 
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build();
-			CloseableHttpResponse closeableHttpResponse =
-				closeableHttpClient.execute(httpPut)) {
-
-			return new JSONObject(
-				EntityUtils.toString(
-					closeableHttpResponse.getEntity(),
-					Charset.defaultCharset()));
+		if (authorization != null) {
+			httpRequest.header("Authorization", authorization);
 		}
+
+		if (contentType != null) {
+			httpRequest.header("Content-Type", contentType);
+		}
+
+		if (!StringUtil.equals(method, "GET")) {
+			httpRequest.method(
+				method, HttpRequest.BodyPublishers.ofString(body));
+		}
+
+		HttpClient httpClient = HttpClient.newHttpClient();
+
+		return httpClient.send(
+			httpRequest.build(), HttpResponse.BodyHandlers.ofString());
 	}
 
 	private final OffsetDateTime _currentDateTime = OffsetDateTime.now(
 		ZoneOffset.UTC);
 	private final String _liferayOAuthClientId;
 	private final String _liferayOAuthClientSecret;
-	private final URL _liferayURL;
-
-	private class HttpDeleteBatch extends HttpPost {
-
-		public HttpDeleteBatch(String url) {
-			super(url);
-		}
-
-		@Override
-		public String getMethod() {
-			return "DELETE";
-		}
-
-	}
+	private final String _liferayURL;
 
 }

@@ -79,6 +79,30 @@ public class ResourceActionLocalServiceTest {
 	}
 
 	@Test
+	public void testAddResourceActionCachesAction() {
+		String testActionId = "testActionId";
+
+		Assert.assertNull(
+			_resourceActionLocalService.fetchResourceAction(
+				ResourceActionLocalServiceTest.class.getName(), testActionId));
+
+		ResourceAction resourceAction =
+			_resourceActionLocalService.addResourceAction(
+				ResourceActionLocalServiceTest.class.getName(), testActionId,
+				0L);
+
+		try {
+			Assert.assertNotNull(
+				_resourceActionLocalService.fetchResourceAction(
+					ResourceActionLocalServiceTest.class.getName(),
+					testActionId));
+		}
+		finally {
+			_resourceActionLocalService.deleteResourceAction(resourceAction);
+		}
+	}
+
+	@Test
 	public void testFirstAvailableBitwiseValueGetsGenerated()
 		throws PortalException {
 

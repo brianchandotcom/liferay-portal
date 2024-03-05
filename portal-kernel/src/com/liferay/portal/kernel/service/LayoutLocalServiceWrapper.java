@@ -1180,20 +1180,6 @@ public class LayoutLocalServiceWrapper
 			orderByComparator);
 	}
 
-	/**
-	 * Returns a range of all the layouts belonging to the group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param userId the primary key of the user
-	 * @param privateLayout whether the layout is private to the group
-	 * @param keywords keywords
-	 * @param types layout types
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the layouts
-	 * @return the matching layouts, or <code>null</code> if no matches were
-	 found
-	 */
 	@Override
 	public java.util.List<Layout> getLayouts(
 			long groupId, long userId, boolean privateLayout, String keywords,
@@ -1639,6 +1625,110 @@ public class LayoutLocalServiceWrapper
 
 		return _layoutLocalService.hasLayoutSetPrototypeLayout(
 			layoutSetPrototypeUuid, companyId, layoutUuid);
+	}
+
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param keywords keywords
+	 * @param searchOnlyByTitle searchOnlyByTitle
+	 * @param types layout types
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 found
+	 */
+	@Override
+	public java.util.List<Layout> search(
+			long groupId, boolean privateLayout, String keywords,
+			boolean searchOnlyByTitle, String[] types, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.search(
+			groupId, privateLayout, keywords, searchOnlyByTitle, types, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param userId the primary key of the user
+	 * @param privateLayout whether the layout is private to the group
+	 * @param keywords keywords
+	 * @param searchOnlyByTitle searchOnlyByTitle
+	 * @param types layout types
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 found
+	 */
+	@Override
+	public java.util.List<Layout> search(
+			long groupId, long userId, boolean privateLayout, String keywords,
+			boolean searchOnlyByTitle, String[] types, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.search(
+			groupId, userId, privateLayout, keywords, searchOnlyByTitle, types,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param userId the primary key of the user
+	 * @param privateLayout whether the layout is private to the group
+	 * @param keywords keywords
+	 * @param searchOnlyByTitle searchOnlyByTitle
+	 * @param types layout types
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 found
+	 */
+	@Override
+	public java.util.List<Layout> search(
+			long groupId, long userId, boolean privateLayout, String keywords,
+			boolean searchOnlyByTitle, String[] types, int[] statuses,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.search(
+			groupId, userId, privateLayout, keywords, searchOnlyByTitle, types,
+			statuses, start, end, orderByComparator);
+	}
+
+	@Override
+	public int searchCount(
+			com.liferay.portal.kernel.model.Group group, boolean privateLayout,
+			String keywords, boolean searchOnlyByTitle, String[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.searchCount(
+			group, privateLayout, keywords, searchOnlyByTitle, types);
+	}
+
+	@Override
+	public int searchCount(
+			long groupId, long userId, boolean privateLayout, String keywords,
+			boolean searchOnlyByTitle, String[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.searchCount(
+			groupId, userId, privateLayout, keywords, searchOnlyByTitle, types);
 	}
 
 	/**

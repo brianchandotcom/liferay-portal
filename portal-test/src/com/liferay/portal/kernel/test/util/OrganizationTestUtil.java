@@ -56,7 +56,10 @@ public class OrganizationTestUtil {
 			Organization organization, ServiceContext serviceContext)
 		throws Exception {
 
-		Country country = CountryLocalServiceUtil.addCountry(
+		Country country = CountryLocalServiceUtil.fetchCountryByA2(
+			organization.getCompanyId(), "A2XY");
+			
+		CountryLocalServiceUtil.addCountry(
 			"XY", "XYZ", true, true, null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(), true,
 			false, false, serviceContext);

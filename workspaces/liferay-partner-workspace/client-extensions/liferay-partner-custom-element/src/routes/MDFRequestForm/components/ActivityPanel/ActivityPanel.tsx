@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
@@ -34,71 +35,80 @@ const ActivityPanel = ({
 	const {values} = useFormikContext<MDFRequest>();
 
 	return (
-		<ClayPanel
-			className={classNames({
-				'border-brand-primary-lighten-4': !hasErrors,
-				'border-danger': hasErrors,
-			})}
-			collapsable={detail}
-			displayTitle={
-				<ClayPanel.Title
-					className={classNames('text-dark', {
-						'p-4': !detail,
-						'py-2': detail,
-					})}
-				>
-					<div className="d-flex justify-content-between">
-						<div className="text-truncate">
-							<div className="mb-1 text-neutral-7 text-paragraph-sm">
-								{overallCampaignName}
+		<div>
+			<ClayPanel
+				className={classNames({
+					'border-brand-primary-lighten-4': !hasErrors,
+					'border-danger mb-1': hasErrors,
+				})}
+				collapsable={detail}
+				displayTitle={
+					<ClayPanel.Title
+						className={classNames('text-dark', {
+							'p-4': !detail,
+							'py-2': detail,
+						})}
+					>
+						<div className="d-flex justify-content-between">
+							<div className="text-truncate">
+								<div className="mb-1 text-neutral-7 text-paragraph-sm">
+									{overallCampaignName}
+								</div>
+
+								<h5 className="mb-1 text-truncate">
+									{activity.name}
+								</h5>
 							</div>
 
-							<h5 className="mb-1 text-truncate">
-								{activity.name}
+							<div className="ml-5">
+								{!detail && (
+									<div className="d-flex">
+										<ClayButtonWithIcon
+											aria-label="Edit Activity"
+											displayType={null}
+											onClick={onEdit}
+											small
+											symbol="pencil"
+										/>
+
+										<ClayButtonWithIcon
+											aria-label="Remove Activity"
+											displayType={null}
+											onClick={onRemove}
+											small
+											symbol="trash"
+										/>
+									</div>
+								)}
+							</div>
+						</div>
+
+						<div className="align-items-center d-flex justify-content-between">
+							<div className="font-weight-semi-bold text-neutral-7 text-paragraph-sm">
+								MDF Requested:
+							</div>
+
+							<h5 className="mr-2">
+								{getIntlNumberFormat(values.currency).format(
+									activity.mdfRequestAmount
+								)}
 							</h5>
 						</div>
+					</ClayPanel.Title>
+				}
+				displayType="secondary"
+				showCollapseIcon={detail}
+			>
+				{detail && <ClayPanel.Body>{children}</ClayPanel.Body>}
+			</ClayPanel>
 
-						<div className="ml-5">
-							{!detail && (
-								<div className="d-flex">
-									<ClayButtonWithIcon
-										aria-label="Edit Activity"
-										displayType={null}
-										onClick={onEdit}
-										small
-										symbol="pencil"
-									/>
-
-									<ClayButtonWithIcon
-										aria-label="Remove Activity"
-										displayType={null}
-										onClick={onRemove}
-										small
-										symbol="trash"
-									/>
-								</div>
-							)}
-						</div>
-					</div>
-
-					<div className="align-items-center d-flex justify-content-between">
-						<div className="font-weight-semi-bold text-neutral-7 text-paragraph-sm">
-							MDF Requested:
-						</div>
-
-						<h5 className="mr-2">
-							{getIntlNumberFormat(values.currency).format(
-								activity.mdfRequestAmount
-							)}
-						</h5>
-					</div>
-				</ClayPanel.Title>
-			}
-			displayType="secondary"
-			showCollapseIcon={detail}
-		>
-			{detail && <ClayPanel.Body>{children}</ClayPanel.Body>}
-		</ClayPanel>
+			{hasErrors && (
+				<ClayAlert displayType="danger" hideCloseIcon={true}>
+					Missing information! Please complete the activity&apos;s
+					required fields before proceeding to the next step.
+				</ClayAlert>
+			)}
+		</div>
 	);
 };
 

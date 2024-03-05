@@ -9,6 +9,7 @@ import {HomePage} from '../portal-web/HomePage';
 
 export class ApplicationsMenuPage {
 	private readonly aiCreatorLink: Locator;
+	private readonly announcementsItem: Locator;
 	private readonly apiBuilderMenuItem: Locator;
 	private readonly applicationsMenuTabButton: Locator;
 	private readonly clientExtensionsLink: Locator;
@@ -29,6 +30,10 @@ export class ApplicationsMenuPage {
 	private readonly usersAndOrganizationsItem: Locator;
 
 	constructor(page: Page) {
+		this.announcementsItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Announcements and Alerts',
+		});
 		this.apiBuilderMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'API Builder',
@@ -102,6 +107,11 @@ export class ApplicationsMenuPage {
 		await this.homePage.openApplicationMenu();
 
 		await expect(this.applicationsMenuTabButton).toBeVisible();
+	}
+
+	async goToAnnouncements() {
+		await this.goToApplicationsMenu();
+		await this.announcementsItem.click();
 	}
 
 	async goToDataSetManager() {

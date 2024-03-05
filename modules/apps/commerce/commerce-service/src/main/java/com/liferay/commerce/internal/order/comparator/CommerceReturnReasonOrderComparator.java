@@ -30,10 +30,10 @@ public class CommerceReturnReasonOrderComparator
 		CommerceReturnReason commerceReturnReason1,
 		CommerceReturnReason commerceReturnReason2) {
 
-		int displayOrder1 = commerceReturnReason1.getPriority();
-		int displayOrder2 = commerceReturnReason2.getPriority();
+		int priority1 = commerceReturnReason1.getPriority();
+		int priority2 = commerceReturnReason2.getPriority();
 
-		int value = Integer.compare(displayOrder1, displayOrder2);
+		int value = Integer.compare(priority1, priority2);
 
 		if (_ascending) {
 			return value;

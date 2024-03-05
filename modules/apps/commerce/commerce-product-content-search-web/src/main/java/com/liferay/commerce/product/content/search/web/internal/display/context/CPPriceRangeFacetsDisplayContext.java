@@ -130,15 +130,15 @@ public class CPPriceRangeFacetsDisplayContext {
 	}
 
 	public boolean isFacetVisible() {
-		if (_facet != null) {
-			FacetCollector facetCollector = _facet.getFacetCollector();
+		if (_facet == null) {
+			return false;
+		}
 
-			for (TermCollector termCollector :
-					facetCollector.getTermCollectors()) {
+		FacetCollector facetCollector = _facet.getFacetCollector();
 
-				if (termCollector.getFrequency() > 0) {
-					return true;
-				}
+		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
+			if (termCollector.getFrequency() > 0) {
+				return true;
 			}
 		}
 

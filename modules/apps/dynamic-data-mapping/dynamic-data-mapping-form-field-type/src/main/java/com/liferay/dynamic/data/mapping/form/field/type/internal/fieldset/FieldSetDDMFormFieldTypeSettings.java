@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 		@DDMFormRule(
 			actions = {
 				"setVisible('ddmStructureId', FALSE)",
-				"setVisible('ddmStructureKey, FALSE)",
+				"setVisible('ddmStructureKey', FALSE)",
 				"setVisible('ddmStructureLayoutId', FALSE)",
 				"setVisible('name', FALSE)",
 				"setVisible('normalizedStructure', FALSE)",

@@ -95,7 +95,7 @@ public class ClassNameLocalServiceImpl
 			return _nullClassName;
 		}
 
-		ClassName className = ClassNamePool.fetchByClassName(value);
+		ClassName className = ClassNamePool.fetchByValue(value);
 
 		if (className == null) {
 			className = classNamePersistence.fetchByValue(value);
@@ -120,7 +120,7 @@ public class ClassNameLocalServiceImpl
 		// Always cache the class name. This table exists to improve
 		// performance. Create the class name if one does not exist.
 
-		ClassName className = ClassNamePool.fetchByClassName(value);
+		ClassName className = ClassNamePool.fetchByValue(value);
 
 		if (className != null) {
 			return className;
@@ -134,7 +134,7 @@ public class ClassNameLocalServiceImpl
 				_log.debug(throwable);
 			}
 
-			return ClassNamePool.fetchByClassName(value);
+			return ClassNamePool.fetchByValue(value);
 		}
 	}
 
@@ -174,58 +174,57 @@ public class ClassNameLocalServiceImpl
 				return;
 			}
 
-			Map<String, Long> classNameToClassNameIdMap = _getCompanyMap(
-				_companyClassNameToClassNameIdMap);
+			Map<String, Long> valueToClassNameIdMap = _getCompanyMap(
+				_valueToClassNameIdCompanyMap);
 
-			classNameToClassNameIdMap.put(
+			valueToClassNameIdMap.put(
 				className.getValue(), className.getClassNameId());
 
-			Map<Long, ClassName> classNameIdToClassNameMap = _getCompanyMap(
-				_companyClassNameIdToClassNameMap);
+			Map<Long, ClassName> classNameIdToValueMap = _getCompanyMap(
+				_classNameIdToValueCompanyMap);
 
-			classNameIdToClassNameMap.put(
-				className.getClassNameId(), className);
+			classNameIdToValueMap.put(className.getClassNameId(), className);
 		}
 
-		public static ClassName fetchByClassName(String className) {
-			Map<String, Long> classNameToClassNameIdMap = _getCompanyMap(
-				_companyClassNameToClassNameIdMap);
+		public static ClassName fetchByClassNameId(long classNameId) {
+			Map<Long, ClassName> classNameIdToValueMap = _getCompanyMap(
+				_classNameIdToValueCompanyMap);
 
-			Long classNameId = classNameToClassNameIdMap.get(className);
+			return classNameIdToValueMap.get(classNameId);
+		}
+
+		public static ClassName fetchByValue(String value) {
+			Map<String, Long> valueToClassNameIdMap = _getCompanyMap(
+				_valueToClassNameIdCompanyMap);
+
+			Long classNameId = valueToClassNameIdMap.get(value);
 
 			if (classNameId == null) {
 				return null;
 			}
 
-			Map<Long, ClassName> classNameIdToClassNameMap = _getCompanyMap(
-				_companyClassNameIdToClassNameMap);
+			Map<Long, ClassName> classNameIdToValueMap = _getCompanyMap(
+				_classNameIdToValueCompanyMap);
 
-			return classNameIdToClassNameMap.get(classNameId);
-		}
-
-		public static ClassName fetchByClassNameId(long classNameId) {
-			Map<Long, ClassName> classNameIdToClassNameMap = _getCompanyMap(
-				_companyClassNameIdToClassNameMap);
-
-			return classNameIdToClassNameMap.get(classNameId);
+			return classNameIdToValueMap.get(classNameId);
 		}
 
 		public static void invalidate() {
 			for (Map<String, Long> map :
-					_companyClassNameToClassNameIdMap.values()) {
+					_valueToClassNameIdCompanyMap.values()) {
 
 				map.clear();
 			}
 
 			for (Map<Long, ClassName> map :
-					_companyClassNameIdToClassNameMap.values()) {
+					_classNameIdToValueCompanyMap.values()) {
 
 				map.clear();
 			}
 		}
 
 		public static void remove(ClassName className) {
-			_companyClassNameToClassNameIdMap.computeIfPresent(
+			_valueToClassNameIdCompanyMap.computeIfPresent(
 				_getCompanyId(),
 				(key, map) -> {
 					map.remove(className.getValue());
@@ -233,7 +232,7 @@ public class ClassNameLocalServiceImpl
 					return map;
 				});
 
-			_companyClassNameIdToClassNameMap.computeIfPresent(
+			_classNameIdToValueCompanyMap.computeIfPresent(
 				_getCompanyId(),
 				(key, map) -> {
 					map.remove(className.getClassNameId());
@@ -258,9 +257,9 @@ public class ClassNameLocalServiceImpl
 		}
 
 		private static Map<Long, Map<Long, ClassName>>
-			_companyClassNameIdToClassNameMap = new ConcurrentHashMap<>();
+			_classNameIdToValueCompanyMap = new ConcurrentHashMap<>();
 		private static Map<Long, Map<String, Long>>
-			_companyClassNameToClassNameIdMap = new ConcurrentHashMap<>();
+			_valueToClassNameIdCompanyMap = new ConcurrentHashMap<>();
 
 	}
 

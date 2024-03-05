@@ -17,17 +17,19 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreatorUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -52,14 +54,16 @@ public class SingleIndexToMultipleIndexImporterImplTest
 		ReflectionTestUtil.setFieldValue(
 			_singleIndexToMultipleIndexImporterImpl, "_queries", queries);
 		ReflectionTestUtil.setFieldValue(
-			_singleIndexToMultipleIndexImporterImpl, "_rankingIndexCreator",
-			_rankingIndexCreator);
-		ReflectionTestUtil.setFieldValue(
 			_singleIndexToMultipleIndexImporterImpl, "_rankingIndexReader",
 			_rankingIndexReader);
 		ReflectionTestUtil.setFieldValue(
 			_singleIndexToMultipleIndexImporterImpl, "_searchEngineAdapter",
 			searchEngineAdapter);
+	}
+
+	@After
+	public void tearDown() {
+		_rankingIndexCreatorUtilMockedStatic.close();
 	}
 
 	@Test
@@ -83,11 +87,10 @@ public class SingleIndexToMultipleIndexImporterImplTest
 		).execute(
 			(BulkDocumentRequest)Mockito.any()
 		);
-		Mockito.verify(
-			_rankingIndexCreator, Mockito.times(1)
-		).deleteIfExists(
-			Mockito.any()
-		);
+		_rankingIndexCreatorUtilMockedStatic.verify(
+			() -> RankingIndexCreatorUtil.deleteIfExists(
+				Mockito.any(), Mockito.any()),
+			Mockito.times(1));
 	}
 
 	@Test
@@ -165,8 +168,9 @@ public class SingleIndexToMultipleIndexImporterImplTest
 
 	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(
 		IndexNameBuilder.class);
-	private final RankingIndexCreator _rankingIndexCreator = Mockito.mock(
-		RankingIndexCreator.class);
+	private final MockedStatic<RankingIndexCreatorUtil>
+		_rankingIndexCreatorUtilMockedStatic = Mockito.mockStatic(
+			RankingIndexCreatorUtil.class);
 	private final RankingIndexReader _rankingIndexReader = Mockito.mock(
 		RankingIndexReader.class);
 	private SingleIndexToMultipleIndexImporterImpl

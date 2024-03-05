@@ -5,15 +5,12 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.DocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,29 +20,19 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class RankingIndexCreatorImplTest extends BaseRankingsIndexTestCase {
+public class RankingIndexCreatorUtilTest extends BaseRankingsIndexTestCase {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() throws Exception {
-		_rankingIndexCreatorImpl = new RankingIndexCreatorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_rankingIndexCreatorImpl, "_jsonFactory", new JSONFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			_rankingIndexCreatorImpl, "_searchEngineAdapter",
-			searchEngineAdapter);
-	}
-
 	@Test
 	public void testCreate() {
 		setUpSearchEngineAdapter((DocumentResponse)null);
 
-		_rankingIndexCreatorImpl.create(Mockito.mock(RankingIndexName.class));
+		RankingIndexCreatorUtil.create(
+			searchEngineAdapter, Mockito.mock(RankingIndexName.class));
 
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)
@@ -58,8 +45,8 @@ public class RankingIndexCreatorImplTest extends BaseRankingsIndexTestCase {
 	public void testDelete() {
 		setUpSearchEngineAdapter((DocumentResponse)null);
 
-		_rankingIndexCreatorImpl.deleteIfExists(
-			Mockito.mock(RankingIndexName.class));
+		RankingIndexCreatorUtil.deleteIfExists(
+			searchEngineAdapter, Mockito.mock(RankingIndexName.class));
 
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)
@@ -67,7 +54,5 @@ public class RankingIndexCreatorImplTest extends BaseRankingsIndexTestCase {
 			Mockito.any(DeleteIndexRequest.class)
 		);
 	}
-
-	private RankingIndexCreatorImpl _rankingIndexCreatorImpl;
 
 }

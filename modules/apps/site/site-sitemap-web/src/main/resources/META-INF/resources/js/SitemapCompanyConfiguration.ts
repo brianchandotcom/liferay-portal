@@ -14,6 +14,7 @@ interface Props {
 type SelectedItem = {
 	groupdescriptivename: string;
 	groupid: string;
+	hasvirtualhost: string;
 };
 
 export default function ({
@@ -54,6 +55,7 @@ export default function ({
 					const {
 						groupdescriptivename: entityName,
 						groupid: entityId,
+						hasvirtualhost: hasVirtualHost,
 					} = selectedItem;
 					const rowColumns = [];
 
@@ -71,6 +73,20 @@ export default function ({
 						'times-circle'
 					);
 
+					let siteName;
+
+					if (hasVirtualHost === 'true') {
+						const warningIcon = Liferay.Util.getLexiconIconTpl(
+							'warning-full',
+							'text-warning'
+						);
+
+						siteName = `${entityName}&nbsp;${warningIcon}`;
+					}
+					else {
+						siteName = entityName;
+					}
+
 					const removeButton = `<button
 					aria-label="${title}"
 					class="btn btn-monospaced btn-sm lfr-portal-tooltip remove-button" 
@@ -81,7 +97,7 @@ export default function ({
 					</button>`;
 
 					rowColumns.push(sitesIcon);
-					rowColumns.push(entityName);
+					rowColumns.push(siteName);
 					rowColumns.push(removeButton);
 
 					searchContainer.addRow(rowColumns, entityId);

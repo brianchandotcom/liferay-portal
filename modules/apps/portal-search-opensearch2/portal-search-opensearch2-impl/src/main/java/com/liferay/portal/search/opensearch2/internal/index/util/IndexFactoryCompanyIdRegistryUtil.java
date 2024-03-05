@@ -5,10 +5,10 @@
 
 package com.liferay.portal.search.opensearch2.internal.index.util;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import org.apache.commons.lang.ArrayUtils;
 
 /**
  * @author Joao Victor Alves
@@ -16,7 +16,7 @@ import org.apache.commons.lang.ArrayUtils;
 public class IndexFactoryCompanyIdRegistryUtil {
 
 	public static long[] getCompanyIds() {
-		return ArrayUtils.toPrimitive(_companyIds.toArray(new Long[0]));
+		return ArrayUtil.toLongArray(_companyIds);
 	}
 
 	public static synchronized void registerCompanyId(long companyId) {

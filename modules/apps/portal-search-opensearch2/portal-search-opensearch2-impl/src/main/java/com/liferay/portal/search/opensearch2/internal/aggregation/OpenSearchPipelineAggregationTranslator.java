@@ -6,6 +6,7 @@
 package com.liferay.portal.search.opensearch2.internal.aggregation;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregation;
@@ -31,12 +32,9 @@ import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortFieldTranslator;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import org.opensearch.client.opensearch._types.SortOptions;
 import org.opensearch.client.opensearch._types.aggregations.Aggregation;
@@ -296,9 +294,8 @@ public class OpenSearchPipelineAggregationTranslator
 				percentilesBucketPipelineAggregation.getPercents())) {
 
 			builder.percents(
-				Arrays.asList(
-					ArrayUtils.toObject(
-						percentilesBucketPipelineAggregation.getPercents())));
+				ListUtil.fromArray(
+					percentilesBucketPipelineAggregation.getPercents()));
 		}
 
 		return new Aggregation(builder.build());

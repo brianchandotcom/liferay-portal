@@ -76,8 +76,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.ArrayUtils;
-
 /**
  * @author Petteri Karttunen
  */
@@ -281,7 +279,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				sxpParameters.add(
 					new BooleanArraySXPParameter(
 						expandoSXPParameterName, true,
-						ArrayUtils.toObject(expandoValue.getBooleanArray())));
+						ArrayUtil.toArray(expandoValue.getBooleanArray())));
 			}
 			else if (type == ExpandoColumnConstants.DATE) {
 				sxpParameters.add(
@@ -298,7 +296,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				sxpParameters.add(
 					new DoubleArraySXPParameter(
 						expandoSXPParameterName, true,
-						ArrayUtils.toObject(expandoValue.getDoubleArray())));
+						ArrayUtil.toArray(expandoValue.getDoubleArray())));
 			}
 			else if (type == ExpandoColumnConstants.FLOAT) {
 				sxpParameters.add(
@@ -310,7 +308,7 @@ public class UserSXPParameterContributor implements SXPParameterContributor {
 				sxpParameters.add(
 					new FloatArraySXPParameter(
 						expandoSXPParameterName, true,
-						ArrayUtils.toObject(expandoValue.getFloatArray())));
+						ArrayUtil.toArray(expandoValue.getFloatArray())));
 			}
 			else if (type == ExpandoColumnConstants.GEOLOCATION) {
 				JSONObject jsonObject = expandoValue.getGeolocationJSONObject();

@@ -6,17 +6,15 @@
 package com.liferay.portal.search.opensearch2.internal.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch._types.FieldValue;
@@ -58,7 +56,7 @@ public class ConversionUtil {
 			return Collections.emptyList();
 		}
 
-		return Arrays.asList(ArrayUtils.toObject(array));
+		return ListUtil.fromArray(array);
 	}
 
 	public static FieldDateMath toFieldDateMath(

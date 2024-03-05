@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -58,8 +59,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import org.opensearch.client.json.JsonData;
 import org.opensearch.client.opensearch.OpenSearchClient;
@@ -352,7 +351,7 @@ public class OpenSearchSearchEngine
 			companyIds.add(companyId);
 		}
 
-		return ArrayUtils.toPrimitive(companyIds.toArray(new Long[0]));
+		return ListUtil.toLongArray(companyIds, Long::longValue);
 	}
 
 	private boolean _hasBackupRepository() {

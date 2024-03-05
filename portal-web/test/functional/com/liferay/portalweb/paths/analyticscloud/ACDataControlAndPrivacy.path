@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>SELECT_USER</td>
-	<td>//button[contains(@class,'dropdown-item')]</td>
+	<td>//*[contains(@class,'dropdown-item')and text()='${key_optionName}']</td>
 	<td></td>
 </tr>
 <tr>

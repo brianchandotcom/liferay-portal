@@ -47,6 +47,16 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 			<%
 			List<Group> childGroups = GroupServiceUtil.getGroups(group.getCompanyId(), group.getGroupId(), true);
 
+			boolean hasvirtualhost = false;
+
+			if (!group.isDepot()) {
+				LayoutSet layoutSet = group.getPublicLayoutSet();
+
+				if ((layoutSet != null) && MapUtil.isNotEmpty(layoutSet.getVirtualHostnames())) {
+					hasvirtualhost = true;
+				}
+			}
+
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"groupdescriptivename", group.getDescriptiveName(locale)
 			).put(
@@ -59,6 +69,8 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 				"grouptarget", target
 			).put(
 				"grouptype", LanguageUtil.get(resourceBundle, group.getTypeLabel())
+			).put(
+				"hasvirtualhost", hasvirtualhost
 			).put(
 				"url", groupURLProvider.getGroupURL(group, liferayPortletRequest)
 			).put(

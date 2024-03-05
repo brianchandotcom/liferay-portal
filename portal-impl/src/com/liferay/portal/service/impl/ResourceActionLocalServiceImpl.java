@@ -65,6 +65,8 @@ public class ResourceActionLocalServiceImpl
 			resourceAction = resourceActionPersistence.update(resourceAction);
 		}
 
+		_resourceActions.put(encodeKey(name, actionId), resourceAction);
+
 		return resourceAction;
 	}
 
@@ -179,18 +181,17 @@ public class ResourceActionLocalServiceImpl
 
 					resourceAction = resourceActionPersistence.update(
 						resourceAction);
+
+					_resourceActions.put(key, resourceAction);
 				}
 				catch (Throwable throwable) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(throwable);
 					}
 
-					resourceAction =
-						resourceActionLocalService.addResourceAction(
-							name, actionId, bitwiseValue);
+					resourceActionLocalService.addResourceAction(
+						name, actionId, bitwiseValue);
 				}
-
-				_resourceActions.put(key, resourceAction);
 			}
 
 			if (!addDefaultActions) {

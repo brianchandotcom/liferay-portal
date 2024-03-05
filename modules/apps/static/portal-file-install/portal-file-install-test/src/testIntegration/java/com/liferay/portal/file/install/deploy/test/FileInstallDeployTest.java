@@ -75,7 +75,6 @@ public class FileInstallDeployTest {
 
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
-
 		_group = GroupTestUtil.addGroup();
 	}
 

@@ -458,9 +458,13 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
 			dataDefinitionId);
 
+		DataDefinitionContentType dataDefinitionContentType =
+			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
+				ddmStructure.getClassNameId());
+
 		_normalizeDataDefinitionFields(
-			ddmStructure.getGroupId(), dataDefinition.getContentType(),
-			dataDefinition.getDataDefinitionFields(),
+			dataDefinitionContentType.getContentType(),
+			dataDefinition.getDataDefinitionFields(), ddmStructure.getGroupId(),
 			_journalArticleLocalService.getStructureArticlesCount(
 				ddmStructure.getGroupId(), ddmStructure.getStructureId()));
 
@@ -481,10 +485,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesRegistry);
-
-		DataDefinitionContentType dataDefinitionContentType =
-			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
-				ddmStructure.getClassNameId());
 
 		ddmForm.setAllowInvalidAvailableLocalesForProperty(
 			dataDefinitionContentType.
@@ -562,14 +562,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		throws Exception {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
-			long fieldSetDDMStructureId = GetterUtil.getLong(
-				ddmFormField.getProperty("ddmStructureId"));
-
-			String ddmStructureKey = GetterUtil.getString(
-				ddmFormField.getProperty("ddmStructureKey"));
-
-			DDMStructure ddmStructure = _getAndCheckDDMStructure(
-				fieldSetDDMStructureId, ddmStructureKey, groupId, contentType);
+			DDMStructure ddmStructure = _getDDMStructure(
+				contentType, groupId, ddmFormField.getProperties());
 
 			if (ddmStructure != null) {
 				_deDataDefinitionFieldLinkLocalService.
@@ -586,9 +580,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	private void _createDataDefinitionFieldsMap(
-			Long siteId, String contentType,
-			DataDefinitionField[] dataDefinitionFields,
-			Map<Long, DataDefinitionField[]> dataDefinitionFieldsMap)
+			String contentType, DataDefinitionField[] dataDefinitionFields,
+			Map<Long, DataDefinitionField[]> dataDefinitionFieldsMap,
+			long groupId)
 		throws Exception {
 
 		if (dataDefinitionFields == null) {
@@ -597,9 +591,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
 			_createDataDefinitionFieldsMap(
-				siteId, contentType,
+				contentType,
 				dataDefinitionField.getNestedDataDefinitionFields(),
-				dataDefinitionFieldsMap);
+				dataDefinitionFieldsMap, groupId);
 
 			Map<String, Object> customProperties =
 				dataDefinitionField.getCustomProperties();
@@ -608,20 +602,14 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				continue;
 			}
 
-			long ddmStructureId = MapUtil.getLong(
-				customProperties, "ddmStructureId");
-
-			String ddmStructureKey = MapUtil.getString(
-				customProperties, "ddmStructureKey");
-
-			DDMStructure ddmStructure = _getAndCheckDDMStructure(
-				ddmStructureId, ddmStructureKey, siteId, contentType);
+			DDMStructure ddmStructure = _getDDMStructure(
+				contentType, groupId, customProperties);
 
 			if (ddmStructure == null) {
 				continue;
 			}
 
-			ddmStructureId = ddmStructure.getStructureId();
+			long ddmStructureId = ddmStructure.getStructureId();
 
 			dataDefinitionFieldsMap.put(
 				ddmStructureId,
@@ -706,25 +694,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		return null;
 	}
 
-	private DDMStructure _getAndCheckDDMStructure(
-			long ddmStructureId, String ddmStructureKey, long siteOrGroupId,
-			String contentType)
-		throws Exception {
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			ddmStructureId);
-
-		if (ddmStructure == null) {
-			ddmStructure = _ddmStructureLocalService.fetchStructure(
-				siteOrGroupId,
-				DataDefinitionContentTypeRegistryUtil.getClassNameId(
-					contentType),
-				ddmStructureKey);
-		}
-
-		return ddmStructure;
-	}
-
 	private DataLayoutResource _getDataLayoutResource(boolean checkPermission) {
 		DataLayoutResource.Builder dataLayoutResourceBuilder =
 			_dataLayoutResourceFactory.create();
@@ -759,6 +728,23 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		}
 
 		return ddmStructure.getDDMForm();
+	}
+
+	private DDMStructure _getDDMStructure(
+			String contentType, long groupId, Map<String, Object> properties)
+		throws Exception {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			MapUtil.getLong(properties, "ddmStructureId"));
+
+		if (ddmStructure != null) {
+			return ddmStructure;
+		}
+
+		return _ddmStructureLocalService.fetchStructure(
+			groupId,
+			DataDefinitionContentTypeRegistryUtil.getClassNameId(contentType),
+			MapUtil.getString(properties, "ddmStructureKey"));
 	}
 
 	private long _getDefaultDataLayoutId(
@@ -951,16 +937,16 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	private void _normalizeDataDefinitionFields(
-			Long siteId, String contentType,
-			DataDefinitionField[] dataDefinitionFields,
-			long structureArticlesCount)
+			String contentType, DataDefinitionField[] dataDefinitionFields,
+			long groupId, long structureArticlesCount)
 		throws Exception {
 
 		Map<Long, DataDefinitionField[]> dataDefinitionFieldsMap =
 			new HashMap<>();
 
 		_createDataDefinitionFieldsMap(
-			siteId, contentType, dataDefinitionFields, dataDefinitionFieldsMap);
+			contentType, dataDefinitionFields, dataDefinitionFieldsMap,
+			groupId);
 
 		if (MapUtil.isEmpty(dataDefinitionFieldsMap)) {
 			return;
@@ -1125,7 +1111,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataActionKeys.ADD_DATA_DEFINITION);
 
 		_normalizeDataDefinitionFields(
-			siteId, contentType, dataDefinition.getDataDefinitionFields(), 0);
+			contentType, dataDefinition.getDataDefinitionFields(),
+			GetterUtil.getLong(siteId), 0);
 
 		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesRegistry);

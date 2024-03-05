@@ -503,14 +503,14 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 				locale, friendlyURLEntryLocalization.getUrlTitle());
 		}
 
-		Locale defaultSiteLocale = LocaleUtil.getSiteDefault();
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLanguageId());
 
-		if (Validator.isNull(friendlyURLMap.get(defaultSiteLocale))) {
-			Locale defaultLocale = LocaleUtil.fromLanguageId(
-				getDefaultLanguageId());
+		if (Validator.isNull(friendlyURLMap.get(defaultLocale))) {
+			Locale defaultSiteLocale = LocaleUtil.getSiteDefault();
 
 			friendlyURLMap.put(
-				defaultSiteLocale, friendlyURLMap.get(defaultLocale));
+				defaultLocale, friendlyURLMap.get(defaultSiteLocale));
 		}
 
 		return friendlyURLMap;

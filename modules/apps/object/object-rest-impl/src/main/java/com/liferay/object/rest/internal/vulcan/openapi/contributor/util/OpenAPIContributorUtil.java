@@ -27,13 +27,11 @@ public class OpenAPIContributorUtil {
 		String schemaName, Map<String, Schema> sourceSchemas, boolean system,
 		OpenAPI targetOpenAPI) {
 
-		if (system) {
-			for (String sourceSchemaName : sourceSchemas.keySet()) {
-				_copySchema(
-					false, sourceSchemaName, sourceSchemas, targetOpenAPI);
-			}
+		for (String sourceSchemaName : sourceSchemas.keySet()) {
+			_copySchema(false, sourceSchemaName, sourceSchemas, targetOpenAPI);
 		}
-		else {
+
+		if (!system) {
 			_copySchema(true, schemaName, sourceSchemas, targetOpenAPI);
 			_copySchema(
 				true, getPageSchemaName(schemaName), sourceSchemas,

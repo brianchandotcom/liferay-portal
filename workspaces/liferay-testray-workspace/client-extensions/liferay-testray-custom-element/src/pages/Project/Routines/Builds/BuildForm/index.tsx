@@ -203,7 +203,8 @@ const BuildForm = () => {
 					type: 'danger',
 				});
 			}
-		} else {
+		}
+		else {
 			if (!data.runOptions) {
 				return Liferay.Util.openToast({
 					message: i18n.translate('at-least-one-run-is-required'),

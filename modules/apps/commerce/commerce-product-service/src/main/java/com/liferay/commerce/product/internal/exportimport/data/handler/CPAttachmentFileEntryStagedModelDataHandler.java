@@ -115,6 +115,13 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 
 		CPAttachmentFileEntry importedCPAttachmentFileEntry = null;
 
+		Map<Long, Long> fileEntryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				FileEntry.class);
+
+		long fileEntryId = MapUtil.getLong(
+			fileEntryIds, cpAttachmentFileEntry.getFileEntryId(), 0);
+
 		Date displayDate = cpAttachmentFileEntry.getDisplayDate();
 
 		int displayDateMonth = 0;
@@ -174,13 +181,6 @@ public class CPAttachmentFileEntryStagedModelDataHandler
 				fetchCPAttachmentFileEntryByUuidAndGroupId(
 					cpAttachmentFileEntry.getUuid(),
 					portletDataContext.getScopeGroupId());
-
-		Map<Long, Long> fileEntryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FileEntry.class);
-
-		long fileEntryId = MapUtil.getLong(
-			fileEntryIds, cpAttachmentFileEntry.getFileEntryId(), 0);
 
 		if (existingCPAttachmentFileEntry == null) {
 			if (portletDataContext.isDataStrategyMirror()) {

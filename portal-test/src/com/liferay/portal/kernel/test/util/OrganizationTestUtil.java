@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.PasswordPolicyRelLocalServiceUtil;
 import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
 
 import java.util.List;
@@ -51,6 +50,26 @@ public class OrganizationTestUtil {
 				organization.getCompanyId(),
 				ListTypeConstants.ORGANIZATION_ADDRESS),
 			false, false, null, new ServiceContext());
+	}
+
+	public static Country addCountry(
+			Organization organization, ServiceContext serviceContext)
+		throws Exception {
+
+		Country country = CountryLocalServiceUtil.addCountry(
+			"XY", "XYZ", true, true, null, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(), true,
+			false, false, serviceContext);
+
+		OrganizationLocalServiceUtil.updateOrganization(
+			organization.getExternalReferenceCode(),
+			organization.getCompanyId(), organization.getOrganizationId(),
+			organization.getParentOrganizationId(), organization.getName(),
+			organization.getType(), organization.getRegionId(),
+			country.getCountryId(), organization.getStatusListTypeId(),
+			organization.getComments(), false, null, false, null);
+
+		return country;
 	}
 
 	public static EmailAddress addEmailAddress(Organization organization)
@@ -96,27 +115,6 @@ public class OrganizationTestUtil {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(), type, 0, 0, listType.getListTypeId(),
 			StringPool.BLANK, false, null);
-	}
-
-	public static Country addCountry(
-		Organization organization, ServiceContext serviceContext)
-		throws Exception {
-
-		Country country = CountryLocalServiceUtil.addCountry(
-			"XY", "XYZ", true, true, null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomDouble(), true, false,
-			false, serviceContext);
-
-		OrganizationLocalServiceUtil.updateOrganization(
-			organization.getExternalReferenceCode(),
-			organization.getCompanyId(), organization.getOrganizationId(),
-			organization.getParentOrganizationId(), organization.getName(),
-			organization.getType(), organization.getRegionId(),
-			country.getCountryId(), organization.getStatusListTypeId(),
-			organization.getComments(), false, null, false, null);
-
-		return country;
 	}
 
 	public static OrgLabor addOrgLabor(Organization organization)

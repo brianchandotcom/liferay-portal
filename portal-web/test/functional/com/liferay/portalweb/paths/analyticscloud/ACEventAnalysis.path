@@ -144,8 +144,8 @@
 <!-- EVENT ANALYSIS DROPDOWN -->
 
 <tr>
-	<td>DROPDOWN_BY_INDEX</td>
-	<td>//div[contains(@class,'show')]//li[${key_index}]</td>
+	<td>DROPDOWN_BY_OPTION</td>
+	<td>//*[contains(@class,'dropdown-item')and text()='${key_optionName}']</td>
 	<td></td>
 </tr>
 </tbody>

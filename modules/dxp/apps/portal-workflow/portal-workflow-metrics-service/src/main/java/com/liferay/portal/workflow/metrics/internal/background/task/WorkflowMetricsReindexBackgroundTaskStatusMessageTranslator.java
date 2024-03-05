@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.metrics.internal.background.task.constants.WorkflowMetricsReindexBackgroundTaskConstants;
 
-import org.apache.commons.lang.ArrayUtils;
+import java.util.Objects;
 
 /**
  * @author Rafael Praxedes
@@ -54,9 +54,18 @@ public class WorkflowMetricsReindexBackgroundTaskStatusMessageTranslator
 					WorkflowMetricsReindexBackgroundTaskConstants.
 						INDEX_ENTITY_NAMES);
 
+			int pos = -1;
+
+			for (int i = 0; i < indexEntityNames.length; i++) {
+				if (Objects.equals(indexEntityNames[i], indexEntityName)) {
+					pos = i;
+
+					break;
+				}
+			}
+
 			percentage = _getPercentage(
-				count, ArrayUtils.indexOf(indexEntityNames, indexEntityName),
-				indexEntityNames.length, total);
+				count, pos, indexEntityNames.length, total);
 		}
 
 		backgroundTaskStatus.setAttribute(

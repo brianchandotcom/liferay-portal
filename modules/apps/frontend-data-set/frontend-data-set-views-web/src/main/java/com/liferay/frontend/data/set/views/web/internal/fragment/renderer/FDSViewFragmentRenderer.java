@@ -260,22 +260,20 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			fragmentEntryLink.getCompanyId(), fdsEntryObjectEntryERC,
 			fdsEntryObjectDefinition);
 
-		Collection<ObjectEntry> fdsCardsSectionObjectEntries = null;
+		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
+			fdsViewObjectDefinition, fdsViewObjectEntry);
 
+		Collection<ObjectEntry> fdsCardsSectionObjectEntries = null;
 		Collection<ObjectEntry> fdsListSectionObjectEntries = null;
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
 			fdsCardsSectionObjectEntries = _getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSCardsSectionRelationship");
-
 			fdsListSectionObjectEntries = _getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSListSectionRelationship");
 		}
-
-		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
-			fdsViewObjectDefinition, fdsViewObjectEntry);
 
 		_reactRenderer.renderReact(
 			componentDescriptor,
@@ -312,8 +310,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				"views",
 				_getFDSViewsJSONArray(
 					fragmentEntryLink.getCompanyId(),
-					fdsCardsSectionObjectEntries, fdsListSectionObjectEntries,
-					fdsFieldObjectEntries, httpServletRequest)
+					fdsCardsSectionObjectEntries, fdsFieldObjectEntries,
+					fdsListSectionObjectEntries, httpServletRequest)
 			).build(),
 			httpServletRequest, writer);
 
@@ -503,8 +501,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	private JSONArray _getFDSViewsJSONArray(
 			long companyId,
 			Collection<ObjectEntry> fdsCardsSectionObjectEntries,
-			Collection<ObjectEntry> fdsListSectionObjectEntries,
 			Set<ObjectEntry> fdsFieldObjectEntries,
+			Collection<ObjectEntry> fdsListSectionObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -532,8 +530,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-10735") ||
 			(fdsCardsSectionObjectEntries.isEmpty() &&
-			 fdsListSectionObjectEntries.isEmpty() &&
-			 fdsFieldObjectEntries.isEmpty())) {
+			 fdsFieldObjectEntries.isEmpty() &&
+			 fdsListSectionObjectEntries.isEmpty())) {
 
 			viewsJSONArray.put(
 				_getFDSTableViewJSONObject(

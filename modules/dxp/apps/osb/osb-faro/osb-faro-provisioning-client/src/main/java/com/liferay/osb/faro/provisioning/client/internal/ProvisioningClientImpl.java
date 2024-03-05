@@ -193,21 +193,21 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 			{
 				OSBOfferingEntry osbOfferingEntry = new OSBOfferingEntry();
 
-				if (corpProjectUuid.endsWith("BusinessTest")) {
-					osbOfferingEntry.setProductEntryId(
-						ProductConstants.BUSINESS_PRODUCT_ENTRY_ID);
-				}
-				else if (corpProjectUuid.endsWith("BusinessLXCTest")) {
+				if (corpProjectUuid.endsWith("BusinessLXCTest")) {
 					osbOfferingEntry.setProductEntryId(
 						ProductConstants.LXC_BUSINESS_PRODUCT_ENTRY_ID);
 				}
-				else if (corpProjectUuid.endsWith("EnterpriseTest")) {
+				else if (corpProjectUuid.endsWith("BusinessTest")) {
 					osbOfferingEntry.setProductEntryId(
-						ProductConstants.ENTERPRISE_PRODUCT_ENTRY_ID);
+						ProductConstants.BUSINESS_PRODUCT_ENTRY_ID);
 				}
 				else if (corpProjectUuid.endsWith("EnterpriseLXCTest")) {
 					osbOfferingEntry.setProductEntryId(
 						ProductConstants.LXC_ENTERPRISE_PRODUCT_ENTRY_ID);
+				}
+				else if (corpProjectUuid.endsWith("EnterpriseTest")) {
+					osbOfferingEntry.setProductEntryId(
+						ProductConstants.ENTERPRISE_PRODUCT_ENTRY_ID);
 				}
 				else if (corpProjectUuid.endsWith("ProLXCTest")) {
 					osbOfferingEntry.setProductEntryId(

@@ -395,7 +395,7 @@ public class ObjectRelationshipLocalServiceUtil {
 
 	public static ObjectRelationship getObjectRelationshipByObjectDefinitionId(
 			long objectDefinitionId, String name)
-		throws Exception {
+		throws PortalException {
 
 		return getService().getObjectRelationshipByObjectDefinitionId(
 			objectDefinitionId, name);

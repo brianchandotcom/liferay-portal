@@ -460,7 +460,7 @@ public class ObjectRelationshipLocalServiceWrapper
 	public com.liferay.object.model.ObjectRelationship
 			getObjectRelationshipByObjectDefinitionId(
 				long objectDefinitionId, String name)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipLocalService.
 			getObjectRelationshipByObjectDefinitionId(objectDefinitionId, name);

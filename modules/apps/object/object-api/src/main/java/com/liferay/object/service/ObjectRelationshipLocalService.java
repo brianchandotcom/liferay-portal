@@ -315,7 +315,7 @@ public interface ObjectRelationshipLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectRelationship getObjectRelationshipByObjectDefinitionId(
 			long objectDefinitionId, String name)
-		throws Exception;
+		throws PortalException;
 
 	/**
 	 * Returns the object relationship with the matching UUID and company.

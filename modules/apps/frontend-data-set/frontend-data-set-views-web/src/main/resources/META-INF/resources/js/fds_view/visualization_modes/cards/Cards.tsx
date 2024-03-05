@@ -73,7 +73,7 @@ export default function Cards(props: IFDSViewSectionProps) {
 				);
 
 				if (!fdsCardsSection) {
-					return cardsSection;
+					return {label: cardsSection.label, name: cardsSection.name};
 				}
 
 				return {
@@ -161,26 +161,9 @@ export default function Cards(props: IFDSViewSectionProps) {
 			return;
 		}
 
-		const fdsCardsSection: IFDSCardsSection = await response.json();
-
 		closeModal();
 
-		setCardsSections(
-			cardsSections.map((cardsSection) => {
-				if (cardsSection.name !== fdsCardsSection.name) {
-					return cardsSection;
-				}
-
-				return {
-					...cardsSection,
-					externalReferenceCode:
-						fdsCardsSection.externalReferenceCode,
-					field: {
-						name: fdsCardsSection.fieldName,
-					},
-				};
-			})
-		);
+		getFDSCardsSections();
 
 		openDefaultSuccessToast();
 	};

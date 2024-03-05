@@ -1763,20 +1763,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			end, orderByComparator);
 	}
 
-	/**
-	 * Returns a range of all the layouts belonging to the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  userId the primary key of the user
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  keywords keywords
-	 * @param  types layout types
-	 * @param  start the lower bound of the range of layouts
-	 * @param  end the upper bound of the range of layouts (not inclusive)
-	 * @param  orderByComparator the comparator to order the layouts
-	 * @return the matching layouts, or <code>null</code> if no matches were
-	 *         found
-	 */
 	@Override
 	public List<Layout> getLayouts(
 			long groupId, long userId, boolean privateLayout, String keywords,
@@ -1784,40 +1770,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			OrderByComparator<Layout> orderByComparator)
 		throws PortalException {
 
-		if (Validator.isNull(keywords)) {
-			return getLayouts(
-				groupId, privateLayout, statuses, start, end,
-				orderByComparator);
-		}
-
-		Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(
-			Layout.class.getName());
-
-		Hits hits = indexer.search(
-			_buildSearchContext(
-				groupId, userId, privateLayout, keywords, types, statuses,
-				start, end, orderByComparator));
-
-		List<Document> documents = hits.toList();
-
-		List<Layout> layouts = new ArrayList<>(documents.size());
-
-		for (Document document : documents) {
-			Layout layout = fetchLayout(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
-
-			if (layout == null) {
-				indexer.delete(
-					GetterUtil.getLong(document.get(Field.COMPANY_ID)),
-					document.getUID());
-
-				continue;
-			}
-
-			layouts.add(layout);
-		}
-
-		return layouts;
+		return search(
+			groupId, userId, privateLayout, keywords, false, types, statuses,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -2036,19 +1991,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			String[] types)
 		throws PortalException {
 
-		if (Validator.isNull(keywords)) {
-			return getLayoutsCount(groupId, privateLayout);
-		}
-
-		Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(
-			Layout.class.getName());
-
-		Hits hits = indexer.search(
-			_buildSearchContext(
-				groupId, userId, privateLayout, keywords, types, new int[0],
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
-
-		return hits.getLength();
+		return searchCount(
+			groupId, userId, privateLayout, keywords, false, types);
 	}
 
 	@Override
@@ -2488,6 +2432,149 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		return layoutLocalServiceHelper.hasLayoutSetPrototypeLayout(
 			layoutSetPrototype, layoutUuid);
+	}
+
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  keywords keywords
+	 * @param  searchOnlyByTitle searchOnlyByTitle
+	 * @param  types layout types
+	 * @param  start the lower bound of the range of layouts
+	 * @param  end the upper bound of the range of layouts (not inclusive)
+	 * @param  orderByComparator the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 *         found
+	 */
+	@Override
+	public List<Layout> search(
+			long groupId, boolean privateLayout, String keywords,
+			boolean searchOnlyByTitle, String[] types, int start, int end,
+			OrderByComparator<Layout> orderByComparator)
+		throws PortalException {
+
+		return search(
+			groupId, 0, privateLayout, keywords, searchOnlyByTitle, types,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userId the primary key of the user
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  keywords keywords
+	 * @param  searchOnlyByTitle searchOnlyByTitle
+	 * @param  types layout types
+	 * @param  start the lower bound of the range of layouts
+	 * @param  end the upper bound of the range of layouts (not inclusive)
+	 * @param  orderByComparator the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 *         found
+	 */
+	@Override
+	public List<Layout> search(
+			long groupId, long userId, boolean privateLayout, String keywords,
+			boolean searchOnlyByTitle, String[] types, int start, int end,
+			OrderByComparator<Layout> orderByComparator)
+		throws PortalException {
+
+		return search(
+			groupId, userId, privateLayout, keywords, searchOnlyByTitle, types,
+			new int[0], start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userId the primary key of the user
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  keywords keywords
+	 * @param  searchOnlyByTitle searchOnlyByTitle
+	 * @param  types layout types
+	 * @param  start the lower bound of the range of layouts
+	 * @param  end the upper bound of the range of layouts (not inclusive)
+	 * @param  orderByComparator the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 *         found
+	 */
+	@Override
+	public List<Layout> search(
+			long groupId, long userId, boolean privateLayout, String keywords,
+			boolean searchOnlyByTitle, String[] types, int[] statuses,
+			int start, int end, OrderByComparator<Layout> orderByComparator)
+		throws PortalException {
+
+		if (Validator.isNull(keywords)) {
+			return getLayouts(
+				groupId, privateLayout, statuses, start, end,
+				orderByComparator);
+		}
+
+		Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(
+			Layout.class.getName());
+
+		Hits hits = indexer.search(
+			_buildSearchContext(
+				groupId, userId, privateLayout, keywords, searchOnlyByTitle,
+				types, statuses, start, end, orderByComparator));
+
+		List<Document> documents = hits.toList();
+
+		List<Layout> layouts = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			Layout layout = fetchLayout(
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+			if (layout == null) {
+				indexer.delete(
+					GetterUtil.getLong(document.get(Field.COMPANY_ID)),
+					document.getUID());
+
+				continue;
+			}
+
+			layouts.add(layout);
+		}
+
+		return layouts;
+	}
+
+	@Override
+	public int searchCount(
+			Group group, boolean privateLayout, String keywords,
+			boolean searchOnlyByTitle, String[] types)
+		throws PortalException {
+
+		return searchCount(
+			group.getGroupId(), 0, privateLayout, keywords, searchOnlyByTitle,
+			types);
+	}
+
+	@Override
+	public int searchCount(
+			long groupId, long userId, boolean privateLayout, String keywords,
+			boolean searchOnlyByTitle, String[] types)
+		throws PortalException {
+
+		if (Validator.isNull(keywords)) {
+			return getLayoutsCount(groupId, privateLayout);
+		}
+
+		Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(
+			Layout.class.getName());
+
+		Hits hits = indexer.search(
+			_buildSearchContext(
+				groupId, userId, privateLayout, keywords, searchOnlyByTitle,
+				types, new int[0], QueryUtil.ALL_POS, QueryUtil.ALL_POS, null));
+
+		return hits.getLength();
 	}
 
 	/**

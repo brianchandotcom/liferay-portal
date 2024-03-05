@@ -41,7 +41,7 @@ definition {
 
 	@priority = 3
 	test CustomizeNewWatchedDirectory {
-		property custom.properties = "module.framework.auto.deploy.dirs=${liferay.home}/alt-deploy/osgi/portal,${liferay.home}/osgi/modules,${liferay.home}/osgi/war,${liferay.home}/osgi/configs,${liferay.home}/osgi/marketplace";
+		property custom.properties = "module.framework.auto.deploy.dirs=${liferay.home}/alt-deploy/osgi/portal,${liferay.home}/osgi/configs,${liferay.home}/osgi/marketplace,${liferay.home}/osgi/modules,${liferay.home}/osgi/portal-war,${liferay.home}/osgi/war";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

@@ -119,6 +119,8 @@ public class TalendProcess {
 			processConfigBuilder.setBootstrapClassPath(
 				_getBootstrapClassPath(
 					portalProcessConfig.getBootstrapClassPathHolders()));
+			processConfigBuilder.setJavaExecutable(
+				System.getProperty("java.home") + "/bin/java");
 			processConfigBuilder.setProcessLogConsumer(
 				portalProcessConfig.getProcessLogConsumer());
 			processConfigBuilder.setReactClassLoader(

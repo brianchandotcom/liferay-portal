@@ -371,6 +371,11 @@ public interface LayoutPageTemplateCollectionLocalService
 	public String getUniqueLayoutPageTemplateCollectionName(
 		long groupId, String name, int type);
 
+	public LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId,
+			long targetLayoutPageTemplateCollectionId)
+		throws PortalException;
+
 	/**
 	 * Updates the layout page template collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

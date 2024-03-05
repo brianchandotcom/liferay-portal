@@ -250,6 +250,11 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 		fetchCPDefinitionSpecificationOptionValue(
 			long cpDefinitionId, long cpDefinitionSpecificationOptionValueId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionSpecificationOptionValue
+		fetchCPDefinitionSpecificationOptionValue(
+			long cpDefinitionId, String key);
+
 	/**
 	 * Returns the cp definition specification option value matching the UUID and group.
 	 *

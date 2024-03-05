@@ -280,6 +280,14 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 			cpDefinitionId, cpDefinitionSpecificationOptionValueId);
 	}
 
+	public static CPDefinitionSpecificationOptionValue
+		fetchCPDefinitionSpecificationOptionValue(
+			long cpDefinitionId, String key) {
+
+		return getService().fetchCPDefinitionSpecificationOptionValue(
+			cpDefinitionId, key);
+	}
+
 	/**
 	 * Returns the cp definition specification option value matching the UUID and group.
 	 *

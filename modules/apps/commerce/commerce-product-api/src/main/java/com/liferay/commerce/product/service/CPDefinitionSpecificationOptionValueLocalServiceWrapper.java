@@ -324,6 +324,15 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 				cpDefinitionId, cpDefinitionSpecificationOptionValueId);
 	}
 
+	@Override
+	public CPDefinitionSpecificationOptionValue
+		fetchCPDefinitionSpecificationOptionValue(
+			long cpDefinitionId, String key) {
+
+		return _cpDefinitionSpecificationOptionValueLocalService.
+			fetchCPDefinitionSpecificationOptionValue(cpDefinitionId, key);
+	}
+
 	/**
 	 * Returns the cp definition specification option value matching the UUID and group.
 	 *

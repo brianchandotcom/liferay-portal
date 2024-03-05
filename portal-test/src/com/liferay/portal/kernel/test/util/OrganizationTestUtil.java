@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
+import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.service.OrgLaborLocalServiceUtil;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.service.PasswordPolicyRelLocalServiceUtil;
 import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
 
 import java.util.List;
@@ -93,6 +96,27 @@ public class OrganizationTestUtil {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(), type, 0, 0, listType.getListTypeId(),
 			StringPool.BLANK, false, null);
+	}
+
+	public static Country addCountry(
+		Organization organization, ServiceContext serviceContext)
+		throws Exception {
+
+		Country country = CountryLocalServiceUtil.addCountry(
+			"XY", "XYZ", true, true, null,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomDouble(), true, false,
+			false, serviceContext);
+
+		OrganizationLocalServiceUtil.updateOrganization(
+			organization.getExternalReferenceCode(),
+			organization.getCompanyId(), organization.getOrganizationId(),
+			organization.getParentOrganizationId(), organization.getName(),
+			organization.getType(), organization.getRegionId(),
+			country.getCountryId(), organization.getStatusListTypeId(),
+			organization.getComments(), false, null, false, null);
+
+		return country;
 	}
 
 	public static OrgLabor addOrgLabor(Organization organization)

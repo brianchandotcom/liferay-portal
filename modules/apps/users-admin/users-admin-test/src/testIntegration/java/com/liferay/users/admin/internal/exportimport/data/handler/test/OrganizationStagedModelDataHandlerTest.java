@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
+import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrgLaborLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -88,6 +90,13 @@ public class OrganizationStagedModelDataHandlerTest
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, Address.class, address);
+
+		Country country = OrganizationTestUtil.addCountry(
+			_organization,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, Country.class, country);
 
 		EmailAddress emailAddress = OrganizationTestUtil.addEmailAddress(
 			_organization);
@@ -178,6 +187,27 @@ public class OrganizationStagedModelDataHandlerTest
 		Assert.assertNotNull(importedAddress);
 		Assert.assertEquals(
 			organization.getOrganizationId(), importedAddress.getClassPK());
+
+		List<StagedModel> countryDependentStagedModels =
+			dependentStagedModelsMap.get(Country.class.getSimpleName());
+
+		Assert.assertEquals(
+			countryDependentStagedModels.toString(), 1,
+			countryDependentStagedModels.size());
+
+		Country country = (Country)countryDependentStagedModels.get(0);
+
+		Country importedCountry =
+			CountryLocalServiceUtil.fetchCountryByUuidAndCompanyId(
+				country.getUuid(), group.getCompanyId());
+
+		Assert.assertNotNull(importedCountry);
+
+		Country organizationCountry = CountryLocalServiceUtil.getCountry(
+			organization.getCountryId());
+
+		Assert.assertEquals(
+			organizationCountry.getA2(), importedCountry.getA2());
 
 		List<StagedModel> emailAddressDependentStagedModels =
 			dependentStagedModelsMap.get(EmailAddress.class.getSimpleName());

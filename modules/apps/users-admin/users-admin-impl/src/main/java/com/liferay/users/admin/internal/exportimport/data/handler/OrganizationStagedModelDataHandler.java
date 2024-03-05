@@ -244,12 +244,14 @@ public class OrganizationStagedModelDataHandler
 			PortletDataContext portletDataContext, Organization organization)
 		throws Exception {
 
-		Country country = _countryLocalService.getCountry(
-			organization.getCountryId());
+		if (organization.getCountryId() > 0) {
+			Country country = _countryLocalService.getCountry(
+				organization.getCountryId());
 
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, organization, country,
-			PortletDataContext.REFERENCE_TYPE_EMBEDDED);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, organization, country,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
+		}
 	}
 
 	private void _exportEmailAddresses(
@@ -380,10 +382,13 @@ public class OrganizationStagedModelDataHandler
 				countryPath);
 
 			if (country != null) {
-				Country existingCountry = _countryLocalService.getCountryByA2(
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, country);
+
+				country = _countryLocalService.getCountryByA2(
 					portletDataContext.getCompanyId(), country.getA2());
 
-				organization.setCountryId(existingCountry.getCountryId());
+				organization.setCountryId(country.getCountryId());
 			}
 		}
 

@@ -141,24 +141,22 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		String userInfoJSON = null;
 
 		if (oidcProviderMetadata.getUserInfoEndpointURI() == null) {
-			JWT idToken = oidcTokens.getIDToken();
+			JWT jwt = oidcTokens.getIDToken();
 
-			JWTClaimsSet userInfoClaimSet = idToken.getJWTClaimsSet();
+			JWTClaimsSet jwtClaimsSet = jwt.getJWTClaimsSet();
 
-			List<String> emails = userInfoClaimSet.getStringListClaim("emails");
+			JSONObject jsonObject = jwtClaimsSet.toJSONObject();
 
-			String email = emails.get(0);
+			List<String> emails = jwtClaimsSet.getStringListClaim("emails");
 
-			String familyName = userInfoClaimSet.getStringClaim("family_name");
-			String givenName = userInfoClaimSet.getStringClaim("given_name");
+			jsonObject.put("email", emails.get(0));
 
-			JSONObject userInfoJSONObject = userInfoClaimSet.toJSONObject();
+			jsonObject.put(
+				"family_name", jwtClaimsSet.getStringClaim("family_name"));
+			jsonObject.put(
+				"given_name", jwtClaimsSet.getStringClaim("given_name"));
 
-			userInfoJSONObject.put("email", email);
-			userInfoJSONObject.put("family_name", familyName);
-			userInfoJSONObject.put("given_name", givenName);
-
-			UserInfo userInfo = new UserInfo(userInfoJSONObject);
+			UserInfo userInfo = new UserInfo(jsonObject);
 
 			userInfoJSON = userInfo.toJSONString();
 		}

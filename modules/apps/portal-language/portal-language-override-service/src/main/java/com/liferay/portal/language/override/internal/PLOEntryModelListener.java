@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.language.override.model.PLOEntry;
@@ -18,7 +19,6 @@ import com.liferay.portal.language.override.model.PLOEntry;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -49,16 +49,13 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 		_notifyCluster(MethodType.UPDATE, ploEntry);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
 	private static void _onNotify(MethodType methodType, PLOEntry ploEntry)
 		throws InvalidSyntaxException {
 
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
 		ServiceReference<?>[] serviceReferences =
-			_bundleContext.getServiceReferences(
+			bundleContext.getServiceReferences(
 				ModelListener.class.getName(),
 				"(component.name=com.liferay.portal.language.override." +
 					"internal.PLOEntryModelListener)");
@@ -67,7 +64,7 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 
 		try {
 			ploEntryModelListener =
-				(PLOEntryModelListener)_bundleContext.getService(
+				(PLOEntryModelListener)bundleContext.getService(
 					serviceReferences[0]);
 
 			ploEntryModelListener._updatePLOLanguageOverrideProvider(
@@ -75,7 +72,7 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 		}
 		finally {
 			if (ploEntryModelListener != null) {
-				_bundleContext.ungetService(serviceReferences[0]);
+				bundleContext.ungetService(serviceReferences[0]);
 			}
 		}
 	}
@@ -118,7 +115,6 @@ public class PLOEntryModelListener extends BaseModelListener<PLOEntry> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PLOEntryModelListener.class.getName());
 
-	private static BundleContext _bundleContext;
 	private static final MethodKey _onNotifyMethodKey = new MethodKey(
 		PLOEntryModelListener.class, "_onNotify", MethodType.class,
 		PLOEntry.class);

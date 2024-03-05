@@ -351,7 +351,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		HttpSession mockHttpSession = mockHttpServletRequest.getSession();
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
-			SP_ENTITY_ID, RELAY_STATE, null, userLocalService);
+			SP_ENTITY_ID, RELAY_STATE, null);
 
 		mockHttpSession.setAttribute(
 			SamlWebKeys.SAML_SSO_REQUEST_CONTEXT, samlSsoRequestContext);
@@ -869,7 +869,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		samlPeerEntityContext.setEntityId(SP_ENTITY_ID);
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
-			SP_ENTITY_ID, null, idpMessageContext, userLocalService);
+			SP_ENTITY_ID, null, idpMessageContext);
 
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
@@ -901,7 +901,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		samlPeerEntityContext.setEntityId(SP_ENTITY_ID);
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
-			SP_ENTITY_ID, null, idpMessageContext, userLocalService);
+			SP_ENTITY_ID, null, idpMessageContext);
 
 		DateTime dateTime = new DateTime(DateTimeZone.UTC);
 
@@ -933,7 +933,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		samlPeerEntityContext.setEntityId(SP_ENTITY_ID);
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
-			SP_ENTITY_ID, null, idpMessageContext, userLocalService);
+			SP_ENTITY_ID, null, idpMessageContext);
 
 		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
 			samlSsoRequestContext, null, null);
@@ -1082,7 +1082,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		samlPeerEntityContext.setEntityId(SP_ENTITY_ID);
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
-			SP_ENTITY_ID, null, idpMessageContext, userLocalService);
+			SP_ENTITY_ID, null, idpMessageContext);
 
 		Conditions conditions = _webSsoProfileImpl.getSuccessConditions(
 			samlSsoRequestContext, null, null);
@@ -1226,8 +1226,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		SamlSsoRequestContext samlSsoRequestContext = new SamlSsoRequestContext(
 			samlPeerEntityContext.getEntityId(),
-			samlBindingContext.getRelayState(), messageContext,
-			userLocalService);
+			samlBindingContext.getRelayState(), messageContext);
 
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);

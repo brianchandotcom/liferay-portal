@@ -428,8 +428,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 			samlSsoRequestContext = new SamlSsoRequestContext(
-				samlPeerEntityContext.getEntityId(), relayState, messageContext,
-				_userLocalService);
+				samlPeerEntityContext.getEntityId(), relayState,
+				messageContext);
 		}
 		else {
 			SamlProviderConfiguration samlProviderConfiguration =
@@ -463,8 +463,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			samlSsoRequestContext = new SamlSsoRequestContext(
 				authnRequestXml, samlPeerEntityContext.getEntityId(),
-				samlBindingContext.getRelayState(), messageContext,
-				_userLocalService);
+				samlBindingContext.getRelayState(), messageContext);
 		}
 
 		String samlSsoSessionId = getSamlSsoSessionId(httpServletRequest);
@@ -1464,7 +1463,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			return assertion;
 		}
 
-		User user = samlSsoRequestContext.getUser();
+		User user = _userLocalService.fetchUser(
+			samlSsoRequestContext.getUserId());
 
 		AttributeResolver attributeResolver = _getAttributeResolver(
 			samlPeerEntityContext.getEntityId());
@@ -1565,7 +1565,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return OpenSamlUtil.buildNameId(
 			nameIdFormat, null, spNameQualifier,
 			nameIdResolver.resolve(
-				samlSsoRequestContext.getUser(),
+				_userLocalService.fetchUser(samlSsoRequestContext.getUserId()),
 				samlPeerEntityContext.getEntityId(), nameIdFormat,
 				spNameQualifier, allowCreate,
 				new NameIdResolverSAMLContextImpl(messageContext)));
@@ -1652,7 +1652,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			messageContext.getSubcontext(InOutOperationContext.class, false);
 
 		AuthnRequest authnRequest = null;
-		User user = samlSsoRequestContext.getUser();
+		User user = _userLocalService.fetchUser(
+			samlSsoRequestContext.getUserId());
 
 		if (inOutOperationContext != null) {
 			MessageContext<AuthnRequest> inboundMessageContext =

@@ -5,11 +5,6 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
-
 import java.io.Serializable;
 
 import org.opensaml.messaging.context.MessageContext;
@@ -25,20 +20,19 @@ public class SamlSsoRequestContext implements Serializable {
 
 	public SamlSsoRequestContext(
 		String peerEntityId, String relayState,
-		MessageContext<?> messageContext, UserLocalService userLocalService) {
+		MessageContext<?> messageContext) {
 
-		this(null, peerEntityId, relayState, messageContext, userLocalService);
+		this(null, peerEntityId, relayState, messageContext);
 	}
 
 	public SamlSsoRequestContext(
 		String authnRequestXml, String peerEntityId, String relayState,
-		MessageContext<?> messageContext, UserLocalService userLocalService) {
+		MessageContext<?> messageContext) {
 
 		_authnRequestXml = authnRequestXml;
 		_peerEntityId = peerEntityId;
 		_relayState = relayState;
 		_messageContext = messageContext;
-		_userLocalService = userLocalService;
 	}
 
 	public String getAuthnRequestXml() {
@@ -63,19 +57,6 @@ public class SamlSsoRequestContext implements Serializable {
 
 	public int getStage() {
 		return _stage;
-	}
-
-	public User getUser() {
-		try {
-			return _userLocalService.fetchUserById(_userId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return null;
-		}
 	}
 
 	public long getUserId() {
@@ -106,9 +87,6 @@ public class SamlSsoRequestContext implements Serializable {
 		_userId = userId;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SamlSsoRequestContext.class);
-
 	private final String _authnRequestXml;
 	private volatile MessageContext<?> _messageContext;
 	private boolean _newSession;
@@ -117,6 +95,5 @@ public class SamlSsoRequestContext implements Serializable {
 	private String _samlSsoSessionId;
 	private int _stage;
 	private long _userId;
-	private final UserLocalService _userLocalService;
 
 }

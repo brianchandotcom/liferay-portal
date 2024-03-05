@@ -101,14 +101,16 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 				_faroProjectLocalService.getFaroProjects(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
-			if (Validator.isNull(faroProject.getCorpProjectUuid())) {
-				continue;
-			}
+			FaroSubscriptionDisplay faroSubscriptionDisplay = null;
 
-			FaroSubscriptionDisplay faroSubscriptionDisplay =
-				new FaroSubscriptionDisplay(
+			if (Validator.isNull(faroProject.getCorpProjectUuid())) {
+				faroSubscriptionDisplay = new FaroSubscriptionDisplay();
+			}
+			else {
+				faroSubscriptionDisplay = new FaroSubscriptionDisplay(
 					_provisioningClient.getOSBAccountEntry(
 						faroProject.getCorpProjectUuid()));
+			}
 
 			try {
 				faroSubscriptionDisplay.setCounts(

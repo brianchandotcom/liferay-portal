@@ -40,8 +40,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -204,6 +205,24 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private String _getQueryQuestionByEmailHash(
+		Set<String> questions, String email) {
+
+		TreeSet<String> sortedQuestions = new TreeSet<>();
+
+		sortedQuestions.addAll(questions);
+
+		int emailHash = Math.abs(email.hashCode());
+
+		int mappedQuestionIndex = emailHash % sortedQuestions.size();
+
+		return new ArrayList<>(
+			sortedQuestions
+		).get(
+			mappedQuestionIndex
+		);
+	}
+
 	private User _getUser(ActionRequest actionRequest) throws Exception {
 		try {
 			User user = null;
@@ -278,9 +297,11 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 			guestUser.getReminderQueryQuestions();
 
 		if (!reminderQueryQuestions.isEmpty()) {
-			Iterator<String> iterator = reminderQueryQuestions.iterator();
+			String loginEmail = ParamUtil.getString(actionRequest, "login");
 
-			guestUser.setReminderQueryQuestion(iterator.next());
+			guestUser.setReminderQueryQuestion(
+				_getQueryQuestionByEmailHash(
+					reminderQueryQuestions, loginEmail));
 		}
 		else {
 			guestUser.setReminderQueryQuestion(

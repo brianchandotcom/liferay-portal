@@ -82,7 +82,7 @@ public class LayoutBackLinkProductNavigationControlMenuEntry
 
 	@Override
 	public String getLinkCssClass(HttpServletRequest httpServletRequest) {
-		return "lfr-back-link";
+		return "control-menu-nav-link lfr-back-link";
 	}
 
 	@Override

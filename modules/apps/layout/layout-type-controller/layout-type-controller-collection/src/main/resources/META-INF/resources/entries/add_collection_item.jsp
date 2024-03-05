@@ -26,7 +26,7 @@ List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders = (List<AssetPubl
 			<clay:link
 				aria-label="<%= label %>"
 				borderless="<%= true %>"
-				cssClass="lfr-portal-tooltip"
+				cssClass="control-menu-nav-link lfr-portal-tooltip"
 				data-title="<%= label %>"
 				displayType="unstyled"
 				href="<%= String.valueOf(assetPublisherAddItemHolder.getPortletURL()) %>"

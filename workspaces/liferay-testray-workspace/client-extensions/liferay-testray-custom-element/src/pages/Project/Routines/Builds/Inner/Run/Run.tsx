@@ -3,23 +3,61 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useContext} from 'react';
+import {useContext, useMemo} from 'react';
 import {useParams} from 'react-router-dom';
 import ProgressBar from '~/components/ProgressBar';
 import {TestrayContext, TestrayTypes} from '~/context/TestrayContext';
+import {useFetch} from '~/hooks/useFetch';
 
 import Container from '../../../../../../components/Layout/Container';
 import ListView from '../../../../../../components/ListView';
 import SearchBuilder from '../../../../../../core/SearchBuilder';
 import i18n from '../../../../../../i18n';
-import {testrayRunImpl} from '../../../../../../services/rest';
+import {
+	APIResponse,
+	TestrayFactor,
+	testrayFactorRest,
+	testrayRunImpl,
+} from '../../../../../../services/rest';
 import RunFormModal from './RunFormModal';
 import useRunActions from './useRunActions';
 
 const Runs = () => {
 	const {actions, formModal} = useRunActions();
-	const {buildId} = useParams();
+	const {buildId, routineId} = useParams();
 	const [, dispatch] = useContext(TestrayContext);
+
+	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
+		testrayFactorRest.resource,
+		{
+			params: {
+				filter: SearchBuilder.eq('routineId', routineId as string),
+				pageSize: 100,
+			},
+			transformData: (response) =>
+				testrayFactorRest.transformDataFromList(response),
+		}
+	);
+
+	const factorItems = useMemo(() => factorsData?.items || [], [
+		factorsData?.items,
+	]);
+
+	const formatedCategoryName = (name?: string) => {
+		return name
+			?.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
+				return index === 0 ? word.toLowerCase() : word.toUpperCase();
+			})
+			.replace(/\s+/g, '');
+	};
+
+	const factorNameCategory = factorItems
+		.map(({factorCategory}) => ({
+			clickable: true,
+			key: formatedCategoryName(factorCategory?.name) as string,
+			value: i18n.translate(`${factorCategory?.name}`),
+		}))
+		.sort((a: any, b: any) => a?.value?.localeCompare(b?.value));
 
 	return (
 		<Container className="mt-4">
@@ -50,31 +88,7 @@ const Runs = () => {
 								number?.toString().padStart(2, '0'),
 							value: i18n.translate('run'),
 						},
-						{
-							clickable: true,
-							key: 'applicationServer',
-							value: i18n.translate('application-server'),
-						},
-						{
-							clickable: true,
-							key: 'browser',
-							value: i18n.translate('browser'),
-						},
-						{
-							clickable: true,
-							key: 'database',
-							value: i18n.translate('database'),
-						},
-						{
-							clickable: true,
-							key: 'javaJDK',
-							value: 'javaJDK',
-						},
-						{
-							clickable: true,
-							key: 'operatingSystem',
-							value: i18n.translate('operating-system'),
-						},
+						...factorNameCategory,
 						{
 							clickable: true,
 							key: 'caseResultFailed',

@@ -207,6 +207,49 @@ public class AddressServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Address>
+			getListTypeAddresses(
+				HttpPrincipal httpPrincipal, String className, long classPK,
+				long[] listTypeIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AddressServiceUtil.class, "getListTypeAddresses",
+				_getListTypeAddressesParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, className, classPK, listTypeIds);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.portal.kernel.model.Address>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Address updateAddress(
 			HttpPrincipal httpPrincipal, long addressId, String name,
 			String description, String street1, String street2, String street3,
@@ -218,7 +261,7 @@ public class AddressServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AddressServiceUtil.class, "updateAddress",
-				_updateAddressParameterTypes4);
+				_updateAddressParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, addressId, name, description, street1, street2,
@@ -269,7 +312,9 @@ public class AddressServiceHttp {
 	private static final Class<?>[] _getAddressesParameterTypes3 = new Class[] {
 		String.class, long.class
 	};
-	private static final Class<?>[] _updateAddressParameterTypes4 =
+	private static final Class<?>[] _getListTypeAddressesParameterTypes4 =
+		new Class[] {String.class, long.class, long[].class};
+	private static final Class<?>[] _updateAddressParameterTypes5 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class, String.class, String.class, long.class, long.class,

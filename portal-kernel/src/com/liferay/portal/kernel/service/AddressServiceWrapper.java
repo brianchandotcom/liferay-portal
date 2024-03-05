@@ -61,6 +61,15 @@ public class AddressServiceWrapper
 		return _addressService.getAddresses(className, classPK);
 	}
 
+	@Override
+	public java.util.List<Address> getListTypeAddresses(
+			String className, long classPK, long[] listTypeIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _addressService.getListTypeAddresses(
+			className, classPK, listTypeIds);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

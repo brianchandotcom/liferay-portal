@@ -41,6 +41,54 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 public class ContactServiceHttp {
 
+	public static com.liferay.portal.kernel.model.Contact addContact(
+			HttpPrincipal httpPrincipal, long userId, String className,
+			long classPK, String emailAddress, String firstName,
+			String middleName, String lastName, long prefixListTypeId,
+			long suffixListTypeId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, String smsSn, String facebookSn,
+			String jabberSn, String skypeSn, String twitterSn, String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactServiceUtil.class, "addContact",
+				_addContactParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, className, classPK, emailAddress, firstName,
+				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
+				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
+				jabberSn, skypeSn, twitterSn, jobTitle);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Contact)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Contact>
 			getCompanyContacts(
 				HttpPrincipal httpPrincipal, long companyId, int start, int end)
@@ -49,7 +97,7 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getCompanyContacts",
-				_getCompanyContactsParameterTypes0);
+				_getCompanyContactsParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, start, end);
@@ -89,7 +137,7 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getCompanyContactsCount",
-				_getCompanyContactsCountParameterTypes1);
+				_getCompanyContactsCountParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId);
@@ -122,7 +170,7 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getContact",
-				_getContactParameterTypes2);
+				_getContactParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, contactId);
@@ -166,7 +214,7 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getContacts",
-				_getContactsParameterTypes3);
+				_getContactsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, classNameId, classPK, start, end, orderByComparator);
@@ -207,7 +255,7 @@ public class ContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ContactServiceUtil.class, "getContactsCount",
-				_getContactsCountParameterTypes4);
+				_getContactsCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, classNameId, classPK);
@@ -240,20 +288,81 @@ public class ContactServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.Contact updateContact(
+			HttpPrincipal httpPrincipal, long contactId, String emailAddress,
+			String firstName, String middleName, String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn,
+			String facebookSn, String jabberSn, String skypeSn,
+			String twitterSn, String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ContactServiceUtil.class, "updateContact",
+				_updateContactParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, contactId, emailAddress, firstName, middleName,
+				lastName, prefixListTypeId, suffixListTypeId, male,
+				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
+				jabberSn, skypeSn, twitterSn, jobTitle);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Contact)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ContactServiceHttp.class);
 
-	private static final Class<?>[] _getCompanyContactsParameterTypes0 =
+	private static final Class<?>[] _addContactParameterTypes0 = new Class[] {
+		long.class, String.class, long.class, String.class, String.class,
+		String.class, String.class, long.class, long.class, boolean.class,
+		int.class, int.class, int.class, String.class, String.class,
+		String.class, String.class, String.class, String.class
+	};
+	private static final Class<?>[] _getCompanyContactsParameterTypes1 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getCompanyContactsCountParameterTypes1 =
+	private static final Class<?>[] _getCompanyContactsCountParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getContactParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getContactParameterTypes3 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getContactsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getContactsParameterTypes4 = new Class[] {
 		long.class, long.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _getContactsCountParameterTypes4 =
+	private static final Class<?>[] _getContactsCountParameterTypes5 =
 		new Class[] {long.class, long.class};
+	private static final Class<?>[] _updateContactParameterTypes6 =
+		new Class[] {
+			long.class, String.class, String.class, String.class, String.class,
+			long.class, long.class, boolean.class, int.class, int.class,
+			int.class, String.class, String.class, String.class, String.class,
+			String.class, String.class
+		};
 
 }

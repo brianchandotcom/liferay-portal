@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,7 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DepotAppCustomizationModel
-	extends BaseModel<DepotAppCustomization>, MVCCModel, ShardedModel {
+	extends BaseModel<DepotAppCustomization>, CTModel<DepotAppCustomization>,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -38,6 +40,7 @@ public interface DepotAppCustomizationModel
 	 *
 	 * @return the primary key of this depot app customization
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -45,6 +48,7 @@ public interface DepotAppCustomizationModel
 	 *
 	 * @param primaryKey the primary key of this depot app customization
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -62,6 +66,22 @@ public interface DepotAppCustomizationModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this depot app customization.
+	 *
+	 * @return the ct collection ID of this depot app customization
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this depot app customization.
+	 *
+	 * @param ctCollectionId the ct collection ID of this depot app customization
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the depot app customization ID of this depot app customization.

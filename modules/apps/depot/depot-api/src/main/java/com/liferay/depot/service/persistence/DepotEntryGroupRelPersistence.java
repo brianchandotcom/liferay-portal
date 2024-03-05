@@ -8,6 +8,7 @@ package com.liferay.depot.service.persistence;
 import com.liferay.depot.exception.NoSuchEntryGroupRelException;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,7 +25,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DepotEntryGroupRelPersistence
-	extends BasePersistence<DepotEntryGroupRel> {
+	extends BasePersistence<DepotEntryGroupRel>,
+			CTPersistence<DepotEntryGroupRel> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

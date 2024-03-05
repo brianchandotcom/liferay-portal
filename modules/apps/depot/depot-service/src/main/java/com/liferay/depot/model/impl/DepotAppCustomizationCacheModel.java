@@ -67,10 +67,12 @@ public class DepotAppCustomizationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", depotAppCustomizationId=");
 		sb.append(depotAppCustomizationId);
 		sb.append(", companyId=");
@@ -92,6 +94,7 @@ public class DepotAppCustomizationCacheModel
 			new DepotAppCustomizationImpl();
 
 		depotAppCustomizationImpl.setMvccVersion(mvccVersion);
+		depotAppCustomizationImpl.setCtCollectionId(ctCollectionId);
 		depotAppCustomizationImpl.setDepotAppCustomizationId(
 			depotAppCustomizationId);
 		depotAppCustomizationImpl.setCompanyId(companyId);
@@ -114,6 +117,8 @@ public class DepotAppCustomizationCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		depotAppCustomizationId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -127,6 +132,8 @@ public class DepotAppCustomizationCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(depotAppCustomizationId);
 
@@ -145,6 +152,7 @@ public class DepotAppCustomizationCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long depotAppCustomizationId;
 	public long companyId;
 	public long depotEntryId;

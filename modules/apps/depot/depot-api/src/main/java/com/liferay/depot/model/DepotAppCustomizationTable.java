@@ -26,6 +26,9 @@ public class DepotAppCustomizationTable
 	public final Column<DepotAppCustomizationTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DepotAppCustomizationTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DepotAppCustomizationTable, Long>
 		depotAppCustomizationId = createColumn(
 			"depotAppCustomizationId", Long.class, Types.BIGINT,

@@ -64,11 +64,11 @@ public class DepotEntryModelImpl
 	public static final String TABLE_NAME = "DepotEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"depotEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"depotEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -76,6 +76,7 @@ public class DepotEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("depotEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -87,7 +88,7 @@ public class DepotEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DepotEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+		"create table DepotEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,depotEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,primary key (depotEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntry";
 
@@ -237,6 +238,8 @@ public class DepotEntryModelImpl
 
 			attributeGetterFunctions.put(
 				"mvccVersion", DepotEntry::getMvccVersion);
+			attributeGetterFunctions.put(
+				"ctCollectionId", DepotEntry::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", DepotEntry::getUuid);
 			attributeGetterFunctions.put(
 				"depotEntryId", DepotEntry::getDepotEntryId);
@@ -267,6 +270,9 @@ public class DepotEntryModelImpl
 			attributeSetterBiConsumers.put(
 				"mvccVersion",
 				(BiConsumer<DepotEntry, Long>)DepotEntry::setMvccVersion);
+			attributeSetterBiConsumers.put(
+				"ctCollectionId",
+				(BiConsumer<DepotEntry, Long>)DepotEntry::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<DepotEntry, String>)DepotEntry::setUuid);
 			attributeSetterBiConsumers.put(
@@ -309,6 +315,21 @@ public class DepotEntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -554,6 +575,7 @@ public class DepotEntryModelImpl
 		DepotEntryImpl depotEntryImpl = new DepotEntryImpl();
 
 		depotEntryImpl.setMvccVersion(getMvccVersion());
+		depotEntryImpl.setCtCollectionId(getCtCollectionId());
 		depotEntryImpl.setUuid(getUuid());
 		depotEntryImpl.setDepotEntryId(getDepotEntryId());
 		depotEntryImpl.setGroupId(getGroupId());
@@ -574,6 +596,8 @@ public class DepotEntryModelImpl
 
 		depotEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		depotEntryImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		depotEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		depotEntryImpl.setDepotEntryId(
 			this.<Long>getColumnOriginalValue("depotEntryId"));
@@ -665,6 +689,8 @@ public class DepotEntryModelImpl
 		DepotEntryCacheModel depotEntryCacheModel = new DepotEntryCacheModel();
 
 		depotEntryCacheModel.mvccVersion = getMvccVersion();
+
+		depotEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		depotEntryCacheModel.uuid = getUuid();
 
@@ -770,6 +796,7 @@ public class DepotEntryModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private long _depotEntryId;
 	private long _groupId;
@@ -811,6 +838,7 @@ public class DepotEntryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("depotEntryId", _depotEntryId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -844,21 +872,23 @@ public class DepotEntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("uuid_", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("depotEntryId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("depotEntryId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
+
+		columnBitmasks.put("modifiedDate", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

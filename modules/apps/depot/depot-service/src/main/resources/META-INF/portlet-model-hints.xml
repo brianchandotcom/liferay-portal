@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.depot.model.DepotAppCustomization">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="depotAppCustomizationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="depotEntryId" type="long" />
@@ -11,6 +12,7 @@
 	</model>
 	<model name="com.liferay.depot.model.DepotEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="depotEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -22,6 +24,7 @@
 	</model>
 	<model name="com.liferay.depot.model.DepotEntryGroupRel">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="depotEntryGroupRelId" type="long" />
 		<field name="groupId" type="long" />

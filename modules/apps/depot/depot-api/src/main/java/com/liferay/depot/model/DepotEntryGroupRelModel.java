@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -28,8 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DepotEntryGroupRelModel
-	extends BaseModel<DepotEntryGroupRel>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends BaseModel<DepotEntryGroupRel>, CTModel<DepotEntryGroupRel>,
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -42,6 +43,7 @@ public interface DepotEntryGroupRelModel
 	 *
 	 * @return the primary key of this depot entry group rel
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -49,6 +51,7 @@ public interface DepotEntryGroupRelModel
 	 *
 	 * @param primaryKey the primary key of this depot entry group rel
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -66,6 +69,22 @@ public interface DepotEntryGroupRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this depot entry group rel.
+	 *
+	 * @return the ct collection ID of this depot entry group rel
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this depot entry group rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this depot entry group rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this depot entry group rel.

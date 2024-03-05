@@ -117,6 +117,8 @@ public class DepotEntryPersistenceTest {
 
 		newDepotEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDepotEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDepotEntry.setUuid(RandomTestUtil.randomString());
 
 		newDepotEntry.setGroupId(RandomTestUtil.nextLong());
@@ -139,6 +141,9 @@ public class DepotEntryPersistenceTest {
 		Assert.assertEquals(
 			existingDepotEntry.getMvccVersion(),
 			newDepotEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingDepotEntry.getCtCollectionId(),
+			newDepotEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingDepotEntry.getUuid(), newDepotEntry.getUuid());
 		Assert.assertEquals(
@@ -219,9 +224,10 @@ public class DepotEntryPersistenceTest {
 
 	protected OrderByComparator<DepotEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DepotEntry", "mvccVersion", true, "uuid", true, "depotEntryId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true);
+			"DepotEntry", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "depotEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true);
 	}
 
 	@Test
@@ -508,6 +514,8 @@ public class DepotEntryPersistenceTest {
 		DepotEntry depotEntry = _persistence.create(pk);
 
 		depotEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		depotEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		depotEntry.setUuid(RandomTestUtil.randomString());
 

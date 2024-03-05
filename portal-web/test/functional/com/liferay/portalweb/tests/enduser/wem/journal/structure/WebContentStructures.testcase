@@ -393,9 +393,9 @@ definition {
 			var tempFileDirectory = selenium.getOutputDirName();
 
 			File.regexReplace(
-				content = ''', "contentType": "journal", "dataDefinitionKey": "MY_STRUCTURE_KEY",''',
+				content = ''', "dataDefinitionKey": "MY_STRUCTURE_KEY",''',
 				fileName = "${tempFileDirectory}/${tempFileName}",
-				regex = ''', "contentType": "journal",''');
+				regex = ''', "dataDefinitionKey": "STRUCTURE_KEY",''');
 
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Import and Override",

@@ -7525,8 +7525,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 								--hostname=@{name} \
 								--interactive \
 								--name=@{name} \
-								--tty \
 								--privileged \
+								--tty \
 								${docker.network.run.option} \
 								@{run.options} \
 								\

@@ -100,8 +100,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	public static void setUpClass() throws Exception {
 		BaseNotificationTypeTest.setUpClass();
 
-		_siteGroup = GroupTestUtil.addGroup();
-
 		_freeMarkerTermValues = LinkedHashMapBuilder.<String, Object>put(
 			"${ObjectField_booleanObjectField.getData()}",
 			childObjectEntryValues.get("booleanObjectField")
@@ -160,38 +158,21 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			}
 		).build();
 
+		_group = GroupTestUtil.addGroup();
+
 		_scopeSiteFreeMarkerTermValues =
 			LinkedHashMapBuilder.<String, Object>put(
 				"${ObjectField_textObjectField.getData()}",
 				scopeSiteObjectEntryValues.get("textObjectField")
-			).put(
-				"${portalURL}",
-				() -> {
-					_originalHttpServletRequest =
-						ObjectActionThreadLocal.getHttpServletRequest();
-
-					HttpServletRequest httpServletRequest =
-						_originalHttpServletRequest;
-
-					if (httpServletRequest == null) {
-						httpServletRequest = new MockHttpServletRequest(
-							null, StringPool.BLANK,
-							RandomTestUtil.randomString());
-
-						ObjectActionThreadLocal.setHttpServletRequest(
-							httpServletRequest);
-					}
-
-					return _portal.getPortalURL(httpServletRequest);
-				}
 			).build();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws PortalException {
+		_groupLocalService.deleteGroup(_group);
+
 		ObjectActionThreadLocal.setHttpServletRequest(
 			_originalHttpServletRequest);
-		_groupLocalService.deleteGroup(_siteGroup);
 	}
 
 	@Test
@@ -211,7 +192,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
 				false,
 				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress())));
+					LocaleUtil.US, user1.getEmailAddress()),
+				childObjectDefinition.getObjectDefinitionId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			childObjectDefinition.getObjectDefinitionId());
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -249,7 +233,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
 				false,
 				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress())));
+					LocaleUtil.US, user1.getEmailAddress()),
+				childObjectDefinition.getObjectDefinitionId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			childObjectDefinition.getObjectDefinitionId());
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -284,12 +271,16 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				).build()),
 			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
 
-		_executeNotificationObjectActionScopeSite(
-			_addNotificationTemplateScopeSite(
+		_executeNotificationObjectAction(
+			0,
+			_addNotificationTemplate(
 				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
 				false,
 				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress())));
+					LocaleUtil.US, user1.getEmailAddress()),
+				scopeSiteObjectDefinition.getObjectDefinitionId()),
+			ObjectDefinitionConstants.SCOPE_SITE,
+			scopeSiteObjectDefinition.getObjectDefinitionId());
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -410,17 +401,19 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	private NotificationTemplate _addNotificationTemplate(
 			String body, String editorType, boolean singleRecipient,
-			Map<Locale, String> to)
+			Map<Locale, String> to, long objectDefinitionId)
 		throws Exception {
 
-		ObjectField objectField = objectFieldLocalService.getObjectField(
-			childObjectDefinition.getObjectDefinitionId(),
-			"attachmentObjectField");
+		ObjectField objectField = objectFieldLocalService.fetchObjectField(
+			objectDefinitionId, "attachmentObjectField");
+
+		List<Long> objectId = (objectField != null) ?
+			Collections.singletonList(objectField.getObjectFieldId()) :
+				Collections.emptyList();
 
 		return notificationTemplateLocalService.addNotificationTemplate(
 			NotificationTemplateUtil.createNotificationContext(
-				TestPropsValues.getUser(),
-				childObjectDefinition.getObjectDefinitionId(), body,
+				TestPropsValues.getUser(), objectDefinitionId, body,
 				RandomTestUtil.randomString(), editorType,
 				Arrays.asList(
 					createNotificationRecipientSetting(
@@ -439,42 +432,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					createNotificationRecipientSetting("to", to)),
 				ListUtil.toString(
 					getTermNames(), StringPool.BLANK, StringPool.SEMICOLON),
-				NotificationConstants.TYPE_EMAIL,
-				Collections.singletonList(objectField.getObjectFieldId())));
-	}
-
-	private NotificationTemplate _addNotificationTemplateScopeSite(
-			String body, String editorType, boolean singleRecipient,
-			Map<Locale, String> to)
-		throws Exception {
-
-		ObjectField objectField = objectFieldLocalService.getObjectField(
-			scopeSiteObjectDefinition.getObjectDefinitionId(),
-			"attachmentObjectField");
-
-		return notificationTemplateLocalService.addNotificationTemplate(
-			NotificationTemplateUtil.createNotificationContext(
-				TestPropsValues.getUser(),
-				scopeSiteObjectDefinition.getObjectDefinitionId(), body,
-				RandomTestUtil.randomString(), editorType,
-				Arrays.asList(
-					createNotificationRecipientSetting(
-						"bcc",
-						"[%CURRENT_USER_EMAIL_ADDRESS%],bcc@liferay.com"),
-					createNotificationRecipientSetting(
-						"cc", "[%CURRENT_USER_EMAIL_ADDRESS%],cc@liferay.com"),
-					createNotificationRecipientSetting(
-						"from", "[%CURRENT_USER_EMAIL_ADDRESS%]"),
-					createNotificationRecipientSetting(
-						"fromName",
-						Collections.singletonMap(
-							LocaleUtil.US, "[%CURRENT_USER_FIRST_NAME%]")),
-					createNotificationRecipientSetting(
-						"singleRecipient", String.valueOf(singleRecipient)),
-					createNotificationRecipientSetting("to", to)),
-				ListUtil.toString(getTermNames(), StringPool.BLANK),
-				NotificationConstants.TYPE_EMAIL,
-				Collections.singletonList(objectField.getObjectFieldId())));
+				NotificationConstants.TYPE_EMAIL, objectId));
 	}
 
 	private void _assertNotificationQueueEntry(
@@ -548,13 +506,14 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private void _executeNotificationObjectAction(
-			long fileEntryId, NotificationTemplate notificationTemplate)
+			long fileEntryId, NotificationTemplate notificationTemplate,
+			String scope, long objectDefinitionId)
 		throws Exception {
 
 		ObjectAction objectAction = objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			childObjectDefinition.getObjectDefinitionId(), true,
-			StringPool.BLANK, RandomTestUtil.randomString(),
+			objectDefinitionId, true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(),
@@ -566,62 +525,42 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			).build(),
 			false);
 
-		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
-			dtoConverterContext, parentObjectDefinition,
-			new ObjectEntry() {
-				{
-					properties = parentObjectEntryValues;
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		if (scope == ObjectDefinitionConstants.SCOPE_SITE) {
+			objectEntryManager.addObjectEntry(
+				dtoConverterContext, scopeSiteObjectDefinition,
+				new ObjectEntry() {
+					{
+						properties = scopeSiteObjectEntryValues;
+					}
+				},
+				String.valueOf(_group.getGroupId()));
+		}
+		else {
+			ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+				dtoConverterContext, parentObjectDefinition,
+				new ObjectEntry() {
+					{
+						properties = parentObjectEntryValues;
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		objectEntryManager.addObjectEntry(
-			dtoConverterContext, childObjectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.putAll(
-						childObjectEntryValues
-					).put(
-						getObjectRelationshipObjectField2Name(),
-						objectEntry.getId()
-					).put(
-						"attachmentObjectField", fileEntryId
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		objectActionLocalService.deleteObjectAction(
-			objectAction.getObjectActionId());
-	}
-
-	private void _executeNotificationObjectActionScopeSite(
-			NotificationTemplate notificationTemplate)
-		throws Exception {
-
-		ObjectAction objectAction = objectActionLocalService.addObjectAction(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			scopeSiteObjectDefinition.getObjectDefinitionId(), true,
-			StringPool.BLANK, RandomTestUtil.randomString(),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(),
-			ObjectActionExecutorConstants.KEY_NOTIFICATION,
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
-			UnicodePropertiesBuilder.put(
-				"notificationTemplateId",
-				notificationTemplate.getNotificationTemplateId()
-			).build(),
-			false);
-
-		objectEntryManager.addObjectEntry(
-			dtoConverterContext, scopeSiteObjectDefinition,
-			new ObjectEntry() {
-				{
-					properties = scopeSiteObjectEntryValues;
-				}
-			},
-			String.valueOf(_siteGroup.getGroupId()));
+			objectEntryManager.addObjectEntry(
+				dtoConverterContext, childObjectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.putAll(
+							childObjectEntryValues
+						).put(
+							getObjectRelationshipObjectField2Name(),
+							objectEntry.getId()
+						).put(
+							"attachmentObjectField", fileEntryId
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+		}
 
 		objectActionLocalService.deleteObjectAction(
 			objectAction.getObjectActionId());
@@ -663,7 +602,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				ListUtil.toString(
 					getTermNames(), StringPool.BLANK, StringPool.SEMICOLON),
 				NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
-				singleRecipient, Collections.singletonMap(LocaleUtil.US, to)));
+				singleRecipient, Collections.singletonMap(LocaleUtil.US, to),
+				childObjectDefinition.getObjectDefinitionId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			childObjectDefinition.getObjectDefinitionId());
 
 		List<NotificationQueueEntry> notificationQueueEntries = ListUtil.sort(
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -728,6 +670,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	private static CompanyLocalService _companyLocalService;
 
 	private static Map<String, Object> _freeMarkerTermValues;
+	private static Group _group;
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
@@ -738,7 +681,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	private static Portal _portal;
 
 	private static Map<String, Object> _scopeSiteFreeMarkerTermValues;
-	private static Group _siteGroup;
 
 	@Inject
 	private NotificationQueueEntryAttachmentLocalService

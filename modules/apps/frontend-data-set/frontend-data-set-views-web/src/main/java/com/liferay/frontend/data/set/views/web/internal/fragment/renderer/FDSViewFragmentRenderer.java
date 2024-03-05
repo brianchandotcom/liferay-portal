@@ -1005,14 +1005,12 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		for (int i = 0; i < fdsViewObjectEntries.size(); i++) {
-			for (ObjectEntry objectEntry : fdsViewObjectEntries) {
-				Map<String, Object> properties = objectEntry.getProperties();
+		for (ObjectEntry objectEntry : fdsViewObjectEntries) {
+			Map<String, Object> properties = objectEntry.getProperties();
 
-				jsonObject.put(
-					String.valueOf(properties.get("name")),
-					String.valueOf(properties.get("fieldName")));
-			}
+			jsonObject.put(
+				String.valueOf(properties.get("name")),
+				String.valueOf(properties.get("fieldName")));
 		}
 
 		return jsonObject;

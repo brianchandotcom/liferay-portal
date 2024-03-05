@@ -41,13 +41,9 @@ public class CommerceServicePortalInstanceLifecycleListener
 		_commerceSAPHelper.addCommerceDefaultSAPEntries(
 			company.getCompanyId(), user.getUserId());
 
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-12754")) {
-			_createDefaultCommercePaymentEntryRefundTypeConfiguration(company);
+		if (!FeatureFlagManagerUtil.isEnabled("COMMERCE-12754")) {
+			return;
 		}
-	}
-
-	private void _createDefaultCommercePaymentEntryRefundTypeConfiguration(
-		Company company) {
 
 		try {
 			Configuration[] configurations =
@@ -59,30 +55,29 @@ public class CommerceServicePortalInstanceLifecycleListener
 							getName(),
 						"*))"));
 
-			if (ArrayUtil.isEmpty(configurations)) {
-				_updateCommercePaymentEntryRefundTypeConfiguration(
-					_configurationAdmin.createFactoryConfiguration(
-						CommercePaymentEntryRefundTypeConfiguration.class.
-							getName(),
-						StringPool.QUESTION),
-					CommercePaymentEntryRefundTypeConfiguration.class.getName(),
-					"damaged-in-transit", "Damaged in Transit", company);
-
-				_updateCommercePaymentEntryRefundTypeConfiguration(
-					_configurationAdmin.createFactoryConfiguration(
-						CommercePaymentEntryRefundTypeConfiguration.class.
-							getName(),
-						StringPool.QUESTION),
-					CommercePaymentEntryRefundTypeConfiguration.class.getName(),
-					"product-defect", "Product Defect", company);
+			if (!ArrayUtil.isEmpty(configurations)) {
+				return;
 			}
+
+			_createFactoryConfiguration(
+				_configurationAdmin.createFactoryConfiguration(
+					CommercePaymentEntryRefundTypeConfiguration.class.getName(),
+					StringPool.QUESTION),
+				CommercePaymentEntryRefundTypeConfiguration.class.getName(),
+				"damaged-in-transit", "Damaged in Transit", company);
+			_createFactoryConfiguration(
+				_configurationAdmin.createFactoryConfiguration(
+					CommercePaymentEntryRefundTypeConfiguration.class.getName(),
+					StringPool.QUESTION),
+				CommercePaymentEntryRefundTypeConfiguration.class.getName(),
+				"product-defect", "Product Defect", company);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
 	}
 
-	private void _updateCommercePaymentEntryRefundTypeConfiguration(
+	private void _createFactoryConfiguration(
 			Configuration configuration, String factoryPid, String key,
 			String name, Company company)
 		throws IOException {

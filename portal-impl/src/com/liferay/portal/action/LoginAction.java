@@ -127,6 +127,9 @@ public class LoginAction implements Action {
 				LiferayWindowState.EXCLUSIVE)) {
 
 			redirect = Portal.PATH_MAIN + "/portal/sign_in";
+
+			redirect = HttpComponentsUtil.setParameter(
+				redirect, "groupId", themeDisplay.getScopeGroupId());
 		}
 
 		if (Validator.isNull(redirect)) {

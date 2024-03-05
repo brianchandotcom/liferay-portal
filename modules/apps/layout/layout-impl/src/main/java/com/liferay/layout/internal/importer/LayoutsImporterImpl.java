@@ -735,7 +735,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			if (!FeatureFlagManagerUtil.isEnabled("LPD-6378") &&
 				(utilityPageTemplate.getType() ==
-					UtilityPageTemplate.Type.SIGN_IN)) {
+					UtilityPageTemplate.Type.LOGIN)) {
 
 				continue;
 			}

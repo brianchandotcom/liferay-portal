@@ -10,12 +10,12 @@ package com.liferay.layout.utility.page.kernel.constants;
  */
 public class LayoutUtilityPageEntryConstants {
 
+	public static final String TYPE_LOGIN = "LOGIN";
+
 	public static final String TYPE_SC_INTERNAL_SERVER_ERROR =
 		"SC_INTERNAL_SERVER_ERROR";
 
 	public static final String TYPE_SC_NOT_FOUND = "SC_NOT_FOUND";
-
-	public static final String TYPE_SIGN_IN = "SIGN_IN";
 
 	public static final String TYPE_STATUS = "STATUS";
 

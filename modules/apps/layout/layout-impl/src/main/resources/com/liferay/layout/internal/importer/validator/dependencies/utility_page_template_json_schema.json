@@ -20,7 +20,7 @@
 				"Error",
 				"ErrorCode404",
 				"ErrorCode500",
-				"SignIn",
+				"Login",
 				"TermsOfUse"
 			],
 			"title": "The type Schema",

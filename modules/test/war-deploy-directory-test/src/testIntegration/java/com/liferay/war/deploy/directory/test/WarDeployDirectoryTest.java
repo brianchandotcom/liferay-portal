@@ -122,10 +122,11 @@ public class WarDeployDirectoryTest {
 		File testWarFileInDeployDir = new File(
 			PropsUtil.get(PropsKeys.AUTO_DEPLOY_DEPLOY_DIR), testWarFileName);
 
+		Assert.assertFalse(testWarFileInDeployDir.exists());
+
 		File testWarFileInWarDir = new File(
 			PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_WAR_DIR), testWarFileName);
 
-		Assert.assertFalse(testWarFileInDeployDir.exists());
 		Assert.assertFalse(testWarFileInWarDir.exists());
 
 		try {

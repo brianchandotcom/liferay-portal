@@ -5452,7 +5452,7 @@ components:
                     # @review
                     description:
                         The utility page template type.
-                    enum: [Error, ErrorCode404, ErrorCode500, SignIn, TermsOfUse]
+                    enum: [Error, ErrorCode404, ErrorCode500, Login, TermsOfUse]
                     type: string
             type: object
         WidgetInstance:

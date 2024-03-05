@@ -152,6 +152,17 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 			SearchContext searchContext)
 		throws Exception {
 
+		if (searchContext.isIncludeAttachments() ||
+			searchContext.isIncludeDiscussions()) {
+
+			addSearchLocalizedTerm(
+				searchQuery, searchContext, Field.CONTENT, false);
+			addSearchLocalizedTerm(
+				searchQuery, searchContext, Field.TITLE, false);
+
+			return;
+		}
+
 		BooleanQuery keywordsBooleanQuery = new BooleanQueryImpl();
 
 		addSearchLocalizedTerm(

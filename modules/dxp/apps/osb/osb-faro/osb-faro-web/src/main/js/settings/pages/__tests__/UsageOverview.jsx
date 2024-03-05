@@ -98,7 +98,7 @@ describe('UsageOverview', () => {
 		).toBeInTheDocument();
 
 		expect(
-			getByText('104,000 Known Individuals remaining.')
+			getByText('104,000 Known Individuals are available.')
 		).toBeInTheDocument();
 
 		expect(getByText('1,000 of 105,000 - 1% used.')).toBeInTheDocument();
@@ -153,7 +153,7 @@ describe('UsageOverview', () => {
 		).toBeInTheDocument();
 
 		expect(
-			getByText('6,888,877 Page Views remaining.')
+			getByText('6,888,877 Page Views are available.')
 		).toBeInTheDocument();
 	});
 

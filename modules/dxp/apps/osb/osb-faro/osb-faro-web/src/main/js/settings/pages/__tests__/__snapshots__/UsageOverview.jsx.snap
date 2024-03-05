@@ -495,7 +495,7 @@ exports[`UsageOverview should render 1`] = `
                   <span
                     class="text-3 text-secondary"
                   >
-                    102,943 Known Individuals remaining.
+                    102,943 Known Individuals are available.
                   </span>
                   <div
                     class="mt-4"
@@ -553,7 +553,7 @@ exports[`UsageOverview should render 1`] = `
                 <span
                   class="text-3 text-secondary"
                 >
-                  6,899,977 Page Views remaining.
+                  6,899,977 Page Views are available.
                 </span>
               </div>
             </div>

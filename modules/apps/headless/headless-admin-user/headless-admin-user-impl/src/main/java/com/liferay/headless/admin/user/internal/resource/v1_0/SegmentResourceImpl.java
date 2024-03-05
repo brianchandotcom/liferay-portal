@@ -10,24 +10,16 @@ import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.segments.context.Context;
+import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
-
-import java.util.List;
-import java.util.Map;
-
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,61 +59,21 @@ public class SegmentResourceImpl extends BaseSegmentResourceImpl {
 				ArrayUtil.toArray(
 					_segmentsEntryProviderRegistry.getSegmentsEntryIds(
 						siteId, user.getModelClassName(), user.getPrimaryKey(),
-						_createSegmentsContext(), new long[0])),
+						_requestContextMapper.map(contextHttpServletRequest),
+						new long[0])),
 				segmentsEntryId -> _toSegment(
 					_segmentsEntryService.getSegmentsEntry(segmentsEntryId))));
-	}
-
-	private Context _createSegmentsContext() {
-		Context context = new Context();
-
-		MultivaluedMap<String, String> multivaluedMap =
-			_httpHeaders.getRequestHeaders();
-
-		for (Map.Entry<String, List<String>> entry :
-				multivaluedMap.entrySet()) {
-
-			String key = StringUtil.toLowerCase(entry.getKey());
-
-			List<String> values = entry.getValue();
-
-			String value = values.get(0);
-
-			if (key.startsWith("x-")) {
-				context.put(
-					CamelCaseUtil.toCamelCase(
-						StringUtil.removeSubstring(key, "x-")),
-					value);
-			}
-			else if (key.equals("accept-language")) {
-				context.put(
-					Context.LANGUAGE_ID, StringUtil.replace(value, '-', '_'));
-			}
-			else if (key.equals("host")) {
-				context.put(Context.URL, value);
-			}
-			else if (key.equals("referer")) {
-				context.put(Context.REFERRER_URL, value);
-			}
-			else if (key.equals("user-agent")) {
-				context.put(Context.USER_AGENT, value);
-			}
-			else {
-				context.put(key, value);
-			}
-		}
-
-		context.put(Context.LOCAL_DATE, LocalDate.from(ZonedDateTime.now()));
-
-		return context;
 	}
 
 	private Segment _toSegment(SegmentsEntry segmentsEntry) throws Exception {
 		return _segmentDTOConverter.toDTO(segmentsEntry);
 	}
 
-	@javax.ws.rs.core.Context
+	@Context
 	private HttpHeaders _httpHeaders;
+
+	@Reference
+	private RequestContextMapper _requestContextMapper;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.user.internal.dto.v1_0.converter.SegmentDTOConverter)"

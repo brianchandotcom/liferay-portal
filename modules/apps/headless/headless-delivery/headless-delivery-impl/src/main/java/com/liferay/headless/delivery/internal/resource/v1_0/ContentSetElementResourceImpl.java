@@ -14,21 +14,15 @@ import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.util.CamelCaseUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.segments.context.Context;
+import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
-
-import java.util.Enumeration;
 import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -97,46 +91,6 @@ public class ContentSetElementResourceImpl
 		return _getContentSetContentSetElementsPage(assetListEntry, pagination);
 	}
 
-	private Context _createSegmentsContext() {
-		Context context = new Context();
-
-		Enumeration<String> enumeration =
-			contextHttpServletRequest.getHeaderNames();
-
-		while (enumeration.hasMoreElements()) {
-			String key = enumeration.nextElement();
-
-			String value = contextHttpServletRequest.getHeader(key);
-
-			if (key.equals("accept-language")) {
-				context.put(
-					Context.LANGUAGE_ID, StringUtil.replace(value, '-', '_'));
-			}
-			else if (key.equals("host")) {
-				context.put(Context.URL, value);
-			}
-			else if (key.equals("referer")) {
-				context.put(Context.REFERRER_URL, value);
-			}
-			else if (key.equals("user-agent")) {
-				context.put(Context.USER_AGENT, value);
-			}
-			else if (key.startsWith("x-")) {
-				context.put(
-					CamelCaseUtil.toCamelCase(
-						StringUtil.removeSubstring(key, "x-")),
-					value);
-			}
-			else {
-				context.put(key, value);
-			}
-		}
-
-		context.put(Context.LOCAL_DATE, LocalDate.from(ZonedDateTime.now()));
-
-		return context;
-	}
-
 	private Page<ContentSetElement> _getContentSetContentSetElementsPage(
 			AssetListEntry assetListEntry, Pagination pagination)
 		throws Exception {
@@ -144,7 +98,8 @@ public class ContentSetElementResourceImpl
 		long[] segmentsEntryIds =
 			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
 				assetListEntry.getGroupId(), contextUser.getModelClassName(),
-				contextUser.getPrimaryKey(), _createSegmentsContext(),
+				contextUser.getPrimaryKey(),
+				_requestContextMapper.map(contextHttpServletRequest),
 				new long[0]);
 
 		InfoPage<AssetEntry> infoPage =
@@ -207,6 +162,9 @@ public class ContentSetElementResourceImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private RequestContextMapper _requestContextMapper;
 
 	@Reference
 	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;

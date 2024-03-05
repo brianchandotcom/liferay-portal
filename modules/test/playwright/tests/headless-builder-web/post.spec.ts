@@ -71,6 +71,43 @@ const studentSubjectsApplication = {
 	title: 'Student-Subject manager',
 };
 
+test('can create post endpoint and can not disassociate request api schema', async ({
+	apiHelpers,
+	applicationPage,
+	headlessBuilderPage,
+	page,
+}) => {
+	await apiHelpers.object.postObjectEntry(
+		application,
+		'headless-builder/applications'
+	);
+
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.goToEditApplication(application.title);
+
+	await applicationPage.createEndpoint('POST', 'Company', 'student');
+
+	await applicationPage.goToEndpointConfigurationTab();
+
+	await page.getByLabel('Response Body Schema').click();
+	await expect(
+		page.getByRole('menuitem', {name: 'Not Selected'})
+	).toBeVisible();
+
+	await page.getByRole('menuitem', {name: 'Not Selected'}).click();
+
+	await applicationPage.publishButton.click();
+
+	await expect(
+		page.getByText('Please select a request body schema.')
+	).toBeVisible();
+
+	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		'headless-builder/applications',
+		application.externalReferenceCode
+	);
+});
+
 test('can create post endpoint and can not edit http method', async ({
 	apiHelpers,
 	applicationPage,
@@ -93,6 +130,11 @@ test('can create post endpoint and can not edit http method', async ({
 	);
 
 	await expect(isDisabled).toBeTruthy();
+
+	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		'headless-builder/applications',
+		application.externalReferenceCode
+	);
 });
 
 test('can create post endpoint with different request and response schema', async ({

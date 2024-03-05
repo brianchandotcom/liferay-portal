@@ -17,6 +17,82 @@ export const test = mergeTests(
 	headlessDiscoveryPagesTest
 );
 
+test('can associate and disassociate schema', async ({
+	apiHelpers,
+	applicationPage,
+	headlessBuilderPage,
+	page,
+}) => {
+	const application = await apiHelpers.object.postObjectEntry(
+		{
+			apiApplicationToAPISchemas: [
+				{
+					description: 'API Application Schema',
+					externalReferenceCode: 'api-application-schema',
+					mainObjectDefinitionERC: 'L_API_APPLICATION',
+					name: 'API Application Schema',
+				},
+			],
+			applicationStatus: 'unpublished',
+			baseURL: 'basic-application',
+			description: 'Test API Application',
+			externalReferenceCode: 'basic-application',
+			title: 'Basic application',
+		},
+		'headless-builder/applications'
+	);
+
+	const endpoint = await apiHelpers.object.postObjectEntry(
+		{
+			description: 'Test API Endpoint',
+			externalReferenceCode: 'basic-endpoint',
+			httpMethod: 'get',
+			name: 'Basic API Endpoint',
+			path: '/endpoint/',
+			r_apiApplicationToAPIEndpoints_c_apiApplicationERC:
+				application.externalReferenceCode,
+			r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC:
+				application.apiApplicationToAPISchemas[0].externalReferenceCode,
+			retrieveType: 'collection',
+			scope: 'company',
+		},
+		'headless-builder/endpoints'
+	);
+
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.goToEditApplication(application.title);
+	await applicationPage.goToEndpointsTab();
+	await applicationPage.goToEditEndpoint(endpoint.path);
+	await applicationPage.goToEndpointConfigurationTab();
+
+	await page.getByLabel('Response Body Schema').click();
+	await expect(
+		page.getByRole('menuitem', {name: 'Not Selected'})
+	).toBeVisible();
+
+	await page.getByRole('menuitem', {name: 'Not Selected'}).click();
+
+	await applicationPage.publishButton.click();
+
+	await page.waitForTimeout(1500);
+
+	await applicationPage.goToDetailsTab();
+	await applicationPage.goToEndpointsTab();
+	await applicationPage.goToEditEndpoint(endpoint.path);
+	await applicationPage.goToEndpointConfigurationTab();
+
+	const responseBodySchemaContent = await page
+		.getByLabel('Response Body Schema')
+		.textContent();
+
+	await expect(responseBodySchemaContent).toEqual('Select a Schema');
+
+	await apiHelpers.object.deleteObjectEntryByExternalReferenceCode(
+		'headless-builder/applications',
+		application.externalReferenceCode
+	);
+});
+
 test('can see available path parameter properties of a singleElement endpoint', async ({
 	applicationPage,
 	headlessBuilderPage,

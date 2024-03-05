@@ -88,12 +88,14 @@ export default function ({
 					}
 
 					const removeButton = `<button
-					aria-label="${title}"
-					class="btn btn-monospaced btn-sm lfr-portal-tooltip remove-button" 
-					data-rowid="${entityId}" 
-					type="button" 
-					title="${title}">
-					<span class="inline-item">${removeIcon}</span>
+						aria-label="${title}"
+						class="btn btn-monospaced btn-outline-borderless btn-outline-secondary
+							btn-sm lfr-portal-tooltip remove-button text-secondary" 
+						data-rowid="${entityId}" 
+						type="button" 
+						title="${title}"
+					>
+						<span class="inline-item">${removeIcon}</span>
 					</button>`;
 
 					rowColumns.push(sitesIcon);

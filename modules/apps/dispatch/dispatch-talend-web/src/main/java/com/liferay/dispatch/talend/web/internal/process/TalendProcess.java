@@ -117,29 +117,27 @@ public class TalendProcess {
 
 			arguments.add("-Djava.security.manager=allow");
 
-			processConfigBuilder.setArguments(arguments);
-
 			ProcessConfig portalProcessConfig =
 				PortalClassPathUtil.getPortalProcessConfig();
 
-			processConfigBuilder.setBootstrapClassPath(
+			return processConfigBuilder.setArguments(
+				arguments
+			).setBootstrapClassPath(
 				_getBootstrapClassPath(
-					portalProcessConfig.getBootstrapClassPathHolders()));
-			processConfigBuilder.setJavaExecutable(
-				System.getProperty("java.home") + "/bin/java");
-			processConfigBuilder.setProcessLogConsumer(
-				portalProcessConfig.getProcessLogConsumer());
-			processConfigBuilder.setReactClassLoader(
+					portalProcessConfig.getBootstrapClassPathHolders())
+			).setJavaExecutable(
+				System.getProperty("java.home") + "/bin/java"
+			).setProcessLogConsumer(
+				portalProcessConfig.getProcessLogConsumer()
+			).setReactClassLoader(
 				AggregateClassLoader.getAggregateClassLoader(
 					portalProcessConfig.getReactClassLoader(),
-					TalendProcess.class.getClassLoader()));
-
-			processConfigBuilder.setRuntimeClassPath(
+					TalendProcess.class.getClassLoader())
+			).setRuntimeClassPath(
 				StringBundler.concat(
 					_talendArchive.getClassPath(), File.pathSeparator,
-					_BUNDLE_FILE_PATH));
-
-			return processConfigBuilder.build();
+					_BUNDLE_FILE_PATH)
+			).build();
 		}
 
 		private String _getBootstrapClassPath(PathHolder[] pathHolders) {

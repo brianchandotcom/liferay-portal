@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useRef} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
+import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import isLink from '../../utils/isLink';
 
 const Cards = ({items, schema}) => {
@@ -60,6 +61,11 @@ const Card = ({item, schema}) => {
 		(itemsActions?.length && itemsActions) || item.actionDropdownItems
 	);
 
+	const localizedDescription =
+		schema.description && getLocalizedValue(item, schema.description);
+	const localizedTitle =
+		schema.description && getLocalizedValue(item, schema.title);
+
 	return (
 		<ClayCardWithInfo
 			actions={actionsRef.current?.map((action) => ({
@@ -78,8 +84,8 @@ const Card = ({item, schema}) => {
 				},
 				symbolLeft: action.icon,
 			}))}
-			description={schema.description && item[schema.description]}
-			href={(schema.href && item[schema.href]) || null}
+			description={localizedDescription.value}
+			href={(schema.link && item[schema.link]) || null}
 			imgProps={schema.image && item[schema.image]}
 			onSelectChange={
 				selectable && (() => selectItems(item[selectedItemsKey]))
@@ -92,7 +98,7 @@ const Card = ({item, schema}) => {
 			}
 			stickerProps={schema.sticker && item[schema.sticker]}
 			symbol={schema.symbol && item[schema.symbol]}
-			title={schema.title && item[schema.title]}
+			title={localizedTitle.value}
 		/>
 	);
 };
@@ -101,9 +107,9 @@ Cards.propTypes = {
 	items: PropTypes.array,
 	schema: PropTypes.shape({
 		description: PropTypes.string,
-		href: PropTypes.string,
 		imgProps: PropTypes.imgProps,
 		labels: PropTypes.arrayOf(PropTypes.string),
+		link: PropTypes.string,
 		stickerProps: PropTypes.string,
 		title: PropTypes.string,
 	}).isRequired,

@@ -16,6 +16,7 @@ import React, {useContext, useState} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
+import {getLocalizedValue} from '../../utils/getLocalizedValue';
 
 const List = ({header, items, schema}) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
@@ -59,7 +60,11 @@ const Title = ({item, title, titleRenderer}) => {
 	}
 
 	if (title) {
-		return <ClayList.ItemTitle>{item[title]}</ClayList.ItemTitle>;
+		return (
+			<ClayList.ItemTitle>
+				{getLocalizedValue(item, title).value}
+			</ClayList.ItemTitle>
+		);
 	}
 
 	return null;
@@ -78,7 +83,15 @@ const ListItem = ({item, schema}) => {
 
 	const [menuActive, setMenuActive] = useState(false);
 
-	const {description, image, sticker, symbol, title, titleRenderer} = schema;
+	const {
+		description,
+		image,
+		link,
+		sticker,
+		symbol,
+		title,
+		titleRenderer,
+	} = schema;
 
 	return (
 		<ClayList.Item
@@ -139,7 +152,9 @@ const ListItem = ({item, schema}) => {
 				/>
 
 				{description && (
-					<ClayList.ItemText>{item[description]}</ClayList.ItemText>
+					<ClayList.ItemText>
+						{getLocalizedValue(item, description).value}
+					</ClayList.ItemText>
 				)}
 			</ClayList.ItemField>
 

@@ -19,6 +19,7 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 			).build()
 		%>'
 		aria-label='<%= LanguageUtil.get(request, "this-page-can-be-customized") %>'
+		cssClass="control-menu-nav-link"
 		data-qa-id="customizations"
 		displayType="unstyled"
 		icon="pencil"

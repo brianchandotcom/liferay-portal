@@ -37,7 +37,7 @@ export function BackButtonPortal({backURL = '/'}) {
 		<ReactPortal container={container}>
 			<li className="control-menu-nav-item">
 				<Link
-					className="btn-monospaced btn-sm lfr-icon-item"
+					className="btn-monospaced btn-sm control-menu-nav-link lfr-icon-item"
 					tabIndex={1}
 					to={backURL}
 				>

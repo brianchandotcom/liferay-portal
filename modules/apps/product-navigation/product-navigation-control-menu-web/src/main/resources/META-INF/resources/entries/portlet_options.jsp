@@ -9,6 +9,7 @@
 
 <li class="control-menu-nav-item" data-qa-id="headerOptions">
 	<liferay-frontend:icon-options
+		cssClass="control-menu-nav-link"
 		monospaced="<%= true %>"
 	/>
 </li>

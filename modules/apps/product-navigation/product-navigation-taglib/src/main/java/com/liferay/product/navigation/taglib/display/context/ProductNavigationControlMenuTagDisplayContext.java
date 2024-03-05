@@ -233,7 +233,8 @@ public class ProductNavigationControlMenuTagDisplayContext {
 		String linkCssClass = productNavigationControlMenuEntry.getLinkCssClass(
 			_httpServletRequest);
 
-		iconTag.setLinkCssClass("btn btn-monospaced btn-sm " + linkCssClass);
+		iconTag.setLinkCssClass(
+			"btn btn-monospaced btn-sm control-menu-nav-link " + linkCssClass);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(

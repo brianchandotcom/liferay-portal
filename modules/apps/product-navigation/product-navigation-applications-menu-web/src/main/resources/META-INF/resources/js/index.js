@@ -531,7 +531,7 @@ const ApplicationsMenu = ({
 			<ClayButtonWithIcon
 				aria-haspopup="dialog"
 				aria-labelledby={buttonTitleId}
-				className="dropdown-toggle lfr-portal-tooltip"
+				className="control-menu-nav-link dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="applicationsMenu"
 				data-title={ReactDOMServer.renderToString(buttonTitle)}
 				data-title-set-as-html

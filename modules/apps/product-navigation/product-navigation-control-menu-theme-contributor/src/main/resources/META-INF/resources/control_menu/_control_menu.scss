@@ -45,8 +45,7 @@ html#{$cadmin-selector} {
 				width: 19.2px;
 			}
 
-			a:not(.dropdown-item),
-			button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
+			.control-menu-nav-link {
 				&:focus,
 				&:hover {
 					text-decoration: none;
@@ -63,8 +62,7 @@ html#{$cadmin-selector} {
 			background-color: $control-menu-level-1-bg;
 			color: $control-menu-level-1-color;
 
-			a:not(.dropdown-item),
-			button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
+			.control-menu-nav-link {
 				color: $control-menu-level-1-link-color;
 
 				&:focus,
@@ -84,8 +82,7 @@ html#{$cadmin-selector} {
 			border-bottom: $control-menu-level-1-light-border;
 			color: $control-menu-level-1-light-color;
 
-			a:not(.dropdown-item),
-			button:not(.btn-link):not(.btn-translucent):not(.dropdown-item):not(.nav-link) {
+			.control-menu-nav-link {
 				color: $control-menu-level-1-light-link-color;
 
 				&:focus,

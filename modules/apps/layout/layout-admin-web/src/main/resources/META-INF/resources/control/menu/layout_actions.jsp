@@ -14,7 +14,7 @@ LayoutActionsDisplayContext layoutActionsDisplayContext = (LayoutActionsDisplayC
 <li class="control-menu-nav-item">
 	<clay:dropdown-menu
 		aria-label='<%= LanguageUtil.get(resourceBundle, "options") %>'
-		borderless="<%= true %>"
+		cssClass="control-menu-nav-link"
 		displayType="unstyled"
 		dropdownItems="<%= layoutActionsDisplayContext.getDropdownItems() %>"
 		icon="ellipsis-v"

@@ -14,6 +14,7 @@ EditDisplayPageMenuDisplayContext editDisplayPageMenuDisplayContext = (EditDispl
 <li class="control-menu-nav-item">
 	<clay:dropdown-menu
 		borderless="<%= true %>"
+		cssClass="control-menu-nav-link"
 		displayType="unstyled"
 		dropdownItems="<%= editDisplayPageMenuDisplayContext.getDropdownItems() %>"
 		icon="pencil"

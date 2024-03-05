@@ -97,6 +97,17 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			SearchContext searchContext)
 		throws Exception {
 
+		if (searchContext.isIncludeAttachments() ||
+			searchContext.isIncludeDiscussions()) {
+
+			addSearchTerm(searchQuery, searchContext, Field.CONTENT, true);
+			addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, true);
+			addSearchTerm(searchQuery, searchContext, Field.TITLE, true);
+			addSearchTerm(searchQuery, searchContext, Field.USER_NAME, true);
+
+			return;
+		}
+
 		BooleanQuery keywordsBooleanQuery = new BooleanQueryImpl();
 
 		addSearchTerm(keywordsBooleanQuery, searchContext, Field.CONTENT, true);
@@ -105,6 +116,10 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		addSearchTerm(keywordsBooleanQuery, searchContext, Field.TITLE, true);
 		addSearchTerm(
 			keywordsBooleanQuery, searchContext, Field.USER_NAME, true);
+
+		if (!keywordsBooleanQuery.hasClauses()) {
+			return;
+		}
 
 		try {
 			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();

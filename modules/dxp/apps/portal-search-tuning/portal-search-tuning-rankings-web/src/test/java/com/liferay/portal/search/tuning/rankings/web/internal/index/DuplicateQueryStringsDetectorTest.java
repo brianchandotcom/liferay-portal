@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -25,7 +24,7 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class DuplicateQueryStringsDetectorImplTest
+public class DuplicateQueryStringsDetectorTest
 	extends BaseRankingsIndexTestCase {
 
 	@ClassRule
@@ -35,14 +34,8 @@ public class DuplicateQueryStringsDetectorImplTest
 
 	@Before
 	public void setUp() throws Exception {
-		_duplicateQueryStringsDetectorImpl =
-			new DuplicateQueryStringsDetectorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_duplicateQueryStringsDetectorImpl, "queries", queries);
-		ReflectionTestUtil.setFieldValue(
-			_duplicateQueryStringsDetectorImpl, "searchEngineAdapter",
-			searchEngineAdapter);
+		_duplicateQueryStringsDetector = new DuplicateQueryStringsDetector(
+			queries, searchEngineAdapter);
 	}
 
 	@Test
@@ -73,18 +66,17 @@ public class DuplicateQueryStringsDetectorImplTest
 		setUpSearchEngineAdapter(setUpSearchHits(queryStrings));
 
 		Assert.assertEquals(
-			queryStrings, _duplicateQueryStringsDetectorImpl.detect(criteria));
+			queryStrings, _duplicateQueryStringsDetector.detect(criteria));
 	}
 
 	@Test
 	public void testDetectCriteriaQueryStringsEmpty() {
 		Assert.assertEquals(
 			Collections.emptyList(),
-			_duplicateQueryStringsDetectorImpl.detect(
+			_duplicateQueryStringsDetector.detect(
 				Mockito.mock(Criteria.class)));
 	}
 
-	private DuplicateQueryStringsDetectorImpl
-		_duplicateQueryStringsDetectorImpl;
+	private DuplicateQueryStringsDetector _duplicateQueryStringsDetector;
 
 }

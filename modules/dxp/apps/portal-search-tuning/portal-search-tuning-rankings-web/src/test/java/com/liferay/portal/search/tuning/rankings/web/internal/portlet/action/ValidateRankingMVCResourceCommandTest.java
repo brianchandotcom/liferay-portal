@@ -35,8 +35,8 @@ public class ValidateRankingMVCResourceCommandTest
 			new ValidateRankingMVCResourceCommand();
 
 		ReflectionTestUtil.setFieldValue(
-			_validateRankingMVCResourceCommand, "duplicateQueryStringsDetector",
-			duplicateQueryStringsDetector);
+			_validateRankingMVCResourceCommand,
+			"_duplicateQueryStringsDetector", duplicateQueryStringsDetector);
 		ReflectionTestUtil.setFieldValue(
 			_validateRankingMVCResourceCommand, "indexNameBuilder",
 			indexNameBuilder);

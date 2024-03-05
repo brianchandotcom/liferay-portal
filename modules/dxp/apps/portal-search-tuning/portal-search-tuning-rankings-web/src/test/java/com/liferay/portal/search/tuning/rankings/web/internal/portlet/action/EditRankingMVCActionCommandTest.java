@@ -46,7 +46,7 @@ public class EditRankingMVCActionCommandTest
 		_editRankingMVCActionCommand = new EditRankingMVCActionCommand();
 
 		ReflectionTestUtil.setFieldValue(
-			_editRankingMVCActionCommand, "duplicateQueryStringsDetector",
+			_editRankingMVCActionCommand, "_duplicateQueryStringsDetector",
 			duplicateQueryStringsDetector);
 		ReflectionTestUtil.setFieldValue(
 			_editRankingMVCActionCommand, "indexNameBuilder", indexNameBuilder);

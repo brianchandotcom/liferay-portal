@@ -22,6 +22,13 @@ import {
 import RunFormModal from './RunFormModal';
 import useRunActions from './useRunActions';
 
+const getCategoryName = (name = '') =>
+	name
+		.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) =>
+			index === 0 ? word.toLowerCase() : word.toUpperCase()
+		)
+		.replace(/\s+/g, '');
+
 const Runs = () => {
 	const {actions, formModal} = useRunActions();
 	const {buildId, routineId} = useParams();
@@ -43,18 +50,10 @@ const Runs = () => {
 		factorsData?.items,
 	]);
 
-	const formatedCategoryName = (name?: string) => {
-		return name
-			?.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
-				return index === 0 ? word.toLowerCase() : word.toUpperCase();
-			})
-			.replace(/\s+/g, '');
-	};
-
-	const factorNameCategory = factorItems
+	const factorCategoryName = factorItems
 		.map(({factorCategory}) => ({
 			clickable: true,
-			key: formatedCategoryName(factorCategory?.name) as string,
+			key: getCategoryName(factorCategory?.name) as string,
 			value: i18n.translate(`${factorCategory?.name}`),
 		}))
 		.sort((a: any, b: any) => a?.value?.localeCompare(b?.value));
@@ -88,7 +87,7 @@ const Runs = () => {
 								number?.toString().padStart(2, '0'),
 							value: i18n.translate('run'),
 						},
-						...factorNameCategory,
+						...factorCategoryName,
 						{
 							clickable: true,
 							key: 'caseResultFailed',

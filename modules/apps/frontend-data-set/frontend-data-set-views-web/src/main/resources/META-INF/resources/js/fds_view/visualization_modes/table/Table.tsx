@@ -270,6 +270,8 @@ const SaveFDSFieldsModalContent = ({
 
 	const visibleFields = fields?.filter((field) => field.visible) ?? [];
 
+	const selectedFieldsCount = getSelectedFieldsCount();
+
 	return (
 		<>
 			<ClayModal.Header>
@@ -311,23 +313,23 @@ const SaveFDSFieldsModalContent = ({
 							</ManagementToolbar.ItemList>
 						</ManagementToolbar.Container>
 
-						{getSelectedFieldsCount() > 0 && (
+						{selectedFieldsCount > 0 && (
 							<ClayResultsBar>
 								<ClayResultsBar.Item expand>
 									<span className="component-text text-truncate-inline">
 										<span className="text-truncate">
-											{getSelectedFieldsCount() > 1
+											{selectedFieldsCount > 1
 												? sub(
 														Liferay.Language.get(
 															'x-items-selected'
 														),
-														getSelectedFieldsCount()
+														selectedFieldsCount
 												  )
 												: sub(
 														Liferay.Language.get(
 															'x-item-selected'
 														),
-														getSelectedFieldsCount()
+														selectedFieldsCount
 												  )}
 										</span>
 									</span>

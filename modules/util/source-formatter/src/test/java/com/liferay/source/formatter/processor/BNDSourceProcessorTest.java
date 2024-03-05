@@ -64,6 +64,11 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectWhitespace() throws Exception {
+		test("IncorrectWhitespace.testbnd");
+	}
+
+	@Test
 	public void testRemoveInternalPrivatePackages() throws Exception {
 		test("RemoveInternalPrivatePackages.testbnd");
 	}

@@ -122,6 +122,16 @@ public class LayoutPageTemplateCollectionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId,
+			long targetLayoutPageTemplateCollectionId)
+		throws PortalException {
+
+		return getService().moveLayoutPageTemplateCollection(
+			layoutPageTemplateCollectionId,
+			targetLayoutPageTemplateCollectionId);
+	}
+
 	public static LayoutPageTemplateCollection
 			updateLayoutPageTemplateCollection(
 				long layoutPageTemplateCollectionId, String name)

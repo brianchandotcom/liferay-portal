@@ -5,19 +5,61 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 
 /**
  * @author André de Oliveira
  */
-public interface RankingIndexWriter {
+public class RankingIndexWriter {
 
-	public String create(RankingIndexName rankingIndexName, Ranking ranking);
+	public RankingIndexWriter(
+		DocumentBuilderFactory documentBuilderFactory,
+		SearchEngineAdapter searchEngineAdapter) {
+
+		_documentBuilderFactory = documentBuilderFactory;
+		_searchEngineAdapter = searchEngineAdapter;
+	}
+
+	public String create(RankingIndexName rankingIndexName, Ranking ranking) {
+		IndexDocumentResponse indexDocumentResponse =
+			_searchEngineAdapter.execute(
+				new IndexDocumentRequest(
+					rankingIndexName.getIndexName(),
+					RankingToDocumentTranslatorUtil.translate(
+						_documentBuilderFactory, ranking)));
+
+		return indexDocumentResponse.getUid();
+	}
 
 	public void remove(
-		RankingIndexName rankingIndexName, String rankingDocumentId);
+		RankingIndexName rankingIndexName, String rankingDocumentId) {
 
-	public void update(RankingIndexName rankingIndexName, Ranking ranking);
+		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
+			rankingIndexName.getIndexName(), rankingDocumentId);
+
+		deleteDocumentRequest.setRefresh(true);
+
+		_searchEngineAdapter.execute(deleteDocumentRequest);
+	}
+
+	public void update(RankingIndexName rankingIndexName, Ranking ranking) {
+		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+			rankingIndexName.getIndexName(), ranking.getRankingDocumentId(),
+			RankingToDocumentTranslatorUtil.translate(
+				_documentBuilderFactory, ranking));
+
+		indexDocumentRequest.setRefresh(true);
+
+		_searchEngineAdapter.execute(indexDocumentRequest);
+	}
+
+	private final DocumentBuilderFactory _documentBuilderFactory;
+	private final SearchEngineAdapter _searchEngineAdapter;
 
 }

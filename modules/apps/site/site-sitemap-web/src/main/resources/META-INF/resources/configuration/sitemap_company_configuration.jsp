@@ -80,6 +80,7 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 				>
 					<liferay-ui:search-container-column-text>
 						<clay:icon
+							cssClass="c-ml-2 text-4 text-secondary"
 							symbol="sites"
 						/>
 					</liferay-ui:search-container-column-text>
@@ -106,7 +107,7 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 								borderless="<%= true %>"
 								cssClass="lfr-portal-tooltip remove-button"
 								data-rowId="<%= group.getGroupId() %>"
-								displayType="secondary"
+								displayType=""
 								icon="times-circle"
 								monospaced="<%= true %>"
 								small="<%= true %>"

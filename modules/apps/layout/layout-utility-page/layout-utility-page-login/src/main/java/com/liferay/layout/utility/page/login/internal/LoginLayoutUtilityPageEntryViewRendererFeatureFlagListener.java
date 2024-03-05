@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.utility.page.sign.in.internal;
+package com.liferay.layout.utility.page.login.internal;
 
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "featureFlagKey=LPD-6378", service = FeatureFlagListener.class
 )
-public class SignInLayoutUtilityPageEntryViewRendererFeatureFlagListener
+public class LoginLayoutUtilityPageEntryViewRendererFeatureFlagListener
 	implements FeatureFlagListener {
 
 	@Override
@@ -42,11 +42,10 @@ public class SignInLayoutUtilityPageEntryViewRendererFeatureFlagListener
 
 		_serviceRegistration = _bundleContext.registerService(
 			LayoutUtilityPageEntryViewRenderer.class,
-			new SignInLayoutUtilityPageEntryViewRenderer(
+			new LoginLayoutUtilityPageEntryViewRenderer(
 				_language, _servletContext),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"utility.page.type",
-				LayoutUtilityPageEntryConstants.TYPE_LOGIN
+				"utility.page.type", LayoutUtilityPageEntryConstants.TYPE_LOGIN
 			).build());
 	}
 

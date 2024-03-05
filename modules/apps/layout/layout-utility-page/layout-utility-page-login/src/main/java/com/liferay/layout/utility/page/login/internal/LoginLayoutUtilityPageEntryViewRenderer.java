@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.utility.page.sign.in.internal;
+package com.liferay.layout.utility.page.login.internal;
 
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
@@ -22,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Olivér Kecskeméty
  */
-public class SignInLayoutUtilityPageEntryViewRenderer
+public class LoginLayoutUtilityPageEntryViewRenderer
 	implements LayoutUtilityPageEntryViewRenderer {
 
-	public SignInLayoutUtilityPageEntryViewRenderer(
+	public LoginLayoutUtilityPageEntryViewRenderer(
 		Language language, ServletContext servletContext) {
 
 		_language = language;
@@ -49,7 +49,7 @@ public class SignInLayoutUtilityPageEntryViewRenderer
 		throws IOException, ServletException {
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/sign_in.jsp");
+			_servletContext.getRequestDispatcher("/login.jsp");
 
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}

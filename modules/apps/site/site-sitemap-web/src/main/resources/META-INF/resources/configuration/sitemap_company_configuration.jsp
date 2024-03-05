@@ -56,6 +56,7 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 			expand="<%= true %>"
 		>
 			<clay:alert
+				cssClass="c-mb-0 c-mt-2"
 				message="the-companys-xml-sitemap-only-includes-sites-without-virtual-hosts"
 			/>
 		</clay:content-col>

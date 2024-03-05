@@ -989,9 +989,7 @@ public class TestrayImporter {
 
 						propertiesMap.put(
 							"testray.build.date",
-							JenkinsResultsParserUtil.toDateString(
-								new Date(testTopLevelBuild.getStartTime()),
-								"yyyy-MM-dd HH:mm:ss", "America/Los_Angeles"));
+							testTopLevelBuild.getTestrayBuildDateString());
 
 						propertiesMap.put(
 							"testray.build.name", testrayBuild.getName());

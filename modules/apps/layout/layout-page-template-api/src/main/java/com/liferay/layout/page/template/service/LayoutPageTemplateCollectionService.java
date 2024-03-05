@@ -96,6 +96,11 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	public LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId,
+			long targetLayoutPageTemplateCollectionId)
+		throws PortalException;
+
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name)
 		throws PortalException;

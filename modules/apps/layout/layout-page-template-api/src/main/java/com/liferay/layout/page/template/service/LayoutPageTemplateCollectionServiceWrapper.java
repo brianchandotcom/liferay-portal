@@ -138,6 +138,18 @@ public class LayoutPageTemplateCollectionServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId,
+			long targetLayoutPageTemplateCollectionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateCollectionService.
+			moveLayoutPageTemplateCollection(
+				layoutPageTemplateCollectionId,
+				targetLayoutPageTemplateCollectionId);
+	}
+
+	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

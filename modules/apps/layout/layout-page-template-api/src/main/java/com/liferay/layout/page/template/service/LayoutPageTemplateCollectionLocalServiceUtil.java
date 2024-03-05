@@ -453,6 +453,16 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 			groupId, name, type);
 	}
 
+	public static LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
+			long layoutPageTemplateCollectionId,
+			long targetLayoutPageTemplateCollectionId)
+		throws PortalException {
+
+		return getService().moveLayoutPageTemplateCollection(
+			layoutPageTemplateCollectionId,
+			targetLayoutPageTemplateCollectionId);
+	}
+
 	/**
 	 * Updates the layout page template collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

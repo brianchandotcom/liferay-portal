@@ -138,11 +138,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			_getLoginRedirectURI(httpServletRequest),
 			oAuthClientEntry.getTokenRequestParametersJSON());
 
-		URI userInfoURI = oidcProviderMetadata.getUserInfoEndpointURI();
-
 		String userInfoJSON = null;
 
-		if (userInfoURI == null) {
+		if (oidcProviderMetadata.getUserInfoEndpointURI() == null) {
 			JWT idToken = oidcTokens.getIDToken();
 
 			JWTClaimsSet userInfoClaimSet = idToken.getJWTClaimsSet();

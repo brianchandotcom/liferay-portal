@@ -39,7 +39,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFilter(inputEndValue = null, dropdownIndex = null, month = null, year = null, dropdownData = null, optionValue = null, filterName = null, inputValue = null) {
+	macro addFilter(inputEndValue = null, month = null, year = null, dropdownOptionName = null, optionValue = null, filterName = null, inputValue = null) {
 		ACEventAnalysis.clickToAddFilterButton();
 
 		ACEventAnalysis.searchEventAnalysis(searchItem = ${filterName});
@@ -50,10 +50,8 @@ definition {
 
 		ACUtils.selectGenericOption(optionValue = ${optionValue});
 
-		if (isSet(dropdownIndex)) {
-			ACEventAnalysis.selectAutocompleteOption(
-				dropdownData = ${dropdownData},
-				key_index = ${dropdownIndex});
+		if (isSet(dropdownOptionName)) {
+			ACEventAnalysis.selectAutocompleteOption(dropdownOptionName = ${dropdownOptionName});
 		}
 		else if ((IsElementNotPresent(key_text = "calendar", locator1 = "Icon#ANY")) && (${optionValue} != "True") && (${optionValue} != "False")) {
 			Type(
@@ -213,16 +211,19 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectAutocompleteOption(dropdownIndex = null, dropdownData = null) {
+	macro selectAutocompleteOption(dropdownOptionName) {
 		Click(locator1 = "ACEventAnalysis#INPUT_CONDITION");
 
+		ACUtils.waitForLoading();
+
 		WaitForElementPresent(
-			key_index = ${dropdownIndex},
-			locator1 = "ACEventAnalysis#DROPDOWN_BY_INDEX");
+			key_optionName = ${dropdownOptionName},
+			locator1 = "ACEventAnalysis#DROPDOWN_BY_OPTION");
 
 		AssertClick(
-			locator1 = "ACEventAnalysis#DROPDOWN_BY_INDEX",
-			value1 = ${dropdownData});
+			key_optionName = ${dropdownOptionName},
+			locator1 = "ACEventAnalysis#DROPDOWN_BY_OPTION",
+			value1 = ${dropdownOptionName});
 	}
 
 	@summary = "Default summary"

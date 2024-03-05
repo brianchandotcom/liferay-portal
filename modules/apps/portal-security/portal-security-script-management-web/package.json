@@ -1,5 +1,10 @@
 {
 	"dependencies": {
+		"@clayui/alert": "3.111.0",
+		"@clayui/button": "3.111.0",
+		"@clayui/core": "3.111.0",
+		"@clayui/form": "3.111.0",
+		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
 	"main": "js/index.ts",
@@ -11,5 +16,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "1.0.0"
+	"version": "1.0.2"
 }

@@ -339,7 +339,7 @@ public class UtilityPageTemplate implements Serializable {
 	public static enum Type {
 
 		ERROR("Error"), ERROR_CODE404("ErrorCode404"),
-		ERROR_CODE500("ErrorCode500"), SIGN_IN("SignIn"),
+		ERROR_CODE500("ErrorCode500"), LOGIN("Login"),
 		TERMS_OF_USE("TermsOfUse");
 
 		@JsonCreator

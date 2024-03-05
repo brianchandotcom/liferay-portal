@@ -36,6 +36,9 @@ import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 
 import '../../../../css/TableVisualizationMode.scss';
+
+import ClayIcon from '@clayui/icon';
+
 import {IFDSField, IField} from '../../../utils/types';
 import {IBaseVisualizationMode} from '../VisualizationModes';
 import AddFieldsModalContent from './modal_content/AddFieldsModalContent';
@@ -612,11 +615,21 @@ const EditFDSFieldModalContent = ({
 				<ClayForm.Group>
 					<ClayCheckbox
 						checked={fdsFieldSortable}
+						inline
 						label={Liferay.Language.get('sortable')}
 						onChange={({target: {checked}}) =>
 							setFSDFieldSortable(checked)
 						}
 					/>
+
+					<span
+						className="label-icon lfr-portal-tooltip ml-2"
+						title={Liferay.Language.get(
+							'if-checked,-data-set-items-can-be-sorted-by-this-field'
+						)}
+					>
+						<ClayIcon symbol="question-circle-full" />
+					</span>
 				</ClayForm.Group>
 			</ClayModal.Body>
 

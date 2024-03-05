@@ -171,39 +171,7 @@ public class BaseNotificationTypeTest {
 			"textObjectField", RandomTestUtil.randomString()
 		).build();
 
-		siteScopeObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
-			"booleanObjectField", RandomTestUtil.randomBoolean()
-		).put(
-			"dateObjectField",
-			() -> {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd");
-
-				return simpleDateFormat.format(RandomTestUtil.nextDate());
-			}
-		).put(
-			"dateTimeObjectField",
-			() -> {
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd 00:00:00.0");
-
-				return simpleDateFormat.format(RandomTestUtil.nextDate());
-			}
-		).put(
-			"emailTextObjectField",
-			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
-				"@liferay.com"
-		).put(
-			"integerObjectField", RandomTestUtil.nextInt()
-		).put(
-			"picklistObjectField",
-			new ListEntry() {
-				{
-					key = listTypeEntry.getKey();
-					name = listTypeEntry.getName(LocaleUtil.US);
-				}
-			}
-		).put(
+		scopeSiteObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
 			"textObjectField", RandomTestUtil.randomString()
 		).build();
 
@@ -449,7 +417,7 @@ public class BaseNotificationTypeTest {
 			getTermName(true, "AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
 		).build();
 
-		siteScopeObjectDefinition =
+		scopeSiteObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				user1.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -486,59 +454,6 @@ public class BaseNotificationTypeTest {
 								"100"
 							).build())
 					).build(),
-					new BooleanObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"booleanObjectField"
-					).build(),
-					new DateObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"dateObjectField"
-					).build(),
-					new DateTimeObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"dateTimeObjectField"
-					).objectFieldSettings(
-						Collections.singletonList(
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_TIME_STORAGE
-							).value(
-								ObjectFieldSettingConstants.
-									VALUE_USE_INPUT_AS_ENTERED
-							).build())
-					).build(),
-					new IntegerObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"integerObjectField"
-					).build(),
-					new PicklistObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"picklistObjectField"
-					).listTypeDefinitionId(
-						_listTypeDefinition.getListTypeDefinitionId()
-					).build(),
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"emailTextObjectField"
-					).build(),
 					new TextObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
@@ -547,10 +462,10 @@ public class BaseNotificationTypeTest {
 						"textObjectField"
 					).build()));
 
-		siteScopeObjectDefinition =
+		scopeSiteObjectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				user1.getUserId(),
-				siteScopeObjectDefinition.getObjectDefinitionId());
+				scopeSiteObjectDefinition.getObjectDefinitionId());
 
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
@@ -568,7 +483,7 @@ public class BaseNotificationTypeTest {
 
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
-			siteScopeObjectDefinition.getResourceName(),
+			scopeSiteObjectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
@@ -700,9 +615,9 @@ public class BaseNotificationTypeTest {
 	protected static Role role;
 
 	@DeleteAfterTestRun
-	protected static ObjectDefinition siteScopeObjectDefinition;
+	protected static ObjectDefinition scopeSiteObjectDefinition;
 
-	protected static LinkedHashMap<String, Object> siteScopeObjectEntryValues;
+	protected static LinkedHashMap<String, Object> scopeSiteObjectEntryValues;
 	protected static User user1;
 	protected static User user2;
 

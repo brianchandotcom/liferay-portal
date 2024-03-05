@@ -309,9 +309,7 @@ public class ResourceActionLocalServiceImpl
 	@Override
 	@Transactional(enabled = false)
 	public ResourceAction fetchResourceAction(String name, String actionId) {
-		String key = encodeKey(name, actionId);
-
-		return _resourceActions.get(key);
+		return _resourceActions.get(encodeKey(name, actionId));
 	}
 
 	@Override

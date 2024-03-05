@@ -32,7 +32,8 @@ public class BNDWhitespaceCheck extends WhitespaceCheck {
 		content = _formatWhitespace(shortFileName, content);
 
 		content = StringUtil.replace(
-			content, new String[] {"\n\n", "\t "}, new String[] {"\n", "\t"});
+			content, new String[] {"\n\n", "\t ", ": \t", ":\t "},
+			new String[] {"\n", "\t", ": ", ": "});
 
 		return super.doProcess(fileName, absolutePath, content);
 	}

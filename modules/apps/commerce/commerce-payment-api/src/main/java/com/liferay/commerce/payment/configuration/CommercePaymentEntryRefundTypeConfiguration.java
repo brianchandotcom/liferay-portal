@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 )
 public interface CommercePaymentEntryRefundTypeConfiguration {
 
+	@Meta.AD(deflt = "true", name = "enabled", required = false)
+	public boolean enabled();
+
 	@Meta.AD(name = "key")
 	public String key();
 
@@ -34,8 +37,5 @@ public interface CommercePaymentEntryRefundTypeConfiguration {
 
 	@Meta.AD(name = "priority", required = false)
 	public int priority();
-
-	@Meta.AD(deflt = "true", name = "enabled", required = false)
-	public boolean enabled();
 
 }

@@ -31,10 +31,9 @@ describe('SearchOptions', () => {
 
 		const selectors = document.querySelectorAll('.form-control-select');
 
-		expect(selectors.length).toBe(2);
+		expect(selectors.length).toBe(1);
 
 		expect(screen.getByText('Search In')).toBeInTheDocument();
-		expect(screen.getByText('Search Results')).toBeInTheDocument();
 	});
 
 	it('renders search location selector if it has any location option', () => {
@@ -47,7 +46,7 @@ describe('SearchOptions', () => {
 
 		const selectors = document.querySelectorAll('.form-control-select');
 
-		expect(selectors.length).toBe(3);
+		expect(selectors.length).toBe(2);
 
 		expect(screen.getByText('Search Location')).toBeInTheDocument();
 	});

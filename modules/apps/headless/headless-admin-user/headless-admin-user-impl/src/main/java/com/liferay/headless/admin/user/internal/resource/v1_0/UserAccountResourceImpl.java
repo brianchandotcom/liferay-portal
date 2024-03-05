@@ -615,20 +615,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		_updatePassword(
 			user, userAccount.getCurrentPassword(), userAccount.getPassword());
 
-		String status = userAccount.getStatusAsString();
-
-		Integer workflowStatus = null;
-
-		if (StringUtil.equalsIgnoreCase(
-				UserAccount.Status.ACTIVE.getValue(), status)) {
-
-			workflowStatus = WorkflowConstants.STATUS_APPROVED;
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					UserAccount.Status.INACTIVE.getValue(), status)) {
-
-			workflowStatus = WorkflowConstants.STATUS_INACTIVE;
-		}
+		Integer workflowStatus = _getWorkflowStatus(
+			userAccount.getStatusAsString());
 
 		if ((workflowStatus != null) && (user.getStatus() != workflowStatus)) {
 			user = _userService.updateStatus(
@@ -944,24 +932,6 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				"Unable to put pending user account " + user.getUserId());
 		}
 
-		String status = userAccount.getStatusAsString();
-
-		Integer workflowStatus = null;
-
-		if (StringUtil.equalsIgnoreCase(
-				UserAccount.Status.ACTIVE.getValue(), status)) {
-
-			workflowStatus = WorkflowConstants.STATUS_APPROVED;
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					UserAccount.Status.INACTIVE.getValue(), status)) {
-
-			workflowStatus = WorkflowConstants.STATUS_INACTIVE;
-		}
-		else {
-			throw new BadRequestException("Status is invalid");
-		}
-
 		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
 
 		if (accountBriefs != null) {
@@ -1015,8 +985,13 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				userAccount.getExternalReferenceCode(),
 				user.getExternalReferenceCode()));
 
-		_userService.updateStatus(
-			userAccountId, workflowStatus, serviceContext);
+		Integer workflowStatus = _getWorkflowStatus(
+			userAccount.getStatusAsString());
+
+		if ((workflowStatus != null) && (user.getStatus() != workflowStatus)) {
+			user = _userService.updateStatus(
+				userAccountId, workflowStatus, serviceContext);
+		}
 
 		return _toUserAccount(
 			_userService.updateUser(
@@ -1062,6 +1037,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				userAccount.getCurrentPassword());
 		}
 
+		ServiceContext serviceContext = _createServiceContext(userAccount);
+
 		User user = _userService.addOrUpdateUser(
 			externalReferenceCode, contextUser.getUserId(),
 			contextCompany.getCompanyId(), autoPassword, password, password,
@@ -1077,8 +1054,15 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			_getAddresses(null, userAccount),
 			_getServiceBuilderEmailAddresses(null, userAccount),
 			_getServiceBuilderPhones(null, userAccount),
-			_getWebsites(null, userAccount), false,
-			_createServiceContext(userAccount));
+			_getWebsites(null, userAccount), false, serviceContext);
+
+		Integer workflowStatus = _getWorkflowStatus(
+			userAccount.getStatusAsString());
+
+		if ((workflowStatus != null) && (user.getStatus() != workflowStatus)) {
+			user = _userService.updateStatus(
+				user.getUserId(), workflowStatus, serviceContext);
+		}
 
 		UserAccountContactInformation userAccountContactInformation =
 			userAccount.getUserAccountContactInformation();
@@ -1553,6 +1537,23 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 					contextCompany.getCompanyId(),
 					ListTypeConstants.CONTACT_WEBSITE, webUrl)),
 			Objects::nonNull);
+	}
+
+	private Integer _getWorkflowStatus(String status) throws Exception {
+		Integer workflowStatus = null;
+
+		if (StringUtil.equalsIgnoreCase(
+				UserAccount.Status.ACTIVE.getValue(), status)) {
+
+			workflowStatus = WorkflowConstants.STATUS_APPROVED;
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					UserAccount.Status.INACTIVE.getValue(), status)) {
+
+			workflowStatus = WorkflowConstants.STATUS_INACTIVE;
+		}
+
+		return workflowStatus;
 	}
 
 	private boolean _hasPortrait(User user, UserAccount userAccount) {

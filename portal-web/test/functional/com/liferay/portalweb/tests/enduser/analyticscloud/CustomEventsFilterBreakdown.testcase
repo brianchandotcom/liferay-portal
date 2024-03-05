@@ -643,7 +643,6 @@ definition {
 
 		var attributeName = "city";
 		var inputValue = "los angeles";
-
 		var attributeValueList = "los angeles,madrid";
 		var optionValueList = "contains,not contains,is,is not";
 

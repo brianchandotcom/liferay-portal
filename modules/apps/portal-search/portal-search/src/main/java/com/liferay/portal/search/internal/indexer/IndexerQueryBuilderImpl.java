@@ -125,18 +125,17 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 			return;
 		}
 
+		if (searchContext.isIncludeAttachments() ||
+			searchContext.isIncludeDiscussions()) {
+
+			_contributeFilters(booleanQuery, searchContext);
+
+			return;
+		}
+
 		BooleanQuery keywordsBooleanQuery = new BooleanQueryImpl();
 
-		contribute(
-			_modelKeywordQueryContributorsRegistry.
-				filterKeywordQueryContributors(
-					_getStrings(
-						"search.full.query.clause.contributors.excludes",
-						searchContext),
-					_getStrings(
-						"search.full.query.clause.contributors.includes",
-						searchContext)),
-			keywordsBooleanQuery, searchContext);
+		_contributeFilters(keywordsBooleanQuery, searchContext);
 
 		if (!keywordsBooleanQuery.hasClauses()) {
 			return;
@@ -250,6 +249,21 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 					throw new SystemException(exception);
 				}
 			});
+	}
+
+	private void _contributeFilters(
+		BooleanQuery booleanQuery, SearchContext searchContext) {
+
+		contribute(
+			_modelKeywordQueryContributorsRegistry.
+				filterKeywordQueryContributors(
+					_getStrings(
+						"search.full.query.clause.contributors.excludes",
+						searchContext),
+					_getStrings(
+						"search.full.query.clause.contributors.includes",
+						searchContext)),
+			booleanQuery, searchContext);
 	}
 
 	private void _contributeSearchContext(SearchContext searchContext) {

@@ -741,10 +741,21 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			return ddmStructure;
 		}
 
+		long classNameId = DataDefinitionContentTypeRegistryUtil.getClassNameId(
+			contentType);
+		String ddmStructureKey = MapUtil.getString(
+			properties, "ddmStructureKey");
+
+		ddmStructure = _ddmStructureLocalService.fetchStructure(
+			groupId, classNameId, ddmStructureKey);
+
+		if (ddmStructure != null) {
+			return ddmStructure;
+		}
+
 		return _ddmStructureLocalService.fetchStructure(
-			groupId,
-			DataDefinitionContentTypeRegistryUtil.getClassNameId(contentType),
-			MapUtil.getString(properties, "ddmStructureKey"));
+			_portal.getSiteGroupId(contextCompany.getGroupId()), classNameId,
+			ddmStructureKey);
 	}
 
 	private long _getDefaultDataLayoutId(

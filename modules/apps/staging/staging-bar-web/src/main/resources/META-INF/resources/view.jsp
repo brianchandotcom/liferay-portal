@@ -253,15 +253,6 @@ if (liveLayout != null) {
 		</c:if>
 	</c:if>
 
-	<c:if test="<%= !branchingEnabled %>">
-		<aui:script use="liferay-staging">
-			Liferay.StagingBar.init({
-				namespace: '<portlet:namespace />',
-				portletId: '<%= portletDisplay.getId() %>',
-			});
-		</aui:script>
-	</c:if>
-
 	<aui:script use="aui-base">
 		var staging = document.querySelector('.staging');
 

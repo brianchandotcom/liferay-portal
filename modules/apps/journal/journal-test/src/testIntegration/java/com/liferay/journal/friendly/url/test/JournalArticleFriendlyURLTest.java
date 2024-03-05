@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -132,6 +133,27 @@ public class JournalArticleFriendlyURLTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(friendlyURLMap, updatedArticle.getFriendlyURLMap());
+	}
+
+	@Test
+	public void testFriendlyURLShouldNotHaveSiteLanguageNotEqualDefaultLanguage()
+		throws Exception {
+
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
+
+		String title = RandomTestUtil.randomString();
+		Locale[] locales = {LocaleUtil.SPAIN};
+
+		Map<Locale, String> titleMap = _getLocalizedMap(title, locales);
+
+		JournalArticle article = _addJournalArticleWithTitleMap(
+			LocaleUtil.SPAIN, titleMap);
+
+		Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
+
+		Assert.assertNull(friendlyURLMap.get(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			friendlyURLMap.toString(), 1, friendlyURLMap.size());
 	}
 
 	@Test

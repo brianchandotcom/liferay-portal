@@ -41,7 +41,7 @@ export const PageViewsSession = ({currentPlan}) => {
 					}
 				}}
 				legendText={sub(
-					Liferay.Language.get('x-page-views-available'),
+					Liferay.Language.get('x-page-views-are-available'),
 					[(available > 0 ? available : 0).toLocaleString()]
 				)}
 				limit={limit}

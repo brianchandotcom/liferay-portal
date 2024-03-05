@@ -46,7 +46,9 @@ export const KnownIndividualsSession = ({currentPlan}) => {
 						}
 					}}
 					legendText={sub(
-						Liferay.Language.get('x-known-individuals-available'),
+						Liferay.Language.get(
+							'x-known-individuals-are-available'
+						),
 						[(available > 0 ? available : 0).toLocaleString()]
 					)}
 					limit={limit}

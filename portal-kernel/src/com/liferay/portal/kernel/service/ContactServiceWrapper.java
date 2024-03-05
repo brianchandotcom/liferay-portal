@@ -24,6 +24,25 @@ public class ContactServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Contact addContact(
+			long userId, java.lang.String className, long classPK,
+			java.lang.String emailAddress, java.lang.String firstName,
+			java.lang.String middleName, java.lang.String lastName,
+			long prefixListTypeId, long suffixListTypeId, boolean male,
+			int birthdayMonth, int birthdayDay, int birthdayYear,
+			java.lang.String smsSn, java.lang.String facebookSn,
+			java.lang.String jabberSn, java.lang.String skypeSn,
+			java.lang.String twitterSn, java.lang.String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactService.addContact(
+			userId, className, classPK, emailAddress, firstName, middleName,
+			lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, jobTitle);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Contact>
 			getCompanyContacts(long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -69,6 +88,25 @@ public class ContactServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _contactService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Contact updateContact(
+			long contactId, java.lang.String emailAddress,
+			java.lang.String firstName, java.lang.String middleName,
+			java.lang.String lastName, long prefixListTypeId,
+			long suffixListTypeId, boolean male, int birthdayMonth,
+			int birthdayDay, int birthdayYear, java.lang.String smsSn,
+			java.lang.String facebookSn, java.lang.String jabberSn,
+			java.lang.String skypeSn, java.lang.String twitterSn,
+			java.lang.String jobTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contactService.updateContact(
+			contactId, emailAddress, firstName, middleName, lastName,
+			prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
+			twitterSn, jobTitle);
 	}
 
 	@Override

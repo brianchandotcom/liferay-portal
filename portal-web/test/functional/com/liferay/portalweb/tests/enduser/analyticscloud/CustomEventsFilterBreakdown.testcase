@@ -691,9 +691,7 @@ definition {
 					key_filterName = ${attributeName},
 					locator1 = "ACEventAnalysis#CHOOSE_FILTER");
 
-				Select(
-					locator1 = "Select#SELECT",
-					value1 = ${optionValue});
+				ACUtils.selectGenericOption(optionValue = ${optionValue});
 
 				Click(locator1 = "ACEventAnalysis#INPUT_CONDITION");
 
@@ -701,13 +699,13 @@ definition {
 
 				for (var attributeValue : list ${attributeValueList}) {
 					AssertElementPresent(
-						key_buttonName = ${attributeValue},
-						locator1 = "ACUtils#GENERIC_BUTTON");
+						key_optionName = ${attributeValue},
+						locator1 = "ACEventAnalysis#DROPDOWN_BY_OPTION");
 				}
 
 				Click(
-					key_buttonName = ${inputValue},
-					locator1 = "ACUtils#GENERIC_BUTTON");
+					key_optionName = ${inputValue},
+					locator1 = "ACEventAnalysis#DROPDOWN_BY_OPTION");
 
 				Click(locator1 = "ACEventAnalysis#FILTER_DONE_BUTTON");
 			}

@@ -438,8 +438,7 @@ definition {
 
 		task ("Add a default attribute in the filter and use the contains condition") {
 			ACEventAnalysis.addFilter(
-				dropdownData = ${analysisInformation},
-				dropdownIndex = 1,
+				dropdownOptionName = ${analysisInformation},
 				filterName = ${firstFilterName},
 				optionValue = ${firstFilterCondition});
 		}
@@ -450,8 +449,7 @@ definition {
 
 		task ("Add another attribute in the filter and use not contains condition") {
 			ACEventAnalysis.addFilter(
-				dropdownData = ${currentURL},
-				dropdownIndex = 1,
+				dropdownOptionName = ${currentURL},
 				filterName = ${secondFilterName},
 				optionValue = ${secondFilterCondition});
 		}

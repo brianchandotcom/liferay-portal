@@ -140,6 +140,32 @@
 				},
 				"type": "object"
 			},
+			"ListEntry": {
+				"properties": {
+					"key": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"name_i18n": {
+						"additionalProperties": {
+							"type": "string"
+						},
+						"readOnly": true,
+						"type": "object"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.ListEntry",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"xml": {
+					"name": "ListEntry"
+				}
+			},
 			"Object1": {
 				"description": "Information about the relationship relationship2 can be embedded with \"nestedFields\".",
 				"properties": {
@@ -357,6 +383,17 @@
 							"description": "A list of keywords describing the object entry.",
 							"type": "string"
 						},
+						"type": "array"
+					},
+					"multiselectPicklistField": {
+						"extensions": {
+							"x-batch-unsupported-formats": "CSV",
+							"x-parent-map": "properties"
+						},
+						"items": {
+							"$ref": "#/components/schemas/ListEntry"
+						},
+						"readOnly": false,
 						"type": "array"
 					},
 					"r_relationship2_c_object1ERC": {

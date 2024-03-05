@@ -487,8 +487,6 @@ definition {
 		}
 
 		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
-
-		var productId = ${productId} - 1;
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''

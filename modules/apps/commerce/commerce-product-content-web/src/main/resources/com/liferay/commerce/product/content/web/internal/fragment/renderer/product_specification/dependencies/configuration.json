@@ -1,0 +1,115 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "key",
+					"name": "key",
+					"type": "text"
+				},
+				{
+					"defaultValue": "span",
+					"label": "label-element-type",
+					"name": "labelElementType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "div",
+								"value": "div"
+							},
+							{
+								"label": "h1",
+								"value": "h1"
+							},
+							{
+								"label": "h2",
+								"value": "h2"
+							},
+							{
+								"label": "h3",
+								"value": "h3"
+							},
+							{
+								"label": "h4",
+								"value": "h4"
+							},
+							{
+								"label": "h5",
+								"value": "h5"
+							},
+							{
+								"label": "h6",
+								"value": "h6"
+							},
+							{
+								"label": "p",
+								"value": "p"
+							},
+							{
+								"label": "span",
+								"value": "span"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": "span",
+					"label": "value-element-type",
+					"name": "valueElementType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "div",
+								"value": "div"
+							},
+							{
+								"label": "h1",
+								"value": "h1"
+							},
+							{
+								"label": "h2",
+								"value": "h2"
+							},
+							{
+								"label": "h3",
+								"value": "h3"
+							},
+							{
+								"label": "h4",
+								"value": "h4"
+							},
+							{
+								"label": "h5",
+								"value": "h5"
+							},
+							{
+								"label": "h6",
+								"value": "h6"
+							},
+							{
+								"label": "p",
+								"value": "p"
+							},
+							{
+								"label": "span",
+								"value": "span"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-label",
+					"name": "showLabel",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}

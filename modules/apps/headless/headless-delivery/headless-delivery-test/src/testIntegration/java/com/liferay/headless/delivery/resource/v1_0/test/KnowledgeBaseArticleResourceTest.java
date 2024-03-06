@@ -13,9 +13,12 @@ import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -25,6 +28,8 @@ import java.util.Date;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,6 +39,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class KnowledgeBaseArticleResourceTest
 	extends BaseKnowledgeBaseArticleResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	@Override

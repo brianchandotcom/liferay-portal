@@ -6,7 +6,7 @@
 import {Locator, expect} from '@playwright/test';
 
 export async function clickAndExpectToBeVisible({
-	autoClick,
+	autoClick = false,
 	target,
 	timeout = 100,
 	trigger,

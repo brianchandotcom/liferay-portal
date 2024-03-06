@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 
@@ -18,6 +20,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-11253': true,
 		'LPD-16469': true,
+		'LPS-114700': true,
 	}),
 	loginTest(),
 	journalPagesTest
@@ -109,4 +112,50 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 
 	await journalPage.deleteJournalArticle(title1);
 	await journalPage.deleteJournalArticle(title2);
+});
+
+test('LPD-19627: Translate several fields and check how many fields have been translated', async ({
+	journalEditArticlePage,
+	journalPage,
+	page,
+}) => {
+	await journalPage.goto();
+
+	const title = getRandomString();
+
+	await journalEditArticlePage.goToCreateNewBasicArticle(title);
+
+	const friendlyURLInput = page.getByLabel('Friendly URL', {exact: true});
+
+	await fillAndClickOutside(page, friendlyURLInput);
+
+	const translationButton = page.getByRole('combobox', {
+		name: 'Select a language',
+	});
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('option', {
+			name: 'Catalan Language: Not Translated',
+		}),
+		trigger: translationButton,
+	});
+
+	await fillAndClickOutside(page, friendlyURLInput);
+	await fillAndClickOutside(
+		page,
+		page.getByPlaceholder('Untitled Basic Web Content')
+	);
+	await fillAndClickOutside(
+		page,
+		page
+			.frameLocator(':text("Description")+div iframe')
+			.getByRole('textbox')
+	);
+
+	await translationButton.click();
+
+	await expect(
+		page.getByRole('option', {name: 'Catalan Language: Translating 3/4'})
+	).toBeVisible({timeout: 1000});
 });

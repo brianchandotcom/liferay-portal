@@ -558,7 +558,7 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 					HashMapBuilder.put(
 						"page", (Object)requestPage
 					).put(
-						"pageSize", (Object)requestPageSize
+						"pageSize", requestPageSize
 					).build(),
 					new GraphQLField("page"), new GraphQLField("pageSize")),
 				"query"),

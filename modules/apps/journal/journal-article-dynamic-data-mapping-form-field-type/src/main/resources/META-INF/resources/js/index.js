@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
-import {FieldBase} from 'dynamic-data-mapping-form-field-type/FieldBase/ReactFieldBase.es';
+import {ReactFieldBase} from 'dynamic-data-mapping-form-field-type';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -112,7 +112,7 @@ const JournalArticleSelector = ({
 	);
 };
 
-const Main = ({
+const App = ({
 	editingLanguageId,
 	itemSelectorURL,
 	message,
@@ -124,7 +124,7 @@ const Main = ({
 	value,
 	...otherProps
 }) => (
-	<FieldBase {...otherProps} name={name} readOnly={readOnly}>
+	<ReactFieldBase {...otherProps} name={name} readOnly={readOnly}>
 		<JournalArticleSelector
 			disabled={readOnly}
 			editingLanguageId={editingLanguageId}
@@ -135,9 +135,9 @@ const Main = ({
 			onChange={(value) => onChange({}, value)}
 			portletNamespace={portletNamespace}
 		/>
-	</FieldBase>
+	</ReactFieldBase>
 );
 
-Main.displayName = 'JournalArticleSelector';
+App.displayName = 'JournalArticleSelector';
 
-export default Main;
+export {App};

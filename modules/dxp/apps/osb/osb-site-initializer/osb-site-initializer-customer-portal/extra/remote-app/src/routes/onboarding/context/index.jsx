@@ -76,7 +76,7 @@ const AppContextProvider = ({children}) => {
 
 				const userAccount = {
 					...data.userAccount,
-					isAdmin: isAccountAdministrator,
+					isAccountAdmin: isAccountAdministrator,
 					isProvisioning: isAccountProvisioning,
 					isStaff,
 				};
@@ -110,14 +110,14 @@ const AppContextProvider = ({children}) => {
 								projectExternalReferenceCode
 						);
 						if (currentAccountBrief) {
-							const isAdmin = currentAccountBrief?.roleBriefs?.some(
+							const isAccountAdmin = currentAccountBrief?.roleBriefs?.some(
 								(role) => role.name === ROLE_TYPES.admin.key
 							);
 							const isRequester = currentAccountBrief?.roleBriefs?.some(
 								(role) => role.name === ROLE_TYPES.requester.key
 							);
 
-							if (isAdmin || isRequester) {
+							if (isAccountAdmin || isRequester) {
 								return ++totalAdministrators;
 							}
 						}

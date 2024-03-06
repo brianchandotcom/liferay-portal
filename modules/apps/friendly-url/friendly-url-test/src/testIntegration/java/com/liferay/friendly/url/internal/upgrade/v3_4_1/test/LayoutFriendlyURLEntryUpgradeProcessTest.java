@@ -16,6 +16,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
@@ -34,6 +35,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.List;
 
@@ -85,6 +90,50 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		_deleteFriendlyURLEntries(draftLayout2, layout2);
 
 		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
+	}
+
+	@Test
+	public void testUpgradeProcessIsIdempotent() throws Exception {
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout1 = layout1.fetchDraftLayout();
+
+		_assertFriendlyURLEntries(draftLayout1, layout1);
+
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout2 = layout2.fetchDraftLayout();
+
+		_deleteFriendlyURLEntries(draftLayout2, layout2);
+
+		int expectedFriendlyURLEntriesCount =
+			_getRowsCount("FriendlyURLEntry") + 2;
+		int expectedFriendlyURLEntryMappingsCount =
+			_getRowsCount("FriendlyURLEntryMapping") + 2;
+		int expectedFriendlyURLEntryLocalizationsCount =
+			_getRowsCount("FriendlyURLEntryLocalization") + 2;
+
+		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
+
+		Assert.assertEquals(
+			expectedFriendlyURLEntriesCount, _getRowsCount("FriendlyURLEntry"));
+		Assert.assertEquals(
+			expectedFriendlyURLEntryMappingsCount,
+			_getRowsCount("FriendlyURLEntryMapping"));
+		Assert.assertEquals(
+			expectedFriendlyURLEntryLocalizationsCount,
+			_getRowsCount("FriendlyURLEntryLocalization"));
+
+		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
+
+		Assert.assertEquals(
+			expectedFriendlyURLEntriesCount, _getRowsCount("FriendlyURLEntry"));
+		Assert.assertEquals(
+			expectedFriendlyURLEntryMappingsCount,
+			_getRowsCount("FriendlyURLEntryMapping"));
+		Assert.assertEquals(
+			expectedFriendlyURLEntryLocalizationsCount,
+			_getRowsCount("FriendlyURLEntryLocalization"));
 	}
 
 	@Test
@@ -256,6 +305,20 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		Assert.assertNotNull(friendlyURLEntry);
 
 		return friendlyURLEntry;
+	}
+
+	private int _getRowsCount(String tableName) throws Exception {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select count(*) from " + tableName);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		return 0;
 	}
 
 	private void _runSQL(String sql) throws Exception {

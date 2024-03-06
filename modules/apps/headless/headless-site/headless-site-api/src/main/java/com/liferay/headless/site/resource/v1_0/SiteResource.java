@@ -28,6 +28,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -53,6 +54,10 @@ public interface SiteResource {
 
 	public Site putSiteByExternalReferenceCode(
 			String externalReferenceCode, MultipartBody multipartBody)
+		throws Exception;
+
+	public Response getSiteByExternalReferenceCodeSiteInitializer(
+			String externalReferenceCode)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

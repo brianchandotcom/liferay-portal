@@ -251,7 +251,7 @@ public abstract class BaseSiteResourceTestCase {
 		assertEquals(randomSite, putSite);
 		assertValid(putSite);
 
-		Site getSite = testPutSiteByExternalReferenceCode_getSite(
+		Site getSite = siteResource.getSiteByExternalReferenceCode(
 			putSite.getExternalReferenceCode());
 
 		assertEquals(randomSite, getSite);
@@ -267,7 +267,7 @@ public abstract class BaseSiteResourceTestCase {
 		assertEquals(newSite, putSite);
 		assertValid(putSite);
 
-		getSite = testPutSiteByExternalReferenceCode_getSite(
+		getSite = siteResource.getSiteByExternalReferenceCode(
 			putSite.getExternalReferenceCode());
 
 		assertEquals(newSite, getSite);
@@ -275,13 +275,6 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertEquals(
 			newSite.getExternalReferenceCode(),
 			putSite.getExternalReferenceCode());
-	}
-
-	protected Site testPutSiteByExternalReferenceCode_getSite(
-		String externalReferenceCode) {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected Site testPutSiteByExternalReferenceCode_createSite()
@@ -295,6 +288,13 @@ public abstract class BaseSiteResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSiteByExternalReferenceCodeSiteInitializer()
+		throws Exception {
+
+		Assert.assertTrue(false);
 	}
 
 	protected Site testGraphQLSite_addSite() throws Exception {

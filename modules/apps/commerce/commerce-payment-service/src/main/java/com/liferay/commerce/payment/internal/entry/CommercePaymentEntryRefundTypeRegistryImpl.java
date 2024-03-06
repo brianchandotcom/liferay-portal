@@ -8,9 +8,9 @@ package com.liferay.commerce.payment.internal.entry;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundType;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry;
 import com.liferay.commerce.payment.internal.entry.comparator.CommercePaymentEntryRefundTypeOrderComparator;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,27 +66,10 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 		}
 
 		List<CommercePaymentEntryRefundType> commercePaymentEntryRefundTypes =
-			new ArrayList<>();
+			new ArrayList<>(_serviceTrackerMap.values());
 
-		try {
-			commercePaymentEntryRefundTypes = TransformUtil.transform(
-				_serviceTrackerMap.values(),
-				commercePaymentEntryRefundType -> {
-					if (commercePaymentEntryRefundType.isEnabled()) {
-						return commercePaymentEntryRefundType;
-					}
-
-					return null;
-				});
-
-			commercePaymentEntryRefundTypes.sort(
-				_commercePaymentEntryRefundTypeOrderComparator);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
+		commercePaymentEntryRefundTypes.sort(
+			_commercePaymentEntryRefundTypeOrderComparator);
 
 		return Collections.unmodifiableList(commercePaymentEntryRefundTypes);
 	}
@@ -94,20 +77,8 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CommercePaymentEntryRefundType.class, null,
-			(serviceReference, emitter) -> {
-				CommercePaymentEntryRefundType commercePaymentEntryRefundType =
-					bundleContext.getService(serviceReference);
-
-				try {
-					if (commercePaymentEntryRefundType.getKey() != null) {
-						emitter.emit(commercePaymentEntryRefundType.getKey());
-					}
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-			});
+			bundleContext, CommercePaymentEntryRefundType.class,
+			"(enabled=true)", new PropertyServiceReferenceMapper<>("key"));
 	}
 
 	@Deactivate

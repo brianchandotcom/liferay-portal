@@ -156,7 +156,7 @@ dependencies {
 	api(group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "4.0.15") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	api group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.104"
+	api group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "5.2.105"
 	api group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "3.0.32"
 	api(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.26") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"

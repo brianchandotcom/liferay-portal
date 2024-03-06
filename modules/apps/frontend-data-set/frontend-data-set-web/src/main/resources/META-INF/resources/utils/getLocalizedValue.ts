@@ -14,13 +14,16 @@ interface ILocalizedItemDetails {
 }
 
 function getLanguageKey(data: any): string {
+	const languageId = Liferay.ThemeDisplay.getLanguageId();
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 	let languageKey = '';
 
-	if (data[Liferay.ThemeDisplay.getLanguageId()]) {
-		languageKey = Liferay.ThemeDisplay.getLanguageId() as string;
+	if (data[languageId]) {
+		languageKey = languageId as string;
 	}
-	else if (data[Liferay.ThemeDisplay.getDefaultLanguageId()]) {
-		languageKey = Liferay.ThemeDisplay.getDefaultLanguageId() as string;
+	else if (data[defaultLanguageId]) {
+		languageKey = defaultLanguageId as string;
 	}
 	else if (data['en_US']) {
 		languageKey = 'en_US';

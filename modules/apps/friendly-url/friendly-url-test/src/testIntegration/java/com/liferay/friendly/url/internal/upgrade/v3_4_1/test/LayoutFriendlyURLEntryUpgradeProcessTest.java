@@ -65,11 +65,9 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
 		_privateLayoutClassNameId = _classNameLocalService.getClassNameId(
 			_resourceActions.getCompositeModelName(
 				Layout.class.getName(), Boolean.TRUE.toString()));
-
 		_publicLayoutClassNameId = _classNameLocalService.getClassNameId(
 			_resourceActions.getCompositeModelName(
 				Layout.class.getName(), Boolean.FALSE.toString()));

@@ -1,0 +1,17 @@
+[
+    {
+        "externalReferenceCode": "M2H8_ADMIN_ADAM",
+        "name": "M2H8 Admin Adam",
+        "type": "person"
+    },
+    {
+        "externalReferenceCode": "M2H8_CUSTOMER_CARL",
+        "name": "M2H8 Customer Carl",
+        "type": "person"
+    },
+    {
+        "externalReferenceCode": "M2H8_SUPPORT_SAM",
+        "name": "M2H8 Support Sam",
+        "type": "person"
+    }
+]

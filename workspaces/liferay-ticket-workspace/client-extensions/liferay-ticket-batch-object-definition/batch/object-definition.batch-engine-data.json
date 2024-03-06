@@ -130,6 +130,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
+					"defaultValue": "unassigned",
 					"externalReferenceCode": "PRIORITY",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -149,6 +150,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
+					"defaultValue": "eMEA",
 					"externalReferenceCode": "REGION",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -511,6 +513,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Picklist",
+					"defaultValue": "other",
 					"externalReferenceCode": "TYPE",
 					"indexed": true,
 					"indexedAsKeyword": false,

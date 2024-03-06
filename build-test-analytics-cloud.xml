@@ -562,6 +562,49 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 					</if>
 				</sequential>
 			</for>
+
+			<for list="${analytics.cloud.jstack.dumps}" param="analytics.cloud.jstack.dump">
+				<sequential>
+					<local name="analytics.cloud.container.name" />
+					<local name="analytics.cloud.java.process" />
+
+					<propertyregex
+						input="@{analytics.cloud.jstack.dump}"
+						override="true"
+						property="analytics.cloud.container.name"
+						regexp="([^=]+)=([^=]+)"
+						replace="\1"
+					/>
+
+					<propertyregex
+						input="@{analytics.cloud.jstack.dump}"
+						override="true"
+						property="analytics.cloud.java.process"
+						regexp="([^=]+)=([^=]+)"
+						replace="\2"
+					/>
+
+					<local name="analytics.cloud.jstack.log.file.name" />
+
+					<property name="analytics.cloud.jstack.log.file.name" value="${analytics.cloud.container.name}.${analytics.cloud.java.process}.jstack.log" />
+
+					<execute failonerror="false">
+						<![CDATA[
+							docker exec ${analytics.cloud.container.name} jstack -l ${analytics.cloud.java.process} > ${docker.logs.dir}/${analytics.cloud.jstack.log.file.name}
+						]]>
+					</execute>
+
+					<if>
+						<isset property="env.BUILD_USER_CONTENT_URL" />
+						<then>
+							<echo>${env.BUILD_USER_CONTENT_URL}/docker-logs/${analytics.cloud.jstack.log.file.name}</echo>
+						</then>
+						<else>
+							<print-file file.name="${docker.logs.dir}/${analytics.cloud.jstack.log.file.name}" />
+						</else>
+					</if>
+				</sequential>
+			</for>
 		</sequential>
 	</macrodef>
 

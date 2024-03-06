@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
@@ -59,6 +61,7 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.SearchMapUtil;
 import com.liferay.portal.search.test.util.document.DocumentTranslator;
+import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.io.Serializable;
 
@@ -89,6 +92,10 @@ public abstract class BaseIndexingTestCase {
 		_indexingFixture = null;
 
 		_documentFixture.setUp();
+
+		ReflectionTestUtil.setFieldValue(
+			FastDateFormatFactoryUtil.class, "_fastDateFormatFactory",
+			new FastDateFormatFactoryImpl());
 	}
 
 	@AfterClass

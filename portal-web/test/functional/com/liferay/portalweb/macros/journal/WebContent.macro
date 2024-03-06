@@ -222,6 +222,10 @@ definition {
 			locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_TYPE",
 			value1 = "From Your Computer");
 
+		SetElementAttribute.removeElementAttribute(
+			attribute1 = "hidden",
+			locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_INPUT");
+
 		UploadCommonFile(
 			locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_INPUT",
 			value1 = ${uploadFileName});

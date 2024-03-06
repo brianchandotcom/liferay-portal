@@ -18,8 +18,6 @@ export class ProductMenuPage {
 	readonly knowledgeBaseMenuItem: Locator;
 	readonly lockedItemsMenuItem: Locator;
 	readonly openProductMenuButton: Locator;
-	readonly pagesMenuItem: Locator;
-	readonly siteBuilderMenuItem: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -48,14 +46,6 @@ export class ProductMenuPage {
 			name: 'Locked Items',
 		});
 		this.openProductMenuButton = page.getByLabel('Open Product Menu');
-		this.pagesMenuItem = page.getByRole('menuitem', {
-			exact: true,
-			name: 'Pages',
-		});
-		this.siteBuilderMenuItem = page.getByRole('menuitem', {
-			exact: true,
-			name: 'Site Builder',
-		});
 	}
 
 	async closeProductMenu() {
@@ -115,22 +105,6 @@ export class ProductMenuPage {
 	async goToLockedItemsMenuItem() {
 		await this.goToConfiguration();
 		await this.lockedItemsMenuItem.click();
-	}
-
-	async goToPagesMenuItem() {
-		await this.goToSiteBuilder();
-		await this.pagesMenuItem.click();
-	}
-
-	async goToSiteBuilder() {
-		await this.openProductMenu();
-		const isClosed =
-			(await this.siteBuilderMenuItem.getAttribute('aria-expanded')) ===
-			'false';
-
-		if (isClosed) {
-			await this.siteBuilderMenuItem.click();
-		}
 	}
 
 	async openProductMenu() {

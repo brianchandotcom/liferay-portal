@@ -5,6 +5,7 @@
 
 package com.liferay.adaptive.media.image.content.transformer.backwards.compatibility.internal;
 
+import com.liferay.adaptive.media.content.transformer.BaseRegexStringContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformer;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
@@ -39,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ContentTransformer.class)
 public class AMBackwardsCompatibilityHtmlContentTransformer
-	implements ContentTransformer<String> {
+	extends BaseRegexStringContentTransformer {
 
 	@Override
 	public String transform(String html) throws PortalException {
@@ -90,7 +91,8 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		return sb.toString();
 	}
 
-	private FileEntry _getFileEntry(Matcher matcher) throws PortalException {
+	@Override
+	protected FileEntry getFileEntry(Matcher matcher) throws PortalException {
 		if (Objects.equals(
 				FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY,
 				matcher.group(7))) {
@@ -132,7 +134,13 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		}
 	}
 
-	private String _getReplacement(String originalImgTag, FileEntry fileEntry)
+	@Override
+	protected Pattern getPattern() {
+		return _pattern;
+	}
+
+	@Override
+	protected String getReplacement(String originalImgTag, FileEntry fileEntry)
 		throws PortalException {
 
 		if ((fileEntry == null) ||
@@ -195,7 +203,9 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 
 		StringBuffer sb = null;
 
-		Matcher matcher = _pattern.matcher(src);
+		Pattern pattern = getPattern();
+
+		Matcher matcher = pattern.matcher(src);
 
 		while (matcher.find()) {
 			if (sb == null) {
@@ -207,10 +217,10 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			if (!imgElementString.contains(
 					AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID)) {
 
-				fileEntry = _getFileEntry(matcher);
+				fileEntry = getFileEntry(matcher);
 			}
 
-			replacement = _getReplacement(imgElementString, fileEntry);
+			replacement = getReplacement(imgElementString, fileEntry);
 
 			matcher.appendReplacement(
 				sb, Matcher.quoteReplacement(replacement));

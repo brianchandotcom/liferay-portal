@@ -228,9 +228,37 @@ public abstract class BaseSiteResourceTestCase {
 			204,
 			siteResource.deleteSiteByExternalReferenceCodeHttpResponse(
 				site.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			siteResource.getSiteByExternalReferenceCodeHttpResponse(
+				site.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			siteResource.getSiteByExternalReferenceCodeHttpResponse(
+				site.getExternalReferenceCode()));
 	}
 
 	protected Site testDeleteSiteByExternalReferenceCode_addSite()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetSiteByExternalReferenceCode() throws Exception {
+		Site postSite = testGetSiteByExternalReferenceCode_addSite();
+
+		Site getSite = siteResource.getSiteByExternalReferenceCode(
+			postSite.getExternalReferenceCode());
+
+		assertEquals(postSite, getSite);
+		assertValid(getSite);
+	}
+
+	protected Site testGetSiteByExternalReferenceCode_addSite()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

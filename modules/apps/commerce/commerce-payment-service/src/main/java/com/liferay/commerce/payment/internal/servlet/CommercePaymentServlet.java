@@ -325,18 +325,21 @@ public class CommercePaymentServlet extends HttpServlet {
 			 (CommercePaymentEntryConstants.STATUS_AUTHORIZED ==
 				 paymentStatus))) {
 
-			if (CommercePaymentEntryConstants.STATUS_CREATED == paymentStatus) {
-				commercePaymentEntry = _commercePaymentGateway.authorize(
-					httpServletRequest, commercePaymentEntry);
-			}
-
 			if (Validator.isNull(commercePaymentEntry.getRedirectURL())) {
-				_commercePaymentGateway.capture(
-					httpServletRequest, commercePaymentEntry);
+				if (CommercePaymentEntryConstants.STATUS_CREATED ==
+						paymentStatus) {
 
-				httpServletResponse.sendRedirect(_nextUrl);
+					commercePaymentEntry = _commercePaymentGateway.authorize(
+						httpServletRequest, commercePaymentEntry);
+				}
+				else {
+					_commercePaymentGateway.capture(
+						httpServletRequest, commercePaymentEntry);
 
-				return;
+					httpServletResponse.sendRedirect(_nextUrl);
+
+					return;
+				}
 			}
 
 			URL redirectURL = new URL(commercePaymentEntry.getRedirectURL());

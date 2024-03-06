@@ -7,10 +7,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext.getLayoutDescriptions();
-%>
-
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
@@ -35,46 +31,22 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 				/>
 			</div>
 
-			<c:choose>
-				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-17664") %>'>
+			<%
+			Layout rootLayout = siteNavigationSiteMapDisplayContext.getRootLayout();
+			%>
 
-					<%
-					Layout rootLayout = siteNavigationSiteMapDisplayContext.getRootLayout();
-					%>
-
-					<liferay-frontend:resource-selector
-						inputLabel='<%= LanguageUtil.get(request, "root-layout") %>'
-						inputName="preferences--rootLayoutUuid--"
-						modalTitle='<%= LanguageUtil.get(request, "select-layout") %>'
-						resourceName="<%= Validator.isNotNull(rootLayout) ? rootLayout.getName(themeDisplay.getSiteDefaultLocale()) : StringPool.BLANK %>"
-						resourceNameKey="name"
-						resourceValue="<%= Validator.isNotNull(rootLayout) ? siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid() : StringPool.BLANK %>"
-						resourceValueKey="id"
-						selectEventName="selectLayout"
-						selectResourceURL="<%= siteNavigationSiteMapDisplayContext.getItemSelectorURL() %>"
-						showRemoveButton="<%= false %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<aui:select label="root-layout" name="preferences--rootLayoutUuid--">
-						<aui:option value="" />
-
-						<%
-						for (LayoutDescription layoutDescription : layoutDescriptions) {
-							Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
-						%>
-
-							<c:if test="<%= layoutDescriptionLayout != null %>">
-								<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
-							</c:if>
-
-						<%
-						}
-						%>
-
-					</aui:select>
-				</c:otherwise>
-			</c:choose>
+			<liferay-frontend:resource-selector
+				inputLabel='<%= LanguageUtil.get(request, "root-layout") %>'
+				inputName="preferences--rootLayoutUuid--"
+				modalTitle='<%= LanguageUtil.get(request, "select-layout") %>'
+				resourceName="<%= Validator.isNotNull(rootLayout) ? rootLayout.getName(themeDisplay.getSiteDefaultLocale()) : StringPool.BLANK %>"
+				resourceNameKey="name"
+				resourceValue="<%= Validator.isNotNull(rootLayout) ? siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid() : StringPool.BLANK %>"
+				resourceValueKey="id"
+				selectEventName="selectLayout"
+				selectResourceURL="<%= siteNavigationSiteMapDisplayContext.getItemSelectorURL() %>"
+				showRemoveButton="<%= false %>"
+			/>
 
 			<aui:select name="preferences--displayDepth--">
 				<aui:option label="unlimited" value="0" />

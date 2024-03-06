@@ -36,6 +36,11 @@ public class CKEditorSampleDisplayContext {
 				tabsItem.setLabel("Legacy");
 				tabsItem.setPanelId("legacy");
 			}
+		).add(
+			tabsItem -> {
+				tabsItem.setLabel("Alloy");
+				tabsItem.setPanelId("alloy");
+			}
 		).build();
 
 		return _tabsItems;

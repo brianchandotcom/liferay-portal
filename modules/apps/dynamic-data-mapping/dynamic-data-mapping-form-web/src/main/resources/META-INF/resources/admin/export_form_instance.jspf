@@ -7,7 +7,7 @@
 
 <div id="<portlet:namespace />exportForm">
 	<react:component
-		module="admin/js/components/export-form/ExportForm"
+		module="{ExportForm} from dynamic-data-mapping-form-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"csvExport", ddmFormAdminDisplayContext.getCSVExport()

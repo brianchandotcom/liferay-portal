@@ -32,7 +32,7 @@
 	disabled="<%= ddmFormAdminDisplayContext.isDisabledManagementBar() %>"
 	itemsTotal="<%= ddmFormAdminDisplayContext.getTotalItems() %>"
 	orderDropdownItems="<%= ddmFormAdminDisplayContext.getOrderItemsDropdownItems() %>"
-	propsTransformer="admin/js/DDMFormAdminManagementToolbarPropsTransformer"
+	propsTransformer="{DDMFormAdminManagementToolbarPropsTransformer} from dynamic-data-mapping-form-web"
 	searchActionURL="<%= ddmFormAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormAdminDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"

@@ -283,7 +283,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 	private static final Pattern _pattern = Pattern.compile(
 		"((?:/?[^\\s]*)/documents/(\\d+)/(\\d+)/([^/?]+)(?:/([-0-9a-fA-F]+))?" +
 			"(?:\\?t=\\d+)?)|((?:/?[^\\s]*)/documents/(d)/(.*)/" +
-				"([_A-Za-z0-9-]+)?(?:\\?.*$)?)");
+				"([_A-Za-z0-9-]+)?)");
 
 	@Reference
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;

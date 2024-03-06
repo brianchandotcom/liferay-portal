@@ -6,17 +6,11 @@
 package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.EventHandlerContext;
-import com.liferay.jethr0.event.github.comment.GitHubComment;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -24,7 +18,7 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class PortalTestGitHubCommentEventHandler
-	extends BaseGitHubCommentEventHandler {
+	extends BaseTestGitHubCommentEventHandler {
 
 	@Override
 	public String process() throws InvalidJSONException, IOException {
@@ -48,28 +42,10 @@ public class PortalTestGitHubCommentEventHandler
 		super(eventHandlerContext, messageJSONObject);
 	}
 
-	private List<String> _getTestOptions() throws InvalidJSONException {
-		List<String> testOptions = new ArrayList<>();
-
-		GitHubComment gitHubComment = getGitHubComment();
-
-		Matcher matcher = _pattern.matcher(gitHubComment.getBody());
-
-		if (!matcher.find()) {
-			return testOptions;
-		}
-
-		String testOptionsString = matcher.group("testOptions");
-
-		Collections.addAll(testOptions, testOptionsString.split(","));
-
-		return testOptions;
-	}
-
 	private String _getTestSuite() throws InvalidJSONException, IOException {
 		Set<String> availableTestSuites = getAvailableTestSuites();
 
-		for (String testOption : _getTestOptions()) {
+		for (String testOption : getTestOptions()) {
 			if (availableTestSuites.contains(testOption)) {
 				return testOption;
 			}
@@ -77,8 +53,5 @@ public class PortalTestGitHubCommentEventHandler
 
 		return "default";
 	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"ci:test(\\:(?<testOptions>[^\\s]+))?");
 
 }

@@ -11,7 +11,7 @@
 
 		<div>
 			<react:component
-				module="admin/js/util/ShowPartialResultsAlert"
+				module="{ShowPartialResultsAlert} from dynamic-data-mapping-form-web"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"showPartialResultsToRespondents", ddmFormAdminDisplayContext.isShowPartialResultsToRespondents(ddmFormAdminDisplayContext.getDDMFormInstance())

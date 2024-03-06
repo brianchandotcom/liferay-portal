@@ -1,5 +1,5 @@
 {
-	"@generated": "527bf223d205584947527a41a6cf2c3edeb46c0e",
+	"@generated": "090976887fb2674bc89d9c9752d370267f5bd302",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -23,7 +23,7 @@
 				"../../data-engine/data-engine-js-components-web/src/main/resources/META-INF/resources/js/index.d.ts"
 			],
 			"data-engine-taglib": [
-				"../../data-engine/data-engine-taglib/src/main/resources/META-INF/resources/data_layout_builder/js/index.d.ts"
+				"../../data-engine/data-engine-taglib/src/main/resources/META-INF/resources/js/index.d.ts"
 			],
 			"dynamic-data-mapping-form-field-type": [
 				"../dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/index.ts"

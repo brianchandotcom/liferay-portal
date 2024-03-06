@@ -37,7 +37,7 @@
 			"/__mock__/"
 		]
 	},
-	"main": "admin/js/App.es.js",
+	"main": "js/index.js",
 	"name": "dynamic-data-mapping-form-web",
 	"private": true,
 	"scripts": {

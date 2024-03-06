@@ -881,10 +881,6 @@ public class DDMFormAdminDisplayContext {
 		return spritemap + "#";
 	}
 
-	public String getMainRequire() {
-		return _npmResolver.resolveModuleName("dynamic-data-mapping-form-web");
-	}
-
 	public List<NavigationItem> getNavigationItems() {
 		HttpServletRequest httpServletRequest =
 			ddmFormAdminRequestHelper.getRequest();

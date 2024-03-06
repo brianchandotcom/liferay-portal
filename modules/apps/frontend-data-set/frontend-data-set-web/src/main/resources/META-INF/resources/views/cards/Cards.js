@@ -61,10 +61,9 @@ const Card = ({item, schema}) => {
 		(itemsActions?.length && itemsActions) || item.actionDropdownItems
 	);
 
-	const localizedDescription =
-		schema.description && getLocalizedValue(item, schema.description);
-	const localizedTitle =
-		schema.description && getLocalizedValue(item, schema.title);
+	const localizedDescription = getLocalizedValue(item, schema.description)
+		?.value;
+	const localizedTitle = getLocalizedValue(item, schema.title)?.value || '';
 
 	return (
 		<ClayCardWithInfo
@@ -84,7 +83,7 @@ const Card = ({item, schema}) => {
 				},
 				symbolLeft: action.icon,
 			}))}
-			description={localizedDescription.value}
+			description={localizedDescription}
 			href={(schema.link && item[schema.link]) || null}
 			imgProps={schema.image && item[schema.image]}
 			onSelectChange={
@@ -98,7 +97,7 @@ const Card = ({item, schema}) => {
 			}
 			stickerProps={schema.sticker && item[schema.sticker]}
 			symbol={schema.symbol && item[schema.symbol]}
-			title={localizedTitle.value}
+			title={localizedTitle}
 		/>
 	);
 };

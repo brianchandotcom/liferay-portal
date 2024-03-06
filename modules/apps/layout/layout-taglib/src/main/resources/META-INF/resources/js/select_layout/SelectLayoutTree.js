@@ -609,6 +609,7 @@ function findLayouts(
 			[`groupId`]: groupId,
 			[`itemSelectorReturnType`]: itemSelectorReturnType,
 			[`keywords`]: keywords,
+			[`searchOnlyByTitle`]: Liferay.FeatureFlags['LPD-15607'],
 			[`start`]: start,
 		}),
 		method: 'post',

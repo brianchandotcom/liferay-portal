@@ -217,37 +217,6 @@
 									},
 									{
 										"definition": {
-											"fragment": {
-												"key": "DIALECT-dialect-text",
-												"siteKey": "[$GROUP_KEY$]"
-											},
-											"fragmentConfig": {
-												"textType": "h3"
-											},
-											"fragmentFields": [
-												{
-													"id": "element-text",
-													"value": {
-														"fragmentLink": {
-														},
-														"text": {
-															"value_i18n": {
-																"en_US": "How can we help?"
-															}
-														}
-													}
-												}
-											],
-											"fragmentStyle": {
-												"marginBottom": "5",
-												"textColor": "colorNeutral10"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
-									},
-									{
-										"definition": {
 											"formConfig": {
 												"formReference": {
 													"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
@@ -260,6 +229,37 @@
 											}
 										},
 										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "DIALECT-dialect-text",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"textType": "h3"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "How can we help?"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "5",
+														"textColor": "colorNeutral10"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
 											{
 												"definition": {
 													"fragment": {
@@ -375,222 +375,6 @@
 													},
 													"indexed": true
 												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "dialect-dialect-text",
-														"siteKey": "Liferay Try It Now"
-													},
-													"fragmentConfig": {
-														"textType": "text-paragraph",
-														"truncateText": false
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Priority"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"fontWeight": "fontWeightBolder",
-														"marginBottom": "2",
-														"textColor": "colorNeutral10"
-													},
-													"indexed": true
-												},
-												"id": "d441b97c-032b-b953-65ad-4e2f51cac91c",
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "INPUTS-select-from-list"
-													},
-													"fragmentConfig": {
-														"inputFieldId": "ObjectField_priority",
-														"inputShowLabel": false
-													},
-													"fragmentFields": [
-													],
-													"fragmentStyle": {
-														"borderColor": "colorNeutral4",
-														"marginBottom": "4"
-													},
-													"indexed": true
-												},
-												"id": "b2916252-546f-ad6a-73a5-a24d54057af4",
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "dialect-dialect-text",
-														"siteKey": "Liferay Try It Now"
-													},
-													"fragmentConfig": {
-														"textType": "text-paragraph",
-														"truncateText": false
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Region"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"fontWeight": "fontWeightBolder",
-														"marginBottom": "2",
-														"textColor": "colorNeutral10"
-													},
-													"indexed": true
-												},
-												"id": "27a0a5f6-f5be-c1d6-aec2-1f3aa384a802",
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "INPUTS-select-from-list"
-													},
-													"fragmentConfig": {
-														"inputFieldId": "ObjectField_region",
-														"inputShowLabel": false
-													},
-													"fragmentFields": [
-													],
-													"fragmentStyle": {
-														"borderColor": "colorNeutral4",
-														"marginBottom": "4"
-													},
-													"indexed": true
-												},
-												"id": "4cded46c-0d88-4b02-7907-7c0109e79b7a",
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "dialect-dialect-text",
-														"siteKey": "Liferay Try It Now"
-													},
-													"fragmentConfig": {
-														"textType": "text-paragraph",
-														"truncateText": false
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Type"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"fontWeight": "fontWeightBolder",
-														"marginBottom": "2",
-														"textColor": "colorNeutral10"
-													},
-													"indexed": true
-												},
-												"id": "caec9c9b-c70e-c97e-2efe-98ec025ed6e7",
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "INPUTS-select-from-list"
-													},
-													"fragmentConfig": {
-														"inputFieldId": "ObjectField_type",
-														"inputShowLabel": false
-													},
-													"fragmentFields": [
-													],
-													"fragmentStyle": {
-														"borderColor": "colorNeutral4",
-														"marginBottom": "4"
-													},
-													"indexed": true
-												},
-												"id": "5f81b2fd-fae4-d280-6eec-b48a83febda5",
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "dialect-dialect-text",
-														"siteKey": "Liferay Try It Now"
-													},
-													"fragmentConfig": {
-														"textType": "text-paragraph",
-														"truncateText": false
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Status"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"fontWeight": "fontWeightBolder",
-														"marginBottom": "2",
-														"textColor": "colorNeutral10"
-													},
-													"indexed": true
-												},
-												"id": "31a1c5ab-5180-4ad3-6c5c-9dbca564c4ca",
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "INPUTS-select-from-list"
-													},
-													"fragmentConfig": {
-														"inputFieldId": "ObjectField_ticketStatus",
-														"inputShowLabel": false
-													},
-													"fragmentFields": [
-													],
-													"fragmentStyle": {
-														"borderColor": "colorNeutral4",
-														"marginBottom": "4"
-													},
-													"indexed": true
-												},
-												"id": "14da38d2-a5bb-cfdf-0f44-c3662951a459",
 												"type": "Fragment"
 											},
 											{

@@ -7,21 +7,30 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
+import getRandomString from '../../utils/getRandomString';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
+import {editorSamplePageTest} from './fixtures/editorSamplePageTest';
 import {newEditorConfigContributorPageTest} from './fixtures/newEditorConfigContributorPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	clientExtensionsPageTest,
+	editorSamplePageTest,
 	featureFlagsTest({
+		'LPS-178052': true,
 		'LPS-186870': true,
 	}),
+	isolatedSiteTest,
 	loginTest(),
 	newEditorConfigContributorPageTest
 );
 
-test('Create, edit and delete editor config contributor client extension', async ({
+test('Create, edit and delete editor config contributor client extension @LPS-186870', async ({
 	clientExtensionsPage,
 	newEditorConfigContributorPage,
 }) => {
@@ -78,7 +87,7 @@ test('Create, edit and delete editor config contributor client extension', async
 	await clientExtensionsPage.itemDeleteButton.click();
 });
 
-test('Add a toolbar button to a CKEditor, by applying editor config contributor client extension', async ({
+test('Add a toolbar button to a CKEditor, by applying editor config contributor client extension @LPS-186870', async ({
 	newEditorConfigContributorPage,
 }) => {
 	await newEditorConfigContributorPage.goto();
@@ -90,4 +99,49 @@ test('Add a toolbar button to a CKEditor, by applying editor config contributor 
 	await expect(
 		newEditorConfigContributorPage.aiCreatorEditorToolbarButton
 	).toBeVisible();
+});
+
+test('Add a toolbar button to an Alloy Editor @LPD-11056', async ({
+	apiHelpers,
+	editorSamplePage,
+	page,
+	site,
+}) => {
+	let layout: Layout;
+
+	await test.step('Create page with CKEditor sample widget', async () => {
+		const widgetDefinition = getWidgetDefinition({
+			id: getRandomString(),
+			widgetName:
+				'com_liferay_editor_ckeditor_sample_web_internal_portlet_CKEditorSamplePortlet',
+		});
+
+		layout = await apiHelpers.headlessDelivery.createSitePage(
+			site.id,
+			getRandomString(),
+			getPageDefinition([widgetDefinition])
+		);
+	});
+
+	await test.step('Navigate to the page with Alloy Editor sample', async () => {
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await editorSamplePage.selectTab({tabLabel: 'Alloy'});
+
+		await editorSamplePage.alloyEditorContainer.isVisible();
+	});
+
+	await test.step('Check if client extenstion is applied', async () => {
+		await editorSamplePage.alloyEditorContainer
+			.getByText('Lorem ipsum')
+			.selectText();
+
+		const toolbarContainer = editorSamplePage.alloyEditorToolbarContainer;
+
+		await toolbarContainer.isVisible();
+
+		expect(toolbarContainer.getByTitle('Insert Video')).toBeVisible();
+	});
 });

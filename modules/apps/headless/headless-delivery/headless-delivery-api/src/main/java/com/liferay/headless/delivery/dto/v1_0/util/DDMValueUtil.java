@@ -559,9 +559,21 @@ public class DDMValueUtil {
 		if (ddmFormField.isLocalizable()) {
 			return _toLocalizedValue(
 				contentFieldValue, localizedContentFieldValues,
-				(localizedContentFieldValue, locale) -> _getOptionValues(
-					ddmFormField, locale, localizedContentFieldValue.getData(),
-					true),
+				(localizedContentFieldValue, locale) -> {
+					String optionValues = localizedContentFieldValue.getData();
+					boolean transformValuesToKeys = true;
+
+					String value = localizedContentFieldValue.getValue();
+
+					if (Validator.isNotNull(value)) {
+						optionValues = value;
+						transformValuesToKeys = false;
+					}
+
+					return _getOptionValues(
+						ddmFormField, locale, optionValues,
+						transformValuesToKeys);
+				},
 				preferredLocale);
 		}
 

@@ -133,7 +133,7 @@ export default function TranslationOptions({
 							onClick={() => onOpenChangeResetTranslation(true)}
 							size="sm"
 						>
-							<ClayIcon className="c-mt-0" symbol="trash" />
+							<ClayIcon symbol="trash" />
 
 							<span className="c-ml-3">
 								{Liferay.Language.get('reset-translation')}
@@ -149,10 +149,7 @@ export default function TranslationOptions({
 							onClick={() => onOpenChangeMarkAsTranslated(true)}
 							size="sm"
 						>
-							<ClayIcon
-								className="c-mt-0"
-								symbol="question-circle-full"
-							/>
+							<ClayIcon symbol="question-circle-full" />
 
 							<span className="c-ml-3">
 								{Liferay.Language.get('mark-as-translated')}
@@ -172,13 +169,16 @@ export default function TranslationOptions({
 					</ClayModal.Header>
 
 					<ClayModal.Body>
-						<p>
-							<strong>{selectedLanguageId}&nbsp;</strong>
-
-							{Liferay.Language.get(
-								'translation-will-be-deleted-and-content-fields-will-be-set-to-default-language'
-							)}
-						</p>
+						<p
+							dangerouslySetInnerHTML={{
+								__html: sub(
+									Liferay.Language.get(
+										'x-translation-will-be-deleted-and-content-fields-will-be-set-to-default-language'
+									),
+									`<strong>${selectedLanguageId}</strong>`
+								),
+							}}
+						/>
 					</ClayModal.Body>
 
 					<ClayModal.Footer

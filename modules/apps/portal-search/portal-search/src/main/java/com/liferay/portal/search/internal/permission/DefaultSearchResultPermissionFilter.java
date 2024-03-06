@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.permission;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
@@ -57,7 +58,6 @@ import java.util.Set;
 import java.util.function.Function;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
-import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Tina Tian
@@ -359,7 +359,6 @@ public class DefaultSearchResultPermissionFilter
 
 			int docsCollectedCount = 0;
 			FacetCountHelper facetCountHelper = null;
-			StopWatch hitFilteringStopWatch = new StopWatch();
 			long hitsStart = 0;
 			int originalHitsSize = 0;
 			int recalculatedHitsSize = 0;
@@ -372,6 +371,8 @@ public class DefaultSearchResultPermissionFilter
 			StopWatch slidingWindowStopWatch = new StopWatch();
 
 			slidingWindowStopWatch.start();
+
+			long filterDuration = 0;
 
 			while (true) {
 				int amplificationFactor = (int)Math.pow(2, searchesExecuted);
@@ -449,17 +450,14 @@ public class DefaultSearchResultPermissionFilter
 
 				Document[] preFilteredDocs = hits.getDocs();
 
-				if (searchesExecuted == 0) {
-					hitFilteringStopWatch.start();
-				}
-				else {
-					hitFilteringStopWatch.resume();
-				}
+				StopWatch hitFilterStopWatch = new StopWatch();
+
+				hitFilterStopWatch.start();
 
 				recalculatedHitsSize -= _filterHits(
 					facetCountHelper, hits, searchContext);
 
-				hitFilteringStopWatch.suspend();
+				filterDuration += hitFilterStopWatch.getTime();
 
 				docsCollectedCount = _collectDocumentsAndScores(
 					hits, slidingWindowHelper);
@@ -486,10 +484,9 @@ public class DefaultSearchResultPermissionFilter
 						sb.append(slidingWindowStopWatch.getTime());
 						sb.append(" ms (");
 						sb.append(
-							slidingWindowStopWatch.getTime() -
-								hitFilteringStopWatch.getTime());
+							slidingWindowStopWatch.getTime() - filterDuration);
 						sb.append(" ms spent searching, ");
-						sb.append(hitFilteringStopWatch.getTime());
+						sb.append(filterDuration);
 						sb.append(" ms spent filtering results)");
 
 						_log.debug(sb.toString());

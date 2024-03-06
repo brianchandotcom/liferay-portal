@@ -11,9 +11,9 @@ import com.liferay.portal.kernel.monitoring.RequestStatus;
 
 import java.io.Serializable;
 
-import java.util.Map;
+import java.text.SimpleDateFormat;
 
-import org.apache.commons.lang.time.StopWatch;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -23,10 +23,10 @@ public class BaseDataSample implements DataSample, Serializable {
 
 	@Override
 	public void capture(RequestStatus requestStatus) {
-		if (_stopWatch != null) {
-			_stopWatch.stop();
+		if (_startTime != -1) {
+			_stopTime = System.currentTimeMillis();
 
-			_duration = _stopWatch.getTime();
+			_duration = _stopTime - _startTime;
 		}
 
 		if ((_timeout > 0) && (_duration >= _timeout) &&
@@ -91,11 +91,7 @@ public class BaseDataSample implements DataSample, Serializable {
 
 	@Override
 	public void prepare() {
-		if (_stopWatch == null) {
-			_stopWatch = new StopWatch();
-		}
-
-		_stopWatch.start();
+		_startTime = System.currentTimeMillis();
 	}
 
 	@Override
@@ -140,12 +136,27 @@ public class BaseDataSample implements DataSample, Serializable {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm:ss.SSS");
+
+		long time;
+
+		if (_startTime == -1) { // Not started
+			time = 0;
+		}
+		else if (_stopTime == -1) { // Started but not stopped
+			time = System.currentTimeMillis() - _startTime;
+		}
+		else { // Started and stopped
+			time = _stopTime - _startTime;
+		}
+
 		return StringBundler.concat(
 			"{attributes=", _attributes, ", companyId=", _companyId,
 			", groupId=", _groupId, ", description=", _description,
 			", duration=", _duration, ", name=", _name, ", namespace=",
 			_namespace, ", requestStatus=", _requestStatus, ", stopWatch=",
-			_stopWatch, ", timeout=", _timeout, ", user=", _user, "}");
+			simpleDateFormat.format(time), ", timeout=", _timeout, ", user=",
+			_user, "}");
 	}
 
 	private Map<String, String> _attributes;
@@ -156,7 +167,8 @@ public class BaseDataSample implements DataSample, Serializable {
 	private String _name;
 	private String _namespace;
 	private RequestStatus _requestStatus;
-	private transient StopWatch _stopWatch;
+	private long _startTime = -1;
+	private long _stopTime = -1;
 	private long _timeout = -1;
 	private String _user;
 

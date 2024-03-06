@@ -25,8 +25,7 @@ import java.time.temporal.ChronoUnit;
 
 import java.util.Date;
 
-import org.apache.commons.lang.time.DateUtils;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -105,24 +104,23 @@ public class KnowledgeBaseArticleResourceTest
 			knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
 				testGroup.getGroupId(), randomKnowledgeBaseArticle);
 
-		Date postKnowledgeBaseArticleDatePublished =
-			postknowledgeBaseArticle.getDatePublished();
-
-		postknowledgeBaseArticle.setDatePublished(
-			DateUtils.addHours(postKnowledgeBaseArticleDatePublished, 1));
+		String randomTitle = RandomTestUtil.randomString();
 
 		KnowledgeBaseArticle patchKnowledgeBaseArticle =
 			knowledgeBaseArticleResource.patchKnowledgeBaseArticle(
-				postknowledgeBaseArticle.getId(), postknowledgeBaseArticle);
+				postknowledgeBaseArticle.getId(),
+				new KnowledgeBaseArticle() {
+					{
+						title = randomTitle;
+					}
+				});
 
 		assertValid(patchKnowledgeBaseArticle);
 
-		DateTestUtil.assertEquals(
-			postknowledgeBaseArticle.getDatePublished(),
-			patchKnowledgeBaseArticle.getDatePublished());
-		DateTestUtil.assertNotEquals(
-			postknowledgeBaseArticle.getDateModified(),
-			patchKnowledgeBaseArticle.getDateModified());
+		Assert.assertEquals(randomTitle, patchKnowledgeBaseArticle.getTitle());
+		Assert.assertNotEquals(
+			postknowledgeBaseArticle.getTitle(),
+			patchKnowledgeBaseArticle.getTitle());
 	}
 
 	@Override

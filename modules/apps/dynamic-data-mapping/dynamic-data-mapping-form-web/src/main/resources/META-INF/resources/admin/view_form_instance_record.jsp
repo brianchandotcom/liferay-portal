@@ -32,7 +32,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 	cssClass="ddm-form-builder-app form-entry"
 >
 	<react:component
-		module="admin/js/FormView"
+		module="{FormView} from dynamic-data-mapping-form-web"
 		props="<%= ddmFormAdminDisplayContext.getDDMFormContext(renderRequest) %>"
 	/>
 </clay:container-fluid>

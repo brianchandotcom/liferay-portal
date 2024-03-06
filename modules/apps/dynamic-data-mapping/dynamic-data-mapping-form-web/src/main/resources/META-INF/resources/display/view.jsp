@@ -92,7 +92,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 				%>
 
 				<react:component
-					module="admin/js/components/DefaultPage"
+					module="{DefaultPage} from dynamic-data-mapping-form-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"dataEngineModule", ddmFormDisplayContext.getDataEngineModule()
@@ -258,7 +258,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 
 						<clay:container-fluid>
 							<react:component
-								module="admin/js/util/ShowPartialResultsAlert"
+								module="{ShowPartialResultsAlert} from dynamic-data-mapping-form-web"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
 										"dismissible", true
@@ -280,7 +280,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 							id="<%= ddmFormDisplayContext.getContainerId() %>"
 						>
 							<react:component
-								module="admin/js/FormView"
+								module="{FormView} from dynamic-data-mapping-form-web"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
 										"dataEngineModule", ddmFormDisplayContext.getDataEngineModule()

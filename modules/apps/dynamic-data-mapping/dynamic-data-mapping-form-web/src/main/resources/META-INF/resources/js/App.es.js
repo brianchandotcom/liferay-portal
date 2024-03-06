@@ -22,12 +22,14 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
-import LazyRoute from './components/LazyRoute';
 import {NavigationBar} from './components/NavigationBar.es';
 import {INITIAL_CONFIG_STATE} from './config/initialConfigState.es';
 import {BUILDER_INITIAL_STATE, initState} from './config/initialState.es';
 import AutoSaveProvider from './hooks/useAutoSave.es';
 import {ToastProvider} from './hooks/useToast.es';
+import FormBuilder from './pages/FormBuilder.es';
+import Report from './pages/Report';
+import RuleBuilder from './pages/RuleBuilder.es';
 import {
 	elementSetReducer,
 	formInfoReducer,
@@ -39,12 +41,7 @@ import {
  * Exporting default application to Forms Admin. Only Providers and
  * routing must be defined.
  */
-export default function App({
-	autosaveInterval,
-	autosaveURL,
-	mainRequire,
-	...otherProps
-}) {
+export default function App({autosaveInterval, autosaveURL, ...otherProps}) {
 	const {config, state} = parseProps(otherProps);
 	const {defaultLanguageId} = state;
 
@@ -92,19 +89,19 @@ export default function App({
 											fallback={<ClayLoadingIndicator />}
 										>
 											<Switch>
-												<LazyRoute
+												<Route
+													component={FormBuilder}
 													exact
-													importPath={`${mainRequire}/admin/js/pages/FormBuilder.es`}
 													path="/"
 												/>
 
-												<LazyRoute
-													importPath={`${mainRequire}/admin/js/pages/RuleBuilder.es`}
+												<Route
+													component={RuleBuilder}
 													path="/rules"
 												/>
 
-												<LazyRoute
-													importPath={`${mainRequire}/admin/js/pages/Report`}
+												<Route
+													component={Report}
 													path="/report"
 												/>
 											</Switch>

@@ -60,7 +60,7 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 			%>
 
 			<react:component
-				module="admin/js/FormView"
+				module="{FormView} from dynamic-data-mapping-form-web"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"description", formInstance.getDescription(displayLocale)

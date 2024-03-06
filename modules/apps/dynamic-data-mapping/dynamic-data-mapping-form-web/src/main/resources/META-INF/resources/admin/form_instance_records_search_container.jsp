@@ -33,7 +33,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 	disabled="<%= ddmFormViewFormInstanceRecordsDisplayContext.isDisabledManagementBar() %>"
 	itemsTotal="<%= ddmFormViewFormInstanceRecordsDisplayContext.getTotalItems() %>"
 	orderDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getOrderItemsDropdownItems() %>"
-	propsTransformer="admin/js/DDMFormViewFormInstanceRecordsManagementToolbarPropsTransformer"
+	propsTransformer="{DDMFormViewFormInstanceRecordsManagementToolbarPropsTransformer} from dynamic-data-mapping-form-web"
 	searchActionURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm"

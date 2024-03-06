@@ -68,7 +68,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 
 		<div id="<%= containerId %>">
 			<react:component
-				module="admin/js/FormView"
+				module="{FormView} from dynamic-data-mapping-form-web"
 				props="<%= ddmFormContext %>"
 			/>
 		</div>

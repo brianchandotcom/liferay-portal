@@ -45,8 +45,6 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Calendar;
 import java.util.Locale;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * @author Shinn Lok
  */
@@ -66,9 +64,7 @@ public class SetupWizardSampleDataUtil {
 			boolean resetPassword)
 		throws Exception {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Adding sample data");
@@ -126,7 +122,9 @@ public class SetupWizardSampleDataUtil {
 		addOrganizations(companyName, guestUser, organization);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Finished adding data in " + stopWatch.getTime() + " ms");
+			_log.info(
+				"Finished adding data in " +
+					(System.currentTimeMillis() - startTime) + " ms");
 		}
 	}
 

@@ -44,8 +44,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -297,9 +295,7 @@ public class AudioPreviewableDLProcessor
 			return;
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			FileUtil.write(
@@ -322,8 +318,8 @@ public class AudioPreviewableDLProcessor
 			_log.info(
 				StringBundler.concat(
 					"Generated a ", containerType, " preview audio for ",
-					fileVersion.getFileVersionId(), " in ", stopWatch.getTime(),
-					"ms"));
+					fileVersion.getFileVersionId(), " in ",
+					System.currentTimeMillis() - startTime, "ms"));
 		}
 	}
 

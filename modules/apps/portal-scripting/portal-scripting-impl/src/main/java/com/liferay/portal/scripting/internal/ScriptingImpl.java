@@ -25,8 +25,6 @@ import java.io.LineNumberReader;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -75,9 +73,7 @@ public class ScriptingImpl implements Scripting {
 			throw new UnsupportedLanguageException(language);
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			return scriptingExecutor.eval(
@@ -90,7 +86,8 @@ public class ScriptingImpl implements Scripting {
 		finally {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Evaluated script in " + stopWatch.getTime() + " ms");
+					"Evaluated script in " +
+						(System.currentTimeMillis() - startTime) + " ms");
 			}
 		}
 	}

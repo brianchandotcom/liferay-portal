@@ -32,8 +32,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.framework.BundleContext;
 
 /**
@@ -76,9 +74,7 @@ public class SearchEngineInitializer implements Runnable {
 	}
 
 	protected void reindex(Indexer<?> indexer) throws Exception {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -93,7 +89,8 @@ public class SearchEngineInitializer implements Runnable {
 				StringBundler.concat(
 					"Reindexing of ", indexer.getClassName(),
 					" entities completed in ",
-					stopWatch.getTime() / Time.SECOND, " seconds"));
+					(System.currentTimeMillis() - startTime) / Time.SECOND,
+					" seconds"));
 		}
 	}
 
@@ -146,9 +143,7 @@ public class SearchEngineInitializer implements Runnable {
 			_portalExecutorManager.getPortalExecutor(
 				SearchEngineInitializer.class.getName());
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			Date date = null;
@@ -239,9 +234,10 @@ public class SearchEngineInitializer implements Runnable {
 			}
 
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Reindexing completed in " +
-						(stopWatch.getTime() / Time.SECOND) + " seconds");
+				long seconds =
+					(System.currentTimeMillis() - startTime) / Time.SECOND;
+
+				_log.info("Reindexing completed in " + seconds + " seconds");
 			}
 		}
 		catch (Exception exception) {

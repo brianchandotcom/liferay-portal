@@ -25,8 +25,6 @@ import java.io.LineNumberReader;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * @author Carolina Barbosa
  */
@@ -42,9 +40,7 @@ public class ServerScriptingUtil {
 			throw new UnsupportedLanguageException(language);
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			if (language.equals("groovy")) {
@@ -58,7 +54,8 @@ public class ServerScriptingUtil {
 		finally {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Evaluated script in " + stopWatch.getTime() + " ms");
+					"Evaluated script in " +
+						(System.currentTimeMillis() - startTime) + " ms");
 			}
 		}
 	}

@@ -21,8 +21,6 @@ import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
 
 import java.util.List;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * Provides the local service for accessing, adding, and updating resources.
  *
@@ -435,9 +433,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			String actionId, long[] roleIds)
 		throws PortalException {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		boolean hasUserPermissions =
 			_resourcePermissionLocalService.hasResourcePermission(
@@ -447,7 +443,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			_log.debug(
 				StringBundler.concat(
 					"Checking user permissions for ", userId, " ", resourceId,
-					" ", actionId, " takes ", stopWatch.getTime(), " ms"));
+					" ", actionId, " takes ",
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 
 		return hasUserPermissions;

@@ -113,8 +113,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -1189,9 +1187,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -1378,7 +1374,9 @@ public class PortletImportControllerImpl implements PortletImportController {
 			portletDataContext);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Importing portlet takes " + stopWatch.getTime() + " ms");
+			_log.info(
+				"Importing portlet takes " +
+					(System.currentTimeMillis() - startTime) + " ms");
 		}
 
 		// Service portlet preferences

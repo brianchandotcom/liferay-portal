@@ -45,8 +45,6 @@ import javax.naming.directory.ModificationItem;
 import javax.naming.directory.SchemaViolationException;
 import javax.naming.ldap.LdapContext;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -71,11 +69,9 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		long companyId = contact.getCompanyId();
 
-		StopWatch stopWatch = new StopWatch();
+		long startTime = System.currentTimeMillis();
 
 		if (_log.isDebugEnabled()) {
-			stopWatch.start();
-
 			_log.debug("Exporting contact " + contact);
 		}
 
@@ -146,7 +142,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 				_log.debug(
 					StringBundler.concat(
 						"Finished exporting contact ", contact, " in ",
-						stopWatch.getTime(), "ms"));
+						System.currentTimeMillis() - startTime, "ms"));
 			}
 		}
 	}
@@ -160,11 +156,9 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		long companyId = user.getCompanyId();
 
-		StopWatch stopWatch = new StopWatch();
+		long startTime = System.currentTimeMillis();
 
 		if (_log.isDebugEnabled()) {
-			stopWatch.start();
-
 			_log.debug(
 				StringBundler.concat(
 					"Exporting user ", user, " in user group ", userGroupId));
@@ -255,7 +249,8 @@ public class LDAPUserExporterImpl implements UserExporter {
 				_log.debug(
 					StringBundler.concat(
 						"Finished exporting user ", user, " in user group ",
-						userGroupId, " in ", stopWatch.getTime(), "ms"));
+						userGroupId, " in ",
+						System.currentTimeMillis() - startTime, "ms"));
 			}
 		}
 	}

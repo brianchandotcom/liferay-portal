@@ -43,8 +43,6 @@ import com.liferay.portal.search.solr8.internal.search.response.HitsImpl;
 
 import java.util.Map;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -68,9 +66,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 	@Override
 	public Hits search(SearchContext searchContext, Query query) {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			int start = searchContext.getStart();
@@ -133,7 +129,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 				end = startAndEnd[1];
 			}
 
-			hits.setStart(stopWatch.getStartTime());
+			hits.setStart(startTime);
 
 			return hits;
 		}
@@ -153,20 +149,17 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
-				stopWatch.stop();
-
 				_log.info(
 					StringBundler.concat(
-						"Searching took ", stopWatch.getTime(), " ms"));
+						"Searching took ",
+						System.currentTimeMillis() - startTime, " ms"));
 			}
 		}
 	}
 
 	@Override
 	public long searchCount(SearchContext searchContext, Query query) {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			CountSearchRequest countSearchRequest = createCountSearchRequest(
@@ -204,11 +197,10 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
-				stopWatch.stop();
-
 				_log.info(
 					StringBundler.concat(
-						"Searching took ", stopWatch.getTime(), " ms"));
+						"Searching took ",
+						System.currentTimeMillis() - startTime, " ms"));
 			}
 		}
 	}

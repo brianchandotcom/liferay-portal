@@ -123,8 +123,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Felix Ventero
@@ -142,9 +140,7 @@ public class ServicePreAction extends Action {
 			HttpServletResponse httpServletResponse)
 		throws ActionException {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			servicePre(httpServletRequest, httpServletResponse, true);
@@ -154,7 +150,9 @@ public class ServicePreAction extends Action {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Running takes " + stopWatch.getTime() + " ms");
+			_log.debug(
+				"Running takes " + (System.currentTimeMillis() - startTime) +
+					" ms");
 		}
 	}
 

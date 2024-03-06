@@ -48,8 +48,6 @@ import java.text.DateFormat;
 
 import java.util.Date;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * @author Alexander Chow
  * @author Brian Wing Shun Chan
@@ -146,9 +144,7 @@ public class Table {
 				Paths.get(SystemProperties.get(SystemProperties.TMP_DIR)),
 				"temp-db-" + _tableName + "-", null));
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -188,7 +184,7 @@ public class Table {
 				_log.info(
 					StringBundler.concat(
 						"Finished backup of ", _tableName, " to ", tempFileName,
-						" in ", stopWatch.getTime(), " ms"));
+						" in ", System.currentTimeMillis() - startTime, " ms"));
 			}
 		}
 		catch (Exception exception) {

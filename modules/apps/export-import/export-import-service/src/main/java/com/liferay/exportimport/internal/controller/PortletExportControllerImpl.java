@@ -96,8 +96,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -735,9 +733,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 			_log.debug("Export permissions " + exportPermissions);
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		Layout layout = _layoutLocalService.getLayout(
 			portletDataContext.getPlid());
@@ -883,7 +879,9 @@ public class PortletExportControllerImpl implements PortletExportController {
 			document, portletDataContext.getManifestSummary());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Exporting portlet took " + stopWatch.getTime() + " ms");
+			_log.info(
+				"Exporting portlet took " +
+					(System.currentTimeMillis() - startTime) + " ms");
 		}
 
 		try {

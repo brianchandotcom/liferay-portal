@@ -48,8 +48,6 @@ import java.util.List;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -118,9 +116,7 @@ public class MessageListenerImpl implements MessageListener {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs = null;
 
 		try {
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
+			long startTime = System.currentTimeMillis();
 
 			String messageIdString = _getMessageIdString(recipients, message);
 
@@ -228,7 +224,8 @@ public class MessageListenerImpl implements MessageListener {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Delivering message takes " + stopWatch.getTime() + " ms");
+					"Delivering message takes " +
+						(System.currentTimeMillis() - startTime) + " ms");
 			}
 		}
 		catch (PrincipalException principalException) {

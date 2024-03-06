@@ -101,8 +101,6 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -613,11 +611,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 	protected User addUser(long companyId, LDAPUser ldapUser, String password)
 		throws Exception {
 
-		StopWatch stopWatch = new StopWatch();
+		long startTime = System.currentTimeMillis();
 
 		if (_log.isDebugEnabled()) {
-			stopWatch.start();
-
 			_log.debug(
 				StringBundler.concat(
 					"Adding LDAP user ", ldapUser, " to company ", companyId));
@@ -681,7 +677,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			_log.debug(
 				StringBundler.concat(
 					"Finished adding LDAP user ", ldapUser, " as user ", user,
-					" in ", stopWatch.getTime(), "ms"));
+					" in ", System.currentTimeMillis() - startTime, "ms"));
 		}
 
 		return user;
@@ -1538,11 +1534,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 				_log.debug(noSuchUserGroupException);
 			}
 
-			StopWatch stopWatch = new StopWatch();
+			long startTime = System.currentTimeMillis();
 
 			if (_log.isDebugEnabled()) {
-				stopWatch.start();
-
 				_log.debug("Adding LDAP group " + ldapGroup);
 			}
 
@@ -1560,7 +1554,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 						StringBundler.concat(
 							"Finished adding LDAP group ", ldapGroup,
 							" as user group ", userGroup, " in ",
-							stopWatch.getTime(), "ms"));
+							System.currentTimeMillis() - startTime, "ms"));
 				}
 			}
 			catch (Exception exception) {
@@ -1688,14 +1682,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			String password, String modifyTimestamp, boolean isNew)
 		throws Exception {
 
-		StopWatch stopWatch = new StopWatch();
-
 		long companyId = ldapImportContext.getCompanyId();
 		long ldapServerId = ldapImportContext.getLdapServerId();
 
-		if (_log.isDebugEnabled()) {
-			stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
+		if (_log.isDebugEnabled()) {
 			if (isNew) {
 				_log.debug(
 					StringBundler.concat(
@@ -1877,7 +1869,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			_log.debug(
 				StringBundler.concat(
 					"Finished update for user ", user, " in ",
-					stopWatch.getTime(), "ms"));
+					System.currentTimeMillis() - startTime, "ms"));
 		}
 
 		return user;

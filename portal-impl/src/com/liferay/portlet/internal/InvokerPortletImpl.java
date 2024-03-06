@@ -74,8 +74,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim
@@ -272,9 +270,7 @@ public class InvokerPortletImpl
 	public void processAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			invokeAction(actionRequest, actionResponse);
@@ -287,7 +283,7 @@ public class InvokerPortletImpl
 			_log.debug(
 				StringBundler.concat(
 					"processAction for ", _portletId, " takes ",
-					stopWatch.getTime(), " ms"));
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 	}
 
@@ -295,9 +291,7 @@ public class InvokerPortletImpl
 	public void processEvent(
 		EventRequest eventRequest, EventResponse eventResponse) {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			invokeEvent(eventRequest, eventResponse);
@@ -310,7 +304,7 @@ public class InvokerPortletImpl
 			_log.debug(
 				StringBundler.concat(
 					"processEvent for ", _portletId, " takes ",
-					stopWatch.getTime(), " ms"));
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 	}
 
@@ -326,9 +320,7 @@ public class InvokerPortletImpl
 			throw portletException;
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		String remoteUser = renderRequest.getRemoteUser();
 
@@ -399,8 +391,8 @@ public class InvokerPortletImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"render for ", _portletId, " takes ", stopWatch.getTime(),
-					" ms"));
+					"render for ", _portletId, " takes ",
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 	}
 
@@ -416,9 +408,7 @@ public class InvokerPortletImpl
 			throw portletException;
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		String remoteUser = headerRequest.getRemoteUser();
 
@@ -469,8 +459,8 @@ public class InvokerPortletImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"header for", _portletId, " takes ", stopWatch.getTime(),
-					" ms"));
+					"header for", _portletId, " takes ",
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 	}
 
@@ -478,9 +468,7 @@ public class InvokerPortletImpl
 	public void serveResource(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			invokeResource(resourceRequest, resourceResponse);
@@ -493,7 +481,7 @@ public class InvokerPortletImpl
 			_log.debug(
 				StringBundler.concat(
 					"serveResource for ", _portletId, " takes ",
-					stopWatch.getTime(), " ms"));
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 	}
 

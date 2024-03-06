@@ -65,8 +65,6 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -193,9 +191,7 @@ public class LayoutExportController implements ExportController {
 			portletDataContext.setStartDate(null);
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		Document document = SAXReaderUtil.createDocument();
 
@@ -333,7 +329,9 @@ public class LayoutExportController implements ExportController {
 			document, portletDataContext.getManifestSummary());
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Exporting layouts takes " + stopWatch.getTime() + " ms");
+			_log.info(
+				"Exporting layouts takes " +
+					(System.currentTimeMillis() - startTime) + " ms");
 		}
 
 		portletDataContext.addZipEntry(

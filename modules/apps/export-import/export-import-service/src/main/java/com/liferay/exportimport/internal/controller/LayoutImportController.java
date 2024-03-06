@@ -95,8 +95,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiPredicate;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -717,9 +715,7 @@ public class LayoutImportController implements ImportController {
 			_log.debug("Import permissions " + permissions);
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		_permissionImporter.clearCache();
 
@@ -944,7 +940,9 @@ public class LayoutImportController implements ImportController {
 		_groupLocalService.updateSite(portletDataContext.getGroupId(), true);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Importing layouts takes " + stopWatch.getTime() + " ms");
+			_log.info(
+				"Importing layouts takes " +
+					(System.currentTimeMillis() - startTime) + " ms");
 		}
 
 		ZipReader zipReader = portletDataContext.getZipReader();

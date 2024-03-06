@@ -56,8 +56,6 @@ import java.util.zip.ZipFile;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.hibernate.SessionFactory;
 
 import org.osgi.framework.BundleContext;
@@ -94,9 +92,7 @@ public class InitUtil {
 			}
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		// Set the default locale used by Liferay. This locale is no longer set
 		// at the VM level. See LEP-2584.
@@ -190,7 +186,8 @@ public class InitUtil {
 
 		if (_PRINT_TIME) {
 			System.out.println(
-				"InitAction takes " + stopWatch.getTime() + " ms");
+				"InitAction takes " + (System.currentTimeMillis() - startTime) +
+					" ms");
 		}
 
 		_initialized = true;

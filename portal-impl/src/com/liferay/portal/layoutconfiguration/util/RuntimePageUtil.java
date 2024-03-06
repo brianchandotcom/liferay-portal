@@ -35,8 +35,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -191,9 +189,7 @@ public class RuntimePageUtil {
 
 			List<PortletRenderer> portletRenderers = entry.getValue();
 
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
+			long startTime = System.currentTimeMillis();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Start serial header phase");
@@ -229,15 +225,15 @@ public class RuntimePageUtil {
 					_log.debug(
 						StringBundler.concat(
 							"Serially rendered headers for portlet ",
-							rendererPortletId, " in ", stopWatch.getTime(),
-							" ms"));
+							rendererPortletId, " in ",
+							System.currentTimeMillis() - startTime, " ms"));
 				}
 			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Finished serial header phase in " + stopWatch.getTime() +
-						" ms");
+					"Finished serial header phase in " +
+						(System.currentTimeMillis() - startTime) + " ms");
 			}
 		}
 
@@ -253,9 +249,7 @@ public class RuntimePageUtil {
 
 			List<PortletRenderer> portletRenderers = entry.getValue();
 
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
+			long startTime = System.currentTimeMillis();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Start serial rendering");
@@ -276,14 +270,15 @@ public class RuntimePageUtil {
 					_log.debug(
 						StringBundler.concat(
 							"Serially rendered portlet ", rendererPortletId,
-							" in ", stopWatch.getTime(), " ms"));
+							" in ", System.currentTimeMillis() - startTime,
+							" ms"));
 				}
 			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Finished serial rendering in " + stopWatch.getTime() +
-						" ms");
+					"Finished serial rendering in " +
+						(System.currentTimeMillis() - startTime) + " ms");
 			}
 		}
 

@@ -50,8 +50,6 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.CancellationException;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -342,9 +340,7 @@ public class VideoPreviewableDLProcessor
 	}
 
 	private void _generateThumbnail(FileVersion fileVersion, File file) {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		File thumbnailTempFile = getThumbnailTempFile(
 			DLUtil.getTempFileId(
@@ -381,7 +377,7 @@ public class VideoPreviewableDLProcessor
 				_log.info(
 					StringBundler.concat(
 						"Generated a thumbnail for ", fileVersion.getTitle(),
-						" in ", stopWatch.getTime(), " ms"));
+						" in ", System.currentTimeMillis() - startTime, " ms"));
 			}
 		}
 		catch (Exception exception) {
@@ -401,9 +397,7 @@ public class VideoPreviewableDLProcessor
 			return;
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			FileUtil.write(
@@ -438,8 +432,8 @@ public class VideoPreviewableDLProcessor
 			_log.info(
 				StringBundler.concat(
 					"Generated a ", containerType, " preview video for ",
-					fileVersion.getTitle(), " in ", stopWatch.getTime(),
-					" ms"));
+					fileVersion.getTitle(), " in ",
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 	}
 

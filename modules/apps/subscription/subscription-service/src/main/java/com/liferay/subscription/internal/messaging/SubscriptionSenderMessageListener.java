@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -60,9 +58,7 @@ public class SubscriptionSenderMessageListener extends BaseMessageListener {
 		SubscriptionSender subscriptionSender =
 			(SubscriptionSender)message.getPayload();
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -77,7 +73,8 @@ public class SubscriptionSenderMessageListener extends BaseMessageListener {
 				StringBundler.concat(
 					"Sending notifications for {mailId=",
 					subscriptionSender.getMailId(), "} completed in ",
-					stopWatch.getTime() / Time.SECOND, " seconds"));
+					(System.currentTimeMillis() - startTime) / Time.SECOND,
+					" seconds"));
 		}
 	}
 

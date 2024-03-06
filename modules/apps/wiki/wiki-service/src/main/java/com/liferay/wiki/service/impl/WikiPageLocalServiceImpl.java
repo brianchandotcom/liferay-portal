@@ -156,8 +156,6 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -997,9 +995,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String attachmentURLPrefix)
 		throws PortalException {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		WikiPageDisplay pageDisplay = null;
 
@@ -1027,7 +1023,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				StringBundler.concat(
 					"getDisplay for {", nodeId, ", ", title, ", ", viewPageURL,
 					", ", editPageURLSupplier.get(), "} takes ",
-					stopWatch.getTime(), " ms"));
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 
 		return pageDisplay;

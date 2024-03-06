@@ -46,8 +46,6 @@ import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -180,9 +178,7 @@ public class JournalContentImpl implements JournalContent {
 		String languageId, int page, PortletRequestModel portletRequestModel,
 		ThemeDisplay themeDisplay) {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		long groupId = article.getGroupId();
 		String articleId = article.getArticleId();
@@ -271,7 +267,8 @@ public class JournalContentImpl implements JournalContent {
 				StringBundler.concat(
 					"getDisplay for {", groupId, ", ", articleId, ", ",
 					ddmTemplateKey, ", ", viewMode, ", ", languageId, ", ",
-					page, "} takes ", stopWatch.getTime(), " ms"));
+					page, "} takes ", System.currentTimeMillis() - startTime,
+					" ms"));
 		}
 
 		return articleDisplay;

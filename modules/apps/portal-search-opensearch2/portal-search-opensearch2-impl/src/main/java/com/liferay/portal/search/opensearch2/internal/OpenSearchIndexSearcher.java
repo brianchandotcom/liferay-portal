@@ -61,8 +61,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.opensearch.client.opensearch._types.OpenSearchException;
 
 import org.osgi.service.component.annotations.Component;
@@ -84,9 +82,7 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override
 	public Hits search(SearchContext searchContext, Query query) {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			int end = searchContext.getEnd();
@@ -147,7 +143,7 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 					searchResponseBuilder, start);
 			}
 
-			hits.setStart(stopWatch.getStartTime());
+			hits.setStart(startTime);
 
 			return hits;
 		}
@@ -169,20 +165,17 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
-				stopWatch.stop();
-
 				_log.info(
 					StringBundler.concat(
-						"Searching took ", stopWatch.getTime(), " ms"));
+						"Searching took ",
+						System.currentTimeMillis() - startTime, " ms"));
 			}
 		}
 	}
 
 	@Override
 	public long searchCount(SearchContext searchContext, Query query) {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			CountSearchRequest countSearchRequest = _createCountSearchRequest(
@@ -218,11 +211,10 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
-				stopWatch.stop();
-
 				_log.info(
 					StringBundler.concat(
-						"Searching took ", stopWatch.getTime(), " ms"));
+						"Searching took ",
+						System.currentTimeMillis() - startTime, " ms"));
 			}
 		}
 	}

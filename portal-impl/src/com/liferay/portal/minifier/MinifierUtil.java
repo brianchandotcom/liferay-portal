@@ -22,8 +22,6 @@ import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.ServletContext;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -80,9 +78,7 @@ public class MinifierUtil {
 	}
 
 	private static String _minifyCss(String content) {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -121,7 +117,7 @@ public class MinifierUtil {
 				_log.debug(
 					StringBundler.concat(
 						"Minification for ", length, " bytes of CSS took ",
-						stopWatch.getTime(), " ms"));
+						System.currentTimeMillis() - startTime, " ms"));
 			}
 		}
 	}
@@ -136,9 +132,7 @@ public class MinifierUtil {
 			return content;
 		}
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			return javaScriptMinifier.compress(resourceName, content);
@@ -157,7 +151,8 @@ public class MinifierUtil {
 					StringBundler.concat(
 						"Minification for ", length,
 						" bytes of JavaScript in resource ", resourceName,
-						" took ", stopWatch.getTime(), " ms"));
+						" took ", System.currentTimeMillis() - startTime,
+						" ms"));
 			}
 		}
 	}

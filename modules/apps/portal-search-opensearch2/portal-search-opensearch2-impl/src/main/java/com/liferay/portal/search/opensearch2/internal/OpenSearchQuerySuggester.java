@@ -31,8 +31,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -246,9 +244,7 @@ public class OpenSearchQuerySuggester implements QuerySuggester {
 	private SuggestSearchResponse _executeSuggestSearchRequest(
 		SearchContext searchContext, Suggester suggester) {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			SuggestSearchRequest suggestSearchRequest =
@@ -275,10 +271,9 @@ public class OpenSearchQuerySuggester implements QuerySuggester {
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
-				stopWatch.stop();
-
 				_log.info(
-					"Spell checked keywords in " + stopWatch.getTime() + "ms");
+					"Spell checked keywords in " +
+						(System.currentTimeMillis() - startTime) + "ms");
 			}
 		}
 	}

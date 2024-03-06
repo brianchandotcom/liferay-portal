@@ -57,8 +57,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * @author Charles May
  * @author Brian Wing Shun Chan
@@ -184,9 +182,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	public boolean hasPermission(
 		Group group, String name, String primKey, String actionId) {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		long groupId = 0;
 
@@ -236,8 +232,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			_log.debug(
 				StringBundler.concat(
 					"Checking permission for ", groupId, " ", name, " ",
-					primKey, " ", actionId, " takes ", stopWatch.getTime(),
-					" ms"));
+					primKey, " ", actionId, " takes ",
+					System.currentTimeMillis() - startTime, " ms"));
 		}
 
 		PermissionCacheUtil.putPermission(
@@ -390,10 +386,10 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 	protected boolean doCheckPermission(
 			long companyId, long groupId, String name, String primKey,
-			long[] roleIds, String actionId, StopWatch stopWatch)
+			long[] roleIds, String actionId, long startTime)
 		throws Exception {
 
-		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 1);
+		logHasUserPermission(groupId, name, primKey, actionId, startTime, 1);
 
 		List<Resource> resources = getResources(
 			companyId, groupId, name, primKey, actionId);
@@ -401,7 +397,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		resources = fixMissingResources(
 			companyId, groupId, name, primKey, actionId, resources);
 
-		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 3);
+		logHasUserPermission(groupId, name, primKey, actionId, startTime, 3);
 
 		// Check if user has access to perform the action on the given resource
 		// scopes. The resources are scoped to check first for an individual
@@ -411,7 +407,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		boolean value = ResourceLocalServiceUtil.hasUserPermissions(
 			user.getUserId(), groupId, resources, actionId, roleIds);
 
-		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 4);
+		logHasUserPermission(groupId, name, primKey, actionId, startTime, 4);
 
 		return value;
 	}
@@ -801,9 +797,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				return true;
 			}
 
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
+			long startTime = System.currentTimeMillis();
 
 			Group parentGroup = group;
 
@@ -815,7 +809,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 						Group.class.getName(),
 						String.valueOf(parentGroup.getGroupId()),
 						getRoleIds(getUserId(), parentGroup.getGroupId()),
-						ActionKeys.MANAGE_SUBGROUPS, stopWatch)) {
+						ActionKeys.MANAGE_SUBGROUPS, startTime)) {
 
 					return true;
 				}
@@ -872,9 +866,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				organizationId = organization.getParentOrganizationId();
 			}
 
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
+			long startTime = System.currentTimeMillis();
 
 			Organization organization =
 				OrganizationLocalServiceUtil.getOrganization(
@@ -891,7 +883,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 						Organization.class.getName(),
 						String.valueOf(parentOrganization.getOrganizationId()),
 						getRoleIds(getUserId(), parentGroup.getGroupId()),
-						ActionKeys.MANAGE_SUBORGANIZATIONS, stopWatch)) {
+						ActionKeys.MANAGE_SUBORGANIZATIONS, startTime)) {
 
 					return true;
 				}
@@ -1145,7 +1137,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 	protected void logHasUserPermission(
 		long groupId, String name, String primKey, String actionId,
-		StopWatch stopWatch, int block) {
+		long startTime, int block) {
 
 		if (!_log.isDebugEnabled()) {
 			return;
@@ -1155,7 +1147,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			StringBundler.concat(
 				"Checking user permission block ", block, " for ", groupId, " ",
 				name, " ", primKey, " ", actionId, " takes ",
-				stopWatch.getTime(), " ms"));
+				System.currentTimeMillis() - startTime, " ms"));
 	}
 
 	private long[] _applyRoleContributors(long[] roleIds, long groupId) {
@@ -1283,9 +1275,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			String actionId)
 		throws Exception {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		long companyId = user.getCompanyId();
 		long groupId = 0;
@@ -1298,7 +1288,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		try {
 			boolean hasPermission = doCheckPermission(
 				companyId, groupId, name, primKey, roleIds, actionId,
-				stopWatch);
+				startTime);
 
 			if (hasPermission) {
 				return true;
@@ -1358,7 +1348,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				boolean hasPermission = doCheckPermission(
 					companyId, groupId, name, primKey,
 					new long[] {siteMemberRole.getRoleId()}, actionId,
-					stopWatch);
+					startTime);
 
 				if (hasPermission) {
 					return true;

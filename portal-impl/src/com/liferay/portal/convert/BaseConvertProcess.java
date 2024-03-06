@@ -22,8 +22,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.time.StopWatch;
-
 /**
  * @author Alexander Chow
  */
@@ -36,9 +34,7 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 				return;
 			}
 
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
+			long startTime = System.currentTimeMillis();
 
 			if (_log.isInfoEnabled()) {
 				Class<?> clazz = getClass();
@@ -54,7 +50,7 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 				_log.info(
 					StringBundler.concat(
 						"Finished conversion for ", clazz.getName(), " in ",
-						stopWatch.getTime(), " ms"));
+						System.currentTimeMillis() - startTime, " ms"));
 			}
 		}
 		catch (Exception exception) {

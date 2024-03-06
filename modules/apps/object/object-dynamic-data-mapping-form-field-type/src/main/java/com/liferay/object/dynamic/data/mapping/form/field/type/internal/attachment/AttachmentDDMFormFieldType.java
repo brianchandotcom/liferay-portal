@@ -7,12 +7,9 @@ package com.liferay.object.dynamic.data.mapping.form.field.type.internal.attachm
 
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carolina Barbosa
@@ -27,10 +24,8 @@ import org.osgi.service.component.annotations.Reference;
 public class AttachmentDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
-	public String getModuleName() {
-		JSPackage jsPackage = _npmResolver.getJSPackage();
-
-		return jsPackage.getResolvedId() + "/Attachment/Attachment";
+	public String getESModule() {
+		return "{Attachment} from object-dynamic-data-mapping-form-field-type";
 	}
 
 	@Override
@@ -42,8 +37,5 @@ public class AttachmentDDMFormFieldType extends BaseDDMFormFieldType {
 	public boolean isCustomDDMFormFieldType() {
 		return true;
 	}
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 }

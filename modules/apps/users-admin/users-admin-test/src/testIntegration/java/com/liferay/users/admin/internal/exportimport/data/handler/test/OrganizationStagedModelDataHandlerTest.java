@@ -98,6 +98,9 @@ public class OrganizationStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, Country.class, country);
 
+		_organization = OrganizationLocalServiceUtil.getOrganization(
+			_organization.getOrganizationId());
+
 		EmailAddress emailAddress = OrganizationTestUtil.addEmailAddress(
 			_organization);
 
@@ -203,7 +206,7 @@ public class OrganizationStagedModelDataHandlerTest
 
 		Assert.assertNotNull(importedCountry);
 
-		Country organizationCountry = CountryLocalServiceUtil.getCountry(
+		Country organizationCountry = CountryLocalServiceUtil.fetchCountry(
 			organization.getCountryId());
 
 		Assert.assertEquals(

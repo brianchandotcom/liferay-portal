@@ -8,6 +8,7 @@ package com.liferay.analytics.settings.web.internal.upgrade.v1_0_2;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
+import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
@@ -38,11 +39,13 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 	public AnalyticsDispatchTriggersUpgradeProcess(
 		ConfigurationAdmin configurationAdmin,
 		DispatchLogLocalService dispatchLogLocalService,
+		DispatchTaskExecutor dispatchTaskExecutor,
 		DispatchTriggerLocalService dispatchTriggerLocalService,
 		UserLocalService userLocalService) {
 
 		_configurationAdmin = configurationAdmin;
 		_dispatchLogLocalService = dispatchLogLocalService;
+		_dispatchTaskExecutor = dispatchTaskExecutor;
 		_dispatchTriggerLocalService = dispatchTriggerLocalService;
 		_userLocalService = userLocalService;
 	}
@@ -95,7 +98,8 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 			}
 
 			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
-				null, user.getUserId(), "export-analytics-dxp-entities", null,
+				null, user.getUserId(), _dispatchTaskExecutor,
+				"export-analytics-dxp-entities", null,
 				"export-analytics-dxp-entities", false);
 
 			LocalDateTime localDateTime = LocalDateTime.now();
@@ -126,6 +130,7 @@ public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
 
 	private final ConfigurationAdmin _configurationAdmin;
 	private final DispatchLogLocalService _dispatchLogLocalService;
+	private final DispatchTaskExecutor _dispatchTaskExecutor;
 	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
 	private final UserLocalService _userLocalService;
 

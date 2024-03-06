@@ -75,18 +75,18 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 	public void testMutation() throws Exception {
 		TestDTO testDTO = new TestDTO();
 
-		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
-			invoke(
-				new GraphQLField(
-					"createTestDTO",
-					Collections.singletonMap(
-						"testDTO", toGraphQLString(testDTO)),
-					new GraphQLField("id"), new GraphQLField("map"),
-					new GraphQLField("string")),
-				"mutation"),
-			"JSONObject/data", "JSONObject/createTestDTO");
-
-		assertEquals(false, testDTO, jsonObject);
+		assertEquals(
+			false, testDTO,
+			JSONUtil.getValueAsJSONObject(
+				invoke(
+					new GraphQLField(
+						"createTestDTO",
+						Collections.singletonMap(
+							"testDTO", toGraphQLString(testDTO)),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string")),
+					"mutation"),
+				"JSONObject/data", "JSONObject/createTestDTO"));
 	}
 
 	@FeatureFlags("LPD-10789")
@@ -97,52 +97,52 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 		TestDTO testDTO = new TestDTO();
 
-		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
-			invoke(
-				new GraphQLField(
-					"testPath_v1_0",
+		assertEquals(
+			false, testDTO,
+			JSONUtil.getValueAsJSONObject(
+				invoke(
 					new GraphQLField(
-						"createTestDTO",
-						Collections.singletonMap(
-							"testDTO", toGraphQLString(testDTO)),
-						new GraphQLField("id"), new GraphQLField("map"),
-						new GraphQLField("string"))),
-				"mutation"),
-			"JSONObject/data", "JSONObject/testPath_v1_0",
-			"JSONObject/createTestDTO");
-
-		assertEquals(false, testDTO, jsonObject);
+						"testPath_v1_0",
+						new GraphQLField(
+							"createTestDTO",
+							Collections.singletonMap(
+								"testDTO", toGraphQLString(testDTO)),
+							new GraphQLField("id"), new GraphQLField("map"),
+							new GraphQLField("string"))),
+					"mutation"),
+				"JSONObject/data", "JSONObject/testPath_v1_0",
+				"JSONObject/createTestDTO"));
 
 		// Without namespace (backwards compatibility)
 
 		testDTO = new TestDTO();
 
-		jsonObject = JSONUtil.getValueAsJSONObject(
-			invoke(
-				new GraphQLField(
-					"createTestDTO",
-					Collections.singletonMap(
-						"testDTO", toGraphQLString(testDTO)),
-					new GraphQLField("id"), new GraphQLField("map"),
-					new GraphQLField("string")),
-				"mutation"),
-			"JSONObject/data", "JSONObject/createTestDTO");
-
-		assertEquals(false, testDTO, jsonObject);
+		assertEquals(
+			false, testDTO,
+			JSONUtil.getValueAsJSONObject(
+				invoke(
+					new GraphQLField(
+						"createTestDTO",
+						Collections.singletonMap(
+							"testDTO", toGraphQLString(testDTO)),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string")),
+					"mutation"),
+				"JSONObject/data", "JSONObject/createTestDTO"));
 	}
 
 	@Test
 	public void testQuery() throws Exception {
-		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
-			invoke(
-				new GraphQLField(
-					"testDTO", new GraphQLField("extendedString"),
-					new GraphQLField("id"), new GraphQLField("map"),
-					new GraphQLField("string")),
-				"query"),
-			"JSONObject/data", "JSONObject/testDTO");
-
-		assertEquals(true, _testDTO, jsonObject);
+		assertEquals(
+			true, _testDTO,
+			JSONUtil.getValueAsJSONObject(
+				invoke(
+					new GraphQLField(
+						"testDTO", new GraphQLField("extendedString"),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string")),
+					"query"),
+				"JSONObject/data", "JSONObject/testDTO"));
 	}
 
 	@Test
@@ -198,16 +198,16 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 					"queryDepthLimit", 2
 				).build());
 
-			jsonObject = JSONUtil.getValueAsJSONObject(
-				invoke(
-					new GraphQLField(
-						"testDTO", new GraphQLField("extendedString"),
-						new GraphQLField("id"), new GraphQLField("map"),
-						new GraphQLField("string")),
-					"query"),
-				"JSONObject/data", "JSONObject/testDTO");
-
-			assertEquals(true, _testDTO, jsonObject);
+			assertEquals(
+				true, _testDTO,
+				JSONUtil.getValueAsJSONObject(
+					invoke(
+						new GraphQLField(
+							"testDTO", new GraphQLField("extendedString"),
+							new GraphQLField("id"), new GraphQLField("map"),
+							new GraphQLField("string")),
+						"query"),
+					"JSONObject/data", "JSONObject/testDTO"));
 		}
 		finally {
 			if (configurations == null) {
@@ -320,32 +320,32 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 		// With namespace
 
-		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
-			invoke(
-				new GraphQLField(
-					"testPath_v1_0",
+		assertEquals(
+			true, _testDTO,
+			JSONUtil.getValueAsJSONObject(
+				invoke(
 					new GraphQLField(
-						"testDTO", new GraphQLField("extendedString"),
-						new GraphQLField("id"), new GraphQLField("map"),
-						new GraphQLField("string"))),
-				"query"),
-			"JSONObject/data", "JSONObject/testPath_v1_0",
-			"JSONObject/testDTO");
-
-		assertEquals(true, _testDTO, jsonObject);
+						"testPath_v1_0",
+						new GraphQLField(
+							"testDTO", new GraphQLField("extendedString"),
+							new GraphQLField("id"), new GraphQLField("map"),
+							new GraphQLField("string"))),
+					"query"),
+				"JSONObject/data", "JSONObject/testPath_v1_0",
+				"JSONObject/testDTO"));
 
 		// Without namespace (backwards compatibility)
 
-		jsonObject = JSONUtil.getValueAsJSONObject(
-			invoke(
-				new GraphQLField(
-					"testDTO", new GraphQLField("extendedString"),
-					new GraphQLField("id"), new GraphQLField("map"),
-					new GraphQLField("string")),
-				"query"),
-			"JSONObject/data", "JSONObject/testDTO");
-
-		assertEquals(true, _testDTO, jsonObject);
+		assertEquals(
+			true, _testDTO,
+			JSONUtil.getValueAsJSONObject(
+				invoke(
+					new GraphQLField(
+						"testDTO", new GraphQLField("extendedString"),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string")),
+					"query"),
+				"JSONObject/data", "JSONObject/testDTO"));
 	}
 
 	@Test

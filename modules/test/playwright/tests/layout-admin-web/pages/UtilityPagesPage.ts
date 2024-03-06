@@ -8,21 +8,21 @@
 import {Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {StaticPagesPage} from '../../layout-admin-web/pages/StaticPagesPage';
+import {getSiteUrl} from '../../../utils/siteUrl';
 
 export class UtilityPagesPage {
 	readonly page: Page;
 
-	readonly staticPagesPage: StaticPagesPage;
-
 	constructor(page: Page) {
 		this.page = page;
-
-		this.staticPagesPage = new StaticPagesPage(page);
 	}
 
 	async goto() {
-		await this.staticPagesPage.goToUtilityPages();
+		const siteUrl = await getSiteUrl(this.page);
+
+		await this.page.goto(
+			`/group${siteUrl}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages`
+		);
 	}
 
 	async clickOnAction(action: string, title: string) {
@@ -41,10 +41,10 @@ export class UtilityPagesPage {
 	async goToEdit(title: string) {
 		await this.goto();
 
-		await this.page.getByTitle(title).waitFor();
+		await this.page.getByLabel(title).waitFor();
 
 		const href = await this.page
-			.locator('div.card-row', {has: this.page.getByTitle(title)})
+			.locator('div.card-row', {has: this.page.getByLabel(title)})
 			.getByRole('link')
 			.getAttribute('href');
 

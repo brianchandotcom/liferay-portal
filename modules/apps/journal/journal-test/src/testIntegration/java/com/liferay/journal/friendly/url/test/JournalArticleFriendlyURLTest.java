@@ -139,21 +139,29 @@ public class JournalArticleFriendlyURLTest {
 	public void testFriendlyURLShouldNotHaveSiteLanguageNotEqualDefaultLanguage()
 		throws Exception {
 
-		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
+		Locale originalSiteDefaultLocale =
+			LocaleThreadLocal.getSiteDefaultLocale();
 
-		String title = RandomTestUtil.randomString();
-		Locale[] locales = {LocaleUtil.SPAIN};
+		try {
+			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 
-		Map<Locale, String> titleMap = _getLocalizedMap(title, locales);
+			String title = RandomTestUtil.randomString();
+			Locale[] locales = {LocaleUtil.SPAIN};
 
-		JournalArticle article = _addJournalArticleWithTitleMap(
-			LocaleUtil.SPAIN, titleMap);
+			Map<Locale, String> titleMap = _getLocalizedMap(title, locales);
 
-		Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
+			JournalArticle article = _addJournalArticleWithTitleMap(
+				LocaleUtil.SPAIN, titleMap);
 
-		Assert.assertNull(friendlyURLMap.get(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals(
-			friendlyURLMap.toString(), 1, friendlyURLMap.size());
+			Map<Locale, String> friendlyURLMap = article.getFriendlyURLMap();
+
+			Assert.assertNull(friendlyURLMap.get(LocaleUtil.getSiteDefault()));
+			Assert.assertEquals(
+				friendlyURLMap.toString(), 1, friendlyURLMap.size());
+		}
+		finally {
+			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
+		}
 	}
 
 	@Test

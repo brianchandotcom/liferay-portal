@@ -460,8 +460,6 @@ public class Main {
 			catch (Exception exception) {
 				_error(fileName + ": " + exception.getMessage());
 			}
-
-			_saveHashToFile(new File(_baseDirName), _newHash);
 		}
 
 		existingStructuredContentIds.removeAll(importedStructuredContentIds);
@@ -484,6 +482,8 @@ public class Main {
 						exception.getMessage());
 			}
 		}
+
+		_saveHashToFile(new File(_baseDirName), _newHash);
 
 		System.out.println(
 			addedStructuredContentCount + " structured contents were added.");

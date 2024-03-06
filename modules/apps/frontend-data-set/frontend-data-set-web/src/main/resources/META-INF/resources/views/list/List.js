@@ -83,15 +83,7 @@ const ListItem = ({item, schema}) => {
 
 	const [menuActive, setMenuActive] = useState(false);
 
-	const {
-		description,
-		image,
-		link,
-		sticker,
-		symbol,
-		title,
-		titleRenderer,
-	} = schema;
+	const {description, image, sticker, symbol, title, titleRenderer} = schema;
 
 	return (
 		<ClayList.Item

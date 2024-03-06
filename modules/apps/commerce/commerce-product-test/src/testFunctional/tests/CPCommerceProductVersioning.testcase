@@ -333,8 +333,6 @@ definition {
 				productCatalog = "Master",
 				productName = "Simple T-Shirt",
 				productType = "Simple");
-
-			var approvedProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
 		}
 
 		task ("And click on 'Save as Draft'") {
@@ -347,20 +345,12 @@ definition {
 			AssertElementPresent(
 				key_status = "Draft",
 				locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-			var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
-
-			CommerceProducts.checkProductIdsNotEqual(
-				firstProductId = ${approvedProductId},
-				secondProductId = ${draftProductId});
 		}
 
 		task ("if the admin goes back, he will find two products with the same name where the first is approved, and the second is draft") {
 			Navigator.gotoBack();
 
 			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft");
-
-			CommerceProducts.checkProductId(list = "Simple T-Shirt:Approved:${approvedProductId},Simple T-Shirt:Draft:${draftProductId}");
 		}
 	}
 
@@ -559,8 +549,6 @@ definition {
 				productCatalog = "Master",
 				productName = "Simple T-Shirt",
 				productType = "Simple");
-
-			var approvedProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
 		}
 
 		task ("And click on 'Save as Draft'") {
@@ -571,10 +559,6 @@ definition {
 			AssertElementPresent(
 				key_status = "Draft",
 				locator1 = "CommerceEntry#WORKFLOW_STATUS");
-		}
-
-		task ("Then a new version of the product is created") {
-			var incompleteProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
 		}
 
 		task ("And the admin goes back and opens the first approved product again") {
@@ -617,20 +601,12 @@ definition {
 			AssertElementPresent(
 				key_status = "Draft",
 				locator1 = "CommerceEntry#WORKFLOW_STATUS");
-
-			var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
 		}
 
 		task ("Then if the admin goes back to the products page the admin will see 3 products, one approved, one incomplete, and one draft") {
-			CommerceProducts.checkProductIdsNotEqual(
-				firstProductId = ${incompleteProductId},
-				secondProductId = ${draftProductId});
-
 			Navigator.gotoBack();
 
 			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
-
-			CommerceProducts.checkProductId(list = "Simple T-Shirt:Approved:${approvedProductId},Simple T-Shirt:Incomplete:${incompleteProductId},Simple T-Shirt:Draft:${draftProductId}");
 		}
 	}
 

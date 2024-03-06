@@ -69,8 +69,21 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 							eventHandlerContext, messageJSONObject);
 					}
 					else if (body.startsWith("ci:test")) {
-						return new TestGitHubCommentEventHandler(
-							eventHandlerContext, messageJSONObject);
+						JSONObject repositoryJSONObject =
+							messageJSONObject.getJSONObject("repository");
+
+						String repositoryName = repositoryJSONObject.getString(
+							"name");
+
+						if (repositoryName.equals("liferay-portal") ||
+							repositoryName.equals("liferay-portal-ee")) {
+
+							return new PortalTestGitHubCommentEventHandler(
+								eventHandlerContext, messageJSONObject);
+						}
+
+						throw new IllegalArgumentException(
+							"Invalid repository " + repositoryName);
 					}
 
 					throw new IllegalArgumentException(

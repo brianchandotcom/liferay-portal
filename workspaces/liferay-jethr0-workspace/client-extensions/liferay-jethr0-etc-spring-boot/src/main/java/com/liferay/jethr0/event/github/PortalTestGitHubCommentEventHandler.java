@@ -23,7 +23,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class TestGitHubCommentEventHandler
+public class PortalTestGitHubCommentEventHandler
 	extends BaseGitHubCommentEventHandler {
 
 	@Override
@@ -42,7 +42,7 @@ public class TestGitHubCommentEventHandler
 		return portalPullRequestJobEntity.toString();
 	}
 
-	protected TestGitHubCommentEventHandler(
+	protected PortalTestGitHubCommentEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);

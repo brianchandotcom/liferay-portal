@@ -13,8 +13,11 @@ type PageDefinition = {
 
 type PageElement = {
 	definition?: {
-		fragment: {
+		fragment?: {
 			key: string;
+		};
+		widgetInstance?: {
+			widgetName: string;
 		};
 	};
 	id: string;

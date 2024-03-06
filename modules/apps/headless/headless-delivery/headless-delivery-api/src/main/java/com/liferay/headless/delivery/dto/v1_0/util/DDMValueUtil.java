@@ -86,7 +86,7 @@ public class DDMValueUtil {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
-					DDMValueUtil::_toLocalizedDateString, preferredLocale);
+					DDMValueUtil::_toDateString, preferredLocale);
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.DOCUMENT_LIBRARY,
@@ -97,9 +97,8 @@ public class DDMValueUtil {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
-					(localizedContentFieldValue, locale) ->
-						_toLocalizedDocument(
-							localizedContentFieldValue, dlAppService),
+					(localizedContentFieldValue, locale) -> _toDocumentString(
+						localizedContentFieldValue, dlAppService),
 					preferredLocale);
 			}
 			else if (Objects.equals(
@@ -110,7 +109,7 @@ public class DDMValueUtil {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
-					(localizedContentFieldValue, locale) -> _toLocalizedImage(
+					(localizedContentFieldValue, locale) -> _toImageString(
 						localizedContentFieldValue, dlAppService),
 					preferredLocale);
 			}
@@ -125,7 +124,7 @@ public class DDMValueUtil {
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
 					(localizedContentFieldValue, locale) ->
-						_toLocalizedJournalArticle(
+						_toJournalArticleString(
 							localizedContentFieldValue, journalArticleService,
 							locale),
 					preferredLocale);
@@ -193,10 +192,9 @@ public class DDMValueUtil {
 
 				return _toLocalizedValue(
 					contentFieldValue, localizedContentFieldValues,
-					(localizedContentFieldValue, locale) ->
-						_toLocalizedLinkToPage(
-							localizedContentFieldValue, groupId,
-							layoutLocalService, locale),
+					(localizedContentFieldValue, locale) -> _toLinkToPageString(
+						localizedContentFieldValue, groupId, layoutLocalService,
+						locale),
 					preferredLocale);
 			}
 			else if (Objects.equals(
@@ -263,41 +261,7 @@ public class DDMValueUtil {
 		return layout;
 	}
 
-	private static String _toJSON(
-		String description, DLAppService dlAppService, long fileEntryId) {
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = dlAppService.getFileEntry(fileEntryId);
-		}
-		catch (Exception exception) {
-			throw new BadRequestException(
-				"No document exists with ID " + fileEntryId, exception);
-		}
-
-		return JSONUtil.put(
-			"alt", description
-		).put(
-			"classPK", fileEntry.getFileEntryId()
-		).put(
-			"fileEntryId", fileEntry.getFileEntryId()
-		).put(
-			"groupId", fileEntry.getGroupId()
-		).put(
-			"name", fileEntry.getFileName()
-		).put(
-			"resourcePrimKey", fileEntry.getPrimaryKey()
-		).put(
-			"title", fileEntry.getFileName()
-		).put(
-			"type", "document"
-		).put(
-			"uuid", fileEntry.getUuid()
-		).toString();
-	}
-
-	private static String _toLocalizedDateString(
+	private static String _toDateString(
 		ContentFieldValue contentFieldValue, Locale locale) {
 
 		if (Validator.isNull(contentFieldValue.getData())) {
@@ -318,7 +282,7 @@ public class DDMValueUtil {
 		}
 	}
 
-	private static String _toLocalizedDocument(
+	private static String _toDocumentString(
 		ContentFieldValue contentFieldValue, DLAppService dlAppService) {
 
 		String valueString = StringPool.BLANK;
@@ -333,7 +297,7 @@ public class DDMValueUtil {
 		return valueString;
 	}
 
-	private static String _toLocalizedImage(
+	private static String _toImageString(
 		ContentFieldValue contentFieldValue, DLAppService dlAppService) {
 
 		String valueString = StringPool.BLANK;
@@ -349,7 +313,7 @@ public class DDMValueUtil {
 		return valueString;
 	}
 
-	private static String _toLocalizedJournalArticle(
+	private static String _toJournalArticleString(
 		ContentFieldValue contentFieldValue,
 		JournalArticleService journalArticleService, Locale locale) {
 
@@ -386,7 +350,41 @@ public class DDMValueUtil {
 		return valueString;
 	}
 
-	private static String _toLocalizedLinkToPage(
+	private static String _toJSON(
+		String description, DLAppService dlAppService, long fileEntryId) {
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = dlAppService.getFileEntry(fileEntryId);
+		}
+		catch (Exception exception) {
+			throw new BadRequestException(
+				"No document exists with ID " + fileEntryId, exception);
+		}
+
+		return JSONUtil.put(
+			"alt", description
+		).put(
+			"classPK", fileEntry.getFileEntryId()
+		).put(
+			"fileEntryId", fileEntry.getFileEntryId()
+		).put(
+			"groupId", fileEntry.getGroupId()
+		).put(
+			"name", fileEntry.getFileName()
+		).put(
+			"resourcePrimKey", fileEntry.getPrimaryKey()
+		).put(
+			"title", fileEntry.getFileName()
+		).put(
+			"type", "document"
+		).put(
+			"uuid", fileEntry.getUuid()
+		).toString();
+	}
+
+	private static String _toLinkToPageString(
 		ContentFieldValue contentFieldValue, long groupId,
 		LayoutLocalService layoutLocalService, Locale locale) {
 

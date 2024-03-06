@@ -63,7 +63,7 @@ const RuleEditorModalContent = ({onClose, onSaveRule, rule}) => {
 
 	const {resource: rolesResource} = useResource({
 		fetch,
-		link: `${window.location.origin}/o/headless-admin-user/v1.0/roles`,
+		link: `${window.location.origin}/o/headless-admin-user/v1.0/roles?restrictFields=rolePermissions`,
 	});
 
 	const roles = useMemo(

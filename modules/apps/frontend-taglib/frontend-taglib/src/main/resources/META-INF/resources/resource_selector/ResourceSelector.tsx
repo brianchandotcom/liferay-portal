@@ -119,16 +119,3 @@ export default function ResourceSelector({
 		</div>
 	);
 }
-
-ResourceSelector.propTypes = {
-	inputLabel: PropTypes.string.isRequired,
-	inputName: PropTypes.string.isRequired,
-	modalTitle: PropTypes.string.isRequired,
-	portletNamespace: PropTypes.string.isRequired,
-	resourceName: PropTypes.string.isRequired,
-	resourceValue: PropTypes.string.isRequired,
-	selectEventName: PropTypes.string.isRequired,
-	selectResourceURL: PropTypes.string.isRequired,
-	showRemoveButton: PropTypes.bool.isRequired,
-	warningMessage: PropTypes.bool,
-};

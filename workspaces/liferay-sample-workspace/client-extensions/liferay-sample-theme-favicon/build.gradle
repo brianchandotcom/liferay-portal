@@ -1,0 +1,34 @@
+import java.security.MessageDigest
+
+task buildFaviconFile(type: Copy)
+
+buildFaviconFile {
+	from "assets"
+	into "build/static"
+	include "favicon.ico"
+
+	doFirst {
+		file("build/static").deleteDir()
+	}
+
+	rename {
+		def file = file("assets/" + it)
+
+		def hash =
+		MessageDigest
+		.getInstance("SHA-1")
+		.digest(file.bytes)
+		.encodeHex()
+		.toString()
+
+		def doti = it.lastIndexOf(".")
+		def name = doti == -1 ? it : it.substring(0, doti)
+		def ext = doti == -1 ? "" : it.substring(doti + 1)
+
+		def newName = name + "." + hash + "." + ext;
+
+		println "Renaming '" + it + "' file as '" + newName + "'"
+
+		return newName
+	}
+}

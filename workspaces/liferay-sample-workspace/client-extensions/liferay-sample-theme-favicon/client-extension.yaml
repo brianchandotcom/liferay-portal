@@ -1,7 +1,7 @@
 assemble:
-    - from: assets
+    - fromTask: buildFaviconFile
       into: static
 liferay-sample-theme-favicon:
     name: Liferay Sample Theme Favicon
     type: themeFavicon
-    url: favicon.ico
+    url: favicon.*.ico

@@ -10,6 +10,7 @@ export default defineConfig({
 	build: {
 		outDir: 'build/vite',
 		rollupOptions: {
+			external: [/@clayui\/*/, 'react', 'react-dom'],
 			output: {
 				assetFileNames: 'assets/[name][extname]',
 				chunkFileNames: '[name]-[hash].js',

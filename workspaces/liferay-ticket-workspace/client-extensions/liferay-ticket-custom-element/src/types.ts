@@ -65,7 +65,7 @@ export type TicketPayload = {
 	externalReferenceCode: string;
 	id: string;
 	priority: {name: string};
-	r_j3y7TicketToJ3Y7Ticket_c_j3y7TicketId?: string;
+	r_j3y7TicketToJ3Y7Tickets_c_j3y7TicketId?: string;
 	r_userToJ3Y7Ticket_userId?: string;
 	region: {name: string};
 	resolution: {name: string};

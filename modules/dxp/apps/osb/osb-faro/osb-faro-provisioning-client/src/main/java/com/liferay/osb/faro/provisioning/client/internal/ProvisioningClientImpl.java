@@ -191,6 +191,8 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 
 		return new OSBAccountEntry() {
 			{
+				List<OSBOfferingEntry> osbOfferingEntries = new ArrayList<>();
+
 				OSBOfferingEntry osbOfferingEntry = new OSBOfferingEntry();
 
 				if (corpProjectUuid.endsWith("BusinessLXCTest")) {
@@ -219,7 +221,51 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 				osbOfferingEntry.setStatus(
 					ProductConstants.OSB_OFFERING_ENTRY_STATUS_ACTIVE);
 
-				setOfferingEntries(Collections.singletonList(osbOfferingEntry));
+				osbOfferingEntries.add(osbOfferingEntry);
+
+				if (corpProjectUuid.contains("AddOn")) {
+					OSBOfferingEntry contactsOSBOfferingEntry =
+						new OSBOfferingEntry();
+					OSBOfferingEntry trackedPagesOSBOfferingEntry =
+						new OSBOfferingEntry();
+
+					if (corpProjectUuid.endsWith("BusinessLXCTest") ||
+						corpProjectUuid.endsWith("BusinessTest")) {
+
+						contactsOSBOfferingEntry.setProductEntryId(
+							ProductConstants.
+								BUSINESS_CONTACTS_PRODUCT_ENTRY_ID);
+						trackedPagesOSBOfferingEntry.setProductEntryId(
+							ProductConstants.
+								BUSINESS_TRACKED_PAGES_PRODUCT_ENTRY_ID);
+					}
+					else if (corpProjectUuid.endsWith("EnterpriseLXCTest") ||
+							 corpProjectUuid.endsWith("EnterpriseTest")) {
+
+						contactsOSBOfferingEntry.setProductEntryId(
+							ProductConstants.
+								ENTERPRISE_CONTACTS_PRODUCT_ENTRY_ID);
+						trackedPagesOSBOfferingEntry.setProductEntryId(
+							ProductConstants.
+								ENTERPRISE_TRACKED_PAGES_PRODUCT_ENTRY_ID);
+					}
+
+					contactsOSBOfferingEntry.setQuantity(1);
+					contactsOSBOfferingEntry.setStartDate(new Date());
+					contactsOSBOfferingEntry.setStatus(
+						ProductConstants.OSB_OFFERING_ENTRY_STATUS_ACTIVE);
+
+					osbOfferingEntries.add(contactsOSBOfferingEntry);
+
+					trackedPagesOSBOfferingEntry.setQuantity(1);
+					trackedPagesOSBOfferingEntry.setStartDate(new Date());
+					trackedPagesOSBOfferingEntry.setStatus(
+						ProductConstants.OSB_OFFERING_ENTRY_STATUS_ACTIVE);
+
+					osbOfferingEntries.add(trackedPagesOSBOfferingEntry);
+				}
+
+				setOfferingEntries(osbOfferingEntries);
 			}
 		};
 	}

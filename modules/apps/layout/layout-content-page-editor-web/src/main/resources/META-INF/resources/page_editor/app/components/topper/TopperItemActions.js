@@ -117,6 +117,7 @@ export default function TopperItemActions({item}) {
 					dispatch(
 						deleteItem({
 							itemId: item.itemId,
+							selectItem,
 						})
 					),
 				icon: 'trash',

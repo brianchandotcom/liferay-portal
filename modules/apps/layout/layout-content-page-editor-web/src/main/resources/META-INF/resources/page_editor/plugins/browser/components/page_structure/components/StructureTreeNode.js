@@ -318,6 +318,15 @@ function StructureTreeNodeContent({
 		};
 	}, [isOverTarget, node]);
 
+	useEffect(() => {
+		if (
+			isActive &&
+			activationOrigin === ITEM_ACTIVATION_ORIGINS.itemActions
+		) {
+			document.querySelector(`[data-id*="${node.id}"]`).focus();
+		}
+	}, [activationOrigin, isActive, node.id, node.hidden]);
+
 	return (
 		<div
 			aria-disabled={node.isMasterItem || !node.activable}

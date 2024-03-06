@@ -82,8 +82,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.extension.util.ExtensionUtil;
-import com.liferay.portal.vulcan.fields.NestedFieldsContext;
-import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -557,88 +555,71 @@ public class ObjectEntryDTOConverter
 				ObjectDefinition objectDefinition, long primaryKey)
 		throws Exception {
 
-		NestedFieldsContext nestedFieldsContext =
-			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+		return NestedFieldsSupplier.supplyUnsafeSupplier(
+			nestedFieldName -> {
+				ObjectRelationship objectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectDefinitionId1(
+							objectDefinition.getObjectDefinitionId(),
+							nestedFieldName);
 
-		if (nestedFieldsContext == null) {
-			return null;
-		}
+				if ((objectRelationship == null) ||
+					!objectRelationship.isAllowedObjectRelationshipType(
+						objectRelationship.getType())) {
 
-		Map<String, UnsafeSupplier<Object, Exception>> nestedFieldValues =
-			new HashMap<>();
+					return null;
+				}
 
-		for (String nestedFieldName : nestedFieldsContext.getFieldNames()) {
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.
-					fetchObjectRelationshipByObjectDefinitionId1(
-						objectDefinition.getObjectDefinitionId(),
-						nestedFieldName);
+				ObjectDefinition relatedObjectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId2());
 
-			if ((objectRelationship == null) ||
-				!objectRelationship.isAllowedObjectRelationshipType(
-					objectRelationship.getType())) {
+				if (!relatedObjectDefinition.isActive()) {
+					return null;
+				}
 
-				continue;
-			}
+				ObjectRelatedModelsProvider objectRelatedModelsProvider =
+					_objectRelatedModelsProviderRegistry.
+						getObjectRelatedModelsProvider(
+							relatedObjectDefinition.getClassName(),
+							relatedObjectDefinition.getCompanyId(),
+							objectRelationship.getType());
 
-			ObjectDefinition relatedObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId2());
+				List<?> relatedModels =
+					objectRelatedModelsProvider.getRelatedModels(
+						groupId, objectRelationship.getObjectRelationshipId(),
+						primaryKey, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			if (!relatedObjectDefinition.isActive()) {
-				continue;
-			}
+				if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
+					SystemObjectDefinitionManager
+						systemObjectDefinitionManager =
+							_systemObjectDefinitionManagerRegistry.
+								getSystemObjectDefinitionManager(
+									relatedObjectDefinition.getName());
 
-			ObjectRelatedModelsProvider objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						relatedObjectDefinition.getClassName(),
-						relatedObjectDefinition.getCompanyId(),
-						objectRelationship.getType());
-
-			List<?> relatedModels =
-				objectRelatedModelsProvider.getRelatedModels(
-					groupId, objectRelationship.getObjectRelationshipId(),
-					primaryKey, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
-				SystemObjectDefinitionManager systemObjectDefinitionManager =
-					_systemObjectDefinitionManagerRegistry.
-						getSystemObjectDefinitionManager(
-							relatedObjectDefinition.getName());
-
-				nestedFieldValues.put(
-					nestedFieldName,
-					NestedFieldsSupplier.supply(
-						() -> TransformUtil.transformToArray(
-							relatedModels,
-							relatedModel -> _toExtendedEntity(
-								(BaseModel<?>)relatedModel, dtoConverterContext,
-								relatedObjectDefinition,
-								systemObjectDefinitionManager),
-							Object.class)));
-			}
-			else {
-				nestedFieldValues.put(
-					nestedFieldName,
-					() -> TransformUtil.transformToArray(
+					return () -> TransformUtil.transformToArray(
 						relatedModels,
-						relatedModel -> {
-							com.liferay.object.model.ObjectEntry objectEntry =
-								(com.liferay.object.model.ObjectEntry)
-									relatedModel;
+						relatedModel -> _toExtendedEntity(
+							(BaseModel<?>)relatedModel, dtoConverterContext,
+							relatedObjectDefinition,
+							systemObjectDefinitionManager),
+						Object.class);
+				}
 
-							return toDTO(
-								_getDTOConverterContext(
-									dtoConverterContext,
-									objectEntry.getObjectEntryId()),
-								objectEntry);
-						},
-						ObjectEntry.class));
-			}
-		}
+				return () -> TransformUtil.transformToArray(
+					relatedModels,
+					relatedModel -> {
+						com.liferay.object.model.ObjectEntry objectEntry =
+							(com.liferay.object.model.ObjectEntry)relatedModel;
 
-		return nestedFieldValues;
+						return toDTO(
+							_getDTOConverterContext(
+								dtoConverterContext,
+								objectEntry.getObjectEntryId()),
+							objectEntry);
+					},
+					ObjectEntry.class);
+			});
 	}
 
 	private ObjectDefinition _getObjectDefinition(

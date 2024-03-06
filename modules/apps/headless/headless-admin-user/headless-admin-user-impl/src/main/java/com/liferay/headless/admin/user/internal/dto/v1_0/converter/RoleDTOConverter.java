@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -24,6 +25,9 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,77 +79,110 @@ public class RoleDTOConverter
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(role.getTitleMap()));
 				setRolePermissions(
-					() -> TransformUtil.transformToArray(
-						_resourcePermissionLocalService.
-							getRoleResourcePermissions(role.getRoleId()),
-						resourcePermission -> new RolePermission() {
-							{
-								setActionIds(
-									() -> {
-										List<ResourceAction> resourceActions =
-											_resourceActionLocalService.
-												getResourceActions(
-													resourcePermission.
-														getName());
+					() -> {
+						UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
-										Set<String> actionIdsSet =
-											new HashSet<>();
+						if (uriInfo != null) {
+							MultivaluedMap<String, String> queryParameters =
+								uriInfo.getQueryParameters();
 
-										long actionIds =
-											resourcePermission.getActionIds();
+							if (StringUtil.contains(
+									queryParameters.getFirst("restrictFields"),
+									"rolePermissions")) {
 
-										for (ResourceAction resourceAction :
-												resourceActions) {
-
-											long bitwiseValue =
-												resourceAction.
-													getBitwiseValue();
-
-											if ((actionIds & bitwiseValue) ==
-													bitwiseValue) {
-
-												actionIdsSet.add(
-													resourceAction.
-														getActionId());
-											}
-										}
-
-										return actionIdsSet.toArray(
-											new String[0]);
-									});
-								setId(resourcePermission::getRoleId);
-								setLabel(
-									() -> {
-										String resourceName = getResourceName();
-
-										if (Validator.isBlank(resourceName)) {
-											return null;
-										}
-
-										if (resourceName.contains("model")) {
-											return _language.get(
-												dtoConverterContext.getLocale(),
-												"model.resource." +
-													resourceName);
-										}
-
-										if (resourceName.contains("portlet")) {
-											return _language.get(
-												dtoConverterContext.getLocale(),
-												"javax.portlet.title." +
-													resourceName);
-										}
-
-										return resourceName;
-									});
-								setPrimaryKey(resourcePermission::getPrimKey);
-								setResourceName(resourcePermission::getName);
-								setRoleId(resourcePermission::getRoleId);
-								setScope(
-									() -> (long)resourcePermission.getScope());
+								return null;
 							}
-						},
-						RolePermission.class));
+						}
+
+						return TransformUtil.transformToArray(
+							_resourcePermissionLocalService.
+								getRoleResourcePermissions(role.getRoleId()),
+							resourcePermission -> new RolePermission() {
+								{
+									setActionIds(
+										() -> {
+											List<ResourceAction>
+												resourceActions =
+													_resourceActionLocalService.
+														getResourceActions(
+															resourcePermission.
+																getName());
+
+											Set<String> actionIdsSet =
+												new HashSet<>();
+
+											long actionIds =
+												resourcePermission.
+													getActionIds();
+
+											for (ResourceAction resourceAction :
+													resourceActions) {
+
+												long bitwiseValue =
+													actionIds &
+													resourceAction.
+														getBitwiseValue();
+
+												if (bitwiseValue ==
+														resourceAction.
+															getBitwiseValue()) {
+
+													actionIdsSet.add(
+														resourceAction.
+															getActionId());
+												}
+											}
+
+											return actionIdsSet.toArray(
+												new String[0]);
+										});
+									setId(resourcePermission::getRoleId);
+									setLabel(
+										() -> {
+											String resourceName =
+												getResourceName();
+
+											if (Validator.isBlank(
+													resourceName)) {
+
+												return null;
+											}
+
+											if (resourceName.contains(
+													"model")) {
+
+												return _language.get(
+													dtoConverterContext.
+														getLocale(),
+													"model.resource." +
+														resourceName);
+											}
+
+											if (resourceName.contains(
+													"portlet")) {
+
+												return _language.get(
+													dtoConverterContext.
+														getLocale(),
+													"javax.portlet.title." +
+														resourceName);
+											}
+
+											return resourceName;
+										});
+									setPrimaryKey(
+										resourcePermission::getPrimKey);
+									setResourceName(
+										resourcePermission::getName);
+									setRoleId(resourcePermission::getRoleId);
+									setScope(
+										() ->
+											(long)
+												resourcePermission.getScope());
+								}
+							},
+							RolePermission.class);
+					});
 				setRoleType(role::getTypeLabel);
 			}
 		};

@@ -4257,6 +4257,10 @@ paths:
             operationId: getRolesPage
             parameters:
                 - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   schema:
                       type: integer
@@ -4264,6 +4268,10 @@ paths:
                   name: pageSize
                   schema:
                       type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: query
                   name: search
                   schema:

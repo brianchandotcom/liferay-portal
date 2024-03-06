@@ -43,14 +43,14 @@ import com.liferay.users.admin.test.util.search.OrganizationSearchFixture;
 import com.liferay.users.admin.test.util.search.UserGroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.time.StopWatch;
 
 import org.junit.After;
 import org.junit.Before;
@@ -278,13 +278,15 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 	protected void measure(
 		Map<String, String> map, String name, Runnable runnable) {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		runnable.run();
 
-		map.put(name, stopWatch.toString());
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm:ss.SSS");
+
+		map.put(
+			name,
+			simpleDateFormat.format(System.currentTimeMillis() - startTime));
 	}
 
 	protected void reindex(List<User> users) {

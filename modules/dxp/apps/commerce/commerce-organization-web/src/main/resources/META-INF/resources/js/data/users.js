@@ -38,6 +38,7 @@ export function getOrganizationRoles() {
 	);
 
 	url.searchParams.append('pageSize', 100);
+	url.searchParams.append('restrictFields', 'rolePermissions');
 	url.searchParams.append('types', ORGANIZATIONS_ROLE_TYPE_ID);
 
 	return fetchFromHeadless(url, {}, null, true).then(
@@ -52,6 +53,7 @@ export function getAccountRoles(accountId) {
 	);
 
 	genericRolesURL.searchParams.append('pageSize', 100);
+	genericRolesURL.searchParams.append('restrictFields', 'rolePermissions');
 	genericRolesURL.searchParams.append('types', ACCOUNTS_ROLE_TYPE_ID);
 
 	const specificRolesURL = `${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/account-roles`;

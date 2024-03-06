@@ -58,7 +58,7 @@ export function UserNotificationSettings({
 	const [userList, setUserList] = useState<MultiSelectItem[]>([]);
 
 	const getRoles = async () => {
-		const query = `/o/headless-admin-user/v1.0/roles?page=-1`;
+		const query = `/o/headless-admin-user/v1.0/roles?page=-1&restrictFields=rolePermissions`;
 
 		const response = await fetch(query, {
 			headers: HEADERS,

@@ -21,6 +21,10 @@ export class UtilityPagesPage {
 		this.staticPagesPage = new StaticPagesPage(page);
 	}
 
+	async goto() {
+		await this.staticPagesPage.goToUtilityPages();
+	}
+
 	async clickOnAction(action: string, title: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -32,10 +36,6 @@ export class UtilityPagesPage {
 				.locator('div.card-row', {has: this.page.getByTitle(title)})
 				.getByRole('button'),
 		});
-	}
-
-	async goto() {
-		await this.staticPagesPage.goToUtilityPages();
 	}
 
 	async goToEdit(title: string) {

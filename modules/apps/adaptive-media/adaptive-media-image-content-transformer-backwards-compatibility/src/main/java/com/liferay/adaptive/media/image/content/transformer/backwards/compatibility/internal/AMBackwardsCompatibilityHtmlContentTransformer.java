@@ -137,6 +137,12 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
 	}
 
+	@Override
+	protected boolean isSupported(FileEntry fileEntry) {
+		return _amImageMimeTypeProvider.isMimeTypeSupported(
+			fileEntry.getMimeType());
+	}
+
 	private Group _getGroup(long companyId, String name)
 		throws PortalException {
 

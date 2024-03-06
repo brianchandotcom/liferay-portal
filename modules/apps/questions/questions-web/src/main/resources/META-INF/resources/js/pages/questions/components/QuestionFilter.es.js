@@ -105,6 +105,17 @@ const getFilterValues = (form, tags) => {
 
 	query.sortBy = sortOption?.sortValue;
 
+	query.creatorId = form.creatorId;
+
+	if (query.creatorId) {
+		const creatorIdFilter = `creatorId eq ${query.creatorId}`;
+
+		query.filterBy =
+			query.filterBy === undefined
+				? creatorIdFilter
+				: `${query.filterBy} and ${creatorIdFilter}`;
+	}
+
 	if (form.taggedWith === 'none') {
 		return query;
 	}
@@ -131,17 +142,6 @@ const getFilterValues = (form, tags) => {
 		query.filterBy = `${
 			query.filterBy ?? ''
 		} (keywords/any(x:${filterKeyword}))`;
-	}
-
-	query.creatorId = form.creatorId;
-
-	if (query.creatorId) {
-		const creatorIdFilter = `creatorId eq ${query.creatorId}`;
-
-		query.filterBy =
-			query.filterBy === undefined
-				? creatorIdFilter
-				: `${query.filterBy} and ${creatorIdFilter}`;
 	}
 
 	return query;

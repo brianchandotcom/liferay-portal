@@ -49,6 +49,8 @@ public interface SiteResource {
 
 	public Site postSite(Site site) throws Exception;
 
+	public Site postSite(MultipartBody multipartBody) throws Exception;
+
 	public void deleteSiteByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 

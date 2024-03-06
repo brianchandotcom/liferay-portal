@@ -208,13 +208,43 @@ public abstract class BaseSiteResourceTestCase {
 	public void testPostSite() throws Exception {
 		Site randomSite = randomSite();
 
-		Site postSite = testPostSite_addSite(randomSite);
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Site postSite = testPostSite_addSite(randomSite, multipartFiles);
 
 		assertEquals(randomSite, postSite);
 		assertValid(postSite);
+
+		assertValid(postSite, multipartFiles);
 	}
 
-	protected Site testPostSite_addSite(Site site) throws Exception {
+	protected Site testPostSite_addSite(
+			Site site, Map<String, File> multipartFiles)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostFormDataSite() throws Exception {
+		Site randomSite = randomSite();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Site postSite = testPostFormDataSite_addSite(
+			randomSite, multipartFiles);
+
+		assertEquals(randomSite, postSite);
+		assertValid(postSite);
+
+		assertValid(postSite, multipartFiles);
+	}
+
+	protected Site testPostFormDataSite_addSite(
+			Site site, Map<String, File> multipartFiles)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

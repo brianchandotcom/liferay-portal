@@ -474,12 +474,6 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							</div>
 						</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand table-cell-minw-200 text-truncate"
-							name="description"
-							value="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
-						/>
-
 						<c:if test="<%= journalDisplayContext.isSearch() && ((curFolder.getParentFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curFolder.getParentFolder(), ActionKeys.VIEW)) %>">
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smallest table-cell-minw-200"

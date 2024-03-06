@@ -14,15 +14,23 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class QAWebsitesPullRequestSFJobEntity extends BaseJobEntity {
+public class QAWebsitesPullRequestSFJobEntity extends BasePullRequestJobEntity {
 
 	public URL getQAWebsitesPullRequestURL() {
 		return getParameterValueURL("qaWebsitesPullRequestURL");
 	}
 
+	public String getTestSuiteName() {
+		return getParameterValue("testSuiteName");
+	}
+
 	public void setQAWebsitesPullRequestURL(URL qaWebsitesPullRequestURL) {
 		setParameterValueURL(
 			"qaWebsitesPullRequestURL", qaWebsitesPullRequestURL);
+	}
+
+	public void setTestSuiteName(String testSuiteName) {
+		setParameterValue("testSuiteName", testSuiteName);
 	}
 
 	protected QAWebsitesPullRequestSFJobEntity(JSONObject jsonObject) {

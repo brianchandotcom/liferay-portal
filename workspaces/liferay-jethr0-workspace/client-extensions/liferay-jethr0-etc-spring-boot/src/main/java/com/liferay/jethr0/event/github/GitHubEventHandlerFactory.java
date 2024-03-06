@@ -85,6 +85,12 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 							return new PortalTestGitHubCommentEventHandler(
 								eventHandlerContext, messageJSONObject);
 						}
+						else if (repositoryName.equals(
+									"liferay-qa-websites-ee")) {
+
+							return new QAWebsitesTestGitHubCommentEventHandler(
+								eventHandlerContext, messageJSONObject);
+						}
 
 						throw new IllegalArgumentException(
 							"Invalid repository " + repositoryName);

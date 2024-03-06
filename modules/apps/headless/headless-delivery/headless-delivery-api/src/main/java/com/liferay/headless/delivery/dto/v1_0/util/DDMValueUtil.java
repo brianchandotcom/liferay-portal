@@ -192,6 +192,47 @@ public class DDMValueUtil {
 		return layout;
 	}
 
+	private static String _getOptionValues(
+		DDMFormField ddmFormField, Locale locale, String optionValues,
+		boolean transformValuesToKeys) {
+
+		try {
+			List<String> values = new ArrayList<>();
+
+			if (!ddmFormField.isMultiple() &&
+				!Objects.equals(
+					DDMFormFieldType.CHECKBOX_MULTIPLE,
+					ddmFormField.getType())) {
+
+				values.add(optionValues);
+			}
+			else {
+				values.addAll(
+					JSONUtil.toStringList(
+						JSONFactoryUtil.createJSONArray(optionValues)));
+			}
+
+			if (transformValuesToKeys) {
+				values = _transformValuesToKeys(ddmFormField, locale, values);
+			}
+
+			if ((values.size() == 1) &&
+				DDMFormFieldType.RADIO.equals(ddmFormField.getType())) {
+
+				return values.get(0);
+			}
+
+			return JSONUtil.toString(JSONFactoryUtil.createJSONArray(values));
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return null;
+		}
+	}
+
 	private static String _toDateString(
 		ContentFieldValue contentFieldValue, Locale locale) {
 
@@ -515,48 +556,19 @@ public class DDMValueUtil {
 		Map<String, ContentFieldValue> localizedContentFieldValues,
 		Locale preferredLocale) {
 
-		return _toLocalizedValue(
-			contentFieldValue, localizedContentFieldValues,
-			(localizedContentFieldValue, locale) -> {
-				try {
-					String data = localizedContentFieldValue.getData();
+		if (ddmFormField.isLocalizable()) {
+			return _toLocalizedValue(
+				contentFieldValue, localizedContentFieldValues,
+				(localizedContentFieldValue, locale) -> _getOptionValues(
+					ddmFormField, locale, localizedContentFieldValue.getData(),
+					true),
+				preferredLocale);
+		}
 
-					List<String> values = new ArrayList<>();
-
-					if (!ddmFormField.isMultiple() &&
-						!Objects.equals(
-							DDMFormFieldType.CHECKBOX_MULTIPLE,
-							ddmFormField.getType())) {
-
-						values.add(data);
-					}
-					else {
-						values.addAll(
-							JSONUtil.toStringList(
-								JSONFactoryUtil.createJSONArray(data)));
-					}
-
-					List<String> collect = _transformValuesToKeys(
-						ddmFormField, locale, values);
-
-					if ((collect.size() == 1) &&
-						DDMFormFieldType.RADIO.equals(ddmFormField.getType())) {
-
-						return collect.get(0);
-					}
-
-					return JSONUtil.toString(
-						JSONFactoryUtil.createJSONArray(collect));
-				}
-				catch (JSONException jsonException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(jsonException);
-					}
-
-					return null;
-				}
-			},
-			preferredLocale);
+		return new UnlocalizedValue(
+			_getOptionValues(
+				ddmFormField, preferredLocale, contentFieldValue.getValue(),
+				false));
 	}
 
 	private static List<String> _transformValuesToKeys(

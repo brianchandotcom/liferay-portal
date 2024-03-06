@@ -8,12 +8,9 @@ package com.liferay.object.dynamic.data.mapping.form.field.type.internal.object.
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -41,11 +38,9 @@ public class ObjectRelationshipDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
-	public String getModuleName() {
-		JSPackage jsPackage = _npmResolver.getJSPackage();
-
-		return jsPackage.getResolvedId() +
-			"/ObjectRelationship/ObjectRelationship";
+	public String getESModule() {
+		return "{ObjectRelationship} from " +
+			"object-dynamic-data-mapping-form-field-type";
 	}
 
 	@Override
@@ -57,8 +52,5 @@ public class ObjectRelationshipDDMFormFieldType extends BaseDDMFormFieldType {
 	public boolean isCustomDDMFormFieldType() {
 		return true;
 	}
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 }

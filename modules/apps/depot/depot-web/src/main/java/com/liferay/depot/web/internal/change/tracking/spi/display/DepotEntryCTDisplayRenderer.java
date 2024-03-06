@@ -11,6 +11,8 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -35,6 +37,38 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CTDisplayRenderer.class)
 public class DepotEntryCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DepotEntry> {
+
+	@Override
+	public String[] getAvailableLanguageIds(DepotEntry depotEntry) {
+		try {
+			Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+			return group.getAvailableLanguageIds();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getDefaultLanguageId(DepotEntry depotEntry) {
+		try {
+			Group group = _groupLocalService.getGroup(depotEntry.getGroupId());
+
+			return group.getDefaultLanguageId();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
+	}
 
 	@Override
 	public String getEditURL(
@@ -117,6 +151,9 @@ public class DepotEntryCTDisplayRenderer
 			}
 		);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DepotEntryCTDisplayRenderer.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

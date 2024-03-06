@@ -14,7 +14,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -50,11 +50,15 @@ public class CPDefinitionAssetRenderer
 
 	public CPDefinitionAssetRenderer(
 		CPDefinition cpDefinition, CPDefinitionHelper cpDefinitionHelper,
-		ModelResourcePermission<CommerceCatalog> modelResourcePermission) {
+		Language language,
+		ModelResourcePermission<CommerceCatalog> modelResourcePermission,
+		Portal portal) {
 
 		_cpDefinition = cpDefinition;
 		_cpDefinitionHelper = cpDefinitionHelper;
+		_language = language;
 		_modelResourcePermission = modelResourcePermission;
+		_portal = portal;
 	}
 
 	@Override
@@ -108,7 +112,8 @@ public class CPDefinitionAssetRenderer
 				AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH);
 		}
 
-		String summary = _cpDefinition.getDescription();
+		String summary = _cpDefinition.getDescription(
+			_language.getLanguageId(_portal.getLocale(portletRequest)));
 
 		if (Validator.isNull(summary)) {
 			summary = StringUtil.shorten(
@@ -120,7 +125,7 @@ public class CPDefinitionAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _cpDefinition.getName(LanguageUtil.getLanguageId(locale));
+		return _cpDefinition.getName(_language.getLanguageId(locale));
 	}
 
 	@Override
@@ -130,7 +135,7 @@ public class CPDefinitionAssetRenderer
 		throws Exception {
 
 		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
+			_portal.getControlPanelPortletURL(
 				liferayPortletRequest,
 				GroupLocalServiceUtil.fetchGroup(_cpDefinition.getGroupId()),
 				CPPortletKeys.CP_DEFINITIONS, 0, 0, PortletRequest.RENDER_PHASE)
@@ -249,7 +254,9 @@ public class CPDefinitionAssetRenderer
 
 	private final CPDefinition _cpDefinition;
 	private final CPDefinitionHelper _cpDefinitionHelper;
+	private final Language _language;
 	private final ModelResourcePermission<CommerceCatalog>
 		_modelResourcePermission;
+	private final Portal _portal;
 
 }

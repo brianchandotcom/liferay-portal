@@ -71,7 +71,8 @@ public class CPDefinitionAssetRendererFactory
 		CPDefinitionAssetRenderer cpDefinitionAssetRenderer =
 			new CPDefinitionAssetRenderer(
 				_cpDefinitionLocalService.getCPDefinition(classPK),
-				_cpDefinitionHelper, _commerceCatalogModelResourcePermission);
+				_cpDefinitionHelper, _language,
+				_commerceCatalogModelResourcePermission, _portal);
 
 		cpDefinitionAssetRenderer.setAssetRendererType(type);
 		cpDefinitionAssetRenderer.setServletContext(_servletContext);

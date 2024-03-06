@@ -119,6 +119,26 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["Site"]
+        get:
+            operationId: getSiteByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                    description:
+                        default response
+            tags: ["Site"]
         put:
             description:
                 Adds or update a new site

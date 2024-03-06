@@ -49,6 +49,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.ws.rs.core.Response;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -100,6 +102,17 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				setName(() -> group.getName(LocaleUtil.getDefault()));
 			}
 		};
+	}
+
+	@Override
+	public Response getSiteByExternalReferenceCodeSiteInitializer(
+		String externalReferenceCode) {
+
+		return Response.ok(
+			new File("/some-zip-file.zip")
+		).header(
+			"Content-Disposition", "attachment; filename=\"file.zip\""
+		).build();
 	}
 
 	@Override

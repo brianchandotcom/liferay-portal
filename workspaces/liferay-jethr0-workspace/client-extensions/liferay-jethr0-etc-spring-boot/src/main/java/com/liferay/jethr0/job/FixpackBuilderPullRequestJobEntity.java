@@ -18,7 +18,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class FixpackBuilderPullRequestJobEntity extends BaseJobEntity {
+public class FixpackBuilderPullRequestJobEntity
+	extends BasePullRequestJobEntity {
 
 	public FixpackBuilderPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);

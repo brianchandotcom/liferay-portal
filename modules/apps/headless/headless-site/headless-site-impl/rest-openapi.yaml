@@ -150,3 +150,20 @@ paths:
                     description:
                         default response
             tags: ["Site"]
+    /sites/by-external-reference-code/{externalReferenceCode}/site-initializer:
+        get:
+            operationId: getSiteByExternalReferenceCodeSiteInitializer
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/zip:
+                            schema:
+                                format: binary
+                                type: string
+            tags: ["Site"]

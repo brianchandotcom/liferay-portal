@@ -51,7 +51,6 @@ import java.sql.Connection;
 
 import java.util.Collection;
 
-import org.apache.commons.lang.time.StopWatch;
 import org.apache.logging.log4j.core.Appender;
 
 import org.osgi.framework.BundleContext;
@@ -114,11 +113,7 @@ public class DBUpgrader {
 	}
 
 	public static long getUpgradeTime() {
-		if (_stopWatch == null) {
-			return 0;
-		}
-
-		return _stopWatch.getTime();
+		return _getUpgradeTime();
 	}
 
 	public static boolean isUpgradeClient() {
@@ -151,9 +146,9 @@ public class DBUpgrader {
 
 		_upgradeClient = true;
 
-		try {
-			_initUpgradeStopwatch();
+		_startTime = System.currentTimeMillis();
 
+		try {
 			PortalClassPathUtil.initializeClassPaths(null);
 
 			InitUtil.initWithSpring(
@@ -189,15 +184,15 @@ public class DBUpgrader {
 			System.out.println(
 				StringBundler.concat(
 					"\n", result, " Liferay upgrade process in ",
-					_stopWatch.getTime() / Time.SECOND, " seconds"));
+					_getUpgradeTime() / Time.SECOND, " seconds"));
 		}
 
 		System.out.println("Exiting DBUpgrader#main(String[]).");
 	}
 
 	public static void startUpgradeLogAppender() {
-		if (_stopWatch == null) {
-			_initUpgradeStopwatch();
+		if (_startTime == -1) {
+			_startTime = System.currentTimeMillis();
 		}
 
 		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
@@ -218,7 +213,7 @@ public class DBUpgrader {
 
 	public static void stopUpgradeLogAppender() {
 		if (_appender != null) {
-			_stopWatch.stop();
+			_stopTime = System.currentTimeMillis();
 
 			_appender.stop();
 		}
@@ -396,10 +391,15 @@ public class DBUpgrader {
 		return buildNumber;
 	}
 
-	private static void _initUpgradeStopwatch() {
-		_stopWatch = new StopWatch();
+	private static long _getUpgradeTime() {
+		if (_startTime == -1) { // Not started
+			return 0;
+		}
+		else if (_stopTime == -1) { // Started but not stopped
+			return System.currentTimeMillis() - _startTime;
+		}
 
-		_stopWatch.start();
+		return _stopTime - _startTime; // Started and stopped
 	}
 
 	private static void _registerModuleServiceLifecycle(
@@ -433,7 +433,8 @@ public class DBUpgrader {
 	private static volatile Appender _appender;
 	private static volatile ServiceReference<Appender>
 		_appenderServiceReference;
-	private static volatile StopWatch _stopWatch;
+	private static long _startTime = -1;
+	private static long _stopTime = -1;
 	private static volatile boolean _upgradeClient;
 	private static Boolean _upgradeDatabaseAutoRun;
 

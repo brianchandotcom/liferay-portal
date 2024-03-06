@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.component.UpgradeRecorderTestComponent;
@@ -45,7 +44,6 @@ import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 
-import org.apache.commons.lang.time.StopWatch;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.LogEvent;
@@ -82,9 +80,6 @@ public class UpgradeRecorderTest {
 	public static void setUpClass() {
 		_bundle = FrameworkUtil.getBundle(UpgradeRecorderTest.class);
 
-		_originalStopWatch = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_stopWatch");
-
 		_originalVerifyProcessError = ReflectionTestUtil.getFieldValue(
 			_upgradeRecorder, "_verifyProcessError");
 	}
@@ -92,17 +87,12 @@ public class UpgradeRecorderTest {
 	@AfterClass
 	public static void tearDownClass() {
 		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_stopWatch", _originalStopWatch);
-
-		ReflectionTestUtil.setFieldValue(
 			_upgradeRecorder, "_verifyProcessError",
 			_originalVerifyProcessError);
 	}
 
 	@Before
 	public void setUp() {
-		ReflectionTestUtil.setFieldValue(DBUpgrader.class, "_stopWatch", null);
-
 		ReflectionTestUtil.setFieldValue(
 			_upgradeRecorder, "_verifyProcessError",
 			_originalVerifyProcessError);
@@ -449,7 +439,6 @@ public class UpgradeRecorderTest {
 		"UpgradeRecorderTestComponent.xml";
 
 	private static Bundle _bundle;
-	private static StopWatch _originalStopWatch;
 	private static boolean _originalVerifyProcessError;
 
 	@Inject(

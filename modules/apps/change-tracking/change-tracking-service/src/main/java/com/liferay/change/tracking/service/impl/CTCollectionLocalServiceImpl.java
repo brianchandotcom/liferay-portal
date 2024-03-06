@@ -408,21 +408,30 @@ public class CTCollectionLocalServiceImpl
 		List<CTEntry> ctEntries = _ctEntryPersistence.findByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
-		Set<Long> modelClassNameIds = new HashSet<>();
+		Map<Long, List<Long>> modelClassNameMap = new HashMap<>();
 
 		for (CTEntry ctEntry : ctEntries) {
-			modelClassNameIds.add(ctEntry.getModelClassNameId());
+			List<Long> modelClassPKs = modelClassNameMap.get(
+				ctEntry.getModelClassNameId());
+
+			if (modelClassPKs == null) {
+				modelClassPKs = new ArrayList<>();
+
+				modelClassNameMap.put(
+					ctEntry.getModelClassNameId(), modelClassPKs);
+			}
+
+			modelClassPKs.add(ctEntry.getModelClassPK());
 		}
 
-		for (long modelClassNameId : modelClassNameIds) {
+		for (Map.Entry<Long, List<Long>> entry : modelClassNameMap.entrySet()) {
 			CTService<?> ctService = _ctServiceRegistry.getCTService(
-				modelClassNameId);
+				entry.getKey());
 
 			if (ctService == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"No CTService found for classNameId " +
-							modelClassNameId);
+						"No CTService found for classNameId " + entry.getKey());
 				}
 
 				continue;
@@ -430,16 +439,57 @@ public class CTCollectionLocalServiceImpl
 
 			ctService.updateWithUnsafeFunction(
 				ctPersistence -> {
+					Set<String> primaryKeyNames =
+						ctPersistence.getCTColumnNames(
+							CTColumnResolutionType.PK);
+
+					if (primaryKeyNames.size() != 1) {
+						throw new IllegalArgumentException(
+							StringBundler.concat(
+								"{primaryKeyNames=", primaryKeyNames,
+								", tableName=", ctPersistence.getTableName(),
+								"}"));
+					}
+
+					Iterator<String> iterator = primaryKeyNames.iterator();
+
+					String primaryKeyName = iterator.next();
+
+					StringBundler sb = new StringBundler();
+
+					sb.append("delete from ");
+					sb.append(ctPersistence.getTableName());
+					sb.append(" where ctCollectionId = ");
+					sb.append(ctCollection.getCtCollectionId());
+					sb.append(" and ");
+					sb.append(primaryKeyName);
+					sb.append(" in (");
+
+					int i = 0;
+
+					for (long modelClassPK : entry.getValue()) {
+						if (i == _BATCH_SIZE) {
+							sb.setStringAt(")", sb.index() - 1);
+							sb.append(" or ");
+							sb.append(primaryKeyName);
+							sb.append(" in (");
+
+							i = 0;
+						}
+
+						sb.append(modelClassPK);
+						sb.append(", ");
+
+						i++;
+					}
+
+					sb.setStringAt(")", sb.index() - 1);
+
 					Connection connection = _currentConnection.getConnection(
 						ctPersistence.getDataSource());
 
 					try (PreparedStatement preparedStatement =
-							connection.prepareStatement(
-								StringBundler.concat(
-									"delete from ",
-									ctPersistence.getTableName(),
-									" where ctCollectionId = ",
-									ctCollection.getCtCollectionId()))) {
+							connection.prepareStatement(sb.toString())) {
 
 						return preparedStatement.executeUpdate();
 					}

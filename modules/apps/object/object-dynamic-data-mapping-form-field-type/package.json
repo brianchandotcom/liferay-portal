@@ -13,6 +13,7 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"main": "js/index.ts",
 	"name": "@liferay/object-dynamic-data-mapping-form-field-type",
 	"private": true,
 	"scripts": {

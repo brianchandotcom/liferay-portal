@@ -67,8 +67,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 						dropdownItem -> {
 							dropdownItem.setHref(
 								_getEditLayoutPageTemplateCollectionURL(
-									layoutPageTemplateCollection, tabs1,
-									_themeDisplay));
+									layoutPageTemplateCollection, tabs1));
 							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
@@ -94,7 +93,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 							dropdownItem.putData(
 								"dialogTitle",
 								_getRenameDialogTitle(
-									_httpServletRequest,
 									layoutPageTemplateCollection));
 							dropdownItem.putData(
 								"layoutPageTemplateCollectionDescription",
@@ -181,7 +179,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 							dropdownItem.putData(
 								"dialogTitle",
 								_getDeleteDialogTitle(
-									_httpServletRequest,
 									layoutPageTemplateCollection));
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
@@ -195,16 +192,15 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 	}
 
 	private String _getDeleteDialogTitle(
-		HttpServletRequest httpServletRequest,
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		if (layoutPageTemplateCollection.getType() ==
 				LayoutPageTemplateCollectionTypeConstants.BASIC) {
 
-			return LanguageUtil.get(httpServletRequest, "page-template-set");
+			return LanguageUtil.get(_httpServletRequest, "page-template-set");
 		}
 
-		return LanguageUtil.get(httpServletRequest, "folder");
+		return LanguageUtil.get(_httpServletRequest, "folder");
 	}
 
 	private String _getDeleteLayoutPageTemplateCollectionURL(
@@ -232,15 +228,15 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 	}
 
 	private String _getEditLayoutPageTemplateCollectionURL(
-		LayoutPageTemplateCollection layoutPageTemplateCollection, String tabs1,
-		ThemeDisplay themeDisplay) {
+		LayoutPageTemplateCollection layoutPageTemplateCollection,
+		String tabs1) {
 
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
 			"/layout_page_template_admin/edit_layout_page_template_collection"
 		).setRedirect(
-			themeDisplay.getURLCurrent()
+			_themeDisplay.getURLCurrent()
 		).setTabs1(
 			tabs1
 		).setParameter(
@@ -301,17 +297,16 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 	}
 
 	private String _getRenameDialogTitle(
-		HttpServletRequest httpServletRequest,
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		if (layoutPageTemplateCollection.getType() ==
 				LayoutPageTemplateCollectionTypeConstants.BASIC) {
 
 			return LanguageUtil.get(
-				httpServletRequest, "rename-page-template-set");
+				_httpServletRequest, "rename-page-template-set");
 		}
 
-		return LanguageUtil.get(httpServletRequest, "edit-folder");
+		return LanguageUtil.get(_httpServletRequest, "edit-folder");
 	}
 
 	private String _getUpdateLayoutPageTemplateCollectionURL(

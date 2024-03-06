@@ -7,7 +7,6 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {openSelectionModal} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 interface IResourceSelectorProps {
@@ -16,13 +15,13 @@ interface IResourceSelectorProps {
 	modalTitle: string;
 	portletNamespace: string;
 	resourceName: string;
-	resourceNameKey: string;
+	resourceNameKey?: string;
 	resourceValue: string;
-	resourceValueKey: string;
+	resourceValueKey?: string;
 	selectEventName: string;
 	selectResourceURL: string;
 	showRemoveButton: boolean;
-	warningMessage: boolean;
+	warningMessage?: boolean;
 }
 
 export default function ResourceSelector({
@@ -31,14 +30,17 @@ export default function ResourceSelector({
 	modalTitle,
 	portletNamespace,
 	resourceName: initialResourceName,
-	resourceNameKey = 'resourcename',
+	resourceNameKey: initialResourceNameKey,
 	resourceValue: initialResourceValue,
-	resourceValueKey = 'resourceid',
+	resourceValueKey: initialResourceValueKey,
 	selectEventName,
 	selectResourceURL,
 	showRemoveButton,
 	warningMessage,
 }: IResourceSelectorProps) {
+	const resourceNameKey = initialResourceNameKey || 'resourcename';
+	const resourceValueKey = initialResourceValueKey || 'resourceid';
+
 	const [resourceData, setResourceData] = useState({
 		resourceName: initialResourceName,
 		resourceValue: initialResourceValue,

@@ -17,6 +17,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
@@ -136,6 +137,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		throws IOException {
 
 		try {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			FragmentEntryLink fragmentEntryLink =
@@ -220,6 +223,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			_log.error("Unable to render frontend data set view", exception);
 
 			throw new IOException(exception);
+		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
 		}
 	}
 

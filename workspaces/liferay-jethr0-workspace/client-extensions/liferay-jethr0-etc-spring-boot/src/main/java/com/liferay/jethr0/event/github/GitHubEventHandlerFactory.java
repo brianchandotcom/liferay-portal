@@ -75,8 +75,12 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 						String repositoryName = repositoryJSONObject.getString(
 							"name");
 
-						if (repositoryName.equals("liferay-portal") ||
-							repositoryName.equals("liferay-portal-ee")) {
+						if (repositoryName.equals("liferay-jenkins-ee")) {
+							return new JenkinsTestGitHubCommentEventHandler(
+								eventHandlerContext, messageJSONObject);
+						}
+						else if (repositoryName.equals("liferay-portal") ||
+								 repositoryName.equals("liferay-portal-ee")) {
 
 							return new PortalTestGitHubCommentEventHandler(
 								eventHandlerContext, messageJSONObject);

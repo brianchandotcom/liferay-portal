@@ -8,9 +8,12 @@ package com.liferay.jethr0.event.github;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,6 +47,18 @@ public abstract class BaseTestGitHubCommentEventHandler
 		Collections.addAll(testOptions, testOptionsString.split(","));
 
 		return testOptions;
+	}
+
+	protected String getTestSuite() throws InvalidJSONException, IOException {
+		Set<String> availableTestSuites = getAvailableTestSuites();
+
+		for (String testOption : getTestOptions()) {
+			if (availableTestSuites.contains(testOption)) {
+				return testOption;
+			}
+		}
+
+		return "default";
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

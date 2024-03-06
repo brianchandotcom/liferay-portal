@@ -202,7 +202,7 @@ const ActivationKeysInputs = ({
 		const isRequester = accountBrief?.roleBriefs?.some(
 			({name}) => name === ROLE_TYPES.requester.key
 		);
-		if (userAccount.isAdmin || isRequester) {
+		if (userAccount.isAccountAdmin || isRequester) {
 			return errorDownloadMessage.messageRequestersAdministrators;
 		}
 

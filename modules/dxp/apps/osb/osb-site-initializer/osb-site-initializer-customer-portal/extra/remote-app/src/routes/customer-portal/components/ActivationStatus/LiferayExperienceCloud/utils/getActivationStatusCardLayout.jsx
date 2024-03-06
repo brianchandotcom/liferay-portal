@@ -111,7 +111,7 @@ export default function getActivationStatusCardLayout(
 			title: i18n.translate('liferay-experience-cloud-activation'),
 		},
 		[STATUS_TAG_TYPE_NAMES.notActivated]: {
-			buttonLink: userAccount.isAdmin && (
+			buttonLink: userAccount.isAccountAdmin && (
 				<Button
 					appendIcon="order-arrow-right"
 					className="btn btn-link font-weight-semi-bold p-0 text-brand-primary text-paragraph"

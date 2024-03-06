@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.LayoutDescription;
-import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.site.navigation.site.map.web.internal.configuration.SiteNavigationSiteMapPortletInstanceConfiguration;
 
 import java.util.List;
@@ -113,16 +111,6 @@ public class SiteNavigationSiteMapDisplayContext {
 				_renderResponse.getNamespace() + "selectLayout",
 				layoutItemSelectorCriterion)
 		).buildString();
-	}
-
-	public List<LayoutDescription> getLayoutDescriptions() {
-		Layout layout = _themeDisplay.getLayout();
-
-		String rootNodeName = StringPool.BLANK;
-
-		return LayoutListUtil.getLayoutDescriptions(
-			layout.getGroupId(), layout.isPrivateLayout(), rootNodeName,
-			_themeDisplay.getLocale());
 	}
 
 	public Layout getRootLayout() {

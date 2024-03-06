@@ -96,6 +96,26 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustBeGroupAdmin extends PrincipalException {
+
+		public MustBeGroupAdmin(long userId) {
+			super(
+				String.format(
+					"User %s must be the site administrator to perform the " +
+						"action",
+					userId));
+
+			this.userId = userId;
+		}
+
+		public MustBeGroupAdmin(PermissionChecker permissionChecker) {
+			this(permissionChecker.getUserId());
+		}
+
+		public final long userId;
+
+	}
+
 	public static class MustBeInvokedUsingPost extends PrincipalException {
 
 		public MustBeInvokedUsingPost(String url) {

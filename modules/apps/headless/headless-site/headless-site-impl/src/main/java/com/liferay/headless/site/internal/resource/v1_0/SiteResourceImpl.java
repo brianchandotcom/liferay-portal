@@ -85,6 +85,24 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	@Override
+	public Site getSiteByExternalReferenceCode(String externalReferenceCode)
+		throws Exception {
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		return new Site() {
+			{
+				setExternalReferenceCode(group::getExternalReferenceCode);
+				setFriendlyUrlPath(group::getFriendlyURL);
+				setId(group::getGroupId);
+				setKey(group::getGroupKey);
+				setName(() -> group.getName(LocaleUtil.getDefault()));
+			}
+		};
+	}
+
+	@Override
 	public Site postSite(Site site) throws Exception {
 		try {
 			Group group = _addGroup(site.getExternalReferenceCode(), site);

@@ -13,7 +13,7 @@ import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.db.partition.DBPartitionUtil;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
 import com.liferay.portal.kernel.dao.orm.LockMode;

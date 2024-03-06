@@ -208,88 +208,74 @@ public class IndexerClauseContributorsTest {
 				"gamma"
 			);
 
-		String titleContributorId =
+		String alwaysPresentContributor =
 			"com.liferay.portal.search.internal.spi.model.query.contributor." +
 				"AlwaysPresentFieldsKeywordQueryContributor";
-		String titleMultilangContributorId1 =
+		String blogsContributor =
 			"com.liferay.blogs.internal.search.spi.model.query.contributor." +
 				"BlogsEntryKeywordQueryContributor";
-		String titleMultilangContributorId2 =
+		String journalArticleContributor =
 			"com.liferay.journal.internal.search.spi.model.query.contributor." +
 				"JournalArticleKeywordQueryContributor";
-		String titleMultilangContributorId3 =
+		String mbMessageContributor =
 			"com.liferay.message.boards.internal.search.spi.model.query." +
 				"contributor.MBMessageKeywordQueryContributor";
 
 		assertSearch(
 			"[Gamma Article, Gamma Blog, Gamma Message]",
 			withIncludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2, titleMultilangContributorId3),
+				alwaysPresentContributor, blogsContributor,
+				journalArticleContributor, mbMessageContributor),
 			consumer);
 
 		assertSearch(
 			"[Gamma Article, Gamma Blog, Gamma Message]",
 			withIncludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2, titleMultilangContributorId3),
-			withExcludes(titleContributorId), consumer);
+				alwaysPresentContributor, blogsContributor,
+				journalArticleContributor, mbMessageContributor),
+			withExcludes(alwaysPresentContributor), consumer);
 
 		assertSearch(
-			"[Gamma Article, Gamma Blog, Gamma Message]",
+			"[Gamma Blog, Gamma Message]",
 			withIncludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2, titleMultilangContributorId3),
-			withExcludes(
-				titleMultilangContributorId1, titleMultilangContributorId2),
+				alwaysPresentContributor, blogsContributor,
+				journalArticleContributor, mbMessageContributor),
+			withExcludes(blogsContributor, journalArticleContributor),
 			consumer);
 
 		assertSearch(
-			"[Gamma Article, Gamma Blog, Gamma Message]",
+			"[Gamma Message]",
 			withIncludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2, titleMultilangContributorId3),
+				alwaysPresentContributor, blogsContributor,
+				journalArticleContributor, mbMessageContributor),
 			withExcludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2),
+				alwaysPresentContributor, blogsContributor,
+				journalArticleContributor),
 			consumer);
 
 		assertSearch(
-			"[Gamma Article, Gamma Blog, Gamma Message]",
+			"[Gamma Article, Gamma Blog]",
 			withIncludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2, titleMultilangContributorId3),
+				alwaysPresentContributor, blogsContributor,
+				journalArticleContributor, mbMessageContributor),
+			withExcludes(blogsContributor, mbMessageContributor), consumer);
+
+		assertSearch(
+			"[Gamma Article]",
+			withIncludes(
+				alwaysPresentContributor, blogsContributor,
+				journalArticleContributor, mbMessageContributor),
 			withExcludes(
-				titleMultilangContributorId1, titleMultilangContributorId3),
+				alwaysPresentContributor, blogsContributor,
+				mbMessageContributor),
 			consumer);
 
 		assertSearch(
-			"[Gamma Article, Gamma Blog, Gamma Message]",
+			"[Gamma Blog]",
 			withIncludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2, titleMultilangContributorId3),
-			withExcludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId3),
-			consumer);
-
-		assertSearch(
-			"[Gamma Article, Gamma Blog, Gamma Message]",
-			withIncludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2, titleMultilangContributorId3),
-			withExcludes(
-				titleMultilangContributorId2, titleMultilangContributorId3),
-			consumer);
-
-		assertSearch(
-			"[Gamma Article, Gamma Blog, Gamma Message]",
-			withIncludes(
-				titleContributorId, titleMultilangContributorId1,
-				titleMultilangContributorId2, titleMultilangContributorId3),
-			withExcludes(
-				titleContributorId, titleMultilangContributorId2,
-				titleMultilangContributorId3),
+				alwaysPresentContributor, blogsContributor,
+				journalArticleContributor, mbMessageContributor),
+			withExcludes(journalArticleContributor, mbMessageContributor),
 			consumer);
 	}
 

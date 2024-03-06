@@ -19,7 +19,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class JenkinsPullRequestJobEntity extends BaseJobEntity {
+public class JenkinsPullRequestJobEntity
+	extends BasePullRequestJobEntity implements PullRequestJobEntity {
 
 	public JenkinsPullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
@@ -43,10 +44,22 @@ public class JenkinsPullRequestJobEntity extends BaseJobEntity {
 		return HashMapBuilder.put(
 			"BUILD_PRIORITY", String.valueOf(getPriority())
 		).put(
+			"GITHUB_ORIGIN_NAME", getOriginName()
+		).put(
 			"GITHUB_PULL_REQUEST_NUMBER",
 			String.valueOf(_getPullRequestNumber())
 		).put(
 			"GITHUB_RECEIVER_USERNAME", _getPullRequestReceiverUserName()
+		).put(
+			"GITHUB_SENDER_BRANCH_NAME", getSenderBranchName()
+		).put(
+			"GITHUB_SENDER_BRANCH_SHA", getSenderBranchSHA()
+		).put(
+			"GITHUB_SENDER_USERNAME", getSenderUserName()
+		).put(
+			"GITHUB_UPSTREAM_BRANCH_NAME", getUpstreamBranchName()
+		).put(
+			"GITHUB_UPSTREAM_BRANCH_SHA", getUpstreamBranchSHA()
 		).build();
 	}
 

@@ -289,7 +289,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isGroupAdmin(groupId)) {
-			throw new PrincipalException.MustBeCompanyAdmin(permissionChecker);
+			throw new PrincipalException.MustBeGroupAdmin(permissionChecker);
 		}
 
 		_kbArticleModelResourcePermission.check(

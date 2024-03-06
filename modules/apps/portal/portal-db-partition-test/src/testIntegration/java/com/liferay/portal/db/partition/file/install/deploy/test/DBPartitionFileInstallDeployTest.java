@@ -236,7 +236,7 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 			() -> _checkConfigurationNotExists(),
 			() -> _checkConfigurationNotExists(),
 			unsupportedOperationException -> Assert.assertEquals(
-				"Portlet-instance scoped configuration do not support " +
+				"Portlet-instance scoped configuration files do not support " +
 					"database partitioning",
 				unsupportedOperationException.getMessage()),
 			false);

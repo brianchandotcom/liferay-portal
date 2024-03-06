@@ -427,29 +427,19 @@ public class DBTest {
 		throws Exception {
 
 		db.runSQL(
-			"create table " + DBTest._TABLE_NAME_3 +
+			"create table " + DBTest._TABLE_NAME_2 +
 				" (id1 LONG not null, id2 LONG not null)");
 
-		db.runSQL(
-			"CREATE UNIQUE INDEX IX_TEMP ON " + _TABLE_NAME_3 + " (id1,id2)");
+		addIndex(_TABLE_NAME_2, new String[] {"id1", "id2"}, true);
 
-		db.runSQL("INSERT into " + _TABLE_NAME_3 + " (id1,id2) values (1,1)");
+		db.runSQL("INSERT into " + _TABLE_NAME_2 + " (id1, id2) values (1, 1)");
+		db.runSQL("INSERT into " + _TABLE_NAME_2 + " (id1, id2) values (1, 2)");
 
-		db.runSQL("INSERT into " + _TABLE_NAME_3 + " (id1,id2) values (1,2)");
+		db.alterTableDropColumn(connection, _TABLE_NAME_2, "id2");
 
-		db.alterTableDropColumn(connection, _TABLE_NAME_3, "id2");
+		Assert.assertFalse(dbInspector.hasColumn(_TABLE_NAME_2, "id2"));
 
-		Assert.assertFalse(dbInspector.hasColumn(_TABLE_NAME_3, "id2"));
-
-		List<IndexMetadata> indexMetadatas = ReflectionTestUtil.invoke(
-			db, "getIndexes",
-			new Class<?>[] {
-				Connection.class, String.class, String.class, boolean.class
-			},
-			connection, _TABLE_NAME_3, "id2", false);
-
-		Assert.assertEquals(
-			indexMetadatas.toString(), 0, indexMetadatas.size());
+		Assert.assertFalse(dbInspector.hasIndex(_TABLE_NAME_2, INDEX_NAME));
 	}
 
 	@Test
@@ -848,13 +838,19 @@ public class DBTest {
 		}
 	}
 
-	protected void addIndex(String[] columnNames) {
+	protected void addIndex(
+		String tableName, String[] columnNames, boolean unique) {
+
 		List<IndexMetadata> indexMetadatas = Arrays.asList(
-			new IndexMetadata(INDEX_NAME, TABLE_NAME_1, false, columnNames));
+			new IndexMetadata(INDEX_NAME, tableName, unique, columnNames));
 
 		ReflectionTestUtil.invoke(
 			db, "addIndexes", new Class<?>[] {Connection.class, List.class},
 			connection, indexMetadatas);
+	}
+
+	protected void addIndex(String[] columnNames) {
+		addIndex(TABLE_NAME_1, columnNames, false);
 	}
 
 	protected static final String INDEX_NAME = "IX_TEMP";

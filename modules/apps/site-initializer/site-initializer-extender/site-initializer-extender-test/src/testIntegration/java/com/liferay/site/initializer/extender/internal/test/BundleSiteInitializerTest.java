@@ -117,6 +117,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -359,6 +361,34 @@ public class BundleSiteInitializerTest {
 		finally {
 			FileUtil.deltree(tempDir1);
 			FileUtil.deltree(tempDir2);
+		}
+	}
+
+	@Test
+	public void testSerialize() throws Exception {
+		File tempDir1 = _getTempDir(
+			"/com.liferay.site.initializer.extender.test.bundle.1.jar");
+
+		try {
+			SiteInitializer siteInitializer = _siteInitializerFactory.create(
+				new File(tempDir1, "site-initializer"), null);
+
+			//siteInitializer.initialize(_group.getGroupId());
+
+			File file = siteInitializer.serialize(_group.getGroupId());
+
+			Assert.assertNotNull(file);
+
+			File tempFolderFile = FileUtil.createTempFolder();
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Temp folder " + tempFolderFile);
+			}
+
+			FileUtil.unzip(file, tempFolderFile);
+		}
+		finally {
+			FileUtil.deltree(tempDir1);
 		}
 	}
 
@@ -3891,6 +3921,9 @@ public class BundleSiteInitializerTest {
 		_assertSXPBlueprint2();
 		_assertUserAccounts2();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BundleSiteInitializerTest.class);
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;

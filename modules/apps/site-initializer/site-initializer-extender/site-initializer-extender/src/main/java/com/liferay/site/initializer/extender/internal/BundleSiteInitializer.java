@@ -210,6 +210,8 @@ import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -231,6 +233,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.ServletContext;
 
@@ -689,7 +693,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	@Override
 	public File serialize(long groupId) throws SerializationException {
-		return null;
+		File file = FileUtil.createTempFile("zip");
+
+		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
+				new FileOutputStream(file))) {
+
+			ZipEntry zipEntry = new ZipEntry("hello/world.json");
+
+			zipOutputStream.putNextEntry(zipEntry);
+
+			zipOutputStream.write("{}".getBytes(), 0, "{}".length());
+
+			zipOutputStream.closeEntry();
+		}
+		catch (IOException ioException) {
+			throw new SerializationException(ioException);
+		}
+
+		return file;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {

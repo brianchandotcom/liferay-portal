@@ -51,6 +51,8 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 		</aui:select>
 
 		<aui:input helpMessage="key-help" name="key" />
+
+		<aui:input name="priority" />
 	</aui:fieldset>
 </commerce-ui:panel>
 

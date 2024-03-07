@@ -53,6 +53,8 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 			<aui:select label="order-specifications-by" name="preferences--specificationsOrder--" value='<%= portletPreferences.getValue("specificationsOrder", "priority:asc") %>'>
 				<aui:option label="specification-group-priority-ascending" value="priority:asc" />
 				<aui:option label="specification-group-priority-descending" value="priority:desc" />
+				<aui:option label="specification-label-priority-ascending" value="label-priority:asc" />
+				<aui:option label="specification-label-priority-descending" value="label-priority:desc" />
 			</aui:select>
 
 			<aui:input label="display-frequencies" name="preferences--frequenciesVisible--" type="checkbox" value='<%= GetterUtil.getBoolean(portletPreferences.getValue("frequenciesVisible", null), true) %>' />

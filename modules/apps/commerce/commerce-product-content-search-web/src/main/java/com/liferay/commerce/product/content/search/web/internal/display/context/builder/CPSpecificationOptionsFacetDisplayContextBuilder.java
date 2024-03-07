@@ -112,17 +112,12 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 		CPSpecificationOption cpSpecificationOption = _getCPSpecificationOption(
 			_facet.getFieldName());
 
-		CPOptionCategory cpOptionCategory =
-			cpSpecificationOption.getCPOptionCategory();
-
-		if (cpOptionCategory != null) {
-			cpSpecificationOptionsSearchFacetDisplayContext.setPriority(
-				cpOptionCategory.getPriority());
-		}
-		else {
-			cpSpecificationOptionsSearchFacetDisplayContext.setPriority(
-				GetterUtil.DEFAULT_DOUBLE);
-		}
+		cpSpecificationOptionsSearchFacetDisplayContext.setPriority(
+			_getCPSpecificationOptionsSearchFacetDisplayContextPriority(
+				cpSpecificationOption.getCPOptionCategory(),
+				cpSpecificationOption,
+				_portletSharedSearchResponse.getPortletPreferences(
+					_renderRequest)));
 
 		cpSpecificationOptionsSearchFacetDisplayContext.setTermDisplayContexts(
 			_buildTermDisplayContexts());
@@ -243,7 +238,9 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 					CPSpecificationOptionsSearchFacetDisplayContext::
 						getPriority);
 
-			if (_specificationsOrder.equals("priority:desc")) {
+			if (_specificationsOrder.equals("label-priority:desc") ||
+				_specificationsOrder.equals("priority:desc")) {
+
 				comparator = comparator.reversed();
 			}
 
@@ -361,6 +358,33 @@ public class CPSpecificationOptionsFacetDisplayContextBuilder
 			PortalUtil.getCompanyId(_renderRequest),
 			CPSpecificationOptionFacetsUtil.
 				getCPSpecificationOptionKeyFromIndexFieldName(fieldName));
+	}
+
+	private double _getCPSpecificationOptionsSearchFacetDisplayContextPriority(
+		CPOptionCategory cpOptionCategory,
+		CPSpecificationOption cpSpecificationOption,
+		PortletPreferences portletPreferences) {
+
+		double priority = GetterUtil.DEFAULT_DOUBLE;
+
+		if (portletPreferences != null) {
+			String specificationsOrder = portletPreferences.getValue(
+				"specificationsOrder", _specificationsOrder);
+
+			if (specificationsOrder.equals("label-priority:asc") ||
+				specificationsOrder.equals("label-priority:desc")) {
+
+				priority = cpSpecificationOption.getPriority();
+			}
+			else if (cpOptionCategory != null) {
+				priority = cpOptionCategory.getPriority();
+			}
+		}
+		else if (cpOptionCategory != null) {
+			priority = cpOptionCategory.getPriority();
+		}
+
+		return priority;
 	}
 
 	private String _getFirstParameterValueString() {

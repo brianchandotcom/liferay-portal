@@ -160,7 +160,7 @@ public class CPSpecificationOptionManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"group", "label", "modified-date"};
+		return new String[] {"group", "label", "modified-date", "priority"};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

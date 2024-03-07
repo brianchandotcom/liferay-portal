@@ -84,26 +84,32 @@ export default function useTranslationProgress({
 		setTranslationProgress(translationProgress);
 	}, [fields, translatedItems, setTranslationProgress]);
 
-	const defaultLocaleChangeHandler = (event: any) => {
-		const selectedLanguageId = event.item.getAttribute('data-value');
+	const defaultLocaleChangeHandler = useCallback(
+		(event: any) => {
+			const selectedLanguageId = event.item.getAttribute('data-value');
 
-		const defaultLanguageIdInput = document.getElementById(
-			`${namespace}defaultLanguageId`
-		) as HTMLInputElement;
+			const defaultLanguageIdInput = document.getElementById(
+				`${namespace}defaultLanguageId`
+			) as HTMLInputElement;
 
-		if (defaultLanguageIdInput) {
-			defaultLanguageIdInput.value = selectedLanguageId;
-		}
+			if (defaultLanguageIdInput) {
+				defaultLanguageIdInput.value = selectedLanguageId;
+			}
 
-		setDeafultLanguageId(selectedLanguageId);
-		setSelectedLanguageId(selectedLanguageId);
-	};
+			setDeafultLanguageId(selectedLanguageId);
+			setSelectedLanguageId(selectedLanguageId);
+		},
+		[namespace, setDeafultLanguageId, setSelectedLanguageId]
+	);
 
-	const localeChangeHandler = (event: any) => {
-		const selectedLanguageId = event.item.getAttribute('data-value');
+	const localeChangeHandler = useCallback(
+		(event: any) => {
+			const selectedLanguageId = event.item.getAttribute('data-value');
 
-		setSelectedLanguageId(selectedLanguageId);
-	};
+			setSelectedLanguageId(selectedLanguageId);
+		},
+		[setSelectedLanguageId]
+	);
 
 	useEffect(() => {
 		Liferay.on(
@@ -136,8 +142,7 @@ export default function useTranslationProgress({
 				localeChangeHandler as () => void
 			);
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [defaultLocaleChangeHandler, localeChangeHandler]);
 
 	return {
 		defaultLanguageId,

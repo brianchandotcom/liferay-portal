@@ -48,20 +48,8 @@ export default function TranslationOptions({
 	};
 
 	const resetButtonHandler = () => {
-		const fields = getAllLocalizableFields(initialFields);
-
-		const defaultFields = [
-			'descriptionMapAsXML',
-			'friendlyURL',
-			'titleMapAsXML',
-		];
-
-		Object.keys(fields)
+		Object.keys(initialFields)
 			.flatMap((fieldName) => {
-				if (!defaultFields.includes(fieldName)) {
-					return [];
-				}
-
 				return Array.from(
 					document.querySelectorAll<HTMLInputElement>(
 						`[type="hidden"][data-field-name="${fieldName}"]`

@@ -34,6 +34,7 @@ import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 import com.liferay.users.admin.web.internal.display.context.UserActionDisplayContext;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -105,6 +106,8 @@ public class UserActionDropdownItems {
 					() ->
 						!PropsValues.PORTAL_JAAS_ENABLE &&
 						PropsValues.PORTAL_IMPERSONATION_ENABLE &&
+						!Objects.equals(
+							_user.getScreenName(), "default-service-account") &&
 						(_user.getUserId() != _themeDisplay.getUserId()) &&
 						_user.isActive() && !_themeDisplay.isImpersonated() &&
 						UserPermissionUtil.contains(

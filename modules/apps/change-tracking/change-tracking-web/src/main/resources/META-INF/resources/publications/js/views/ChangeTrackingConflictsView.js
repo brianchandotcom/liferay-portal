@@ -35,7 +35,6 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			timeZone,
 			unapprovedChangesAllowed,
 			unresolvedConflicts,
-			unscheduleURL,
 		} = props;
 
 		this.hasUnapprovedChanges = hasUnapprovedChanges;
@@ -50,7 +49,6 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 		this.timeZone = timeZone;
 		this.unapprovedChangesAllowed = unapprovedChangesAllowed;
 		this.unresolvedConflicts = unresolvedConflicts;
-		this.unscheduleURL = unscheduleURL;
 
 		this.state = {
 			date: null,
@@ -102,17 +100,13 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 							spritemap={this.spritemap}
 						>
 							<span>
-								{this.unscheduleURL
-									? Liferay.Language.get(
-											'this-scheduled-publication-contains-conflicting-changes-that-must-be-manually-resolved-before-publishing'
-									  )
-									: Liferay.Language.get(
-											'this-publication-contains-conflicting-changes-that-must-be-manually-resolved-before-publishing'
-									  )}
+								{Liferay.Language.get(
+									'this-publication-contains-conflicting-changes-that-must-be-manually-resolved-before-publishing'
+								) + ' '}
 							</span>
 
 							<a href={this.learnLink.url}>
-								{' ' + this.learnLink.message}
+								{this.learnLink.message}
 							</a>
 						</ClayAlert>
 					)}
@@ -260,31 +254,21 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 				<div className="sheet-footer sheet-footer-btn-block-sm-down">
 					<div className="btn-group">
 						<div className="btn-group-item">
-							{this.unscheduleURL ? (
-								<button
-									className="btn btn-primary"
-									onClick={() => navigate(this.unscheduleURL)}
-									type="button"
-								>
-									{Liferay.Language.get('unschedule')}
-								</button>
-							) : (
-								<button
-									className={
-										!!this.unresolvedConflicts.length ||
-										(this.hasUnapprovedChanges &&
-											!this.unapprovedChangesAllowed)
-											? 'btn btn-primary disabled'
-											: 'btn btn-primary'
-									}
-									onClick={() => this.handleSubmit()}
-									type="button"
-								>
-									{this.schedule
-										? Liferay.Language.get('schedule')
-										: Liferay.Language.get('publish')}
-								</button>
-							)}
+							<button
+								className={
+									!!this.unresolvedConflicts.length ||
+									(this.hasUnapprovedChanges &&
+										!this.unapprovedChangesAllowed)
+										? 'btn btn-primary disabled'
+										: 'btn btn-primary'
+								}
+								onClick={() => this.handleSubmit()}
+								type="button"
+							>
+								{this.schedule
+									? Liferay.Language.get('schedule')
+									: Liferay.Language.get('publish')}
+							</button>
 						</div>
 
 						<div className="btn-group-item">

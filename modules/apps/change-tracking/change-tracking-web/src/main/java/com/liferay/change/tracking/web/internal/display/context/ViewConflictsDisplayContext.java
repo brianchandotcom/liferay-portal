@@ -7,7 +7,6 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -32,12 +31,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Map;
@@ -214,32 +211,6 @@ public class ViewConflictsDisplayContext {
 				_themeDisplay.getCompanyId())
 		).put(
 			"unresolvedConflicts", unresolvedConflictsJSONArray
-		).put(
-			"unscheduleURL",
-			() -> {
-				if (_ctCollection.getStatus() !=
-						WorkflowConstants.STATUS_SCHEDULED) {
-
-					return null;
-				}
-
-				return PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/change_tracking/unschedule_publication"
-				).setRedirect(
-					() -> {
-						String namespace = _portal.getPortletNamespace(
-							CTPortletKeys.PUBLICATIONS);
-
-						return HttpComponentsUtil.addParameter(
-							_portal.getCurrentURL(_renderRequest),
-							namespace + "schedule", true);
-					}
-				).setParameter(
-					"ctCollectionId", _ctCollection.getCtCollectionId()
-				).buildString();
-			}
 		).build();
 	}
 
@@ -341,10 +312,7 @@ public class ViewConflictsDisplayContext {
 					_themeDisplay.getLocale())
 			);
 
-			if (!conflictInfo.isResolved() &&
-				(_ctCollection.getStatus() !=
-					WorkflowConstants.STATUS_SCHEDULED)) {
-
+			if (!conflictInfo.isResolved()) {
 				JSONArray actionsJSONArray = JSONFactoryUtil.createJSONArray();
 
 				String conflictDescription =

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(service = DynamicInclude.class)
-public class OAuth2ProviderTopJSDynamicInclude implements DynamicInclude {
+public class OAuth2ProviderTopJSPDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(

@@ -448,6 +448,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			"5.13.0", "5.14.0",
 			new CPDefinitionSpecificationOptionValueUpgradeProcess());
 
+		registry.register(
+			"5.14.0", "5.15.0",
+			UpgradeProcessFactory.addColumns(
+				"CPSpecificationOption", "priority DOUBLE"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

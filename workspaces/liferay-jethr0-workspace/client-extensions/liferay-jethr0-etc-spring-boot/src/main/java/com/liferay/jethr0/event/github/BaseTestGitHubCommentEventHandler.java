@@ -75,14 +75,10 @@ public abstract class BaseTestGitHubCommentEventHandler
 
 		_pullRequestJobEntity = createPullRequestJobEntity(getTestSuite());
 
-		if (_testNoRebase()) {
-			GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+		String rebaseBranchSHA = _getRebaseBranchSHA();
 
-			GitHubCommit commonParentGitHubCommit =
-				gitHubPullRequest.getCommonParentGitHubCommit();
-
-			_pullRequestJobEntity.setUpstreamBranchSHA(
-				commonParentGitHubCommit.getSHA());
+		if (!StringUtil.isNullOrEmpty(rebaseBranchSHA)) {
+			_pullRequestJobEntity.setUpstreamBranchSHA(rebaseBranchSHA);
 		}
 
 		return _pullRequestJobEntity;
@@ -142,6 +138,32 @@ public abstract class BaseTestGitHubCommentEventHandler
 		return true;
 	}
 
+	private String _getRebaseBranchSHA() throws InvalidJSONException {
+		for (String testOption : getTestOptions()) {
+			if (StringUtil.isNullOrEmpty(testOption)) {
+				continue;
+			}
+
+			Matcher gitHubCommitIDMatcher = _gitHubCommitIDPattern.matcher(
+				testOption);
+
+			if (gitHubCommitIDMatcher.matches()) {
+				return gitHubCommitIDMatcher.group();
+			}
+		}
+
+		if (_testNoRebase()) {
+			GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+			GitHubCommit commonParentGitHubCommit =
+				gitHubPullRequest.getCommonParentGitHubCommit();
+
+			return commonParentGitHubCommit.getSHA();
+		}
+
+		return null;
+	}
+
 	private boolean _testNoRebase() throws InvalidJSONException {
 		for (String testOption : getTestOptions()) {
 			if (testOption.equals("norebase")) {
@@ -155,6 +177,8 @@ public abstract class BaseTestGitHubCommentEventHandler
 	private static final Log _log = LogFactory.getLog(
 		BaseTestGitHubCommentEventHandler.class);
 
+	private static final Pattern _gitHubCommitIDPattern = Pattern.compile(
+		"[a-f0-9]{7,40}");
 	private static final Pattern _pattern = Pattern.compile(
 		"ci:test(\\:(?<testOptions>[^\\s]+))?");
 

@@ -8,8 +8,6 @@ package com.liferay.jethr0.job;
 import com.liferay.jethr0.util.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.net.URL;
-
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,14 +27,6 @@ public class JenkinsPullRequestJobEntity
 	@Override
 	public String getJenkinsJobName() {
 		return "test-jenkins-acceptance-pullrequest";
-	}
-
-	public URL getJenkinsPullRequestURL() {
-		return getParameterValueURL("jenkinsPullRequestURL");
-	}
-
-	public void setJenkinsPullRequestURL(URL jenkinsPullRequestURL) {
-		setParameterValueURL("jenkinsPullRequestURL", jenkinsPullRequestURL);
 	}
 
 	@Override
@@ -69,7 +59,7 @@ public class JenkinsPullRequestJobEntity
 		}
 
 		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getJenkinsPullRequestURL()));
+			String.valueOf(getPullRequestURL()));
 
 		if (matcher.find()) {
 			_pullRequestNumber = Long.valueOf(
@@ -87,7 +77,7 @@ public class JenkinsPullRequestJobEntity
 		}
 
 		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getJenkinsPullRequestURL()));
+			String.valueOf(getPullRequestURL()));
 
 		if (matcher.find()) {
 			_receiverUserName = matcher.group("receiverUserName");

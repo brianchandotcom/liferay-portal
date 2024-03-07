@@ -5,12 +5,16 @@
 
 package com.liferay.jethr0.job;
 
+import java.net.URL;
+
 /**
  * @author Michael Hashimoto
  */
 public interface PullRequestJobEntity extends JobEntity {
 
 	public String getOriginName();
+
+	public URL getPullRequestURL();
 
 	public String getSenderBranchName();
 
@@ -23,6 +27,8 @@ public interface PullRequestJobEntity extends JobEntity {
 	public String getUpstreamBranchSHA();
 
 	public void setOriginName(String originName);
+
+	public void setPullRequestURL(URL pullRequestURL);
 
 	public void setSenderBranchName(String senderBranchName);
 

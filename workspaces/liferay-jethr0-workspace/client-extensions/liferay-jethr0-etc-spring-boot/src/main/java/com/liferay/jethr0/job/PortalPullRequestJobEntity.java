@@ -5,8 +5,6 @@
 
 package com.liferay.jethr0.job;
 
-import java.net.URL;
-
 /**
  * @author Michael Hashimoto
  */
@@ -14,13 +12,9 @@ public interface PortalPullRequestJobEntity extends PullRequestJobEntity {
 
 	public String getForwardReceiverUserName();
 
-	public URL getPortalPullRequestURL();
-
 	public String getTestSuiteName();
 
 	public void setForwardReceiverUserName(String forwardReceiverUserName);
-
-	public void setPortalPullRequestURL(URL portalPullRequestURL);
 
 	public void setTestSuiteName(String testSuiteName);
 

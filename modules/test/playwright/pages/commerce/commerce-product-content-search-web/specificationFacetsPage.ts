@@ -21,6 +21,10 @@ export class SpecificationFacetsPage {
 	readonly searchOptionsConfigurationEditButton: Locator;
 	readonly searchOptionsConfigurationSaveButton: Locator;
 	readonly selectSpecificationFacetPageInput: Locator;
+	readonly specificationFacetConfigurationEditButton: Locator;
+	readonly specificationFacetConfigurationMenuItem: Locator;
+	readonly specificationFacetConfigurationSaveButton: Locator;
+	readonly specificationFacetOrderSpecificationInput: Locator;
 
 	constructor(page: Page) {
 		this.addSearchOptionsLabel = page
@@ -58,6 +62,21 @@ export class SpecificationFacetsPage {
 		this.selectSpecificationFacetPageInput = page
 			.getByTestId('selectLayout')
 			.getByLabel('Select Specification Facet Page');
+		this.specificationFacetConfigurationEditButton = page
+			.locator(
+				'//section[contains(@id, "CPSpecificationOptionFacetsPortlet")]'
+			)
+			.getByLabel('Options');
+		this.specificationFacetConfigurationMenuItem = page.getByRole(
+			'menuitem',
+			{exact: true, name: 'Configuration'}
+		);
+		this.specificationFacetConfigurationSaveButton = page
+			.frameLocator('iframe[id="modalIframe"]')
+			.getByRole('button', {name: 'Save'});
+		this.specificationFacetOrderSpecificationInput = page
+			.frameLocator('iframe[id="modalIframe"]')
+			.getByLabel('Order Specifications By');
 	}
 
 	async addSearchOptionsWidget() {
@@ -85,6 +104,16 @@ export class SpecificationFacetsPage {
 		});
 		await this.searchOptionsAllowEmptySearchesInput.click();
 		await this.searchOptionsConfigurationSaveButton.click();
+	}
+
+	async configureSpecificationFacetOrdering(value: string) {
+		await this.specificationFacetConfigurationEditButton.click();
+		await this.specificationFacetConfigurationMenuItem.click();
+		await this.specificationFacetOrderSpecificationInput.selectOption(
+			value
+		);
+		await this.specificationFacetConfigurationSaveButton.click();
+		await this.reloadPage();
 	}
 
 	async deleteSpecificationPage() {

@@ -13,7 +13,48 @@ import {loginTest} from '../../../fixtures/loginTest';
 
 export const test = mergeTests(apiHelpersTest, commercePagesTest, loginTest());
 
-test('can sort specifications by specification group priority', async ({
+const data = [];
+
+test.afterEach(async ({apiHelpers}) => {
+	for await (const item of data.reverse()) {
+		switch (item.type) {
+			case 'catalog':
+				await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(
+					item.id
+				);
+
+				break;
+			case 'channel':
+				await apiHelpers.headlessCommerceAdminChannel.deleteChannel(
+					item.id
+				);
+
+				break;
+			case 'optionCategory':
+				apiHelpers.headlessCommerceAdminCatalog.deleteOptionCategory(
+					item.id
+				);
+
+				break;
+			case 'product':
+				await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
+					item.id
+				);
+
+				break;
+			case 'specification':
+				await apiHelpers.headlessCommerceAdminCatalog.deleteSpecification(
+					item.id
+				);
+
+				break;
+			default:
+				break;
+		}
+	}
+});
+
+test('can sort specifications by specification group and label priority', async ({
 	apiHelpers,
 	commerceLayoutsPage,
 	specificationFacetsPage,
@@ -35,20 +76,28 @@ test('can sort specifications by specification group priority', async ({
 		siteGroupId: site.id,
 	});
 
+	data.push({id: channel.id, type: 'channel'});
+
 	const optionCategory1 =
 		await apiHelpers.headlessCommerceAdminCatalog.postOptionCategory(
 			'Warranty',
 			1
 		);
+
+	data.push({id: optionCategory1.id, type: 'optionCategory'});
+
 	const optionCategory2 =
 		await apiHelpers.headlessCommerceAdminCatalog.postOptionCategory(
 			'Material',
 			0
 		);
 
+	data.push({id: optionCategory2.id, type: 'optionCategory'});
+
 	const specification1 =
 		await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
 			true,
+			optionCategory2.priority,
 			'Warranty1',
 			{
 				id: optionCategory1.id,
@@ -59,9 +108,13 @@ test('can sort specifications by specification group priority', async ({
 				},
 			}
 		);
+
+	data.push({id: specification1.id, type: 'specification'});
+
 	const specification2 =
 		await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
 			true,
+			optionCategory1.priority,
 			'Material1',
 			{
 				id: optionCategory2.id,
@@ -73,9 +126,13 @@ test('can sort specifications by specification group priority', async ({
 			}
 		);
 
+	data.push({id: specification2.id, type: 'specification'});
+
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
 		name: 'Specification Facet Catalog',
 	});
+
+	data.push({id: catalog.id, type: 'catalog'});
 
 	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
@@ -91,6 +148,9 @@ test('can sort specifications by specification group priority', async ({
 			},
 		],
 	});
+
+	data.push({id: product1.productId, type: 'product'});
+
 	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
 		name: {
@@ -106,6 +166,8 @@ test('can sort specifications by specification group priority', async ({
 		],
 	});
 
+	data.push({id: product2.productId, type: 'product'});
+
 	await specificationFacetsPage.reloadPage();
 
 	const panelList = await specificationFacetsPage.panelList.all();
@@ -116,31 +178,19 @@ test('can sort specifications by specification group priority', async ({
 		await expect(panelList[i]).toHaveText(specificationFacetsList[i]);
 	}
 
-	await Promise.all([
-		apiHelpers.headlessCommerceAdminCatalog.deleteOptionCategory(
-			optionCategory1.id
-		),
-		apiHelpers.headlessCommerceAdminCatalog.deleteOptionCategory(
-			optionCategory2.id
-		),
-		apiHelpers.headlessCommerceAdminChannel.deleteChannel(channel.id),
-	]);
-
-	await apiHelpers.headlessCommerceAdminCatalog.deleteSpecification(
-		specification1.id
-	);
-	await apiHelpers.headlessCommerceAdminCatalog.deleteSpecification(
-		specification2.id
+	await specificationFacetsPage.configureSpecificationFacetOrdering(
+		'label-priority:asc'
 	);
 
-	await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-		product1.productId
-	);
-	await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-		product2.productId
-	);
+	await specificationFacetsPage.reloadPage();
 
-	await apiHelpers.headlessCommerceAdminCatalog.deleteCatalog(catalog.id);
+	const reverseSpecificationFacetsList = specificationFacetsList.reverse();
+
+	for (let i = 0; i < reverseSpecificationFacetsList.length; i++) {
+		await expect(panelList[i]).toHaveText(
+			reverseSpecificationFacetsList[i]
+		);
+	}
 
 	await commerceLayoutsPage.goToPages();
 	await specificationFacetsPage.deleteSpecificationPage();

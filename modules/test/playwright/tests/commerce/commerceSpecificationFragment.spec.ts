@@ -82,6 +82,7 @@ test('Product specification fragment only shows correct specifications', async (
 	const specification =
 		await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
 			true,
+			0,
 			'Test Specification'
 		);
 

@@ -278,6 +278,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 
 	async postSpecification(
 		facetable: boolean = true,
+		priority: number = 0,
 		specificationTitle: string = 'Specification' + getRandomInt(),
 		optionCategory?: DataObject
 	) {
@@ -288,6 +289,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 					facetable,
 					key: specificationTitle,
 					optionCategory,
+					priority,
 					title: {
 						en_US: specificationTitle,
 					},
@@ -300,6 +302,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 			{
 				facetable,
 				key: specificationTitle,
+				priority,
 				title: {
 					en_US: specificationTitle,
 				},

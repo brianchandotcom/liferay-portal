@@ -93,7 +93,9 @@ export class CommerceLayoutsPage {
 		});
 		this.optionsButton = page.getByLabel('Options', {exact: true});
 		this.page = page;
-		this.pagesMenuItem = page.getByTestId('app').filter({hasText: 'Pages'});
+		this.pagesMenuItem = page
+			.getByTestId('app')
+			.filter({hasNotText: 'Locked', hasText: 'Pages'});
 		this.pageTemplatesMenuItem = page
 			.getByTestId('app')
 			.filter({hasText: 'Page Templates'});

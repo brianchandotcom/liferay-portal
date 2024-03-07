@@ -8049,7 +8049,7 @@ public class ServiceBuilder {
 
 		content = header + "\n\n" + content;
 
-		String fileName = file.toString();
+		String fileName = _normalize(file.toString());
 
 		int startIndex = 0;
 

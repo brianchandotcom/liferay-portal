@@ -184,8 +184,7 @@ public class Main {
 			return;
 		}
 
-		HttpPost httpPost = new HttpPost(
-			System.getenv("LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT"));
+		HttpPost httpPost = new HttpPost(slackEndpoint);
 
 		String slackMessage = StringBundler.concat(
 			new Date(), " *", System.getenv("LCP_PROJECT_ID"), "*->*",

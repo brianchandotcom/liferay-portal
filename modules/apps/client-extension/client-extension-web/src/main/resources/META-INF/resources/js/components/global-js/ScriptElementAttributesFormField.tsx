@@ -6,7 +6,7 @@
 import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
-import AttributeFields, {TYPE_STRING} from './AttributeFields';
+import AttributeFields, {TYPE_BOOLEAN, TYPE_STRING} from './AttributeFields';
 
 const emptyRow = () => ({id: uuidv4(), name: '', type: TYPE_STRING, value: ''});
 
@@ -42,7 +42,16 @@ export default function ScriptElementAttributesFormField({
 }: IProps) {
 	const [attributes, settAtributes] = useState(() =>
 		initialAttributes && !!initialAttributes.length
-			? [initialAttributes.map((item) => ({...item, id: uuidv4()}))]
+			? [
+					initialAttributes.map((attribute) => ({
+						...attribute,
+						id: uuidv4(),
+						type:
+							typeof attribute.value === 'boolean'
+								? TYPE_BOOLEAN
+								: TYPE_STRING,
+					})),
+			  ]
 			: [emptyRow()]
 	);
 

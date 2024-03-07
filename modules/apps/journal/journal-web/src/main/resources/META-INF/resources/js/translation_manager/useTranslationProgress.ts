@@ -3,19 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locale, TranslationProgress} from 'frontend-js-components-web';
+import {TranslationProgress} from 'frontend-js-components-web';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 
-export type Field = Record<Liferay.Language.Locale, string>;
-export type Fields = Record<string, Field>;
-
-export interface useTranslationProgressProps {
-	defaultLanguageId: Liferay.Language.Locale;
-	fields: Fields;
-	locales: Locale[];
-	namespace: string;
-	selectedLanguageId: Liferay.Language.Locale;
-}
+import {Field, TranslationManagerProps} from './Types';
 
 export default function useTranslationProgress({
 	defaultLanguageId: initialDefaultLanguageId,
@@ -23,7 +14,7 @@ export default function useTranslationProgress({
 	locales,
 	namespace,
 	selectedLanguageId: initialSelectedLanguageId,
-}: useTranslationProgressProps) {
+}: TranslationManagerProps) {
 	const [defaultLanguageId, setDeafultLanguageId] = useState(
 		initialDefaultLanguageId
 	);

@@ -7,20 +7,11 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {Locale} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {TranslationManagerProps} from './Types';
 import useTranslationProgress from './useTranslationProgress';
-
-type Field = Record<Liferay.Language.Locale, string>;
-interface Props {
-	defaultLanguageId: Liferay.Language.Locale;
-	fields: Record<string, Field>;
-	locales: Locale[];
-	namespace: string;
-	selectedLanguageId: Liferay.Language.Locale;
-}
 
 export default function TranslationOptions({
 	defaultLanguageId: initialDefaultLanguageId,
@@ -28,7 +19,7 @@ export default function TranslationOptions({
 	locales,
 	namespace,
 	selectedLanguageId: initialSelectedLanguageId,
-}: Props) {
+}: TranslationManagerProps) {
 	const {
 		observer: resetTranslationObserver,
 		onOpenChange: onOpenChangeResetTranslation,

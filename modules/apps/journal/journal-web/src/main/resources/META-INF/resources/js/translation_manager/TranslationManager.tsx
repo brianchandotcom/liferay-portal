@@ -4,20 +4,11 @@
  */
 
 import classNames from 'classnames';
-import {Locale, TranslationAdminSelector} from 'frontend-js-components-web';
+import {TranslationAdminSelector} from 'frontend-js-components-web';
 import React from 'react';
 
+import {TranslationManagerProps} from './Types';
 import useTranslationProgress from './useTranslationProgress';
-
-interface TranslationManagerProps {
-	defaultLanguageId: Liferay.Language.Locale;
-	fields: Fields;
-	locales: Locale[];
-	namespace: string;
-	selectedLanguageId: Liferay.Language.Locale;
-}
-export type Field = Record<Liferay.Language.Locale, string>;
-export type Fields = Record<string, Field>;
 
 export default function TranslationManager({
 	defaultLanguageId: initialDefaultLanguageId,

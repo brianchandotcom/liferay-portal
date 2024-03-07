@@ -35,7 +35,8 @@ public class Log4jLogImpl implements Log {
 	@Override
 	public void debug(Throwable throwable) {
 		_logger.logIfEnabled(
-			_logWrapperClassName, Level.DEBUG, null, (Object)null, throwable);
+			_logWrapperClassName, Level.DEBUG, null, throwable.getMessage(),
+			throwable);
 	}
 
 	@Override
@@ -53,7 +54,8 @@ public class Log4jLogImpl implements Log {
 	@Override
 	public void error(Throwable throwable) {
 		_logger.logIfEnabled(
-			_logWrapperClassName, Level.ERROR, null, (Object)null, throwable);
+			_logWrapperClassName, Level.ERROR, null, throwable.getMessage(),
+			throwable);
 	}
 
 	@Override
@@ -71,7 +73,8 @@ public class Log4jLogImpl implements Log {
 	@Override
 	public void fatal(Throwable throwable) {
 		_logger.logIfEnabled(
-			_logWrapperClassName, Level.FATAL, null, (Object)null, throwable);
+			_logWrapperClassName, Level.FATAL, null, throwable.getMessage(),
+			throwable);
 	}
 
 	@Override
@@ -88,7 +91,8 @@ public class Log4jLogImpl implements Log {
 	@Override
 	public void info(Throwable throwable) {
 		_logger.logIfEnabled(
-			_logWrapperClassName, Level.INFO, null, (Object)null, throwable);
+			_logWrapperClassName, Level.INFO, null, throwable.getMessage(),
+			throwable);
 	}
 
 	@Override
@@ -141,7 +145,8 @@ public class Log4jLogImpl implements Log {
 	@Override
 	public void trace(Throwable throwable) {
 		_logger.logIfEnabled(
-			_logWrapperClassName, Level.TRACE, null, (Object)null, throwable);
+			_logWrapperClassName, Level.TRACE, null, throwable.getMessage(),
+			throwable);
 	}
 
 	@Override
@@ -158,7 +163,8 @@ public class Log4jLogImpl implements Log {
 	@Override
 	public void warn(Throwable throwable) {
 		_logger.logIfEnabled(
-			_logWrapperClassName, Level.WARN, null, (Object)null, throwable);
+			_logWrapperClassName, Level.WARN, null, throwable.getMessage(),
+			throwable);
 	}
 
 	private final org.apache.logging.log4j.core.Logger _logger;

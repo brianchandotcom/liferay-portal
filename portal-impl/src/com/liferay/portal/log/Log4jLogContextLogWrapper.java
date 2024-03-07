@@ -50,7 +50,7 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	public void debug(Throwable throwable) {
 		_populateThreadContext();
 
-		super.debug(null, throwable);
+		super.debug(throwable);
 
 		_cleanThreadContext();
 	}
@@ -77,7 +77,7 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	public void error(Throwable throwable) {
 		_populateThreadContext();
 
-		super.error(null, throwable);
+		super.error(throwable);
 
 		_cleanThreadContext();
 	}
@@ -104,7 +104,7 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	public void fatal(Throwable throwable) {
 		_populateThreadContext();
 
-		super.fatal(null, throwable);
+		super.fatal(throwable);
 
 		_cleanThreadContext();
 	}
@@ -131,7 +131,7 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	public void info(Throwable throwable) {
 		_populateThreadContext();
 
-		super.info(null, throwable);
+		super.info(throwable);
 
 		_cleanThreadContext();
 	}
@@ -158,7 +158,7 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	public void trace(Throwable throwable) {
 		_populateThreadContext();
 
-		super.trace(null, throwable);
+		super.trace(throwable);
 
 		_cleanThreadContext();
 	}
@@ -185,7 +185,7 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	public void warn(Throwable throwable) {
 		_populateThreadContext();
 
-		super.warn(null, throwable);
+		super.warn(throwable);
 
 		_cleanThreadContext();
 	}

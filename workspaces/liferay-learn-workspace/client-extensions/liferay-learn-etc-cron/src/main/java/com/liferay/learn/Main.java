@@ -177,6 +177,13 @@ public class Main {
 	public static void sendSlackMessage(String exceptionMessage)
 		throws Exception {
 
+		String slackEndpoint = System.getenv(
+			"LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT");
+
+		if (slackEndpoint == null) {
+			return;
+		}
+
 		HttpPost httpPost = new HttpPost(
 			System.getenv("LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT"));
 
@@ -1413,6 +1420,7 @@ public class Main {
 							_landingPageFiles.contains(englishFile)));
 				}
 			};
+
 		ContentFieldValue englishNavigationLinksContentFieldValue =
 			new ContentFieldValue() {
 				{

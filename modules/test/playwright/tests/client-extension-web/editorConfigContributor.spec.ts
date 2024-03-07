@@ -14,13 +14,13 @@ import getRandomString from '../../utils/getRandomString';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
-import {editorSamplePageTest} from './fixtures/editorSamplePageTest';
+import {editorSamplesPageTest} from './fixtures/editorSamplesPageTest';
 import {newEditorConfigContributorPageTest} from './fixtures/newEditorConfigContributorPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	clientExtensionsPageTest,
-	editorSamplePageTest,
+	editorSamplesPageTest,
 	featureFlagsTest({
 		'LPS-178052': true,
 		'LPS-186870': true,
@@ -103,7 +103,7 @@ test('Add a toolbar button to a CKEditor, by applying editor config contributor 
 
 test('Add a toolbar button to an Alloy Editor @LPD-11056', async ({
 	apiHelpers,
-	editorSamplePage,
+	editorSamplesPage,
 	page,
 	site,
 }) => {
@@ -128,20 +128,26 @@ test('Add a toolbar button to an Alloy Editor @LPD-11056', async ({
 			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		await editorSamplePage.selectTab({tabLabel: 'Alloy'});
+		await expect(
+			editorSamplesPage.balloonEditorContainer.getByText('Lorem ipsum')
+		).toBeInViewport();
 
-		await editorSamplePage.alloyEditorContainer.isVisible();
+		await editorSamplesPage.selectTab({tabLabel: 'Alloy'});
+
+		await expect(
+			editorSamplesPage.alloyEditorContainer.getByText('Lorem ipsum')
+		).toBeInViewport();
 	});
 
 	await test.step('Check if client extenstion is applied', async () => {
-		await editorSamplePage.alloyEditorContainer
+		await editorSamplesPage.alloyEditorContainer
 			.getByText('Lorem ipsum')
 			.selectText();
 
-		const toolbarContainer = editorSamplePage.alloyEditorToolbarContainer;
-
-		await toolbarContainer.isVisible();
-
-		expect(toolbarContainer.getByTitle('Insert Video')).toBeVisible();
+		await expect(
+			editorSamplesPage.alloyEditorToolbarContainer.getByTitle(
+				'Insert Video'
+			)
+		).toBeInViewport();
 	});
 });

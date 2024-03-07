@@ -5,14 +5,19 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class EditorsSamplePage {
+export class EditorSamplesPage {
 	readonly alloyEditorContainer: Locator;
 	readonly alloyEditorToolbarContainer: Locator;
+	readonly balloonEditorContainer: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.alloyEditorContainer = page.locator('.alloy-editor-container');
+		this.alloyEditorContainer = page.locator('div[id$=sampleAlloyEditor]');
 		this.alloyEditorToolbarContainer = page.locator('.ae-toolbars');
+
+		this.balloonEditorContainer = page.locator(
+			'div[id$=sampleBalloonEditor]'
+		);
 
 		this.page = page;
 	}

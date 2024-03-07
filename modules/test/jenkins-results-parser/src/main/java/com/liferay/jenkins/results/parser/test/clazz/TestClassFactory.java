@@ -56,15 +56,46 @@ public class TestClassFactory {
 	public static TestClass newTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile) {
 
-		return _newTestClass(batchTestClassGroup, null, testClassFile, null);
+		long start = System.currentTimeMillis();
+
+		TestClass testClass = _newTestClass(
+			batchTestClassGroup, null, testClassFile, null);
+
+		long duration = System.currentTimeMillis() - start;
+
+		if (duration > 500) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"[", batchTestClassGroup.getBatchName(),
+					"] Created test class for ", testClassFile.toString(),
+					" in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
+		}
+
+		return testClass;
 	}
 
 	public static TestClass newTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile,
 		String testClassMethodName) {
 
-		return _newTestClass(
+		long start = System.currentTimeMillis();
+
+		TestClass testClass = _newTestClass(
 			batchTestClassGroup, null, testClassFile, testClassMethodName);
+
+		long duration = System.currentTimeMillis() - start;
+
+		if (duration > 500) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"[", batchTestClassGroup.getBatchName(),
+					"] Created test class for ", testClassFile.toString(),
+					" in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
+		}
+
+		return testClass;
 	}
 
 	public static TestClass newTestClass(
@@ -76,8 +107,22 @@ public class TestClassFactory {
 	public static TestClass newTestClass(
 		BatchTestClassGroup batchTestClassGroup, String testClassMethodName) {
 
-		return _newTestClass(
+		long start = System.currentTimeMillis();
+
+		TestClass testClass = _newTestClass(
 			batchTestClassGroup, null, null, testClassMethodName);
+
+		long duration = System.currentTimeMillis() - start;
+
+		if (duration > 500) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"[", batchTestClassGroup.getBatchName(),
+					"] Created test class for ", testClassMethodName, " in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
+		}
+
+		return testClass;
 	}
 
 	public static TestClassMethod newTestClassMethod(

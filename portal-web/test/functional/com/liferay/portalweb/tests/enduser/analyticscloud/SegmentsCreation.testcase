@@ -1096,6 +1096,8 @@ definition {
 
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "View Page 1,View Page 2,View Page 3",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

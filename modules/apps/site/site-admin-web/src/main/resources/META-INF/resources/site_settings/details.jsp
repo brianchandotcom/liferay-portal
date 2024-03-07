@@ -64,9 +64,7 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 
 <c:if test="<%= liveGroup != null %>">
 	<aui:input name="siteId" type="resource" value="<%= String.valueOf(liveGroup.getGroupId()) %>" />
-</c:if>
 
-<c:if test="<%= liveGroup != null %>">
 	<aui:input disabled="<%= true %>" name="externalReferenceCode" value="<%= String.valueOf(liveGroup.getExternalReferenceCode()) %>" />
 </c:if>
 

@@ -56,6 +56,11 @@ import org.osgi.framework.ServiceRegistration;
 @RunWith(Arquillian.class)
 public class SiteResourceTest extends BaseSiteResourceTestCase {
 
+	@Override
+	public File serialize(long groupId) {
+		throw new UnsupportedOperationException();
+	}
+
 	@Before
 	@Override
 	public void setUp() throws Exception {

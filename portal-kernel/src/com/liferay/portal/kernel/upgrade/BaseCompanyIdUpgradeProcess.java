@@ -72,17 +72,12 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 		public void update(Connection connection) throws Exception {
 			for (String[] foreignNames : _foreignNamesArray) {
 				runSQL(
-					getUpdateSQLMap(
+					getUpdateDBTypeToSQLMap(
 						connection, foreignNames[0], foreignNames[1]));
 			}
 		}
 
-		protected String getUpdateSQL(String selectSQL) {
-			return StringBundler.concat(
-				"update ", _tableName, " set companyId = (", selectSQL, ")");
-		}
-
-		protected DBTypeToSQLMap getUpdateSQLMap(
+		protected DBTypeToSQLMap getUpdateDBTypeToSQLMap(
 				Connection connection, String foreignTableName,
 				String foreignColumnName)
 			throws SQLException {
@@ -128,6 +123,11 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			}
 
 			return dbTypeToSQLMap;
+		}
+
+		protected String getUpdateSQL(String selectSQL) {
+			return StringBundler.concat(
+				"update ", _tableName, " set companyId = (", selectSQL, ")");
 		}
 
 		private final String _columnName;

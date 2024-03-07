@@ -171,6 +171,9 @@ public class CPSpecificationOptionIndexer
 				_localization.getLocalizedName(Field.TITLE, languageId), title);
 		}
 
+		document.addNumberSortable(
+			Field.PRIORITY, cpSpecificationOption.getPriority());
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Commerce product specification option " +

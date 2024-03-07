@@ -77,7 +77,7 @@ public class CPSpecificationOptionLocalServiceImpl
 	public CPSpecificationOption addCPSpecificationOption(
 			long userId, long cpOptionCategoryId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
-			ServiceContext serviceContext)
+			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -101,6 +101,7 @@ public class CPSpecificationOptionLocalServiceImpl
 		cpSpecificationOption.setDescriptionMap(descriptionMap);
 		cpSpecificationOption.setFacetable(facetable);
 		cpSpecificationOption.setKey(key);
+		cpSpecificationOption.setPriority(priority);
 		cpSpecificationOption.setExpandoBridgeAttributes(serviceContext);
 
 		cpSpecificationOption = cpSpecificationOptionPersistence.update(
@@ -221,7 +222,8 @@ public class CPSpecificationOptionLocalServiceImpl
 	public CPSpecificationOption updateCPSpecificationOption(
 			long cpSpecificationOptionId, long cpOptionCategoryId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, ServiceContext serviceContext)
+			boolean facetable, String key, double priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPSpecificationOption cpSpecificationOption =
@@ -241,6 +243,7 @@ public class CPSpecificationOptionLocalServiceImpl
 		cpSpecificationOption.setDescriptionMap(descriptionMap);
 		cpSpecificationOption.setFacetable(facetable);
 		cpSpecificationOption.setKey(key);
+		cpSpecificationOption.setPriority(priority);
 		cpSpecificationOption.setExpandoBridgeAttributes(serviceContext);
 
 		cpSpecificationOption = cpSpecificationOptionPersistence.update(

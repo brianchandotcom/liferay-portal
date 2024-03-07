@@ -40,7 +40,7 @@ public class CPSpecificationOptionServiceImpl
 	public CPSpecificationOption addCPSpecificationOption(
 			long cpOptionCategoryId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
-			ServiceContext serviceContext)
+			double priority, ServiceContext serviceContext)
 		throws PortalException {
 
 		PortletResourcePermission portletResourcePermission =
@@ -53,7 +53,7 @@ public class CPSpecificationOptionServiceImpl
 
 		return cpSpecificationOptionLocalService.addCPSpecificationOption(
 			getUserId(), cpOptionCategoryId, titleMap, descriptionMap,
-			facetable, key, serviceContext);
+			facetable, key, priority, serviceContext);
 	}
 
 	@Override
@@ -126,7 +126,8 @@ public class CPSpecificationOptionServiceImpl
 	public CPSpecificationOption updateCPSpecificationOption(
 			long cpSpecificationOptionId, long cpOptionCategoryId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, ServiceContext serviceContext)
+			boolean facetable, String key, double priority,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_cpSpecificationOptionModelResourcePermission.check(
@@ -134,7 +135,7 @@ public class CPSpecificationOptionServiceImpl
 
 		return cpSpecificationOptionLocalService.updateCPSpecificationOption(
 			cpSpecificationOptionId, cpOptionCategoryId, titleMap,
-			descriptionMap, facetable, key, serviceContext);
+			descriptionMap, facetable, key, priority, serviceContext);
 	}
 
 	@Reference(

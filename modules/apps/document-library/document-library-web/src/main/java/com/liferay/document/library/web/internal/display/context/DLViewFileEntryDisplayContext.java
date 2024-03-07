@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -231,21 +233,29 @@ public class DLViewFileEntryDisplayContext {
 			return _redirect;
 		}
 
-		long parentFolderId = _getParentFolderId();
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		String mvcRenderCommandName = "/document_library/view";
+		String portletName = portletDisplay.getPortletName();
 
-		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			mvcRenderCommandName = "/document_library/view_folder";
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+
+			long parentFolderId = _getParentFolderId();
+
+			String mvcRenderCommandName = "/document_library/view";
+
+			if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				mvcRenderCommandName = "/document_library/view_folder";
+			}
+
+			_redirect = PortletURLBuilder.createRenderURL(
+				_renderResponse
+			).setMVCRenderCommandName(
+				mvcRenderCommandName
+			).setParameter(
+				"folderId", parentFolderId
+			).buildString();
 		}
-
-		_redirect = PortletURLBuilder.createRenderURL(
-			_renderResponse
-		).setMVCRenderCommandName(
-			mvcRenderCommandName
-		).setParameter(
-			"folderId", parentFolderId
-		).buildString();
 
 		return _redirect;
 	}

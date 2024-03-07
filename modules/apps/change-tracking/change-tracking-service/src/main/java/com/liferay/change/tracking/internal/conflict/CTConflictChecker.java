@@ -858,9 +858,22 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		sb.append(primaryKeyName);
 		sb.append(" in (");
 
-		for (Long primaryKey : resolvedPrimaryKeys) {
+		int i = 0;
+
+		for (long primaryKey : resolvedPrimaryKeys) {
+			if (i == _BATCH_SIZE) {
+				sb.setStringAt(")", sb.index() - 1);
+				sb.append(" or ");
+				sb.append(primaryKeyName);
+				sb.append(" in (");
+
+				i = 0;
+			}
+
 			sb.append(primaryKey);
 			sb.append(", ");
+
+			i++;
 		}
 
 		sb.setStringAt(")", sb.index() - 1);
@@ -1048,6 +1061,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			throw new ORMException(sqlException);
 		}
 	}
+
+	private static final int _BATCH_SIZE = 1000;
 
 	private final ClassNameLocalService _classNameLocalService;
 	private final ServiceTrackerMap

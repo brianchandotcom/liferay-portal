@@ -52,6 +52,7 @@ public class CPSpecificationOptionWrapper
 		attributes.put("description", getDescription());
 		attributes.put("facetable", isFacetable());
 		attributes.put("key", getKey());
+		attributes.put("priority", getPriority());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -142,6 +143,12 @@ public class CPSpecificationOptionWrapper
 
 		if (key != null) {
 			setKey(key);
+		}
+
+		Double priority = (Double)attributes.get("priority");
+
+		if (priority != null) {
+			setPriority(priority);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -357,6 +364,16 @@ public class CPSpecificationOptionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the priority of this cp specification option.
+	 *
+	 * @return the priority of this cp specification option
+	 */
+	@Override
+	public double getPriority() {
+		return model.getPriority();
 	}
 
 	/**
@@ -680,6 +697,16 @@ public class CPSpecificationOptionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the priority of this cp specification option.
+	 *
+	 * @param priority the priority of this cp specification option
+	 */
+	@Override
+	public void setPriority(double priority) {
+		model.setPriority(priority);
 	}
 
 	/**

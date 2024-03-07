@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -146,6 +147,8 @@ public class CPSpecificationOptionPersistenceTest {
 
 		newCPSpecificationOption.setKey(RandomTestUtil.randomString());
 
+		newCPSpecificationOption.setPriority(RandomTestUtil.nextDouble());
+
 		newCPSpecificationOption.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_cpSpecificationOptions.add(
@@ -199,6 +202,9 @@ public class CPSpecificationOptionPersistenceTest {
 		Assert.assertEquals(
 			existingCPSpecificationOption.getKey(),
 			newCPSpecificationOption.getKey());
+		AssertUtils.assertEquals(
+			existingCPSpecificationOption.getPriority(),
+			newCPSpecificationOption.getPriority());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCPSpecificationOption.getLastPublishDate()),
@@ -279,8 +285,8 @@ public class CPSpecificationOptionPersistenceTest {
 			true, "uuid", true, "CPSpecificationOptionId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CPOptionCategoryId", true, "title", true,
-			"description", true, "facetable", true, "key", true,
-			"lastPublishDate", true);
+			"description", true, "facetable", true, "key", true, "priority",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -620,6 +626,8 @@ public class CPSpecificationOptionPersistenceTest {
 		cpSpecificationOption.setFacetable(RandomTestUtil.randomBoolean());
 
 		cpSpecificationOption.setKey(RandomTestUtil.randomString());
+
+		cpSpecificationOption.setPriority(RandomTestUtil.nextDouble());
 
 		cpSpecificationOption.setLastPublishDate(RandomTestUtil.nextDate());
 

@@ -69,7 +69,7 @@ public class CPSpecificationOptionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,8 @@ public class CPSpecificationOptionCacheModel
 		sb.append(facetable);
 		sb.append(", key=");
 		sb.append(key);
+		sb.append(", priority=");
+		sb.append(priority);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -172,6 +174,8 @@ public class CPSpecificationOptionCacheModel
 			cpSpecificationOptionImpl.setKey(key);
 		}
 
+		cpSpecificationOptionImpl.setPriority(priority);
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			cpSpecificationOptionImpl.setLastPublishDate(null);
 		}
@@ -207,6 +211,8 @@ public class CPSpecificationOptionCacheModel
 
 		facetable = objectInput.readBoolean();
 		key = objectInput.readUTF();
+
+		priority = objectInput.readDouble();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -264,6 +270,7 @@ public class CPSpecificationOptionCacheModel
 			objectOutput.writeUTF(key);
 		}
 
+		objectOutput.writeDouble(priority);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -281,6 +288,7 @@ public class CPSpecificationOptionCacheModel
 	public String description;
 	public boolean facetable;
 	public String key;
+	public double priority;
 	public long lastPublishDate;
 
 }

@@ -421,6 +421,7 @@ create table CPSpecificationOption (
 	description STRING null,
 	facetable BOOLEAN,
 	key_ VARCHAR(75) null,
+	priority DOUBLE,
 	lastPublishDate DATE null,
 	primary key (CPSpecificationOptionId, ctCollectionId)
 );

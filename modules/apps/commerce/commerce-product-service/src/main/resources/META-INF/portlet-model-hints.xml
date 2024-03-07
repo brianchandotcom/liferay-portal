@@ -593,6 +593,7 @@
 		<field name="key" type="String">
 			<validator name="required" />
 		</field>
+		<field name="priority" type="double" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPTaxCategory">

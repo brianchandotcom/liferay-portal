@@ -57,13 +57,13 @@ public class CPSpecificationOptionLocalServiceUtil {
 			long userId, long cpOptionCategoryId,
 			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
-			String key,
+			String key, double priority,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPSpecificationOption(
 			userId, cpOptionCategoryId, titleMap, descriptionMap, facetable,
-			key, serviceContext);
+			key, priority, serviceContext);
 	}
 
 	/**
@@ -395,13 +395,13 @@ public class CPSpecificationOptionLocalServiceUtil {
 			long cpSpecificationOptionId, long cpOptionCategoryId,
 			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
-			String key,
+			String key, double priority,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCPSpecificationOption(
 			cpSpecificationOptionId, cpOptionCategoryId, titleMap,
-			descriptionMap, facetable, key, serviceContext);
+			descriptionMap, facetable, key, priority, serviceContext);
 	}
 
 	public static CPSpecificationOptionLocalService getService() {

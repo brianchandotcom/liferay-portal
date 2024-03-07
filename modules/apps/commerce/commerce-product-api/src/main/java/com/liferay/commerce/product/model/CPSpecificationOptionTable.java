@@ -65,6 +65,9 @@ public class CPSpecificationOptionTable
 			"facetable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CPSpecificationOptionTable, String> key = createColumn(
 		"key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPSpecificationOptionTable, Double> priority =
+		createColumn(
+			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CPSpecificationOptionTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

@@ -131,7 +131,7 @@ public class CPSpecificationOptionModelArgumentsResolver
 		long orderByColumnsBitmask = 0;
 
 		orderByColumnsBitmask |=
-			CPSpecificationOptionModelImpl.getColumnBitmask("title");
+			CPSpecificationOptionModelImpl.getColumnBitmask("priority");
 
 		_ORDER_BY_COLUMNS_BITMASK = orderByColumnsBitmask;
 	}

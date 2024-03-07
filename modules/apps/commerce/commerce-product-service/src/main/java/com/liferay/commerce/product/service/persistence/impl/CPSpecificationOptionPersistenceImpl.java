@@ -5065,6 +5065,7 @@ public class CPSpecificationOptionPersistenceImpl
 		ctStrictColumnNames.add("description");
 		ctStrictColumnNames.add("facetable");
 		ctStrictColumnNames.add("key_");
+		ctStrictColumnNames.add("priority");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(

@@ -86,7 +86,7 @@ public interface CPSpecificationOptionLocalService
 	public CPSpecificationOption addCPSpecificationOption(
 			long userId, long cpOptionCategoryId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
-			ServiceContext serviceContext)
+			double priority, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -346,7 +346,8 @@ public interface CPSpecificationOptionLocalService
 	public CPSpecificationOption updateCPSpecificationOption(
 			long cpSpecificationOptionId, long cpOptionCategoryId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, ServiceContext serviceContext)
+			boolean facetable, String key, double priority,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Override

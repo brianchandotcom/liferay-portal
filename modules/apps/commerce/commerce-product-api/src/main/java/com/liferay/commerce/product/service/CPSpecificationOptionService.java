@@ -51,7 +51,7 @@ public interface CPSpecificationOptionService extends BaseService {
 	public CPSpecificationOption addCPSpecificationOption(
 			long cpOptionCategoryId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
-			ServiceContext serviceContext)
+			double priority, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCPSpecificationOption(long cpSpecificationOptionId)
@@ -89,7 +89,8 @@ public interface CPSpecificationOptionService extends BaseService {
 	public CPSpecificationOption updateCPSpecificationOption(
 			long cpSpecificationOptionId, long cpOptionCategoryId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, ServiceContext serviceContext)
+			boolean facetable, String key, double priority,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

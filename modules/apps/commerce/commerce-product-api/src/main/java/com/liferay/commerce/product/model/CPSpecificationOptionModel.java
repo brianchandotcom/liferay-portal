@@ -469,6 +469,20 @@ public interface CPSpecificationOptionModel
 	public void setKey(String key);
 
 	/**
+	 * Returns the priority of this cp specification option.
+	 *
+	 * @return the priority of this cp specification option
+	 */
+	public double getPriority();
+
+	/**
+	 * Sets the priority of this cp specification option.
+	 *
+	 * @param priority the priority of this cp specification option
+	 */
+	public void setPriority(double priority);
+
+	/**
 	 * Returns the last publish date of this cp specification option.
 	 *
 	 * @return the last publish date of this cp specification option

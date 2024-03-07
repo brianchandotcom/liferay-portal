@@ -32,13 +32,13 @@ public class CPSpecificationOptionServiceUtil {
 	public static CPSpecificationOption addCPSpecificationOption(
 			long cpOptionCategoryId, Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
-			String key,
+			String key, double priority,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPSpecificationOption(
 			cpOptionCategoryId, titleMap, descriptionMap, facetable, key,
-			serviceContext);
+			priority, serviceContext);
 	}
 
 	public static void deleteCPSpecificationOption(long cpSpecificationOptionId)
@@ -91,13 +91,13 @@ public class CPSpecificationOptionServiceUtil {
 			long cpSpecificationOptionId, long cpOptionCategoryId,
 			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
-			String key,
+			String key, double priority,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCPSpecificationOption(
 			cpSpecificationOptionId, cpOptionCategoryId, titleMap,
-			descriptionMap, facetable, key, serviceContext);
+			descriptionMap, facetable, key, priority, serviceContext);
 	}
 
 	public static CPSpecificationOptionService getService() {

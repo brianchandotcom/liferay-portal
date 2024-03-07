@@ -13,6 +13,9 @@ import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.json.JSONObject;
 
 /**
@@ -76,11 +79,48 @@ public class GitHubIssue {
 		return StringUtil.toURL(_jsonObject.getString("html_url"));
 	}
 
+	public int getNumber() {
+		Matcher pullRequestURLMatcher = _pullRequestURLPattern.matcher(
+			String.valueOf(getHTMLURL()));
+
+		if (!pullRequestURLMatcher.find()) {
+			return 0;
+		}
+
+		return Integer.valueOf(pullRequestURLMatcher.group("number"));
+	}
+
 	public URL getPullRequestAPIURL() {
 		JSONObject jsonObject = _jsonObject.getJSONObject("pull_request");
 
 		return StringUtil.toURL(jsonObject.getString("url"));
 	}
+
+	public String getReceiverUserName() {
+		Matcher pullRequestURLMatcher = _pullRequestURLPattern.matcher(
+			String.valueOf(getHTMLURL()));
+
+		if (!pullRequestURLMatcher.find()) {
+			return null;
+		}
+
+		return pullRequestURLMatcher.group("receiverUserName");
+	}
+
+	public String getRepositoryName() {
+		Matcher pullRequestURLMatcher = _pullRequestURLPattern.matcher(
+			String.valueOf(getHTMLURL()));
+
+		if (!pullRequestURLMatcher.find()) {
+			return null;
+		}
+
+		return pullRequestURLMatcher.group("repositoryName");
+	}
+
+	private static final Pattern _pullRequestURLPattern = Pattern.compile(
+		"https://github.com/(?<receiverUserName>\\d+)/(?<repositoryName>\\d+)" +
+			"/pull/(?<number>\\d+)");
 
 	private final GitHubFactory _gitHubFactory;
 	private GitHubPullRequest _gitHubPullRequest;

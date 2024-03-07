@@ -183,10 +183,14 @@ public abstract class BaseGitHubIssueEventHandler
 
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
+		GitHubIssue gitHubIssue = getGitHubIssue();
+
 		JobEntity jobEntity = jobEntityRepository.create(
 			StringUtil.combine(
-				upstreamGitBranchEntity.getBranchName(), " - ci:test:",
-				testSuite),
+				"[", upstreamGitBranchEntity.getBranchName(), "] - ci:test:",
+				testSuite, " ", gitHubIssue.getRepositoryName(), "/",
+				gitHubIssue.getReceiverUserName(), "#",
+				gitHubIssue.getNumber()),
 			jobPriority, null, JobEntity.State.OPENED, jobEntityType);
 
 		if (!(jobEntity instanceof PullRequestJobEntity)) {

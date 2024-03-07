@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
@@ -29,10 +28,18 @@ const toJSONObjectString = (attributes) => {
 	return JSON.stringify(attributesObject);
 };
 
+interface IProps {
+	attributes?: {
+		name: string;
+		value: boolean | string;
+	}[];
+	portletNamespace: string;
+}
+
 const ScriptElementAttributesFormField = ({
 	attributes: initialAttributes,
 	portletNamespace,
-}) => {
+}: IProps) => {
 	const [attributes, settAtributes] = useState(() =>
 		initialAttributes && !!initialAttributes.length
 			? [initialAttributes.map((item) => ({...item, id: uuidv4()}))]
@@ -76,16 +83,6 @@ const ScriptElementAttributesFormField = ({
 			))}
 		</>
 	);
-};
-
-ScriptElementAttributesFormField.propTypes = {
-	attributes: PropTypes.arrayOf(
-		PropTypes.shape({
-			name: PropTypes.string,
-			value: PropTypes.string,
-		})
-	),
-	portletNamespace: PropTypes.string.isRequired,
 };
 
 export default ScriptElementAttributesFormField;

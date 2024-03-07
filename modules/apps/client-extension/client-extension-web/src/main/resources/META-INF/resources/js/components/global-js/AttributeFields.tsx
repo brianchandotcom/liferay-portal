@@ -11,7 +11,7 @@ import classNames from 'classnames';
 import {FieldBase} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-interface AttributeFieldsProps {
+interface IProps {
 	index: number;
 	name: string;
 	onAddClick: (index: number) => void;
@@ -32,7 +32,7 @@ const TYPE_ITEMS = [
 	{label: Liferay.Language.get('boolean'), value: 'Boolean'},
 ];
 
-const AttributeFields: React.FC<AttributeFieldsProps> = ({
+const AttributeFields = ({
 	index,
 	name,
 	onAddClick,
@@ -41,7 +41,7 @@ const AttributeFields: React.FC<AttributeFieldsProps> = ({
 	portletNamespace,
 	type,
 	value,
-}) => {
+}: IProps) {
 	const nameId = `${portletNamespace}name_${index}`;
 	const typeId = `${portletNamespace}type_${index}`;
 	const valueId = `${portletNamespace}value_${index}`;

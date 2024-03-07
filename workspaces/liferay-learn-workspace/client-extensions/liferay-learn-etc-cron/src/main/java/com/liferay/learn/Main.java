@@ -78,6 +78,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.http.HttpStatus;
@@ -366,13 +367,24 @@ public class Main {
 						!_diffFileNames.contains(relativeFileName)) {
 
 						System.out.println(
-							"Skipping structured content " +
+							"Skipping structured content (diffs) " +
 								structuredContent.getFriendlyUrlPath());
 
 						continue;
 					}
 
-					// md5sum check
+					File file = new File(fileName);
+
+					String existingMd5Hex = _getMd5Hex(siteStructuredContent);
+					String md5Hex = DigestUtils.md5Hex(file.toString());
+
+					if (StringUtil.equals(md5Hex, existingMd5Hex)) {
+						System.out.println(
+							"Skipping structured content (md5Hex) " +
+								structuredContent.getFriendlyUrlPath());
+
+						continue;
+					}
 
 					System.out.println(
 						"Updating structured content " +
@@ -663,6 +675,21 @@ public class Main {
 		File htmlFile = new File(htmlFilePath);
 
 		return FileUtils.readFileToString(htmlFile, StandardCharsets.UTF_8);
+	}
+
+	private String _getMd5Hex(StructuredContent structuredContent) {
+		ContentField[] contentFields = structuredContent.getContentFields();
+
+		for (ContentField contentField : contentFields) {
+			if (!StringUtil.equals(contentField.getName(), "md5Hex")) {
+				continue;
+			}
+
+			return contentField.getContentFieldValue(
+			).getData();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private JSONArray _getNavigationLinksJSONArray(
@@ -1421,6 +1448,13 @@ public class Main {
 				}
 			};
 
+		ContentFieldValue englishMd5HexContentFieldValue =
+			new ContentFieldValue() {
+				{
+					setData(() -> DigestUtils.md5Hex(englishFile.toString()));
+				}
+			};
+
 		ContentFieldValue englishNavigationLinksContentFieldValue =
 			new ContentFieldValue() {
 				{
@@ -1501,6 +1535,26 @@ public class Main {
 									"ja-JP", englishLandingPageContentFieldValue
 								).build());
 							setName(() -> "landingPage");
+						}
+					},
+					new ContentField() {
+						{
+							setContentFieldValue(
+								() -> englishMd5HexContentFieldValue);
+							setContentFieldValue_i18n(
+								() -> HashMapBuilder.put(
+									"en-US", englishMd5HexContentFieldValue
+								).put(
+									"ja-JP",
+									new ContentFieldValue() {
+										{
+											setData(
+												() -> DigestUtils.md5Hex(
+													japaneseFile.toString()));
+										}
+									}
+								).build());
+							setName(() -> "md5Hex");
 						}
 					},
 					new ContentField() {
@@ -1589,6 +1643,13 @@ public class Main {
 							setContentFieldValue(
 								() -> englishLandingPageContentFieldValue);
 							setName(() -> "landingPage");
+						}
+					},
+					new ContentField() {
+						{
+							setContentFieldValue(
+								() -> englishMd5HexContentFieldValue);
+							setName(() -> "md5Hex");
 						}
 					},
 					new ContentField() {

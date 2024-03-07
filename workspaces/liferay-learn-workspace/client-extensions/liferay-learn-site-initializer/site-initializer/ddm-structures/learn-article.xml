@@ -114,6 +114,27 @@
 								"en_US": ""
 							},
 							"type": "text"
+						},
+						{
+							"dataType": "string",
+							"displayStyle": "singleline",
+							"indexType": "none",
+							"label": {
+								"en_US": "md5Hex"
+							},
+							"localizable": true,
+							"name": "md5Hex",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "text"
 						}
 					],
 					"successPage": {

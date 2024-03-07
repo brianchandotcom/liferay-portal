@@ -79,7 +79,7 @@ public class ResourceActionLocalServiceTest {
 	}
 
 	@Test
-	public void testAddResourceActionCachesAction() {
+	public void testAddResourceActionCachesActionId() {
 		String testActionId = "testActionId";
 
 		Assert.assertNull(

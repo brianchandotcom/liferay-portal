@@ -209,6 +209,7 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 
 		themeDisplay.setCompany(contextCompany);
 		themeDisplay.setLayout(layout);
+		themeDisplay.setLocale(contextAcceptLanguage.getPreferredLocale());
 		themeDisplay.setPathMain(_portal.getPathMain());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());

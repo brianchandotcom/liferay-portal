@@ -40,7 +40,7 @@ export default function ScriptElementAttributesFormField({
 	attributes: initialAttributes,
 	portletNamespace,
 }: IProps) {
-	const [attributes, settAtributes] = useState(() =>
+	const [attributes, setAttributes] = useState(() =>
 		initialAttributes && !!initialAttributes.length
 			? [
 					initialAttributes.map((attribute) => ({
@@ -56,17 +56,17 @@ export default function ScriptElementAttributesFormField({
 	);
 
 	const handleAddClick = (index) => {
-		settAtributes(attributes.toSpliced(index + 1, 0, emptyRow()));
+		setAttributes(attributes.toSpliced(index + 1, 0, emptyRow()));
+	};
+
+	const handleAttributeChange = (index, updatedValue) => {
+		setAttributes((prevList) =>
+			prevList.with(index, {...prevList[index], ...updatedValue})
+		);
 	};
 
 	const handleRemoveClick = (index) => {
-		settAtributes(attributes.toSpliced(index, 1));
-	};
-
-	const updateAttributeList = (index, updatedValue) => {
-		settAtributes((prevList) =>
-			prevList.with(index, {...prevList[index], ...updatedValue})
-		);
+		setAttributes(attributes.toSpliced(index, 1));
 	};
 
 	return (
@@ -77,17 +77,17 @@ export default function ScriptElementAttributesFormField({
 				value={toJSONObjectString(attributes)}
 			/>
 
-			{attributes.map((item, index) => (
+			{attributes.map((attribute, index) => (
 				<AttributeFields
 					index={index}
-					key={item.id}
-					name={item.name}
+					key={attribute.id}
+					name={attribute.name}
 					onAddClick={handleAddClick}
-					onAttributeChange={updateAttributeList}
+					onAttributeChange={handleAttributeChange}
 					onRemoveClick={handleRemoveClick}
 					portletNamespace={portletNamespace}
-					type={item.type}
-					value={item.value}
+					type={attribute.type}
+					value={attribute.value}
 				/>
 			))}
 		</>

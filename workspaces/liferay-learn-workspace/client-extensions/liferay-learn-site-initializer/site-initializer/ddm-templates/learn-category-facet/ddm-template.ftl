@@ -238,7 +238,8 @@
 <#if vocabularyNames?has_content>
 
 	<#assign
-	    siteId = themeDisplay.getSiteGroupId()
+		siteId = themeDisplay.getSiteGroupId()
+
 		taxonomyVocabularyItems = restClient.get("/headless-admin-taxonomy/v1.0/sites/${siteId}/taxonomy-vocabularies?sort=name").items
 		vocabularyNamesSorted = []
 	/>

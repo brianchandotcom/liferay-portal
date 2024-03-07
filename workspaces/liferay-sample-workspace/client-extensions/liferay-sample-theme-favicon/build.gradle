@@ -1,34 +1,19 @@
-import java.security.MessageDigest
+import com.liferay.gradle.util.hash.HashUtil
+import com.liferay.gradle.util.hash.HashValue
 
-task buildFaviconFile(type: Copy)
+task buildFavicon(type: Copy)
 
-buildFaviconFile {
-	from "assets"
-	into "build/static"
-	include "favicon.ico"
-
+buildFavicon {
 	doFirst {
-		file("build/static").deleteDir()
+		delete "build/static"
 	}
 
+	from "assets/favicon.ico"
+	into "build/static"
+
 	rename {
-		def file = file("assets/" + it)
+		HashValue hashValue = HashUtil.sha1(file("assets/favicon.ico"))
 
-		def hash =
-		MessageDigest
-		.getInstance("SHA-1")
-		.digest(file.bytes)
-		.encodeHex()
-		.toString()
-
-		def doti = it.lastIndexOf(".")
-		def name = doti == -1 ? it : it.substring(0, doti)
-		def ext = doti == -1 ? "" : it.substring(doti + 1)
-
-		def newName = name + "." + hash + "." + ext;
-
-		println "Renaming '" + it + "' file as '" + newName + "'"
-
-		return newName
+		"favicon." + hashValue.asHexString() + ".ico"
 	}
 }

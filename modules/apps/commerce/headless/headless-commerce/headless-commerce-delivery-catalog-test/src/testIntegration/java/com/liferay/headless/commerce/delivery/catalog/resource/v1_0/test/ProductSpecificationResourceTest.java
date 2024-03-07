@@ -66,7 +66,8 @@ public class ProductSpecificationResourceTest
 				_user.getUserId(), _cpOptionCategory.getCPOptionCategoryId(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
-				RandomTestUtil.randomString(), _serviceContext);
+				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
+				_serviceContext);
 	}
 
 	@Override

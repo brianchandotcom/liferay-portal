@@ -160,6 +160,7 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 				LanguageUtils.getLocalizedMap(specification.getTitle()),
 				LanguageUtils.getLocalizedMap(specification.getDescription()),
 				_isFacetable(specification), specificationKey,
+				GetterUtil.getDouble(specification.getPriority()),
 				_serviceContextHelper.getServiceContext());
 
 		return _toSpecification(
@@ -214,6 +215,9 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 				_isFacetable(specification)),
 			GetterUtil.getString(
 				specification.getKey(), cpSpecificationOption.getKey()),
+			GetterUtil.getDouble(
+				specification.getPriority(),
+				cpSpecificationOption.getPriority()),
 			_serviceContextHelper.getServiceContext());
 	}
 
@@ -233,7 +237,11 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			_getCPOptionCategoryId(specification),
 			LanguageUtils.getLocalizedMap(specification.getTitle()),
 			LanguageUtils.getLocalizedMap(specification.getDescription()),
-			_isFacetable(specification), key, serviceContext);
+			_isFacetable(specification), key,
+			GetterUtil.getDouble(
+				specification.getPriority(),
+				cpSpecificationOption.getPriority()),
+			serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

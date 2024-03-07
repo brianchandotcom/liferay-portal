@@ -114,6 +114,8 @@ public class ProductSpecificationUtil {
 					LanguageUtils.getLocalizedMap(
 						productSpecification.getLabel()),
 					false, productSpecification.getSpecificationKey(),
+					GetterUtil.getDouble(
+						productSpecification.getSpecificationPriority()),
 					serviceContext);
 		}
 

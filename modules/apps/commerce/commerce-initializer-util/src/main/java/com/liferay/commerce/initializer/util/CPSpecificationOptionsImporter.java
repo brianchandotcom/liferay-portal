@@ -87,6 +87,7 @@ public class CPSpecificationOptionsImporter {
 			locale, jsonObject.getString("description"));
 
 		boolean facetable = jsonObject.getBoolean("facetable");
+		double priority = jsonObject.getDouble("priority", 0);
 
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
@@ -97,12 +98,12 @@ public class CPSpecificationOptionsImporter {
 				updateCPSpecificationOption(
 					cpSpecificationOption.getCPSpecificationOptionId(),
 					cpOptionCategoryId, titleMap, descriptionMap, facetable,
-					key, serviceContext);
+					key, priority, serviceContext);
 		}
 
 		return _cpSpecificationOptionLocalService.addCPSpecificationOption(
 			serviceContext.getUserId(), cpOptionCategoryId, titleMap,
-			descriptionMap, facetable, key, serviceContext);
+			descriptionMap, facetable, key, priority, serviceContext);
 	}
 
 	@Reference

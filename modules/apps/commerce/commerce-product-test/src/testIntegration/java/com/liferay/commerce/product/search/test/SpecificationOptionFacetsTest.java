@@ -110,7 +110,8 @@ public class SpecificationOptionFacetsTest {
 				cpOptionCategory.getCPOptionCategoryId(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
-				RandomTestUtil.randomString(), serviceContext);
+				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
+				serviceContext);
 
 		_cpDefinitionSpecificationOptionValueLocalService.
 			addCPDefinitionSpecificationOptionValue(
@@ -187,7 +188,7 @@ public class SpecificationOptionFacetsTest {
 				cpOptionCategory.getCPOptionCategoryId(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), false,
-				RandomTestUtil.randomString(), serviceContext);
+				RandomTestUtil.randomString(), 0, serviceContext);
 
 		_cpDefinitionSpecificationOptionValueLocalService.
 			addCPDefinitionSpecificationOptionValue(

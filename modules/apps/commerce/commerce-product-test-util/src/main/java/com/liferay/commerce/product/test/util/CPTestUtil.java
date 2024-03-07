@@ -676,7 +676,8 @@ public class CPTestUtil {
 			serviceContext.getUserId(), 0,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), false,
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
+			serviceContext);
 	}
 
 	public static void buildCPInstances(CPDefinition cpDefinition)

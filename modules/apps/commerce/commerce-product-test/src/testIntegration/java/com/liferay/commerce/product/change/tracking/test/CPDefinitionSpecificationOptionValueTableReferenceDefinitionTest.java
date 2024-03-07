@@ -81,7 +81,7 @@ public class CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest
 				RandomTestUtil.randomLocaleStringMap(), true,
 				CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest.class.
 					getSimpleName(),
-				_serviceContext);
+				RandomTestUtil.randomDouble(), _serviceContext);
 	}
 
 	@Override

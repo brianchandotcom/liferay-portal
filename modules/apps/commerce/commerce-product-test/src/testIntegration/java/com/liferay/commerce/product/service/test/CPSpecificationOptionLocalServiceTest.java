@@ -113,7 +113,7 @@ public class CPSpecificationOptionLocalServiceTest {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
-			serviceContext);
+			RandomTestUtil.randomDouble(), serviceContext);
 	}
 
 	private static User _user;

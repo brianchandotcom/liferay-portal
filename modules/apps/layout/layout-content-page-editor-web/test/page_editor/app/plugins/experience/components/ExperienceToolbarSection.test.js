@@ -6,6 +6,7 @@
 import {
 	fireEvent,
 	render,
+	screen,
 	waitFor,
 	waitForElementToBeRemoved,
 	within,
@@ -155,6 +156,15 @@ describe('ExperienceToolbarSection', () => {
 
 	afterEach(() => {
 		serviceFetch.mockReset();
+	});
+
+	it('renders ExperienceToolbarSection component and makes sure that the button has aria-label and the label is present', async () => {
+		renderExperienceToolbarSection(mockState, mockConfig);
+
+		expect(screen.getByText('experience')).toBeInTheDocument();
+		expect(
+			screen.getByLabelText('experience: Default Experience')
+		).toBeInTheDocument();
 	});
 
 	it('shows a list of Experiences ordered by priority', async () => {

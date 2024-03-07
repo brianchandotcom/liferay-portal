@@ -19,18 +19,8 @@ public abstract class BasePortalPullRequestJobEntity
 	}
 
 	@Override
-	public String getTestSuiteName() {
-		return getParameterValue("testSuiteName");
-	}
-
-	@Override
 	public void setForwardReceiverUserName(String forwardReceiverUserName) {
 		setParameterValue("forwardReceiverUserName", forwardReceiverUserName);
-	}
-
-	@Override
-	public void setTestSuiteName(String testSuiteName) {
-		setParameterValue("testSuiteName", testSuiteName);
 	}
 
 	protected BasePortalPullRequestJobEntity(JSONObject jsonObject) {

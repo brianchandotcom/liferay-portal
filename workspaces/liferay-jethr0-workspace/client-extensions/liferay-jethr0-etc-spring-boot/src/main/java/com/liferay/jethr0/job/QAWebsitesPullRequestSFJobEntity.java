@@ -14,14 +14,6 @@ import org.json.JSONObject;
  */
 public class QAWebsitesPullRequestSFJobEntity extends BasePullRequestJobEntity {
 
-	public String getTestSuiteName() {
-		return getParameterValue("testSuiteName");
-	}
-
-	public void setTestSuiteName(String testSuiteName) {
-		setParameterValue("testSuiteName", testSuiteName);
-	}
-
 	protected QAWebsitesPullRequestSFJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}

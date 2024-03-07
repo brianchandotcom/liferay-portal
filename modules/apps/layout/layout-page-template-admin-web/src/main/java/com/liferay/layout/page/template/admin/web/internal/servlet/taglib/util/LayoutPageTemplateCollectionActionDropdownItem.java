@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -106,6 +107,24 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
+						}
+					).add(
+						() ->
+							(layoutPageTemplateCollection.getType() ==
+								LayoutPageTemplateCollectionTypeConstants.
+									DISPLAY_PAGE) &&
+							LayoutPageTemplateCollectionPermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								layoutPageTemplateCollection,
+								ActionKeys.UPDATE),
+						dropdownItem -> {
+							dropdownItem.setHref(
+								_getExportLayoutPageTemplateCollectionURL(
+									layoutPageTemplateCollection));
+							dropdownItem.setIcon("export");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "export"));
 						}
 					).add(
 						() ->
@@ -241,6 +260,21 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 		).setParameter(
 			"layoutPageTemplateCollectionId",
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
+		).buildString();
+	}
+
+	private String _getExportLayoutPageTemplateCollectionURL(
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
+		return ResourceURLBuilder.createResourceURL(
+			_renderResponse
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId())
+		).setResourceID(
+			"/layout_page_template_admin/export_layout_page_template_collection"
 		).buildString();
 	}
 

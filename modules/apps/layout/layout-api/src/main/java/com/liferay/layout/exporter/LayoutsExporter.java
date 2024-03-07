@@ -5,6 +5,8 @@
 
 package com.liferay.layout.exporter;
 
+import com.liferay.portal.kernel.zip.ZipWriter;
+
 import java.io.File;
 
 /**
@@ -16,6 +18,11 @@ public interface LayoutsExporter {
 
 	public File exportLayoutPageTemplateEntries(
 			long[] layoutPageTemplateEntryIds, int type)
+		throws Exception;
+
+	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
+			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter,
+			String path)
 		throws Exception;
 
 	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)

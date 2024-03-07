@@ -154,6 +154,22 @@ public class OAuth2ServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"4.2.5", "4.2.6",
+			new UpgradeProcess() {
+
+				@Override
+				protected void doUpgrade() throws Exception {
+					runSQL(
+						StringBundler.concat(
+							"update OAuth2ScopeGrant set applicationName = ",
+							"LOWER(applicationName), scopeAliases = ",
+							"LOWER(scopeAliases) where bundleSymbolicName = ",
+							"'com.liferay.object.rest.impl'"));
+				}
+
+			});
 	}
 
 	@Reference

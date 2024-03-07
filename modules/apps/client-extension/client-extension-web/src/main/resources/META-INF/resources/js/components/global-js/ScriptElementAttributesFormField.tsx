@@ -36,10 +36,10 @@ interface IProps {
 	portletNamespace: string;
 }
 
-const ScriptElementAttributesFormField = ({
+export default function ScriptElementAttributesFormField({
 	attributes: initialAttributes,
 	portletNamespace,
-}: IProps) => {
+}: IProps) {
 	const [attributes, settAtributes] = useState(() =>
 		initialAttributes && !!initialAttributes.length
 			? [initialAttributes.map((item) => ({...item, id: uuidv4()}))]
@@ -83,6 +83,4 @@ const ScriptElementAttributesFormField = ({
 			))}
 		</>
 	);
-};
-
-export default ScriptElementAttributesFormField;
+}

@@ -32,7 +32,7 @@ const TYPE_ITEMS = [
 	{label: Liferay.Language.get('boolean'), value: 'Boolean'},
 ];
 
-const AttributeFields = ({
+export default function AttributeFields({
 	index,
 	name,
 	onAddClick,
@@ -185,6 +185,4 @@ const AttributeFields = ({
 			</ClayLayout.Col>
 		</ClayLayout.Row>
 	);
-};
-
-export default AttributeFields;
+}

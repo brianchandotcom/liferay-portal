@@ -34,6 +34,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -256,6 +259,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		else {
 			_includeUnstagedTestClassFiles = false;
 		}
+
+		_loadJavaFiles(_getWorkingDirectory());
 
 		setTestClasses();
 
@@ -587,20 +592,55 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setTestClasses() {
-		final List<PathMatcher> includesPathMatchers =
-			getIncludesPathMatchers();
+		List<PathMatcher> includesPathMatchers = getIncludesPathMatchers();
 
 		if (includesPathMatchers.isEmpty()) {
 			return;
 		}
 
-		final List<PathMatcher> filterPathMatchers = getPathMatchers(
+		long start = System.currentTimeMillis();
+
+		List<PathMatcher> filterPathMatchers = getPathMatchers(
 			getFilterJobProperties());
-		final List<PathMatcher> excludesPathMatchers = getPathMatchers(
+		List<PathMatcher> excludesPathMatchers = getPathMatchers(
 			getExcludesJobProperties());
 
-		final BatchTestClassGroup batchTestClassGroup = this;
+		BatchTestClassGroup batchTestClassGroup = this;
 
+		for (final File javaTestClassFile : _javaTestClassFiles) {
+			if (JenkinsResultsParserUtil.isFileExcluded(
+					excludesPathMatchers, javaTestClassFile) ||
+				!JenkinsResultsParserUtil.isFileIncluded(
+					excludesPathMatchers, includesPathMatchers,
+					javaTestClassFile) ||
+				!JenkinsResultsParserUtil.isFileIncluded(
+					null, filterPathMatchers, javaTestClassFile)) {
+
+				continue;
+			}
+
+			TestClass testClass = TestClassFactory.newTestClass(
+				batchTestClassGroup, javaTestClassFile);
+
+			if ((testClass != null) && !testClass.isIgnored() &&
+				testClass.hasTestClassMethods()) {
+
+				testClasses.add(testClass);
+			}
+		}
+
+		long duration = System.currentTimeMillis() - start;
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"[", getBatchName(), "] Found ",
+				String.valueOf(testClasses.size()), " test classes in ",
+				JenkinsResultsParserUtil.toDurationString(duration)));
+
+		Collections.sort(testClasses);
+	}
+
+	private File _getWorkingDirectory() {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 
@@ -614,63 +654,86 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			workingDirectory = new File(jobPropertyValue);
 		}
 
-		try {
-			Files.walkFileTree(
-				workingDirectory.toPath(),
-				new SimpleFileVisitor<Path>() {
+		return workingDirectory;
+	}
 
-					@Override
-					public FileVisitResult preVisitDirectory(
+	private void _loadJavaFiles(File workingDirectory) {
+		synchronized (_javaFilesLoaded) {
+			if (_javaFilesLoaded.get()) {
+				return;
+			}
+
+			long start = System.currentTimeMillis();
+
+			try {
+				Files.walkFileTree(
+					workingDirectory.toPath(),
+					new SimpleFileVisitor<Path>() {
+
+						@Override
+						public FileVisitResult preVisitDirectory(
 							Path filePath,
-							BasicFileAttributes basicFileAttributes)
-						throws IOException {
+							BasicFileAttributes basicFileAttributes) {
 
-						if (JenkinsResultsParserUtil.isFileExcluded(
-								excludesPathMatchers, filePath.toFile())) {
+							String filePathString = filePath.toString();
 
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath,
-							BasicFileAttributes basicFileAttributes)
-						throws IOException {
-
-						if (!JenkinsResultsParserUtil.isFileIncluded(
-								excludesPathMatchers, includesPathMatchers,
-								filePath) ||
-							!JenkinsResultsParserUtil.isFileIncluded(
-								null, filterPathMatchers, filePath)) {
+							for (String ignorableDir : _IGNORABLE_DIRS) {
+								if (filePathString.endsWith(ignorableDir)) {
+									return FileVisitResult.SKIP_SUBTREE;
+								}
+							}
 
 							return FileVisitResult.CONTINUE;
 						}
 
-						TestClass testClass = TestClassFactory.newTestClass(
-							batchTestClassGroup, filePath.toFile());
+						@Override
+						public FileVisitResult visitFile(
+							Path path,
+							BasicFileAttributes basicFileAttributes) {
 
-						if ((testClass != null) && !testClass.isIgnored() &&
-							testClass.hasTestClassMethods()) {
+							_searchedFileCount++;
 
-							testClasses.add(testClass);
+							String pathString = path.toString();
+
+							if (pathString.endsWith(".java")) {
+								Path parentPath = path.getParent();
+
+								_javaDirPathStrings.add(parentPath.toString());
+							}
+
+							if (pathString.endsWith("Test.java") ||
+								pathString.endsWith("TestCase.java")) {
+
+								_javaTestClassFiles.add(path.toFile());
+
+								return FileVisitResult.CONTINUE;
+							}
+
+							return FileVisitResult.CONTINUE;
 						}
 
-						return FileVisitResult.CONTINUE;
-					}
+					});
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to search for test file names in " +
+						workingDirectory.toPath(),
+					ioException);
+			}
 
-				});
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to search for test file names in " +
-					workingDirectory.getPath(),
-				ioException);
-		}
+			long duration = System.currentTimeMillis() - start;
 
-		Collections.sort(testClasses);
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Found ", String.valueOf(_javaDirPathStrings.size()),
+					" Java directories and ",
+					String.valueOf(_javaTestClassFiles.size()),
+					" Java test class files in ", workingDirectory.toString(),
+					" in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
+
+			_javaFilesLoaded.set(true);
+		}
 	}
 
 	private void _setAutoBalanceTestFiles() {
@@ -730,6 +793,18 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		_includeAutoBalanceTests = false;
 	}
+
+	private static final String[] _IGNORABLE_DIRS = {
+		"/.git", "/.gradle", "/.m2", "/.m2-tmp", "/build/node", "/build/tmp",
+		"/node_modules"
+	};
+
+	private static final Set<String> _javaDirPathStrings =
+		ConcurrentHashMap.newKeySet();
+	private static final AtomicBoolean _javaFilesLoaded = new AtomicBoolean();
+	private static final Set<File> _javaTestClassFiles =
+		ConcurrentHashMap.newKeySet();
+	private static int _searchedFileCount;
 
 	private final List<File> _autoBalanceTestFiles = new ArrayList<>();
 	private boolean _includeAutoBalanceTests;

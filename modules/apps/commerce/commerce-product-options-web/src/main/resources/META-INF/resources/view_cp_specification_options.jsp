@@ -97,6 +97,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 									value='<%= LanguageUtil.get(request, cpSpecificationOption.isFacetable() ? "yes" : "no") %>'
 								/>
 
+								<liferay-ui:search-container-column-text
+									cssClass="table-cell-expand"
+									property="priority"
+								/>
+
 								<liferay-ui:search-container-column-date
 									cssClass="table-cell-expand"
 									name="modified-date"

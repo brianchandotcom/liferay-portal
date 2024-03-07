@@ -7,6 +7,7 @@ package com.liferay.client.extension.internal.service.taglib;
 
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = DynamicInclude.class)
-public class ClientExtensionBottomJSPDynamicInclude implements DynamicInclude {
+public class ClientExtensionBottomDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -30,7 +31,7 @@ public class ClientExtensionBottomJSPDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		_clientExtensionJSInclude.include(
+		_clientExtensionGlobalJSScriptInclude.include(
 			httpServletRequest, httpServletResponse, "bottom");
 	}
 
@@ -41,14 +42,15 @@ public class ClientExtensionBottomJSPDynamicInclude implements DynamicInclude {
 
 	@Activate
 	protected void activate() {
-		_clientExtensionJSInclude = new ClientExtensionJSInclude(
-			_cetManager, _jsonFactory);
+		_clientExtensionGlobalJSScriptInclude =
+			new ClientExtensionGlobalJSScriptInclude(_cetManager, _jsonFactory);
 	}
 
 	@Reference
 	private CETManager _cetManager;
 
-	private ClientExtensionJSInclude _clientExtensionJSInclude;
+	private ClientExtensionGlobalJSScriptInclude
+		_clientExtensionGlobalJSScriptInclude;
 
 	@Reference
 	private JSONFactory _jsonFactory;

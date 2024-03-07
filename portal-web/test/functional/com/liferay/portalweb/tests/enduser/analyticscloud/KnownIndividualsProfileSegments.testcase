@@ -138,6 +138,8 @@ definition {
 
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "View Page 1,View Page 2,View Page 3",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");

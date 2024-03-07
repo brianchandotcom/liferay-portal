@@ -5,7 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
-import {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {FieldBase} from 'frontend-js-components-web';
@@ -112,76 +112,75 @@ export default function AttributeFields({
 				</FieldBase>
 			</ClayLayout.Col>
 
-			<ClayLayout.Col
-				className="d-flex flex-column-reverse justify-content-end"
-				size={4}
-			>
-				{type !== 'Boolean' ? (
-					<ClayInput
-						id={valueId}
-						onChange={({target}) =>
-							onAttributeChange(index, {value: target.value})
-						}
-						type="text"
-						value={value.toString()}
-					/>
-				) : (
-					<Picker
-						aria-labelledby="picker-label"
-						defaultSelectedKey={value.toString()}
-						id={valueId}
-						items={BOOLEAN_VALUE_ITEMS}
-						onSelectionChange={(value) =>
-							onAttributeChange(index, {value})
-						}
-					>
-						{(item) => (
-							<Option key={item.value.toString()}>
-								{item.label}
-							</Option>
-						)}
-					</Picker>
-				)}
+			<ClayLayout.Col size={4}>
+				<ClayForm.Group className="d-flex flex-column-reverse justify-content-end">
+					{type !== TYPE_BOOLEAN ? (
+						<ClayInput
+							id={valueId}
+							onChange={({target}) =>
+								onAttributeChange(index, {value: target.value})
+							}
+							type="text"
+							value={value.toString()}
+						/>
+					) : (
+						<Picker
+							aria-labelledby="picker-label"
+							defaultSelectedKey={value.toString()}
+							id={valueId}
+							items={BOOLEAN_VALUE_ITEMS}
+							onSelectionChange={(value) =>
+								onAttributeChange(index, {value})
+							}
+						>
+							{(item) => (
+								<Option key={item.value.toString()}>
+									{item.label}
+								</Option>
+							)}
+						</Picker>
+					)}
 
-				<FieldBase
-					className="d-flex justify-content-between mb-0"
-					id={valueId}
-					label={Liferay.Language.get('value')}
-				>
-					<div>
-						{index > 0 && (
+					<div className="d-flex justify-content-between">
+						<label htmlFor={valueId}>
+							{Liferay.Language.get('value')}
+						</label>
+
+						<div>
+							{index > 0 && (
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'remove-attribute'
+									)}
+									className="btn btn-primary btn-xs dm-field-repeatable-delete-button rounded-pill"
+									onClick={() => onRemoveClick(index)}
+									symbol="hr"
+									title={Liferay.Language.get('remove')}
+									type="button"
+								/>
+							)}
+
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(
-									'remove-attribute'
+									'add-new-attribute'
 								)}
-								className="btn btn-primary btn-xs dm-field-repeatable-delete-button rounded-pill"
-								onClick={() => onRemoveClick(index)}
-								symbol="hr"
-								title={Liferay.Language.get('remove')}
+								className="btn btn-primary btn-xs dm-field-repeatable-add-button ml-1 rounded-pill"
+								onClick={() =>
+									name
+										? onAddClick(index)
+										: setErrorMessage(
+												Liferay.Language.get(
+													'attribute-field-is-required'
+												)
+										  )
+								}
+								symbol="plus"
+								title={Liferay.Language.get('add')}
 								type="button"
 							/>
-						)}
-
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get(
-								'add-new-attribute'
-							)}
-							className="btn btn-primary btn-xs dm-field-repeatable-add-button ml-1 rounded-pill"
-							onClick={() =>
-								name
-									? onAddClick(index)
-									: setErrorMessage(
-											Liferay.Language.get(
-												'attribute-field-is-required'
-											)
-									  )
-							}
-							symbol="plus"
-							title={Liferay.Language.get('add')}
-							type="button"
-						/>
+						</div>
 					</div>
-				</FieldBase>
+				</ClayForm.Group>
 			</ClayLayout.Col>
 		</ClayLayout.Row>
 	);

@@ -86,9 +86,11 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 				<clay:content-col
 					cssClass="lfr-search-container-wrapper"
 				>
-					<liferay-util:include page="/organization/opening_hours_action.jsp" servletContext="<%= application %>">
-						<liferay-util:param name="orgLaborId" value="<%= String.valueOf(orgLabor.getOrgLaborId()) %>" />
-					</liferay-util:include>
+					<div data-qa-id="editOrgLaborIconMenu">
+						<liferay-util:include page="/organization/opening_hours_action.jsp" servletContext="<%= application %>">
+							<liferay-util:param name="orgLaborId" value="<%= String.valueOf(orgLabor.getOrgLaborId()) %>" />
+						</liferay-util:include>
+					</div>
 				</clay:content-col>
 			</clay:content-row>
 

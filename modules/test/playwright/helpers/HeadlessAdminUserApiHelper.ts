@@ -13,6 +13,23 @@ type TAccount = {
 	type?: string;
 };
 
+type THoursAvailable = {
+	closes: string;
+	dayOfWeek?: string;
+	opens: string;
+};
+
+type TOrganization = {
+	id?: string;
+	name: string;
+	services?: TServices[];
+};
+
+type TServices = {
+	hoursAvailable: THoursAvailable[];
+	serviceType: string;
+};
+
 export class HeadlessAdminUserApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -38,6 +55,12 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async deleteOrganization(organizationId: string) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/organizations/${organizationId}`
+		);
+	}
+
 	async getSiteByFriendlyUrlPath(friendlyUrlPath: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/by-friendly-url-path/${friendlyUrlPath}`
@@ -48,6 +71,15 @@ export class HeadlessAdminUserApiHelper {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/accounts`,
 			{name: 'Account' + getRandomInt(), ...(account || {})}
+		);
+	}
+
+	async postOrganization(
+		organization?: TOrganization
+	): Promise<TOrganization> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/organizations`,
+			{name: 'Organization' + getRandomInt(), ...(organization || {})}
 		);
 	}
 }

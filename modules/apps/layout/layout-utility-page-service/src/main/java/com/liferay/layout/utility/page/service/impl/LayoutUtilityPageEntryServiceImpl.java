@@ -135,9 +135,24 @@ public class LayoutUtilityPageEntryServiceImpl
 	}
 
 	@Override
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, String[] types, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+			groupId, types, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getLayoutUtilityPageEntriesCount(long groupId) {
 		return layoutUtilityPageEntryLocalService.
 			getLayoutUtilityPageEntriesCount(groupId);
+	}
+
+	@Override
+	public int getLayoutUtilityPageEntriesCount(long groupId, String[] types) {
+		return layoutUtilityPageEntryLocalService.
+			getLayoutUtilityPageEntriesCount(groupId, types);
 	}
 
 	@Override

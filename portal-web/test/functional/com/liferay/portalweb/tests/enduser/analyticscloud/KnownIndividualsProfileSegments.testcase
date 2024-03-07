@@ -32,6 +32,11 @@ definition {
 					userFirstName = "user${n}",
 					userLastName = "user${n}",
 					userScreenName = "user${n}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "user${n}@liferay.com");
 			}
 		}
 

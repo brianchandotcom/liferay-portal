@@ -151,9 +151,7 @@ public class ResourceOpenAPIParser {
 					sb.append(", requestBody = ");
 					sb.append("@io.swagger.v3.oas.annotations.parameters.");
 					sb.append("RequestBody(content = ");
-
 					sb.append(_getRequestBodyContent(javaMethodSignature));
-
 					sb.append(")");
 				}
 			}
@@ -169,9 +167,7 @@ public class ResourceOpenAPIParser {
 			sb.append("requestBody = ");
 			sb.append("@io.swagger.v3.oas.annotations.parameters.");
 			sb.append("RequestBody(content = ");
-
 			sb.append(_getRequestBodyContent(javaMethodSignature));
-
 			sb.append("))");
 
 			methodAnnotations.add(sb.toString());
@@ -1199,6 +1195,8 @@ public class ResourceOpenAPIParser {
 	private static String _getRequestBodyContent(
 		JavaMethodSignature javaMethodSignature) {
 
+		StringBundler sb = new StringBundler();
+
 		Operation operation = javaMethodSignature.getOperation();
 
 		RequestBody requestBody = operation.getRequestBody();
@@ -1208,17 +1206,15 @@ public class ResourceOpenAPIParser {
 		List<Map.Entry<String, Content>> entries = new ArrayList<>(
 			contents.entrySet());
 
-		StringBundler sb = new StringBundler();
-
 		if (entries.size() > 1) {
 			sb.append("{");
 		}
 
 		for (Map.Entry<String, Content> entry : entries) {
 			if (Objects.equals(entry.getKey(), "multipart/form-data")) {
-				sb.append("@io.swagger.v3.oas.annotations.media.Content( ");
+				sb.append("@io.swagger.v3.oas.annotations.media.Content(");
 				sb.append("mediaType = \"multipart/form-data\", schema = ");
-				sb.append("@io.swagger.v3.oas.annotations.media.Schema( ");
+				sb.append("@io.swagger.v3.oas.annotations.media.Schema(");
 				sb.append("implementation = ");
 				sb.append(
 					StringUtil.upperCaseFirstLetter(
@@ -1226,14 +1222,12 @@ public class ResourceOpenAPIParser {
 				sb.append("RequestBody.class))");
 			}
 			else {
-				sb.append("@io.swagger.v3.oas.annotations.media.Content( ");
+				sb.append("@io.swagger.v3.oas.annotations.media.Content(");
 				sb.append("mediaType = \"");
 				sb.append(entry.getKey());
 				sb.append("\", schema = @io.swagger.v3.oas.annotations.media.");
-				sb.append("Schema( implementation = ");
-
+				sb.append("Schema(implementation = ");
 				sb.append(javaMethodSignature.getReturnType());
-
 				sb.append(".class))");
 			}
 

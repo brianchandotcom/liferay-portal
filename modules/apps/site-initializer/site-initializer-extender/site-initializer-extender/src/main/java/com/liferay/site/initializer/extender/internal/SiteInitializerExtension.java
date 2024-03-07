@@ -79,6 +79,7 @@ import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.template.service.TemplateEntryLocalService;
 
@@ -177,7 +178,8 @@ public class SiteInitializerExtension {
 		UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory,
-		ZipWriterFactory zipWriterFactory) {
+		ZipWriterFactory zipWriterFactory,
+		StyleBookEntryLocalService styleBookEntryLocalService) {
 
 		_dependencyManager = dependencyManager;
 
@@ -220,7 +222,8 @@ public class SiteInitializerExtension {
 			templateEntryLocalService, themeLocalService,
 			userAccountResourceFactory, userGroupLocalService, userLocalService,
 			workflowDefinitionLinkLocalService,
-			workflowDefinitionResourceFactory, zipWriterFactory);
+			workflowDefinitionResourceFactory, zipWriterFactory,
+			styleBookEntryLocalService);
 
 		_component.setImplementation(bundleSiteInitializer);
 

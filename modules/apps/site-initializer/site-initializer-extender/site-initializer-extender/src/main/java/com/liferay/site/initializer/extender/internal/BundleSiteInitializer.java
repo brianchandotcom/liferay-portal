@@ -205,10 +205,14 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -236,6 +240,7 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
@@ -327,7 +332,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory,
-		ZipWriterFactory zipWriterFactory) {
+		ZipWriterFactory zipWriterFactory,
+		StyleBookEntryLocalService styleBookEntryLocalService) {
 
 		_accountEntryLocalService = accountEntryLocalService;
 		_accountEntryOrganizationRelLocalService =
@@ -418,6 +424,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			workflowDefinitionLinkLocalService;
 		_workflowDefinitionResourceFactory = workflowDefinitionResourceFactory;
 		_zipWriterFactory = zipWriterFactory;
+		_styleBookEntryLocalService = styleBookEntryLocalService;
 
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -698,19 +705,74 @@ public class BundleSiteInitializer implements SiteInitializer {
 		try (ZipOutputStream zipOutputStream = new ZipOutputStream(
 				new FileOutputStream(file))) {
 
-			ZipEntry zipEntry = new ZipEntry("hello/world.json");
-
-			zipOutputStream.putNextEntry(zipEntry);
-
-			zipOutputStream.write("{}".getBytes(), 0, "{}".length());
+			_serializeStylebooks(zipOutputStream, groupId);
 
 			zipOutputStream.closeEntry();
+			
 		}
 		catch (IOException ioException) {
 			throw new SerializationException(ioException);
 		}
-
 		return file;
+	}
+
+	private void _serializeStylebooks(ZipOutputStream zipOutputStream, long groupId)
+		throws IOException {
+		List<Map<String, Object>> stylebooks = _getStyleBooks(groupId);
+
+		for (Map<String, Object> stylebook: stylebooks){
+			BufferedImage previewImage = ImageIO.read(new File(stylebook.get("imagePreviewURL").toString()));
+
+			ZipEntry stylebookConfigs = new ZipEntry("stylebooks/"+stylebook.get("name")+"/style-book.json");
+			ZipEntry stylebookTokens = new ZipEntry("stylebooks/"+stylebook.get("name")+"/frontend-tokens-values.json");
+
+			String configs = "{\n" +
+							 "\t\"frontendTokensValuesPath\": \"frontend-tokens-values.json\",\n" +
+							 "\t\"name\": \""+ stylebook.get("name") +"\"\n" +
+							 "}";
+
+			zipOutputStream.putNextEntry(stylebookConfigs);
+
+			zipOutputStream.write(configs.getBytes(),0, configs.length());
+
+			String tokens = (String) stylebook.get("frontendTokensValues");
+
+			zipOutputStream.putNextEntry(stylebookTokens);
+			zipOutputStream.write(tokens.getBytes(),0, tokens.length());
+		}
+	}
+
+	private List<Map<String, Object>> _getStyleBooks(long groupId) {
+		ServiceContext serviceContextThreadLocal =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ServiceContext serviceContext =
+			(ServiceContext)serviceContextThreadLocal.clone();
+
+		ArrayList<Map<String, Object>> styleBooks = new ArrayList<>();
+
+		List<StyleBookEntry> styleBookEntries =
+			_styleBookEntryLocalService.getStyleBookEntries(
+				groupId,
+				0, 10,
+				new StyleBookEntryNameComparator(true));
+
+		for (StyleBookEntry styleBookEntry : styleBookEntries) {
+			styleBooks.add(
+				HashMapBuilder.<String, Object>put(
+					"imagePreviewURL",
+					styleBookEntry.getImagePreviewURL(serviceContext.getThemeDisplay())
+				).put(
+					"name", styleBookEntry.getName()
+				).put(
+					"styleBookEntryId", styleBookEntry.getStyleBookEntryId()
+				)
+					.put(
+						"frontendTokensValues", styleBookEntry.getFrontendTokensValues()
+					).build());
+		}
+
+		return styleBooks;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -5337,6 +5399,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final WorkflowDefinitionResource.Factory
 		_workflowDefinitionResourceFactory;
 	private final ZipWriterFactory _zipWriterFactory;
+	private final StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	private class SiteNavigationMenuItemSetting {
 

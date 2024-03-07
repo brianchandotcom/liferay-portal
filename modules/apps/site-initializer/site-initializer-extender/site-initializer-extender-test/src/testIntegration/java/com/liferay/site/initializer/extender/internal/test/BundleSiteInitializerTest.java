@@ -373,7 +373,7 @@ public class BundleSiteInitializerTest {
 			SiteInitializer siteInitializer = _siteInitializerFactory.create(
 				new File(tempDir1, "site-initializer"), null);
 
-			//siteInitializer.initialize(_group.getGroupId());
+			siteInitializer.initialize(_group.getGroupId());
 
 			File file = siteInitializer.serialize(_group.getGroupId());
 

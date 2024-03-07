@@ -83,6 +83,7 @@ import com.liferay.site.initializer.extender.internal.file.backed.servlet.FileBa
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.template.service.TemplateEntryLocalService;
 
@@ -174,7 +175,8 @@ public class SiteInitializerExtender
 				_themeLocalService, _userAccountResourceFactory,
 				_userGroupLocalService, _userLocalService,
 				_workflowDefinitionLinkLocalService,
-				_workflowDefinitionResourceFactory, _zipWriterFactory);
+				_workflowDefinitionResourceFactory, _zipWriterFactory,
+				_styleBookEntryLocalService);
 
 		siteInitializerExtension.start();
 
@@ -301,7 +303,8 @@ public class SiteInitializerExtender
 				_themeLocalService, _userAccountResourceFactory,
 				_userGroupLocalService, _userLocalService,
 				_workflowDefinitionLinkLocalService,
-				_workflowDefinitionResourceFactory, _zipWriterFactory);
+				_workflowDefinitionResourceFactory, _zipWriterFactory,
+				_styleBookEntryLocalService);
 
 		siteInitializerExtension.start();
 
@@ -560,5 +563,8 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ZipWriterFactory _zipWriterFactory;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

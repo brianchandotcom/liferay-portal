@@ -49,6 +49,7 @@ export class ProductMenuPage {
 		});
 		this.openProductMenuButton = page.getByLabel('Open Product Menu');
 		this.pagesMenuItem = page.getByRole('menuitem', {
+			exact: true,
 			name: 'Pages',
 		});
 		this.siteBuilderMenuItem = page.getByRole('menuitem', {

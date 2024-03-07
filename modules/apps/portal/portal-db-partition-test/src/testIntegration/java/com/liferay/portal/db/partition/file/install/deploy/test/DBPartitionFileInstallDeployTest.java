@@ -344,7 +344,8 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 	}
 
 	private static final String _CONFIGURATION_FACTORY_PID =
-		DBPartitionFileInstallDeployTest.class.getName() + "Configuration~foo";
+		DBPartitionFileInstallDeployTest.class.getName() + "Configuration~" +
+			RandomTestUtil.randomString();
 
 	private static final String _TEST_KEY = "testKey";
 

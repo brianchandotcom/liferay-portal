@@ -17,6 +17,7 @@ import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.MasterPageUti
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.PageTemplateCollectionUtil;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.PageTemplateUtil;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.UtilityPageTemplateUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -31,6 +32,7 @@ import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServic
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -46,6 +48,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -126,6 +129,64 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		return null;
 	}
 
+	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
+			List<LayoutPageTemplateCollection> layoutPageTemplateCollections,
+			ZipWriter zipWriter, String path)
+		throws Exception {
+
+		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
+				layoutPageTemplateCollections) {
+
+			if (layoutPageTemplateCollection.getType() ==
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE) {
+
+				String layoutPageTemplateCollectionKey =
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionKey();
+
+				path =
+					path + StringPool.SLASH + layoutPageTemplateCollectionKey;
+
+				zipWriter.addEntry(
+					path + StringPool.SLASH +
+						LayoutPageTemplateExportImportConstants.
+							FILE_NAME_PAGE_TEMPLATE_COLLECTION,
+					JSONUtil.put(
+						"description",
+						layoutPageTemplateCollection.getDescription()
+					).put(
+						"name", layoutPageTemplateCollection.getName()
+					).toString());
+
+				zipWriter = _exportLayoutPageTemplateEntriesAndCollections(
+					layoutPageTemplateCollection, path, zipWriter);
+			}
+		}
+
+		return zipWriter;
+	}
+
+	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
+			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter,
+			String path)
+		throws Exception {
+
+		List<LayoutPageTemplateCollection> exportLayoutPageTemplateCollections =
+			new ArrayList<>();
+
+		for (long layoutPageTemplateCollectionId :
+				layoutPageTemplateCollectionIds) {
+
+			exportLayoutPageTemplateCollections.add(
+				_layoutPageTemplateCollectionLocalService.
+					fetchLayoutPageTemplateCollection(
+						layoutPageTemplateCollectionId));
+		}
+
+		return exportLayoutPageTemplateEntriesAndCollections(
+			exportLayoutPageTemplateCollections, zipWriter, path);
+	}
+
 	@Override
 	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)
 		throws Exception {
@@ -174,6 +235,47 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		}
 
 		return zipWriter.getFile();
+	}
+
+	private ZipWriter _exportLayoutPageTemplateEntriesAndCollections(
+			LayoutPageTemplateCollection layoutPageTemplateCollection,
+			String path, ZipWriter zipWriter)
+		throws Exception {
+
+		DTOConverter<LayoutStructure, PageDefinition>
+			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
+
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+				layoutPageTemplateCollection.getGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId());
+
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+				layoutPageTemplateEntries) {
+
+			if (layoutPageTemplateEntry.isDraft()) {
+				continue;
+			}
+
+			if (layoutPageTemplateEntry.getType() ==
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
+
+				_populateDisplayPagesZipWriter(
+					layoutPageTemplateEntry, pageDefinitionDTOConverter,
+					zipWriter);
+			}
+		}
+
+		exportLayoutPageTemplateEntriesAndCollections(
+			_layoutPageTemplateCollectionLocalService.
+				getLayoutPageTemplateCollections(
+					layoutPageTemplateCollection.getGroupId(),
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId()),
+			zipWriter, path);
+
+		return zipWriter;
 	}
 
 	private DTOConverterContext _getDTOConverterContext(

@@ -14,6 +14,26 @@ import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 
+const translateNameAndMetadataFields = async (
+	page,
+	structureName = 'Basic Web Content'
+) => {
+	await fillAndClickOutside(
+		page,
+		page.getByLabel('Friendly URL', {exact: true})
+	);
+	await fillAndClickOutside(
+		page,
+		page.getByPlaceholder(`Untitled ${structureName}`)
+	);
+	await fillAndClickOutside(
+		page,
+		page
+			.frameLocator(':text("Description")+div iframe')
+			.getByRole('textbox')
+	);
+};
+
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
@@ -114,7 +134,7 @@ test('LPD-17782: This is a test for bulk permissions of web content', async ({
 	await journalPage.deleteJournalArticle(title2);
 });
 
-test('LPD-19627: Translate several fields and check how many fields have been translated', async ({
+test('LPD-19627: Translate several fields in a Basic Web Content and check how many fields have been translated', async ({
 	journalEditArticlePage,
 	journalPage,
 	page,
@@ -124,10 +144,6 @@ test('LPD-19627: Translate several fields and check how many fields have been tr
 	const title = getRandomString();
 
 	await journalEditArticlePage.goToCreateNewBasicArticle(title);
-
-	const friendlyURLInput = page.getByLabel('Friendly URL', {exact: true});
-
-	await fillAndClickOutside(page, friendlyURLInput);
 
 	const translationButton = page.getByRole('combobox', {
 		name: 'Select a language',
@@ -141,17 +157,7 @@ test('LPD-19627: Translate several fields and check how many fields have been tr
 		trigger: translationButton,
 	});
 
-	await fillAndClickOutside(page, friendlyURLInput);
-	await fillAndClickOutside(
-		page,
-		page.getByPlaceholder('Untitled Basic Web Content')
-	);
-	await fillAndClickOutside(
-		page,
-		page
-			.frameLocator(':text("Description")+div iframe')
-			.getByRole('textbox')
-	);
+	await translateNameAndMetadataFields(page);
 
 	await translationButton.click();
 

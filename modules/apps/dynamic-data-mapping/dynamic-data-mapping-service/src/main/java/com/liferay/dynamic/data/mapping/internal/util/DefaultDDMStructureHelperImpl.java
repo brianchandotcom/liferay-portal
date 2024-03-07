@@ -295,21 +295,6 @@ public class DefaultDDMStructureHelperImpl
 		return _ddm.getDefaultDDMFormLayout(ddmForm);
 	}
 
-	private List<Element> _getStructureElements(
-			ClassLoader classLoader, String fileName, Locale locale)
-		throws Exception {
-
-		String xml = StringUtil.read(classLoader, fileName);
-
-		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
-
-		Document document = UnsecureSAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		return rootElement.elements("structure");
-	}
-
 	private DDMForm _getPopulateDDMForm(
 		DDMForm ddmForm, Locale defaultLocale, Set<Locale> locales) {
 
@@ -374,6 +359,21 @@ public class DefaultDDMStructureHelperImpl
 		}
 
 		return localizedValue;
+	}
+
+	private List<Element> _getStructureElements(
+			ClassLoader classLoader, String fileName, Locale locale)
+		throws Exception {
+
+		String xml = StringUtil.read(classLoader, fileName);
+
+		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
+
+		Document document = UnsecureSAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		return rootElement.elements("structure");
 	}
 
 	@Reference

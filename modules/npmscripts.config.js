@@ -461,6 +461,7 @@ module.exports = {
 			'@liferay/template-web': [],
 			'asset-taglib': [],
 			'data-engine-js-components-web': [],
+			'data-engine-taglib': [],
 			'dynamic-data-mapping-form-field-type': [
 				'leaflet/dist/leaflet.css',
 			],

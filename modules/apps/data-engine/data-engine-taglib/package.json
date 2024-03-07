@@ -27,7 +27,7 @@
 	},
 	"jest": {
 		"collectCoverageFrom": [
-			"src/main/resources/META-INF/resources/data_layout_builder/js/**/*.es.js"
+			"src/main/resources/META-INF/resources/js/**/*.es.js"
 		],
 		"setupFilesAfterEnv": [
 			"<rootDir>/jest-setup.config.js"
@@ -41,7 +41,7 @@
 			"<rootDir>/jest-setup.config.js"
 		]
 	},
-	"main": "data_layout_builder/js/index.es.js",
+	"main": "js/index.js",
 	"name": "data-engine-taglib",
 	"private": true,
 	"scripts": {

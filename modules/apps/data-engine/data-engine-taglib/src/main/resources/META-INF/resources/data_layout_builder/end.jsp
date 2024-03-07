@@ -57,7 +57,7 @@
 
 <div id="<%= componentId %>container">
 	<react:component
-		module="<%= module %>"
+		module="{App} from data-engine-taglib"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"availableLanguageIds", availableLanguageIds

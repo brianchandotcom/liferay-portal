@@ -9,18 +9,12 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useIsMounted, useStateSafe} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
+import {loadModule, sub} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import useLoad from '../../hooks/useLoad.es';
 
 import './MultiPanelSidebar.scss';
-
-/**
- * Failure to preload is a non-critical failure, so we'll use this to swallow
- * rejected promises silently.
- */
-const swallow = [(value) => value, (_error) => undefined];
 
 export default function MultiPanelSidebar({
 	createPlugin,
@@ -43,8 +37,8 @@ export default function MultiPanelSidebar({
 
 	useEffect(() => {
 		const panelPromises = Object.values(sidebarPanelsRef.current).map(
-			(sidebarPanel) =>
-				load(sidebarPanel.sidebarPanelId, sidebarPanel.pluginEntryPoint)
+			(sidebarPanel) => {
+				return loadModule(sidebarPanel.pluginEntryPoint)
 					.then((Plugin) => {
 						const instance = new Plugin(
 							createPlugin({
@@ -60,7 +54,8 @@ export default function MultiPanelSidebar({
 							sidebarPanelId: sidebarPanel.sidebarPanelId,
 						};
 					})
-					.catch((error) => console.error(error))
+					.catch((error) => console.error(error));
+			}
 		);
 
 		setPanelComponents([]);
@@ -174,19 +169,7 @@ export default function MultiPanelSidebar({
 
 							const active = open && currentPanelId === panelId;
 
-							const {
-								icon,
-								isLink,
-								label,
-								pluginEntryPoint,
-								url,
-							} = panel;
-
-							const prefetch = () =>
-								load(
-									panel.sidebarPanelId,
-									pluginEntryPoint
-								).then(...swallow);
+							const {icon, isLink, label, url} = panel;
 
 							const btnClasses = classNames(
 								'tbar-btn tbar-btn-monospaced',
@@ -211,8 +194,6 @@ export default function MultiPanelSidebar({
 											onClick={() =>
 												handlePanelClick(panel)
 											}
-											onFocus={prefetch}
-											onMouseEnter={prefetch}
 											role="tab"
 											symbol={icon}
 											tabIndex={index === 0 ? '0' : '-1'}

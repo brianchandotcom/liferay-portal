@@ -10,7 +10,7 @@ import TranslationManager, {
 	TranslationManagerLabel,
 	formatIcon,
 	formatLabel,
-} from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/translation-manager/TranslationManager.es';
+} from '../../../../../src/main/resources/META-INF/resources/js/components/translation-manager/TranslationManager.es';
 
 const translatedLanguageIds = {
 	ar_SA: 'لقبي',

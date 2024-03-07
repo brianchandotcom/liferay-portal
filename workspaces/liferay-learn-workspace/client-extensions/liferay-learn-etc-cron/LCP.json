@@ -2,18 +2,18 @@
 	"concurrencyPolicy": "Forbid",
 	"cpu": 4,
 	"env": {
-		"LIFERAY_JAR_RUNNER_JAVA_OPTS": "-Xmx2048m",
+		"LIFERAY_JAR_RUNNER_JAVA_OPTS": "-Xmx4096m",
+		"LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR": "/home/liferay/liferay-learn",
 		"LIFERAY_LEARN_ETC_CRON_GITHUB_BRANCH": "master",
 		"LIFERAY_LEARN_ETC_CRON_GITHUB_DEPLOY_KEY": "@liferay-learn-github-deploy-key",
-		"LIFERAY_LEARN_ETC_CRON_GITHUB_REPO": "@liferay-learn-github-repo",
+		"LIFERAY_LEARN_ETC_CRON_GITHUB_USER": "liferay",
 		"LIFERAY_LEARN_ETC_CRON_LIFERAY_DATA_DEFINITION_KEY": "LEARN-ARTICLE",
-		"LIFERAY_LEARN_ETC_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN": "https://liferaylearnresources-exte5a2learn-extuat.lfr.cloud",
+		"LIFERAY_LEARN_ETC_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN": "https://liferaylearnresources-exte5a2learn-extdev.lfr.cloud",
 		"LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID": "@liferay-oauth-client-id",
 		"LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET": "@liferay-oauth-client-secret",
 		"LIFERAY_LEARN_ETC_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH": "guest",
-		"LIFERAY_LEARN_ETC_CRON_LIFERAY_URL": "@liferay-url",
-		"LIFERAY_LEARN_ETC_CRON_MARKDOWN_IMPORT_DIR": "/home/liferay/liferay-learn/docs",
-		"LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL": "#is-sites-learn-devops",
+		"LIFERAY_LEARN_ETC_CRON_LIFERAY_URL": "https://learn-dev.liferay.com",
+		"LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL": "#is-sites-learn-devops-dev",
 		"LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT": "@slack-endpoint",
 		"LIFERAY_ROUTES_CLIENT_EXTENSION": "/etc/liferay/lxc/ext-init-metadata",
 		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
@@ -22,7 +22,16 @@
 		"extprd": {
 			"env": {
 				"LIFERAY_LEARN_ETC_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN": "https://resources.learn.liferay.com",
+				"LIFERAY_LEARN_ETC_CRON_LIFERAY_URL": "https://learn.liferay.com",
 				"LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL": "#is-sites-learn-devops-prd"
+			},
+			"schedule": "0 15 * * *"
+		},
+		"extuat": {
+			"env": {
+				"LIFERAY_LEARN_ETC_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN": "https://liferaylearnresources-exte5a2learn-extuat.lfr.cloud",
+				"LIFERAY_LEARN_ETC_CRON_LIFERAY_URL": "https://learn-uat.liferay.com",
+				"LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL": "#is-sites-learn-devops-uat"
 			},
 			"schedule": "0 15 * * *"
 		},
@@ -36,6 +45,7 @@
 	"scale": 1,
 	"schedule": "0 10 * * 1",
 	"volumes": {
-		"publicHtml": "/public_html"
+		"publicHtml": "/public_html",
+		"homeLiferay": "/home/liferay"
 	}
 }

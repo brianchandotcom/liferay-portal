@@ -15,7 +15,7 @@ export default function useTranslationProgress({
 	namespace,
 	selectedLanguageId: initialSelectedLanguageId,
 }: TranslationManagerProps) {
-	const [defaultLanguageId, setDeafultLanguageId] = useState(
+	const [defaultLanguageId, setDefaultLanguageId] = useState(
 		initialDefaultLanguageId
 	);
 	const [fields, setFields] = useState(initialFields);
@@ -96,10 +96,10 @@ export default function useTranslationProgress({
 				defaultLanguageIdInput.value = selectedLanguageId;
 			}
 
-			setDeafultLanguageId(selectedLanguageId);
+			setDefaultLanguageId(selectedLanguageId);
 			setSelectedLanguageId(selectedLanguageId);
 		},
-		[namespace, setDeafultLanguageId, setSelectedLanguageId]
+		[namespace, setDefaultLanguageId, setSelectedLanguageId]
 	);
 
 	const localeChangeHandler = useCallback(

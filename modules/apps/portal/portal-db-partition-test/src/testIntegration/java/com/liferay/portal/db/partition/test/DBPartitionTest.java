@@ -8,6 +8,7 @@ package com.liferay.portal.db.partition.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -491,6 +493,10 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		try {
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> {
+					CounterLocalServiceUtil.increment(
+						ResourceAction.class.getName(),
+						RandomTestUtil.randomInt());
+
 					_resourceActionLocalService.addResourceAction(
 						"resource.action.test", "TEST", companyId);
 

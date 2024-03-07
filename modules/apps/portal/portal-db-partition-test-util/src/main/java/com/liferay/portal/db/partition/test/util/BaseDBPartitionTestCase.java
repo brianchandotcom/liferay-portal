@@ -326,7 +326,7 @@ public abstract class BaseDBPartitionTestCase {
 				preparedStatement1.executeUpdate();
 
 				preparedStatement2.setLong(1, 0L);
-				preparedStatement2.setLong(2, RandomTestUtil.nextLong());
+				preparedStatement2.setLong(2, RandomTestUtil.randomLong());
 				preparedStatement2.setLong(3, companyId);
 				preparedStatement2.setLong(4, 0L);
 				preparedStatement2.setString(5, "test" + companyId);

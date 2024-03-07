@@ -41,6 +41,7 @@ export default function VerticalNav({
 					href={item.href}
 					items={item.items}
 					key={item.id}
+					textValue={item.label}
 				>
 					{item.label}
 

@@ -63,9 +63,9 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 <liferay-ui:error key="resetMergeFailCountAndMerge" message="unable-to-reset-the-failure-counter-and-propagate-the-changes" />
 
 <c:if test="<%= liveGroup != null %>">
-	<aui:input disabled="<%= true %>" name="externalReferenceCode" value="<%= String.valueOf(liveGroup.getExternalReferenceCode()) %>" />
-
 	<aui:input name="siteId" type="resource" value="<%= String.valueOf(liveGroup.getGroupId()) %>" />
+
+	<aui:input disabled="<%= true %>" name="externalReferenceCode" value="<%= String.valueOf(liveGroup.getExternalReferenceCode()) %>" />
 </c:if>
 
 <c:choose>

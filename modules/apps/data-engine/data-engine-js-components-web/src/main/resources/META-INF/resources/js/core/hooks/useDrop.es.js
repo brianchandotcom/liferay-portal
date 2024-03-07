@@ -79,9 +79,6 @@ const isFieldGroupMovingIntoItself = ({
 		[sourceIndexes, ...(sourceParentField?.loc ?? [])]
 	);
 
-const isDroppingFieldGroupIntoField = (targetField, sourceField) =>
-	sourceField?.type === 'fieldset' && targetField !== undefined;
-
 /**
  * Determines whether the source Field is being moved into inside a Field
  * where its parent is a FieldGroup with just that element.
@@ -110,6 +107,11 @@ const isDroppingFieldIntoFieldset = (sourceField, targetField) =>
 	sourceField.fieldName !== targetField?.fieldName &&
 	targetField?.type === 'fieldset' &&
 	!!targetField?.ddmStructureId;
+
+const isDroppingFieldsetIntoNestedField = ({sourceField, targetField}) =>
+	sourceField?.type === 'fieldset' &&
+	targetField &&
+	'nestedFieldIndex' in targetField;
 
 const isSameField = (targetField, sourceField) =>
 	targetField && targetField.fieldName === sourceField.fieldName;
@@ -152,7 +154,10 @@ export function useDrop({
 			!isElementsSetOverTarget(field, item.data) &&
 			!isElementsSetOverTarget(parentField, item.data) &&
 			!isSameField(field, item.data) &&
-			!isDroppingFieldGroupIntoField(field, item.data) &&
+			!isDroppingFieldsetIntoNestedField({
+				sourceField: item.data,
+				targetField: field,
+			}) &&
 			!isDroppingFieldIntoFieldset(item.data, field) &&
 			!isFieldGroupMovingIntoItself({
 				sourceIndexes: item.sourceIndexes,

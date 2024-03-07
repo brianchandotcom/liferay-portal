@@ -1,76 +1,71 @@
 <style>
-	.portlet {
+	.learn-search-sort {
+		align-items: center;
+		height: 32px;
 		margin-bottom: 24px;
+		padding: 8px 0px 8px 8px;
 	}
 	
-	.form-group-autofit{
-	    align-items: center;
-        height: 32px;
-      	padding: 8px 0px 8px 8px;
-      	margin-bottom: 0px;
+	.learn-search-sort:hover {
+		background-color: #EDF3FE;
+		border-radius: 10px;
 	}
 	
-	.form-group-autofit:hover {
-       background-color: #EDF3FE;
-       border-radius: 10px;
-    }
+	.learn-search-sort option {
+		color: #282934;
+		font-size: 16px;
+	}
 	
-	.form-group-autofit .form-group-item {
-	    height: 32px;
+	.learn-search-sort .form-group-item {
+		height: 32px;
 		margin-bottom: 0px;
 		min-height: 32px;
 	}
 	
-	.form-group-item .input-select-wrapper{
-	    margin-bottom: 0px;
+	.learn-search-sort > .form-group-item:not(:last-child) {
+		margin-right: 0px;
+	}
+	
+	.learn-search-sort .form-group-item .input-select-wrapper {
+		height: 32px;
+		margin-bottom: 0px;
+	}
+	
+	.learn-search-sort .form-group-item select {
+		align-items: center;
+		background-color: transparent;
+		background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7 10l5 5 5-5z"/><path fill="rgba(11, 95, 255, 1)" d="M7 10l5 5 5-5z"/></svg>') calc(100% - 2px) 50% no-repeat;
+		border: none;
+		color: #0B5FFF;
+		font-size: 14px;
+		font-weight: 600;
+		height: 32px;
+		padding-bottom: 0px;
+		padding-top: 0px;
+	}
+	
+	.learn-search-sort .form-group-item select:focus {
+		background-color: transparent;
+		box-shadow: none;
+		color: #0B5FFF;
 		height: 32px;
 	}
 	
-	.form-group-item select{
-	    height: 32px;
-		border: none;
-		font-weight: 600;
-		font-size: 14px;
-		color: #0B5FFF;
+	.learn-search-sort .text-truncate-inline {
 		align-items: center;
-		background-color: transparent;
-	    padding-top: 0px;
-		padding-bottom: 0px;
-        background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7 10l5 5 5-5z"/><path fill="rgba(11, 95, 255, 1)" d="M7 10l5 5 5-5z"/></svg>') calc(100% - 2px) 50% no-repeat;
+		color:#282934;
+		height: 32px;
 	}
 	
-	.form-group-item select:focus{
-	    box-shadow: none;
-        color: #0B5FFF;
-        background-color: transparent;
-        height: 32px;
+	.learn-search-sort .text-truncate-inline .text-truncate {
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 16px;
+		margin-top:1px;
 	}
-	
-	.text-truncate-inline{
-	    height: 32px;
-        align-items: center;
-	    color:#282934;
-	}
-	
-	.text-truncate-inline .text-truncate{
-	   font-weight: 600;
-       font-size: 13px;
-	   line-height: 16px;
-	   margin-top:1px;
-	}
-	
-	.form-group-autofit > .form-group-item:not(:last-child) {
-	   margin-right: 0px;
-	}
-	
-	option {
-	  color: #282934;
-	  font-size: 16px;
-	}
-
 </style>
 
-<div class="form-group-autofit">
+<div class="form-group-autofit learn-search-sort">
 	<div class="form-group-item form-group-item-label form-group-item-shrink">
 		<label>
 			<span class="text-truncate-inline">
@@ -82,20 +77,20 @@
 	</div>
 	
 	<div class="form-group-item">
-    <@liferay_aui.select
-        cssClass="sort-term"
-        label=""
-        name="sortSelection" 
-    >  
-			<#if entries?has_content>
-            <#list entries as entry >
-                <@liferay_aui.option 
-                    label="${entry.getLanguageLabel()}"
-                    selected=entry.isSelected()
-                    value="${entry.getField()}"
-                />  
-            </#list>
-        </#if>
-    </@liferay_aui.select>
+		<@liferay_aui.select
+			cssClass="sort-term"
+			label=""
+			name="sortSelection" 
+		>  
+				<#if entries?has_content>
+				<#list entries as entry >
+					<@liferay_aui.option 
+						label="${entry.getLanguageLabel()}"
+						selected=entry.isSelected()
+						value="${entry.getField()}"
+					/>  
+				</#list>
+			</#if>
+		</@liferay_aui.select>
 	</div>
 </div>

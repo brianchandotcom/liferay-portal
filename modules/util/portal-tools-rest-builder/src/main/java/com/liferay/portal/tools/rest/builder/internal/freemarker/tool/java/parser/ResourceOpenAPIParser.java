@@ -147,22 +147,14 @@ public class ResourceOpenAPIParser {
 				sb.append(operation.getDescription());
 				sb.append("\"");
 
-				if (javaMethodSignature.getRequestBodyMediaTypes(
-					).contains(
-						"multipart/form-data"
-					)) {
-
+				if (getMultipartBodySchemas(javaMethodSignature) != null) {
 					sb.append(", requestBody = ");
 					sb.append("@io.swagger.v3.oas.annotations.parameters.");
-					sb.append("RequestBody(content = @io.swagger.v3.oas.");
-					sb.append("annotations.media.Content( mediaType = ");
-					sb.append("\"multipart/form-data\", schema = @io.swagger.");
-					sb.append("v3.oas.annotations.media.Schema( ");
-					sb.append("implementation = ");
-					sb.append(
-						StringUtil.upperCaseFirstLetter(
-							operation.getOperationId()));
-					sb.append("RequestBody.class)))");
+					sb.append("RequestBody(content = ");
+
+					sb.append(_getRequestBodyContent(javaMethodSignature));
+
+					sb.append(")");
 				}
 			}
 
@@ -176,13 +168,11 @@ public class ResourceOpenAPIParser {
 
 			sb.append("requestBody = ");
 			sb.append("@io.swagger.v3.oas.annotations.parameters.");
-			sb.append("RequestBody(content = @io.swagger.v3.oas.annotations.");
-			sb.append("media.Content( mediaType = \"multipart/form-data\", ");
-			sb.append("schema = @io.swagger.v3.oas.annotations.media.Schema( ");
-			sb.append("implementation = ");
-			sb.append(
-				StringUtil.upperCaseFirstLetter(operation.getOperationId()));
-			sb.append("RequestBody.class))))");
+			sb.append("RequestBody(content = ");
+
+			sb.append(_getRequestBodyContent(javaMethodSignature));
+
+			sb.append("))");
 
 			methodAnnotations.add(sb.toString());
 		}
@@ -1204,6 +1194,59 @@ public class ResourceOpenAPIParser {
 		parameter.setSchema(schema);
 
 		return parameter;
+	}
+
+	private static String _getRequestBodyContent(
+		JavaMethodSignature javaMethodSignature) {
+
+		Operation operation = javaMethodSignature.getOperation();
+
+		RequestBody requestBody = operation.getRequestBody();
+
+		Map<String, Content> contents = requestBody.getContent();
+
+		List<Map.Entry<String, Content>> entries = new ArrayList<>(
+			contents.entrySet());
+
+		StringBundler sb = new StringBundler();
+
+		if (entries.size() > 1) {
+			sb.append("{");
+		}
+
+		for (Map.Entry<String, Content> entry : entries) {
+			if (Objects.equals(entry.getKey(), "multipart/form-data")) {
+				sb.append("@io.swagger.v3.oas.annotations.media.Content( ");
+				sb.append("mediaType = \"multipart/form-data\", schema = ");
+				sb.append("@io.swagger.v3.oas.annotations.media.Schema( ");
+				sb.append("implementation = ");
+				sb.append(
+					StringUtil.upperCaseFirstLetter(
+						operation.getOperationId()));
+				sb.append("RequestBody.class))");
+			}
+			else {
+				sb.append("@io.swagger.v3.oas.annotations.media.Content( ");
+				sb.append("mediaType = \"");
+				sb.append(entry.getKey());
+				sb.append("\", schema = @io.swagger.v3.oas.annotations.media.");
+				sb.append("Schema( implementation = ");
+
+				sb.append(javaMethodSignature.getReturnType());
+
+				sb.append(".class))");
+			}
+
+			if (entry != entries.get(entries.size() - 1)) {
+				sb.append(",");
+			}
+		}
+
+		if (entries.size() > 1) {
+			sb.append("}");
+		}
+
+		return sb.toString();
 	}
 
 	private static String _getReturnType(

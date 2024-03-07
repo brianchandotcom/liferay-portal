@@ -86,20 +86,12 @@ public class ResourceActionLocalServiceTest {
 			_resourceActionLocalService.fetchResourceAction(
 				ResourceActionLocalServiceTest.class.getName(), testActionId));
 
-		ResourceAction resourceAction =
-			_resourceActionLocalService.addResourceAction(
-				ResourceActionLocalServiceTest.class.getName(), testActionId,
-				0L);
+		_resourceActionLocalService.addResourceAction(
+			ResourceActionLocalServiceTest.class.getName(), testActionId, 0L);
 
-		try {
-			Assert.assertNotNull(
-				_resourceActionLocalService.fetchResourceAction(
-					ResourceActionLocalServiceTest.class.getName(),
-					testActionId));
-		}
-		finally {
-			_resourceActionLocalService.deleteResourceAction(resourceAction);
-		}
+		Assert.assertNotNull(
+			_resourceActionLocalService.fetchResourceAction(
+				ResourceActionLocalServiceTest.class.getName(), testActionId));
 	}
 
 	@Test

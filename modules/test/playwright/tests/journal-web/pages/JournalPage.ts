@@ -43,6 +43,16 @@ export class JournalPage {
 		});
 	}
 
+	async goToCreateStructureArticle(structureName) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: structureName,
+			}),
+			trigger: this.newButton,
+		});
+	}
+
 	async goToCreateNewTemplate() {
 		await this.goToTemplates();
 		await this.newButton.click();

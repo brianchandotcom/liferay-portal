@@ -12,10 +12,6 @@ public interface PortalPullRequestJobEntity extends PullRequestJobEntity {
 
 	public String getForwardReceiverUserName();
 
-	public String getTestSuiteName();
-
 	public void setForwardReceiverUserName(String forwardReceiverUserName);
-
-	public void setTestSuiteName(String testSuiteName);
 
 }

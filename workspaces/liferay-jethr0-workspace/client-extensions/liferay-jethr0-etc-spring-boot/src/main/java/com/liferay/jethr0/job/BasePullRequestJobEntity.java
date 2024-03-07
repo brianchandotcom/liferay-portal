@@ -100,6 +100,11 @@ public abstract class BasePullRequestJobEntity
 	}
 
 	@Override
+	public String getTestSuiteName() {
+		return getParameterValue("testSuiteName");
+	}
+
+	@Override
 	public String getUpstreamBranchName() {
 		return getParameterValue("upstreamBranchName");
 	}
@@ -132,6 +137,11 @@ public abstract class BasePullRequestJobEntity
 	@Override
 	public void setSenderUserName(String senderUserName) {
 		setParameterValue("senderUserName", senderUserName);
+	}
+
+	@Override
+	public void setTestSuiteName(String testSuiteName) {
+		setParameterValue("testSuiteName", testSuiteName);
 	}
 
 	@Override

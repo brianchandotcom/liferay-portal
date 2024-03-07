@@ -38,20 +38,12 @@ public class FixpackBuilderPullRequestJobEntity
 		return getParameterValueURL("qaWebsitesBranchURL");
 	}
 
-	public String getTestSuiteName() {
-		return getParameterValue("testSuiteName");
-	}
-
 	public void setQAWebsitesBranchSHA(String qaWebsitesBranchSHA) {
 		setParameterValue("qaWebsitesBranchSHA", qaWebsitesBranchSHA);
 	}
 
 	public void setQAWebsitesBranchURL(URL qaWebsitesBranchURL) {
 		setParameterValueURL("qaWebsitesBranchURL", qaWebsitesBranchURL);
-	}
-
-	public void setTestSuiteName(String testSuiteName) {
-		setParameterValue("testSuiteName", testSuiteName);
 	}
 
 	@Override

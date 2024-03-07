@@ -28,6 +28,8 @@ public interface PullRequestJobEntity extends JobEntity {
 
 	public String getSenderUserName();
 
+	public String getTestSuiteName();
+
 	public String getUpstreamBranchName();
 
 	public String getUpstreamBranchSHA();
@@ -41,6 +43,8 @@ public interface PullRequestJobEntity extends JobEntity {
 	public void setSenderBranchSHA(String senderBranchSHA);
 
 	public void setSenderUserName(String senderUserName);
+
+	public void setTestSuiteName(String testSuiteName);
 
 	public void setUpstreamBranchName(String upstreamBranchName);
 

@@ -1033,8 +1033,10 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 					long mvccVersion = resultSet.getLong(2);
 
-					ctEntry = _ctEntryLocalService.updateModelMvccVersion(
-						ctEntry.getCtEntryId(), mvccVersion);
+					ctEntry.setModifiedDate(ctEntry.getModifiedDate());
+					ctEntry.setModelMvccVersion(mvccVersion);
+
+					ctEntry = _ctEntryLocalService.updateCTEntry(ctEntry);
 
 					_modificationCTEntries.put(pk, ctEntry);
 

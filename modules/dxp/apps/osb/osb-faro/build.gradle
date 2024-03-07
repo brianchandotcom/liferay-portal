@@ -149,7 +149,7 @@ stopDocker {
 configure(project(":dxp:apps:osb:osb-faro:osb-faro-dependencies")) {
 	task copyCloudResources(type: Copy)
 
-	String deployDir = "../osb-faro-docker/cloud/deploy"
+	String deployDir = "../osb-faro-docker/cloud/modules"
 
 	copyCloudResources {
 		doFirst {

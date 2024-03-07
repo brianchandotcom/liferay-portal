@@ -106,6 +106,19 @@ public class UpgradeProcessFactory {
 		};
 	}
 
+	public static UpgradeProcess runSQL(String... sqls) {
+		return new UpgradeProcess() {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				for (String sql : sqls) {
+					runSQL(sql);
+				}
+			}
+
+		};
+	}
+
 	private static String _getUpgradeInfo(String message) {
 		return _getUpgradeInfo(null, "Modifying schema to " + message);
 	}

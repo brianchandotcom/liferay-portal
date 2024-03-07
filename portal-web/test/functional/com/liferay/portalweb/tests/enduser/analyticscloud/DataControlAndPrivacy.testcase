@@ -101,9 +101,11 @@ definition {
 		}
 
 		task ("Go to the Home Page") {
-			Navigator.openURL();
-
-			ACUtils.waitForSendingRequest();
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "View Page,View Page",
+				pageName = "Home",
+				siteName = "guest");
 		}
 
 		task ("Close sessions") {
@@ -112,6 +114,14 @@ definition {
 
 		task ("Go to AC") {
 			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACUtils.viewNameList(nameList = "${userName} ${userName}");
 		}
 
 		task ("Create Access Request") {
@@ -169,9 +179,11 @@ definition {
 		}
 
 		task ("Go to the Home Page") {
-			Navigator.openURL();
-
-			ACUtils.waitForSendingRequest();
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "View Page,View Page",
+				pageName = "Home",
+				siteName = "guest");
 		}
 
 		task ("Close sessions") {
@@ -180,6 +192,14 @@ definition {
 
 		task ("Go to AC") {
 			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACUtils.viewNameList(nameList = "${userName} ${userName}");
 		}
 
 		task ("Create Delete Request") {

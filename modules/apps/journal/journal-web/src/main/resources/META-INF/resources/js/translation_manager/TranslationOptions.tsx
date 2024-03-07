@@ -7,27 +7,27 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {TranslationProgress} from 'frontend-js-components-web';
+import {Locale} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {getAllLocalizableFields} from './TranslationsWrapper';
+import useTranslationProgress from './useTranslationProgress';
 
 type Field = Record<Liferay.Language.Locale, string>;
 interface Props {
 	defaultLanguageId: Liferay.Language.Locale;
 	fields: Record<string, Field>;
-	getLocalizableFields: () => void;
+	locales: Locale[];
+	namespace: string;
 	selectedLanguageId: Liferay.Language.Locale;
-	translationProgress: TranslationProgress | null;
 }
 
 export default function TranslationOptions({
-	defaultLanguageId,
+	defaultLanguageId: initialDefaultLanguageId,
 	fields: initialFields,
-	getLocalizableFields,
-	selectedLanguageId,
-	translationProgress,
+	locales,
+	namespace,
+	selectedLanguageId: initialSelectedLanguageId,
 }: Props) {
 	const {
 		observer: resetTranslationObserver,
@@ -42,6 +42,19 @@ export default function TranslationOptions({
 	} = useModal();
 
 	const [dropdownActive, setDropdownActive] = useState(false);
+
+	const {
+		defaultLanguageId,
+		selectedLanguageId,
+		translationProgress,
+		updateTranslations,
+	} = useTranslationProgress({
+		defaultLanguageId: initialDefaultLanguageId,
+		fields: initialFields,
+		locales,
+		namespace,
+		selectedLanguageId: initialSelectedLanguageId,
+	});
 
 	const markAsTranslatedHandler = () => {
 		Liferay.fire('inputLocalized:markAsTranslated', {selectedLanguageId});
@@ -94,7 +107,7 @@ export default function TranslationOptions({
 				active={dropdownActive}
 				onActiveChange={(active: boolean) => {
 					if (active) {
-						getLocalizableFields();
+						updateTranslations();
 					}
 
 					setDropdownActive(active);

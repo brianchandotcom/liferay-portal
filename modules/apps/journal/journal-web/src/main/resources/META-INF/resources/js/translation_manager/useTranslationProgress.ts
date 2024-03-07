@@ -3,16 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import classNames from 'classnames';
-import {Locale} from 'frontend-js-components-web';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-
-import TranslationManager from './TranslationManager';
-import TranslationOptions from './TranslationOptions';
+import {Locale, TranslationProgress} from 'frontend-js-components-web';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
 export type Field = Record<Liferay.Language.Locale, string>;
 export type Fields = Record<string, Field>;
-export interface TranslationsWrapper {
+
+export interface useTranslationProgressProps {
 	defaultLanguageId: Liferay.Language.Locale;
 	fields: Fields;
 	locales: Locale[];
@@ -20,31 +17,34 @@ export interface TranslationsWrapper {
 	selectedLanguageId: Liferay.Language.Locale;
 }
 
-export default function TranslationsWrapper({
-	defaultLanguageId: currentDefaultLanguageId,
+export default function useTranslationProgress({
+	defaultLanguageId: initialDefaultLanguageId,
 	fields: initialFields,
 	locales,
 	namespace,
 	selectedLanguageId: initialSelectedLanguageId,
-}: TranslationsWrapper) {
+}: useTranslationProgressProps) {
 	const [defaultLanguageId, setDeafultLanguageId] = useState(
-		currentDefaultLanguageId
+		initialDefaultLanguageId
 	);
 	const [fields, setFields] = useState(initialFields);
 	const [translations, setTranslations] = useState(
 		fieldToTranslations(initialFields)
 	);
+	const [
+		translationProgress,
+		setTranslationProgress,
+	] = useState<TranslationProgress | null>();
+
 	const [selectedLanguageId, setSelectedLanguageId] = useState<
 		Liferay.Language.Locale
 	>(initialSelectedLanguageId);
 
-	const updateTranslations = useCallback(
-		(fields: Fields) => {
-			if (!fields) {
-				return;
-			}
+	const updateTranslations = useCallback(() => {
+		const localizableFields = getAllLocalizableFields(fields);
 
-			const newTranslations = Object.keys(fields).map((fieldName) => {
+		const newTranslations = Object.keys(localizableFields).map(
+			(fieldName) => {
 				const languages = Array.from(
 					document.querySelectorAll<HTMLInputElement>(
 						`[type="hidden"][data-field-name="${fieldName}"]`
@@ -60,20 +60,12 @@ export default function TranslationsWrapper({
 					fieldName,
 					languages,
 				};
-			});
-
-			setTranslations(newTranslations);
-		},
-		[setTranslations]
-	);
-
-	const getLocalizableFields = useCallback(() => {
-		const localizableFields = getAllLocalizableFields(fields);
+			}
+		);
 
 		setFields(localizableFields);
-
-		updateTranslations(localizableFields);
-	}, [fields, setFields, updateTranslations]);
+		setTranslations(newTranslations);
+	}, [setTranslations, setFields, fields]);
 
 	const translatedItems = useMemo(
 		() =>
@@ -90,12 +82,16 @@ export default function TranslationsWrapper({
 		[translations, locales]
 	);
 
-	const translationProgress = Object.keys(translatedItems).length
-		? {
-				totalItems: Object.keys(fields).length,
-				translatedItems,
-		  }
-		: null;
+	useEffect(() => {
+		const translationProgress = Object.keys(translatedItems).length
+			? {
+					totalItems: Object.keys(fields).length,
+					translatedItems,
+			  }
+			: null;
+
+		setTranslationProgress(translationProgress);
+	}, [fields, translatedItems, setTranslationProgress]);
 
 	const defaultLocaleChangeHandler = (event: any) => {
 		const selectedLanguageId = event.item.getAttribute('data-value');
@@ -112,56 +108,52 @@ export default function TranslationsWrapper({
 		setSelectedLanguageId(selectedLanguageId);
 	};
 
+	const localeChangeHandler = (event: any) => {
+		const selectedLanguageId = event.item.getAttribute('data-value');
+
+		setSelectedLanguageId(selectedLanguageId);
+	};
+
+	useEffect(() => {
+		Liferay.on(
+			'inputLocalized:updateTranslationStatus',
+			updateTranslations
+		);
+
+		return () => {
+			Liferay.detach(
+				'inputLocalized:updateTranslationStatus',
+				updateTranslations as () => void
+			);
+		};
+	}, [updateTranslations]);
+
 	useEffect(() => {
 		Liferay.on(
 			'inputLocalized:defaultLocaleChanged',
 			defaultLocaleChangeHandler
 		);
+		Liferay.on('inputLocalized:localeChanged', localeChangeHandler);
 
 		return () => {
 			Liferay.detach(
 				'inputLocalized:defaultLocaleChanged',
 				defaultLocaleChangeHandler as () => void
 			);
+			Liferay.detach(
+				'inputLocalized:localeChanged',
+				localeChangeHandler as () => void
+			);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return (
-		<>
-			<div
-				className={classNames({
-					'translation-manager': Liferay.FeatureFlags['LPD-11253'],
-				})}
-			>
-				<TranslationManager
-					defaultLanguageId={defaultLanguageId}
-					fields={fields}
-					getLocalizableFields={getLocalizableFields}
-					locales={locales}
-					namespace={namespace}
-					selectedLanguageId={selectedLanguageId}
-					setFields={setFields}
-					setSelectedLanguageId={setSelectedLanguageId}
-					setTranslations={setTranslations}
-					translationProgress={translationProgress}
-					updateTranslations={updateTranslations}
-				/>
-			</div>
-
-			{Liferay.FeatureFlags['LPD-11253'] && (
-				<div className="c-ml-2">
-					<TranslationOptions
-						defaultLanguageId={defaultLanguageId}
-						fields={initialFields}
-						getLocalizableFields={getLocalizableFields}
-						selectedLanguageId={selectedLanguageId}
-						translationProgress={translationProgress}
-					/>
-				</div>
-			)}
-		</>
-	);
+	return {
+		defaultLanguageId,
+		selectedLanguageId,
+		translationProgress,
+		updateTranslations,
+	};
 }
 
 export function fieldToTranslations(fields: Record<string, Field>) {
@@ -180,18 +172,18 @@ export function fieldToTranslations(fields: Record<string, Field>) {
 
 	return translations;
 }
-
 export function getAllLocalizableFields(initialFields: Record<string, Field>) {
 	const ddmFields = Array.from(
 		document.querySelectorAll<HTMLInputElement>(
-			`[data-ddm-localizable-field-id]`
+			'[data-ddm-localizable-field-id]'
 		)
-	)
-		.map(
-			(field) =>
-				`${field.dataset.fieldName}${field.dataset.ddmLocalizableFieldId}`
-		)
-		.reduce((acc, name) => ({...acc, [name]: {}}), {});
+	).reduce(
+		(acc, field) => ({
+			...acc,
+			[`${field.dataset.fieldName}${field.dataset.ddmLocalizableFieldId}`]: {},
+		}),
+		{}
+	);
 
 	return {...initialFields, ...ddmFields};
 }

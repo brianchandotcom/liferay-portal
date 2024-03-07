@@ -74,7 +74,30 @@ journalEditArticleDisplayContext.setViewAttributes();
 									</c:choose>
 
 									<react:component
-										module="js/translation_manager/TranslationsWrapper"
+										module="js/translation_manager/TranslationManager"
+										props='<%=
+											HashMapBuilder.<String, Object>put(
+												"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
+											).put(
+												"fields", journalEditArticleDisplayContext.getFieldMap()
+											).put(
+												"locales", journalEditArticleDisplayContext.getLocales()
+											).put(
+												"namespace", liferayPortletResponse.getNamespace()
+											).put(
+												"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
+											).build()
+										%>'
+									/>
+								</div>
+
+								<div class="c-ml-2">
+									<div class="inline-item my-5 p-5 w-100">
+										<span aria-hidden="true" class="loading-animation"></span>
+									</div>
+
+									<react:component
+										module="js/translation_manager/TranslationOptions"
 										props='<%=
 											HashMapBuilder.<String, Object>put(
 												"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()

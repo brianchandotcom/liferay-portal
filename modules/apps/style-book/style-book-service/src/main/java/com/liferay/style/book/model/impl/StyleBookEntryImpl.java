@@ -65,7 +65,8 @@ public class StyleBookEntryImpl extends StyleBookEntryBaseImpl {
 				"thumbnail." + previewFileEntry.getExtension());
 		}
 
-		zipWriter.addEntry(path + "/style-book.json", jsonObject.toString());
+		zipWriter.addEntry(
+			path + "/style-book.json", JSONUtil.toString(jsonObject));
 
 		zipWriter.addEntry(
 			path + "/frontend-tokens-values.json", getFrontendTokensValues());

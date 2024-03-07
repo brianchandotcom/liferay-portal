@@ -13,7 +13,6 @@ import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
@@ -60,19 +59,7 @@ public class CTConflictCheckerDispatchTaskExecutor
 		return KEY;
 	}
 
-	@Override
-	public boolean isHiddenInUI() {
-		if (!_featureFlagManager.isEnabled("LPD-11018")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 }

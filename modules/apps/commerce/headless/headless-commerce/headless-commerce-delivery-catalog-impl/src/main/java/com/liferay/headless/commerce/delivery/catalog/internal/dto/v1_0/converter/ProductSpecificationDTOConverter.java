@@ -88,6 +88,7 @@ public class ProductSpecificationDTOConverter
 				setSpecificationId(
 					cpSpecificationOption::getCPSpecificationOptionId);
 				setSpecificationKey(cpSpecificationOption::getKey);
+				setSpecificationPriority(cpSpecificationOption::getPriority);
 				setSpecificationTitle(
 					() -> cpSpecificationOption.getTitle(languageId));
 				setValue(

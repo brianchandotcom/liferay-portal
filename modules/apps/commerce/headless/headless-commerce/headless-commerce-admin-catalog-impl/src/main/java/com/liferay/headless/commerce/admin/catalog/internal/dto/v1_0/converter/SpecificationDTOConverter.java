@@ -64,6 +64,7 @@ public class SpecificationDTOConverter
 								cpOptionCategory.getCPOptionCategoryId(),
 								dtoConverterContext.getLocale()));
 					});
+				setPriority(cpSpecificationOption::getPriority);
 				setTitle(
 					() -> LanguageUtils.getLanguageIdMap(
 						cpSpecificationOption.getTitleMap()));

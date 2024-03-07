@@ -1088,6 +1088,35 @@ public class ObjectDefinitionResourceImpl
 								objectDefinition.getObjectDefinitionId());
 						}
 					).put(
+						"exportBoundObjectDefinitions",
+						() -> {
+							if (!FeatureFlagManagerUtil.isEnabled(
+									"LPS-187142") ||
+								!objectDefinition.isRootNode()) {
+
+								return null;
+							}
+
+							return addAction(
+								ActionKeys.VIEW, "getObjectDefinitionsPage",
+								permissionName,
+								objectDefinition.getObjectDefinitionId());
+						}
+					).put(
+						"exportObjectDefinition",
+						() -> {
+							if (objectDefinition.isRootDescendantNode() ||
+								objectDefinition.isRootNode()) {
+
+								return null;
+							}
+
+							return addAction(
+								ActionKeys.VIEW, "getObjectDefinition",
+								permissionName,
+								objectDefinition.getObjectDefinitionId());
+						}
+					).put(
 						"get",
 						addAction(
 							ActionKeys.VIEW, "getObjectDefinition",
@@ -1239,19 +1268,8 @@ public class ObjectDefinitionResourceImpl
 							return null;
 						}
 
-						com.liferay.object.model.ObjectDefinition
-							serviceBuilderObjectDefinition =
-								_objectDefinitionLocalService.
-									fetchObjectDefinition(
-										objectDefinition.
-											getRootObjectDefinitionId());
-
-						if (serviceBuilderObjectDefinition == null) {
-							return null;
-						}
-
-						return serviceBuilderObjectDefinition.
-							getExternalReferenceCode();
+						return objectDefinition.
+							getRootObjectDefinitionExternalReferenceCode();
 					});
 				setScope(objectDefinition::getScope);
 				setStatus(

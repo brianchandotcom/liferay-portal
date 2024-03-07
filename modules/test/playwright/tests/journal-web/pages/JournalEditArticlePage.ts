@@ -26,13 +26,18 @@ export class JournalEditArticlePage {
 		);
 	}
 
-	async goto() {
-		await this.journalPage.goToCreateNewBasicArticle();
+	async goto(structureName = null) {
+		if (structureName) {
+			await this.journalPage.goToCreateStructureArticle(structureName);
+		}
+		else {
+			await this.journalPage.goToCreateNewBasicArticle();
 
-		// Do it twice so we decrease flakiness
+			// Do it twice so we decrease flakiness
 
-		await this.journalPage.goto();
-		await this.journalPage.goToCreateNewBasicArticle();
+			await this.journalPage.goto();
+			await this.journalPage.goToCreateNewBasicArticle();
+		}
 	}
 
 	async goToCreateNewBasicArticle(title: string) {

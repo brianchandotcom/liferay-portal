@@ -8,11 +8,14 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
+import {setSiteUrl} from '../../utils/siteUrl';
 import {journalPagesTest} from './fixtures/journalPagesTest';
+import getDataStructureDefinition from './utils/getDataStructureDefinition';
 
 const translateNameAndMetadataFields = async (
 	page,
@@ -42,6 +45,7 @@ export const test = mergeTests(
 		'LPD-16469': true,
 		'LPS-114700': true,
 	}),
+	isolatedSiteTest,
 	loginTest(),
 	journalPagesTest
 );
@@ -163,5 +167,75 @@ test('LPD-19627: Translate several fields in a Basic Web Content and check how m
 
 	await expect(
 		page.getByRole('option', {name: 'Catalan Language: Translating 3/4'})
+	).toBeVisible({timeout: 1000});
+});
+
+test('LPD-19627: Translate all fields of a Web Content based on a custom structure with repeatable fields', async ({
+	apiHelpers,
+	journalEditArticlePage,
+	journalPage,
+	page,
+	site,
+}) => {
+	await setSiteUrl(page, site.friendlyUrlPath);
+
+	const localizableFieldName = 'Text5678';
+	const structureName = 'Structure 1';
+
+	const dataDefinition = getDataStructureDefinition({
+		defaultLanguageId: 'en_US',
+		fields: [{name: localizableFieldName, repeatable: true}],
+		name: structureName,
+	});
+
+	await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+	await journalPage.goto();
+
+	await journalEditArticlePage.goto(structureName);
+
+	const translationButton = page.getByRole('combobox', {
+		name: 'Select a language',
+	});
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('option', {
+			name: 'Catalan Language: Not Translated',
+		}),
+		trigger: translationButton,
+	});
+
+	await translateNameAndMetadataFields(page, structureName);
+
+	const localizableField = page.getByRole('textbox', {
+		name: localizableFieldName,
+	});
+
+	await fillAndClickOutside(page, localizableField);
+
+	await translationButton.click();
+
+	await expect(
+		page.getByRole('option', {name: 'Catalan Language: Translated'})
+	).toBeVisible({timeout: 1000});
+
+	await page.getByLabel('Add Duplicate Field Text').click();
+
+	await translationButton.click();
+
+	await expect(
+		page.getByRole('option', {name: 'Catalan Language: Translating 4/5'})
+	).toBeVisible({timeout: 1000});
+
+	await fillAndClickOutside(
+		page,
+		page.locator('input.ddm-field-text').nth(1)
+	);
+
+	await translationButton.click();
+
+	await expect(
+		page.getByRole('option', {name: 'Catalan Language: Translated'})
 	).toBeVisible({timeout: 1000});
 });

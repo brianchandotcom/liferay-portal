@@ -1378,6 +1378,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void restoreDependentKBArticleFromTrash(KBArticle kbArticle)
 		throws PortalException {
 
@@ -1385,6 +1386,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		restoreDependentKBArticlesFromTrash(kbArticle.getResourcePrimKey());
 	}
 
+	@Override
 	public void restoreDependentKBArticlesFromTrash(long parentResourcePrimKey)
 		throws PortalException {
 

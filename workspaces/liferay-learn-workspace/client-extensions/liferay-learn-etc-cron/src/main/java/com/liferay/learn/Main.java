@@ -145,7 +145,8 @@ public class Main {
 			liferayUrl = "http://localhost:8080";
 		}
 
-		String baseDir = System.getenv("LIFERAY_LEARN_ETC_CRON_ROOT_DIR");
+		String baseDir = System.getenv(
+			"LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR");
 
 		if (baseDir == null) {
 			baseDir = "~/liferay-learn";

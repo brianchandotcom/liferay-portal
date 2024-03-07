@@ -545,7 +545,7 @@ definition {
 
 			Segmentation.addProperties(propertyOption = "Tag");
 
-			Segmentation.fillProperty(selectEntry = "tagName");
+			Segmentation.fillProperty(selectEntry = "tagname");
 
 			Segmentation.fillTitle(titleField = "AddSegmentByOrganizationTag Test");
 
@@ -561,7 +561,7 @@ definition {
 
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "tagName");
+				value1 = "tagname");
 		}
 	}
 

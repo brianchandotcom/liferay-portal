@@ -7,6 +7,8 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.PullRequestJobEntity;
 
 import java.io.IOException;
 
@@ -25,11 +27,38 @@ import org.json.JSONObject;
 public abstract class BaseTestGitHubCommentEventHandler
 	extends BaseGitHubCommentEventHandler {
 
+	@Override
+	public String process() throws InvalidJSONException, IOException {
+		if (checkLiferayGitHubUser() ||
+			closeInvalidUpstreamGitHubBranchName()) {
+
+			return null;
+		}
+
+		PullRequestJobEntity pullRequestJobEntity = createPullRequestJobEntity(
+			getTestSuite());
+
+		invokeJobEntity(pullRequestJobEntity);
+
+		return pullRequestJobEntity.toString();
+	}
+
 	protected BaseTestGitHubCommentEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
 	}
+
+	protected PullRequestJobEntity createPullRequestJobEntity(String testSuite)
+		throws InvalidJSONException {
+
+		return createPullRequestJobEntity(
+			getJobEntityType(), getJobPriority(), testSuite);
+	}
+
+	protected abstract JobEntity.Type getJobEntityType();
+
+	protected abstract int getJobPriority();
 
 	protected List<String> getTestOptions() throws InvalidJSONException {
 		List<String> testOptions = new ArrayList<>();

@@ -15,6 +15,7 @@ import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
+import com.liferay.jethr0.job.PullRequestJobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.PropertiesUtil;
 import com.liferay.jethr0.util.StringUtil;
@@ -156,72 +157,84 @@ public abstract class BaseGitHubIssueEventHandler
 			String testSuite)
 		throws InvalidJSONException, IOException {
 
-		GitBranchEntity upstreamGitBranchEntity = getUpstreamGitBranchEntity();
-
-		String name = StringUtil.combine(
-			upstreamGitBranchEntity.getBranchName(), " - ci:test:", testSuite);
-
-		int priority = 5;
-		JobEntity.Type type = JobEntity.Type.PORTAL_PULL_REQUEST;
+		int jobPriority = 5;
+		JobEntity.Type jobEntityType = JobEntity.Type.PORTAL_PULL_REQUEST;
 
 		if (testSuite.equals("sf")) {
-			priority = 4;
-			type = JobEntity.Type.PORTAL_PULL_REQUEST_SF;
+			jobPriority = 4;
+			jobEntityType = JobEntity.Type.PORTAL_PULL_REQUEST_SF;
 		}
 
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
-
-		JobEntity jobEntity = jobEntityRepository.create(
-			name, priority, null, JobEntity.State.OPENED, type);
+		JobEntity jobEntity = createPullRequestJobEntity(
+			jobEntityType, jobPriority, testSuite);
 
 		if (!(jobEntity instanceof PortalPullRequestJobEntity)) {
 			return null;
 		}
 
-		PortalPullRequestJobEntity portalPullRequestJobEntity =
-			(PortalPullRequestJobEntity)jobEntity;
+		return (PortalPullRequestJobEntity)jobEntity;
+	}
 
-		portalPullRequestJobEntity.setTestSuiteName(testSuite);
+	protected PullRequestJobEntity createPullRequestJobEntity(
+			JobEntity.Type jobEntityType, int jobPriority, String testSuite)
+		throws InvalidJSONException {
+
+		GitBranchEntity upstreamGitBranchEntity = getUpstreamGitBranchEntity();
+
+		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+
+		JobEntity jobEntity = jobEntityRepository.create(
+			StringUtil.combine(
+				upstreamGitBranchEntity.getBranchName(), " - ci:test:",
+				testSuite),
+			jobPriority, null, JobEntity.State.OPENED, jobEntityType);
+
+		if (!(jobEntity instanceof PullRequestJobEntity)) {
+			return null;
+		}
+
+		PullRequestJobEntity pullRequestJobEntity =
+			(PullRequestJobEntity)jobEntity;
+
+		pullRequestJobEntity.setTestSuiteName(testSuite);
 
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		if (gitHubPullRequest != null) {
-			portalPullRequestJobEntity.setPullRequestURL(
+			pullRequestJobEntity.setPullRequestURL(
 				gitHubPullRequest.getHTMLURL());
 
 			GitHubUser originGitHubUser =
 				gitHubPullRequest.getOriginGitHubUser();
 
-			portalPullRequestJobEntity.setOriginName(
-				originGitHubUser.getName());
+			pullRequestJobEntity.setOriginName(originGitHubUser.getName());
 
-			portalPullRequestJobEntity.setSenderBranchName(
+			pullRequestJobEntity.setSenderBranchName(
 				gitHubPullRequest.getHeadBranchName());
-			portalPullRequestJobEntity.setSenderBranchSHA(
+			pullRequestJobEntity.setSenderBranchSHA(
 				gitHubPullRequest.getHeadBranchSHA());
 
 			GitHubUser senderGitHubUser =
 				gitHubPullRequest.getSenderGitHubUser();
 
-			portalPullRequestJobEntity.setSenderUserName(
-				senderGitHubUser.getName());
+			pullRequestJobEntity.setSenderUserName(senderGitHubUser.getName());
 
-			portalPullRequestJobEntity.setUpstreamBranchName(
+			pullRequestJobEntity.setUpstreamBranchName(
 				gitHubPullRequest.getBaseBranchName());
-			portalPullRequestJobEntity.setUpstreamBranchSHA(
+			pullRequestJobEntity.setUpstreamBranchSHA(
 				gitHubPullRequest.getBaseBranchSHA());
 		}
 
 		if (upstreamGitBranchEntity != null) {
-			portalPullRequestJobEntity.setUpstreamBranchName(
+			pullRequestJobEntity.setUpstreamBranchName(
 				upstreamGitBranchEntity.getBranchName());
-			portalPullRequestJobEntity.setUpstreamBranchSHA(
+			pullRequestJobEntity.setUpstreamBranchSHA(
 				upstreamGitBranchEntity.getBranchSHA());
 		}
 
-		jobEntityRepository.update(portalPullRequestJobEntity);
+		jobEntityRepository.update(pullRequestJobEntity);
 
-		return portalPullRequestJobEntity;
+		return pullRequestJobEntity;
 	}
 
 	protected Set<String> getAvailableTestSuites()

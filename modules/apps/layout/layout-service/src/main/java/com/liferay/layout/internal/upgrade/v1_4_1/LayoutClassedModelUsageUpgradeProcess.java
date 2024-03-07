@@ -198,12 +198,13 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select Layout.plid, LayoutPageTemplateEntry.type_ from ",
 					"Layout left join LayoutPageTemplateEntry on ",
-					"(Layout.classPK = 0 and LayoutPageTemplateEntry.plid = ? ",
+					"(Layout.classPK = ? and LayoutPageTemplateEntry.plid = ? ",
 					") or (LayoutPageTemplateEntry.plid = Layout.classPK) ",
 					"where Layout.plid = ?"))) {
 
-			preparedStatement.setLong(1, plid);
+			preparedStatement.setLong(1, 0);
 			preparedStatement.setLong(2, plid);
+			preparedStatement.setLong(3, plid);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -258,12 +259,12 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(
-					"select 1 from AssetEntry where classNameId = ? and " +
-						"classPK = ? and visible = [$TRUE$]"))) {
+				"select 1 from AssetEntry where classNameId = ? and classPK " +
+					"= ? and visible = ?")) {
 
 			preparedStatement.setLong(1, classNameId);
 			preparedStatement.setLong(2, classPK);
+			preparedStatement.setBoolean(3, true);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {

@@ -257,7 +257,7 @@ definition {
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 
 			ACUtils.viewNameList(nameList = "${userName} ${userName}");
-			
+
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(

@@ -193,7 +193,6 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.site.exception.InitializationException;
-import com.liferay.site.exception.SerializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.extender.CommerceSiteInitializer;
 import com.liferay.site.initializer.extender.OSBSiteInitializer;
@@ -209,7 +208,6 @@ import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalService;
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -685,11 +683,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return true;
-	}
-
-	@Override
-	public File serialize(long groupId) throws SerializationException {
-		return null;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {

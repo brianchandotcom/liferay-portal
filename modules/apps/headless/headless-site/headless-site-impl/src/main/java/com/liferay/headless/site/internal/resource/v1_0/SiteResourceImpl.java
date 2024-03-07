@@ -40,6 +40,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerFactory;
 import com.liferay.site.initializer.SiteInitializerRegistry;
+import com.liferay.site.initializer.SiteInitializerSerializer;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
@@ -106,13 +107,25 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public Response getSiteByExternalReferenceCodeSiteInitializer(
-		String externalReferenceCode) {
+			String externalReferenceCode)
+		throws Exception {
 
-		return Response.ok(
-			new File("/some-zip-file.zip")
-		).header(
-			"Content-Disposition", "attachment; filename=\"file.zip\""
-		).build();
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		File file = _siteInitializerSerializer.serialize(group.getGroupId());
+
+		try {
+			return Response.ok(
+				file
+			).header(
+				"Content-Disposition",
+				"attachment; filename=\"" + file.getName() + "\""
+			).build();
+		}
+		finally {
+			file.delete();
+		}
 	}
 
 	@Override
@@ -417,6 +430,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;
+
+	@Reference
+	private SiteInitializerSerializer _siteInitializerSerializer;
 
 	@Reference
 	private Sites _sites;

@@ -6,9 +6,6 @@
 package com.liferay.site.initializer;
 
 import com.liferay.site.exception.InitializationException;
-import com.liferay.site.exception.SerializationException;
-
-import java.io.File;
 
 import java.util.Locale;
 
@@ -31,7 +28,5 @@ public interface SiteInitializer {
 	public void initialize(long groupId) throws InitializationException;
 
 	public boolean isActive(long companyId);
-
-	public File serialize(long groupId) throws SerializationException;
 
 }

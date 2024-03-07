@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
-import java.io.File;
-
 import java.util.Date;
 import java.util.Locale;
 
@@ -80,11 +78,6 @@ public class BlankSiteInitializer implements SiteInitializer {
 	@Override
 	public boolean isActive(long companyId) {
 		return true;
-	}
-
-	@Override
-	public File serialize(long groupId) {
-		throw new UnsupportedOperationException();
 	}
 
 	private void _addLayoutUtilityPageEntry(

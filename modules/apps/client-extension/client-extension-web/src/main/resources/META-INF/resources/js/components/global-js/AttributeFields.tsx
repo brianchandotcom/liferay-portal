@@ -22,14 +22,17 @@ interface IProps {
 	value: string | boolean;
 }
 
+export const TYPE_BOOLEAN = 'TYPE_BOOLEAN';
+export const TYPE_STRING = 'TYPE_STRING';
+
 const BOOLEAN_VALUE_ITEMS = [
 	{label: Liferay.Language.get('true'), value: true},
 	{label: Liferay.Language.get('false'), value: false},
 ];
 
 const TYPE_ITEMS = [
-	{label: Liferay.Language.get('string'), value: 'String'},
-	{label: Liferay.Language.get('boolean'), value: 'Boolean'},
+	{label: Liferay.Language.get('string'), value: TYPE_STRING},
+	{label: Liferay.Language.get('boolean'), value: TYPE_BOOLEAN},
 ];
 
 export default function AttributeFields({
@@ -99,7 +102,7 @@ export default function AttributeFields({
 							onAttributeChange(index, {
 								type,
 								value:
-									type !== 'Boolean'
+									type !== TYPE_BOOLEAN
 										? ''
 										: BOOLEAN_VALUE_ITEMS[0].value,
 							})

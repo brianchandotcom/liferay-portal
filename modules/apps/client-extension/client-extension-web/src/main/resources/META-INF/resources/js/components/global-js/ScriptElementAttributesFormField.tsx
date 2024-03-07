@@ -6,9 +6,9 @@
 import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
-import AttributeFields from './AttributeFields';
+import AttributeFields, {TYPE_STRING} from './AttributeFields';
 
-const emptyRow = () => ({id: uuidv4(), name: '', type: 'String', value: ''});
+const emptyRow = () => ({id: uuidv4(), name: '', type: TYPE_STRING, value: ''});
 
 const toJSONObjectString = (attributes) => {
 	const attributesObject = {};

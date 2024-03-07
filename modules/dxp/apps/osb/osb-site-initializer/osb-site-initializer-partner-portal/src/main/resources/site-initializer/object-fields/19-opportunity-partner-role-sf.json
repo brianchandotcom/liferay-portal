@@ -3,7 +3,7 @@
 		{
 			"DBType": "Boolean",
 			"businessType": "Boolean",
-			"externalReferenceCode": "Active__c",
+			"externalReferenceCode": "Acitve_Partner__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
@@ -49,6 +49,32 @@
 				"en_US": "Close Date"
 			},
 			"name": "closeDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "Opp_Project_Subscription_Start_Date__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Subscription Start Date"
+			},
+			"name": "projectSubscriptionStartDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "Opp_Project_Subscription_End_Date__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Project Subscription End Date"
+			},
+			"name": "projectSubscriptionEndDate",
 			"required": false,
 			"type": "Date"
 		},

@@ -131,6 +131,40 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return includesJobProperties;
 	}
 
+	public File getJavaFileFromFullClassName(String fullClassName) {
+		String classFileName =
+			fullClassName.replaceAll(".*\\.([^\\.]+)", "$1") + ".java";
+
+		String classPackageName = fullClassName.substring(
+			0, fullClassName.lastIndexOf("."));
+
+		String classPackagePath = classPackageName.replaceAll("\\.", "/");
+
+		for (String javaDirPath : _javaDirPathStrings) {
+			if (!javaDirPath.contains(classPackagePath)) {
+				continue;
+			}
+
+			File classFile = new File(javaDirPath, classFileName);
+
+			if (!classFile.exists()) {
+				continue;
+			}
+
+			String classFilePath = classFile.getPath();
+
+			if (!classFilePath.contains(
+					classPackagePath + "/" + classFileName)) {
+
+				continue;
+			}
+
+			return classFile;
+		}
+
+		return null;
+	}
+
 	@Override
 	public JSONObject getJSONObject() {
 		if (jsonObject != null) {
@@ -754,9 +788,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 			fullClassName = fullClassName.replaceAll("/", "\\.");
 
-			File javaTestClassFile =
-				portalGitWorkingDirectory.getJavaFileFromFullClassName(
-					fullClassName);
+			File javaTestClassFile = getJavaFileFromFullClassName(
+				fullClassName);
 
 			if (!JenkinsResultsParserUtil.isFileIncluded(
 					null, getPathMatchers(getFilterJobProperties()),

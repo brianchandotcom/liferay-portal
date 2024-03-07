@@ -1379,53 +1379,6 @@ public class GitWorkingDirectory {
 		return _gitRepositoryUsername;
 	}
 
-	public File getJavaFileFromFullClassName(String fullClassName) {
-		if (_javaDirPaths == null) {
-			List<File> javaFiles = JenkinsResultsParserUtil.findFiles(
-				getWorkingDirectory(), ".*\\.java");
-
-			_javaDirPaths = ConcurrentHashMap.newKeySet();
-
-			for (File javaFile : javaFiles) {
-				File parentFile = javaFile.getParentFile();
-
-				_javaDirPaths.add(parentFile.getPath());
-			}
-		}
-
-		String classFileName =
-			fullClassName.replaceAll(".*\\.([^\\.]+)", "$1") + ".java";
-
-		String classPackageName = fullClassName.substring(
-			0, fullClassName.lastIndexOf("."));
-
-		String classPackagePath = classPackageName.replaceAll("\\.", "/");
-
-		for (String javaDirPath : _javaDirPaths) {
-			if (!javaDirPath.contains(classPackagePath)) {
-				continue;
-			}
-
-			File classFile = new File(javaDirPath, classFileName);
-
-			if (!classFile.exists()) {
-				continue;
-			}
-
-			String classFilePath = classFile.getPath();
-
-			if (!classFilePath.contains(
-					classPackagePath + "/" + classFileName)) {
-
-				continue;
-			}
-
-			return classFile;
-		}
-
-		return null;
-	}
-
 	public String getLatestCommitSHA() {
 		List<LocalGitCommit> localGitCommits = log(1);
 
@@ -3096,7 +3049,6 @@ public class GitWorkingDirectory {
 		new ConcurrentHashMap<>();
 	private final String _gitRepositoryName;
 	private final String _gitRepositoryUsername;
-	private Set<String> _javaDirPaths;
 	private final String _upstreamBranchName;
 	private File _workingDirectory;
 

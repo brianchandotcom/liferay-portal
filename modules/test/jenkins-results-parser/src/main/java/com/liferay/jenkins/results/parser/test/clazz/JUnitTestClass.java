@@ -6,8 +6,8 @@
 package com.liferay.jenkins.results.parser.test.clazz;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.JUnitBatchTestClassGroup;
 
 import java.io.File;
 import java.io.IOException;
@@ -254,11 +254,11 @@ public class JUnitTestClass extends BaseTestClass {
 			return;
 		}
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			getPortalGitWorkingDirectory();
+		JUnitBatchTestClassGroup jUnitBatchTestClassGroup =
+			(JUnitBatchTestClassGroup)getBatchTestClassGroup();
 
 		File parentJavaFile =
-			portalGitWorkingDirectory.getJavaFileFromFullClassName(
+			jUnitBatchTestClassGroup.getJavaFileFromFullClassName(
 				parentFullClassName);
 
 		if (parentJavaFile == null) {

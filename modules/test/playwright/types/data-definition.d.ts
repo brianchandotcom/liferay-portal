@@ -1,0 +1,50 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+type Locale = Liferay.Language.Locale;
+
+type DataDefinition = {
+	availableLanguageIds: Locale[];
+	dataDefinitionFields: DefinitionField[];
+	defaultDataLayout: DataLayout;
+	defaultLanguageId: Locale;
+	name: {[keys: string]: string};
+};
+
+type DefinitionField = {
+	customProperties: {
+		dataType: 'string';
+		displayStyle: 'singleline' | 'multiline';
+		fieldReference: string;
+	};
+	fieldType: 'text' | 'select';
+	indexType: 'keyword' | 'text' | 'none';
+	label: {[keys: string]: string};
+	localizable: boolean;
+	name: string;
+	repeatable: boolean;
+	showLabel: boolean;
+};
+
+type DataLayouRow = {
+	dataLayoutColumns: [
+		{
+			columnSize: number;
+			fieldNames: string[];
+		}
+	];
+};
+
+type DataLayout = {
+	dataLayoutPages: [
+		{
+			dataLayoutRows: DataLayouRow[];
+			description: {[keys: string]: string};
+			title: {[keys: string]: string};
+		}
+	];
+	name: {[keys: string]: string};
+	paginationMode: 'single-page';
+};

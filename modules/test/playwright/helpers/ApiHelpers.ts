@@ -9,6 +9,7 @@ import {Page} from '@playwright/test';
 
 import {liferayConfig} from '../liferay.config';
 import {ApiBuilderHelper} from './ApiBuilderHelper';
+import {DataEngineApiHelper} from './DataEngineApiHelper';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
 import {HeadlessAdminContentApiHelper} from './HeadlessAdminContentApiHelper';
 import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
@@ -32,6 +33,7 @@ export class ApiHelpers {
 	readonly apiBuilder: ApiBuilderHelper;
 	readonly baseUrl: string;
 	readonly featureFlag: FeatureFlagApiHelper;
+	readonly dataEngine: DataEngineApiHelper;
 	readonly headlessAdminContent: HeadlessAdminContentApiHelper;
 	readonly headlessAdminUser: HeadlessAdminUserApiHelper;
 	readonly headlessCommerceAdminCatalog: HeadlessCommerceAdminCatalogApiHelper;
@@ -59,6 +61,7 @@ export class ApiHelpers {
 		this.apiBuilder = new ApiBuilderHelper(this);
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
+		this.dataEngine = new DataEngineApiHelper(this);
 		this.headlessAdminContent = new HeadlessAdminContentApiHelper(this);
 		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);
 		this.headlessCommerceAdminCatalog =

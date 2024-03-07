@@ -5,19 +5,21 @@
 
 import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Color from 'dynamic-data-mapping-form-field-type/ColorPicker/ColorPicker.es';
-import Date from 'dynamic-data-mapping-form-field-type/DatePicker/DatePicker.es';
-import DocumentLibrary from 'dynamic-data-mapping-form-field-type/DocumentLibrary/DocumentLibrary.es';
-import Grid from 'dynamic-data-mapping-form-field-type/Grid/Grid.es';
-import Image from 'dynamic-data-mapping-form-field-type/ImagePicker/ImagePicker.es';
-import Numeric from 'dynamic-data-mapping-form-field-type/Numeric/Numeric';
-import RichText from 'dynamic-data-mapping-form-field-type/RichText/RichText.es';
-import Select from 'dynamic-data-mapping-form-field-type/Select/Select';
-import Text from 'dynamic-data-mapping-form-field-type/Text/Text.es';
+import {
+	ColorPicker,
+	DatePicker,
+	DocumentLibrary,
+	Grid,
+	ImagePicker,
+	Numeric,
+	RichText,
+	Select,
+	Text,
+} from 'dynamic-data-mapping-form-field-type';
 import React from 'react';
 
-import {Editor} from '../../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rules/editor/Editor.es';
-import {DEFAULT_RULE} from '../../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/rules/editor/config.es';
+import {Editor} from '../../../../../../src/main/resources/META-INF/resources/js/components/rules/editor/Editor.es';
+import {DEFAULT_RULE} from '../../../../../../src/main/resources/META-INF/resources/js/components/rules/editor/config.es';
 import {
 	FIELDS,
 	FIELDS_TYPES,
@@ -127,16 +129,16 @@ describe('Editor', () => {
 				require: ([fieldModule], resolve) => {
 					switch (fieldModule) {
 						case 'color':
-							resolve({default: Color});
+							resolve({default: ColorPicker});
 							break;
 						case 'date':
-							resolve({default: Date});
+							resolve({default: DatePicker});
 							break;
 						case 'grid':
 							resolve({default: Grid});
 							break;
 						case 'image':
-							resolve({default: Image});
+							resolve({default: ImagePicker});
 							break;
 						case 'numeric':
 							resolve({default: Numeric});

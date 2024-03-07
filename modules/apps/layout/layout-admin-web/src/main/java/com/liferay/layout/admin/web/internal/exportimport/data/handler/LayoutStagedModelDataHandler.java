@@ -2846,6 +2846,8 @@ public class LayoutStagedModelDataHandler
 		layoutElement.addAttribute(
 			"layout-id", String.valueOf(layout.getLayoutId()));
 		layoutElement.addAttribute(
+			"layout-plid", String.valueOf(layout.getPlid()));
+		layoutElement.addAttribute(
 			"layout-parent-layout-id",
 			String.valueOf(layout.getParentLayoutId()));
 		layoutElement.addAttribute(

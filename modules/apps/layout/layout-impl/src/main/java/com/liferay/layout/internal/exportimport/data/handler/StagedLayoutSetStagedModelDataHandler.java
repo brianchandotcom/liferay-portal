@@ -950,10 +950,10 @@ public class StagedLayoutSetStagedModelDataHandler
 			}
 
 			if (action.equals(Constants.ADD)) {
-				long layoutId = GetterUtil.getLong(
-					layoutElement.attributeValue("layout-id"));
+				long layoutPlid = GetterUtil.getLong(
+					layoutElement.attributeValue("layout-plid"));
 
-				Layout layout = layouts.get(layoutId);
+				Layout layout = layouts.get(layoutPlid);
 
 				if (layout == null) {
 					if (_log.isDebugEnabled()) {

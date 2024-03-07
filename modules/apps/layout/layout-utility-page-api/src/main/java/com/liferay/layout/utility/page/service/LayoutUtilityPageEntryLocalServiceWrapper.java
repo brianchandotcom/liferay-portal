@@ -393,6 +393,16 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 			groupId, type, start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, String[] types, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutUtilityPageEntry>
+			orderByComparator) {
+
+		return _layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+			groupId, types, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns all the layout utility page entries matching the UUID and company.
 	 *
@@ -446,6 +456,12 @@ public class LayoutUtilityPageEntryLocalServiceWrapper
 	public int getLayoutUtilityPageEntriesCount(long groupId) {
 		return _layoutUtilityPageEntryLocalService.
 			getLayoutUtilityPageEntriesCount(groupId);
+	}
+
+	@Override
+	public int getLayoutUtilityPageEntriesCount(long groupId, String[] types) {
+		return _layoutUtilityPageEntryLocalService.
+			getLayoutUtilityPageEntriesCount(groupId, types);
 	}
 
 	/**

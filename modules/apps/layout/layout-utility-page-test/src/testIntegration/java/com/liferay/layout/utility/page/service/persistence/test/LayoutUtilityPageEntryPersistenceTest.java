@@ -298,6 +298,15 @@ public class LayoutUtilityPageEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_TArrayable() throws Exception {
+		_persistence.countByG_T(
+			RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			});
+	}
+
+	@Test
 	public void testCountByG_D_T() throws Exception {
 		_persistence.countByG_D_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");

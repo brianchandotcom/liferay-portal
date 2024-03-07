@@ -293,6 +293,11 @@ public interface LayoutUtilityPageEntryLocalService
 		long groupId, String type, int start, int end,
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutUtilityPageEntry> getLayoutUtilityPageEntries(
+		long groupId, String[] types, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator);
+
 	/**
 	 * Returns all the layout utility page entries matching the UUID and company.
 	 *
@@ -331,6 +336,9 @@ public interface LayoutUtilityPageEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutUtilityPageEntriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutUtilityPageEntriesCount(long groupId, String[] types);
 
 	/**
 	 * Returns the layout utility page entry with the primary key.

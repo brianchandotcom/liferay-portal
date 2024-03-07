@@ -43,7 +43,16 @@ export class UsersAndOrganizationsPage {
 	readonly pageTitle: Locator;
 	readonly exportUsersOptionsMenuItem: Locator;
 	readonly manageCustomFieldsOptionsMenuItem: Locator;
+	readonly organizationActionsMenu: (
+		organizationName: string
+	) => Promise<Locator>;
 	readonly organizationsLink: Locator;
+	readonly organizationsTable: Locator;
+	readonly organizationsTableRow: (
+		colPosition: number,
+		value: string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
 	readonly exportImportOptionsMenuItem: Locator;
 	readonly usersTableRow: (
 		colPosition: number,
@@ -68,9 +77,47 @@ export class UsersAndOrganizationsPage {
 		this.optionsMenu = page
 			.getByTestId('headerOptions')
 			.getByLabel('Options');
+		this.organizationActionsMenu = async (organizationName: string) => {
+			const organizationsTableRow = await this.organizationsTableRow(
+				1,
+				organizationName,
+				true
+			);
+
+			if (organizationsTableRow && organizationsTableRow.row) {
+				const organizationActionsMenu =
+					organizationsTableRow.row.getByLabel('Show Actions');
+
+				if (organizationActionsMenu) {
+					return organizationActionsMenu;
+				}
+			}
+			else {
+				throw new Error(
+					`Cannot locate organization row with organizationName ${organizationName}`
+				);
+			}
+
+			throw new Error(`Cannot locate button with label: Show Actions`);
+		};
 		this.organizationsLink = page.getByRole('link', {
 			name: 'Organizations',
 		});
+		this.organizationsTable = page.locator(
+			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_organizationsSearchContainer'
+		);
+		this.organizationsTableRow = async (
+			colPosition: number,
+			value: string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.organizationsTable,
+				colPosition,
+				value,
+				strictEqual
+			);
+		};
 		this.page = page;
 		this.pageTitle = page.getByTestId('headerTitle');
 		this.usersTableRow = async (

@@ -17,6 +17,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 
@@ -60,35 +61,17 @@ public class ReleaseManagerTest {
 	}
 
 	@Test
-	public void testUnsuccessfulUpgradeByMissingModuleUpgrade()
+	public void testUnsuccessfulUpgradeByMissingModuleUpgradeWithAutorun()
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(ReleaseManagerTest.class);
+		_testUnsuccessfulUpgradeByMissingModuleUpgrade("true", "failure");
+	}
 
-		BundleContext bundleContext = bundle.getBundleContext();
+	@Test
+	public void testUnsuccessfulUpgradeByMissingModuleUpgradeWithoutAutorun()
+		throws Exception {
 
-		_serviceRegistration = bundleContext.registerService(
-			UpgradeStepRegistrator.class,
-			new ReleaseManagerTest.TestUpgradeStepRegistrator(), null);
-
-		Release release = _releaseLocalService.fetchRelease(
-			bundle.getSymbolicName());
-
-		try {
-			release.setSchemaVersion("0.0.0");
-
-			release = _releaseLocalService.updateRelease(release);
-
-			Assert.assertEquals("failure", _releaseManager.getStatus());
-			Assert.assertFalse(
-				Validator.isBlank(
-					_releaseManager.getShortStatusMessage(false)));
-			Assert.assertFalse(
-				Validator.isBlank(_releaseManager.getStatusMessage(false)));
-		}
-		finally {
-			_releaseLocalService.deleteRelease(release);
-		}
+		_testUnsuccessfulUpgradeByMissingModuleUpgrade("false", "unresolved");
 	}
 
 	@Test
@@ -113,6 +96,40 @@ public class ReleaseManagerTest {
 			finally {
 				PortalUpgradeProcess.updateSchemaVersion(connection, version);
 			}
+		}
+	}
+
+	private void _testUnsuccessfulUpgradeByMissingModuleUpgrade(
+			String autorun, String status)
+		throws Exception {
+
+		PropsUtil.set("upgrade.database.auto.run", autorun);
+
+		Bundle bundle = FrameworkUtil.getBundle(ReleaseManagerTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			UpgradeStepRegistrator.class,
+			new ReleaseManagerTest.TestUpgradeStepRegistrator(), null);
+
+		Release release = _releaseLocalService.fetchRelease(
+			bundle.getSymbolicName());
+
+		try {
+			release.setSchemaVersion("0.0.0");
+
+			release = _releaseLocalService.updateRelease(release);
+
+			Assert.assertEquals(status, _releaseManager.getStatus());
+			Assert.assertFalse(
+				Validator.isBlank(
+					_releaseManager.getShortStatusMessage(false)));
+			Assert.assertFalse(
+				Validator.isBlank(_releaseManager.getStatusMessage(false)));
+		}
+		finally {
+			_releaseLocalService.deleteRelease(release);
 		}
 	}
 

@@ -5,28 +5,11 @@
 
 /// <reference types="react" />
 
-import {TranslationProgress} from 'frontend-js-components-web';
-import {Fields, TranslationsWrapper} from './TranslationsWrapper';
-interface IProps extends TranslationsWrapper {
-	getLocalizableFields: () => void;
-	setFields: (fields: Fields) => void;
-	setSelectedLanguageId: (languageId: Liferay.Language.Locale) => void;
-	setTranslations: (translations: Translation[]) => void;
-	translationProgress: TranslationProgress | null;
-	updateTranslations: (fields: Fields) => void;
-}
-interface Translation {
-	fieldName: string;
-	languages: Liferay.Language.Locale[];
-}
+import {TranslationManagerProps} from './Types';
 export default function TranslationManager({
-	defaultLanguageId,
-	fields,
-	getLocalizableFields,
+	defaultLanguageId: initialDefaultLanguageId,
+	fields: initialFields,
 	locales,
-	selectedLanguageId,
-	setSelectedLanguageId,
-	translationProgress,
-	updateTranslations,
-}: IProps): JSX.Element;
-export {};
+	namespace,
+	selectedLanguageId: initialSelectedLanguageId,
+}: TranslationManagerProps): JSX.Element;

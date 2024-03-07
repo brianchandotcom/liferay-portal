@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import React, {useRef} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {
 	useMovementTarget,
 	useMovementTargetPosition,
@@ -58,20 +57,23 @@ function TopperEmpty({children, className, item}) {
 			<>
 				{React.cloneElement(child, {
 					...child.props,
-					className: classNames(child.props.className, className, {
-						'drag-over-bottom':
-							isValidDrop &&
-							dropTargetPosition === TARGET_POSITIONS.BOTTOM,
-						'drag-over-middle':
-							isValidDrop &&
-							dropTargetPosition === TARGET_POSITIONS.MIDDLE,
-						'drag-over-top':
-							isValidDrop &&
-							dropTargetPosition === TARGET_POSITIONS.TOP,
-						'drop-container': dropContainerId === item.itemId,
-						'page-editor__topper':
-							item.type !== LAYOUT_DATA_ITEM_TYPES.root,
-					}),
+					className: classNames(
+						child.props.className,
+						className,
+						'page-editor__topper',
+						{
+							'drag-over-bottom':
+								isValidDrop &&
+								dropTargetPosition === TARGET_POSITIONS.BOTTOM,
+							'drag-over-middle':
+								isValidDrop &&
+								dropTargetPosition === TARGET_POSITIONS.MIDDLE,
+							'drag-over-top':
+								isValidDrop &&
+								dropTargetPosition === TARGET_POSITIONS.TOP,
+							'drop-container': dropContainerId === item.itemId,
+						}
+					),
 					ref: (node) => {
 						containerRef.current = node;
 						targetRef(node);

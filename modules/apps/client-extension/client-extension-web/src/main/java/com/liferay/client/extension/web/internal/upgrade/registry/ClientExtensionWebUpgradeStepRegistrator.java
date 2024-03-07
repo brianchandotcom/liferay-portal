@@ -5,9 +5,10 @@
 
 package com.liferay.client.extension.web.internal.upgrade.registry;
 
+import com.liferay.client.extension.web.internal.upgrade.v2_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,18 +33,10 @@ public class ClientExtensionWebUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.0", "2.0.0",
-			new UpgradeProcess() {
-
-				@Override
-				protected void doUpgrade() throws Exception {
-					runSQL(
-						"delete from Release_ where servletContextName = " +
-							"'com.liferay.remote.app.web'");
-				}
-
-			},
-			new com.liferay.client.extension.web.internal.upgrade.v2_0_0.
-				UpgradePortletId());
+			UpgradeProcessFactory.runSQL(
+				"delete from Release_ where servletContextName = " +
+					"'com.liferay.remote.app.web'"),
+			new UpgradePortletId());
 
 		registry.register("2.0.0", "3.0.0", new DummyUpgradeStep());
 

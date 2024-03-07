@@ -5,7 +5,7 @@
 
 package com.liferay.external.data.source.test.internal.upgrade.registry;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -21,17 +21,10 @@ public class TestEntityUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.1.0",
-			new UpgradeProcess() {
-
-				@Override
-				protected void doUpgrade() throws Exception {
-					runSQL("delete from TestEntity");
-					runSQL(
-						"insert into TestEntity (id_, data_) values (-1, " +
-							"'Test Upgrade Value')");
-				}
-
-			});
+			UpgradeProcessFactory.runSQL(
+				"delete from TestEntity",
+				"insert into TestEntity (id_, data_) values (-1, 'Test " +
+					"Upgrade Value')"));
 	}
 
 }

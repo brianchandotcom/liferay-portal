@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -185,16 +184,9 @@ public class FragmentServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.10.1", "2.10.2",
-			new UpgradeProcess() {
-
-				@Override
-				protected void doUpgrade() throws Exception {
-					runSQL(
-						"update FragmentEntryLink set deleted = [$FALSE$] " +
-							"where deleted is null");
-				}
-
-			});
+			UpgradeProcessFactory.runSQL(
+				"update FragmentEntryLink set deleted = [$FALSE$] where " +
+					"deleted is null"));
 
 		registry.register(
 			"2.10.2", "2.10.3",

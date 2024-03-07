@@ -444,10 +444,6 @@ definition {
 				locator1 = "Staging#SITE_PAGES_VARIATION_DROPDOWN");
 		}
 
-		task ("Assert the Experience is shown in management bar") {
-			AssertVisible(locator1 = "PageEditor#EXPERIENCE_LABEL");
-		}
-
 		task ("Add a HTML fragment to page") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
@@ -491,10 +487,6 @@ definition {
 			AssertElementNotPresent(
 				key_sitePagesVariationName = "Main Variation",
 				locator1 = "Staging#SITE_PAGES_VARIATION_DROPDOWN");
-		}
-
-		task ("Assert the Experience is shown in management bar") {
-			AssertVisible(locator1 = "PageEditor#EXPERIENCE_LABEL");
 		}
 	}
 

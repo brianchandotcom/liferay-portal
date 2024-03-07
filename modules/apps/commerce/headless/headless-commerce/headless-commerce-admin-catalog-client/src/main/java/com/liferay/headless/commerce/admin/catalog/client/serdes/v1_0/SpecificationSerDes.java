@@ -100,6 +100,16 @@ public class SpecificationSerDes {
 			sb.append(String.valueOf(specification.getOptionCategory()));
 		}
 
+		if (specification.getPriority() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(specification.getPriority());
+		}
+
 		if (specification.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -167,6 +177,13 @@ public class SpecificationSerDes {
 				String.valueOf(specification.getOptionCategory()));
 		}
 
+		if (specification.getPriority() == null) {
+			map.put("priority", null);
+		}
+		else {
+			map.put("priority", String.valueOf(specification.getPriority()));
+		}
+
 		if (specification.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -223,6 +240,12 @@ public class SpecificationSerDes {
 					specification.setOptionCategory(
 						OptionCategorySerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				if (jsonParserFieldValue != null) {
+					specification.setPriority(
+						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

@@ -187,7 +187,7 @@ public abstract class BaseProductSpecificationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/productSpecifications/{id}' -d $'{"id": ___, "key": ___, "label": ___, "optionCategoryId": ___, "priority": ___, "productId": ___, "specificationId": ___, "specificationKey": ___, "value": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/productSpecifications/{id}' -d $'{"id": ___, "key": ___, "label": ___, "optionCategoryId": ___, "priority": ___, "productId": ___, "specificationId": ___, "specificationKey": ___, "specificationPriority": ___, "value": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -264,7 +264,7 @@ public abstract class BaseProductSpecificationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/productSpecifications' -d $'{"id": ___, "key": ___, "label": ___, "optionCategoryId": ___, "priority": ___, "productId": ___, "specificationId": ___, "specificationKey": ___, "value": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/productSpecifications' -d $'{"id": ___, "key": ___, "label": ___, "optionCategoryId": ___, "priority": ___, "productId": ___, "specificationId": ___, "specificationKey": ___, "specificationPriority": ___, "value": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

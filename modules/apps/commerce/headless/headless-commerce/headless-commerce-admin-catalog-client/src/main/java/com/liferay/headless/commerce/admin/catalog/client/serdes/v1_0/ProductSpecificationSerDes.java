@@ -134,6 +134,16 @@ public class ProductSpecificationSerDes {
 			sb.append("\"");
 		}
 
+		if (productSpecification.getSpecificationPriority() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"specificationPriority\": ");
+
+			sb.append(productSpecification.getSpecificationPriority());
+		}
+
 		if (productSpecification.getValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -230,6 +240,16 @@ public class ProductSpecificationSerDes {
 				String.valueOf(productSpecification.getSpecificationKey()));
 		}
 
+		if (productSpecification.getSpecificationPriority() == null) {
+			map.put("specificationPriority", null);
+		}
+		else {
+			map.put(
+				"specificationPriority",
+				String.valueOf(
+					productSpecification.getSpecificationPriority()));
+		}
+
 		if (productSpecification.getValue() == null) {
 			map.put("value", null);
 		}
@@ -304,6 +324,14 @@ public class ProductSpecificationSerDes {
 				if (jsonParserFieldValue != null) {
 					productSpecification.setSpecificationKey(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "specificationPriority")) {
+
+				if (jsonParserFieldValue != null) {
+					productSpecification.setSpecificationPriority(
+						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "value")) {

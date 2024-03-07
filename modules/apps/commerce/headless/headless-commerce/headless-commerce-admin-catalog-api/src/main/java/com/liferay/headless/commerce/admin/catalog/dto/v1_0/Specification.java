@@ -261,6 +261,47 @@ public class Specification implements Serializable {
 	@JsonIgnore
 	private Supplier<OptionCategory> _optionCategorySupplier;
 
+	@Schema(example = "1.2")
+	public Double getPriority() {
+		if (_prioritySupplier != null) {
+			priority = _prioritySupplier.get();
+
+			_prioritySupplier = null;
+		}
+
+		return priority;
+	}
+
+	public void setPriority(Double priority) {
+		this.priority = priority;
+
+		_prioritySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPriority(
+		UnsafeSupplier<Double, Exception> priorityUnsafeSupplier) {
+
+		_prioritySupplier = () -> {
+			try {
+				return priorityUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double priority;
+
+	@JsonIgnore
+	private Supplier<Double> _prioritySupplier;
+
 	@Schema(example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}")
 	@Valid
 	public Map<String, String> getTitle() {
@@ -393,6 +434,18 @@ public class Specification implements Serializable {
 			sb.append("\"optionCategory\": ");
 
 			sb.append(String.valueOf(optionCategory));
+		}
+
+		Double priority = getPriority();
+
+		if (priority != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(priority);
 		}
 
 		Map<String, String> title = getTitle();

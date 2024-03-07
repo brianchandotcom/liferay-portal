@@ -592,6 +592,16 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"specificationPriority", additionalAssertFieldName)) {
+
+				if (productSpecification.getSpecificationPriority() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"specificationTitle", additionalAssertFieldName)) {
 
 				if (productSpecification.getSpecificationTitle() == null) {
@@ -815,6 +825,19 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				if (!Objects.deepEquals(
 						productSpecification1.getSpecificationKey(),
 						productSpecification2.getSpecificationKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"specificationPriority", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productSpecification1.getSpecificationPriority(),
+						productSpecification2.getSpecificationPriority())) {
 
 					return false;
 				}
@@ -1118,6 +1141,14 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("specificationPriority")) {
+			sb.append(
+				String.valueOf(
+					productSpecification.getSpecificationPriority()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("specificationTitle")) {
 			Object object = productSpecification.getSpecificationTitle();
 
@@ -1267,6 +1298,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				specificationId = RandomTestUtil.randomLong();
 				specificationKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				specificationPriority = RandomTestUtil.randomDouble();
 				specificationTitle = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				value = StringUtil.toLowerCase(RandomTestUtil.randomString());

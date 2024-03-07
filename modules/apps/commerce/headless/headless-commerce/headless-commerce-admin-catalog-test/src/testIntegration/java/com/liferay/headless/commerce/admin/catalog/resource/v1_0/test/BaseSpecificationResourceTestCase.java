@@ -879,6 +879,14 @@ public abstract class BaseSpecificationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("priority", additionalAssertFieldName)) {
+				if (specification.getPriority() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (specification.getTitle() == null) {
 					valid = false;
@@ -1052,6 +1060,17 @@ public abstract class BaseSpecificationResourceTestCase {
 				if (!Objects.deepEquals(
 						specification1.getOptionCategory(),
 						specification2.getOptionCategory())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("priority", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						specification1.getPriority(),
+						specification2.getPriority())) {
 
 					return false;
 				}
@@ -1243,6 +1262,12 @@ public abstract class BaseSpecificationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("priority")) {
+			sb.append(String.valueOf(specification.getPriority()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("title")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1295,6 +1320,7 @@ public abstract class BaseSpecificationResourceTestCase {
 				facetable = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				priority = RandomTestUtil.randomDouble();
 			}
 		};
 	}

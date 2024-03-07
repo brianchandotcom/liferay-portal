@@ -129,6 +129,27 @@ public class Specification implements Cloneable, Serializable {
 
 	protected OptionCategory optionCategory;
 
+	public Double getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Double priority) {
+		this.priority = priority;
+	}
+
+	public void setPriority(
+		UnsafeSupplier<Double, Exception> priorityUnsafeSupplier) {
+
+		try {
+			priority = priorityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double priority;
+
 	public Map<String, String> getTitle() {
 		return title;
 	}

@@ -250,6 +250,14 @@ definition {
 		task ("Go to AC > Settings > Create a suppress request") {
 			ACUtils.launchAC();
 
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToKnownIndividualsTab();
+
+			ACUtils.viewNameList(nameList = "${userName} ${userName}");
+			
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
@@ -327,7 +335,7 @@ definition {
 
 		task ("Assert that the user was unsuppressed") {
 			ACSettings.createRequestLogByEmail(
-				emailAdresses = ${userEmail},
+				email = ${userEmail},
 				jobType = "Access");
 
 			ACSettings.goToDataControlAndPrivacy();
@@ -375,7 +383,7 @@ definition {
 			ACNavigation.goToSettings();
 
 			ACSettings.createRequestLogByEmail(
-				emailAdresses = ${userEmail},
+				email = ${userEmail},
 				jobType = "Suppress");
 		}
 

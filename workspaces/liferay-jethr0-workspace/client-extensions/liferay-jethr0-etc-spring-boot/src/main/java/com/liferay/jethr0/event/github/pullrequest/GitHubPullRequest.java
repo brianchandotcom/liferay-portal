@@ -121,6 +121,21 @@ public class GitHubPullRequest {
 		return StringUtil.toURL(_jsonObject.getString("comments_url"));
 	}
 
+	public URL getCommitsURL() {
+		return StringUtil.toURL(_jsonObject.getString("commits_url"));
+	}
+
+	public GitHubCommit getCommonParentGitHubCommit() {
+		List<GitHubCommit> gitHubCommits = getGitHubCommits();
+
+		GitHubCommit firstGitHubCommit = gitHubCommits.get(0);
+
+		List<GitHubCommit> parentGitHubCommits =
+			firstGitHubCommit.getParentGitHubCommits();
+
+		return parentGitHubCommits.get(0);
+	}
+
 	public Set<String> getCompletedTestSuites() {
 		Set<String> completedTestSuites = new HashSet<>();
 
@@ -159,6 +174,27 @@ public class GitHubPullRequest {
 		}
 
 		return gitHubComments;
+	}
+
+	public List<GitHubCommit> getGitHubCommits() {
+		if (_gitHubCommits != null) {
+			return _gitHubCommits;
+		}
+
+		_gitHubCommits = new ArrayList<>();
+
+		GitHubClient gitHubClient = getGitHubClient();
+
+		JSONArray commitsJSONArray = new JSONArray(
+			gitHubClient.requestGet(getCommitsURL()));
+
+		for (int i = 0; i < commitsJSONArray.length(); i++) {
+			_gitHubCommits.add(
+				_gitHubFactory.newGitHubCommit(
+					commitsJSONArray.getJSONObject(i)));
+		}
+
+		return _gitHubCommits;
 	}
 
 	public List<GitHubFile> getGitHubFiles() {
@@ -337,6 +373,7 @@ public class GitHubPullRequest {
 	private final String _baseBranchName;
 	private final GitHubCommit _baseGitHubCommit;
 	private final GitHubRepository _baseGitHubRepository;
+	private List<GitHubCommit> _gitHubCommits;
 	private final GitHubFactory _gitHubFactory;
 	private List<GitHubFile> _gitHubFiles;
 	private Set<GitHubStatus> _gitHubStatuses;

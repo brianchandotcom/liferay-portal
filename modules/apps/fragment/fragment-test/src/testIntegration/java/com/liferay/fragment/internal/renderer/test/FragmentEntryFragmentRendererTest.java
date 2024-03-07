@@ -6,6 +6,7 @@
 package com.liferay.fragment.internal.renderer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -16,10 +17,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.test.util.FragmentTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -108,11 +106,8 @@ public class FragmentEntryFragmentRendererTest {
 			defaultFragmentRendererContext, _getMockHttpServletRequest(),
 			new MockHttpServletResponse());
 
-		PortalCache<String, String> portalCache =
-			(PortalCache<String, String>)_multiVMPool.getPortalCache(
-				FragmentEntryLink.class.getName());
-
-		String content = portalCache.get(_getPortalCacheKey(fragmentEntryLink));
+		String content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
+			fragmentEntryLink, LocaleUtil.US);
 
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
 	}
@@ -140,12 +135,9 @@ public class FragmentEntryFragmentRendererTest {
 			defaultFragmentRendererContext, _getMockHttpServletRequest(),
 			new MockHttpServletResponse());
 
-		PortalCache<String, String> portalCache =
-			(PortalCache<String, String>)_multiVMPool.getPortalCache(
-				FragmentEntryLink.class.getName());
-
 		Assert.assertNull(
-			portalCache.get(_getPortalCacheKey(fragmentEntryLink)));
+			_fragmentEntryLinkCache.getFragmentEntryLinkContent(
+				fragmentEntryLink, LocaleUtil.US));
 	}
 
 	@Test
@@ -192,11 +184,8 @@ public class FragmentEntryFragmentRendererTest {
 			defaultFragmentRendererContext, _getMockHttpServletRequest(),
 			new MockHttpServletResponse());
 
-		PortalCache<String, String> portalCache =
-			(PortalCache<String, String>)_multiVMPool.getPortalCache(
-				FragmentEntryLink.class.getName());
-
-		String content = portalCache.get(_getPortalCacheKey(fragmentEntryLink));
+		String content = _fragmentEntryLinkCache.getFragmentEntryLinkContent(
+			fragmentEntryLink, LocaleUtil.US);
 
 		Assert.assertTrue(content.contains(fragmentEntry.getHtml()));
 	}
@@ -227,18 +216,6 @@ public class FragmentEntryFragmentRendererTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 
 		return mockHttpServletRequest;
-	}
-
-	private String _getPortalCacheKey(FragmentEntryLink fragmentEntryLink) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(fragmentEntryLink.getFragmentEntryLinkId());
-		sb.append(StringPool.DASH);
-		sb.append(LocaleUtil.US);
-		sb.append(StringPool.DASH);
-		sb.append(fragmentEntryLink.getSegmentsExperienceId());
-
-		return sb.toString();
 	}
 
 	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
@@ -272,6 +249,9 @@ public class FragmentEntryFragmentRendererTest {
 	private long _defaultSegmentsExperienceId;
 
 	@Inject
+	private FragmentEntryLinkCache _fragmentEntryLinkCache;
+
+	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Inject
@@ -286,9 +266,6 @@ public class FragmentEntryFragmentRendererTest {
 	private Group _group;
 
 	private Layout _layout;
-
-	@Inject
-	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

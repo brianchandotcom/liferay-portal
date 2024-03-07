@@ -5,18 +5,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.listener;
 
+import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.language.Language;
 
-import java.util.Locale;
-import java.util.Set;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -29,51 +21,27 @@ public class PortalCacheFragmentEntryLinkListener
 
 	@Override
 	public void onAddFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
-		_clearCache(fragmentEntryLink);
+		_fragmentEntryLinkCache.removeFragmentEntryLinkCache(fragmentEntryLink);
 	}
 
 	@Override
 	public void onDeleteFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
-		_clearCache(fragmentEntryLink);
+		_fragmentEntryLinkCache.removeFragmentEntryLinkCache(fragmentEntryLink);
 	}
 
 	@Override
 	public void onUpdateFragmentEntryLink(FragmentEntryLink fragmentEntryLink) {
-		_clearCache(fragmentEntryLink);
+		_fragmentEntryLinkCache.removeFragmentEntryLinkCache(fragmentEntryLink);
 	}
 
 	@Override
 	public void onUpdateFragmentEntryLinkConfigurationValues(
 		FragmentEntryLink fragmentEntryLink) {
 
-		_clearCache(fragmentEntryLink);
-	}
-
-	@Activate
-	protected void activate() {
-		_portalCache = (PortalCache<String, String>)_multiVMPool.getPortalCache(
-			FragmentEntryLink.class.getName());
-	}
-
-	private void _clearCache(FragmentEntryLink fragmentEntryLink) {
-		Set<Locale> availableLocales = _language.getAvailableLocales(
-			fragmentEntryLink.getGroupId());
-
-		for (Locale locale : availableLocales) {
-			_portalCache.remove(
-				StringBundler.concat(
-					fragmentEntryLink.getFragmentEntryLinkId(), StringPool.DASH,
-					locale, StringPool.DASH,
-					fragmentEntryLink.getSegmentsExperienceId()));
-		}
+		_fragmentEntryLinkCache.removeFragmentEntryLinkCache(fragmentEntryLink);
 	}
 
 	@Reference
-	private Language _language;
-
-	@Reference
-	private MultiVMPool _multiVMPool;
-
-	private PortalCache<String, String> _portalCache;
+	private FragmentEntryLinkCache _fragmentEntryLinkCache;
 
 }

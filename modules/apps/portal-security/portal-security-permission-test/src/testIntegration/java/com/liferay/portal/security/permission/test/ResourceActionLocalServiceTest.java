@@ -84,14 +84,13 @@ public class ResourceActionLocalServiceTest {
 
 		Assert.assertNull(
 			_resourceActionLocalService.fetchResourceAction(
-				ResourceActionLocalServiceTest.class.getName(), testActionId));
+				_NAME, testActionId));
 
-		_resourceActionLocalService.addResourceAction(
-			ResourceActionLocalServiceTest.class.getName(), testActionId, 0L);
+		_resourceActionLocalService.addResourceAction(_NAME, testActionId, 0L);
 
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
-				ResourceActionLocalServiceTest.class.getName(), testActionId));
+				_NAME, testActionId));
 	}
 
 	@Test

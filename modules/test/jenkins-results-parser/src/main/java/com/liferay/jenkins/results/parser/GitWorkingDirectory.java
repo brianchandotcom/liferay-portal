@@ -2328,6 +2328,10 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	public void setCacheBashCommands(boolean cacheBashCommands) {
+		_cacheBashCommands = cacheBashCommands;
+	}
+
 	public void stageFileInCurrentLocalGitBranch(String fileName) {
 		String command = "git stage " + fileName;
 
@@ -2417,11 +2421,23 @@ public class GitWorkingDirectory {
 		_gitRepositoryUsername = loadGitRepositoryUsername();
 	}
 
-	protected GitUtil.ExecutionResult executeBashCommands(
+	protected synchronized GitUtil.ExecutionResult executeBashCommands(
 		int maxRetries, long retryDelay, long timeout, String... commands) {
 
-		return GitUtil.executeBashCommands(
+		String command = String.join(" ", commands);
+
+		if (_cacheBashCommands && _cachedBashCommands.containsKey(command)) {
+			System.out.println("Using cached excecution for: " + command);
+
+			return _cachedBashCommands.get(command);
+		}
+
+		GitUtil.ExecutionResult executionResult = GitUtil.executeBashCommands(
 			maxRetries, retryDelay, timeout, _workingDirectory, commands);
+
+		_cachedBashCommands.put(command, executionResult);
+
+		return executionResult;
 	}
 
 	protected Map<String, String> getLocalGitBranchesShaMap() {
@@ -3072,6 +3088,9 @@ public class GitWorkingDirectory {
 			_getBuildPropertyAsList(
 				"git.working.directory.public.only.repository.names"));
 
+	private boolean _cacheBashCommands;
+	private final Map<String, GitUtil.ExecutionResult> _cachedBashCommands =
+		new HashMap<>();
 	private File _gitDirectory;
 	private final Map<String, GitRemote> _gitRemotes =
 		new ConcurrentHashMap<>();

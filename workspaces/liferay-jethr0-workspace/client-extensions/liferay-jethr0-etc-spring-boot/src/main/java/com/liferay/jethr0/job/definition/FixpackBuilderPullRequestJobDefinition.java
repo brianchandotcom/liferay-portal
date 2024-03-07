@@ -6,9 +6,9 @@
 package com.liferay.jethr0.job.definition;
 
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.definition.parameter.FixpackBuilderPullRequestURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PullRequestURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.QAWebsitesBranchSHAJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.QAWebsitesBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.TestSuiteNameJobParameterDefinition;
@@ -26,9 +26,8 @@ public class FixpackBuilderPullRequestJobDefinition extends BaseJobDefinition {
 		Set<JobParameterDefinition> jobParameterDefinitions = new HashSet<>();
 
 		jobParameterDefinitions.add(
-			new FixpackBuilderPullRequestURLJobParameterDefinition());
-		jobParameterDefinitions.add(
 			new JenkinsBranchURLJobParameterDefinition());
+		jobParameterDefinitions.add(new PullRequestURLJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new QAWebsitesBranchSHAJobParameterDefinition());
 		jobParameterDefinitions.add(

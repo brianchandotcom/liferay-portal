@@ -10,17 +10,17 @@ import com.liferay.jethr0.util.StringUtil;
 /**
  * @author Michael Hashimoto
  */
-public class QAWebsitesPullRequestURLJobParameterDefinition
+public class PullRequestURLJobParameterDefinition
 	extends BaseJobParameterDefinition {
 
 	@Override
 	public String getKey() {
-		return "qaWebsitesPullRequestURL";
+		return "pullRequestURL";
 	}
 
 	@Override
 	public String getLabel() {
-		return "QA Websites Pull Request URL";
+		return "Pull Request URL";
 	}
 
 	@Override
@@ -36,13 +36,12 @@ public class QAWebsitesPullRequestURLJobParameterDefinition
 	@Override
 	public String getValueDescription() {
 		return StringUtil.combine(
-			"e.g. https://github.com/[user]/liferay-qa-websites-ee/pull",
-			"/[number]");
+			"e.g. https://github.com/[user]/[repository]/pull/[number]");
 	}
 
 	@Override
 	public String getValueRegex() {
-		return "https://github.com/[^/]+/liferay-qa-websites-ee/pull/[^/]+";
+		return "https://github.com/[^/]+/[^/]+/pull/[^/]+";
 	}
 
 }

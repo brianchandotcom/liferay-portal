@@ -8,7 +8,7 @@ package com.liferay.jethr0.job.definition;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
-import com.liferay.jethr0.job.definition.parameter.PortalPullRequestURLJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PullRequestURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.TestSuiteNameJobParameterDefinition;
 
 import java.util.HashSet;
@@ -25,8 +25,7 @@ public class PortalPullRequestSFJobDefinition extends BaseJobDefinition {
 
 		jobParameterDefinitions.add(
 			new JenkinsBranchURLJobParameterDefinition());
-		jobParameterDefinitions.add(
-			new PortalPullRequestURLJobParameterDefinition());
+		jobParameterDefinitions.add(new PullRequestURLJobParameterDefinition());
 		jobParameterDefinitions.add(
 			new TestSuiteNameJobParameterDefinition("sf"));
 

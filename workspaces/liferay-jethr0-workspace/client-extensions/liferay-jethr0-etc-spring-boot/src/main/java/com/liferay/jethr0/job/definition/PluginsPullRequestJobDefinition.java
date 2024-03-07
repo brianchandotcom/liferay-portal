@@ -8,8 +8,8 @@ package com.liferay.jethr0.job.definition;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.definition.parameter.JenkinsBranchURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.JobParameterDefinition;
-import com.liferay.jethr0.job.definition.parameter.PluginsPullRequestURLJobParameterDefinition;
 import com.liferay.jethr0.job.definition.parameter.PluginsUpstreamBranchNameJobParameterDefinition;
+import com.liferay.jethr0.job.definition.parameter.PullRequestURLJobParameterDefinition;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,9 +26,8 @@ public class PluginsPullRequestJobDefinition extends BaseJobDefinition {
 		jobParameterDefinitions.add(
 			new JenkinsBranchURLJobParameterDefinition());
 		jobParameterDefinitions.add(
-			new PluginsPullRequestURLJobParameterDefinition());
-		jobParameterDefinitions.add(
 			new PluginsUpstreamBranchNameJobParameterDefinition());
+		jobParameterDefinitions.add(new PullRequestURLJobParameterDefinition());
 
 		return jobParameterDefinitions;
 	}

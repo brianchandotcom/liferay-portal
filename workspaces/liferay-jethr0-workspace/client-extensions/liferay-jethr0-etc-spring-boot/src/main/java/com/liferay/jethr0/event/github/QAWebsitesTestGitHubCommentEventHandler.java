@@ -73,7 +73,7 @@ public class QAWebsitesTestGitHubCommentEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		if (gitHubPullRequest != null) {
-			qaWebsitesPullRequestSFJobEntity.setQAWebsitesPullRequestURL(
+			qaWebsitesPullRequestSFJobEntity.setPullRequestURL(
 				gitHubPullRequest.getHTMLURL());
 
 			GitHubUser originGitHubUser =

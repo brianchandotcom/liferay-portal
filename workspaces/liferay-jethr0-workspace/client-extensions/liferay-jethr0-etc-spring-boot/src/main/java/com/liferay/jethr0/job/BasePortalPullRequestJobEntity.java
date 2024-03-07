@@ -5,10 +5,6 @@
 
 package com.liferay.jethr0.job;
 
-import com.liferay.jethr0.util.StringUtil;
-
-import java.net.URL;
-
 import org.json.JSONObject;
 
 /**
@@ -23,17 +19,6 @@ public abstract class BasePortalPullRequestJobEntity
 	}
 
 	@Override
-	public URL getPortalPullRequestURL() {
-		String portalPullRequestURL = getParameterValue("portalPullRequestURL");
-
-		if (StringUtil.isNullOrEmpty(portalPullRequestURL)) {
-			return null;
-		}
-
-		return StringUtil.toURL(portalPullRequestURL);
-	}
-
-	@Override
 	public String getTestSuiteName() {
 		return getParameterValue("testSuiteName");
 	}
@@ -41,12 +26,6 @@ public abstract class BasePortalPullRequestJobEntity
 	@Override
 	public void setForwardReceiverUserName(String forwardReceiverUserName) {
 		setParameterValue("forwardReceiverUserName", forwardReceiverUserName);
-	}
-
-	@Override
-	public void setPortalPullRequestURL(URL portalPullRequestURL) {
-		setParameterValue(
-			"portalPullRequestURL", String.valueOf(portalPullRequestURL));
 	}
 
 	@Override

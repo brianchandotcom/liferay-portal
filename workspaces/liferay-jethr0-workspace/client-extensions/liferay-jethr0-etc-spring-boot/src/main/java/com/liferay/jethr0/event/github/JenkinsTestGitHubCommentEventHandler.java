@@ -66,7 +66,7 @@ public class JenkinsTestGitHubCommentEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		if (gitHubPullRequest != null) {
-			jenkinsPullRequestJobEntity.setJenkinsPullRequestURL(
+			jenkinsPullRequestJobEntity.setPullRequestURL(
 				gitHubPullRequest.getHTMLURL());
 
 			GitHubUser originGitHubUser =

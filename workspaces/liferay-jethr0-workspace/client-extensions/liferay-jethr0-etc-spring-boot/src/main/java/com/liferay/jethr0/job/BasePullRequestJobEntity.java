@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.job;
 
+import java.net.URL;
+
 import org.json.JSONObject;
 
 /**
@@ -16,6 +18,11 @@ public abstract class BasePullRequestJobEntity
 	@Override
 	public String getOriginName() {
 		return getParameterValue("originName");
+	}
+
+	@Override
+	public URL getPullRequestURL() {
+		return getParameterValueURL("pullRequestURL");
 	}
 
 	@Override
@@ -46,6 +53,11 @@ public abstract class BasePullRequestJobEntity
 	@Override
 	public void setOriginName(String originName) {
 		setParameterValue("originName", originName);
+	}
+
+	@Override
+	public void setPullRequestURL(URL pullRequestURL) {
+		setParameterValueURL("pullRequestURL", pullRequestURL);
 	}
 
 	@Override

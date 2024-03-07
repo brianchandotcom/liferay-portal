@@ -186,7 +186,7 @@ public abstract class BaseGitHubIssueEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		if (gitHubPullRequest != null) {
-			portalPullRequestJobEntity.setPortalPullRequestURL(
+			portalPullRequestJobEntity.setPullRequestURL(
 				gitHubPullRequest.getHTMLURL());
 
 			GitHubUser originGitHubUser =

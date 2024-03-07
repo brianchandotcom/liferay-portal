@@ -68,7 +68,7 @@ public class DefaultPortalPullRequestJobEntity
 		}
 
 		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getPortalPullRequestURL()));
+			String.valueOf(getPullRequestURL()));
 
 		if (matcher.find()) {
 			_pullRequestNumber = Long.valueOf(matcher.group("number"));
@@ -85,7 +85,7 @@ public class DefaultPortalPullRequestJobEntity
 		}
 
 		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getPortalPullRequestURL()));
+			String.valueOf(getPullRequestURL()));
 
 		if (matcher.find()) {
 			_receiverUserName = matcher.group("receiverUserName");
@@ -102,7 +102,7 @@ public class DefaultPortalPullRequestJobEntity
 		}
 
 		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getPortalPullRequestURL()));
+			String.valueOf(getPullRequestURL()));
 
 		if (matcher.find()) {
 			_repositoryName = matcher.group("repositoryName");

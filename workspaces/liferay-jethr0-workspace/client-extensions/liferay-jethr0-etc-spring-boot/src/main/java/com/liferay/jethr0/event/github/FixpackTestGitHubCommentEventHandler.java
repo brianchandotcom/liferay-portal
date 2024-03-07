@@ -68,7 +68,7 @@ public class FixpackTestGitHubCommentEventHandler
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
 
 		if (gitHubPullRequest != null) {
-			fixpackBuilderPullRequestJobEntity.setFixpackBuilderPullRequestURL(
+			fixpackBuilderPullRequestJobEntity.setPullRequestURL(
 				gitHubPullRequest.getHTMLURL());
 
 			GitHubUser originGitHubUser =

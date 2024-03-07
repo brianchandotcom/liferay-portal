@@ -25,10 +25,6 @@ public class FixpackBuilderPullRequestJobEntity
 		super(jsonObject);
 	}
 
-	public URL getFixpackBuilderPullRequestURL() {
-		return getParameterValueURL("fixpackBuilderPullRequestURL");
-	}
-
 	@Override
 	public String getJenkinsJobName() {
 		return "test-fixpack-builder-pullrequest";
@@ -44,13 +40,6 @@ public class FixpackBuilderPullRequestJobEntity
 
 	public String getTestSuiteName() {
 		return getParameterValue("testSuiteName");
-	}
-
-	public void setFixpackBuilderPullRequestURL(
-		URL fixpackBuilderPullRequestURL) {
-
-		setParameterValueURL(
-			"fixpackBuilderPullRequestURL", fixpackBuilderPullRequestURL);
 	}
 
 	public void setQAWebsitesBranchSHA(String qaWebsitesBranchSHA) {
@@ -92,7 +81,7 @@ public class FixpackBuilderPullRequestJobEntity
 		}
 
 		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getFixpackBuilderPullRequestURL()));
+			String.valueOf(getPullRequestURL()));
 
 		if (matcher.find()) {
 			_pullRequestNumber = Long.valueOf(
@@ -110,7 +99,7 @@ public class FixpackBuilderPullRequestJobEntity
 		}
 
 		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getFixpackBuilderPullRequestURL()));
+			String.valueOf(getPullRequestURL()));
 
 		if (matcher.find()) {
 			_receiverUserName = matcher.group("receiverUserName");

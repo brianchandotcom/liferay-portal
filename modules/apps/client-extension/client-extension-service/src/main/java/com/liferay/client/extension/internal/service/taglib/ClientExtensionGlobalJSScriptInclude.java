@@ -38,9 +38,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Thiago Buarque
  */
-public class ClientExtensionJSInclude {
+public class ClientExtensionGlobalJSScriptInclude {
 
-	public ClientExtensionJSInclude(
+	public ClientExtensionGlobalJSScriptInclude(
 		CETManager cetManager, JSONFactory jsonFactory) {
 
 		_cetManager = cetManager;
@@ -166,7 +166,7 @@ public class ClientExtensionJSInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ClientExtensionJSInclude.class);
+		ClientExtensionGlobalJSScriptInclude.class);
 
 	private final CETManager _cetManager;
 	private final JSONFactory _jsonFactory;

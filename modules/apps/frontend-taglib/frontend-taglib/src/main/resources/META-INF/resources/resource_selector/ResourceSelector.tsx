@@ -64,6 +64,14 @@ export default function ResourceSelector({
 						resourceValue: selectedItem[resourceValueKey],
 						showWarning: false,
 					});
+
+					const repositoryIdElement = document.querySelector<
+						HTMLInputElement
+					>(`${portletNamespace}selectedRepositoryId`);
+
+					if (repositoryIdElement) {
+						repositoryIdElement.value = selectedItem.repositoryid;
+					}
 				}
 			},
 			selectEventName: `${portletNamespace}${selectEventName}`,

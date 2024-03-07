@@ -2072,6 +2072,25 @@ rerun your task.
 				<entry key="systemProp.repository.private.username" value="${build.repository.private.username}" />
 			</propertyfile>
 
+			<if>
+				<available file="${project.dir}/portal-impl/src/portal.properties" />
+				<then>
+					<loadfile
+						property="portal.properties.content"
+						srcfile="${project.dir}/portal-impl/src/portal.properties"
+					/>
+
+					<if>
+						<contains string="${portal.properties.content}" substring="module.framework.portal.war.dir" />
+						<then>
+							<propertyfile file="${gradle.properties.file}">
+								<entry key="portal.war.auto.deploy.enabled" value="true" />
+							</propertyfile>
+						</then>
+					</if>
+				</then>
+			</if>
+
 			<replaceregexp
 				file="${gradle.properties.file}"
 				flags="g"

@@ -85,6 +85,11 @@ public class WabGenerator
 					_getRequiredForStartupContextPaths(
 						Paths.get(PropsValues.LIFERAY_HOME, "osgi/war"));
 
+				requiredForStartupContextPaths.addAll(
+					_getRequiredForStartupContextPaths(
+						Paths.get(
+							PropsValues.LIFERAY_HOME, "osgi/portal-war")));
+
 				if (requiredForStartupContextPaths.isEmpty()) {
 					return null;
 				}

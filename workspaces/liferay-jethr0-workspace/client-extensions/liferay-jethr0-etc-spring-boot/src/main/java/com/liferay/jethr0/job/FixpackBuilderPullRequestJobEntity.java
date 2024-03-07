@@ -61,10 +61,9 @@ public class FixpackBuilderPullRequestJobEntity
 
 		initialBuildParameters.put("CI_TEST_SUITE", getTestSuiteName());
 		initialBuildParameters.put(
-			"GITHUB_PULL_REQUEST_NUMBER",
-			String.valueOf(_getPullRequestNumber()));
+			"GITHUB_PULL_REQUEST_NUMBER", String.valueOf(getNumber()));
 		initialBuildParameters.put(
-			"GITHUB_RECEIVER_USERNAME", _getPullRequestReceiverUserName());
+			"GITHUB_RECEIVER_USERNAME", getReceiverUserName());
 		initialBuildParameters.put(
 			"TEST_QA_WEBSITES_BRANCH_NAME", _getQAWebsitesBranchName());
 		initialBuildParameters.put(
@@ -73,41 +72,6 @@ public class FixpackBuilderPullRequestJobEntity
 			"TEST_QA_WEBSITES_GIT_ID", getQAWebsitesBranchSHA());
 
 		return initialBuildParameters;
-	}
-
-	private long _getPullRequestNumber() {
-		if (_pullRequestNumber > 0) {
-			return _pullRequestNumber;
-		}
-
-		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getPullRequestURL()));
-
-		if (matcher.find()) {
-			_pullRequestNumber = Long.valueOf(
-				matcher.group("pullRequestNumber"));
-
-			return _pullRequestNumber;
-		}
-
-		return -1;
-	}
-
-	private String _getPullRequestReceiverUserName() {
-		if (!StringUtil.isNullOrEmpty(_receiverUserName)) {
-			return _receiverUserName;
-		}
-
-		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getPullRequestURL()));
-
-		if (matcher.find()) {
-			_receiverUserName = matcher.group("receiverUserName");
-
-			return _receiverUserName;
-		}
-
-		return null;
 	}
 
 	private String _getQAWebsitesBranchName() {
@@ -148,14 +112,8 @@ public class FixpackBuilderPullRequestJobEntity
 		StringUtil.combine(
 			"https://github.com/(?<userName>[^/]+)/(?<repositoryName>[^/]+)",
 			"/tree/(?<branchName>[^/]+)"));
-	private static final Pattern _pullRequestURLPattern = Pattern.compile(
-		StringUtil.combine(
-			"https://github.com/(?<receiverUserName>[^/]+)/",
-			"liferay-fix-pack-builder-ee/pull/(?<pullRequestNumber>\\d+)"));
 
-	private long _pullRequestNumber;
 	private String _qaWebsitesBranchName;
 	private String _qaWebsitesBranchUserName;
-	private String _receiverUserName;
 
 }

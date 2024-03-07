@@ -5,7 +5,12 @@
 
 package com.liferay.jethr0.job;
 
+import com.liferay.jethr0.util.StringUtil;
+
 import java.net.URL;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -16,6 +21,24 @@ public abstract class BasePullRequestJobEntity
 	extends BaseJobEntity implements PullRequestJobEntity {
 
 	@Override
+	public long getNumber() {
+		if (_number > 0) {
+			return _number;
+		}
+
+		Matcher matcher = _pullRequestURLPattern.matcher(
+			String.valueOf(getPullRequestURL()));
+
+		if (matcher.find()) {
+			_number = Long.valueOf(matcher.group("number"));
+
+			return _number;
+		}
+
+		return -1;
+	}
+
+	@Override
 	public String getOriginName() {
 		return getParameterValue("originName");
 	}
@@ -23,6 +46,42 @@ public abstract class BasePullRequestJobEntity
 	@Override
 	public URL getPullRequestURL() {
 		return getParameterValueURL("pullRequestURL");
+	}
+
+	@Override
+	public String getReceiverUserName() {
+		if (!StringUtil.isNullOrEmpty(_receiverUserName)) {
+			return _receiverUserName;
+		}
+
+		Matcher matcher = _pullRequestURLPattern.matcher(
+			String.valueOf(getPullRequestURL()));
+
+		if (matcher.find()) {
+			_receiverUserName = matcher.group("receiverUserName");
+
+			return _receiverUserName;
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getRepositoryName() {
+		if (!StringUtil.isNullOrEmpty(_repositoryName)) {
+			return _repositoryName;
+		}
+
+		Matcher matcher = _pullRequestURLPattern.matcher(
+			String.valueOf(getPullRequestURL()));
+
+		if (matcher.find()) {
+			_repositoryName = matcher.group("repositoryName");
+
+			return _repositoryName;
+		}
+
+		return null;
 	}
 
 	@Override
@@ -88,5 +147,14 @@ public abstract class BasePullRequestJobEntity
 	protected BasePullRequestJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
+
+	private static final Pattern _pullRequestURLPattern = Pattern.compile(
+		StringUtil.combine(
+			"https://github.com/(?<receiverUserName>[^/]+)/",
+			"(?<repositoryName>[^/]+)/pull/(?<number>\\d+)"));
+
+	private long _number;
+	private String _receiverUserName;
+	private String _repositoryName;
 
 }

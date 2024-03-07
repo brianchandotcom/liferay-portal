@@ -12,9 +12,15 @@ import java.net.URL;
  */
 public interface PullRequestJobEntity extends JobEntity {
 
+	public long getNumber();
+
 	public String getOriginName();
 
 	public URL getPullRequestURL();
+
+	public String getReceiverUserName();
+
+	public String getRepositoryName();
 
 	public String getSenderBranchName();
 

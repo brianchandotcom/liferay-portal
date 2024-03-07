@@ -5,12 +5,9 @@
 
 package com.liferay.jethr0.job;
 
-import com.liferay.jethr0.util.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -36,10 +33,9 @@ public class JenkinsPullRequestJobEntity
 		).put(
 			"GITHUB_ORIGIN_NAME", getOriginName()
 		).put(
-			"GITHUB_PULL_REQUEST_NUMBER",
-			String.valueOf(_getPullRequestNumber())
+			"GITHUB_PULL_REQUEST_NUMBER", String.valueOf(getNumber())
 		).put(
-			"GITHUB_RECEIVER_USERNAME", _getPullRequestReceiverUserName()
+			"GITHUB_RECEIVER_USERNAME", getReceiverUserName()
 		).put(
 			"GITHUB_SENDER_BRANCH_NAME", getSenderBranchName()
 		).put(
@@ -52,48 +48,5 @@ public class JenkinsPullRequestJobEntity
 			"GITHUB_UPSTREAM_BRANCH_SHA", getUpstreamBranchSHA()
 		).build();
 	}
-
-	private long _getPullRequestNumber() {
-		if (_pullRequestNumber > 0) {
-			return _pullRequestNumber;
-		}
-
-		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getPullRequestURL()));
-
-		if (matcher.find()) {
-			_pullRequestNumber = Long.valueOf(
-				matcher.group("pullRequestNumber"));
-
-			return _pullRequestNumber;
-		}
-
-		return -1;
-	}
-
-	private String _getPullRequestReceiverUserName() {
-		if (!StringUtil.isNullOrEmpty(_receiverUserName)) {
-			return _receiverUserName;
-		}
-
-		Matcher matcher = _pullRequestURLPattern.matcher(
-			String.valueOf(getPullRequestURL()));
-
-		if (matcher.find()) {
-			_receiverUserName = matcher.group("receiverUserName");
-
-			return _receiverUserName;
-		}
-
-		return null;
-	}
-
-	private static final Pattern _pullRequestURLPattern = Pattern.compile(
-		StringUtil.combine(
-			"https://github.com/(?<receiverUserName>[^/]+)/",
-			"liferay-jenkins-ee/pull/(?<pullRequestNumber>\\d+)"));
-
-	private long _pullRequestNumber;
-	private String _receiverUserName;
 
 }

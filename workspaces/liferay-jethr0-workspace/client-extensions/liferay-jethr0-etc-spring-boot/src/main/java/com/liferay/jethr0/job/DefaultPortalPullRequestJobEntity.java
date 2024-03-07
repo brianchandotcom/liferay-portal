@@ -29,6 +29,7 @@ public class DefaultPortalPullRequestJobEntity
 		initialBuildParameters.put(
 			"CI_FORWARD_RECEIVER_USERNAME", getForwardReceiverUserName());
 		initialBuildParameters.put("CI_TEST_SUITE", getTestSuiteName());
+		initialBuildParameters.put("GITHUB_GIST_ID", getGitHubGistID());
 		initialBuildParameters.put("GITHUB_ORIGIN_NAME", getOriginName());
 		initialBuildParameters.put(
 			"GITHUB_PULL_REQUEST_NUMBER", String.valueOf(getNumber()));

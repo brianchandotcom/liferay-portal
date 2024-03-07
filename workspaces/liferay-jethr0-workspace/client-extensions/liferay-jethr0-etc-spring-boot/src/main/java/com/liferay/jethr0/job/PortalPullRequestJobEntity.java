@@ -12,6 +12,10 @@ public interface PortalPullRequestJobEntity extends PullRequestJobEntity {
 
 	public String getForwardReceiverUserName();
 
+	public String getGitHubGistID();
+
 	public void setForwardReceiverUserName(String forwardReceiverUserName);
+
+	public void setGitHubGistID(String gitHubGistID);
 
 }

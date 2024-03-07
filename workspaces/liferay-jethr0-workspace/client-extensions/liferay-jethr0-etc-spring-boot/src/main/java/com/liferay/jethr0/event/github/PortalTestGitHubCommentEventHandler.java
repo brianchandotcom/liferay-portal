@@ -8,8 +8,12 @@ package com.liferay.jethr0.event.github;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
+import com.liferay.jethr0.util.StringUtil;
 
 import java.io.IOException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,6 +36,8 @@ public class PortalTestGitHubCommentEventHandler
 
 		PortalPullRequestJobEntity portalPullRequestJobEntity =
 			createPortalPullRequestJobEntity(getTestSuite());
+
+		portalPullRequestJobEntity.setGitHubGistID(_getGitHubGistID());
 
 		invokeJobEntity(portalPullRequestJobEntity);
 
@@ -75,8 +81,30 @@ public class PortalTestGitHubCommentEventHandler
 		return 5;
 	}
 
+	private String _getGitHubGistID() throws InvalidJSONException {
+		for (String testOption : getTestOptions()) {
+			if (StringUtil.isNullOrEmpty(testOption)) {
+				continue;
+			}
+
+			Matcher gitHubGistIDMatcher = _gitHubGistIDPattern.matcher(
+				testOption);
+
+			if (!gitHubGistIDMatcher.find()) {
+				continue;
+			}
+
+			return gitHubGistIDMatcher.group("id");
+		}
+
+		return null;
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		PortalTestGitHubCommentEventHandler.class);
+
+	private static final Pattern _gitHubGistIDPattern = Pattern.compile(
+		"gist-(?<id>[a-f0-9]{7,40})");
 
 	private final String _testSuiteName;
 

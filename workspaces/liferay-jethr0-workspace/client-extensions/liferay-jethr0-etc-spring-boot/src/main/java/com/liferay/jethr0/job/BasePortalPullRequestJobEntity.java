@@ -19,8 +19,18 @@ public abstract class BasePortalPullRequestJobEntity
 	}
 
 	@Override
+	public String getGitHubGistID() {
+		return getParameterValue("gitHubGistID");
+	}
+
+	@Override
 	public void setForwardReceiverUserName(String forwardReceiverUserName) {
 		setParameterValue("forwardReceiverUserName", forwardReceiverUserName);
+	}
+
+	@Override
+	public void setGitHubGistID(String gitHubGistID) {
+		setParameterValue("gitHubGistID", gitHubGistID);
 	}
 
 	protected BasePortalPullRequestJobEntity(JSONObject jsonObject) {

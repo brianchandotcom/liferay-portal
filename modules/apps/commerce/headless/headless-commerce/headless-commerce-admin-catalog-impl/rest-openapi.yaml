@@ -1515,6 +1515,10 @@ components:
                 specificationKey:
                     example: specification-key
                     type: string
+                specificationPriority:
+                    example: 1.1
+                    format: double
+                    type: number
                 value:
                     additionalProperties:
                         type: string
@@ -2128,6 +2132,10 @@ components:
                     type: string
                 optionCategory:
                     $ref: "#/components/schemas/OptionCategory"
+                priority:
+                    example: 1.2
+                    format: double
+                    type: number
                 title:
                     additionalProperties:
                         type: string

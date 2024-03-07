@@ -811,6 +811,12 @@ components:
                 specificationKey:
                     example: specification-key
                     type: string
+                specificationPriority:
+                    example: 1.1
+                    format: double
+                    minimum: 0
+                    readonly: true
+                    type: number
                 specificationTitle:
                     type: string
                 value:

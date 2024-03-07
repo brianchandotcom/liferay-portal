@@ -239,3 +239,46 @@ test('LPD-19627: Translate all fields of a Web Content based on a custom structu
 		page.getByRole('option', {name: 'Catalan Language: Translated'})
 	).toBeVisible({timeout: 1000});
 });
+
+test('LPD-19627: A non-localizabled field is disabled when another translation language is selected', async ({
+	apiHelpers,
+	journalEditArticlePage,
+	journalPage,
+	page,
+	site,
+}) => {
+	await setSiteUrl(page, site.friendlyUrlPath);
+
+	const nonLocalizableFieldName = 'Text1234';
+	const structureName = 'Structure 1';
+
+	const dataDefinition = getDataStructureDefinition({
+		defaultLanguageId: 'en_US',
+		fields: [{localizable: false, name: nonLocalizableFieldName}],
+		name: structureName,
+	});
+
+	await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+	await journalPage.goto();
+
+	await journalEditArticlePage.goto(structureName);
+
+	const translationButton = page.getByRole('combobox', {
+		name: 'Select a language',
+	});
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('option', {
+			name: 'Catalan Language: Not Translated',
+		}),
+		trigger: translationButton,
+	});
+
+	await expect(
+		page.getByRole('textbox', {
+			name: nonLocalizableFieldName,
+		})
+	).toBeDisabled();
+});

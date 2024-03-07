@@ -43,11 +43,13 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -56,6 +58,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -69,6 +72,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -100,12 +104,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 		try {
 			HttpServletRequest httpServletRequest = getRequest();
-
-			setNamespacedAttribute(
-				httpServletRequest, "dataLayoutBuilderModule",
-				_resolveModule(
-					"data-engine-taglib/data_layout_builder/js" +
-						"/DataLayoutBuilder.es"));
 
 			if (Validator.isNotNull(getDataDefinitionId()) &&
 				Validator.isNull(getDataLayoutId())) {
@@ -168,7 +166,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				(HttpServletResponse)pageContext.getResponse()));
 		setNamespacedAttribute(
 			httpServletRequest, "defaultLanguageId", _getDefaultLanguageId());
-		setNamespacedAttribute(httpServletRequest, "module", _getModule());
 		setNamespacedAttribute(
 			httpServletRequest, "moduleServletContext",
 			_getModuleServletContext());
@@ -444,12 +441,18 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		return ddmStructure.getDefaultLanguageId();
 	}
 
-	private String _getModule() {
-		if (Validator.isBlank(getModule())) {
-			return "data_layout_builder/js/App";
-		}
+	private String _getESModule(
+		String esModuleSpecifier, HttpServletRequest httpServletRequest) {
 
-		return getModule();
+		ESImport esImport = ESImportUtil.getESImport(
+			_absolutePortalURLBuilderFactorySnapshot.get(
+			).getAbsolutePortalURLBuilder(
+				httpServletRequest
+			),
+			esModuleSpecifier);
+
+		return StringBundler.concat(
+			"{", esImport.getSymbol(), "} from ", esImport.getModule());
 	}
 
 	private ServletContext _getModuleServletContext() {
@@ -458,12 +461,6 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 		}
 
 		return getModuleServletContext();
-	}
-
-	private String _getPluginEntryPoint(String value) {
-		return _resolveModule(
-			"data-engine-taglib/data_layout_builder/js/plugins/" + value +
-				"/index");
 	}
 
 	private Map<String, Object> _getSidebarPanels() {
@@ -482,7 +479,10 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 				).put(
 					"label", LanguageUtil.get(resourceBundle, "builder")
 				).put(
-					"pluginEntryPoint", _getPluginEntryPoint("fields-sidebar")
+					"pluginEntryPoint",
+					_getESModule(
+						"{FieldsSidebar} from data-engine-taglib",
+						httpServletRequest)
 				).put(
 					"sidebarPanelId", "fields"
 				).build()
@@ -502,7 +502,9 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 							"label", LanguageUtil.get(resourceBundle, "rules")
 						).put(
 							"pluginEntryPoint",
-							_getPluginEntryPoint("rules-sidebar")
+							_getESModule(
+								"{RulesSidebar} from data-engine-taglib",
+								httpServletRequest)
 						).put(
 							"sidebarPanelId", "rules"
 						).build();
@@ -560,6 +562,9 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutBuilderTag.class);
 
+	private static final Snapshot<AbsolutePortalURLBuilderFactory>
+		_absolutePortalURLBuilderFactorySnapshot = new Snapshot<>(
+			DataLayoutBuilderTag.class, AbsolutePortalURLBuilderFactory.class);
 	private static final ServiceTrackerMap<String, DataDefinitionContentType>
 		_dataDefinitionContentTypeServiceTrackerMap;
 	private static final ServiceTrackerMap<String, DataLayoutBuilderDefinition>

@@ -13,3 +13,7 @@ export {EVENT_TYPES} from './eventTypes';
 export * as DataConverter from './utils/dataConverter.es';
 export * as LangUtil from './utils/lang.es';
 export * as SearchUtils from './utils/search.es';
+export {default as App} from './App';
+
+export {default as FieldsSidebar} from './plugins/fields-sidebar/index';
+export {default as RulesSidebar} from './plugins/rules-sidebar/index';

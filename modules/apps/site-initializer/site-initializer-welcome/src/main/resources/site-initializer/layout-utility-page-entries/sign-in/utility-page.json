@@ -1,6 +1,6 @@
 {
 	"defaultTemplate": false,
-	"externalReferenceCode": "LFR-SIGN-IN",
+	"externalReferenceCode": "LFR-LOGIN",
 	"name": "Login",
 	"type": "Login"
 }

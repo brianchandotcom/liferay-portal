@@ -112,7 +112,10 @@ public class DefaultElasticsearchDocumentFactory
 				value = _DATE_MAX_VALUE;
 			}
 			else {
-				value = _FORMAT.format(date);
+				Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+					"yyyyMMddHHmmss", null, null);
+
+				value = format.format(date);
 			}
 
 			xContentBuilder.value(value);
@@ -358,9 +361,5 @@ public class DefaultElasticsearchDocumentFactory
 	}
 
 	private static final String _DATE_MAX_VALUE = "99950812133000";
-
-	private static final Format _FORMAT =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmmss", null, null);
 
 }

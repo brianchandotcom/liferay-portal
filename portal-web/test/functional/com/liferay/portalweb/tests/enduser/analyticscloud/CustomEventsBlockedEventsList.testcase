@@ -302,7 +302,7 @@ definition {
 		task ("Try to unblock a custom event with the list having reached the limit") {
 			ACCustomEvents.unblockAllCustomEvents();
 
-			Alert.viewErrorMessage(errorMessage = "Error:Your workspace is over the event limit. Please remove some events from the allow list to continue. Visit our documentation to learn more.");
+			Alert.viewErrorMessage(errorMessage = "Error:Your workspace is over the event limit. Please remove some events from the allow list to continue. Visit our documentation (Opens a new window) to learn more.");
 
 			ACUtils.viewPartialNameList(nameList = ${customEventName});
 		}

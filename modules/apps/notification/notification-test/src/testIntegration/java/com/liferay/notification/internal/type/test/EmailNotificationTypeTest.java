@@ -21,12 +21,17 @@ import com.liferay.notification.service.test.util.NotificationTemplateUtil;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectAction;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -34,13 +39,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -68,14 +76,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -163,8 +174,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		_scopeSiteFreeMarkerTermValues =
 			LinkedHashMapBuilder.<String, Object>put(
 				"${ObjectField_textObjectField.getData()}",
-				scopeSiteObjectEntryValues.get("textObjectField")
+				"textObjectFieldValue"
 			).build();
+
+		_scopeSiteObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
+			"textObjectField", "textObjectFieldValue"
+		).build();
 	}
 
 	@AfterClass
@@ -175,8 +190,45 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			_originalHttpServletRequest);
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_scopeSiteObjectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				user1.getUserId(), 0, false, false, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Arrays.asList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectField"
+					).build()));
+
+		_scopeSiteObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				user1.getUserId(),
+				_scopeSiteObjectDefinition.getObjectDefinitionId());
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(),
+			_scopeSiteObjectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+	}
+
 	@Test
-	public void testFreeMarkerNotification() throws Exception {
+	public void testFreeMarkerNotification1() throws Exception {
+
+		// SCOPE_COMPANY Object Definition
+
 		String body = LocalizationUtil.updateLocalization(
 			LocalizedMapUtil.getLocalizedMap(
 				HashMapBuilder.put(
@@ -190,12 +242,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			0,
 			_addNotificationTemplate(
 				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
-				false,
+				childObjectDefinition.getObjectDefinitionId(), false,
 				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress()),
-				childObjectDefinition.getObjectDefinitionId()),
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			childObjectDefinition.getObjectDefinitionId());
+					LocaleUtil.US, user1.getEmailAddress())),
+			childObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -210,6 +261,50 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		assertTermValues(
 			new ArrayList<>(_freeMarkerTermValues.values()),
+			Arrays.asList(
+				StringUtil.split(
+					notificationQueueEntry.getBody(), StringPool.COMMA)));
+	}
+
+	@Test
+	public void testFreeMarkerNotification2() throws Exception {
+
+		// SCOPE_SITE Object Definition
+
+		String body = LocalizationUtil.updateLocalization(
+			LocalizedMapUtil.getLocalizedMap(
+				HashMapBuilder.put(
+					LanguageUtil.getLanguageId(LocaleUtil.US),
+					StringUtil.merge(
+						_scopeSiteFreeMarkerTermValues.keySet(),
+						StringPool.COMMA)
+				).build()),
+			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
+
+		_executeNotificationObjectAction(
+			0,
+			_addNotificationTemplate(
+				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
+				_scopeSiteObjectDefinition.getObjectDefinitionId(), false,
+				Collections.singletonMap(
+					LocaleUtil.US, user1.getEmailAddress())),
+			_scopeSiteObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		notificationQueueEntry = notificationQueueEntries.get(0);
+
+		assertTermValues(
+			TransformUtil.transform(
+				_scopeSiteFreeMarkerTermValues.values(), Object::toString),
 			Arrays.asList(
 				StringUtil.split(
 					notificationQueueEntry.getBody(), StringPool.COMMA)));
@@ -231,12 +326,11 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			0,
 			_addNotificationTemplate(
 				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
-				false,
+				childObjectDefinition.getObjectDefinitionId(), false,
 				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress()),
-				childObjectDefinition.getObjectDefinitionId()),
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			childObjectDefinition.getObjectDefinitionId());
+					LocaleUtil.US, user1.getEmailAddress())),
+			childObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		List<NotificationQueueEntry> notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -254,50 +348,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		assertTermValues(
 			Arrays.asList(listEntry.getName()),
-			Arrays.asList(
-				StringUtil.split(
-					notificationQueueEntry.getBody(), StringPool.COMMA)));
-	}
-
-	@Test
-	public void testScopeSiteFreeMarkerNotification() throws Exception {
-		String body = LocalizationUtil.updateLocalization(
-			LocalizedMapUtil.getLocalizedMap(
-				HashMapBuilder.put(
-					LanguageUtil.getLanguageId(LocaleUtil.US),
-					StringUtil.merge(
-						_scopeSiteFreeMarkerTermValues.keySet(),
-						StringPool.COMMA)
-				).build()),
-			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
-
-		_executeNotificationObjectAction(
-			0,
-			_addNotificationTemplate(
-				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
-				false,
-				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress()),
-				scopeSiteObjectDefinition.getObjectDefinitionId()),
-			ObjectDefinitionConstants.SCOPE_SITE,
-			scopeSiteObjectDefinition.getObjectDefinitionId());
-
-		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 1,
-			notificationQueueEntries.size());
-
-		notificationQueueEntry = notificationQueueEntries.get(0);
-
-		assertTermValues(
-			TransformUtil.transform(
-				_scopeSiteFreeMarkerTermValues.values(),
-				scopeSiteFreeMarkerTermValue ->
-					scopeSiteFreeMarkerTermValue.toString()),
 			Arrays.asList(
 				StringUtil.split(
 					notificationQueueEntry.getBody(), StringPool.COMMA)));
@@ -400,14 +450,14 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private NotificationTemplate _addNotificationTemplate(
-			String body, String editorType, boolean singleRecipient,
-			Map<Locale, String> to, long objectDefinitionId)
+			String body, String editorType, long objectDefinitionId,
+			boolean singleRecipient, Map<Locale, String> to)
 		throws Exception {
 
 		ObjectField objectField = objectFieldLocalService.fetchObjectField(
 			objectDefinitionId, "attachmentObjectField");
 
-		List<Long> objectId = (objectField != null) ?
+		List<Long> attachmentObjectFieldIds = (objectField != null) ?
 			Collections.singletonList(objectField.getObjectFieldId()) :
 				Collections.emptyList();
 
@@ -432,7 +482,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					createNotificationRecipientSetting("to", to)),
 				ListUtil.toString(
 					getTermNames(), StringPool.BLANK, StringPool.SEMICOLON),
-				NotificationConstants.TYPE_EMAIL, objectId));
+				NotificationConstants.TYPE_EMAIL, attachmentObjectFieldIds));
 	}
 
 	private void _assertNotificationQueueEntry(
@@ -507,7 +557,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	private void _executeNotificationObjectAction(
 			long fileEntryId, NotificationTemplate notificationTemplate,
-			String scope, long objectDefinitionId)
+			long objectDefinitionId, String scope)
 		throws Exception {
 
 		ObjectAction objectAction = objectActionLocalService.addObjectAction(
@@ -525,12 +575,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			).build(),
 			false);
 
-		if (scope == ObjectDefinitionConstants.SCOPE_SITE) {
+		if (Objects.equals(ObjectDefinitionConstants.SCOPE_SITE, scope)) {
 			objectEntryManager.addObjectEntry(
-				dtoConverterContext, scopeSiteObjectDefinition,
+				dtoConverterContext, _scopeSiteObjectDefinition,
 				new ObjectEntry() {
 					{
-						properties = scopeSiteObjectEntryValues;
+						properties = _scopeSiteObjectEntryValues;
 					}
 				},
 				String.valueOf(_group.getGroupId()));
@@ -602,10 +652,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				ListUtil.toString(
 					getTermNames(), StringPool.BLANK, StringPool.SEMICOLON),
 				NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
-				singleRecipient, Collections.singletonMap(LocaleUtil.US, to),
-				childObjectDefinition.getObjectDefinitionId()),
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			childObjectDefinition.getObjectDefinitionId());
+				childObjectDefinition.getObjectDefinitionId(), singleRecipient,
+				Collections.singletonMap(LocaleUtil.US, to)),
+			childObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		List<NotificationQueueEntry> notificationQueueEntries = ListUtil.sort(
 			notificationQueueEntryLocalService.getNotificationEntries(
@@ -675,6 +725,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	@Inject
 	private static GroupLocalService _groupLocalService;
 
+	@Inject
+	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+
 	private static HttpServletRequest _originalHttpServletRequest;
 
 	@Inject
@@ -682,11 +735,19 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	private static Map<String, Object> _scopeSiteFreeMarkerTermValues;
 
+	@DeleteAfterTestRun
+	private static ObjectDefinition _scopeSiteObjectDefinition;
+
+	private static LinkedHashMap<String, Object> _scopeSiteObjectEntryValues;
+
 	@Inject
 	private NotificationQueueEntryAttachmentLocalService
 		_notificationQueueEntryAttachmentLocalService;
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

@@ -171,10 +171,6 @@ public class BaseNotificationTypeTest {
 			"textObjectField", RandomTestUtil.randomString()
 		).build();
 
-		scopeSiteObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
-			"textObjectField", RandomTestUtil.randomString()
-		).build();
-
 		user1 = TestPropsValues.getUser();
 
 		dtoConverterContext = new DefaultDTOConverterContext(
@@ -417,28 +413,6 @@ public class BaseNotificationTypeTest {
 			getTermName(true, "AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
 		).build();
 
-		scopeSiteObjectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				user1.getUserId(), 0, false, false, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionTestUtil.getRandomName(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_SITE,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Arrays.asList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"textObjectField"
-					).build()));
-
-		scopeSiteObjectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				user1.getUserId(),
-				scopeSiteObjectDefinition.getObjectDefinitionId());
-
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
 			childObjectDefinition.getResourceName(),
@@ -449,13 +423,6 @@ public class BaseNotificationTypeTest {
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
 			parentObjectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
-			ObjectActionKeys.ADD_OBJECT_ENTRY);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(),
-			scopeSiteObjectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
@@ -585,11 +552,6 @@ public class BaseNotificationTypeTest {
 
 	protected static LinkedHashMap<String, Object> parentObjectEntryValues;
 	protected static Role role;
-
-	@DeleteAfterTestRun
-	protected static ObjectDefinition scopeSiteObjectDefinition;
-
-	protected static LinkedHashMap<String, Object> scopeSiteObjectEntryValues;
 	protected static User user1;
 	protected static User user2;
 

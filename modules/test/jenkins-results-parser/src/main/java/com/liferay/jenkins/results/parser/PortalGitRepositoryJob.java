@@ -19,6 +19,8 @@ public abstract class PortalGitRepositoryJob
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
+		gitWorkingDirectory.setCacheBashCommands(true);
+
 		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
 			throw new RuntimeException("Invalid portal Git working directory");
 		}

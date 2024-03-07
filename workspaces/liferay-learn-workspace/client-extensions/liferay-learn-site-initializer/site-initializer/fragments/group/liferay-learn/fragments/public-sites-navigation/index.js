@@ -304,7 +304,7 @@ window.addEventListener('keyup', (event) => {
 		siteSearchWrapper.classList.remove('search-open');
 	}
 
-	if (event.code === 'Slash') {
+	if (event.code === 'Slash' || event.key === '/') {
 		searchInput.focus();
 
 		if (siteSearchWrapper.classList.contains('search-open')) {

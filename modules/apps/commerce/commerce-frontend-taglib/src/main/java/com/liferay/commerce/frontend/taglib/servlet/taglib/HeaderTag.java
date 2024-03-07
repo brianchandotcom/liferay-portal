@@ -49,7 +49,7 @@ public class HeaderTag extends IncludeTag {
 		return _cssClasses;
 	}
 
-	public String getDisplayBeanId() {
+	public long getDisplayBeanId() {
 		return _displayBeanId;
 	}
 
@@ -121,7 +121,7 @@ public class HeaderTag extends IncludeTag {
 		_cssClasses = cssClasses;
 	}
 
-	public void setDisplayBeanId(String displayBeanId) {
+	public void setDisplayBeanId(long displayBeanId) {
 		_displayBeanId = displayBeanId;
 	}
 
@@ -191,7 +191,7 @@ public class HeaderTag extends IncludeTag {
 		_bean = null;
 		_beanIdLabel = null;
 		_cssClasses = null;
-		_displayBeanId = null;
+		_displayBeanId = 0;
 		_dropdownItems = null;
 		_externalReferenceCode = null;
 		_externalReferenceCodeEditUrl = null;
@@ -272,7 +272,7 @@ public class HeaderTag extends IncludeTag {
 	private Object _bean;
 	private String _beanIdLabel;
 	private String _cssClasses;
-	private String _displayBeanId;
+	private long _displayBeanId;
 	private List<DropdownItem> _dropdownItems;
 	private String _externalReferenceCode;
 	private String _externalReferenceCodeEditUrl;

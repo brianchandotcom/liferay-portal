@@ -65,7 +65,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 							</span>
 
 							<strong class="c-ml-1 header-info-value">
-								<%= displayBeanId %>
+								<%= displayBeanId > 0 ? String.valueOf(displayBeanId) : "" %>
 							</strong>
 
 							<span class="c-ml-1 lfr-portal-tooltip text-secondary" title="<%= LanguageUtil.get(request, "identification-number") %>">

@@ -10,6 +10,7 @@ import com.liferay.client.extension.internal.service.taglib.util.ClientExtension
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.type.GlobalCSSCET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = DynamicInclude.class)
-public class ClientExtensionTopHeadDynamicInclude implements DynamicInclude {
+public class ClientExtensionTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(

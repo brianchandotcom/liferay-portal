@@ -111,8 +111,22 @@ public class ViewObjectDefinitionsDisplayContext {
 				).buildString(),
 				"export", "export",
 				LanguageUtil.get(
-					_objectRequestHelper.getRequest(), "export-as-json"),
-				"get", null, null),
+					_objectRequestHelper.getRequest(),
+					"export-object-definition"),
+				"get", "exportObjectDefinition", null),
+			new FDSActionDropdownItem(
+				ResourceURLBuilder.createResourceURL(
+					_objectRequestHelper.getLiferayPortletResponse()
+				).setParameter(
+					"objectDefinitionId", "{id}"
+				).setResourceID(
+					"/object_definitions/export_bound_object_definitions"
+				).buildString(),
+				"export", "exportBoundObjectDefinitions",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(),
+					"export-bound-object-definitions"),
+				"get", "exportBoundObjectDefinitions", null),
 			new FDSActionDropdownItem(
 				getPermissionsURL(ObjectDefinition.class.getName()),
 				"password-policies", "permissions",

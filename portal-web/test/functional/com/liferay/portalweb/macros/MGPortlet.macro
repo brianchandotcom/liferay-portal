@@ -98,7 +98,7 @@ definition {
 
 				AssertClick(
 					key_dmFolderName = ${dmRootFolderName},
-					locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
+					locator1 = "DocumentsAndMedia#SELECT_RESOURCE_BUTTON",
 					value1 = "Select");
 			}
 

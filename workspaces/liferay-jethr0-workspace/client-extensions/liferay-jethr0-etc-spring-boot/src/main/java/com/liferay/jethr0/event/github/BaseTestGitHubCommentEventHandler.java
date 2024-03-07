@@ -7,6 +7,7 @@ package com.liferay.jethr0.event.github;
 
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.event.github.comment.GitHubComment;
+import com.liferay.jethr0.event.github.commit.GitHubCommit;
 import com.liferay.jethr0.event.github.pullrequest.GitHubPullRequest;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PullRequestJobEntity;
@@ -41,8 +42,7 @@ public abstract class BaseTestGitHubCommentEventHandler
 			return null;
 		}
 
-		PullRequestJobEntity pullRequestJobEntity = createPullRequestJobEntity(
-			getTestSuite());
+		PullRequestJobEntity pullRequestJobEntity = getPullRequestJobEntity();
 
 		invokeJobEntity(pullRequestJobEntity);
 
@@ -65,6 +65,28 @@ public abstract class BaseTestGitHubCommentEventHandler
 	protected abstract JobEntity.Type getJobEntityType();
 
 	protected abstract int getJobPriority();
+
+	protected PullRequestJobEntity getPullRequestJobEntity()
+		throws InvalidJSONException, IOException {
+
+		if (_pullRequestJobEntity != null) {
+			return _pullRequestJobEntity;
+		}
+
+		_pullRequestJobEntity = createPullRequestJobEntity(getTestSuite());
+
+		if (_testNoRebase()) {
+			GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+			GitHubCommit commonParentGitHubCommit =
+				gitHubPullRequest.getCommonParentGitHubCommit();
+
+			_pullRequestJobEntity.setUpstreamBranchSHA(
+				commonParentGitHubCommit.getSHA());
+		}
+
+		return _pullRequestJobEntity;
+	}
 
 	protected List<String> getTestOptions() throws InvalidJSONException {
 		List<String> testOptions = new ArrayList<>();
@@ -120,10 +142,22 @@ public abstract class BaseTestGitHubCommentEventHandler
 		return true;
 	}
 
+	private boolean _testNoRebase() throws InvalidJSONException {
+		for (String testOption : getTestOptions()) {
+			if (testOption.equals("norebase")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		BaseTestGitHubCommentEventHandler.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"ci:test(\\:(?<testOptions>[^\\s]+))?");
+
+	private PullRequestJobEntity _pullRequestJobEntity;
 
 }

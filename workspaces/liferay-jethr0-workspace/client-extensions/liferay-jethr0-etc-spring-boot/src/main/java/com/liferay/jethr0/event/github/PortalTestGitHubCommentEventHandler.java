@@ -8,6 +8,7 @@ package com.liferay.jethr0.event.github;
 import com.liferay.jethr0.event.EventHandlerContext;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.PortalPullRequestJobEntity;
+import com.liferay.jethr0.job.PullRequestJobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.io.IOException;
@@ -25,24 +26,6 @@ import org.json.JSONObject;
  */
 public class PortalTestGitHubCommentEventHandler
 	extends BaseTestGitHubCommentEventHandler {
-
-	@Override
-	public String process() throws InvalidJSONException, IOException {
-		if (checkLiferayGitHubUser() ||
-			closeInvalidUpstreamGitHubBranchName()) {
-
-			return null;
-		}
-
-		PortalPullRequestJobEntity portalPullRequestJobEntity =
-			createPortalPullRequestJobEntity(getTestSuite());
-
-		portalPullRequestJobEntity.setGitHubGistID(_getGitHubGistID());
-
-		invokeJobEntity(portalPullRequestJobEntity);
-
-		return portalPullRequestJobEntity.toString();
-	}
 
 	protected PortalTestGitHubCommentEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
@@ -79,6 +62,23 @@ public class PortalTestGitHubCommentEventHandler
 		}
 
 		return 5;
+	}
+
+	@Override
+	protected PullRequestJobEntity getPullRequestJobEntity()
+		throws InvalidJSONException, IOException {
+
+		PullRequestJobEntity pullRequestJobEntity =
+			super.getPullRequestJobEntity();
+
+		if (pullRequestJobEntity instanceof PortalPullRequestJobEntity) {
+			PortalPullRequestJobEntity portalPullRequestJobEntity =
+				(PortalPullRequestJobEntity)pullRequestJobEntity;
+
+			portalPullRequestJobEntity.setGitHubGistID(_getGitHubGistID());
+		}
+
+		return pullRequestJobEntity;
 	}
 
 	private String _getGitHubGistID() throws InvalidJSONException {

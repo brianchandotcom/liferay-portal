@@ -166,7 +166,7 @@
 
 <tr>
 	<td>TOOLBAR_ANY_ITEM_BUTTON</td>
-	<td>//a[contains(@href,"${key_titleName}")]</td>
+	<td>//div[contains(@class, 'cke_balloontoolbar')]//a[contains(@href,"${key_titleName}")]</td>
 	<td></td>
 </tr>
 <tr>

@@ -244,7 +244,12 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTotalCount(cardName = null, count = null) {
+	macro viewTotalCount(cardName, count) {
+
+		while ((IsElementNotPresent(key_cardTitle = ${cardName}, key_count = ${count}, locator1 = "ACCards#TOTAL_COUNT_VALUE")) && (maxIterations = "50")) {
+				TestUtils.hardRefresh();
+			}
+
 		AssertTextEquals(
 			key_cardTitle = ${cardName},
 			locator1 = "ACCards#TOTAL_COUNT",

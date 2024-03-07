@@ -1203,12 +1203,13 @@
 		<column localized="true" name="description" type="String" />
 		<column name="facetable" type="boolean" />
 		<column name="key" type="String" />
+		<column name="priority" type="double" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
-		<order by="asc">
-			<order-column name="title" />
+		<order by="desc">
+			<order-column name="priority" />
 		</order>
 
 		<!-- Finder methods -->

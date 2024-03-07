@@ -295,7 +295,7 @@ const searchInput = document.getElementById('searchInput');
 const siteSearchWrapper = document.getElementById('siteSearchWrapper');
 
 window.addEventListener('keyup', (event) => {
-	if (event.code === 'Escape') {
+	if (event.code === 'Escape' || event.key === 'Escape') {
 		if (!siteSearchWrapper.classList.contains('search-open')) {
 			return;
 		}

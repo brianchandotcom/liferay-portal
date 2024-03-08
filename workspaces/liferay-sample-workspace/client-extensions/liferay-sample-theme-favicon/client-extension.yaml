@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: buildFaviconFile
+    - fromTask: buildFavicon
       into: static
 liferay-sample-theme-favicon:
     name: Liferay Sample Theme Favicon

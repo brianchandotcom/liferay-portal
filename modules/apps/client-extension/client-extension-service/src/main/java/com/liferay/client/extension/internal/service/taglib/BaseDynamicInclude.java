@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -35,21 +36,17 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Thiago Buarque
  */
-public class ClientExtensionJSInclude {
+public abstract class BaseDynamicInclude implements DynamicInclude {
 
-	public ClientExtensionJSInclude(
-		CETManager cetManager, JSONFactory jsonFactory) {
-
-		_cetManager = cetManager;
-		_jsonFactory = jsonFactory;
-	}
-
+	@Override
 	public void include(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String scriptLocation)
+			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
 		ThemeDisplay themeDisplay =
@@ -66,7 +63,7 @@ public class ClientExtensionJSInclude {
 		for (ClientExtensionEntryRel clientExtensionEntryRel :
 				clientExtensionEntryRels) {
 
-			GlobalJSCET globalJSCET = (GlobalJSCET)_cetManager.getCET(
+			GlobalJSCET globalJSCET = (GlobalJSCET)cetManager.getCET(
 				clientExtensionEntryRel.getCompanyId(),
 				clientExtensionEntryRel.getCETExternalReferenceCode());
 
@@ -84,7 +81,7 @@ public class ClientExtensionJSInclude {
 			if (!Objects.equals(
 					typeSettingsUnicodeProperties.getProperty(
 						"scriptLocation", StringPool.BLANK),
-					scriptLocation)) {
+					getScriptLocation())) {
 
 				continue;
 			}
@@ -118,13 +115,21 @@ public class ClientExtensionJSInclude {
 		}
 	}
 
+	protected abstract String getScriptLocation();
+
+	@Reference
+	protected CETManager cetManager;
+
+	@Reference
+	protected JSONFactory jsonFactory;
+
 	private String _toScriptElementAttributes(
 		String scriptElementAttributesJSON) {
 
 		StringBuilder stringBuilder = new StringBuilder();
 
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
+			JSONObject jsonObject = jsonFactory.createJSONObject(
 				scriptElementAttributesJSON);
 
 			Set<String> keySet = jsonObject.keySet();
@@ -166,9 +171,6 @@ public class ClientExtensionJSInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ClientExtensionJSInclude.class);
-
-	private final CETManager _cetManager;
-	private final JSONFactory _jsonFactory;
+		BaseDynamicInclude.class);
 
 }

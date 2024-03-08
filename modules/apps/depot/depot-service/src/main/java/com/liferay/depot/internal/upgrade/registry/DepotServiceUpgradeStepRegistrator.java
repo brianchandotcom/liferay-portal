@@ -5,6 +5,7 @@
 
 package com.liferay.depot.internal.upgrade.registry;
 
+import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -34,6 +35,11 @@ public class DepotServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"DepotEntryGroupRel", "userId LONG",
 				"userName VARCHAR(75) null", "lastPublishDate DATE null"));
+
+		registry.register(
+			"2.0.0", "2.1.0",
+			new CTModelUpgradeProcess(
+				"DepotAppCustomization", "DepotEntry", "DepotEntryGroupRel"));
 	}
 
 }

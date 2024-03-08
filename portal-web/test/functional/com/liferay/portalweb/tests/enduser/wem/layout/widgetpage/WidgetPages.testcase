@@ -84,34 +84,6 @@ definition {
 		}
 	}
 
-	@description = "The user can add a private widget page with a child page."
-	@priority = 4
-	test AddPrivateChildPage {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-
-		task ("Add a private widget page") {
-			JSONLayout.addPrivateLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Private Page");
-		}
-
-		task ("Add a child page") {
-			JSONLayout.addPrivateLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Child Page",
-				parentLayoutName = "Test Private Page");
-		}
-
-		task ("View child page is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.viewPageItemPresent(
-				depth = 2,
-				pageName = "Test Child Page",
-				privacy = "Private Pages");
-		}
-	}
-
 	@description = "The user can add a Blogs portlet to private page."
 	@priority = 4
 	test AddWidgetToPrivatePage {

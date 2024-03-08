@@ -6,19 +6,27 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
+import com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration;
 import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterWriter;
-import com.liferay.portal.search.tuning.synonyms.web.internal.filter.name.SynonymSetFilterNameHolder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReader;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
  */
-@Component(service = IndexToFilterSynchronizer.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration",
+	service = IndexToFilterSynchronizer.class
+)
 public class IndexToFilterSynchronizerImpl
 	implements IndexToFilterSynchronizer {
 
@@ -27,7 +35,7 @@ public class IndexToFilterSynchronizerImpl
 		SynonymSetIndexName synonymSetIndexName, String companyIndexName,
 		boolean deletion) {
 
-		for (String filterName : _synonymSetFilterNameHolder.getFilterNames()) {
+		for (String filterName : _filterNames) {
 			_synonymSetFilterWriter.updateSynonymSets(
 				companyIndexName, filterName,
 				TransformUtil.transformToArray(
@@ -37,8 +45,17 @@ public class IndexToFilterSynchronizerImpl
 		}
 	}
 
-	@Reference
-	private SynonymSetFilterNameHolder _synonymSetFilterNameHolder;
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		SynonymsConfiguration synonymsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SynonymsConfiguration.class, properties);
+
+		_filterNames = synonymsConfiguration.filterNames();
+	}
+
+	private volatile String[] _filterNames;
 
 	@Reference
 	private SynonymSetFilterWriter _synonymSetFilterWriter;

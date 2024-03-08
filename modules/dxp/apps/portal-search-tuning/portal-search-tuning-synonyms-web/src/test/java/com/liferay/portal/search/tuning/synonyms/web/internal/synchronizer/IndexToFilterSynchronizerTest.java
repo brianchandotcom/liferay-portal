@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.web.internal.BaseSynonymsWebTestCase;
 import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterWriterUtil;
@@ -22,7 +21,7 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class IndexToFilterSynchronizerImplTest extends BaseSynonymsWebTestCase {
+public class IndexToFilterSynchronizerTest extends BaseSynonymsWebTestCase {
 
 	@ClassRule
 	@Rule
@@ -31,13 +30,8 @@ public class IndexToFilterSynchronizerImplTest extends BaseSynonymsWebTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_indexToFilterSynchronizerImpl = new IndexToFilterSynchronizerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_indexToFilterSynchronizerImpl, "_filterNames",
-			new String[] {"car,automobile"});
-		ReflectionTestUtil.setFieldValue(
-			_indexToFilterSynchronizerImpl, "_synonymSetIndexReader",
+		_indexToFilterSynchronizerImpl = new IndexToFilterSynchronizer(
+			new String[] {"car,automobile"}, searchEngineAdapter,
 			synonymSetIndexReader);
 	}
 
@@ -55,7 +49,7 @@ public class IndexToFilterSynchronizerImplTest extends BaseSynonymsWebTestCase {
 			Mockito.times(1));
 	}
 
-	private IndexToFilterSynchronizerImpl _indexToFilterSynchronizerImpl;
+	private IndexToFilterSynchronizer _indexToFilterSynchronizerImpl;
 	private final MockedStatic<SynonymSetFilterWriterUtil>
 		_synonymSetFilterWriterUtilMockedStatic = Mockito.mockStatic(
 			SynonymSetFilterWriterUtil.class);

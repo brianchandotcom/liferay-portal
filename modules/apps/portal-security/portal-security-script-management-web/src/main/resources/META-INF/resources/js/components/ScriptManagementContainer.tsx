@@ -7,8 +7,11 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
+import ClayModal, {useModal} from '@clayui/modal';
 import {createResourceURL, fetch, openToast} from 'frontend-js-web';
 import React, {useState} from 'react';
+
+import {GroovyScriptUsesModalContent} from './GroovyScriptUsesModalContent';
 
 import './ScriptManagementContainer.scss';
 
@@ -17,6 +20,12 @@ interface ScriptManagementContainerProps {
 	baseResourceURL: string;
 }
 
+export type GroovyScriptUseItem = {
+	companyWebId: string;
+	redirectURL: string;
+	scriptSource: string;
+};
+
 export default function ScriptManagementContainer({
 	allowScriptContentBeExecutedOrIncluded,
 	baseResourceURL,
@@ -24,6 +33,16 @@ export default function ScriptManagementContainer({
 	const [allowScriptContent, setAllowScriptContent] = useState(
 		allowScriptContentBeExecutedOrIncluded
 	);
+	const [showGroovyScriptUsesModal, setShowGroovyScriptUsesModal] = useState<
+		boolean
+	>(false);
+
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			setShowGroovyScriptUsesModal(false);
+			setGroovyScriptUses([]);
+		},
+	});
 
 	const handleSaveSystemConfiguration = async () => {
 		const response = await fetch(
@@ -79,7 +98,11 @@ export default function ScriptManagementContainer({
 			<ClayButton.Group key={1} spaced>
 				<ClayButton
 					displayType="primary"
-					onClick={() => handleSaveSystemConfiguration()}
+					onClick={() => {
+						handleSaveSystemConfiguration();
+
+						setShowGroovyScriptUsesModal(true);
+					}}
 					type="submit"
 				>
 					{Liferay.Language.get('save')}
@@ -96,6 +119,20 @@ export default function ScriptManagementContainer({
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 			</ClayButton.Group>
+
+			{showGroovyScriptUsesModal && (
+				<ClayModal
+					center
+					observer={observer}
+					size="lg"
+					status="warning"
+				>
+					<GroovyScriptUsesModalContent
+						groovyScriptUses={groovyScriptUses}
+						handleOnClose={onClose}
+					/>
+				</ClayModal>
+			)}
 		</div>
 	);
 }

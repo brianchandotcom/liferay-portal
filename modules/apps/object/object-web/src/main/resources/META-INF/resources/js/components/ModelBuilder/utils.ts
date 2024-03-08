@@ -184,7 +184,7 @@ function hasPositionedNode(objectFolderItems: ObjectFolderItem[]) {
 	);
 }
 
-interface handleUnplacedObjectDefinitionNode {
+interface HandleUnplacedObjectDefinitionNode {
 	index: number;
 	objectFolderExternalReferenceCode: string;
 	outdatedObjectFolderItems: ObjectFolderItem[];
@@ -198,7 +198,7 @@ function handleUnplacedObjectDefinitionNode({
 	outdatedObjectFolderItems,
 	positionColumn,
 	updatedObjectFolderItems,
-}: handleUnplacedObjectDefinitionNode) {
+}: HandleUnplacedObjectDefinitionNode) {
 	const hasNewPositionedNode = hasPositionedNode(updatedObjectFolderItems);
 
 	if (objectFolderExternalReferenceCode === 'default') {
@@ -221,7 +221,7 @@ function handleUnplacedObjectDefinitionNode({
 	return getObjectFolderDiagramCenterPosition();
 }
 
-interface getObjectDefinitionNodePosition {
+interface GetObjectDefinitionNodePosition {
 	index: number;
 	objectDefinition: ObjectDefinitionNodeData;
 	objectFolderExternalReferenceCode: string;
@@ -237,7 +237,7 @@ export function getObjectDefinitionNodePosition({
 	outdatedObjectFolderItems,
 	positionColumn,
 	updatedObjectFolderItems,
-}: getObjectDefinitionNodePosition) {
+}: GetObjectDefinitionNodePosition) {
 	const objectFolderItem = outdatedObjectFolderItems.find(
 		(objectFolderItem) =>
 			objectFolderItem.objectDefinitionExternalReferenceCode ===
@@ -369,7 +369,7 @@ export function getUnsupportedObjectRelationshipErrorMessage(
 	}
 }
 
-interface updatePreviousURLParam {
+interface UpdatePreviousURLParam {
 	paramType: string;
 	paramURL: string;
 	paramValue: string;
@@ -379,23 +379,10 @@ export function updatePreviousURLParam({
 	paramType,
 	paramURL,
 	paramValue,
-}: updatePreviousURLParam) {
+}: UpdatePreviousURLParam) {
 	const newPreviousURL = new URL(paramURL);
 
 	newPreviousURL.searchParams.set(paramType, paramValue);
 
-	window.history.pushState(null, '', newPreviousURL.toString());
-
 	window.location.href = newPreviousURL.toString();
-}
-
-export function updateURLParam(paramType: string, paramValue: string) {
-	const currentURL = window.location.href;
-
-	const newURL = currentURL.replace(
-		new RegExp('(' + paramType + '=)([^&]*)'),
-		paramType + '=' + paramValue
-	);
-
-	window.history.pushState({path: newURL}, '', newURL);
 }

@@ -41,7 +41,7 @@ export declare function getEdgeParams(
 	targetY: number;
 };
 export declare function getObjectFolderName(): string;
-interface getObjectDefinitionNodePosition {
+interface GetObjectDefinitionNodePosition {
 	index: number;
 	objectDefinition: ObjectDefinitionNodeData;
 	objectFolderExternalReferenceCode: string;
@@ -59,7 +59,7 @@ export declare function getObjectDefinitionNodePosition({
 	outdatedObjectFolderItems,
 	positionColumn,
 	updatedObjectFolderItems,
-}: getObjectDefinitionNodePosition): {
+}: GetObjectDefinitionNodePosition): {
 	x: number;
 	y: number;
 };
@@ -87,7 +87,7 @@ export declare function getUnsupportedObjectRelationshipErrorMessage(
 			learnMessage: string;
 	  }
 	| undefined;
-interface updatePreviousURLParam {
+interface UpdatePreviousURLParam {
 	paramType: string;
 	paramURL: string;
 	paramValue: string;
@@ -96,9 +96,5 @@ export declare function updatePreviousURLParam({
 	paramType,
 	paramURL,
 	paramValue,
-}: updatePreviousURLParam): void;
-export declare function updateURLParam(
-	paramType: string,
-	paramValue: string
-): void;
+}: UpdatePreviousURLParam): void;
 export {};

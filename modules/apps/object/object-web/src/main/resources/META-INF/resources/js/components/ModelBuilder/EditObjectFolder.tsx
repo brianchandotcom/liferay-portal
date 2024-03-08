@@ -245,20 +245,14 @@ export default function EditObjectFolder({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedObjectFolder.objectFolderItems?.length]);
 
-	Liferay.on('beforeNavigate', () => {
-		updatePreviousURLParam({
-			paramType: 'objectFolderName',
-			paramURL: viewObjectDefinitionsURL,
-			paramValue: objectFolderName,
-		});
-	});
-
-	window.addEventListener('popstate', () => {
-		updatePreviousURLParam({
-			paramType: 'objectFolderName',
-			paramURL: viewObjectDefinitionsURL,
-			paramValue: objectFolderName,
-		});
+	Liferay.on('beforeNavigate', (event) => {
+		if (event.path.includes('objectFolderName')) {
+			updatePreviousURLParam({
+				paramType: 'objectFolderName',
+				paramURL: viewObjectDefinitionsURL,
+				paramValue: objectFolderName,
+			});
+		}
 	});
 
 	return (

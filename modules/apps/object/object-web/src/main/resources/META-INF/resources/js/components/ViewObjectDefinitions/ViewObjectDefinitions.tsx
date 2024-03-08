@@ -358,20 +358,16 @@ export default function ViewObjectDefinitions({
 				'objectFolderName'
 			);
 
-			if (objectFolderNameSearchParam === null) {
-				setDefaultToSearchParams(allObjectFolders, currentURL);
+			const newSelectedObjectFolder = allObjectFolders.items.find(
+				(objectFolder) =>
+					objectFolder.name === objectFolderNameSearchParam
+			);
+
+			if (newSelectedObjectFolder) {
+				setSelectedObjectFolder(newSelectedObjectFolder);
 			}
 			else {
-				const newSelectedObjectFolder = allObjectFolders.items.find(
-					(folder) => folder.name === objectFolderNameSearchParam
-				);
-
-				if (newSelectedObjectFolder) {
-					setSelectedObjectFolder(newSelectedObjectFolder);
-				}
-				else {
-					setDefaultToSearchParams(allObjectFolders, currentURL);
-				}
+				setDefaultToSearchParams(allObjectFolders, currentURL);
 			}
 
 			setLoading(false);

@@ -5,7 +5,6 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v5_1_1;
 
-import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -72,10 +71,9 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		List<Long> plids = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				SQLTransformer.transform(
-					"select layoutPageTemplateStructureId, classPK from " +
-						"LayoutPageTemplateStructure where classPK in " +
-							"(select plid from Layout where type_ = ?)"));
+				"select layoutPageTemplateStructureId, classPK from " +
+					"LayoutPageTemplateStructure where classPK in " +
+						"(select plid from Layout where type_ = ?)");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,

@@ -12,6 +12,7 @@ import com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditModelImpl
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryReplenishmentItemModelImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -130,8 +131,15 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.5.0", "2.5.1",
-			new com.liferay.commerce.inventory.internal.upgrade.v2_5_1.
-				CommerceInventoryReplenishmentItemUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"delete from CIReplenishmentItem where ",
+					"CIReplenishmentItem.sku not in (select ",
+					"CIWarehouseItem.sku from CIWarehouseItem where ",
+					"CIReplenishmentItem.companyId = ",
+					"CIWarehouseItem.companyId and ",
+					"CIReplenishmentItem.commerceInventoryWarehouseId = ",
+					"CIWarehouseItem.commerceInventoryWarehouseId)")));
 
 		registry.register(
 			"2.5.1", "2.6.0", CommerceInventoryWarehouseRelTable.create(),

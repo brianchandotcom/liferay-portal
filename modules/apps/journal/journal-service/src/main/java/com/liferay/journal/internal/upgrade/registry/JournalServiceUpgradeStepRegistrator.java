@@ -31,8 +31,6 @@ import com.liferay.journal.internal.upgrade.v0_0_5.UpgradeJournalDisplayPreferen
 import com.liferay.journal.internal.upgrade.v0_0_5.UpgradeLastPublishDate;
 import com.liferay.journal.internal.upgrade.v0_0_5.UpgradePortletSettings;
 import com.liferay.journal.internal.upgrade.v0_0_6.ImageTypeContentAttributesUpgradeProcess;
-import com.liferay.journal.internal.upgrade.v0_0_7.JournalArticleDatesUpgradeProcess;
-import com.liferay.journal.internal.upgrade.v0_0_7.JournalArticleTreePathUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v0_0_8.ArticleAssetsUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v0_0_8.ArticleExpirationDateUpgradeProcess;
 import com.liferay.journal.internal.upgrade.v0_0_8.ArticleSystemEventsUpgradeProcess;
@@ -155,8 +153,10 @@ public class JournalServiceUpgradeStepRegistrator
 			"0.0.6", "0.0.7", new ImageTypeContentAttributesUpgradeProcess());
 
 		registry.register(
-			"0.0.7", "0.0.8", new JournalArticleDatesUpgradeProcess(),
-			new JournalArticleTreePathUpgradeProcess());
+			"0.0.7", "0.0.8",
+			UpgradeProcessFactory.runSQL(
+				"update JournalArticle set treePath = '/' where folderId = 0 " +
+					"and treePath = '/0/'"));
 
 		registry.register(
 			"0.0.8", "1.0.0",

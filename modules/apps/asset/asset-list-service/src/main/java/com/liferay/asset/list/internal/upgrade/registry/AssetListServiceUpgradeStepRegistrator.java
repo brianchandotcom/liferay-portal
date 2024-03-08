@@ -65,8 +65,9 @@ public class AssetListServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.6.0", "1.7.0",
-			new com.liferay.asset.list.internal.upgrade.v1_7_0.
-				AssetListEntrySegmentsEntryRelUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				"update AssetListEntrySegmentsEntryRel set priority = -1 " +
+					"where priority is null"));
 
 		registry.register(
 			"1.7.0", "1.8.0",

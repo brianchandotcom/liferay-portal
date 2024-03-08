@@ -18,7 +18,6 @@ import com.liferay.commerce.internal.upgrade.v2_1_0.CommerceSubscriptionEntryUpg
 import com.liferay.commerce.internal.upgrade.v4_1_0.CommerceAddressUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v4_3_0.CommerceOrderDateUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v4_5_1.CommerceShippingMethodUpgradeProcess;
-import com.liferay.commerce.internal.upgrade.v4_8_1.CommerceOrderStatusesUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v5_0_1.CommercePermissionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v5_9_0.CommerceAccountOrganizationRelUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v5_9_0.CommerceAccountUserRelUpgradeProcess;
@@ -232,7 +231,12 @@ public class CommerceServiceUpgradeStepRegistrator
 		registry.register("4.6.0", "4.7.0", new DummyUpgradeProcess());
 
 		registry.register(
-			"4.7.0", "4.8.1", new CommerceOrderStatusesUpgradeProcess());
+			"4.7.0", "4.8.1",
+			UpgradeProcessFactory.runSQL(
+				"update CommerceOrder set orderStatus = 1 where orderStatus " +
+					"= 11",
+				"update CommerceOrder set orderStatus = 10 where orderStatus " +
+					"= 12"));
 
 		registry.register(
 			"4.8.1", "4.9.0",
@@ -269,8 +273,9 @@ public class CommerceServiceUpgradeStepRegistrator
 
 		registry.register(
 			"4.9.0", "4.9.1",
-			new com.liferay.commerce.internal.upgrade.v4_9_1.
-				CommerceOrderUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				"update CommerceOrder set orderDate = createDate where " +
+					"orderDate is NULL"));
 
 		registry.register(
 			"4.9.1", "4.10.0",

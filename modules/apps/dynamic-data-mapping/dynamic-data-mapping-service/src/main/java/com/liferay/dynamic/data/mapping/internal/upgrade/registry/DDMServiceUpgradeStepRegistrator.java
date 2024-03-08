@@ -363,8 +363,10 @@ public class DDMServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.7.3", "3.7.4",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_7_4.
-				DDMTemplateUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				"update DDMTemplate set templateKey = " +
+					"CONCAT(CAST_TEXT(templateId), '_key') where templateKey " +
+						"is null or templateKey = ''"));
 
 		registry.register(
 			"3.7.4", "3.8.0",

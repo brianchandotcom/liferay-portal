@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.opener.internal.upgrade.registry;
 
-import com.liferay.document.library.opener.internal.upgrade.v1_1_0.DLOpenerFileEntryReferenceUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -24,7 +23,9 @@ public class DLOpenerServiceUpgradeStepRegistrator
 			"1.0.0", "1.1.0",
 			UpgradeProcessFactory.addColumns(
 				"DLOpenerFileEntryReference", "referenceType VARCHAR(75) null"),
-			new DLOpenerFileEntryReferenceUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				"update DLOpenerFileEntryReference  set referenceType = " +
+					"'GoogleDrive'"));
 	}
 
 }

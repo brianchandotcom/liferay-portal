@@ -5,7 +5,9 @@
 
 package com.liferay.osb.faro.internal.upgrade.registry;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,8 +38,12 @@ public class FaroServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.0.0", "4.0.0",
-			new com.liferay.osb.faro.internal.upgrade.v4_0_0.
-				UpgradeFaroPreferencesUpgradeProcess(),
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"create table OSBFaro_FaroPreferences (faroPreferencesId ",
+					"LONG not null primary key, groupId LONG, userId LONG, ",
+					"userName VARCHAR(75) null, createTime LONG, modifiedTime ",
+					"LONG, ownerId LONG, preferences STRING null)")),
 			new com.liferay.osb.faro.internal.upgrade.v4_0_0.
 				UpgradeFaroProjectUpgradeProcess());
 
@@ -50,13 +56,22 @@ public class FaroServiceUpgradeStepRegistrator
 			"5.0.0", "6.0.0",
 			new com.liferay.osb.faro.internal.upgrade.v6_0_0.
 				UpgradeFaroProjectUpgradeProcess(),
-			new com.liferay.osb.faro.internal.upgrade.v6_0_0.
-				UpgradeFaroProjectEmailAddressDomainUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"create table OSBFaro_FaroProjectEmailAddressDomain ",
+					"(faroProjectEmailAddressDomainId LONG not null primary ",
+					"key, groupId LONG, faroProjectId LONG, ",
+					"emailAddressDomain VARCHAR(255) null)")));
 
 		registry.register(
 			"6.0.0", "7.0.0",
-			new com.liferay.osb.faro.internal.upgrade.v7_0_0.
-				UpgradeFaroChannelUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"create table OSBFaro_FaroChannel (faroChannelId LONG not ",
+					"null primary key, groupId LONG, userId LONG, userName ",
+					"VARCHAR(75) null, createTime LONG, modifiedTime LONG, ",
+					"channelId VARCHAR(75), name VARCHAR(75) null, ",
+					"permissionType INTEGER, workspaceGroupId LONG)")));
 
 		registry.register(
 			"7.0.0", "8.0.0",
@@ -110,8 +125,10 @@ public class FaroServiceUpgradeStepRegistrator
 
 		registry.register(
 			"17.0.0", "18.0.0",
-			new com.liferay.osb.faro.internal.upgrade.v18_0_0.
-				LayoutSetUpgradeProcess(),
+			UpgradeProcessFactory.runSQL(
+				"update LayoutSet set themeId = " +
+					"'osbfarotheme_WAR_osbfarotheme' where themeId = " +
+						"'osbfaro_WAR_osbfarotheme'"),
 			new MVCCVersionUpgradeProcess() {
 
 				@Override

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -185,6 +186,136 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 					PortalInstances.removeCompany(company.getCompanyId());
 				},
 				companies);
+		}
+	}
+
+	@Test
+	public void testPortletDisplayCategory() throws Exception {
+		Company company1 = CompanyTestUtil.addCompany();
+		Company company2 = CompanyTestUtil.addCompany();
+
+		PortalInstances.initCompany(company1);
+		PortalInstances.initCompany(company2);
+
+		String displayCategory = RandomTestUtil.randomString();
+
+		try {
+			setUpPortlet(
+				_internalClassTestPortlet,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.display-category", displayCategory
+				).build(),
+				"companyPortlet", false);
+
+			PortletCategory portletCategory1 = (PortletCategory)WebAppPool.get(
+				company1.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+			Assert.assertNotNull(portletCategory1.getCategory(displayCategory));
+
+			PortletCategory portletCategory2 = (PortletCategory)WebAppPool.get(
+				company2.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+			Assert.assertNotNull(portletCategory2.getCategory(displayCategory));
+
+			Company company3 = CompanyTestUtil.addCompany();
+
+			PortalInstances.initCompany(company3);
+
+			try {
+				PortletCategory portletCategory3 =
+					(PortletCategory)WebAppPool.get(
+						company3.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+				Assert.assertNotNull(
+					portletCategory3.getCategory(displayCategory));
+			}
+			finally {
+				_companyLocalService.deleteCompany(company3);
+
+				PortalInstances.removeCompany(company3.getCompanyId());
+			}
+		}
+		finally {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+
+			serviceRegistrations.clear();
+
+			_companyLocalService.deleteCompany(company2);
+
+			_companyLocalService.deleteCompany(company1);
+
+			PortalInstances.removeCompany(company1.getCompanyId());
+			PortalInstances.removeCompany(company2.getCompanyId());
+		}
+	}
+
+	@Test
+	public void testPortletDisplayCategoryByCompany() throws Exception {
+		Company company1 = CompanyTestUtil.addCompany();
+		Company company2 = CompanyTestUtil.addCompany();
+
+		PortalInstances.initCompany(company1);
+		PortalInstances.initCompany(company2);
+
+		String displayCategory = RandomTestUtil.randomString();
+
+		try {
+			setUpPortlet(
+				_internalClassTestPortlet,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.company", company1.getCompanyId()
+				).put(
+					"com.liferay.portlet.display-category", displayCategory
+				).build(),
+				"companyPortlet", false);
+
+			PortletCategory portletCategory1 = (PortletCategory)WebAppPool.get(
+				company1.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+			Assert.assertNotNull(portletCategory1.getCategory(displayCategory));
+
+			PortletCategory portletCategory2 = (PortletCategory)WebAppPool.get(
+				company2.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+			Assert.assertNull(portletCategory2.getCategory(displayCategory));
+
+			Company company3 = CompanyTestUtil.addCompany();
+
+			PortalInstances.initCompany(company3);
+
+			try {
+				PortletCategory portletCategory3 =
+					(PortletCategory)WebAppPool.get(
+						company3.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+				Assert.assertNull(
+					portletCategory3.getCategory(displayCategory));
+			}
+			finally {
+				_companyLocalService.deleteCompany(company3);
+
+				PortalInstances.removeCompany(company3.getCompanyId());
+			}
+		}
+		finally {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+
+			serviceRegistrations.clear();
+
+			_companyLocalService.deleteCompany(company2);
+
+			_companyLocalService.deleteCompany(company1);
+
+			PortalInstances.removeCompany(company1.getCompanyId());
+			PortalInstances.removeCompany(company2.getCompanyId());
 		}
 	}
 

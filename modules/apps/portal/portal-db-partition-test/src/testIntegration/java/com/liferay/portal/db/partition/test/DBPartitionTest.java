@@ -388,13 +388,10 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public void testCounterReset() throws Exception {
 		_processCompanyAndResetCounter(
 			(processCompanyId, className) -> {
-				Assert.assertEquals(
-					10, _counterLocalService.increment(className, 10));
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> _counterLocalService.increment(className));
 
-				_counterLocalService.reset(getClass().getName());
-
-				Assert.assertEquals(
-					1, _counterLocalService.increment(className));
+				_counterLocalService.reset(className);
 
 				DBPartitionUtil.forEachCompanyId(
 					companyId -> {
@@ -402,11 +399,11 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 							_counterLocalService.getNames();
 
 						if (processCompanyId.equals(companyId)) {
-							Assert.assertTrue(counterNames.contains(className));
-						}
-						else {
 							Assert.assertFalse(
 								counterNames.contains(className));
+						}
+						else {
+							Assert.assertTrue(counterNames.contains(className));
 						}
 					});
 			});
@@ -416,25 +413,20 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public void testCounterResetWithIncrement() throws Exception {
 		_processCompanyAndResetCounter(
 			(processCompanyId, className) -> {
-				Assert.assertEquals(
-					10, _counterLocalService.increment(className, 10));
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> _counterLocalService.increment(className));
 
-				_counterLocalService.reset(getClass().getName(), 100);
-
-				Assert.assertEquals(
-					111, _counterLocalService.increment(className));
+				_counterLocalService.reset(className, 100);
 
 				DBPartitionUtil.forEachCompanyId(
 					companyId -> {
-						List<String> counterNames =
-							_counterLocalService.getNames();
-
 						if (processCompanyId.equals(companyId)) {
-							Assert.assertTrue(counterNames.contains(className));
+							Assert.assertEquals(
+								101, _counterLocalService.increment(className));
 						}
 						else {
-							Assert.assertFalse(
-								counterNames.contains(className));
+							Assert.assertEquals(
+								2, _counterLocalService.increment(className));
 						}
 					});
 			});

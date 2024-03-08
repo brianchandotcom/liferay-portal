@@ -62,6 +62,10 @@ public class SearchContext implements Serializable {
 		return _assetTagNames;
 	}
 
+	public long[] getAssetVocabularyIds() {
+		return _assetVocabularyIds;
+	}
+
 	public Serializable getAttribute(String name) {
 		if (_attributes == null) {
 			return null;
@@ -260,6 +264,10 @@ public class SearchContext implements Serializable {
 		_assetTagNames = assetTagNames;
 	}
 
+	public void setAssetVocabularyIds(long[] assetVocabularyIds) {
+		_assetVocabularyIds = assetVocabularyIds;
+	}
+
 	public void setAttribute(String name, Serializable value) {
 		if (_attributes == null) {
 			_attributes = new HashMap<>();
@@ -409,6 +417,7 @@ public class SearchContext implements Serializable {
 	private boolean _andSearch;
 	private long[] _assetCategoryIds;
 	private String[] _assetTagNames;
+	private long[] _assetVocabularyIds;
 	private Map<String, Serializable> _attributes;
 	private BooleanClause<Query>[] _booleanClauses;
 	private long[] _categoryIds;

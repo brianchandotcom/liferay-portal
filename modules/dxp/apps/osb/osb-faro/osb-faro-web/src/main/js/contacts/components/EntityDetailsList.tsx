@@ -148,7 +148,7 @@ export default class EntityDetailsList extends React.Component<IEntityDetailsLis
 					<div className='secondary-info'>
 						{sub(
 							Liferay.Language.get(
-								'x-known-attributes-of-x-total'
+								'x-known-individuals-are-available-of-x-total'
 							),
 							[
 								<b key='KNOWN'>{this._knownCount}</b>,

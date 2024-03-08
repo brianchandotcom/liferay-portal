@@ -5,22 +5,29 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
+import com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration;
 import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterReader;
-import com.liferay.portal.search.tuning.synonyms.web.internal.filter.name.SynonymSetFilterNameHolder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.storage.SynonymSetStorageAdapter;
 
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
  */
-@Component(service = FilterToIndexSynchronizer.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration",
+	service = FilterToIndexSynchronizer.class
+)
 public class FilterToIndexSynchronizerImpl
 	implements FilterToIndexSynchronizer {
 
@@ -31,6 +38,16 @@ public class FilterToIndexSynchronizerImpl
 		for (String synonyms : _getSynonymsFromFilters(companyIndexName)) {
 			_addSynonymSetToIndex(synonymSetIndexName, synonyms);
 		}
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		SynonymsConfiguration synonymsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SynonymsConfiguration.class, properties);
+
+		_filterNames = synonymsConfiguration.filterNames();
 	}
 
 	private void _addSynonymSetToIndex(
@@ -48,7 +65,7 @@ public class FilterToIndexSynchronizerImpl
 	private String[] _getSynonymsFromFilters(String companyIndexName) {
 		LinkedHashSet<String> synonyms = new LinkedHashSet<>();
 
-		for (String filterName : _synonymSetFilterNameHolder.getFilterNames()) {
+		for (String filterName : _filterNames) {
 			Collections.addAll(
 				synonyms,
 				_synonymSetFilterReader.getSynonymSets(
@@ -58,8 +75,7 @@ public class FilterToIndexSynchronizerImpl
 		return synonyms.toArray(new String[0]);
 	}
 
-	@Reference
-	private SynonymSetFilterNameHolder _synonymSetFilterNameHolder;
+	private volatile String[] _filterNames;
 
 	@Reference
 	private SynonymSetFilterReader _synonymSetFilterReader;

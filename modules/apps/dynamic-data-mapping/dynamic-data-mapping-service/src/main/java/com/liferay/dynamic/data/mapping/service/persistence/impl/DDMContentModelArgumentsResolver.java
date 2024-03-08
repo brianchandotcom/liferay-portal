@@ -21,7 +21,6 @@ import org.osgi.service.component.annotations.Component;
  * The arguments resolver class for retrieving value from DDMContent.
  *
  * @author Brian Wing Shun Chan
- * @deprecated
  * @generated
  */
 @Component(

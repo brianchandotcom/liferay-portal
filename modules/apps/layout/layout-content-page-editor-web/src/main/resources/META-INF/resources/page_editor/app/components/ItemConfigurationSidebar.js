@@ -26,6 +26,7 @@ export default function ItemConfigurationSidebar() {
 	return (
 		<ReactPortal className="cadmin">
 			<div
+				aria-label={Liferay.Language.get('configuration-panel')}
 				className={classNames(
 					'flex-column page-editor__item-configuration-sidebar',
 					{

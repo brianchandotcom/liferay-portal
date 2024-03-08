@@ -15,11 +15,10 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
-		}
-		else {
-			ObjectAdmin.deleteAllCustomObjectsViaAPI();
 		}
 	}
 

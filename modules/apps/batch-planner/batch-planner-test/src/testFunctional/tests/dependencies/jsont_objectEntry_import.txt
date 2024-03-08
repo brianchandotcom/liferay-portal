@@ -1,6 +1,6 @@
 {"actions":
 {"createBatch": {"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry", "method": "POST"}, "deleteBatch": {"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry", "method": "DELETE"}, "updateBatch": {"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry", "method": "PUT"}},
 "configuration":
-{"callbackURL":null,"className":"com.liferay.object.rest.dto.v1_0.ObjectEntry","companyId":20095,"multiCompany":false,"parameters":{"containsHeaders":"true","createStrategy":"INSERT","importStrategy":"ON_ERROR_FAIL","taskItemDelegateName":"C_Stock","updateStrategy":"UPDATE"},"userId":20123,"version":"v1.0"},
+{"callbackURL":null,"className":"com.liferay.object.rest.dto.v1_0.ObjectEntry","companyId":20095,"multiCompany":false,"parameters":{"containsHeaders":"true","createStrategy":"INSERT","importStrategy":"ON_ERROR_FAIL","updateStrategy":"UPDATE"},"taskItemDelegateName":"C_Stock","userId":20123,"version":"v1.0"},
 "items": [{"name":"Stock Entry"}]
 }

@@ -54,6 +54,9 @@ public class IndexToFilterSynchronizerImpl
 				SynonymsConfiguration.class, properties);
 
 		_filterNames = synonymsConfiguration.filterNames();
+
+		_synonymSetIndexReader = new SynonymSetIndexReader(
+			_searchEngineAdapter);
 	}
 
 	private volatile String[] _filterNames;
@@ -61,7 +64,6 @@ public class IndexToFilterSynchronizerImpl
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
 
-	@Reference
-	private SynonymSetIndexReader _synonymSetIndexReader;
+	private volatile SynonymSetIndexReader _synonymSetIndexReader;
 
 }

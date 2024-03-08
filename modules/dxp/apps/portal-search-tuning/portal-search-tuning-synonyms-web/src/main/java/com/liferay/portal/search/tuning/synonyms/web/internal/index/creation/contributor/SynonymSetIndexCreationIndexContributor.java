@@ -7,6 +7,7 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.index.creation.co
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.engine.SearchEngineInformation;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReader;
@@ -14,6 +15,7 @@ import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.Index
 
 import java.util.Objects;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,6 +46,12 @@ public class SynonymSetIndexCreationIndexContributor
 			synonymSetIndexName, companyIndexName, false);
 	}
 
+	@Activate
+	protected void activate() {
+		_synonymSetIndexReader = new SynonymSetIndexReader(
+			_searchEngineAdapter);
+	}
+
 	protected static final String SYNONYMS_INDEX_NAME_SUFFIX =
 		"search-tuning-synonyms";
 
@@ -51,9 +59,11 @@ public class SynonymSetIndexCreationIndexContributor
 	private IndexToFilterSynchronizer _indexToFilterSynchronizer;
 
 	@Reference
-	private SearchEngineInformation _searchEngineInformation;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
+	private SearchEngineInformation _searchEngineInformation;
+
 	private SynonymSetIndexReader _synonymSetIndexReader;
 
 }

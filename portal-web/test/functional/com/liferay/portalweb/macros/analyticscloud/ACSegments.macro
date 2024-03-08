@@ -543,6 +543,8 @@ definition {
 	macro previewSegmentMembership() {
 		WaitForElementNotPresent(locator1 = "ACSegments#FORM_HEADER_LOADING_ANIMATION");
 
+		ACUtils.waitForSendingRequest();
+
 		Click(locator1 = "Icon#EYE_PREVIEW");
 	}
 

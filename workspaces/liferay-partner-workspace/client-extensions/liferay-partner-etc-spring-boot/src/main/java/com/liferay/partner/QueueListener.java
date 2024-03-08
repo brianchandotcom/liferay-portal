@@ -432,6 +432,8 @@ public class QueueListener {
 			uriBuilder -> uriBuilder.path(
 				"/o/headless-admin-user/v1.0/roles"
 			).queryParam(
+				"filter", "name eq '" + name + "'"
+			).queryParam(
 				"pageSize", "-1"
 			).build());
 
@@ -484,7 +486,7 @@ public class QueueListener {
 			).codecs(
 				clientCodecConfigurer -> clientCodecConfigurer.defaultCodecs(
 				).maxInMemorySize(
-					5 * 1024 * 1024
+					16 * 1024 * 1024
 				)
 			).build()
 		).build();

@@ -68,6 +68,13 @@ public class CommerceOrderItemQuantityFormatterImpl
 		return decimalFormat.format(quantity);
 	}
 
+	@Override
+	public BigDecimal parse(String quantity, Locale locale) throws Exception {
+		DecimalFormat decimalFormat = _getDecimalFormat(locale);
+
+		return (BigDecimal)decimalFormat.parse(quantity);
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -93,6 +100,7 @@ public class CommerceOrderItemQuantityFormatterImpl
 		decimalFormat.setMinimumFractionDigits(
 			_commerceOrderItemDecimalQuantityConfiguration.
 				minimumFractionDigits());
+		decimalFormat.setParseBigDecimal(true);
 		decimalFormat.setRoundingMode(
 			_commerceOrderItemDecimalQuantityConfiguration.roundingMode());
 

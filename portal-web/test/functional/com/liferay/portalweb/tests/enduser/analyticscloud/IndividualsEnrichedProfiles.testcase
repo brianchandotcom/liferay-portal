@@ -115,13 +115,10 @@ definition {
 
 			ACDXPSettings.syncNewContactData();
 
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "anonymousconvertedtoknown@liferay.com",
-				userLoginFullName = "anonymousconvertedtoknown anonymousconvertedtoknown");
-
-			ACUtils.navigateToSitePage(
+			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
+				emailList = "anonymousconvertedtoknown@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

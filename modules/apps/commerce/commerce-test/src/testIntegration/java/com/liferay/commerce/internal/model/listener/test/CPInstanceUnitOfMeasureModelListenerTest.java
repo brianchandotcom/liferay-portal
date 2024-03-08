@@ -163,16 +163,18 @@ public class CPInstanceUnitOfMeasureModelListenerTest {
 			_cpInstance.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
-		commerceOrder2.setOrderStatus(
-			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
-
-		commerceOrder2 = _commerceOrderLocalService.updateCommerceOrder(
-			commerceOrder2);
-
 		CommerceOrderItem commerceOrderItem2 =
 			CommerceTestUtil.addCommerceOrderItem(
 				commerceOrder2.getCommerceOrderId(),
 				_cpInstance.getCPInstanceId(), quantity);
+
+		commerceOrder2 = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder2.getCommerceOrderId());
+
+		commerceOrder2.setOrderStatus(
+			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+
+		_commerceOrderLocalService.updateCommerceOrder(commerceOrder2);
 
 		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
 			CPTestUtil.addCPInstanceUnitOfMeasure(

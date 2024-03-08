@@ -385,6 +385,46 @@ public class CommerceTestUtil {
 				commerceOrder.getGroupId()));
 	}
 
+	public static CommerceOrder addCommerceOrderShippingDetails(
+			CommerceOrder commerceOrder, BigDecimal value)
+		throws Exception {
+
+		int orderStatusIndex = RandomTestUtil.randomInt(
+			0, CommerceShipmentConstants.ALLOWED_ORDER_STATUSES.length - 1);
+
+		int orderStatus =
+			CommerceShipmentConstants.ALLOWED_ORDER_STATUSES[orderStatusIndex];
+
+		commerceOrder.setOrderStatus(orderStatus);
+
+		CommerceAddress billingCommerceAddress = addUserCommerceAddress(
+			commerceOrder.getGroupId(), commerceOrder.getUserId());
+		CommerceAddress shippingCommerceAddress = addUserCommerceAddress(
+			commerceOrder.getGroupId(), commerceOrder.getUserId());
+
+		commerceOrder.setBillingAddressId(
+			billingCommerceAddress.getCommerceAddressId());
+		commerceOrder.setShippingAddressId(
+			shippingCommerceAddress.getCommerceAddressId());
+
+		CommerceShippingMethod commerceShippingMethod =
+			addFixedRateCommerceShippingMethod(
+				commerceOrder.getUserId(), commerceOrder.getGroupId(), value);
+
+		commerceOrder.setCommerceShippingMethodId(
+			commerceShippingMethod.getCommerceShippingMethodId());
+
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			addCommerceShippingFixedOption(commerceShippingMethod, value);
+
+		commerceOrder.setShippingAmount(
+			commerceShippingFixedOption.getAmount());
+		commerceOrder.setShippingOptionName(
+			commerceShippingFixedOption.getNameCurrentValue());
+
+		return CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
+	}
+
 	public static CommercePaymentMethodGroupRel
 			addCommercePaymentMethodGroupRel(long userId, long groupId)
 		throws Exception {
@@ -481,11 +521,18 @@ public class CommerceTestUtil {
 	}
 
 	public static CommerceOrder createCommerceOrderForShipping(
-			long userId, long groupId, long currencyId, BigDecimal value)
+			long userId, long groupId, long commerceCurrencyId,
+			long cpInstanceId, BigDecimal amount, BigDecimal quantity,
+			int commerceOrderItemQuantity)
 		throws Exception {
 
 		CommerceOrder commerceOrder = addB2CCommerceOrder(
-			userId, groupId, currencyId);
+			userId, groupId, commerceCurrencyId);
+
+		for (int i = 0; i < commerceOrderItemQuantity; i++) {
+			addCommerceOrderItem(
+				commerceOrder.getCommerceOrderId(), cpInstanceId, quantity);
+		}
 
 		int orderStatusIndex = RandomTestUtil.randomInt(
 			0, CommerceShipmentConstants.ALLOWED_ORDER_STATUSES.length - 1);
@@ -494,6 +541,9 @@ public class CommerceTestUtil {
 			CommerceShipmentConstants.ALLOWED_ORDER_STATUSES[orderStatusIndex];
 
 		commerceOrder.setOrderStatus(orderStatus);
+
+		commerceOrder = CommerceOrderLocalServiceUtil.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
 
 		CommerceAddress billingCommerceAddress = addUserCommerceAddress(
 			groupId, userId);
@@ -506,14 +556,13 @@ public class CommerceTestUtil {
 			shippingCommerceAddress.getCommerceAddressId());
 
 		CommerceShippingMethod commerceShippingMethod =
-			addFixedRateCommerceShippingMethod(
-				userId, commerceOrder.getGroupId(), value);
+			addFixedRateCommerceShippingMethod(userId, groupId, amount);
 
 		commerceOrder.setCommerceShippingMethodId(
 			commerceShippingMethod.getCommerceShippingMethodId());
 
 		CommerceShippingFixedOption commerceShippingFixedOption =
-			addCommerceShippingFixedOption(commerceShippingMethod, value);
+			addCommerceShippingFixedOption(commerceShippingMethod, amount);
 
 		commerceOrder.setShippingAmount(
 			commerceShippingFixedOption.getAmount());

@@ -68,9 +68,12 @@ public class ShippingAddressResourceTest
 
 		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
-		_commerceOrder = CommerceTestUtil.createCommerceOrderForShipping(
+		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),
-			_commerceCurrency.getCommerceCurrencyId(), value);
+			_commerceCurrency.getCommerceCurrencyId());
+
+		_commerceOrder = CommerceTestUtil.addCommerceOrderShippingDetails(
+			_commerceOrder, value);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testCompany.getCompanyId(), testGroup.getGroupId(),

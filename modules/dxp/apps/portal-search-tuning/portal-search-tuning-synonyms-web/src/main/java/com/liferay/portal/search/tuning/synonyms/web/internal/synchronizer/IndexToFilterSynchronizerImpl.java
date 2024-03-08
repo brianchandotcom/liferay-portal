@@ -7,9 +7,10 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration;
-import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterWriter;
+import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterWriterUtil;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReader;
 
@@ -36,8 +37,8 @@ public class IndexToFilterSynchronizerImpl
 		boolean deletion) {
 
 		for (String filterName : _filterNames) {
-			_synonymSetFilterWriter.updateSynonymSets(
-				companyIndexName, filterName,
+			SynonymSetFilterWriterUtil.updateSynonymSets(
+				_searchEngineAdapter, companyIndexName, filterName,
 				TransformUtil.transformToArray(
 					_synonymSetIndexReader.search(synonymSetIndexName),
 					SynonymSet::getSynonyms, String.class),
@@ -58,7 +59,7 @@ public class IndexToFilterSynchronizerImpl
 	private volatile String[] _filterNames;
 
 	@Reference
-	private SynonymSetFilterWriter _synonymSetFilterWriter;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private SynonymSetIndexReader _synonymSetIndexReader;

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.filter;
 
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -13,25 +13,20 @@ import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.OpenIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adam Brandizzi
  */
-@Component(service = SynonymSetFilterWriter.class)
-public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
+public class SynonymSetFilterWriterUtil {
 
-	@Override
-	public void updateSynonymSets(
-		String companyIndexName, String filterName, String[] synonymSets,
-		boolean deletion) {
+	public static void updateSynonymSets(
+		SearchEngineAdapter searchEngineAdapter, String companyIndexName,
+		String filterName, String[] synonymSets, boolean deletion) {
 
 		if (ArrayUtil.isEmpty(synonymSets) && !deletion) {
 			return;
 		}
 
-		_closeIndex(companyIndexName);
+		_closeIndex(searchEngineAdapter, companyIndexName);
 
 		try {
 			UpdateIndexSettingsIndexRequest updateIndexSettingsIndexRequest =
@@ -43,17 +38,13 @@ public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
 			searchEngineAdapter.execute(updateIndexSettingsIndexRequest);
 		}
 		finally {
-			_openIndex(companyIndexName);
+			_openIndex(searchEngineAdapter, companyIndexName);
 		}
 	}
 
-	@Reference
-	protected JSONFactory jsonFactory;
+	private static String _buildSettings(
+		String filterName, String[] synonymSets) {
 
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
-
-	private String _buildSettings(String filterName, String[] synonymSets) {
 		return JSONUtil.put(
 			"analysis",
 			JSONUtil.put(
@@ -63,20 +54,24 @@ public class SynonymSetFilterWriterImpl implements SynonymSetFilterWriter {
 					JSONUtil.put(
 						"lenient", true
 					).put(
-						"synonyms", jsonFactory.createJSONArray(synonymSets)
+						"synonyms", JSONFactoryUtil.createJSONArray(synonymSets)
 					).put(
 						"type", "synonym_graph"
 					)))
 		).toString();
 	}
 
-	private void _closeIndex(String indexName) {
+	private static void _closeIndex(
+		SearchEngineAdapter searchEngineAdapter, String indexName) {
+
 		CloseIndexRequest closeIndexRequest = new CloseIndexRequest(indexName);
 
 		searchEngineAdapter.execute(closeIndexRequest);
 	}
 
-	private void _openIndex(String indexName) {
+	private static void _openIndex(
+		SearchEngineAdapter searchEngineAdapter, String indexName) {
+
 		OpenIndexRequest openIndexRequest = new OpenIndexRequest(indexName);
 
 		openIndexRequest.setWaitForActiveShards(1);

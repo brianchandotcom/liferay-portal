@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -90,9 +89,10 @@ public class VirtualHostFilter extends BasePortalFilter {
 	}
 
 	protected boolean isDocumentFriendlyURL(
-			HttpServletRequest httpServletRequest, long groupId,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long groupId,
 			String friendlyURL)
-		throws PortalException {
+		throws Exception {
 
 		if (friendlyURL.startsWith(_PATH_DOCUMENTS) &&
 			WebServerServlet.hasFiles(httpServletRequest)) {
@@ -102,7 +102,14 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
-			if (pathArray.length == 2) {
+			if (pathArray.length == 0) {
+				PortalUtil.sendError(
+					new NoSuchLayoutException(), httpServletRequest,
+					httpServletResponse);
+
+				return true;
+			}
+			else if (pathArray.length == 2) {
 				try {
 					LayoutLocalServiceUtil.getFriendlyURLLayout(
 						groupId, false, friendlyURL);
@@ -299,7 +306,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 				Group group = layoutSet.getGroup();
 
 				if (isDocumentFriendlyURL(
-						httpServletRequest, group.getGroupId(), friendlyURL)) {
+						httpServletRequest, httpServletResponse,
+						group.getGroupId(), friendlyURL)) {
 
 					processFilter(
 						VirtualHostFilter.class.getName(), httpServletRequest,

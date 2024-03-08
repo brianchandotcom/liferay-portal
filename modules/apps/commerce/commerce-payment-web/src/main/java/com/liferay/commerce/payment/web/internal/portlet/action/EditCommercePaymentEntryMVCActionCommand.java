@@ -6,12 +6,12 @@
 package com.liferay.commerce.payment.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.payment.exception.NoSuchPaymentEntryException;
 import com.liferay.commerce.payment.gateway.CommercePaymentGateway;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -134,13 +134,22 @@ public class EditCommercePaymentEntryMVCActionCommand
 
 	private CommercePaymentEntry _addOrUpdateCommercePaymentEntry(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commercePaymentEntryId = ParamUtil.getLong(
 			actionRequest, "commercePaymentEntryId");
 
-		BigDecimal amount = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "amount", BigDecimal.ZERO);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String amount = ParamUtil.getString(
+			actionRequest, "amount", BigDecimal.ZERO.toString());
+
+		amount = _commercePriceFormatter.parse(
+			amount, themeDisplay.getLocale());
+
+		BigDecimal formattedAmount = new BigDecimal(amount);
+
 		String reasonKey = ParamUtil.getString(actionRequest, "reasonKey");
 
 		if (commercePaymentEntryId > 0) {
@@ -151,7 +160,7 @@ public class EditCommercePaymentEntryMVCActionCommand
 			return _commercePaymentEntryService.updateCommercePaymentEntry(
 				curCommercePaymentEntry.getExternalReferenceCode(),
 				curCommercePaymentEntry.getCommercePaymentEntryId(),
-				curCommercePaymentEntry.getCommerceChannelId(), amount,
+				curCommercePaymentEntry.getCommerceChannelId(), formattedAmount,
 				curCommercePaymentEntry.getCallbackURL(),
 				curCommercePaymentEntry.getCancelURL(),
 				curCommercePaymentEntry.getCurrencyCode(),
@@ -186,10 +195,10 @@ public class EditCommercePaymentEntryMVCActionCommand
 
 		return _commercePaymentEntryService.addCommercePaymentEntry(
 			_classNameLocalService.getClassNameId(className), classPK,
-			commerceChannelId, amount, StringPool.BLANK, StringPool.BLANK,
-			currencyCode, languageId, StringPool.BLANK, paymentIntegrationKey,
-			paymentIntegrationType, reasonKey, transactionCode, type,
-			serviceContext);
+			commerceChannelId, formattedAmount, StringPool.BLANK,
+			StringPool.BLANK, currencyCode, languageId, StringPool.BLANK,
+			paymentIntegrationKey, paymentIntegrationType, reasonKey,
+			transactionCode, type, serviceContext);
 	}
 
 	@Reference
@@ -200,6 +209,9 @@ public class EditCommercePaymentEntryMVCActionCommand
 
 	@Reference
 	private CommercePaymentGateway _commercePaymentGateway;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private Portal _portal;

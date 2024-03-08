@@ -17,13 +17,19 @@ export default function ToggleConfigurationSidebarButton() {
 			aria-label={Liferay.Language.get('open-configuration-panel')}
 			borderless
 			displayType="secondary"
-			onClick={() =>
+			onClick={() => {
 				dispatch(
 					switchSidebarPanel({
 						itemConfigurationOpen: true,
 					})
-				)
-			}
+				);
+
+				const configurationSidebar = document.querySelector(
+					'.page-editor__item-configuration-sidebar'
+				) as HTMLElement;
+
+				configurationSidebar?.focus();
+			}}
 			size="sm"
 			symbol="cog"
 			title={Liferay.Language.get('open-configuration-panel')}

@@ -166,9 +166,7 @@ definition {
 		task ("Given: Add multiple URL Pattern in System Settings") {
 			StagingNavigator.openToConfigInSystemSettings(portlet = "Export/Import, Staging");
 
-			ExportImport.configureURLPattern(
-				multipleURL = "/files/MyFileToLinkToWebContent",
-				urlPattern = "/dl/*");
+			ExportImport.configureURLPattern(urlPattern = "/dl/*");
 
 			takeScreenshot();
 		}

@@ -84,7 +84,7 @@
 </tr>
 <tr>
 	<td>KEYWORD_NAME_BY_INDEX</td>
-	<td>//tr[${key_index}]//*[contains(@class,'table-title') and (text()='${key_keywordName}')]</td>
+	<td>xpath=(//*[contains(@class,'table-title')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

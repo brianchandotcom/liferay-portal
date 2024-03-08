@@ -303,6 +303,18 @@ describe('SpacingBox', () => {
 	});
 
 	describe('Reset button inside SpacingBox', () => {
+		it('does not show reset button if no value is selected', () => {
+			render(<SpacingBoxTest />);
+
+			const button = screen.getByLabelText('margin-top');
+
+			userEvent.click(button);
+
+			expect(
+				screen.queryByTitle('reset-to-initial-value')
+			).not.toBeInTheDocument();
+		});
+
 		it('reset value when pressing the button', () => {
 			const onChange = jest.fn();
 

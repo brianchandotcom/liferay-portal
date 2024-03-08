@@ -1,30 +1,28 @@
 # Using liferay-learn:message Tags
 
-You can link to resources, such as [Liferay Learn](https://learn.liferay.com) articles, using the `liferay-learn:message` tag. For example, the *Click to Chat* app links to the [Chatwoot](https://learn.liferay.com/dxp/latest/en/site-building/personalizing-site-experience/enabling-automated-live-chat-systems/getting-a-chat-provider-account-id/chatwoot.html) Liferay Learn article.
+You can provide direct links to [Liferay Learn](https://learn.liferay.com) documentation from Liferay's UI with the `liferay-learn:message` tag. For example, the *Click to Chat* app links to the [Chatwoot](https://learn.liferay.com/w/dxp/site-building/personalizing-site-experience/enabling-automated-live-chat-systems/getting-a-chat-provider-account-id/chatwoot) Liferay Learn article.
 
 ![The Click to Chat page links to the Chatwoot article.](./images/01.png)
 
-Users can click on `liferay-learn:message` tag generated links, like the one above, to get help.
+Now users can click your `liferay-learn:message` links to get help!
 
 The links have two parts:
 
-1. A JSON file that specifies the resource you're linking to.
+1. A JSON file specifying the linked documentation.
 
-1. A `liferay-learn:message` tag that references the JSON file and one of its resources.
+1. A `liferay-learn:message` tag pointing to the JSON file and one of its links.
 
-Specifying resources in a JSON file separate from the JSP facilitates adding locale translations and updating link labels and URLs.
+Keeping the resources separate from your JSP code makes it easier to update link labels and URLs and add translations.
 
-**Note:** If a `liferay-learn:message` tag references a missing JSON file or unspecified resource entry, there's no ugly error--the tag simply doesn't render anything.
+**Note:** This is safe to use: the `liferay-learn:message` tag renders nothing if you accidentally reference a missing JSON file or an unspecified resource entry. 
 
 Start with specifying a resource.
 
 ## Adding Resources in a JSON File
 
-Here are the steps:
+1. In this folder (`learn-resources`), create a JSON file named after your module. 
 
-1. In this folder (i.e., `learn-resources`), create a JSON file named after the module you're embedding links in.
-
-1. Create an element for each resource you're linking to. For example, the [`learn-resources/data/marketplace-store-web.json`](https://github.com/liferay/liferay-portal/blob/master/learn-resources/data/marketplace-store-web.json) file has these resource entries:
+1. Create an element for each resource on Liferay Learn. For example, the [`learn-resources/data/marketplace-store-web.json`](https://github.com/liferay/liferay-portal/blob/master/learn-resources/data/marketplace-store-web.json) file has these resource entries:
 
 	```json
 	{
@@ -45,11 +43,13 @@ Here are the steps:
 
 The example resource entries have the keys `download-app` and `purchase-app`. The keys are unique within the JSON file. You can provide each resource in multiple locales. For example, the resources above are in the `en_US` locale. For each locale, assign the `url` to the resource location and the `message` to a label for the resource link.
 
+**Note:** The only valid locales on Liferay Learn are `en-US` and `ja-JP`.
+
 ## Adding `liferay-learn:message` Tags to a JSP
 
-In your module's JSP, link to the resources using `liferay-learn:message` tags. For example, the `marketplace-store-web` module's `view.jsp` file can reference the `learn-resources/data/marketplace-store-web.json` file's `download-app` resource with this code:
+In your module's JSP, link to the resources using `liferay-learn:message` tags. For example, use this code in the `marketplace-store-web` module's `view.jsp` file to reference the `learn-resources/data/marketplace-store-web.json` file's `download-app` resource: 
 
-```javascript
+```jsp
 <%@ taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %>
 
 <liferay-learn:message
@@ -70,9 +70,31 @@ That's how you link to Liferay Learn resources!
 >
 > Note: The cache refreshes every four hours by default, per the [`learn.resources.refresh.time` portal property](../portal-impl/src/portal.properties).
 
+## Previewing Liferay Learn Resource Links
+
+If you want to test your link, you don't have to recompile your module. From this folder (`learn-resources`), you can run a quick dev server that's configured with only one property/environment variable: 
+
+```properties
+learn.resources.mode=dev|off|on
+```
+
+or
+
+```bash
+LIFERAY_LEARN_PERIOD_RESOURCES_PERIOD_MODE=dev|off|on
+```
+
+Use the property with a local bundle and the environment variable with Docker. 
+
+`dev`: Set this value and then run `docker compose up` from the `learn-resources` folder to start a small dev server. You can then access <http://localhost:3062/[json file name]> to access your resources. For example, if you're modifying `server-admin-web.json`, access <http://localhost:3062/server-admin-web.json>. 
+
+`on`: Set this value to read Learn resources from <https://s3.amazonaws.com/learn-resources.liferay.com>. 
+
+`off`: Set this value to disable the Learn tag library. 
+
 ## Adding a Resource Link to a React Component
 
-For example, to use [the `search-experiences-web.json` file's `advanced-configuration` resource key](https://github.com/liferay/liferay-portal/blob/master/learn-resources/data/search-experiences-web.json#L2-L7):
+To use [the `search-experiences-web.json` file's `advanced-configuration` resource key](https://github.com/liferay/liferay-portal/blob/master/learn-resources/data/search-experiences-web.json#L2-L7),
 
 1. In the JSP, use the `LearnMessageUtil.getReactDataJSONObject` Java method to retrieve the resource data to pass into the React component.
 
@@ -104,15 +126,15 @@ For example, to use [the `search-experiences-web.json` file's `advanced-configur
 	</LearnResourcesContext.Provider>
 	```
 
-	The `LearnMessage` component renders a `ClayLink` and additional props will be passed into it.
+	The `LearnMessage` component renders a `ClayLink` and additional props are passed into it.
 
 ## Guidelines
 
 Here are some guidelines for writing the JSON files and tags.
 
-### Name the JSON Files After the Web Modules That Will Use the Resources
+### Name the JSON Files After the Web Modules That Use the Resources
 
-For example, if want the `foo-web` module's JSPs to link to resources, create the resources in a JSON file called `liferay-resources/foo-web.json`.
+For example, if you want the `foo-web` module's JSPs to link to resources, create the resources in a JSON file called `liferay-resources/foo-web.json`.
 
 ### Make Resource Keys Unique Per JSON File
 

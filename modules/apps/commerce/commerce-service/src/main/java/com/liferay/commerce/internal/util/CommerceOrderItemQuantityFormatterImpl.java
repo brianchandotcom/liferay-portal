@@ -59,7 +59,7 @@ public class CommerceOrderItemQuantityFormatterImpl
 		}
 
 		if (cpInstanceUnitOfMeasure != null) {
-			return String.valueOf(
+			return decimalFormat.format(
 				quantity.setScale(
 					cpInstanceUnitOfMeasure.getPrecision(),
 					RoundingMode.HALF_UP));

@@ -304,7 +304,6 @@ public class AssetPublisherExportImportTest
 
 		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
 			group.getGroupId(), assetVocabulary.getVocabularyId());
-
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			group.getGroupId(), assetVocabulary.getVocabularyId());
 
@@ -313,7 +312,6 @@ public class AssetPublisherExportImportTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId(),
 				new long[] {assetCategory1.getCategoryId()}));
-
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			group.getGroupId(), 0,
 			ServiceContextTestUtil.getServiceContext(
@@ -348,7 +346,6 @@ public class AssetPublisherExportImportTest
 
 		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
 			group.getGroupId(), assetVocabulary.getVocabularyId());
-
 		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
 			group.getGroupId(), assetVocabulary.getVocabularyId());
 
@@ -357,7 +354,6 @@ public class AssetPublisherExportImportTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId(),
 				new long[] {assetCategory1.getCategoryId()}));
-
 		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
 			group.getGroupId(), 0,
 			ServiceContextTestUtil.getServiceContext(

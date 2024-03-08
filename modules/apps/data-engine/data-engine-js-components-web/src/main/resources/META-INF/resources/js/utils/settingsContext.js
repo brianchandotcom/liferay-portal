@@ -25,13 +25,26 @@ export function getSettingsContextProperty(
 	return propertyValue;
 }
 
-export function setFieldReferenceErrorMessage(
+export function setFieldErrorMessage(
 	settingsContext,
 	propertyName,
 	displayErrors = true,
 	shouldUpdateValue = false
 ) {
 	const visitor = new PagesVisitor(settingsContext.pages);
+
+	const getErrorMessage = () => {
+		if (!displayErrors) {
+			return '';
+		}
+		if (propertyName === 'fieldReference') {
+			return Liferay.Language.get('this-reference-is-already-being-used');
+		}
+
+		return Liferay.Language.get(
+			'this-name-is-already-in-use-try-another-one'
+		);
+	};
 
 	return {
 		...settingsContext,
@@ -40,9 +53,7 @@ export function setFieldReferenceErrorMessage(
 				field = {
 					...field,
 					displayErrors,
-					errorMessage: Liferay.Language.get(
-						'this-reference-is-already-being-used'
-					),
+					errorMessage: getErrorMessage(),
 					shouldUpdateValue,
 					valid: !displayErrors,
 				};
@@ -175,7 +186,7 @@ export function updateFieldReference(
 
 	focusedField = {
 		...focusedField,
-		settingsContext: setFieldReferenceErrorMessage(
+		settingsContext: setFieldErrorMessage(
 			settingsContext,
 			'fieldReference',
 			invalid,

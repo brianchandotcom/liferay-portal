@@ -5,11 +5,10 @@
 
 package com.liferay.account.internal.upgrade.registry;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.internal.upgrade.v1_1_0.SchemaUpgradeProcess;
-import com.liferay.account.internal.upgrade.v2_3_0.AccountResourceUpgradeProcess;
 import com.liferay.account.internal.upgrade.v2_4_0.AccountGroupResourceUpgradeProcess;
 import com.liferay.account.internal.upgrade.v2_5_0.AccountRoleResourceUpgradeProcess;
-import com.liferay.account.internal.upgrade.v2_7_1.AccountEntryUserRelUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -91,7 +90,11 @@ public class AccountServiceUpgradeStepRegistrator
 				AccountGroupRelUpgradeProcess(_companyLocalService));
 
 		registry.register(
-			"2.2.0", "2.3.0", new AccountResourceUpgradeProcess());
+			"2.2.0", "2.3.0",
+			UpgradeProcessFactory.runSQL(
+				"delete from ResourceAction where name = 'com.liferay.account'",
+				"delete from ResourcePermission where name = " +
+					"'com.liferay.account'"));
 
 		registry.register(
 			"2.3.0", "2.4.0",
@@ -113,7 +116,10 @@ public class AccountServiceUpgradeStepRegistrator
 				"AccountEntry", "defaultCPaymentMethodKey VARCHAR(75)"));
 
 		registry.register(
-			"2.7.0", "2.7.1", new AccountEntryUserRelUpgradeProcess());
+			"2.7.0", "2.7.1",
+			UpgradeProcessFactory.runSQL(
+				"delete from AccountEntryUserRel where accountEntryId = " +
+					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT));
 
 		registry.register(
 			"2.7.1", "2.8.0",

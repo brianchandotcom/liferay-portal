@@ -74,8 +74,11 @@ public class CommerceDiscountServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.4.0", "2.4.1",
-			new com.liferay.commerce.discount.internal.upgrade.v2_4_1.
-				CommerceDiscountUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				"update CommerceDiscount set target = 'product-groups' where " +
+					"target = 'pricing-class'",
+				"update CommerceDiscount set target = 'products' where " +
+					"target = 'product'"));
 
 		registry.register("2.4.1", "2.4.2", new DummyUpgradeStep());
 

@@ -5,6 +5,9 @@
 
 package com.liferay.object.internal.upgrade.registry;
 
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.internal.upgrade.v1_2_0.util.ObjectViewColumnTable;
 import com.liferay.object.internal.upgrade.v1_2_0.util.ObjectViewTable;
 import com.liferay.object.internal.upgrade.v2_1_0.ObjectFieldBusinessTypeUpgradeProcess;
@@ -23,6 +26,8 @@ import com.liferay.object.internal.upgrade.v3_9_0.ObjectLayoutBoxUpgradeProcess;
 import com.liferay.object.internal.upgrade.v6_0_0.util.ObjectValidationRuleSettingTable;
 import com.liferay.object.internal.upgrade.v8_8_2.SchemaUpgradeProcess;
 import com.liferay.object.internal.upgrade.v9_0_1.ObjectFolderUpgradeProcess;
+import com.liferay.object.model.impl.ObjectFieldSettingModelImpl;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -215,8 +220,10 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.23.0", "3.23.1",
-			new com.liferay.object.internal.upgrade.v3_23_1.
-				ObjectFieldUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				"update ObjectField set indexed = [$TRUE$], indexedAsKeyWord " +
+					"= [$TRUE$] where indexed = [$FALSE$] and name = 'id' " +
+						"and system_ = [$TRUE$]"));
 
 		registry.register(
 			"3.23.1", "3.24.0", new ObjectFieldSettingUpgradeProcess());
@@ -240,8 +247,13 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.27.0", "3.27.1",
-			new com.liferay.object.internal.upgrade.v3_27_1.
-				ObjectFieldSettingUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update ", ObjectFieldSettingModelImpl.TABLE_NAME,
+					" set name = '",
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+					"' where name like 'objectRelationshipERCFieldName'")));
 
 		registry.register(
 			"3.27.1", "3.28.0",
@@ -345,8 +357,10 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"8.1.0", "8.2.0",
-			new com.liferay.object.internal.upgrade.v8_2_0.
-				ObjectValidationRuleSettingsUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				"update ObjectValidationRuleSetting set name = '" +
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_ID + "'"));
 
 		registry.register(
 			"8.2.0", "8.3.0",
@@ -399,8 +413,12 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"8.8.0", "8.8.1",
-			new com.liferay.object.internal.upgrade.v8_8_1.
-				ObjectFieldSettingUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update ObjectFieldSetting set name = '",
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_DEFINITION_1_SHORT_NAME,
+					"' where name = 'ObjectDefinition1ShortName'")));
 
 		registry.register("8.8.1", "8.8.2", new SchemaUpgradeProcess());
 
@@ -431,8 +449,12 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"9.1.0", "9.1.1",
-			new com.liferay.object.internal.upgrade.v9_1_1.
-				ObjectFieldUpgradeProcess());
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update ObjectField set indexed = [$FALSE$] where ",
+					"businessType in ('",
+					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION, "', '",
+					ObjectFieldConstants.BUSINESS_TYPE_FORMULA, "')")));
 	}
 
 	@Reference

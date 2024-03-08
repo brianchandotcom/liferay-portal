@@ -14,6 +14,7 @@ import {HeadlessAdminContentApiHelper} from './HeadlessAdminContentApiHelper';
 import {HeadlessAdminUserApiHelper} from './HeadlessAdminUserApiHelper';
 import {HeadlessCommerceAdminCatalogApiHelper} from './HeadlessCommerceAdminCatalogApiHelper';
 import {HeadlessCommerceAdminChannelApiHelper} from './HeadlessCommerceAdminChannelApiHelper';
+import {HeadlessCommerceAdminPaymentApiHelper} from './HeadlessCommerceAdminPaymentApiHelper';
 import {HeadlessCommerceDeliveryCartApiHelper} from './HeadlessCommerceDeliveryCartApiHelper';
 import {HeadlessCommerceDeliveryCatalogApiHelper} from './HeadlessCommerceDeliveryCatalogApiHelper';
 import {HeadlessDeliveryApiHelper} from './HeadlessDeliveryApiHelper';
@@ -35,6 +36,7 @@ export class ApiHelpers {
 	readonly headlessAdminUser: HeadlessAdminUserApiHelper;
 	readonly headlessCommerceAdminCatalog: HeadlessCommerceAdminCatalogApiHelper;
 	readonly headlessCommerceAdminChannel: HeadlessCommerceAdminChannelApiHelper;
+	readonly headlessCommerceAdminPaymentApiHelper: HeadlessCommerceAdminPaymentApiHelper;
 	readonly headlessCommerceDeliveryCatalog: HeadlessCommerceDeliveryCatalogApiHelper;
 	readonly headlessCommerceDeliveryCart: HeadlessCommerceDeliveryCartApiHelper;
 	readonly headlessDelivery: HeadlessDeliveryApiHelper;
@@ -63,6 +65,8 @@ export class ApiHelpers {
 			new HeadlessCommerceAdminCatalogApiHelper(this);
 		this.headlessCommerceAdminChannel =
 			new HeadlessCommerceAdminChannelApiHelper(this);
+		this.headlessCommerceAdminPaymentApiHelper =
+			new HeadlessCommerceAdminPaymentApiHelper(this);
 		this.headlessCommerceDeliveryCatalog =
 			new HeadlessCommerceDeliveryCatalogApiHelper(this);
 		this.headlessCommerceDeliveryCart =

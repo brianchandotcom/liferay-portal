@@ -33,6 +33,12 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 		this.basePath = 'headless-commerce-delivery-cart/v1.0/';
 	}
 
+	async deleteCart(cartId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}`
+		);
+	}
+
 	async postCart(cart: TCart, channelId: number): Promise<TCart> {
 		return await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}/carts?nestedFields=cartItems`,

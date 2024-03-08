@@ -25,6 +25,7 @@ export class ApplicationsMenuPage {
 	private readonly oAuth2Administration: Locator;
 	private readonly objectsMenuItem: Locator;
 	readonly page: Page;
+	private readonly paymentsMenuItem: Locator;
 	private readonly processBuilderItem: Locator;
 	private readonly productsMenuItem: Locator;
 	private readonly usersAndOrganizationsItem: Locator;
@@ -80,6 +81,10 @@ export class ApplicationsMenuPage {
 			name: 'Objects',
 		});
 		this.page = page;
+		this.paymentsMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Payments',
+		});
 		this.processBuilderItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Process Builder',
@@ -172,6 +177,11 @@ export class ApplicationsMenuPage {
 	async goToCommerceOrders() {
 		await this.goToCommercePanel();
 		await this.commerceOrdersMenuItem.click();
+	}
+
+	async goToPayments() {
+		await this.goToCommercePanel();
+		await this.paymentsMenuItem.click();
 	}
 
 	async goToProducts() {

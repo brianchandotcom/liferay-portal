@@ -3,20 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import MDFClaimDTO from '../../../common/interfaces/dto/mdfClaimDTO';
-import MDFRequestActivityDTO from '../../../common/interfaces/dto/mdfRequestActivityDTO';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import {Liferay} from '../../../common/services/liferay';
+import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
+import liferayFetcher from '../../../common/services/liferay/common/utils/fetcher';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import patchObjectEntry from '../../../common/services/liferay/object/patchObjectEntry/patchObjectEntry';
 import {Status} from '../../../common/utils/constants/status';
 
 const patchRequestStatus = async (
 	mdfRequestStatus: LiferayPicklist,
-	mdfRequestId: string,
-	mdfReqToActs?: MDFRequestActivityDTO[],
-	mdfReqToMDFClms?: MDFClaimDTO[]
+	mdfRequestId: string
 ) => {
 	try {
 		const mdfRequestDTO = await patchObjectEntry<MDFRequestDTO>(
@@ -27,12 +25,17 @@ const patchRequestStatus = async (
 			}
 		);
 
-		if (mdfRequestDTO) {
+		const mdfRequest = (await liferayFetcher(
+			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${mdfRequestId}?nestedFields=mdfReqToActs,mdfReqToMDFClms`,
+			Liferay.authToken
+		)) as MDFRequestDTO;
+
+		if (mdfRequestDTO && mdfRequest) {
 			if (
 				mdfRequestDTO.mdfRequestStatus.key === Status.APPROVED.key &&
-				mdfReqToActs?.length
+				mdfRequest.mdfReqToActs?.length
 			) {
-				for (const activity of mdfReqToActs) {
+				for (const activity of mdfRequest.mdfReqToActs) {
 					if (
 						activity.id &&
 						(activity.activityStatus?.key ===
@@ -50,8 +53,8 @@ const patchRequestStatus = async (
 					}
 				}
 
-				if (mdfReqToMDFClms?.length) {
-					for (const claim of mdfReqToMDFClms) {
+				if (mdfRequest.mdfReqToMDFClms?.length) {
+					for (const claim of mdfRequest.mdfReqToMDFClms) {
 						if (
 							claim.id &&
 							claim.mdfClaimStatus?.key === Status.CANCELED.key
@@ -72,9 +75,9 @@ const patchRequestStatus = async (
 			}
 			else if (
 				mdfRequestDTO.mdfRequestStatus.key === Status.CANCELED.key &&
-				mdfReqToActs?.length
+				mdfRequest.mdfReqToActs?.length
 			) {
-				for (const activity of mdfReqToActs) {
+				for (const activity of mdfRequest.mdfReqToActs) {
 					if (
 						activity.id &&
 						activity.activityStatus?.key === Status.APPROVED.key
@@ -89,8 +92,8 @@ const patchRequestStatus = async (
 					}
 				}
 
-				if (mdfReqToMDFClms?.length) {
-					for (const claim of mdfReqToMDFClms) {
+				if (mdfRequest.mdfReqToMDFClms?.length) {
+					for (const claim of mdfRequest.mdfReqToMDFClms) {
 						if (
 							claim.id &&
 							(claim.mdfClaimStatus?.key ===

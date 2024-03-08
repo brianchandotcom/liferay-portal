@@ -63,9 +63,7 @@ const MDFRequestManagerStatus = () => {
 
 		const newRequestStatus = await patchRequestStatus(
 			selectedStatus,
-			mdfRequestId,
-			mdfRequest?.mdfReqToActs,
-			mdfRequest?.mdfReqToMDFClms
+			mdfRequestId
 		);
 
 		if (newRequestStatus) {

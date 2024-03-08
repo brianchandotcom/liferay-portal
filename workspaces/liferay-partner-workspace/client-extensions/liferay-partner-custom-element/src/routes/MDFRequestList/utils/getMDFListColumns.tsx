@@ -16,11 +16,9 @@ import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import {MDFRequestListItem} from '../../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../../common/interfaces/tableColumn';
 import {Liferay} from '../../../common/services/liferay';
-import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
 import deleteObjectEntry from '../../../common/services/liferay/object/deleteObjectEntry/deleteObjectEntry';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
-import useGet from '../../../common/services/liferay/object/useGet';
 import {Status} from '../../../common/utils/constants/status';
 import patchRequestStatus from '../../MDFRequestManagerStatus/util/patchRequestStatus';
 
@@ -90,14 +88,6 @@ export default function getMDFListColumns(
 					currentValue === PermissionActionType.CANCEL &&
 					row[MDFColumnKey.STATUS] === Status.APPROVED.name
 				) {
-					const {data: mdfRequest} = useGet<MDFRequestDTO>(
-						row[MDFColumnKey.ID] &&
-							`/o/${LiferayAPIs.OBJECT}/${
-								ResourceName.MDF_REQUEST_DXP
-							}/${
-								row[MDFColumnKey.ID]
-							}?nestedFields=mdfReqToActs,mdfReqToMDFClms`
-					);
 					previousValue.push({
 						icon: 'block',
 						key: Status.CANCELED.key,
@@ -110,9 +100,7 @@ export default function getMDFListColumns(
 									if (isConfirmed) {
 										const newRequestStatus = await patchRequestStatus(
 											Status.CANCELED,
-											String(row[MDFColumnKey.ID]),
-											mdfRequest?.mdfReqToActs,
-											mdfRequest?.mdfReqToMDFClms
+											String(row[MDFColumnKey.ID])
 										);
 
 										if (newRequestStatus) {

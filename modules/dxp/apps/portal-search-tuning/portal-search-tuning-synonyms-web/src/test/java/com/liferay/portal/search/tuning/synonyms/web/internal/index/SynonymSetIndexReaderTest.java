@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.IndexResponse;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
@@ -26,7 +25,7 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
+public class SynonymSetIndexReaderTest extends BaseSynonymsWebTestCase {
 
 	@ClassRule
 	@Rule
@@ -35,10 +34,7 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_synonymSetIndexReaderImpl = new SynonymSetIndexReaderImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexReaderImpl, "_searchEngineAdapter",
+		_synonymSetIndexReaderImpl = new SynonymSetIndexReader(
 			searchEngineAdapter);
 	}
 
@@ -130,6 +126,6 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 		return getDocumentResponse;
 	}
 
-	private SynonymSetIndexReaderImpl _synonymSetIndexReaderImpl;
+	private SynonymSetIndexReader _synonymSetIndexReaderImpl;
 
 }

@@ -9,7 +9,7 @@
 
 <div>
 	<react:component
-		module="js/modals/ImportDataDefinitionModal"
+		module="{ImportDataDefinitionModal} from journal-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"importDataDefinitionURL",

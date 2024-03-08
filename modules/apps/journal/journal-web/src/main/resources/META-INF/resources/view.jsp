@@ -104,7 +104,7 @@ else {
 					"alertMessage", alertMessage
 				).build()
 			%>'
-			module="js/SuccessMessageWithLink"
+			module="{SuccessMessageWithLink} from journal-web"
 		/>
 	</c:if>
 </c:if>
@@ -122,7 +122,7 @@ else {
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= journalManagementToolbarDisplayContext %>"
-	propsTransformer="js/ManagementToolbarPropsTransformer"
+	propsTransformer="{ManagementToolbarPropsTransformer} from journal-web"
 />
 
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

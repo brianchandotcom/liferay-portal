@@ -65,7 +65,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 									</div>
 
 									<react:component
-										module="js/translation_manager/TranslationManager"
+										module="{TranslationManager} from journal-web"
 										props='<%=
 											HashMapBuilder.<String, Object>put(
 												"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
@@ -160,7 +160,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 
 								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-15596") %>'>
 									<react:component
-										module="js/SaveButtons"
+										module="{SaveButtons} from journal-web"
 										props="<%= journalEditArticleDisplayContext.getSaveButtonsContext() %>"
 									/>
 								</c:if>
@@ -200,7 +200,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 					displayType="secondary"
 					icon="times"
 					monospaced="<%= true %>"
-					propsTransformer="js/CloseConfigurationPanelPropsTransformer"
+					propsTransformer="{CloseConfigurationPanelPropsTransformer} from journal-web"
 					small="<%= true %>"
 					title="close-configuration-panel"
 					type="button"
@@ -330,7 +330,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "JournalPortletComponent" %>'
 	context="<%= journalEditArticleDisplayContext.getComponentContext() %>"
-	module="js/JournalPortlet.es"
+	module="{JournalPortlet} from journal-web"
 	servletContext="<%= application %>"
 />
 

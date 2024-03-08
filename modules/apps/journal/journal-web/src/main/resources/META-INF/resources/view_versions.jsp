@@ -73,7 +73,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						%>'
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= journalDisplayContext.getArticleVersionActionDropdownItems(articleVersion) %>"
-						propsTransformer="js/ElementsDefaultPropsTransformer"
+						propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>
@@ -139,7 +139,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						%>'
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= journalDisplayContext.getArticleVersionActionDropdownItems(articleVersion) %>"
-						propsTransformer="js/ElementsDefaultPropsTransformer"
+						propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:when>

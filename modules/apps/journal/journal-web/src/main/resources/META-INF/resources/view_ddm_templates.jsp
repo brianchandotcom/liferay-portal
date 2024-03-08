@@ -26,7 +26,7 @@ if (ddmStructure != null) {
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= journalDDMTemplateManagementToolbarDisplayContext %>"
-	propsTransformer="js/DDMTemplatesManagementToolbarPropsTransformer"
+	propsTransformer="{DDMTemplatesManagementToolbarPropsTransformer} from journal-web"
 />
 
 <portlet:actionURL name="/journal/delete_ddm_template" var="deleteDDMTemplateURL">
@@ -79,7 +79,7 @@ if (ddmStructure != null) {
 				<c:when test='<%= Objects.equals(journalDDMTemplateDisplayContext.getDisplayStyle(), "icon") %>'>
 					<liferay-ui:search-container-column-text>
 						<clay:vertical-card
-							propsTransformer="js/DDMTemplateElementsDefaultPropsTransformer"
+							propsTransformer="{DDMTemplateElementsDefaultPropsTransformer} from journal-web"
 							verticalCard="<%= new JournalDDMTemplateVerticalCard(ddmTemplate, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 						/>
 					</liferay-ui:search-container-column-text>
@@ -146,7 +146,7 @@ if (ddmStructure != null) {
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= journalDDMTemplateDisplayContext.getDDMTemplateActionDropdownItems(ddmTemplate) %>"
-							propsTransformer="js/DDMTemplateElementsDefaultPropsTransformer"
+							propsTransformer="{DDMTemplateElementsDefaultPropsTransformer} from journal-web"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>

@@ -23,6 +23,6 @@
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "DataEngineLayoutRendererLanguageProxy" %>'
 	context="<%= journalEditArticleDisplayContext.getDataEngineLayoutRendererComponentContext() %>"
-	module="js/DataEngineLayoutRendererLanguageProxy.es"
+	module="{DataEngineLayoutRendererLanguageProxy} from journal-web"
 	servletContext="<%= application %>"
 />

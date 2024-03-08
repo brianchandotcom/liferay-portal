@@ -30,7 +30,7 @@ renderResponse.setTitle(article.getTitle(locale));
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= journalHistoryManagementToolbarDisplayContext %>"
-	propsTransformer="js/ArticleHistoryManagementToolbarPropsTransformer"
+	propsTransformer="{ArticleHistoryManagementToolbarPropsTransformer} from journal-web"
 />
 
 <aui:form action="<%= journalHistoryDisplayContext.getPortletURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
@@ -99,7 +99,7 @@ renderResponse.setTitle(article.getTitle(locale));
 							%>'
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
-							propsTransformer="js/ElementsDefaultPropsTransformer"
+							propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -163,7 +163,7 @@ renderResponse.setTitle(article.getTitle(locale));
 							%>'
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= journalDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
-							propsTransformer="js/ElementsDefaultPropsTransformer"
+							propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

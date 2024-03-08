@@ -52,7 +52,7 @@
 
 				<c:if test="<%= journalDisplayContext.isSearch() %>">
 					<react:component
-						module="js/SearchOptions"
+						module="{SearchOptions} from journal-web"
 						props="<%= journalDisplayContext.getSearchProps() %>"
 					/>
 				</c:if>

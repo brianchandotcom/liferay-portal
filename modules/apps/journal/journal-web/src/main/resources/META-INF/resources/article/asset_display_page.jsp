@@ -41,6 +41,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEdit
 <div>
 	<react:component
 		data="<%= journalEditArticleDisplayContext.getSelectAssetDisplayPageContext() %>"
-		module="js/article/SelectAssetDisplayPage"
+		module="{SelectAssetDisplayPage} from journal-web"
 	/>
 </div>

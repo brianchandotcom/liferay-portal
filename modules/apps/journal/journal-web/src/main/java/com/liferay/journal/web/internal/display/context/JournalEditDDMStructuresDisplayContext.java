@@ -10,20 +10,25 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,8 +54,13 @@ public class JournalEditDDMStructuresDisplayContext {
 				JournalWebConfiguration.class.getName());
 	}
 
-	public List<Map<String, Object>> getAdditionalPanels(
-		String npmResolvedPackageName) {
+	public List<Map<String, Object>> getAdditionalPanels() {
+		ESImport esImport = ESImportUtil.getESImport(
+			_absolutePortalURLBuilderFactorySnapshot.get(
+			).getAbsolutePortalURLBuilder(
+				_httpServletRequest
+			),
+			"{BasicInfoPanel} from journal-web");
 
 		return ListUtil.fromArray(
 			HashMapBuilder.<String, Object>put(
@@ -59,7 +69,8 @@ public class JournalEditDDMStructuresDisplayContext {
 				"label", LanguageUtil.get(_httpServletRequest, "properties")
 			).put(
 				"pluginEntryPoint",
-				npmResolvedPackageName + "/js/data_engine/panels/index.es"
+				StringBundler.concat(
+					"{", esImport.getSymbol(), "} from ", esImport.getModule())
 			).put(
 				"sidebarPanelId", "properties"
 			).put(
@@ -215,6 +226,11 @@ public class JournalEditDDMStructuresDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalEditDDMStructuresDisplayContext.class);
+
+	private static final Snapshot<AbsolutePortalURLBuilderFactory>
+		_absolutePortalURLBuilderFactorySnapshot = new Snapshot<>(
+			JournalEditDDMStructuresDisplayContext.class,
+			AbsolutePortalURLBuilderFactory.class);
 
 	private DDMStructure _ddmStructure;
 	private Long _ddmStructureId;

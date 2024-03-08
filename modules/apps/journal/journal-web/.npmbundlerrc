@@ -1,9 +1,0 @@
-{
-	"config": {
-		"imports": {
-			"@liferay/template-web": {
-				"/": ">=1.0.0"
-			}
-		}
-	}
-}

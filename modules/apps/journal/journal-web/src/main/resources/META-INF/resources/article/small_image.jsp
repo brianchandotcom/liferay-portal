@@ -34,7 +34,7 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 
 <div>
 	<react:component
-		module="js/SmallImage"
+		module="{SmallImage} from journal-web"
 		props="<%= journalEditArticleDisplayContext.getProps() %>"
 	/>
 </div>

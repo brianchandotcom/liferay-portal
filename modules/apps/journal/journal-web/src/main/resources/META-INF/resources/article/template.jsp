@@ -66,7 +66,7 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 		<liferay-frontend:component
 			componentId='<%= liferayPortletResponse.getNamespace() + "selectStructureField" %>'
 			context="<%= journalEditArticleDisplayContext.getTemplateComponentContext() %>"
-			module="js/article/Template"
+			module="{Template} from journal-web"
 		/>
 	</c:when>
 	<c:otherwise>

@@ -6,7 +6,7 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.filter;
 
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -15,17 +15,15 @@ import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adam Brandizzi
  */
-@Component(service = SynonymSetFilterReader.class)
-public class SynonymSetFilterReaderImpl implements SynonymSetFilterReader {
+public class SynonymSetFilterReaderUtil {
 
-	@Override
-	public String[] getSynonymSets(String companyIndexName, String filterName) {
+	public static String[] getSynonymSets(
+		SearchEngineAdapter searchEngineAdapter, String companyIndexName,
+		String filterName) {
+
 		GetIndexIndexRequest getIndexIndexRequest = new GetIndexIndexRequest(
 			companyIndexName);
 
@@ -39,7 +37,7 @@ public class SynonymSetFilterReaderImpl implements SynonymSetFilterReader {
 		JSONObject jsonObject = null;
 
 		try {
-			jsonObject = jsonFactory.createJSONObject(
+			jsonObject = JSONFactoryUtil.createJSONObject(
 				settings.get(companyIndexName));
 		}
 		catch (JSONException jsonException) {
@@ -50,11 +48,5 @@ public class SynonymSetFilterReaderImpl implements SynonymSetFilterReader {
 			jsonObject.getJSONArray(
 				"index.analysis.filter." + filterName + ".synonyms"));
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
-
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
 
 }

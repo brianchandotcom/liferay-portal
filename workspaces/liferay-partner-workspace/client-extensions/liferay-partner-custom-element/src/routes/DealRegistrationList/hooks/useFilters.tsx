@@ -19,8 +19,8 @@ export default function useFilters(submittedDealsFilter?: boolean) {
 	const [filtersTerm, setFilterTerm] = useState('');
 
 	const dealsInitialFilter = submittedDealsFilter
-		? Filters.DEAL_LISTING.submittedWIP
-		: Filters.DEAL_LISTING.rejectedWIP;
+		? Filters.DEAL_LISTING.submitted
+		: Filters.DEAL_LISTING.rejected;
 
 	const onFilter = (newFilters: Partial<typeof INITIAL_FILTER>) =>
 		setFilters((previousFilters) => ({...previousFilters, ...newFilters}));

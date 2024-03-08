@@ -9,7 +9,6 @@ import {SWRConfig} from 'swr';
 
 import {WebDAV} from './common/context/WebDAV';
 import {AppRouteType} from './common/enums/appRouteType';
-import {OpportunityType} from './common/enums/opportunityType';
 import getIconSpriteMap from './common/utils/getIconSpriteMap';
 import DealRegistrationForm from './routes/DealRegistrationForm';
 import DealRegistrationList from './routes/DealRegistrationList';
@@ -44,86 +43,16 @@ const appRoutes: AppRouteComponent = {
 	[AppRouteType.MDF_CLAIM_MANAGER_STATUS]: <MDFClaimManagerStatus />,
 	[AppRouteType.DEAL_REGISTRATION_FORM]: <DealRegistrationForm />,
 	[AppRouteType.DEAL_REGISTRATION_LIST]: (
-		<DealRegistrationList
-			getFilteredItems={(items, submittedDealsFilter) => {
-				const currentYear = new Date().getFullYear();
-
-				if (submittedDealsFilter === false) {
-					return items.filter((item) => {
-						const createDateYear = new Date(
-							item['DATE-CREATED']
-						).getFullYear();
-
-						return (
-							item.STATUS === 'Rejected' &&
-							createDateYear === currentYear
-						);
-					});
-				}
-
-				return items.filter((item) => {
-					const createDateYear = new Date(
-						item['DATE-CREATED']
-					).getFullYear();
-
-					return (
-						item.STATUS !== 'Rejected' &&
-						!item.ISCONVERTED &&
-						createDateYear >= 2023
-					);
-				});
-			}}
-			sort="dateCreated:desc"
-		/>
+		<DealRegistrationList sort="dateCreated:desc" />
 	),
 	[AppRouteType.PARTNER_OPPORTUNITIES_LIST]: (
 		<PartnerOpportunitiesList
-			getFilteredItems={(items, openOpportunitiesFilter) => {
-				if (openOpportunitiesFilter === false) {
-					return items.filter(
-						(item) =>
-							(item['TYPE'] === OpportunityType.NEW_BUSINESS ||
-								item['TYPE'] ===
-									OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
-								(item['TYPE'] ===
-									OpportunityType.EXISTING_BUSINESS &&
-									!item['HAS-RENEWAL'])) &&
-							item['ACTIVE']
-					);
-				}
-				if (openOpportunitiesFilter === true) {
-					return items.filter(
-						(item) =>
-							(item['TYPE'] === OpportunityType.NEW_BUSINESS ||
-								item['TYPE'] ===
-									OpportunityType.NEW_PROJECT_EXISTING_BUSINESS ||
-								(item['TYPE'] ===
-									OpportunityType.EXISTING_BUSINESS &&
-									!item['HAS-RENEWAL'] &&
-									Number(item['GROWTH-ARR']) > 0)) &&
-							item['ACTIVE']
-					);
-				}
-
-				return items;
-			}}
 			name="Partner Opportunities"
 			sort="closeDate:desc"
 		/>
 	),
 	[AppRouteType.RENEWALS_OPPORTUNITIES_LIST]: (
 		<PartnerOpportunitiesList
-			getFilteredItems={(items, openOpportunitiesFilter) => {
-				if (openOpportunitiesFilter === false) {
-					return items.filter(
-						(item) => item['HAS-RENEWAL'] && item['ACTIVE']
-					);
-				}
-
-				return items.filter(
-					(item) => item['HAS-RENEWAL'] && item['ACTIVE']
-				);
-			}}
 			isRenewalListing={true}
 			name="Renewal Opportunities"
 			sort="closeDate:asc"

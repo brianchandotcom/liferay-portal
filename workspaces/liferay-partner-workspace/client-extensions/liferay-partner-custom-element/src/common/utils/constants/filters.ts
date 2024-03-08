@@ -8,11 +8,12 @@ import {getCamelCase} from '../getCamelCase';
 const todayDate = new Date();
 const currentYear = todayDate.getFullYear();
 
-const previousFiscalYearStart = `${currentYear - 1}-01-01`;
-const currentFiscalYearStart = `${currentYear}-01-01`;
 const currentFiscalYearEnd = `${currentYear}-12-31`;
+const currentFiscalYearStart = `${currentYear}-01-01`;
+const previousFiscalYearStart = `${currentYear - 1}-01-01`;
 
 const fiscalYearFilterCloseDate = `closeDate ge ${currentFiscalYearStart} and closeDate le ${currentFiscalYearEnd}`;
+const fiscalYearFilterCreatedDate = `createdDate ge ${currentFiscalYearStart}T00:00:00Z and createdDate le ${currentFiscalYearEnd}T23:59:59Z`;
 const fiscalYearFilterSubmitDate = `submitDate ge ${currentFiscalYearStart}T00:00:00Z and submitDate le ${currentFiscalYearEnd}T23:59:59Z`;
 const previousToCurrentYearFilterSubmitDate = `submitDate ge ${previousFiscalYearStart}T00:00:00Z and submitDate le ${currentFiscalYearEnd}T23:59:59Z`;
 
@@ -66,9 +67,6 @@ const mdfClaimCompletedFilter = mdfClaimOpenListStatus
 	})
 	.join(' and ');
 
-const opportunityStageClosed = `stage ne 'Marketing Qualified' and stage ne 'Sales Accepted Opportunity' and stage ne 'Confirmation' and stage ne 'Justification / Solution Review' and stage ne 'Justification / Due Diligence' and stage ne 'Solution Validation' and stage ne 'GTM / Partnership Plan Validation' and stage ne 'Legal Review / Purchasing' and stage ne 'Legal Review' and stage ne 'Committed' and stage ne 'Pending' and stage ne 'Rolled into Opportunity'`;
-const opportunityStageOpen = `stage ne 'Closed Won' and stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity'`;
-
 todayDate.setDate(todayDate.getDate() + 30);
 const thirtyDaysFromToday = todayDate.toISOString().split('T')[0];
 
@@ -77,12 +75,11 @@ export const Filters = {
 		deals: `leadType eq 'Partner Qualified Lead (PQL)'`,
 	},
 	DEAL_LISTING: {
-		rejectedWIP: `leadType eq 'Partner Qualified Lead (PQL)' and leadStatus eq 'CAM rejected'`,
-
-		submittedWIP: `leadType eq 'Partner Qualified Lead (PQL)' and leadStatus ne 'Qualified' and leadStatus ne 'CAM rejected'`,
+		rejected: `${fiscalYearFilterCreatedDate} and leadType eq 'Partner Qualified Lead (PQL)' and leadStatus eq 'CAM rejected'`,
+		submitted: `createdDate ge 2023-01-01T00:00:00Z and leadType eq 'Partner Qualified Lead (PQL)' and isConverted eq false and leadStatus ne 'CAM rejected'`,
 	},
 	LEVEL_DASHBOARD: {
-		opportunities: `stage eq 'Closed Won' and ${fiscalYearFilterCloseDate}`,
+		opportunities: `${fiscalYearFilterCloseDate} and stage eq 'Closed Won'`,
 	},
 	MDF_CLAIM_LISTING: {
 		channelsCompleted: `${mdfClaimCompletedFilter} and ${previousToCurrentYearFilterSubmitDate}`,
@@ -105,17 +102,17 @@ export const Filters = {
 		partnersOpen: `${mdfRequestOpenFilter}`,
 	},
 	OPPORTUNITY_LISTING: {
-		closedWIP: `${opportunityStageClosed} and ${fiscalYearFilterCloseDate}`,
-		openWIP: `${opportunityStageOpen}`,
+		closed: `${fiscalYearFilterCloseDate} and (stage eq 'Closed Lost' or stage eq 'Closed Won' or stage eq 'Disqualified' or stage eq 'Rejected') and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
+		open: `stage ne 'Closed Lost' and stage ne 'Closed Won' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
 	},
 	RENEWAL_DASHBOARD: {
-		renewals: `${opportunityStageOpen} and type eq 'Existing Business' and closeDate le ${thirtyDaysFromToday}`,
+		renewals: `stage ne 'Closed Won' and stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and type eq 'Existing Business' and closeDate le ${thirtyDaysFromToday}`,
 	},
 	RENEWAL_LISTING: {
-		closedWIP: `${opportunityStageClosed} and type eq 'Existing Business' and ${fiscalYearFilterCloseDate}`,
-		openWIP: `${opportunityStageOpen} and type eq 'Existing Business'`,
+		closed: `${fiscalYearFilterCloseDate} and (stage eq 'Closed Lost' or stage eq 'Closed Won') and type eq 'Existing Business' and hasRenewal eq true`,
+		open: `stage ne 'Closed Lost' and stage ne 'Closed Won' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and type eq 'Existing Business' and hasRenewal eq true`,
 	},
 	REVENUE_DASHBOARD: {
-		opportunities: `stage eq 'Closed Won' and ${fiscalYearFilterCloseDate}`,
+		opportunities: `${fiscalYearFilterCloseDate} and (stage eq 'Closed Won') and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
 	},
 };

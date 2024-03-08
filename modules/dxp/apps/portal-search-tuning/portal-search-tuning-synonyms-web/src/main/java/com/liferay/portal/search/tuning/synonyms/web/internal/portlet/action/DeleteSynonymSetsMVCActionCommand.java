@@ -6,6 +6,7 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.portlet.action;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -15,6 +16,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
+import com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration;
 import com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReader;
@@ -22,18 +24,21 @@ import com.liferay.portal.search.tuning.synonyms.web.internal.storage.SynonymSet
 import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.IndexToFilterSynchronizer;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Filipe Oshiro
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration",
 	property = {
 		"javax.portlet.name=" + SynonymsPortletKeys.SYNONYMS,
 		"mvc.command.name=/synonyms/delete_synonym_sets"
@@ -43,9 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
 		_synonymSetIndexReader = new SynonymSetIndexReader(
 			_searchEngineAdapter);
+
+		modified(properties);
 	}
 
 	@Override
@@ -77,6 +84,17 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 			id -> _synonymSetIndexReader.fetch(synonymSetIndexName, id));
 	}
 
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		SynonymsConfiguration synonymsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SynonymsConfiguration.class, properties);
+
+		_indexToFilterSynchronizer = new IndexToFilterSynchronizer(
+			synonymsConfiguration.filterNames(), _searchEngineAdapter,
+			_synonymSetIndexReader);
+	}
+
 	protected void removeSynonymSets(
 			SynonymSetIndexName synonymSetIndexName,
 			List<SynonymSet> synonymSets)
@@ -91,8 +109,7 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;
 
-	@Reference
-	private IndexToFilterSynchronizer _indexToFilterSynchronizer;
+	private volatile IndexToFilterSynchronizer _indexToFilterSynchronizer;
 
 	@Reference
 	private Portal _portal;

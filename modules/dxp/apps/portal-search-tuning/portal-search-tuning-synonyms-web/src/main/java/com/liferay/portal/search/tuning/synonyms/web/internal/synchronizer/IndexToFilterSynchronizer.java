@@ -5,15 +5,43 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
+import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterWriterUtil;
+import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
+import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReader;
 
 /**
  * @author Adam Brandizzi
  */
-public interface IndexToFilterSynchronizer {
+public class IndexToFilterSynchronizer {
+
+	public IndexToFilterSynchronizer(
+		String[] filterNames, SearchEngineAdapter searchEngineAdapter,
+		SynonymSetIndexReader synonymSetIndexReader) {
+
+		_filterNames = filterNames;
+		_searchEngineAdapter = searchEngineAdapter;
+		_synonymSetIndexReader = synonymSetIndexReader;
+	}
 
 	public void copyToFilter(
 		SynonymSetIndexName synonymSetIndexName, String companyIndexName,
-		boolean deletion);
+		boolean deletion) {
+
+		for (String filterName : _filterNames) {
+			SynonymSetFilterWriterUtil.updateSynonymSets(
+				_searchEngineAdapter, companyIndexName, filterName,
+				TransformUtil.transformToArray(
+					_synonymSetIndexReader.search(synonymSetIndexName),
+					SynonymSet::getSynonyms, String.class),
+				deletion);
+		}
+	}
+
+	private final String[] _filterNames;
+	private final SearchEngineAdapter _searchEngineAdapter;
+	private final SynonymSetIndexReader _synonymSetIndexReader;
 
 }

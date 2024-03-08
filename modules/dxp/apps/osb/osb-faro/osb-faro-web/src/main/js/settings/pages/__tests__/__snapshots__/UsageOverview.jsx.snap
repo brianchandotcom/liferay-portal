@@ -194,7 +194,7 @@ exports[`Subscription Details renders subscription details for BUSINESS PLAN 1`]
       <span
         class="text-3 text-secondary"
       >
-        5,000
+        10,000
       </span>
     </div>
     <div
@@ -330,7 +330,7 @@ exports[`Subscription Details renders subscription details for ENTERPRISE PLAN 1
       <span
         class="text-3 text-secondary"
       >
-        5,000
+        10,000
       </span>
     </div>
     <div
@@ -442,6 +442,7 @@ exports[`UsageOverview should render 1`] = `
                 </span>
               </p>
               <p
+                class="mb-0"
                 data-testid="next-anniversary-date"
               >
                 <span
@@ -455,142 +456,105 @@ exports[`UsageOverview should render 1`] = `
                 </span>
               </p>
               <div
-                class="my-4"
+                class="mt-4 mb-5"
               >
-                <h3
-                  class="text-secondary"
+                <span
+                  class="text-3 text-secondary font-weight-semi-bold"
                 >
-                  Individuals
-                </h3>
+                  KNOWN INDIVIDUALS
+                </span>
+                <hr
+                  class="my-2"
+                />
+                <span
+                  class="text-3 text-secondary"
+                >
+                  Active users logged on your DXP instance have been tracked by Analytics Cloud since Jul 08, 2018.
+                </span>
                 <div
-                  class="d-flex align-items-center"
+                  class="mt-3"
                 >
                   <div
-                    class="sticker sticker-root sticker-static sticker-rounded sticker-dark"
+                    class="d-flex justify-content-between mb-1"
                   >
-                    <svg
-                      class="lexicon-icon lexicon-icon-ac-individual icon-root"
-                      role="presentation"
+                    <span
+                      class="text-3 text-secondary"
                     >
-                      <use
-                        href="#ac-individual"
-                      />
-                    </svg>
+                      CURRENT USAGE
+                    </span>
+                    <span
+                      class="text-3 text-secondary"
+                    >
+                      2,057 of 105,000 - 2% known individuals were used.
+                    </span>
                   </div>
                   <div
-                    class="m-2"
+                    class="recharts-responsive-container"
+                    style="width: 100%; height: 24px; min-width: 0;"
+                  />
+                  <span
+                    class="text-3 text-secondary"
                   >
-                    <span
-                      class="mr-2"
+                    102,943 known individuals are available.
+                  </span>
+                  <div
+                    class="mt-4"
+                  >
+                    <div
+                      class="mb-1"
                     >
-                      <h2
-                        class="m-0 d-inline"
-                      >
-                        2,057
-                      </h2>
-                       of 
                       <span
-                        class="text-3 font-weight-semi-bold"
+                        class="text-3 text-secondary"
                       >
-                        105,000
-                      </span>
-                    </span>
-                    <span
-                      class="text-3 text-secondary font-weight-semi-bold"
-                    >
-                      2% Since Jul 08, 2018
-                    </span>
-                    <div>
-                      <span
-                        class="text-3 text-muted font-weight-semi-bold"
-                      >
-                        Enterprise Plan 95,000 + 5,000 Add-On (2x)
+                        INDIVIDUALS BREAKDOWN
                       </span>
                     </div>
+                    <div
+                      class="recharts-responsive-container"
+                      style="width: 100%; height: 24px; min-width: 0;"
+                    />
                   </div>
-                </div>
-                <div
-                  class="metric-bar-root"
-                >
-                  <div
-                    class="bar bar-primary bar-default"
-                    style="width: 2%;"
-                  />
-                </div>
-                <div
-                  class="metric-definition text-secondary"
-                >
-                  Contacts with a known email address that are synced to Analytics Cloud.
                 </div>
               </div>
-              <div
-                class="mt-4"
+              <span
+                class="text-3 text-secondary font-weight-semi-bold"
               >
-                <h3
-                  class="text-secondary"
-                >
-                  Page Views
-                </h3>
+                PAGE VIEWS
+              </span>
+              <hr
+                class="my-2"
+              />
+              <span
+                class="text-3 text-secondary"
+              >
+                Total page views have been tracked by Analytics Cloud since Jul 08, 2018.
+              </span>
+              <div
+                class="mt-3"
+              >
                 <div
-                  class="d-flex align-items-center"
+                  class="d-flex justify-content-between mb-1"
                 >
-                  <div
-                    class="sticker sticker-root sticker-static sticker-rounded sticker-dark"
+                  <span
+                    class="text-3 text-secondary"
                   >
-                    <svg
-                      class="lexicon-icon lexicon-icon-faro-page-views icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        href="#faro-page-views"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="m-2"
+                    CURRENT USAGE
+                  </span>
+                  <span
+                    class="text-3 text-secondary"
                   >
-                    <span
-                      class="mr-2"
-                    >
-                      <h2
-                        class="m-0 d-inline"
-                      >
-                        100,023
-                      </h2>
-                       of 
-                      <span
-                        class="text-3 font-weight-semi-bold"
-                      >
-                        7,000,000
-                      </span>
-                    </span>
-                    <span
-                      class="text-3 text-secondary font-weight-semi-bold"
-                    >
-                      1.4% Since Jul 08, 2018
-                    </span>
-                    <div>
-                      <span
-                        class="text-3 text-muted font-weight-semi-bold"
-                      >
-                        Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)
-                      </span>
-                    </div>
-                  </div>
+                    100,023 of 7,000,000 - 1.4% page views were used.
+                  </span>
                 </div>
                 <div
-                  class="metric-bar-root"
+                  class="recharts-responsive-container"
+                  style="width: 100%; height: 24px; min-width: 0;"
+                />
+                <span
+                  class="text-3 text-secondary"
                 >
-                  <div
-                    class="bar bar-primary bar-default"
-                    style="width: 1%;"
-                  />
-                </div>
-                <div
-                  class="metric-definition text-secondary"
-                >
-                  Non-unique visits to any of the pages synced to Analytics Cloud.
-                </div>
+                  6,899,977 page views are available.
+                </span>
               </div>
             </div>
           </div>
@@ -712,7 +676,7 @@ exports[`UsageOverview should render 1`] = `
                 <span
                   class="text-3 text-secondary"
                 >
-                  5,000
+                  10,000
                 </span>
               </div>
               <div

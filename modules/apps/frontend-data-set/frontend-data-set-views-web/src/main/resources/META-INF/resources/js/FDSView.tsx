@@ -15,13 +15,14 @@ import Actions from './fds_view/Actions';
 import Details from './fds_view/Details';
 import Filters from './fds_view/Filters';
 import Pagination from './fds_view/Pagination';
+import Settings from './fds_view/Settings';
 import Sorting from './fds_view/Sorting';
 import VisualizationModes from './fds_view/visualization_modes/VisualizationModes';
 import {Fields} from './fds_view/visualization_modes/table/Table';
 import {API_URL, OBJECT_RELATIONSHIP} from './utils/constants';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
-const NAVIGATION_BAR_ITEMS = [
+let NAVIGATION_BAR_ITEMS = [
 	{
 		Component: Details,
 		label: Liferay.Language.get('details'),
@@ -52,6 +53,16 @@ const NAVIGATION_BAR_ITEMS = [
 		label: Liferay.Language.get('pagination'),
 	},
 ];
+
+if (Liferay.FeatureFlags['LPD-10735']) {
+	NAVIGATION_BAR_ITEMS = [
+		...NAVIGATION_BAR_ITEMS,
+		{
+			Component: Settings,
+			label: Liferay.Language.get('settings'),
+		},
+	];
+}
 
 interface IFDSViewSectionProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];

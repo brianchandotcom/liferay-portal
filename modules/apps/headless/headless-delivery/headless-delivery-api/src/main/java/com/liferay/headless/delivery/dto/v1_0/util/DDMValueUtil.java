@@ -217,8 +217,7 @@ public class DDMValueUtil {
 			}
 
 			if ((values.size() == 1) &&
-				(DDMFormFieldType.RADIO.equals(ddmFormField.getType()) ||
-				 DDMFormFieldType.SELECT.equals(ddmFormField.getType()))) {
+				DDMFormFieldType.RADIO.equals(ddmFormField.getType())) {
 
 				return values.get(0);
 			}

@@ -5,8 +5,6 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.DocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
@@ -24,7 +22,7 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class SynonymSetIndexCreatorImplTest extends BaseSynonymsWebTestCase {
+public class SynonymSetIndexCreatorTest extends BaseSynonymsWebTestCase {
 
 	@ClassRule
 	@Rule
@@ -33,12 +31,7 @@ public class SynonymSetIndexCreatorImplTest extends BaseSynonymsWebTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_synonymSetIndexCreatorImpl = new SynonymSetIndexCreatorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexCreatorImpl, "_jsonFactory", new JSONFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexCreatorImpl, "_searchEngineAdapter",
+		_synonymSetIndexCreatorImpl = new SynonymSetIndexCreator(
 			searchEngineAdapter);
 	}
 
@@ -68,6 +61,6 @@ public class SynonymSetIndexCreatorImplTest extends BaseSynonymsWebTestCase {
 		);
 	}
 
-	private SynonymSetIndexCreatorImpl _synonymSetIndexCreatorImpl;
+	private SynonymSetIndexCreator _synonymSetIndexCreatorImpl;
 
 }

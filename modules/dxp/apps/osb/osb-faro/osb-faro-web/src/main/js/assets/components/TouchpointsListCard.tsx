@@ -106,11 +106,14 @@ const TouchpointsListCard: React.FC<ITouchpointsListCardProps> = ({items}) => {
 				items={items}
 				rowIdentifier={['touchpoint', 'title']}
 			/>
+
 			{items?.length >= MAX_PAGES_LIMIT && (
 				<p>
 					{sub(
-						Liferay.Language.get('x-page-limit-has-been-reached'),
-						[toFixedPoint(MAX_PAGES_LIMIT)]
+						Liferay.Language.get(
+							'x-page-views-are-available-of-x-total'
+						),
+						[items?.length, toFixedPoint(MAX_PAGES_LIMIT)]
 					)}
 				</p>
 			)}

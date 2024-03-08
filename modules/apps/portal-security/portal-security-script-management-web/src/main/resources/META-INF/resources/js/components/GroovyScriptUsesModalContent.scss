@@ -1,0 +1,13 @@
+.lfr__script-management-groovy-script-uses-modal {
+	&-body {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	&-company-web-id-cell {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+	}
+}

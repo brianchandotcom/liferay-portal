@@ -6,9 +6,10 @@ import {fromJS} from 'immutable';
 import {Project} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
-import {SubscriptionStatuses} from 'shared/util/constants';
+import {SubscriptionStatuses, UserRoleNames} from 'shared/util/constants';
 import {UsageOverview} from '../UsageOverview';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {User} from 'shared/util/records';
 
 jest.unmock('react-dom');
 
@@ -105,9 +106,19 @@ describe('UsageOverview', () => {
 			<WrappedComponent {...defaultProps} project={mockProject} />
 		);
 
-		expect(getByText('1,000')).toBeInTheDocument();
+		expect(getByText('KNOWN INDIVIDUALS')).toBeInTheDocument();
 
-		expect(getByText('1% Since Jul 08, 2018')).toBeInTheDocument();
+		expect(
+			getByText(
+				'Active users logged on your DXP instance have been tracked by Analytics Cloud since Jul 08, 2018.'
+			)
+		).toBeInTheDocument();
+
+		expect(
+			getByText('104,000 known individuals are available.')
+		).toBeInTheDocument();
+
+		expect(getByText('1,000 of 105,000 - 1% used.')).toBeInTheDocument();
 	});
 
 	it('should display the limit of INDIVIDUALS and PAGE VIEWS. Also, it should render a warning if INDIVIDUALS is over the limit. Also, it should render the current plan name.', () => {
@@ -126,18 +137,6 @@ describe('UsageOverview', () => {
 		const {container, getByText} = render(
 			<WrappedComponent {...defaultProps} project={mockProject} />
 		);
-
-		expect(getByText('105,000')).toBeInTheDocument();
-
-		expect(
-			getByText('Enterprise Plan 95,000 + 5,000 Add-On (2x)')
-		).toBeInTheDocument();
-
-		expect(getByText('7,000,000')).toBeInTheDocument();
-
-		expect(
-			getByText('Enterprise Plan 2,000,000 + 5,000,000 Add-On (1x)')
-		).toBeInTheDocument();
 
 		expect(container.querySelector('.alert-warning')).toBeInTheDocument();
 
@@ -162,9 +161,21 @@ describe('UsageOverview', () => {
 			<WrappedComponent {...defaultProps} project={mockProject} />
 		);
 
-		expect(getByText('111,123')).toBeInTheDocument();
+		expect(getByText('PAGE VIEWS')).toBeInTheDocument();
 
-		expect(getByText('1.6% Since Jul 08, 2018')).toBeInTheDocument();
+		expect(
+			getByText(
+				'Active users logged on your DXP instance have been tracked by Analytics Cloud since Jul 08, 2018.'
+			)
+		).toBeInTheDocument();
+
+		expect(
+			getByText('111,123 of 7,000,000 - 1.6% used.')
+		).toBeInTheDocument();
+
+		expect(
+			getByText('6,888,877 page views are available.')
+		).toBeInTheDocument();
 	});
 
 	it('should render with an overage warning if the PAGE VIEWS metric has exceeded the plan limit', () => {
@@ -310,6 +321,90 @@ describe('UsageOverview', () => {
 		);
 
 		expect(queryByText('Manage Subscriptions')).toBeInTheDocument();
+	});
+
+	it('renders current usage message for BASIC PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Basic'
+					})
+				)
+			})
+		);
+
+		const {queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(
+			queryByText(
+				'When either limit is exceeded, the current plan will have to be upgraded to Business or Enterprise.'
+			)
+		).toBeInTheDocument();
+	});
+
+	it('renders current usage message for BUSINESS PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Business'
+					})
+				)
+			})
+		);
+
+		const {queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(
+			queryByText(
+				'When either limit is exceeded, the current plan will either have to be upgraded or add-ons will have to be purchased to accommodate the overage.'
+			)
+		).toBeInTheDocument();
+	});
+
+	it('renders current usage message for ENTERPRISE PLAN', () => {
+		const mockProject = new Project(
+			data.mockProject(23, {
+				faroSubscription: fromJS(
+					data.mockSubscription({
+						name: 'Liferay Analytics Cloud Enterprise'
+					})
+				)
+			})
+		);
+
+		const {queryByText} = render(
+			<WrappedComponent
+				{...defaultProps}
+				currentUser={
+					new User(data.mockUser(0, {roleName: UserRoleNames.Member}))
+				}
+				project={mockProject}
+			/>
+		);
+
+		expect(
+			queryByText(
+				'When either limit is exceeded, the current plan will either have to be upgraded or add-ons will have to be purchased to accommodate the overage.'
+			)
+		).toBeInTheDocument();
 	});
 });
 

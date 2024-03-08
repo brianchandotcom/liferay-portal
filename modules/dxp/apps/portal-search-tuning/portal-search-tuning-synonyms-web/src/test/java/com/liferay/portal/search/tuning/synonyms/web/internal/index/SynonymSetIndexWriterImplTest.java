@@ -14,12 +14,14 @@ import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.web.internal.BaseSynonymsWebTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -34,20 +36,27 @@ public class SynonymSetIndexWriterImplTest extends BaseSynonymsWebTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		_synonymSetToDocumentTranslatorUtilMockedStatic.when(
+			() -> SynonymSetToDocumentTranslatorUtil.translate(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			Mockito.mock(Document.class)
+		);
+
 		_synonymSetIndexWriterImpl = new SynonymSetIndexWriterImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexWriterImpl, "_synonymSetToDocumentTranslator",
-			_synonymSetToDocumentTranslator);
 		ReflectionTestUtil.setFieldValue(
 			_synonymSetIndexWriterImpl, "_searchEngineAdapter",
 			searchEngineAdapter);
 	}
 
+	@After
+	public void tearDown() {
+		_synonymSetToDocumentTranslatorUtilMockedStatic.close();
+	}
+
 	@Test
 	public void testCreate() {
-		_setUpSynonymSetToDocumentTranslator();
-
 		setUpSearchEngineAdapter(_setUpIndexDocumentResponse("uid"));
 
 		Assert.assertEquals(
@@ -95,19 +104,9 @@ public class SynonymSetIndexWriterImplTest extends BaseSynonymsWebTestCase {
 		return indexDocumentResponse;
 	}
 
-	private void _setUpSynonymSetToDocumentTranslator() {
-		Mockito.doReturn(
-			Mockito.mock(Document.class)
-		).when(
-			_synonymSetToDocumentTranslator
-		).translate(
-			Mockito.any()
-		);
-	}
-
 	private SynonymSetIndexWriterImpl _synonymSetIndexWriterImpl;
-	private final SynonymSetToDocumentTranslator
-		_synonymSetToDocumentTranslator = Mockito.mock(
-			SynonymSetToDocumentTranslator.class);
+	private final MockedStatic<SynonymSetToDocumentTranslatorUtil>
+		_synonymSetToDocumentTranslatorUtilMockedStatic = Mockito.mockStatic(
+			SynonymSetToDocumentTranslatorUtil.class);
 
 }

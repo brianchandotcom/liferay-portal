@@ -5,14 +5,12 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,22 +20,12 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class SynonymSetToDocumentTranslatorImplTest {
+public class SynonymSetToDocumentTranslatorUtilTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		_synonymSetToDocumentTranslatorImpl =
-			new SynonymSetToDocumentTranslatorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_synonymSetToDocumentTranslatorImpl, "_documentBuilderFactory",
-			_documentBuilderFactory);
-	}
 
 	@Test
 	public void testTranslate() {
@@ -65,18 +53,13 @@ public class SynonymSetToDocumentTranslatorImplTest {
 			_documentBuilderFactory
 		).builder();
 
-		_synonymSetToDocumentTranslatorImpl.translate(
-			Mockito.mock(SynonymSet.class));
-
 		Assert.assertEquals(
 			document,
-			_synonymSetToDocumentTranslatorImpl.translate(
-				Mockito.mock(SynonymSet.class)));
+			SynonymSetToDocumentTranslatorUtil.translate(
+				_documentBuilderFactory, Mockito.mock(SynonymSet.class)));
 	}
 
 	private final DocumentBuilderFactory _documentBuilderFactory = Mockito.mock(
 		DocumentBuilderFactory.class);
-	private SynonymSetToDocumentTranslatorImpl
-		_synonymSetToDocumentTranslatorImpl;
 
 }

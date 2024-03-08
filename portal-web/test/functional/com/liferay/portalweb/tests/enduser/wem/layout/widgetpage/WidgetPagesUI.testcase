@@ -62,33 +62,6 @@ definition {
 		}
 	}
 
-	@description = "The user can add a child page."
-	@priority = 5
-	@uitest
-	test AddChildPage {
-		property portal.acceptance = "true";
-
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("Add a child page") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
-
-			PagesAdmin.addChildPage(
-				childPageName = "Test Child Page",
-				parentPageName = "Test Page Name");
-		}
-
-		task ("View child page in Pages admin") {
-			PagesAdmin.viewPageItemPresent(
-				depth = 2,
-				pageName = "Test Child Page");
-		}
-	}
-
 	@description = "The user can add multiple public pages."
 	@priority = 3
 	@uitest
@@ -103,41 +76,6 @@ definition {
 			for (var i : list "1,2,3") {
 				PagesAdmin.viewPageItemPresent(pageName = "Test Page Name ${i}");
 			}
-		}
-	}
-
-	@description = "The user can add a private page."
-	@priority = 4
-	@uitest
-	test AddPrivatePage {
-		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-
-		task ("Add a private page") {
-			PagesAdmin.addPrivatePage(pageName = "Test Private Page");
-		}
-
-		task ("View private page in Pages admin") {
-			PagesAdmin.viewPageItemPresent(
-				pageName = "Test Private Page",
-				privacy = "Private Pages");
-		}
-	}
-
-	@description = "This is a test for LPS-132422. The list of actions appear in right order for pages."
-	@priority = 3
-	test ViewOrderOfPageActions {
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("View order of the page actions") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteURLKey});
-
-			PagesAdmin.openPageEllipsisMenu(pageName = "Test Page Name");
-
-			MenuItem.viewOrder(menuItemList = "View,Convert to content page...,Make a Copy,Configure,Permissions,Delete");
 		}
 	}
 

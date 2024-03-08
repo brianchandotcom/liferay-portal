@@ -55,7 +55,7 @@ export class PageEditorPage {
 	}
 
 	async goToConfigurationTab(tab: ConfigurationTab) {
-		await this.page.getByRole('tab', {name: tab}).click();
+		await this.page.getByRole('tab', {exact: true, name: tab}).click();
 	}
 
 	async goToEditMode(layout: Layout, siteUrl?: Site['friendlyUrlPath']) {
@@ -65,7 +65,7 @@ export class PageEditorPage {
 	}
 
 	async goToSidebarTab(tab: SidebarTab) {
-		await this.page.getByTitle(tab).click();
+		await this.page.getByRole('tab', {exact: true, name: tab}).click();
 	}
 
 	async isActive(fragmentId: string, isDesktop = true) {

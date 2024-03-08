@@ -9,6 +9,7 @@ import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -16,8 +17,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -80,7 +83,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 	private void _addCommerceInventoryReplenishmentItem(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
@@ -93,8 +96,16 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		calendar.set(year, month, day);
 
-		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "quantity", BigDecimal.ZERO);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String quantity = ParamUtil.getString(
+			actionRequest, "quantity", BigDecimal.ZERO.toString());
+
+		BigDecimal formattedQuantity =
+			_commerceOrderItemQuantityFormatter.parse(
+				quantity, themeDisplay.getLocale());
+
 		String sku = ParamUtil.getString(actionRequest, "sku");
 		String unitOfMeasureKey = ParamUtil.getString(
 			actionRequest, "unitOfMeasureKey");
@@ -102,7 +113,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 		_commerceInventoryReplenishmentItemService.
 			addCommerceInventoryReplenishmentItem(
 				null, commerceInventoryWarehouseId, calendar.getTime(),
-				quantity, sku, unitOfMeasureKey);
+				formattedQuantity, sku, unitOfMeasureKey);
 	}
 
 	private void _deleteCommerceInventoryReplenishmentItem(
@@ -119,7 +130,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 	private void _updateCommerceInventoryReplenishmentItem(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceInventoryReplenishmentItemId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryReplenishmentItemId");
@@ -129,8 +140,15 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 				getCommerceInventoryReplenishmentItem(
 					commerceInventoryReplenishmentItemId);
 
-		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "quantity", BigDecimal.ZERO);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String quantity = ParamUtil.getString(
+			actionRequest, "quantity", BigDecimal.ZERO.toString());
+
+		BigDecimal formattedQuantity =
+			_commerceOrderItemQuantityFormatter.parse(
+				quantity, themeDisplay.getLocale());
 
 		int day = ParamUtil.getInteger(actionRequest, "dateDay");
 		int month = ParamUtil.getInteger(actionRequest, "dateMonth");
@@ -146,7 +164,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 			updateCommerceInventoryReplenishmentItem(
 				commerceInventoryReplenishmentItem.getExternalReferenceCode(),
 				commerceInventoryReplenishmentItemId, calendar.getTime(),
-				quantity, mvccVersion);
+				formattedQuantity, mvccVersion);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -155,5 +173,9 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 	@Reference
 	private CommerceInventoryReplenishmentItemService
 		_commerceInventoryReplenishmentItemService;
+
+	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
 
 }

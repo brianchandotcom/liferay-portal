@@ -96,173 +96,205 @@ public class TestClassFactory {
 		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject,
 		File testClassFile, String testClassMethodName) {
 
-		if (batchTestClassGroup instanceof CompileModulesBatchTestClassGroup) {
-			if (jsonObject != null) {
+		long start = System.currentTimeMillis();
+
+		try {
+			if (batchTestClassGroup instanceof
+					CompileModulesBatchTestClassGroup) {
+
+				if (jsonObject != null) {
+					return new CompileModulesTestClass(
+						batchTestClassGroup, jsonObject);
+				}
+
 				return new CompileModulesTestClass(
-					batchTestClassGroup, jsonObject);
+					batchTestClassGroup, testClassFile);
 			}
+			else if (batchTestClassGroup instanceof
+						FunctionalBatchTestClassGroup) {
 
-			return new CompileModulesTestClass(
-				batchTestClassGroup, testClassFile);
-		}
-		else if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
-			if (jsonObject != null) {
-				return new FunctionalTestClass(batchTestClassGroup, jsonObject);
+				if (jsonObject != null) {
+					return new FunctionalTestClass(
+						batchTestClassGroup, jsonObject);
+				}
+
+				return new FunctionalTestClass(
+					batchTestClassGroup, testClassMethodName);
 			}
+			else if (batchTestClassGroup instanceof
+						JSUnitModulesBatchTestClassGroup) {
 
-			return new FunctionalTestClass(
-				batchTestClassGroup, testClassMethodName);
-		}
-		else if (batchTestClassGroup instanceof
-					JSUnitModulesBatchTestClassGroup) {
+				if (jsonObject != null) {
+					return new JSUnitModulesTestClass(
+						batchTestClassGroup, jsonObject);
+				}
 
-			if (jsonObject != null) {
 				return new JSUnitModulesTestClass(
-					batchTestClassGroup, jsonObject);
+					batchTestClassGroup, testClassFile);
 			}
+			else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
+				File canonicalFile;
 
-			return new JSUnitModulesTestClass(
-				batchTestClassGroup, testClassFile);
-		}
-		else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
-			File canonicalFile;
+				if (testClassFile != null) {
+					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
+						testClassFile);
+				}
+				else if ((jsonObject != null) && jsonObject.has("file")) {
+					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
+						new File(jsonObject.getString("file")));
+				}
+				else {
+					throw new RuntimeException("Please set a test class file");
+				}
 
-			if (testClassFile != null) {
-				canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-					testClassFile);
-			}
-			else if ((jsonObject != null) && jsonObject.has("file")) {
-				canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-					new File(jsonObject.getString("file")));
-			}
-			else {
-				throw new RuntimeException("Please set a test class file");
-			}
+				if (_jUnitTestClasses.containsKey(canonicalFile)) {
+					return _jUnitTestClasses.get(canonicalFile);
+				}
 
-			if (_jUnitTestClasses.containsKey(canonicalFile)) {
+				JUnitTestClass jUnitTestClass = null;
+
+				if (jsonObject != null) {
+					jUnitTestClass = new JUnitTestClass(
+						batchTestClassGroup, jsonObject);
+				}
+				else {
+					jUnitTestClass = new JUnitTestClass(
+						batchTestClassGroup, testClassFile);
+				}
+
+				_jUnitTestClasses.put(canonicalFile, jUnitTestClass);
+
 				return _jUnitTestClasses.get(canonicalFile);
 			}
+			else if (batchTestClassGroup instanceof
+						NPMTestBatchTestClassGroup) {
 
-			JUnitTestClass jUnitTestClass = null;
+				File canonicalFile;
 
-			if (jsonObject != null) {
-				jUnitTestClass = new JUnitTestClass(
-					batchTestClassGroup, jsonObject);
-			}
-			else {
-				jUnitTestClass = new JUnitTestClass(
-					batchTestClassGroup, testClassFile);
-			}
+				if (testClassFile != null) {
+					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
+						testClassFile);
+				}
+				else if ((jsonObject != null) && jsonObject.has("file")) {
+					canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
+						new File(jsonObject.getString("file")));
+				}
+				else {
+					throw new RuntimeException("Please set a test class file");
+				}
 
-			_jUnitTestClasses.put(canonicalFile, jUnitTestClass);
+				if (_npmTestClasses.containsKey(canonicalFile)) {
+					return _npmTestClasses.get(canonicalFile);
+				}
 
-			return _jUnitTestClasses.get(canonicalFile);
-		}
-		else if (batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {
-			File canonicalFile;
+				NPMTestClass npmTestClass = null;
 
-			if (testClassFile != null) {
-				canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-					testClassFile);
-			}
-			else if ((jsonObject != null) && jsonObject.has("file")) {
-				canonicalFile = JenkinsResultsParserUtil.getCanonicalFile(
-					new File(jsonObject.getString("file")));
-			}
-			else {
-				throw new RuntimeException("Please set a test class file");
-			}
+				if (jsonObject != null) {
+					npmTestClass = new NPMTestClass(
+						batchTestClassGroup, jsonObject);
+				}
+				else {
+					npmTestClass = new NPMTestClass(
+						batchTestClassGroup, testClassFile);
+				}
 
-			if (_npmTestClasses.containsKey(canonicalFile)) {
+				_npmTestClasses.put(canonicalFile, npmTestClass);
+
 				return _npmTestClasses.get(canonicalFile);
 			}
+			else if (batchTestClassGroup instanceof
+						PlaywrightBatchTestClassGroup) {
 
-			NPMTestClass npmTestClass = null;
+				if (jsonObject != null) {
+					return new PlaywrightTestClass(
+						batchTestClassGroup, jsonObject);
+				}
 
-			if (jsonObject != null) {
-				npmTestClass = new NPMTestClass(
-					batchTestClassGroup, jsonObject);
+				return new PlaywrightTestClass(
+					batchTestClassGroup, testClassFile, testClassMethodName);
 			}
-			else {
-				npmTestClass = new NPMTestClass(
+			else if (batchTestClassGroup instanceof
+						PluginsBatchTestClassGroup) {
+
+				if (jsonObject != null) {
+					return new PluginsTestClass(
+						batchTestClassGroup, jsonObject);
+				}
+
+				return new PluginsTestClass(batchTestClassGroup, testClassFile);
+			}
+			else if (batchTestClassGroup instanceof
+						PluginsGulpBatchTestClassGroup) {
+
+				if (jsonObject != null) {
+					return new PluginsGulpTestClass(
+						batchTestClassGroup, jsonObject);
+				}
+
+				return new PluginsGulpTestClass(
 					batchTestClassGroup, testClassFile);
 			}
+			else if (batchTestClassGroup instanceof
+						RESTBuilderModulesBatchTestClassGroup) {
 
-			_npmTestClasses.put(canonicalFile, npmTestClass);
+				if (jsonObject != null) {
+					return new RESTBuilderModulesTestClass(
+						batchTestClassGroup, jsonObject);
+				}
 
-			return _npmTestClasses.get(canonicalFile);
-		}
-		else if (batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
-			if (jsonObject != null) {
-				return new PlaywrightTestClass(batchTestClassGroup, jsonObject);
-			}
-
-			return new PlaywrightTestClass(
-				batchTestClassGroup, testClassFile, testClassMethodName);
-		}
-		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
-			if (jsonObject != null) {
-				return new PluginsTestClass(batchTestClassGroup, jsonObject);
-			}
-
-			return new PluginsTestClass(batchTestClassGroup, testClassFile);
-		}
-		else if (batchTestClassGroup instanceof
-					PluginsGulpBatchTestClassGroup) {
-
-			if (jsonObject != null) {
-				return new PluginsGulpTestClass(
-					batchTestClassGroup, jsonObject);
-			}
-
-			return new PluginsGulpTestClass(batchTestClassGroup, testClassFile);
-		}
-		else if (batchTestClassGroup instanceof
-					RESTBuilderModulesBatchTestClassGroup) {
-
-			if (jsonObject != null) {
 				return new RESTBuilderModulesTestClass(
-					batchTestClassGroup, jsonObject);
+					batchTestClassGroup, testClassFile);
 			}
+			else if (batchTestClassGroup instanceof
+						SemVerModulesBatchTestClassGroup) {
 
-			return new RESTBuilderModulesTestClass(
-				batchTestClassGroup, testClassFile);
-		}
-		else if (batchTestClassGroup instanceof
-					SemVerModulesBatchTestClassGroup) {
+				if (jsonObject != null) {
+					return new SemVerModulesTestClass(
+						batchTestClassGroup, jsonObject);
+				}
 
-			if (jsonObject != null) {
 				return new SemVerModulesTestClass(
-					batchTestClassGroup, jsonObject);
+					batchTestClassGroup, testClassFile);
 			}
+			else if (batchTestClassGroup instanceof
+						ServiceBuilderModulesBatchTestClassGroup) {
 
-			return new SemVerModulesTestClass(
-				batchTestClassGroup, testClassFile);
-		}
-		else if (batchTestClassGroup instanceof
-					ServiceBuilderModulesBatchTestClassGroup) {
+				if (jsonObject != null) {
+					return new ServiceBuilderModulesTestClass(
+						batchTestClassGroup, jsonObject);
+				}
 
-			if (jsonObject != null) {
 				return new ServiceBuilderModulesTestClass(
-					batchTestClassGroup, jsonObject);
+					batchTestClassGroup, testClassFile);
+			}
+			else if (batchTestClassGroup instanceof
+						TCKJunitBatchTestClassGroup) {
+
+				if (jsonObject != null) {
+					return new TCKTestClass(batchTestClassGroup, jsonObject);
+				}
+
+				return new TCKTestClass(batchTestClassGroup, testClassFile);
 			}
 
-			return new ServiceBuilderModulesTestClass(
-				batchTestClassGroup, testClassFile);
-		}
-		else if (batchTestClassGroup instanceof TCKJunitBatchTestClassGroup) {
 			if (jsonObject != null) {
-				return new TCKTestClass(batchTestClassGroup, jsonObject);
+				return new BatchTestClass(batchTestClassGroup, jsonObject);
 			}
 
-			return new TCKTestClass(batchTestClassGroup, testClassFile);
+			return new BatchTestClass(batchTestClassGroup, testClassFile);
 		}
+		finally {
+			long duration = System.currentTimeMillis() - start;
 
-		if (jsonObject != null) {
-			return new BatchTestClass(batchTestClassGroup, jsonObject);
+			if (duration > 500) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"[", batchTestClassGroup.getBatchName(),
+						"] Created test class for ", testClassFile.toString(),
+						" in ",
+						JenkinsResultsParserUtil.toDurationString(duration)));
+			}
 		}
-
-		return new BatchTestClass(batchTestClassGroup, testClassFile);
 	}
 
 	private static final Map<File, JUnitTestClass> _jUnitTestClasses =

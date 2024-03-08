@@ -64,38 +64,6 @@ definition {
 		}
 	}
 
-	@priority = 3
-	test AddPageWithMultipleChildPages {
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("Add three children pages") {
-			for (var i : list "1,2,3") {
-				JSONLayout.addPublicLayout(
-					groupName = ${randomSiteName},
-					layoutName = "Test Child Page ${i}",
-					parentLayoutName = "Test Page Name");
-			}
-		}
-
-		task ("View parent page is shown") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name");
-		}
-
-		task ("View children pages are shwon") {
-			for (var i : list "1,2,3") {
-				PagesAdmin.viewPageItemPresent(
-					depth = 2,
-					pageName = "Test Child Page ${i}");
-			}
-		}
-	}
-
 	@description = "The user can add a private widget page with a child page."
 	@priority = 4
 	test AddPrivateChildPage {

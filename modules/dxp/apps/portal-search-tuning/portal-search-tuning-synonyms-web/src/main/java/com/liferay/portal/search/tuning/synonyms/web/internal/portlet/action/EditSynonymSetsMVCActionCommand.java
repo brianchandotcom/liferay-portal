@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
@@ -22,6 +23,7 @@ import com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer.Index
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,6 +38,12 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
+
+	@Activate
+	protected void activate() {
+		_synonymSetIndexReader = new SynonymSetIndexReader(
+			_searchEngineAdapter);
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -111,9 +119,11 @@ public class EditSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 	private IndexToFilterSynchronizer _indexToFilterSynchronizer;
 
 	@Reference
-	private SynonymSetIndexNameBuilder _synonymSetIndexNameBuilder;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
+	private SynonymSetIndexNameBuilder _synonymSetIndexNameBuilder;
+
 	private SynonymSetIndexReader _synonymSetIndexReader;
 
 	@Reference

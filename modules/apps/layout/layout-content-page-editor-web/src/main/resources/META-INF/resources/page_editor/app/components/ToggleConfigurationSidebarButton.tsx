@@ -17,6 +17,7 @@ export default function ToggleConfigurationSidebarButton() {
 			aria-label={Liferay.Language.get('open-configuration-panel')}
 			borderless
 			displayType="secondary"
+			id="page-editor__toolbar__configuration-button"
 			onClick={() => {
 				dispatch(
 					switchSidebarPanel({

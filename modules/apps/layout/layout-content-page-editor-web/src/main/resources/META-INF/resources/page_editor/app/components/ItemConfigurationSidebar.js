@@ -48,6 +48,12 @@ export default function ItemConfigurationSidebar() {
 										itemConfigurationOpen: false,
 									})
 								);
+
+								document
+									.getElementById(
+										'page-editor__toolbar__configuration-button'
+									)
+									?.focus();
 							}}
 							size="sm"
 							symbol="times"

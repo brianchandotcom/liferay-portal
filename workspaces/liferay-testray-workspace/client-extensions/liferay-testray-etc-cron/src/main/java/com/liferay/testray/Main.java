@@ -5,6 +5,7 @@
 
 package com.liferay.testray;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -19,8 +20,8 @@ import java.nio.charset.StandardCharsets;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.apache.http.client.utils.URIBuilder;
@@ -38,7 +39,13 @@ public class Main {
 			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID"),
 			System.getenv(
 				"LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
-			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_URL"));
+			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_URL"),
+			GetterUtil.get(
+				System.getenv("LIFERAY_TESTRAY_ETC_CRON_AUTO_ARCHIVE_POLICY"),
+				60),
+			GetterUtil.get(
+				System.getenv("LIFERAY_TESTRAY_ETC_CRON_AUTO_DELETE_POLICY"),
+				30));
 
 		String oAuthAuthorization = main.getOAuthAuthorization();
 
@@ -47,22 +54,36 @@ public class Main {
 	}
 
 	public Main(
-			String liferayOAuthClientId, String liferayOAuthClientSecret,
-			String liferayURL)
-		throws Exception {
+		String liferayOAuthClientId, String liferayOAuthClientSecret,
+		String liferayURL, long autoArchivePolicy, long autoDeletePolicy) {
 
 		_liferayOAuthClientId = liferayOAuthClientId;
 		_liferayOAuthClientSecret = liferayOAuthClientSecret;
 		_liferayURL = liferayURL;
+		_autoArchivePolicy = autoArchivePolicy;
+		_autoDeletePolicy = autoDeletePolicy;
 	}
 
 	public void autoArchiveTestrayBuilds(String oAuthAuthorization)
 		throws Exception {
 
-		JSONArray testrayBuildsJSONArray = _getTestrayBuildsJSONArray(
-			oAuthAuthorization,
-			"archived eq false and promoted eq false and dateCreated lt " +
-				_currentDateTime.minusDays(60));
+		HttpResponse<String> httpResponse = _sendRequest(
+			oAuthAuthorization, null, "application/json", "GET",
+			new URIBuilder(
+				_liferayURL + "/o/c/builds"
+			).addParameter(
+				"filter",
+				"archived eq false and promoted eq false and dateCreated lt " +
+					_currentDateTime.minusDays(_autoArchivePolicy)
+			).addParameter(
+				"pageSize", "-1"
+			).build());
+
+		JSONArray testrayBuildsJSONArray = new JSONObject(
+			httpResponse.body()
+		).getJSONArray(
+			"items"
+		);
 
 		if ((testrayBuildsJSONArray == null) ||
 			testrayBuildsJSONArray.isEmpty()) {
@@ -91,24 +112,28 @@ public class Main {
 	public void deleteTestrayArchivedBuilds(String oAuthAuthorization)
 		throws Exception {
 
-		JSONArray testrayBuildsJSONArray = _getTestrayBuildsJSONArray(
-			oAuthAuthorization,
-			"archived eq true and dateArchived lt " +
-				_currentDateTime.minusDays(30));
+		HttpResponse<String> httpResponse = _sendRequest(
+			oAuthAuthorization, null, "application/json", "GET",
+			new URIBuilder(
+				_liferayURL + "/o/c/builds"
+			).addParameter(
+				"fields", "id"
+			).addParameter(
+				"filter",
+				"archived eq true and dateArchived lt " +
+					_currentDateTime.minusDays(_autoDeletePolicy)
+			).addParameter(
+				"pageSize", "-1"
+			).build());
 
-		if ((testrayBuildsJSONArray == null) ||
-			testrayBuildsJSONArray.isEmpty()) {
+		JSONArray jsonArray = new JSONObject(
+			httpResponse.body()
+		).getJSONArray(
+			"items"
+		);
 
+		if ((jsonArray == null) || jsonArray.isEmpty()) {
 			return;
-		}
-
-		JSONArray jsonArray = new JSONArray();
-
-		for (int i = 0; i < testrayBuildsJSONArray.length(); i++) {
-			JSONObject jsonObject = (JSONObject)testrayBuildsJSONArray.get(i);
-
-			jsonArray.put(
-				Collections.singletonMap("id", jsonObject.getLong("id")));
 		}
 
 		_sendRequest(
@@ -154,27 +179,6 @@ public class Main {
 		throw new Exception("Unable to get OAuth authorization");
 	}
 
-	private JSONArray _getTestrayBuildsJSONArray(
-			String authorization, String filterString)
-		throws Exception {
-
-		HttpResponse<String> httpResponse = _sendRequest(
-			authorization, null, "application/json", "GET",
-			new URIBuilder(
-				_liferayURL + "/o/c/builds"
-			).addParameter(
-				"filter", filterString
-			).addParameter(
-				"pageSize", "-1"
-			).build());
-
-		return new JSONObject(
-			httpResponse.body()
-		).getJSONArray(
-			"items"
-		);
-	}
-
 	private HttpResponse<String> _sendRequest(
 			String authorization, String body, String contentType,
 			String method, URI uri)
@@ -206,8 +210,13 @@ public class Main {
 			httpRequest.build(), HttpResponse.BodyHandlers.ofString());
 	}
 
+	private final long _autoArchivePolicy;
+	private final long _autoDeletePolicy;
 	private final OffsetDateTime _currentDateTime = OffsetDateTime.now(
-		ZoneOffset.UTC);
+		ZoneOffset.UTC
+	).truncatedTo(
+		ChronoUnit.SECONDS
+	);
 	private final String _liferayOAuthClientId;
 	private final String _liferayOAuthClientSecret;
 	private final String _liferayURL;

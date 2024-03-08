@@ -8,13 +8,16 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.web.internal.BaseSynonymsWebTestCase;
+import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterReaderUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -35,16 +38,23 @@ public class FilterToIndexSynchronizerImplTest extends BaseSynonymsWebTestCase {
 			_filterToIndexSynchronizerImpl, "_filterNames",
 			new String[] {"car,automobile"});
 		ReflectionTestUtil.setFieldValue(
-			_filterToIndexSynchronizerImpl, "_synonymSetFilterReader",
-			synonymSetFilterReader);
-		ReflectionTestUtil.setFieldValue(
 			_filterToIndexSynchronizerImpl, "_synonymSetStorageAdapter",
 			synonymSetStorageAdapter);
 	}
 
+	@After
+	public void tearDown() {
+		_synonymSetFilterReaderUtilMockedStatic.close();
+	}
+
 	@Test
 	public void testCopyToIndex() {
-		setUpSynonymSetFilterReader(new String[] {"car,automobile"});
+		_synonymSetFilterReaderUtilMockedStatic.when(
+			() -> SynonymSetFilterReaderUtil.getSynonymSets(
+				Mockito.any(), Mockito.anyString(), Mockito.anyString())
+		).thenReturn(
+			new String[] {"car,automobile"}
+		);
 
 		_filterToIndexSynchronizerImpl.copyToIndex(
 			"companyIndexName", Mockito.mock(SynonymSetIndexName.class));
@@ -56,5 +66,8 @@ public class FilterToIndexSynchronizerImplTest extends BaseSynonymsWebTestCase {
 	}
 
 	private FilterToIndexSynchronizerImpl _filterToIndexSynchronizerImpl;
+	private final MockedStatic<SynonymSetFilterReaderUtil>
+		_synonymSetFilterReaderUtilMockedStatic = Mockito.mockStatic(
+			SynonymSetFilterReaderUtil.class);
 
 }

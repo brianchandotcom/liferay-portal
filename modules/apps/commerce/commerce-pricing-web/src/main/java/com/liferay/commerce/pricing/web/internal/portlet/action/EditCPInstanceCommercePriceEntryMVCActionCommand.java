@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
@@ -20,9 +21,11 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -167,14 +170,42 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			actionRequest, "bulkPricing");
 		boolean overrideDiscount = ParamUtil.getBoolean(
 			actionRequest, "overrideDiscount");
-		BigDecimal discountLevel1 = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "discountLevel1", BigDecimal.ZERO);
-		BigDecimal discountLevel2 = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "discountLevel2", BigDecimal.ZERO);
-		BigDecimal discountLevel3 = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "discountLevel3", BigDecimal.ZERO);
-		BigDecimal discountLevel4 = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "discountLevel4", BigDecimal.ZERO);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String discountLevel1 = ParamUtil.getString(
+			actionRequest, "discountLevel1", BigDecimal.ZERO.toString());
+
+		discountLevel1 = _commercePriceFormatter.parse(
+			discountLevel1, themeDisplay.getLocale());
+
+		BigDecimal formattedDiscountLevel1 = new BigDecimal(discountLevel1);
+
+		String discountLevel2 = ParamUtil.getString(
+			actionRequest, "discountLevel2", BigDecimal.ZERO.toString());
+
+		discountLevel2 = _commercePriceFormatter.parse(
+			discountLevel2, themeDisplay.getLocale());
+
+		BigDecimal formattedDiscountLevel2 = new BigDecimal(discountLevel2);
+
+		String discountLevel3 = ParamUtil.getString(
+			actionRequest, "discountLevel3", BigDecimal.ZERO.toString());
+
+		discountLevel3 = _commercePriceFormatter.parse(
+			discountLevel3, themeDisplay.getLocale());
+
+		BigDecimal formattedDiscountLevel3 = new BigDecimal(discountLevel3);
+
+		String discountLevel4 = ParamUtil.getString(
+			actionRequest, "discountLevel4", BigDecimal.ZERO.toString());
+
+		discountLevel4 = _commercePriceFormatter.parse(
+			discountLevel4, themeDisplay.getLocale());
+
+		BigDecimal formattedDiscountLevel4 = new BigDecimal(discountLevel4);
+
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
@@ -212,28 +243,34 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
 
-		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "price", BigDecimal.ZERO);
+		String price = ParamUtil.getString(
+			actionRequest, "price", BigDecimal.ZERO.toString());
+
+		price = _commercePriceFormatter.parse(price, themeDisplay.getLocale());
+
+		BigDecimal formattedPrice = new BigDecimal(price);
+
 		boolean priceOnApplication = ParamUtil.getBoolean(
 			actionRequest, "priceOnApplication");
 
 		if (priceOnApplication) {
 			bulkPricing = commercePriceEntry.isBulkPricing();
 			overrideDiscount = !commercePriceEntry.isDiscountDiscovery();
-			discountLevel1 = commercePriceEntry.getDiscountLevel1();
-			discountLevel2 = commercePriceEntry.getDiscountLevel2();
-			discountLevel3 = commercePriceEntry.getDiscountLevel3();
-			discountLevel4 = commercePriceEntry.getDiscountLevel4();
-			price = commercePriceEntry.getPrice();
+			formattedDiscountLevel1 = commercePriceEntry.getDiscountLevel1();
+			formattedDiscountLevel2 = commercePriceEntry.getDiscountLevel2();
+			formattedDiscountLevel3 = commercePriceEntry.getDiscountLevel3();
+			formattedDiscountLevel4 = commercePriceEntry.getDiscountLevel4();
+			formattedPrice = commercePriceEntry.getPrice();
 		}
 
 		return _commercePriceEntryService.updateCommercePriceEntry(
 			commercePriceEntryId, bulkPricing, !overrideDiscount,
-			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, priceOnApplication,
+			formattedDiscountLevel1, formattedDiscountLevel2,
+			formattedDiscountLevel3, formattedDiscountLevel4, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			formattedPrice, priceOnApplication,
 			commercePriceEntry.getUnitOfMeasureKey(),
 			ServiceContextFactory.getInstance(
 				CommercePriceEntry.class.getName(), actionRequest));
@@ -241,6 +278,9 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

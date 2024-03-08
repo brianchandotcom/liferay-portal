@@ -24,10 +24,6 @@ import useGetListItemsFromPartnerOpportunities from './hooks/useGetListItemsFrom
 import PartnerOpportunitiesItem from './interfaces/partnerOpportunitiesItem';
 
 interface IProps {
-	getFilteredItems: (
-		items: PartnerOpportunitiesItem[],
-		openOpportunitiesFilter: boolean
-	) => PartnerOpportunitiesItem[];
 	isRenewalListing?: boolean;
 	name: string;
 	sort: string;
@@ -36,12 +32,7 @@ interface IProps {
 const BASE_PAGE = 1;
 const MAX_ITEMS = 200;
 
-const PartnerOpportunitiesList = ({
-	getFilteredItems,
-	isRenewalListing,
-	name,
-	sort,
-}: IProps) => {
+const PartnerOpportunitiesList = ({isRenewalListing, name, sort}: IProps) => {
 	const [openOpportunitiesFilter, setOpenOpportunitiesFilter] = useState(
 		JSON.parse(sessionStorage.getItem('openOpportunitiesFilter')!) === null
 			? true
@@ -81,11 +72,8 @@ const PartnerOpportunitiesList = ({
 	);
 
 	const {totalCount: totalPagination} = data;
-	const filteredData =
-		data.items && getFilteredItems(data.items, openOpportunitiesFilter);
-	const filteredCSVData =
-		dataCSV.items &&
-		getFilteredItems(dataCSV.items, openOpportunitiesFilter);
+	const filteredData = data.items;
+	const filteredCSVData = dataCSV.items;
 
 	const columns = [
 		{

@@ -33,17 +33,13 @@ export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
 };
 interface IProps {
-	getFilteredItems: (
-		items: DealRegistrationItem[],
-		submittedDealsFilter: boolean
-	) => DealRegistrationItem[];
 	sort: string;
 }
 
 const BASE_PAGE = 1;
 const MAX_ITEMS = 200;
 
-const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
+const DealRegistrationList = ({sort}: IProps) => {
 	const [submittedDealsFilter, setSubmittedDealsFilter] = useState(
 		JSON.parse(sessionStorage.getItem('submittedDealsFilter')!) === null
 			? true
@@ -83,10 +79,8 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 
 	const actions = usePermissionActions(ObjectActionName.DEAL_REGISTRATION);
 
-	const filteredData =
-		data.items && getFilteredItems(data.items, submittedDealsFilter);
-	const filteredCSVData =
-		dataCSV.items && getFilteredItems(dataCSV.items, submittedDealsFilter);
+	const filteredData = data.items;
+	const filteredCSVData = dataCSV.items;
 
 	const columns = [
 		{

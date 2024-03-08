@@ -298,7 +298,9 @@ const AddFieldsModalContent = ({
 				) : (
 					<>
 						<ClayManagementToolbar>
-							<ClayManagementToolbar.Search>
+							<ClayManagementToolbar.Search
+								onSubmit={(event) => event.preventDefault()}
+							>
 								<AutoSearch onSearch={onSearch} query={query} />
 							</ClayManagementToolbar.Search>
 						</ClayManagementToolbar>

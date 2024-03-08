@@ -3360,7 +3360,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void waitForPopUp(String windowID, String timeout) {
 		int wait = 0;
 
-		if (timeout.equals("")) {
+		if (timeout.equals("") || timeout.equals("null")) {
 			wait = 30;
 		}
 		else {

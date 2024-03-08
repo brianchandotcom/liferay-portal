@@ -16,6 +16,7 @@ import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,9 +28,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -96,8 +99,16 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 					httpServletRequest);
 			}
 
-			BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
-				actionRequest, "quantity", BigDecimal.ZERO);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			String quantity = ParamUtil.getString(
+				actionRequest, "quantity", BigDecimal.ZERO.toString());
+
+			BigDecimal formattedQuantity =
+				_commerceOrderItemQuantityFormatter.parse(
+					quantity, themeDisplay.getLocale());
+
 			String unitOfMeasureKey = ParamUtil.getString(
 				actionRequest, "unitOfMeasureKey");
 
@@ -111,7 +122,7 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId,
-					formFieldValues, quantity, 0, BigDecimal.ZERO,
+					formFieldValues, formattedQuantity, 0, BigDecimal.ZERO,
 					unitOfMeasureKey, commerceContext, serviceContext);
 
 			jsonObject.put(
@@ -192,6 +203,10 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+
+	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

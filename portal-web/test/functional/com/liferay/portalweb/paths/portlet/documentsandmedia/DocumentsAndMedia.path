@@ -219,7 +219,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_STATUS</td>
-	<td>//*[contains(@data-title,'${key_dmDocumentTitle}')]//span[contains(@class,'status') and contains(@class,'${key_workflowStatus}')]</td>
+	<td>//*[contains(@data-title,'${key_dmDocumentTitle}')]//span[contains(@class,'status') and contains(.,'${key_workflowStatus}')]</td>
 	<td></td>
 </tr>
 <tr>

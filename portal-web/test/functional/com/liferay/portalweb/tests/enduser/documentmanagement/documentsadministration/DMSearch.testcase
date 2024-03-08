@@ -117,13 +117,13 @@ definition {
 			authorName = "Test Test",
 			contextualBreadcrumb = "Home",
 			dmDocumentTitle = "DM Document 1",
-			workflowStatus = "approved");
+			workflowStatus = "Approved");
 
 		DMDocument.viewDocumentDetailsInListView(
 			authorName = "Test Test",
 			contextualBreadcrumb = "Home",
 			dmDocumentTitle = "DM Document 2",
-			workflowStatus = "approved");
+			workflowStatus = "Approved");
 	}
 
 	@priority = 5
@@ -244,7 +244,7 @@ definition {
 			authorName = "Test Test",
 			contextualBreadcrumb = "Home",
 			dmDocumentTitle = "Test External Video",
-			workflowStatus = "approved");
+			workflowStatus = "Approved");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "Test Document",
@@ -256,13 +256,13 @@ definition {
 			authorName = "Test Test",
 			contextualBreadcrumb = "Home",
 			dmDocumentTitle = "Test External Video",
-			workflowStatus = "approved");
+			workflowStatus = "Approved");
 
 		DMDocument.viewDocumentDetailsInListView(
 			authorName = "Test Test",
 			contextualBreadcrumb = "Home",
 			dmDocumentTitle = "Test Document",
-			workflowStatus = "approved");
+			workflowStatus = "Approved");
 	}
 
 	@description = "This is a test for LPS-98063. It checks that a user can search for document by synonyms."
@@ -420,7 +420,7 @@ definition {
 			authorName = "Test Test",
 			contextualBreadcrumb = "Home > Folder 1",
 			dmDocumentTitle = "DM Asset",
-			workflowStatus = "approved");
+			workflowStatus = "Approved");
 
 		DMFolder.viewDetailsInListView(
 			authorName = "Test Test",

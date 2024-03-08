@@ -119,7 +119,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",
-			value1 = "\"cluster_name\" : \"LiferayElasticsearchCluster\"");
+			value1 = "\"cluster_name\" : \"Liferay");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "//body",

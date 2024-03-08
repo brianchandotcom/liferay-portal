@@ -1,19 +1,25 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertKeywordNotPresentByIndex(keywordName = null, index = null) {
+	macro assertKeywordNotPresentByIndex(keywordName, index) {
 		var key_keywordName = ${keywordName};
 		var key_index = ${index};
 
-		AssertElementNotPresent(locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+		AssertTextNotEquals(
+			key_index = ${index},
+			locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX",
+			value1 = ${keywordName});
 	}
 
 	@summary = "Default summary"
-	macro assertKeywordPresentByIndex(keywordName = null, index = null) {
+	macro assertKeywordPresentByIndex(keywordName, index) {
 		var key_keywordName = ${keywordName};
 		var key_index = ${index};
 
-		AssertElementPresent(locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+		AssertTextEquals(
+			key_index = ${index},
+			locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX",
+			value1 = ${keywordName});
 	}
 
 	@summary = "Default summary"

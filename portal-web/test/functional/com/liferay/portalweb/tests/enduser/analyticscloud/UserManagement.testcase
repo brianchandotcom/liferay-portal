@@ -877,15 +877,15 @@ definition {
 		}
 
 		task ("Assert that the first item on the list was changed") {
-			AssertElementPresent(
+			AssertTextEquals(
 				key_index = 1,
-				key_keywordName = "test test",
-				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX",
+				value1 = "test test");
 
-			AssertElementPresent(
+			AssertTextEquals(
 				key_index = 5,
-				key_keywordName = "bryan cheung",
-				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX",
+				value1 = "bryan cheung");
 		}
 
 		task ("Change the order do asc") {
@@ -893,15 +893,15 @@ definition {
 		}
 
 		task ("Assert that the first item on the list was changed") {
-			AssertElementPresent(
+			AssertTextEquals(
 				key_index = 1,
-				key_keywordName = "bryan cheung",
-				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX",
+				value1 = "bryan cheung");
 
-			AssertElementPresent(
+			AssertTextEquals(
 				key_index = 5,
-				key_keywordName = "Test Test",
-				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX");
+				locator1 = "ACSettings#KEYWORD_NAME_BY_INDEX",
+				value1 = "Test Test");
 		}
 	}
 

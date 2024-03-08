@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -186,9 +187,28 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	@Override
 	public void checkPortlets(long companyId) throws PortalException {
+
+		// Initialize display
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initialize display");
+		}
+
+		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
+			companyId, WebKeys.PORTLET_CATEGORY);
+
+		if (portletCategory == null) {
+			portletCategory = new PortletCategory();
+
+			WebAppPool.put(
+				companyId, WebKeys.PORTLET_CATEGORY, portletCategory);
+		}
+
 		List<Portlet> portlets = getPortlets(companyId);
 
 		for (Portlet portlet : portlets) {
+			_updatePortletCategory(portletCategory, portlet);
+
 			checkPortlet(portlet);
 		}
 	}
@@ -322,6 +342,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			boolean eagerDestroy, boolean clearCache)
 		throws PortalException {
 
+		portlet.setDisplayCategories(SetUtil.fromArray(categoryNames));
+
 		_portletsMap.put(portlet.getRootPortletId(), portlet);
 
 		if (eagerDestroy) {
@@ -336,7 +358,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
-				_deployRemotePortlet(companyId, portlet, categoryNames);
+				_deployRemotePortlet(companyId, portlet);
 
 				portletPersistence.flush();
 			},
@@ -2642,8 +2664,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return updatePortlet(companyId, portletId, roles, active);
 	}
 
-	private void _deployRemotePortlet(
-			long companyId, Portlet portlet, String[] categoryNames)
+	private void _deployRemotePortlet(long companyId, Portlet portlet)
 		throws PortalException {
 
 		Portlet companyPortletModel = (Portlet)portlet.clone();
@@ -2662,24 +2683,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return;
 		}
 
-		portletCategory.separate(companyPortletModel.getPortletId());
-
-		for (String categoryName : categoryNames) {
-			PortletCategory newPortletCategory = new PortletCategory(
-				categoryName);
-
-			if (newPortletCategory.getParentCategory() == null) {
-				PortletCategory rootPortletCategory = new PortletCategory();
-
-				rootPortletCategory.addCategory(newPortletCategory);
-			}
-
-			Set<String> portletIds = newPortletCategory.getPortletIds();
-
-			portletIds.add(companyPortletModel.getPortletId());
-
-			portletCategory.merge(newPortletCategory.getRootCategory());
-		}
+		_updatePortletCategory(portletCategory, companyPortletModel);
 
 		checkPortlet(companyPortletModel);
 	}
@@ -2752,6 +2756,29 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		ExtraPortletAppConfigRegistry.registerExtraPortletAppConfig(
 			servletContextName, extraPortletAppConfig);
+	}
+
+	private void _updatePortletCategory(
+		PortletCategory portletCategory, Portlet portlet) {
+
+		portletCategory.separate(portlet.getPortletId());
+
+		for (String categoryName : portlet.getDisplayCategories()) {
+			PortletCategory newPortletCategory = new PortletCategory(
+				categoryName);
+
+			if (newPortletCategory.getParentCategory() == null) {
+				PortletCategory rootPortletCategory = new PortletCategory();
+
+				rootPortletCategory.addCategory(newPortletCategory);
+			}
+
+			Set<String> portletIds = newPortletCategory.getPortletIds();
+
+			portletIds.add(portlet.getPortletId());
+
+			portletCategory.merge(newPortletCategory.getRootCategory());
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

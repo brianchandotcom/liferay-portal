@@ -134,6 +134,7 @@ definition {
 	@priority = 3
 	test AssertIndividualsSegmentSelected {
 		property test.run.type = "single";
+
 		var emailList = "user1@liferay.com";
 
 		task ("View the page as different users") {

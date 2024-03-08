@@ -35,3 +35,15 @@ type PageElement = {
 		| 'Section'
 		| 'Widget';
 };
+
+type SpacingType =
+	| 'Margin Bottom'
+	| 'Margin Left'
+	| 'Margin Right'
+	| 'Margin Top'
+	| 'Padding Bottom'
+	| 'Padding Left'
+	| 'Padding Right'
+	| 'Padding Top';
+
+type StyleUnit = 'px' | '%' | 'em' | 'rem' | 'vw' | 'vh' | 'custom';

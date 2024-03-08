@@ -10,6 +10,11 @@ interface ScriptManagementContainerProps {
 	allowScriptContentBeExecutedOrIncluded: boolean;
 	baseResourceURL: string;
 }
+export declare type GroovyScriptUseItem = {
+	companyWebId: string;
+	redirectURL: string;
+	scriptSource: string;
+};
 export default function ScriptManagementContainer({
 	allowScriptContentBeExecutedOrIncluded,
 	baseResourceURL,

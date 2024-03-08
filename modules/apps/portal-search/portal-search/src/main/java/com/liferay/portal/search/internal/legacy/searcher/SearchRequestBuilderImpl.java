@@ -559,10 +559,24 @@ public class SearchRequestBuilderImpl implements SearchRequestBuilder {
 		for (SearchRequestBuilder searchRequestBuilder :
 				searchRequestBuilders) {
 
-			searchRequests.add(searchRequestBuilder.build());
+			SearchRequest searchRequest = searchRequestBuilder.build();
+
+			SearchContext searchContext = _getSearchContext(searchRequest);
+
+			searchContext.setEnd(_searchContext.getEnd());
+			searchContext.setStart(_searchContext.getStart());
+
+			searchRequests.add(searchRequest);
 		}
 
 		return searchRequests;
+	}
+
+	private SearchContext _getSearchContext(SearchRequest searchRequest) {
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(searchRequest);
+
+		return searchRequestBuilder.withSearchContextGet(Function.identity());
 	}
 
 	private SearchRequestImpl _getSearchRequestImpl(

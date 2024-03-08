@@ -107,7 +107,7 @@ public class UpgradeProcessFactory {
 	}
 
 	public static UpgradeProcess runSQL(String... sqls) {
-		return new UpgradeProcess() {
+		return new UpgradeProcess(_getUpgradeInfo("run SQL updates")) {
 
 			@Override
 			protected void doUpgrade() throws Exception {

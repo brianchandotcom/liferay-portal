@@ -259,7 +259,7 @@ function SpacingSelectorButton({
 				</ClayButton>
 			}
 		>
-			<div ref={itemListRef}>
+			<div className={DROPDOWN_CLASSNAME} ref={itemListRef}>
 				<ClayDropDown.ItemList aria-labelledby={triggerId}>
 					{active && canSetCustomValue ? (
 						<>

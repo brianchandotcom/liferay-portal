@@ -11,6 +11,7 @@ import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.type.deployer.CETDeployer;
 import com.liferay.client.extension.type.factory.CETFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,7 +38,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Anderson Luiz
  * @author Thiago Buarque
  */
-@FeatureFlags("LPD-10773")
+@FeatureFlags({"LPD-10773", "LPD-15804", "LPS-186870"})
 @RunWith(Arquillian.class)
 public class CETDeployerTest {
 
@@ -51,18 +52,43 @@ public class CETDeployerTest {
 		User user = UserTestUtil.addUser();
 
 		_testDeploy(
-			ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY, user);
-		_testDeploy(ClientExtensionEntryConstants.TYPE_THEME_CSS, user);
+			1, ClientExtensionEntryConstants.TYPE_COMMERCE_CHECKOUT_STEP,
+			"checkoutStepOrder=" + RandomTestUtil.randomInt(), user);
+		_testDeploy(
+			1, ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK,
+			user);
+
+		String randomURL = "http://" + RandomTestUtil.randomString() + ".com";
+
+		_testDeploy(
+			2, ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT,
+			"htmlElementName=valid-name\nurls=" + randomURL, user);
+		_testDeploy(
+			1, ClientExtensionEntryConstants.TYPE_EDITOR_CONFIG_CONTRIBUTOR,
+			"url=" + randomURL, user);
+		_testDeploy(
+			2, ClientExtensionEntryConstants.TYPE_IFRAME, "url=" + randomURL,
+			user);
+		_testDeploy(
+			1, ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY,
+			StringBundler.concat(
+				"bareSpecifier=", RandomTestUtil.randomString(), "\nurl=",
+				randomURL),
+			user);
 	}
 
-	private void _testDeploy(String type, User user) throws Exception {
+	private void _testDeploy(
+			int expectedServiceRegistrationsSize, String type,
+			String typeSettings, User user)
+		throws Exception {
+
 		ClientExtensionEntry clientExtensionEntry =
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
 				StringPool.BLANK, user.getUserId(), StringPool.BLANK,
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()
 				).build(),
-				StringPool.BLANK, StringPool.BLANK, type, StringPool.BLANK);
+				StringPool.BLANK, StringPool.BLANK, type, typeSettings);
 
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
@@ -71,8 +97,8 @@ public class CETDeployerTest {
 				_cetFactory.create(clientExtensionEntry, false));
 
 			Assert.assertEquals(
-				serviceRegistrations.toString(), 1,
-				serviceRegistrations.size());
+				serviceRegistrations.toString(),
+				expectedServiceRegistrationsSize, serviceRegistrations.size());
 		}
 		finally {
 			_clientExtensionEntryLocalService.deleteClientExtensionEntry(

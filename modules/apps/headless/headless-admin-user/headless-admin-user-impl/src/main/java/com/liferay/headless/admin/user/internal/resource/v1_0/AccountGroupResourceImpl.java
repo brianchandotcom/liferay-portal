@@ -211,6 +211,19 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			Long accountGroupId, AccountGroup accountGroup)
 		throws Exception {
 
+		if (accountGroupId <= 0) {
+			com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
+				_accountGroupService.addAccountGroup(
+					contextUser.getUserId(), accountGroup.getDescription(),
+					accountGroup.getName(),
+					_createServiceContext(accountGroup));
+
+			return _toAccountGroup(
+				_accountGroupService.updateExternalReferenceCode(
+					serviceBuilderAccountGroup.getAccountGroupId(),
+					accountGroup.getExternalReferenceCode()));
+		}
+
 		_accountGroupService.updateExternalReferenceCode(
 			accountGroupId, accountGroup.getExternalReferenceCode());
 
@@ -225,10 +238,16 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			String externalReferenceCode, AccountGroup accountGroup)
 		throws Exception {
 
+		com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
+			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (serviceBuilderAccountGroup == null) {
+			return putAccountGroup(0L, accountGroup);
+		}
+
 		return putAccountGroup(
-			DTOConverterUtil.getModelPrimaryKey(
-				_accountGroupResourceDTOConverter, externalReferenceCode),
-			accountGroup);
+			serviceBuilderAccountGroup.getAccountGroupId(), accountGroup);
 	}
 
 	private ServiceContext _createServiceContext(AccountGroup accountGroup)

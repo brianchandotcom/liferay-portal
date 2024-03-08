@@ -92,10 +92,13 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 	public AccountGroup getAccountGroup(long accountGroupId)
 		throws PortalException {
 
+		AccountGroup accountGroup = accountGroupLocalService.getAccountGroup(
+			accountGroupId);
+
 		_accountGroupModelResourcePermission.check(
 			getPermissionChecker(), accountGroupId, ActionKeys.VIEW);
 
-		return accountGroupLocalService.getAccountGroup(accountGroupId);
+		return accountGroup;
 	}
 
 	@Override

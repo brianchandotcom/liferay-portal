@@ -6,6 +6,7 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.exception.CommerceShippingFixedOptionKeyException;
@@ -19,11 +20,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -151,13 +154,22 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 
 	private CommerceShippingFixedOption _updateCommerceShippingFixedOption(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceShippingFixedOptionId = ParamUtil.getLong(
 			actionRequest, "commerceShippingFixedOptionId");
 
-		BigDecimal amount = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "amount", BigDecimal.ZERO);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String amount = ParamUtil.getString(
+			actionRequest, "amount", BigDecimal.ZERO.toString());
+
+		amount = _commercePriceFormatter.parse(
+			amount, themeDisplay.getLocale());
+
+		BigDecimal formattedAmount = new BigDecimal(amount);
+
 		Map<Locale, String> descriptionMap = _localization.getLocalizationMap(
 			actionRequest, "description");
 		String key = ParamUtil.getString(actionRequest, "key");
@@ -171,8 +183,8 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			commerceShippingFixedOption =
 				_commerceShippingFixedOptionService.
 					updateCommerceShippingFixedOption(
-						commerceShippingFixedOptionId, amount, descriptionMap,
-						key, nameMap, priority);
+						commerceShippingFixedOptionId, formattedAmount,
+						descriptionMap, key, nameMap, priority);
 		}
 		else {
 			long commerceShippingMethodId = ParamUtil.getLong(
@@ -187,11 +199,15 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 					addCommerceShippingFixedOption(
 						commerceShippingMethod.getGroupId(),
 						commerceShippingMethod.getCommerceShippingMethodId(),
-						amount, descriptionMap, key, nameMap, priority);
+						formattedAmount, descriptionMap, key, nameMap,
+						priority);
 		}
 
 		return commerceShippingFixedOption;
 	}
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommerceShippingFixedOptionService

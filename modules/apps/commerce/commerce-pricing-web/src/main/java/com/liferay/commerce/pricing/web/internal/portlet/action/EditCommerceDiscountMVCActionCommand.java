@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
 import com.liferay.commerce.discount.exception.CommerceDiscountMaxPriceValueException;
@@ -18,8 +19,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -158,15 +161,30 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		boolean usePercentage = ParamUtil.getBoolean(
 			actionRequest, "usePercentage");
 
-		BigDecimal maximumDiscountAmount = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "maximumDiscountAmount", BigDecimal.ZERO);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String maximumDiscountAmount = ParamUtil.getString(
+			actionRequest, "maximumDiscountAmount", BigDecimal.ZERO.toString());
+
+		maximumDiscountAmount = _commercePriceFormatter.parse(
+			maximumDiscountAmount, themeDisplay.getLocale());
+
+		BigDecimal formattedMaximumDiscountAmount = new BigDecimal(
+			maximumDiscountAmount);
 
 		String level = ParamUtil.getString(actionRequest, "level");
 
-		BigDecimal amount = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "amount", BigDecimal.ZERO);
+		String amount = ParamUtil.getString(
+			actionRequest, "amount", BigDecimal.ZERO.toString());
 
-		BigDecimal[] discountLevels = _getDiscountLevels(level, amount);
+		amount = _commercePriceFormatter.parse(
+			amount, themeDisplay.getLocale());
+
+		BigDecimal formattedAmount = new BigDecimal(amount);
+
+		BigDecimal[] discountLevels = _getDiscountLevels(
+			level, formattedAmount);
 
 		int limitationTimes = ParamUtil.getInteger(
 			actionRequest, "limitationTimes");
@@ -232,9 +250,9 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 
 		return _commerceDiscountService.addOrUpdateCommerceDiscount(
 			externalReferenceCode, commerceDiscountId, title, target,
-			useCouponCode, couponCode, usePercentage, maximumDiscountAmount,
-			level, discountLevels[0], discountLevels[1], discountLevels[2],
-			discountLevels[3],
+			useCouponCode, couponCode, usePercentage,
+			formattedMaximumDiscountAmount, level, discountLevels[0],
+			discountLevels[1], discountLevels[2], discountLevels[3],
 			_getLimitationType(limitationTimes, limitationTimesPerAccount),
 			limitationTimes, limitationTimesPerAccount, rulesConjunction,
 			active, displayDateMonth, displayDateDay, displayDateYear,
@@ -245,5 +263,8 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceDiscountService _commerceDiscountService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 }

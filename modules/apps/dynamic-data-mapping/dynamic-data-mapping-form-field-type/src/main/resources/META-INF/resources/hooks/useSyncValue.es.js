@@ -24,7 +24,7 @@ export function useSyncValue(newValue, isDelay = true, forceValue) {
 		const handler = setTimeout(
 			() => {
 				if (
-					value !== newValue &&
+					value !== newValue ||
 					previousValueRef.current !== newValue
 				) {
 					previousValueRef.current = newValue;

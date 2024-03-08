@@ -77,7 +77,7 @@ definition {
 		}
 
 		task ("Click on the delete button on the top") {
-			Button.clickDelete();
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Delete");
 		}
 
 		task ("Get site assigned property name and get data source name") {
@@ -127,7 +127,7 @@ definition {
 		}
 
 		task ("Click on the review button on the top") {
-			Button.click(button = "Review");
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Review");
 		}
 
 		task ("Get site assigned property name and get data source name") {

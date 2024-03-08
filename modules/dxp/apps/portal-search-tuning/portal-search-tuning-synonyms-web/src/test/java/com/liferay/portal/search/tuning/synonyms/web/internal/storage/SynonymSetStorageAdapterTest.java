@@ -36,7 +36,7 @@ public class SynonymSetStorageAdapterTest {
 		_synonymSetStorageAdapter = new SynonymSetStorageAdapter();
 
 		ReflectionTestUtil.setFieldValue(
-			_synonymSetStorageAdapter, "synonymSetIndexWriter",
+			_synonymSetStorageAdapter, "_synonymSetIndexWriter",
 			_synonymSetIndexWriter);
 		ReflectionTestUtil.setFieldValue(
 			_synonymSetStorageAdapter, "synonymSetJSONStorageHelper",

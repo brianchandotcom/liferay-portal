@@ -5,8 +5,8 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
@@ -27,7 +27,7 @@ import org.mockito.Mockito;
 /**
  * @author Wade Cao
  */
-public class SynonymSetIndexWriterImplTest extends BaseSynonymsWebTestCase {
+public class SynonymSetIndexWriterTest extends BaseSynonymsWebTestCase {
 
 	@ClassRule
 	@Rule
@@ -43,11 +43,8 @@ public class SynonymSetIndexWriterImplTest extends BaseSynonymsWebTestCase {
 			Mockito.mock(Document.class)
 		);
 
-		_synonymSetIndexWriterImpl = new SynonymSetIndexWriterImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexWriterImpl, "_searchEngineAdapter",
-			searchEngineAdapter);
+		_synonymSetIndexWriterImpl = new SynonymSetIndexWriter(
+			Mockito.mock(DocumentBuilderFactory.class), searchEngineAdapter);
 	}
 
 	@After
@@ -104,7 +101,7 @@ public class SynonymSetIndexWriterImplTest extends BaseSynonymsWebTestCase {
 		return indexDocumentResponse;
 	}
 
-	private SynonymSetIndexWriterImpl _synonymSetIndexWriterImpl;
+	private SynonymSetIndexWriter _synonymSetIndexWriterImpl;
 	private final MockedStatic<SynonymSetToDocumentTranslatorUtil>
 		_synonymSetToDocumentTranslatorUtilMockedStatic = Mockito.mockStatic(
 			SynonymSetToDocumentTranslatorUtil.class);

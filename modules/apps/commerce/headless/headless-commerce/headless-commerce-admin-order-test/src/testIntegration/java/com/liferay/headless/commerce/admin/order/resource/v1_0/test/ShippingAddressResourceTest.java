@@ -116,7 +116,7 @@ public class ShippingAddressResourceTest
 				commerceCurrency.getCommerceCurrencyId(),
 				CommerceOrderConstants.TYPE_PK_FULFILLMENT, 0,
 				address.getAddressId(), RandomTestUtil.randomString(), 1, 1,
-				2022, 0, 0, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+				2022, 0, 0, CommerceOrderConstants.ORDER_STATUS_OPEN,
 				CommercePaymentMethodConstants.TYPE_OFFLINE,
 				RandomTestUtil.randomString(), BigDecimal.ONE,
 				RandomTestUtil.randomString(), BigDecimal.ONE, BigDecimal.ONE,
@@ -140,6 +140,14 @@ public class ShippingAddressResourceTest
 			commerceOrderItem.getCommerceOrderItemId(), address.getAddressId(),
 			commerceOrderItem.getDeliveryGroup(),
 			commerceOrderItem.getPrintedNote());
+
+		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
+
+		commerceOrder.setOrderStatus(
+			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+
+		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
 	}
 
 	@Ignore

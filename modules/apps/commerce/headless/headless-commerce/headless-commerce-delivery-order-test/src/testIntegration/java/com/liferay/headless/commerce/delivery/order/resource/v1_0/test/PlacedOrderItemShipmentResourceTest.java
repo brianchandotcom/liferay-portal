@@ -98,12 +98,6 @@ public class PlacedOrderItemShipmentResourceTest
 			_accountEntry.getAccountEntryId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
-		_commerceOrder.setOrderStatus(
-			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
-
-		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			_commerceOrder);
-
 		_commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
 				RandomTestUtil.randomString(), testGroup.getGroupId(),
@@ -126,6 +120,15 @@ public class PlacedOrderItemShipmentResourceTest
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,
 					testGroup, _commerceOrder),
 				_serviceContext);
+
+		_commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			_commerceOrder.getCommerceOrderId());
+
+		_commerceOrder.setOrderStatus(
+			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
 
 		_country = _countryLocalService.addCountry(
 			"XY", "XYZ", true, true, RandomTestUtil.randomString(),

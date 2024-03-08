@@ -50,10 +50,18 @@ test.afterEach(async ({apiHelpers}) => {
 				await apiHelpers.headlessSite.deleteSite(item.id);
 
 				break;
+			case 'skuUnitOfMeasure':
+				await apiHelpers.headlessCommerceAdminCatalog.deleteSkuUnitOfMeasure(
+					item.id
+				);
+
+				break;
 			default:
 				break;
 		}
 	}
+
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', false);
 });
 
 test('mini cart bundle with UOM', async ({
@@ -246,6 +254,9 @@ test('mini cart bundle with UOM', async ({
 				rate: 1,
 			}
 		);
+
+	data.push({id: sku1SkuUnitOfMeasure.id, type: 'skuUnitOfMeasure'});
+
 	const sku2SkuUnitOfMeasure =
 		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
 			sku2.id,
@@ -256,6 +267,8 @@ test('mini cart bundle with UOM', async ({
 				rate: 0.5,
 			}
 		);
+
+	data.push({id: sku2SkuUnitOfMeasure.id, type: 'skuUnitOfMeasure'});
 
 	await applicationsMenuPage.goToSite('Mini Cart Site');
 
@@ -339,6 +352,4 @@ test('mini cart bundle with UOM', async ({
 	await expect(
 		page.getByText('$ 100.00', {exact: true}).first()
 	).toBeVisible();
-
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', false);
 });

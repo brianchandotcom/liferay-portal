@@ -52,6 +52,8 @@ test.afterEach(async ({apiHelpers}) => {
 				break;
 		}
 	}
+
+	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', false);
 });
 
 test('Edit pending order item with UOM', async ({
@@ -143,8 +145,6 @@ test('Edit pending order item with UOM', async ({
 	await pendingOrdersPage.orderItemActionsButton.click();
 
 	await expect(pendingOrdersPage.orderItemActionsButtonEdit).toBeVisible();
-
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', false);
 });
 
 test('Edit pending order item without UOM', async ({
@@ -229,6 +229,4 @@ test('Edit pending order item without UOM', async ({
 	await pendingOrdersPage.orderItemActionsButton.click();
 
 	await expect(pendingOrdersPage.orderItemActionsButtonEdit).toHaveCount(0);
-
-	await apiHelpers.featureFlag.updateFeatureFlag('COMMERCE-9599', false);
 });

@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>FILTER_AND_ORDER_DROPDOWN</td>
-	<td>//*[contains(@class, 'dropdown-toggle') and contains(@class, 'nav-link') and contains(@class, 'btn-unstyled')]</td>
+	<td>//*[contains(@class, 'dropdown-toggle') and contains(@class, 'nav-link') and contains(@class, 'btn-unstyled') and @aria-expanded]</td>
 	<td></td>
 </tr>
 <tr>

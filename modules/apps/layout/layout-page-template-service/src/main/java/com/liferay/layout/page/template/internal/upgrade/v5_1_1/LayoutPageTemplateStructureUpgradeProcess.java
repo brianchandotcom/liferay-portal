@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v5_1_1;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -71,35 +72,50 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		List<Long> plids = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select layoutPageTemplateStructureId, classPK from " +
-					"LayoutPageTemplateStructure where classPK in " +
-						"(select plid from Layout where type_ = ?)");
+				StringBundler.concat(
+					"select LayoutPageTemplateStructure.",
+					"layoutPageTemplateStructureId, ",
+					"LayoutPageTemplateStructure.ctCollectionId, ",
+					"LayoutPageTemplateStructure.classPK from ",
+					"LayoutPageTemplateStructure inner join Layout on ",
+					"LayoutPageTemplateStructure.classPK = Layout.plid and ",
+					"LayoutPageTemplateStructure.ctCollectionId = ",
+					"Layout.ctCollectionId and Layout.type_ = ?"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"delete from LayoutPageTemplateStructure where classPK = " +
-						"?");
+						"? and ctCollectionId = ?");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"delete from LayoutPageTemplateStructureRel where " +
-						"layoutPageTemplateStructureId = ?")) {
+						"layoutPageTemplateStructureId = ? and " +
+							"ctCollectionId = ?")) {
 
 			preparedStatement1.setString(1, LayoutConstants.TYPE_PORTLET);
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
-				long classPK = resultSet.getLong("classPK");
+				long classPK = resultSet.getLong(
+					"LayoutPageTemplateStructure.classPK");
+				long ctCollectionId = resultSet.getLong(
+					"LayoutPageTemplateStructure.ctCollectionId");
 
 				plids.add(classPK);
 
 				preparedStatement2.setLong(1, classPK);
+				preparedStatement2.setLong(2, ctCollectionId);
 
 				preparedStatement2.addBatch();
 
 				preparedStatement3.setLong(
-					1, resultSet.getLong("layoutPageTemplateStructureId"));
+					1,
+					resultSet.getLong(
+						"LayoutPageTemplateStructure." +
+							"layoutPageTemplateStructureId"));
+				preparedStatement3.setLong(2, ctCollectionId);
 
 				preparedStatement3.addBatch();
 			}

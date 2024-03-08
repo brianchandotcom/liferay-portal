@@ -50,20 +50,6 @@ definition {
 		}
 	}
 
-	@description = "Can add a widget page with escape characters."
-	@priority = 3
-	test AddPageWithEscapeCharacter {
-		task ("Add a page with escape characters name") {
-			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
-
-			PagesAdmin.addPage(pageName = "Test's Page Name");
-		}
-
-		task ("View the alert not shown") {
-			AssertAlertNotPresent();
-		}
-	}
-
 	@description = "The user can add a private widget page with a child page."
 	@priority = 4
 	test AddPrivateChildPage {

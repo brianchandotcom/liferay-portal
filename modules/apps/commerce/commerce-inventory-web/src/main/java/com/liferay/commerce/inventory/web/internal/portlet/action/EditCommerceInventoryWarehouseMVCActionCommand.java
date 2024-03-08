@@ -13,6 +13,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemServ
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureKeyException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -21,9 +22,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -86,21 +89,29 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 	}
 
 	private void _addCommerceInventoryWarehouse(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
 
-		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "quantity", BigDecimal.ZERO);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String quantity = ParamUtil.getString(
+			actionRequest, "quantity", BigDecimal.ZERO.toString());
+
+		BigDecimal formattedQuantity =
+			_commerceOrderItemQuantityFormatter.parse(
+				quantity, themeDisplay.getLocale());
+
 		String sku = ParamUtil.getString(actionRequest, "sku");
 		String unitOfMeasure = ParamUtil.getString(
 			actionRequest, "unitOfMeasure");
 
 		_commerceInventoryWarehouseItemService.
 			addCommerceInventoryWarehouseItem(
-				StringPool.BLANK, commerceInventoryWarehouseId, quantity, sku,
-				unitOfMeasure);
+				StringPool.BLANK, commerceInventoryWarehouseId,
+				formattedQuantity, sku, unitOfMeasure);
 	}
 
 	private void _deleteCommerceInventoryWarehouse(ActionRequest actionRequest)
@@ -122,7 +133,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 	}
 
 	private void _updateCommerceInventoryWarehouse(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
@@ -136,21 +147,28 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				fetchCommerceInventoryWarehouseItem(
 					commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 
-		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "quantity", BigDecimal.ZERO);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String quantity = ParamUtil.getString(
+			actionRequest, "quantity", BigDecimal.ZERO.toString());
+
+		BigDecimal formattedQuantity =
+			_commerceOrderItemQuantityFormatter.parse(
+				quantity, themeDisplay.getLocale());
 
 		if (commerceInventoryWarehouseItem == null) {
 			_commerceInventoryWarehouseItemService.
 				addCommerceInventoryWarehouseItem(
-					StringPool.BLANK, commerceInventoryWarehouseId, quantity,
-					sku, unitOfMeasureKey);
+					StringPool.BLANK, commerceInventoryWarehouseId,
+					formattedQuantity, sku, unitOfMeasureKey);
 		}
 		else {
 			_commerceInventoryWarehouseItemService.
 				increaseCommerceInventoryWarehouseItemQuantity(
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId(),
-					quantity);
+					formattedQuantity);
 		}
 	}
 
@@ -164,6 +182,10 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 	@Reference
 	private CommerceInventoryWarehouseItemService
 		_commerceInventoryWarehouseItemService;
+
+	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
 
 	@Reference
 	private Portal _portal;

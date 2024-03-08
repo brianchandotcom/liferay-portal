@@ -1,5 +1,6 @@
 assemble:
-    - fromTask: buildFavicon
+    - from: assets
+      hashify: favicon.ico
       into: static
 liferay-sample-theme-favicon:
     name: Liferay Sample Theme Favicon

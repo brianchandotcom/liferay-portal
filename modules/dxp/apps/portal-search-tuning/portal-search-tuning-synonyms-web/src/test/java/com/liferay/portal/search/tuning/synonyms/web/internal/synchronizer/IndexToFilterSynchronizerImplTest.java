@@ -8,7 +8,7 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.web.internal.BaseSynonymsWebTestCase;
-import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterWriter;
+import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterWriterUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Before;
@@ -16,6 +16,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -36,9 +37,6 @@ public class IndexToFilterSynchronizerImplTest extends BaseSynonymsWebTestCase {
 			_indexToFilterSynchronizerImpl, "_filterNames",
 			new String[] {"car,automobile"});
 		ReflectionTestUtil.setFieldValue(
-			_indexToFilterSynchronizerImpl, "_synonymSetFilterWriter",
-			_synonymSetFilterWriter);
-		ReflectionTestUtil.setFieldValue(
 			_indexToFilterSynchronizerImpl, "_synonymSetIndexReader",
 			synonymSetIndexReader);
 	}
@@ -49,16 +47,17 @@ public class IndexToFilterSynchronizerImplTest extends BaseSynonymsWebTestCase {
 
 		_indexToFilterSynchronizerImpl.copyToFilter(
 			Mockito.mock(SynonymSetIndexName.class), "companyIndexName", true);
-		Mockito.verify(
-			_synonymSetFilterWriter, Mockito.times(1)
-		).updateSynonymSets(
-			Mockito.anyString(), Mockito.anyString(), Mockito.any(),
-			Mockito.anyBoolean()
-		);
+
+		_synonymSetFilterWriterUtilMockedStatic.verify(
+			() -> SynonymSetFilterWriterUtil.updateSynonymSets(
+				Mockito.any(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.any(), Mockito.anyBoolean()),
+			Mockito.times(1));
 	}
 
 	private IndexToFilterSynchronizerImpl _indexToFilterSynchronizerImpl;
-	private final SynonymSetFilterWriter _synonymSetFilterWriter = Mockito.mock(
-		SynonymSetFilterWriter.class);
+	private final MockedStatic<SynonymSetFilterWriterUtil>
+		_synonymSetFilterWriterUtilMockedStatic = Mockito.mockStatic(
+			SynonymSetFilterWriterUtil.class);
 
 }

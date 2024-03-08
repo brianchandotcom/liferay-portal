@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -260,41 +259,6 @@ public class PortalInstances {
 			}
 
 			PrincipalThreadLocal.setName(principalName);
-
-			// Initialize display
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Initialize display");
-			}
-
-			try {
-				PortletCategory portletCategory =
-					(PortletCategory)WebAppPool.get(
-						company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
-
-				if (portletCategory == null) {
-					portletCategory = new PortletCategory();
-				}
-
-				for (long currentCompanyId :
-						PortalInstancePool.getCompanyIds()) {
-
-					PortletCategory currentPortletCategory =
-						(PortletCategory)WebAppPool.get(
-							currentCompanyId, WebKeys.PORTLET_CATEGORY);
-
-					if (currentPortletCategory != null) {
-						portletCategory.merge(currentPortletCategory);
-					}
-				}
-
-				WebAppPool.put(
-					company.getCompanyId(), WebKeys.PORTLET_CATEGORY,
-					portletCategory);
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-			}
 
 			// Process application startup events
 

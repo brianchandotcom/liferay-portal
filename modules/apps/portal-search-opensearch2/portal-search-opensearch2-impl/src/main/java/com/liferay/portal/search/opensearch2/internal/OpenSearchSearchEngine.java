@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -351,7 +351,7 @@ public class OpenSearchSearchEngine
 			companyIds.add(companyId);
 		}
 
-		return ListUtil.toLongArray(companyIds, Long::longValue);
+		return ArrayUtil.toLongArray(companyIds);
 	}
 
 	private boolean _hasBackupRepository() {

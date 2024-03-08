@@ -77,6 +77,20 @@ export default function FieldsSidebarSettingsBody({field}) {
 				onAction={({payload, type}) => {
 					switch (type) {
 						case CORE_EVENT_TYPES.FIELD.BLUR:
+							if (payload.fieldInstance.fieldName === 'name') {
+								dispatch({
+									payload: {
+										propertyName:
+											payload.fieldInstance.fieldName,
+										propertyValue: payload.value,
+									},
+									type,
+								});
+
+								break;
+							}
+
+						// eslint-disable-next-line no-fallthrough
 						case CORE_EVENT_TYPES.FIELD.CHANGE: {
 							if (payload.fieldInstance.fieldName !== 'options') {
 								dispatch({

@@ -5,12 +5,17 @@
 
 package com.liferay.portal.kernel.theme;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu;
 import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
 import com.liferay.portal.kernel.util.Constants;
@@ -26,6 +31,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
+
+import java.lang.reflect.Method;
+
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
@@ -247,6 +256,31 @@ public class PortletDisplay implements Cloneable, Serializable {
 		}
 
 		return _portletDisplayName;
+	}
+
+	public <T> T getPortletInstanceConfiguration(Class<T> clazz)
+		throws ConfigurationException {
+
+		List<Object> configurationProviders = _serviceTrackerList.toList();
+
+		Object configurationProvider = configurationProviders.get(0);
+
+		try {
+			Method method = ReflectionUtil.getDeclaredMethod(
+				configurationProvider.getClass(),
+				"getPortletInstanceConfiguration", Class.class,
+				ThemeDisplay.class);
+
+			return (T)method.invoke(
+				configurationProvider, clazz, _themeDisplay);
+		}
+		catch (Exception exception) {
+			if (exception instanceof ConfigurationException) {
+				throw (ConfigurationException)exception;
+			}
+
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
 	public String getPortletName() {
@@ -910,6 +944,11 @@ public class PortletDisplay implements Cloneable, Serializable {
 
 	private static final StringBundler _blankSB = new StringBundler(
 		StringPool.BLANK);
+	private static final ServiceTrackerList<Object> _serviceTrackerList =
+		ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(), null,
+			"(objectClass=com.liferay.portal.configuration.module." +
+				"configuration.ConfigurationProvider)");
 
 	private boolean _active;
 	private boolean _beta;

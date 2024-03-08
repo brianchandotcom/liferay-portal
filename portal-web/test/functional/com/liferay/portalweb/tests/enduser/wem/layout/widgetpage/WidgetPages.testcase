@@ -24,6 +24,40 @@ definition {
 		}
 	}
 
+	@description = "Can add and delete a web content display widget on page."
+	@priority = 5
+	@uitest
+	test AddAndDeleteWidget {
+		property portal.acceptance = "true";
+		property testray.component.names = "Web Content Display,Training";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a Web Content Display widget to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Portlet.addPG(portletName = "Web Content Display");
+		}
+
+		task ("View Web Content Display is shown") {
+			Portlet.viewPG(portletName = "Web Content Display");
+		}
+
+		task ("Delete Web Content Display widget") {
+			Portlet.deletePG(portletName = "Web Content Display");
+		}
+
+		task ("View Web Content Display is not shown") {
+			Portlet.viewNoSpecificPG(portletName = "Web Content Display");
+		}
+	}
+
 	@description = "The user can add a page based in global search template."
 	@priority = 5
 	@uitest
@@ -92,28 +126,6 @@ definition {
 		task ("Add a Blogs portlet to private page") {
 			Navigator.gotoPrivateSitePage(
 				pageName = "Test Private Page",
-				siteName = ${randomSiteName});
-
-			Portlet.addPG(portletName = "Blogs");
-		}
-
-		task ("View Blogs portlet is shown") {
-			Portlet.viewPG(portletName = "Blogs");
-		}
-	}
-
-	@description = "The user can add a Blogs portlet to public page."
-	@priority = 4
-	test AddWidgetToPublicPage {
-		task ("Add a widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
-				layoutName = "Test Page Name");
-		}
-
-		task ("Add a Blogs portlet to public page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
 
 			Portlet.addPG(portletName = "Blogs");

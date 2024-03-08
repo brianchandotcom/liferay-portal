@@ -89,6 +89,13 @@
 	.doc-nav {
 		overflow-x: hidden !important;
 	}
+	
+	.doc-nav-wrapper-inner {
+		min-width: fit-content;
+	  	position: sticky !important;
+		top: 135px;
+		width: 110%;
+	}
 
 	.doc-nav::-webkit-scrollbar {
 		background: transparent;
@@ -167,6 +174,7 @@
 		color: var(--color-neutral-10, #282934) !important;
 		font-size: 1rem;
 		font-weight:600;
+		gap: 10px;
 		width: 100%;
 	}
 

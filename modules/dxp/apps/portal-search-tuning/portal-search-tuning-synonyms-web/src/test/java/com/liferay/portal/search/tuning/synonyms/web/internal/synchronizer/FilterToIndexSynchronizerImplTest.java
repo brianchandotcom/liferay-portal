@@ -32,8 +32,8 @@ public class FilterToIndexSynchronizerImplTest extends BaseSynonymsWebTestCase {
 		_filterToIndexSynchronizerImpl = new FilterToIndexSynchronizerImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_filterToIndexSynchronizerImpl, "_synonymSetFilterNameHolder",
-			synonymSetFilterNameHolder);
+			_filterToIndexSynchronizerImpl, "_filterNames",
+			new String[] {"car,automobile"});
 		ReflectionTestUtil.setFieldValue(
 			_filterToIndexSynchronizerImpl, "_synonymSetFilterReader",
 			synonymSetFilterReader);
@@ -44,7 +44,6 @@ public class FilterToIndexSynchronizerImplTest extends BaseSynonymsWebTestCase {
 
 	@Test
 	public void testCopyToIndex() {
-		setUpSynonymSetFilterNameHolder(new String[] {"car,automobile"});
 		setUpSynonymSetFilterReader(new String[] {"car,automobile"});
 
 		_filterToIndexSynchronizerImpl.copyToIndex(

@@ -31,7 +31,6 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterReader;
-import com.liferay.portal.search.tuning.synonyms.web.internal.filter.name.SynonymSetFilterNameHolder;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetFields;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSetIndexReader;
@@ -314,14 +313,6 @@ public abstract class BaseSynonymsWebTestCase {
 		return searchHits;
 	}
 
-	protected void setUpSynonymSetFilterNameHolder(String[] synonyms) {
-		Mockito.doReturn(
-			synonyms
-		).when(
-			synonymSetFilterNameHolder
-		).getFilterNames();
-	}
-
 	protected void setUpSynonymSetFilterReader(String[] synonyms) {
 		Mockito.doReturn(
 			synonyms
@@ -385,8 +376,6 @@ public abstract class BaseSynonymsWebTestCase {
 	protected Portal portal = Mockito.mock(Portal.class);
 	protected SearchEngineAdapter searchEngineAdapter = Mockito.mock(
 		SearchEngineAdapter.class);
-	protected SynonymSetFilterNameHolder synonymSetFilterNameHolder =
-		Mockito.mock(SynonymSetFilterNameHolder.class);
 	protected SynonymSetFilterReader synonymSetFilterReader = Mockito.mock(
 		SynonymSetFilterReader.class);
 	protected SynonymSetIndexNameBuilder synonymSetIndexNameBuilder =

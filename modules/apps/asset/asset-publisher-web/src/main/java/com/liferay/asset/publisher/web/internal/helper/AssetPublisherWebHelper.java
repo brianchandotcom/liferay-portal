@@ -501,12 +501,12 @@ public class AssetPublisherWebHelper {
 
 			if (checkPermission) {
 				return GroupPermissionUtil.contains(
-					permissionChecker, group, ActionKeys.UPDATE);
+					permissionChecker, group, ActionKeys.VIEW);
 			}
 		}
 		else if ((groupId != companyGroupId) && checkPermission) {
 			return GroupPermissionUtil.contains(
-				permissionChecker, groupId, ActionKeys.UPDATE);
+				permissionChecker, groupId, ActionKeys.VIEW);
 		}
 
 		return true;

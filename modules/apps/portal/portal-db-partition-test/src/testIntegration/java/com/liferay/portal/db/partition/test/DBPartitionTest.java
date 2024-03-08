@@ -616,7 +616,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	}
 
-	private static final String _CLASS_NAME = getClass().getName();
+	private static final String _CLASS_NAME = DBPartitionTest.class.getName();
 
 	@Inject
 	private static ResourceActionLocalService _resourceActionLocalService;

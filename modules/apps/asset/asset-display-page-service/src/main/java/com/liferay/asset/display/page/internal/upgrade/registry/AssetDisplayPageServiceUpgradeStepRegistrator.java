@@ -66,9 +66,7 @@ public class AssetDisplayPageServiceUpgradeStepRegistrator
 			"2.2.0", "2.2.1",
 			new AssetDisplayLayoutFriendlyURLPrivateLayoutUpgradeProcess());
 
-		registry.register(
-			"2.2.1", "2.2.2",
-			new AssetDisplayLayoutFriendlyURLPrivateLayoutUpgradeProcess());
+		registry.register("2.2.1", "2.2.2", new DummyUpgradeProcess());
 
 		registry.register(
 			"2.2.2", "2.3.0",

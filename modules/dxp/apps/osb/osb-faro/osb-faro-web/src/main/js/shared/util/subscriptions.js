@@ -110,12 +110,24 @@ export const DEFAULT_ADDONS = {
 
 export function getPlanAddOns(currentPlan) {
 	if (isBasicPlan(currentPlan)) {
-		return [];
+		return {};
 	}
 
 	const planType = PLAN_TYPES[currentPlan.name];
 
-	return [ADD_ONS[INDIVIDUALS][planType], ADD_ONS[PAGEVIEWS][planType]];
+	return [ADD_ONS[INDIVIDUALS][planType], ADD_ONS[PAGEVIEWS][planType]]
+		.filter(Boolean)
+		.reduce((acc, plan) => {
+			const name = PLAN_TYPES[plan.name];
+			const quantity = currentPlan.getIn(['addOns', name, 'quantity']);
+			const limit = plan.limits[name];
+			const totalLimit = quantity ? limit * quantity : null;
+
+			return {
+				...acc,
+				[name]: totalLimit ? totalLimit.toLocaleString() : '-'
+			};
+		}, {});
 }
 
 export function getPlanLabel(name) {
@@ -252,6 +264,8 @@ export function formatPlanData(subscriptionIMap) {
 		subscriptionIMap = new Map();
 	}
 
+	const basicPlan = isBasicPlan({name: subscriptionIMap.get('name')});
+
 	return new Plan(
 		fromJS({
 			addOns: {
@@ -263,7 +277,6 @@ export function formatPlanData(subscriptionIMap) {
 					}, {})
 			},
 			endDate: subscriptionIMap.get('endDate'),
-			lastAnniversaryDate: subscriptionIMap.get('lastAnniversaryDate'),
 			metrics: {
 				individuals: new Metric({
 					count: subscriptionIMap.get(
@@ -286,10 +299,13 @@ export function formatPlanData(subscriptionIMap) {
 						'pageViewsStatus',
 						SubscriptionStatuses.Ok
 					)
-				})
+				}),
+				usersCount: subscriptionIMap.get('usersCount')
 			},
 			name: subscriptionIMap.get('name'),
-			startDate: subscriptionIMap.get('startDate')
+			startDate: basicPlan
+				? subscriptionIMap.get('startDate')
+				: subscriptionIMap.get('lastAnniversaryDate')
 		})
 	);
 }

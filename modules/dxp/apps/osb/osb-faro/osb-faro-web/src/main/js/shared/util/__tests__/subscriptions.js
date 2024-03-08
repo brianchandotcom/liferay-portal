@@ -7,7 +7,7 @@ import {
 	PAGEVIEWS
 } from '../subscriptions';
 import {fromJS} from 'immutable';
-import {mockAddOns, mockSubscription} from 'test/data';
+import {mockSubscription} from 'test/data';
 import {Plan} from '../../util/records';
 
 jest.mock('shared/hooks/useTimeZone', () => ({
@@ -19,19 +19,38 @@ jest.mock('shared/hooks/useTimeZone', () => ({
 describe('subscriptions', () => {
 	describe('getPlanAddOns', () => {
 		it('should return the correct plan addons', () => {
-			const planAddOns = getPlanAddOns({
-				name: 'Liferay Analytics Cloud Enterprise'
-			});
+			const planAddOns = getPlanAddOns(
+				formatPlanData(
+					fromJS(
+						mockSubscription({
+							individualsCount: 5000,
+							name: 'Liferay Analytics Cloud Enterprise',
+							pageViewsCount: 5000000
+						})
+					)
+				)
+			);
 
-			expect(planAddOns).toEqual(mockAddOns());
+			expect(planAddOns).toEqual({
+				individuals: '10,000',
+				pageViews: '5,000,000'
+			});
 		});
 
 		it('should not have addons for LXC customers', () => {
-			const planAddOns = getPlanAddOns({
-				name: 'LXC Subscription - Engage Site'
-			});
+			const planAddOns = getPlanAddOns(
+				formatPlanData(
+					fromJS(
+						mockSubscription({
+							individualsCount: 5000,
+							name: 'LXC Subscription - Engage Site',
+							pageViewsCount: 5000000
+						})
+					)
+				)
+			);
 
-			expect(!!planAddOns.filter(Boolean).length).toBeFalsy();
+			expect(planAddOns).toEqual({});
 		});
 	});
 
@@ -56,9 +75,7 @@ describe('subscriptions', () => {
 			const plan = formatPlanData(
 				fromJS(
 					mockSubscription({
-						individualsCount: 3000,
-						name: 'Liferay Analytics Cloud Basic',
-						pageViewsCount: 200000
+						name: 'Liferay Analytics Cloud Basic'
 					})
 				)
 			);
@@ -69,11 +86,11 @@ describe('subscriptions', () => {
 
 			const individualsMetrics = metrics.get('individuals');
 
-			expect(individualsMetrics.count).toEqual(3000);
+			expect(individualsMetrics.count).toEqual(2057);
 
 			const pageViewsMetrics = metrics.get('pageViews');
 
-			expect(pageViewsMetrics.count).toEqual(200000);
+			expect(pageViewsMetrics.count).toEqual(100023);
 		});
 
 		it('should format the plan data as an enterprise Plan record', () => {

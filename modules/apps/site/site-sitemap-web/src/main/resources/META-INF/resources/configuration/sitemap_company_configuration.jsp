@@ -28,7 +28,7 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 	</clay:content-col>
 </clay:content-row>
 
-<clay:sheet-section role="group" aria-labelledby='<%= liferayPortletResponse.getNamespace() + "sitesIncludedTitle" %>'>
+<clay:sheet-section cssClass="c-mb-0" role="group" aria-labelledby='<%= liferayPortletResponse.getNamespace() + "sitesIncludedTitle" %>'>
 	<clay:content-row
 		containerElement="h3"
 		cssClass="c-mb-3 sheet-subtitle"

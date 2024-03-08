@@ -6,6 +6,7 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionRelException;
@@ -15,9 +16,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -99,7 +102,7 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 
 	private void _updateCommerceShippingFixedOptionRel(
 			ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceShippingFixedOptionRelId = ParamUtil.getLong(
 			actionRequest, "commerceShippingFixedOptionRelId");
@@ -111,10 +114,27 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 		String zip = ParamUtil.getString(actionRequest, "zip");
 		double weightFrom = ParamUtil.getDouble(actionRequest, "weightFrom");
 		double weightTo = ParamUtil.getDouble(actionRequest, "weightTo");
-		BigDecimal fixedPrice = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "fixedPrice", BigDecimal.ZERO);
-		BigDecimal rateUnitWeightPrice = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "rateUnitWeightPrice", BigDecimal.ZERO);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String fixedPrice = ParamUtil.getString(
+			actionRequest, "fixedPrice", BigDecimal.ZERO.toString());
+
+		fixedPrice = _commercePriceFormatter.parse(
+			fixedPrice, themeDisplay.getLocale());
+
+		BigDecimal formattedFixedPrice = new BigDecimal(fixedPrice);
+
+		String rateUnitWeightPrice = ParamUtil.getString(
+			actionRequest, "rateUnitWeightPrice", BigDecimal.ZERO.toString());
+
+		rateUnitWeightPrice = _commercePriceFormatter.parse(
+			rateUnitWeightPrice, themeDisplay.getLocale());
+
+		BigDecimal formattedRateUnitWeightPrice = new BigDecimal(
+			rateUnitWeightPrice);
+
 		double ratePercentage = ParamUtil.getDouble(
 			actionRequest, "ratePercentage");
 
@@ -123,8 +143,8 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 				updateCommerceShippingFixedOptionRel(
 					commerceShippingFixedOptionRelId,
 					commerceInventoryWarehouseId, countryId, regionId, zip,
-					weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
-					ratePercentage);
+					weightFrom, weightTo, formattedFixedPrice,
+					formattedRateUnitWeightPrice, ratePercentage);
 		}
 		else {
 			long commerceShippingMethodId = ParamUtil.getLong(
@@ -141,10 +161,14 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 					commerceShippingMethod.getGroupId(),
 					commerceShippingMethod.getCommerceShippingMethodId(),
 					commerceShippingFixedOptionId, commerceInventoryWarehouseId,
-					countryId, regionId, zip, weightFrom, weightTo, fixedPrice,
-					rateUnitWeightPrice, ratePercentage);
+					countryId, regionId, zip, weightFrom, weightTo,
+					formattedFixedPrice, formattedRateUnitWeightPrice,
+					ratePercentage);
 		}
 	}
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommerceShippingFixedOptionRelService

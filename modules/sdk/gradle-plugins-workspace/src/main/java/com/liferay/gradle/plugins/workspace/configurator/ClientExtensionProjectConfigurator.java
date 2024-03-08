@@ -27,6 +27,7 @@ import com.liferay.gradle.plugins.workspace.internal.client.extension.NodeBuildC
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.copy.HashifyAction;
 import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
 import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.Validator;
@@ -534,6 +535,7 @@ public class ClientExtensionProjectConfigurator
 						JsonNode fromJsonNode = copyJsonNode.get("from");
 						JsonNode fromTaskJsonNode = copyJsonNode.get(
 							"fromTask");
+						JsonNode hashifyJsonNode = copyJsonNode.get("hashify");
 						JsonNode includeJsonNode = copyJsonNode.get("include");
 						JsonNode intoJsonNode = copyJsonNode.get("into");
 
@@ -576,6 +578,12 @@ public class ClientExtensionProjectConfigurator
 
 								if (intoJsonNode != null) {
 									copySpec.into(intoJsonNode.asText());
+								}
+
+								if (hashifyJsonNode != null) {
+									copySpec.eachFile(
+										new HashifyAction(
+											hashifyJsonNode.asText()));
 								}
 
 								copySpec.setIncludeEmptyDirs(false);

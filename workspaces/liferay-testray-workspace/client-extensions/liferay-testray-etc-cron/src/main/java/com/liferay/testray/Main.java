@@ -24,6 +24,8 @@ import java.time.temporal.ChronoUnit;
 
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.utils.URIBuilder;
 
 import org.json.JSONArray;
@@ -36,16 +38,16 @@ public class Main {
 
 	public static void main(String[] arguments) throws Exception {
 		Main main = new Main(
-			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID"),
-			System.getenv(
-				"LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
-			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_URL"),
 			GetterUtil.get(
 				System.getenv("LIFERAY_TESTRAY_ETC_CRON_AUTO_ARCHIVE_POLICY"),
 				60),
 			GetterUtil.get(
 				System.getenv("LIFERAY_TESTRAY_ETC_CRON_AUTO_DELETE_POLICY"),
-				30));
+				30),
+			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID"),
+			System.getenv(
+				"LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
+			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_URL"));
 
 		String oAuthAuthorization = main.getOAuthAuthorization();
 
@@ -54,18 +56,23 @@ public class Main {
 	}
 
 	public Main(
+		long autoArchivePolicy, long autoDeletePolicy,
 		String liferayOAuthClientId, String liferayOAuthClientSecret,
-		String liferayURL, long autoArchivePolicy, long autoDeletePolicy) {
+		String liferayURL) {
 
+		_autoArchivePolicy = autoArchivePolicy;
+		_autoDeletePolicy = autoDeletePolicy;
 		_liferayOAuthClientId = liferayOAuthClientId;
 		_liferayOAuthClientSecret = liferayOAuthClientSecret;
 		_liferayURL = liferayURL;
-		_autoArchivePolicy = autoArchivePolicy;
-		_autoDeletePolicy = autoDeletePolicy;
 	}
 
 	public void autoArchiveTestrayBuilds(String oAuthAuthorization)
 		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Starting Testray auto archive policy");
+		}
 
 		HttpResponse<String> httpResponse = _sendRequest(
 			oAuthAuthorization, null, "application/json", "GET",
@@ -88,6 +95,10 @@ public class Main {
 		if ((testrayBuildsJSONArray == null) ||
 			testrayBuildsJSONArray.isEmpty()) {
 
+			if (_log.isInfoEnabled()) {
+				_log.info("No Testray Builds found to archive");
+			}
+
 			return;
 		}
 
@@ -104,6 +115,10 @@ public class Main {
 				));
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Archiving " + jsonArray.length() + " Testray Builds");
+		}
+
 		_sendRequest(
 			oAuthAuthorization, jsonArray.toString(), "application/json", "PUT",
 			URI.create(_liferayURL + "/o/c/builds/batch"));
@@ -111,6 +126,10 @@ public class Main {
 
 	public void deleteTestrayArchivedBuilds(String oAuthAuthorization)
 		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Starting Testray auto delete policy");
+		}
 
 		HttpResponse<String> httpResponse = _sendRequest(
 			oAuthAuthorization, null, "application/json", "GET",
@@ -133,7 +152,15 @@ public class Main {
 		);
 
 		if ((jsonArray == null) || jsonArray.isEmpty()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("No Testray Builds found to delete");
+			}
+
 			return;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Deleting " + jsonArray.length() + " Testray Builds");
 		}
 
 		_sendRequest(
@@ -206,9 +233,17 @@ public class Main {
 
 		HttpClient httpClient = HttpClient.newHttpClient();
 
-		return httpClient.send(
+		HttpResponse<String> httpResponse = httpClient.send(
 			httpRequest.build(), HttpResponse.BodyHandlers.ofString());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(httpResponse.toString());
+		}
+
+		return httpResponse;
 	}
+
+	private static final Log _log = LogFactory.getLog(Main.class);
 
 	private final long _autoArchivePolicy;
 	private final long _autoDeletePolicy;

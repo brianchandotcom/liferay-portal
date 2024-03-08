@@ -9,7 +9,7 @@
 		}
 	},
 	"id": "search",
-	"image": "liferaycloud/elasticsearch:8.9.2-5.2.2",
+	"image": "liferaycloud/elasticsearch:7.17.16-5.2.1",
 	"kind": "StatefulSet",
 	"livenessProbe": {
 		"httpGet": {

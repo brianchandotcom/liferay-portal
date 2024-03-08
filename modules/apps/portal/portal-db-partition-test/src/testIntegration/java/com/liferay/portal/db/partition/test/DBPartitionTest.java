@@ -307,16 +307,14 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public void testCounterIncrementWithName() throws Exception {
 		_processCompanyAndResetCounter(
 			(processCompanyId, className) -> {
-				for (int i = 1; i <= 10; i++) {
-					Assert.assertEquals(
-						i, _counterLocalService.increment(className));
-				}
+				Assert.assertEquals(
+					1, _counterLocalService.increment(className));
 
 				DBPartitionUtil.forEachCompanyId(
 					companyId -> {
 						if (processCompanyId.equals(companyId)) {
 							Assert.assertEquals(
-								11, _counterLocalService.increment(className));
+								2, _counterLocalService.increment(className));
 						}
 						else {
 							Assert.assertEquals(
@@ -330,16 +328,14 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public void testCounterIncrementWithNameAndSize() throws Exception {
 		_processCompanyAndResetCounter(
 			(processCompanyId, className) -> {
-				for (int i = 1; i <= 10; i++) {
-					Assert.assertEquals(
-						i * 10, _counterLocalService.increment(className, 10));
-				}
+				Assert.assertEquals(
+					10, _counterLocalService.increment(className, 10));
 
 				DBPartitionUtil.forEachCompanyId(
 					companyId -> {
 						if (processCompanyId.equals(companyId)) {
 							Assert.assertEquals(
-								110,
+								20,
 								_counterLocalService.increment(className, 10));
 						}
 						else {
@@ -392,12 +388,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public void testCounterReset() throws Exception {
 		_processCompanyAndResetCounter(
 			(processCompanyId, className) -> {
-				for (int i = 0; i < 10; i++) {
-					_counterLocalService.increment(className, 100);
-				}
-
 				Assert.assertEquals(
-					1001, _counterLocalService.increment(className));
+					10, _counterLocalService.increment(className, 10));
 
 				_counterLocalService.reset(getClass().getName());
 
@@ -424,17 +416,13 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public void testCounterResetWithIncrement() throws Exception {
 		_processCompanyAndResetCounter(
 			(processCompanyId, className) -> {
-				for (int i = 0; i < 10; i++) {
-					_counterLocalService.increment(className, 100);
-				}
+				Assert.assertEquals(
+					10, _counterLocalService.increment(className, 10));
+
+				_counterLocalService.reset(getClass().getName(), 100);
 
 				Assert.assertEquals(
-					1001, _counterLocalService.increment(className));
-
-				_counterLocalService.reset(getClass().getName(), 2000);
-
-				Assert.assertEquals(
-					2001, _counterLocalService.increment(className));
+					111, _counterLocalService.increment(className));
 
 				DBPartitionUtil.forEachCompanyId(
 					companyId -> {

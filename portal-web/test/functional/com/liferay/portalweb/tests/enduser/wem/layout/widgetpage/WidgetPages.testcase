@@ -108,6 +108,22 @@ definition {
 		}
 	}
 
+	@description = "The user can not delete the last public page on Liferay instance."
+	@priority = 3
+	test CannotDeleteLastPublicPageOnDefaultSite {
+		task ("Delete the Search page in Liferay instance") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
+
+			PagesAdmin.deletePage(pageName = "Search");
+		}
+
+		task ("View the last public page can not be deleted") {
+			PagesAdmin.openPageEllipsisMenu(pageName = "Home");
+
+			MenuItem.viewNotPresent(menuItem = "Delete");
+		}
+	}
+
 	@description = "The user can change the page layout template of a widget page."
 	@priority = 5
 	test ChangeLayoutTemplate {
@@ -148,6 +164,69 @@ definition {
 		}
 	}
 
+	@description = "The user can add an embedded and panel page via pages administration."
+	@priority = 5
+	@uitest
+	test ConfigureEmbeddedAndPanelPage {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		task ("Add an embedded page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PagesAdmin.addPage(
+				pageName = "Test Page Name 1",
+				pageTypeURL = "https://www.google.com",
+				sitePageType = "Embedded");
+		}
+
+		task ("Change embedded type URL") {
+			PagesAdmin.configurePage(
+				pageName = "Test Page Name 1",
+				pageTypeURL = "https://www.fire.ca.gov",
+				sitePageType = "Embedded");
+		}
+
+		task ("Add a panel page with community component") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PagesAdmin.addPage(
+				componentName = "Community",
+				pageName = "Test Page Name 2",
+				sitePageType = "Panel");
+		}
+
+		task ("View the community options are checked in page settings") {
+			PagesAdmin.viewPanelPortletList(
+				componentName = "Community",
+				pageName = "Test Page Name 2",
+				portletNameList = "My Sites,Page Comments,Page Flags,Page Ratings");
+		}
+
+		task ("View california page is shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 1",
+				siteName = ${randomSiteName});
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_IFRAME");
+
+			AssertVisible(
+				key_title = "CalFire",
+				locator1 = "Header#H1_TITLE");
+		}
+
+		task ("View community portlets are shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name 2",
+				siteName = ${randomSiteName});
+
+			Page.viewPanelPortletListPG(
+				componentName = "Community",
+				pageName = "Test Page Name 2",
+				portletNameList = "My Sites,Page Comments,Page Flags,Page Ratings");
+		}
+	}
+
 	@description = "Can configure a full page application to use all available portlets on the page."
 	@priority = 4
 	test ConfigureFullPageApplicationOfPage {
@@ -177,6 +256,199 @@ definition {
 
 				AssertElementNotPresent(locator1 = "ControlMenu#ADD");
 			}
+		}
+	}
+
+	@description = "This is a test for LPS-172971. As a page admin, I can edit friendly URL of page sets."
+	@priority = 4
+	test EditFriendlyURLOfPageSet {
+		task ("Given a page admin has a page set with child pages") {
+			HeadlessSite.addSite(
+				siteName = "Site Name",
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			PagesAdmin.addPage(
+				pageName = "Test Page Set",
+				sitePageType = "Page Set");
+
+			for (var pageName : list "Test Page Name 1,Test Page Name 2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = ${pageName},
+					parentLayoutName = "Test Page Set",
+					type = "content");
+			}
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 1",
+				siteName = "Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page admin navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		}
+
+		task ("Then the page admin could edit the friendly URL of page set") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Set");
+
+			PagesAdmin.editFriendlyURL(friendlyURLEdit = "/presentation");
+		}
+
+		task ("When the page admin navigates to the page set via new friendly URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/presentation");
+		}
+
+		task ("Then the page admin is redirected to the first child page") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name 1");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+		}
+
+		task ("When the page admin navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		}
+
+		task ("Then the page admin could delete the new friendly URL of page set") {
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Set");
+
+			PagesAdmin.gotoFriendlyURLHistory();
+
+			MouseOver(
+				key_oldFriendlyURL = "/test-page-set",
+				locator1 = "PagesAdmin#FRIENDLY_URL_HISTORY_ITEM");
+
+			Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
+
+			PagesAdmin.removeOldFriendlyURL(oldFriendlyURL = "/presentation");
+
+			IFrame.closeFrame();
+
+			PortletEntry.save();
+		}
+
+		task ("When the page admin navigates to the page set via new friendly URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/presentation");
+		}
+
+		task ("Then the page admin is redirected to not found") {
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Page Not Found");
+		}
+
+		task ("When the page admin navigates to the Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+		}
+
+		task ("Then the page admin could delete the page set and child pages") {
+			for (var pageName : list "Test Page Name 1,Test Page Name 2,Test Page Set") {
+				JSONLayout.deletePublicLayout(
+					groupName = "Site Name",
+					layoutName = ${pageName});
+			}
+		}
+
+		task ("When the page admin navigates to the page set via friendly URL") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/site-name/test-page-set");
+		}
+
+		task ("Then the page admin is redirected to not found") {
+			ContentPages.viewFragmentText(
+				fragmentName = "paragraph",
+				id = "element-text",
+				text = "Page Not Found");
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-71160. Can edit the SEO settings in a widget page via control menu."
+	@priority = 5
+	test EditPageViaControlMenu {
+		property portal.acceptance = "true";
+		property testray.component.names = "Training";
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+		}
+
+		task ("Edit the page via control menu") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
+
+			PagesAdmin.editName(pageNameEdit = "Test Page Name Edit");
+		}
+
+		task ("View the edited name in pages admin") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name Edit",
+				siteName = ${randomSiteName});
+
+			PagesAdmin.viewPageItemPresent(pageName = "Test Page Name Edit");
+		}
+
+		task ("Edit the SEO settings") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name Edit",
+				siteName = ${randomSiteName});
+
+			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name Edit");
+
+			PagesAdmin.editSeoMetadata(
+				htmlTitle = "S.P.A.C.E.Home",
+				metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
+				metaTagsKeywords = "space, education, space travel, graduateschool");
+		}
+
+		task ("View the SEO settings is shown") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name Edit",
+				siteName = ${randomSiteName});
+
+			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name Edit");
+
+			PagesAdmin.viewSeoMetadata(
+				htmlTitle = "S.P.A.C.E.Home",
+				metaTagsDescription = "Welcome to S.P.A.C.E., a graduate-level school for those passionate about expanding their horizons through science, research, and space travel",
+				metaTagsKeywords = "space, education, space travel, graduateschool");
 		}
 	}
 
@@ -315,6 +587,52 @@ definition {
 				pageName = "Test Page Name");
 
 			PortletEntry.viewLocale(locale = "en-US");
+		}
+	}
+
+	@description = "An error is thrown when the default language has an empty friendly url in widget page."
+	@priority = 3
+	test ViewNoExceptionWhenPageWithoutFriendlyURLInDefaultLanguage {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add a localized friendly url") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			PagesAdmin.addLocalizedFriendlyURL(
+				configureWithoutSave = "true",
+				friendlyURLLocalizedList = "de-DE",
+				localizedFriendlyURLList = "/german",
+				localizedNameList = "-");
+		}
+
+		task ("Delete default friendly url") {
+			PagesAdmin.deleteFriendlyURL(locale = "en-US");
+		}
+
+		task ("View no error thrown on console when navigating to page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			AssertConsoleTextNotPresent(value1 = "java.lang.StringIndexOutOfBoundsException: String index out of range: -1");
+		}
+
+		task ("View default friendly url") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			PagesAdmin.viewFriendlyURL(pageName = "test-page-name");
 		}
 	}
 

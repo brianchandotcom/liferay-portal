@@ -19,7 +19,7 @@ import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
 import com.liferay.portal.search.tuning.synonyms.storage.SynonymSetsDatabaseImporter;
-import com.liferay.portal.search.tuning.synonyms.web.internal.index.DocumentToSynonymSetTranslator;
+import com.liferay.portal.search.tuning.synonyms.web.internal.index.DocumentToSynonymSetTranslatorUtil;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.storage.helper.SynonymSetJSONStorageHelper;
 
@@ -52,9 +52,6 @@ public class SynonymSetsDatabaseImporterImpl
 			}
 		}
 	}
-
-	@Reference
-	protected DocumentToSynonymSetTranslator documentToSynonymSetTranslator;
 
 	@Reference
 	protected Queries queries;
@@ -112,8 +109,9 @@ public class SynonymSetsDatabaseImporterImpl
 				continue;
 			}
 
-			SynonymSet synonymSet = documentToSynonymSetTranslator.translate(
-				searchHit.getDocument(), searchHit.getId());
+			SynonymSet synonymSet =
+				DocumentToSynonymSetTranslatorUtil.translate(
+					searchHit.getDocument(), searchHit.getId());
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

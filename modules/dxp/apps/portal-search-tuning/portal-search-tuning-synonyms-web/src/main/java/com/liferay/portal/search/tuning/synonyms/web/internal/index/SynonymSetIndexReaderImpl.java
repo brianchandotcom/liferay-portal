@@ -65,12 +65,12 @@ public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 		SearchSearchResponse searchSearchResponse =
 			_searchEngineAdapter.execute(searchSearchRequest);
 
-		return _documentToSynonymSetTranslator.translateAll(
+		return DocumentToSynonymSetTranslatorUtil.translateAll(
 			searchSearchResponse.getSearchHits());
 	}
 
 	protected SynonymSet translate(Document document, String id) {
-		return _documentToSynonymSetTranslator.translate(document, id);
+		return DocumentToSynonymSetTranslatorUtil.translate(document, id);
 	}
 
 	private Document _getDocument(
@@ -98,9 +98,6 @@ public class SynonymSetIndexReaderImpl implements SynonymSetIndexReader {
 	}
 
 	private static final int _SIZE = 10000;
-
-	@Reference
-	private DocumentToSynonymSetTranslator _documentToSynonymSetTranslator;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

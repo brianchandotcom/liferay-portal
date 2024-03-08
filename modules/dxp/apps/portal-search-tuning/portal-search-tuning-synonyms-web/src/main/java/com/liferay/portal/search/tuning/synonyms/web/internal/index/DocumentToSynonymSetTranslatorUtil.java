@@ -12,17 +12,12 @@ import com.liferay.portal.search.hits.SearchHits;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Adam Brandizzi
  */
-@Component(service = DocumentToSynonymSetTranslator.class)
-public class DocumentToSynonymSetTranslatorImpl
-	implements DocumentToSynonymSetTranslator {
+public class DocumentToSynonymSetTranslatorUtil {
 
-	@Override
-	public SynonymSet translate(
+	public static SynonymSet translate(
 		Document document, String synonymSetDocumentId) {
 
 		return builder(
@@ -33,22 +28,20 @@ public class DocumentToSynonymSetTranslatorImpl
 		).build();
 	}
 
-	@Override
-	public SynonymSet translate(SearchHit searchHit) {
+	public static SynonymSet translate(SearchHit searchHit) {
 		return translate(searchHit.getDocument(), searchHit.getId());
 	}
 
-	@Override
-	public List<SynonymSet> translateAll(List<SearchHit> searchHits) {
-		return TransformUtil.transform(searchHits, this::translate);
+	public static List<SynonymSet> translateAll(List<SearchHit> searchHits) {
+		return TransformUtil.transform(
+			searchHits, DocumentToSynonymSetTranslatorUtil::translate);
 	}
 
-	@Override
-	public List<SynonymSet> translateAll(SearchHits searchHits) {
+	public static List<SynonymSet> translateAll(SearchHits searchHits) {
 		return translateAll(searchHits.getSearchHits());
 	}
 
-	protected SynonymSet.SynonymSetBuilder builder() {
+	protected static SynonymSet.SynonymSetBuilder builder() {
 		return new SynonymSet.SynonymSetBuilder();
 	}
 

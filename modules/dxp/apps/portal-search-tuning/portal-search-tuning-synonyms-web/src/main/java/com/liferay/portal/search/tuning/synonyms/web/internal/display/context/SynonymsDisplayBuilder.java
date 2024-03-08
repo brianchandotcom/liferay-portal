@@ -23,7 +23,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexNameBuilder;
-import com.liferay.portal.search.tuning.synonyms.web.internal.index.DocumentToSynonymSetTranslator;
+import com.liferay.portal.search.tuning.synonyms.web.internal.index.DocumentToSynonymSetTranslatorUtil;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.request.SearchSynonymSetRequest;
 import com.liferay.portal.search.tuning.synonyms.web.internal.request.SearchSynonymSetResponse;
@@ -44,14 +44,12 @@ import javax.servlet.http.HttpServletRequest;
 public class SynonymsDisplayBuilder {
 
 	public SynonymsDisplayBuilder(
-		DocumentToSynonymSetTranslator documentToSynonymSetTranslator,
 		HttpServletRequest httpServletRequest, Language language, Portal portal,
 		Queries queries, RenderRequest renderRequest,
 		RenderResponse renderResponse, SearchEngineAdapter searchEngineAdapter,
 		SearchEngineInformation searchEngineInformation, Sorts sorts,
 		SynonymSetIndexNameBuilder synonymSetIndexNameBuilder) {
 
-		_documentToSynonymSetTranslator = documentToSynonymSetTranslator;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_portal = portal;
@@ -160,7 +158,7 @@ public class SynonymsDisplayBuilder {
 
 		searchContainer.setResultsAndTotal(
 			() -> TransformUtil.transform(
-				_documentToSynonymSetTranslator.translateAll(
+				DocumentToSynonymSetTranslatorUtil.translateAll(
 					searchSynonymSetResponse.getSearchHits()),
 				this::_buildSynonymSetDisplayContext),
 			searchSynonymSetResponse.getTotalHits());
@@ -243,8 +241,6 @@ public class SynonymsDisplayBuilder {
 		).buildPortletURL();
 	}
 
-	private final DocumentToSynonymSetTranslator
-		_documentToSynonymSetTranslator;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;

@@ -81,6 +81,15 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			"%2s %s", StringPool.PLUS, decimalFormat.format(relativePrice));
 	}
 
+	@Override
+	public String parse(String price, Locale locale) throws Exception {
+		DecimalFormat decimalFormat = _getDecimalFormat(null, locale);
+
+		return decimalFormat.parse(
+			price
+		).toString();
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -122,6 +131,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 		decimalFormat.setMaximumFractionDigits(maxFractionDigits);
 		decimalFormat.setMinimumFractionDigits(minFractionDigits);
+		decimalFormat.setParseBigDecimal(true);
 		decimalFormat.setRoundingMode(roundingMode.ordinal());
 
 		return decimalFormat;

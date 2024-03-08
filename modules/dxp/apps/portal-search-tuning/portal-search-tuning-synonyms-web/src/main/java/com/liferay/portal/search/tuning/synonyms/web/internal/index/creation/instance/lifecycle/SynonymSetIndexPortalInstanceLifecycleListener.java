@@ -60,6 +60,8 @@ public class SynonymSetIndexPortalInstanceLifecycleListener
 
 	@Activate
 	protected void activate() {
+		_synonymSetIndexCreator = new SynonymSetIndexCreator(
+			_searchEngineAdapter);
 		_synonymSetIndexReader = new SynonymSetIndexReader(
 			_searchEngineAdapter);
 	}
@@ -76,7 +78,6 @@ public class SynonymSetIndexPortalInstanceLifecycleListener
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
 
-	@Reference
 	private SynonymSetIndexCreator _synonymSetIndexCreator;
 
 	@Reference

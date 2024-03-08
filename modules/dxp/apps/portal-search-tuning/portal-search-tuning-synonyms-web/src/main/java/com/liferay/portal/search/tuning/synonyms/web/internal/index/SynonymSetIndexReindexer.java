@@ -67,9 +67,9 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 			}
 
 			try {
-				synonymSetIndexCreator.deleteIfExists(synonymSetIndexName);
+				_synonymSetIndexCreator.deleteIfExists(synonymSetIndexName);
 
-				synonymSetIndexCreator.create(synonymSetIndexName);
+				_synonymSetIndexCreator.create(synonymSetIndexName);
 			}
 			catch (RuntimeException runtimeException) {
 				_log.error(
@@ -110,6 +110,8 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 
 	@Activate
 	protected void activate() {
+		_synonymSetIndexCreator = new SynonymSetIndexCreator(
+			_searchEngineAdapter);
 		_synonymSetIndexWriter = new SynonymSetIndexWriter(
 			_documentBuilderFactory, _searchEngineAdapter);
 	}
@@ -122,9 +124,6 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 
 	@Reference
 	protected SearchCapabilities searchCapabilities;
-
-	@Reference
-	protected SynonymSetIndexCreator synonymSetIndexCreator;
 
 	@Reference
 	protected SynonymSetIndexNameBuilder synonymSetIndexNameBuilder;
@@ -169,6 +168,7 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
 
+	private SynonymSetIndexCreator _synonymSetIndexCreator;
 	private SynonymSetIndexWriter _synonymSetIndexWriter;
 
 }

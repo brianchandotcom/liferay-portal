@@ -112,8 +112,12 @@ public class CPDefinitionAssetRenderer
 				AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH);
 		}
 
-		String summary = _cpDefinition.getDescription(
-			_language.getLanguageId(_portal.getLocale(portletRequest)));
+		String summary = _cpDefinition.getDescription();
+
+		if (portletRequest != null) {
+			summary = _cpDefinition.getDescription(
+				_language.getLanguageId(_portal.getLocale(portletRequest)));
+		}
 
 		if (Validator.isNull(summary)) {
 			summary = StringUtil.shorten(

@@ -8,27 +8,20 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adam Brandizzi
  */
-@Component(service = SynonymSetToDocumentTranslator.class)
-public class SynonymSetToDocumentTranslatorImpl
-	implements SynonymSetToDocumentTranslator {
+public class SynonymSetToDocumentTranslatorUtil {
 
-	@Override
-	public Document translate(SynonymSet synonymSet) {
-		return _documentBuilderFactory.builder(
+	public static Document translate(
+		DocumentBuilderFactory documentBuilderFactory, SynonymSet synonymSet) {
+
+		return documentBuilderFactory.builder(
 		).setString(
 			SynonymSetFields.SYNONYMS, synonymSet.getSynonyms()
 		).setString(
 			SynonymSetFields.UID, synonymSet.getSynonymSetDocumentId()
 		).build();
 	}
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 }

@@ -28,4 +28,6 @@ public interface CommercePriceFormatter {
 	public String formatAsRelative(
 		CommerceCurrency commerceCurrency, BigDecimal price, Locale locale);
 
+	public String parse(String price, Locale locale) throws Exception;
+
 }

@@ -1144,6 +1144,14 @@ definition {
 					fieldFieldLabel = "Select from List",
 					fieldReferenceOfFieldOption = "Value${index}",
 					index = ${index});
+
+				DataEngine.viewField(
+					fieldFieldLabel = "Select from List",
+					fieldName = "Select from List");
+
+				if (${index} != 2) {
+					FormFields.clickAddOptionButton();
+				}
 			}
 
 			DDLDataDefinition.save();

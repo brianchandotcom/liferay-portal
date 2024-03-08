@@ -695,6 +695,14 @@ definition {
 					fieldReferenceOfFieldOption = "Value${index}",
 					index = ${index});
 
+				DataEngine.viewField(
+					fieldFieldLabel = "Select from List",
+					fieldName = "Select from List");
+
+				if (${index} != 3) {
+					FormFields.clickAddOptionButton();
+				}
+
 				var index = ${index} + 1;
 			}
 

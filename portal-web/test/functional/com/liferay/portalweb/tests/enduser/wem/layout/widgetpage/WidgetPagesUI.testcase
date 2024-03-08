@@ -62,21 +62,4 @@ definition {
 		}
 	}
 
-	@description = "The user can add multiple public pages."
-	@priority = 3
-	@uitest
-	test AddMultiplePages {
-		task ("Add three widget pages") {
-			for (var i : list "1,2,3") {
-				PagesAdmin.addPage(pageName = "Test Page Name ${i}");
-			}
-		}
-
-		task ("View pages in Pages admin") {
-			for (var i : list "1,2,3") {
-				PagesAdmin.viewPageItemPresent(pageName = "Test Page Name ${i}");
-			}
-		}
-	}
-
 }

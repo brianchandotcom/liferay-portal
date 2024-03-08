@@ -257,8 +257,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCounterGetNames() throws Exception {
-		_runOnCompanyAndCleanup(
-			(runCompanyId, className) -> {
+		_processCompanyAndResetCounter(
+			(processCompanyId, className) -> {
 				_counterLocalService.increment(className);
 
 				DBPartitionUtil.forEachCompanyId(
@@ -266,7 +266,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 						List<String> counterNames =
 							_counterLocalService.getNames();
 
-						if (companyId.equals(runCompanyId)) {
+						if (companyId.equals(processCompanyId)) {
 							Assert.assertTrue(counterNames.contains(className));
 						}
 						else {
@@ -284,29 +284,29 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> maxCounters.add(_counterLocalService.increment()));
 
-		long maxCounter = 0;
+		long maxCounterSize = 0;
 
 		for (long counter : maxCounters) {
-			if (counter > maxCounter) {
-				maxCounter = counter;
+			if (counter > maxCounterSize) {
+				maxCounterSize = counter;
 			}
 		}
 
-		long finalMaxCounter = maxCounter + 1000;
+		long size = maxCounterSize + 1000;
 
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> _counterLocalService.reset(
-				Counter.class.getName(), finalMaxCounter));
+				Counter.class.getName(), size));
 
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> Assert.assertEquals(
-				finalMaxCounter + 1, _counterLocalService.increment()));
+				size + 1, _counterLocalService.increment()));
 	}
 
 	@Test
 	public void testCounterIncrementWithName() throws Exception {
-		_runOnCompanyAndCleanup(
-			(runCompanyId, className) -> {
+		_processCompanyAndResetCounter(
+			(processCompanyId, className) -> {
 				for (int i = 1; i <= 10; i++) {
 					Assert.assertEquals(
 						i, _counterLocalService.increment(className));
@@ -314,7 +314,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 				DBPartitionUtil.forEachCompanyId(
 					companyId -> {
-						if (runCompanyId.equals(companyId)) {
+						if (processCompanyId.equals(companyId)) {
 							Assert.assertEquals(
 								11, _counterLocalService.increment(className));
 						}
@@ -328,8 +328,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCounterIncrementWithNameAndSize() throws Exception {
-		_runOnCompanyAndCleanup(
-			(runCompanyId, className) -> {
+		_processCompanyAndResetCounter(
+			(processCompanyId, className) -> {
 				for (int i = 1; i <= 10; i++) {
 					Assert.assertEquals(
 						i * 10, _counterLocalService.increment(className, 10));
@@ -337,7 +337,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 				DBPartitionUtil.forEachCompanyId(
 					companyId -> {
-						if (runCompanyId.equals(companyId)) {
+						if (processCompanyId.equals(companyId)) {
 							Assert.assertEquals(
 								110,
 								_counterLocalService.increment(className, 10));
@@ -353,8 +353,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCounterRename() throws Exception {
-		_runOnCompanyAndCleanup(
-			(runCompanyId, className) -> {
+		_processCompanyAndResetCounter(
+			(processCompanyId, className) -> {
 				try {
 					DBPartitionUtil.forEachCompanyId(
 						companyId -> _counterLocalService.increment(className));
@@ -366,7 +366,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 							List<String> counterNames =
 								_counterLocalService.getNames();
 
-							if (runCompanyId.equals(companyId)) {
+							if (processCompanyId.equals(companyId)) {
 								Assert.assertFalse(
 									counterNames.contains(className));
 								Assert.assertTrue(
@@ -390,8 +390,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCounterReset() throws Exception {
-		_runOnCompanyAndCleanup(
-			(runCompanyId, className) -> {
+		_processCompanyAndResetCounter(
+			(processCompanyId, className) -> {
 				for (int i = 0; i < 10; i++) {
 					_counterLocalService.increment(className, 100);
 				}
@@ -409,7 +409,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 						List<String> counterNames =
 							_counterLocalService.getNames();
 
-						if (runCompanyId.equals(companyId)) {
+						if (processCompanyId.equals(companyId)) {
 							Assert.assertTrue(counterNames.contains(className));
 						}
 						else {
@@ -422,8 +422,8 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCounterResetWithIncrement() throws Exception {
-		_runOnCompanyAndCleanup(
-			(runCompanyId, className) -> {
+		_processCompanyAndResetCounter(
+			(processCompanyId, className) -> {
 				for (int i = 0; i < 10; i++) {
 					_counterLocalService.increment(className, 100);
 				}
@@ -441,7 +441,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 						List<String> counterNames =
 							_counterLocalService.getNames();
 
-						if (runCompanyId.equals(companyId)) {
+						if (processCompanyId.equals(companyId)) {
 							Assert.assertTrue(counterNames.contains(className));
 						}
 						else {
@@ -644,7 +644,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	}
 
-	private void _runOnCompanyAndCleanup(
+	private void _processCompanyAndResetCounter(
 			UnsafeBiConsumer<Long, String, Exception> unsafeBiConsumer)
 		throws Exception {
 

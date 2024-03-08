@@ -133,18 +133,22 @@ export function updateFieldName(
 	editingLanguageId,
 	fieldNameGenerator,
 	focusedField,
-	value
+	value,
+	isInvalidValue = false
 ) {
 	const {fieldName} = focusedField;
 	const normalizedFieldName = normalizeFieldName(value);
 
 	let newFieldName;
 
-	if (normalizedFieldName !== '') {
-		newFieldName = fieldNameGenerator(value, fieldName);
+	if (normalizedFieldName === '') {
+		newFieldName = fieldNameGenerator(
+			getDefaultFieldName(false, {name: focusedField.type}),
+			fieldName
+		);
 	}
 	else {
-		newFieldName = fieldNameGenerator(getDefaultFieldName(), fieldName);
+		newFieldName = normalizedFieldName;
 	}
 
 	if (newFieldName) {
@@ -160,14 +164,22 @@ export function updateFieldName(
 			),
 		};
 
+		const settingsContextWithErrors = setFieldErrorMessage(
+			settingsContext,
+			'name',
+			isInvalidValue,
+			false
+		);
+
 		focusedField = {
 			...focusedField,
+			displayErrors: isInvalidValue,
 			fieldName: newFieldName,
 			name: newFieldName,
 			settingsContext: updateSettingsContextProperty(
 				defaultLanguageId,
 				editingLanguageId,
-				settingsContext,
+				settingsContextWithErrors,
 				'name',
 				newFieldName
 			),
@@ -392,7 +404,8 @@ export function updateField(
 				editingLanguageId,
 				fieldNameGenerator,
 				field,
-				propertyValue
+				propertyValue,
+				field.displayErrors
 			),
 		};
 	}

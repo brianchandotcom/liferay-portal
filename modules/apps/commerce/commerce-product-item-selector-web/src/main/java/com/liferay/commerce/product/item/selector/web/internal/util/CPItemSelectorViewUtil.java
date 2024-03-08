@@ -154,13 +154,13 @@ public class CPItemSelectorViewUtil {
 
 		Sort sort = null;
 
-		if (Objects.equals(orderByCol, "priority")) {
-			sort = SortFactoryUtil.create(
-				Field.PRIORITY + "_sortable", reverse);
-		}
-		else if (Objects.equals(orderByCol, "modified-date")) {
+		if (Objects.equals(orderByCol, "modified-date")) {
 			sort = SortFactoryUtil.create(
 				Field.MODIFIED_DATE + "_sortable", reverse);
+		}
+		else if (Objects.equals(orderByCol, "priority")) {
+			sort = SortFactoryUtil.create(
+				Field.PRIORITY + "_sortable", reverse);
 		}
 		else if (Objects.equals(orderByCol, "title")) {
 			sort = SortFactoryUtil.create(

@@ -7,6 +7,7 @@ export const ITEM_ACTIVATION_ORIGINS = {
 	breadcrumbs: 'breadcrumbs',
 	contents: 'contents',
 	itemActions: 'itemActions',
+	keyboard: 'keyboard',
 	pageEditor: 'pageEditor',
 	sidebar: 'sidebar',
 };

@@ -101,11 +101,14 @@ export function useLayoutKeyboardNavigation(item) {
 						`${item.config.fragmentEntryLinkId}-${editableId}`,
 						{
 							itemType: ITEM_TYPES.editable,
+							origin: ITEM_ACTIVATION_ORIGINS.keyboard,
 						}
 					);
 				}
 				else {
-					selectItem(item.itemId);
+					selectItem(item.itemId, {
+						origin: ITEM_ACTIVATION_ORIGINS.keyboard,
+					});
 				}
 			}
 		},

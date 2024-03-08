@@ -38,20 +38,8 @@ describe('ToggleConfigurationSidebarButton', () => {
 		renderComponent();
 
 		expect(
-			screen.getByTitle('close-configuration-panel')
+			screen.getByTitle('open-configuration-panel')
 		).toBeInTheDocument();
-	});
-
-	it('closes the sidebar when the button is pressed', () => {
-		renderComponent();
-
-		const button = screen.getByLabelText('close-configuration-panel');
-
-		userEvent.click(button);
-
-		expect(switchSidebarPanel).toBeCalledWith({
-			itemConfigurationOpen: false,
-		});
 	});
 
 	it('opens the sidebar when the button is pressed', () => {

@@ -9,14 +9,16 @@ import com.liferay.commerce.exception.NoSuchWarehouseItemException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -68,15 +70,23 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 
 	private CommerceInventoryWarehouseItem
 			_updateCommerceInventoryWarehouseItem(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem = null;
 
 		long commerceInventoryWarehouseItemId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseItemId");
 
-		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "quantity", BigDecimal.ZERO);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String quantity = ParamUtil.getString(
+			actionRequest, "quantity", BigDecimal.ZERO.toString());
+
+		BigDecimal formattedQuantity =
+			_commerceOrderItemQuantityFormatter.parse(
+				quantity, themeDisplay.getLocale());
+
 		String unitOfMeasureKey = ParamUtil.getString(
 			actionRequest, "unitOfMeasureKey");
 
@@ -86,8 +96,8 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 			commerceInventoryWarehouseItem =
 				_commerceInventoryWarehouseItemService.
 					updateCommerceInventoryWarehouseItem(
-						commerceInventoryWarehouseItemId, mvccVersion, quantity,
-						unitOfMeasureKey);
+						commerceInventoryWarehouseItemId, mvccVersion,
+						formattedQuantity, unitOfMeasureKey);
 		}
 		else {
 			long commerceInventoryWarehouseId = ParamUtil.getLong(
@@ -98,7 +108,7 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 				_commerceInventoryWarehouseItemService.
 					addCommerceInventoryWarehouseItem(
 						StringPool.BLANK, commerceInventoryWarehouseId,
-						quantity, sku, unitOfMeasureKey);
+						formattedQuantity, sku, unitOfMeasureKey);
 		}
 
 		return commerceInventoryWarehouseItem;
@@ -107,5 +117,9 @@ public class EditCommerceInventoryWarehouseItemMVCActionCommand
 	@Reference
 	private CommerceInventoryWarehouseItemService
 		_commerceInventoryWarehouseItemService;
+
+	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
 
 }

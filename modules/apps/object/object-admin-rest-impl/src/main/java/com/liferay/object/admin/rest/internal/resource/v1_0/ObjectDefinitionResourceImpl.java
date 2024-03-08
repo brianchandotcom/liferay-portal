@@ -32,6 +32,7 @@ import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
+import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.model.ObjectActionModel;
 import com.liferay.object.model.ObjectFieldModel;
@@ -52,6 +53,7 @@ import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
@@ -195,6 +197,21 @@ public class ObjectDefinitionResourceImpl
 
 		_addListTypeDefinition(objectDefinition);
 
+		String rootObjectDefinitionExternalReferenceCode =
+			objectDefinition.getRootObjectDefinitionExternalReferenceCode();
+
+		if (Validator.isNotNull(rootObjectDefinitionExternalReferenceCode) &&
+			!Objects.equals(
+				rootObjectDefinitionExternalReferenceCode,
+				objectDefinition.getExternalReferenceCode())) {
+
+			objectDefinition.setStatus((Status)null);
+
+			_validateRootObjectDefinition(
+				WorkflowConstants.STATUS_DRAFT,
+				rootObjectDefinitionExternalReferenceCode);
+		}
+
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition;
 
@@ -272,6 +289,13 @@ public class ObjectDefinitionResourceImpl
 				_objectDefinitionService.updateExternalReferenceCode(
 					serviceBuilderObjectDefinition.getObjectDefinitionId(),
 					objectDefinition.getExternalReferenceCode());
+		}
+
+		if (Validator.isNotNull(rootObjectDefinitionExternalReferenceCode)) {
+			serviceBuilderObjectDefinition =
+				_bindObjectDefinitionToRootObjectDefinition(
+					rootObjectDefinitionExternalReferenceCode,
+					serviceBuilderObjectDefinition);
 		}
 
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
@@ -907,6 +931,45 @@ public class ObjectDefinitionResourceImpl
 		}
 	}
 
+	private com.liferay.object.model.ObjectDefinition
+			_bindObjectDefinitionToRootObjectDefinition(
+				String rootObjectDefinitionExternalReferenceCode,
+				com.liferay.object.model.ObjectDefinition
+					serviceBuilderObjectDefinition)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition
+			rootServiceBuilderObjectDefinition =
+				_objectDefinitionService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						rootObjectDefinitionExternalReferenceCode,
+						serviceBuilderObjectDefinition.getCompanyId());
+
+		if (rootServiceBuilderObjectDefinition == null) {
+			rootServiceBuilderObjectDefinition =
+				_objectDefinitionLocalService.addObjectDefinition(
+					rootObjectDefinitionExternalReferenceCode,
+					contextUser.getUserId(),
+					serviceBuilderObjectDefinition.getObjectFolderId(), 0, true,
+					false);
+
+			rootServiceBuilderObjectDefinition =
+				_objectDefinitionLocalService.updateRootObjectDefinitionId(
+					rootServiceBuilderObjectDefinition.getObjectDefinitionId(),
+					rootServiceBuilderObjectDefinition.getObjectDefinitionId());
+		}
+
+		serviceBuilderObjectDefinition =
+			_objectDefinitionService.updateRootObjectDefinitionId(
+				serviceBuilderObjectDefinition.getObjectDefinitionId(),
+				rootServiceBuilderObjectDefinition.getObjectDefinitionId());
+
+		_objectDefinitionLocalService.updateObjectDefinitionPortlet(
+			serviceBuilderObjectDefinition);
+
+		return serviceBuilderObjectDefinition;
+	}
+
 	private Set<String> _getAccountEntryRestrictedObjectRelationshipsNames(
 		com.liferay.object.model.ObjectDefinition objectDefinition1,
 		List<ObjectRelationship> objectRelationships) {
@@ -1124,6 +1187,40 @@ public class ObjectDefinitionResourceImpl
 			).build());
 
 		return objectDefinition;
+	}
+
+	private void _validateRootObjectDefinition(
+			int objectDefinitionStatus,
+			String rootObjectDefinitionExternalReferenceCode)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition
+			rootServiceBuilderObjectDefinition =
+				_objectDefinitionService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						rootObjectDefinitionExternalReferenceCode,
+						contextCompany.getCompanyId());
+
+		if (rootServiceBuilderObjectDefinition == null) {
+			return;
+		}
+
+		if (rootServiceBuilderObjectDefinition.getStatus() !=
+				objectDefinitionStatus) {
+
+			throw new ObjectDefinitionRootObjectDefinitionIdException(
+				"Unable to bind an object definition when the root object " +
+					"definition has a different status");
+		}
+
+		if (!rootServiceBuilderObjectDefinition.isRootNode()) {
+			throw new ObjectDefinitionRootObjectDefinitionIdException(
+				StringBundler.concat(
+					"Unable to set the object definition ",
+					rootServiceBuilderObjectDefinition.getObjectDefinitionId(),
+					" as root object definition because it is bound to ",
+					"another root object definition"));
+		}
 	}
 
 	private static final EntityModel _entityModel =

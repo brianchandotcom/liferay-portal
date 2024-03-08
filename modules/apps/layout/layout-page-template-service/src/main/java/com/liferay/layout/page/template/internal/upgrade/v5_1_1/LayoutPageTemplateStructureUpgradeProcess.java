@@ -84,8 +84,9 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
-					"delete from LayoutPageTemplateStructure where classPK = " +
-						"? and ctCollectionId = ?");
+					"delete from LayoutPageTemplateStructure where " +
+						"layoutPageTemplateStructureId = ? and " +
+							"ctCollectionId = ?");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -102,19 +103,18 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					"LayoutPageTemplateStructure.classPK");
 				long ctCollectionId = resultSet.getLong(
 					"LayoutPageTemplateStructure.ctCollectionId");
+				long layoutPageTemplateStructureId = resultSet.getLong(
+					"LayoutPageTemplateStructure." +
+						"layoutPageTemplateStructureId");
 
 				plids.add(classPK);
 
-				preparedStatement2.setLong(1, classPK);
+				preparedStatement2.setLong(1, layoutPageTemplateStructureId);
 				preparedStatement2.setLong(2, ctCollectionId);
 
 				preparedStatement2.addBatch();
 
-				preparedStatement3.setLong(
-					1,
-					resultSet.getLong(
-						"LayoutPageTemplateStructure." +
-							"layoutPageTemplateStructureId"));
+				preparedStatement3.setLong(1, layoutPageTemplateStructureId);
 				preparedStatement3.setLong(2, ctCollectionId);
 
 				preparedStatement3.addBatch();

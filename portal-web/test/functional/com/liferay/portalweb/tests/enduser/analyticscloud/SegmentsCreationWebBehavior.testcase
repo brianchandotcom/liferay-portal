@@ -55,14 +55,11 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
 			actionType = "Comment Blog",
 			commentText = "Blogs Entry Comment",
 			documentTitleList = "Blogs AC Title",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -91,12 +88,13 @@ definition {
 
 		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
 
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
+		ACUtils.launchDXP();
 
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
 			actionType = "Comment Blog",
 			commentText = "Blogs Entry Comment 1",
 			documentTitleList = "Blogs AC Title",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -231,13 +229,10 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
 			actionType = "Download DM",
 			documentTitleList = "DM AC Title",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -267,11 +262,12 @@ definition {
 
 		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
 
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
+		ACUtils.launchDXP();
 
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
 			actionType = "Download DM",
 			documentTitleList = "DM AC Title,DM AC Title,DM AC Title",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -345,10 +341,12 @@ definition {
 
 		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
 
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
+		ACUtils.launchDXP();
 
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
+			actionType = "View WC",
 			documentTitleList = "1,2,3",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

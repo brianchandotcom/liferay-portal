@@ -409,15 +409,10 @@ public class OpenSearchIndexSearcher extends BaseIndexSearcher {
 		}
 		else if (!ArrayUtil.isEmpty(searchContext.getSorts())) {
 			if (start > 0) {
-				Sort[] sorts1 = searchContext.getSorts();
-
-				Sort[] sorts2 = new Sort[sorts1.length + 1];
-
-				sorts2[0] = new Sort("index", false);
-
-				System.arraycopy(sorts1, 0, sorts2, 1, sorts1.length);
-
-				searchSearchRequest.setSorts(sorts2);
+				searchSearchRequest.setSorts(
+					ArrayUtil.append(
+						new Sort[] {new Sort("index", false)},
+						searchContext.getSorts()));
 			}
 			else {
 				searchSearchRequest.setSorts(searchContext.getSorts());

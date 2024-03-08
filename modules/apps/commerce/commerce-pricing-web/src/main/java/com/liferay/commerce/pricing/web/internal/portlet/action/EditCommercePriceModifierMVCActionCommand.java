@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.exception.NoSuchPriceModifierException;
@@ -16,10 +17,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -117,8 +120,18 @@ public class EditCommercePriceModifierMVCActionCommand
 			actionRequest, "commercePriceListId");
 		String modifierType = ParamUtil.getString(
 			actionRequest, "modifierType");
-		BigDecimal modifierAmount = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "modifierAmount", BigDecimal.ZERO);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String modifierAmount = ParamUtil.getString(
+			actionRequest, "modifierAmount", BigDecimal.ZERO.toString());
+
+		modifierAmount = _commercePriceFormatter.parse(
+			modifierAmount, themeDisplay.getLocale());
+
+		BigDecimal formattedModifierAmount = new BigDecimal(modifierAmount);
+
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 
@@ -173,21 +186,25 @@ public class EditCommercePriceModifierMVCActionCommand
 
 			return _commercePriceModifierService.updateCommercePriceModifier(
 				commercePriceModifierId, commercePriceListGroupId, title,
-				target, commercePriceListId, modifierType, modifierAmount,
-				priority, active, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				target, commercePriceListId, modifierType,
+				formattedModifierAmount, priority, active, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 
 		return _commercePriceModifierService.addCommercePriceModifier(
-			0, title, target, commercePriceListId, modifierType, modifierAmount,
-			priority, active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			0, title, target, commercePriceListId, modifierType,
+			formattedModifierAmount, priority, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommercePriceModifierService _commercePriceModifierService;

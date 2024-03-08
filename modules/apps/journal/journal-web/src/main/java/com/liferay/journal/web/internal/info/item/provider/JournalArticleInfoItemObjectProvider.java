@@ -120,9 +120,7 @@ public class JournalArticleInfoItemObjectProvider
 				"Unable to get journal article " + infoItemIdentifier);
 		}
 
-		if (article.isScheduled() || article.isInTrash() ||
-			(article.isPending() && !_isSignedIn())) {
-
+		if (article.isInTrash() || (article.isPending() && !_isSignedIn())) {
 			return null;
 		}
 

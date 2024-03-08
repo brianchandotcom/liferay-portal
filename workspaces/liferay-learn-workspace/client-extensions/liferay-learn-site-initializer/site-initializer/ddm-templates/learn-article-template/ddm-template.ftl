@@ -379,19 +379,6 @@
 	<div class="row">
 		<div class="col-12 col-md-2 mobile-nav-hide mt-3">
 			<div class="doc-nav-wrapper-inner">
-				<div class="admonition hide hilighting-alert important" id="highlightAlert">
-					<p class="admonition-title">
-						<span class="title-text">
-							${languageUtil.get(locale, "highlighting", "Highlighting")}
-							<span id="highlightTextMatch"></span>
-						</span>
-		  			</p>
-
-					<a class="remove-link" href="javascript:;" id="removeHighlightLink">
-		  				${languageUtil.get(locale, "remove-highlighting", "Remove Highlighting")}
-		 			</a>
-				</div>
-
 				<#if !topLevelArticle>
 					<#assign
 						productTitle = breadcrumbLinksJSONArray.getJSONObject(breadcrumbLinksJSONArray.length()-1).title

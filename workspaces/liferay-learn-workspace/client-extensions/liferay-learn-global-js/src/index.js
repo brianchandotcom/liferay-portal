@@ -10,8 +10,6 @@ import 'prismjs';
 
 import './article';
 
-import './highlighting-alert';
-
 export default {
 	DropdownProvider,
 	SpatialNavigationProvider,

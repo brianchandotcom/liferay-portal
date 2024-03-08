@@ -10,10 +10,10 @@ import {disableSubmitButton} from '../utils/submitButtonController.es';
 
 let REVALIDATE_UPDATES = [];
 
-const notRequireUpdatePageFieldNames = ['requiredErrorMessage'];
+const skipPageEvaluationFieldNames = ['name', 'requiredErrorMessage'];
 
-const needsPageUpdate = (fieldName) => {
-	return !notRequireUpdatePageFieldNames.includes(fieldName);
+const needsPageEvaluation = (fieldName) => {
+	return !skipPageEvaluationFieldNames.includes(fieldName);
 };
 
 const getEditedPages = ({
@@ -89,7 +89,7 @@ export default function fieldChange({
 
 		dispatch({payload: editedPages, type: EVENT_TYPES.PAGE.UPDATE});
 
-		if (evaluable && (viewMode || needsPageUpdate(fieldName))) {
+		if (evaluable && (viewMode || needsPageEvaluation(fieldName))) {
 			try {
 				disableSubmitButton(submitButtonId);
 

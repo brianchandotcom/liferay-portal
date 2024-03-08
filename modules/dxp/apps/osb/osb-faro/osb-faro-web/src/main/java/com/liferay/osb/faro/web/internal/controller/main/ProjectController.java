@@ -382,8 +382,7 @@ public class ProjectController extends BaseFaroController {
 			faroProject.setModifiedTime(now);
 
 			FaroSubscriptionDisplay faroSubscriptionDisplay =
-				new FaroSubscriptionDisplay(
-					getOSBAccountEntry(faroProject.getCorpProjectUuid()));
+				new FaroSubscriptionDisplay(getOSBAccountEntry(faroProject));
 
 			if (_isSubscriptionPlanChanged(
 					faroProject, faroSubscriptionDisplay.getName())) {
@@ -665,6 +664,31 @@ public class ProjectController extends BaseFaroController {
 				setOfferingEntries(Collections.singletonList(osbOfferingEntry));
 			}
 		};
+	}
+
+	protected OSBAccountEntry getOSBAccountEntry(FaroProject faroProject)
+		throws Exception {
+
+		if (Validator.isNull(faroProject.getCorpProjectUuid())) {
+			return new OSBAccountEntry() {
+				{
+					OSBOfferingEntry osbOfferingEntry = new OSBOfferingEntry();
+
+					osbOfferingEntry.setProductEntryId(
+						ProductConstants.BASIC_PRODUCT_ENTRY_ID);
+
+					osbOfferingEntry.setQuantity(1);
+					osbOfferingEntry.setStartDate(
+						new Date(faroProject.getCreateTime()));
+
+					setOfferingEntries(
+						Collections.singletonList(osbOfferingEntry));
+				}
+			};
+		}
+
+		return _provisioningClient.getOSBAccountEntry(
+			faroProject.getCorpProjectUuid());
 	}
 
 	protected OSBAccountEntry getOSBAccountEntry(String corpProjectUuid)

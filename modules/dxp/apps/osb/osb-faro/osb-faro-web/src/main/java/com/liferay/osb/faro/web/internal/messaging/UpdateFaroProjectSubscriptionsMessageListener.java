@@ -10,6 +10,9 @@ import com.liferay.osb.faro.engine.client.CerebroEngineClient;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.provisioning.client.ProvisioningClient;
+import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
+import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
+import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.faro.web.internal.constants.FaroMessageDestinationNames;
 import com.liferay.osb.faro.web.internal.messaging.destination.creator.DestinationCreator;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
 import java.util.Date;
 
 import org.osgi.framework.BundleContext;
@@ -101,16 +105,33 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 				_faroProjectLocalService.getFaroProjects(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
-			FaroSubscriptionDisplay faroSubscriptionDisplay = null;
+			OSBAccountEntry osbAccountEntry = null;
 
 			if (Validator.isNull(faroProject.getCorpProjectUuid())) {
-				faroSubscriptionDisplay = new FaroSubscriptionDisplay();
+				osbAccountEntry = new OSBAccountEntry() {
+					{
+						OSBOfferingEntry osbOfferingEntry =
+							new OSBOfferingEntry();
+
+						osbOfferingEntry.setProductEntryId(
+							ProductConstants.BASIC_PRODUCT_ENTRY_ID);
+
+						osbOfferingEntry.setQuantity(1);
+						osbOfferingEntry.setStartDate(
+							new Date(faroProject.getCreateTime()));
+
+						setOfferingEntries(
+							Collections.singletonList(osbOfferingEntry));
+					}
+				};
 			}
 			else {
-				faroSubscriptionDisplay = new FaroSubscriptionDisplay(
-					_provisioningClient.getOSBAccountEntry(
-						faroProject.getCorpProjectUuid()));
+				osbAccountEntry = _provisioningClient.getOSBAccountEntry(
+					faroProject.getCorpProjectUuid());
 			}
+
+			FaroSubscriptionDisplay faroSubscriptionDisplay =
+				new FaroSubscriptionDisplay(osbAccountEntry);
 
 			try {
 				faroSubscriptionDisplay.setCounts(

@@ -99,7 +99,7 @@ portletDisplay.setURLBackTitle("web-content");
 								</div>
 
 								<react:component
-									module="js/configuration_browse/HighlightedDDMStructuresConfiguration"
+									module="{HighlightedDDMStructuresConfiguration} from journal-web"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
 											"ddmStructures", journalDisplayContext.getHighlightedDDMStructuresJSONArray()

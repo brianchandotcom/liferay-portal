@@ -64,7 +64,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								%>'
 								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= journalDisplayContext.getFolderInfoPanelDropdownItems(folder) %>"
-								propsTransformer="js/ElementsDefaultPropsTransformer"
+								propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 							/>
 						</li>
 					</ul>
@@ -142,7 +142,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								%>'
 								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= journalDisplayContext.getArticleInfoPanelDropdownItems(article) %>"
-								propsTransformer="js/ElementsDefaultPropsTransformer"
+								propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 							/>
 						</li>
 					</ul>
@@ -304,7 +304,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									%>'
 									aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 									dropdownItems="<%= journalVersionTabDisplayContext.getArticleHistoryActionDropdownItems(articleVersion) %>"
-									propsTransformer="js/ElementsDefaultPropsTransformer"
+									propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 								/>
 							</clay:content-col>
 						</li>

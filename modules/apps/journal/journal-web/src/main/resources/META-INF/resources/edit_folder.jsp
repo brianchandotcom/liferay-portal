@@ -312,7 +312,7 @@ renderResponse.setTitle(title);
 									"workflowEnabled", workflowEnabled
 								).build()
 							%>'
-							module="js/SelectDDMStructureButton"
+							module="{SelectDDMStructureButton} from journal-web"
 						/>
 					</div>
 				</c:if>

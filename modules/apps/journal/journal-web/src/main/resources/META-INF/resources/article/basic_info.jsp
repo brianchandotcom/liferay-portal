@@ -20,7 +20,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 <c:if test="<%= journalWebConfiguration.changeableDefaultLanguage() %>">
 	<div id="<%= liferayPortletResponse.getNamespace() %>-change-default-language">
 		<react:component
-			module="js/ChangeDefaultLanguage.es"
+			module="{ChangeDefaultLanguage} from journal-web"
 			props="<%= journalEditArticleDisplayContext.getChangeDefaultLanguageData() %>"
 			servletContext="<%= application %>"
 		/>

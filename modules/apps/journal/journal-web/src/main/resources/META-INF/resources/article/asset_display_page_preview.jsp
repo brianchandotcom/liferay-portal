@@ -20,6 +20,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEdit
 
 	<react:component
 		data="<%= journalEditArticleDisplayContext.getAssetDisplayPagePreviewContext() %>"
-		module="js/article/AssetDisplayPagePreview"
+		module="{AssetDisplayPagePreview} from journal-web"
 	/>
 </div>

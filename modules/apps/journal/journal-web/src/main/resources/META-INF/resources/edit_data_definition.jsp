@@ -114,7 +114,7 @@ editDDMStructureURL.setParameter("structureKey", String.valueOf(ddmStructureKey)
 
 				<div class="contextual-sidebar-mr-n">
 					<liferay-data-engine:data-layout-builder
-						additionalPanels="<%= journalEditDDMStructuresDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
+						additionalPanels="<%= journalEditDDMStructuresDisplayContext.getAdditionalPanels() %>"
 						componentId='<%= liferayPortletResponse.getNamespace() + "dataLayoutBuilder" %>'
 						contentType="journal"
 						dataDefinitionId="<%= ddmStructureId %>"
@@ -134,13 +134,13 @@ editDDMStructureURL.setParameter("structureKey", String.valueOf(ddmStructureKey)
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "DataEngineLayoutBuilderHandler" %>'
 	context="<%= journalEditDDMStructuresDisplayContext.getDataEngineLayoutBuilderHandlerContext() %>"
-	module="js/DataEngineLayoutBuilderHandler.es"
+	module="{DataEngineLayoutBuilderHandler} from journal-web"
 	servletContext="<%= application %>"
 />
 
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "LocaleChangedHandlerComponent" %>'
 	context="<%= journalEditDDMStructuresDisplayContext.getLocaleChangedHandlerContext() %>"
-	module="js/LocaleChangedHandler.es"
+	module="{LocaleChangedHandler} from journal-web"
 	servletContext="<%= application %>"
 />

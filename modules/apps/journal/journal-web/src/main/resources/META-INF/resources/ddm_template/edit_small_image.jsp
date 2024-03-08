@@ -59,7 +59,7 @@ String smallImageSource = journalEditDDMTemplateDisplayContext.getSmallImageSour
 		%>
 
 		<react:component
-			module="js/ImageInput.es"
+			module="{ImageInput} from journal-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"name", "smallImageFile"

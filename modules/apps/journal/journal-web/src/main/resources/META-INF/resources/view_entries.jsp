@@ -183,7 +183,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								%>'
 								aria-label='<%= LanguageUtil.format(request, "actions-for-x", HtmlUtil.escape(title), false) %>'
 								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
-								propsTransformer="js/ElementsDefaultPropsTransformer"
+								propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
@@ -195,7 +195,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										"trashEnabled", componentContext.get("trashEnabled")
 									).build()
 								%>'
-								propsTransformer="js/ElementsDefaultPropsTransformer"
+								propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 								verticalCard="<%= new JournalArticleVerticalCard(curArticle, renderRequest, renderResponse, searchContainer.getRowChecker(), assetDisplayPageFriendlyURLProvider, trashHelper, journalDisplayContext) %>"
 							/>
 						</liferay-ui:search-container-column-text>
@@ -328,7 +328,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								%>'
 								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= journalDisplayContext.getArticleActionDropdownItems(curArticle) %>"
-								propsTransformer="js/ElementsDefaultPropsTransformer"
+								propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:otherwise>
@@ -418,7 +418,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								%>'
 								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
-								propsTransformer="js/ElementsDefaultPropsTransformer"
+								propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
@@ -438,7 +438,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									).build()
 								%>'
 								horizontalCard="<%= new JournalFolderHorizontalCard(curFolder, journalDisplayContext.getDisplayStyle(), renderRequest, renderResponse, searchContainer.getRowChecker(), trashHelper) %>"
-								propsTransformer="js/ElementsDefaultPropsTransformer"
+								propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>
@@ -532,7 +532,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								%>'
 								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 								dropdownItems="<%= journalDisplayContext.getFolderActionDropdownItems(curFolder) %>"
-								propsTransformer="js/ElementsDefaultPropsTransformer"
+								propsTransformer="{ElementsDefaultPropsTransformer} from journal-web"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:otherwise>
@@ -566,6 +566,6 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 			"searchContainerId", "articles"
 		).build()
 	%>'
-	module="js/Navigation"
+	module="{Navigation} from journal-web"
 	servletContext="<%= application %>"
 />

@@ -56,6 +56,19 @@ public class ReindexStatusMessageSenderImpl
 		_sendBackgroundTaskStatusMessage(message);
 	}
 
+	@Override
+	public void sendStatusMessage(String className, int status) {
+		Message message = new Message();
+
+		message.put(
+			BackgroundTaskConstants.BACKGROUND_TASK_ID,
+			BackgroundTaskThreadLocal.getBackgroundTaskId());
+		message.put(ReindexBackgroundTaskConstants.CLASS_NAME, className);
+		message.put("status", status);
+
+		_sendBackgroundTaskStatusMessage(message);
+	}
+
 	private void _sendBackgroundTaskStatusMessage(Message message) {
 		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 			message);

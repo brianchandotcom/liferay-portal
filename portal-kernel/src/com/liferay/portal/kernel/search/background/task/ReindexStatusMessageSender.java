@@ -18,4 +18,7 @@ public interface ReindexStatusMessageSender {
 	public void sendStatusMessage(
 		String state, long searchContext, long[] items);
 
+	public void sendStatusMessage(
+		String className, int status);
+
 }

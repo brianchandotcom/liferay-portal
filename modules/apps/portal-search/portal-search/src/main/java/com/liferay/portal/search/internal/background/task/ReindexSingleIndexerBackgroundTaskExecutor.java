@@ -9,6 +9,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSender;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.search.index.SyncReindexManager;
 
 import java.util.Collections;
@@ -131,6 +133,8 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 			}
 			catch (Exception exception) {
 				_log.error(exception);
+
+				reindexStatusMessageSender.sendStatusMessage(className, BackgroundTaskConstants.STATUS_FAILED);
 			}
 			finally {
 				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode);

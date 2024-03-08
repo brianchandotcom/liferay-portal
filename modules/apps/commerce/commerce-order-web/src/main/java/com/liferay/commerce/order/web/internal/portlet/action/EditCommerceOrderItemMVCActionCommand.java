@@ -8,11 +8,13 @@ package com.liferay.commerce.order.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.exception.CommerceOrderItemRequestedDeliveryDateException;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,11 +23,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -187,8 +191,16 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		long cpMeasurementUnitId = ParamUtil.getLong(
 			actionRequest, "cpMeasurementUnitId");
-		BigDecimal decimalQuantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "decimalQuantity");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String decimalQuantity = ParamUtil.getString(
+			actionRequest, "decimalQuantity", BigDecimal.ZERO.toString());
+
+		BigDecimal formattedDecimalQuantity =
+			_commerceOrderItemQuantityFormatter.parse(
+				decimalQuantity, themeDisplay.getLocale());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrderItem.class.getName(), actionRequest);
@@ -196,31 +208,47 @@ public class EditCommerceOrderItemMVCActionCommand
 		serviceContext.setAttribute("validateOrder", Boolean.FALSE);
 
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
-			commerceOrderItemId, cpMeasurementUnitId, decimalQuantity,
+			commerceOrderItemId, cpMeasurementUnitId, formattedDecimalQuantity,
 			serviceContext);
 
 		if (!commerceOrder.isOpen()) {
-			BigDecimal price = (BigDecimal)ParamUtil.getNumber(
-				actionRequest, "price");
+			String price = ParamUtil.getString(
+				actionRequest, "price", BigDecimal.ZERO.toString());
+
+			price = _commercePriceFormatter.parse(
+				price, themeDisplay.getLocale());
+
+			BigDecimal formattedPrice = new BigDecimal(price);
 
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemUnitPrice(
-					commerceOrderItemId, decimalQuantity, price);
+					commerceOrderItemId, formattedDecimalQuantity,
+					formattedPrice);
 
-			BigDecimal discountAmount = (BigDecimal)ParamUtil.getNumber(
-				actionRequest, "discountAmount");
+			String discountAmount = ParamUtil.getString(
+				actionRequest, "discountAmount", BigDecimal.ZERO.toString());
 
-			BigDecimal finalPrice = (BigDecimal)ParamUtil.getNumber(
-				actionRequest, "finalPrice");
+			discountAmount = _commercePriceFormatter.parse(
+				discountAmount, themeDisplay.getLocale());
+
+			BigDecimal formattedDiscountAmount = new BigDecimal(discountAmount);
+
+			String finalPrice = ParamUtil.getString(
+				actionRequest, "finalPrice", BigDecimal.ZERO.toString());
+
+			finalPrice = _commercePriceFormatter.parse(
+				finalPrice, themeDisplay.getLocale());
+
+			BigDecimal formattedFinalPrice = new BigDecimal(finalPrice);
 
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItemPrices(
-					commerceOrderItemId, discountAmount,
+					commerceOrderItemId, formattedDiscountAmount,
 					commerceOrderItem.getDiscountPercentageLevel1(),
 					commerceOrderItem.getDiscountPercentageLevel2(),
 					commerceOrderItem.getDiscountPercentageLevel3(),
-					commerceOrderItem.getDiscountPercentageLevel4(), finalPrice,
-					commerceOrderItem.getPromoPrice(),
+					commerceOrderItem.getDiscountPercentageLevel4(),
+					formattedFinalPrice, commerceOrderItem.getPromoPrice(),
 					commerceOrderItem.getUnitPrice());
 		}
 
@@ -248,7 +276,14 @@ public class EditCommerceOrderItemMVCActionCommand
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
+
+	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	private class CommerceOrderItemCallable implements Callable<Object> {
 

@@ -437,15 +437,15 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testGetClassName() throws Exception {
-		Map<ClassName, String> classNames = Collections.synchronizedMap(
-			new IdentityHashMap<>());
+		Set<ClassName> classNames = Collections.synchronizedSet(
+			Collections.newSetFromMap(new IdentityHashMap<>()));
 
 		try {
 			DBPartitionUtil.forEachCompanyId(
-				companyId -> Assert.assertNull(
-					classNames.put(
-						_classNameLocalService.getClassName("class.name.test"),
-						"")));
+				companyId -> Assert.assertTrue(
+					classNames.add(
+						_classNameLocalService.getClassName(
+							"class.name.test"))));
 
 			Assert.assertEquals(
 				classNames.toString(), companyLocalService.getCompaniesCount(),

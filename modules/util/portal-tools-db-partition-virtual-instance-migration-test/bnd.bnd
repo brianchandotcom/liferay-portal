@@ -10,8 +10,6 @@ Import-Package:\
 	\
 	*
 -includeresource:\
-	@com.liferay.portal.tools.db.partition.virtual.instance.migration.common-*.jar,\
-	@com.liferay.portal.tools.db.partition.virtual.instance.migration.extractor-*.jar!/com/liferay/portal/tools/db/partition/virtual/instance/migration/extractor/*.class,\
-	@com.liferay.portal.tools.db.partition.virtual.instance.migration.validator-*.jar!/com/liferay/portal/tools/db/partition/virtual/instance/migration/validator/*.class,\
-	@com.liferay.portal.tools.db.partition.virtual.instance.migration.extractor-*.jar!/org/apache/commons/cli/*.class
+	@com.liferay.portal.tools.db.partition.virtual.instance.migration-*.jar!/com/liferay/portal/tools/db/partition/virtual/instance/migration/*.class,\
+	@com.liferay.portal.tools.db.partition.virtual.instance.migration-*.jar!/org/apache/commons/cli/*.class
 -removeheaders: Require-Capability

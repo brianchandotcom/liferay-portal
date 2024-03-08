@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/extractor/util/DatabaseUtil\.java" />
-		<suppress checks="CompanyIterationCheck" files="src/test/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/extractor/DBPartitionVirtualInstanceMigrationExtractorTest\.java" />
-		<suppress checks="CompanyIterationCheck" files="src/test/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/extractor/util/DatabaseMockupUtil\.java" />
-	</checkstyle>
-</suppressions>

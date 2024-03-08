@@ -18,10 +18,9 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.DBPartitionVirtualInstanceMigration;
 import com.liferay.portal.tools.db.partition.virtual.instance.migration.common.LiferayInstance;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.extractor.DBPartitionVirtualInstanceMigrationExtractor;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.extractor.util.DatabaseUtil;
-import com.liferay.portal.tools.db.partition.virtual.instance.migration.validator.DBPartitionVirtualInstanceMigrationValidator;
+import com.liferay.portal.tools.db.partition.virtual.instance.migration.util.DatabaseUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.ByteArrayOutputStream;
@@ -36,7 +35,6 @@ import java.util.Arrays;
 import org.apache.commons.io.FileUtils;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -51,13 +49,9 @@ public class VirtualInstanceMigrationToolTest extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		enableDBPartition();
-		_defaultCompanyId = TestPropsValues.getCompanyId();
-	}
+		BaseDBPartitionTestCase.setUpClass();
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		disableDBPartition();
+		_defaultCompanyId = TestPropsValues.getCompanyId();
 	}
 
 	@Before
@@ -157,8 +151,7 @@ public class VirtualInstanceMigrationToolTest extends BaseDBPartitionTestCase {
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
 			return ReflectionTestUtil.invoke(
-				DBPartitionVirtualInstanceMigrationExtractor.class,
-				"_writeToFile",
+				DBPartitionVirtualInstanceMigration.class, "_writeToFile",
 				new Class<?>[] {LiferayInstance.class, String.class},
 				DatabaseUtil.exportLiferayInstance(connection),
 				_outputDirectoryFile.getAbsolutePath());
@@ -172,8 +165,8 @@ public class VirtualInstanceMigrationToolTest extends BaseDBPartitionTestCase {
 		throws Exception {
 
 		try {
-			DBPartitionVirtualInstanceMigrationValidator.main(
-				new String[] {"-s", sourceFile, "-t", targetFile});
+			DBPartitionVirtualInstanceMigration.main(
+				new String[] {"-v", "-s", sourceFile, "-t", targetFile});
 		}
 		catch (RuntimeException runtimeException) {
 			catchValidations.accept(runtimeException);

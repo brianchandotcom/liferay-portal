@@ -194,9 +194,8 @@ public class ObjectRelationshipResourceImpl
 		long objectDefinitionId2 = GetterUtil.getLong(
 			objectRelationship.getObjectDefinitionId2());
 
-		if ((objectDefinitionId2 == 0) &&
-			(objectRelationship.getObjectDefinitionExternalReferenceCode2() !=
-				null)) {
+		if (objectRelationship.getObjectDefinitionExternalReferenceCode2() !=
+				null) {
 
 			com.liferay.object.model.ObjectDefinition objectDefinition2 =
 				_getObjectDefinition2(objectRelationship);

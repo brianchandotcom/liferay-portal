@@ -6,7 +6,6 @@
 package com.liferay.portal.db.partition.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -37,6 +36,7 @@ import java.sql.ResultSet;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -280,28 +280,16 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testCounterIncrement() throws Exception {
-		CopyOnWriteArrayList<Long> maxCounters = new CopyOnWriteArrayList<>();
+		Map<Long, Long> counterSizes = new HashMap<>();
 
 		DBPartitionUtil.forEachCompanyId(
-			companyId -> maxCounters.add(_counterLocalService.increment()));
-
-		long maxCounterSize = 0;
-
-		for (long counter : maxCounters) {
-			if (counter > maxCounterSize) {
-				maxCounterSize = counter;
-			}
-		}
-
-		long size = maxCounterSize + 1000;
-
-		DBPartitionUtil.forEachCompanyId(
-			companyId -> _counterLocalService.reset(
-				Counter.class.getName(), size));
+			companyId -> counterSizes.put(
+				companyId, _counterLocalService.increment()));
 
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> Assert.assertEquals(
-				size + 1, _counterLocalService.increment()));
+				counterSizes.get(companyId) + 1,
+				_counterLocalService.increment()));
 	}
 
 	@Test

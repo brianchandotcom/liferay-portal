@@ -14,31 +14,24 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Wade Cao
  */
-public class DocumentToSynonymSetTranslatorImplTest
+public class DocumentToSynonymSetTranslatorUtilTest
 	extends BaseSynonymsWebTestCase {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_documentToSynonymSetTranslatorImpl =
-			new DocumentToSynonymSetTranslatorImpl();
-	}
-
 	@Test
 	public void testTranslateWithDocumentSynonymSetDocumentId() {
 		Document document = setUpDocument("car,automobile");
 
-		SynonymSet synonymSet = _documentToSynonymSetTranslatorImpl.translate(
+		SynonymSet synonymSet = DocumentToSynonymSetTranslatorUtil.translate(
 			document, "synonymSetDocumentId");
 
 		Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
@@ -52,7 +45,7 @@ public class DocumentToSynonymSetTranslatorImplTest
 
 		List<SearchHit> searchHitsList = searchHits.getSearchHits();
 
-		SynonymSet synonymSet = _documentToSynonymSetTranslatorImpl.translate(
+		SynonymSet synonymSet = DocumentToSynonymSetTranslatorUtil.translate(
 			searchHitsList.get(0));
 
 		Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
@@ -64,7 +57,7 @@ public class DocumentToSynonymSetTranslatorImplTest
 		SearchHits searchHits = setUpSearchHits("car,automobile");
 
 		List<SynonymSet> synonymSets =
-			_documentToSynonymSetTranslatorImpl.translateAll(
+			DocumentToSynonymSetTranslatorUtil.translateAll(
 				searchHits.getSearchHits());
 
 		Assert.assertEquals(synonymSets.toString(), 1, synonymSets.size());
@@ -74,8 +67,5 @@ public class DocumentToSynonymSetTranslatorImplTest
 		Assert.assertEquals("car,automobile", synonymSet.getSynonyms());
 		Assert.assertEquals("id", synonymSet.getSynonymSetDocumentId());
 	}
-
-	private DocumentToSynonymSetTranslatorImpl
-		_documentToSynonymSetTranslatorImpl;
 
 }

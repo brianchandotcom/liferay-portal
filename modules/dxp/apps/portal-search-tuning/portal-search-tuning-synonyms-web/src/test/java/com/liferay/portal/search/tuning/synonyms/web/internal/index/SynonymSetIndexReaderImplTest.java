@@ -38,9 +38,6 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 		_synonymSetIndexReaderImpl = new SynonymSetIndexReaderImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_synonymSetIndexReaderImpl, "_documentToSynonymSetTranslator",
-			_documentToSynonymSetTranslator);
-		ReflectionTestUtil.setFieldValue(
 			_synonymSetIndexReaderImpl, "_searchEngineAdapter",
 			searchEngineAdapter);
 	}
@@ -133,9 +130,6 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 		return getDocumentResponse;
 	}
 
-	private final DocumentToSynonymSetTranslator
-		_documentToSynonymSetTranslator =
-			new DocumentToSynonymSetTranslatorImpl();
 	private SynonymSetIndexReaderImpl _synonymSetIndexReaderImpl;
 
 }

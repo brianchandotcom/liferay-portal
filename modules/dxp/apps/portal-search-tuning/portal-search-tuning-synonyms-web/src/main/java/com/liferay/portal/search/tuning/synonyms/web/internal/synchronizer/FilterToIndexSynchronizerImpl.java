@@ -6,9 +6,10 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.synchronizer;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration;
-import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterReader;
+import com.liferay.portal.search.tuning.synonyms.web.internal.filter.SynonymSetFilterReaderUtil;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
 import com.liferay.portal.search.tuning.synonyms.web.internal.storage.SynonymSetStorageAdapter;
 
@@ -68,8 +69,8 @@ public class FilterToIndexSynchronizerImpl
 		for (String filterName : _filterNames) {
 			Collections.addAll(
 				synonyms,
-				_synonymSetFilterReader.getSynonymSets(
-					companyIndexName, filterName));
+				SynonymSetFilterReaderUtil.getSynonymSets(
+					_searchEngineAdapter, companyIndexName, filterName));
 		}
 
 		return synonyms.toArray(new String[0]);
@@ -78,7 +79,7 @@ public class FilterToIndexSynchronizerImpl
 	private volatile String[] _filterNames;
 
 	@Reference
-	private SynonymSetFilterReader _synonymSetFilterReader;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private SynonymSetStorageAdapter _synonymSetStorageAdapter;

@@ -11,17 +11,6 @@ import classNames from 'classnames';
 import {FieldBase} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-interface IProps {
-	index: number;
-	name: string;
-	onAddClick: (index: number) => void;
-	onAttributeChange: (index: number, updatedValue: Object) => void;
-	onRemoveClick: (index: number) => void;
-	portletNamespace: string;
-	type: string;
-	value: string | boolean;
-}
-
 export const TYPE_BOOLEAN = 'TYPE_BOOLEAN';
 export const TYPE_STRING = 'TYPE_STRING';
 
@@ -34,6 +23,17 @@ const TYPE_ITEMS = [
 	{label: Liferay.Language.get('string'), value: TYPE_STRING},
 	{label: Liferay.Language.get('boolean'), value: TYPE_BOOLEAN},
 ];
+
+interface IProps {
+	index: number;
+	name: string;
+	onAddClick: (index: number) => void;
+	onAttributeChange: (index: number, updatedValue: Object) => void;
+	onRemoveClick: (index: number) => void;
+	portletNamespace: string;
+	type: string;
+	value: string | boolean;
+}
 
 export default function AttributeFields({
 	index,

@@ -70,6 +70,13 @@ public class SiteInitializerSerializerImpl
 	}
 
 	private void _addZipEntry(
+			String fileName, byte[] content, ZipWriter zipWriter)
+		throws Exception {
+
+		zipWriter.addEntry("site-initializer/" + fileName, content);
+	}
+
+	private void _addZipEntry(
 			String fileName, JSONObject jsonObject, ZipWriter zipWriter)
 		throws Exception {
 
@@ -197,11 +204,9 @@ public class SiteInitializerSerializerImpl
 		byte[] fileContentBytesArray = _file.getBytes(
 			fileEntry.getContentStream());
 
-		String content = new String(fileContentBytesArray);
-
 		_addZipEntry(
 			_normalize(parentFolderName + "/" + fileEntry.getFileName()),
-			content, zipWriter);
+			fileContentBytesArray, zipWriter);
 	}
 
 	private void _serializeStyleBookEntries(long groupId, ZipWriter zipWriter)

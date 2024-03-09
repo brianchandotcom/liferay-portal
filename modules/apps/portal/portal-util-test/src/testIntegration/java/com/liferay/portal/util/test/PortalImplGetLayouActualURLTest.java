@@ -70,32 +70,10 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 	public void testGetLayoutActualURLWithNodeLayoutHierarchy()
 		throws Exception {
 
-		Layout nodeLayout = _addLayout(
-			publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE);
-
-		_createLayoutHierarchy(
-			5, 4, nodeLayout.getLayoutId(), LayoutConstants.TYPE_NODE,
-			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_NODE,
-			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_NODE);
-
-		Layout lastChildLayout = _assertAllChildrenAndGetLastChildLayout(
-			25, nodeLayout);
-
-		Assert.assertEquals(
-			LayoutConstants.TYPE_NODE, lastChildLayout.getType());
-
-		_addChildLayouts(
-			lastChildLayout.getLayoutId(), LayoutConstants.TYPE_NODE,
-			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_NODE,
-			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_PORTLET);
-
-		lastChildLayout = _assertAllChildrenAndGetLastChildLayout(
-			30, nodeLayout);
-
-		Assert.assertEquals(
-			LayoutConstants.TYPE_PORTLET, lastChildLayout.getType());
-
-		_assertGetLayoutActualURL(lastChildLayout, nodeLayout);
+		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
+			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1,
+			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
+			_NODE_LAYOUT_HIERARCHY_DEPTH - 1);
 	}
 
 	private List<Layout> _addChildLayouts(long parentLayoutId, String... types)
@@ -115,15 +93,54 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 			false, StringPool.BLANK, _serviceContext);
 	}
 
-	private Layout _assertAllChildrenAndGetLastChildLayout(
-		int expectedNumChildren, Layout layout) {
+	private Layout _assertAllChildrenAndGetDeeperParentLayout(
+			int expectedNumChildren, Layout layout)
+		throws Exception {
 
 		List<Layout> allChildren = layout.getAllChildren();
 
 		Assert.assertEquals(
 			allChildren.toString(), expectedNumChildren, allChildren.size());
 
-		return allChildren.get(allChildren.size() - 1);
+		int numAncestors = 0;
+		Layout deeperParentLayout = null;
+
+		for (Layout childLayout : allChildren) {
+			if (!childLayout.hasChildren()) {
+				continue;
+			}
+
+			List<Layout> ancestors = childLayout.getAncestors();
+
+			int curNumAncestors = ancestors.size();
+
+			if (curNumAncestors < numAncestors) {
+				continue;
+			}
+
+			numAncestors = curNumAncestors;
+
+			deeperParentLayout = childLayout;
+		}
+
+		Assert.assertNotNull(deeperParentLayout);
+
+		return deeperParentLayout;
+	}
+
+	private Layout _assertAllChildrenAndGetDepperChildLayout(
+			int expectedNumChildren, Layout layout, int pos)
+		throws Exception {
+
+		Layout parentLayout = _assertAllChildrenAndGetDeeperParentLayout(
+			expectedNumChildren, layout);
+
+		List<Layout> lastLevelLayouts = parentLayout.getChildren();
+
+		Assert.assertTrue(
+			lastLevelLayouts.toString(), lastLevelLayouts.size() > pos);
+
+		return lastLevelLayouts.get(pos);
 	}
 
 	private void _assertGetLayoutActualURL(
@@ -159,6 +176,38 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 			MapUtil.getLong(parameterMap, "layoutId"));
 	}
 
+	private void _assertGetLayoutActualURLWithNodeLayoutHierarchy(
+			int browsableTypePos, Layout layout, int parentIndex)
+		throws Exception {
+
+		_createLayoutHierarchy(
+			_NODE_LAYOUT_HIERARCHY_DEPTH, parentIndex, layout.getLayoutId(),
+			_getTypes(-1, _NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH));
+
+		int expectedNumChildren =
+			_NODE_LAYOUT_HIERARCHY_DEPTH * _NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH;
+
+		Layout childLayout = _assertAllChildrenAndGetDepperChildLayout(
+			expectedNumChildren, layout, parentIndex);
+
+		Assert.assertEquals(LayoutConstants.TYPE_NODE, childLayout.getType());
+
+		_addChildLayouts(
+			childLayout.getLayoutId(),
+			_getTypes(browsableTypePos, _NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH));
+
+		expectedNumChildren =
+			expectedNumChildren + _NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH;
+
+		childLayout = _assertAllChildrenAndGetDepperChildLayout(
+			expectedNumChildren, layout, browsableTypePos);
+
+		Assert.assertEquals(
+			LayoutConstants.TYPE_PORTLET, childLayout.getType());
+
+		_assertGetLayoutActualURL(childLayout, layout);
+	}
+
 	private void _createLayoutHierarchy(
 			int depth, int parentIndex, long parentLayoutId, String... types)
 		throws Exception {
@@ -172,9 +221,29 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 
 			Assert.assertNotNull(parentLayout);
 
-			curParentLayoutId = parentLayout.getParentLayoutId();
+			curParentLayoutId = parentLayout.getLayoutId();
 		}
 	}
+
+	private String[] _getTypes(int browsableTypePos, int lenght) {
+		String[] types = new String[lenght];
+
+		for (int i = 0; i < lenght; i++) {
+			String type = LayoutConstants.TYPE_NODE;
+
+			if (i == browsableTypePos) {
+				type = LayoutConstants.TYPE_PORTLET;
+			}
+
+			types[i] = type;
+		}
+
+		return types;
+	}
+
+	private static final int _NODE_LAYOUT_HIERARCHY_DEPTH = 5;
+
+	private static final int _NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH = 5;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

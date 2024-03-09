@@ -5,6 +5,8 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -15,6 +17,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -51,6 +55,9 @@ public class SiteInitializerSerializerImpl
 		try {
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
+			_serializeDocuments(
+				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"documents/group", zipWriter);
 			_serializeDDMStructures(groupId, zipWriter);
 			_serializeDDMTemplates(groupId, zipWriter);
 			_serializeStyleBookEntries(groupId, zipWriter);
@@ -161,6 +168,42 @@ public class SiteInitializerSerializerImpl
 		}
 	}
 
+	private void _serializeDocuments(
+			long groupId, Long parentFolderId, String parentFolderName,
+			ZipWriter zipWriter)
+		throws Exception {
+
+		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
+			groupId, parentFolderId);
+
+		for (FileEntry fileEntry : fileEntries) {
+			_serializeFileEntry(fileEntry, parentFolderName, zipWriter);
+		}
+
+		List<Folder> subfolders = _dlAppService.getFolders(
+			groupId, parentFolderId);
+
+		for (Folder subfolder : subfolders) {
+			_serializeDocuments(
+				groupId, subfolder.getFolderId(),
+				parentFolderName + "/" + subfolder.getName(), zipWriter);
+		}
+	}
+
+	private void _serializeFileEntry(
+			FileEntry fileEntry, String parentFolderName, ZipWriter zipWriter)
+		throws Exception {
+
+		byte[] fileContentBytesArray = _file.getBytes(
+			fileEntry.getContentStream());
+
+		String content = new String(fileContentBytesArray);
+
+		_addZipEntry(
+			_normalize(parentFolderName + "/" + fileEntry.getFileName()),
+			content, zipWriter);
+	}
+
 	private void _serializeStyleBookEntries(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
@@ -180,6 +223,12 @@ public class SiteInitializerSerializerImpl
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
+	private com.liferay.portal.kernel.util.File _file;
 
 	@Reference
 	private JSONFactory _jsonFactory;

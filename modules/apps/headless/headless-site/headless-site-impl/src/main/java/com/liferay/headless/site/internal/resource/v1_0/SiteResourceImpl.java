@@ -129,7 +129,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			).build();
 		}
 		finally {
-			file.delete();
+			//file.delete();
 		}
 	}
 

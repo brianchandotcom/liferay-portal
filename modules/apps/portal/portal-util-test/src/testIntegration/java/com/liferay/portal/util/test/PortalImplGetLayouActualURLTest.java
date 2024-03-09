@@ -6,6 +6,7 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -61,6 +63,45 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE));
 	}
 
+	@Test
+	public void testGetLayoutActualURLWithNodeLayoutHierarchy()
+		throws Exception {
+
+		Layout nodeLayout = _addLayout(
+			publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE);
+
+		_createLayoutHierarchy(
+			5, 4, nodeLayout.getLayoutId(), LayoutConstants.TYPE_NODE,
+			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_NODE,
+			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_NODE);
+
+		Layout lastChildLayout = _assertAllChildrenAndGetLastChildLayout(
+			25, nodeLayout);
+
+		Assert.assertEquals(
+			LayoutConstants.TYPE_NODE, lastChildLayout.getType());
+
+		_addChildLayouts(
+			lastChildLayout.getLayoutId(), LayoutConstants.TYPE_NODE,
+			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_NODE,
+			LayoutConstants.TYPE_NODE, LayoutConstants.TYPE_PORTLET);
+
+		lastChildLayout = _assertAllChildrenAndGetLastChildLayout(
+			30, nodeLayout);
+
+		Assert.assertEquals(
+			LayoutConstants.TYPE_PORTLET, lastChildLayout.getType());
+
+		_assertGetLayoutActualURL(lastChildLayout, nodeLayout);
+	}
+
+	private List<Layout> _addChildLayouts(long parentLayoutId, String... types)
+		throws Exception {
+
+		return TransformUtil.transformToList(
+			types, type -> _addLayout(parentLayoutId, type));
+	}
+
 	private Layout _addLayout(long parentLayoutId, String type)
 		throws Exception {
 
@@ -69,6 +110,17 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 			parentLayoutId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), type,
 			false, StringPool.BLANK, _serviceContext);
+	}
+
+	private Layout _assertAllChildrenAndGetLastChildLayout(
+		int expectedNumChildren, Layout layout) {
+
+		List<Layout> allChildren = layout.getAllChildren();
+
+		Assert.assertEquals(
+			allChildren.toString(), expectedNumChildren, allChildren.size());
+
+		return allChildren.get(allChildren.size() - 1);
 	}
 
 	private void _assertGetLayoutActualURL(
@@ -96,6 +148,23 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 		Assert.assertEquals(
 			MapUtil.toString(parameterMap), expectedLayout.getLayoutId(),
 			MapUtil.getLong(parameterMap, "layoutId"));
+	}
+
+	private void _createLayoutHierarchy(
+			int depth, int parentIndex, long parentLayoutId, String... types)
+		throws Exception {
+
+		long curParentLayoutId = parentLayoutId;
+
+		for (int i = 0; i < depth; i++) {
+			List<Layout> layouts = _addChildLayouts(curParentLayoutId, types);
+
+			Layout parentLayout = layouts.get(parentIndex);
+
+			Assert.assertNotNull(parentLayout);
+
+			curParentLayoutId = parentLayout.getParentLayoutId();
+		}
 	}
 
 	private ServiceContext _serviceContext;

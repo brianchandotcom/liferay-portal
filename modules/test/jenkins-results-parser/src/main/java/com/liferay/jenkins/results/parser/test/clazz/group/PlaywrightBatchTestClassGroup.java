@@ -253,6 +253,10 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		for (int i = 0; i < suitesJSONArray.length(); i++) {
 			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
 
+			if (suiteJSONObject.has("suites")) {
+				specJSONObjects.addAll(_getSpecJSONObjects(suiteJSONObject));
+			}
+
 			JSONArray specsJSONArray = suiteJSONObject.optJSONArray("specs");
 
 			if (specsJSONArray == null) {

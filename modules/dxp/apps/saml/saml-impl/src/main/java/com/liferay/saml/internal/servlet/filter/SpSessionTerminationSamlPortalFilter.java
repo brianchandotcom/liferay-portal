@@ -7,7 +7,9 @@ package com.liferay.saml.internal.servlet.filter;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlSpSession;
+import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService;
 import com.liferay.saml.runtime.servlet.profile.SingleLogoutProfile;
 
 import javax.servlet.Filter;
@@ -73,8 +75,14 @@ public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 			_singleLogoutProfile.terminateSpSession(
 				httpServletRequest, httpServletResponse);
 
-			_singleLogoutProfile.logout(
-				httpServletRequest, httpServletResponse);
+			SamlIdpSpSession samlIdpSpSession =
+				_samlIdpSpSessionLocalService.fetchSamlIdpSpSession(
+					samlSpSession.getSamlSpSessionId());
+
+			if (samlIdpSpSession == null) {
+				_singleLogoutProfile.logout(
+					httpServletRequest, httpServletResponse);
+			}
 		}
 
 		filterChain.doFilter(httpServletRequest, httpServletResponse);
@@ -87,6 +95,9 @@ public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SpSessionTerminationSamlPortalFilter.class);
+
+	@Reference
+	private SamlIdpSpSessionLocalService _samlIdpSpSessionLocalService;
 
 	private ServletContext _servletContext;
 

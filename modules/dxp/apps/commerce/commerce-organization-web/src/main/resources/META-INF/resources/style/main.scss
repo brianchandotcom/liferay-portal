@@ -22,6 +22,13 @@ $btn-size: 28px;
 		}
 	}
 
+	.subnav-tbar-primary {
+		padding-left: 3rem;
+		padding-right: 3rem;
+		position: fixed;
+		width: 100%;
+	}
+
 	.zoom-controls {
 		bottom: $spacer;
 		left: $spacer;
@@ -294,6 +301,8 @@ $btn-size: 28px;
 		background-color: #b3cdff;
 		line-height: 48px;
 		padding: 0 12px;
+		position: fixed;
+		width: 100%;
 	}
 }
 
@@ -399,4 +408,21 @@ $btn-size: 28px;
 
 .org-chart-root {
 	overflow-x: hidden;
+}
+
+.root-organizations-filter .inline-scroller {
+	margin: 1rem 1rem 0.25rem 0;
+
+	&::-webkit-scrollbar {
+		width: 5px;
+
+		&-track {
+			background-color: transparent;
+		}
+
+		&-thumb {
+			background-color: #e7e7ed;
+			border-radius: 2px;
+		}
+	}
 }

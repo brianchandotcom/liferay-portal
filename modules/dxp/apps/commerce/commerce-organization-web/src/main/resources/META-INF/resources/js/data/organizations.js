@@ -41,7 +41,7 @@ export function getOrganization(id) {
 	return fetchFromHeadless(url);
 }
 
-export function getOrganizations(pageSize) {
+export function getOrganizations(pageSize, organizationIds = []) {
 	const url = new URL(
 		`${themeDisplay.getPathContext()}${ORGANIZATIONS_ROOT_ENDPOINT}`,
 		themeDisplay.getPortalURL()
@@ -51,7 +51,16 @@ export function getOrganizations(pageSize) {
 		'nestedFields',
 		`${ORGANIZATIONS_PROPERTY_NAME},${ACCOUNTS_PROPERTY_NAME},${USERS_PROPERTY_NAME_IN_ORGANIZATION}`
 	);
+
 	url.searchParams.append('pageSize', pageSize);
+
+	if (organizationIds.length) {
+		const filter = organizationIds
+			.map((id) => `id eq '${id}'`)
+			.join(' or ');
+
+		url.searchParams.append('filter', filter);
+	}
 
 	return fetchFromHeadless(url);
 }

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -126,7 +127,11 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 	private void _assertGetLayoutActualURL(
 		Layout expectedLayout, Layout layout) {
 
-		String actualURL = portal.getLayoutActualURL(layout);
+		String actualURL = null;
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			actualURL = portal.getLayoutActualURL(layout);
+		}
 
 		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
 			HttpComponentsUtil.getQueryString(actualURL));

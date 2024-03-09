@@ -32,7 +32,6 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -225,89 +224,20 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	@Test
-	public void testFreeMarkerNotification1() throws Exception {
+	public void testFreeMarkerNotification() throws Exception {
 
-		// SCOPE_COMPANY Object Definition
+		// Company-scoped object definition with a notification template action
 
-		String body = LocalizationUtil.updateLocalization(
-			LocalizedMapUtil.getLocalizedMap(
-				HashMapBuilder.put(
-					LanguageUtil.getLanguageId(LocaleUtil.US),
-					StringUtil.merge(
-						_freeMarkerTermValues.keySet(), StringPool.COMMA)
-				).build()),
-			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
-
-		_executeNotificationObjectAction(
-			0,
-			_addNotificationTemplate(
-				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
-				childObjectDefinition.getObjectDefinitionId(), false,
-				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress())),
+		_testFreeMarkerNotification(
 			childObjectDefinition.getObjectDefinitionId(),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+			ObjectDefinitionConstants.SCOPE_COMPANY, _freeMarkerTermValues);
 
-		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
+		// Site-scoped object definition with a notification template action
 
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 1,
-			notificationQueueEntries.size());
-
-		notificationQueueEntry = notificationQueueEntries.get(0);
-
-		assertTermValues(
-			new ArrayList<>(_freeMarkerTermValues.values()),
-			Arrays.asList(
-				StringUtil.split(
-					notificationQueueEntry.getBody(), StringPool.COMMA)));
-	}
-
-	@Test
-	public void testFreeMarkerNotification2() throws Exception {
-
-		// SCOPE_SITE Object Definition
-
-		String body = LocalizationUtil.updateLocalization(
-			LocalizedMapUtil.getLocalizedMap(
-				HashMapBuilder.put(
-					LanguageUtil.getLanguageId(LocaleUtil.US),
-					StringUtil.merge(
-						_scopeSiteFreeMarkerTermValues.keySet(),
-						StringPool.COMMA)
-				).build()),
-			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
-
-		_executeNotificationObjectAction(
-			0,
-			_addNotificationTemplate(
-				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
-				_scopeSiteObjectDefinition.getObjectDefinitionId(), false,
-				Collections.singletonMap(
-					LocaleUtil.US, user1.getEmailAddress())),
+		_testFreeMarkerNotification(
 			_scopeSiteObjectDefinition.getObjectDefinitionId(),
-			ObjectDefinitionConstants.SCOPE_SITE);
-
-		List<NotificationQueueEntry> notificationQueueEntries =
-			notificationQueueEntryLocalService.getNotificationEntries(
-				NotificationConstants.TYPE_EMAIL,
-				NotificationQueueEntryConstants.STATUS_SENT);
-
-		Assert.assertEquals(
-			notificationQueueEntries.toString(), 1,
-			notificationQueueEntries.size());
-
-		notificationQueueEntry = notificationQueueEntries.get(0);
-
-		assertTermValues(
-			TransformUtil.transform(
-				_scopeSiteFreeMarkerTermValues.values(), Object::toString),
-			Arrays.asList(
-				StringUtil.split(
-					notificationQueueEntry.getBody(), StringPool.COMMA)));
+			ObjectDefinitionConstants.SCOPE_SITE,
+			_scopeSiteFreeMarkerTermValues);
 	}
 
 	@Test
@@ -630,6 +560,50 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(
 				notificationQueueEntry.getNotificationQueueEntryId()));
+	}
+
+	private void _testFreeMarkerNotification(
+			long objectDefinitionId, String scope,
+			Map<String, Object> freeMarkerTermValues)
+		throws Exception {
+
+		String body = LocalizationUtil.updateLocalization(
+			LocalizedMapUtil.getLocalizedMap(
+				HashMapBuilder.put(
+					LanguageUtil.getLanguageId(LocaleUtil.US),
+					StringUtil.merge(
+						freeMarkerTermValues.keySet(), StringPool.COMMA)
+				).build()),
+			null, "Body", LanguageUtil.getLanguageId(LocaleUtil.US));
+
+		_executeNotificationObjectAction(
+			0,
+			_addNotificationTemplate(
+				body, NotificationTemplateConstants.EDITOR_TYPE_FREEMARKER,
+				objectDefinitionId, false,
+				Collections.singletonMap(
+					LocaleUtil.US, user1.getEmailAddress())),
+			objectDefinitionId, scope);
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), 1,
+			notificationQueueEntries.size());
+
+		notificationQueueEntry = notificationQueueEntries.get(0);
+
+		assertTermValues(
+			new ArrayList<>(freeMarkerTermValues.values()),
+			Arrays.asList(
+				StringUtil.split(
+					notificationQueueEntry.getBody(), StringPool.COMMA)));
+
+		notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+			notificationQueueEntry);
 	}
 
 	private void _testSendNotification(

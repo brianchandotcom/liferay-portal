@@ -216,26 +216,21 @@ export function getChartNodeId(data) {
 }
 
 export function formatRootData(rootData) {
-	if (!Array.isArray(rootData)) {
-		rootData = [rootData];
-	}
+	const fakeRoot = {
+		[ORGANIZATIONS_PROPERTY_NAME]: rootData.map((data) => {
+			const item = formatItem(data, MODEL_TYPE_MAP.organization);
+			item.fetched = true;
 
-	if (Array.isArray(rootData)) {
-		const fakeRoot = {
-			[ORGANIZATIONS_PROPERTY_NAME]: rootData.map((data) => {
-				const item = formatItem(data, MODEL_TYPE_MAP.organization);
-				item.fetched = true;
+			return item;
+		}),
+		id: 0,
+	};
 
-				return item;
-			}),
-			id: 0,
-		};
+	formatItem(fakeRoot, 'fakeRoot');
 
-		formatItem(fakeRoot, 'fakeRoot');
-		fakeRoot.fetched = true;
+	fakeRoot.fetched = true;
 
-		return fakeRoot;
-	}
+	return fakeRoot;
 }
 
 export function formatAccountDescription(d) {

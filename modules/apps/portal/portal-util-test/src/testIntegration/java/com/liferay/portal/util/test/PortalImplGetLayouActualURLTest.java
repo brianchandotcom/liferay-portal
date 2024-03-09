@@ -8,6 +8,7 @@ package com.liferay.portal.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -127,6 +129,8 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 	private void _assertGetLayoutActualURL(
 		Layout expectedLayout, Layout layout) {
 
+		_multiVMPool.clear();
+
 		String actualURL = null;
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -171,6 +175,9 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 			curParentLayoutId = parentLayout.getParentLayoutId();
 		}
 	}
+
+	@Inject
+	private MultiVMPool _multiVMPool;
 
 	private ServiceContext _serviceContext;
 

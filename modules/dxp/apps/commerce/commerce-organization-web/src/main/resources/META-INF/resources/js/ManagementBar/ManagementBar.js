@@ -13,6 +13,7 @@ import React, {useContext, useRef} from 'react';
 
 import ChartContext from '../ChartContext';
 import {MODEL_TYPE_MAP} from '../utils/constants';
+import RootOrganizationFilter from './RootOrganizationFilter';
 
 function ManagementBar({onSearchSelected}) {
 	const {chartInstanceRef} = useContext(ChartContext);
@@ -23,81 +24,95 @@ function ManagementBar({onSearchSelected}) {
 		<ManagementToolbar.Container className="org-chart-management-toolbar">
 			<ManagementToolbar.ItemList>
 				{Liferay.FeatureFlags['COMMERCE-12192'] && (
-					<ManagementToolbar.Item className="search">
-						<Autocomplete
-							apiUrl={[
-								'/o/headless-admin-user/v1.0/accounts',
-								'/o/headless-admin-user/v1.0/organizations?flatten=true',
-								'/o/headless-admin-user/v1.0/user-accounts',
-							]}
-							autoload={false}
-							customView={CustomAutocompleteRenderer}
-							customViewInsideDropDown={true}
-							fetchDataDebounce={300}
-							infiniteScrollMode={true}
-							initialLabel={
-								searchSelectedItemRef.current
-									? searchSelectedItemRef.current.name
-									: ''
-							}
-							initialValue={
-								searchSelectedItemRef.current
-									? searchSelectedItemRef.current.id
-									: ''
-							}
-							inputName="search"
-							itemsKey="id"
-							itemsLabel="name"
-							onValueUpdated={(currentValue, selectedItem) => {
-								let type;
+					<>
+						<ManagementToolbar.Item className="root-org-filter">
+							<RootOrganizationFilter />
+						</ManagementToolbar.Item>
 
-								if (currentValue) {
-									if (
-										(searchSelectedItemRef.current &&
-											String(
-												searchSelectedItemRef.current.id
-											) === String(currentValue) &&
-											String(
-												searchSelectedItemRef.current
-													.randomId
-											) ===
+						<ManagementToolbar.Item className="search">
+							<Autocomplete
+								apiUrl={[
+									'/o/headless-admin-user/v1.0/accounts',
+									'/o/headless-admin-user/v1.0/organizations?flatten=true',
+									'/o/headless-admin-user/v1.0/user-accounts',
+								]}
+								autoload={false}
+								customView={CustomAutocompleteRenderer}
+								customViewInsideDropDown={true}
+								fetchDataDebounce={300}
+								infiniteScrollMode={true}
+								initialLabel={
+									searchSelectedItemRef.current
+										? searchSelectedItemRef.current.name
+										: ''
+								}
+								initialValue={
+									searchSelectedItemRef.current
+										? searchSelectedItemRef.current.id
+										: ''
+								}
+								inputName="search"
+								inputPlaceholder={Liferay.Language.get(
+									'search'
+								)}
+								itemsKey="id"
+								itemsLabel="name"
+								onValueUpdated={(
+									currentValue,
+									selectedItem
+								) => {
+									let type;
+
+									if (currentValue) {
+										if (
+											(searchSelectedItemRef.current &&
 												String(
-													selectedItem.randomId
-												)) ||
-										!selectedItem.randomId
-									) {
-										return;
-									}
+													searchSelectedItemRef
+														.current.id
+												) === String(currentValue) &&
+												String(
+													searchSelectedItemRef
+														.current.randomId
+												) ===
+													String(
+														selectedItem.randomId
+													)) ||
+											!selectedItem.randomId
+										) {
+											return;
+										}
 
-									searchSelectedItemRef.current = selectedItem;
+										searchSelectedItemRef.current = selectedItem;
 
-									if ('accountBriefs' in selectedItem) {
-										type = MODEL_TYPE_MAP.user;
-									}
-									else if (
-										'numberOfOrganizations' in selectedItem
-									) {
-										type = MODEL_TYPE_MAP.organization;
-									}
-									else if (
-										'parentAccountId' in selectedItem
-									) {
-										type = MODEL_TYPE_MAP.account;
-									}
+										if ('accountBriefs' in selectedItem) {
+											type = MODEL_TYPE_MAP.user;
+										}
+										else if (
+											'numberOfOrganizations' in
+											selectedItem
+										) {
+											type = MODEL_TYPE_MAP.organization;
+										}
+										else if (
+											'parentAccountId' in selectedItem
+										) {
+											type = MODEL_TYPE_MAP.account;
+										}
 
-									onSearchSelected(
-										currentValue,
-										selectedItem.name,
-										type
-									);
-								}
-								else {
-									onSearchSelected(null, null, null);
-								}
-							}}
-							pageSize={10}
-						/>
-					</ManagementToolbar.Item>
+										onSearchSelected(
+											currentValue,
+											selectedItem.name,
+											type
+										);
+									}
+									else {
+										onSearchSelected(null, null, null);
+									}
+								}}
+								pageSize={10}
+							/>
+						</ManagementToolbar.Item>
+					</>
 				)}
 
 				<ManagementToolbar.Item>
@@ -106,6 +121,7 @@ function ManagementBar({onSearchSelected}) {
 						onClick={() =>
 							chartInstanceRef.current.collapseAllNodes()
 						}
+						size="sm"
 					>
 						{Liferay.Language.get('collapse-all')}
 					</ClayButton>

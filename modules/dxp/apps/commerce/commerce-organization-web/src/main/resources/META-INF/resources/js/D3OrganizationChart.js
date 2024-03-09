@@ -880,6 +880,10 @@ class D3OrganizationChart {
 		});
 	}
 
+	destroyChart() {
+		this.svg.select('*').remove();
+	}
+
 	_expandParentNode(node) {
 		if (node && node.parent) {
 			showChildren(node.parent);

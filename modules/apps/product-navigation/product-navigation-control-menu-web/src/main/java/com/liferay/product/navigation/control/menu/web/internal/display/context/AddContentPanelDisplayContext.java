@@ -79,7 +79,7 @@ public class AddContentPanelDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getAddContentPanelData() {
+	public Map<String, Object> getAddContentPanelData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"addContentsURLs",
 			() -> {
@@ -111,6 +111,8 @@ public class AddContentPanelDisplayContext {
 
 				return resourceURL.toString();
 			}
+		).put(
+			"hasAddContentPermission", hasAddContentPermission()
 		).put(
 			"languageDirection", _getLanguageDirection()
 		).put(

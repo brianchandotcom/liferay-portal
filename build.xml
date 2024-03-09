@@ -1027,9 +1027,19 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			todir="."
 		/>
 
-		<setup-profile-dxp
-			to.branch.name="${git.working.branch.name}-private"
-		/>
+		<if>
+			<matches pattern="release-\d{4}\.[q][1234]" string="${git.working.branch.name}" />
+			<then>
+				<setup-profile-dxp
+					to.branch.name="release-private"
+				/>
+			</then>
+			<else>
+				<setup-profile-dxp
+					to.branch.name="${git.working.branch.name}-private"
+				/>
+			</else>
+		</if>
 
 		<delete dir="git-clone-profile-dxp" />
 		<delete file="working.dir.properties" />

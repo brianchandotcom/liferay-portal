@@ -50,7 +50,7 @@ export default function MenuProvider({
 		<ClayDropDown.Menu
 			active={active}
 			alignElementRef={alignElementRef}
-			onSetActive={closeMenu}
+			onActiveChange={closeMenu}
 			ref={menuRef}
 		>
 			{MenuContent && (

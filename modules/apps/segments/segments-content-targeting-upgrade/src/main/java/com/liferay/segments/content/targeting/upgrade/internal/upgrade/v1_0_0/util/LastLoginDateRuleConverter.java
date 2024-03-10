@@ -32,12 +32,7 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 
 	public static final String RULE_CONVERTER_KEY = "LastLoginDateRule";
 
-	public LastLoginDateRuleConverter(
-		SegmentsCriteriaContributor contextSegmentsCriteriaContributor,
-		JSONFactory jsonFactory) {
-
-		_contextSegmentsCriteriaContributor =
-			contextSegmentsCriteriaContributor;
+	public LastLoginDateRuleConverter(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
 
@@ -109,8 +104,9 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 					")");
 			}
 
-			_contextSegmentsCriteriaContributor.contribute(
-				criteria, filterString, Criteria.Conjunction.AND);
+			SegmentsCriteriaContributor.contributeToCriteria(
+				criteria, filterString, Criteria.Conjunction.AND, "context",
+				Criteria.Type.CONTEXT);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -123,8 +119,6 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LastLoginDateRuleConverter.class);
 
-	private final SegmentsCriteriaContributor
-		_contextSegmentsCriteriaContributor;
 	private final JSONFactory _jsonFactory;
 
 }

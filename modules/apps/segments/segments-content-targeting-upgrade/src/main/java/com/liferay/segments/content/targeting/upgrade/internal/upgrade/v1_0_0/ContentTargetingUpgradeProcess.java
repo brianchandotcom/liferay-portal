@@ -50,7 +50,6 @@ import java.util.Map;
 public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 
 	public ContentTargetingUpgradeProcess(
-		SegmentsCriteriaContributor contextSegmentsCriteriaContributor,
 		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoTableLocalService expandoTableLocalService,
 		JSONFactory jsonFactory,
@@ -61,8 +60,7 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 		_segmentsEntryLocalService = segmentsEntryLocalService;
 
 		_ruleConverters.put(
-			BrowseRuleConverter.RULE_CONVERTER_KEY,
-			new BrowseRuleConverter(contextSegmentsCriteriaContributor));
+			BrowseRuleConverter.RULE_CONVERTER_KEY, new BrowseRuleConverter());
 		_ruleConverters.put(
 			CustomFieldRuleConverter.RULE_CONVERTER_KEY,
 			new CustomFieldRuleConverter(
@@ -70,22 +68,19 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 				jsonFactory, userSegmentsCriteriaContributor));
 		_ruleConverters.put(
 			LanguageRuleConverter.RULE_CONVERTER_KEY,
-			new LanguageRuleConverter(contextSegmentsCriteriaContributor));
+			new LanguageRuleConverter());
 		_ruleConverters.put(
 			LastLoginDateRuleConverter.RULE_CONVERTER_KEY,
-			new LastLoginDateRuleConverter(
-				contextSegmentsCriteriaContributor, jsonFactory));
+			new LastLoginDateRuleConverter(jsonFactory));
 		_ruleConverters.put(
 			OrganizationMemberRuleConverter.RULE_CONVERTER_KEY,
 			new OrganizationMemberRuleConverter(
 				userOrganizationSegmentsCriteriaContributor));
 		_ruleConverters.put(
-			OSRuleConverter.RULE_CONVERTER_KEY,
-			new OSRuleConverter(contextSegmentsCriteriaContributor));
+			OSRuleConverter.RULE_CONVERTER_KEY, new OSRuleConverter());
 		_ruleConverters.put(
 			PreviousVisitedSiteRuleConverter.RULE_CONVERTER_KEY,
-			new PreviousVisitedSiteRuleConverter(
-				contextSegmentsCriteriaContributor, jsonFactory));
+			new PreviousVisitedSiteRuleConverter(jsonFactory));
 		_ruleConverters.put(
 			RegularRoleRuleConverter.RULE_CONVERTER_KEY,
 			new RegularRoleRuleConverter(userSegmentsCriteriaContributor));
@@ -97,7 +92,7 @@ public class ContentTargetingUpgradeProcess extends UpgradeProcess {
 			new UserGroupMemberRuleConverter(userSegmentsCriteriaContributor));
 		_ruleConverters.put(
 			UserLoggedRuleConverter.RULE_CONVERTER_KEY,
-			new UserLoggedRuleConverter(contextSegmentsCriteriaContributor));
+			new UserLoggedRuleConverter());
 	}
 
 	@Override

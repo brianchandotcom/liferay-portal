@@ -30,15 +30,11 @@ public class SegmentsContentTargetingUpgradeStepRegistrator
 		registry.register(
 			"0.0.1", "1.0.0",
 			new ContentTargetingUpgradeProcess(
-				_contextSegmentsCriteriaContributor, _expandoColumnLocalService,
-				_expandoTableLocalService, _jsonFactory,
-				_segmentsEntryLocalService,
+				_expandoColumnLocalService, _expandoTableLocalService,
+				_jsonFactory, _segmentsEntryLocalService,
 				_userOrganizationSegmentsCriteriaContributor,
 				_userSegmentsCriteriaContributor));
 	}
-
-	@Reference(target = "(segments.criteria.contributor.key=context)")
-	private SegmentsCriteriaContributor _contextSegmentsCriteriaContributor;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

@@ -15,23 +15,13 @@ public class UserLoggedRuleConverter implements RuleConverter {
 
 	public static final String RULE_CONVERTER_KEY = "UserLoggedRule";
 
-	public UserLoggedRuleConverter(
-		SegmentsCriteriaContributor contextSegmentsCriteriaContributor) {
-
-		_contextSegmentsCriteriaContributor =
-			contextSegmentsCriteriaContributor;
-	}
-
 	@Override
 	public void convert(
 		long companyId, Criteria criteria, String typeSettings) {
 
-		_contextSegmentsCriteriaContributor.contribute(
+		SegmentsCriteriaContributor.contributeToCriteria(
 			criteria, "(signedIn eq " + Boolean.TRUE + ")",
-			Criteria.Conjunction.AND);
+			Criteria.Conjunction.AND, "context", Criteria.Type.CONTEXT);
 	}
-
-	private final SegmentsCriteriaContributor
-		_contextSegmentsCriteriaContributor;
 
 }

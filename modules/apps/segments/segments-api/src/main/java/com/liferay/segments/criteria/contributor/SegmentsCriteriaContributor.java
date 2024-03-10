@@ -24,6 +24,14 @@ import javax.portlet.PortletRequest;
  */
 public interface SegmentsCriteriaContributor {
 
+	public static void contributeToCriteria(
+		Criteria criteria, String filterString,
+		Criteria.Conjunction conjunction, String key, Criteria.Type type) {
+
+		criteria.addCriterion(key, type, filterString, conjunction);
+		criteria.addFilter(type, filterString, conjunction);
+	}
+
 	/**
 	 * Contributes the criterion to a segment's criteria.
 	 *
@@ -35,8 +43,8 @@ public interface SegmentsCriteriaContributor {
 		Criteria criteria, String filterString,
 		Criteria.Conjunction conjunction) {
 
-		criteria.addCriterion(getKey(), getType(), filterString, conjunction);
-		criteria.addFilter(getType(), filterString, conjunction);
+		SegmentsCriteriaContributor.contributeToCriteria(
+			criteria, filterString, conjunction, getKey(), getType());
 	}
 
 	/**

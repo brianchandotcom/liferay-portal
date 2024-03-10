@@ -15,23 +15,13 @@ public class BrowseRuleConverter implements RuleConverter {
 
 	public static final String RULE_CONVERTER_KEY = "BrowserRule";
 
-	public BrowseRuleConverter(
-		SegmentsCriteriaContributor contextSegmentsCriteriaContributor) {
-
-		_contextSegmentsCriteriaContributor =
-			contextSegmentsCriteriaContributor;
-	}
-
 	@Override
 	public void convert(
 		long companyId, Criteria criteria, String typeSettings) {
 
-		_contextSegmentsCriteriaContributor.contribute(
+		SegmentsCriteriaContributor.contributeToCriteria(
 			criteria, "(browser eq '" + typeSettings + "')",
-			Criteria.Conjunction.AND);
+			Criteria.Conjunction.AND, "context", Criteria.Type.CONTEXT);
 	}
-
-	private final SegmentsCriteriaContributor
-		_contextSegmentsCriteriaContributor;
 
 }

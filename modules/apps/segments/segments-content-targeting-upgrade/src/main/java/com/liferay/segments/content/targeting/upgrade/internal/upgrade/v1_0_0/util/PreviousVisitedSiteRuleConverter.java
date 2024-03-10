@@ -21,12 +21,7 @@ public class PreviousVisitedSiteRuleConverter implements RuleConverter {
 
 	public static final String RULE_CONVERTER_KEY = "PreviousVisitedSiteRule";
 
-	public PreviousVisitedSiteRuleConverter(
-		SegmentsCriteriaContributor contextSegmentsCriteriaContributor,
-		JSONFactory jsonFactory) {
-
-		_contextSegmentsCriteriaContributor =
-			contextSegmentsCriteriaContributor;
+	public PreviousVisitedSiteRuleConverter(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
 
@@ -42,9 +37,9 @@ public class PreviousVisitedSiteRuleConverter implements RuleConverter {
 
 				String value = jsonObject.getString("value");
 
-				_contextSegmentsCriteriaContributor.contribute(
+				SegmentsCriteriaContributor.contributeToCriteria(
 					criteria, "contains(referrerURL, '" + value + "')",
-					Criteria.Conjunction.AND);
+					Criteria.Conjunction.AND, "context", Criteria.Type.CONTEXT);
 			}
 		}
 		catch (JSONException jsonException) {
@@ -58,8 +53,6 @@ public class PreviousVisitedSiteRuleConverter implements RuleConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PreviousVisitedSiteRuleConverter.class);
 
-	private final SegmentsCriteriaContributor
-		_contextSegmentsCriteriaContributor;
 	private final JSONFactory _jsonFactory;
 
 }

@@ -229,6 +229,13 @@ public class ObjectValidationRuleLocalServiceImpl
 
 	@Override
 	public List<ObjectValidationRule> getObjectValidationRules(
+		boolean active, String engine) {
+
+		return objectValidationRulePersistence.findByA_E(active, engine);
+	}
+
+	@Override
+	public List<ObjectValidationRule> getObjectValidationRules(
 		long objectDefinitionId) {
 
 		return _getObjectValidationRules(

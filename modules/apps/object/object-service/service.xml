@@ -46,6 +46,10 @@
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="name" />
 		</finder>
+		<finder name="A_OAEK" return-type="Collection">
+			<finder-column name="active" />
+			<finder-column name="objectActionExecutorKey" />
+		</finder>
 		<finder name="ERC_C_ODI" return-type="ObjectEntry" unique="true">
 			<finder-column name="externalReferenceCode" />
 			<finder-column name="companyId" />
@@ -831,6 +835,10 @@
 		<finder name="ODI_O" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="outputType" />
+		</finder>
+		<finder name="A_E" return-type="Collection">
+			<finder-column name="active" />
+			<finder-column name="engine" />
 		</finder>
 		<finder name="ERC_C_ODI" return-type="ObjectEntry" unique="true">
 			<finder-column name="externalReferenceCode" />

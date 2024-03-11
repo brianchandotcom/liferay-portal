@@ -118,66 +118,68 @@ const countLinks = (root) => {
 	return structure.links().length;
 };
 
-const INITIAL_DATA = {
-	[ACCOUNTS_PROPERTY_NAME]: [
-		{
-			actions,
-			id: '1',
-			name: `Auto Care`,
-		},
-		{
-			actions,
-			id: '0000',
-			name: `CC West`,
-		},
-		{
-			actions,
-			id: '3',
-			name: `Leo Auto`,
-		},
-		{
-			actions,
-			id: '5',
-			name: `Repair World`,
-		},
-	],
-	[ORGANIZATIONS_PROPERTY_NAME]: [
-		{
-			actions,
-			id: '999',
-			name: `Canada`,
-		},
-		{
-			actions,
-			id: '2',
-			name: `Italy`,
-		},
-		{
-			actions,
-			id: '40',
-			name: `Spain`,
-		},
-	],
-	[USERS_PROPERTY_NAME_IN_ORGANIZATION]: [
-		{
-			actions,
-			id: '1',
-			name: `Mark`,
-			[BRIEFS_KEYS_MAP.organization]: [],
-			[BRIEFS_KEYS_MAP.account]: [],
-		},
-		{
-			actions,
-			id: '2',
-			name: `John`,
-			[BRIEFS_KEYS_MAP.organization]: [],
-			[BRIEFS_KEYS_MAP.account]: [],
-		},
-	],
-	actions,
-	id: '0',
-	name: `Root`,
-};
+const INITIAL_DATA = [
+	{
+		[ACCOUNTS_PROPERTY_NAME]: [
+			{
+				actions,
+				id: '1',
+				name: `Auto Care`,
+			},
+			{
+				actions,
+				id: '0000',
+				name: `CC West`,
+			},
+			{
+				actions,
+				id: '3',
+				name: `Leo Auto`,
+			},
+			{
+				actions,
+				id: '5',
+				name: `Repair World`,
+			},
+		],
+		[ORGANIZATIONS_PROPERTY_NAME]: [
+			{
+				actions,
+				id: '999',
+				name: `Canada`,
+			},
+			{
+				actions,
+				id: '2',
+				name: `Italy`,
+			},
+			{
+				actions,
+				id: '40',
+				name: `Spain`,
+			},
+		],
+		[USERS_PROPERTY_NAME_IN_ORGANIZATION]: [
+			{
+				actions,
+				id: '1',
+				name: `Mark`,
+				[BRIEFS_KEYS_MAP.organization]: [],
+				[BRIEFS_KEYS_MAP.account]: [],
+			},
+			{
+				actions,
+				id: '2',
+				name: `John`,
+				[BRIEFS_KEYS_MAP.organization]: [],
+				[BRIEFS_KEYS_MAP.account]: [],
+			},
+		],
+		actions,
+		id: '0',
+		name: `Root`,
+	},
+];
 
 const getNodes = (wrapper, value, propertyName) => {
 	const nodes = Array.from(wrapper.querySelectorAll('.chart-item'));
@@ -273,7 +275,7 @@ describe('D3OrganizationChart implementation', () => {
 		);
 
 		expect(chartOrganizations.length).toBe(
-			INITIAL_DATA[ORGANIZATIONS_PROPERTY_NAME].length + 1
+			INITIAL_DATA[0][ORGANIZATIONS_PROPERTY_NAME].length + 1
 		);
 
 		const chartAccounts = chartSVGWrapper.querySelectorAll(
@@ -281,18 +283,18 @@ describe('D3OrganizationChart implementation', () => {
 		);
 
 		expect(chartAccounts.length).toBe(
-			INITIAL_DATA[ACCOUNTS_PROPERTY_NAME].length
+			INITIAL_DATA[0][ACCOUNTS_PROPERTY_NAME].length
 		);
 
 		const chartUsers = chartSVGWrapper.querySelectorAll('.chart-item-user');
 
 		expect(chartUsers.length).toBe(
-			INITIAL_DATA[USERS_PROPERTY_NAME_IN_ORGANIZATION].length
+			INITIAL_DATA[0][USERS_PROPERTY_NAME_IN_ORGANIZATION].length
 		);
 
 		const chartItems = chartSVGWrapper.querySelectorAll('.chart-item');
 
-		expect(chartItems.length).toBe(countNodes(INITIAL_DATA));
+		expect(chartItems.length).toBe(countNodes(INITIAL_DATA[0]));
 	});
 
 	it('Must display the right number of links', () => {
@@ -300,7 +302,7 @@ describe('D3OrganizationChart implementation', () => {
 
 		const chartLinks = chartSVGWrapper.querySelectorAll('.chart-link');
 
-		expect(chartLinks.length).toBe(countLinks(INITIAL_DATA));
+		expect(chartLinks.length).toBe(countLinks(INITIAL_DATA[0]));
 	});
 
 	describe('Node selection', () => {

@@ -362,6 +362,14 @@ public class ObjectActionLocalServiceWrapper
 			uuid, companyId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectAction>
+		getObjectActions(boolean active, String objectActionExecutorKey) {
+
+		return _objectActionLocalService.getObjectActions(
+			active, objectActionExecutorKey);
+	}
+
 	/**
 	 * Returns a range of all the object actions.
 	 *

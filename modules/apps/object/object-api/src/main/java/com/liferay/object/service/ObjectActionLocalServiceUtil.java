@@ -324,6 +324,12 @@ public class ObjectActionLocalServiceUtil {
 		return getService().getObjectActionByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static List<ObjectAction> getObjectActions(
+		boolean active, String objectActionExecutorKey) {
+
+		return getService().getObjectActions(active, objectActionExecutorKey);
+	}
+
 	/**
 	 * Returns a range of all the object actions.
 	 *

@@ -1233,6 +1233,195 @@ public class ObjectValidationRuleUtil {
 	}
 
 	/**
+	 * Returns all the object validation rules where active = &#63; and engine = &#63;.
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 * @return the matching object validation rules
+	 */
+	public static List<ObjectValidationRule> findByA_E(
+		boolean active, String engine) {
+
+		return getPersistence().findByA_E(active, engine);
+	}
+
+	/**
+	 * Returns a range of all the object validation rules where active = &#63; and engine = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 * @param start the lower bound of the range of object validation rules
+	 * @param end the upper bound of the range of object validation rules (not inclusive)
+	 * @return the range of matching object validation rules
+	 */
+	public static List<ObjectValidationRule> findByA_E(
+		boolean active, String engine, int start, int end) {
+
+		return getPersistence().findByA_E(active, engine, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object validation rules where active = &#63; and engine = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 * @param start the lower bound of the range of object validation rules
+	 * @param end the upper bound of the range of object validation rules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object validation rules
+	 */
+	public static List<ObjectValidationRule> findByA_E(
+		boolean active, String engine, int start, int end,
+		OrderByComparator<ObjectValidationRule> orderByComparator) {
+
+		return getPersistence().findByA_E(
+			active, engine, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object validation rules where active = &#63; and engine = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 * @param start the lower bound of the range of object validation rules
+	 * @param end the upper bound of the range of object validation rules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object validation rules
+	 */
+	public static List<ObjectValidationRule> findByA_E(
+		boolean active, String engine, int start, int end,
+		OrderByComparator<ObjectValidationRule> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByA_E(
+			active, engine, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object validation rule in the ordered set where active = &#63; and engine = &#63;.
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object validation rule
+	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
+	 */
+	public static ObjectValidationRule findByA_E_First(
+			boolean active, String engine,
+			OrderByComparator<ObjectValidationRule> orderByComparator)
+		throws com.liferay.object.exception.
+			NoSuchObjectValidationRuleException {
+
+		return getPersistence().findByA_E_First(
+			active, engine, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object validation rule in the ordered set where active = &#63; and engine = &#63;.
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
+	 */
+	public static ObjectValidationRule fetchByA_E_First(
+		boolean active, String engine,
+		OrderByComparator<ObjectValidationRule> orderByComparator) {
+
+		return getPersistence().fetchByA_E_First(
+			active, engine, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object validation rule in the ordered set where active = &#63; and engine = &#63;.
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object validation rule
+	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
+	 */
+	public static ObjectValidationRule findByA_E_Last(
+			boolean active, String engine,
+			OrderByComparator<ObjectValidationRule> orderByComparator)
+		throws com.liferay.object.exception.
+			NoSuchObjectValidationRuleException {
+
+		return getPersistence().findByA_E_Last(
+			active, engine, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object validation rule in the ordered set where active = &#63; and engine = &#63;.
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
+	 */
+	public static ObjectValidationRule fetchByA_E_Last(
+		boolean active, String engine,
+		OrderByComparator<ObjectValidationRule> orderByComparator) {
+
+		return getPersistence().fetchByA_E_Last(
+			active, engine, orderByComparator);
+	}
+
+	/**
+	 * Returns the object validation rules before and after the current object validation rule in the ordered set where active = &#63; and engine = &#63;.
+	 *
+	 * @param objectValidationRuleId the primary key of the current object validation rule
+	 * @param active the active
+	 * @param engine the engine
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object validation rule
+	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
+	 */
+	public static ObjectValidationRule[] findByA_E_PrevAndNext(
+			long objectValidationRuleId, boolean active, String engine,
+			OrderByComparator<ObjectValidationRule> orderByComparator)
+		throws com.liferay.object.exception.
+			NoSuchObjectValidationRuleException {
+
+		return getPersistence().findByA_E_PrevAndNext(
+			objectValidationRuleId, active, engine, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object validation rules where active = &#63; and engine = &#63; from the database.
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 */
+	public static void removeByA_E(boolean active, String engine) {
+		getPersistence().removeByA_E(active, engine);
+	}
+
+	/**
+	 * Returns the number of object validation rules where active = &#63; and engine = &#63;.
+	 *
+	 * @param active the active
+	 * @param engine the engine
+	 * @return the number of matching object validation rules
+	 */
+	public static int countByA_E(boolean active, String engine) {
+		return getPersistence().countByA_E(active, engine);
+	}
+
+	/**
 	 * Returns the object validation rule where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectValidationRuleException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code

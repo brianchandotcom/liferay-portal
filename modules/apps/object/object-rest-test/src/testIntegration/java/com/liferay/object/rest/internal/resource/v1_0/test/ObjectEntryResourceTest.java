@@ -114,6 +114,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -381,6 +382,11 @@ public class ObjectEntryResourceTest {
 					ObjectFieldConstants.DB_TYPE_BIG_DECIMAL, true, false, null,
 					RandomTestUtil.randomString(),
 					_OBJECT_FIELD_NAME_PRECISION_DECIMAL, false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
+					false),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
@@ -5704,9 +5710,9 @@ public class ObjectEntryResourceTest {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint, Http.Method.GET);
 
-		_assertItem("0", jsonObject, "autoIncrement", "10-private");
-		_assertItem("1", jsonObject, "autoIncrement", "100-private");
-		_assertItem("2", jsonObject, "autoIncrement", "90-private");
+		_assertItem(0, jsonObject, "autoIncrement", "10-private");
+		_assertItem(1, jsonObject, "autoIncrement", "100-private");
+		_assertItem(2, jsonObject, "autoIncrement", "90-private");
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -5714,9 +5720,9 @@ public class ObjectEntryResourceTest {
 				endpoint, "?sort=", URLCodec.encodeURL("autoIncrement:asc")),
 			Http.Method.GET);
 
-		_assertItem("0", jsonObject, "autoIncrement", "10-private");
-		_assertItem("1", jsonObject, "autoIncrement", "90-private");
-		_assertItem("2", jsonObject, "autoIncrement", "100-private");
+		_assertItem(0, jsonObject, "autoIncrement", "10-private");
+		_assertItem(1, jsonObject, "autoIncrement", "90-private");
+		_assertItem(2, jsonObject, "autoIncrement", "100-private");
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -5724,9 +5730,9 @@ public class ObjectEntryResourceTest {
 				endpoint, "?sort=", URLCodec.encodeURL("autoIncrement:desc")),
 			Http.Method.GET);
 
-		_assertItem("0", jsonObject, "autoIncrement", "100-private");
-		_assertItem("1", jsonObject, "autoIncrement", "90-private");
-		_assertItem("2", jsonObject, "autoIncrement", "10-private");
+		_assertItem(0, jsonObject, "autoIncrement", "100-private");
+		_assertItem(1, jsonObject, "autoIncrement", "90-private");
+		_assertItem(2, jsonObject, "autoIncrement", "10-private");
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
@@ -7014,6 +7020,122 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_2, _NEW_OBJECT_FIELD_VALUE_1);
 	}
 
+	@Test
+	public void testSortBySystemObjectField() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition1, role);
+
+		User user1 = _addUser("test1", "test1");
+		User user2 = _addUser("test2", "test2");
+
+		_roleLocalService.addUserRole(user1.getUserId(), role.getRoleId());
+		_roleLocalService.addUserRole(user2.getUserId(), role.getRoleId());
+
+		_objectDefinition1.setEnableObjectEntryDraft(true);
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+
+		String endpoint = _getEndpoint(
+			TestPropsValues.getGroupId(), _objectDefinition1);
+
+		JSONObject[] jsonObjects = new JSONObject[2];
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test2@liferay.com", "test2"
+		).apply(
+			() ->
+				jsonObjects[0] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"externalReferenceCode", "ERC2"
+					).put(
+						"status",
+						JSONUtil.put("code", WorkflowConstants.STATUS_DRAFT)
+					).toString(),
+					endpoint, Http.Method.POST)
+		);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test1@liferay.com", "test1"
+		).apply(
+			() ->
+				jsonObjects[1] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						"externalReferenceCode", "ERC1"
+					).toString(),
+					endpoint, Http.Method.POST)
+		);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test1@liferay.com", "test1"
+		).apply(
+			() ->
+				jsonObjects[1] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+					).toString(),
+					endpoint + "/by-external-reference-code/ERC1",
+					Http.Method.PATCH)
+		);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test2@liferay.com", "test2"
+		).apply(
+			() ->
+				jsonObjects[0] = HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+					).toString(),
+					endpoint + "/by-external-reference-code/ERC2",
+					Http.Method.PATCH)
+		);
+
+		try {
+			_testSortByFieldName(
+				endpoint, jsonObjects[1], jsonObjects[0], "creator");
+			_testSortByFieldName(
+				endpoint, jsonObjects[0], jsonObjects[1], "dateCreated");
+			_testSortByFieldName(
+				endpoint, jsonObjects[1], jsonObjects[0], "dateModified");
+			_testSortByFieldName(
+				endpoint, jsonObjects[1], jsonObjects[0],
+				"externalReferenceCode");
+			_testSortByFieldName(
+				endpoint, jsonObjects[0], jsonObjects[1], "id");
+			_testSortByFieldName(
+				endpoint, jsonObjects[1], jsonObjects[0], "status");
+
+			// TODO Uncomment when LPD-20288 is fixed
+
+			// _testSortByFieldName(
+			// 	endpoint, jsonObjects[1], jsonObjects[0], "creatorId");
+			// _testSortByFieldName(
+			// 	endpoint, jsonObjects[0], jsonObjects[1], "objectDefinitionId");
+			// _testSortByFieldName(
+			// 	endpoint, jsonObjects[0], jsonObjects[1], "siteId");
+			// _testSortByFieldName(
+			// 	endpoint, jsonObjects[1], jsonObjects[0], "userId");
+
+		}
+		finally {
+			for (JSONObject jsonObject : jsonObjects) {
+				if (jsonObject == null) {
+					continue;
+				}
+
+				_objectEntryLocalService.deleteObjectEntry(
+					jsonObject.getLong("id"));
+			}
+		}
+	}
+
 	private void _addModelResourcePermissions(
 			String[] actionIds, String className, long objectEntryId,
 			long userId)
@@ -7104,10 +7226,14 @@ public class ObjectEntryResourceTest {
 	private User _addUser(String userName, String userPassword)
 		throws Exception {
 
+		String upperCaseFirstLetterUserName = StringUtil.upperCaseFirstLetter(
+			userName);
+
 		User user = UserTestUtil.addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 			userPassword, userName + "@liferay.com", userName,
-			LocaleUtil.getDefault(), userName, userName, null,
+			LocaleUtil.getDefault(), upperCaseFirstLetterUserName,
+			upperCaseFirstLetterUserName, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		user.setEmailAddressVerified(true);
@@ -7175,7 +7301,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _assertItem(
-		String index, JSONObject jsonObject, String objectFieldName,
+		int index, JSONObject jsonObject, String objectFieldName,
 		Object value) {
 
 		Assert.assertEquals(
@@ -9181,6 +9307,30 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
+	private void _testSortByFieldName(
+			String endpoint, JSONObject expectedJSONObject1,
+			JSONObject expectedJSONObject2, String fieldName)
+		throws Exception {
+
+		JSONObject pageJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				endpoint, "?sort=", URLCodec.encodeURL(fieldName + ":asc")),
+			Http.Method.GET);
+
+		_assertItem(0, pageJSONObject, "id", expectedJSONObject1.getLong("id"));
+		_assertItem(1, pageJSONObject, "id", expectedJSONObject2.getLong("id"));
+
+		pageJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				endpoint, "?sort=", URLCodec.encodeURL(fieldName + ":desc")),
+			Http.Method.GET);
+
+		_assertItem(0, pageJSONObject, "id", expectedJSONObject2.getLong("id"));
+		_assertItem(1, pageJSONObject, "id", expectedJSONObject1.getLong("id"));
+	}
+
 	private JSONObject _toEmbeddedTaxonomyCategoryJSONObject(
 			TaxonomyCategory taxonomyCategory)
 		throws Exception {
@@ -9365,6 +9515,9 @@ public class ObjectEntryResourceTest {
 		"x" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_NAME_PRECISION_DECIMAL =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME_TEXT =
 		"x" + RandomTestUtil.randomString();
 
 	private static final int _OBJECT_FIELD_VALUE_1 = RandomTestUtil.randomInt();

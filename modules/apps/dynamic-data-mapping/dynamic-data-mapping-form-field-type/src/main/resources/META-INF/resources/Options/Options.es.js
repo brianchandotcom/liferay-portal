@@ -349,16 +349,22 @@ const Options = ({
 		return [[...fields], ...args];
 	};
 
-	const clearError = () => {
-		setFieldError(null);
+	const checkValidOptionName = (fields, newValue, fieldReference) => {
+		const field = fields
+			.filter(({reference}) => reference !== fieldReference)
+			.find(
+				({value}) => value?.toLowerCase() === newValue?.toLowerCase()
+			);
+
+		return field ? fieldReference : null;
 	};
 
-	const checkValidReference = (fields, value, fieldName) => {
+	const checkValidOptionReference = (fields, newValue, fieldName) => {
 		const field = fields
 			.filter(({value}) => value !== fieldName)
 			.find(
 				({reference}) =>
-					reference?.toLowerCase() === value?.toLowerCase()
+					reference?.toLowerCase() === newValue?.toLowerCase()
 			);
 
 		return field ? fieldName : null;

@@ -23,33 +23,6 @@ definition {
 			widgetName = "Asset Publisher");
 	}
 
-	@description = "Add multiple Asset Publisher to page."
-	@priority = 5
-	@uitest
-	test AddAssetPublisherWidgetsToPage {
-		property portal.acceptance = "true";
-
-		task ("Add three Asset Publisher widgets to page") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			var i = 0;
-
-			while (${i} != 3) {
-				Portlet.addPG(portletName = "Asset Publisher");
-
-				var i = ${i} + 1;
-			}
-		}
-
-		task ("View the Asset Publisher widgets") {
-			Portlet.viewDuplicatePG(
-				portletName = "Asset Publisher",
-				totalPortletCount = 4);
-		}
-	}
-
 	@description = "This is a use case for LPS-47619. Add assets via Asset Publisher then add associated widgets to page."
 	@priority = 5
 	@uitest

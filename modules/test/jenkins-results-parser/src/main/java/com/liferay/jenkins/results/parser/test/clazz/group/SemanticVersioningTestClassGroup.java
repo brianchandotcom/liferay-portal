@@ -7,6 +7,8 @@ import java.io.File;
 
 import org.json.JSONObject;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SemanticVersioningTestClassGroup extends BatchTestClassGroup {
     
@@ -19,17 +21,21 @@ public class SemanticVersioningTestClassGroup extends BatchTestClassGroup {
     protected SemanticVersioningTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, portalTestClassJob);
+        super(batchName, portalTestClassJob);
 
-		if (ignore()) {
-			return;
-		}
+        if (ignore()) {
+            return;
+        }
 
-		_setTestBatchRunPropertyQueries();
+        File buildTestBatchFile = new File(
+            portalGitWorkingDirectory.getWorkingDirectory(),
+            "build-test-batch.xml");
 
-		setAxisTestClassGroups();
+        addTestClass(TestClassFactory.newTestClass(this, buildTestBatchFile));
 
-		setSegmentTestClassGroups();
+        setAxisTestClassGroups();
+
+        setSegmentTestClassGroups();
 	}
 
     @Override
@@ -42,9 +48,9 @@ public class SemanticVersioningTestClassGroup extends BatchTestClassGroup {
 			return true;
 		}
 
-        if (isQuarterlyReleaseBranch() {
+        if (isQuarterlyReleaseBranch()) {
             return true;
-        })
+        }
 
 		return false;
 	}

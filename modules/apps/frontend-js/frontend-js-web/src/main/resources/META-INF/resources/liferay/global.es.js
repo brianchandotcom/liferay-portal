@@ -364,4 +364,4 @@ Liferay.Util.Cookie = Cookie;
 Liferay.Util.LocalStorage = localStorage;
 Liferay.Util.SessionStorage = sessionStorage;
 
-export {portlet};
+window.portlet = portlet;

@@ -22,7 +22,6 @@ module.exports = {
 	},
 	output: {
 		filename: 'liferay.js',
-		libraryTarget: 'window',
 		path: path.resolve('./build/node/packageRunBuild/resources/js'),
 		publicPath: PUBLIC_PATH,
 	},

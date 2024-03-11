@@ -25,7 +25,6 @@ module.exports = {
 	},
 	output: {
 		filename: 'global.bundle.js',
-		libraryTarget: 'window',
 		path: path.resolve('./build/node/packageRunBuild/resources/liferay/'),
 		publicPath: PUBLIC_PATH,
 	},

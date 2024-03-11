@@ -22,7 +22,6 @@ module.exports = {
 	},
 	output: {
 		filename: 'client-extension-client-js.js',
-		libraryTarget: 'window',
 		path: path.resolve('./build/node/packageRunBuild/resources/'),
 		publicPath: PUBLIC_PATH,
 	},

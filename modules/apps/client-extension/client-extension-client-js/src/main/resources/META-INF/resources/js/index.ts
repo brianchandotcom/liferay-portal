@@ -932,8 +932,4 @@ const SDK = Object.freeze({
 	VERSION,
 });
 
-/**
- * Due to webpack configuration, the SDK will be assigned to
- * `window.__LIFERAY_REMOTE_APP_SDK__`.
- */
-export const __LIFERAY_REMOTE_APP_SDK__ = SDK;
+window['__LIFERAY_REMOTE_APP_SDK__'] = SDK;

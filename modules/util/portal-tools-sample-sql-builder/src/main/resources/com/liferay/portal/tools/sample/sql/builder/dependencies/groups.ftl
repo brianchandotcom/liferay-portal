@@ -6,8 +6,6 @@
 
 <#include "ddm.ftl">
 
-<#include "segments.ftl">
-
 <#list dataFactory.newGroupModels() as groupModel>
 	<#assign groupId = groupModel.groupId />
 
@@ -58,6 +56,8 @@
 	_layoutModels=defaultSiteHomePageContentLayoutModels
 	_templateFileName="default-homepage-layout-definition.json"
 />
+
+<#include "segments.ftl">
 
 <#assign
 	searchLayoutModel = dataFactory.newSearchLayoutModel(guestGroupModel.groupId, true)

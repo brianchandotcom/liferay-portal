@@ -20,6 +20,7 @@ import {
 	compose,
 	dedupValue,
 	getDefaultOptionValue,
+	getErrorMessage,
 	isOptionValueGenerated,
 	normalizeFields,
 	normalizeReference,
@@ -297,10 +298,39 @@ const Options = ({
 		});
 	};
 
+	const addErrorProperties = (fields, matchProperty, matchPropertyValue) => {
+		let matched = false;
+
+		const updatedFields = fields.map((field) => {
+			if (field[matchProperty] === matchPropertyValue) {
+				matched = true;
+
+				return {
+					...field,
+					errorMessage: getErrorMessage(matchProperty),
+					invalidField:
+						matchProperty === 'reference' ? 'value' : 'reference',
+				};
+			}
+
+			return field;
+		});
+
+		return matched ? updatedFields : fields;
+	};
+
+	const removeErrorProperties = (fields) => {
+		return fields.map((field) => {
+			return {
+				...field,
+				errorMessage: '',
+				invalidField: null,
+			};
+		});
+	};
+
 	const getSynchronizedValue = (fields) => {
 		const _fields = [...fields];
-
-		_fields.pop();
 
 		const availableLanguageIds = Object.getOwnPropertyNames(
 			normalizedValue

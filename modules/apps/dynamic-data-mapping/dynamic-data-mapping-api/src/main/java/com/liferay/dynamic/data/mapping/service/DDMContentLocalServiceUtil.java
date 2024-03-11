@@ -26,11 +26,8 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see DDMContentLocalService
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
- DDMFieldLocalServiceImpl}
  * @generated
  */
-@Deprecated
 public class DDMContentLocalServiceUtil {
 
 	/*

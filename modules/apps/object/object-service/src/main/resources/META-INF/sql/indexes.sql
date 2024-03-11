@@ -1,3 +1,4 @@
+create index IX_D89CE7B9 on ObjectAction (active_, objectActionExecutorKey[$COLUMN_LENGTH:255$]);
 create index IX_7A0B755C on ObjectAction (objectDefinitionId, active_, name[$COLUMN_LENGTH:75$], objectActionTriggerKey[$COLUMN_LENGTH:75$]);
 create index IX_684FC85D on ObjectAction (objectDefinitionId, active_, objectActionTriggerKey[$COLUMN_LENGTH:75$]);
 create unique index IX_64C74D27 on ObjectAction (objectDefinitionId, externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
@@ -88,6 +89,7 @@ create index IX_9C3FAB55 on ObjectStateTransition (sourceObjectStateId);
 create index IX_FB9AC71F on ObjectStateTransition (targetObjectStateId);
 create index IX_5E1D73A7 on ObjectStateTransition (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_23EC0B65 on ObjectValidationRule (active_, engine[$COLUMN_LENGTH:255$]);
 create index IX_C476B36E on ObjectValidationRule (objectDefinitionId, active_);
 create index IX_EE533031 on ObjectValidationRule (objectDefinitionId, engine[$COLUMN_LENGTH:255$]);
 create unique index IX_88476606 on ObjectValidationRule (objectDefinitionId, externalReferenceCode[$COLUMN_LENGTH:75$], companyId);

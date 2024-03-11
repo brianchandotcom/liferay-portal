@@ -524,6 +524,161 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 	public int countByODI_N(long objectDefinitionId, String name);
 
 	/**
+	 * Returns all the object actions where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @return the matching object actions
+	 */
+	public java.util.List<ObjectAction> findByA_OAEK(
+		boolean active, String objectActionExecutorKey);
+
+	/**
+	 * Returns a range of all the object actions where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @param start the lower bound of the range of object actions
+	 * @param end the upper bound of the range of object actions (not inclusive)
+	 * @return the range of matching object actions
+	 */
+	public java.util.List<ObjectAction> findByA_OAEK(
+		boolean active, String objectActionExecutorKey, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object actions where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @param start the lower bound of the range of object actions
+	 * @param end the upper bound of the range of object actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object actions
+	 */
+	public java.util.List<ObjectAction> findByA_OAEK(
+		boolean active, String objectActionExecutorKey, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object actions where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @param start the lower bound of the range of object actions
+	 * @param end the upper bound of the range of object actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object actions
+	 */
+	public java.util.List<ObjectAction> findByA_OAEK(
+		boolean active, String objectActionExecutorKey, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	public ObjectAction findByA_OAEK_First(
+			boolean active, String objectActionExecutorKey,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
+				orderByComparator)
+		throws NoSuchObjectActionException;
+
+	/**
+	 * Returns the first object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public ObjectAction fetchByA_OAEK_First(
+		boolean active, String objectActionExecutorKey,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
+			orderByComparator);
+
+	/**
+	 * Returns the last object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action
+	 * @throws NoSuchObjectActionException if a matching object action could not be found
+	 */
+	public ObjectAction findByA_OAEK_Last(
+			boolean active, String objectActionExecutorKey,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
+				orderByComparator)
+		throws NoSuchObjectActionException;
+
+	/**
+	 * Returns the last object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object action, or <code>null</code> if a matching object action could not be found
+	 */
+	public ObjectAction fetchByA_OAEK_Last(
+		boolean active, String objectActionExecutorKey,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
+			orderByComparator);
+
+	/**
+	 * Returns the object actions before and after the current object action in the ordered set where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * @param objectActionId the primary key of the current object action
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object action
+	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
+	 */
+	public ObjectAction[] findByA_OAEK_PrevAndNext(
+			long objectActionId, boolean active, String objectActionExecutorKey,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectAction>
+				orderByComparator)
+		throws NoSuchObjectActionException;
+
+	/**
+	 * Removes all the object actions where active = &#63; and objectActionExecutorKey = &#63; from the database.
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 */
+	public void removeByA_OAEK(boolean active, String objectActionExecutorKey);
+
+	/**
+	 * Returns the number of object actions where active = &#63; and objectActionExecutorKey = &#63;.
+	 *
+	 * @param active the active
+	 * @param objectActionExecutorKey the object action executor key
+	 * @return the number of matching object actions
+	 */
+	public int countByA_OAEK(boolean active, String objectActionExecutorKey);
+
+	/**
 	 * Returns the object action where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectActionException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code

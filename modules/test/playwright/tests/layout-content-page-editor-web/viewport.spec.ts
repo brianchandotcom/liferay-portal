@@ -217,3 +217,65 @@ test('Background Image field is disabled for non-desktop viewports', async ({
 		}
 	}
 });
+
+test('checks that the layout can be resized', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const headingId = getRandomString();
+
+	const headingFragment = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	createPageWithFragmentAndGoToEditMode({
+		apiHelpers,
+		fragment: headingFragment,
+		page,
+		pageEditorPage,
+		site,
+	});
+
+	await pageEditorPage.selectFragment(headingId);
+
+	await pageEditorPage.switchViewport('Portrait Phone');
+
+	// Get the handle for the resize
+
+	const resizeHandle = page.locator('.page-editor__layout-viewport__handle');
+
+	// Get the element to be resized
+
+	const resizer = page.locator('.page-editor__layout-viewport__resizer');
+
+	// Get the size and the position of the previous elements
+
+	const originalSize = await resizeHandle.boundingBox();
+	const originalSizeResizer = await resizer.boundingBox();
+
+	// Check the original size of the resizer element
+
+	await expect(originalSizeResizer.width).toBe(360);
+
+	// Simulate mouse movement to resize the element
+
+	await page.mouse.move(
+		originalSize.x + originalSize.width / 2,
+		originalSize.y
+	);
+	await page.mouse.down();
+	await page.mouse.move(
+		originalSize.x + originalSize.width / 2 + 50,
+		originalSize.y
+	);
+	await page.mouse.up();
+
+	// Get the new size of the resizer element and verify that it has increased
+
+	const newSizeResizer = await resizer.boundingBox();
+
+	await expect(newSizeResizer.width).toBe(460);
+});

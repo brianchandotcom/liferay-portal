@@ -22,3 +22,5 @@ type SidebarTab =
 	| 'Page Rules'
 	| 'Page Content'
 	| 'Comments';
+
+type Viewport = 'Desktop' | 'Landscape Phone' | 'Portrait Phone' | 'Tablet';

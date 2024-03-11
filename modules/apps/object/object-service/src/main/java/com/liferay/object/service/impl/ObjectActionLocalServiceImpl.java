@@ -295,6 +295,14 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectAction> getObjectActions(
+		boolean active, String objectActionExecutorKey) {
+
+		return objectActionPersistence.findByA_OAEK(
+			active, objectActionExecutorKey);
+	}
+
+	@Override
 	public List<ObjectAction> getObjectActions(long objectDefinitionId) {
 		return objectActionPersistence.findByObjectDefinitionId(
 			objectDefinitionId);

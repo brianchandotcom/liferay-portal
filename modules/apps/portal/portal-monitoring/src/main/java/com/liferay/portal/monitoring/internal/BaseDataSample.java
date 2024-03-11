@@ -5,15 +5,16 @@
 
 package com.liferay.portal.monitoring.internal;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.monitoring.DataSample;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 
 import java.io.Serializable;
 
-import java.util.Map;
+import java.text.SimpleDateFormat;
 
-import org.apache.commons.lang.time.StopWatch;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -140,12 +141,21 @@ public class BaseDataSample implements DataSample, Serializable {
 
 	@Override
 	public String toString() {
+		String stopWatchString = null;
+
+		if (_stopWatch != null) {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				"H:mm:ss.SSS");
+
+			stopWatchString = simpleDateFormat.format(_stopWatch.getTime());
+		}
+
 		return StringBundler.concat(
 			"{attributes=", _attributes, ", companyId=", _companyId,
 			", groupId=", _groupId, ", description=", _description,
 			", duration=", _duration, ", name=", _name, ", namespace=",
 			_namespace, ", requestStatus=", _requestStatus, ", stopWatch=",
-			_stopWatch, ", timeout=", _timeout, ", user=", _user, "}");
+			stopWatchString, ", timeout=", _timeout, ", user=", _user, "}");
 	}
 
 	private Map<String, String> _attributes;

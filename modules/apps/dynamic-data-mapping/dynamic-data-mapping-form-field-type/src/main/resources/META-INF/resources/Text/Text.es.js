@@ -82,6 +82,7 @@ const Text = ({
 	onFocus,
 	onKeyDown,
 	placeholder,
+	preventChangeHandlerOnBlur,
 	repeatable,
 	setError,
 	shouldUpdateValue,
@@ -175,7 +176,10 @@ const Text = ({
 							}
 
 							onBlur(event);
-							handleChangeInput(event);
+
+							if (!preventChangeHandlerOnBlur) {
+								handleChangeInput(event);
+							}
 						}}
 						onChange={handleChangeInput}
 						onFocus={onFocus}
@@ -463,6 +467,7 @@ const Main = ({
 	options = [],
 	placeholder,
 	predefinedValue = '',
+	preventChangeHandlerOnBlur,
 	readOnly,
 	repeatable,
 	shouldUpdateValue = false,
@@ -527,6 +532,7 @@ const Main = ({
 				onKeyDown={onKeyDown}
 				options={optionsMemo}
 				placeholder={placeholder}
+				preventChangeHandlerOnBlur={preventChangeHandlerOnBlur}
 				repeatable={repeatable}
 				setError={setError}
 				shouldUpdateValue={shouldUpdateValue}

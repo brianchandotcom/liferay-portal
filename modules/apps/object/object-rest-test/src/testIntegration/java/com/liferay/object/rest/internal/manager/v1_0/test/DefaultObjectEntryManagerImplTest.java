@@ -1897,7 +1897,6 @@ public class DefaultObjectEntryManagerImplTest
 					"longIntegerObjectFieldName", 21394167160L)
 			).build(),
 			childObjectEntry1);
-
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",

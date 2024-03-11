@@ -10,6 +10,8 @@ import SearchBuilder from '~/core/SearchBuilder';
 import i18n from '~/i18n';
 import {
 	APIResponse,
+	testrayCaseResultImpl,
+	testrayCaseTypeImpl,
 	testrayComponentImpl,
 	testrayRunImpl,
 	testrayTeamImpl,
@@ -20,15 +22,19 @@ import {getRandom} from '~/util/mock';
 import {useFetch} from './useFetch';
 
 type TestrayChartResources = {
-	components: {
+	'case-types': {
 		fetchParameters: APIParametersOptions;
 		url: string;
 	};
-	runs: {
+	'components': {
 		fetchParameters: APIParametersOptions;
 		url: string;
 	};
-	teams: {
+	'runs': {
+		fetchParameters: APIParametersOptions;
+		url: string;
+	};
+	'teams': {
 		fetchParameters: APIParametersOptions;
 		url: string;
 	};
@@ -42,6 +48,9 @@ enum statususes {
 	INCOMPLETE = 'caseResultIncomplete',
 }
 
+const caseTypesFields =
+	'caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultPassed,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultBlocked,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultFailed,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultIncomplete,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultTestFix, name';
+
 const fields =
 	'caseResultBlocked,caseResultFailed,caseResultIncomplete,caseResultPassed,caseResultTestFix,name';
 
@@ -52,6 +61,7 @@ const chartSelectData = [
 	{label: i18n.translate('runs'), value: 'runs'},
 	{label: i18n.translate('teams'), value: 'teams'},
 	{label: i18n.translate('components'), value: 'components'},
+	{label: i18n.translate('case-types'), value: 'case-types'},
 ];
 
 const useCaseResultsChart = ({buildId}: {buildId: number}) => {
@@ -68,7 +78,17 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 
 	const resources: TestrayChartResources = useMemo(
 		() => ({
-			components: {
+			'case-types': {
+				fetchParameters: {
+					fields: caseTypesFields,
+					filter: SearchBuilder.eq(
+						'caseTypeToCases/caseToBuildsCases/r_buildToBuildsCases_c_buildId',
+						buildId
+					),
+				},
+				url: testrayCaseTypeImpl.resource,
+			},
+			'components': {
 				fetchParameters: {
 					fields,
 					filter: SearchBuilder.eq(
@@ -78,7 +98,7 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 				},
 				url: testrayComponentImpl.resource,
 			},
-			runs: {
+			'runs': {
 				fetchParameters: {
 					fields,
 					filter: SearchBuilder.eq(
@@ -88,7 +108,7 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 				},
 				url: testrayRunImpl.resource,
 			},
-			teams: {
+			'teams': {
 				fetchParameters: {
 					fields: teamsFields,
 					filter: SearchBuilder.eq(
@@ -111,7 +131,6 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 			},
 		}
 	);
-
 	const responseItems = useMemo(() => data?.items || [], [data?.items]);
 
 	const chartData = useMemo(
@@ -157,6 +176,16 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 									caseResultUntested: 0,
 								}
 							);
+						}
+
+						if (caseResult.caseTypeToCases) {
+							return {
+								...testrayCaseResultImpl.normalizeCaseResultAggregation(
+									caseResult?.caseTypeToCases?.[0]
+										?.caseToBuildsCases?.[0]
+										?.r_buildToBuildsCases_c_build
+								),
+							};
 						}
 
 						return caseResult;

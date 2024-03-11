@@ -431,6 +431,15 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 							/>
 						</pathconvert>
 
+						<if>
+							<not>
+								<isset property="@{custom.suite.testcase}.path" />
+							</not>
+							<then>
+								<fail message="Could not find testcase @{custom.suite.testcase}.testcase, failing task." />
+							</then>
+						</if>
+
 						<loadfile
 							property="@{custom.suite.testcase}.contents"
 							srcFile="${@{custom.suite.testcase}.path}"

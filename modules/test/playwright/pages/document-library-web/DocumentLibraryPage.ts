@@ -57,6 +57,16 @@ export class DocumentLibraryPage {
 			.click();
 	}
 
+	async goToCreateNewFile() {
+		await this.openNewButton();
+
+		await this.page
+			.getByRole('menuitem', {
+				name: 'File Upload',
+			})
+			.click();
+	}
+
 	async openOptionsMenu() {
 		await this.optionsMenu
 			.and(this.page.locator('[aria-haspopup]'))

@@ -7,6 +7,7 @@
 
 import {test} from '@playwright/test';
 
+import {DocumentLibraryEditFilePage} from '../pages/document-library-web/DocumentLibraryEditFilePage';
 import {DocumentLibraryEditFolderPage} from '../pages/document-library-web/DocumentLibraryEditFolderPage';
 import {DocumentLibraryPage} from '../pages/document-library-web/DocumentLibraryPage';
 import {AICreatorInstanceSettingsPage} from '../pages/product-navigation-applications-menu/AICreatorSettingsPage';
@@ -14,12 +15,16 @@ import {GogoShellPage} from '../pages/product-navigation-applications-menu/GogoS
 
 const documentLibraryPagesTest = test.extend<{
 	aiCreatorInstanceSettingsPage: AICreatorInstanceSettingsPage;
+	documentLibraryEditFilePage: DocumentLibraryEditFilePage;
 	documentLibraryEditFolderPage: DocumentLibraryEditFolderPage;
 	documentLibraryPage: DocumentLibraryPage;
 	gogoShellPage: GogoShellPage;
 }>({
 	aiCreatorInstanceSettingsPage: async ({page}, use) => {
 		await use(new AICreatorInstanceSettingsPage(page));
+	},
+	documentLibraryEditFilePage: async ({page}, use) => {
+		await use(new DocumentLibraryEditFilePage(page));
 	},
 	documentLibraryEditFolderPage: async ({page}, use) => {
 		await use(new DocumentLibraryEditFolderPage(page));

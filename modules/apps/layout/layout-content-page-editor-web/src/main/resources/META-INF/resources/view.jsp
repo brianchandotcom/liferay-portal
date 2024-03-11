@@ -11,6 +11,8 @@
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
 %>
 
+<p>Test</p>
+
 <liferay-editor:resources
 	editorName="alloyeditor"
 />

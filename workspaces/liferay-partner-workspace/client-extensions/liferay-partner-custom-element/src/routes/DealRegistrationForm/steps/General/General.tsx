@@ -23,6 +23,15 @@ import useDynamicFieldEntries from '../../hooks/useDynamicFieldEntries';
 import useMDFActivityOptions from '../../hooks/useMDFActivityOptions';
 import DealRegistrationStepProps from '../../interfaces/dealRegistrationStepProps';
 
+const sortByAsc = (
+	first: React.OptionHTMLAttributes<HTMLOptionElement>,
+	second: React.OptionHTMLAttributes<HTMLOptionElement>
+): number => {
+	return first.label && second.label
+		? first.label.localeCompare(second.label)
+		: 0;
+};
+
 const General = ({
 	onCancel,
 	onContinue,
@@ -85,7 +94,7 @@ const General = ({
 		onSelected: onIndustrySelected,
 		options: industryOptions,
 	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.INDUSTRIES],
+		fieldEntries[LiferayPicklistName.INDUSTRIES]?.sort(sortByAsc),
 		(selected) => setFieldValue('prospect.industry', selected)
 	);
 

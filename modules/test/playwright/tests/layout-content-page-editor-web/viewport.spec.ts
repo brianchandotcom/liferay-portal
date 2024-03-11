@@ -176,3 +176,44 @@ test('shows only Image Source field when the viewport is Desktop', async ({
 		}
 	}
 });
+
+test('Background Image field is disabled for non-desktop viewports', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const headingId = getRandomString();
+
+	const headingFragment = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	createPageWithFragmentAndGoToEditMode({
+		apiHelpers,
+		fragment: headingFragment,
+		page,
+		pageEditorPage,
+		site,
+	});
+
+	await pageEditorPage.selectFragment(headingId);
+
+	await pageEditorPage.goToConfigurationTab('Styles');
+
+	for (const viewport of VIEWPORTS) {
+		await pageEditorPage.switchViewport(viewport as Viewport);
+
+		const backgroundImageField = page.getByRole('textbox', {
+			name: 'Background Image',
+		});
+
+		if (viewport === 'Desktop') {
+			await expect(backgroundImageField).not.toBeDisabled();
+		}
+		else {
+			await expect(backgroundImageField).toBeDisabled();
+		}
+	}
+});

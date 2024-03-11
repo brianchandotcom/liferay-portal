@@ -308,6 +308,12 @@ public class ObjectValidationRuleLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static List<ObjectValidationRule> getObjectValidationRules(
+		boolean active, String engine) {
+
+		return getService().getObjectValidationRules(active, engine);
+	}
+
 	/**
 	 * Returns a range of all the object validation rules.
 	 *

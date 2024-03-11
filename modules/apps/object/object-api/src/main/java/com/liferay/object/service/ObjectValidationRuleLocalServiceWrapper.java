@@ -352,6 +352,14 @@ public class ObjectValidationRuleLocalServiceWrapper
 			getObjectValidationRuleByUuidAndCompanyId(uuid, companyId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectValidationRule>
+		getObjectValidationRules(boolean active, String engine) {
+
+		return _objectValidationRuleLocalService.getObjectValidationRules(
+			active, engine);
+	}
+
 	/**
 	 * Returns a range of all the object validation rules.
 	 *

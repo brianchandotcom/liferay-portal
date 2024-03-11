@@ -35,7 +35,7 @@ export const UsageMetric = ({
 	timeZoneId
 }) => {
 	const {count, limit, status} = metrics.get(metricType);
-	const percent = limit > 0 ? count / limit : 0;
+	const percent = limit > 0 ? (count / limit >= 1 ? 1 : count / limit) : 0;
 
 	const addOnQuantity = addOns.getIn([metricType, 'quantity'], 0);
 

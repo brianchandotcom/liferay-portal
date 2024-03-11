@@ -300,6 +300,10 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			).setParameter(
 				"backURLTitle",
 				ParamUtil.getString(actionRequest, "backURLTitle")
+			).setParameter(
+				"sourceLanguageId", _getSourceLanguageId(actionRequest)
+			).setParameter(
+				"targetLanguageId", _getTargetLanguageId(actionRequest)
 			);
 
 		Map<String, String[]> infoFieldParameterValues =

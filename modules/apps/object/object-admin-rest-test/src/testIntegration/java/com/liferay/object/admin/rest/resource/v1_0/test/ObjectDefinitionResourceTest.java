@@ -369,6 +369,28 @@ public class ObjectDefinitionResourceTest
 
 		assertEquals(postObjectDefinition, randomObjectDefinition);
 		assertValid(postObjectDefinition);
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		ObjectField relationshipObjectField = new ObjectField();
+
+		relationshipObjectField.setBusinessType(
+			ObjectField.BusinessType.RELATIONSHIP);
+		relationshipObjectField.setLabel(
+			Collections.singletonMap("en_US", RandomTestUtil.randomString()));
+		relationshipObjectField.setLocalized(false);
+		relationshipObjectField.setName("r_" + RandomTestUtil.randomString());
+
+		randomObjectDefinition.setObjectFields(
+			ArrayUtil.append(
+				randomObjectDefinition.getObjectFields(),
+				relationshipObjectField));
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		assertEquals(postObjectDefinition, randomObjectDefinition);
+		assertValid(postObjectDefinition);
 	}
 
 	@Override

@@ -89,7 +89,7 @@
 	.doc-nav {
 		overflow-x: hidden !important;
 	}
-	
+
 	.doc-nav-wrapper-inner {
 		min-width: fit-content;
 	  	position: sticky !important;

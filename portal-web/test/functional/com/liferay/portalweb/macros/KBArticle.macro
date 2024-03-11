@@ -787,11 +787,7 @@ definition {
 	@summary = "Default summary"
 	macro editScheduledDate(increaseMinutes = null, tooltipMessageDate = null, kbArticleTitle = null) {
 		if (isSet(tooltipMessageDate)) {
-			MouseOver.javaScriptFocus(locator1 = "Icon#TOOLTIP");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#TOOLTIP",
-				value1 = ${tooltipMessageDate});
+			AssertElementPresent(locator1 = "//span[*[name()='svg'][contains(@class,'icon-question')]]/../span[contains(text(),'${tooltipMessageDate}')]");
 		}
 
 		Click(

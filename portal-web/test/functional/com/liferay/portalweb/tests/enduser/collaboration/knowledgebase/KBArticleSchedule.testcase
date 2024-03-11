@@ -100,7 +100,7 @@ definition {
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
-		var tooltipMessageDate = DateUtil.getDateOffsetByMinutes(5, "MMMM d, yyyy h:mm a");
+		var tooltipMessageDate = DateUtil.getDateOffsetByMinutes(5, "MMMM d");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

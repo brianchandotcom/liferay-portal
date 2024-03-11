@@ -68,22 +68,31 @@ AUI.add(
 									'data-portletid'
 								);
 
-								let portletTitle = event.currentTarget.attr(
-									'data-portlettitle'
+								const contentNode = instance.byId(
+									'content_' + portletId
 								);
 
-								if (!portletTitle) {
-									portletTitle = Liferay.Language.get(
-										'content'
-									);
-								}
+								contentNode.delegate(
+									'change',
+									() => {
+										instance._setContentLabels(portletId);
 
-								const contentDialog = instance._getContentDialog(
-									portletId,
-									portletTitle
+										instance._storeNodeInputStates(
+											contentNode
+										);
+									},
+									'input[type="checkbox]'
 								);
 
-								contentDialog.show();
+								instance
+									.byId('rightContentArrow_' + portletId)
+									.toggle('hide');
+
+								instance
+									.byId('downContentArrow_' + portletId)
+									.toggle('hide');
+
+								contentNode.toggle('hide');
 							},
 							'.content-link'
 						);

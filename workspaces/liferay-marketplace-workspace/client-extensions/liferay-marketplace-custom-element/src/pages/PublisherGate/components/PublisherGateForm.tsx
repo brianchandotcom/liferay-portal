@@ -16,7 +16,7 @@ import FormInput from '../../../components/Input/formInput';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
-import {Phone, phones} from '../../PurchasedSolutions/PurchasedSolutionsUtil';
+import {phones} from '../../../utils/phones';
 import {StepType} from './PublisherGateSteps';
 
 type PublisherGateFormProps = {
@@ -121,9 +121,9 @@ const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
 										</div>
 									}
 								>
-									<DropDown.ItemList items={phones}>
+									<DropDown.ItemList items={phones as any}>
 										{(item) => {
-											const phone = item as Phone;
+											const phone = item as any;
 
 											return (
 												<DropDown.Item

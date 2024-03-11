@@ -47,6 +47,7 @@ export default {
 	'confirm': 'Confirm',
 	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
+	'contact-publisher': 'Contact Publisher',
 	'contact-sales': 'Contact Sales',
 	'contact-support': 'Contact Support',
 	'content-policy': 'Content policy',
@@ -97,6 +98,8 @@ export default {
 	'get-app': 'Get App',
 	'get-started': 'Get Started',
 	'go-back-to-marketplace': 'Go Back to Marketplace',
+	'go-to-console': 'Go to Console',
+	'go-to-dxp': 'Go to DXP',
 	'go-to-marketplace': 'Go to Marketplace',
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':

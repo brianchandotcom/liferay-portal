@@ -1,0 +1,14 @@
+[
+	{
+		"allowedServiceSignatures": [
+			"com.liferay.headless.delivery*",
+			"com.liferay.headless.admin.taxonomy*"
+		],
+		"defaultSAPEntry": "true",
+		"enabled": "true",
+		"name": "LIFERAY_LEARN_SAP_GUEST",
+		"title_i18n": {
+			"en-US": "Liferay Learn Service Access Policy Guest"
+		}
+	}
+]

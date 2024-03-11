@@ -94,9 +94,8 @@ test('shows correct sections on each configuration panel when viewport is not De
 	pageEditorPage,
 	site,
 }) => {
-	await page.goto(liferayConfig.environment.baseUrl);
 
-	// Create a page with a Heading fragment
+	// Create a page with a Heading fragment and go to Edit Mode
 
 	const headingId = getRandomString();
 
@@ -105,15 +104,13 @@ test('shows correct sections on each configuration panel when viewport is not De
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString(),
-		getPageDefinition([headingFragment])
-	);
-
-	// Go to edit mode of page
-
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+	createPageWithFragmentAndGoToEditMode({
+		apiHelpers,
+		fragment: headingFragment,
+		page,
+		pageEditorPage,
+		site,
+	});
 
 	// Switch to Tablet viewport and select the fragment
 

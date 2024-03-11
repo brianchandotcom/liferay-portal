@@ -91,7 +91,6 @@ public class CTRowUtilPerformanceTest {
 	@After
 	public void tearDown() throws Exception {
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection1);
-
 		_ctCollectionLocalService.deleteCTCollection(_ctCollection2);
 
 		GroupTestUtil.deleteGroup(_group);
@@ -102,7 +101,7 @@ public class CTRowUtilPerformanceTest {
 	}
 
 	@Test
-	public void testDDMModificationPerformance() throws Exception {
+	public void testAddCTProcessDDMForm() throws Exception {
 		String formFieldName = RandomTestUtil.randomString();
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
@@ -128,7 +127,7 @@ public class CTRowUtilPerformanceTest {
 	}
 
 	@Test
-	public void testJournalArticleModificationPerformance() throws Exception {
+	public void testAddCTProcessJournalArticle() throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
@@ -136,12 +135,12 @@ public class CTRowUtilPerformanceTest {
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			_portal.getClassNameId(JournalArticle.class));
 
-		JournalFolder folder = JournalTestUtil.addFolder(
+		JournalFolder journalFolder = JournalTestUtil.addFolder(
 			_group.getGroupId(), RandomTestUtil.randomString());
 
 		JournalArticle journalArticle =
 			JournalTestUtil.addArticleWithXMLContent(
-				_group.getGroupId(), folder.getFolderId(),
+				_group.getGroupId(), journalFolder.getFolderId(),
 				JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
 				DDMStructureTestUtil.getSampleStructuredContent(),
 				ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
@@ -173,7 +172,7 @@ public class CTRowUtilPerformanceTest {
 	}
 
 	@Test
-	public void testLayoutConflictPerformance() throws Exception {
+	public void testCheckConflictsLayout() throws Exception {
 		String layoutName = RandomTestUtil.randomString();
 
 		try (SafeCloseable safeCloseable =
@@ -201,7 +200,7 @@ public class CTRowUtilPerformanceTest {
 	}
 
 	@Test
-	public void testSiteConflictPerformance() throws Exception {
+	public void testCheckConflictsGroup() throws Exception {
 		String groupName = RandomTestUtil.randomString();
 
 		Group group = null;

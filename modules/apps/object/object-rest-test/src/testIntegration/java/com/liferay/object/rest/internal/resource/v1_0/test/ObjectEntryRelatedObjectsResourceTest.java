@@ -54,10 +54,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -603,9 +601,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
 			objectRelationship, TestPropsValues.getUserId());
 
-		_assertPagination(
-			new ArrayList<>(Arrays.asList(_objectEntry2, _objectEntry3)),
-			objectRelationship);
+		_assertPagination(_objectEntry2, objectRelationship);
 
 		objectRelationship = _addObjectRelationship(
 			_objectDefinition2, _objectDefinition1,
@@ -616,9 +612,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry3.getPrimaryKey(), _objectEntry1.getPrimaryKey(),
 			objectRelationship, TestPropsValues.getUserId());
 
-		_assertPagination(
-			new ArrayList<>(Arrays.asList(_objectEntry2, _objectEntry3)),
-			objectRelationship);
+		_assertPagination(_objectEntry2, objectRelationship);
 
 		// One to many relationship
 
@@ -631,9 +625,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry3.getPrimaryKey(),
 			objectRelationship, TestPropsValues.getUserId());
 
-		_assertPagination(
-			new ArrayList<>(Arrays.asList(_objectEntry2, _objectEntry3)),
-			objectRelationship);
+		_assertPagination(_objectEntry2, objectRelationship);
 	}
 
 	@Test
@@ -715,8 +707,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _user2.getUserId(),
 			objectRelationship, TestPropsValues.getUserId());
 
-		_assertPagination(
-			new ArrayList<>(Arrays.asList(_user1, _user2)), objectRelationship);
+		_assertPagination(_user1, objectRelationship);
 
 		objectRelationship = _addObjectRelationship(
 			relatedObjectDefinition, _objectDefinition1, _user1.getUserId(),
@@ -727,8 +718,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_user2.getUserId(), _objectEntry1.getPrimaryKey(),
 			objectRelationship, TestPropsValues.getUserId());
 
-		_assertPagination(
-			new ArrayList<>(Arrays.asList(_user1, _user2)), objectRelationship);
+		_assertPagination(_user1, objectRelationship);
 
 		// One to many relationship
 
@@ -741,8 +731,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_objectEntry1.getPrimaryKey(), _user2.getUserId(),
 			objectRelationship, TestPropsValues.getUserId());
 
-		_assertPagination(
-			new ArrayList<>(Arrays.asList(_user1, _user2)), objectRelationship);
+		_assertPagination(_user1, objectRelationship);
 	}
 
 	@Test
@@ -1248,8 +1237,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	private void _assertPagination(
-			List<BaseModel<?>> baseModels,
-			ObjectRelationship objectRelationship)
+			BaseModel<?> baseModel, ObjectRelationship objectRelationship)
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -1257,48 +1245,19 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_getEndpoint(objectRelationship.getName()) + "?page=1&pageSize=1",
 			Http.Method.GET);
 
+		_assertEquals(baseModel, jsonObject.getJSONArray("items"));
+
 		Assert.assertEquals(2, jsonObject.getLong("lastPage"));
 		Assert.assertEquals(1, jsonObject.getLong("page"));
 		Assert.assertEquals(1, jsonObject.getLong("pageSize"));
 		Assert.assertEquals(2, jsonObject.getLong("totalCount"));
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(1, itemsJSONArray.length());
-
-		JSONObject itemJSONObject1 = itemsJSONArray.getJSONObject(0);
-
-		Assert.assertTrue(
-			baseModels.removeIf(
-				baseModel -> Objects.equals(
-					baseModel.getPrimaryKeyObj(),
-					itemJSONObject1.getLong("id"))));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			_getEndpoint(objectRelationship.getName()) + "?page=2&pageSize=1",
-			Http.Method.GET);
-
-		itemsJSONArray = jsonObject.getJSONArray("items");
-
-		Assert.assertEquals(1, itemsJSONArray.length());
-
-		JSONObject itemJSONObject2 = itemsJSONArray.getJSONObject(0);
-
-		Assert.assertTrue(
-			baseModels.removeIf(
-				baseModel -> Objects.equals(
-					baseModel.getPrimaryKeyObj(),
-					itemJSONObject2.getLong("id"))));
-
-		Assert.assertTrue(baseModels.isEmpty());
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_getEndpoint(objectRelationship.getName()) + "?page=0&pageSize=0",
 			Http.Method.GET);
 
-		itemsJSONArray = jsonObject.getJSONArray("items");
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(2, itemsJSONArray.length());
 	}

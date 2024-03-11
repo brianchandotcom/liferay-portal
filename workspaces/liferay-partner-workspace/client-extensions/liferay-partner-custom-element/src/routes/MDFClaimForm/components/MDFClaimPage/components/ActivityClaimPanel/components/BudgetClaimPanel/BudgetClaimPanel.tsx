@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
 import {FormikContextType} from 'formik';
 import {useState} from 'react';
@@ -55,6 +56,16 @@ const BudgetClaimPanel = ({
 						{budget.expenseName}
 					</h5>
 				</div>
+				{!expanded && budget.selected && (
+					<span className="collapse-icon-closed mt-2">
+						<ClayIcon symbol="angle-down" />
+					</span>
+				)}
+				{expanded && budget.selected && (
+					<span className="collapse-icon-open mt-2">
+						<ClayIcon symbol="angle-up" />
+					</span>
+				)}
 			</PanelHeader>
 
 			<PanelBody expanded={budget.selected && expanded}>

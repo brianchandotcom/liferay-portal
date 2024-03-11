@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.monitoring.RequestStatus;
 
 import java.io.Serializable;
 
-import java.text.SimpleDateFormat;
-
 import java.util.Map;
 
 /**
@@ -136,27 +134,13 @@ public class BaseDataSample implements DataSample, Serializable {
 
 	@Override
 	public String toString() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm:ss.SSS");
-
-		long time;
-
-		if (_startTime == -1) { // Not started
-			time = 0;
-		}
-		else if (_stopTime == -1) { // Started but not stopped
-			time = System.currentTimeMillis() - _startTime;
-		}
-		else { // Started and stopped
-			time = _stopTime - _startTime;
-		}
-
 		return StringBundler.concat(
 			"{attributes=", _attributes, ", companyId=", _companyId,
 			", groupId=", _groupId, ", description=", _description,
 			", duration=", _duration, ", name=", _name, ", namespace=",
-			_namespace, ", requestStatus=", _requestStatus, ", stopWatch=",
-			simpleDateFormat.format(time), ", timeout=", _timeout, ", user=",
-			_user, "}");
+			_namespace, ", requestStatus=", _requestStatus, ", startTime=",
+			_startTime, ", stopTime=", _stopTime, ", timeout=", _timeout,
+			", user=", _user, "}");
 	}
 
 	private Map<String, String> _attributes;

@@ -1084,21 +1084,12 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				CTEntry ctEntry = _modificationCTEntries.get(pk);
 
 				if (ctEntry != null) {
-					_ctEntries.remove(ctEntry);
-
-					ctEntry = _ctEntryLocalService.fetchCTEntry(
-						ctEntry.getCtEntryId());
-
 					long mvccVersion = resultSet.getLong(2);
 
 					ctEntry.setModifiedDate(ctEntry.getModifiedDate());
 					ctEntry.setModelMvccVersion(mvccVersion);
 
-					ctEntry = _ctEntryLocalService.updateCTEntry(ctEntry);
-
-					_modificationCTEntries.put(pk, ctEntry);
-
-					_ctEntries.add(ctEntry);
+					_ctEntryLocalService.updateCTEntry(ctEntry);
 				}
 			}
 		}

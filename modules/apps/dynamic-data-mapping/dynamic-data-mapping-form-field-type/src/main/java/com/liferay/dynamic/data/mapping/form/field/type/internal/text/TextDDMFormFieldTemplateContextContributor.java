@@ -114,6 +114,10 @@ public class TextDDMFormFieldTemplateContextContributor
 			DDMFormFieldTypeUtil.getPropertyValue(
 				ddmFormField, ddmFormFieldRenderingContext.getLocale(),
 				"predefinedValue")
+		).put(
+			"preventChangeHandlerOnBlur",
+			GetterUtil.getBoolean(
+				ddmFormField.getProperty("preventChangeHandlerOnBlur"))
 		).putAll(
 			parameters
 		).build();

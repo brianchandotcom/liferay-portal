@@ -107,9 +107,8 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 			List<DDMFormFieldValue> ddmFormFieldValues = entry.getValue();
 
-			ddmFormFieldValues.forEach(
-				nestedDDMFormFieldValue -> _addDDMFormFieldValue(
-					groupedModel, nestedDDMFormFieldValue, infoFieldValues));
+			infoFieldValues.add(
+				_getInfoFieldValue(groupedModel, ddmFormFieldValues.get(0)));
 		}
 	}
 

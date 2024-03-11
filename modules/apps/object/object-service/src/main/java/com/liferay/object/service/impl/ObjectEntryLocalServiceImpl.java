@@ -771,6 +771,8 @@ public class ObjectEntryLocalServiceImpl
 		DSLQuery dslQuery = _getManyToManyObjectEntriesGroupByStep(
 			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE),
 			groupId, objectRelationshipId, primaryKey, related, reverse, search
+		).orderBy(
+			ObjectEntryTable.INSTANCE.objectEntryId.ascending()
 		).limit(
 			start, end
 		);
@@ -904,6 +906,8 @@ public class ObjectEntryLocalServiceImpl
 		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
 			DSLQueryFactoryUtil.selectDistinct(ObjectEntryTable.INSTANCE),
 			groupId, objectRelationshipId, primaryKey, related, search
+		).orderBy(
+			ObjectEntryTable.INSTANCE.objectEntryId.ascending()
 		).limit(
 			start, end
 		);

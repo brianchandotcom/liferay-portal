@@ -147,6 +147,9 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(_table), groupId,
 				objectRelationshipId, primaryKey, search
+			).orderBy(
+				_systemObjectDefinitionManager.getPrimaryKeyColumn(
+				).ascending()
 			).limit(
 				start, end
 			));
@@ -185,6 +188,9 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 			_getUnrelatedModelsGroupByStep(
 				companyId, DSLQueryFactoryUtil.selectDistinct(_table), groupId,
 				objectDefinition, objectEntryId, objectRelationshipId
+			).orderBy(
+				_systemObjectDefinitionManager.getPrimaryKeyColumn(
+				).ascending()
 			).limit(
 				start, end
 			));

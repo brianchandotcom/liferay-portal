@@ -259,6 +259,9 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			_getDynamicObjectDefinitionTable(),
 			DSLQueryFactoryUtil.selectDistinct(_table), groupId,
 			objectRelationshipId, primaryKey, search
+		).orderBy(
+			_systemObjectDefinitionManager.getPrimaryKeyColumn(
+			).ascending()
 		).limit(
 			start, end
 		);
@@ -297,6 +300,9 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 		DSLQuery dslQuery = _getUnrelatedModelsGroupByStep(
 			companyId, DSLQueryFactoryUtil.select(_table), groupId,
 			objectDefinition, objectRelationshipId
+		).orderBy(
+			_systemObjectDefinitionManager.getPrimaryKeyColumn(
+			).ascending()
 		).limit(
 			start, end
 		);

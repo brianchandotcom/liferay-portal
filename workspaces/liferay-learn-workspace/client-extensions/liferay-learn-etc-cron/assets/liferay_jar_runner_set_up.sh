@@ -21,8 +21,18 @@ function clone_repository {
 
 	local github_url=git@github.com:${github_user}/liferay-learn.git
 
-	GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q" \
+	GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q"
+
+	if [ -d "${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}" ]
+	then
+		pushd ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}
+
+		git reset --hard origin/master && git pull
+
+		popd
+	else
 		git clone --branch ${github_branch} --depth 1 --single-branch ${github_url} ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}
+	fi
 
 	git -C ${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR} log
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -353,7 +354,12 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 
 		String emailParam = "emailPasswordSent";
 
-		if (company.isSendPasswordResetLink()) {
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		if (!passwordPolicy.isChangeable()) {
+			emailParam = "emailPasswordUnchangeable";
+		}
+		else if (company.isSendPasswordResetLink()) {
 			emailParam = "emailPasswordReset";
 		}
 

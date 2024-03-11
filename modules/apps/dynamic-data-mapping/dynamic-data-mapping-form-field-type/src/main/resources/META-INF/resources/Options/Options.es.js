@@ -53,6 +53,8 @@ const getInitialOption = (generateOptionValueUsingOptionLabel) => {
 	);
 
 	const initalOption = {
+		displayErrors: false,
+		errorMessage: '',
 		id: random(),
 		label: '',
 		reference: optionValue,
@@ -160,8 +162,6 @@ const Options = ({
 
 		return formattedValue;
 	});
-
-	const [fieldError, setFieldError] = useState(null);
 
 	const [fields, setFields] = useState(() => {
 		const options =

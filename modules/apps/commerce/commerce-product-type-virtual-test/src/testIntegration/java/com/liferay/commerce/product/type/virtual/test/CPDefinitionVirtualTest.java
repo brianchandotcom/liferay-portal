@@ -236,11 +236,11 @@ public class CPDefinitionVirtualTest {
 			cpDefinition.getWeight(), cpDefinition.getCPTaxCategoryId(),
 			cpDefinition.isTaxExempt(), cpDefinition.isTelcoOrElectronics(),
 			cpDefinition.getDDMStructureKey(), cpDefinition.isPublished(),
-			displayDate.getMonth(), displayDate.getDay(), displayDate.getYear(),
-			displayDate.getHours(), displayDate.getMinutes(),
-			expirationDate.getMonth(), expirationDate.getDay(),
-			expirationDate.getYear(), expirationDate.getHours(),
-			expirationDate.getMinutes(), true,
+			displayDate.getMonth(), displayDate.getDate(),
+			displayDate.getYear(), displayDate.getHours(),
+			displayDate.getMinutes(), expirationDate.getMonth(),
+			expirationDate.getDate(), expirationDate.getYear(),
+			expirationDate.getHours(), expirationDate.getMinutes(), true,
 			ServiceContextTestUtil.getServiceContext());
 
 		cpDefinition = _cpDefinitionLocalService.getCPDefinition(

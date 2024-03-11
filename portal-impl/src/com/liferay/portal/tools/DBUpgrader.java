@@ -113,7 +113,14 @@ public class DBUpgrader {
 	}
 
 	public static long getUpgradeTime() {
-		return _getUpgradeTime();
+		if (_startTime == -1) { // Not started
+			return 0;
+		}
+		else if (_stopTime == -1) { // Started but not stopped
+			return System.currentTimeMillis() - _startTime;
+		}
+
+		return _stopTime - _startTime; // Started and stopped
 	}
 
 	public static boolean isUpgradeClient() {
@@ -184,7 +191,7 @@ public class DBUpgrader {
 			System.out.println(
 				StringBundler.concat(
 					"\n", result, " Liferay upgrade process in ",
-					_getUpgradeTime() / Time.SECOND, " seconds"));
+					getUpgradeTime() / Time.SECOND, " seconds"));
 		}
 
 		System.out.println("Exiting DBUpgrader#main(String[]).");
@@ -389,17 +396,6 @@ public class DBUpgrader {
 		}
 
 		return buildNumber;
-	}
-
-	private static long _getUpgradeTime() {
-		if (_startTime == -1) { // Not started
-			return 0;
-		}
-		else if (_stopTime == -1) { // Started but not stopped
-			return System.currentTimeMillis() - _startTime;
-		}
-
-		return _stopTime - _startTime; // Started and stopped
 	}
 
 	private static void _registerModuleServiceLifecycle(

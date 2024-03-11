@@ -72,7 +72,6 @@ const refreshFields = (
 	defaultLanguageId,
 	editingLanguageId,
 	generateOptionValueUsingOptionLabel,
-	initialOption,
 	options
 ) => {
 	const refreshedFields = [
@@ -93,10 +92,6 @@ const refreshFields = (
 						option.label
 				  ),
 		})),
-		{
-			generateKeyword: generateOptionValueUsingOptionLabel,
-			...initialOption,
-		},
 	].filter((field) => field && !!Object.keys(field).length);
 
 	return normalizeFields(
@@ -180,7 +175,6 @@ const Options = ({
 			defaultLanguageId,
 			editingLanguageId,
 			generateOptionValueUsingOptionLabel,
-			initialOptionRef.current,
 			options
 		);
 	});
@@ -231,7 +225,6 @@ const Options = ({
 					defaultLanguageId,
 					editingLanguageId,
 					generateOptionValueUsingOptionLabel,
-					initialOptionRef.current,
 					options
 				)
 			);
@@ -420,14 +413,6 @@ const Options = ({
 	};
 
 	const add = (fields, index, property, value) => {
-		fields[index][property] = value;
-
-		fields[index]['newField'] = true;
-
-		if (defaultLanguageId !== editingLanguageId) {
-			fields[index]['edited'] = true;
-		}
-
 		const initialOption = getInitialOption(
 			generateOptionValueUsingOptionLabel
 		);
@@ -437,9 +422,19 @@ const Options = ({
 			...initialOption,
 		});
 
+		const newFieldIndex = index + 1;
+
+		fields[newFieldIndex][property] = value;
+
+		fields[newFieldIndex]['newField'] = true;
+
+		if (defaultLanguageId !== editingLanguageId) {
+			fields[newFieldIndex]['edited'] = true;
+		}
+
 		initialOptionRef.current = initialOption;
 
-		return [fields, index, property, value];
+		return [fields, newFieldIndex, property, value];
 	};
 
 	const change = (fields, index, property, value) => {
@@ -466,10 +461,6 @@ const Options = ({
 
 	const move = (fields, data) => {
 		const {itemPosition, targetPosition} = data;
-
-		if (itemPosition === fields.length - 1) {
-			return [fields];
-		}
 
 		const item = {...fields[itemPosition]};
 		const newTargetPosition =

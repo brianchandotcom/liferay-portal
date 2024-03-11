@@ -279,3 +279,51 @@ test('checks that the layout can be resized', async ({
 
 	await expect(newSizeResizer.width).toBe(460);
 });
+
+test('checks that the value of a field is propagated to smaller viewports', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const headingId = getRandomString();
+
+	const headingFragment = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	createPageWithFragmentAndGoToEditMode({
+		apiHelpers,
+		fragment: headingFragment,
+		page,
+		pageEditorPage,
+		site,
+	});
+
+	await pageEditorPage.selectFragment(headingId);
+
+	await pageEditorPage.goToConfigurationTab('General');
+
+	const hideFragmentInput = await page.getByLabel('Hide Fragment', {
+		exact: true,
+	});
+
+	await hideFragmentInput.check();
+
+	for (const viewport of VIEWPORTS) {
+		await pageEditorPage.switchViewport(viewport as Viewport);
+
+		await expect(hideFragmentInput).toBeChecked();
+	}
+
+	await pageEditorPage.switchViewport('Desktop');
+
+	await hideFragmentInput.uncheck();
+
+	for (const viewport of VIEWPORTS) {
+		await pageEditorPage.switchViewport(viewport as Viewport);
+
+		await expect(hideFragmentInput).not.toBeChecked();
+	}
+});

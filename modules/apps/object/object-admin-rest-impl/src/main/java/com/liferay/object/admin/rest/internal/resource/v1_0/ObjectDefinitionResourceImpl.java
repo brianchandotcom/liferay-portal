@@ -258,10 +258,15 @@ public class ObjectDefinitionResourceImpl
 					transformToList(
 						ArrayUtil.filter(
 							objectDefinition.getObjectFields(),
-							objectField -> !StringUtil.equals(
-								objectField.getBusinessTypeAsString(),
-								ObjectFieldConstants.
-									BUSINESS_TYPE_AGGREGATION)),
+							objectField ->
+								!StringUtil.equals(
+									objectField.getBusinessTypeAsString(),
+									ObjectFieldConstants.
+										BUSINESS_TYPE_AGGREGATION) &&
+								!StringUtil.equals(
+									objectField.getBusinessTypeAsString(),
+									ObjectFieldConstants.
+										BUSINESS_TYPE_RELATIONSHIP)),
 						objectField -> ObjectFieldUtil.toObjectField(
 							GetterUtil.getBoolean(
 								objectDefinition.getEnableLocalization()),

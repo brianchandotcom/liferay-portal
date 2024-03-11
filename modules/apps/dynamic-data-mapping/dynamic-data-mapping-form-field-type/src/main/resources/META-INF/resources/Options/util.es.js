@@ -113,8 +113,8 @@ export function getDefaultOptionValue(generateValueUsingLabel, optionLabel) {
 	return defaultValue;
 }
 
-export function normalizeReference(fields, currentField, index) {
-	const {reference, value} = currentField;
+export function normalizeReference(fields, index) {
+	const {reference, value} = fields[index];
 
 	if (!reference || findDuplicateReference(fields, index, reference)) {
 		return value ? value : FieldSupport.getDefaultFieldName(true);
@@ -135,11 +135,11 @@ export function normalizeReference(fields, currentField, index) {
  */
 export function normalizeValue(
 	allowSpecialCharacters,
-	currentField,
+	index,
 	fields,
 	generateValueUsingLabel
 ) {
-	const {label, value: prevValue} = currentField;
+	const {id, label, newField, value: prevValue} = fields[index];
 
 	let value = prevValue
 		? prevValue
@@ -149,9 +149,9 @@ export function normalizeValue(
 		value = Liferay.Language.get('option');
 	}
 
-	value = dedupValue(fields, value, currentField.id, generateValueUsingLabel);
+	value = dedupValue(fields, value, id, generateValueUsingLabel);
 
-	return allowSpecialCharacters || !currentField.newField
+	return allowSpecialCharacters || !newField
 		? value
 		: normalizeFieldName(value);
 }
@@ -164,21 +164,16 @@ export function normalizeFields(
 	return fields.map((field, index) => {
 		const value = normalizeValue(
 			allowSpecialCharacters,
-			field,
+			index,
 			fields,
 			generateValueUsingLabel
 		);
 
+		fields[index].value = value;
+
 		return {
 			...field,
-			reference: normalizeReference(
-				fields,
-				{
-					...field,
-					value,
-				},
-				index
-			),
+			reference: normalizeReference(fields, index),
 			value,
 		};
 	});

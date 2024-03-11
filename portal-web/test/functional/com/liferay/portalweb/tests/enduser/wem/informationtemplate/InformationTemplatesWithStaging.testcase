@@ -22,9 +22,7 @@ definition {
 	@priority = 4
 	test PublishStagedInformationTemplateToLive {
 		task ("Enable local live with staged Templates portlet") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name");
-
-			Staging.activateStagingCP(siteName = "Test Site Name");
+			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 		}
 
 		task ("Add an information template in staging site") {

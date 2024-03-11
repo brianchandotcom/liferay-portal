@@ -29,9 +29,7 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Test Site Name");
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
-
-		Staging.activateStagingCP(siteName = "Test Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 	}
 
 	@description = "This is a test for LPS-128438. Changes after reordering experiences with Staging should be applied in live."

@@ -110,9 +110,7 @@ definition {
 		}
 
 		task ("Enable Local Live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name");
-
-			Staging.activateStagingCP(siteName = "Test Site Name");
+			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 		}
 
 		task ("Navigate via Menu Display in Staging site") {

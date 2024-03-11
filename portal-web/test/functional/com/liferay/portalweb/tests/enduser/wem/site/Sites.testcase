@@ -386,9 +386,7 @@ definition {
 		}
 
 		task ("Enable local staging for the site") {
-			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
-
-			Staging.activateStagingCP(siteName = ${randomSiteName});
+			JSONStaging.enableLocalStaging(groupName = ${randomSiteName});
 		}
 
 		task ("View page in staging and live site") {

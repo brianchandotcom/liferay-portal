@@ -22,9 +22,7 @@ definition {
 		}
 
 		task ("Enable local staging with a new blank site") {
-			Staging.openStagingAdmin(siteURLKey = "site-name");
-
-			Staging.activateStagingCP(siteName = "Site Name");
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
 		}
 	}
 

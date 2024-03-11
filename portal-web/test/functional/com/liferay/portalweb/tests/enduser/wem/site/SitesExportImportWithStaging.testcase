@@ -21,9 +21,7 @@ definition {
 
 		task ("Activate local live staging for two sites") {
 			for (var n : list "1,2") {
-				Staging.openStagingAdmin(siteURLKey = "test-site-name-${n}");
-
-				Staging.activateStagingCP(siteName = "Test Site Name ${n}");
+				JSONStaging.enableLocalStaging(groupName = "Test Site Name ${n}");
 			}
 		}
 

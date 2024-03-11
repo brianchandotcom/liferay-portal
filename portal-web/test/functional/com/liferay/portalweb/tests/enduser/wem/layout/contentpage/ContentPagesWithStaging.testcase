@@ -24,9 +24,7 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
-
-			Staging.activateStagingCP(siteName = ${randomSiteName});
+			JSONStaging.enableLocalStaging(groupName = ${randomSiteName});
 		}
 	}
 
@@ -1854,9 +1852,7 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
-
-			Staging.activateStagingCP(siteName = ${siteName});
+			JSONStaging.enableLocalStaging(groupName = ${siteName});
 		}
 
 		task ("When adding a web content with email and telephone") {

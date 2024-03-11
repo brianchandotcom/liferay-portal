@@ -113,14 +113,14 @@ public class DBUpgrader {
 	}
 
 	public static long getUpgradeTime() {
-		if (_startTime == -1) { // Not started
+		if (_startTime == -1) {
 			return 0;
 		}
-		else if (_stopTime == -1) { // Started but not stopped
+		else if (_stopTime == -1) {
 			return System.currentTimeMillis() - _startTime;
 		}
 
-		return _stopTime - _startTime; // Started and stopped
+		return _stopTime - _startTime;
 	}
 
 	public static boolean isUpgradeClient() {

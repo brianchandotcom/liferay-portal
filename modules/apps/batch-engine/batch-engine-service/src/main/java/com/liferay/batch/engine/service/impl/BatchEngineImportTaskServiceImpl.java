@@ -6,14 +6,16 @@
 package com.liferay.batch.engine.service.impl;
 
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.internal.security.permission.LiberalPermissionChecker;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.InputStream;
@@ -49,7 +51,7 @@ public class BatchEngineImportTaskServiceImpl
 			String taskItemDelegateName)
 		throws PortalException {
 
-		_checkPermission(companyId);
+		_checkPermission(companyId, userId);
 
 		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
 			externalReferenceCode, companyId, userId, batchSize, callbackURL,
@@ -68,7 +70,7 @@ public class BatchEngineImportTaskServiceImpl
 			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate)
 		throws PortalException {
 
-		_checkPermission(companyId);
+		_checkPermission(companyId, userId);
 
 		return batchEngineImportTaskLocalService.addBatchEngineImportTask(
 			externalReferenceCode, companyId, userId, batchSize, callbackURL,
@@ -178,6 +180,24 @@ public class BatchEngineImportTaskServiceImpl
 		}
 	}
 
+	private void _checkPermission(long companyId, long userId)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			permissionChecker = new LiberalPermissionChecker(
+				_userLocalService.getUser(userId));
+		}
+
+		if ((companyId != permissionChecker.getCompanyId()) &&
+			!permissionChecker.isOmniadmin()) {
+
+			throw new PrincipalException();
+		}
+	}
+
 	private List<BatchEngineImportTask> _filterBatchEngineImportTasks(
 			List<BatchEngineImportTask> batchEngineImportTasks)
 		throws PrincipalException {
@@ -214,7 +234,6 @@ public class BatchEngineImportTaskServiceImpl
 	}
 
 	@Reference
-	private BatchEngineImportTaskErrorLocalService
-		_batchEngineImportTaskErrorLocalService;
+	private UserLocalService _userLocalService;
 
 }

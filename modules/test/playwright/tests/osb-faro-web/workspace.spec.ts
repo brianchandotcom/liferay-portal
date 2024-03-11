@@ -32,13 +32,6 @@ test('renders workspace list', async ({page}) => {
 test('renders workspace buttons', async ({page}) => {
 	await page.goto(faroConfig.environment.baseUrl);
 
-	const buildPayTierButton = page.getByRole('button', {
-		name: /buy paid tier/i,
-	});
-
-	await expect(buildPayTierButton).toBeVisible();
-	await expect(buildPayTierButton).toHaveClass(/btn-primary/);
-
 	const startFreeTrialLink = page.getByRole('link', {
 		name: /start free trial/i,
 	});

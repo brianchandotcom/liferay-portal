@@ -152,7 +152,7 @@ const populateNotificationsData = (
 					}
 				});
 			}
-			if (element.data?.taskTimers?.timerNotifications[0]) {
+			if (element.data?.taskTimers?.timerNotifications[0]?.recipients) {
 				const recipients =
 					element.data.taskTimers.timerNotifications[0].recipients;
 

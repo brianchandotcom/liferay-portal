@@ -8,15 +8,12 @@ package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
-import com.liferay.object.field.business.type.ObjectFieldBusinessType;
-import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -107,7 +104,11 @@ public class SalesforceObjectEntryManagerImpl
 			objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
 			"sobjects/" + objectDefinition.getExternalReferenceCode(),
-			_toJSONObject(dtoConverterContext, objectDefinition, objectEntry));
+			toJSONObject(
+				dtoConverterContext, objectDefinition, objectEntry,
+				StringUtil.endsWith(
+					objectDefinition.getExternalReferenceCode(),
+					_CUSTOM_OBJECT_SUFFIX)));
 
 		return getObjectEntry(
 			objectDefinition.getCompanyId(), dtoConverterContext,
@@ -201,7 +202,11 @@ public class SalesforceObjectEntryManagerImpl
 			StringBundler.concat(
 				"sobjects/", objectDefinition.getExternalReferenceCode(), "/",
 				externalReferenceCode),
-			_toJSONObject(dtoConverterContext, objectDefinition, objectEntry));
+			toJSONObject(
+				dtoConverterContext, objectDefinition, objectEntry,
+				StringUtil.endsWith(
+					objectDefinition.getExternalReferenceCode(),
+					_CUSTOM_OBJECT_SUFFIX)));
 
 		return getObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
@@ -347,18 +352,6 @@ public class SalesforceObjectEntryManagerImpl
 		return null;
 	}
 
-	private ObjectField _getObjectFieldByName(
-		String name, List<ObjectField> objectFields) {
-
-		for (ObjectField objectField : objectFields) {
-			if (Objects.equals(name, objectField.getName())) {
-				return objectField;
-			}
-		}
-
-		return null;
-	}
-
 	private String _getSalesforcePagination(Pagination pagination) {
 		return StringBundler.concat(
 			" LIMIT ", pagination.getPageSize(), " OFFSET ",
@@ -402,7 +395,7 @@ public class SalesforceObjectEntryManagerImpl
 				sb.append(defaultFieldName);
 			}
 			else {
-				ObjectField objectField = _getObjectFieldByName(
+				ObjectField objectField = getObjectFieldByName(
 					fieldName, objectFields);
 
 				if (objectField == null) {
@@ -489,84 +482,6 @@ public class SalesforceObjectEntryManagerImpl
 		).getInt(
 			"expr0"
 		);
-	}
-
-	private JSONObject _toJSONObject(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
-		throws Exception {
-
-		Map<String, Object> map = new HashMap<>();
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		for (String key : properties.keySet()) {
-			ObjectField objectField = _getObjectFieldByName(key, objectFields);
-
-			if (objectField == null) {
-				continue;
-			}
-
-			ObjectFieldBusinessType objectFieldBusinessType =
-				_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
-					objectField.getBusinessType());
-
-			Object value = objectFieldBusinessType.getValue(
-				objectField, dtoConverterContext.getUserId(), properties);
-
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-				StringBundler sb = new StringBundler();
-
-				for (String listTypeEntryKey : (List<String>)value) {
-					String listTypeEntryExternalReferenceCode =
-						ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
-							objectField.getListTypeDefinitionId(),
-							listTypeEntryKey);
-
-					if (Validator.isNull(listTypeEntryExternalReferenceCode)) {
-						continue;
-					}
-
-					sb.append(listTypeEntryExternalReferenceCode);
-					sb.append(StringPool.SEMICOLON);
-				}
-
-				if (sb.index() > 1) {
-					sb.setIndex(sb.index() - 1);
-				}
-
-				value = sb.toString();
-			}
-			else if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-				value = ListTypeEntryUtil.getListTypeEntryExternalReferenceCode(
-					objectField.getListTypeDefinitionId(),
-					GetterUtil.getString(value));
-			}
-
-			map.put(
-				objectField.getExternalReferenceCode(),
-				Objects.equals(value, StringPool.BLANK) ? null : value);
-
-			if (StringUtil.endsWith(
-					objectDefinition.getExternalReferenceCode(),
-					_CUSTOM_OBJECT_SUFFIX) &&
-				Objects.equals(
-					objectField.getObjectFieldId(),
-					objectDefinition.getTitleObjectFieldId())) {
-
-				map.put("Name", value);
-			}
-		}
-
-		return _jsonFactory.createJSONObject(_jsonFactory.looseSerialize(map));
 	}
 
 	private List<ObjectEntry> _toObjectEntries(
@@ -745,9 +660,6 @@ public class SalesforceObjectEntryManagerImpl
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	@Reference
-	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

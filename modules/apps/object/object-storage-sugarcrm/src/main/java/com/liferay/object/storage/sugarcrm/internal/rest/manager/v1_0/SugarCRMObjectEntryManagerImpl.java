@@ -58,7 +58,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -93,7 +92,8 @@ public class SugarCRMObjectEntryManagerImpl
 			objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
 			_getObjectLocation(objectDefinition),
-			_toJSONObject(objectDefinition, objectEntry));
+			toJSONObject(
+				dtoConverterContext, objectDefinition, objectEntry, true));
 
 		return _toObjectEntry(
 			objectDefinition.getCompanyId(), _getDateFormat(),
@@ -192,7 +192,8 @@ public class SugarCRMObjectEntryManagerImpl
 			StringBundler.concat(
 				_getObjectLocation(objectDefinition), StringPool.FORWARD_SLASH,
 				externalReferenceCode),
-			_toJSONObject(objectDefinition, objectEntry));
+			toJSONObject(
+				dtoConverterContext, objectDefinition, objectEntry, true));
 
 		return _toObjectEntry(
 			objectDefinition.getCompanyId(), _getDateFormat(),
@@ -354,18 +355,6 @@ public class SugarCRMObjectEntryManagerImpl
 		return null;
 	}
 
-	private ObjectField _getObjectFieldByName(
-		String name, List<ObjectField> objectFields) {
-
-		for (ObjectField objectField : objectFields) {
-			if (Objects.equals(name, objectField.getName())) {
-				return objectField;
-			}
-		}
-
-		return null;
-	}
-
 	private String _getObjectLocation(ObjectDefinition objectDefinition) {
 		return objectDefinition.getExternalReferenceCode();
 	}
@@ -382,57 +371,6 @@ public class SugarCRMObjectEntryManagerImpl
 			null);
 
 		return responseJSONObject.getInt("record_count", 0);
-	}
-
-	private JSONObject _toJSONObject(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
-		throws Exception {
-
-		Map<String, Object> map = new HashMap<>();
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		for (Map.Entry<String, Object> entry : properties.entrySet()) {
-			ObjectField objectField = _getObjectFieldByName(
-				entry.getKey(), objectFields);
-
-			if (objectField == null) {
-				continue;
-			}
-
-			Object value = entry.getValue();
-
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-				Map<String, String> valueMap = (HashMap<String, String>)value;
-
-				ListTypeEntry listTypeEntry =
-					_listTypeEntryLocalService.getListTypeEntry(
-						objectField.getListTypeDefinitionId(),
-						valueMap.get("key"));
-
-				value = listTypeEntry.getExternalReferenceCode();
-			}
-
-			map.put(
-				objectField.getExternalReferenceCode(),
-				Objects.equals(value, StringPool.BLANK) ? null : value);
-
-			if (Objects.equals(
-					objectField.getObjectFieldId(),
-					objectDefinition.getTitleObjectFieldId())) {
-
-				map.put("Name", value);
-			}
-		}
-
-		return _jsonFactory.createJSONObject(_jsonFactory.looseSerialize(map));
 	}
 
 	private List<ObjectEntry> _toObjectEntries(

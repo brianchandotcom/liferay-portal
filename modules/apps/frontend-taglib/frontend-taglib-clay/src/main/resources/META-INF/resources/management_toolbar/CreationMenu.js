@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {sub, unescapeHTML} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
@@ -172,21 +170,18 @@ const CreationMenu = ({
 					className="creation-menu"
 					onActiveChange={setActive}
 					trigger={
-						<ClayButton
+						<LinkOrButton
 							aria-label={getPlusIconLabel()}
 							className="nav-btn"
 							data-qa-id="creationMenuNewButton"
+							symbol="plus"
 							title={getPlusIconLabel()}
+							wideViewportTitleVisible={false}
 						>
-							<ClayIcon
-								className="d-md-none dropdown-icon"
-								symbol="plus"
-							/>
-
 							<span className="d-md-block d-none pl-3 pr-3">
 								{getPlusIconLabel()}
 							</span>
-						</ClayButton>
+						</LinkOrButton>
 					}
 				>
 					{visibleItemsCount < totalItemsCountRef.current ? (
@@ -257,6 +252,7 @@ const CreationMenu = ({
 						symbol="plus"
 						title={getPlusIconLabel()}
 						wide
+						wideViewportTitleVisible={false}
 					>
 						{Liferay.Language.get('new')}
 					</LinkOrButton>

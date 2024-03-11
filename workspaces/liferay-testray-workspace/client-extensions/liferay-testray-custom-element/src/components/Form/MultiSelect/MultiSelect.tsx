@@ -64,6 +64,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 				openMenuOnClick={true}
 				options={options}
 				ref={multiselectRef}
+				tabSelectsValue={false}
 				value={value as PropsValue<unknown>}
 			/>
 		</Form.BaseWrapper>

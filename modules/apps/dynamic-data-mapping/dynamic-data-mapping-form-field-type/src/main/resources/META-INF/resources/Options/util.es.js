@@ -113,6 +113,20 @@ export function getDefaultOptionValue(generateValueUsingLabel, optionLabel) {
 	return defaultValue;
 }
 
+export function getErrorMessage(propertyName) {
+	if (propertyName === 'value') {
+		return Liferay.Language.get('this-reference-is-already-being-used');
+	}
+
+	if (propertyName === 'reference') {
+		return Liferay.Language.get(
+			'this-name-is-already-in-use-try-another-one'
+		);
+	}
+
+	return '';
+}
+
 export function normalizeReference(fields, index) {
 	const {reference, value} = fields[index];
 

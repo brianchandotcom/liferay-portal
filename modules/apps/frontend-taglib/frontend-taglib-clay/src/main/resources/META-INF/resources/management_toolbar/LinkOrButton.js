@@ -18,9 +18,11 @@ const LinkOrButton = ({
 	symbol,
 	title,
 	wide,
+	wideViewportTitleVisible = true,
 	...otherProps
 }) => {
-	const responsive = symbol && children;
+	const responsive = Boolean(symbol && children);
+
 	const Wrapper = href && !disabled ? ClayLink : ClayButton;
 
 	return (
@@ -50,6 +52,7 @@ const LinkOrButton = ({
 					disabled={disabled}
 					href={href}
 					{...otherProps}
+					title={wideViewportTitleVisible && title}
 				>
 					{children}
 				</Wrapper>
@@ -57,4 +60,5 @@ const LinkOrButton = ({
 		</>
 	);
 };
-export default LinkOrButton;
+
+export default React.forwardRef(LinkOrButton);

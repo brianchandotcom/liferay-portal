@@ -1733,8 +1733,6 @@ public class DefaultObjectEntryManagerImplTest
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
-							"longIntegerObjectFieldName", 21394167160L
-						).put(
 							"textObjectFieldName", "Able"
 						).put(
 							"textObjectFieldNameExtension", "Baker"
@@ -1751,6 +1749,8 @@ public class DefaultObjectEntryManagerImplTest
 						properties = HashMapBuilder.<String, Object>put(
 							_objectRelationshipFieldName,
 							parentObjectEntry1.getId()
+						).put(
+							"longIntegerObjectFieldName", 21394167160L
 						).put(
 							"picklistObjectFieldName", picklistObjectFieldValue1
 						).put(
@@ -1895,7 +1895,8 @@ public class DefaultObjectEntryManagerImplTest
 				"filter",
 				buildEqualsExpressionFilterString(
 					"longIntegerObjectFieldName", 21394167160L)
-			).build());
+			).build(),
+			childObjectEntry1);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(

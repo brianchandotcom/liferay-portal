@@ -39,11 +39,13 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 		<Form.BaseWrapper label={label}>
 			<ReactSelect
 				classNamePrefix="testray-multi-select"
-				closeMenuOnSelect={true}
+				closeMenuOnSelect
 				isDisabled={disabled}
 				isLoading={isLoading}
 				isMulti
 				menuIsOpen={visible}
+				menuPosition="fixed"
+				menuShouldBlockScroll
 				name={name}
 				onBlur={() => setVisible(false)}
 				onChange={(value) => {
@@ -61,7 +63,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 					return;
 				}}
 				onMenuClose={() => setVisible(false)}
-				openMenuOnClick={true}
+				openMenuOnClick
 				options={options}
 				ref={multiselectRef}
 				tabSelectsValue={false}

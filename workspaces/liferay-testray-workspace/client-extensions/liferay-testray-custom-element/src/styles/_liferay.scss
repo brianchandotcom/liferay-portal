@@ -129,7 +129,6 @@ html {
 	bottom: 0;
 	padding: 3px 16px 16px;
 	position: relative;
-	z-index: 999;
 }
 
 .popover-management-toolbar {
@@ -179,7 +178,6 @@ html {
 		background-color: #fff;
 		position: sticky;
 		top: 0;
-		z-index: 999;
 
 		.form-control {
 			margin: 0;
@@ -198,7 +196,6 @@ html {
 		padding: 5px 16px 16px;
 		position: sticky;
 		top: 0;
-		z-index: 99;
 	}
 
 	.inline-scroller {

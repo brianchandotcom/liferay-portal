@@ -419,6 +419,9 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 							<fileset
 								dir="${project.dir}/modules/apps"
 							/>
+							<fileset
+								dir="${project.dir}/modules/dxp/apps"
+							/>
 						</path>
 
 						<pathconvert property="@{custom.suite.testcase}.path" refid="search.path">

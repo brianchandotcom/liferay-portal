@@ -11,6 +11,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -97,93 +98,71 @@ public class RoleDTOConverter
 						return TransformUtil.transformToArray(
 							_resourcePermissionLocalService.
 								getRoleResourcePermissions(role.getRoleId()),
-							resourcePermission -> new RolePermission() {
-								{
-									setActionIds(
-										() -> {
-											List<ResourceAction>
-												resourceActions =
-													_resourceActionLocalService.
-														getResourceActions(
-															resourcePermission.
-																getName());
-
-											Set<String> actionIdsSet =
-												new HashSet<>();
-
-											long actionIds =
-												resourcePermission.
-													getActionIds();
-
-											for (ResourceAction resourceAction :
-													resourceActions) {
-
-												long bitwiseValue =
-													actionIds &
-													resourceAction.
-														getBitwiseValue();
-
-												if (bitwiseValue ==
-														resourceAction.
-															getBitwiseValue()) {
-
-													actionIdsSet.add(
-														resourceAction.
-															getActionId());
-												}
-											}
-
-											return actionIdsSet.toArray(
-												new String[0]);
-										});
-									setId(resourcePermission::getRoleId);
-									setLabel(
-										() -> {
-											String resourceName =
-												getResourceName();
-
-											if (Validator.isBlank(
-													resourceName)) {
-
-												return null;
-											}
-
-											if (resourceName.contains(
-													"model")) {
-
-												return _language.get(
-													dtoConverterContext.
-														getLocale(),
-													"model.resource." +
-														resourceName);
-											}
-
-											if (resourceName.contains(
-													"portlet")) {
-
-												return _language.get(
-													dtoConverterContext.
-														getLocale(),
-													"javax.portlet.title." +
-														resourceName);
-											}
-
-											return resourceName;
-										});
-									setPrimaryKey(
-										resourcePermission::getPrimKey);
-									setResourceName(
-										resourcePermission::getName);
-									setRoleId(resourcePermission::getRoleId);
-									setScope(
-										() ->
-											(long)
-												resourcePermission.getScope());
-								}
-							},
+							resourcePermission -> _toRolePermission(
+								dtoConverterContext, resourcePermission),
 							RolePermission.class);
 					});
 				setRoleType(role::getTypeLabel);
+			}
+		};
+	}
+
+	private RolePermission _toRolePermission(
+		DTOConverterContext dtoConverterContext,
+		ResourcePermission resourcePermission) {
+
+		return new RolePermission() {
+			{
+				setActionIds(
+					() -> {
+						List<ResourceAction> resourceActions =
+							_resourceActionLocalService.getResourceActions(
+								resourcePermission.getName());
+
+						Set<String> actionIdsSet = new HashSet<>();
+
+						long actionIds = resourcePermission.getActionIds();
+
+						for (ResourceAction resourceAction : resourceActions) {
+							long bitwiseValue =
+								actionIds & resourceAction.getBitwiseValue();
+
+							if (bitwiseValue ==
+									resourceAction.getBitwiseValue()) {
+
+								actionIdsSet.add(resourceAction.getActionId());
+							}
+						}
+
+						return actionIdsSet.toArray(new String[0]);
+					});
+				setId(resourcePermission::getRoleId);
+				setLabel(
+					() -> {
+						String resourceName = getResourceName();
+
+						if (Validator.isBlank(resourceName)) {
+							return null;
+						}
+
+						if (resourceName.contains("model")) {
+							return _language.get(
+								dtoConverterContext.getLocale(),
+								"model.resource." + resourceName);
+						}
+
+						if (resourceName.contains("portlet")) {
+							return _language.get(
+								dtoConverterContext.getLocale(),
+								"javax.portlet.title." + resourceName);
+						}
+
+						return resourceName;
+					});
+				setPrimaryKey(resourcePermission::getPrimKey);
+				setResourceName(resourcePermission::getName);
+				setRoleId(resourcePermission::getRoleId);
+				setScope(() -> (long)resourcePermission.getScope());
 			}
 		};
 	}

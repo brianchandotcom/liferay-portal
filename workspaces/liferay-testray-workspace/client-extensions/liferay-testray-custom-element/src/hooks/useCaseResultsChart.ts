@@ -4,10 +4,11 @@
  */
 
 import {useEffect, useMemo, useState} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useSearchParams} from 'react-router-dom';
 import {APIParametersOptions} from '~/core/Rest';
 import SearchBuilder from '~/core/SearchBuilder';
 import i18n from '~/i18n';
+import {FilterSchema, filterSchema as filterSchemas} from '~/schema/filter';
 import {
 	APIResponse,
 	testrayCaseResultImpl,
@@ -65,15 +66,20 @@ const chartSelectData = [
 ];
 
 const useCaseResultsChart = ({buildId}: {buildId: number}) => {
-	const [entity, setEntity] = useState(chartSelectData[0].value);
+	const [entity, setEntity] = useState('');
 	const {pathname} = useLocation();
+
+	const [searchParams] = useSearchParams();
+	const filter = searchParams.get('filter');
 
 	useEffect(() => {
 		const path = pathname.split('/').at(-1) as string;
 
 		if (chartSelectData.some(({value}) => value === path)) {
-			setEntity(path);
+			return setEntity(path);
 		}
+
+		setEntity('');
 	}, [pathname]);
 
 	const resources: TestrayChartResources = useMemo(
@@ -101,10 +107,7 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 			'runs': {
 				fetchParameters: {
 					fields,
-					filter: SearchBuilder.eq(
-						'r_buildToRuns_c_buildId',
-						buildId
-					),
+					filter: SearchBuilder.eq('buildId', buildId),
 				},
 				url: testrayRunImpl.resource,
 			},
@@ -122,12 +125,32 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 		[buildId]
 	);
 
+	const filterSchema = (filterSchemas as any)[
+		searchParams.get('filterSchema') || ''
+	] as FilterSchema;
+
+	const filterVariables = useMemo(
+		() => ({
+			appliedFilter: filter ? JSON.parse(filter) : '',
+			defaultFilter:
+				resources[entity as keyof TestrayChartResources]
+					?.fetchParameters?.filter || '',
+			filterSchema,
+		}),
+		[resources, entity, filterSchema, filter]
+	);
+
 	const {data, loading} = useFetch<APIResponse<any>>(
-		resources[entity as keyof TestrayChartResources].url,
+		resources[entity as keyof TestrayChartResources]?.url,
 		{
 			params: {
-				...resources[entity as keyof TestrayChartResources]
-					.fetchParameters,
+				fields:
+					resources[entity as keyof TestrayChartResources]
+						?.fetchParameters.fields,
+				filter: SearchBuilder.createFilter(filterVariables),
+			},
+			swrConfig: {
+				shouldFetch: !!entity,
 			},
 		}
 	);
@@ -138,7 +161,6 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 			Object.entries(statususes).map(([key, value]) => [
 				key,
 				...responseItems
-
 					.flatMap((caseResult) => {
 						if (caseResult.teamToComponents) {
 							return caseResult.teamToComponents.reduce(
@@ -207,10 +229,8 @@ const useCaseResultsChart = ({buildId}: {buildId: number}) => {
 			columns: chartData,
 			statuses: Object.keys(statususes),
 		},
-		chartSelectData,
 		entity,
 		loading,
-		setEntity,
 	};
 };
 

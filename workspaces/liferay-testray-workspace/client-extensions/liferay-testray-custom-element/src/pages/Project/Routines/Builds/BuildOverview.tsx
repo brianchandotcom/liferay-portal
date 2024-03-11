@@ -4,8 +4,8 @@
  */
 
 import ClayChart from '@clayui/charts';
+import classNames from 'classnames';
 import {useEffect, useRef, useState} from 'react';
-import Form from '~/components/Form';
 import Loading from '~/components/Loading';
 import {useCaseResultsChart} from '~/hooks/useCaseResultsChart';
 
@@ -27,13 +27,7 @@ type BuildOverviewProps = {
 
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 	const totalTestCasesGroup = useTotalTestCases(testrayBuild);
-	const {
-		chart,
-		chartSelectData,
-		entity,
-		loading,
-		setEntity,
-	} = useCaseResultsChart({
+	const {chart, entity, loading} = useCaseResultsChart({
 		buildId: testrayBuild.id,
 	});
 
@@ -126,7 +120,12 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 				title={i18n.translate('total-test-cases')}
 			>
 				<div className="d-flex justify-content-between row">
-					<div className="align-items-center col-4 d-flex">
+					<div
+						className={classNames('align-items-center d-flex', {
+							'col': !entity,
+							'col-4': entity,
+						})}
+					>
 						{totalTestCasesGroup.ready && (
 							<div className="col-8">
 								<ClayChart
@@ -172,65 +171,60 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 						</div>
 					</div>
 
-					<div className="col-8">
-						<Form.Select
-							className="col-2 ml-6"
-							defaultOption={false}
-							name="priority"
-							onChange={({target: {value}}) => setEntity(value)}
-							options={chartSelectData}
-							value={entity}
-						/>
+					{entity && (
+						<div className="col-8">
+							{loading ||
+								(!columnChartLoad && (
+									<Loading className="py-10" />
+								))}
 
-						{loading ||
-							(!columnChartLoad && <Loading className="py-10" />)}
-
-						{columnChartLoad && !loading && (
-							<ClayChart
-								axis={{
-									y: {
-										label: {
-											position: 'outer-middle',
-											text: i18n
-												.translate('tests')
-												.toUpperCase(),
+							{columnChartLoad && !loading && (
+								<ClayChart
+									axis={{
+										y: {
+											label: {
+												position: 'outer-middle',
+												text: i18n
+													.translate('tests')
+													.toUpperCase(),
+											},
 										},
-									},
-								}}
-								bar={{
-									width: {
-										max: 30,
-									},
-								}}
-								data={{
-									colors: chart.colors,
-									columns: chart.columns,
-									groups: [chart.statuses],
-									type: 'bar',
-								}}
-								legend={{
-									inset: {
-										anchor: 'top-right',
-										step: 1,
-										x: 10,
-										y: -20,
-									},
-									position: 'inset',
-								}}
-								padding={{
-									bottom: 5,
-									top: 20,
-								}}
-								tooltip={{
-									format: {
-										title: (index: number) =>
-											chart.columnNames[index],
-									},
-									order: '',
-								}}
-							/>
-						)}
-					</div>
+									}}
+									bar={{
+										width: {
+											max: 30,
+										},
+									}}
+									data={{
+										colors: chart.colors,
+										columns: chart.columns,
+										groups: [chart.statuses],
+										type: 'bar',
+									}}
+									legend={{
+										inset: {
+											anchor: 'top-right',
+											step: 1,
+											x: 10,
+											y: -20,
+										},
+										position: 'inset',
+									}}
+									padding={{
+										bottom: 5,
+										top: 20,
+									}}
+									tooltip={{
+										format: {
+											title: (index: number) =>
+												chart.columnNames[index],
+										},
+										order: '',
+									}}
+								/>
+							)}
+						</div>
+					)}
 				</div>
 			</Container>
 		</>

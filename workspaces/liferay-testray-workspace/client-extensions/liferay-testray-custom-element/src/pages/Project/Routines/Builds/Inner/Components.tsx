@@ -35,10 +35,7 @@ const Components = () => {
 					filterSchema: 'buildComponents',
 					title: i18n.translate('component'),
 				}}
-				resource={`/components?filter=${SearchBuilder.eq(
-					'componentToCaseResult/r_buildToCaseResult_c_buildId',
-					testrayBuild.id
-				)}`}
+				resource={testrayComponentImpl.resource}
 				tableProps={{
 					columns: [
 						{
@@ -135,6 +132,12 @@ const Components = () => {
 				transformData={(response) =>
 					testrayComponentImpl.transformDataFromList(response)
 				}
+				variables={{
+					filter: SearchBuilder.eq(
+						'componentToCaseResult/r_buildToCaseResult_c_buildId',
+						testrayBuild.id
+					),
+				}}
 			/>
 		</Container>
 	);

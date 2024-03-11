@@ -37,17 +37,27 @@ const translateNameAndMetadataFields = async (
 	);
 };
 
-export const test = mergeTests(
+const baseTest = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	loginTest(),
+	isolatedSiteTest,
+	journalPagesTest
+);
+
+const translationTest = mergeTests(
+	baseTest,
 	featureFlagsTest({
 		'LPD-11253': true,
-		'LPD-16469': true,
 		'LPS-114700': true,
-	}),
-	isolatedSiteTest,
-	loginTest(),
-	journalPagesTest
+	})
+);
+
+const bulkTest = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-16469': true,
+	})
 );
 
 const PERMISSIONS_LOCATORS = [
@@ -55,230 +65,241 @@ const PERMISSIONS_LOCATORS = [
 	'#guest_ACTION_PERMISSIONS',
 ];
 
-test('LPD-17245: Add error message in Translation for concurrent users', async ({
-	journalEditArticlePage,
-	journalEditArticleTranslationsPage,
-	journalPage,
-	page,
-}) => {
-	await journalPage.goto();
+translationTest(
+	'LPD-17245: Add error message in Translation for concurrent users',
+	async ({
+		journalEditArticlePage,
+		journalEditArticleTranslationsPage,
+		journalPage,
+		page,
+	}) => {
+		await journalPage.goto();
 
-	const title = getRandomString();
+		const title = getRandomString();
 
-	await journalEditArticlePage.publishNewBasicArticle(title);
+		await journalEditArticlePage.publishNewBasicArticle(title);
 
-	const article = page
-		.locator(
-			'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
-		)
-		.filter({hasText: title});
+		const article = page
+			.locator(
+				'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
+			)
+			.filter({hasText: title});
 
-	await article.waitFor();
+		await article.waitFor();
 
-	const editBasicArticleTranslationUrl =
-		await journalEditArticleTranslationsPage.editBasicArticleTranslations(
-			title,
-			''
+		const editBasicArticleTranslationUrl =
+			await journalEditArticleTranslationsPage.editBasicArticleTranslations(
+				title,
+				''
+			);
+
+		await journalEditArticlePage.editAndPublishExistingBasicArticle(title);
+
+		await journalEditArticleTranslationsPage.assertErrorInEditBasicArticleTranslations(
+			editBasicArticleTranslationUrl
 		);
 
-	await journalEditArticlePage.editAndPublishExistingBasicArticle(title);
+		await journalPage.deleteJournalArticle(title);
+	}
+);
 
-	await journalEditArticleTranslationsPage.assertErrorInEditBasicArticleTranslations(
-		editBasicArticleTranslationUrl
-	);
+bulkTest(
+	'LPD-17782: This is a test for bulk permissions of web content',
+	async ({journalEditArticlePage, journalPage, page}) => {
+		await journalPage.goto();
 
-	await journalPage.deleteJournalArticle(title);
-});
+		const title1 = getRandomString();
+		const title2 = getRandomString();
 
-test('LPD-17782: This is a test for bulk permissions of web content', async ({
-	journalEditArticlePage,
-	journalPage,
-	page,
-}) => {
-	await journalPage.goto();
+		await journalEditArticlePage.publishNewBasicArticle(title1);
 
-	const title1 = getRandomString();
-	const title2 = getRandomString();
+		const article1 = page
+			.locator(
+				'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
+			)
+			.filter({hasText: title1});
 
-	await journalEditArticlePage.publishNewBasicArticle(title1);
+		await article1.waitFor();
 
-	const article1 = page
-		.locator(
-			'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
-		)
-		.filter({hasText: title1});
+		await journalEditArticlePage.publishNewBasicArticle(title2);
 
-	await article1.waitFor();
+		const article2 = page
+			.locator(
+				'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
+			)
+			.filter({hasText: title2});
 
-	await journalEditArticlePage.publishNewBasicArticle(title2);
+		await article2.waitFor();
 
-	const article2 = page
-		.locator(
-			'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
-		)
-		.filter({hasText: title2});
+		await journalPage.setJournalArticlePermissions(
+			[article1, article2],
+			PERMISSIONS_LOCATORS
+		);
 
-	await article2.waitFor();
+		await journalPage.assertJournalArticlePermissions(
+			title1,
+			PERMISSIONS_LOCATORS
+		);
+		await journalPage.assertJournalArticlePermissions(
+			title2,
+			PERMISSIONS_LOCATORS
+		);
 
-	await journalPage.setJournalArticlePermissions(
-		[article1, article2],
-		PERMISSIONS_LOCATORS
-	);
+		await journalPage.setJournalArticlePermissions(
+			[article1, article2],
+			PERMISSIONS_LOCATORS
+		);
 
-	await journalPage.assertJournalArticlePermissions(
-		title1,
-		PERMISSIONS_LOCATORS
-	);
-	await journalPage.assertJournalArticlePermissions(
-		title2,
-		PERMISSIONS_LOCATORS
-	);
+		await journalPage.assertJournalArticlePermissions(
+			title1,
+			PERMISSIONS_LOCATORS
+		);
+		await journalPage.assertJournalArticlePermissions(
+			title2,
+			PERMISSIONS_LOCATORS
+		);
 
-	await journalPage.deleteJournalArticle(title1);
-	await journalPage.deleteJournalArticle(title2);
-});
+		await journalPage.deleteJournalArticle(title1);
+		await journalPage.deleteJournalArticle(title2);
+	}
+);
 
-test('LPD-19627: Translate several fields in a Basic Web Content and check how many fields have been translated', async ({
-	journalEditArticlePage,
-	journalPage,
-	page,
-}) => {
-	await journalPage.goto();
+translationTest(
+	'LPD-19627: Translate several fields in a Basic Web Content and check how many fields have been translated',
+	async ({journalEditArticlePage, journalPage, page}) => {
+		await journalPage.goto();
 
-	const title = getRandomString();
+		const title = getRandomString();
 
-	await journalEditArticlePage.goToCreateNewBasicArticle(title);
+		await journalEditArticlePage.goToCreateNewBasicArticle(title);
 
-	const translationButton = page.getByRole('combobox', {
-		name: 'Select a language',
-	});
+		const translationButton = page.getByRole('combobox', {
+			name: 'Select a language',
+		});
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('option', {
-			name: 'Catalan Language: Not Translated',
-		}),
-		trigger: translationButton,
-	});
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not Translated',
+			}),
+			trigger: translationButton,
+		});
 
-	await translateNameAndMetadataFields(page);
+		await translateNameAndMetadataFields(page);
 
-	await translationButton.click();
+		await translationButton.click();
 
-	await expect(
-		page.getByRole('option', {name: 'Catalan Language: Translating 3/4'})
-	).toBeVisible({timeout: 1000});
-});
+		await expect(
+			page.getByRole('option', {
+				name: 'Catalan Language: Translating 3/4',
+			})
+		).toBeVisible({timeout: 1000});
+	}
+);
 
-test('LPD-19627: Translate all fields of a Web Content based on a custom structure with repeatable fields', async ({
-	apiHelpers,
-	journalEditArticlePage,
-	journalPage,
-	page,
-	site,
-}) => {
-	await setSiteUrl(page, site.friendlyUrlPath);
+translationTest(
+	'LPD-19627: Translate all fields of a Web Content based on a custom structure with repeatable fields',
+	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+		await setSiteUrl(page, site.friendlyUrlPath);
 
-	const localizableFieldName = 'Text5678';
-	const structureName = 'Structure 1';
+		const localizableFieldName = 'Text5678';
+		const structureName = 'Structure 1';
 
-	const dataDefinition = getDataStructureDefinition({
-		defaultLanguageId: 'en_US',
-		fields: [{name: localizableFieldName, repeatable: true}],
-		name: structureName,
-	});
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: localizableFieldName, repeatable: true}],
+			name: structureName,
+		});
 
-	await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
 
-	await journalPage.goto();
+		await journalPage.goto();
 
-	await journalEditArticlePage.goto(structureName);
+		await journalEditArticlePage.goto(structureName);
 
-	const translationButton = page.getByRole('combobox', {
-		name: 'Select a language',
-	});
+		const translationButton = page.getByRole('combobox', {
+			name: 'Select a language',
+		});
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('option', {
-			name: 'Catalan Language: Not Translated',
-		}),
-		trigger: translationButton,
-	});
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not Translated',
+			}),
+			trigger: translationButton,
+		});
 
-	await translateNameAndMetadataFields(page, structureName);
+		await translateNameAndMetadataFields(page, structureName);
 
-	const localizableField = page.getByRole('textbox', {
-		name: localizableFieldName,
-	});
+		const localizableField = page.getByRole('textbox', {
+			name: localizableFieldName,
+		});
 
-	await fillAndClickOutside(page, localizableField);
+		await fillAndClickOutside(page, localizableField);
 
-	await translationButton.click();
+		await translationButton.click();
 
-	await expect(
-		page.getByRole('option', {name: 'Catalan Language: Translated'})
-	).toBeVisible({timeout: 1000});
+		await expect(
+			page.getByRole('option', {name: 'Catalan Language: Translated'})
+		).toBeVisible({timeout: 1000});
 
-	await page.getByLabel('Add Duplicate Field Text').click();
+		await page.getByLabel('Add Duplicate Field Text').click();
 
-	await translationButton.click();
+		await translationButton.click();
 
-	await expect(
-		page.getByRole('option', {name: 'Catalan Language: Translating 4/5'})
-	).toBeVisible({timeout: 1000});
+		await expect(
+			page.getByRole('option', {
+				name: 'Catalan Language: Translating 4/5',
+			})
+		).toBeVisible({timeout: 1000});
 
-	await fillAndClickOutside(
-		page,
-		page.locator('input.ddm-field-text').nth(1)
-	);
+		await fillAndClickOutside(
+			page,
+			page.locator('input.ddm-field-text').nth(1)
+		);
 
-	await translationButton.click();
+		await expect(
+			page.getByRole('option', {name: 'Catalan Language: Translated'})
+		).toBeVisible({timeout: 1000});
+	}
+);
 
-	await expect(
-		page.getByRole('option', {name: 'Catalan Language: Translated'})
-	).toBeVisible({timeout: 1000});
-});
+translationTest(
+	'LPD-19627: A non-localizabled field is disabled when another translation language is selected',
+	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+		await setSiteUrl(page, site.friendlyUrlPath);
 
-test('LPD-19627: A non-localizabled field is disabled when another translation language is selected', async ({
-	apiHelpers,
-	journalEditArticlePage,
-	journalPage,
-	page,
-	site,
-}) => {
-	await setSiteUrl(page, site.friendlyUrlPath);
+		const nonLocalizableFieldName = 'Text1234';
+		const structureName = 'Structure 1';
 
-	const nonLocalizableFieldName = 'Text1234';
-	const structureName = 'Structure 1';
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{localizable: false, name: nonLocalizableFieldName}],
+			name: structureName,
+		});
 
-	const dataDefinition = getDataStructureDefinition({
-		defaultLanguageId: 'en_US',
-		fields: [{localizable: false, name: nonLocalizableFieldName}],
-		name: structureName,
-	});
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
 
-	await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+		await journalPage.goto();
 
-	await journalPage.goto();
+		await journalEditArticlePage.goto(structureName);
 
-	await journalEditArticlePage.goto(structureName);
+		const translationButton = page.getByRole('combobox', {
+			name: 'Select a language',
+		});
 
-	const translationButton = page.getByRole('combobox', {
-		name: 'Select a language',
-	});
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not Translated',
+			}),
+			trigger: translationButton,
+		});
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByRole('option', {
-			name: 'Catalan Language: Not Translated',
-		}),
-		trigger: translationButton,
-	});
-
-	await expect(
-		page.getByRole('textbox', {
-			name: nonLocalizableFieldName,
-		})
-	).toBeDisabled();
-});
+		await expect(
+			page.getByRole('textbox', {
+				name: nonLocalizableFieldName,
+			})
+		).toBeDisabled();
+	}
+);

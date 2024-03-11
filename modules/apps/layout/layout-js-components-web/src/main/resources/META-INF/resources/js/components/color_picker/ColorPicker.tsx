@@ -94,7 +94,6 @@ export default function ColorPicker({
 }: Props) {
 	const colors: ColorCategoryMap = {};
 	const inputId = useId();
-	const labelId = useId();
 	const deleteStyleError = useDeleteStyleError();
 	const setStyleError = useSetStyleError();
 	const styleErrors = useStyleErrors();
@@ -270,13 +269,10 @@ export default function ColorPicker({
 	};
 
 	return (
-		<ClayForm.Group small>
-			<label className={classNames({'sr-only': !showLabel})} id={labelId}>
-				{field.label}
-			</label>
+		<ClayForm.Group aria-label={field.label} small>
+			{showLabel ? <label>{field.label}</label> : null}
 
 			<div
-				aria-labelledby={labelId}
 				className={classNames('layout__color-picker', {
 					'custom': !tokenLabel,
 					'has-error': error.value,
@@ -338,7 +334,7 @@ export default function ColorPicker({
 						<ClayInput.GroupItem append>
 							<ClayInput
 								aria-invalid={Boolean(error.label)}
-								aria-label={field.label}
+								aria-label={Liferay.Language.get('color')}
 								className="layout__color-picker__input"
 								id={inputId}
 								onBlur={onBlurInput}

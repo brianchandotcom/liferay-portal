@@ -21,11 +21,13 @@ const {default: Geolocation} = require('./Geolocation/Geolocation.es');
 const {default: Grid} = require('./Grid/Grid.es');
 const {default: HelpText} = require('./HelpText/HelpText.es');
 const {default: ImagePicker} = require('./ImagePicker/ImagePicker.es');
-const {default: KeyValue} = require('./KeyValue/KeyValue.es');
 const {
 	default: LocalizableText,
 } = require('./LocalizableText/LocalizableText.es');
 const {default: ObjectField} = require('./ObjectField/ObjectField');
+const {
+	default: OptionFieldKeyValue,
+} = require('./OptionFieldKeyValue/OptionFieldKeyValue');
 const {default: Options} = require('./Options/Options.es');
 const {default: Paragraph} = require('./Paragraph/Paragraph.es');
 const {default: Password} = require('./Password/Password.es');
@@ -54,7 +56,7 @@ export {
 	Grid,
 	HelpText,
 	ImagePicker,
-	KeyValue,
+	OptionFieldKeyValue,
 	LocalizableText,
 	ReactFieldBase,
 	ObjectField,

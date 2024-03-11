@@ -14,9 +14,9 @@ declare const Geolocation: any;
 declare const Grid: any;
 declare const HelpText: any;
 declare const ImagePicker: any;
-declare const KeyValue: any;
 declare const LocalizableText: any;
 declare const ObjectField: any;
+declare const OptionFieldKeyValue: any;
 declare const Options: any;
 declare const Paragraph: any;
 declare const Password: any;
@@ -43,7 +43,7 @@ export {
 	Grid,
 	HelpText,
 	ImagePicker,
-	KeyValue,
+	OptionFieldKeyValue,
 	LocalizableText,
 	ReactFieldBase,
 	ObjectField,

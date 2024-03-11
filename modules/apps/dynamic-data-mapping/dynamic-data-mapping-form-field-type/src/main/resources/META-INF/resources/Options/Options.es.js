@@ -13,7 +13,7 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import FieldBase from '../FieldBase/ReactFieldBase.es';
-import KeyValue from '../KeyValue/KeyValue.es';
+import OptionFieldKeyValue from '../OptionFieldKeyValue/OptionFieldKeyValue';
 import DnD from './DnD.es';
 import DragPreview from './DragPreview.es';
 import {
@@ -25,6 +25,8 @@ import {
 	normalizeReference,
 	random,
 } from './util.es';
+
+import './Options.scss';
 
 const Option = React.forwardRef(
 	({children, className, disabled, style}, ref) => (
@@ -572,17 +574,14 @@ const Options = ({
 					<Option disabled={disabled}>
 						{children({
 							defaultOptionRef,
-							fieldError,
+							expandedPanel: true,
 							handleBlur: composedBlur.bind(this, index),
-							handleField: !(fields.length - 1 === index)
-								? composedChange.bind(this, index)
-								: composedAdd.bind(this, index),
+							handleField: composedChange.bind(this, index),
 							index,
 							onClick: () =>
 								handleConfirmDelete(index, option.value),
 							option,
-							showCloseButton:
-								!(fields.length - 1 === index) && !disabled,
+							showCloseButton: fields.length > 1,
 						})}
 					</Option>
 				</DnD>
@@ -598,7 +597,7 @@ const Main = ({
 	generateOptionValueUsingOptionLabel = false,
 	onChange,
 	keywordReadOnly,
-	placeholder = Liferay.Language.get('enter-an-option'),
+	placeholder = Liferay.Language.get('option'),
 	readOnly,
 	required,
 	showKeyword,
@@ -625,7 +624,7 @@ const Main = ({
 				>
 					{({
 						defaultOptionRef,
-						fieldError,
+						expandedPanel,
 						handleBlur,
 						handleField,
 						index,
@@ -634,16 +633,16 @@ const Main = ({
 						showCloseButton,
 					}) =>
 						option && (
-							<KeyValue
+							<OptionFieldKeyValue
 								allowSpecialCharacters={allowSpecialCharacters}
-								displayErrors={
-									fieldError && fieldError === option.value
-								}
 								editingLanguageId={editingLanguageId}
-								errorMessage={Liferay.Language.get(
-									'this-reference-is-already-being-used'
-								)}
+								errorMessage={option.errorMessage}
+								expandedPanel={expandedPanel}
 								generateKeyword={option.generateKeyword}
+								generateOptionValueUsingOptionLabel={
+									generateOptionValueUsingOptionLabel
+								}
+								invalidField={option.invalidField}
 								keyword={option.value}
 								keywordReadOnly={keywordReadOnly}
 								name={`option${index}`}

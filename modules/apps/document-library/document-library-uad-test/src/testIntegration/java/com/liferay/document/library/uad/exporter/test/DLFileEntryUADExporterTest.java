@@ -76,7 +76,8 @@ public class DLFileEntryUADExporterTest
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
-				expectedLog = "null", expectedType = ExpectedType.EXACT
+				expectedLog = "No such file or directory",
+				expectedType = ExpectedType.CONTAINS
 			)
 		},
 		level = "ERROR", loggerClass = DynamicQueryUADExporter.class

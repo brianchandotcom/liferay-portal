@@ -34,7 +34,10 @@ export class PageTemplatePage {
 			})
 			.click();
 
-		await this.newButton.waitFor();
+		await this.page
+			.locator('a.active')
+			.filter({hasText: 'Display Page Templates'})
+			.waitFor();
 	}
 
 	async publishNewDisplayPageTemplate(name: string) {

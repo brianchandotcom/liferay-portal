@@ -156,19 +156,16 @@ public class FaroSubscriptionDisplay {
 			return;
 		}
 
-		Date subscriptionModifiedDate = new Date(
-			faroProject.getSubscriptionModifiedTime());
-
-		if ((_startDate == null) ||
-			(DateUtil.compareTo(subscriptionModifiedDate, _startDate) > 0)) {
-
-			_startDate = subscriptionModifiedDate;
-		}
-
 		if (_isBasicSubscription(faroProject.getSubscription())) {
+			if (_startDate == null) {
+				_startDate = new Date(faroProject.getCreateTime());
+			}
+
 			_lastAnniversaryDate = _startDate;
 		}
 		else {
+			_startDate = new Date(faroProject.getSubscriptionModifiedTime());
+
 			_lastAnniversaryDate = getLastAnniversaryDate(_startDate);
 		}
 

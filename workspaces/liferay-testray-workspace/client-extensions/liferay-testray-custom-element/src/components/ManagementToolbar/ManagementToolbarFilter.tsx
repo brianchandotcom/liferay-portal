@@ -15,6 +15,7 @@ import {
 	useRef,
 	useState,
 } from 'react';
+import {useHotkeys} from 'react-hotkeys-hook';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {ListViewContext, ListViewTypes} from '~/context/ListViewContext';
 import SearchBuilder from '~/core/SearchBuilder';
@@ -161,8 +162,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						(options: Option) => options.value || options
 					),
 				};
-			}
-			else {
+			} else {
 				return {
 					name: key,
 					value: filterCleaned[key],
@@ -207,6 +207,8 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		setVisible,
 		updateUrlParams,
 	]);
+
+	useHotkeys('enter', onApply, {enabled: true}, [fields, form]);
 
 	return (
 		<div className="align-content-between d-flex flex-column">

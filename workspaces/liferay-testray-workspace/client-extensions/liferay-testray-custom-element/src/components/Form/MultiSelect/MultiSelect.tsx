@@ -39,7 +39,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
 		<Form.BaseWrapper label={label}>
 			<ReactSelect
 				classNamePrefix="testray-multi-select"
-				closeMenuOnSelect={false}
+				closeMenuOnSelect={true}
 				isDisabled={disabled}
 				isLoading={isLoading}
 				isMulti

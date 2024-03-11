@@ -5,12 +5,12 @@
 
 import {test} from '@playwright/test';
 
-import {FriendlyUrlInstanceSettingsPage} from '../pages/FriendlyUrlInstanceSettingsPage';
+import {FriendlyUrlInstanceSettingsPage} from '../../../pages/friendly-url-web/FriendlyUrlInstanceSettingsPage';
+import {PageTemplatePage} from '../../../pages/layout-page-template-admin-web/PageTemplatePage';
 import {JournalEditArticlePage} from '../pages/JournalEditArticlePage';
 import {JournalEditArticleTranslationsPage} from '../pages/JournalEditArticleTranslationsPage';
 import {JournalEditTemplatePage} from '../pages/JournalEditTemplatePage';
 import {JournalPage} from '../pages/JournalPage';
-import {PageTemplatePage} from '../pages/PageTemplatePage';
 
 const journalPagesTest = test.extend<{
 	friendlyUrlInstanceSettingsPage: FriendlyUrlInstanceSettingsPage;

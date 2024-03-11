@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ProductMenuPage} from '../../../pages/product-navigation-product-menu/ProductMenuPage';
+import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenuPage';
 
 export class PageTemplatePage {
 	readonly page: Page;

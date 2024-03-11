@@ -61,13 +61,13 @@ pipeline {
 
 						if [ "${FARO_ENVIRONMENT}" == "prd" ];
 						then
-							echo "Deploying PROD license"
+							echo "Deploying production license."
 
-							echo "$LICENSE_PRD" | base64 --decode > osb-faro-docker/cloud/license/license.xml
+							echo "${LICENSE_PRD}" | base64 --decode > osb-faro-docker/cloud/license/license.xml
 						else
-							echo "Deploying UAT license"
+							echo "Deploying UAT license."
 
-							echo "$LICENSE_UAT" | base64 --decode > osb-faro-docker/cloud/license/license.xml
+							echo "${LICENSE_UAT}" | base64 --decode > osb-faro-docker/cloud/license/license.xml
 						fi
 					'''
                 }

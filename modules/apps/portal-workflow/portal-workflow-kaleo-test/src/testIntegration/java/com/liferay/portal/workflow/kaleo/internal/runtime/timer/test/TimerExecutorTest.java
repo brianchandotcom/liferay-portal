@@ -289,12 +289,12 @@ public class TimerExecutorTest {
 
 		Message message = schedulerResponse.getMessage();
 
+		message.put("companyId", kaleoTimerInstanceToken.getCompanyId());
 		message.put(
 			SchedulerEngine.DESTINATION_NAME,
 			KaleoRuntimeDestinationNames.WORKFLOW_TIMER);
 		message.put(SchedulerEngine.GROUP_NAME, schedulerGroupName);
 		message.put(SchedulerEngine.JOB_NAME, schedulerGroupName);
-		message.put("companyId", kaleoTimerInstanceToken.getCompanyId());
 
 		_messageListener.receive(message);
 	}

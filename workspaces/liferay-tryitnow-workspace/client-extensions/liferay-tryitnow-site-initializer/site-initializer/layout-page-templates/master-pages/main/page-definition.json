@@ -920,7 +920,8 @@
 																							"value_i18n": {
 																								"en_US": "https://www.liferay.com/contact-us"
 																							}
-																						}
+																						},
+																						"target": "Blank"
 																					}
 																				},
 																				"text": {
@@ -958,7 +959,8 @@
 																							"value_i18n": {
 																								"en_US": "https://www.liferay.com/request-a-demo"
 																							}
-																						}
+																						},
+																						"target": "Blank"
 																					}
 																				},
 																				"text": {

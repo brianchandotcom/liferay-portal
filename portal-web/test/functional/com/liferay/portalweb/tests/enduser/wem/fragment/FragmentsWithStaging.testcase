@@ -18,9 +18,7 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name");
-
-			Staging.activateStagingCP(siteName = "Test Site Name");
+			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 		}
 	}
 

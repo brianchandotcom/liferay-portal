@@ -87,11 +87,7 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
-
-			Staging.activateStagingCP(
-				pageVersioningEnabled = "true",
-				siteName = ${randomSiteName});
+			JSONStaging.enableLocalStaging(groupName = ${randomSiteName});
 		}
 
 		task ("View the workflow message is not shown in staging site") {

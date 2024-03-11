@@ -75,9 +75,7 @@ definition {
 
 			PagesAdmin.editFriendlyURL(friendlyURLEdit = "/presentation");
 
-			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
-
-			Staging.activateStagingCP(siteName = ${randomSiteName});
+			JSONStaging.enableLocalStaging(groupName = ${randomSiteName});
 		}
 
 		task ("When the page admin navigates to the page set via new friendly URL in live site") {

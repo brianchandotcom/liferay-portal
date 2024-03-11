@@ -18,9 +18,7 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name");
-
-			Staging.activateStagingCP(siteName = "Test Site Name");
+			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
 		}
 	}
 
@@ -372,9 +370,7 @@ definition {
 		task ("Import display page template in a new staging site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			Staging.openStagingAdmin(siteURLKey = "site-name");
-
-			Staging.activateStagingCP(siteName = "Site Name");
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name-staging");
 

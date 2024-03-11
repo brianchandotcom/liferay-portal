@@ -24,9 +24,7 @@ definition {
 		}
 
 		task ("Activate local live staging") {
-			Staging.openStagingAdmin(siteURLKey = ${randomSiteURLKey});
-
-			Staging.activateStagingCP(siteName = ${randomSiteName});
+			JSONStaging.enableLocalStaging(groupName = ${randomSiteName});
 		}
 	}
 
@@ -158,9 +156,7 @@ definition {
 		}
 
 		task ("Enable Local Live") {
-			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
-
-			Staging.activateStagingCP(siteName = ${siteName});
+			JSONStaging.enableLocalStaging(groupName = ${siteName});
 		}
 
 		task ("Assert can reorganize pages via Page Tree panel in Staging site") {

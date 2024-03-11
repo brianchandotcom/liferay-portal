@@ -113,6 +113,6 @@ export const Filters = {
 		open: `stage ne 'Closed Lost' and stage ne 'Closed Won' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into Opportunity' and type eq 'Existing Business' and hasRenewal eq true`,
 	},
 	REVENUE_DASHBOARD: {
-		opportunities: `${fiscalYearFilterCloseDate} and (stage eq 'Closed Won') and ((type eq 'New Business' or type eq 'New Project Existing Business') or (type eq 'Existing Business' and hasRenewal eq false))`,
+		opportunities: `${fiscalYearFilterCloseDate} and stage eq 'Closed Won'`,
 	},
 };

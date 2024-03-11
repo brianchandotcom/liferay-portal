@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import {InstanceSettingsPage} from './InstanceSettingsPage';
+import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
 export class FriendlyUrlInstanceSettingsPage {
 	readonly page: Page;

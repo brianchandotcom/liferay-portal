@@ -1155,7 +1155,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "U-Joint");
 
-		var productId = selenium.getText("CommerceEntry#HEADER_ID");
+		var productId = selenium.getAttribute("CommerceEntry#HEADER_ID_DATA_QA_ID");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 

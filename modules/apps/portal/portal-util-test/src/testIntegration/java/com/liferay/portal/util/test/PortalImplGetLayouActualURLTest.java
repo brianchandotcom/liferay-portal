@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -73,7 +74,49 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
 			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1,
 			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
-			_NODE_LAYOUT_HIERARCHY_DEPTH - 1);
+			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1);
+	}
+
+	@Test
+	public void testGetLayoutActualURLWithNodeLayoutHierarchyFirstLayoutBrowsable()
+		throws Exception {
+
+		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
+			0,
+			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
+			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1);
+	}
+
+	@Test
+	public void testGetLayoutActualURLWithNodeLayoutHierarchyFirstLayoutParent()
+		throws Exception {
+
+		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
+			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1,
+			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
+			0);
+	}
+
+	@Test
+	public void testGetLayoutActualURLWithNodeLayoutHierarchyMiddleLayoutBrowsable()
+		throws Exception {
+
+		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
+			GetterUtil.getInteger(
+				Math.floor((_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1) / 2)),
+			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
+			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1);
+	}
+
+	@Test
+	public void testGetLayoutActualURLWithNodeLayoutHierarchyMiddleLayoutParent()
+		throws Exception {
+
+		_assertGetLayoutActualURLWithNodeLayoutHierarchy(
+			_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1,
+			_addLayout(publicLayout.getLayoutId(), LayoutConstants.TYPE_NODE),
+			GetterUtil.getInteger(
+				Math.floor((_NODE_LAYOUT_HIERARCHY_LEVEL_LENGTH - 1) / 2)));
 	}
 
 	private List<Layout> _addChildLayouts(long parentLayoutId, String... types)

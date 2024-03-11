@@ -11,6 +11,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectValidationRuleSetting;
 import com.liferay.object.admin.rest.client.dto.v1_0.Status;
@@ -342,6 +343,32 @@ public class ObjectDefinitionResourceTest
 
 		Assert.assertNotNull(serviceBuilderlistTypeDefinition);
 		Assert.assertTrue(serviceBuilderlistTypeDefinition.isSystem());
+
+		randomObjectDefinition = randomObjectDefinition();
+
+		ObjectRelationship objectRelationship = new ObjectRelationship();
+
+		objectRelationship.setDeletionType(
+			ObjectRelationship.DeletionType.CASCADE);
+		objectRelationship.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+		objectRelationship.setName("a" + RandomTestUtil.randomString());
+		objectRelationship.setObjectDefinitionExternalReferenceCode1(
+			randomObjectDefinition.getExternalReferenceCode());
+		objectRelationship.setObjectDefinitionExternalReferenceCode2(
+			randomObjectDefinition.getExternalReferenceCode());
+		objectRelationship.setObjectDefinitionId1(RandomTestUtil.randomLong());
+		objectRelationship.setObjectDefinitionId2(RandomTestUtil.randomLong());
+		objectRelationship.setType(ObjectRelationship.Type.ONE_TO_MANY);
+
+		randomObjectDefinition.setObjectRelationships(
+			new ObjectRelationship[] {objectRelationship});
+
+		postObjectDefinition = testPostObjectDefinition_addObjectDefinition(
+			randomObjectDefinition);
+
+		assertEquals(postObjectDefinition, randomObjectDefinition);
+		assertValid(postObjectDefinition);
 	}
 
 	@Override

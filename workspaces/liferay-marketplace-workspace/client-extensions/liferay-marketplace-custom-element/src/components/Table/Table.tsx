@@ -35,6 +35,7 @@ type TableColumn<T = any> = {
 	styles?: string;
 	title: ReactNode;
 	truncate?: boolean;
+	width?: string;
 };
 
 type PaginationProps = {
@@ -60,7 +61,7 @@ const Table: React.FC<TableProps> = ({
 }) => {
 	return (
 		<>
-			<ClayTable borderless className={className}>
+			<ClayTable borderless className={className} striped={false}>
 				<ClayTable.Head>
 					<ClayTable.Row className="border-bottom header-row">
 						{columns.map((column, index) => (
@@ -70,6 +71,7 @@ const Table: React.FC<TableProps> = ({
 								headingCell
 								key={index}
 								noWrap={column.noWrap}
+								style={{width: column.width}}
 							>
 								{column.title}
 							</ClayTable.Cell>

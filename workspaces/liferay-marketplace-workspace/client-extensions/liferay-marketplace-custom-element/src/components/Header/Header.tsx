@@ -7,10 +7,10 @@ import {ReactNode} from 'react';
 
 import './Header.scss';
 
-interface HeaderProps {
-	description: ReactNode | string;
-	title: ReactNode | string;
-}
+type HeaderProps = {
+	description?: ReactNode | string;
+	title?: ReactNode | string;
+};
 
 export function Header({description, title}: HeaderProps) {
 	return (

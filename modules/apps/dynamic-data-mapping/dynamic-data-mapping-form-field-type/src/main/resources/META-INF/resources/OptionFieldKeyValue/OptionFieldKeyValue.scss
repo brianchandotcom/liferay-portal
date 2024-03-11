@@ -1,0 +1,51 @@
+@import 'atlas-variables';
+
+.collapsable-option-body {
+	.tooltip-icon {
+		color: $secondary-l1;
+		font-size: 0.875rem;
+	}
+}
+
+.collapsable-option-header {
+	border-bottom: none !important;
+	padding: 0.4rem 0 0.4rem 0.5rem !important;
+
+	.collapse-icon-closed,
+	.collapse-icon-open {
+		right: 4px !important;
+	}
+
+	.panel-title {
+		display: block;
+		max-width: calc(100% - 31px);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-transform: none;
+		white-space: nowrap;
+	}
+}
+
+#_com_liferay_journal_web_portlet_JournalPortlet_dataLayoutBuildercontainer {
+	.collapsable-option-body {
+		margin-bottom: 7px !important;
+		padding-top: 10px !important;
+	}
+}
+
+#_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet_-container {
+	.collapsable-option-body {
+		margin-bottom: -7px !important;
+		padding: 10px 0 0 !important;
+	}
+
+	.ddm-option-entry {
+		.panel-secondary {
+			margin-bottom: 0 !important;
+
+			.expanded {
+				margin-bottom: 12px !important;
+			}
+		}
+	}
+}

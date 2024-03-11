@@ -7,6 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
+import {VIEWPORT_SIZES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {ResizeContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ResizeContext';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
@@ -240,4 +241,29 @@ describe('RowGeneralPanel', () => {
 			itemId: '0',
 		});
 	});
+
+	test.each([
+		[VIEWPORT_SIZES.desktop],
+		[VIEWPORT_SIZES.tablet],
+		[VIEWPORT_SIZES.landscapeMobile],
+		[VIEWPORT_SIZES.portraitMobile],
+	])(
+		'checks that the Number of Modules field is not visible for the %p viewport',
+		(viewport) => {
+			renderComponent({
+				state: {
+					selectedViewportSize: viewport,
+				},
+			});
+
+			const select = screen.queryByLabelText('number-of-modules');
+
+			if (viewport === VIEWPORT_SIZES.desktop) {
+				expect(select).toBeInTheDocument();
+			}
+			else {
+				expect(select).not.toBeInTheDocument();
+			}
+		}
+	);
 });

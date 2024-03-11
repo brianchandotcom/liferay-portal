@@ -72,7 +72,7 @@ export default function AttributeFields({
 							if (target.value.toLowerCase().trim() === 'src') {
 								setErrorMessage(
 									Liferay.Language.get(
-										'use-the-javascript-url-field-above'
+										'use-the-javascript-url-field'
 									)
 								);
 							}

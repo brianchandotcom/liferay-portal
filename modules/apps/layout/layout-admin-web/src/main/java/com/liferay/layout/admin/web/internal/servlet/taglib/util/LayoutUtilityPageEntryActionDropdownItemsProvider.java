@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -49,7 +50,6 @@ import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -302,19 +302,17 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getExportLayoutUtilityPageEntryActionUnsafeConsumer() {
 
-		ResourceURL exportLayoutUtilityPageEntryURL =
-			_renderResponse.createResourceURL();
-
-		exportLayoutUtilityPageEntryURL.setParameter(
-			"layoutUtilityPageEntryId",
-			String.valueOf(
-				_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()));
-		exportLayoutUtilityPageEntryURL.setResourceID(
-			"/layout_admin/export_layout_utility_page_entries");
-
 		return dropdownItem -> {
 			dropdownItem.setDisabled(!_layout.isPublished());
-			dropdownItem.setHref(exportLayoutUtilityPageEntryURL);
+			dropdownItem.setHref(
+				ResourceURLBuilder.createResourceURL(
+					_renderResponse
+				).setParameter(
+					"layoutUtilityPageEntryId",
+					_layoutUtilityPageEntry.getLayoutUtilityPageEntryId()
+				).setResourceID(
+					"/layout_admin/export_layout_utility_page_entries"
+				).buildString());
 			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));

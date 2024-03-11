@@ -26,6 +26,22 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
+const STYLES = [
+	{defaultValue: 'Align Left', label: 'Text Align', type: 'button'},
+
+	{defaultValue: '#00000000', label: 'Background Color', type: 'color'},
+	{defaultValue: '#1C1C24', label: 'Border Color', type: 'color'},
+
+	{defaultValue: 'Inherited', label: 'Font Family', type: 'select'},
+	{defaultValue: 'Inherited', label: 'Font Size', type: 'select'},
+	{defaultValue: 'Inherited', label: 'Font Weight', type: 'select'},
+
+	{defaultValue: '0', label: 'Border Radius', type: 'text'},
+	{defaultValue: '0', label: 'Border Width', type: 'text'},
+	{defaultValue: '100', label: 'Opacity', type: 'text'},
+	{defaultValue: 'none', label: 'Shadow', type: 'text'},
+];
+
 test('allows changing and resetting spacing', async ({
 	apiHelpers,
 	page,
@@ -76,4 +92,66 @@ test('allows changing and resetting spacing', async ({
 	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
 		'0px'
 	);
+});
+
+test('renders all selectors with correct default values', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await page.goto('/');
+
+	// Create a page with a Heading fragment
+
+	const headingId = getRandomString();
+
+	const headingFragment = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage(
+		site.id,
+		getRandomString(),
+		getPageDefinition([headingFragment])
+	);
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.selectFragment(headingId);
+
+	await pageEditorPage.goToConfigurationTab('Styles');
+
+	// Check correct default values are rendered
+
+	for (const {defaultValue, label, type} of STYLES) {
+		if (type === 'button') {
+			await expect(
+				page.getByRole('button', {exact: true, name: defaultValue})
+			).toHaveAttribute('aria-pressed', 'true');
+		}
+		else if (type === 'color') {
+			await expect(
+				page
+					.getByLabel(label, {exact: true})
+					.getByLabel('Color', {exact: true})
+			).toHaveValue(defaultValue);
+		}
+		else if (type === 'select') {
+			expect(
+				await page
+					.getByLabel(label, {exact: true})
+					.evaluate(
+						(node: HTMLSelectElement) =>
+							node.options[node.selectedIndex].text
+					)
+			).toBe(defaultValue);
+		}
+		else {
+			await expect(page.getByLabel(label, {exact: true})).toHaveValue(
+				defaultValue
+			);
+		}
+	}
 });

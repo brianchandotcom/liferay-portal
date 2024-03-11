@@ -177,7 +177,7 @@ public class SiteInitializerSerializerImpl
 	}
 
 	private void _serializeDocuments(
-			long groupId, Long parentFolderId, String parentFolderName,
+			long groupId, Long parentFolderId, String zipDirName,
 			ZipWriter zipWriter)
 		throws Exception {
 
@@ -186,17 +186,17 @@ public class SiteInitializerSerializerImpl
 
 		for (FileEntry fileEntry : fileEntries) {
 			_addZipEntry(
-				_normalize(parentFolderName + "/" + fileEntry.getFileName()),
+				_normalize(zipDirName + "/" + fileEntry.getFileName()),
 				fileEntry.getContentStream(), zipWriter);
 		}
 
-		List<Folder> subfolders = _dlAppService.getFolders(
+		List<Folder> folders = _dlAppService.getFolders(
 			groupId, parentFolderId);
 
-		for (Folder subfolder : subfolders) {
+		for (Folder folder : folders) {
 			_serializeDocuments(
-				groupId, subfolder.getFolderId(),
-				parentFolderName + "/" + subfolder.getName(), zipWriter);
+				groupId, folder.getFolderId(),
+				zipDirName + "/" + folder.getName(), zipWriter);
 		}
 	}
 

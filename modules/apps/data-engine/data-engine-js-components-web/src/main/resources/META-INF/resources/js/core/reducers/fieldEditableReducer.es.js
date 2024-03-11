@@ -446,6 +446,16 @@ export default function fieldEditableReducer(state, action, config) {
 				pages: visitor.mapFields(
 					(field) => {
 						if (field.fieldName === focusedField.fieldName) {
+							if (
+								propertyName === 'name' &&
+								field.fieldReference ===
+									focusedField.fieldReference &&
+								newFocusedField.displayErrors
+							) {
+								newFocusedField.fieldName =
+									focusedField.fieldName;
+							}
+
 							return newFocusedField;
 						}
 						if (propertyValue && propertyName === 'repeatable') {

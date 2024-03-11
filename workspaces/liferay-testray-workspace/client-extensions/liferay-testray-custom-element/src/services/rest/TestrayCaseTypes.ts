@@ -20,7 +20,7 @@ class TestrayCaseTypeImpl extends Rest<CaseType, TestrayCaseType> {
 				name,
 			}),
 			fields:
-				'name,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultPassed,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultBlocked,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultFailed,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultIncomplete,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultDidNotRun,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultInProgress,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultUntested',
+				'id,name,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultPassed,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultBlocked,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultFailed,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultIncomplete,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultDidNotRun,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultInProgress,caseTypeToCases.caseToBuildsCases.r_buildToBuildsCases_c_build.caseResultUntested',
 			nestedFields:
 				'caseTypeToCases,caseToBuildsCases,buildToBuildsCases',
 			nestedFieldsDepth: 3,

@@ -259,7 +259,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			redirect = Portal.PATH_MAIN + "/portal/sign_in";
 
 			redirect = HttpComponentsUtil.setParameter(
-				redirect, "groupId", layout.getGroupId());
+				redirect, "p_l_id", layout.getPlid());
 		}
 
 		if (Validator.isNull(redirect)) {

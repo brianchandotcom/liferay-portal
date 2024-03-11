@@ -129,7 +129,7 @@ public class LoginAction implements Action {
 			redirect = Portal.PATH_MAIN + "/portal/sign_in";
 
 			redirect = HttpComponentsUtil.setParameter(
-				redirect, "groupId", themeDisplay.getScopeGroupId());
+				redirect, "p_l_id", themeDisplay.getPlid());
 		}
 
 		if (Validator.isNull(redirect)) {

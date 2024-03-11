@@ -13,9 +13,6 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.theme.ThemeUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.RequestDispatcher;
@@ -45,20 +42,6 @@ public class SignInStrutsAction implements StrutsAction {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-
-		if (groupId != 0) {
-			themeDisplay.setScopeGroupId(groupId);
-
-			String portletId = ParamUtil.getString(
-				httpServletRequest, "p_p_id");
-
-			if (Validator.isNotNull(portletId)) {
-				themeDisplay.setPlid(
-					_portal.getPlidFromPortletId(groupId, portletId));
-			}
-		}
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			themeDisplay.getScopeGroupId(), false);
@@ -96,9 +79,6 @@ public class SignInStrutsAction implements StrutsAction {
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.utility.page.login)"

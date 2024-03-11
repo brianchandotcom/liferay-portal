@@ -40,6 +40,8 @@ public class JournalArticleInfoItemIdentifierTranslator
 			return (S)infoItemIdentifier;
 		}
 
+		infoItemIdentifier.setVersion(InfoItemIdentifier.VERSION_LATEST);
+
 		return (S)_getTargetInfoItemIdentifier(
 			_infoItemObjectProvider.getInfoItem(infoItemIdentifier),
 			targetInfoItemIdentifierClass);

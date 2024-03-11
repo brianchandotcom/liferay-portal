@@ -8,7 +8,7 @@
         "name": "ticketCreationNotification",
         "objectActionExecutorKey": "notification",
         "objectActionTriggerKey": "onAfterAdd",
-        "objectDefinitionId": "[$OBJECT_DEFINITION_ID:J3Y7_TICKET$]",
+        "objectDefinitionId": "[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
         "parameters": {
             "objectDefinitionExternalReferenceCode" : "J3Y7_TICKET",
             "notificationTemplateExternalReferenceCode": "NEW_TICKET_USER_TEMPLATE",

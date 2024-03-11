@@ -5,6 +5,7 @@
 
 package com.liferay.osb.faro.provisioning.client.internal;
 
+import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.provisioning.client.ProvisioningClient;
 import com.liferay.osb.faro.provisioning.client.constants.KoroneikiConstants;
 import com.liferay.osb.faro.provisioning.client.constants.ProductConstants;
@@ -13,6 +14,7 @@ import com.liferay.osb.faro.provisioning.client.exception.NoSuchRoleException;
 import com.liferay.osb.faro.provisioning.client.model.OSBAccountEntry;
 import com.liferay.osb.faro.provisioning.client.model.OSBOfferingEntry;
 import com.liferay.osb.faro.provisioning.client.util.KoroneikiHttpUtil;
+import com.liferay.osb.faro.service.FaroProjectLocalService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
@@ -216,8 +218,18 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 						ProductConstants.LXC_PRO_PRODUCT_ENTRY_ID);
 				}
 
+				Date startDate = new Date();
+
+				FaroProject faroProject =
+					_faroProjectLocalService.fetchFaroProjectByCorpProjectUuid(
+						corpProjectUuid);
+
+				if (faroProject != null) {
+					startDate = new Date(faroProject.getCreateTime());
+				}
+
 				osbOfferingEntry.setQuantity(1);
-				osbOfferingEntry.setStartDate(new Date());
+				osbOfferingEntry.setStartDate(startDate);
 				osbOfferingEntry.setStatus(
 					ProductConstants.OSB_OFFERING_ENTRY_STATUS_ACTIVE);
 
@@ -251,14 +263,14 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 					}
 
 					contactsOSBOfferingEntry.setQuantity(1);
-					contactsOSBOfferingEntry.setStartDate(new Date());
+					contactsOSBOfferingEntry.setStartDate(startDate);
 					contactsOSBOfferingEntry.setStatus(
 						ProductConstants.OSB_OFFERING_ENTRY_STATUS_ACTIVE);
 
 					osbOfferingEntries.add(contactsOSBOfferingEntry);
 
 					trackedPagesOSBOfferingEntry.setQuantity(1);
-					trackedPagesOSBOfferingEntry.setStartDate(new Date());
+					trackedPagesOSBOfferingEntry.setStartDate(startDate);
 					trackedPagesOSBOfferingEntry.setStatus(
 						ProductConstants.OSB_OFFERING_ENTRY_STATUS_ACTIVE);
 
@@ -353,6 +365,9 @@ public class ProvisioningClientImpl implements ProvisioningClient {
 
 		return null;
 	}
+
+	@Reference
+	private FaroProjectLocalService _faroProjectLocalService;
 
 	@Reference
 	private Portal _portal;

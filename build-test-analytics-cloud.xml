@@ -155,30 +155,57 @@
 							return;
 						}
 
-						String distNode = getDistNode();
 						String distPath = getDistPath();
 
-						if (JenkinsResultsParserUtil.isNullOrEmpty(distNode) || JenkinsResultsParserUtil.isNullOrEmpty(distPath)) {
+						if (JenkinsResultsParserUtil.isNullOrEmpty(distPath)) {
 							return;
 						}
 
-						StringBuilder sb = new StringBuilder();
+						Map servicesMap = dockerComposeMap.get("services");
 
-						sb.append("time timeout 1200 rsync -qs ");
-						sb.append(distNode);
-						sb.append(":");
-						sb.append(distPath);
-						sb.append("/liferay-docker-*.tar ");
-						sb.append(project.getProperty("project.dir"));
-						sb.append("/dist");
+						for (String serviceName : servicesMap.keySet()) {
+							int retryCount = 0;
 
-						Process process = JenkinsResultsParserUtil.executeBashCommands(false, new File("."), 20 * 60 * 1000, new String[] {sb.toString()});
+							String imageTarFileName = "liferay-docker-" + serviceName + ".tar";
 
-						if (process.exitValue() != 0) {
-							return;
+							while (true) {
+								StringBuilder sb = new StringBuilder();
+
+								String distNode = getDistNode();
+
+								if (JenkinsResultsParserUtil.isNullOrEmpty(distNode)) {
+									return;
+								}
+
+								sb.append("time timeout 600 rsync -qs ");
+								sb.append(distNode);
+								sb.append(":");
+								sb.append(distPath);
+								sb.append("/");
+								sb.append(imageTarFileName);
+								sb.append(" ");
+								sb.append(project.getProperty("project.dir"));
+								sb.append("/dist/liferay-docker-");
+								sb.append(serviceName);
+								sb.append(".tar ");
+
+								Process process = JenkinsResultsParserUtil.executeBashCommands(false, new File("."), 10 * 60 * 1000, new String[] {sb.toString()});
+
+								if (process.exitValue() != 0) {
+									if (retryCount >= 2) {
+										throw new Exception("Unable to download " + imageTarFileName + " after " + retryCount + " retries");
+									}
+
+									retryCount++;
+
+									continue;
+								}
+
+								System.out.println(JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
+
+								break;
+							}
 						}
-
-						System.out.println(JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
 					}
 
 					public void dumpYamlMap(Map yamlMap) {

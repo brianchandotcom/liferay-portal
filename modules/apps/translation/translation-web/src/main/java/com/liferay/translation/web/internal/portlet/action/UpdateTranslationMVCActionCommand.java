@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryService;
@@ -118,7 +119,12 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 			InfoItemFieldValues sourceInfoItemFieldValues =
 				_getInfoItemFieldValues(className, infoItem);
 
+			int workflowAction = ParamUtil.getInteger(
+				actionRequest, "workflowAction",
+				WorkflowConstants.ACTION_PUBLISH);
+
 			if (FeatureFlagManagerUtil.isEnabled("LPD-11253") &&
+				(workflowAction == WorkflowConstants.ACTION_PUBLISH) &&
 				(modifiedDateTime > 0)) {
 
 				Object infoItemFieldValue = _getInfoItemFieldValue(

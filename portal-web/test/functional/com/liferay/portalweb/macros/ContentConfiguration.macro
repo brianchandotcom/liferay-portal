@@ -259,7 +259,7 @@ definition {
 		var key_subContent = ${subContent};
 		var key_subSubContent = ${uncheckSubSubContent};
 
-		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "xpath=(//input[contains(@data-name,'Referenced Content')])");
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX");
 	}
 
 }

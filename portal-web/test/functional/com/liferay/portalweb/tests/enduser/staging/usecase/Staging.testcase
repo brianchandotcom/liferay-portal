@@ -2498,8 +2498,7 @@ definition {
 
 		Staging.configurePublishToLive(
 			contentName = "Web Content",
-			subContent = "Web Content",
-			uncheckSubSubContent = "Include If Modified");
+			subContent = "Web Content");
 
 		Staging.savePublishTemplate(
 			publishTemplateDescription = "Publish Template Description",

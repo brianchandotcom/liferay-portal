@@ -101,7 +101,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX</td>
-	<td>//div[contains(@class,'widget-content-expanded') and contains(.,'${key_contentName}')]//div[contains(@class,'modal-body')]//ul/li[@class='handler-control' and contains(.,'${key_subContent}')]//input[contains(@data-name,'${key_subSubContent}')]</td>
+	<td>//input[contains(@data-name,'${key_subSubContent}')]</td>
 	<td></td>
 </tr>
 <tr>

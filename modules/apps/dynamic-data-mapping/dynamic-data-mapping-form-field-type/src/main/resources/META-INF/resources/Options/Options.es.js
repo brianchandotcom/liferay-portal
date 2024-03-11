@@ -18,7 +18,6 @@ import DnD from './DnD.es';
 import DragPreview from './DragPreview.es';
 import {
 	compose,
-	dedupValue,
 	getDefaultOptionValue,
 	getErrorMessage,
 	isOptionValueGenerated,
@@ -363,25 +362,61 @@ const Options = ({
 		return field ? fieldName : null;
 	};
 
-	const dedup = (fields, index, property, value) => {
-		const {generateKeyword, id} = fields[index];
+	const dedup = (fields, index) => {
+		fields = fields.map((field) => {
+			if (field.invalidField === 'value') {
+				field['value'] = getDefaultOptionValue();
+			}
+			else if (field.invalidField === 'reference') {
+				field['reference'] = normalizeReference(fields, index);
+			}
 
-		if (index === fields.length - 1 && tabPressed) {
+			return field;
+		});
+
+		return removeErrorProperties(fields);
+	};
+
+	const validate = (fields, index, property, value) => {
+		if (index === fields.length && tabPressed) {
 			return [fields];
 		}
 
-		if (property === 'value' && generateKeyword) {
-			value = dedupValue(
+		if (property === 'value') {
+			const invalidNameFieldReference = checkValidOptionName(
 				fields,
-				value ? value : Liferay.Language.get('option'),
-				id,
-				generateOptionValueUsingOptionLabel
+				value,
+				fields[index].reference
 			);
+
+			if (invalidNameFieldReference) {
+				fields = addErrorProperties(
+					fields,
+					'reference',
+					invalidNameFieldReference
+				);
+			}
+			else {
+				fields = removeErrorProperties(fields);
+			}
 		}
 		else if (property === 'reference') {
-			setFieldError(
-				checkValidReference(fields, value, fields[index].value)
+			const invalidReferenceFieldName = checkValidOptionReference(
+				fields,
+				value,
+				fields[index].value
 			);
+
+			if (invalidReferenceFieldName) {
+				fields = addErrorProperties(
+					fields,
+					'value',
+					invalidReferenceFieldName
+				);
+			}
+			else {
+				fields = removeErrorProperties(fields);
+			}
 		}
 
 		return [fields, index, property, value];
@@ -473,13 +508,7 @@ const Options = ({
 	};
 
 	const normalize = (fields, index) => {
-		clearError();
-
-		fields[index]['reference'] = normalizeReference(
-			fields,
-			fields[index],
-			index
-		);
+		fields = dedup(fields, index);
 
 		return [
 			normalizeFields(

@@ -426,6 +426,18 @@ public class TestClassGroupFactory {
 							batchName, portalTestClassJob);
 				}
 			}
+			else if (batchName.startsWith("semantic-versioning")) {
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new SemanticVersioningTestClassGroup(
+							jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup =
+						new SemanticVersioningTestClassGroup(
+							batchName, portalTestClassJob);
+				}
+			}
 			else if (batchName.startsWith("service-builder-")) {
 				if (jsonObject != null) {
 					batchTestClassGroup =

@@ -429,8 +429,8 @@ public class DBUpgrader {
 	private static volatile Appender _appender;
 	private static volatile ServiceReference<Appender>
 		_appenderServiceReference;
-	private static long _startTime = -1;
-	private static long _stopTime = -1;
+	private static volatile long _startTime = -1;
+	private static volatile long _stopTime = -1;
 	private static volatile boolean _upgradeClient;
 	private static Boolean _upgradeDatabaseAutoRun;
 

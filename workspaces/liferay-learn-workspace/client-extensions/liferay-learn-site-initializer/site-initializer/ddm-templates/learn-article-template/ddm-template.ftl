@@ -92,7 +92,7 @@
 
 	.doc-nav-wrapper-inner {
 		min-width: fit-content;
-	  	position: sticky !important;
+		position: sticky !important;
 		top: 135px;
 		width: 110%;
 	}
@@ -149,7 +149,7 @@
 	}
 
 	.rounded-10 {
-	  border-radius: 10px;
+		border-radius: 10px;
 	}
 
 	.section-card:hover {

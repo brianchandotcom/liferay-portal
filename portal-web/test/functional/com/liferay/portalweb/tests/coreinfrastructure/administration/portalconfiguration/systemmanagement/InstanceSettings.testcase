@@ -1396,6 +1396,7 @@ definition {
 	test ViewInstanceMailSettingsValueIsInheritedFromServerLevel {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+		property testray.main.component.name = "Server Administration";
 
 		task ("Given change the server/company level mail setting value") {
 			ServerAdministration.openServerAdmin();

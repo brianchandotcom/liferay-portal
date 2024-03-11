@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -90,6 +91,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -112,6 +114,8 @@ import com.liferay.upload.UploadResponseHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -506,6 +510,44 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					tempFileEntry.getFileEntryId());
 			}
 		}
+	}
+
+	private void _addPublishedDocumentMessage(
+		ActionRequest actionRequest, FileVersion fileVersion,
+		ThemeDisplay themeDisplay) {
+
+		if (!_featureFlagManager.isEnabled("LPD-10701") ||
+			!fileVersion.isScheduled()) {
+
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
+
+			if (Validator.isNotNull(portletResource)) {
+				MultiSessionMessages.add(
+					actionRequest, portletResource + "requestProcessed");
+			}
+
+			return;
+		}
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
+
+		SessionMessages.add(
+			httpServletRequest, "publishedDocumentRequestProcessedSuccess",
+			_language.format(
+				_portal.getHttpServletRequest(actionRequest),
+				"x-will-be-published-on-x",
+				new Object[] {
+					"<strong>" + HtmlUtil.escape(fileVersion.getTitle()) +
+						"</strong>",
+					dateTimeFormat.format(fileVersion.getDisplayDate())
+				}));
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private void _addTempFileEntry(
@@ -1441,13 +1483,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 
-			String portletResource = ParamUtil.getString(
-				actionRequest, "portletResource");
-
-			if (Validator.isNotNull(portletResource)) {
-				MultiSessionMessages.add(
-					actionRequest, portletResource + "requestProcessed");
-			}
+			_addPublishedDocumentMessage(
+				actionRequest, fileEntry.getLatestFileVersion(), themeDisplay);
 
 			if (Validator.isNotNull(urlTitle)) {
 				_addUrlTitleChangedMessage(

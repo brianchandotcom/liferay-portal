@@ -17,7 +17,7 @@ const patchRequestStatus = async (
 	mdfRequestId: string
 ) => {
 	try {
-		const mdfRequestDTO = await patchObjectEntry<MDFRequestDTO>(
+		await patchObjectEntry<MDFRequestDTO>(
 			ResourceName.MDF_REQUEST_DXP,
 			mdfRequestId,
 			{
@@ -25,17 +25,17 @@ const patchRequestStatus = async (
 			}
 		);
 
-		const mdfRequest = (await liferayFetcher(
+		const mdfRequestDTO = (await liferayFetcher(
 			`/o/${LiferayAPIs.OBJECT}/${ResourceName.MDF_REQUEST_DXP}/${mdfRequestId}?nestedFields=mdfReqToActs,mdfReqToMDFClms`,
 			Liferay.authToken
 		)) as MDFRequestDTO;
 
-		if (mdfRequestDTO && mdfRequest) {
+		if (mdfRequestDTO) {
 			if (
 				mdfRequestDTO.mdfRequestStatus.key === Status.APPROVED.key &&
-				mdfRequest.mdfReqToActs?.length
+				mdfRequestDTO.mdfReqToActs?.length
 			) {
-				for (const activity of mdfRequest.mdfReqToActs) {
+				for (const activity of mdfRequestDTO.mdfReqToActs) {
 					if (
 						activity.id &&
 						(activity.activityStatus?.key ===
@@ -53,8 +53,8 @@ const patchRequestStatus = async (
 					}
 				}
 
-				if (mdfRequest.mdfReqToMDFClms?.length) {
-					for (const claim of mdfRequest.mdfReqToMDFClms) {
+				if (mdfRequestDTO.mdfReqToMDFClms?.length) {
+					for (const claim of mdfRequestDTO.mdfReqToMDFClms) {
 						if (
 							claim.id &&
 							claim.mdfClaimStatus?.key === Status.CANCELED.key
@@ -75,9 +75,9 @@ const patchRequestStatus = async (
 			}
 			else if (
 				mdfRequestDTO.mdfRequestStatus.key === Status.CANCELED.key &&
-				mdfRequest.mdfReqToActs?.length
+				mdfRequestDTO.mdfReqToActs?.length
 			) {
-				for (const activity of mdfRequest.mdfReqToActs) {
+				for (const activity of mdfRequestDTO.mdfReqToActs) {
 					if (
 						activity.id &&
 						activity.activityStatus?.key === Status.APPROVED.key
@@ -92,8 +92,8 @@ const patchRequestStatus = async (
 					}
 				}
 
-				if (mdfRequest.mdfReqToMDFClms?.length) {
-					for (const claim of mdfRequest.mdfReqToMDFClms) {
+				if (mdfRequestDTO.mdfReqToMDFClms?.length) {
+					for (const claim of mdfRequestDTO.mdfReqToMDFClms) {
 						if (
 							claim.id &&
 							(claim.mdfClaimStatus?.key ===

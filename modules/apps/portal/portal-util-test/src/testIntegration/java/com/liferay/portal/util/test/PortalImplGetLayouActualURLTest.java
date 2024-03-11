@@ -274,7 +274,7 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 		for (int i = 0; i < lenght; i++) {
 			String type = LayoutConstants.TYPE_NODE;
 
-			if (i == browsableTypePos) {
+			if ((browsableTypePos >= 0) && (i >= browsableTypePos)) {
 				type = LayoutConstants.TYPE_PORTLET;
 			}
 

@@ -12,7 +12,12 @@ import {
 	removeField,
 } from '../../utils/fieldSupport';
 import {formatRules} from '../../utils/rulesSupport';
-import {updateField, updateFieldReference} from '../../utils/settingsContext';
+import {
+	setFieldErrorMessage,
+	updateField,
+	updateFieldName,
+	updateFieldReference,
+} from '../../utils/settingsContext';
 import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 import {createDuplicatedField, isValueAlreadyUsed} from '../utils/fields';
@@ -169,6 +174,16 @@ const updateFieldProperty = ({
 			false
 		);
 	}
+	else if (propertyName === 'name') {
+		focusedField = updateFieldName(
+			defaultLanguageId,
+			editingLanguageId,
+			fieldNameGenerator,
+			focusedField,
+			propertyValue,
+			isValueAlreadyUsed(focusedField, pages, propertyValue, propertyName)
+		);
+	}
 
 	return updateField(
 		{
@@ -258,7 +273,7 @@ export default function fieldEditableReducer(state, action, config) {
 		case EVENT_TYPES.FIELD.BLUR: {
 			const {propertyName, propertyValue} = action.payload;
 			const {defaultLanguageId, editingLanguageId} = state;
-			let {focusedField} = state;
+			let {focusedField, pages} = state;
 
 			if (Object.keys(focusedField).length) {
 				if (
@@ -266,7 +281,7 @@ export default function fieldEditableReducer(state, action, config) {
 					(propertyValue === '' ||
 						isValueAlreadyUsed(
 							focusedField,
-							state.pages,
+							pages,
 							propertyValue,
 							propertyName
 						))
@@ -281,11 +296,68 @@ export default function fieldEditableReducer(state, action, config) {
 						focusedField.fieldName
 					);
 				}
+				else if (
+					propertyName === 'name' &&
+					(propertyValue === '' ||
+						isValueAlreadyUsed(
+							focusedField,
+							pages,
+							propertyValue,
+							propertyName
+						))
+				) {
+					const fieldNameGenerator = config.getFieldNameGenerator(
+						pages,
+						false
+					);
+
+					focusedField = updateField(
+						{
+							defaultLanguageId,
+							editingLanguageId,
+							fieldNameGenerator,
+						},
+						focusedField,
+						propertyName,
+						''
+					);
+
+					const visitor = new PagesVisitor(pages);
+
+					pages = visitor.mapFields(
+						(field) => {
+							if (
+								field.fieldReference ===
+								focusedField.fieldReference
+							) {
+								if (field.displayErrors) {
+									focusedField.displayErrors = false;
+
+									focusedField.settingsContext = setFieldErrorMessage(
+										focusedField.settingsContext,
+										'name',
+										false,
+										false
+									);
+
+									focusedField.errorMessage = '';
+								}
+
+								return focusedField;
+							}
+
+							return field;
+						},
+						false,
+						true
+					);
+				}
 			}
 
 			return {
 				fieldHovered: {},
 				focusedField,
+				pages,
 			};
 		}
 		case EVENT_TYPES.FIELD.CLICK: {

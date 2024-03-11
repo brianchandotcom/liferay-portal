@@ -306,21 +306,29 @@ export function createDuplicatedField(originalField, props, blacklist = []) {
 	);
 }
 
-export function findInvalidFieldReference(focusedField, pages, value) {
+export function isValueAlreadyUsed(focusedField, pages, value, propertyName) {
 	let hasInvalidFieldReference = false;
 
 	const visitor = new PagesVisitor(pages);
 
 	visitor.mapFields(
 		(field) => {
-			const fieldReference = getSettingsContextProperty(
+			const foundValue = getSettingsContextProperty(
 				field.settingsContext,
-				'fieldReference'
+				propertyName
 			);
 
 			if (
+				propertyName === 'fieldReference' &&
 				focusedField.fieldName !== field.fieldName &&
-				fieldReference?.toLowerCase() === value?.toLowerCase()
+				foundValue?.toLowerCase() === value?.toLowerCase()
+			) {
+				hasInvalidFieldReference = true;
+			}
+			else if (
+				propertyName === 'name' &&
+				focusedField.fieldReference !== field.fieldReference &&
+				foundValue?.toLowerCase() === value?.toLowerCase()
 			) {
 				hasInvalidFieldReference = true;
 			}

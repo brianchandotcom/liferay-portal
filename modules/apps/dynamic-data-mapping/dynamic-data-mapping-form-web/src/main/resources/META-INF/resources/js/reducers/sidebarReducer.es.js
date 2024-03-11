@@ -22,10 +22,11 @@ export default function sidebarReducer(state, action) {
 			if (
 				Object.keys(focusedField).length &&
 				(focusedField.fieldReference === '' ||
-					FieldUtil.findInvalidFieldReference(
+					FieldUtil.isValueAlreadyUsed(
 						focusedField,
 						state.pages,
-						focusedField.fieldReference
+						focusedField.fieldReference,
+						'fieldReference'
 					))
 			) {
 				const {defaultLanguageId, editingLanguageId, pages} = state;

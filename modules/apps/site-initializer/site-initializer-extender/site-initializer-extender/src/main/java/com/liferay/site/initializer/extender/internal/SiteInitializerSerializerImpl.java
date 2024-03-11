@@ -33,6 +33,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.util.List;
 
@@ -70,10 +71,10 @@ public class SiteInitializerSerializerImpl
 	}
 
 	private void _addZipEntry(
-			String fileName, byte[] content, ZipWriter zipWriter)
+			String fileName, InputStream inputStream, ZipWriter zipWriter)
 		throws Exception {
 
-		zipWriter.addEntry("site-initializer/" + fileName, content);
+		zipWriter.addEntry("site-initializer/" + fileName, inputStream);
 	}
 
 	private void _addZipEntry(
@@ -201,12 +202,9 @@ public class SiteInitializerSerializerImpl
 			FileEntry fileEntry, String parentFolderName, ZipWriter zipWriter)
 		throws Exception {
 
-		byte[] fileContentBytesArray = _file.getBytes(
-			fileEntry.getContentStream());
-
 		_addZipEntry(
 			_normalize(parentFolderName + "/" + fileEntry.getFileName()),
-			fileContentBytesArray, zipWriter);
+			fileEntry.getContentStream(), zipWriter);
 	}
 
 	private void _serializeStyleBookEntries(long groupId, ZipWriter zipWriter)
@@ -231,9 +229,6 @@ public class SiteInitializerSerializerImpl
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private com.liferay.portal.kernel.util.File _file;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -129,6 +129,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			).build();
 		}
 		finally {
+
+			// TODO LPD-19870
+
 			//file.delete();
 		}
 	}

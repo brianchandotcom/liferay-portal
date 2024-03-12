@@ -52,6 +52,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -92,10 +93,10 @@ public class ObjectDefinitionResourceTest
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		if (_objectDefinition != null) {
+		for (ObjectDefinition objectDefinition : _objectDefinitions) {
 			try {
 				_objectDefinitionLocalService.deleteObjectDefinition(
-					_objectDefinition.getId());
+					objectDefinition.getId());
 			}
 			catch (NoSuchObjectDefinitionException
 						noSuchObjectDefinitionException) {
@@ -834,10 +835,12 @@ public class ObjectDefinitionResourceTest
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		_objectDefinition = objectDefinitionResource.postObjectDefinition(
+		objectDefinition = objectDefinitionResource.postObjectDefinition(
 			objectDefinition);
 
-		return _objectDefinition;
+		_objectDefinitions.add(objectDefinition);
+
+		return objectDefinition;
 	}
 
 	private void _assertGetObjectDefinitionsPageWithFilter(
@@ -1027,10 +1030,10 @@ public class ObjectDefinitionResourceTest
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
-	private ObjectDefinition _objectDefinition;
-
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private final List<ObjectDefinition> _objectDefinitions = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private ObjectFolder _objectFolder1;

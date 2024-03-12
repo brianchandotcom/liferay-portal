@@ -43,14 +43,6 @@ const baseTest = mergeTests(
 	journalPagesTest
 );
 
-const translationTest = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-11253': true,
-		'LPS-114700': true,
-	})
-);
-
 const bulkTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
@@ -58,7 +50,20 @@ const bulkTest = mergeTests(
 	})
 );
 
+const scheduleTest = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-15596': true,
+	})
+);
 
+const translationTest = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-11253': true,
+		'LPS-114700': true,
+	})
+);
 
 translationTest(
 	'LPD-17245: Add error message in Translation for concurrent users',
@@ -289,5 +294,54 @@ translationTest(
 				name: nonLocalizableFieldName,
 			})
 		).toBeDisabled();
+	}
+);
+
+scheduleTest(
+	'Create a web content selecting permissions in the modal',
+	async ({journalEditArticlePage, journalPage, page}) => {
+		await journalPage.goto();
+
+		await journalEditArticlePage.goToCreateNewBasicArticle();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Publish With Permissions',
+			}),
+			trigger: page.getByRole('button', {
+				name: 'Select and Confirm Publish Settings',
+			}),
+		});
+
+		await expect(
+			page.getByText(
+				'Please enter a valid title for the default language'
+			)
+		).toBeVisible({timeout: 1000});
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.titlePlaceholder.fill(title);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Publish With Permissions',
+			}),
+			trigger: page.getByRole('button', {
+				name: 'Select and Confirm Publish Settings',
+			}),
+		});
+
+		await page.getByLabel('Viewable by').selectOption('Site Members');
+
+		await page.getByRole('button', {exact: true, name: 'Publish'}).click();
+
+		await page.getByText(title, {exact: true}).waitFor();
+
+		await journalPage.assertJournalArticlePermissions(title, [
+			{enabled: false, locator: '#guest_ACTION_VIEW'},
+		]);
 	}
 );

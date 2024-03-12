@@ -69,7 +69,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "commons-codec", name: "commons-codec", version: "1.15"
-	compileOnly group: "commons-io", name: "commons-io", version: "2.11.0"
+	compileOnly group: "commons-io", name: "commons-io", version: "2.15.1"
 	compileOnly group: "joda-time", name: "joda-time", version: "2.12.1"
 	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.26.0"
 	compileOnly group: "org.apache.httpcomponents", name: "httpasyncclient", version: "4.1.4"

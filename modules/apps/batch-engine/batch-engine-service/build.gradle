@@ -10,7 +10,7 @@ dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.16.1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.zaxxer", name: "SparseBitSet", version: "1.2"
-	compileOnly group: "commons-io", name: "commons-io", version: "2.11.0"
+	compileOnly group: "commons-io", name: "commons-io", version: "2.15.1"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.26.0"
 	compileOnly group: "org.apache.commons", name: "commons-csv", version: "1.9.0"

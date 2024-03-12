@@ -3,7 +3,7 @@ dependencies {
 	compileInclude group: "commons-codec", name: "commons-codec", version: "1.15"
 	compileInclude group: "commons-digester", name: "commons-digester", version: "2.1"
 	compileInclude group: "commons-fileupload", name: "commons-fileupload", version: "1.5"
-	compileInclude group: "commons-io", name: "commons-io", version: "2.11.0"
+	compileInclude group: "commons-io", name: "commons-io", version: "2.15.1"
 	compileInclude group: "commons-validator", name: "commons-validator", version: "1.7"
 	compileInclude group: "org.apache.commons", name: "commons-collections4", version: "4.4"
 	compileInclude group: "org.apache.commons", name: "commons-compress", version: "1.26.0"

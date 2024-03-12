@@ -23,7 +23,7 @@ dependencies {
 	alloyTaglib group: "commons-beanutils", name: "commons-beanutils", version: "1.9.4"
 	alloyTaglib group: "commons-configuration", name: "commons-configuration", version: "1.10"
 	alloyTaglib group: "commons-digester", name: "commons-digester", version: "2.1"
-	alloyTaglib group: "commons-io", name: "commons-io", version: "2.11.0"
+	alloyTaglib group: "commons-io", name: "commons-io", version: "2.15.1"
 	alloyTaglib group: "commons-lang", name: "commons-lang", version: "2.6"
 	alloyTaglib group: "easyconf", name: "easyconf", transitive: false, version: "0.9.5"
 	alloyTaglib group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"

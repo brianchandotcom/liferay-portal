@@ -19,6 +19,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -145,7 +146,9 @@ public abstract class BaseObjectEntryManager {
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry,
-			boolean addNamePropertyForTitleObjectFieldId)
+			UnsafeTriConsumer
+				<Map<String, Object>, Object, ObjectField, Exception>
+					triConsumer)
 		throws Exception {
 
 		Map<String, Object> map = new HashMap<>();
@@ -207,13 +210,7 @@ public abstract class BaseObjectEntryManager {
 				objectField.getExternalReferenceCode(),
 				Objects.equals(value, StringPool.BLANK) ? null : value);
 
-			if (addNamePropertyForTitleObjectFieldId &&
-				Objects.equals(
-					objectField.getObjectFieldId(),
-					objectDefinition.getTitleObjectFieldId())) {
-
-				map.put("Name", value);
-			}
+			triConsumer.accept(map, value, objectField);
 		}
 
 		return jsonFactory.createJSONObject(jsonFactory.looseSerialize(map));

@@ -28,6 +28,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration;
 import com.liferay.object.storage.salesforce.internal.web.cache.SalesforceAccessTokenWebCacheItem;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -106,9 +107,7 @@ public class SalesforceObjectEntryManagerImpl
 			"sobjects/" + objectDefinition.getExternalReferenceCode(),
 			toJSONObject(
 				dtoConverterContext, objectDefinition, objectEntry,
-				StringUtil.endsWith(
-					objectDefinition.getExternalReferenceCode(),
-					_CUSTOM_OBJECT_SUFFIX)));
+				_getTriConsumer(objectDefinition)));
 
 		return getObjectEntry(
 			objectDefinition.getCompanyId(), dtoConverterContext,
@@ -204,9 +203,7 @@ public class SalesforceObjectEntryManagerImpl
 				externalReferenceCode),
 			toJSONObject(
 				dtoConverterContext, objectDefinition, objectEntry,
-				StringUtil.endsWith(
-					objectDefinition.getExternalReferenceCode(),
-					_CUSTOM_OBJECT_SUFFIX)));
+				_getTriConsumer(objectDefinition)));
 
 		return getObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
@@ -482,6 +479,23 @@ public class SalesforceObjectEntryManagerImpl
 		).getInt(
 			"expr0"
 		);
+	}
+
+	private UnsafeTriConsumer
+		<Map<String, Object>, Object, ObjectField, Exception> _getTriConsumer(
+			ObjectDefinition objectDefinition) {
+
+		return (map, value, objectField) -> {
+			if (StringUtil.endsWith(
+					objectDefinition.getExternalReferenceCode(),
+					_CUSTOM_OBJECT_SUFFIX) &&
+				Objects.equals(
+					objectField.getObjectFieldId(),
+					objectDefinition.getTitleObjectFieldId())) {
+
+				map.put("Name", value);
+			}
+		};
 	}
 
 	private List<ObjectEntry> _toObjectEntries(

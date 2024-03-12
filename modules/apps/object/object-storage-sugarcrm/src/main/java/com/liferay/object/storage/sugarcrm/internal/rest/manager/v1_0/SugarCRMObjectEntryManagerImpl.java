@@ -22,6 +22,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.storage.sugarcrm.configuration.SugarCRMConfiguration;
 import com.liferay.object.storage.sugarcrm.internal.web.cache.SugarCRMAccessTokenWebCacheItem;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -93,7 +94,8 @@ public class SugarCRMObjectEntryManagerImpl
 			getGroupId(objectDefinition, scopeKey),
 			_getObjectLocation(objectDefinition),
 			toJSONObject(
-				dtoConverterContext, objectDefinition, objectEntry, true));
+				dtoConverterContext, objectDefinition, objectEntry,
+				_getTriConsumer(objectDefinition)));
 
 		return _toObjectEntry(
 			objectDefinition.getCompanyId(), _getDateFormat(),
@@ -193,7 +195,8 @@ public class SugarCRMObjectEntryManagerImpl
 				_getObjectLocation(objectDefinition), StringPool.FORWARD_SLASH,
 				externalReferenceCode),
 			toJSONObject(
-				dtoConverterContext, objectDefinition, objectEntry, true));
+				dtoConverterContext, objectDefinition, objectEntry,
+				_getTriConsumer(objectDefinition)));
 
 		return _toObjectEntry(
 			objectDefinition.getCompanyId(), _getDateFormat(),
@@ -371,6 +374,20 @@ public class SugarCRMObjectEntryManagerImpl
 			null);
 
 		return responseJSONObject.getInt("record_count", 0);
+	}
+
+	private UnsafeTriConsumer
+		<Map<String, Object>, Object, ObjectField, Exception> _getTriConsumer(
+			ObjectDefinition objectDefinition) {
+
+		return (map, value, objectField) -> {
+			if (Objects.equals(
+					objectField.getObjectFieldId(),
+					objectDefinition.getTitleObjectFieldId())) {
+
+				map.put("Name", value);
+			}
+		};
 	}
 
 	private List<ObjectEntry> _toObjectEntries(

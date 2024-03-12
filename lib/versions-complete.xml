@@ -29,18 +29,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.batch.engine.service.jar!commons-io.jar</file-name>
-				<version>2.11.0</version>
-				<project-name>Apache Commons IO</project-name>
-				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.calendar.api.jar!com.google.ical.jar</file-name>
 				<version>20110304</version>
 				<project-name>com.google.ical</project-name>
@@ -533,40 +521,6 @@
 					<license>
 						<license-name>Mozilla Public License Version 2.0</license-name>
 						<license-url>http://www.mozilla.org/MPL/2.0/</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.commerce.shipping.engine.fedex.jar!com.fedex.ws.jar</file-name>
-				<version>1.0.0</version>
-				<project-name>com.fedex.ws</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.commerce.shipping.engine.fedex.jar!commons-discovery.jar</file-name>
-				<version>0.4</version>
-				<project-name>org.apache.commons.discovery</project-name>
-				<project-url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>/LICENSE.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.commerce.shipping.engine.fedex.jar!org.apache.axis.jar</file-name>
-				<version>1.4.LIFERAY-PATCHED-8</version>
-				<project-name>org.apache.axis</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -1160,18 +1114,6 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!commons-io.jar</file-name>
-				<version>2.11.0</version>
-				<project-name>Apache Commons IO</project-name>
-				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2652,30 +2594,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-compress.jar</file-name>
-				<version>1.21</version>
-				<project-name>Apache Commons Compress</project-name>
-				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-io.jar</file-name>
-				<version>2.11.0</version>
-				<project-name>Apache Commons IO</project-name>
-				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-lang.jar</file-name>
 				<version>2.6</version>
 				<project-name>Commons Lang</project-name>
@@ -3041,7 +2959,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!antisamy.jar</file-name>
-				<version>1.7.4</version>
+				<version>1.7.5</version>
 				<project-name>OWASP AntiSamy</project-name>
 				<project-url>https://github.com/nahsra/antisamy</project-url>
 				<licenses>
@@ -3130,7 +3048,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!neko-htmlunit.jar</file-name>
-				<version>3.6.0</version>
+				<version>3.11.1</version>
 				<project-name>HtmlUnit NekoHtml</project-name>
 				<project-url>https://www.htmlunit.org</project-url>
 				<licenses>
@@ -4599,12 +4517,12 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-compress.jar</file-name>
-				<version>1.21</version>
+				<version>1.26.0</version>
 				<project-name>Apache Commons Compress</project-name>
 				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -4630,6 +4548,30 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-fileupload.jar</file-name>
+				<version>1.5</version>
+				<project-name>Apache Commons FileUpload</project-name>
+				<project-url>https://commons.apache.org/proper/commons-fileupload/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-io.jar</file-name>
+				<version>2.15.1</version>
+				<project-name>Apache Commons IO</project-name>
+				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -6747,6 +6689,18 @@
 					<license>
 						<license-name>Common Development and Distribution License 1.0</license-name>
 						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/snakeyaml.jar</file-name>
+				<version>2.0</version>
+				<project-name>SnakeYAML</project-name>
+				<project-url>https://bitbucket.org/snakeyaml/snakeyaml</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

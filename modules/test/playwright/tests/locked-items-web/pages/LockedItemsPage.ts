@@ -5,14 +5,13 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ProductMenuPage} from '../../../pages/product-navigation-product-menu/ProductMenuPage';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class LockedItemsPage {
 	readonly page: Page;
 	readonly lockedPagesMenuItem: Locator;
 	readonly lockedPagesTitle: Locator;
 	readonly pageTitle: Locator;
-	readonly productMenuPage: ProductMenuPage;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -23,11 +22,12 @@ export class LockedItemsPage {
 			.locator('p.sheet-title')
 			.filter({hasText: /^Pages$/});
 		this.pageTitle = page.getByRole('heading', {name: 'Locked Items'});
-		this.productMenuPage = new ProductMenuPage(page);
 	}
 
-	async goto() {
-		await this.productMenuPage.goToLockedItemsMenuItem();
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.lockedItems}`
+		);
 	}
 
 	async goToLockedPages() {

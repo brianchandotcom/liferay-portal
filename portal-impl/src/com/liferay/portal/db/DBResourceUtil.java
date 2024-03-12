@@ -33,21 +33,29 @@ public class DBResourceUtil {
 		return _getSQLTemplateString(bundle, "tables.sql");
 	}
 
-	public static String getPortalIndexesSQL() throws IOException {
-		return _getPortalResource(
-			"/com/liferay/portal/tools/sql/dependencies/indexes.sql");
+	public static String getPortalIndexesSQL() {
+		try {
+			return StringUtil.read(
+				DBResourceUtil.class,
+				"/com/liferay/portal/tools/sql/dependencies/indexes.sql");
+		}
+		catch (Exception exception) {
+			_log.error("Unable to read portal indexes SQL", exception);
+
+			return null;
+		}
 	}
 
-	public static String getPortalTablesSQL() throws IOException {
-		return _getPortalResource(
-			"/com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
-	}
+	public static String getPortalTablesSQL() {
+		try {
+			return StringUtil.read(
+				DBResourceUtil.class,
+				"/com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
+		}
+		catch (Exception exception) {
+			_log.error("Unable to read portal tables SQL", exception);
 
-	private static String _getPortalResource(String name) throws IOException {
-		try (InputStream inputStream = DBResourceUtil.class.getResourceAsStream(
-				name)) {
-
-			return StringUtil.read(inputStream);
+			return null;
 		}
 	}
 

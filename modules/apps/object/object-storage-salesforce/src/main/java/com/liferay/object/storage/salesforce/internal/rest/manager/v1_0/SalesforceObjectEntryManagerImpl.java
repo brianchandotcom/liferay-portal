@@ -150,7 +150,8 @@ public class SalesforceObjectEntryManagerImpl
 		}
 
 		return toObjectEntry(
-			companyId, _getDateFormat(), dtoConverterContext,
+			companyId, _getDateFormat(), _defaultObjectFieldNames,
+			dtoConverterContext,
 			_salesforceHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				StringBundler.concat(
@@ -450,8 +451,8 @@ public class SalesforceObjectEntryManagerImpl
 		return JSONUtil.toList(
 			jsonArray,
 			jsonObject -> toObjectEntry(
-				companyId, dateFormat, dtoConverterContext, jsonObject,
-				objectDefinition));
+				companyId, dateFormat, _defaultObjectFieldNames,
+				dtoConverterContext, jsonObject, objectDefinition));
 	}
 
 	private static final String _CUSTOM_OBJECT_SUFFIX = "__c";

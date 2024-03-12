@@ -65,9 +65,9 @@ export default function ResourceSelector({
 						showWarning: false,
 					});
 
-					const repositoryIdElement = document.querySelector<
-						HTMLInputElement
-					>(`${portletNamespace}selectedRepositoryId`);
+					const repositoryIdElement = document.getElementById(
+						`${portletNamespace}selectedRepositoryId`
+					) as HTMLInputElement;
 
 					if (repositoryIdElement) {
 						repositoryIdElement.value = selectedItem.repositoryid;

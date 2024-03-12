@@ -58,7 +58,9 @@ public class GenerateTestrayCSVUtil {
 		try {
 			String testrayResultsCSVString = sb.toString();
 
-			System.out.println("LRCI-3940 restrayResultsCSVString: " + testrayResultsCSVString);
+			System.out.println(
+				"LRCI-3940 restrayResultsCSVString: " +
+					testrayResultsCSVString);
 
 			JenkinsResultsParserUtil.write(
 				new File(projectBuildDir, "testray-results.csv"),
@@ -73,7 +75,8 @@ public class GenerateTestrayCSVUtil {
 		List<TestrayCaseResult> allTestrayCaseResults,
 		TestrayCaseResult.Type testrayCaseResultType) {
 
-		System.out.println("LRCI-3940 inside of _generate function of GenerateTEstrayCSVUtil");
+		System.out.println(
+			"LRCI-3940 inside of _generate function of GenerateTEstrayCSVUtil");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -102,8 +105,9 @@ public class GenerateTestrayCSVUtil {
 		String projectTestrayBuildId) {
 
 		System.out.println("LRCI-3940 inside of _getTestrayCaseResults");
-		System.out.println("LRCI-3940 projectTestrayBuildId: " + projectTestrayBuildId); 
-				
+		System.out.println(
+			"LRCI-3940 projectTestrayBuildId: " + projectTestrayBuildId);
+
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
 		int currentPage = 1;
@@ -115,7 +119,8 @@ public class GenerateTestrayCSVUtil {
 				"/case_results.json?cur=", String.valueOf(currentPage),
 				"&testrayBuildId=", projectTestrayBuildId, "&statuses=3");
 
-			System.out.println("LRCI-3940 testrayCaseResultsURL: " + testrayCaseResultsURL);
+			System.out.println(
+				"LRCI-3940 testrayCaseResultsURL: " + testrayCaseResultsURL);
 
 			JSONObject jsonObject = null;
 

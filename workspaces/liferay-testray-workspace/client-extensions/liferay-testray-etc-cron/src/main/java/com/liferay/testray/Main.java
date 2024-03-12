@@ -38,16 +38,15 @@ public class Main {
 
 	public static void main(String[] arguments) throws Exception {
 		Main main = new Main(
-			GetterUtil.get(
-				System.getenv("LIFERAY_TESTRAY_ETC_CRON_AUTO_ARCHIVE_POLICY"),
-				60),
-			GetterUtil.get(
-				System.getenv("LIFERAY_TESTRAY_ETC_CRON_AUTO_DELETE_POLICY"),
-				30),
 			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID"),
 			System.getenv(
 				"LIFERAY_TESTRAY_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
-			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_URL"));
+			System.getenv("LIFERAY_TESTRAY_ETC_CRON_LIFERAY_URL"),
+			GetterUtil.get(
+				System.getenv("LIFERAY_TESTRAY_ETC_CRON_MAX_DAYS_ARCHIVED"),
+				30),
+			GetterUtil.get(
+				System.getenv("LIFERAY_TESTRAY_ETC_CRON_MAX_DAYS_OPENED"), 60));
 
 		String oAuthAuthorization = main.getOAuthAuthorization();
 
@@ -56,23 +55,18 @@ public class Main {
 	}
 
 	public Main(
-		long autoArchivePolicy, long autoDeletePolicy,
 		String liferayOAuthClientId, String liferayOAuthClientSecret,
-		String liferayURL) {
+		String liferayURL, long maxDaysArchived, long maxDaysOpened) {
 
-		_autoArchivePolicy = autoArchivePolicy;
-		_autoDeletePolicy = autoDeletePolicy;
 		_liferayOAuthClientId = liferayOAuthClientId;
 		_liferayOAuthClientSecret = liferayOAuthClientSecret;
 		_liferayURL = liferayURL;
+		_maxDaysArchived = maxDaysArchived;
+		_maxDaysOpened = maxDaysOpened;
 	}
 
 	public void autoArchiveTestrayBuilds(String oAuthAuthorization)
 		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Starting Testray auto archive policy");
-		}
 
 		HttpResponse<String> httpResponse = _sendRequest(
 			oAuthAuthorization, null, "application/json", "GET",
@@ -81,7 +75,7 @@ public class Main {
 			).addParameter(
 				"filter",
 				"archived eq false and promoted eq false and dateCreated lt " +
-					_currentDateTime.minusDays(_autoArchivePolicy)
+					_currentDateTime.minusDays(_maxDaysOpened)
 			).addParameter(
 				"pageSize", "-1"
 			).build());
@@ -96,7 +90,7 @@ public class Main {
 			testrayBuildsJSONArray.isEmpty()) {
 
 			if (_log.isInfoEnabled()) {
-				_log.info("No Testray Builds found to archive");
+				_log.info("No Testray builds found to archive");
 			}
 
 			return;
@@ -116,7 +110,7 @@ public class Main {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Archiving " + jsonArray.length() + " Testray Builds");
+			_log.info("Archiving " + jsonArray.length() + " Testray builds");
 		}
 
 		_sendRequest(
@@ -127,10 +121,6 @@ public class Main {
 	public void deleteTestrayArchivedBuilds(String oAuthAuthorization)
 		throws Exception {
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Starting Testray auto delete policy");
-		}
-
 		HttpResponse<String> httpResponse = _sendRequest(
 			oAuthAuthorization, null, "application/json", "GET",
 			new URIBuilder(
@@ -140,7 +130,7 @@ public class Main {
 			).addParameter(
 				"filter",
 				"archived eq true and dateArchived lt " +
-					_currentDateTime.minusDays(_autoDeletePolicy)
+					_currentDateTime.minusDays(_maxDaysArchived)
 			).addParameter(
 				"pageSize", "-1"
 			).build());
@@ -153,14 +143,14 @@ public class Main {
 
 		if ((jsonArray == null) || jsonArray.isEmpty()) {
 			if (_log.isInfoEnabled()) {
-				_log.info("No Testray Builds found to delete");
+				_log.info("No Testray builds found to delete");
 			}
 
 			return;
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Deleting " + jsonArray.length() + " Testray Builds");
+			_log.info("Deleting " + jsonArray.length() + " Testray builds");
 		}
 
 		_sendRequest(
@@ -237,7 +227,7 @@ public class Main {
 			httpRequest.build(), HttpResponse.BodyHandlers.ofString());
 
 		if (_log.isInfoEnabled()) {
-			_log.info(httpResponse.toString());
+			_log.info(httpResponse);
 		}
 
 		return httpResponse;
@@ -245,8 +235,6 @@ public class Main {
 
 	private static final Log _log = LogFactory.getLog(Main.class);
 
-	private final long _autoArchivePolicy;
-	private final long _autoDeletePolicy;
 	private final OffsetDateTime _currentDateTime = OffsetDateTime.now(
 		ZoneOffset.UTC
 	).truncatedTo(
@@ -255,5 +243,7 @@ public class Main {
 	private final String _liferayOAuthClientId;
 	private final String _liferayOAuthClientSecret;
 	private final String _liferayURL;
+	private final long _maxDaysArchived;
+	private final long _maxDaysOpened;
 
 }

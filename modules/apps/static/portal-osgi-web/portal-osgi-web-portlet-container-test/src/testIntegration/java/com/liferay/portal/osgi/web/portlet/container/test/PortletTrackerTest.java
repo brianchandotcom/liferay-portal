@@ -244,11 +244,12 @@ public class PortletTrackerTest extends BasePortletContainerTestCase {
 
 			serviceRegistrations.clear();
 
-			_companyLocalService.deleteCompany(company2);
-
 			_companyLocalService.deleteCompany(company1);
 
 			PortalInstances.removeCompany(company1.getCompanyId());
+
+			_companyLocalService.deleteCompany(company2);
+
 			PortalInstances.removeCompany(company2.getCompanyId());
 		}
 	}

@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.LayoutType;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.PortalPreferenceValueTable;
 import com.liferay.portal.kernel.model.PortalPreferences;
@@ -114,6 +116,7 @@ import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.sites.kernel.util.Sites;
@@ -1160,6 +1163,39 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return layouts;
+	}
+
+	@Override
+	public Layout getBrowsableLayout(Layout layout) {
+		List<String> types = TransformUtil.transformToList(
+			LayoutTypeControllerTracker.getTypes(),
+			type -> {
+				LayoutTypeController layoutTypeController =
+					LayoutTypeControllerTracker.getLayoutTypeController(type);
+
+				if ((layoutTypeController == null) ||
+					!layoutTypeController.isBrowsable()) {
+
+					return null;
+				}
+
+				return type;
+			});
+
+		if (types.contains(layout.getType())) {
+			return layout;
+		}
+
+		ChildLayout browsableChildLayout = _getBrowsableChildLayout(
+			types, layout.getGroupId(), layout.getLayoutId(),
+			layout.isPrivateLayout());
+
+		if (browsableChildLayout == null) {
+			return fetchDefaultLayout(
+				layout.getGroupId(), layout.isPrivateLayout());
+		}
+
+		return fetchLayout(browsableChildLayout.getPlid());
 	}
 
 	/**
@@ -3826,6 +3862,29 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return StringPool.SLASH + uuid.toString();
 	}
 
+	private ChildLayout _getBrowsableChildLayout(
+		List<String> browsableTypes, long groupId, long parentLayoutId,
+		boolean privateLayout) {
+
+		for (ChildLayout childLayout :
+				_getChildLayouts(groupId, parentLayoutId, privateLayout)) {
+
+			if (browsableTypes.contains(childLayout.getType())) {
+				return childLayout;
+			}
+
+			ChildLayout browsableChildLayout = _getBrowsableChildLayout(
+				browsableTypes, groupId, childLayout.getLayoutId(),
+				privateLayout);
+
+			if (browsableChildLayout != null) {
+				return browsableChildLayout;
+			}
+		}
+
+		return null;
+	}
+
 	private List<Layout> _getChildLayouts(
 		LayoutSet layoutSet, long[] parentLayoutIds) {
 
@@ -3859,6 +3918,37 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);
 		}
+	}
+
+	private List<ChildLayout> _getChildLayouts(
+		long groupId, long parentLayoutId, boolean privateLayout) {
+
+		List<Object[]> results = dslQuery(
+			DSLQueryFactoryUtil.select(
+				LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.layoutId,
+				LayoutTable.INSTANCE.type
+			).from(
+				LayoutTable.INSTANCE
+			).where(
+				LayoutTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					LayoutTable.INSTANCE.privateLayout.eq(privateLayout)
+				).and(
+					LayoutTable.INSTANCE.system.eq(false)
+				).and(
+					LayoutTable.INSTANCE.parentLayoutId.eq(parentLayoutId)
+				)
+			).orderBy(
+				orderByStep -> orderByStep.orderBy(
+					LayoutTable.INSTANCE, new LayoutPriorityComparator())
+			));
+
+		return TransformUtil.transform(
+			results,
+			columns -> new ChildLayout(
+				GetterUtil.getLong(columns[1]), GetterUtil.getLong(columns[0]),
+				GetterUtil.getString(columns[2])));
 	}
 
 	private Map<Locale, String> _getDraftFriendlyURLMap(
@@ -4275,5 +4365,31 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@BeanReference(type = WorkflowInstanceLinkLocalService.class)
 	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
+
+	private class ChildLayout {
+
+		public ChildLayout(long layoutId, long plid, String type) {
+			_layoutId = layoutId;
+			_plid = plid;
+			_type = type;
+		}
+
+		public long getLayoutId() {
+			return _layoutId;
+		}
+
+		public long getPlid() {
+			return _plid;
+		}
+
+		public String getType() {
+			return _type;
+		}
+
+		private final long _layoutId;
+		private final long _plid;
+		private final String _type;
+
+	}
 
 }

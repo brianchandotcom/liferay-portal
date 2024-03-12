@@ -11,7 +11,7 @@ import * as path from 'path';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {loginTest} from '../../fixtures/loginTest';
-import {exportImportPagesTest} from './fixtures/exportImportPages.fixtures';
+import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

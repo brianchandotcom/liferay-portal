@@ -7,49 +7,66 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from '../layout-content-page-editor-web/fixtures/pageEditorPagesTest';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-164563': true,
+		'LPS-178052': true,
 	}),
+	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest
 );
 
-test('Add the frontend data set sample widget', async ({apiHelpers, page}) => {
-	let site: Site;
+test('Add the frontend data set sample widget', async ({
+	apiHelpers,
+	page,
+	site,
+}) => {
+	let layout: Layout;
 
 	await test.step('Create a content site and the frontend data set sample widget', async () => {
-		site = await apiHelpers.headlessSite.createSite('Test Site');
+		await page.goto('/');
 
-		await apiHelpers.headlessDelivery.createSitePage(
+		const widgetDefinition = getWidgetDefinition({
+			id: getRandomString(),
+			widgetName:
+				'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet',
+		});
+
+		layout = await apiHelpers.headlessDelivery.createSitePage(
 			site.id,
 			getRandomString(),
-			{
-				pageElement: {
-					definition: {
-						widgetInstance: {
-							widgetName:
-								'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet',
-						},
-					},
-					id: getRandomString(),
-					type: 'Widget',
-				},
-			}
+			getPageDefinition([widgetDefinition])
 		);
 	});
 
 	await test.step('Assert that the filter client extension is added', async () => {
-		await page.getByRole('tablist').getByText('Customized').click();
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		const tabHeading = await page
+			.getByRole('tablist')
+			.getByText('Customized');
+
+		await expect(tabHeading).toBeInViewport();
+
+		await tabHeading.click();
 
 		const filterButton = await page
 			.locator('.filters-dropdown')
 			.getByText('Filter');
+
+		await expect(filterButton).toBeInViewport();
 
 		filterButton.click();
 
@@ -59,6 +76,6 @@ test('Add the frontend data set sample widget', async ({apiHelpers, page}) => {
 
 		await expect(
 			filterDropdown.getByText('Client Extension')
-		).toBeVisible();
+		).toBeInViewport();
 	});
 });

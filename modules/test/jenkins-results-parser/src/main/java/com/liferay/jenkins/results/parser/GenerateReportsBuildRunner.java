@@ -10,6 +10,8 @@ import com.liferay.jenkins.results.parser.metrics.BuildHistoryReport;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.io.FileUtils;
 
@@ -67,7 +70,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 	public enum Report {
 
-		BUILD_HISTORY("Build History"),
+		BUILD_HISTORY("Build History"), CI_SYSTEM_HISTORY("CI System History"),
+		CI_SYSTEM_STATUS("CI System Status"),
 		PULL_REQUEST_HISTORY("Pull Request History");
 
 		public String getDirName() {
@@ -134,6 +138,76 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		aggregateBuildHistoryReport.write();
 	}
 
+	private void _generateCISystemHistoryReport(String filePath)
+		throws IOException {
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			CISystemHistoryReportUtil.generateCISystemHistoryReport(
+				filePath,
+				buildProperties.getProperty(
+					"ci.system.history.report.job.name"),
+				buildProperties.getProperty(
+					"ci.system.history.report.test.suite.name"));
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+
+			throw exception;
+		}
+	}
+
+	private void _generateCISystemStatusReport(String filePath)
+		throws IOException {
+
+		CISystemStatusReportUtil.copyBaseReportFiles(filePath);
+
+		Files.deleteIfExists(Paths.get(filePath, "js/testray-data.js"));
+
+		CISystemStatusReportUtil.writeJenkinsDataJavaScriptFile(
+			filePath + "/js/jenkins-data.js");
+
+		String testrayDataFilepath = null;
+
+		try {
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				1000 * 30,
+				JenkinsResultsParserUtil.combine(
+					"ssh test-1-0 'find ", _REPORT_RSYNC_DESTINATION_DIR_PATH,
+					_getReportDirName(Report.CI_SYSTEM_STATUS.toString()),
+					"/js -name testray-data.js -mmin +60'"));
+
+			testrayDataFilepath = JenkinsResultsParserUtil.readInputStream(
+				process.getInputStream());
+		}
+		catch (IOException | TimeoutException exception) {
+			System.out.println("Unable to get age of testray-data.js");
+		}
+
+		if ((testrayDataFilepath == null) ||
+			!testrayDataFilepath.contains("testray-data.js")) {
+
+			return;
+		}
+
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		CISystemStatusReportUtil.writeTestrayDataJavaScriptFile(
+			filePath + "/js/testray-data.js",
+			buildProperties.getProperty("ci.system.status.report.job.name"),
+			buildProperties.getProperty(
+				"ci.system.status.report.test.suite.name"));
+	}
+
 	private void _generatePullRequestReport(String filePath)
 		throws IOException {
 
@@ -160,6 +234,14 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			try {
 				if (reportName.equals(Report.BUILD_HISTORY.toString())) {
 					_generateBuildHistoryReport(reportFilePath);
+				}
+
+				if (reportName.equals(Report.CI_SYSTEM_HISTORY.toString())) {
+					_generateCISystemHistoryReport(reportFilePath);
+				}
+
+				if (reportName.equals(Report.CI_SYSTEM_STATUS.toString())) {
+					_generateCISystemStatusReport(reportFilePath);
 				}
 
 				if (reportName.equals(Report.PULL_REQUEST_HISTORY.toString())) {
@@ -258,13 +340,16 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		new HashMap<String, String>() {
 			{
 				put(Report.BUILD_HISTORY.toString(), "build-history-report");
+				put(Report.CI_SYSTEM_HISTORY.toString(), "ci-system-history");
+				put(Report.CI_SYSTEM_STATUS.toString(), "ci-system-status");
 				put(
 					Report.PULL_REQUEST_HISTORY.toString(),
 					"pull-request-report");
 			}
 		};
 	private static final List<String> _validReportNames = Arrays.asList(
-		Report.BUILD_HISTORY.toString(),
+		Report.BUILD_HISTORY.toString(), Report.CI_SYSTEM_HISTORY.toString(),
+		Report.CI_SYSTEM_STATUS.toString(),
 		Report.PULL_REQUEST_HISTORY.toString());
 
 	static {

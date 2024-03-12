@@ -81,18 +81,25 @@ export class JournalPage {
 
 	async assertJournalArticlePermissions(
 		title: string,
-		permissionLocators: string[]
+		permissions: {enabled: boolean; locator: string}[]
 	) {
 		await this.goToJournalArticleAction('Permissions', title);
 
 		await this.permissionsFrameLocator
-			.locator(permissionLocators[0])
+			.locator(permissions[0].locator)
 			.waitFor();
 
-		for (const permissionsLocator of permissionLocators) {
-			await expect(
-				this.permissionsFrameLocator.locator(permissionsLocator)
-			).toBeChecked();
+		for (const permission of permissions) {
+			const permissionCheckbox = this.permissionsFrameLocator.locator(
+				permission.locator
+			);
+
+			if (permission.enabled) {
+				await expect(permissionCheckbox).toBeChecked();
+			}
+			else {
+				await expect(permissionCheckbox).not.toBeChecked();
+			}
 		}
 
 		await this.permissionsFrameLocator
@@ -122,21 +129,21 @@ export class JournalPage {
 
 		await this.permissionsFrameLocator
 			.locator(permissionLocators[0])
-			.waitFor();
+			.check({trial: true});
 
 		for (const permissionsLocator of permissionLocators) {
 			await this.permissionsFrameLocator
 				.locator(permissionsLocator)
-				.check();
+				.check({timeout: 2000});
 		}
 
 		await this.permissionsFrameLocator
 			.getByRole('button', {name: 'Save'})
 			.click();
 
-		for (const permissionsLocator of permissionLocators) {
-			await this.permissionsFrameLocator.locator(permissionsLocator);
-		}
+		await this.permissionsFrameLocator
+			.getByText('Success:Your request completed successfully.')
+			.waitFor();
 
 		await this.permissionsFrameLocator
 			.getByRole('button', {name: 'Cancel'})

@@ -22,9 +22,9 @@
 			"containsHeaders": "true",
 			"createStrategy": "INSERT",
 			"importStrategy": "ON_ERROR_FAIL",
-			"taskItemDelegateName": "C_Stock",
 			"updateStrategy": "UPDATE"
 		},
+		"taskItemDelegateName": "C_Stock",
 		"userId": 20123,
 		"version": "v1.0"
 	},

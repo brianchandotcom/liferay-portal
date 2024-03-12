@@ -62,6 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Luca Pellizzon
  * @author Alessio Antonio Rendina
+ * @author Crescenzo Rega
  */
 @Component(
 	property = "model.class.name=com.liferay.commerce.payment.model.CommercePaymentEntry",
@@ -81,9 +82,12 @@ public class CommercePaymentEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(userId);
+
 		CommercePaymentEntryRefundType commercePaymentEntryRefundType =
 			_commercePaymentEntryRefundTypeRegistry.
-				getCommercePaymentEntryRefundType(reasonKey);
+				getCommercePaymentEntryRefundType(
+					user.getCompanyId(), reasonKey);
 
 		_validate(
 			commercePaymentEntryRefundType, classNameId, classPK, amount,
@@ -93,8 +97,6 @@ public class CommercePaymentEntryLocalServiceImpl
 		CommercePaymentEntry commercePaymentEntry =
 			commercePaymentEntryPersistence.create(
 				counterLocalService.increment());
-
-		User user = _userLocalService.getUser(userId);
 
 		commercePaymentEntry.setCompanyId(user.getCompanyId());
 		commercePaymentEntry.setUserId(user.getUserId());
@@ -319,7 +321,8 @@ public class CommercePaymentEntryLocalServiceImpl
 
 		CommercePaymentEntryRefundType commercePaymentEntryRefundType =
 			_commercePaymentEntryRefundTypeRegistry.
-				getCommercePaymentEntryRefundType(reasonKey);
+				getCommercePaymentEntryRefundType(
+					commercePaymentEntry.getCompanyId(), reasonKey);
 
 		_validate(
 			commercePaymentEntryRefundType,
@@ -403,7 +406,8 @@ public class CommercePaymentEntryLocalServiceImpl
 
 		CommercePaymentEntryRefundType commercePaymentEntryRefundType =
 			_commercePaymentEntryRefundTypeRegistry.
-				getCommercePaymentEntryRefundType(reasonKey);
+				getCommercePaymentEntryRefundType(
+					commercePaymentEntry.getCompanyId(), reasonKey);
 
 		_validate(
 			commercePaymentEntryRefundType,

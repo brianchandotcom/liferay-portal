@@ -9,13 +9,14 @@ import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Crescenzo Rega
  */
 public interface CommercePaymentEntryRefundTypeRegistry {
 
 	public CommercePaymentEntryRefundType getCommercePaymentEntryRefundType(
-		String key);
+		long companyId, String key);
 
 	public List<CommercePaymentEntryRefundType>
-		getCommercePaymentEntryRefundTypes();
+		getCommercePaymentEntryRefundTypes(long companyId);
 
 }

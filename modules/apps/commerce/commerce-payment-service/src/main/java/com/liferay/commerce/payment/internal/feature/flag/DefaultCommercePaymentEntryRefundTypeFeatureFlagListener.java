@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.IOException;
 
@@ -83,7 +84,9 @@ public class DefaultCommercePaymentEntryRefundTypeFeatureFlagListener
 			).put(
 				"key", key
 			).put(
-				"name", name
+				"name",
+				StringBundler.concat(
+					"{", LocaleUtil.getDefault(), ":", name, "}")
 			).put(
 				"priority", "0"
 			).put(

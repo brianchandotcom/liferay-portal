@@ -8,9 +8,10 @@ package com.liferay.commerce.payment.internal.entry;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundType;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry;
 import com.liferay.commerce.payment.internal.entry.comparator.CommercePaymentEntryRefundTypeOrderComparator;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,12 +23,15 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Crescenzo Rega
  */
 @Component(service = CommercePaymentEntryRefundTypeRegistry.class)
 public class CommercePaymentEntryRefundTypeRegistryImpl
@@ -35,7 +39,7 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 
 	@Override
 	public CommercePaymentEntryRefundType getCommercePaymentEntryRefundType(
-		String key) {
+		long companyId, String key) {
 
 		if (Validator.isNull(key) ||
 			!FeatureFlagManagerUtil.isEnabled("COMMERCE-12754")) {
@@ -44,7 +48,7 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 		}
 
 		CommercePaymentEntryRefundType commercePaymentEntryRefundType =
-			_serviceTrackerMap.getService(key);
+			_serviceTrackerMap.getService(companyId + StringPool.POUND + key);
 
 		if (commercePaymentEntryRefundType == null) {
 			if (_log.isDebugEnabled()) {
@@ -59,26 +63,42 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 
 	@Override
 	public List<CommercePaymentEntryRefundType>
-		getCommercePaymentEntryRefundTypes() {
+		getCommercePaymentEntryRefundTypes(long companyId) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("COMMERCE-12754")) {
 			return Collections.emptyList();
 		}
 
 		List<CommercePaymentEntryRefundType> commercePaymentEntryRefundTypes =
-			new ArrayList<>(_serviceTrackerMap.values());
+			new ArrayList<>();
 
-		commercePaymentEntryRefundTypes.sort(
-			_commercePaymentEntryRefundTypeOrderComparator);
+		try {
+			for (String key : _serviceTrackerMap.keySet()) {
+				if (key.startsWith(companyId + StringPool.POUND)) {
+					commercePaymentEntryRefundTypes.add(
+						_serviceTrackerMap.getService(key));
+				}
+			}
+
+			commercePaymentEntryRefundTypes.sort(
+				_commercePaymentEntryRefundTypeOrderComparator);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
 
 		return Collections.unmodifiableList(commercePaymentEntryRefundTypes);
 	}
 
 	@Activate
+	@Modified
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, CommercePaymentEntryRefundType.class,
-			"(enabled=true)", new PropertyServiceReferenceMapper<>("key"));
+			"(enabled=true)",
+			new CommercePaymentEntryRefundTypeServiceReferenceMapper());
 	}
 
 	@Deactivate
@@ -92,7 +112,23 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 	private final Comparator<CommercePaymentEntryRefundType>
 		_commercePaymentEntryRefundTypeOrderComparator =
 			new CommercePaymentEntryRefundTypeOrderComparator();
-	private ServiceTrackerMap<String, CommercePaymentEntryRefundType>
+	private volatile ServiceTrackerMap<String, CommercePaymentEntryRefundType>
 		_serviceTrackerMap;
+
+	private static class CommercePaymentEntryRefundTypeServiceReferenceMapper
+		implements ServiceReferenceMapper
+			<String, CommercePaymentEntryRefundType> {
+
+		@Override
+		public void map(
+			ServiceReference<CommercePaymentEntryRefundType> serviceReference,
+			ServiceReferenceMapper.Emitter<String> emitter) {
+
+			emitter.emit(
+				serviceReference.getProperty("companyId") + StringPool.POUND +
+					serviceReference.getProperty("key"));
+		}
+
+	}
 
 }

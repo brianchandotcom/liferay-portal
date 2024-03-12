@@ -120,7 +120,7 @@ public class FrontendTokenDefinitionRegistryTest {
 
 		// Theme
 
-		_layoutSet.setThemeId("test-frontend-token-definition");
+		_layoutSet.setThemeId("testfrontendtokendefinition");
 
 		_assertFrontendTokenDefinition(
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(

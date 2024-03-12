@@ -20,6 +20,8 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
@@ -55,6 +57,7 @@ import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.model.ObjectStateTransition;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -129,6 +132,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -3199,6 +3203,94 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateObjectEntryWithActions() throws Exception {
+		ObjectDefinition publishedObjectDefinition =
+			_publishCustomObjectDefinition(
+				false,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+						ObjectFieldConstants.DB_TYPE_INTEGER, true, false, null,
+						"integerField", "integerField", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+						ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+						"upload", "upload",
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_ACCEPTED_FILE_EXTENSIONS
+							).value(
+								"txt"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE
+							).value(
+								ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+							).value(
+								String.valueOf(100)
+							).build()),
+						false)));
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			publishedObjectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_UPDATE_OBJECT_ENTRY,
+			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+			UnicodePropertiesBuilder.put(
+				"objectDefinitionId",
+				publishedObjectDefinition.getObjectDefinitionId()
+			).put(
+				"predefinedValues",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"inputAsValue", true
+					).put(
+						"name", "integerField"
+					).put(
+						"value", "1"
+					)
+				).toString()
+			).build(),
+			false);
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			0, publishedObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"integerField", String.valueOf(RandomTestUtil.randomInt())
+			).put(
+				"upload", StringPool.BLANK
+			).build());
+
+		_objectEntryLocalService.addOrUpdateObjectEntry(
+			objectEntry.getExternalReferenceCode(), TestPropsValues.getUserId(),
+			0, publishedObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"integerField", String.valueOf(RandomTestUtil.randomInt())
+			).put(
+				"upload", StringPool.BLANK
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		Assert.assertEquals(1, values.get("integerField"));
+	}
+
+	@Test
 	public void testUpdateStatus() throws Exception {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -3889,6 +3981,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	private ObjectDefinition _objectDefinition;
 

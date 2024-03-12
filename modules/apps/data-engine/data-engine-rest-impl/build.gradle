@@ -35,6 +35,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")
 
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")

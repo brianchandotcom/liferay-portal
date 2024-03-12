@@ -61,7 +61,9 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutsExporterImpl implements LayoutsExporter {
 
 	@Override
-	public File exportLayoutPageTemplateEntries(long groupId) throws Exception {
+	public File exportLayoutPageTemplateEntries(long groupId, String path)
+		throws Exception {
+
 		DTOConverter<LayoutStructure, PageDefinition>
 			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
@@ -88,7 +90,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 				_populateDisplayPagesZipWriter(
-					layoutPageTemplateEntry, pageDefinitionDTOConverter,
+					layoutPageTemplateEntry, pageDefinitionDTOConverter, path,
 					zipWriter);
 			}
 			else if (layoutPageTemplateEntry.getType() ==
@@ -117,7 +119,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		if (LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE == type) {
 			return _exportLayoutPageTemplateEntries(
 				layoutPageTemplateEntryIds, type,
-				this::_populateDisplayPagesZipWriter);
+				(layoutPageTemplateEntry, pageDefinitionDTOConverter,
+				 zipWriter) -> _populateDisplayPagesZipWriter(
+					layoutPageTemplateEntry, pageDefinitionDTOConverter,
+					StringPool.BLANK, zipWriter));
 		}
 
 		if (LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT == type) {
@@ -262,7 +267,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 				_populateDisplayPagesZipWriter(
-					layoutPageTemplateEntry, pageDefinitionDTOConverter,
+					layoutPageTemplateEntry, pageDefinitionDTOConverter, path,
 					zipWriter);
 			}
 		}
@@ -331,11 +336,11 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			LayoutPageTemplateEntry layoutPageTemplateEntry,
 			DTOConverter<LayoutStructure, PageDefinition>
 				pageDefinitionDTOConverter,
-			ZipWriter zipWriter)
+			String path, ZipWriter zipWriter)
 		throws Exception {
 
 		String displayPagePath =
-			"display-page-templates/" +
+			path + "/display-page-templates/" +
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey();
 
 		DisplayPageTemplate displayPageTemplate =

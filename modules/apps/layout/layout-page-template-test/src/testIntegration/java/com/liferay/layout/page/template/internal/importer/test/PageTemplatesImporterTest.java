@@ -184,7 +184,7 @@ public class PageTemplatesImporterTest {
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			File file = _layoutsExporter.exportLayoutPageTemplateEntries(
-				_group.getGroupId());
+				_group.getGroupId(), StringPool.BLANK);
 
 			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 					_layoutPageTemplateEntryLocalService.

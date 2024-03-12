@@ -23,6 +23,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -32,7 +34,7 @@ import org.json.JSONObject;
 public class CISystemHistoryReportUtil {
 
 	public static void generateCISystemHistoryReport(
-			String jobName, String testSuiteName)
+			String filePath, String jobName, String testSuiteName)
 		throws IOException {
 
 		writeAllDurationsJavaScriptFile();
@@ -42,6 +44,9 @@ public class CISystemHistoryReportUtil {
 		writeDateDurationsJavaScriptFiles(jobName, testSuiteName);
 
 		writeIndexHtmlFile();
+
+		FileUtils.copyDirectory(
+			_CI_SYSTEM_HISTORY_REPORT_DIR, new File(filePath));
 	}
 
 	protected static void writeAllDurationsJavaScriptFile() throws IOException {

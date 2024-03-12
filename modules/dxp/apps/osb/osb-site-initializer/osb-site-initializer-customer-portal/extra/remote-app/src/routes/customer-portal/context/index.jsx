@@ -53,7 +53,7 @@ const AppContextProvider = ({children}) => {
 			});
 
 			if (data) {
-				const isAccountAdministrator = !!data.userAccount?.accountBriefs
+				const isAccountAdministrator = Boolean(data.userAccount?.accountBriefs
 					?.find(
 						({externalReferenceCode}) =>
 							externalReferenceCode ===
@@ -61,15 +61,15 @@ const AppContextProvider = ({children}) => {
 					)
 					?.roleBriefs?.find(
 						({name}) => name === ROLE_TYPES.admin.key
-					);
+					));
 
-				const isAccountProvisioning = !!data.userAccount?.accountBriefs
+				const isAccountProvisioning = Boolean(data.userAccount?.accountBriefs
 					?.find(
 						({externalReferenceCode}) =>
 							externalReferenceCode ===
 							projectExternalReferenceCode
 					)
-					?.roleBriefs?.find(({name}) => name === 'Provisioning');
+					?.roleBriefs?.find(({name}) => name === 'Provisioning'));
 
 				const isOmniAdmin = Boolean(data.userAccount?.roleBriefs?.find(
 					({name}) => name === 'Administrator'

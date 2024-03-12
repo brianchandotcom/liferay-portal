@@ -33,7 +33,7 @@ const isValidPage = async (
 	});
 
 	if (data) {
-		const hasAccountFlags = !!data.c?.accountFlags?.items?.length;
+		const hasAccountFlags = Boolean(data.c?.accountFlags?.items?.length);
 		const isAccountAdministrator = userAccount.isAccountAdmin;
 
 		if (pageKey === ROUTE_TYPES.onboarding) {

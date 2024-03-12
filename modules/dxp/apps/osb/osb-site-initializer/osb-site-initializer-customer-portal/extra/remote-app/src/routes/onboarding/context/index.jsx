@@ -52,7 +52,7 @@ const AppContextProvider = ({children}) => {
 			});
 
 			if (data) {
-				const isAccountAdministrator = !!data.userAccount?.accountBriefs
+				const isAccountAdministrator = Boolean(data.userAccount?.accountBriefs
 					?.find(
 						({externalReferenceCode}) =>
 							externalReferenceCode ===
@@ -60,15 +60,15 @@ const AppContextProvider = ({children}) => {
 					)
 					?.roleBriefs?.find(
 						({name}) => name === ROLE_TYPES.admin.key
-					);
+					));
 
-				const isAccountProvisioning = !!data.userAccount?.accountBriefs
+				const isAccountProvisioning = Boolean(data.userAccount?.accountBriefs
 					?.find(
 						({externalReferenceCode}) =>
 							externalReferenceCode ===
 							projectExternalReferenceCode
 					)
-					?.roleBriefs?.find(({name}) => name === 'Provisioning');
+					?.roleBriefs?.find(({name}) => name === 'Provisioning'));
 
 				const isOmniAdmin = Boolean(data.userAccount?.roleBriefs?.find(
 					({name}) => name === 'Administrator'
@@ -196,7 +196,7 @@ const AppContextProvider = ({children}) => {
 			});
 
 			if (data) {
-				const status = !!data.c?.dXPCloudEnvironments?.items?.length;
+				const status = Boolean(data.c?.dXPCloudEnvironments?.items?.length);
 
 				dispatch({
 					payload: status,
@@ -216,8 +216,8 @@ const AppContextProvider = ({children}) => {
 			});
 
 			if (data) {
-				const status = !!data.c?.analyticsCloudWorkspaces?.items
-					?.length;
+				const status = Boolean(data.c?.analyticsCloudWorkspaces?.items
+					?.length);
 
 				dispatch({
 					payload: status,
@@ -238,8 +238,8 @@ const AppContextProvider = ({children}) => {
 			});
 
 			if (data) {
-				const status = !!data.c?.liferayExperienceCloudEnvironments
-					?.items?.length;
+				const status = Boolean(data.c?.liferayExperienceCloudEnvironments
+					?.items?.length);
 
 				dispatch({
 					payload: status,

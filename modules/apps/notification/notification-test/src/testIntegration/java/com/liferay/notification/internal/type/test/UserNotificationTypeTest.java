@@ -232,7 +232,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 					).build();
 				}
 			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+			group.getGroupKey());
 
 		notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationQueueEntries(
@@ -328,7 +328,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 					).build();
 				}
 			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+			group.getGroupKey());
 
 		notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationQueueEntries(

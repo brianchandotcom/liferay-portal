@@ -483,7 +483,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					).build();
 				}
 			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+			group.getGroupKey());
 
 		objectActionLocalService.deleteObjectAction(
 			objectAction.getObjectActionId());

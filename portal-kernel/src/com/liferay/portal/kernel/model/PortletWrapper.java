@@ -300,6 +300,16 @@ public class PortletWrapper
 	}
 
 	/**
+	 * Returns the category names of the portlet.
+	 *
+	 * @return the category names of the portlet
+	 */
+	@Override
+	public java.util.Set<String> getCategoryNames() {
+		return model.getCategoryNames();
+	}
+
+	/**
 	 * Returns <code>true</code> if the portlet is found in a WAR file.
 	 *
 	 * @param portletId the cloned instance portlet ID
@@ -467,16 +477,6 @@ public class PortletWrapper
 	@Override
 	public String getDefaultPreferences() {
 		return model.getDefaultPreferences();
-	}
-
-	/**
-	 * Returns the names of the category that display the portlet
-	 *
-	 * @return the names of the category that display the portlet
-	 */
-	@Override
-	public java.util.Set<String> getDisplayCategories() {
-		return model.getDisplayCategories();
 	}
 
 	/**
@@ -2459,6 +2459,16 @@ public class PortletWrapper
 	}
 
 	/**
+	 * Sets the category names of the portlet.
+	 *
+	 * @param categoryNames the category names of the portlet
+	 */
+	@Override
+	public void setCategoryNames(java.util.Set<String> categoryNames) {
+		model.setCategoryNames(categoryNames);
+	}
+
+	/**
 	 * Sets the company ID of this portlet.
 	 *
 	 * @param companyId the company ID of this portlet
@@ -2560,17 +2570,6 @@ public class PortletWrapper
 	@Override
 	public void setDefaultPreferences(String defaultPreferences) {
 		model.setDefaultPreferences(defaultPreferences);
-	}
-
-	/**
-	 * Sets the names of the category that display the portlet
-	 *
-	 * @param displayCategories the names of the category that display the
-	 portlet
-	 */
-	@Override
-	public void setDisplayCategories(java.util.Set<String> displayCategories) {
-		model.setDisplayCategories(displayCategories);
 	}
 
 	/**

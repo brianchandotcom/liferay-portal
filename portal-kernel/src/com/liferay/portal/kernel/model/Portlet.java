@@ -210,6 +210,13 @@ public interface Portlet extends PersistedModel, PortletModel {
 	public java.util.Set<String> getAutopropagatedParameters();
 
 	/**
+	 * Returns the category names of the portlet.
+	 *
+	 * @return the category names of the portlet
+	 */
+	public java.util.Set<String> getCategoryNames();
+
+	/**
 	 * Returns <code>true</code> if the portlet is found in a WAR file.
 	 *
 	 * @param portletId the cloned instance portlet ID
@@ -323,13 +330,6 @@ public interface Portlet extends PersistedModel, PortletModel {
 	 * @return the default preferences of the portlet
 	 */
 	public String getDefaultPreferences();
-
-	/**
-	 * Returns the names of the category that display the portlet
-	 *
-	 * @return the names of the category that display the portlet
-	 */
-	public java.util.Set<String> getDisplayCategories();
 
 	/**
 	 * Returns the display name of the portlet.
@@ -1686,6 +1686,13 @@ public interface Portlet extends PersistedModel, PortletModel {
 		java.util.Set<String> autopropagatedParameters);
 
 	/**
+	 * Sets the category names of the portlet.
+	 *
+	 * @param categoryNames the category names of the portlet
+	 */
+	public void setCategoryNames(java.util.Set<String> categoryNames);
+
+	/**
 	 * Sets the configuration action class of the portlet.
 	 *
 	 * @param configurationActionClass the configuration action class of the
@@ -1753,14 +1760,6 @@ public interface Portlet extends PersistedModel, PortletModel {
 	 * @param defaultPreferences the default preferences of the portlet
 	 */
 	public void setDefaultPreferences(String defaultPreferences);
-
-	/**
-	 * Sets the names of the category that display the portlet
-	 *
-	 * @param displayCategories the names of the category that display the
-	 portlet
-	 */
-	public void setDisplayCategories(java.util.Set<String> displayCategories);
 
 	/**
 	 * Sets the display name of the portlet.

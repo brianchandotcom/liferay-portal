@@ -7,6 +7,9 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.google.gson.Gson;
 
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
+import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.data.engine.constants.DataActionKeys;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
@@ -1387,6 +1390,18 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	}
 
 	private String _resolveModuleName(DDMFormFieldType ddmFormFieldType) {
+		String esModule = ddmFormFieldType.getESModule();
+
+		if (Validator.isNotNull(esModule)) {
+			ESImport esImport = ESImportUtil.getESImport(
+				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+					contextHttpServletRequest),
+				esModule);
+
+			return StringBundler.concat(
+				"{", esImport.getSymbol(), "} from ", esImport.getModule());
+		}
+
 		if (Validator.isNull(ddmFormFieldType.getModuleName())) {
 			return StringPool.BLANK;
 		}
@@ -1870,6 +1885,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	private static final EntityModel _entityModel =
 		new DataDefinitionEntityModel();
+
+	@Reference
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
 	@Reference
 	private DataLayoutResource.Factory _dataLayoutResourceFactory;

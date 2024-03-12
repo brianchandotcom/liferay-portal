@@ -1,10 +1,15 @@
 {
 	"devDependencies": {
-		"serve": "^14.2.0"
+		"css-loader": "6.10.0",
+		"style-loader": "3.3.4",
+		"webpack": "5.90.1",
+		"webpack-cli": "5.1.4"
 	},
 	"name": "@liferay/liferay-sample-custom-element-4",
+	"private": true,
 	"scripts": {
-		"start": "PORT=5001 serve --cors"
+		"build": "webpack",
+		"start": "webpack-dev-server"
 	},
-	"version": "0.0.0"
+	"version": "0.1.0"
 }

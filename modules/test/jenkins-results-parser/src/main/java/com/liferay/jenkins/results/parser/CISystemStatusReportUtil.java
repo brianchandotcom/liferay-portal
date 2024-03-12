@@ -28,6 +28,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeoutException;
 
+import org.apache.commons.io.FileUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -35,6 +37,11 @@ import org.json.JSONObject;
  * @author Kenji Heigel
  */
 public class CISystemStatusReportUtil {
+
+	public static void copyBaseReportFiles(String filePath) throws IOException {
+		FileUtils.copyDirectory(
+			_CI_SYSTEM_STATUS_REPORT_DIR, new File(filePath));
+	}
 
 	public static void writeJenkinsDataJavaScriptFile(String filePath)
 		throws IOException {
@@ -529,6 +536,8 @@ public class CISystemStatusReportUtil {
 		return jsonObject;
 	}
 
+	private static final File _CI_SYSTEM_STATUS_REPORT_DIR;
+
 	private static final int _DAYS_PER_WEEK = 7;
 
 	private static final File _TESTRAY_LOGS_DIR;
@@ -621,6 +630,9 @@ public class CISystemStatusReportUtil {
 				}
 			}
 		};
+
+		_CI_SYSTEM_STATUS_REPORT_DIR = new File(
+			_buildProperties.getProperty("ci.system.status.report.dir"));
 
 		_TESTRAY_LOGS_DIR = new File(
 			_buildProperties.getProperty("jenkins.testray.results.dir"),

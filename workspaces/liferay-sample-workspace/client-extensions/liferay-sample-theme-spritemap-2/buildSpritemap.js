@@ -71,11 +71,11 @@ async function buildSpritemap() {
 
 	spritemapContent += '</svg>';
 
-	if (!fs.existsSync('dist')) {
-		fs.mkdirSync('dist');
+	if (!fs.existsSync('build/static')) {
+		fs.mkdirSync('build/static', {recursive: true});
 	}
 
-	fs.writeFileSync('dist/spritemap.svg', spritemapContent);
+	fs.writeFileSync('build/static/spritemap.svg', spritemapContent);
 }
 
 buildSpritemap();

@@ -2463,38 +2463,17 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getLayoutActualURL(Layout layout, String mainPath) {
-		Layout browsableLayout = getBrowsableLayout(layout);
+		Map<String, String> variablesMap = _getVariablesMap(
+			getBrowsableLayout(layout), mainPath);
 
-		String groupIdString = String.valueOf(browsableLayout.getGroupId());
-
-		Map<String, String> variables = HashMapBuilder.put(
-			"liferay:groupId", groupIdString
-		).put(
-			"liferay:layoutId", String.valueOf(browsableLayout.getLayoutId())
-		).put(
-			"liferay:mainPath", mainPath
-		).put(
-			"liferay:plid", String.valueOf(browsableLayout.getPlid())
-		).put(
-			"liferay:privateLayout",
-			String.valueOf(browsableLayout.isPrivateLayout())
-		).build();
-
-		String pvlsgid = "0";
-
-		if (browsableLayout instanceof VirtualLayout) {
-			pvlsgid = groupIdString;
-		}
-
-		variables.put("liferay:pvlsgid", pvlsgid);
-
-		variables.putAll(layout.getTypeSettingsProperties());
+		variablesMap.putAll(layout.getTypeSettingsProperties());
 
 		LayoutTypeController layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(
 				layout.getType());
 
-		return LayoutTypeImpl.getURL(layoutTypeController.getURL(), variables);
+		return LayoutTypeImpl.getURL(
+			layoutTypeController.getURL(), variablesMap);
 	}
 
 	@Override
@@ -8071,6 +8050,34 @@ public class PortalImpl implements Portal {
 		}
 
 		return group;
+	}
+
+	private Map<String, String> _getVariablesMap(
+		Layout layout, String mainPath) {
+
+		String groupIdString = String.valueOf(layout.getGroupId());
+
+		Map<String, String> variables = HashMapBuilder.put(
+			"liferay:groupId", groupIdString
+		).put(
+			"liferay:layoutId", String.valueOf(layout.getLayoutId())
+		).put(
+			"liferay:mainPath", mainPath
+		).put(
+			"liferay:plid", String.valueOf(layout.getPlid())
+		).put(
+			"liferay:privateLayout", String.valueOf(layout.isPrivateLayout())
+		).build();
+
+		String pvlsgid = "0";
+
+		if (layout instanceof VirtualLayout) {
+			pvlsgid = groupIdString;
+		}
+
+		variables.put("liferay:pvlsgid", pvlsgid);
+
+		return variables;
 	}
 
 	private String _getVirtualHostname(

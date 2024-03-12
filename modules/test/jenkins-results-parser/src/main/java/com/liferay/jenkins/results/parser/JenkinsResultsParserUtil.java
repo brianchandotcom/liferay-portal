@@ -4784,6 +4784,10 @@ public class JenkinsResultsParserUtil {
 				return urlConnection.getInputStream();
 			}
 			catch (IOException ioException) {
+				if (ioException instanceof FileNotFoundException) {
+					throw ioException;
+				}
+
 				if ((ioException instanceof UnknownHostException) &&
 					url.matches("http://test-\\d+-\\d+/.*")) {
 

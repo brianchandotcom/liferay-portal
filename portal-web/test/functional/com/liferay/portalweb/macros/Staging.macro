@@ -462,10 +462,6 @@ definition {
 				key_contentName = ${checkContentNameList},
 				key_subContent = "Previews and Thumbnails",
 				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX");
-
-			AssertClick.assertTextClickNoMouseOver(
-				locator1 = "Button#CANCEL",
-				value1 = "Cancel");
 		}
 		else if (${includeThumbnailsAndPreviewsDuringStaging} == "false") {
 			AssertTextNotEquals.assertNotPartialMatch(
@@ -485,10 +481,6 @@ definition {
 				key_contentName = ${checkContentNameList},
 				key_subContent = "Previews and Thumbnails",
 				locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX");
-
-			AssertClick.assertTextClickNoMouseOver(
-				locator1 = "Button#CANCEL",
-				value1 = "Cancel");
 		}
 
 		if (isSet(uncheckSubContent)) {

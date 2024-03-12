@@ -76,8 +76,9 @@ public class FrontendTokenDefinitionRegistryTest {
 	}
 
 	@Test
-	public void testGetClientExtensionFrontendTokenDefinition()
-		throws Exception {
+	public void testGetFrontendTokenDefinition() throws Exception {
+
+		// Client extension entry
 
 		User user = UserTestUtil.addUser();
 
@@ -115,10 +116,9 @@ public class FrontendTokenDefinitionRegistryTest {
 			_clientExtensionEntryLocalService.deleteClientExtensionEntry(
 				clientExtensionEntry.getClientExtensionEntryId());
 		}
-	}
 
-	@Test
-	public void testGetWorkspaceFrontendTokenDefinition() {
+		// Theme
+
 		_layoutSet.setThemeId("testTheme");
 
 		_assertFrontendTokenDefinition(

@@ -47,9 +47,9 @@ describe('UserRoutes', () => {
 			isAdmin: () => true
 		}));
 
-		const {queryByText} = render(<DefaultComponent />);
+		const {queryAllByText, queryByText} = render(<DefaultComponent />);
 
-		expect(queryByText('Manage Users')).toBeTruthy();
+		expect(queryAllByText('Manage Users')).toBeTruthy();
 		expect(queryByText('Requests')).toBeTruthy();
 	});
 

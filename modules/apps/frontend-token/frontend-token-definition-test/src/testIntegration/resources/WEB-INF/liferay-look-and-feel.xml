@@ -5,6 +5,6 @@
 	<compatibility>
 		<version>7.4.0+</version>
 	</compatibility>
-	<theme id="testTheme" name="Test Theme">
+	<theme id="test-frontend-token-definition" name="Test Frontend Token Definition">
 	</theme>
 </look-and-feel>

@@ -5,8 +5,6 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {getSiteUrl} from '../../utils/siteUrl';
-
 export class ProductMenuPage {
 	readonly page: Page;
 
@@ -57,10 +55,8 @@ export class ProductMenuPage {
 	}
 
 	async goto() {
-		const siteUrl = await getSiteUrl(this.page);
-
 		await this.page.goto(
-			`/group${siteUrl}/~/control_panel/manage/-/site/settings`
+			`/group/guest/~/control_panel/manage/-/site/settings`
 		);
 	}
 

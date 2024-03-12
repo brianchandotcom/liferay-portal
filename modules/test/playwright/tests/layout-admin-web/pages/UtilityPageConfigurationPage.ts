@@ -26,17 +26,16 @@ export class UtilityPageConfigurationPage {
 		this.utilityPagesPage = new UtilityPagesPage(page);
 	}
 
-	async goto(title: string) {
-		await this.utilityPagesPage.goto();
-		await this.utilityPagesPage.clickOnAction('Configure', title);
+	async goto(pageTitle: string) {
+		await this.utilityPagesPage.clickOnAction('Configure', pageTitle);
 	}
 
 	async setUtilityPageConfiguration(
 		htmlDescription: string,
 		htmlTitle: string,
-		title: string
+		pageTitle: string
 	) {
-		await this.goto(title);
+		await this.goto(pageTitle);
 
 		await this.descriptionInput.waitFor();
 

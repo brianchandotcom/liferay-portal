@@ -58,9 +58,9 @@ export class PageEditorPage {
 		await this.page.getByRole('tab', {name: tab}).click();
 	}
 
-	async goToEditMode(site: Site, layout: Layout) {
+	async goToEditMode(layout: Layout, siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
-			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			`/web${siteUrl || '/guest'}${layout.friendlyUrlPath}?p_l_mode=edit`
 		);
 	}
 

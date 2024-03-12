@@ -8,7 +8,6 @@
 import {Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {getSiteUrl} from '../../../utils/siteUrl';
 
 export class UtilityPagesPage {
 	readonly page: Page;
@@ -17,11 +16,11 @@ export class UtilityPagesPage {
 		this.page = page;
 	}
 
-	async goto() {
-		const siteUrl = await getSiteUrl(this.page);
-
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
-			`/group${siteUrl}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages`
+			`/group${
+				siteUrl || '/guest'
+			}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages`
 		);
 	}
 
@@ -38,13 +37,11 @@ export class UtilityPagesPage {
 		});
 	}
 
-	async goToEdit(title: string) {
-		await this.goto();
-
-		await this.page.getByLabel(title).waitFor();
+	async goToEdit(pageTitle: string) {
+		await this.page.getByLabel(pageTitle).waitFor();
 
 		const href = await this.page
-			.locator('div.card-row', {has: this.page.getByLabel(title)})
+			.locator('div.card-row', {has: this.page.getByLabel(pageTitle)})
 			.getByRole('link')
 			.getAttribute('href');
 

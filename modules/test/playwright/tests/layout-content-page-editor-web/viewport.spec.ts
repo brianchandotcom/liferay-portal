@@ -104,7 +104,7 @@ test('shows correct sections on each configuration panel when viewport is not De
 		'BASIC_COMPONENT-heading'
 	);
 
-	createPageWithFragmentAndGoToEditMode({
+	await createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
 		page,
@@ -148,7 +148,7 @@ test('shows only Image Source field when the viewport is Desktop', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	createPageWithFragmentAndGoToEditMode({
+	await createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
 		page,
@@ -187,7 +187,7 @@ test('Background Image field is disabled for non-desktop viewports', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	createPageWithFragmentAndGoToEditMode({
+	await createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
 		page,
@@ -228,7 +228,7 @@ test('checks that the layout can be resized', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	createPageWithFragmentAndGoToEditMode({
+	await createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
 		page,
@@ -290,7 +290,7 @@ test('checks that the value of a field is propagated to smaller viewports', asyn
 		'BASIC_COMPONENT-heading'
 	);
 
-	createPageWithFragmentAndGoToEditMode({
+	await createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
 		page,

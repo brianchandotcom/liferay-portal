@@ -6,6 +6,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './style.css';
+
 const api = async (url, options = {}) => {
 	return fetch(window.location.origin + '/' + url, {
 		headers: {

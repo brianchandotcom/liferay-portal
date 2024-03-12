@@ -1,2 +1,4 @@
 liferay-sample-custom-element-4:
-    baseURL: http://localhost:5001/assets
+    baseURL: http://localhost:3000
+    urls:
+        - index.js

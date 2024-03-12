@@ -1,9 +1,7 @@
 assemble:
-    - from: assets
+    - from: build/static
       into: static
 liferay-sample-custom-element-4:
-    cssURLs:
-        - style.css
     friendlyURLMapping: liferay-sample-custom-element-4
     htmlElementName: liferay-sample-custom-element-4
     instanceable: false
@@ -11,5 +9,5 @@ liferay-sample-custom-element-4:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - index.js
+        - index.*.js
     useESM: true

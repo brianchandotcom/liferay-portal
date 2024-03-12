@@ -6,8 +6,10 @@
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 
+import {DefinitionBuilderContext} from '../../../../../DefinitionBuilderContext';
+import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import {sortElements} from '../utils';
 
 const BaseActionsInfo = ({
@@ -36,6 +38,11 @@ const BaseActionsInfo = ({
 	statuses,
 	updateActionInfo,
 }) => {
+	const {hadGroovyScriptBefore} = useContext(DiagramBuilderContext);
+	const {allowScriptContentBeExecutedOrIncluded} = useContext(
+		DefinitionBuilderContext
+	);
+
 	useEffect(() => {
 		if (executionTypeOptions) {
 			sortElements(executionTypeOptions, 'value');
@@ -50,6 +57,20 @@ const BaseActionsInfo = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const getActionTypes = () => {
+		if (
+			Liferay.FeatureFlags['LPD-11179'] &&
+			!allowScriptContentBeExecutedOrIncluded &&
+			!hadGroovyScriptBefore
+		) {
+			return actionTypes.filter(
+				(actionType) => actionType.value !== 'groovy'
+			);
+		}
+
+		return actionTypes;
+	};
 
 	return (
 		<>
@@ -147,7 +168,7 @@ const BaseActionsInfo = ({
 					/>
 
 					{actionTypes &&
-						actionTypes.map((item, index) => (
+						getActionTypes().map((item, index) => (
 							<ClaySelect.Option
 								className="select-options"
 								key={index + 1}

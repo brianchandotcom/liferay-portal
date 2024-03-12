@@ -5,9 +5,11 @@
 
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
+import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DEFAULT_LANGUAGE} from '../../../source-builder/constants';
+import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 
 const scriptLanguageOptions = [
 	{
@@ -26,10 +28,29 @@ const ScriptInput = ({
 	inputValue,
 	updateSelectedItem,
 }) => {
+	const {hadGroovyScriptBefore} = useContext(DiagramBuilderContext);
+	const {allowScriptContentBeExecutedOrIncluded} = useContext(
+		DefinitionBuilderContext
+	);
 	const [script, setScript] = useState(inputValue);
 	const [scriptLanguage, setScriptLanguage] = useState(
 		defaultScriptLanguage || DEFAULT_LANGUAGE
 	);
+
+	const getScriptLanguageOptions = () => {
+		if (
+			Liferay.FeatureFlags['LPD-11179'] &&
+			!allowScriptContentBeExecutedOrIncluded &&
+			!hadGroovyScriptBefore
+		) {
+			return scriptLanguageOptions.filter(
+				(scriptLanguageOption) =>
+					scriptLanguageOption.value !== 'groovy'
+			);
+		}
+
+		return scriptLanguageOptions;
+	};
 
 	return (
 		<>
@@ -46,7 +67,7 @@ const ScriptInput = ({
 				}}
 				onClickCapture={() => handleClickCapture(scriptLanguage)}
 			>
-				{scriptLanguageOptions.map((item) => (
+				{getScriptLanguageOptions().map((item) => (
 					<ClaySelect.Option
 						key={item.value}
 						label={item.label}

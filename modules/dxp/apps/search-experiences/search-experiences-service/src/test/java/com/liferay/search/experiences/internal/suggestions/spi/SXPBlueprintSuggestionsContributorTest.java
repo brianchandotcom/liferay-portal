@@ -207,8 +207,8 @@ public class SXPBlueprintSuggestionsContributorTest {
 			summary
 		).when(
 			assetRenderer
-		).getSearchSummary(
-			Mockito.any()
+		).getSummary(
+			_liferayPortletRequest, _liferayPortletResponse
 		);
 
 		Mockito.doReturn(

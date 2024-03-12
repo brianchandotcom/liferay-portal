@@ -64,10 +64,11 @@ public class FrontendTokenDefinitionRegistryTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Class<?> clazz = getClass();
+
 		_frontendTokenDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
 			URLUtil.toString(
-				FrontendTokenDefinitionRegistryTest.class.getResource(
-					"/WEB-INF/frontend-token-definition.json")));
+				clazz.getResource("/WEB-INF/frontend-token-definition.json")));
 
 		_group = GroupTestUtil.addGroup();
 

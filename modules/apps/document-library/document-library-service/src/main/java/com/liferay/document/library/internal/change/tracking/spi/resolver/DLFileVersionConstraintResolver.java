@@ -180,8 +180,9 @@ public class DLFileVersionConstraintResolver
 			String newStoreFileName = entry.getValue();
 
 			try (InputStream inputStream = DLStoreUtil.getFileAsStream(
-					dlFileEntry.getCompanyId(), dlFileEntry.getRepositoryId(),
-					dlFileEntry.getName(), oldStoreFileName)) {
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
+					oldStoreFileName)) {
 
 				DLStoreUtil.addFile(
 					DLStoreRequest.builder(

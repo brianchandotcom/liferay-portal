@@ -51,7 +51,7 @@ test('View Undo interaction state is cleared after refreshing the page', async (
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goToEditMode(site, layout);
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
 	// Assert undo button is disabled
 
@@ -106,7 +106,7 @@ test('Undo and Redo buttons work as expected', async ({
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goToEditMode(site, layout);
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
 	// Change number of tabs to 5
 
@@ -179,7 +179,7 @@ test('Undo history works as expected', async ({
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goToEditMode(site, layout);
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
 	// Assert History button is visible
 

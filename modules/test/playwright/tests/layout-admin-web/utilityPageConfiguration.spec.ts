@@ -10,7 +10,6 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
-import {setSiteUrl} from '../../utils/siteUrl';
 import {pageEditorPagesTest} from '../layout-content-page-editor-web/fixtures/pageEditorPagesTest';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
@@ -32,11 +31,10 @@ test('LPD-4459: Asserts the Utility Pages configuration view.', async ({
 }) => {
 	await page.goto('/');
 
-	await setSiteUrl(page, site.friendlyUrlPath);
-
 	// The configuration action must be available from the card
 	// The configuration view should only allow setting the htmlTitle and htmlDescription SEO fields
 
+	await utilityPagesPage.goto(site.friendlyUrlPath);
 	await utilityPageConfigurationPage.setUtilityPageConfiguration(
 		getRandomString(),
 		getRandomString(),
@@ -45,12 +43,11 @@ test('LPD-4459: Asserts the Utility Pages configuration view.', async ({
 
 	// During editing the "More Page Design Options" link should not be available
 
+	await utilityPagesPage.goto(site.friendlyUrlPath);
 	await utilityPagesPage.goToEdit('404 Error');
-
 	await pageEditorPage.goToSidebarTab('Page Design Options');
 
 	await expect(page.getByText('Master', {exact: true})).toBeVisible();
-
 	expect(await page.getByTitle('More Page Design Options').count()).toEqual(
 		0
 	);

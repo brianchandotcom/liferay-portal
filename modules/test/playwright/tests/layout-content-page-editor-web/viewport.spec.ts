@@ -84,7 +84,7 @@ test('shows correct sections on each configuration panel when viewport is not De
 
 	// Go to edit mode of page
 
-	await pageEditorPage.goToEditMode(site, layout);
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
 	// Switch to Tablet viewport and select the fragment
 

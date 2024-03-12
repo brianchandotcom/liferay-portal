@@ -58,10 +58,7 @@ const bulkTest = mergeTests(
 	})
 );
 
-const PERMISSIONS_LOCATORS = [
-	'#guest_ACTION_DELETE',
-	'#guest_ACTION_PERMISSIONS',
-];
+
 
 translationTest(
 	'LPD-17245: Add error message in Translation for concurrent users',
@@ -104,6 +101,11 @@ translationTest(
 bulkTest(
 	'LPD-17782: This is a test for bulk permissions of web content',
 	async ({journalEditArticlePage, journalPage, page}) => {
+		const PERMISSIONS_LOCATORS = [
+			{enabled: true, locator: '#guest_ACTION_DELETE'},
+			{enabled: true, locator: '#guest_ACTION_PERMISSIONS'},
+		];
+
 		await journalPage.goto();
 
 		const title1 = getRandomString();
@@ -131,21 +133,7 @@ bulkTest(
 
 		await journalPage.setJournalArticlePermissions(
 			[article1, article2],
-			PERMISSIONS_LOCATORS
-		);
-
-		await journalPage.assertJournalArticlePermissions(
-			title1,
-			PERMISSIONS_LOCATORS
-		);
-		await journalPage.assertJournalArticlePermissions(
-			title2,
-			PERMISSIONS_LOCATORS
-		);
-
-		await journalPage.setJournalArticlePermissions(
-			[article1, article2],
-			PERMISSIONS_LOCATORS
+			['#guest_ACTION_DELETE', '#guest_ACTION_PERMISSIONS']
 		);
 
 		await journalPage.assertJournalArticlePermissions(

@@ -85,6 +85,12 @@ export class JournalPage {
 	) {
 		await this.goToJournalArticleAction('Permissions', title);
 
+		await this.assertPermissions(permissions);
+	}
+
+	async assertPermissions(
+		permissions: {enabled: boolean; locator: string}[]
+	) {
 		await this.permissionsFrameLocator
 			.locator(permissions[0].locator)
 			.waitFor();
@@ -127,6 +133,10 @@ export class JournalPage {
 			trigger: this.page.getByTitle('Actions', {exact: true}),
 		});
 
+		await this.setPermissions(permissionLocators);
+	}
+
+	async setPermissions(permissionLocators: string[]) {
 		await this.permissionsFrameLocator
 			.locator(permissionLocators[0])
 			.check({trial: true});

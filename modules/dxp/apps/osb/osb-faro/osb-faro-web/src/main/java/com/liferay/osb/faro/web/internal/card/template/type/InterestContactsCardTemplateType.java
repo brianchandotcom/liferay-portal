@@ -12,12 +12,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Shinn Lok
  */
-@Component(service = ContactsCardTemplateType.class)
 public class InterestContactsCardTemplateType
 	extends BaseContactsCardTemplateType {
 

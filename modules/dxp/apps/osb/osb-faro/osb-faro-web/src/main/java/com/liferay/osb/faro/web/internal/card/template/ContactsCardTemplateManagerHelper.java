@@ -13,7 +13,22 @@ import com.liferay.osb.faro.contacts.service.ContactsCardTemplateLocalService;
 import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.osb.faro.web.internal.card.template.type.ActivityHistoryContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.AssociatedSegmentsContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.ClosedWonContactsCardTemplateType;
 import com.liferay.osb.faro.web.internal.card.template.type.ContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.ConversionHealthContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.CoworkersContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.EmployeesContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.InterestContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.LifetimeValueContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.NetSalesContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.ProfileContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.RecentActivitiesContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.SegmentDistributionContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.SegmentMembershipContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.SimilarContactsCardTemplateType;
+import com.liferay.osb.faro.web.internal.card.template.type.TouchpointAttributionContactsCardTemplateType;
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ContactsCardTemplateDisplay;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
@@ -25,12 +40,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import java.lang.reflect.Constructor;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
@@ -134,18 +147,6 @@ public class ContactsCardTemplateManagerHelper {
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addContactsCardTemplateType(
-		ContactsCardTemplateType contactsCardTemplateType) {
-
-		_contactsCardTemplateTypes.put(
-			contactsCardTemplateType.getType(), contactsCardTemplateType);
-	}
-
 	protected ContactsCardTemplateDisplay getContactsCardTemplateDisplay(
 			ContactsCardTemplate contactsCardTemplate,
 			ContactsCardTemplateType contactsCardTemplateType, int size)
@@ -187,7 +188,53 @@ public class ContactsCardTemplateManagerHelper {
 		ContactsCardTemplateManagerHelper.class);
 
 	private static final Map<Integer, ContactsCardTemplateType>
-		_contactsCardTemplateTypes = new HashMap<>();
+		_contactsCardTemplateTypes =
+			HashMapBuilder.<Integer, ContactsCardTemplateType>put(
+				ContactsCardTemplateConstants.TYPE_ACTIVITY_HISTORY,
+				new ActivityHistoryContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_ASSOCIATED_SEGMENTS,
+				new AssociatedSegmentsContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_CLOSED_WON,
+				new ClosedWonContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_CONVERSION_HEALTH,
+				new ConversionHealthContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_COWORKERS,
+				new CoworkersContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_EMPLOYEES,
+				new EmployeesContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_INTEREST,
+				new InterestContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_LIFETIME_VALUE,
+				new LifetimeValueContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_NET_SALES,
+				new NetSalesContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_PROFILE,
+				new ProfileContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_RECENT_ACTIVITIES,
+				new RecentActivitiesContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_SEGMENT_DISTRIBUTION,
+				new SegmentDistributionContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_SEGMENT_MEMBERSHIP,
+				new SegmentMembershipContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_SIMILAR,
+				new SimilarContactsCardTemplateType()
+			).put(
+				ContactsCardTemplateConstants.TYPE_TOUCHPOINT_ATTRIBUTION,
+				new TouchpointAttributionContactsCardTemplateType()
+			).build();
 	private static final Map<Integer, int[][]>
 		_defaultContactsCardTemplateTypes =
 			HashMapBuilder.<Integer, int[][]>put(

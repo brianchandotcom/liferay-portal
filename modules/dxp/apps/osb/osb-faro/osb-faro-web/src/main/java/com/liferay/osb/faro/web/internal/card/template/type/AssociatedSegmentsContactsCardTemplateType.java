@@ -9,12 +9,9 @@ import com.liferay.osb.faro.contacts.model.constants.ContactsCardTemplateConstan
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.AssociatedSegmentsContactsCardTemplateDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.card.template.ContactsCardTemplateDisplay;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Shinn Lok
  */
-@Component(service = ContactsCardTemplateType.class)
 public class AssociatedSegmentsContactsCardTemplateType
 	extends BaseContactsCardTemplateType {
 

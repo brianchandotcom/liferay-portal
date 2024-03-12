@@ -24,6 +24,8 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -248,6 +250,27 @@ public class DDMRESTDataProviderTest {
 
 		Assert.assertEquals("Brazil", keyValuePair.getKey());
 		Assert.assertEquals("Brazil", keyValuePair.getValue());
+	}
+
+	@Test
+	public void testGetDataWithLocale() throws Exception {
+		_setUserPermissionChecker(false);
+
+		String outputParameterId = StringUtil.randomString();
+
+		long ddmDataProviderId = _addDDMDataProviderInstance(
+			_createDDMDataProviderDDMFormValues(
+				false, false, StringPool.BLANK, null, outputParameterId,
+				"nameCurrentValue;name", "list", null, null,
+				_GET_COUNTRIES_URL),
+			false);
+
+		_testGetDataWithLocale(
+			ddmDataProviderId, LocaleUtil.FRANCE, outputParameterId);
+		_testGetDataWithLocale(
+			ddmDataProviderId, LocaleUtil.GERMANY, outputParameterId);
+		_testGetDataWithLocale(
+			ddmDataProviderId, LocaleUtil.US, outputParameterId);
 	}
 
 	@Test
@@ -610,6 +633,25 @@ public class DDMRESTDataProviderTest {
 			PermissionCheckerFactoryUtil.create(user));
 	}
 
+	private void _testGetDataWithLocale(
+			long ddmDataProviderId, Locale locale, String outputParameterId)
+		throws Exception {
+
+		DDMDataProviderResponse ddmDataProviderResponse =
+			_ddmDataProvider.getData(
+				_createDDMDataProviderRequest(
+					ddmDataProviderId, null, null, null, locale, null, null));
+
+		for (KeyValuePair keyValuePair :
+				(List<KeyValuePair>)ddmDataProviderResponse.getOutput(
+					outputParameterId, List.class)) {
+
+			Assert.assertEquals(
+				LanguageUtil.get(locale, "country." + keyValuePair.getKey()),
+				keyValuePair.getValue());
+		}
+	}
+
 	private static final String _GET_COUNTRIES_URL =
 		"http://localhost:8080/api/jsonws/country/get-countries";
 
@@ -627,6 +669,9 @@ public class DDMRESTDataProviderTest {
 	@Inject(type = DDMDataProviderInstanceLocalService.class)
 	private DDMDataProviderInstanceLocalService
 		_ddmDataProviderInstanceLocalService;
+
+	@Inject
+	private Language _language;
 
 	private PermissionChecker _originalPermissionChecker;
 

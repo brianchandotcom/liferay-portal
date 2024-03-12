@@ -219,12 +219,9 @@ public class FrontendTokenDefinitionRegistryImpl
 	protected Portal portal;
 
 	private void _addingService(ThemeCSSCET themeCSSCET) {
-		String frontendTokenDefinitionJSON =
-			themeCSSCET.getFrontendTokenDefinitionJSON();
-
 		try {
 			_frontendTokenDefinitionJSONValidator.validate(
-				frontendTokenDefinitionJSON);
+				themeCSSCET.getFrontendTokenDefinitionJSON());
 
 			Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
 				_frontendTokenDefinitionsMap.computeIfAbsent(
@@ -234,7 +231,8 @@ public class FrontendTokenDefinitionRegistryImpl
 			frontendTokenDefinitions.put(
 				themeCSSCET.getExternalReferenceCode(),
 				new FrontendTokenDefinitionImpl(
-					jsonFactory.createJSONObject(frontendTokenDefinitionJSON),
+					jsonFactory.createJSONObject(
+						themeCSSCET.getFrontendTokenDefinitionJSON()),
 					jsonFactory,
 					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 					themeCSSCET.getExternalReferenceCode()));

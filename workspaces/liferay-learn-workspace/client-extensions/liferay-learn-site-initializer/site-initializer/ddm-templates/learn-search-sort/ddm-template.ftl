@@ -5,32 +5,32 @@
 		margin-bottom: 24px;
 		padding: 8px 0px 8px 8px;
 	}
-	
+
 	.learn-search-sort:hover {
 		background-color: #EDF3FE;
 		border-radius: 10px;
 	}
-	
+
 	.learn-search-sort option {
 		color: #282934;
 		font-size: 16px;
 	}
-	
+
 	.learn-search-sort .form-group-item {
 		height: 32px;
 		margin-bottom: 0px;
 		min-height: 32px;
 	}
-	
+
 	.learn-search-sort > .form-group-item:not(:last-child) {
 		margin-right: 0px;
 	}
-	
+
 	.learn-search-sort .form-group-item .input-select-wrapper {
 		height: 32px;
 		margin-bottom: 0px;
 	}
-	
+
 	.learn-search-sort .form-group-item select {
 		align-items: center;
 		background-color: transparent;
@@ -43,20 +43,20 @@
 		padding-bottom: 0px;
 		padding-top: 0px;
 	}
-	
+
 	.learn-search-sort .form-group-item select:focus {
 		background-color: transparent;
 		box-shadow: none;
 		color: #0B5FFF;
 		height: 32px;
 	}
-	
+
 	.learn-search-sort .text-truncate-inline {
 		align-items: center;
 		color:#282934;
 		height: 32px;
 	}
-	
+
 	.learn-search-sort .text-truncate-inline .text-truncate {
 		font-size: 13px;
 		font-weight: 600;
@@ -75,20 +75,20 @@
 			</span>
 		</label>
 	</div>
-	
+
 	<div class="form-group-item">
 		<@liferay_aui.select
 			cssClass="sort-term"
 			label=""
-			name="sortSelection" 
-		>  
+			name="sortSelection"
+		>
 				<#if entries?has_content>
-				<#list entries as entry >
-					<@liferay_aui.option 
+				<#list entries as entry>
+					<@liferay_aui.option
 						label="${entry.getLanguageLabel()}"
 						selected=entry.isSelected()
 						value="${entry.getField()}"
-					/>  
+					/>
 				</#list>
 			</#if>
 		</@liferay_aui.select>

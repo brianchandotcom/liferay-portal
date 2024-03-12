@@ -100,7 +100,7 @@
 
 <#assign
 	taxonomyVocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getSiteGroupId()}/taxonomy-vocabularies/by-external-reference-code/CAPABILITY").id
-	taxonomyVocabulary = {} 
+	taxonomyVocabulary = {}
 />
 
 <#list restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories?sort=name").items as taxonomyCategory>

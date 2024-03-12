@@ -140,7 +140,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Search"
@@ -313,15 +314,20 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {"width": "100%"},
+									"fragmentStyle": {
+										"width": "100%"
+									},
 									"indexed": true,
-									"layout": {}
+									"layout": {
+									}
 								},
 								"pageElements": [
 									{
 										"definition": {
 											"customCSS": ".[$FRAGMENT_CLASS$] {\nfloat: right;\n}",
-											"fragmentStyle": {"width": "200px"},
+											"fragmentStyle": {
+												"width": "200px"
+											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayStyle": "ddmTemplate_LEARN_SEARCH_SORT",

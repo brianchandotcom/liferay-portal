@@ -85,7 +85,7 @@
 			<matches>Portlet com_liferay_commerce.* failed to initialize</matches>
 		</ignore-error>
 		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
-			<contains>(IX_DBE2592|ix_DBE2592)</contains>
+			<contains>(IX_F2237D8E|ix_f2237d8e)</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPD-1949 - temporarily ignore until fixed">

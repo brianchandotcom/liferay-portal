@@ -6,6 +6,7 @@
 import {
 	COOKIE_TYPES,
 	getCookie as getCookieUtil,
+	getOpener,
 	setCookie as setCookieUtil,
 } from 'frontend-js-web';
 
@@ -47,4 +48,6 @@ export function setCookie(name, value) {
 
 export function setUserConfigCookie() {
 	setCookie(userConfigCookieName, 'true');
+
+	getOpener()?.Liferay.fire('cookieBannerSetCookie');
 }

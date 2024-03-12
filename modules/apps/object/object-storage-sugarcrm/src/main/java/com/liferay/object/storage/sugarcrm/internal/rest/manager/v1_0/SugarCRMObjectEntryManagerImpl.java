@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -86,7 +87,8 @@ public class SugarCRMObjectEntryManagerImpl
 
 		return toObjectEntry(
 			objectDefinition.getCompanyId(), _getDateFormat(),
-			dtoConverterContext, responseJSONObject, objectDefinition);
+			_defaultObjectFieldNames, dtoConverterContext, responseJSONObject,
+			objectDefinition);
 	}
 
 	@Override
@@ -139,7 +141,8 @@ public class SugarCRMObjectEntryManagerImpl
 		}
 
 		return toObjectEntry(
-			companyId, _getDateFormat(), dtoConverterContext,
+			companyId, _getDateFormat(), _defaultObjectFieldNames,
+			dtoConverterContext,
 			_sugarCRMHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				StringBundler.concat(
@@ -187,7 +190,8 @@ public class SugarCRMObjectEntryManagerImpl
 
 		return toObjectEntry(
 			objectDefinition.getCompanyId(), _getDateFormat(),
-			dtoConverterContext, responseJSONObject, objectDefinition);
+			_defaultObjectFieldNames, dtoConverterContext, responseJSONObject,
+			objectDefinition);
 	}
 
 	private void _appendFilter(StringBuilder sb, String filterString) {
@@ -372,8 +376,8 @@ public class SugarCRMObjectEntryManagerImpl
 		return JSONUtil.toList(
 			jsonArray,
 			jsonObject -> toObjectEntry(
-				companyId, dateFormat, dtoConverterContext, jsonObject,
-				objectDefinition));
+				companyId, dateFormat, _defaultObjectFieldNames,
+				dtoConverterContext, jsonObject, objectDefinition));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -381,6 +385,17 @@ public class SugarCRMObjectEntryManagerImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private final Map<String, String> _defaultObjectFieldNames =
+		HashMapBuilder.put(
+			"createDate", "date_entered"
+		).put(
+			"creator", "created_by"
+		).put(
+			"externalReferenceCode", "id"
+		).put(
+			"modifiedDate", "date_modified"
+		).build();
 
 	@Reference
 	private Http _http;

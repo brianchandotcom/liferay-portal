@@ -236,6 +236,7 @@ public abstract class BaseObjectEntryManager {
 
 	protected com.liferay.object.rest.dto.v1_0.ObjectEntry toObjectEntry(
 			long companyId, DateFormat dateFormat,
+			Map<String, String> defaultObjectFieldNames,
 			DTOConverterContext dtoConverterContext, JSONObject jsonObject,
 			ObjectDefinition objectDefinition)
 		throws Exception {
@@ -253,14 +254,20 @@ public abstract class BaseObjectEntryManager {
 					() -> CreatorUtil.toCreator(
 						portal, null,
 						userLocalService.fetchUserByExternalReferenceCode(
-							jsonObject.getString("OwnerId"), companyId)));
+							jsonObject.getString(
+								defaultObjectFieldNames.get("creator")),
+							companyId)));
 				setDateCreated(
 					() -> dateFormat.parse(
-						jsonObject.getString("CreatedDate")));
+						jsonObject.getString(
+							defaultObjectFieldNames.get("createDate"))));
 				setDateModified(
 					() -> dateFormat.parse(
-						jsonObject.getString("LastModifiedDate")));
-				setExternalReferenceCode(() -> jsonObject.getString("Id"));
+						jsonObject.getString(
+							defaultObjectFieldNames.get("modifiedDate"))));
+				setExternalReferenceCode(
+					() -> jsonObject.getString(
+						defaultObjectFieldNames.get("externalReferenceCode")));
 				setProperties(
 					() -> _toProperties(
 						dtoConverterContext, jsonObject, objectDefinition,

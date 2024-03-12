@@ -1,0 +1,21 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"link": {
+			"config": {
+				"layout": {
+					"groupId": "$GROUP_ID",
+					"layoutId": "$LAYOUT_ID",
+					"layoutUuid": "$LAYOUT_UUID",
+					"privateLayout": false,
+					"title": "$TITLE"
+				}
+			},
+			"defaultValue": "\n\t\t\t\tGo Somewhere\n\t\t\t"
+		}
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"buttonSize": "nm",
+		"buttonType": "primary",
+		"type": "link"
+	}
+}

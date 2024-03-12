@@ -37,15 +37,15 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Stack;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -655,15 +655,15 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 				new WorkflowTaskAssignToMe[] {
 					new WorkflowTaskAssignToMe() {
 						{
-							dueDate = DateUtils.addDays(
-								RandomTestUtil.nextDate(), 1);
+							dueDate = new Date(
+								System.currentTimeMillis() + (1 * Time.DAY));
 							workflowTaskId = workflowTask1.getId();
 						}
 					},
 					new WorkflowTaskAssignToMe() {
 						{
-							dueDate = DateUtils.addDays(
-								RandomTestUtil.nextDate(), 2);
+							dueDate = new Date(
+								System.currentTimeMillis() + (2 * Time.DAY));
 							workflowTaskId = workflowTask2.getId();
 						}
 					}
@@ -884,8 +884,8 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 				workflowTask.getId(),
 				new WorkflowTaskAssignToMe() {
 					{
-						dueDate = DateUtils.addDays(
-							RandomTestUtil.nextDate(), 2);
+						dueDate = new Date(
+							System.currentTimeMillis() + (2 * Time.DAY));
 					}
 				});
 

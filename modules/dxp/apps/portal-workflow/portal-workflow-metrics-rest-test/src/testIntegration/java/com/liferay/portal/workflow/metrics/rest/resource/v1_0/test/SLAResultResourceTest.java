@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
@@ -18,10 +19,7 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.SLAResultSerDes;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
-import java.util.Calendar;
 import java.util.Date;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -67,12 +65,13 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 	@Override
 	@Test
 	public void testGetProcessLastSLAResult() throws Exception {
-		Date dateModified = DateUtils.truncate(
-			RandomTestUtil.nextDate(), Calendar.SECOND);
+		Date dateModified = new Date(
+			System.currentTimeMillis() / Time.SECOND * Time.SECOND);
 
 		SLAResult slaResult1 = randomSLAResult();
 
-		slaResult1.setDateModified(DateUtils.addDays(dateModified, -2));
+		slaResult1.setDateModified(
+			new Date(dateModified.getTime() - (2 * Time.DAY)));
 
 		SLAResult slaResult2 = randomSLAResult();
 
@@ -136,8 +135,8 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 
 		return new SLAResult() {
 			{
-				dateModified = DateUtils.truncate(
-					RandomTestUtil.nextDate(), Calendar.SECOND);
+				dateModified = new Date(
+					System.currentTimeMillis() / Time.SECOND * Time.SECOND);
 				dateOverdue = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

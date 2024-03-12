@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
@@ -71,7 +72,6 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -82,7 +82,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.Assert;
 
@@ -422,10 +421,12 @@ public class WorkflowMetricsRESTTestHelper {
 					companyId, instance,
 					new SLAResult() {
 						{
-							dateModified = DateUtils.truncate(
-								RandomTestUtil.nextDate(), Calendar.SECOND);
-							dateOverdue = DateUtils.truncate(
-								RandomTestUtil.nextDate(), Calendar.SECOND);
+							dateModified = new Date(
+								(System.currentTimeMillis() / Time.MINUTE) *
+									Time.MINUTE);
+							dateOverdue = new Date(
+								(System.currentTimeMillis() / Time.MINUTE) *
+									Time.MINUTE);
 							id = RandomTestUtil.randomLong();
 							name = null;
 							onTime = true;
@@ -441,10 +442,12 @@ public class WorkflowMetricsRESTTestHelper {
 					companyId, instance,
 					new SLAResult() {
 						{
-							dateModified = DateUtils.truncate(
-								RandomTestUtil.nextDate(), Calendar.SECOND);
-							dateOverdue = DateUtils.truncate(
-								RandomTestUtil.nextDate(), Calendar.SECOND);
+							dateModified = new Date(
+								System.currentTimeMillis() / Time.SECOND *
+									Time.SECOND);
+							dateOverdue = new Date(
+								System.currentTimeMillis() / Time.SECOND *
+									Time.SECOND);
 							id = RandomTestUtil.randomLong();
 							name = null;
 							onTime = false;

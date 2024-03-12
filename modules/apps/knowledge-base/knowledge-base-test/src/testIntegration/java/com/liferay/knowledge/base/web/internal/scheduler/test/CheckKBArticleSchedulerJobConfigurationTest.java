@@ -31,8 +31,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Date;
 
-import org.apache.commons.lang.time.DateUtils;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -67,9 +65,10 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 	public void testDoNotExpireKBArticleIfKBArticleIsScheduled()
 		throws Exception {
 
-		Date displayDate = DateUtils.addDays(RandomTestUtil.nextDate(), 1);
+		Date displayDate = new Date(
+			System.currentTimeMillis() + (1 * Time.DAY));
 
-		Date expirationDate = DateUtils.addDays(displayDate, 1);
+		Date expirationDate = new Date(displayDate.getTime() + (1 * Time.DAY));
 
 		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
 			null, UserLocalServiceUtil.getGuestUserId(_group.getCompanyId()),

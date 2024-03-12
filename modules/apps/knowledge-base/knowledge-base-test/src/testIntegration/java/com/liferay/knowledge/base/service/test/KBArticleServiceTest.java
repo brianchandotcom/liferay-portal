@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -32,8 +33,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -83,7 +82,7 @@ public class KBArticleServiceTest {
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		_addKbArticle(new Date());
-		_addKbArticle(DateUtils.addDays(RandomTestUtil.nextDate(), 2));
+		_addKbArticle(new Date(System.currentTimeMillis() + (2 * Time.DAY)));
 
 		KBArticle kbArticle = _addKbArticle(new Date());
 

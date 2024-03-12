@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -35,9 +36,8 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.WorkflowMetricsRESTTestHelper;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -442,8 +442,8 @@ public class AssigneeMetricResourceTest
 				{
 					completed = true;
 					dateEnd = RandomTestUtil.nextDate();
-					dateStart = DateUtils.addMinutes(
-						RandomTestUtil.nextDate(), -2);
+					dateStart = new Date(
+						System.currentTimeMillis() - (2 * Time.MINUTE));
 				}
 			});
 

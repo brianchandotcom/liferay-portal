@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -49,8 +50,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -217,7 +216,8 @@ public class TaxonomyCategoryResourceTest
 				ServiceContextTestUtil.getServiceContext());
 
 		AssetCategory assetCategory1 = _addAssetCategory(
-			_assetVocabulary, DateUtils.addMinutes(new Date(), -2),
+			_assetVocabulary,
+			new Date(System.currentTimeMillis() - (2 * Time.MINUTE)),
 			parentAssetCategory);
 		AssetCategory assetCategory2 = _addAssetCategory(
 			_assetVocabulary, new Date(), parentAssetCategory);

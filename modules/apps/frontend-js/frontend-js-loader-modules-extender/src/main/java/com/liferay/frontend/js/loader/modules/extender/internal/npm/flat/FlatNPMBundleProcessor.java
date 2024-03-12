@@ -353,8 +353,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 			}
 		}
 
-		HashMap<URL, Collection<String>> moduleDependenciesMap =
-			new HashMap<>();
+		Map<URL, Collection<String>> moduleDependenciesMap = new HashMap<>();
 
 		Map<String, URL> jsURLsMap = new HashMap<>();
 

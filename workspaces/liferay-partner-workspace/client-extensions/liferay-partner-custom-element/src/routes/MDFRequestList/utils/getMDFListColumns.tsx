@@ -204,7 +204,7 @@ export default function getMDFListColumns(
 			render: (data) => <StatusLabel status={data as string} />,
 		},
 		{
-			columnKey: MDFColumnKey.NAME,
+			columnKey: MDFColumnKey.CAMPAIGN_NAME,
 			label: 'Campaign Name',
 			size: 'sm',
 		},

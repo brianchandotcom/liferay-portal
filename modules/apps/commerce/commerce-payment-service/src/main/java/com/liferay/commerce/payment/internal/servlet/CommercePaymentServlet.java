@@ -331,6 +331,14 @@ public class CommercePaymentServlet extends HttpServlet {
 
 					commercePaymentEntry = _commercePaymentGateway.authorize(
 						httpServletRequest, commercePaymentEntry);
+
+					if (CommercePaymentEntryConstants.STATUS_FAILED ==
+							commercePaymentEntry.getPaymentStatus()) {
+
+						httpServletResponse.sendRedirect(_nextUrl);
+
+						return;
+					}
 				}
 				else {
 					_commercePaymentGateway.capture(

@@ -20,6 +20,7 @@ import com.liferay.frontend.token.definition.FrontendTokenSet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
@@ -149,20 +150,11 @@ public class FrontendTokenDefinitionRegistryTest {
 		Assert.assertEquals(
 			frontendTokens.toString(), 1, frontendTokens.size());
 
-		JSONObject expectedTokenJSONObject =
-			_frontendTokenDefinitionJSONObject.getJSONArray(
-				"frontendTokenCategories"
-			).getJSONObject(
-				0
-			).getJSONArray(
-				"frontendTokenSets"
-			).getJSONObject(
-				0
-			).getJSONArray(
-				"frontendTokens"
-			).getJSONObject(
-				0
-			);
+		JSONObject expectedTokenJSONObject = JSONUtil.getValueAsJSONObject(
+			_frontendTokenDefinitionJSONObject,
+			"JSONArray/frontendTokenCategories", "JSONObject/0",
+			"JSONArray/frontendTokenSets", "JSONObject/0",
+			"JSONArray/frontendTokens", "JSONObject/0");
 
 		FrontendToken frontendToken = frontendTokens.get(0);
 
@@ -189,11 +181,9 @@ public class FrontendTokenDefinitionRegistryTest {
 
 		Assert.assertEquals(
 			String.valueOf(
-				expectedTokenJSONObject.getJSONArray(
-					"mappings"
-				).get(
-					0
-				)),
+				JSONUtil.getValueAsJSONObject(
+					expectedTokenJSONObject, "JSONArray/mappings",
+					"JSONObject/0")),
 			String.valueOf(
 				frontendTokenMapping.getJSONObject(LocaleUtil.ENGLISH)));
 	}

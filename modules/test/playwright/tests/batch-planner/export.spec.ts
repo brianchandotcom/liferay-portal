@@ -5,24 +5,22 @@
 
 import {expect, mergeTests} from '@playwright/test';
 import * as fs from 'fs';
-import * as path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataMigrationCenterPagesTest} from '../../fixtures/dataMigrationCenterPages';
-import {exportImportPagesTest} from '../../fixtures/exportImportPages.fixtures';
+import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {streamToJson, unzipFile} from '../../utils/zipFolder';
+import {getTempFile} from '../../utils/temp';
+import {unzipFile} from '../../utils/zip';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	exportImportPagesTest,
-	loginTest(),
 	dataMigrationCenterPagesTest,
 	featureFlagsTest({
 		'COMMERCE-8087': true,
 		'LPS-174455': true,
-	})
+	}),
+	loginTest()
 );
 
 const stockObjectDefinition = {
@@ -71,24 +69,25 @@ test('can download jsont format file as json', async ({
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	await dataMigrationCenterPage.goto();
-	await dataMigrationCenterPage.goToExportFile();
-
 	await dataMigrationCenterPage.exportFile(
 		'JSONT',
 		'C_Stock (v1_0 - Liferay Object REST)',
-		__dirname + '/../../tmp/',
 		['name']
 	);
 
-	const exportPath = path.resolve(__dirname, '../../tmp/Export.zip');
+	const exportPath = getTempFile('Export.zip');
 
-	await unzipFile(
-		handleUnzipFile,
-		exportPath,
-		'jsont_objectEntry_import',
-		require('./dependencies/jsont_objectEntry_import.json')
-	);
+	const unzipedFile = JSON.parse(await unzipFile(exportPath));
+
+	expect(require('./dependencies/jsont_objectEntry_import.json')).toEqual({
+		actions: unzipedFile.actions,
+		configuration: {
+			...unzipedFile.configuration,
+			companyId: expect.any(Number),
+			userId: expect.any(Number),
+		},
+		items: unzipedFile.items,
+	});
 
 	fs.unlinkSync(exportPath);
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
@@ -104,24 +103,17 @@ test('verify users can exclude fields from being exported in JSON format', async
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	await dataMigrationCenterPage.goto();
-	await dataMigrationCenterPage.goToExportFile();
-
 	await dataMigrationCenterPage.exportFile(
 		'JSON',
 		'C_Stock (v1_0 - Liferay Object REST)',
-		__dirname + '/../../tmp/',
 		['name']
 	);
 
-	const exportPath = path.resolve(__dirname, '../../tmp/Export.zip');
+	const exportPath = getTempFile('Export.zip');
 
-	await unzipFile(
-		handleUnzipFile,
-		exportPath,
-		'json_objectEntry_export_excluded',
+	expect(
 		require('./dependencies/json_objectEntry_export_excluded.json')
-	);
+	).toEqual(JSON.parse(await unzipFile(exportPath)));
 
 	fs.unlinkSync(exportPath);
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
@@ -283,13 +275,9 @@ test('export custom object with all field types mapped', async ({
 		'c/stocks'
 	);
 
-	await dataMigrationCenterPage.goto();
-	await dataMigrationCenterPage.goToExportFile();
-
 	await dataMigrationCenterPage.exportFile(
 		'JSON',
 		'C_Stock (v1_0 - Liferay Object REST)',
-		__dirname + '/../../tmp/',
 		[
 			'creator',
 			'customAttachment',
@@ -301,14 +289,27 @@ test('export custom object with all field types mapped', async ({
 		]
 	);
 
-	const exportPath = path.resolve(__dirname, '../../tmp/Export.zip');
+	const exportPath = getTempFile('Export.zip');
 
-	await unzipFile(
-		handleUnzipFile,
-		exportPath,
-		'json_objectEntry_export',
-		require('./dependencies/json_objectEntry_export.json')
-	);
+	const unzipedFile = JSON.parse(await unzipFile(exportPath));
+
+	expect(require('./dependencies/json_objectEntry_export.json')).toEqual([
+		{
+			...unzipedFile[0],
+			creator: {
+				...unzipedFile[0].creator,
+				id: expect.any(Number),
+			},
+			customAttachment: {
+				id: expect.any(Number),
+				link: {
+					href: expect.any(String),
+					label: unzipedFile[0].customAttachment.link.label,
+				},
+				name: expect.any(String),
+			},
+		},
+	]);
 
 	fs.unlinkSync(exportPath);
 	await apiHelpers.delete(
@@ -327,65 +328,18 @@ test('verify users can exclude fields from being exported in JSONL format', asyn
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	await dataMigrationCenterPage.goto();
-	await dataMigrationCenterPage.goToExportFile();
-
 	await dataMigrationCenterPage.exportFile(
 		'JSONL',
 		'C_Stock (v1_0 - Liferay Object REST)',
-		__dirname + '/../../tmp/',
 		['name']
 	);
 
-	const exportPath = path.resolve(__dirname, '../../tmp/Export.zip');
+	const exportPath = getTempFile('Export.zip');
 
-	expect(JSON.parse(await unzipFile(exportPath))).toEqual(
-		_getExpectedValue(
-			'jsonl_objectEntry_import',
-			require('./dependencies/jsonl_objectEntry_import.json')
-		)
+	expect(require('./dependencies/jsonl_objectEntry_import.json')).toEqual(
+		JSON.parse(await unzipFile(exportPath))
 	);
 
 	fs.unlinkSync(exportPath);
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });
-
-function _getExpectedValue(id: string, unzipFile: any) {
-	let expectedValue: {};
-
-	if (id === 'json_objectEntry_export') {
-		expectedValue = [
-			{
-				...unzipFile[0],
-				creator: {
-					...unzipFile[0].creator,
-					id: expect.any(Number),
-				},
-				customAttachment: {
-					id: expect.any(Number),
-					link: {
-						href: expect.any(String),
-						label: unzipFile[0].customAttachment.link.label,
-					},
-					name: expect.any(String),
-				},
-			},
-		];
-	} else if (id === 'json_objectEntry_export_excluded') {
-		expectedValue = unzipFile;
-	} else if (id === 'jsonl_objectEntry_import') {
-		expectedValue = unzipFile;
-	} else if (id === 'jsont_objectEntry_import') {
-		expectedValue = {
-			actions: unzipFile.actions,
-			configuration: {
-				...unzipFile.configuration,
-				companyId: expect.any(Number),
-				userId: expect.any(Number),
-			},
-			items: unzipFile.items,
-		};
-	}
-
-	return expectedValue;
-}

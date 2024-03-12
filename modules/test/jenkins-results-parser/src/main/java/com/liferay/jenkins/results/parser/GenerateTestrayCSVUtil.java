@@ -31,6 +31,8 @@ public class GenerateTestrayCSVUtil {
 	public static void generate(
 		String projectBuildDir, String projectTestrayBuildId) {
 
+		System.out.println("LRCI-3940 inside of GenerateTestrayCSVUtil");
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(
@@ -54,9 +56,13 @@ public class GenerateTestrayCSVUtil {
 			_generate(allTestrayCaseResults, TestrayCaseResult.Type.COMMON));
 
 		try {
+			String testrayResultsCSVString = sb.toString();
+
+			System.out.println("LRCI-3940 restrayResultsCSVString: " + testrayResultsCSVString);
+
 			JenkinsResultsParserUtil.write(
 				new File(projectBuildDir, "testray-results.csv"),
-				sb.toString());
+				testrayResultsCSVString);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -66,6 +72,8 @@ public class GenerateTestrayCSVUtil {
 	private static String _generate(
 		List<TestrayCaseResult> allTestrayCaseResults,
 		TestrayCaseResult.Type testrayCaseResultType) {
+
+		System.out.println("LRCI-3940 inside of _generate function of GenerateTEstrayCSVUtil");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -93,6 +101,9 @@ public class GenerateTestrayCSVUtil {
 	private static List<TestrayCaseResult> _getTestrayCaseResults(
 		String projectTestrayBuildId) {
 
+		System.out.println("LRCI-3940 inside of _getTestrayCaseResults");
+		System.out.println("LRCI-3940 projectTestrayBuildId: " + projectTestrayBuildId); 
+				
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
 		int currentPage = 1;
@@ -103,6 +114,8 @@ public class GenerateTestrayCSVUtil {
 				"https://testray.liferay.com/home/-/testray",
 				"/case_results.json?cur=", String.valueOf(currentPage),
 				"&testrayBuildId=", projectTestrayBuildId, "&statuses=3");
+
+			System.out.println("LRCI-3940 testrayCaseResultsURL: " + testrayCaseResultsURL);
 
 			JSONObject jsonObject = null;
 

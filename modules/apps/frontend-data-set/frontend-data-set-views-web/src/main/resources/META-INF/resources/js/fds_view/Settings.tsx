@@ -10,27 +10,165 @@ import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {navigate} from 'frontend-js-web';
-import React, {useState} from 'react';
+import {fetch, navigate} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../FDSView';
+import {API_URL, OBJECT_RELATIONSHIP} from '../utils/constants';
+import openDefaultFailureToast from '../utils/openDefaultFailureToast';
+import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
-const NOT_CONFIGURED_VIEW_MODE = {
-	id: 0,
+interface IVisualizationMode {
+	label: string;
+	name: string;
+	thumbnail: string;
+	url: string;
+}
+
+const NOT_CONFIGURED_VISUALIZATION_MODE: Omit<IVisualizationMode, 'url'> = {
 	label: Liferay.Language.get('configure-new-layout'),
 	name: 'not-configured',
 	thumbnail: 'plus',
 };
 
-const Settings = ({fdsViewsURL, spritemap}: IFDSViewSectionProps) => {
+const Settings = ({
+	fdsView,
+	fdsViewsURL,
+	onActiveSectionChage,
+	onFDSViewUpdate,
+	spritemap,
+}: IFDSViewSectionProps) => {
+	const FDS_VISUALIZATION_MODES: Array<IVisualizationMode> = [
+		{
+			label: Liferay.Language.get('cards'),
+			name: 'cards',
+			thumbnail: 'cards2',
+			url: `${API_URL.FDS_CARDS_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CARDS_SECTION_ERC} eq '${fdsView.externalReferenceCode}')`,
+		},
+		{
+			label: Liferay.Language.get('list'),
+			name: 'list',
+			thumbnail: 'list',
+			url: `${API_URL.FDS_LIST_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_LIST_SECTION_ERC} eq '${fdsView.externalReferenceCode}')`,
+		},
+		{
+			label: Liferay.Language.get('table'),
+			name: 'table',
+			thumbnail: 'table',
+			url: `${API_URL.FDS_FIELDS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD}`,
+		},
+	];
+	const [defaultView, setDefaultView] = useState(
+		NOT_CONFIGURED_VISUALIZATION_MODE.name
+	);
 	const [enableCustomView, setEnableCustomView] = useState(false);
-	const [viewModes, setViewModes] = useState([]);
-	const handleViewModeChange = (option: any) => {
-		return option;
-	};
+	const [visualizationModes, setVisualizationModes] = useState<
+		Array<IVisualizationMode>
+	>([]);
+
 	const updateFDSViewSettings = async () => {
-		setViewModes([]);
+		const body = {
+			defaultView,
+		};
+
+		const response = await fetch(
+			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
+			{
+				body: JSON.stringify(body),
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				method: 'PATCH',
+			}
+		);
+
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
+		const responseJSON = await response.json();
+
+		if (responseJSON?.id) {
+			openDefaultSuccessToast();
+
+			onFDSViewUpdate(responseJSON);
+		}
+		else {
+			openDefaultFailureToast();
+		}
 	};
+
+	const getActiveVisualizationModes = async () => {
+		const visualizationConfigRequests = FDS_VISUALIZATION_MODES.map((viewMode) =>
+			fetch(viewMode.url)
+		);
+
+		Promise.all(visualizationConfigRequests)
+			.then((visualizationConfigResults) =>
+				Promise.all(visualizationConfigResults.map((result) => result.json()))
+			)
+			.then(
+				([cards, list, table]) => {
+					const activeViews: Array<IVisualizationMode> = [];
+
+					FDS_VISUALIZATION_MODES.forEach((view) => {
+						if (
+							view.name === 'cards' &&
+							cards.items &&
+							cards.items.length
+						) {
+							activeViews.push(view);
+						}
+						if (
+							view.name === 'list' &&
+							list.items &&
+							list.items.length
+						) {
+							activeViews.push(view);
+						}
+						if (
+							view.name === 'table' &&
+							table.items &&
+							table.items.length
+						) {
+							activeViews.push(view);
+						}
+					});
+
+					setVisualizationModes(activeViews);
+
+					setDefaultView(() => {
+						if (
+							activeViews.find(
+								(view: IVisualizationMode) =>
+									view.name === fdsView.defaultView
+							)
+						) {
+							return fdsView.defaultView;
+						}
+						else {
+							return activeViews.length
+								? activeViews[0].name
+								: NOT_CONFIGURED_VISUALIZATION_MODE.name;
+						}
+					});
+				},
+				() => {
+					setVisualizationModes([]);
+
+					setDefaultView(NOT_CONFIGURED_VISUALIZATION_MODE.name);
+				}
+			);
+	};
+
+	useEffect(() => {
+		getActiveVisualizationModes();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<ClayLayout.Sheet className="mt-3" size="lg">
@@ -46,7 +184,7 @@ const Settings = ({fdsViewsURL, spritemap}: IFDSViewSectionProps) => {
 				</h3>
 
 				<ClayLayout.Row className="align-items-center justify-content-between">
-					<ClayLayout.Col size={8}>
+					<ClayLayout.Col size={9}>
 						<div>
 							<label htmlFor="view-mode-picker" id="view-mode">
 								{Liferay.Language.get(
@@ -77,17 +215,25 @@ const Settings = ({fdsViewsURL, spritemap}: IFDSViewSectionProps) => {
 						</div>
 					</ClayLayout.Col>
 
-					<ClayLayout.Col className="" size={4}>
+					<ClayLayout.Col size={3}>
 						<Picker
 							aria-labelledby="view-mode"
 							id="view-mode-picker"
-							items={viewModes}
-							onSelectionChange={handleViewModeChange}
+							items={visualizationModes}
+							onSelectionChange={(option: React.Key) => {
+								if (option === 'not-configured') {
+									onActiveSectionChage(1);
+								}
+								else {
+									setDefaultView(option as string);
+								}
+							}}
 							placeholder={Liferay.Language.get('not-configured')}
+							selectedKey={defaultView}
 						>
-							{viewModes.length ? (
+							{visualizationModes.length ? (
 								({label, name, thumbnail}) => (
-									<Option key={name} textValue={name}>
+									<Option key={name} textValue={label}>
 										<ClayIcon
 											className="mr-3"
 											symbol={thumbnail}
@@ -103,9 +249,11 @@ const Settings = ({fdsViewsURL, spritemap}: IFDSViewSectionProps) => {
 									)}
 								>
 									<Option
-										key={NOT_CONFIGURED_VIEW_MODE.name}
+										key={
+											NOT_CONFIGURED_VISUALIZATION_MODE.name
+										}
 										textValue={
-											NOT_CONFIGURED_VIEW_MODE.name
+											NOT_CONFIGURED_VISUALIZATION_MODE.name
 										}
 									>
 										<ClayLayout.Row className="mb-2 mt-2">
@@ -115,7 +263,7 @@ const Settings = ({fdsViewsURL, spritemap}: IFDSViewSectionProps) => {
 											>
 												<ClayIcon
 													symbol={
-														NOT_CONFIGURED_VIEW_MODE.thumbnail
+														NOT_CONFIGURED_VISUALIZATION_MODE.thumbnail
 													}
 												/>
 											</ClayLayout.Col>
@@ -123,7 +271,7 @@ const Settings = ({fdsViewsURL, spritemap}: IFDSViewSectionProps) => {
 											<ClayLayout.Col size={10}>
 												<Text size={4}>
 													{
-														NOT_CONFIGURED_VIEW_MODE.label
+														NOT_CONFIGURED_VISUALIZATION_MODE.label
 													}
 												</Text>
 											</ClayLayout.Col>

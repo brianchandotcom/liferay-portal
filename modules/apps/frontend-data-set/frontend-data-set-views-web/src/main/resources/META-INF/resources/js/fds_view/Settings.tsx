@@ -27,7 +27,7 @@ interface IVisualizationMode {
 
 const NOT_CONFIGURED_VISUALIZATION_MODE: Omit<IVisualizationMode, 'url'> = {
 	label: Liferay.Language.get('configure-new-layout'),
-	name: 'not-configured',
+	name: Liferay.Language.get('not-configured'),
 	thumbnail: 'plus',
 };
 
@@ -223,14 +223,14 @@ const Settings = ({
 							id="view-mode-picker"
 							items={visualizationModes}
 							onSelectionChange={(option: React.Key) => {
-								if (option === 'not-configured') {
+								if (option === NOT_CONFIGURED_VISUALIZATION_MODE.name) {
 									onActiveSectionChage(1);
 								}
 								else {
 									setDefaultView(option as string);
 								}
 							}}
-							placeholder={Liferay.Language.get('not-configured')}
+							placeholder={NOT_CONFIGURED_VISUALIZATION_MODE.name}
 							selectedKey={defaultView}
 						>
 							{visualizationModes.length ? (
@@ -258,10 +258,9 @@ const Settings = ({
 											NOT_CONFIGURED_VISUALIZATION_MODE.name
 										}
 									>
-										<ClayLayout.Row className="mb-2 mt-2">
+										<ClayLayout.Row>
 											<ClayLayout.Col
 												className="align-self-center"
-												size={1}
 											>
 												<ClayIcon
 													symbol={
@@ -271,7 +270,7 @@ const Settings = ({
 											</ClayLayout.Col>
 
 											<ClayLayout.Col size={10}>
-												<Text size={4}>
+												<Text size={3}>
 													{
 														NOT_CONFIGURED_VISUALIZATION_MODE.label
 													}

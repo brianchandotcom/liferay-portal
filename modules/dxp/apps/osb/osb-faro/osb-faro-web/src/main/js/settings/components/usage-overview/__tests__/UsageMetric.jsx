@@ -93,4 +93,20 @@ describe('UsageMetric', () => {
 
 		expect(getByText('10% Since Jul 10, 2017')).toBeInTheDocument();
 	});
+
+	it('should display the plan count percentage as 100% even when count is higher than limit ', () => {
+		const props = {
+			count: 7500,
+			data: {
+				name: 'Liferay Analytics Cloud Basic',
+				startDate: getTimestamp(-365)
+			},
+			limit: 7000,
+			status: SubscriptionStatuses.Ok
+		};
+
+		const {getByText} = render(<DefaultComponent {...props} />);
+
+		expect(getByText('100% Since Jul 10, 2017')).toBeInTheDocument();
+	});
 });

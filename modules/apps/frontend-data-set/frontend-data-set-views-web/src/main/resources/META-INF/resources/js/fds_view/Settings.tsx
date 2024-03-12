@@ -66,49 +66,16 @@ const Settings = ({
 		Array<IVisualizationMode>
 	>([]);
 
-	const updateFDSViewSettings = async () => {
-		const body = {
-			defaultView,
-		};
-
-		const response = await fetch(
-			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
-			{
-				body: JSON.stringify(body),
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
-				method: 'PATCH',
-			}
-		);
-
-		if (!response.ok) {
-			openDefaultFailureToast();
-
-			return;
-		}
-
-		const responseJSON = await response.json();
-
-		if (responseJSON?.id) {
-			openDefaultSuccessToast();
-
-			onFDSViewUpdate(responseJSON);
-		}
-		else {
-			openDefaultFailureToast();
-		}
-	};
-
 	const getActiveVisualizationModes = async () => {
-		const visualizationConfigRequests = FDS_VISUALIZATION_MODES.map((viewMode) =>
-			fetch(viewMode.url)
+		const visualizationConfigRequests = FDS_VISUALIZATION_MODES.map(
+			(viewMode) => fetch(viewMode.url)
 		);
 
 		Promise.all(visualizationConfigRequests)
 			.then((visualizationConfigResults) =>
-				Promise.all(visualizationConfigResults.map((result) => result.json()))
+				Promise.all(
+					visualizationConfigResults.map((result) => result.json())
+				)
 			)
 			.then(
 				([cards, list, table]) => {
@@ -162,6 +129,41 @@ const Settings = ({
 					setDefaultView(NOT_CONFIGURED_VISUALIZATION_MODE.name);
 				}
 			);
+	};
+
+	const updateFDSViewSettings = async () => {
+		const body = {
+			defaultView,
+		};
+
+		const response = await fetch(
+			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
+			{
+				body: JSON.stringify(body),
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				method: 'PATCH',
+			}
+		);
+
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
+		const responseJSON = await response.json();
+
+		if (responseJSON?.id) {
+			openDefaultSuccessToast();
+
+			onFDSViewUpdate(responseJSON);
+		}
+		else {
+			openDefaultFailureToast();
+		}
 	};
 
 	useEffect(() => {

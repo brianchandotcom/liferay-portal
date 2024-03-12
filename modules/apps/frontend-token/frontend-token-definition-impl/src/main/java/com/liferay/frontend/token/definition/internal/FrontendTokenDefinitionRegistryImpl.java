@@ -321,8 +321,7 @@ public class FrontendTokenDefinitionRegistryImpl
 		Map<String, FrontendTokenDefinition> frontendTokenDefinitions =
 			_getFrontendTokenDefinitionsMap(themeCSSCET.getCompanyId());
 
-		frontendTokenDefinitions.remove(
-			themeCSSCET.getExternalReferenceCode());
+		frontendTokenDefinitions.remove(themeCSSCET.getExternalReferenceCode());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -378,11 +377,11 @@ public class FrontendTokenDefinitionRegistryImpl
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
 
-	private final Map<Long, Map<String, FrontendTokenDefinition>>
-		_frontendTokenDefinitionsMap = new ConcurrentHashMap<>();
 	private final FrontendTokenDefinitionJSONValidator
 		_frontendTokenDefinitionJSONValidator =
 			new FrontendTokenDefinitionJSONValidator();
+	private final Map<Long, Map<String, FrontendTokenDefinition>>
+		_frontendTokenDefinitionsMap = new ConcurrentHashMap<>();
 
 	@Reference
 	private Portal _portal;

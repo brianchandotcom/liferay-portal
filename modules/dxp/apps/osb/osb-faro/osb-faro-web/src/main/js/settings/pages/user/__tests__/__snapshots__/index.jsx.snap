@@ -56,7 +56,9 @@ exports[`UserRoutes should render 1`] = `
             >
               <span
                 class="navbar-text-truncate"
-              />
+              >
+                Manage Users
+              </span>
               <svg
                 class="lexicon-icon lexicon-icon-caret-bottom"
                 role="presentation"

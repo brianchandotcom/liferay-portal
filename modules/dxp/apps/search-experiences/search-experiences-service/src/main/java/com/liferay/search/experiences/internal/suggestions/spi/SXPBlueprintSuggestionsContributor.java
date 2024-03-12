@@ -280,7 +280,8 @@ public class SXPBlueprintSuggestionsContributor
 		if (includeAssetSearchSummary) {
 			suggestionBuilder.attribute(
 				"assetSearchSummary",
-				assetRenderer.getSearchSummary(searchContext.getLocale()));
+				assetRenderer.getSummary(
+					liferayPortletRequest, liferayPortletResponse));
 		}
 
 		if (includeAssetURL) {

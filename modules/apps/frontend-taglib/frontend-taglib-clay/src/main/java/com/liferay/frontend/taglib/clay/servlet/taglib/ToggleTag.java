@@ -12,8 +12,10 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
@@ -21,6 +23,13 @@ import javax.servlet.jsp.JspWriter;
  * @author Kevin Tan
  */
 public class ToggleTag extends BaseContainerTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		updateFormCheckboxNames();
+
+		return super.doEndTag();
+	}
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -312,6 +321,18 @@ public class ToggleTag extends BaseContainerTag {
 		jspWriter.write("</label>");
 
 		return SKIP_BODY;
+	}
+
+	protected void updateFormCheckboxNames() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		List<String> checkboxNames =
+			(List<String>)httpServletRequest.getAttribute(
+				"LIFERAY_SHARED_aui:form:checkboxNames");
+
+		if (checkboxNames != null) {
+			checkboxNames.add(_name);
+		}
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:toggle:";

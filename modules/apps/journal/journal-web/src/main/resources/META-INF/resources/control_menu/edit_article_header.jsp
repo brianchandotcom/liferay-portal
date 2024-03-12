@@ -11,5 +11,5 @@
 	aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
 	cssClass="c-ml-2 c-mt-0 lfr-portal-tooltip text-white"
 	data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
-	symbol="lock"
+	symbol="password-policies"
 />

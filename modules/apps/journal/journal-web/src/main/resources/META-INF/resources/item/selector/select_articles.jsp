@@ -97,7 +97,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 											aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
 											cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"
 											data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
-											symbol="lock"
+											symbol="password-policies"
 										/>
 									</c:if>
 								</p>
@@ -168,7 +168,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 										aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
 										cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"
 										data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
-										symbol="lock"
+										symbol="password-policies"
 									/>
 								</c:if>
 							</liferay-ui:search-container-column-text>

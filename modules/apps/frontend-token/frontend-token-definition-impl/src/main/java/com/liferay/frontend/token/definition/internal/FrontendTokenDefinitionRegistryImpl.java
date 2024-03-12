@@ -218,6 +218,19 @@ public class FrontendTokenDefinitionRegistryImpl
 	@Reference
 	protected Portal portal;
 
+	private String _getCETExternalReferenceCode(long layoutSetId) {
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
+				_portal.getClassNameId(LayoutSet.class), layoutSetId,
+				ClientExtensionEntryConstants.TYPE_THEME_CSS);
+
+		if (clientExtensionEntryRel != null) {
+			return clientExtensionEntryRel.getCETExternalReferenceCode();
+		}
+
+		return null;
+	}
+
 	private FrontendTokenDefinition _getFrontendTokenDefinition(
 		long companyId, String externalReferenceCode, String themeId) {
 
@@ -269,19 +282,6 @@ public class FrontendTokenDefinitionRegistryImpl
 
 		return _companyFrontendTokenDefinitionsMap.getOrDefault(
 			companyId, new ConcurrentHashMap<>());
-	}
-
-	private String _getCETExternalReferenceCode(long layoutSetId) {
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
-				_portal.getClassNameId(LayoutSet.class), layoutSetId,
-				ClientExtensionEntryConstants.TYPE_THEME_CSS);
-
-		if (clientExtensionEntryRel != null) {
-			return clientExtensionEntryRel.getCETExternalReferenceCode();
-		}
-
-		return null;
 	}
 
 	private void _registerThemeCSSClientExtensionFrontendTokenDefinition(
@@ -378,7 +378,7 @@ public class FrontendTokenDefinitionRegistryImpl
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
 
-	private Map<Long, Map<String, FrontendTokenDefinition>>
+	private final Map<Long, Map<String, FrontendTokenDefinition>>
 		_companyFrontendTokenDefinitionsMap = new ConcurrentHashMap<>();
 	private final FrontendTokenDefinitionJSONValidator
 		_frontendTokenDefinitionJSONValidator =

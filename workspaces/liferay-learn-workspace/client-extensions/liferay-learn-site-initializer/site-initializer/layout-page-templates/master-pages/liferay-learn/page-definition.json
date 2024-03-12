@@ -9,16 +9,16 @@
 						"siteKey": "Liferay Learn"
 					},
 					"fragmentConfig": {
-						"darkNav": true,
-						"searchBlueprintId": 33221,
-						"showLanguageMenu": true,
-						"siteNavigationMenuId": 0,
 						"accountMenuId": 0,
-						"showCta": false,
+						"darkNav": true,
 						"navigationDDMTemplateKey": "NAVIGATION_PRIMARY",
-						"showSearch": true,
+						"searchBlueprintId": 33221,
 						"showAccountMenu": true,
-						"showSiteName": true
+						"showCta": false,
+						"showLanguageMenu": true,
+						"showSearch": true,
+						"showSiteName": true,
+						"siteNavigationMenuId": 0
 					},
 					"fragmentFields": [
 						{
@@ -36,31 +36,36 @@
 						{
 							"id": "siteName",
 							"value": {
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						},
 						{
 							"id": "suggestionsPopularItem4",
 							"value": {
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						},
 						{
 							"id": "suggestionsPopularItem3",
 							"value": {
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						},
 						{
 							"id": "suggestionsPopularItem2",
 							"value": {
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						},
 						{
 							"id": "suggestionsPopularItem1",
 							"value": {
-								"fragmentLink": {}
+								"fragmentLink": {
+								}
 							}
 						}
 					],
@@ -69,7 +74,8 @@
 				"id": "2d92e3f6-ff16-1f34-ffa9-f24baa8c6fd3",
 				"pageElements": [
 					{
-						"definition": {},
+						"definition": {
+						},
 						"id": "d3286e7e-2bc7-1f46-9e16-a7e37e0a17f7",
 						"pageElements": [
 							{
@@ -87,7 +93,8 @@
 										{
 											"id": "menuItemText",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Liferay.com"
@@ -116,7 +123,8 @@
 										{
 											"id": "menuItemText",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Help Center"
@@ -145,7 +153,8 @@
 										{
 											"id": "menuItemText",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Community"
@@ -174,7 +183,8 @@
 										{
 											"id": "menuItemText",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Marketplace"
@@ -197,7 +207,8 @@
 			{
 				"definition": {
 					"fragmentSettings": {
-						"unallowedFragments": []
+						"unallowedFragments": [
+						]
 					}
 				},
 				"id": "1d61c463-b942-bb0d-f995-aff6273efe85",
@@ -233,7 +244,8 @@
 						}
 					],
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Footer"
 				},
 				"id": "5c2f6c53-7600-8343-4273-26ba6ba7d09e",
@@ -328,7 +340,8 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-html"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-html",
@@ -362,7 +375,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Liferay"
@@ -606,7 +620,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Capabilities-Title"
 														},
 														"id": "9b86fad6-8191-3d53-5e66-9f97e871d172",
@@ -625,7 +640,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Capabilities"
@@ -654,7 +670,8 @@
 																"capabilities-link-container"
 															],
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Capabalities-Links"
 														},
 														"id": "ed805a2d-ab42-daa9-5ba5-088bbb415ee5",
@@ -717,7 +734,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Products-Title"
 														},
 														"id": "a851cace-126b-0ce4-4a9e-25b4bb527146",
@@ -736,7 +754,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Product"
@@ -998,7 +1017,8 @@
 															{
 																"definition": {
 																	"indexed": true,
-																	"layout": {},
+																	"layout": {
+																	},
 																	"name": "Contact-Title"
 																},
 																"id": "edf87ef6-5ca5-a6b1-8c03-601f69ef3f9b",
@@ -1017,7 +1037,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Contact Us"
@@ -1043,7 +1064,8 @@
 															{
 																"definition": {
 																	"indexed": true,
-																	"layout": {},
+																	"layout": {
+																	},
 																	"name": "Contact-Links"
 																},
 																"id": "b3b5ca37-2a89-b745-638c-9cfc30acc671",
@@ -1106,7 +1128,8 @@
 															{
 																"definition": {
 																	"indexed": true,
-																	"layout": {},
+																	"layout": {
+																	},
 																	"name": "Connect-Title"
 																},
 																"id": "c1696538-4bf2-2153-2125-eb7b81746ffa",
@@ -1125,7 +1148,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Connect"
@@ -1164,7 +1188,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -1188,7 +1213,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -1212,7 +1238,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -1236,7 +1263,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -1260,7 +1288,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -1284,7 +1313,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -1358,7 +1388,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -1381,7 +1412,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -1489,9 +1521,9 @@
 		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

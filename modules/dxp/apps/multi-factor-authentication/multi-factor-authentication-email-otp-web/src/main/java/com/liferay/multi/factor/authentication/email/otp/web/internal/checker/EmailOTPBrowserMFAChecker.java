@@ -88,6 +88,17 @@ public class EmailOTPBrowserMFAChecker implements BrowserMFAChecker {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
+		Long mfaEmailOTPUserId = (Long)httpSession.getAttribute(
+			MFAEmailOTPWebKeys.MFA_EMAIL_OTP_USER_ID);
+
+		if ((mfaEmailOTPUserId != null) && (mfaEmailOTPUserId != userId)) {
+			httpSession.removeAttribute(MFAEmailOTPWebKeys.MFA_EMAIL_OTP_PHASE);
+			httpSession.removeAttribute(
+				MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SET_AT_TIME);
+			httpSession.removeAttribute(
+				MFAEmailOTPWebKeys.MFA_EMAIL_OTP_USER_ID);
+		}
+
 		httpServletRequest.setAttribute(
 			MFAEmailOTPWebKeys.MFA_EMAIL_OTP_SEND_TO_ADDRESS_OBFUSCATED,
 			obfuscateEmailAddress(user.getEmailAddress()));

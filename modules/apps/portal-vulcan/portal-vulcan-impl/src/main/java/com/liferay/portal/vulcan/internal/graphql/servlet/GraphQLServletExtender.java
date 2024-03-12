@@ -2679,8 +2679,8 @@ public class GraphQLServletExtender {
 
 				graphQLFieldDefinitionBuilder.deprecate(
 					StringBundler.concat(
-						"This field is deprecated. Please, access this ",
-						fieldType, " through the following path : ", fieldType,
+						"This field is deprecated. Access to ",
+						fieldType, " is available at ", fieldType,
 						"/", _getGraphQLNamespace(_servletDataMap.get(method)),
 						"/", method.getName()));
 			}

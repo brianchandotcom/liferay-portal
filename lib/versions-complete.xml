@@ -29,18 +29,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.batch.engine.service.jar!commons-io.jar</file-name>
-				<version>2.11.0</version>
-				<project-name>Apache Commons IO</project-name>
-				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.calendar.api.jar!com.google.ical.jar</file-name>
 				<version>20110304</version>
 				<project-name>com.google.ical</project-name>
@@ -1126,18 +1114,6 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.dynamic.data.mapping.data.provider.impl.jar!commons-io.jar</file-name>
-				<version>2.11.0</version>
-				<project-name>Apache Commons IO</project-name>
-				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2614,30 +2590,6 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-compress.jar</file-name>
-				<version>1.21</version>
-				<project-name>Apache Commons Compress</project-name>
-				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-io.jar</file-name>
-				<version>2.11.0</version>
-				<project-name>Apache Commons IO</project-name>
-				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4565,12 +4517,12 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-compress.jar</file-name>
-				<version>1.21</version>
+				<version>1.26.0</version>
 				<project-name>Apache Commons Compress</project-name>
 				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -4596,6 +4548,30 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-fileupload.jar</file-name>
+				<version>1.5</version>
+				<project-name>Apache Commons FileUpload</project-name>
+				<project-url>https://commons.apache.org/proper/commons-fileupload/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-io.jar</file-name>
+				<version>2.15.1</version>
+				<project-name>Apache Commons IO</project-name>
+				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

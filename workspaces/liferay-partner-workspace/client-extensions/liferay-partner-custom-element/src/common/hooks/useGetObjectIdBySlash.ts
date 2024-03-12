@@ -9,7 +9,7 @@ const ID_POSITION = 1;
 
 export default function useGetObjectIdBySlash() {
 	return useMemo(() => {
-		const hrefLocation = window.location.href;
+		const hrefLocation = window.location.pathname;
 
 		return hrefLocation.split('/l/')[ID_POSITION].split('?')[0];
 	}, []);

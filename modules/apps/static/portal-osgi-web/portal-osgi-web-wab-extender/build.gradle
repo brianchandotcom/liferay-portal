@@ -5,8 +5,6 @@ dependencies {
 	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.LIFERAY-PATCHED-22"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "commons-fileupload", name: "commons-fileupload", version: "1.5"
-	compileOnly group: "commons-io", name: "commons-io", version: "2.11.0"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
@@ -29,11 +27,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
-}
-
-deployDependencies {
-	from configurations.compileOnly
-
-	include "commons-fileupload-*.jar"
-	include "commons-io-*.jar"
 }

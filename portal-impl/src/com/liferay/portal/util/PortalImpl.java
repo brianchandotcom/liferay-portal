@@ -2464,7 +2464,7 @@ public class PortalImpl implements Portal {
 	@Override
 	public String getLayoutActualURL(Layout layout, String mainPath) {
 		Map<String, String> variablesMap = _getVariablesMap(
-			getBrowsableLayout(layout), mainPath);
+			LayoutLocalServiceUtil.getBrowsableLayout(layout), mainPath);
 
 		variablesMap.putAll(layout.getTypeSettingsProperties());
 
@@ -6786,40 +6786,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return locale;
-	}
-
-	protected Layout getBrowsableLayout(Layout layout) {
-		LayoutTypeController layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(
-				layout.getType());
-
-		if (layoutTypeController.isBrowsable()) {
-			return layout;
-		}
-
-		Layout browsableChildLayout = null;
-
-		List<Layout> childLayouts = layout.getAllChildren();
-
-		for (Layout childLayout : childLayouts) {
-			LayoutTypeController childLayoutTypeController =
-				LayoutTypeControllerTracker.getLayoutTypeController(
-					childLayout.getType());
-
-			if (childLayoutTypeController.isBrowsable()) {
-				browsableChildLayout = childLayout;
-
-				break;
-			}
-		}
-
-		if (browsableChildLayout != null) {
-			return browsableChildLayout;
-		}
-
-		return LayoutLocalServiceUtil.fetchLayout(
-			LayoutLocalServiceUtil.getDefaultPlid(
-				layout.getGroupId(), layout.isPrivateLayout()));
 	}
 
 	protected String getCanonicalDomain(

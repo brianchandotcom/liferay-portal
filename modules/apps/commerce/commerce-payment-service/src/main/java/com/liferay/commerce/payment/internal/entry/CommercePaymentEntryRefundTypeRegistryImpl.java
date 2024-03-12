@@ -8,22 +8,22 @@ package com.liferay.commerce.payment.internal.entry;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundType;
 import com.liferay.commerce.payment.entry.CommercePaymentEntryRefundTypeRegistry;
 import com.liferay.commerce.payment.internal.entry.comparator.CommercePaymentEntryRefundTypeOrderComparator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -47,7 +47,7 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 		}
 
 		CommercePaymentEntryRefundType commercePaymentEntryRefundType =
-			_serviceTrackerMap.getService(companyId + StringPool.POUND + key);
+			_serviceTrackerMap.getService(new ScopedKey(companyId, key));
 
 		if (commercePaymentEntryRefundType == null) {
 			if (_log.isDebugEnabled()) {
@@ -71,10 +71,10 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 		List<CommercePaymentEntryRefundType> commercePaymentEntryRefundTypes =
 			new ArrayList<>();
 
-		for (String key : _serviceTrackerMap.keySet()) {
-			if (key.startsWith(companyId + StringPool.POUND)) {
+		for (ScopedKey scopedKey : _serviceTrackerMap.keySet()) {
+			if (companyId == scopedKey._companyId) {
 				commercePaymentEntryRefundTypes.add(
-					_serviceTrackerMap.getService(key));
+					_serviceTrackerMap.getService(scopedKey));
 			}
 		}
 
@@ -89,7 +89,11 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, CommercePaymentEntryRefundType.class,
 			"(enabled=true)",
-			new CommercePaymentEntryRefundTypeServiceReferenceMapper());
+			(serviceReference, emitter) -> emitter.emit(
+				new ScopedKey(
+					GetterUtil.getLong(
+						serviceReference.getProperty("companyId")),
+					String.valueOf(serviceReference.getProperty("key")))));
 	}
 
 	@Deactivate
@@ -103,22 +107,46 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 	private final Comparator<CommercePaymentEntryRefundType>
 		_commercePaymentEntryRefundTypeOrderComparator =
 			new CommercePaymentEntryRefundTypeOrderComparator();
-	private ServiceTrackerMap<String, CommercePaymentEntryRefundType>
+	private ServiceTrackerMap<ScopedKey, CommercePaymentEntryRefundType>
 		_serviceTrackerMap;
 
-	private static class CommercePaymentEntryRefundTypeServiceReferenceMapper
-		implements ServiceReferenceMapper
-			<String, CommercePaymentEntryRefundType> {
+	private static class ScopedKey {
 
 		@Override
-		public void map(
-			ServiceReference<CommercePaymentEntryRefundType> serviceReference,
-			ServiceReferenceMapper.Emitter<String> emitter) {
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
 
-			emitter.emit(
-				serviceReference.getProperty("companyId") + StringPool.POUND +
-					serviceReference.getProperty("key"));
+			if (!(object instanceof ScopedKey)) {
+				return false;
+			}
+
+			ScopedKey scopedKey = (ScopedKey)object;
+
+			if ((_companyId == scopedKey._companyId) &&
+				Objects.equals(_key, scopedKey._key)) {
+
+				return true;
+			}
+
+			return false;
 		}
+
+		@Override
+		public int hashCode() {
+			int hash = HashUtil.hash(0, _companyId);
+
+			return HashUtil.hash(hash, _key);
+		}
+
+		private ScopedKey(long companyId, String key) {
+			_companyId = companyId;
+			_key = key;
+		}
+
+		private final long _companyId;
+		private final String _key;
 
 	}
 

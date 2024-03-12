@@ -7,11 +7,11 @@ import {expect, mergeTests} from '@playwright/test';
 import * as fs from 'fs';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getTempFile} from '../../utils/temp';
 import {unzipFile} from '../../utils/zip';
+import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,

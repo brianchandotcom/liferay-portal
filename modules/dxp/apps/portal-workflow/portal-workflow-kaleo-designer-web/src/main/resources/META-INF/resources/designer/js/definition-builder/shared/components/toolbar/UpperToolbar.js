@@ -16,6 +16,7 @@ import {isEdge, isNode} from 'react-flow-renderer';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {defaultLanguageId} from '../../../constants';
+import {detectGroovyScript} from '../../../diagram-builder/util/detectGroovyScript';
 import {xmlNamespace} from '../../../source-builder/constants';
 import DeserializeUtil from '../../../source-builder/deserializeUtil';
 import {serializeDefinition} from '../../../source-builder/serializeUtil';
@@ -26,6 +27,7 @@ import {
 	saveDefinitionRequest,
 } from '../../../util/fetchUtil';
 import {isObjectEmpty} from '../../../util/utils';
+import {GroovyScriptWarningModal} from './GroovyScriptWarningModal';
 
 export default function UpperToolbar({
 	displayNames,
@@ -37,6 +39,7 @@ export default function UpperToolbar({
 		active,
 		alertMessage,
 		alertType,
+		allowScriptContentBeExecutedOrIncluded,
 		blockingErrors,
 		currentEditor,
 		definitionDescription,
@@ -54,6 +57,7 @@ export default function UpperToolbar({
 		setDefinitionTitleTranslations,
 		setDeserialize,
 		setElements,
+		setHasGroovyScript,
 		setSelectedLanguageId,
 		setShowAlert,
 		setShowDefinitionInfo,
@@ -64,6 +68,11 @@ export default function UpperToolbar({
 		sourceView,
 		version,
 	} = useContext(DefinitionBuilderContext);
+
+	const [
+		showGroovyScriptWarningModal,
+		setShowGroovyScriptWarningModal,
+	] = useState(false);
 
 	const [translations, setTranslations] = useState(
 		definitionTitleTranslations
@@ -179,6 +188,16 @@ export default function UpperToolbar({
 	};
 
 	const publishDefinition = () => {
+		if (
+			Liferay.FeatureFlags['LPD-11179'] &&
+			!allowScriptContentBeExecutedOrIncluded &&
+			detectGroovyScript(elements, setHasGroovyScript)
+		) {
+			setShowGroovyScriptWarningModal(true);
+
+			return;
+		}
+
 		if (!definitionTitle) {
 			setAlert(
 				Liferay.Language.get('name-workflow-before-publish'),
@@ -238,6 +257,16 @@ export default function UpperToolbar({
 	};
 
 	const saveDefinition = () => {
+		if (
+			Liferay.FeatureFlags['LPD-11179'] &&
+			!allowScriptContentBeExecutedOrIncluded &&
+			detectGroovyScript(elements, setHasGroovyScript)
+		) {
+			setShowGroovyScriptWarningModal(true);
+
+			return;
+		}
+
 		if (blockingErrors.errorType !== '') {
 			setAlert(blockingErrors.errorMessage, 'danger', true);
 		}
@@ -492,6 +521,14 @@ export default function UpperToolbar({
 						{alertMessage}
 					</ClayAlert>
 				</ClayAlert.ToastContainer>
+			)}
+
+			{showGroovyScriptWarningModal && (
+				<GroovyScriptWarningModal
+					setShowGroovyScriptWarningModal={() => {
+						setShowGroovyScriptWarningModal(false);
+					}}
+				/>
 			)}
 		</>
 	);

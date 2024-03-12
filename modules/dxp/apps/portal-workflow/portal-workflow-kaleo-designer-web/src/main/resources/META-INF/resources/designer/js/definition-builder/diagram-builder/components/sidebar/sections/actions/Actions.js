@@ -5,11 +5,17 @@
 
 import React, {useContext, useEffect, useState} from 'react';
 
+import {DefinitionBuilderContext} from '../../../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
+import {DisabledGroovyScriptAlert} from '../../../shared-components/DisabledGroovyScriptAlert';
 import ActionsInfo from './ActionsInfo';
 
 const Actions = (props) => {
 	const {selectedItem} = useContext(DiagramBuilderContext);
+	const {
+		allowScriptContentBeExecutedOrIncluded,
+		hasGroovyScript,
+	} = useContext(DefinitionBuilderContext);
 
 	const {actions} = selectedItem?.data;
 	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
@@ -37,17 +43,25 @@ const Actions = (props) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return sections.map(({identifier}, index) => {
-		return (
-			<ActionsInfo
-				{...props}
-				identifier={identifier}
-				index={index}
-				key={`section-${identifier}`}
-				sectionsLength={sections?.length}
-				setSections={setSections}
-			/>
-		);
-	});
+	return (
+		<>
+			{Liferay.FeatureFlags['LPD-11179'] &&
+				!allowScriptContentBeExecutedOrIncluded &&
+				hasGroovyScript && <DisabledGroovyScriptAlert />}
+
+			{sections.map(({identifier}, index) => {
+				return (
+					<ActionsInfo
+						{...props}
+						identifier={identifier}
+						index={index}
+						key={`section-${identifier}`}
+						sectionsLength={sections?.length}
+						setSections={setSections}
+					/>
+				);
+			})}
+		</>
+	);
 };
 export default Actions;

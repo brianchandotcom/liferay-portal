@@ -30,6 +30,7 @@ import {isIdDuplicated} from './components/sidebar/utils';
 import edgeTypes from './components/transitions/Edge';
 import FloatingConnectionLine from './components/transitions/FloatingConnectionLine';
 import getCollidingElements from './util/collisionDetection';
+import {detectGroovyScript} from './util/detectGroovyScript';
 import populateAssignmentsData from './util/populateAssignmentsData';
 import populateNotificationsData from './util/populateNotificationsData';
 
@@ -48,6 +49,7 @@ const deserializeUtil = new DeserializeUtil();
 export default function DiagramBuilder() {
 	const {
 		accountEntryId,
+		allowScriptContentBeExecutedOrIncluded,
 		currentEditor,
 		definitionName,
 		deserialize,
@@ -63,6 +65,7 @@ export default function DiagramBuilder() {
 		setDefinitionTitleTranslations,
 		setDeserialize,
 		setElements,
+		setHasGroovyScript,
 		setShowDefinitionInfo,
 		statuses,
 		version,
@@ -337,6 +340,20 @@ export default function DiagramBuilder() {
 
 			setElements(elements);
 
+			if (
+				Liferay.FeatureFlags['LPD-11179'] &&
+				!allowScriptContentBeExecutedOrIncluded
+			) {
+				const hasGroovyScript = detectGroovyScript(
+					elements,
+					setHasGroovyScript
+				);
+
+				if (hasGroovyScript && !hadGroovyScriptBefore) {
+					setHadGroovyScriptBefore(true);
+				}
+			}
+
 			populateAssignmentsData(
 				accountEntryId,
 				elements,
@@ -384,6 +401,20 @@ export default function DiagramBuilder() {
 						const elements = deserializeUtil.getElements();
 
 						setElements(elements);
+
+						if (
+							Liferay.FeatureFlags['LPD-11179'] &&
+							!allowScriptContentBeExecutedOrIncluded
+						) {
+							const hasGroovyScript = detectGroovyScript(
+								elements,
+								setHasGroovyScript
+							);
+
+							if (hasGroovyScript && !hadGroovyScriptBefore) {
+								setHadGroovyScriptBefore(true);
+							}
+						}
 
 						populateAssignmentsData(
 							accountEntryId,

@@ -27,7 +27,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Alessio Antonio Rendina
@@ -93,7 +92,6 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 	}
 
 	@Activate
-	@Modified
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, CommercePaymentEntryRefundType.class,
@@ -112,7 +110,7 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 	private final Comparator<CommercePaymentEntryRefundType>
 		_commercePaymentEntryRefundTypeOrderComparator =
 			new CommercePaymentEntryRefundTypeOrderComparator();
-	private volatile ServiceTrackerMap<String, CommercePaymentEntryRefundType>
+	private ServiceTrackerMap<String, CommercePaymentEntryRefundType>
 		_serviceTrackerMap;
 
 	private static class CommercePaymentEntryRefundTypeServiceReferenceMapper

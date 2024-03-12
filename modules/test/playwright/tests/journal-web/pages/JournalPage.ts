@@ -5,8 +5,8 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-import {ProductMenuPage} from '../../../pages/product-navigation-product-menu/ProductMenuPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class JournalPage {
 	readonly page: Page;
@@ -14,7 +14,6 @@ export class JournalPage {
 	readonly createBasicWebContentLink: Locator;
 	readonly newButton: Locator;
 	readonly permissionsFrameLocator: FrameLocator;
-	readonly productMenuPage: ProductMenuPage;
 	readonly templatesLink: Locator;
 
 	constructor(page: Page) {
@@ -27,12 +26,13 @@ export class JournalPage {
 		this.permissionsFrameLocator = page.frameLocator(
 			'iframe[title="Permissions"]'
 		);
-		this.productMenuPage = new ProductMenuPage(page);
 		this.templatesLink = page.getByRole('link', {name: 'Templates'});
 	}
 
-	async goto() {
-		await this.productMenuPage.goToJournalMenuItem();
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.journal}`
+		);
 	}
 
 	async goToCreateNewBasicArticle() {

@@ -695,9 +695,6 @@ public class ObjectDefinitionResourceTest
 		objectDefinition.setName("O" + objectDefinition.getName());
 		objectDefinition.setObjectFolderExternalReferenceCode(
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT);
-		objectDefinition.setPluralLabel(
-			Collections.singletonMap(
-				"en_US", "O" + objectDefinition.getName()));
 		objectDefinition.setObjectFields(
 			new ObjectField[] {
 				new ObjectField() {
@@ -715,6 +712,11 @@ public class ObjectDefinitionResourceTest
 					}
 				}
 			});
+		objectDefinition.setPluralLabel(
+			Collections.singletonMap(
+				"en_US", "O" + objectDefinition.getName()));
+		objectDefinition.setRootObjectDefinitionExternalReferenceCode(
+			StringPool.BLANK);
 		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_COMPANY);
 		objectDefinition.setStatus(
 			new Status() {

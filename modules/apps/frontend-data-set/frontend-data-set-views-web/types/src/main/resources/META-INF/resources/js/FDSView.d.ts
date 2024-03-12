@@ -13,6 +13,7 @@ interface IFDSViewSectionProps {
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
+	onActiveSectionChage: (section: number) => void;
 	onFDSViewUpdate: (data: FDSViewType) => void;
 	saveFDSFieldsURL: string;
 	spritemap: string;

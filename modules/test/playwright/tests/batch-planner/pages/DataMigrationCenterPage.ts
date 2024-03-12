@@ -4,8 +4,9 @@
  */
 
 import {Locator, Page} from '@playwright/test';
+
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
-import {getTempDir} from '../../utils/temp';
+import {getTempDir} from '../../../utils/temp';
 
 export class DataMigrationCenterPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;

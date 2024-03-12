@@ -40,12 +40,14 @@ export class JournalEditArticlePage {
 		}
 	}
 
-	async goToCreateNewBasicArticle(title: string) {
+	async goToCreateNewBasicArticle(title?: string) {
 		await this.goto();
 
 		await this.propertiesTab.waitFor();
 
-		await this.titlePlaceholder.fill(title);
+		if (title) {
+			await this.titlePlaceholder.fill(title);
+		}
 	}
 
 	async editAndPublishExistingBasicArticle(title: string) {

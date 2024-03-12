@@ -592,10 +592,6 @@ public abstract class DDMContentLocalServiceBaseImpl
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@Reference
-	protected com.liferay.portal.kernel.service.UserLocalService
-		userLocalService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMContentLocalServiceBaseImpl.class);
 

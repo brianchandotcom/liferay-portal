@@ -85,12 +85,13 @@ public class FrontendTokenDefinitionRegistryImpl
 					ThemeCSSCET themeCSSCET = bundleContext.getService(
 						serviceReference);
 
-					if (!Validator.isBlank(
+					if (Validator.isNull(
 							themeCSSCET.getFrontendTokenDefinitionJSON())) {
 
-						_registerThemeCSSClientExtensionFrontendTokenDefinition(
-							themeCSSCET);
+						return themeCSSCET;
 					}
+
+					_addingService(themeCSSCET);
 
 					return themeCSSCET;
 				}
@@ -106,10 +107,9 @@ public class FrontendTokenDefinitionRegistryImpl
 					ServiceReference<ThemeCSSCET> serviceReference,
 					ThemeCSSCET themeCSSCET) {
 
-					_unregisterThemeCSSClientExtensionFrontendTokenDefinition(
-						themeCSSCET);
-
 					bundleContext.ungetService(serviceReference);
+
+					_removedService(themeCSSCET);
 				}
 
 			});
@@ -284,7 +284,7 @@ public class FrontendTokenDefinitionRegistryImpl
 			companyId, new ConcurrentHashMap<>());
 	}
 
-	private void _registerThemeCSSClientExtensionFrontendTokenDefinition(
+	private void _addingService(
 		ThemeCSSCET themeCSSCET) {
 
 		String frontendTokenDefinitionJSON =
@@ -315,7 +315,7 @@ public class FrontendTokenDefinitionRegistryImpl
 		}
 	}
 
-	private void _unregisterThemeCSSClientExtensionFrontendTokenDefinition(
+	private void _removedService(
 		ThemeCSSCET themeCSSCET) {
 
 		Map<String, FrontendTokenDefinition> frontendTokenDefinitions =

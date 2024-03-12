@@ -39,7 +39,8 @@ public class JournalArticleDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getESModule() {
-		return "{App} from journal-article-dynamic-data-mapping-form-field-type";
+		return "{App} from " +
+			"journal-article-dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

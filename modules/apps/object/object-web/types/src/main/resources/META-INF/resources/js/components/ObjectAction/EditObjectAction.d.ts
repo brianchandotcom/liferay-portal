@@ -7,6 +7,7 @@
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
 interface EditObjectActionProps {
+	allowScriptContentBeExecutedOrIncluded: boolean;
 	isApproved: boolean;
 	objectAction: ObjectAction;
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -16,11 +17,11 @@ interface EditObjectActionProps {
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
 	readOnly?: boolean;
-	scriptManagementEnabled: boolean;
 	systemObject: boolean;
 	validateExpressionURL: string;
 }
 export default function EditObjectAction({
+	allowScriptContentBeExecutedOrIncluded,
 	isApproved,
 	objectAction: {id, ...values},
 	objectActionCodeEditorElements,
@@ -30,7 +31,6 @@ export default function EditObjectAction({
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
 	readOnly,
-	scriptManagementEnabled,
 	systemObject,
 	validateExpressionURL,
 }: EditObjectActionProps): JSX.Element;

@@ -9,6 +9,7 @@ import React from 'react';
 import {ObjectActionContainer} from './ObjectActionContainer';
 
 interface AddObjectActionProps {
+	allowScriptContentBeExecutedOrIncluded: boolean;
 	apiURL: string;
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: ObjectActionTriggerExecutorItem[];
@@ -16,12 +17,12 @@ interface AddObjectActionProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
-	scriptManagementEnabled: boolean;
 	systemObject: boolean;
 	validateExpressionURL: string;
 }
 
 export default function AddObjectAction({
+	allowScriptContentBeExecutedOrIncluded,
 	apiURL,
 	objectActionCodeEditorElements,
 	objectActionExecutors = [],
@@ -29,12 +30,14 @@ export default function AddObjectAction({
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
-	scriptManagementEnabled,
 	systemObject,
 	validateExpressionURL,
 }: AddObjectActionProps) {
 	return (
 		<ObjectActionContainer
+			allowScriptContentBeExecutedOrIncluded={
+				allowScriptContentBeExecutedOrIncluded
+			}
 			objectAction={{active: true, system: false}}
 			objectActionCodeEditorElements={objectActionCodeEditorElements}
 			objectActionExecutors={objectActionExecutors}
@@ -50,7 +53,6 @@ export default function AddObjectAction({
 				method: 'POST',
 				url: apiURL,
 			}}
-			scriptManagementEnabled={scriptManagementEnabled}
 			successMessage={Liferay.Language.get(
 				'the-object-action-was-created-successfully'
 			)}

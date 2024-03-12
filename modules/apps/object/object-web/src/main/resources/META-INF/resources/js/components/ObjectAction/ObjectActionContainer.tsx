@@ -24,6 +24,7 @@ const TABS = [
 ];
 
 interface ObjectActionContainerProps {
+	allowScriptContentBeExecutedOrIncluded: boolean;
 	editingObjectAction?: boolean;
 	isApproved?: boolean;
 	objectAction: Partial<ObjectAction>;
@@ -38,7 +39,6 @@ interface ObjectActionContainerProps {
 		method: 'POST' | 'PUT';
 		url: string;
 	};
-	scriptManagementEnabled: boolean;
 	successMessage: string;
 	systemObject: boolean;
 	title: string;
@@ -60,6 +60,7 @@ export type ActionError = FormError<ObjectAction & ObjectActionParameters> & {
 };
 
 export function ObjectActionContainer({
+	allowScriptContentBeExecutedOrIncluded,
 	editingObjectAction = false,
 	isApproved,
 	objectAction: initialValues,
@@ -71,7 +72,6 @@ export function ObjectActionContainer({
 	objectDefinitionsRelationshipsURL,
 	readOnly,
 	requestParams: {method, url},
-	scriptManagementEnabled,
 	successMessage,
 	systemObject,
 	validateExpressionURL,
@@ -152,13 +152,16 @@ export function ObjectActionContainer({
 
 	const disableGroovyAction =
 		Liferay.FeatureFlags['LPD-11179'] &&
-		!scriptManagementEnabled &&
+		!allowScriptContentBeExecutedOrIncluded &&
 		editingObjectAction &&
 		values.objectActionExecutorKey === 'groovy';
 
 	let newObjectActionExecutors = [...objectActionExecutors];
 
-	if (Liferay.FeatureFlags['LPD-11179'] && !scriptManagementEnabled) {
+	if (
+		Liferay.FeatureFlags['LPD-11179'] &&
+		!allowScriptContentBeExecutedOrIncluded
+	) {
 		const shouldFilterGroovyExecutor =
 			!editingObjectAction ||
 			(editingObjectAction &&

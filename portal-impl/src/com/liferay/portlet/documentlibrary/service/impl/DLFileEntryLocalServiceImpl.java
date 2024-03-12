@@ -2060,6 +2060,15 @@ public class DLFileEntryLocalServiceImpl
 				}
 
 				dlFileEntry.setVersion(newVersion);
+				dlFileEntry.setDisplayDate(dlFileVersion.getDisplayDate());
+
+				dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
+			}
+			else if (!Objects.equals(
+						dlFileEntry.getDisplayDate(),
+						dlFileVersion.getDisplayDate())) {
+
+				dlFileEntry.setDisplayDate(dlFileVersion.getDisplayDate());
 
 				dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 			}

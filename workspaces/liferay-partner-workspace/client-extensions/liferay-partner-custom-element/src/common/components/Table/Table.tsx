@@ -4,6 +4,7 @@
  */
 
 import ClayTable from '@clayui/table';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 
 import TableColumn from '../../interfaces/tableColumn';
 
@@ -22,64 +23,72 @@ const Table = <T extends unknown>({
 	customClickOnRow,
 	rows,
 }: TableProps<T>) => (
-	<ClayTable
-		borderless
-		className={className}
-		noWrap
-		responsive
-		tableVerticalAlignment="middle"
-	>
-		<ClayTable.Head>
-			<ClayTable.Row>
-				{columns.map((column: TableColumn<T>, index: number) => (
-					<ClayTable.Cell
-						align="left"
-						className="align-baseline border-neutral-2 rounded-0"
-						headingCell
-						key={index}
-						truncate
-					>
-						{column.label instanceof String ? (
-							<p className="mb-0 mt-4 text-neutral-10">
-								{column.label}
-							</p>
-						) : (
-							column.label
-						)}
-					</ClayTable.Cell>
-				))}
-			</ClayTable.Row>
-		</ClayTable.Head>
-
-		<ClayTable.Body>
-			{rows.map((row, rowIndex) => (
-				<ClayTable.Row key={rowIndex}>
-					{columns.map((column, colIndex) => {
-						const data: any = row[column.columnKey as keyof T];
-
-						return (
-							<ClayTable.Cell
-								align="left"
-								className="border-0 font-weight-normal py-4 text-truncate text-truncate-inline"
-								headingCell
-								key={colIndex}
-								onClick={() => {
-									if (customClickOnRow) {
-										return customClickOnRow(row);
-									}
-								}}
-								truncate
-							>
-								{column.render
-									? column.render(data, row, rowIndex)
-									: data}
-							</ClayTable.Cell>
-						);
-					})}
+	<ClayTooltipProvider>
+		<ClayTable
+			borderless
+			className={className}
+			noWrap
+			responsive
+			tableVerticalAlignment="middle"
+		>
+			<ClayTable.Head>
+				<ClayTable.Row>
+					{columns.map((column: TableColumn<T>, index: number) => (
+						<ClayTable.Cell
+							align="left"
+							className="align-baseline border-neutral-2 rounded-0"
+							headingCell
+							key={index}
+						>
+							{column.label instanceof String ? (
+								<p className="mb-0 mt-4 text-neutral-10">
+									{column.label}
+								</p>
+							) : (
+								column.label
+							)}
+						</ClayTable.Cell>
+					))}
 				</ClayTable.Row>
-			))}
-		</ClayTable.Body>
-	</ClayTable>
+			</ClayTable.Head>
+
+			<ClayTable.Body>
+				{rows.map((row, rowIndex) => (
+					<ClayTable.Row key={rowIndex}>
+						{columns.map((column, colIndex) => {
+							const data: any = row[column.columnKey as keyof T];
+
+							return (
+								<ClayTable.Cell
+									align="left"
+									className="border-0 font-weight-normal py-4 table-cell"
+									headingCell
+									key={colIndex}
+									onClick={() => {
+										if (customClickOnRow) {
+											return customClickOnRow(row);
+										}
+									}}
+								>
+									{column.render ? (
+										column.render(data, row, rowIndex)
+									) : (
+										<span
+											className="table-cell-items"
+											data-tooltip-align="top"
+											title={data}
+										>
+											{data}
+										</span>
+									)}
+								</ClayTable.Cell>
+							);
+						})}
+					</ClayTable.Row>
+				))}
+			</ClayTable.Body>
+		</ClayTable>
+	</ClayTooltipProvider>
 );
 
 export default Table;

@@ -1,3 +1,20 @@
-.table-cell-expand {
-	min-width: min-content !important;
+.campaign-name-column,
+.table-cell-items {
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.campaign-name-column {
+	width: 120px;
+}
+
+.table-cell-items {
+	max-width: 160px;
+}
+
+@media (min-width: 140px) {
+	.table-cell-items {
+		width: 100%;
+	}
 }

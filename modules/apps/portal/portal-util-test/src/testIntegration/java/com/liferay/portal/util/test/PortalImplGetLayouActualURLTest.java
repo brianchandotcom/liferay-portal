@@ -140,28 +140,28 @@ public class PortalImplGetLayouActualURLTest extends BasePortalImplURLTestCase {
 			int expectedNumChildren, Layout layout)
 		throws Exception {
 
-		List<Layout> allChildren = layout.getAllChildren();
+		List<Layout> childLayouts = layout.getAllChildren();
 
 		Assert.assertEquals(
-			allChildren.toString(), expectedNumChildren, allChildren.size());
+			childLayouts.toString(), expectedNumChildren, childLayouts.size());
 
-		int numAncestors = 0;
+		int ancestorLayoutsCount = 0;
 		Layout deeperParentLayout = null;
 
-		for (Layout childLayout : allChildren) {
+		for (Layout childLayout : childLayouts) {
 			if (!childLayout.hasChildren()) {
 				continue;
 			}
 
-			List<Layout> ancestors = childLayout.getAncestors();
+			List<Layout> ancestorLayouts = childLayout.getAncestors();
 
-			int curNumAncestors = ancestors.size();
+			int curAncestorLayoutsCount = ancestorLayouts.size();
 
-			if (curNumAncestors < numAncestors) {
+			if (curAncestorLayoutsCount < ancestorLayoutsCount) {
 				continue;
 			}
 
-			numAncestors = curNumAncestors;
+			ancestorLayoutsCount = curAncestorLayoutsCount;
 
 			deeperParentLayout = childLayout;
 		}

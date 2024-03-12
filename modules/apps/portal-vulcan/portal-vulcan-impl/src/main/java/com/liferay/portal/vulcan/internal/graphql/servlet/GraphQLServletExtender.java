@@ -2679,10 +2679,10 @@ public class GraphQLServletExtender {
 
 				graphQLFieldDefinitionBuilder.deprecate(
 					StringBundler.concat(
-						"This field is deprecated. Access to ",
-						fieldType, " is available at ", fieldType,
-						"/", _getGraphQLNamespace(_servletDataMap.get(method)),
-						"/", method.getName()));
+						"This field is deprecated. Access to ", fieldType,
+						" is available at ", fieldType, "/",
+						_getGraphQLNamespace(_servletDataMap.get(method)), "/",
+						method.getName()));
 			}
 
 			return graphQLFieldDefinitionBuilder.build();

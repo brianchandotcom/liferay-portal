@@ -5,6 +5,8 @@
 
 package com.liferay.jethr0.job;
 
+import java.net.URL;
+
 /**
  * @author Michael Hashimoto
  */
@@ -14,8 +16,12 @@ public interface PortalPullRequestJobEntity extends PullRequestJobEntity {
 
 	public String getGitHubGistID();
 
+	public URL getPortalBundlesDistURL();
+
 	public void setForwardReceiverUserName(String forwardReceiverUserName);
 
 	public void setGitHubGistID(String gitHubGistID);
+
+	public void setPortalBundlesDistURL(URL portalBundlesDistURL);
 
 }

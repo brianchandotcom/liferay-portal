@@ -5,17 +5,11 @@
 
 package com.liferay.object.storage.sugarcrm.internal.rest.manager.v1_0;
 
-import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.dto.v1_0.Status;
-import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -36,12 +30,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,9 +40,6 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.math.BigDecimal;
 
 import java.net.HttpURLConnection;
 
@@ -59,7 +47,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -97,7 +84,7 @@ public class SugarCRMObjectEntryManagerImpl
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getTriConsumer(objectDefinition)));
 
-		return _toObjectEntry(
+		return toObjectEntry(
 			objectDefinition.getCompanyId(), _getDateFormat(),
 			dtoConverterContext, responseJSONObject, objectDefinition);
 	}
@@ -151,7 +138,7 @@ public class SugarCRMObjectEntryManagerImpl
 			return null;
 		}
 
-		return _toObjectEntry(
+		return toObjectEntry(
 			companyId, _getDateFormat(), dtoConverterContext,
 			_sugarCRMHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
@@ -198,7 +185,7 @@ public class SugarCRMObjectEntryManagerImpl
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getTriConsumer(objectDefinition)));
 
-		return _toObjectEntry(
+		return toObjectEntry(
 			objectDefinition.getCompanyId(), _getDateFormat(),
 			dtoConverterContext, responseJSONObject, objectDefinition);
 	}
@@ -343,21 +330,6 @@ public class SugarCRMObjectEntryManagerImpl
 				sorts));
 	}
 
-	private ObjectField _getObjectFieldByExternalReferenceCode(
-		String externalReferenceCode, List<ObjectField> objectFields) {
-
-		for (ObjectField objectField : objectFields) {
-			if (Objects.equals(
-					externalReferenceCode,
-					objectField.getExternalReferenceCode())) {
-
-				return objectField;
-			}
-		}
-
-		return null;
-	}
-
 	private String _getObjectLocation(ObjectDefinition objectDefinition) {
 		return objectDefinition.getExternalReferenceCode();
 	}
@@ -399,111 +371,9 @@ public class SugarCRMObjectEntryManagerImpl
 
 		return JSONUtil.toList(
 			jsonArray,
-			jsonObject -> _toObjectEntry(
+			jsonObject -> toObjectEntry(
 				companyId, dateFormat, dtoConverterContext, jsonObject,
 				objectDefinition));
-	}
-
-	private ObjectEntry _toObjectEntry(
-			long companyId, DateFormat dateFormat,
-			DTOConverterContext dtoConverterContext, JSONObject jsonObject,
-			ObjectDefinition objectDefinition)
-		throws Exception {
-
-		ObjectEntry objectEntry = new ObjectEntry() {
-			{
-				actions = HashMapBuilder.put(
-					"delete", Collections.<String, String>emptyMap()
-				).build();
-				creator = CreatorUtil.toCreator(
-					_portal, null,
-					_userLocalService.fetchUserByExternalReferenceCode(
-						jsonObject.getString("created_by"), companyId));
-
-				dateCreated = dateFormat.parse(
-					jsonObject.getString("date_entered"));
-				dateModified = dateFormat.parse(
-					jsonObject.getString("date_modified"));
-				externalReferenceCode = jsonObject.getString("id");
-				status = new Status() {
-					{
-						code = 0;
-						label = "approved";
-						label_i18n = "Approved";
-					}
-				};
-			}
-		};
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
-		Iterator<String> iterator = jsonObject.keys();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-
-			ObjectField objectField = _getObjectFieldByExternalReferenceCode(
-				key, objectFields);
-
-			if (objectField == null) {
-				continue;
-			}
-
-			Map<String, Object> properties = objectEntry.getProperties();
-
-			if (jsonObject.isNull(key)) {
-				properties.put(objectField.getName(), null);
-
-				continue;
-			}
-
-			Object value = jsonObject.get(key);
-
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_INTEGER) ||
-				Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER)) {
-
-				if (value instanceof BigDecimal) {
-					BigDecimal bigDecimalValue = (BigDecimal)value;
-
-					value = bigDecimalValue.toBigInteger();
-				}
-			}
-			else if (Objects.equals(
-						objectField.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-				ListTypeEntry listTypeEntry =
-					_listTypeEntryLocalService.
-						fetchListTypeEntryByExternalReferenceCode(
-							(String)value, objectDefinition.getCompanyId(),
-							objectField.getListTypeDefinitionId());
-
-				if (listTypeEntry == null) {
-					continue;
-				}
-
-				value = new ListEntry() {
-					{
-						key = listTypeEntry.getKey();
-						name = listTypeEntry.getName(
-							dtoConverterContext.getLocale());
-						name_i18n = LocalizedMapUtil.getI18nMap(
-							dtoConverterContext.isAcceptAllLanguages(),
-							listTypeEntry.getNameMap());
-					}
-				};
-			}
-
-			properties.put(objectField.getName(), value);
-		}
-
-		return objectEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -519,18 +389,9 @@ public class SugarCRMObjectEntryManagerImpl
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 
-	@Reference
-	private Portal _portal;
-
 	private final SugarCRMHttp _sugarCRMHttp = new SugarCRMHttp();
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	private class SugarCRMHttp {
 

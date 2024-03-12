@@ -8,19 +8,11 @@ package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.constants.ObjectFieldSettingConstants;
-import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.dto.v1_0.Status;
-import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
@@ -45,15 +37,12 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -61,9 +50,6 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.math.BigDecimal;
 
 import java.net.HttpURLConnection;
 
@@ -71,7 +57,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -164,7 +149,7 @@ public class SalesforceObjectEntryManagerImpl
 			return null;
 		}
 
-		return _toObjectEntry(
+		return toObjectEntry(
 			companyId, _getDateFormat(), dtoConverterContext,
 			_salesforceHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
@@ -245,34 +230,6 @@ public class SalesforceObjectEntryManagerImpl
 		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	}
 
-	private ListEntry _getListEntry(
-		DTOConverterContext dtoConverterContext, String externalReferenceCode,
-		ObjectDefinition objectDefinition, ObjectField objectField) {
-
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.
-				fetchListTypeEntryByExternalReferenceCode(
-					externalReferenceCode, objectDefinition.getCompanyId(),
-					objectField.getListTypeDefinitionId());
-
-		if (listTypeEntry == null) {
-			return null;
-		}
-
-		return new ListEntry() {
-			{
-				setKey(listTypeEntry::getKey);
-				setName(
-					() -> listTypeEntry.getName(
-						dtoConverterContext.getLocale()));
-				setName_i18n(
-					() -> LocalizedMapUtil.getI18nMap(
-						dtoConverterContext.isAcceptAllLanguages(),
-						listTypeEntry.getNameMap()));
-			}
-		};
-	}
-
 	private String _getLocation(
 		ObjectDefinition objectDefinition, Pagination pagination,
 		String predicateString, String search, Sort[] sorts) {
@@ -332,21 +289,6 @@ public class SalesforceObjectEntryManagerImpl
 					companyId, dtoConverterContext, objectDefinition,
 					filterString, scopeKey),
 				scopeKey, search));
-	}
-
-	private ObjectField _getObjectFieldByExternalReferenceCode(
-		String externalReferenceCode, List<ObjectField> objectFields) {
-
-		for (ObjectField objectField : objectFields) {
-			if (Objects.equals(
-					externalReferenceCode,
-					objectField.getExternalReferenceCode())) {
-
-				return objectField;
-			}
-		}
-
-		return null;
 	}
 
 	private String _getSalesforcePagination(Pagination pagination) {
@@ -507,132 +449,9 @@ public class SalesforceObjectEntryManagerImpl
 
 		return JSONUtil.toList(
 			jsonArray,
-			jsonObject -> _toObjectEntry(
+			jsonObject -> toObjectEntry(
 				companyId, dateFormat, dtoConverterContext, jsonObject,
 				objectDefinition));
-	}
-
-	private ObjectEntry _toObjectEntry(
-			long companyId, DateFormat dateFormat,
-			DTOConverterContext dtoConverterContext, JSONObject jsonObject,
-			ObjectDefinition objectDefinition)
-		throws Exception {
-
-		return new ObjectEntry() {
-			{
-				setActions(
-					() -> HashMapBuilder.put(
-						"delete",
-						addDeleteAction(
-							objectDefinition, getScopeKey(),
-							dtoConverterContext.getUser())
-					).build());
-				setCreator(
-					() -> CreatorUtil.toCreator(
-						_portal, null,
-						_userLocalService.fetchUserByExternalReferenceCode(
-							jsonObject.getString("OwnerId"), companyId)));
-				setDateCreated(
-					() -> dateFormat.parse(
-						jsonObject.getString("CreatedDate")));
-				setDateModified(
-					() -> dateFormat.parse(
-						jsonObject.getString("LastModifiedDate")));
-				setExternalReferenceCode(() -> jsonObject.getString("Id"));
-				setProperties(
-					() -> _toProperties(
-						dtoConverterContext, jsonObject, objectDefinition,
-						_objectFieldLocalService.getObjectFields(
-							objectDefinition.getObjectDefinitionId())));
-				setStatus(
-					() -> new Status() {
-						{
-							setCode(() -> 0);
-							setLabel(() -> "approved");
-							setLabel_i18n(() -> "Approved");
-						}
-					});
-			}
-		};
-	}
-
-	private Map<String, Object> _toProperties(
-			DTOConverterContext dtoConverterContext, JSONObject jsonObject,
-			ObjectDefinition objectDefinition, List<ObjectField> objectFields)
-		throws Exception {
-
-		Map<String, Object> properties = new HashMap<>();
-
-		for (String key : jsonObject.keySet()) {
-			ObjectField objectField = _getObjectFieldByExternalReferenceCode(
-				key, objectFields);
-
-			if (objectField == null) {
-				continue;
-			}
-
-			if (jsonObject.isNull(key)) {
-				properties.put(objectField.getName(), null);
-
-				continue;
-			}
-
-			Object value = jsonObject.get(key);
-
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
-
-				String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
-
-				if (StringUtil.equals(
-						ObjectFieldSettingUtil.getValue(
-							ObjectFieldSettingConstants.NAME_TIME_STORAGE,
-							objectField),
-						ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
-
-					pattern += "Z";
-				}
-
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-					pattern);
-
-				value = simpleDateFormat.format(
-					simpleDateFormat.parse(GetterUtil.getString(value)));
-			}
-			else if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_INTEGER) ||
-					 objectField.compareBusinessType(
-						 ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER)) {
-
-				if (value instanceof BigDecimal) {
-					BigDecimal bigDecimalValue = (BigDecimal)value;
-
-					value = bigDecimalValue.toBigInteger();
-				}
-			}
-			else if (objectField.compareBusinessType(
-						ObjectFieldConstants.
-							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-				value = TransformUtil.transformToList(
-					StringUtil.split(
-						GetterUtil.getString(value), StringPool.SEMICOLON),
-					listTypeEntryExternalReferenceCode -> _getListEntry(
-						dtoConverterContext, listTypeEntryExternalReferenceCode,
-						objectDefinition, objectField));
-			}
-			else if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-				value = _getListEntry(
-					dtoConverterContext, GetterUtil.getString(value),
-					objectDefinition, objectField);
-			}
-
-			properties.put(objectField.getName(), value);
-		}
-
-		return properties;
 	}
 
 	private static final String _CUSTOM_OBJECT_SUFFIX = "__c";
@@ -673,18 +492,9 @@ public class SalesforceObjectEntryManagerImpl
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
 
-	@Reference
-	private Portal _portal;
-
 	private final SalesforceHttp _salesforceHttp = new SalesforceHttp();
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	private class SalesforceHttp {
 

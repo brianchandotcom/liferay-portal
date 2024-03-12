@@ -17,7 +17,7 @@ import {
 import {formatStorage, openSelectionModal, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 
 const CardItem = ({fileEntryTitle, fileEntryURL}) => {
 	return (

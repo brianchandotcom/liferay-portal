@@ -8,7 +8,7 @@ import {cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import ShowPartialResultsAlert from '../../../src/main/resources/META-INF/resources/admin/js/util/ShowPartialResultsAlert';
+import ShowPartialResultsAlert from '../../../src/main/resources/META-INF/resources/js/util/ShowPartialResultsAlert';
 
 describe('Show Partial Results Alert', () => {
 	afterEach(() => {

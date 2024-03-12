@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import Report from '../../../src/main/resources/META-INF/resources/admin/js/pages/Report';
+import Report from '../../../src/main/resources/META-INF/resources/js/pages/Report';
 
 let mockResource;
 

@@ -6,7 +6,7 @@
 import {runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef} from 'react';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 
 const Captcha = ({html, name, ...otherProps}) => {
 	// eslint-disable-next-line react-hooks/exhaustive-deps

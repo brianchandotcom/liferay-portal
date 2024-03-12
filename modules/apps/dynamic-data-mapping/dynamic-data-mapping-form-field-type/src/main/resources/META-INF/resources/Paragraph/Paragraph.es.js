@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 
 const Paragraph = ({name, text, ...otherProps}) => (
 	<FieldBase {...otherProps} name={name} text={text}>

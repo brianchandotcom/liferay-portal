@@ -12,7 +12,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 import KeyValue from '../KeyValue/KeyValue.es';
 import DnD from './DnD.es';
 import DragPreview from './DragPreview.es';

@@ -7,7 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import ClayIcon from '@clayui/icon';
 import React, {useCallback, useState} from 'react';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 import {MAP_PROVIDER, useGeolocation} from './useGeolocation.es';
 
 const geolocateTitle = Liferay.Language.get('geolocate');

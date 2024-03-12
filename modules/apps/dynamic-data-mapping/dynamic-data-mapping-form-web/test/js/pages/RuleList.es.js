@@ -6,7 +6,7 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import {RuleList} from '../../../src/main/resources/META-INF/resources/admin/js/pages/RuleList.es';
+import {RuleList} from '../../../src/main/resources/META-INF/resources/js/pages/RuleList.es';
 
 const DEFAULT_ACTIONS = {
 	action: 'enable',

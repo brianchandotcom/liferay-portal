@@ -14,7 +14,7 @@ import React, {ChangeEventHandler, FocusEventHandler, useMemo} from 'react';
 import {createNumberMask} from 'text-mask-addons';
 import {conformToMask} from 'text-mask-core';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 import {ISymbols} from '../NumericInputMask/NumericInputMask';
 import {trimLeftZero} from '../util/numericalOperations';
 

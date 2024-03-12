@@ -8,7 +8,7 @@ import {normalizeFieldName} from 'data-engine-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useRef} from 'react';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 import Text from '../Text/Text.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 

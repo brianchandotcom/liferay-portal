@@ -9,7 +9,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useFormState} from 'data-engine-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 
 // @ts-ignore
 

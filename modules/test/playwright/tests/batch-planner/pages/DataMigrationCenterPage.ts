@@ -4,8 +4,8 @@
  */
 
 import {Locator, Page} from '@playwright/test';
-
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {getTempDir} from '../../utils/temp';
 
 export class DataMigrationCenterPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
@@ -109,9 +109,11 @@ export class DataMigrationCenterPage {
 	async exportFile(
 		exportFileFormat: string,
 		entitType: string,
-		path: string,
 		checkedFields: Array<String> = null
 	) {
+		await this.goto();
+		await this.goToExportFile();
+
 		await this.selectExportFileFormat(exportFileFormat);
 		await this.selectEntityType(entitType);
 
@@ -128,6 +130,6 @@ export class DataMigrationCenterPage {
 		const downloadPromise = this.page.waitForEvent('download');
 		await this.downloadButton.click();
 		const download = await downloadPromise;
-		await download.saveAs(path + download.suggestedFilename());
+		await download.saveAs(getTempDir() + download.suggestedFilename());
 	}
 }

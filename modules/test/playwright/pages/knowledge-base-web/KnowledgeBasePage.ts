@@ -6,14 +6,13 @@
 import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenuPage';
+import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class KnowledgeBasePage {
 	readonly basicArticleMenuItem: Locator;
 	readonly foldersAndArticlesButton: Locator;
 	readonly newButton: Locator;
 	readonly page: Page;
-	readonly productMenuPage: ProductMenuPage;
 	readonly selectAllCheckBox: Locator;
 
 	constructor(page: Page) {
@@ -23,14 +22,15 @@ export class KnowledgeBasePage {
 		this.foldersAndArticlesButton = page.getByLabel('Folders and Articles');
 		this.newButton = page.getByLabel('New', {exact: true});
 		this.page = page;
-		this.productMenuPage = new ProductMenuPage(page);
 		this.selectAllCheckBox = page.getByLabel(
 			'Select All Items on the Page'
 		);
 	}
 
-	async goto() {
-		await this.productMenuPage.goToKnowledgeBaseMenuItem();
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.knowledgeBase}`
+		);
 	}
 
 	async goToCreateNewArticle() {

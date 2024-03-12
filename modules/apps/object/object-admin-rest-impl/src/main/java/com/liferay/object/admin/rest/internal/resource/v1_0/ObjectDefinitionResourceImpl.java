@@ -557,6 +557,19 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectDefinition.getCompanyId(),
 				_listTypeDefinitionLocalService, objectField);
 
+			if (objectField.getBusinessType() ==
+					ObjectField.BusinessType.RELATIONSHIP) {
+
+				com.liferay.object.model.ObjectField existingObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectField.getExternalReferenceCode(),
+						objectDefinitionId);
+
+				if (existingObjectField == null) {
+					continue;
+				}
+			}
+
 			_objectFieldLocalService.updateObjectField(
 				objectField.getExternalReferenceCode(),
 				GetterUtil.getLong(objectField.getId()),

@@ -45,7 +45,6 @@ public class MoveLayoutPageTemplateCollectionMVCActionCommand
 
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
-
 		long targetLayoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "targetLayoutPageTemplateCollectionId");
 

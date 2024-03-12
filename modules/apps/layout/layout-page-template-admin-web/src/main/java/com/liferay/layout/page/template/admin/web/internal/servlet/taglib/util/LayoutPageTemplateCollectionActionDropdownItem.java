@@ -43,7 +43,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
-
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -254,7 +253,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 
 		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
-
 		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
 			setLayoutPageTemplateCollectionId(
 				layoutPageTemplateCollection.

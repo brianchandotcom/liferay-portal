@@ -73,26 +73,27 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select LayoutPageTemplateStructure.",
+					"select LayoutPageTemplateStructure.ctCollectionId, ",
+					"LayoutPageTemplateStructure.",
 					"layoutPageTemplateStructureId, ",
-					"LayoutPageTemplateStructure.ctCollectionId, ",
 					"LayoutPageTemplateStructure.classPK from ",
 					"LayoutPageTemplateStructure inner join Layout on ",
-					"LayoutPageTemplateStructure.classPK = Layout.plid and ",
 					"LayoutPageTemplateStructure.ctCollectionId = ",
-					"Layout.ctCollectionId and Layout.type_ = ?"));
+					"Layout.ctCollectionId and ",
+					"LayoutPageTemplateStructure.classPK = Layout.plid and ",
+					"Layout.type_ = ?"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"delete from LayoutPageTemplateStructure where " +
-						"layoutPageTemplateStructureId = ? and " +
-							"ctCollectionId = ?");
+						"ctCollectionId = ? and " +
+							"layoutPageTemplateStructureId = ?");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"delete from LayoutPageTemplateStructureRel where " +
-						"layoutPageTemplateStructureId = ? and " +
-							"ctCollectionId = ?")) {
+						"ctCollectionId = ? and " +
+							"layoutPageTemplateStructureId = ?")) {
 
 			preparedStatement1.setString(1, LayoutConstants.TYPE_PORTLET);
 
@@ -108,13 +109,13 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				plids.add(
 					resultSet.getLong("LayoutPageTemplateStructure.classPK"));
 
-				preparedStatement2.setLong(1, layoutPageTemplateStructureId);
-				preparedStatement2.setLong(2, ctCollectionId);
+				preparedStatement2.setLong(1, ctCollectionId);
+				preparedStatement2.setLong(2, layoutPageTemplateStructureId);
 
 				preparedStatement2.addBatch();
 
-				preparedStatement3.setLong(1, layoutPageTemplateStructureId);
-				preparedStatement3.setLong(2, ctCollectionId);
+				preparedStatement3.setLong(1, ctCollectionId);
+				preparedStatement3.setLong(2, layoutPageTemplateStructureId);
 
 				preparedStatement3.addBatch();
 			}

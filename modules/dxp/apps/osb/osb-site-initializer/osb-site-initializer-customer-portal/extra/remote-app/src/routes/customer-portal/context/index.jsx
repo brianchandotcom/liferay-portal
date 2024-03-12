@@ -7,13 +7,13 @@ import {
 	createContext,
 	useContext,
 	useEffect,
-	useReducer,
-	useState,
+	useReducer
 } from 'react';
 import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
 import {Liferay} from '../../../common/services/liferay';
 import {
 	getAccountByExternalReferenceCode,
+	getAccountByExternalReferenceCodeOrganizations,
 	getAccountSubscriptionGroups,
 	getKoroneikiAccounts,
 	getStructuredContentFolders,
@@ -38,8 +38,8 @@ const AppContextProvider = ({children}) => {
 		structuredContents: undefined,
 		subscriptionGroups: undefined,
 		userAccount: undefined,
+		userProjectAccess: undefined
 	});
-	const [errorOccurred, setErrorOccurred] = useState(false);
 
 	const pageRoutes = routerPath();
 
@@ -49,7 +49,7 @@ const AppContextProvider = ({children}) => {
 				query: getUserAccount,
 				variables: {
 					id: Liferay.ThemeDisplay.getUserId(),
-				},
+				}
 			});
 
 			if (data) {
@@ -71,37 +71,18 @@ const AppContextProvider = ({children}) => {
 					)
 					?.roleBriefs?.find(({name}) => name === 'Provisioning');
 
-				const isOmniAdmin = !!data.userAccount?.roleBriefs?.find(
+				const isOmniAdmin = Boolean(data.userAccount?.roleBriefs?.find(
 					({name}) => name === 'Administrator'
-				);
-
-				const isPartner =
-					data.userAccount?.organizationBriefs?.filter(
-						({name}) =>
-							name !== 'Account Access EU' &&
-							name !== 'Account Access US' &&
-							name !== 'Liferay Staff' &&
-							name !== 'Systems - Provisioning'
-					).length > 0;
+				));
 
 				const isStaff = data.userAccount?.organizationBriefs?.some(
 					(organization) => organization.name === 'Liferay Staff'
 				);
 
-				const hasAccountAccessOrg =
-					data.userAccount?.organizationBriefs?.filter(
-						({name}) =>
-							name === 'Account Access EU' ||
-							name === 'Account Access US' ||
-							name === 'Systems - Provisioning'
-					).length > 0;
-
 				const userAccount = {
 					...data.userAccount,
-					hasAccountAccessOrg,
 					isAccountAdmin: isAccountAdministrator,
 					isOmniAdmin,
-					isPartner,
 					isProvisioning: isAccountProvisioning,
 					isStaff
 				};
@@ -114,6 +95,69 @@ const AppContextProvider = ({children}) => {
 				return userAccount;
 			}
 		};
+
+		const getUserProjectAccess = async (userAccount, projectExternalReferenceCode) => {
+			let userProjectAccess = Boolean(userAccount.organizationBriefs);
+			let denyAccess = false;
+
+			const organizationBriefs = userAccount.organizationBriefs;
+
+			if (organizationBriefs) {
+				try {
+					const {data: dataAccountOrg} = await client.query({
+						query: getAccountByExternalReferenceCodeOrganizations,
+						variables: {
+							externalReferenceCode: projectExternalReferenceCode
+						}
+					});
+
+					if (dataAccountOrg) {
+						const accountOrganizations = dataAccountOrg.accountByExternalReferenceCodeOrganizations?.items;
+
+						const filteredOrganizationBriefs = organizationBriefs.filter(
+							(organizationBrief) => (
+								accountOrganizations.some(
+									(accountOrganization) => accountOrganization.name === organizationBrief.name
+								)
+							)
+						);
+
+						userProjectAccess = filteredOrganizationBriefs.length > 0;
+					}
+				}
+				catch (error) {
+					const message = error.message;
+
+					if (!message.includes('(/accountByExternalReferenceCodeOrganizations) : null')) {
+						console.error(error);
+					}
+
+					denyAccess = true;
+				}
+			}
+
+			const accountAccess = Boolean(userAccount.accountBriefs?.find(
+				(accountBrief) =>
+					accountBrief.externalReferenceCode ===
+					projectExternalReferenceCode
+			));
+
+			if (accountAccess) {
+				userProjectAccess = accountAccess;
+			}
+
+			const currentUserProjectAccess = {
+				hasProjectAccess: userAccount.isOmniAdmin || userProjectAccess,
+				denyAccess
+			};
+
+			dispatch({
+				payload: currentUserProjectAccess,
+				type: actionTypes.UPDATE_USER_PROJECT_ACCESS
+			});
+
+			return currentUserProjectAccess;
+		}
 
 		const getProject = async (externalReferenceCode, accountBrief) => {
 			const {data: projects} = await client.query({
@@ -187,16 +231,21 @@ const AppContextProvider = ({children}) => {
 		};
 
 		const fetchData = async () => {
-			try {
-				const projectExternalReferenceCode = getAccountKey();
+			const projectExternalReferenceCode = getAccountKey();
 
-				if (!projectExternalReferenceCode) {
-					Liferay.Util.navigate(pageRoutes.home());
-				}
+			if (!projectExternalReferenceCode) {
+				Liferay.Util.navigate(pageRoutes.home());
+			}
 
-				const user = await getUser(projectExternalReferenceCode);
+			const user = await getUser(projectExternalReferenceCode);
 
-				if (user) {
+			if (user) {
+				const userProjectAccess = await getUserProjectAccess(
+					user,
+					projectExternalReferenceCode
+				);
+	
+				if (userProjectAccess.hasProjectAccess) {
 					const isValid = await isValidPage(
 						client,
 						user,
@@ -211,13 +260,7 @@ const AppContextProvider = ({children}) => {
 								projectExternalReferenceCode
 						);
 
-						const apiPermission =
-							user.hasAccountAccessOrg ||
-							user.isOmniAdmin ||
-							user.isPartner ||
-							user.isStaff;
-
-						if (!accountBrief && apiPermission) {
+						if (!accountBrief && !userProjectAccess.denyAccess) {
 							const {data: dataAccount} = await client.query({
 								query: getAccountByExternalReferenceCode,
 								variables: {
@@ -232,24 +275,14 @@ const AppContextProvider = ({children}) => {
 						}
 
 						if (accountBrief) {
-							getProject(
-								projectExternalReferenceCode,
-								accountBrief
-							);
+							getProject(projectExternalReferenceCode, accountBrief);
 							getSubscriptionGroups(projectExternalReferenceCode);
-						}
-
-						if (!accountBrief) {
-							setErrorOccurred(true);
 						}
 
 						getStructuredContents();
 						getSessionId();
 					}
 				}
-			} catch (error) {
-				console.error(error);
-				setErrorOccurred(true);
 			}
 		};
 
@@ -258,7 +291,7 @@ const AppContextProvider = ({children}) => {
 	}, [oktaSessionAPI]);
 
 	return (
-		<AppContext.Provider value={[state, dispatch, errorOccurred]}>
+		<AppContext.Provider value={[state, dispatch]}>
 			{children}
 		</AppContext.Provider>
 	);

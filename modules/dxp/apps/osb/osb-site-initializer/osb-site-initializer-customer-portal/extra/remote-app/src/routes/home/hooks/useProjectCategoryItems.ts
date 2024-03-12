@@ -69,46 +69,28 @@ const getFLSOrganizationsAccounts = (client: ApolloClient<any>) => async ({
 	return organizationAccounts as Account[];
 };
 
-const useProjectOrganizations = (organizationName = '') => {
+const useProjectCategoryItems = () => {
 	const {client} = useAppPropertiesContext();
 
 	const {
 		data: myUserAccount = {accountBriefs: [], organizationBriefs: []},
-		...myUserAccountSWR
-	} = useSWR({key: '/my-user-account'}, getMyUserAccount);
+	} = useSWR({key: '/projects'}, getMyUserAccount);
 
 	const myFLSOrganizationBriefIds = useMemo(
 		() =>
 			myUserAccount?.organizationBriefs
-				?.filter(({name}) =>
-					organizationName.length
-						? name.includes(organizationName)
-						: true
-				)
+				?.filter(({name}) => name.includes('FLS'))
 				.map(({id}) => id),
-		[myUserAccount?.organizationBriefs, organizationName]
+		[myUserAccount?.organizationBriefs]
 	);
 
-	const {data: organizations = [], ...organizationsSWR} = useSWR(
+	const {data: organizations = []} = useSWR(
 		{
-			key: `/${organizationName}-organizations`,
+			key: '/organizations',
 			organizationIds: myFLSOrganizationBriefIds,
 		},
 		myUserAccount ? getFLSOrganizationsAccounts(client) : null
 	);
-
-	return {
-		myUserAccount,
-		organizations,
-		swr: {
-			myUserAccountSWR,
-			organizationsSWR,
-		},
-	};
-};
-
-const useProjectCategoryItems = () => {
-	const {myUserAccount, organizations} = useProjectOrganizations('FLS');
 
 	const projectCategoryItems = useMemo(() => {
 		const teamMembersERC = myUserAccount?.accountBriefs?.map(

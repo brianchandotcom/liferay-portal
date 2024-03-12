@@ -70,6 +70,10 @@ const AppContextProvider = ({children}) => {
 					)
 					?.roleBriefs?.find(({name}) => name === 'Provisioning');
 
+				const isOmniAdmin = Boolean(data.userAccount?.roleBriefs?.find(
+					({name}) => name === 'Administrator'
+				));	
+
 				const isStaff = data.userAccount?.organizationBriefs?.some(
 					(organization) => organization.name === 'Liferay Staff'
 				);
@@ -77,8 +81,9 @@ const AppContextProvider = ({children}) => {
 				const userAccount = {
 					...data.userAccount,
 					isAccountAdmin: isAccountAdministrator,
+					isOmniAdmin,
 					isProvisioning: isAccountProvisioning,
-					isStaff,
+					isStaff
 				};
 
 				dispatch({

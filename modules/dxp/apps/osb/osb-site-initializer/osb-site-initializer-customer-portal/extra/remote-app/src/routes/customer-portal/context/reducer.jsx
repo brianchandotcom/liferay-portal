@@ -12,6 +12,7 @@ export const actionTypes = {
 	UPDATE_STRUCTURED_CONTENTS: 'UPDATE_STRUCTURED_CONTENTS',
 	UPDATE_SUBSCRIPTION_GROUPS: 'UPDATE_SUBSCRIPTION_GROUPS',
 	UPDATE_USER_ACCOUNT: 'UPDATE_USER_ACCOUNT',
+	UPDATE_USER_PROJECT_ACCESS: 'UPDATE_USER_PROJECT_ACCESS'
 };
 
 const reducer = (state, action) => {
@@ -63,6 +64,12 @@ const reducer = (state, action) => {
 				...state,
 				page: action.payload,
 			};
+		}
+		case actionTypes.UPDATE_USER_PROJECT_ACCESS: {
+			return {
+				...state,
+				userProjectAccess: action.payload
+			}
 		}
 		default: {
 			return state;

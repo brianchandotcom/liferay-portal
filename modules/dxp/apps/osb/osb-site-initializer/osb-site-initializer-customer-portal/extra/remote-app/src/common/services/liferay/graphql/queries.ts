@@ -564,6 +564,20 @@ export const getAccountByExternalReferenceCode = gql`
 	}
 `;
 
+export const getAccountByExternalReferenceCodeOrganizations = gql`
+	query getAccountByExternalReferenceCodeOrganizations(
+		$externalReferenceCode: String
+	) {
+		accountByExternalReferenceCodeOrganizations(
+			externalReferenceCode: $externalReferenceCode
+		) {
+			items {
+				name
+			}
+		}
+	}
+`;
+
 export const getAccountUserAccountsByExternalReferenceCode = gql`
 	query getAccountUserAccountsByExternalReferenceCode(
 		$externalReferenceCode: String!

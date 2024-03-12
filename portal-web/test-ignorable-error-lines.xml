@@ -76,6 +76,26 @@
 			<contains>Skipping email because the sender is not specified</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
+			<contains></contains>
+			<matches>Declarative Service Unsatisfied Component System Checker check result((.|\n)*)com_liferay_commerce((.|\n)*)</matches>
+		</ignore-error>
+		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
+			<contains></contains>
+			<matches>Portlet com_liferay_commerce.* failed to initialize</matches>
+		</ignore-error>
+		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
+			<contains>(IX_DBE2592|ix_DBE2592)</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
+			<contains>ERROR: current transaction is aborted, commands ignored until end of transaction block</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
+			<contains>insert into ResourcePermission</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-22821">
 			<contains>Exception sending context destroyed event to listener instance of class com.liferay.portal.spring.context.PortalContextLoaderListener</contains>
 			<matches></matches>
@@ -307,26 +327,6 @@
 		<ignore-error description="LPS-182604 - temporarily ignore until fixed">
 			<contains></contains>
 			<matches>.*This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.*</matches>
-		</ignore-error>
-		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
-			<contains></contains>
-			<matches>Declarative Service Unsatisfied Component System Checker check result((.|\n)*)com_liferay_commerce((.|\n)*)</matches>
-		</ignore-error>
-		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
-			<contains></contains>
-			<matches>Portlet com_liferay_commerce.* failed to initialize</matches>
-		</ignore-error>
-		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
-			<contains>(IX_DBE2592|ix_DBE2592)</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
-			<contains>ERROR: current transaction is aborted, commands ignored until end of transaction block</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPD-1949 - temporarily ignore until fixed">
-			<contains>insert into ResourcePermission</contains>
-			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>

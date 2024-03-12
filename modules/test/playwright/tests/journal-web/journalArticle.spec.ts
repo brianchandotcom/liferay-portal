@@ -244,6 +244,8 @@ translationTest(
 			page.locator('input.ddm-field-text').nth(1)
 		);
 
+		translationButton.click();
+
 		await expect(
 			page.getByRole('option', {name: 'Catalan Language: Translated'})
 		).toBeVisible({timeout: 1000});

@@ -6,7 +6,7 @@
 import {ClayInput} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';
 import {
 	convertValueToJSON,

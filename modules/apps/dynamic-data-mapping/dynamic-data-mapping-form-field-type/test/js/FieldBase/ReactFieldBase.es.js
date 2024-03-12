@@ -9,7 +9,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {FieldBase} from '../../../src/main/resources/META-INF/resources/FieldBase/ReactFieldBase.es';
+import FieldBase from '../../../src/main/resources/META-INF/resources/FieldBase/ReactFieldBase.es';
 
 const spritemap = 'icons.svg';
 

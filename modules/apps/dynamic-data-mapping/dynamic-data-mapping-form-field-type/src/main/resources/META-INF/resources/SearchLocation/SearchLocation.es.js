@@ -8,7 +8,7 @@ import {SettingsContext, useFormState} from 'data-engine-js-components-web';
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {FieldBase} from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../FieldBase/ReactFieldBase.es';
 import usePlaces from './usePlaces.es';
 
 const parse = (value, defaultValue) => {

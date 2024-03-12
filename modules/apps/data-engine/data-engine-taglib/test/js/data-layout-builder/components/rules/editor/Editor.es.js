@@ -5,17 +5,6 @@
 
 import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-	ColorPicker,
-	DatePicker,
-	DocumentLibrary,
-	Grid,
-	ImagePicker,
-	Numeric,
-	RichText,
-	Select,
-	Text,
-} from 'dynamic-data-mapping-form-field-type';
 import React from 'react';
 
 import {Editor} from '../../../../../../src/main/resources/META-INF/resources/js/components/rules/editor/Editor.es';
@@ -110,6 +99,59 @@ const defaultProps = (fieldsList = FIELDS) => {
 	};
 };
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	loadModule: jest.fn((fieldModule) => {
+		const {
+			ColorPicker,
+			DatePicker,
+			DocumentLibrary,
+			Grid,
+			ImagePicker,
+			Numeric,
+			RichText,
+			Select,
+			Text,
+		} = jest.requireActual('dynamic-data-mapping-form-field-type');
+
+		let component = null;
+
+		switch (fieldModule) {
+			case 'color':
+				component = ColorPicker;
+				break;
+			case 'date':
+				component = DatePicker;
+				break;
+			case 'grid':
+				component = Grid;
+				break;
+			case 'image':
+				component = ImagePicker;
+				break;
+			case 'numeric':
+				component = Numeric;
+				break;
+			case 'rich_text':
+				component = RichText;
+				break;
+			case 'select':
+				component = Select;
+				break;
+			case 'text':
+				component = Text;
+				break;
+			case 'document_library':
+				component = DocumentLibrary;
+				break;
+			default:
+				break;
+		}
+
+		return Promise.resolve(component);
+	}),
+}));
+
 describe('Editor', () => {
 	const originalLiferayLoader = window.Liferay.Loader;
 
@@ -121,45 +163,6 @@ describe('Editor', () => {
 	beforeAll(() => {
 		Liferay.Language.direction = {
 			en_US: 'rtl',
-		};
-
-		window.Liferay = {
-			...window.Liferay,
-			Loader: {
-				require: ([fieldModule], resolve) => {
-					switch (fieldModule) {
-						case 'color':
-							resolve({default: ColorPicker});
-							break;
-						case 'date':
-							resolve({default: DatePicker});
-							break;
-						case 'grid':
-							resolve({default: Grid});
-							break;
-						case 'image':
-							resolve({default: ImagePicker});
-							break;
-						case 'numeric':
-							resolve({default: Numeric});
-							break;
-						case 'rich_text':
-							resolve({default: RichText});
-							break;
-						case 'select':
-							resolve({default: Select});
-							break;
-						case 'text':
-							resolve({default: Text});
-							break;
-						case 'document_library':
-							resolve({default: DocumentLibrary});
-							break;
-						default:
-							break;
-					}
-				},
-			},
 		};
 	});
 

@@ -5,7 +5,7 @@
 
 import {LocalizedValue} from '../types';
 
-export function FieldBase(props: IFieldBase): JSX.Element;
+export default function FieldBase(props: IFieldBase): JSX.Element;
 
 interface IFieldBase {
 	accessible?: boolean;

@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, getByText, render} from '@testing-library/react';
 import React from 'react';
 
-import ErrorList from '../../../src/main/resources/META-INF/resources/admin/js/pages/ErrorList';
+import ErrorList from '../../../src/main/resources/META-INF/resources/js/pages/ErrorList';
 
 describe('Error List', () => {
 	afterEach(cleanup);

@@ -5,6 +5,7 @@
 
 package com.liferay.wiki.editor.configuration.internal;
 
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
@@ -15,24 +16,28 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -52,6 +57,31 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(new LanguageImpl());
+
+		_mimeTypesUtilMockedStatic = Mockito.mockStatic(MimeTypesUtil.class);
+
+		Mockito.when(
+			MimeTypesUtil.getExtensions(Mockito.anyString())
+		).thenReturn(
+			Collections.emptySet()
+		);
+
+		_uploadServletRequestConfigurationProviderUtilMockedStatic =
+			Mockito.mockStatic(
+				UploadServletRequestConfigurationProviderUtil.class);
+
+		Mockito.when(
+			UploadServletRequestConfigurationProviderUtil.getMaxSize()
+		).thenReturn(
+			0L
+		);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_mimeTypesUtilMockedStatic.close();
+
+		_uploadServletRequestConfigurationProviderUtilMockedStatic.close();
 	}
 
 	@Before
@@ -62,9 +92,8 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest {
 		_wikiAttachmentImageHTMLEditorConfigContributor =
 			new WikiAttachmentImageHTMLEditorConfigContributor();
 
-		ReflectionTestUtil.setFieldValue(
-			_wikiAttachmentImageHTMLEditorConfigContributor, "_itemSelector",
-			_itemSelector);
+		_wikiAttachmentImageHTMLEditorConfigContributor.itemSelector =
+			_itemSelector;
 	}
 
 	@Test
@@ -152,20 +181,22 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest {
 		JSONObject jsonObject = getJSONObjectWithDefaultItemSelectorURL();
 
 		_wikiAttachmentImageHTMLEditorConfigContributor.
-			setWikiFileUploadConfiguration(
-				new WikiFileUploadConfiguration() {
+			wikiFileUploadConfiguration = new WikiFileUploadConfiguration() {
 
-					@Override
-					public long attachmentMaxSize() {
-						return 0;
-					}
+				@Override
+				public long attachmentMaxSize() {
+					return 0;
+				}
 
-					@Override
-					public String[] attachmentMimeTypes() {
-						return new String[] {StringPool.STAR};
-					}
+				@Override
+				public String[] attachmentMimeTypes() {
+					return new String[] {StringPool.STAR};
+				}
 
-				});
+			};
+
+		_wikiAttachmentImageHTMLEditorConfigContributor.dlValidator =
+			Mockito.mock(DLValidator.class);
 
 		_wikiAttachmentImageHTMLEditorConfigContributor.
 			populateConfigJSONObject(
@@ -260,6 +291,10 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest {
 				"wikiPageResourcePrimKey", String.valueOf(primKey)
 			).build());
 	}
+
+	private static MockedStatic<MimeTypesUtil> _mimeTypesUtilMockedStatic;
+	private static MockedStatic<UploadServletRequestConfigurationProviderUtil>
+		_uploadServletRequestConfigurationProviderUtilMockedStatic;
 
 	private final Map<String, Object> _inputEditorTaglibAttributes =
 		new HashMap<>();

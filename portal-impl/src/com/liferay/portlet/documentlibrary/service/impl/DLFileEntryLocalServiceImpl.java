@@ -2334,8 +2334,9 @@ public class DLFileEntryLocalServiceImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Publishing file entries with display date less than ",
-					displayDate, " for company ", companyId));
+					"Publishing file entries with display date between ",
+					_dates.get(companyId), " and ", displayDate,
+					" for company ", companyId));
 		}
 
 		_publishFileEntriesByCompanyId(
@@ -3504,6 +3505,11 @@ public class DLFileEntryLocalServiceImpl
 			).where(
 				DLFileEntryTable.INSTANCE.companyId.eq(
 					companyId
+				).and(
+					DLFileEntryTable.INSTANCE.displayDate.isNotNull()
+				).and(
+					DLFileEntryTable.INSTANCE.displayDate.gte(
+						_dates.get(companyId))
 				).and(
 					DLFileEntryTable.INSTANCE.displayDate.lte(displayDate)
 				)

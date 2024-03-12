@@ -20,7 +20,7 @@
 					<contains string="${test.class}" substring="com.liferay." />
 				</not>
 				<then>
-					<fail message="Please set -Dtest.class= to full test class package name. e.g. -Dtest.class=com.liferay.address.service.test.AddressLocalServiceTest" />
+					<fail message="Please set -Dtest.class= to full test class package name (e.g. -Dtest.class=com.liferay.address.service.test.AddressLocalServiceTest)." />
 				</then>
 			</if>
 
@@ -311,7 +311,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 				<isset property="custom.suite" />
 			</not>
 			<then>
-				<fail message="Please set property custom.suite, which contains the name of the *.txt file of the list of testcases to add to the custom suite" />
+				<fail message="Please set property custom.suite, which contains the name of the *.txt file of the list of testcases to add to the custom suite." />
 			</then>
 			<else>
 				<loadfile
@@ -490,7 +490,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 						</then>
 					</elseif>
 					<else>
-						<fail message="Failing, detected invalid test format: @{custom.suite.testcase}" />
+						<fail message="Failing, detected invalid test format: @{custom.suite.testcase}." />
 					</else>
 				</if>
 			</sequential>
@@ -519,7 +519,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 					<matches pattern="[^0-9]" string="${node.count}" />
 				</condition>
 
-				<fail if="non.numeric" message="node.count property must be a number" />
+				<fail if="non.numeric" message="node.count property must be a number." />
 
 				<math
 					datatype="int"

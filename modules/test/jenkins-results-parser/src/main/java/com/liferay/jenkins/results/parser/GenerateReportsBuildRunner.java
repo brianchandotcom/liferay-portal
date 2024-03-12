@@ -48,8 +48,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	public void run() {
 		_validateBuildParameters();
 
-		setUpWorkspace();
-
 		_copyArchivedBuildData();
 
 		_generateReports();

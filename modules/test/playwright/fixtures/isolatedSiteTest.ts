@@ -28,10 +28,6 @@ const isolatedSiteFixture = test.extend<{
 					getRandomString()
 				);
 
-				await page.goto(
-					`/group${site.friendlyUrlPath}/~/control_panel/manage/-/site/settings`
-				);
-
 				await use(site);
 			}
 			catch {

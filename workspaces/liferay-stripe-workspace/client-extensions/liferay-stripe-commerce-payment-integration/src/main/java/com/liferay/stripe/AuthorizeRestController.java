@@ -8,10 +8,13 @@ package com.liferay.stripe;
 import com.liferay.petra.string.StringBundler;
 
 import com.stripe.Stripe;
+import com.stripe.model.TaxRate;
 import com.stripe.model.checkout.Session;
+import com.stripe.param.TaxRateCreateParams;
 import com.stripe.param.checkout.SessionCreateParams;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -168,6 +171,21 @@ public class AuthorizeRestController extends BaseRestController {
 		return Session.create(sessionCreateParams);
 	}
 
+	private TaxRate _createTaxRate(String name, BigDecimal taxPercentage)
+		throws Exception {
+
+		TaxRateCreateParams params = TaxRateCreateParams.builder(
+		).setDisplayName(
+			name
+		).setPercentage(
+			taxPercentage
+		).setInclusive(
+			true
+		).build();
+
+		return TaxRate.create(params);
+	}
+
 	private List<SessionCreateParams.LineItem> _getLineItems(
 		JSONObject commercePaymentEntryJSONObject) {
 
@@ -199,7 +217,9 @@ public class AuthorizeRestController extends BaseRestController {
 	}
 
 	private List<SessionCreateParams.LineItem> _getLineItems(
-		String currencyCode, String languageId, JSONArray orderItemsJSONArray) {
+			String currencyCode, String languageId,
+			JSONArray orderItemsJSONArray)
+		throws Exception {
 
 		List<SessionCreateParams.LineItem> lineItems = new ArrayList<>();
 
@@ -207,10 +227,33 @@ public class AuthorizeRestController extends BaseRestController {
 			JSONObject orderItemJSONObject = orderItemsJSONArray.getJSONObject(
 				i);
 
+			BigDecimal finalPrice = BigDecimal.valueOf(
+				orderItemJSONObject.getDouble("finalPrice"));
+			BigDecimal finalPriceWithTaxAmount = BigDecimal.valueOf(
+				orderItemJSONObject.getDouble("finalPriceWithTaxAmount"));
+
+			BigDecimal taxPercentage = finalPriceWithTaxAmount.subtract(
+				finalPrice
+			).divide(
+				finalPrice, 4, RoundingMode.HALF_DOWN
+			).multiply(
+				BigDecimal.valueOf(100)
+			);
+
+			String name = orderItemJSONObject.getJSONObject(
+				"name"
+			).getString(
+				languageId
+			);
+
+			TaxRate taxRate = _createTaxRate(name, taxPercentage);
+
 			long quantity = orderItemJSONObject.getLong("quantity");
 
 			SessionCreateParams.LineItem lineItem =
 				SessionCreateParams.LineItem.builder(
+				).addTaxRate(
+					taxRate.getId()
 				).setPriceData(
 					SessionCreateParams.LineItem.PriceData.builder(
 					).setCurrency(
@@ -219,17 +262,10 @@ public class AuthorizeRestController extends BaseRestController {
 						SessionCreateParams.LineItem.PriceData.ProductData.
 							builder(
 							).setName(
-								orderItemJSONObject.getJSONObject(
-									"name"
-								).getString(
-									languageId
-								)
+								name
 							).build()
 					).setUnitAmount(
-						BigDecimal.valueOf(
-							orderItemJSONObject.getDouble(
-								"finalPriceWithTaxAmount")
-						).divide(
+						finalPriceWithTaxAmount.divide(
 							BigDecimal.valueOf(quantity)
 						).multiply(
 							BigDecimal.valueOf(100)

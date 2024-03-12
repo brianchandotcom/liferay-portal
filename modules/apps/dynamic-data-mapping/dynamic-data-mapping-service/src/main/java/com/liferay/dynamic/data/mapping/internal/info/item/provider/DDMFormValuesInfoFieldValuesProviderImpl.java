@@ -75,78 +75,43 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 		List<InfoFieldValue<InfoLocalizedValue<Object>>> infoFieldValues =
 			new ArrayList<>();
 
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmFormValues.getDDMFormFieldValues()) {
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			ddmFormValues.getDDMFormFieldValuesMap(true);
 
-			infoFieldValues.addAll(
-				_getInfoFieldValues(groupedModel, ddmFormFieldValue));
-		}
+		for (List<DDMFormFieldValue> ddmFormFieldValues :
+				ddmFormFieldValuesMap.values()) {
 
-		return infoFieldValues;
-	}
+			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+				Value value = ddmFormFieldValue.getValue();
 
-	private void _addDDMFormFieldValue(
-		GroupedModel groupedModel, DDMFormFieldValue ddmFormFieldValue,
-		List<InfoFieldValue<InfoLocalizedValue<Object>>> infoFieldValues) {
+				if ((value == null) ||
+					(ddmFormFieldValue.getDDMFormField() == null)) {
 
-		_addNestedFields(groupedModel, ddmFormFieldValue, infoFieldValues);
-
-		infoFieldValues.add(
-			_getInfoFieldValue(groupedModel, ddmFormFieldValue));
-	}
-
-	private void _addNestedFields(
-		GroupedModel groupedModel, DDMFormFieldValue ddmFormFieldValue,
-		List<InfoFieldValue<InfoLocalizedValue<Object>>> infoFieldValues) {
-
-		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
-			ddmFormFieldValue.getNestedDDMFormFieldValuesMap();
-
-		for (Map.Entry<String, List<DDMFormFieldValue>> entry :
-				nestedDDMFormFieldValuesMap.entrySet()) {
-
-			List<DDMFormFieldValue> ddmFormFieldValues = entry.getValue();
-
-			infoFieldValues.add(
-				_getInfoFieldValue(groupedModel, ddmFormFieldValues.get(0)));
-		}
-	}
-
-	private InfoFieldValue<InfoLocalizedValue<Object>> _getInfoFieldValue(
-		GroupedModel groupedModel, DDMFormFieldValue ddmFormFieldValue) {
-
-		Value value = ddmFormFieldValue.getValue();
-
-		if ((value == null) || (ddmFormFieldValue.getDDMFormField() == null)) {
-			return null;
-		}
-
-		return new InfoFieldValue<>(
-			_ddmFormFieldInfoFieldConverter.convert(
-				ddmFormFieldValue.getDDMFormField()),
-			InfoLocalizedValue.builder(
-			).defaultLocale(
-				value.getDefaultLocale()
-			).value(
-				consumer -> {
-					for (Locale locale : value.getAvailableLocales()) {
-						consumer.accept(
-							locale,
-							_sanitizeDDMFormFieldValue(
-								groupedModel, ddmFormFieldValue, locale));
-					}
+					continue;
 				}
-			).build());
-	}
 
-	private List<InfoFieldValue<InfoLocalizedValue<Object>>>
-		_getInfoFieldValues(
-			GroupedModel groupedModel, DDMFormFieldValue ddmFormFieldValue) {
+				infoFieldValues.add(
+					new InfoFieldValue<>(
+						_ddmFormFieldInfoFieldConverter.convert(
+							ddmFormFieldValue.getDDMFormField()),
+						InfoLocalizedValue.builder(
+						).defaultLocale(
+							value.getDefaultLocale()
+						).value(
+							consumer -> {
+								for (Locale locale :
+										value.getAvailableLocales()) {
 
-		List<InfoFieldValue<InfoLocalizedValue<Object>>> infoFieldValues =
-			new ArrayList<>();
-
-		_addDDMFormFieldValue(groupedModel, ddmFormFieldValue, infoFieldValues);
+									consumer.accept(
+										locale,
+										_sanitizeDDMFormFieldValue(
+											groupedModel, ddmFormFieldValue,
+											locale));
+								}
+							}
+						).build()));
+			}
+		}
 
 		return infoFieldValues;
 	}

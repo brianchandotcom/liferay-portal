@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {LockedItemsPage} from '../pages/LockedItems.page';
+import {LockedItemsPage} from '../pages/LockedItemsPage';
 
 const lockedItemsPagesTest = test.extend<{
 	lockedItemsPage: LockedItemsPage;

@@ -6,7 +6,7 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {KnowledgeBasePage} from './KnowledgeBase.page';
+import {KnowledgeBasePage} from './KnowledgeBasePage';
 
 export class KnowledgeBaseEditArticlePage {
 	readonly contentFrameLocator: FrameLocator;

@@ -42,6 +42,22 @@ const STYLES = [
 	{defaultValue: 'none', label: 'Shadow', type: 'text'},
 ];
 
+const COLOR_PICKER_PALETTES = [
+	{sections: ['Brand Colors', 'Gray', 'Theme Colors'], title: 'Color System'},
+	{sections: ['Body'], title: 'General'},
+	{sections: ['Other'], title: 'Typography'},
+	{
+		sections: [
+			'Button Primary',
+			'Button Outline Primary',
+			'Button Secondary',
+			'Button Outline Secondary',
+			'Button Link',
+		],
+		title: 'Buttons',
+	},
+];
+
 test('allows changing and resetting spacing', async ({
 	apiHelpers,
 	page,
@@ -152,6 +168,54 @@ test('renders all selectors with correct default values', async ({
 			await expect(page.getByLabel(label, {exact: true})).toHaveValue(
 				defaultValue
 			);
+		}
+	}
+});
+
+test('renders correct sections in color picker', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await page.goto('/');
+
+	// Create a page with a Heading fragment
+
+	const headingId = getRandomString();
+
+	const headingFragment = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage(
+		site.id,
+		getRandomString(),
+		getPageDefinition([headingFragment])
+	);
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.selectFragment(headingId);
+
+	await pageEditorPage.goToConfigurationTab('Styles');
+
+	await page.locator('.layout__dropdown-color-picker__selector').click();
+
+	for (const palette of COLOR_PICKER_PALETTES) {
+		await expect(
+			page
+				.locator('.layout__dropdown-color-picker__color-palette')
+				.getByText(palette.title)
+		).toBeAttached();
+
+		for (const section of palette.sections) {
+			await expect(
+				page
+					.locator('.layout__dropdown-color-picker__color-palette')
+					.getByText(section)
+			).toBeAttached();
 		}
 	}
 });

@@ -8,6 +8,8 @@ package com.liferay.analytics.web.internal.servlet.taglib;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.web.internal.constants.AnalyticsWebKeys;
+import com.liferay.cookies.configuration.CookiesConfigurationProvider;
+import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -95,6 +97,9 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS,
 			_serialize(analyticsConfiguration.syncedGroupIds()));
+		httpServletRequest.setAttribute(
+			AnalyticsWebKeys.ANALYTICS_COOKIES_EXPLICIT_CONSENT_MODE,
+			_isCookiesExplicitConsentMode(themeDisplay));
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -176,6 +181,28 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return false;
 	}
 
+	private boolean _isCookiesExplicitConsentMode(ThemeDisplay themeDisplay) {
+		try {
+			CookiesPreferenceHandlingConfiguration
+				cookiesPreferenceHandlingConfiguration =
+					_cookiesConfigurationProvider.
+						getCookiesPreferenceHandlingConfiguration(themeDisplay);
+
+			if (cookiesPreferenceHandlingConfiguration.enabled() &&
+				cookiesPreferenceHandlingConfiguration.explicitConsentMode()) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
+	}
+
 	private boolean _isSharedFormEnabled(
 		String[] liferayAnalyticsGroupIds, Group group,
 		HttpServletRequest httpServletRequest) {
@@ -211,6 +238,9 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private CookiesConfigurationProvider _cookiesConfigurationProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

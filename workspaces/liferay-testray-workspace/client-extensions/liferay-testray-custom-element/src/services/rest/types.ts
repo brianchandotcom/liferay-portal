@@ -455,6 +455,7 @@ export type TestrayRoutine = {
 	id: number;
 	name: string;
 	routineToBuilds: TestrayBuild[];
+	routineToProjects?: TestrayProject;
 };
 
 export type TestrayFactor = {

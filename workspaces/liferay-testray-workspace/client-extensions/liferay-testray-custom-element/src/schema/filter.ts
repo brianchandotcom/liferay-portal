@@ -821,7 +821,19 @@ const filterSchema = {
 			overrides(baseFilters.routine, {
 				label: i18n.translate('routine-name'),
 				name: 'buildToTasks/r_routineToBuilds_c_routineId',
-				resource: '/routines?fields=id,name&sort=name:asc&pageSize=100',
+				resource:
+					'/routines?fields=id,name,routineToProjects.name&nestedFields=routineToProjects&sort=name:asc&pageSize=100',
+				transformData(item) {
+					const transformRoutineData = (routine: TestrayRoutine) => ({
+						label: `${routine.routineToProjects?.name} / ${routine.name}`,
+						value: routine.id,
+					});
+
+					return dataToOptions(
+						transformData<TestrayRoutine>(item),
+						transformRoutineData
+					);
+				},
 				type: 'multiselect',
 			}),
 			{

@@ -27,12 +27,7 @@ if (!global.performance.timing) {
 	});
 }
 
-Liferay.Util.Cookie = {
-	TYPES: {
-		FUNCTIONAL: 'CONSENT_TYPE_FUNCTIONAL',
-		NECESSARY: 'CONSENT_TYPE_NECESSARY',
-		PERFORMANCE: 'CONSENT_TYPE_PERFORMANCE',
-		PERSONALIZATION: 'CONSENT_TYPE_PERSONALIZATION',
-	},
-	set: jest.fn(),
-};
+Object.defineProperty(document, 'cookie', {
+	value: '',
+	writable: true,
+});

@@ -223,7 +223,10 @@ const Settings = ({
 							id="view-mode-picker"
 							items={visualizationModes}
 							onSelectionChange={(option: React.Key) => {
-								if (option === NOT_CONFIGURED_VISUALIZATION_MODE.name) {
+								if (
+									option ===
+									NOT_CONFIGURED_VISUALIZATION_MODE.name
+								) {
 									onActiveSectionChage(1);
 								}
 								else {
@@ -259,9 +262,7 @@ const Settings = ({
 										}
 									>
 										<ClayLayout.Row>
-											<ClayLayout.Col
-												className="align-self-center"
-											>
+											<ClayLayout.Col className="align-self-center">
 												<ClayIcon
 													symbol={
 														NOT_CONFIGURED_VISUALIZATION_MODE.thumbnail

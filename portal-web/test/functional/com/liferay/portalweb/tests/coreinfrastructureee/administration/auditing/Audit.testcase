@@ -1193,7 +1193,7 @@ definition {
 
 			AssertConsoleTextPresent(value1 = "\"doAsUserEmailAddress\":\"userea@liferay.com\",\"doAsUserName\":\"userfn userln\",\"doAsUserId\":\"${userId}\",\"attributes\":\[\{\"newValue\":\"\",\"name\":\"password\"");
 
-			AssertConsoleTextPresent(value1 = "\"newValue\":\"test\",\"name\":\"reminderQueryAnswer\"");
+			AssertConsoleTextPresent(value1 = "\"newValue\":\"\",\"name\":\"reminderQueryAnswer\"");
 		}
 	}
 

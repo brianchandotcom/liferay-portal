@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -76,6 +77,7 @@ import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.DigesterImpl;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -140,6 +142,28 @@ public class UserLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		_bundleActivator.stop(_bundleContext);
+	}
+
+	@Test
+	public void testAddUserWithChangedAlgorithmAndDigest() throws Exception {
+		try (AutoCloseable autoCloseable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384");
+			AutoCloseable autoCloseable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DigesterImpl.class, "_BASE_64", false)) {
+
+			User user = UserTestUtil.addUser();
+
+			user = _userLocalService.updatePassword(
+				user.getUserId(), "password", "password", false, true);
+
+			Assert.assertEquals(
+				"{SHA-384}a8b64babd0aca91a59bdbb7761b421d4f2bb38280" +
+					"d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7",
+				user.getPassword());
+		}
 	}
 
 	@Test
@@ -597,6 +621,80 @@ public class UserLocalServiceTest {
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testPasswordHistoryWithChangedAlgorithmAndDigest()
+		throws Exception {
+
+		try (AutoCloseable autoCloseable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384");
+			AutoCloseable autoCloseable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DigesterImpl.class, "_BASE_64", false)) {
+
+			User user = UserTestUtil.addUser();
+
+			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+			passwordPolicy.setHistory(true);
+			passwordPolicy.setHistoryCount(1);
+
+			_passwordPolicyLocalService.updatePasswordPolicy(passwordPolicy);
+
+			try {
+				ServiceContextThreadLocal.pushServiceContext(
+					ServiceContextTestUtil.getServiceContext(
+						user.getGroupId(), user.getUserId()));
+
+				user = _userLocalService.updatePassword(
+					user.getUserId(), "password", "password", false, false);
+
+				Assert.assertEquals(
+					"{SHA-384}a8b64babd0aca91a59bdbb7761b421d4f2bb" +
+						"38280d3a75ba0f21f2bebc45583d446c598660c94ce680c47d" +
+							"19c30783a7",
+					user.getPassword());
+			}
+			catch (PortalException portalException) {
+				Assert.assertEquals(
+					UserPasswordException.MustNotBeRecentlyUsed.class,
+					portalException.getClass());
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
+		}
+	}
+
+	@Test
+	public void testRecoverPasswordWithChangedAlgorithmAndDigest()
+		throws Exception {
+
+		try (AutoCloseable autoCloseable1 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					PasswordEncryptorUtil.class,
+					"_PASSWORDS_ENCRYPTION_ALGORITHM", "SHA-384");
+			AutoCloseable autoCloseable2 =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DigesterImpl.class, "_BASE_64", false)) {
+
+			Ticket ticket = _ticketLocalService.addDistinctTicket(
+				RandomTestUtil.randomLong(), null, RandomTestUtil.randomLong(),
+				TicketConstants.TYPE_PASSWORD, null, RandomTestUtil.nextDate(),
+				null);
+
+			ticket.setKey(PasswordEncryptorUtil.encrypt("password"));
+
+			ticket = _ticketLocalService.updateTicket(ticket);
+
+			Assert.assertEquals(
+				"{SHA-384}a8b64babd0aca91a59bdbb7761b421d4f2bb38280" +
+					"d3a75ba0f21f2bebc45583d446c598660c94ce680c47d19c30783a7",
+				ticket.getKey());
 		}
 	}
 

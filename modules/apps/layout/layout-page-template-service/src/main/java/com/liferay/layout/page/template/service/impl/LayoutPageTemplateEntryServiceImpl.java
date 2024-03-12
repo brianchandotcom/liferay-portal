@@ -836,13 +836,8 @@ public class LayoutPageTemplateEntryServiceImpl
 			return layoutPageTemplateEntry;
 		}
 
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				getLayoutPageTemplateCollection(
-					targetLayoutPageTemplateCollectionId);
-
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
+			targetLayoutPageTemplateCollectionId);
 
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);

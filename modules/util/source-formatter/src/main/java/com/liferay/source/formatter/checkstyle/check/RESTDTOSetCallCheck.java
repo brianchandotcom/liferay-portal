@@ -255,14 +255,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			return;
 		}
 
-		parentDetailAST = parentDetailAST.getParent();
-
-		if (parentDetailAST.getType() == TokenTypes.LITERAL_IF) {
-			log(detailAST, _MSG_INLINE_IF_STATEMENT, methodName);
-
-			return;
-		}
-
 		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
 			DetailAST elistDetailAST = detailAST.findFirstToken(
 				TokenTypes.ELIST);
@@ -351,9 +343,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 		return false;
 	}
-
-	private static final String _MSG_INLINE_IF_STATEMENT =
-		"if.statement.inline";
 
 	private static final String _MSG_USE_SET_METHOD_INSTEAD =
 		"set.method.use.instead";

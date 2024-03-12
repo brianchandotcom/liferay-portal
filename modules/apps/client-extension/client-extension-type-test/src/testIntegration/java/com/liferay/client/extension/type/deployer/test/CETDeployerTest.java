@@ -64,13 +64,11 @@ public class CETDeployerTest {
 			1, ClientExtensionEntryConstants.TYPE_EDITOR_CONFIG_CONTRIBUTOR,
 			"url=" + url, user);
 		_testDeploy(
-			2, ClientExtensionEntryConstants.TYPE_IFRAME, "url=" + url,
-			user);
+			2, ClientExtensionEntryConstants.TYPE_IFRAME, "url=" + url, user);
 		_testDeploy(
 			1, ClientExtensionEntryConstants.TYPE_JS_IMPORT_MAPS_ENTRY,
 			StringBundler.concat(
-				"bareSpecifier=", RandomTestUtil.randomString(), "\nurl=",
-				url),
+				"bareSpecifier=", RandomTestUtil.randomString(), "\nurl=", url),
 			user);
 
 		_testDeploy(

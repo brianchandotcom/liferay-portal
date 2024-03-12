@@ -345,3 +345,55 @@ scheduleTest(
 		]);
 	}
 );
+
+scheduleTest(
+	'Change permission of a web content in edition mode',
+	async ({journalEditArticlePage, journalPage, page}) => {
+		await journalPage.goto();
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.goToCreateNewBasicArticle(title);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Publish With Permissions',
+			}),
+			trigger: page.getByRole('button', {
+				name: 'Select and Confirm Publish Settings',
+			}),
+		});
+
+		await page.getByRole('button', {exact: true, name: 'Publish'}).click();
+
+		await page.getByLabel(`Actions for ${title}`).waitFor();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				exact: true,
+				name: 'Edit',
+			}),
+			trigger: page.getByLabel(`Actions for ${title}`, {
+				exact: true,
+			}),
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Permissions',
+			}),
+			trigger: page.getByRole('button', {
+				name: 'Options',
+			}),
+		});
+
+		await journalPage.setPermissions(['#power-user_ACTION_DELETE']);
+
+		await journalPage.assertJournalArticlePermissions(title, [
+			{enabled: true, locator: '#power-user_ACTION_DELETE'},
+		]);
+	}
+);

@@ -11,6 +11,7 @@ import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.event.github.GitHubFactory;
 import com.liferay.jethr0.event.github.client.GitHubClient;
 import com.liferay.jethr0.event.jenkins.JenkinsEventProcessor;
+import com.liferay.jethr0.event.jenkins.client.JenkinsClient;
 import com.liferay.jethr0.event.jrp.JRPEventProcessor;
 import com.liferay.jethr0.git.branch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
@@ -47,6 +48,10 @@ public class EventHandlerContext {
 
 	public GitHubClient getGitHubClient() {
 		return _gitHubClient;
+	}
+
+	public JenkinsClient getJenkinsClient() {
+		return _jenkinsClient;
 	}
 
 	public JenkinsCohortEntityRepository getJenkinsCohortEntityRepository() {
@@ -112,6 +117,9 @@ public class EventHandlerContext {
 
 	@Autowired
 	private GitHubFactory _gitHubFactory;
+
+	@Autowired
+	private JenkinsClient _jenkinsClient;
 
 	@Autowired
 	private JenkinsCohortEntityRepository _jenkinsCohortEntityRepository;

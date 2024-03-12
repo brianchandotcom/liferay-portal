@@ -11,12 +11,18 @@ import React, {useContext} from 'react';
 import {DefinitionBuilderContext} from '../../../../DefinitionBuilderContext';
 import {defaultLanguageId} from '../../../../constants';
 import {DiagramBuilderContext} from '../../../DiagramBuilderContext';
+import {DisabledGroovyScriptAlert} from '../../shared-components/DisabledGroovyScriptAlert';
 import ScriptInput from '../../shared-components/ScriptInput';
 import SidebarPanel from '../SidebarPanel';
 import {checkIdErrors, checkLabelErrors, getUpdatedLabelItem} from './utils';
 
 export default function NodeInformation({errors, setErrors}) {
-	const {elements, selectedLanguageId} = useContext(DefinitionBuilderContext);
+	const {
+		allowScriptContentBeExecutedOrIncluded,
+		elements,
+		hasGroovyScript,
+		selectedLanguageId,
+	} = useContext(DefinitionBuilderContext);
 	const {
 		selectedItem,
 		selectedItemNewId,
@@ -25,167 +31,181 @@ export default function NodeInformation({errors, setErrors}) {
 	} = useContext(DiagramBuilderContext);
 
 	return (
-		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
-			<ClayForm.Group className={errors.label ? 'has-error' : ''}>
-				<label htmlFor="nodeLabel">
-					{Liferay.Language.get('label')}
+		<>
+			{Liferay.FeatureFlags['LPD-11179'] &&
+				!allowScriptContentBeExecutedOrIncluded &&
+				hasGroovyScript &&
+				selectedItem &&
+				selectedItem.type === 'condition' && (
+					<DisabledGroovyScriptAlert />
+				)}
 
-					<span className="ml-1 mr-1 text-warning">*</span>
+			<SidebarPanel panelTitle={Liferay.Language.get('information')}>
+				<ClayForm.Group className={errors.label ? 'has-error' : ''}>
+					<label htmlFor="nodeLabel">
+						{Liferay.Language.get('label')}
 
-					<span title={Liferay.Language.get('label-name')}>
-						<ClayIcon
-							className="text-muted"
-							symbol="question-circle-full"
-						/>
-					</span>
-				</label>
+						<span className="ml-1 mr-1 text-warning">*</span>
 
-				<ClayInput
-					id="nodeLabel"
-					onChange={({target}) => {
-						setErrors(checkLabelErrors(errors, target));
+						<span title={Liferay.Language.get('label-name')}>
+							<ClayIcon
+								className="text-muted"
+								symbol="question-circle-full"
+							/>
+						</span>
+					</label>
 
-						const key =
-							selectedLanguageId !== ''
-								? selectedLanguageId
-								: defaultLanguageId;
+					<ClayInput
+						id="nodeLabel"
+						onChange={({target}) => {
+							setErrors(checkLabelErrors(errors, target));
 
-						setSelectedItem(
-							getUpdatedLabelItem(key, selectedItem, target)
-						);
-					}}
-					type="text"
-					value={
-						(selectedLanguageId
-							? selectedItem?.data.label[selectedLanguageId]
-							: selectedItem?.data.label[defaultLanguageId]) || ''
-					}
-				/>
+							const key =
+								selectedLanguageId !== ''
+									? selectedLanguageId
+									: defaultLanguageId;
 
-				<ClayForm.FeedbackItem>
-					{errors.label && (
-						<>
-							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+							setSelectedItem(
+								getUpdatedLabelItem(key, selectedItem, target)
+							);
+						}}
+						type="text"
+						value={
+							(selectedLanguageId
+								? selectedItem?.data.label[selectedLanguageId]
+								: selectedItem?.data.label[
+										defaultLanguageId
+								  ]) || ''
+						}
+					/>
 
-							{Liferay.Language.get('this-field-is-required')}
-						</>
-					)}
-				</ClayForm.FeedbackItem>
-			</ClayForm.Group>
+					<ClayForm.FeedbackItem>
+						{errors.label && (
+							<>
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-			<ClayForm.Group
-				className={
-					errors?.id?.duplicated || errors?.id?.empty
-						? 'has-error'
-						: ''
-				}
-			>
-				<label htmlFor="nodeName">
-					<span>
-						{`${Liferay.Language.get(
-							'node'
-						)} ${Liferay.Language.get('name')}`}
-					</span>
-
-					<span className="ml-1 mr-1 text-warning">*</span>
-
-					<span
-						title={Liferay.Language.get(
-							'name-is-the-node-identifier'
+								{Liferay.Language.get('this-field-is-required')}
+							</>
 						)}
-					>
-						<ClayIcon
-							className="text-muted"
-							symbol="question-circle-full"
-						/>
-					</span>
-				</label>
+					</ClayForm.FeedbackItem>
+				</ClayForm.Group>
 
-				<ClayInput
-					id="nodeName"
-					onChange={({target}) => {
-						const filteredElements = elements.slice();
-
-						filteredElements.splice(
-							elements.findIndex(
-								(element) => element.id === selectedItem.id
-							),
-							1
-						);
-
-						setErrors(
-							checkIdErrors(filteredElements, errors, target)
-						);
-						setSelectedItemNewId(target.value);
-					}}
-					type="text"
-					value={(selectedItemNewId ?? selectedItem?.id) || ''}
-				/>
-
-				<ClayForm.FeedbackItem>
-					{(errors?.id?.duplicated || errors?.id?.empty) && (
-						<>
-							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-							{errors.id.duplicated
-								? Liferay.Language.get(
-										'a-node-with-that-name-already-exists'
-								  )
-								: Liferay.Language.get(
-										'this-field-is-required'
-								  )}
-						</>
-					)}
-				</ClayForm.FeedbackItem>
-			</ClayForm.Group>
-
-			<ClayForm.Group>
-				<label htmlFor="nodeDescription">
-					{Liferay.Language.get('description')}
-				</label>
-
-				<ClayInput
-					component="textarea"
-					id="nodeDescription"
-					onChange={({target}) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								description: target.value,
-							},
-						})
+				<ClayForm.Group
+					className={
+						errors?.id?.duplicated || errors?.id?.empty
+							? 'has-error'
+							: ''
 					}
-					type="text"
-					value={selectedItem?.data.description || ''}
-				/>
-			</ClayForm.Group>
+				>
+					<label htmlFor="nodeName">
+						<span>
+							{`${Liferay.Language.get(
+								'node'
+							)} ${Liferay.Language.get('name')}`}
+						</span>
 
-			{selectedItem?.type === 'condition' && (
-				<ScriptInput
-					defaultScriptLanguage={selectedItem?.data.scriptLanguage}
-					handleClickCapture={(scriptLanguage) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								scriptLanguage,
-							},
-						})
-					}
-					inputValue={selectedItem?.data.script || ''}
-					updateSelectedItem={({target}) =>
-						setSelectedItem({
-							...selectedItem,
-							data: {
-								...selectedItem.data,
-								script: target.value,
-							},
-						})
-					}
-				/>
-			)}
-		</SidebarPanel>
+						<span className="ml-1 mr-1 text-warning">*</span>
+
+						<span
+							title={Liferay.Language.get(
+								'name-is-the-node-identifier'
+							)}
+						>
+							<ClayIcon
+								className="text-muted"
+								symbol="question-circle-full"
+							/>
+						</span>
+					</label>
+
+					<ClayInput
+						id="nodeName"
+						onChange={({target}) => {
+							const filteredElements = elements.slice();
+
+							filteredElements.splice(
+								elements.findIndex(
+									(element) => element.id === selectedItem.id
+								),
+								1
+							);
+
+							setErrors(
+								checkIdErrors(filteredElements, errors, target)
+							);
+							setSelectedItemNewId(target.value);
+						}}
+						type="text"
+						value={(selectedItemNewId ?? selectedItem?.id) || ''}
+					/>
+
+					<ClayForm.FeedbackItem>
+						{(errors?.id?.duplicated || errors?.id?.empty) && (
+							<>
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								{errors.id.duplicated
+									? Liferay.Language.get(
+											'a-node-with-that-name-already-exists'
+									  )
+									: Liferay.Language.get(
+											'this-field-is-required'
+									  )}
+							</>
+						)}
+					</ClayForm.FeedbackItem>
+				</ClayForm.Group>
+
+				<ClayForm.Group>
+					<label htmlFor="nodeDescription">
+						{Liferay.Language.get('description')}
+					</label>
+
+					<ClayInput
+						component="textarea"
+						id="nodeDescription"
+						onChange={({target}) =>
+							setSelectedItem({
+								...selectedItem,
+								data: {
+									...selectedItem.data,
+									description: target.value,
+								},
+							})
+						}
+						type="text"
+						value={selectedItem?.data.description || ''}
+					/>
+				</ClayForm.Group>
+
+				{selectedItem?.type === 'condition' && (
+					<ScriptInput
+						defaultScriptLanguage={
+							selectedItem?.data.scriptLanguage
+						}
+						handleClickCapture={(scriptLanguage) =>
+							setSelectedItem({
+								...selectedItem,
+								data: {
+									...selectedItem.data,
+									scriptLanguage,
+								},
+							})
+						}
+						inputValue={selectedItem?.data.script || ''}
+						updateSelectedItem={({target}) =>
+							setSelectedItem({
+								...selectedItem,
+								data: {
+									...selectedItem.data,
+									script: target.value,
+								},
+							})
+						}
+					/>
+				)}
+			</SidebarPanel>
+		</>
 	);
 }
 

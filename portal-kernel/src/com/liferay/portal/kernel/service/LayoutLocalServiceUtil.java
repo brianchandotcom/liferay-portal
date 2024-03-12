@@ -690,6 +690,10 @@ public class LayoutLocalServiceUtil {
 		return getService().getAllLayouts(groupId, privateLayout, type);
 	}
 
+	public static Layout getBrowsableLayout(Layout layout) {
+		return getService().getBrowsableLayout(layout);
+	}
+
 	/**
 	 * Returns the primary key of the default layout for the group.
 	 *

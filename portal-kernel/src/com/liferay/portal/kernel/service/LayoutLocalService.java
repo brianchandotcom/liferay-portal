@@ -618,6 +618,9 @@ public interface LayoutLocalService
 			long groupId, boolean privateLayout, String type)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Layout getBrowsableLayout(Layout layout);
+
 	/**
 	 * Returns the primary key of the default layout for the group.
 	 *

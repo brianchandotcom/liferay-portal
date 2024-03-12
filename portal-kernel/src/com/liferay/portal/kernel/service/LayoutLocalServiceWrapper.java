@@ -731,6 +731,11 @@ public class LayoutLocalServiceWrapper
 		return _layoutLocalService.getAllLayouts(groupId, privateLayout, type);
 	}
 
+	@Override
+	public Layout getBrowsableLayout(Layout layout) {
+		return _layoutLocalService.getBrowsableLayout(layout);
+	}
+
 	/**
 	 * Returns the primary key of the default layout for the group.
 	 *

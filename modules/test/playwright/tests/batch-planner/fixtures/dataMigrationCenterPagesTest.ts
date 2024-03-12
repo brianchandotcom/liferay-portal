@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {DataMigrationCenterPage} from '../pages/dataMigrationCenter.page';
+import {DataMigrationCenterPage} from '../pages/DataMigrationCenterPage';
 
 const dataMigrationCenterPagesTest = test.extend<{
 	dataMigrationCenterPage: DataMigrationCenterPage;

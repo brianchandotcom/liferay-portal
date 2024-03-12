@@ -11,7 +11,7 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPages';
+import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 import {OBJECT_ENTRY_ENTITY_TYPE} from './utils/constants';
 
 export const test = mergeTests(

@@ -57,6 +57,11 @@ export const User = ({className}) => {
 
 	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 
+	const initialItem =
+		NAV_ITEMS.find(item => item.route === matchedRoute) ?? NAV_ITEMS[0];
+
+	const [activeLabel, setActiveLabel] = useState(initialItem.label);
+
 	return (
 		<BasePage
 			className={getCN('user-list-page-root', className)}
@@ -71,14 +76,17 @@ export const User = ({className}) => {
 				{currentUser.isAdmin() && (
 					<ClayNavigationBar
 						className='page-subnav mx-4 my-3'
-						triggerLabel={matchedRoute}
+						triggerLabel={activeLabel}
 					>
 						{NAV_ITEMS.map(({label, route}) => (
 							<ClayNavigationBar.Item
 								active={matchedRoute === route}
 								key={route}
 							>
-								<ClayLink href={toRoute(route, {groupId})}>
+								<ClayLink
+									href={toRoute(route, {groupId})}
+									onClick={() => setActiveLabel(label)}
+								>
 									{label}
 								</ClayLink>
 							</ClayNavigationBar.Item>

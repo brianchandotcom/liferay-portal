@@ -8055,9 +8055,15 @@ public class PortalImpl implements Portal {
 	private Map<String, String> _getVariablesMap(
 		Layout layout, String mainPath) {
 
+		if (layout == null) {
+			return HashMapBuilder.put(
+				"liferay:pvlsgid", "0"
+			).build();
+		}
+
 		String groupIdString = String.valueOf(layout.getGroupId());
 
-		Map<String, String> variables = HashMapBuilder.put(
+		return HashMapBuilder.put(
 			"liferay:groupId", groupIdString
 		).put(
 			"liferay:layoutId", String.valueOf(layout.getLayoutId())
@@ -8067,17 +8073,16 @@ public class PortalImpl implements Portal {
 			"liferay:plid", String.valueOf(layout.getPlid())
 		).put(
 			"liferay:privateLayout", String.valueOf(layout.isPrivateLayout())
+		).put(
+			"liferay:pvlsgid",
+			() -> {
+				if (layout instanceof VirtualLayout) {
+					return groupIdString;
+				}
+
+				return "0";
+			}
 		).build();
-
-		String pvlsgid = "0";
-
-		if (layout instanceof VirtualLayout) {
-			pvlsgid = groupIdString;
-		}
-
-		variables.put("liferay:pvlsgid", pvlsgid);
-
-		return variables;
 	}
 
 	private String _getVirtualHostname(

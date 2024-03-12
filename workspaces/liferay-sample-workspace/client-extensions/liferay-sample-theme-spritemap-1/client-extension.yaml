@@ -1,7 +1,8 @@
 assemble:
     - from: assets
+      hashify: spritemap.svg
       into: static
 liferay-sample-theme-spritemap-1:
     name: Liferay Sample Theme Spritemap 1
     type: themeSpritemap
-    url: spritemap.svg
+    url: spritemap.*.svg

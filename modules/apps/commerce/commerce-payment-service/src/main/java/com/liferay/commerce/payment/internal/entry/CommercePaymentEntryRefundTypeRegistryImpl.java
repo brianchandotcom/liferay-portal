@@ -71,22 +71,15 @@ public class CommercePaymentEntryRefundTypeRegistryImpl
 		List<CommercePaymentEntryRefundType> commercePaymentEntryRefundTypes =
 			new ArrayList<>();
 
-		try {
-			for (String key : _serviceTrackerMap.keySet()) {
-				if (key.startsWith(companyId + StringPool.POUND)) {
-					commercePaymentEntryRefundTypes.add(
-						_serviceTrackerMap.getService(key));
-				}
+		for (String key : _serviceTrackerMap.keySet()) {
+			if (key.startsWith(companyId + StringPool.POUND)) {
+				commercePaymentEntryRefundTypes.add(
+					_serviceTrackerMap.getService(key));
 			}
+		}
 
-			commercePaymentEntryRefundTypes.sort(
-				_commercePaymentEntryRefundTypeOrderComparator);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
+		commercePaymentEntryRefundTypes.sort(
+			_commercePaymentEntryRefundTypeOrderComparator);
 
 		return Collections.unmodifiableList(commercePaymentEntryRefundTypes);
 	}

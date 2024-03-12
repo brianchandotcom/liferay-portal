@@ -70,7 +70,6 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 
 		boolean privateLayout = ParamUtil.getBoolean(
 			httpServletRequest, "privateLayout");
-
 		boolean searchOnlyByTitle = ParamUtil.getBoolean(
 			httpServletRequest, "searchOnlyByTitle");
 

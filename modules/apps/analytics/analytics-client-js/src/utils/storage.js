@@ -5,14 +5,60 @@
 
 import ProcessLock from 'browser-tabs-lock';
 
+const getCookieFromDocument = (key) => {
+	const name = key + '=';
+	const decodedCookie = decodeURIComponent(document.cookie);
+	const cookieArray = decodedCookie.split(';');
+
+	for (let i = 0; i < cookieArray.length; i++) {
+		let cookie = cookieArray[i];
+
+		while (cookie.charAt(0) === ' ') {
+			cookie = cookie.substring(1);
+		}
+
+		if (cookie.indexOf(name) === 0) {
+			const jsonStr = cookie.substring(name.length, cookie.length);
+
+			return JSON.parse(jsonStr);
+		}
+	}
+
+	return null;
+};
+
 const getItem = (key) => {
+	const Liferay = window.Liferay;
+	let data;
+
+	try {
+		if (Liferay?.Util?.Cookie) {
+			const cookie = Liferay.Util.Cookie.get(
+				key,
+				Liferay.Util.Cookie.TYPES.PERFORMANCE
+			);
+
+			data = JSON.parse(decodeURIComponent(cookie));
+		}
+		else {
+			data = getCookieFromDocument(key);
+		}
+	}
+	catch (error) {
+		return;
+	}
+
+	return data;
+};
+
+const getItemFromLocalStorage = (key) => {
 	const Liferay = window.Liferay;
 	let data;
 
 	try {
 		let item;
 
-		if (Liferay && Liferay.Util && Liferay.Util.LocalStorage) {
+		if (Liferay?.Util?.LocalStorage) {
 			item = Liferay.Util.LocalStorage.getItem(
 				key,
 				Liferay.Util.LocalStorage.TYPES.PERSONALIZATION
@@ -31,19 +77,29 @@ const getItem = (key) => {
 	return data;
 };
 
-const setItem = (key, value) => {
+const setItem = (key, value, encode = true) => {
 	const Liferay = window.Liferay;
+	const expires = new Date();
+
+	expires.setDate(expires.getDate() + 365);
 
 	try {
-		if (Liferay && Liferay.Util && Liferay.Util.LocalStorage) {
-			Liferay.Util.LocalStorage.setItem(
+		const jsonStr = JSON.stringify(value);
+		const data = encode ? encodeURIComponent(jsonStr) : jsonStr;
+
+		if (Liferay?.Util?.Cookie) {
+			Liferay.Util.Cookie.set(
 				key,
-				JSON.stringify(value),
-				Liferay.Util.LocalStorage.TYPES.PERSONALIZATION
+				data,
+				Liferay.Util.Cookie.TYPES.PERFORMANCE,
+				{
+					expires,
+					secure: true,
+				}
 			);
 		}
 		else {
-			localStorage.setItem(key, JSON.stringify(value));
+			document.cookie = `${key}=${data}; expires=${expires.toUTCString()}; path=/; Secure`;
 		}
 	}
 	catch (error) {
@@ -55,14 +111,18 @@ const removeItem = (key) => {
 	const Liferay = window.Liferay;
 
 	try {
-		if (Liferay && Liferay.Util && Liferay.Util.LocalStorage) {
-			Liferay.Util.LocalStorage.removeItem(
+		if (Liferay?.Util?.Cookie) {
+			Liferay.Util.Cookie.remove(
 				key,
-				Liferay.Util.LocalStorage.TYPES.PERSONALIZATION
+				Liferay.Util.Cookie.TYPES.PERFORMANCE
 			);
 		}
 		else {
-			localStorage.removeItem(key);
+			const expirationDate = new Date();
+
+			expirationDate.setFullYear(expirationDate.getFullYear() - 1);
+
+			document.cookie = `${key}=; expires=${expirationDate.toUTCString()}; path=/;`;
 		}
 	}
 	catch (error) {
@@ -83,7 +143,7 @@ const getStorageSizeInKb = (val) => {
 /**
  * Verify storage size and dequeue 1 item when limit is reached.
  *
- * Note: Because we are using a ProcessLock, no other process should
+ * @description Because we are using a ProcessLock, no other process should
  * be able to acquire a lock for a particular key to run its callback
  * until the process with the active lock releases it.
  *
@@ -94,7 +154,7 @@ const getStorageSizeInKb = (val) => {
 const verifyStorageLimitForKey = (storageKey, limit) => {
 	const storedValue = getItem(storageKey);
 
-	if (!storedValue.length) {
+	if (!storedValue?.length) {
 		return Promise.resolve();
 	}
 
@@ -113,8 +173,36 @@ const verifyStorageLimitForKey = (storageKey, limit) => {
 	});
 };
 
+/**
+ * Get storaged item from cookies or localStorage
+ *
+ * @description Maintain compatibility between browsers that already have data saved
+ * in local storage but now need to save it in cookies and therefore, we obtain the data
+ * from localStorage, update the cookies with it to make the data consistent and avoid
+ * sending a new identity and return the value.
+ *
+ * @param {String} key
+ * @returns {String | undefined}
+ */
+const getItemFromCookiesOrLocalStorage = (key) => {
+	let item = getItem(key);
+
+	if (!item) {
+		const itemFromLocalStorage = getItemFromLocalStorage(key);
+
+		if (itemFromLocalStorage) {
+			setItem(key, itemFromLocalStorage);
+
+			item = itemFromLocalStorage;
+		}
+	}
+
+	return item;
+};
+
 export {
 	getItem,
+	getItemFromCookiesOrLocalStorage,
 	getStorageSizeInKb,
 	removeItem,
 	setItem,

@@ -31,7 +31,7 @@ function getStorageVersion() {
 }
 
 function setStorageVersion(version = AC_CLIENT_STORAGE_VERSION) {
-	return setItem(STORAGE_KEY_STORAGE_VERSION, version.toString());
+	return setItem(STORAGE_KEY_STORAGE_VERSION, version.toString(), false);
 }
 
 function upgradeStorage() {

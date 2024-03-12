@@ -11,7 +11,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 
-export const test = mergeTests(
+export const testFeatureFlagsEnabled = mergeTests(
 	loginTest(),
 	featureFlagsTest({
 		'LPD-10701': true,
@@ -19,34 +19,31 @@ export const test = mergeTests(
 	documentLibraryPagesTest
 );
 
-test('LPD-16658 Show a success message after scheduling a new file', async ({
-	documentLibraryEditFilePage,
-	documentLibraryPage,
-	page,
-}) => {
-	const scheduleDate = `01/01/${new Date().getFullYear() + 1}`;
-	const title = getRandomString();
+testFeatureFlagsEnabled(
+	'LPD-16658 Show a success message after scheduling a new file',
+	async ({documentLibraryEditFilePage, documentLibraryPage, page}) => {
+		const scheduleDate = `01/01/${new Date().getFullYear() + 1}`;
+		const title = getRandomString();
 
-	const fileEntry = page.getByRole('link', {name: title});
+		await documentLibraryEditFilePage.publishNewFileWithScheduleDate(
+			scheduleDate,
+			title
+		);
 
-	await documentLibraryEditFilePage.publishNewFileWithScheduleDate(
-		scheduleDate,
-		title
-	);
+		await expect(page.getByRole('link', {name: title})).toBeVisible();
 
-	await expect(fileEntry).toBeVisible();
+		const toastAlertContainer = page.locator('[id="ToastAlertContainer"]');
 
-	const toastAlertContainer = page.locator('[id="ToastAlertContainer"]');
+		await expect(toastAlertContainer).toBeVisible();
 
-	await expect(toastAlertContainer).toBeVisible();
+		await expect(toastAlertContainer).toHaveText(
+			'Success:' +
+				title +
+				' will be published on ' +
+				format(new Date(scheduleDate), 'M/d/yy h:mm a') +
+				'.'
+		);
 
-	await expect(toastAlertContainer).toHaveText(
-		'Success:' +
-			title +
-			' will be published on ' +
-			format(new Date(scheduleDate), 'M/d/yy h:mm a') +
-			'.'
-	);
-
-	await documentLibraryPage.deleteAllFileEntries();
-});
+		await documentLibraryPage.deleteAllFileEntries();
+	}
+);

@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.query.QueryHelper;
@@ -44,14 +45,9 @@ public class LayoutKeywordQueryContributor implements KeywordQueryContributor {
 		List<String> prefixes = new ArrayList<>(
 			Arrays.asList(Field.NAME, Field.TITLE));
 
-		Serializable searchOnlyByTitle = searchContext.getAttribute(
-			"searchOnlyByTitle");
+		if (!GetterUtil.getBoolean(
+				searchContext.getAttribute("searchOnlyByTitle"))) {
 
-		if (Validator.isNull(searchOnlyByTitle)) {
-			searchOnlyByTitle = false;
-		}
-
-		if (searchOnlyByTitle.equals(false)) {
 			_queryHelper.addSearchLocalizedTerm(
 				booleanQuery, searchContext, Field.CONTENT, false);
 

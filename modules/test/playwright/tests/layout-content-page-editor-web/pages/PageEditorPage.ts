@@ -7,6 +7,10 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
+import getPageDefinition from '../utils/getPageDefinition';
+
 export class PageEditorPage {
 	readonly page: Page;
 	readonly redoButton: Locator;
@@ -175,5 +179,21 @@ export class PageEditorPage {
 				.frameLocator('.page-editor__global-context-iframe')
 				.locator(`.lfr-layout-structure-item-${fragmentId}`);
 		}
+	}
+
+	async createPageWithFragmentAndGoToEditMode({apiHelpers, fragment, site}) {
+		await this.page.goto(liferayConfig.environment.baseUrl);
+
+		// Create a page with a  fragment
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage(
+			site.id,
+			getRandomString(),
+			getPageDefinition([fragment])
+		);
+
+		// Go to edit mode of page
+
+		await this.goToEditMode(layout, site.friendlyUrlPath);
 	}
 }

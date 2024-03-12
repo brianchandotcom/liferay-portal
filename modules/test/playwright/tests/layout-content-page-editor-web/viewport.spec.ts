@@ -9,11 +9,9 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
-import getPageDefinition from './utils/getPageDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -64,28 +62,6 @@ const NON_DESKTOP_PANELS: NonDesktopPanels = [
 	},
 ];
 
-const createPageWithFragmentAndGoToEditMode = async ({
-	apiHelpers,
-	fragment,
-	page,
-	pageEditorPage,
-	site,
-}) => {
-	await page.goto(liferayConfig.environment.baseUrl);
-
-	// Create a page with a  fragment
-
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString(),
-		getPageDefinition([fragment])
-	);
-
-	// Go to edit mode of page
-
-	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
-};
-
 test('shows correct sections on each configuration panel when viewport is not Desktop', async ({
 	apiHelpers,
 	page,
@@ -102,11 +78,9 @@ test('shows correct sections on each configuration panel when viewport is not De
 		'BASIC_COMPONENT-heading'
 	);
 
-	await createPageWithFragmentAndGoToEditMode({
+	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
-		page,
-		pageEditorPage,
 		site,
 	});
 
@@ -146,11 +120,9 @@ test('shows only Image Source field when the viewport is Desktop', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	await createPageWithFragmentAndGoToEditMode({
+	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
-		page,
-		pageEditorPage,
 		site,
 	});
 
@@ -185,11 +157,9 @@ test('Background Image field is disabled for non-desktop viewports', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	await createPageWithFragmentAndGoToEditMode({
+	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
-		page,
-		pageEditorPage,
 		site,
 	});
 
@@ -226,11 +196,9 @@ test('checks that the layout can be resized', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	await createPageWithFragmentAndGoToEditMode({
+	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
-		page,
-		pageEditorPage,
 		site,
 	});
 
@@ -288,11 +256,9 @@ test('checks that the value of a field is propagated to smaller viewports', asyn
 		'BASIC_COMPONENT-heading'
 	);
 
-	await createPageWithFragmentAndGoToEditMode({
+	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
 		apiHelpers,
 		fragment: headingFragment,
-		page,
-		pageEditorPage,
 		site,
 	});
 

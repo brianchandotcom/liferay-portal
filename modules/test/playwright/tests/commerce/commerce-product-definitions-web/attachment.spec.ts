@@ -45,7 +45,10 @@ test('The download URL is present when the file entry is a file upload', async (
 	});
 
 	const siteDocumentsPage =
-		await apiHelpers.headlessDelivery.getSiteDocumentsPage(site.id);
+		await apiHelpers.headlessDelivery.getSiteDocumentsPage(
+			site.id,
+			'id:desc'
+		);
 
 	const siteDocument = siteDocumentsPage.items[0];
 
@@ -112,7 +115,10 @@ test('The download URL is not present when the file entry is an external resourc
 	});
 
 	const siteDocumentsPage =
-		await apiHelpers.headlessDelivery.getSiteDocumentsPage(site.id);
+		await apiHelpers.headlessDelivery.getSiteDocumentsPage(
+			site.id,
+			'id:desc'
+		);
 
 	const siteDocument = siteDocumentsPage.items[0];
 

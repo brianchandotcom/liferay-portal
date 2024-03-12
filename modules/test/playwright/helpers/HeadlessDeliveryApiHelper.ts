@@ -50,9 +50,9 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
-	async getSiteDocumentsPage(siteId: string) {
+	async getSiteDocumentsPage(siteId: string, sort: string = 'id') {
 		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/documents`
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/documents?sort=${sort}`
 		);
 	}
 

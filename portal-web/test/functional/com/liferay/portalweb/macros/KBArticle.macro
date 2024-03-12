@@ -1938,13 +1938,9 @@ definition {
 			locator1 = "KnowledgeBaseArticle#INFO_VERSION_TITLE",
 			value1 = ${entryVersion});
 
-		var modifiedDate = DateUtil.getFormattedCurrentDate("MMMM d, yyyy");
+		var modifiedDate = DateUtil.getFormattedCurrentDate("MMMM d");
 
-		AssertTextEquals.assertPartialText(
-			key_entryVersion = ${entryVersion},
-			locator1 = "KnowledgeBaseArticle#INFO_VERSION_SUBTITLE",
-			userName = ${userName},
-			value1 = "By ${userName}, on ${modifiedDate}");
+		AssertElementPresent(locator1 = "//li[contains(*,'${entryVersion}')]//div[@class='list-group-subtitle'][contains(text(),'By ${userName}, on ${modifiedDate}')]");
 	}
 
 	@summary = "Default summary"

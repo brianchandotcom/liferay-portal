@@ -7,7 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {knowledgeBasePages} from '../../fixtures/knowledgeBasePages';
+import {knowledgeBasePages} from '../../fixtures/knowledgeBasePagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 

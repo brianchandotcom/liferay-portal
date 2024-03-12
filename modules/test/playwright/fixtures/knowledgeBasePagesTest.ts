@@ -5,9 +5,9 @@
 
 import {test} from '@playwright/test';
 
-import {KnowledgeBasePage} from '../pages/knowledge-base-web/KnowledgeBase.page';
-import {KnowledgeBaseEditArticlePage} from '../pages/knowledge-base-web/KnowledgeBaseEditArticle.page';
-import {KnowledgeBaseViewArticlePage} from '../pages/knowledge-base-web/KnowledgeBaseViewArticle.page';
+import {KnowledgeBaseEditArticlePage} from '../pages/knowledge-base-web/KnowledgeBaseEditArticlePage';
+import {KnowledgeBasePage} from '../pages/knowledge-base-web/KnowledgeBasePage';
+import {KnowledgeBaseViewArticlePage} from '../pages/knowledge-base-web/KnowledgeBaseViewArticlePage';
 
 const knowledgeBasePages = test.extend<{
 	knowledgeBaseEditArticlePage: KnowledgeBaseEditArticlePage;

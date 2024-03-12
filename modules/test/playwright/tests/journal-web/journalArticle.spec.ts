@@ -9,7 +9,6 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
@@ -40,7 +39,6 @@ const translateNameAndMetadataFields = async (
 const baseTest = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
-	loginTest(),
 	isolatedSiteTest,
 	journalPagesTest
 );

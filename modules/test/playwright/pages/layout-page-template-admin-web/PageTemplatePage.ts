@@ -13,6 +13,7 @@ export class PageTemplatePage {
 
 	readonly newButton: Locator;
 	readonly publishButton: Locator;
+	readonly successfulMessage: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -20,6 +21,9 @@ export class PageTemplatePage {
 
 		this.newButton = page.getByText('New', {exact: true});
 		this.publishButton = page.getByLabel('Publish', {exact: true});
+		this.successfulMessage = page.getByText(
+			'Success:Your request completed successfully.'
+		);
 	}
 
 	async goto() {
@@ -71,8 +75,12 @@ export class PageTemplatePage {
 			dialog.accept().catch(() => {});
 		});
 		await this.page
-			.getByRole('menuitem', {name: 'Mark as Default'})
+			.getByRole('menuitem', {
+				exact: true,
+				name: 'Mark as Default',
+			})
 			.click();
+		await this.successfulMessage.waitFor();
 	}
 
 	async deleteDisplayPageTemplate(name: string) {

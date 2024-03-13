@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {unzipFile} from '../../utils/zip';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 
 export const test = mergeTests(
@@ -67,20 +66,18 @@ test('can download jsont format file as json', async ({
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	const unzipedFile = JSON.parse(
-		await unzipFile(
-			await dataMigrationCenterPage.exportFile(
-				'JSONT',
-				'C_Stock (v1_0 - Liferay Object REST)',
-				['name']
-			)
+	const exportedData = JSON.parse(
+		await dataMigrationCenterPage.exportFile(
+			'JSONT',
+			'C_Stock (v1_0 - Liferay Object REST)',
+			['name']
 		)
 	);
 
 	expect(require('./dependencies/jsont_objectEntry_import.json')).toEqual({
-		...unzipedFile,
+		...exportedData,
 		configuration: {
-			...unzipedFile.configuration,
+			...exportedData.configuration,
 			companyId: expect.any(Number),
 			userId: expect.any(Number),
 		},
@@ -103,12 +100,10 @@ test('verify users can exclude fields from being exported in JSON format', async
 		require('./dependencies/json_objectEntry_export_excluded.json')
 	).toEqual(
 		JSON.parse(
-			await unzipFile(
-				await dataMigrationCenterPage.exportFile(
-					'JSON',
-					'C_Stock (v1_0 - Liferay Object REST)',
-					['name']
-				)
+			await dataMigrationCenterPage.exportFile(
+				'JSON',
+				'C_Stock (v1_0 - Liferay Object REST)',
+				['name']
 			)
 		)
 	);
@@ -272,36 +267,34 @@ test('export custom object with all field types mapped', async ({
 		'c/stocks'
 	);
 
-	const unzipedFile = JSON.parse(
-		await unzipFile(
-			await dataMigrationCenterPage.exportFile(
-				'JSON',
-				'C_Stock (v1_0 - Liferay Object REST)',
-				[
-					'creator',
-					'customAttachment',
-					'customPicklist',
-					'customBoolean',
-					'customPrecisionDecimal',
-					'customLongText',
-					'name',
-				]
-			)
+	const exportedObjectEntry = JSON.parse(
+		await dataMigrationCenterPage.exportFile(
+			'JSON',
+			'C_Stock (v1_0 - Liferay Object REST)',
+			[
+				'creator',
+				'customAttachment',
+				'customPicklist',
+				'customBoolean',
+				'customPrecisionDecimal',
+				'customLongText',
+				'name',
+			]
 		)
 	);
 
 	expect(require('./dependencies/json_objectEntry_export.json')).toEqual([
 		{
-			...unzipedFile[0],
+			...exportedObjectEntry[0],
 			creator: {
-				...unzipedFile[0].creator,
+				...exportedObjectEntry[0].creator,
 				id: expect.any(Number),
 			},
 			customAttachment: {
 				id: expect.any(Number),
 				link: {
 					href: expect.any(String),
-					label: unzipedFile[0].customAttachment.link.label,
+					label: exportedObjectEntry[0].customAttachment.link.label,
 				},
 				name: expect.any(String),
 			},
@@ -326,12 +319,10 @@ test('verify users can exclude fields from being exported in JSONL format', asyn
 
 	expect(require('./dependencies/jsonl_objectEntry_import.json')).toEqual(
 		JSON.parse(
-			await unzipFile(
-				await dataMigrationCenterPage.exportFile(
-					'JSONL',
-					'C_Stock (v1_0 - Liferay Object REST)',
-					['name']
-				)
+			await dataMigrationCenterPage.exportFile(
+				'JSONL',
+				'C_Stock (v1_0 - Liferay Object REST)',
+				['name']
 			)
 		)
 	);

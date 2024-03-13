@@ -63,21 +63,49 @@ test('can export as JSONT', async ({apiHelpers, dataMigrationCenterPage}) => {
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	const exportedObject = JSON.parse(
-		await dataMigrationCenterPage.exportFile(
-			'JSONT',
-			'C_Stock (v1_0 - Liferay Object REST)',
-			['name']
+	expect(
+		JSON.parse(
+			await dataMigrationCenterPage.exportFile(
+				'JSONT',
+				'C_Stock (v1_0 - Liferay Object REST)',
+				['name']
+			)
 		)
-	);
-
-	expect(require('./dependencies/jsont_objectEntry_import.json')).toEqual({
-		...exportedObject,
-		configuration: {
-			...exportedObject.configuration,
-			companyId: expect.any(Number),
-			userId: expect.any(Number),
+	).toEqual({
+		actions: {
+			createBatch: {
+				href: '/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry',
+				method: 'POST',
+			},
+			deleteBatch: {
+				href: '/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry',
+				method: 'DELETE',
+			},
+			updateBatch: {
+				href: '/o/headless-batch-engine/v1.0/import-task/com.liferay.object.rest.dto.v1_0.ObjectEntry',
+				method: 'PUT',
+			},
 		},
+		configuration: {
+			callbackURL: null,
+			className: 'com.liferay.object.rest.dto.v1_0.ObjectEntry',
+			companyId: expect.any(Number),
+			multiCompany: false,
+			parameters: {
+				containsHeaders: 'true',
+				createStrategy: 'INSERT',
+				importStrategy: 'ON_ERROR_FAIL',
+				updateStrategy: 'UPDATE',
+			},
+			taskItemDelegateName: 'C_Stock',
+			userId: expect.any(Number),
+			version: 'v1.0',
+		},
+		items: [
+			{
+				name: 'Stock Entry',
+			},
+		],
 	});
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
@@ -94,8 +122,6 @@ test('can export as JSON with excluded fields', async ({
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
 	expect(
-		require('./dependencies/json_objectEntry_export_excluded.json')
-	).toEqual(
 		JSON.parse(
 			await dataMigrationCenterPage.exportFile(
 				'JSON',
@@ -103,7 +129,11 @@ test('can export as JSON with excluded fields', async ({
 				['name']
 			)
 		)
-	);
+	).toEqual([
+		{
+			name: 'Stock Entry',
+		},
+	]);
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });
@@ -264,37 +294,48 @@ test('can export as JSON with all field types mapped', async ({
 		'c/stocks'
 	);
 
-	const exportedObject = JSON.parse(
-		await dataMigrationCenterPage.exportFile(
-			'JSON',
-			'C_Stock (v1_0 - Liferay Object REST)',
-			[
-				'creator',
-				'customAttachment',
-				'customPicklist',
-				'customBoolean',
-				'customPrecisionDecimal',
-				'customLongText',
-				'name',
-			]
+	expect(
+		JSON.parse(
+			await dataMigrationCenterPage.exportFile(
+				'JSON',
+				'C_Stock (v1_0 - Liferay Object REST)',
+				[
+					'creator',
+					'customAttachment',
+					'customPicklist',
+					'customBoolean',
+					'customPrecisionDecimal',
+					'customLongText',
+					'name',
+				]
+			)
 		)
-	)[0];
-
-	expect(require('./dependencies/json_objectEntry_export.json')).toEqual([
+	).toEqual([
 		{
-			...exportedObject,
 			creator: {
-				...exportedObject.creator,
+				additionalName: '',
+				contentType: 'UserAccount',
+				familyName: 'Test',
+				givenName: 'Test',
 				id: expect.any(Number),
+				name: 'Test Test',
 			},
 			customAttachment: {
 				id: expect.any(Number),
 				link: {
 					href: expect.any(String),
-					label: exportedObject.customAttachment.link.label,
+					label: expect.any(String),
 				},
 				name: expect.any(String),
 			},
+			customBoolean: true,
+			customLongText: 'This is a custom LongText field',
+			customPicklist: {
+				key: 'distance1',
+				name: 'distance1',
+			},
+			customPrecisionDecimal: 12.55,
+			name: 'NameValue',
 		},
 	]);
 
@@ -314,7 +355,7 @@ test('can export as JSONL with excluded fields', async ({
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	expect(require('./dependencies/jsonl_objectEntry_import.json')).toEqual(
+	expect(
 		JSON.parse(
 			await dataMigrationCenterPage.exportFile(
 				'JSONL',
@@ -322,7 +363,9 @@ test('can export as JSONL with excluded fields', async ({
 				['name']
 			)
 		)
-	);
+	).toEqual({
+		name: 'Stock Entry',
+	});
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });

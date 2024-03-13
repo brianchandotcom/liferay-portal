@@ -26,7 +26,10 @@ import com.liferay.document.library.web.internal.security.permission.resource.DL
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -37,6 +40,8 @@ import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -81,6 +86,13 @@ public class DLViewEntriesDisplayContext {
 
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
+
+		_resourcePermissionLocalService =
+			(ResourcePermissionLocalService)liferayPortletRequest.getAttribute(
+				ResourcePermissionLocalService.class.getName());
+		_roleLocalService =
+			(RoleLocalService)liferayPortletRequest.getAttribute(
+				RoleLocalService.class.getName());
 	}
 
 	public List<String> getAvailableActions(FileEntry fileEntry)
@@ -308,6 +320,21 @@ public class DLViewEntriesDisplayContext {
 		return true;
 	}
 
+	public boolean hasGuestViewPermission(FileEntry fileEntry)
+		throws PortalException {
+
+		if (_guestRole == null) {
+			_guestRole = _roleLocalService.getRole(
+				fileEntry.getCompanyId(), RoleConstants.GUEST);
+		}
+
+		return _resourcePermissionLocalService.hasResourcePermission(
+			fileEntry.getCompanyId(), DLFileEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(fileEntry.getFileEntryId()), _guestRole.getRoleId(),
+			ActionKeys.VIEW);
+	}
+
 	public boolean isDescriptiveDisplayStyle() {
 		if (Objects.equals(getDisplayStyle(), "descriptive")) {
 			return true;
@@ -459,11 +486,15 @@ public class DLViewEntriesDisplayContext {
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;
 	private final DLTrashHelper _dlTrashHelper;
+	private Role _guestRole;
 	private Boolean _hasValidAssetVocabularies;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+	private final RoleLocalService _roleLocalService;
 	private final ThemeDisplay _themeDisplay;
 
 }

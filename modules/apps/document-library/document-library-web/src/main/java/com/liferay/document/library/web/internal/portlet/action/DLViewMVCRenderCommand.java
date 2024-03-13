@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContr
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -77,6 +79,12 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 					_portal));
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FOLDER, _getFolder(renderRequest));
+
+			renderRequest.setAttribute(
+				ResourcePermissionLocalService.class.getName(),
+				_resourcePermissionLocalService);
+			renderRequest.setAttribute(
+				RoleLocalService.class.getName(), _roleLocalService);
 
 			DLAdminDisplayContext dlAdminDisplayContext =
 				_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
@@ -195,5 +203,11 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

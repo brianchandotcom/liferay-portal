@@ -34,7 +34,7 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 	public String process() throws InvalidJSONException, IOException {
 		if (checkLiferayGitHubUser() ||
 			closeInvalidUpstreamGitHubBranchName() ||
-			skipCISenderBlacklistGitHubUser()) {
+			skipAutoTestSenderBlacklist()) {
 
 			return null;
 		}
@@ -227,7 +227,7 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 		}
 	}
 
-	protected boolean skipCISenderBlacklistGitHubUser()
+	protected boolean skipAutoTestSenderBlacklist()
 		throws InvalidJSONException, IOException {
 
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
@@ -258,9 +258,16 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 
 		GitHubUser senderGitHubUser = gitHubPullRequest.getSenderGitHubUser();
 
-		if (!ciTestAutoSendersBlacklist.contains(senderGitHubUser.getName())) {
+		String senderGitHubUserName = senderGitHubUser.getName();
+
+		if (!ciTestAutoSendersBlacklist.contains(senderGitHubUserName)) {
 			return false;
 		}
+
+		gitHubPullRequest.comment(
+			StringUtil.combine(
+				"To conserve resources, the PR Tester does not run for the ",
+				"sending user \"", senderGitHubUserName, "\"."));
 
 		return true;
 	}

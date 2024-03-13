@@ -33,7 +33,7 @@ public class PortalOpenGitHubPullRequestEventHandler
 	public String process() throws InvalidJSONException, IOException {
 		if (checkLiferayGitHubUser() ||
 			closeInvalidUpstreamGitHubBranchName() ||
-			_skipAutoTestReleaseBranch() || skipCISenderBlacklistGitHubUser()) {
+			_skipAutoTestReleaseBranch() || skipAutoTestSenderBlacklist()) {
 
 			return null;
 		}

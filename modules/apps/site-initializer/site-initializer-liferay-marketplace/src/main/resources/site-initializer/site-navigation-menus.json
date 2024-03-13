@@ -16,6 +16,11 @@
 				"friendlyURL": "/publisher-dashboard",
 				"privateLayout": false,
 				"type": "layout"
+			},
+			{
+				"friendlyURL": "/administrator-dashboard",
+				"privateLayout": false,
+				"type": "layout"
 			}
 		],
 		"name": "Primary Navigation"
@@ -40,6 +45,11 @@
 			},
 			{
 				"friendlyURL": "/publisher-dashboard",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/administrator-dashboard",
 				"privateLayout": false,
 				"type": "layout"
 			}

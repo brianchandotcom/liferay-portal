@@ -12,6 +12,7 @@ import PublisherGateRouter from './pages/PublisherGate/PublisheGateRouter';
 import PurchasedAppsDashboardRouter from './pages/PurchasedAppsDashboard/PurchasedAppsDashboardRouter';
 
 const Routes = {
+	'administrator-dashboard': PublishedAppsDashboardRouter,
 	'customer-gate': CustomerGatePage,
 	'get-app': GetAppRouter,
 	'next-steps': NextSteps,

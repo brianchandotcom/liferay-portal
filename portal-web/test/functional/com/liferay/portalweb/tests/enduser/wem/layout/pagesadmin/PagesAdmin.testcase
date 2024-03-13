@@ -308,6 +308,8 @@ definition {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 
 		task ("Add a private page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
+
 			PagesAdmin.addPrivatePage(pageName = "Test Private Page");
 		}
 

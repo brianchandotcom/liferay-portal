@@ -34,7 +34,7 @@ renderResponse.setTitle(LanguageUtil.get(request, titleKey));
 %>
 
 <react:component
-	module="designer/js/definition-builder/DefinitionBuilder"
+	module="{DefinitionBuilder} from portal-workflow-kaleo-designer-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"accountEntryId", ParamUtil.getLong(liferayPortletRequest, "accountEntryId")

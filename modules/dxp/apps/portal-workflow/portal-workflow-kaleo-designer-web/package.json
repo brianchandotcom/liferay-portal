@@ -36,6 +36,7 @@
 			"<rootDir>/test/mock"
 		]
 	},
+	"main": "designer/js/index.js",
 	"name": "portal-workflow-kaleo-designer-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

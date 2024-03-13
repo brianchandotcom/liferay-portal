@@ -515,6 +515,7 @@ module.exports = {
 			],
 			'item-selector-taglib': [],
 			'item-selector-web': [],
+			'portal-workflow-kaleo-designer-web': [],
 			'social-bookmarks-taglib': [],
 		},
 	},

@@ -90,7 +90,8 @@ public abstract class BaseTemplateResourceCache
 			templateResource = new CacheTemplateResource(templateResource);
 		}
 
-		_multiVMPortalCache.put(templateId, templateResource);
+		PortalCacheHelperUtil.putWithoutReplicator(
+			_multiVMPortalCache, templateId, templateResource);
 	}
 
 	@Override

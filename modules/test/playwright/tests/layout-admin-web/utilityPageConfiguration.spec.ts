@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from '../layout-content-page-editor-web/fixtures/pageEditorPagesTest';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
@@ -17,7 +16,6 @@ export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	isolatedSiteTest,
-	loginTest(),
 	pageEditorPagesTest,
 	pagesPagesTest
 );

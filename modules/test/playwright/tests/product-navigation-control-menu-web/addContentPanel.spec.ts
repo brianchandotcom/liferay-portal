@@ -7,7 +7,6 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../fixtures/loginTest';
 import {widgetPagesTest} from '../../fixtures/widgetPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
@@ -20,7 +19,6 @@ import getBasicWebContentStructureId from '../../utils/structured-content/getBas
 export const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
-	loginTest(),
 	widgetPagesTest
 );
 

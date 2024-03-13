@@ -13,6 +13,8 @@ import com.rabbitmq.client.Channel;
 
 import java.net.URI;
 
+import java.time.Duration;
+
 import java.util.Locale;
 import java.util.function.Function;
 
@@ -33,11 +35,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
+
+import reactor.netty.http.client.HttpClient;
+import reactor.netty.resources.ConnectionProvider;
 
 /**
  * @author Jair Medeiros
@@ -478,7 +484,24 @@ public class QueueListener {
 	}
 
 	private WebClient _getWebClient() {
+		ConnectionProvider connectionProvider = ConnectionProvider.builder(
+			"fixed"
+		).evictInBackground(
+			Duration.ofSeconds(120)
+		).maxConnections(
+			500
+		).maxIdleTime(
+			Duration.ofSeconds(20)
+		).maxLifeTime(
+			Duration.ofSeconds(60)
+		).pendingAcquireTimeout(
+			Duration.ofSeconds(60)
+		).build();
+
 		return WebClient.builder(
+		).clientConnector(
+			new ReactorClientHttpConnector(
+				HttpClient.create(connectionProvider))
 		).baseUrl(
 			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
 		).exchangeStrategies(

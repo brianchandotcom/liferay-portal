@@ -131,6 +131,9 @@ export class DataMigrationCenterPage {
 		const downloadPromise = this.page.waitForEvent('download');
 		await this.downloadButton.click();
 		const download = await downloadPromise;
-		await download.saveAs(getTempDir() + download.suggestedFilename());
+		const filePath = getTempDir() + download.suggestedFilename();
+		await download.saveAs(filePath);
+
+		return filePath;
 	}
 }

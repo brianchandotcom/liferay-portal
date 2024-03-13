@@ -100,16 +100,18 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
+				plids.add(
+					resultSet.getLong("LayoutPageTemplateStructure.classPK"));
+
 				long ctCollectionId = resultSet.getLong(
 					"LayoutPageTemplateStructure.ctCollectionId");
+
+				preparedStatement2.setLong(1, ctCollectionId);
+
 				long layoutPageTemplateStructureId = resultSet.getLong(
 					"LayoutPageTemplateStructure." +
 						"layoutPageTemplateStructureId");
 
-				plids.add(
-					resultSet.getLong("LayoutPageTemplateStructure.classPK"));
-
-				preparedStatement2.setLong(1, ctCollectionId);
 				preparedStatement2.setLong(2, layoutPageTemplateStructureId);
 
 				preparedStatement2.addBatch();

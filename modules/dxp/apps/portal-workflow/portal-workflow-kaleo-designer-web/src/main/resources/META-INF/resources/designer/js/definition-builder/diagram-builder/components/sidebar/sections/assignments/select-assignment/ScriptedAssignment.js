@@ -9,6 +9,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {DefinitionBuilderContext} from '../../../../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
@@ -24,7 +25,12 @@ const scriptLanguageOptions = [
 ];
 
 const ScriptedAssignment = ({setContentName}) => {
-	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+	const {hadGroovyScriptBefore, selectedItem, setSelectedItem} = useContext(
+		DiagramBuilderContext
+	);
+	const {allowScriptContentBeExecutedOrIncluded} = useContext(
+		DefinitionBuilderContext
+	);
 
 	const [showScriptData, setShowScriptData] = useState(
 		selectedItem?.data.assignments?.script
@@ -45,6 +51,21 @@ const ScriptedAssignment = ({setContentName}) => {
 				data: {...previous.data, assignments: null},
 			};
 		});
+	};
+
+	const getScriptLanguageOptions = () => {
+		if (
+			Liferay.FeatureFlags['LPD-11179'] &&
+			!allowScriptContentBeExecutedOrIncluded &&
+			!hadGroovyScriptBefore
+		) {
+			return scriptLanguageOptions.filter(
+				(scriptLanguageOption) =>
+					scriptLanguageOption.value !== 'groovy'
+			);
+		}
+
+		return scriptLanguageOptions;
 	};
 
 	useEffect(() => {
@@ -79,7 +100,7 @@ const ScriptedAssignment = ({setContentName}) => {
 				}}
 			>
 				{scriptLanguageOptions &&
-					scriptLanguageOptions.map((item) => (
+					getScriptLanguageOptions().map((item) => (
 						<ClaySelect.Option
 							key={item.value}
 							label={item.label}

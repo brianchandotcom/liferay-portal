@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceCache;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 /**
@@ -83,21 +82,15 @@ public abstract class BaseTemplateResourceCache
 		}
 
 		if (templateResource == null) {
-			_multiVMPortalCache.put(templateId, DUMMY_TEMPLATE_RESOURCE);
+			templateResource = DUMMY_TEMPLATE_RESOURCE;
 		}
-		else if (templateResource instanceof URLTemplateResource) {
-			_multiVMPortalCache.put(
-				templateId, new CacheTemplateResource(templateResource));
-		}
-		else if (templateResource instanceof CacheTemplateResource ||
-				 templateResource instanceof StringTemplateResource) {
+		else if (!(templateResource instanceof CacheTemplateResource) &&
+				 !(templateResource instanceof StringTemplateResource)) {
 
-			_multiVMPortalCache.put(templateId, templateResource);
+			templateResource = new CacheTemplateResource(templateResource);
 		}
-		else {
-			_multiVMPortalCache.put(
-				templateId, new CacheTemplateResource(templateResource));
-		}
+
+		_multiVMPortalCache.put(templateId, templateResource);
 	}
 
 	@Override

@@ -29,76 +29,7 @@ public class JavaEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 		content = _fixRedundantEmptyLineInLambdaExpression(content);
 
-		content = _fixIncorrectEmptyLineInsideStatement(content);
-
 		return content;
-	}
-
-	private String _fixIncorrectEmptyLineInsideStatement(String content) {
-		int pos = -1;
-
-		outerLoop:
-		while (true) {
-			int previousPos = pos;
-
-			pos = content.indexOf("\n\n", pos + 1);
-
-			if (pos == -1) {
-				return content;
-			}
-
-			if (previousPos == -1) {
-				continue;
-			}
-
-			String s1 = content.substring(previousPos, pos);
-
-			if (getLevel(s1) <= 0) {
-				continue;
-			}
-
-			String lineBefore = StringUtil.trim(
-				getLine(content, getLineNumber(content, previousPos)));
-
-			if (lineBefore.startsWith("//")) {
-				continue;
-			}
-
-			String lineAfter = StringUtil.trim(
-				getLine(content, getLineNumber(content, pos + 2)));
-
-			if (lineAfter.startsWith("//")) {
-				continue;
-			}
-
-			int x = s1.length();
-
-			while (true) {
-				x = s1.lastIndexOf("(", x - 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				String s2 = s1.substring(x);
-
-				if (getLevel(s2) > 0) {
-					if (getLevel(s2, "{", "}") > 0) {
-						continue outerLoop;
-					}
-
-					String s3 = StringUtil.trim(s1.substring(0, x));
-
-					if (s3.endsWith("\ttry")) {
-						continue outerLoop;
-					}
-
-					break;
-				}
-			}
-
-			return StringUtil.replaceFirst(content, "\n\n", "\n", pos);
-		}
 	}
 
 	private String _fixRedundantEmptyLineInLambdaExpression(String content) {

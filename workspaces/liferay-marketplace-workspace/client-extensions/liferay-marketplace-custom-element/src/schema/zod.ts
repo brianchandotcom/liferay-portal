@@ -11,7 +11,7 @@ import i18n from '../i18n';
 const zodSchema = {
 	accountCreator: z.object({
 		accounts: z.any().array().optional(),
-		agreeToTermsAndConditions: z.boolean(),
+		agreeToTermsAndConditions: z.boolean().optional(),
 		companyName: z
 			.string()
 			.min(1, {message: 'Please enter a company name to continue'}),

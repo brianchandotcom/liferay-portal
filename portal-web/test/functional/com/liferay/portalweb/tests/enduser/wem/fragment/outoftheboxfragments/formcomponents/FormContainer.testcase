@@ -518,7 +518,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Region",
 				showLabel = "true",
-				type = "text");
+				type = "text-input");
 
 			PageEditor.viewFragmentEditableText(
 				className = "button",
@@ -553,7 +553,7 @@ definition {
 			PageEditor.viewInputStyle(
 				label = "Region",
 				showLabel = "true",
-				type = "text");
+				type = "text-input");
 		}
 	}
 

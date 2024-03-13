@@ -667,6 +667,38 @@ function Table({
 }: IFDSViewSectionProps & {title?: string}) {
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
 
+	const reorderFDSFields = ({
+		fdsFieldsOrder,
+		storedFDSFields,
+	}: {
+		fdsFieldsOrder: string;
+		storedFDSFields: Array<IFDSField>;
+	}): Array<IFDSField> => {
+		const storedOrderedFDSFieldIds = fdsFieldsOrder.split(',');
+
+		const orderedFDSFields: Array<IFDSField> = [];
+
+		const orderedFDSFieldIds: Array<number> = [];
+
+		storedOrderedFDSFieldIds.forEach((fdsFieldId: string) => {
+			storedFDSFields.forEach((storedFDSField: IFDSField) => {
+				if (fdsFieldId === String(storedFDSField.id)) {
+					orderedFDSFields.push(storedFDSField);
+
+					orderedFDSFieldIds.push(storedFDSField.id);
+				}
+			});
+		});
+
+		storedFDSFields.forEach((storedFDSField: IFDSField) => {
+			if (!orderedFDSFieldIds.includes(storedFDSField.id)) {
+				orderedFDSFields.push(storedFDSField);
+			}
+		});
+
+		return orderedFDSFields;
+	};
+
 	const getFDSFields = async () => {
 		const response = await fetch(
 			`${API_URL.FDS_FIELDS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD}`
@@ -693,26 +725,9 @@ function Table({
 				?.fdsFieldsOrder;
 
 		if (fdsFieldsOrder) {
-			const storedOrderedFDSFieldIds = fdsFieldsOrder.split(',');
-
-			const orderedFDSFields: Array<IFDSField> = [];
-
-			const orderedFDSFieldIds: Array<number> = [];
-
-			storedOrderedFDSFieldIds.forEach((fdsFieldId: string) => {
-				storedFDSFields.forEach((storedFDSField: IFDSField) => {
-					if (fdsFieldId === String(storedFDSField.id)) {
-						orderedFDSFields.push(storedFDSField);
-
-						orderedFDSFieldIds.push(storedFDSField.id);
-					}
-				});
-			});
-
-			storedFDSFields.forEach((storedFDSField: IFDSField) => {
-				if (!orderedFDSFieldIds.includes(storedFDSField.id)) {
-					orderedFDSFields.push(storedFDSField);
-				}
+			const orderedFDSFields = reorderFDSFields({
+				fdsFieldsOrder,
+				storedFDSFields,
 			});
 
 			setFDSFields(orderedFDSFields);
@@ -800,7 +815,20 @@ function Table({
 
 		const storedFDSFieldsOrder = responseJSON?.fdsFieldsOrder;
 
-		if (storedFDSFieldsOrder && storedFDSFieldsOrder === fdsFieldsOrder) {
+		const storedFDSFields = fdsFields;
+
+		if (
+			storedFDSFields &&
+			storedFDSFieldsOrder &&
+			storedFDSFieldsOrder === fdsFieldsOrder
+		) {
+			const orderedFDSFields = reorderFDSFields({
+				fdsFieldsOrder,
+				storedFDSFields,
+			});
+
+			setFDSFields(orderedFDSFields);
+
 			openDefaultSuccessToast();
 		}
 		else {

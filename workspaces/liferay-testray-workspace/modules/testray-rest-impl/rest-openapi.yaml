@@ -1,0 +1,52 @@
+components:
+    schemas:
+        TestrayRunComparison:
+            properties:
+                results:
+                    items:
+                        type: object
+                    type: array
+            type: object
+info:
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "Testray REST"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/testray-run-comparisons/{testrayRun1Id}/{testrayRun2Id}":
+        get:
+            operationId: getTestrayRunComparison
+            parameters:
+                - in: path
+                  name: testrayRun1Id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: testrayRun2Id
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: testrayCasePriorities
+                  schema:
+                      type: string
+                - in: query
+                  name: testrayTeamId
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TestrayRunComparison"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TestrayRunComparison"
+            tags: ["TestrayRunComparison"]

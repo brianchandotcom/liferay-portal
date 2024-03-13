@@ -261,8 +261,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmFormFieldTypeServicesRegistry,
 			_ddmStructureLocalService.getStructure(dataDefinitionId),
-			_ddmStructureLayoutLocalService, contextHttpServletRequest,
-			_spiDDMFormRuleConverter);
+			_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+			contextHttpServletRequest, _spiDDMFormRuleConverter);
 	}
 
 	@Override
@@ -343,8 +343,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmFormFieldTypeServicesRegistry, ddmStructure,
-			_ddmStructureLayoutLocalService, contextHttpServletRequest,
-			_spiDDMFormRuleConverter);
+			_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+			contextHttpServletRequest, _spiDDMFormRuleConverter);
 	}
 
 	@Override
@@ -403,8 +403,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				_ddmFormFieldTypeServicesRegistry,
 				_ddmStructureLocalService.getStructure(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
-				_ddmStructureLayoutLocalService, contextHttpServletRequest,
-				_spiDDMFormRuleConverter));
+				_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+				contextHttpServletRequest, _spiDDMFormRuleConverter));
 	}
 
 	@Override
@@ -424,8 +424,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		DataDefinition dataDefinition = DataDefinitionUtil.toDataDefinition(
 			_ddmFormFieldTypeServicesRegistry,
 			_ddmStructureLocalService.getStructure(dataDefinitionId),
-			_ddmStructureLayoutLocalService, contextHttpServletRequest,
-			_spiDDMFormRuleConverter);
+			_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+			contextHttpServletRequest, _spiDDMFormRuleConverter);
 
 		_uniquifyDataDefinitionFields(dataDefinition);
 
@@ -513,8 +513,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 				DataDefinitionUtil.toDataDefinition(
 					_ddmFormFieldTypeServicesRegistry,
 					_ddmStructureLocalService.getStructure(classPK),
-					_ddmStructureLayoutLocalService, contextHttpServletRequest,
-					_spiDDMFormRuleConverter);
+					_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+					contextHttpServletRequest, _spiDDMFormRuleConverter);
 
 			putDataDefinition(
 				existingDataDefinition.getId(), existingDataDefinition);
@@ -889,8 +889,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataDefinitionUtil.toDataDefinition(
 				_ddmFormFieldTypeServicesRegistry,
 				_ddmStructureLocalService.getStructure(dataDefinitionId),
-				_ddmStructureLayoutLocalService, contextHttpServletRequest,
-				_spiDDMFormRuleConverter);
+				_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+				contextHttpServletRequest, _spiDDMFormRuleConverter);
 
 		DDMForm existingDDMForm = DataDefinitionDDMFormUtil.toDDMForm(
 			existingDataDefinition, _ddmFormFieldTypeServicesRegistry);
@@ -969,8 +969,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataDefinition dataDefinition = DataDefinitionUtil.toDataDefinition(
 				_ddmFormFieldTypeServicesRegistry,
 				_ddmStructureLocalService.getDDMStructure(entry.getKey()),
-				_ddmStructureLayoutLocalService, contextHttpServletRequest,
-				_spiDDMFormRuleConverter);
+				_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+				contextHttpServletRequest, _spiDDMFormRuleConverter);
 
 			DDMStructureLayout ddmStructureLayout =
 				_ddmStructureLayoutLocalService.fetchDDMStructureLayout(
@@ -1194,8 +1194,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		dataDefinition = DataDefinitionUtil.toDataDefinition(
 			_ddmFormFieldTypeServicesRegistry, ddmStructure,
-			_ddmStructureLayoutLocalService, contextHttpServletRequest,
-			_spiDDMFormRuleConverter);
+			_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+			contextHttpServletRequest, _spiDDMFormRuleConverter);
 
 		if (copyPermissions) {
 			_resourceLocalService.copyModelResources(
@@ -1484,8 +1484,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmFormFieldTypeServicesRegistry, ddmStructure,
-			_ddmStructureLayoutLocalService, contextHttpServletRequest,
-			_spiDDMFormRuleConverter);
+			_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+			contextHttpServletRequest, _spiDDMFormRuleConverter);
 	}
 
 	private DataDefinitionValidationException
@@ -1796,8 +1796,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 					dataDefinition.getDescription()),
 				ddmFormSerializerSerializeResponse.getContent(),
 				new ServiceContext()),
-			_ddmStructureLayoutLocalService, contextHttpServletRequest,
-			_spiDDMFormRuleConverter);
+			_ddmStructureLayoutLocalService, _ddmStructureLocalService,
+			contextHttpServletRequest, _spiDDMFormRuleConverter);
 	}
 
 	private void _updateDataLayout(DataLayout dataLayout) {

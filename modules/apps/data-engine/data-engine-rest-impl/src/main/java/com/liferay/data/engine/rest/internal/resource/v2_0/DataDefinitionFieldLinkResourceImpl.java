@@ -178,7 +178,8 @@ public class DataDefinitionFieldLinkResourceImpl
 						_ddmStructureLocalService.getDDMStructure(
 							dataDefinitionId),
 						_ddmStructureLayoutLocalService,
-						contextHttpServletRequest, _spiDDMFormRuleConverter));
+						_ddmStructureLocalService, contextHttpServletRequest,
+						_spiDDMFormRuleConverter));
 				setDataLayouts(() -> new DataLayout[0]);
 				setDataListViews(() -> new DataListView[0]);
 			}

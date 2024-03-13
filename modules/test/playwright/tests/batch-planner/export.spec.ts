@@ -80,13 +80,12 @@ test('can download jsont format file as json', async ({
 	const unzipedFile = JSON.parse(await unzipFile(exportPath));
 
 	expect(require('./dependencies/jsont_objectEntry_import.json')).toEqual({
-		actions: unzipedFile.actions,
+		...unzipedFile,
 		configuration: {
 			...unzipedFile.configuration,
 			companyId: expect.any(Number),
 			userId: expect.any(Number),
 		},
-		items: unzipedFile.items,
 	});
 
 	fs.unlinkSync(exportPath);

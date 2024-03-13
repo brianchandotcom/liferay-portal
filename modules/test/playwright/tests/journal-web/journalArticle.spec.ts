@@ -69,10 +69,9 @@ translationTest(
 	async ({
 		journalEditArticlePage,
 		journalEditArticleTranslationsPage,
-		journalPage,
 		site,
 	}) => {
-		await journalPage.goto(site.friendlyUrlPath);
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		const title = getRandomString();
 
@@ -100,7 +99,7 @@ bulkTest(
 			{enabled: true, locator: '#guest_ACTION_PERMISSIONS'},
 		];
 
-		await journalPage.goto(site.friendlyUrlPath);
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		const title1 = getRandomString();
 		const title2 = getRandomString();
@@ -143,10 +142,8 @@ bulkTest(
 
 translationTest(
 	'LPD-19627: Translate several fields in a Basic Web Content and check how many fields have been translated',
-	async ({journalEditArticlePage, journalPage, page, site}) => {
-		await journalPage.goto(site.friendlyUrlPath);
-
-		await journalEditArticlePage.goto();
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		await journalEditArticlePage.fillTitle(getRandomString());
 
@@ -176,7 +173,7 @@ translationTest(
 
 translationTest(
 	'LPD-19627: Translate all fields of a Web Content based on a custom structure with repeatable fields',
-	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const localizableFieldName = 'Text5678';
 		const structureName = 'Structure 1';
 
@@ -188,9 +185,10 @@ translationTest(
 
 		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
 
-		await journalPage.goto(site.friendlyUrlPath);
-
-		await journalEditArticlePage.goto(structureName);
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
 
 		const translationButton = page.getByRole('combobox', {
 			name: 'Select a language',
@@ -243,7 +241,7 @@ translationTest(
 
 translationTest(
 	'LPD-19627: A non-localizabled field is disabled when another translation language is selected',
-	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
 		const nonLocalizableFieldName = 'Text1234';
 		const structureName = 'Structure 1';
 
@@ -255,9 +253,10 @@ translationTest(
 
 		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
 
-		await journalPage.goto(site.friendlyUrlPath);
-
-		await journalEditArticlePage.goto(structureName);
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
 
 		const translationButton = page.getByRole('combobox', {
 			name: 'Select a language',
@@ -282,9 +281,7 @@ translationTest(
 scheduleTest(
 	'Create a web content selecting permissions in the modal',
 	async ({journalEditArticlePage, journalPage, page, site}) => {
-		await journalPage.goto(site.friendlyUrlPath);
-
-		await journalEditArticlePage.goto();
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -331,9 +328,7 @@ scheduleTest(
 scheduleTest(
 	'Change permission of a web content in edition mode',
 	async ({journalEditArticlePage, journalPage, page, site}) => {
-		await journalPage.goto(site.friendlyUrlPath);
-
-		await journalEditArticlePage.goto();
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		const title = getRandomString();
 

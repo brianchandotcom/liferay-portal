@@ -10,6 +10,7 @@ import {JournalPage} from './JournalPage';
 export class JournalEditTemplatePage {
 	readonly page: Page;
 
+	readonly basicInformation: Locator;
 	readonly elementsButton: Locator;
 	readonly journalPage: JournalPage;
 	readonly saveButton: Locator;
@@ -17,18 +18,29 @@ export class JournalEditTemplatePage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.basicInformation = page.getByRole('link', {
+			name: 'Basic Information',
+		});
 		this.elementsButton = page.getByTitle('Elements', {exact: true});
 		this.journalPage = new JournalPage(page);
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 	}
 
-	async goto() {
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.journalPage.goto(siteUrl);
+		await this.journalPage.goToCreateNewTemplate();
+
+		// Do it twice so we decrease flakiness
+
+		await this.journalPage.goto(siteUrl);
 		await this.journalPage.goToCreateNewTemplate();
 
 		// Do it twice so we decrease flakiness
 
 		await this.journalPage.goto();
 		await this.journalPage.goToCreateNewTemplate();
+
+		await this.basicInformation.waitFor();
 	}
 
 	async gotoElements() {

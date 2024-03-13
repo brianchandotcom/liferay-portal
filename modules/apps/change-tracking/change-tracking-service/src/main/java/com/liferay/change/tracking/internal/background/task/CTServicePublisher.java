@@ -237,6 +237,32 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			sb.append(tableName);
 			sb.append(" where ctCollectionId = ");
 			sb.append(tempCTCollectionId);
+			sb.append(" and ");
+			sb.append(primaryKeyName);
+			sb.append(" in (");
+
+			int i = 0;
+
+			for (Serializable primaryKey : _modificationCTEntries.keySet()) {
+				if (i == _BATCH_SIZE) {
+					sb.setStringAt(")", sb.index() - 1);
+
+					sb.append(" or ");
+					sb.append(tableName);
+					sb.append(".");
+					sb.append(primaryKeyName);
+					sb.append(" in (");
+
+					i = 0;
+				}
+
+				sb.append(primaryKey);
+				sb.append(", ");
+
+				i++;
+			}
+
+			sb.setStringAt(")", sb.index() - 1);
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(sb.toString())) {

@@ -113,10 +113,6 @@ export class JournalPage {
 			.click();
 	}
 
-	async deleteJournalArticle(title: string) {
-		await this.goToJournalArticleAction('Delete', title);
-	}
-
 	async setJournalArticlePermissions(
 		articles: Locator[],
 		permissionLocators: string[]

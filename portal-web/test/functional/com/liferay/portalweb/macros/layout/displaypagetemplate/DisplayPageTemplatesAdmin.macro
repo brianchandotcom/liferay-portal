@@ -49,7 +49,7 @@ definition {
 
 		PortletEntry.inputName(name = ${folderName});
 
-		PortletEntry.save();
+		PortletEntry.create();
 	}
 
 	@summary = "Change content type"

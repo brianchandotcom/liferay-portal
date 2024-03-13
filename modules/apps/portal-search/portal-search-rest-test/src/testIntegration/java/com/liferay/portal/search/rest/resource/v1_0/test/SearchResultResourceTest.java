@@ -483,8 +483,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			String facetName, Object facetValues, String... expectedValues)
 		throws Exception {
 
-		Arrays.sort(expectedValues);
-
 		SearchPage<SearchResult> page = _postSearchPageWithFacetConfiguration(
 			new FacetConfiguration() {
 				{
@@ -519,6 +517,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		String[] termValues = termValuesList.toArray(new String[0]);
 
+		Arrays.sort(expectedValues);
 		Arrays.sort(termValues);
 
 		if (anyMatch) {

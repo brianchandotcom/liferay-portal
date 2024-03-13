@@ -10,6 +10,7 @@ import {config as announcementsWebConfig} from './tests/announcements-web/config
 import {config as batchPlannerConfig} from './tests/batch-planner/config';
 import {config as clientExtensionWebConfig} from './tests/client-extension-web/config';
 import {config as commerceConfig} from './tests/commerce/config';
+import {config as dispatchWebConfig} from './tests/dispatch-web/config';
 import {config as documentLibraryWebConfig} from './tests/document-library-web/config';
 import {config as exportImportWebConfig} from './tests/export-import-web/config';
 import {config as frontendDataSetViewsWebConfig} from './tests/frontend-data-set-views-web/config';
@@ -39,6 +40,7 @@ export default defineConfig({
 		batchPlannerConfig,
 		clientExtensionWebConfig,
 		commerceConfig,
+		dispatchWebConfig,
 		documentLibraryWebConfig,
 		exportImportWebConfig,
 		frontendDataSetViewsWebConfig,

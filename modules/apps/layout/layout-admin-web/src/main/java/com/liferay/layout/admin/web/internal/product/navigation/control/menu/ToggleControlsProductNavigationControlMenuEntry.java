@@ -59,6 +59,7 @@ public class ToggleControlsProductNavigationControlMenuEntry
 		return null;
 	}
 
+	@Override
 	public String getURL(HttpServletRequest httpServletRequest) {
 		return null;
 	}

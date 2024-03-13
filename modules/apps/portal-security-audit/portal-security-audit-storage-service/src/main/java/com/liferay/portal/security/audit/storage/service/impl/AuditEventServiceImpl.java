@@ -72,6 +72,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			companyId, start, end, orderByComparator);
 	}
 
+	@Override
 	public List<AuditEvent> getAuditEvents(
 			long companyId, long groupId, long userId, String userName,
 			Date createDateGT, Date createDateLT, String eventType,
@@ -96,6 +97,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 			serverPort, sessionID, andSearch, start, end);
 	}
 
+	@Override
 	public List<AuditEvent> getAuditEvents(
 			long companyId, long groupId, long userId, String userName,
 			Date createDateGT, Date createDateLT, String eventType,
@@ -126,6 +128,7 @@ public class AuditEventServiceImpl extends AuditEventServiceBaseImpl {
 		return auditEventLocalService.getAuditEventsCount(companyId);
 	}
 
+	@Override
 	public int getAuditEventsCount(
 			long companyId, long groupId, long userId, String userName,
 			Date createDateGT, Date createDateLT, String eventType,

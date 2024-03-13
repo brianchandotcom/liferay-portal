@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class ObjectFolderImpl extends ObjectFolderBaseImpl {
 
+	@Override
 	public boolean isDefault() {
 		if (StringUtil.equals(getName(), ObjectFolderConstants.NAME_DEFAULT)) {
 			return true;

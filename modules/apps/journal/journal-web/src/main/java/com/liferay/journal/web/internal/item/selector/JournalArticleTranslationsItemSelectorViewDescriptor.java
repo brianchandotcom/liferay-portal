@@ -58,6 +58,7 @@ public class JournalArticleTranslationsItemSelectorViewDescriptor
 		return "list";
 	}
 
+	@Override
 	public String[] getDisplayViews() {
 		return new String[] {"list"};
 	}

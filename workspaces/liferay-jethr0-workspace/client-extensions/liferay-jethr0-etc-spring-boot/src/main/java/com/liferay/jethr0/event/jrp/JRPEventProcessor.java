@@ -22,6 +22,7 @@ public class JRPEventProcessor extends BaseEventProcessor {
 	@JmsListener(
 		destination = "${JETHR0_JMS_QUEUE_JRP_TO_JETHR0:jrp-to-jethr0}"
 	)
+	@Override
 	public void receiveMessage(String message) {
 		super.receiveMessage(message);
 	}

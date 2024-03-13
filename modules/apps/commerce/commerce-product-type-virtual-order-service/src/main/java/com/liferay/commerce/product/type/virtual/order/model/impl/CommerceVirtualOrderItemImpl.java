@@ -25,6 +25,7 @@ public class CommerceVirtualOrderItemImpl
 			getCommerceOrderItemId());
 	}
 
+	@Override
 	public List<CommerceVirtualOrderItemFileEntry>
 		getCommerceVirtualOrderItemFileEntries() {
 
@@ -33,6 +34,7 @@ public class CommerceVirtualOrderItemImpl
 				getCommerceVirtualOrderItemId());
 	}
 
+	@Override
 	public int getCommerceVirtualOrderItemFileEntriesCount() {
 		return CommerceVirtualOrderItemFileEntryLocalServiceUtil.
 			getCommerceVirtualOrderItemFileEntriesCount(

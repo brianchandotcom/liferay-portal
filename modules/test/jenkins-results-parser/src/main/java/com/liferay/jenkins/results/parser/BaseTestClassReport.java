@@ -23,6 +23,7 @@ public abstract class BaseTestClassReport implements TestClassReport {
 		return _downstreamBuildReport;
 	}
 
+	@Override
 	public long getDuration() {
 		long duration = 0L;
 

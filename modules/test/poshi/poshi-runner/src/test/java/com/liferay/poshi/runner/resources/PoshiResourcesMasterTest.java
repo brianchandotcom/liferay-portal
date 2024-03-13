@@ -12,6 +12,7 @@ import org.junit.Test;
  */
 public class PoshiResourcesMasterTest extends BasePoshiResourcesTestCase {
 
+	@Override
 	@Test
 	public void testLatestVersion() throws Exception {
 		runTest("master");

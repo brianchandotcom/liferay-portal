@@ -23,6 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SiteActivityAsahConfiguration extends AsahConfiguration {
 
 	@Meta.AD(deflt = "14400", name = "cache-timeout", required = false)
+	@Override
 	public int cacheTimeout();
 
 }

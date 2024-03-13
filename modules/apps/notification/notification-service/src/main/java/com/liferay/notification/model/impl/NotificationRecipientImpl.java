@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class NotificationRecipientImpl extends NotificationRecipientBaseImpl {
 
+	@Override
 	public List<NotificationRecipientSetting>
 		getNotificationRecipientSettings() {
 

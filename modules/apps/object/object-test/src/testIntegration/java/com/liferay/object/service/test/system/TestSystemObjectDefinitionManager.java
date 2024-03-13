@@ -51,6 +51,7 @@ public class TestSystemObjectDefinitionManager
 		return null;
 	}
 
+	@Override
 	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 
@@ -90,6 +91,7 @@ public class TestSystemObjectDefinitionManager
 			restContextPaths.get(1));
 	}
 
+	@Override
 	public Map<String, String> getLabelKeys() {
 		return HashMapBuilder.put(
 			"label", "test"
@@ -139,6 +141,7 @@ public class TestSystemObjectDefinitionManager
 		throws Exception {
 	}
 
+	@Override
 	public long upsertBaseModel(
 		String externalReferenceCode, long companyId, User user,
 		Map<String, Object> values) {

@@ -48,6 +48,7 @@ public class LayoutPortletExportImportTest extends BaseExportImportTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

@@ -54,6 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FaroChannelLocalServiceImpl
 	extends FaroChannelLocalServiceBaseImpl {
 
+	@Override
 	public FaroChannel addFaroChannel(
 			long userId, String name, String channelId, long workspaceGroupId)
 		throws PortalException {
@@ -92,6 +93,7 @@ public class FaroChannelLocalServiceImpl
 		return faroChannelPersistence.update(faroChannel);
 	}
 
+	@Override
 	public void addUsers(
 			long companyId, String channelId, List<Long> invitedUserIds,
 			long userId, long workspaceGroupId)
@@ -123,6 +125,7 @@ public class FaroChannelLocalServiceImpl
 		}
 	}
 
+	@Override
 	public FaroChannel deleteFaroChannel(FaroChannel faroChannel)
 		throws PortalException {
 
@@ -131,6 +134,7 @@ public class FaroChannelLocalServiceImpl
 		return faroChannelPersistence.remove(faroChannel);
 	}
 
+	@Override
 	public FaroChannel deleteFaroChannel(
 			String channelId, long workspaceGroupId)
 		throws PortalException {
@@ -139,6 +143,7 @@ public class FaroChannelLocalServiceImpl
 			faroChannelPersistence.findByC_W(channelId, workspaceGroupId));
 	}
 
+	@Override
 	public void deleteFaroChannels(long workspaceGroupId)
 		throws PortalException {
 
@@ -150,12 +155,14 @@ public class FaroChannelLocalServiceImpl
 		}
 	}
 
+	@Override
 	public FaroChannel getFaroChannel(String channelId, long workspaceGroupId)
 		throws PortalException {
 
 		return faroChannelPersistence.findByC_W(channelId, workspaceGroupId);
 	}
 
+	@Override
 	public List<FaroUser> getFaroUsers(
 			String channelId, boolean available, String query,
 			List<Integer> statuses, long workspaceGroupId, int start, int end,
@@ -170,6 +177,7 @@ public class FaroChannelLocalServiceImpl
 			faroChannel.getWorkspaceGroupId(), start, end, orderByComparator);
 	}
 
+	@Override
 	public int getFaroUsersCount(
 			String channelId, boolean available, String query,
 			List<Integer> statuses, long workspaceGroupId)
@@ -183,6 +191,7 @@ public class FaroChannelLocalServiceImpl
 			faroChannel.getWorkspaceGroupId());
 	}
 
+	@Override
 	public void removeUsers(
 			String channelId, List<Long> userIds, long workspaceGroupId)
 		throws PortalException {
@@ -199,6 +208,7 @@ public class FaroChannelLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<FaroChannel> search(
 		long groupId, String query, int start, int end,
 		OrderByComparator<FaroChannel> orderByComparator) {
@@ -211,6 +221,7 @@ public class FaroChannelLocalServiceImpl
 			permissionChecker.getUserId(), start, end, orderByComparator);
 	}
 
+	@Override
 	public int searchCount(long groupId, String query) {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

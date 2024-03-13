@@ -135,6 +135,7 @@ public class MessageBoardSectionResourceImpl
 			sorts);
 	}
 
+	@Override
 	public MessageBoardSection getSiteMessageBoardSectionByFriendlyUrlPath(
 			Long siteId, String friendlyUrlPath)
 		throws Exception {

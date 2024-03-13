@@ -34,6 +34,7 @@ public class AntivirusAsyncFileSchedulerJobConfiguration
 		return () -> _antivirusScannerHelper.processMessage(_message);
 	}
 
+	@Override
 	public String getName() {
 		return _jobName;
 	}

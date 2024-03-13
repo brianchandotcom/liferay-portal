@@ -44,6 +44,7 @@ public class RESTBuilderModulesBatchTestClassGroup
 		return _buildType;
 	}
 
+	@Override
 	public JSONObject getJSONObject() {
 		if (jsonObject != null) {
 			return jsonObject;

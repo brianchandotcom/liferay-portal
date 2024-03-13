@@ -83,6 +83,7 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 		return false;
 	}
 
+	@Override
 	public boolean hasUpdateValues() {
 		if (compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
@@ -114,6 +115,7 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 		return true;
 	}
 
+	@Override
 	public boolean isMetadata() {
 		return ObjectFieldUtil.isMetadata(getName());
 	}

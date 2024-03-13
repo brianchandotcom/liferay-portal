@@ -39,6 +39,7 @@ public class LayoutSearchRequestBuilderHighlightTest
 		return Layout.class;
 	}
 
+	@Override
 	protected String[] getFieldNames() {
 		return new String[] {"title_en_US"};
 	}

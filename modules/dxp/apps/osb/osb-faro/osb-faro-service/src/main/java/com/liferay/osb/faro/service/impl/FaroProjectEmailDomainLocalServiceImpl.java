@@ -38,6 +38,7 @@ public class FaroProjectEmailDomainLocalServiceImpl
 	extends FaroProjectEmailDomainLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public FaroProjectEmailDomain addFaroProjectEmailDomain(
 		long groupId, long faroProjectId, String emailDomain) {
 
@@ -53,6 +54,7 @@ public class FaroProjectEmailDomainLocalServiceImpl
 		return faroProjectEmailDomainPersistence.update(faroProjectEmailDomain);
 	}
 
+	@Override
 	public void addFaroProjectEmailDomains(
 		long groupId, long faroProjectId, List<String> emailAddressDomains) {
 
@@ -82,6 +84,7 @@ public class FaroProjectEmailDomainLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<FaroProjectEmailDomain>
 		getFaroProjectEmailDomainsByFaroProjectId(long faroProjectId) {
 
@@ -89,6 +92,7 @@ public class FaroProjectEmailDomainLocalServiceImpl
 			faroProjectId);
 	}
 
+	@Override
 	public List<FaroProjectEmailDomain> getFaroProjectEmailDomainsByGroupId(
 		long groupId) {
 

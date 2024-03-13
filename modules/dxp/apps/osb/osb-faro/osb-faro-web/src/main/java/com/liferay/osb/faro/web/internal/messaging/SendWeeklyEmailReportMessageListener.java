@@ -33,6 +33,7 @@ public class SendWeeklyEmailReportMessageListener
 	extends BaseEmailReportMessageListener {
 
 	@Activate
+	@Override
 	protected void activate(BundleContext bundleContext) {
 		try {
 			_destinationCreator.createDestination(
@@ -58,6 +59,7 @@ public class SendWeeklyEmailReportMessageListener
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		try {
 			if (_destinationCreator != null) {

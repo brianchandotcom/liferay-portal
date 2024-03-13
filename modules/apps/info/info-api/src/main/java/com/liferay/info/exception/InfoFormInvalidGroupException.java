@@ -15,6 +15,7 @@ import java.util.Locale;
  */
 public class InfoFormInvalidGroupException extends InfoFormException {
 
+	@Override
 	public String getLocalizedMessage(Locale locale) {
 		return LanguageUtil.get(
 			locale, "the-form-cannot-be-submitted-from-a-staged-page");

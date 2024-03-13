@@ -250,6 +250,7 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		removeRelatedEntity(jenkinsCohortEntity);
 	}
 
+	@Override
 	public void removeTaskEntities(Set<TaskEntity> taskEntities) {
 		removeRelatedEntities(taskEntities);
 	}

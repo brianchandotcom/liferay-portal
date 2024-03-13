@@ -46,6 +46,7 @@ public class IPGeocoderCountrySegmentsFieldCustomizer
 		return IPGeocoderCountrySegmentsFieldCustomizer.KEY;
 	}
 
+	@Override
 	public String getLabel(String fieldName, Locale locale) {
 		return _language.get(locale, "ip-geocoder-country");
 	}

@@ -67,6 +67,7 @@ public class CommerceAvalaraConnectorImpl implements CommerceAvalaraConnector {
 		return taxCodeModelFetchResult.getValue();
 	}
 
+	@Override
 	public String getTaxRateByZipCode() throws Exception {
 		AvaTaxClient avaTaxClient = _getAvaTaxClient();
 

@@ -27,10 +27,12 @@ import org.osgi.service.component.annotations.Modified;
 public class OpenSearchConfigurationWrapperImpl
 	implements OpenSearchConfigurationWrapper {
 
+	@Override
 	public String additionalIndexConfigurations() {
 		return _openSearchConfiguration.additionalIndexConfigurations();
 	}
 
+	@Override
 	public String additionalTypeMappings() {
 		return _openSearchConfiguration.additionalTypeMappings();
 	}
@@ -54,48 +56,59 @@ public class OpenSearchConfigurationWrapperImpl
 		return -1;
 	}
 
+	@Override
 	public int indexMaxResultWindow() {
 		return _openSearchConfiguration.indexMaxResultWindow();
 	}
 
+	@Override
 	public String indexNamePrefix() {
 		return _openSearchConfiguration.indexNamePrefix();
 	}
 
+	@Override
 	public String indexNumberOfReplicas() {
 		return _openSearchConfiguration.indexNumberOfReplicas();
 	}
 
+	@Override
 	public String indexNumberOfShards() {
 		return _openSearchConfiguration.indexNumberOfShards();
 	}
 
+	@Override
 	public boolean logExceptionsOnly() {
 		return _openSearchConfiguration.logExceptionsOnly();
 	}
 
+	@Override
 	public String minimumRequiredNodeVersion() {
 		return _openSearchConfiguration.minimumRequiredNodeVersion();
 	}
 
+	@Override
 	public String overrideTypeMappings() {
 		return _openSearchConfiguration.overrideTypeMappings();
 	}
 
+	@Override
 	public void register(
 		OpenSearchConfigurationObserver openSearchConfigurationObserver) {
 
 		_openSearchConfigurationObservers.add(openSearchConfigurationObserver);
 	}
 
+	@Override
 	public String remoteClusterConnectionId() {
 		return _openSearchConfiguration.remoteClusterConnectionId();
 	}
 
+	@Override
 	public boolean trackTotalHits() {
 		return _openSearchConfiguration.trackTotalHits();
 	}
 
+	@Override
 	public void unregister(
 		OpenSearchConfigurationObserver openSearchConfigurationObserver) {
 

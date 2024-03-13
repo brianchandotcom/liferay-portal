@@ -90,6 +90,7 @@ public abstract class BaseMultiLanguageSortTestCase
 			"[a, á, c, ch, cu, d, e, é, ll, nu, ña, p]");
 	}
 
+	@Override
 	protected void addDocuments(
 		Function<Double, DocumentCreationHelper> function, double... values) {
 

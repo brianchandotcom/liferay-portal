@@ -1366,6 +1366,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return LiferaySeleniumUtil.getNumberIncrement(value);
 	}
 
+	@Override
 	public String getOcularBaselineImageDirName() {
 		return _OCULAR_BASELINE_IMAGE_DIR_NAME;
 	}
@@ -2225,6 +2226,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		pause("3000");
 	}
 
+	@Override
 	public Map<String, Object> returnCDPCommand(
 		String commandName, Map<String, Object> commandParameters) {
 
@@ -2546,6 +2548,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		_primaryTestSuiteName = primaryTestSuiteName;
 	}
 
+	@Override
 	public void setTestName(String testName) {
 		_testName = testName;
 	}

@@ -344,6 +344,7 @@ public class MessageBoardMessageResourceImpl
 			sorts);
 	}
 
+	@Override
 	public Page<MessageBoardMessage>
 			getSiteUserMessageBoardMessagesActivityPage(
 				Long siteId, Long userId, Pagination pagination)

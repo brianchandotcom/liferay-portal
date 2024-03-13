@@ -64,6 +64,7 @@ public class FaroProjectLocalServiceImpl
 	extends FaroProjectLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public FaroProject addFaroProject(
 			long userId, String name, String accountKey, String accountName,
 			String corpProjectName, String corpProjectUuid,
@@ -125,6 +126,7 @@ public class FaroProjectLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.DELETE)
+	@Override
 	public FaroProject deleteFaroProjectByGroupId(long groupId)
 		throws PortalException {
 
@@ -137,54 +139,65 @@ public class FaroProjectLocalServiceImpl
 		return faroProjectPersistence.removeByGroupId(groupId);
 	}
 
+	@Override
 	public <T> T dslQuery(DSLQuery dslQuery) {
 		return faroProjectPersistence.dslQuery(dslQuery);
 	}
 
+	@Override
 	public int dslQueryCount(DSLQuery dslQuery) {
 		return faroProjectPersistence.dslQueryCount(dslQuery);
 	}
 
+	@Override
 	public FaroProject fetchFaroProjectByCorpProjectUuid(
 		String corpProjectUuid) {
 
 		return faroProjectPersistence.fetchByCorpProjectUuid(corpProjectUuid);
 	}
 
+	@Override
 	public FaroProject fetchFaroProjectByGroupId(long groupId) {
 		return faroProjectPersistence.fetchByGroupId(groupId);
 	}
 
+	@Override
 	public FaroProject fetchFaroProjectByWeDeployKey(String weDeployKey) {
 		return faroProjectPersistence.fetchByWeDeployKey(weDeployKey);
 	}
 
+	@Override
 	public FaroProject getFaroProjectByGroupId(long groupId)
 		throws PortalException {
 
 		return faroProjectPersistence.findByGroupId(groupId);
 	}
 
+	@Override
 	public FaroProject getFaroProjectByWeDeployKey(String weDeployKey)
 		throws PortalException {
 
 		return faroProjectPersistence.findByWeDeployKey(weDeployKey);
 	}
 
+	@Override
 	public List<FaroProject> getFaroProjects(String serverLocation) {
 		return faroProjectPersistence.findByServerLocation(serverLocation);
 	}
 
+	@Override
 	public List<FaroProject> getFaroProjectsByEmailAddressDomain(
 		String emailAddressDomains) {
 
 		return faroProjectFinder.findByEmailAddressDomain(emailAddressDomains);
 	}
 
+	@Override
 	public List<FaroProject> getFaroProjectsByUserId(long userId) {
 		return faroProjectPersistence.findByUserId(userId);
 	}
 
+	@Override
 	public List<FaroProject> getJoinableFaroProjects(User user)
 		throws PortalException {
 
@@ -213,6 +226,7 @@ public class FaroProjectLocalServiceImpl
 		return faroProjectsFiltered;
 	}
 
+	@Override
 	public void sendCreatedWorkspaceEmail(String weDeployKey) throws Exception {
 		FaroProject faroProject = fetchFaroProjectByWeDeployKey(weDeployKey);
 
@@ -301,6 +315,7 @@ public class FaroProjectLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public FaroProject updateState(long faroProjectId, String state) {
 		FaroProject faroProject = faroProjectPersistence.fetchByPrimaryKey(
 			faroProjectId);
@@ -315,6 +330,7 @@ public class FaroProjectLocalServiceImpl
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public FaroProject updateSubscription(
 		long faroProjectId, String subscription) {
 

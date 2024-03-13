@@ -56,6 +56,7 @@ public class AddressSystemObjectDefinitionManager
 		return _addressLocalService.deleteAddress((Address)baseModel);
 	}
 
+	@Override
 	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

@@ -22,6 +22,7 @@ public class DefaultJobProperty extends BaseJobProperty {
 			testBatchName);
 	}
 
+	@Override
 	public Type getType() {
 		return Type.DEFAULT;
 	}

@@ -190,6 +190,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 * @param  active whether the company is active
 	 * @return the company
 	 */
+	@Override
 	public Company addCompany(
 			Long companyId, String webId, String virtualHostname, String mx,
 			int maxUsers, boolean active, String defaultAdminPassword,
@@ -345,6 +346,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public Company addDBPartitionCompany(
 			long companyId, String name, String virtualHostName, String webId)
 		throws PortalException {
@@ -534,6 +536,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return company;
 	}
 
+	@Override
 	public Company extractDBPartitionCompany(long companyId)
 		throws PortalException {
 

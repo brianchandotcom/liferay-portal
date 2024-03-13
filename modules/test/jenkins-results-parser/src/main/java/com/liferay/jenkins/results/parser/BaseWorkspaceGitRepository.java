@@ -251,6 +251,7 @@ public abstract class BaseWorkspaceGitRepository
 		buildDatabase.putWorkspaceGitRepository(getDirectoryName(), this);
 	}
 
+	@Override
 	public void setRebase(boolean rebase) {
 		_rebase = rebase;
 	}

@@ -111,6 +111,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CommerceSiteInitializer.class)
 public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
+	@Override
 	public void addAccountGroups(
 			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
@@ -146,6 +147,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		}
 	}
 
+	@Override
 	public void addCPDefinitions(
 			Bundle bundle, ServiceContext serviceContext,
 			ServletContext servletContext,
@@ -169,6 +171,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		_addOrUpdateCommerceOrderTypes(serviceContext, servletContext);
 	}
 
+	@Override
 	public void addPortletSettings(
 			ClassLoader classLoader, ServiceContext serviceContext,
 			ServletContext servletContext)
@@ -192,6 +195,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 			serviceContext.getUserId());
 	}
 
+	@Override
 	public long getCommerceChannelGroupId(long siteGroupId) {
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.fetchCommerceChannelBySiteGroupId(
@@ -200,6 +204,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		return commerceChannel.getGroupId();
 	}
 
+	@Override
 	public String getCommerceOrderClassName() {
 		return CommerceOrder.class.getName();
 	}

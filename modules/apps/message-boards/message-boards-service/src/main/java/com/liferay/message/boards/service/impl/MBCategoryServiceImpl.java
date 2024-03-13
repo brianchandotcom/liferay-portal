@@ -102,6 +102,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		mbCategoryLocalService.deleteCategory(categoryId);
 	}
 
+	@Override
 	public MBCategory fetchMBCategory(long groupId, String friendlyURL)
 		throws PortalException {
 

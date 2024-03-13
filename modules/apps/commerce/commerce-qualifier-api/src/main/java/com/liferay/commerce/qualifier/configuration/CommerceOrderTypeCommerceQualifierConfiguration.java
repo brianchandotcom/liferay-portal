@@ -24,9 +24,11 @@ public interface CommerceOrderTypeCommerceQualifierConfiguration
 	extends CommerceQualifierConfiguration {
 
 	@Meta.AD(deflt = "channel", name = "allowed-target-keys", required = false)
+	@Override
 	public String[] allowedTargetKeys();
 
 	@Meta.AD(deflt = "channel", name = "order-by-target-keys", required = false)
+	@Override
 	public String[] orderByTargetKeys();
 
 }

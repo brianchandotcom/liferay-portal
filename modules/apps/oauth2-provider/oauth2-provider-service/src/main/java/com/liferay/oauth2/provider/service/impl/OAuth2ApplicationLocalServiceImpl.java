@@ -285,6 +285,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		return oAuth2ApplicationPersistence.update(oAuth2Application);
 	}
 
+	@Override
 	public OAuth2Application addOrUpdateOAuth2Application(
 			String externalReferenceCode, long userId, String userName,
 			List<GrantType> allowedGrantTypesList,
@@ -343,6 +344,7 @@ public class OAuth2ApplicationLocalServiceImpl
 		return oAuth2ApplicationPersistence.update(oAuth2Application);
 	}
 
+	@Override
 	public OAuth2Application addOrUpdateOAuth2Application(
 			String externalReferenceCode, long userId, String userName,
 			List<GrantType> allowedGrantTypesList,

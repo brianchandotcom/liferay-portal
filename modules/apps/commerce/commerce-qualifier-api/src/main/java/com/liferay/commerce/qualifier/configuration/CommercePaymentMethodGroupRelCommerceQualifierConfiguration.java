@@ -26,11 +26,13 @@ public interface CommercePaymentMethodGroupRelCommerceQualifierConfiguration
 	@Meta.AD(
 		deflt = "order-type", name = "allowed-target-keys", required = false
 	)
+	@Override
 	public String[] allowedTargetKeys();
 
 	@Meta.AD(
 		deflt = "order-type", name = "order-by-target-keys", required = false
 	)
+	@Override
 	public String[] orderByTargetKeys();
 
 }

@@ -24,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 public class AnalyticsAssociationLocalServiceImpl
 	extends AnalyticsAssociationLocalServiceBaseImpl {
 
+	@Override
 	public AnalyticsAssociation addAnalyticsAssociation(
 		long companyId, Date createDate, long userId,
 		String associationClassName, long associationClassPK, String className,

@@ -23,6 +23,7 @@ import org.osgi.service.component.annotations.Component;
 public class NotificationRecipientSettingLocalServiceImpl
 	extends NotificationRecipientSettingLocalServiceBaseImpl {
 
+	@Override
 	public NotificationRecipientSetting fetchNotificationRecipientSetting(
 		long notificationRecipientId, String name) {
 
@@ -30,6 +31,7 @@ public class NotificationRecipientSettingLocalServiceImpl
 			notificationRecipientId, name);
 	}
 
+	@Override
 	public List<NotificationRecipientSetting> getNotificationRecipientSettings(
 		long notificationRecipientId) {
 

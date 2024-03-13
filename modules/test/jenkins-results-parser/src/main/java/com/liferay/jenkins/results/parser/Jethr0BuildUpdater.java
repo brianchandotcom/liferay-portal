@@ -117,6 +117,7 @@ public class Jethr0BuildUpdater extends BaseBuildUpdater {
 		return false;
 	}
 
+	@Override
 	protected boolean isBuildRunning() {
 		if (Objects.equals(_jethr0Status, "running")) {
 			return true;

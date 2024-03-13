@@ -414,6 +414,7 @@ public class SQLServerDB extends BaseDB {
 		runSQL(connection, sb.toString());
 	}
 
+	@Override
 	protected String getCopyTableStructureSQL(
 		String tableName, String newTableName) {
 
@@ -422,6 +423,7 @@ public class SQLServerDB extends BaseDB {
 			" where 1 = 0");
 	}
 
+	@Override
 	protected String getRenameTableSQL(
 		String oldTableName, String newTableName) {
 

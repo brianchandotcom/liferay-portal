@@ -78,6 +78,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

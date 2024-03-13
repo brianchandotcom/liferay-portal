@@ -42,6 +42,7 @@ public class ContinuePoshiElement extends PoshiElement {
 		throws PoshiScriptParserException {
 	}
 
+	@Override
 	public String toPoshiScript() {
 		StringBuilder sb = new StringBuilder();
 

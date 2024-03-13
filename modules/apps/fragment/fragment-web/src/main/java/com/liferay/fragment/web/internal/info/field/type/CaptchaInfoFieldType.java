@@ -15,6 +15,7 @@ public class CaptchaInfoFieldType implements InfoFieldType {
 	public static final CaptchaInfoFieldType INSTANCE =
 		new CaptchaInfoFieldType();
 
+	@Override
 	public String getName() {
 		return "captcha";
 	}

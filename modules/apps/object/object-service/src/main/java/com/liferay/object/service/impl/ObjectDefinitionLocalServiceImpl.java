@@ -728,6 +728,7 @@ public class ObjectDefinitionLocalServiceImpl
 		return objectDefinitionPersistence.fetchByC_C(companyId, className);
 	}
 
+	@Override
 	public ObjectDefinition fetchSystemObjectDefinition(String name) {
 		for (ObjectDefinition systemObjectDefinition :
 				getSystemObjectDefinitions()) {
@@ -804,6 +805,7 @@ public class ObjectDefinitionLocalServiceImpl
 		return objectDefinitionPersistence.findByObjectFolderId(objectFolderId);
 	}
 
+	@Override
 	public int getObjectFolderObjectDefinitionsCount(long objectFolderId)
 		throws PortalException {
 

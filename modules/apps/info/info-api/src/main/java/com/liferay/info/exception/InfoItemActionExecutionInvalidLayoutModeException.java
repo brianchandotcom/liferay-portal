@@ -15,6 +15,7 @@ import java.util.Locale;
 public class InfoItemActionExecutionInvalidLayoutModeException
 	extends InfoItemActionExecutionException {
 
+	@Override
 	public String getLocalizedMessage(Locale locale) {
 		return LanguageUtil.get(
 			locale, "the-action-cannot-be-executed-from-this-view-mode");

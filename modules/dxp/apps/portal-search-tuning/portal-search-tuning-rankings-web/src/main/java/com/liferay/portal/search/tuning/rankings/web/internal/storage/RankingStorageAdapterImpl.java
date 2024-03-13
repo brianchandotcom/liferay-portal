@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = RankingStorageAdapter.class)
 public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 
+	@Override
 	public String create(Ranking ranking, RankingIndexName rankingIndexName) {
 		String rankingDocumentId = rankingJSONStorageHelper.addJSONStorageEntry(
 			ranking);
@@ -38,6 +39,7 @@ public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 		return rankingDocumentId;
 	}
 
+	@Override
 	public void delete(
 			String rankingDocumentId, RankingIndexName rankingIndexName)
 		throws PortalException {
@@ -47,6 +49,7 @@ public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 		_rankingIndexWriter.remove(rankingIndexName, rankingDocumentId);
 	}
 
+	@Override
 	public void update(Ranking ranking, RankingIndexName rankingIndexName)
 		throws PortalException {
 

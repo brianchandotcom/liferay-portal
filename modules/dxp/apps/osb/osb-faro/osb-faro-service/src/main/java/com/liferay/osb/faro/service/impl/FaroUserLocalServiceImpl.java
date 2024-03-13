@@ -56,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 
+	@Override
 	public List<FaroUser> acceptInvitations(long userId, String key) {
 		User user = _userLocalService.fetchUser(userId);
 
@@ -88,6 +89,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 		return faroUsers;
 	}
 
+	@Override
 	public FaroUser addFaroUser(
 			long userId, long groupId, long liveUserId, long roleId,
 			String emailAddress, int status, boolean sendEmail)
@@ -142,6 +144,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 		return faroUser;
 	}
 
+	@Override
 	public FaroUser deleteFaroUser(long faroUserId) throws PortalException {
 		FaroUser faroUser = getFaroUser(faroUserId);
 
@@ -157,18 +160,22 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 		return super.deleteFaroUser(faroUserId);
 	}
 
+	@Override
 	public void deleteFaroUsers(long groupId) {
 		faroUserPersistence.removeByGroupId(groupId);
 	}
 
+	@Override
 	public FaroUser fetchFaroUser(long groupId, long liveUserId) {
 		return faroUserPersistence.fetchByG_L(groupId, liveUserId, false);
 	}
 
+	@Override
 	public FaroUser fetchFaroUser(long groupId, String emailAddress) {
 		return faroUserPersistence.fetchByG_E(groupId, emailAddress);
 	}
 
+	@Override
 	public FaroUser fetchOwnerFaroUser(long groupId) {
 		Role role = _roleLocalService.fetchRole(
 			_portal.getDefaultCompanyId(), RoleConstants.SITE_OWNER);
@@ -181,12 +188,14 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 			groupId, role.getRoleId(), null);
 	}
 
+	@Override
 	public FaroUser getFaroUser(long groupId, long liveUserId)
 		throws PortalException {
 
 		return faroUserPersistence.findByG_L(groupId, liveUserId);
 	}
 
+	@Override
 	public List<FaroUser> getFaroUsers(
 			long groupId, boolean available, String query,
 			List<Integer> statuses, long workspaceGroupId, int start, int end,
@@ -198,20 +207,24 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 			orderByComparator);
 	}
 
+	@Override
 	public List<FaroUser> getFaroUsersByLiveUserId(
 		long liveUserId, int status) {
 
 		return faroUserPersistence.findByL_S(liveUserId, status);
 	}
 
+	@Override
 	public List<FaroUser> getFaroUsersByRoleId(long groupId, long roleId) {
 		return faroUserPersistence.findByG_R(groupId, roleId);
 	}
 
+	@Override
 	public List<FaroUser> getFaroUsersByStatus(long groupId, int status) {
 		return faroUserPersistence.findByG_S(groupId, status);
 	}
 
+	@Override
 	public int getFaroUsersCount(
 			long groupId, boolean available, String query,
 			List<Integer> statuses, long workspaceGroupId)
@@ -221,6 +234,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 			groupId, available, query, statuses, workspaceGroupId);
 	}
 
+	@Override
 	public FaroUser getOwnerFaroUser(long groupId) throws PortalException {
 		Role role = _roleLocalService.getRole(
 			_portal.getDefaultCompanyId(), RoleConstants.SITE_OWNER);
@@ -229,6 +243,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 			groupId, role.getRoleId(), null);
 	}
 
+	@Override
 	public List<FaroUser> search(
 		long groupId, String query, List<Integer> statuses, int start, int end,
 		OrderByComparator<FaroUser> orderByComparator) {
@@ -237,6 +252,7 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 			groupId, query, statuses, start, end, orderByComparator);
 	}
 
+	@Override
 	public int searchCount(long groupId, String query, List<Integer> statuses) {
 		return faroUserFinder.countByKeywords(groupId, query, statuses);
 	}

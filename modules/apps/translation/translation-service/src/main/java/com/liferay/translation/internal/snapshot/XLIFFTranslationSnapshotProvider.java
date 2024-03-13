@@ -81,6 +81,7 @@ import org.osgi.service.component.annotations.Reference;
 public class XLIFFTranslationSnapshotProvider
 	implements TranslationSnapshotProvider {
 
+	@Override
 	public TranslationSnapshot getTranslationSnapshot(
 			long groupId, InfoItemReference infoItemReference,
 			InputStream inputStream, boolean includeSource)

@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = RelayStateHelper.class)
 public class RelayStateHelperImpl implements RelayStateHelper {
 
+	@Override
 	public String getRedirectFromRelayStateToken(String relayStateToken) {
 		if (Validator.isNotNull(relayStateToken) &&
 			relayStateToken.startsWith("RDR_")) {
@@ -35,6 +36,7 @@ public class RelayStateHelperImpl implements RelayStateHelper {
 		return relayStateToken;
 	}
 
+	@Override
 	public String getRelayStateTokenFromRedirect(String redirect) {
 		String relayStateToken = _redirectsToRelayStateTokens.get(redirect);
 

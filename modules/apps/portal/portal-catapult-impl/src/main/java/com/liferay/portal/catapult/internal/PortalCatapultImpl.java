@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PortalCatapult.class)
 public class PortalCatapultImpl implements PortalCatapult {
 
+	@Override
 	public Future<byte[]> launch(
 			long companyId, Http.Method method,
 			String oAuth2ApplicationExternalReferenceCode,

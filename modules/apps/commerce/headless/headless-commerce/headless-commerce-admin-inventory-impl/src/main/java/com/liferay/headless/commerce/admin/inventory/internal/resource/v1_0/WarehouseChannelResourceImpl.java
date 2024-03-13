@@ -87,6 +87,7 @@ public class WarehouseChannelResourceImpl
 	}
 
 	@NestedField(parentClass = Warehouse.class, value = "warehouseChannels")
+	@Override
 	public Page<WarehouseChannel> getWarehouseIdWarehouseChannelsPage(
 			Long id, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)

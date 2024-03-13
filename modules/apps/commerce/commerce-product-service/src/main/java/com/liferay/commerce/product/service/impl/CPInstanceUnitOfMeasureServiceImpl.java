@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CPInstanceUnitOfMeasureServiceImpl
 	extends CPInstanceUnitOfMeasureServiceBaseImpl {
 
+	@Override
 	public CPInstanceUnitOfMeasure addCPInstanceUnitOfMeasure(
 			long cpInstanceId, boolean active,
 			BigDecimal incrementalOrderQuantity, String key,
@@ -70,6 +71,7 @@ public class CPInstanceUnitOfMeasureServiceImpl
 				key, nameMap, precision, primary, priority, rate, sku);
 	}
 
+	@Override
 	public CPInstanceUnitOfMeasure deleteCPInstanceUnitOfMeasure(
 			long cpInstanceUnitOfMeasureId)
 		throws PortalException {
@@ -193,6 +195,7 @@ public class CPInstanceUnitOfMeasureServiceImpl
 			getCPInstanceUnitOfMeasuresCount(cpInstanceId);
 	}
 
+	@Override
 	public CPInstanceUnitOfMeasure updateCPInstanceUnitOfMeasure(
 			long cpInstanceUnitOfMeasureId, long cpInstanceId, boolean active,
 			BigDecimal incrementalOrderQuantity, String key,

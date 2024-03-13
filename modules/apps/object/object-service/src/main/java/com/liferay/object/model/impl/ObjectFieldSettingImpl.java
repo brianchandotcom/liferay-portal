@@ -25,18 +25,22 @@ public class ObjectFieldSettingImpl extends ObjectFieldSettingBaseImpl {
 		return false;
 	}
 
+	@Override
 	public List<ObjectFilter> getObjectFilters() {
 		return _objectFilters;
 	}
 
+	@Override
 	public ObjectStateFlow getObjectStateFlow() {
 		return _objectStateFlow;
 	}
 
+	@Override
 	public void setObjectFilters(List<ObjectFilter> objectFilters) {
 		_objectFilters = objectFilters;
 	}
 
+	@Override
 	public void setObjectStateFlow(ObjectStateFlow objectStateFlow) {
 		_objectStateFlow = objectStateFlow;
 	}

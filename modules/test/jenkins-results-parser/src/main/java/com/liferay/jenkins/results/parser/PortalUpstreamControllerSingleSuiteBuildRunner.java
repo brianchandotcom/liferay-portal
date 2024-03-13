@@ -16,6 +16,7 @@ public class PortalUpstreamControllerSingleSuiteBuildRunner
 		super(buildData);
 	}
 
+	@Override
 	protected String getJobURL() {
 		return JenkinsResultsParserUtil.combine(
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(

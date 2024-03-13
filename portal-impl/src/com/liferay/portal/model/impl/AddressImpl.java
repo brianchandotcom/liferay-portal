@@ -41,6 +41,7 @@ public class AddressImpl extends AddressBaseImpl {
 		return country;
 	}
 
+	@Override
 	public ListType getListType() {
 		ListType listType = null;
 

@@ -32,6 +32,7 @@ public class MeasurementUnitResourceTest
 	extends BaseMeasurementUnitResourceTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
@@ -250,6 +251,7 @@ public class MeasurementUnitResourceTest
 		return _postMeasurementUnit(randomMeasurementUnit());
 	}
 
+	@Override
 	protected MeasurementUnit
 			testGetMeasurementUnitByExternalReferenceCode_addMeasurementUnit()
 		throws Exception {
@@ -257,6 +259,7 @@ public class MeasurementUnitResourceTest
 		return _postMeasurementUnit(randomMeasurementUnit());
 	}
 
+	@Override
 	protected MeasurementUnit testGetMeasurementUnitByKey_addMeasurementUnit()
 		throws Exception {
 

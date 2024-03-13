@@ -200,6 +200,7 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 			urlPath, null, JenkinsResultsParserUtil.HttpRequestMethod.GET);
 	}
 
+	@Override
 	public String liferayDXPRequest(String urlPath, String message) {
 		return _requestLiferayDXPMessage(
 			urlPath, message, JenkinsResultsParserUtil.HttpRequestMethod.POST);

@@ -99,6 +99,7 @@ public class AutoIncrementObjectFieldBusinessType
 			ObjectFieldSettingConstants.NAME_INITIAL_VALUE);
 	}
 
+	@Override
 	public Set<String> getUnmodifiableObjectFieldSettingsNames() {
 		return SetUtil.fromArray(
 			ObjectFieldSettingConstants.NAME_INITIAL_VALUE,

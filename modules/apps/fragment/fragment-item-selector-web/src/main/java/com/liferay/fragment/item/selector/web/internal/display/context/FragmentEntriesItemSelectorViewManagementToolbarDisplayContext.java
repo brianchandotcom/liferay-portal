@@ -50,6 +50,7 @@ public class FragmentEntriesItemSelectorViewManagementToolbarDisplayContext
 		return "icon";
 	}
 
+	@Override
 	protected String[] getDisplayViews() {
 		return new String[] {"icon"};
 	}

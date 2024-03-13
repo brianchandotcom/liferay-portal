@@ -282,6 +282,7 @@ public class AssetHelperImpl implements AssetHelper {
 		return assetEntries;
 	}
 
+	@Override
 	public List<AssetEntry> getAssetEntries(SearchHits searchHits) {
 		if (searchHits.getTotalHits() <= 0) {
 			return Collections.emptyList();

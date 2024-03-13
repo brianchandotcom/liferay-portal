@@ -83,6 +83,7 @@ public class PartiallyShippedCommerceOrderStatusImpl
 		return !commerceOrder.isQuote();
 	}
 
+	@Override
 	public boolean isTransitionCriteriaMet(CommerceOrder commerceOrder)
 		throws PortalException {
 

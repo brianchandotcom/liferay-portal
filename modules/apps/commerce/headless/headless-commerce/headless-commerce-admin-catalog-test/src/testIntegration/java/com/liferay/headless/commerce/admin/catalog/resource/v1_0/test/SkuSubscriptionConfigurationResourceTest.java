@@ -29,6 +29,7 @@ public class SkuSubscriptionConfigurationResourceTest
 	extends BaseSkuSubscriptionConfigurationResourceTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

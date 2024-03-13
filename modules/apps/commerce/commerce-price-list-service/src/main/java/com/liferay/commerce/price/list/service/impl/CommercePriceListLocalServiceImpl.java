@@ -1371,6 +1371,7 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Deactivate
+	@Override
 	protected void deactivate() {
 		_multiVMPool.removePortalCache(_portalCache.getPortalCacheName());
 	}

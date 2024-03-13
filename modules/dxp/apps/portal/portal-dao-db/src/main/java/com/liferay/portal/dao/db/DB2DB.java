@@ -400,6 +400,7 @@ public class DB2DB extends BaseDB {
 		runSQL(connection, sb.toString());
 	}
 
+	@Override
 	protected String getCopyTableStructureSQL(
 		String tableName, String newTableName) {
 
@@ -461,6 +462,7 @@ public class DB2DB extends BaseDB {
 		return reorgTableRequired;
 	}
 
+	@Override
 	protected boolean isSupportsDuplicatedIndexName() {
 		return false;
 	}

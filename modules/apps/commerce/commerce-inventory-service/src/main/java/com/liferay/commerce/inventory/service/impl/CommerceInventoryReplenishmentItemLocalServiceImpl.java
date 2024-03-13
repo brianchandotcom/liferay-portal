@@ -105,6 +105,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 			companyId, sku, unitOfMeasureKey);
 	}
 
+	@Override
 	public CommerceInventoryReplenishmentItem
 		fetchCommerceInventoryReplenishmentItem(
 			long companyId, String sku, String unitOfMeasureKey,
@@ -125,6 +126,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 				commerceInventoryWarehouseId, start, end);
 	}
 
+	@Override
 	public List<CommerceInventoryReplenishmentItem>
 		getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
 			long companyId, String sku, String unitOfMeasureKey, int start,

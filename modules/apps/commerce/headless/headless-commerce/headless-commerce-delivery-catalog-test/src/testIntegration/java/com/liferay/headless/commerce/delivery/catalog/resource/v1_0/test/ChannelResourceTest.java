@@ -74,12 +74,14 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 		};
 	}
 
+	@Override
 	protected Channel testGetChannelsPage_addChannel(Channel channel)
 		throws Exception {
 
 		return _addCommerceChannel(channel);
 	}
 
+	@Override
 	protected Channel testGraphQLChannel_addChannel() throws Exception {
 		return _addCommerceChannel(randomChannel());
 	}

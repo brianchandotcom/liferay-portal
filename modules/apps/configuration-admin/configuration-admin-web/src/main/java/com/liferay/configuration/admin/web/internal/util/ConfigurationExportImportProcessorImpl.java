@@ -32,6 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ConfigurationExportImportProcessorImpl
 	implements ConfigurationExportImportProcessor {
 
+	@Override
 	public boolean prepareForExport(
 			String pid, Dictionary<String, Object> properties)
 		throws PortalException {
@@ -73,6 +74,7 @@ public class ConfigurationExportImportProcessorImpl
 		return false;
 	}
 
+	@Override
 	public boolean prepareForImport(
 			String pid, Dictionary<String, Object> properties)
 		throws PortalException {

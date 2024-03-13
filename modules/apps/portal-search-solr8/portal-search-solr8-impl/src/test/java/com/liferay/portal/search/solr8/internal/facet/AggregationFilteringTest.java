@@ -35,6 +35,7 @@ public class AggregationFilteringTest extends BaseAggregationFilteringTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
@@ -51,6 +52,7 @@ public class AggregationFilteringTest extends BaseAggregationFilteringTestCase {
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
 

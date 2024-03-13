@@ -121,6 +121,7 @@ public class RefreshTokenAuthorizationGrantTest
 
 	}
 
+	@Override
 	protected AuthorizationGrant getAuthorizationGrant(String clientId) {
 		return new RefreshTokenAuthorizationGrant(
 			getRefreshToken(

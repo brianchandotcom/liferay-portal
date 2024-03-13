@@ -2371,6 +2371,7 @@ public class ContactsEngineClientImpl
 		return pagedModel.getResults();
 	}
 
+	@Override
 	public long getUsersCount(FaroProject faroProject) {
 		RestTemplate restTemplate = getRestTemplate(faroProject);
 

@@ -1375,6 +1375,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			INACTIVE.toString();
 	}
 
+	@Override
 	protected UserAccount testGetUserAccountsPage_addUserAccount(
 			UserAccount userAccount)
 		throws Exception {

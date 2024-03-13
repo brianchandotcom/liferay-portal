@@ -630,6 +630,7 @@ public class CTCollectionLocalServiceImpl
 		return ctMappingTableInfos;
 	}
 
+	@Override
 	public List<CTCollection> getExclusivePublishedCTCollections(
 			long modelClassNameId, long modelClassPK)
 		throws PortalException {

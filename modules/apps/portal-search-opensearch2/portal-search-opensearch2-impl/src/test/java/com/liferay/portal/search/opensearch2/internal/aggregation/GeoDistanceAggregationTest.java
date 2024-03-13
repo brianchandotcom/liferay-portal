@@ -38,6 +38,7 @@ public class GeoDistanceAggregationTest
 	public static final OpenSearchTestRule openSearchTestRule =
 		OpenSearchTestRule.INSTANCE;
 
+	@Override
 	@Test
 	public void testGeoDistance() throws Exception {
 		addDocument(

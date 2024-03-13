@@ -104,6 +104,7 @@ public abstract class BaseAccountRoleDefinePermissionsScreenNavigationEntry
 
 	protected abstract boolean doIsAccountRoleGroupScope();
 
+	@Override
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());

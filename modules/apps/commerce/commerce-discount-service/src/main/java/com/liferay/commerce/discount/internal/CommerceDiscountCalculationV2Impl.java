@@ -99,6 +99,7 @@ public class CommerceDiscountCalculationV2Impl
 			CommerceDiscountConstants.TARGET_TOTAL);
 	}
 
+	@Override
 	public CommerceDiscountValue getProductCommerceDiscountValue(
 			long cpInstanceId, BigDecimal quantity, BigDecimal productUnitPrice,
 			String unitOfMeasureKey, CommerceContext commerceContext)
@@ -109,6 +110,7 @@ public class CommerceDiscountCalculationV2Impl
 			commerceContext);
 	}
 
+	@Override
 	public CommerceDiscountValue getProductCommerceDiscountValue(
 			long cpInstanceId, long commercePriceListId, BigDecimal quantity,
 			BigDecimal productUnitPrice, String unitOfMeasureKey,

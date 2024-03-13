@@ -64,6 +64,7 @@ public class CPDefinitionSystemObjectDefinitionManager
 			(CPDefinition)baseModel);
 	}
 
+	@Override
 	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

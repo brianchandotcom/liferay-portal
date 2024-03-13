@@ -253,6 +253,7 @@ public class ObjectDefinitionsActionsDisplayContext
 		return objectActionTriggersJSONArray;
 	}
 
+	@Override
 	public ObjectDefinition getObjectDefinition() {
 		HttpServletRequest httpServletRequest =
 			objectRequestHelper.getRequest();

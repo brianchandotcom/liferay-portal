@@ -32,6 +32,7 @@ public class OptionInfoFieldType implements InfoFieldType {
 		_active = false;
 	}
 
+	@Override
 	public String getLabel(Locale locale) {
 		return _labelInfoLocalizedValue.getValue(locale);
 	}

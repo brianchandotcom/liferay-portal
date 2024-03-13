@@ -104,6 +104,7 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		_errorMessages = new ArrayList<>();
 

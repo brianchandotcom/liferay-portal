@@ -64,6 +64,7 @@ public class CommercePricingClassSystemObjectDefinitionManager
 			(CommercePricingClass)baseModel);
 	}
 
+	@Override
 	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

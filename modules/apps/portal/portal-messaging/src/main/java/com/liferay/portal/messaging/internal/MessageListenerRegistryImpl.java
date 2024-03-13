@@ -27,6 +27,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(service = MessageListenerRegistry.class)
 public class MessageListenerRegistryImpl implements MessageListenerRegistry {
 
+	@Override
 	public List<MessageListener> getMessageListeners(String destinationName) {
 		List<MessageListener> messageListeners = _serviceTrackerMap.getService(
 			destinationName);

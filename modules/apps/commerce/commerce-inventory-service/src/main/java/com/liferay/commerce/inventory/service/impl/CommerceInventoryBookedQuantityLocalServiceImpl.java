@@ -195,6 +195,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			companyId, sku, unitOfMeasureKey);
 	}
 
+	@Override
 	public int getCommerceInventoryBookedQuantitiesCount(
 			long companyId, String keywords, String sku,
 			String unitOfMeasureKey)
@@ -374,6 +375,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		return commerceInventoryBookedQuantity;
 	}
 
+	@Override
 	public BaseModelSearchResult<CommerceInventoryBookedQuantity>
 			searchCommerceInventoryBookedQuantities(SearchContext searchContext)
 		throws PortalException {

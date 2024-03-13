@@ -58,6 +58,7 @@ public class OpenSearchConnectionManagerImpl
 			this, openSearchConfigurationObserver);
 	}
 
+	@Override
 	public JsonpMapper getJsonpMapper(String connectionId) {
 		OpenSearchConnection openSearchConnection;
 
@@ -75,6 +76,7 @@ public class OpenSearchConnectionManagerImpl
 		return new JacksonJsonpMapper();
 	}
 
+	@Override
 	public String getLocalClusterConnectionId() {
 		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
 
@@ -118,14 +120,17 @@ public class OpenSearchConnectionManagerImpl
 			localClusterNodeHostName);
 	}
 
+	@Override
 	public OpenSearchClient getOpenSearchClient() {
 		return getOpenSearchClient(null);
 	}
 
+	@Override
 	public OpenSearchClient getOpenSearchClient(String connectionId) {
 		return getOpenSearchClient(connectionId, false);
 	}
 
+	@Override
 	public OpenSearchClient getOpenSearchClient(
 		String connectionId, boolean preferLocalCluster) {
 
@@ -153,16 +158,19 @@ public class OpenSearchConnectionManagerImpl
 		return openSearchClient;
 	}
 
+	@Override
 	public OpenSearchConnection getOpenSearchConnection() {
 		return getOpenSearchConnection(null, false);
 	}
 
+	@Override
 	public OpenSearchConnection getOpenSearchConnection(
 		boolean preferLocalCluster) {
 
 		return getOpenSearchConnection(null, preferLocalCluster);
 	}
 
+	@Override
 	public OpenSearchConnection getOpenSearchConnection(String connectionId) {
 		if (Validator.isBlank(connectionId)) {
 			throw new RuntimeException("OpenSearch connection not configured");
@@ -189,6 +197,7 @@ public class OpenSearchConnectionManagerImpl
 		return 2;
 	}
 
+	@Override
 	public boolean isCrossClusterReplicationEnabled() {
 		CrossClusterReplicationConfigurationHelper
 			currentCrossClusterReplicationConfigurationHelper =

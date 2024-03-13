@@ -29,6 +29,7 @@ import java.util.Map;
 public class TXTAITextEmbeddingProvider
 	extends BaseTextEmbeddingProvider implements TextEmbeddingProvider {
 
+	@Override
 	public Double[] getEmbedding(
 		EmbeddingProviderConfiguration embeddingProviderConfiguration,
 		String text) {

@@ -71,6 +71,7 @@ public class CTRemoteServiceImpl extends CTRemoteServiceBaseImpl {
 		return ctRemoteLocalService.deleteCTRemote(ctRemoteId);
 	}
 
+	@Override
 	public List<CTRemote> getCTRemotes(
 		String keywords, int start, int end,
 		OrderByComparator<CTRemote> orderByComparator) {
@@ -105,6 +106,7 @@ public class CTRemoteServiceImpl extends CTRemoteServiceBaseImpl {
 		return ctRemotePersistence.dslQuery(dslQuery);
 	}
 
+	@Override
 	public int getCTRemotesCount(String keywords) {
 		String[] keywordsArray = _customSQL.keywords(
 			keywords, true, WildcardMode.SURROUND);

@@ -224,6 +224,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 			});
 	}
 
+	@Override
 	protected void assertGroupByDocsSortsScoreField(boolean desc)
 		throws Exception {
 

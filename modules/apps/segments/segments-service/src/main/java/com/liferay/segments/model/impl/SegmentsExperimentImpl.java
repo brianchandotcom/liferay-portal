@@ -105,6 +105,7 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 			getSegmentsExperimentId());
 	}
 
+	@Override
 	public String getType() {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			getTypeSettingsProperties();

@@ -83,6 +83,7 @@ public class UnsubscribeJournalArticleContentDashboardItemAction
 		return getURL();
 	}
 
+	@Override
 	public boolean isDisabled() {
 		try {
 			_journalArticleModelResourcePermission.check(

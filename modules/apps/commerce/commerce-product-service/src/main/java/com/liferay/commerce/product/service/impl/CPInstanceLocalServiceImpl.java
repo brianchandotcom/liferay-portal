@@ -963,6 +963,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return searchCPInstances(searchContext);
 	}
 
+	@Override
 	public BaseModelSearchResult<CPInstance> searchCPInstances(
 			long companyId, String cpInstanceUuid, long cProductId,
 			String keywords, int status, int start, int end, Sort sort)

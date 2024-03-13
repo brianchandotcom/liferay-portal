@@ -35,6 +35,7 @@ public class KaleoTaskFormInstanceTableReferenceDefinitionTest
 	extends BaseKaleoTableReferenceDefinitionTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

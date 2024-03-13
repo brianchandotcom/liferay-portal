@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = ClientDataRequestHelper.class)
 public class ClientDataRequestHelperImpl implements ClientDataRequestHelper {
 
+	@Override
 	public Part getPart(String name, Object request, Portlet portlet)
 		throws IOException, PortletException {
 
@@ -56,6 +57,7 @@ public class ClientDataRequestHelperImpl implements ClientDataRequestHelper {
 		return new PartImpl(fileItems[0], portlet.getMultipartLocation());
 	}
 
+	@Override
 	public Collection<Part> getParts(Object request, Portlet portlet)
 		throws IOException, PortletException {
 

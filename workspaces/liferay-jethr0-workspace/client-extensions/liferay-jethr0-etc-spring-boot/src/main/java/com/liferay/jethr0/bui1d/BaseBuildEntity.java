@@ -213,6 +213,7 @@ public abstract class BaseBuildEntity
 		return _name;
 	}
 
+	@Override
 	public Set<BuildEntity> getParentBuildEntities() {
 		return _parentBuildEntities;
 	}

@@ -27,6 +27,7 @@ public class ProjectTemplatesJUnitBatchTestClassGroup
 		super(batchName, portalTestClassJob);
 	}
 
+	@Override
 	protected boolean ignore() {
 		if (!isStableTestSuiteBatch() && testRelevantJUnitTestsOnly) {
 			return true;

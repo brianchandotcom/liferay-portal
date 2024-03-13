@@ -51,6 +51,7 @@ public class AssetListEntryUsageUpgradeProcess extends UpgradeProcess {
 		_portal = portal;
 	}
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		long layoutPageTemplateStructureClassNameId = _portal.getClassNameId(
 			LayoutPageTemplateStructure.class);

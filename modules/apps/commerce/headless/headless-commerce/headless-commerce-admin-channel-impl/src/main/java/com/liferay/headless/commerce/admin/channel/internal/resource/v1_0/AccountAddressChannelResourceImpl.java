@@ -90,6 +90,7 @@ public class AccountAddressChannelResourceImpl
 	@NestedField(
 		parentClass = AccountAddress.class, value = "accountAddressChannels"
 	)
+	@Override
 	public Page<AccountAddressChannel>
 			getAccountAddressIdAccountAddressChannelsPage(
 				Long addressId, String search, Filter filter,

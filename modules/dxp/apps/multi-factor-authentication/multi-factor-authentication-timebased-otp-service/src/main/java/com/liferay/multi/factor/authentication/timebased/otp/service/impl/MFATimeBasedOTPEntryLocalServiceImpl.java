@@ -109,6 +109,7 @@ public class MFATimeBasedOTPEntryLocalServiceImpl
 		return mfaTimeBasedOTPEntryPersistence.update(mfaTimeBasedOTPEntry);
 	}
 
+	@Override
 	public MFATimeBasedOTPEntry updateLastTOTP(
 			long userId, String lastValidTOTP)
 		throws PortalException {

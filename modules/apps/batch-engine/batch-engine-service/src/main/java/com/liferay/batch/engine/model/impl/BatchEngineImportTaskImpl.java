@@ -26,11 +26,13 @@ import java.util.List;
  */
 public class BatchEngineImportTaskImpl extends BatchEngineImportTaskBaseImpl {
 
+	@Override
 	public List<BatchEngineImportTaskError> getBatchEngineImportTaskErrors() {
 		return BatchEngineImportTaskErrorLocalServiceUtil.
 			getBatchEngineImportTaskErrors(getBatchEngineImportTaskId());
 	}
 
+	@Override
 	public int getBatchEngineImportTaskErrorsCount() {
 		return BatchEngineImportTaskErrorLocalServiceUtil.
 			getBatchEngineImportTaskErrorsCount(getBatchEngineImportTaskId());

@@ -112,6 +112,7 @@ public class DefaultTable implements Table {
 		return cellValues.size();
 	}
 
+	@Override
 	public int getTableSize() {
 		return _rows.size();
 	}

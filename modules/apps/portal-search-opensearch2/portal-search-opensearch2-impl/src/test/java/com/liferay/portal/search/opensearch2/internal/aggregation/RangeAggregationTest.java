@@ -37,6 +37,7 @@ public class RangeAggregationTest extends BaseRangeAggregationTestCase {
 	public static final OpenSearchTestRule openSearchTestRule =
 		OpenSearchTestRule.INSTANCE;
 
+	@Override
 	@Test
 	public void testKeyedRanges() throws Exception {
 		for (int i = 1; i <= 20; i++) {

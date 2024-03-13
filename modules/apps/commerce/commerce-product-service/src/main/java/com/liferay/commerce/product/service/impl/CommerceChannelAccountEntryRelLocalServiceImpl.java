@@ -316,6 +316,7 @@ public class CommerceChannelAccountEntryRelLocalServiceImpl
 		return commerceChannelAccountEntryRels.size();
 	}
 
+	@Override
 	public CommerceChannelAccountEntryRel updateCommerceChannelAccountEntryRel(
 			long commerceChannelAccountEntryRelId, long commerceChannelId,
 			long classPK, boolean overrideEligibility, double priority)

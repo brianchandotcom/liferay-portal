@@ -97,6 +97,7 @@ public class ObjectDefinitionsDetailsDisplayContext
 		return nonrelationshipObjectFieldsInfo;
 	}
 
+	@Override
 	public ObjectDefinition getObjectDefinition() {
 		HttpServletRequest httpServletRequest =
 			objectRequestHelper.getRequest();

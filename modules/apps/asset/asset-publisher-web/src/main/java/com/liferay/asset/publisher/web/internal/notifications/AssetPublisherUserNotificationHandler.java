@@ -61,6 +61,7 @@ public class AssetPublisherUserNotificationHandler
 		return assetEntriesJSONObject.getString("escapedValue");
 	}
 
+	@Override
 	protected String getTitle(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)

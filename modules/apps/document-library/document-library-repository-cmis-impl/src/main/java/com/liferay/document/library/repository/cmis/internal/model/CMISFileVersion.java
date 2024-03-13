@@ -389,6 +389,7 @@ public class CMISFileVersion extends BaseCMISModel implements FileVersion {
 		return false;
 	}
 
+	@Override
 	public boolean isScheduled() {
 		return false;
 	}

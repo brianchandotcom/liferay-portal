@@ -101,6 +101,7 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		return _toCTCollection(ctCollectionId);
 	}
 
+	@Override
 	public CTCollection getCTCollectionByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {

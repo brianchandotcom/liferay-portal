@@ -76,6 +76,7 @@ public class TestOpenSearchConnectionManager
 		return new JacksonJsonpMapper();
 	}
 
+	@Override
 	public OpenSearchClient getOpenSearchClient(
 		String connectionId, boolean preferLocalCluster) {
 

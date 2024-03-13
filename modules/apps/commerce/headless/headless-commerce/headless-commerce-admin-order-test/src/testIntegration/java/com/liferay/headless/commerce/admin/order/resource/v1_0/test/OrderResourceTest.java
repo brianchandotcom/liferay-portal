@@ -259,6 +259,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		super.testPatchOrderByExternalReferenceCode();
 	}
 
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"currencyCode", "paymentMethod", "printedNote",

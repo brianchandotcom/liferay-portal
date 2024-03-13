@@ -189,6 +189,7 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 			deleteCPDefinitionSpecificationOptionValues(cpDefinitionId, true);
 	}
 
+	@Override
 	public void deleteCPDefinitionSpecificationOptionValues(
 			long cpDefinitionId, boolean makeCopy)
 		throws PortalException {

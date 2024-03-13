@@ -13,6 +13,7 @@ import com.liferay.notification.service.NotificationRecipientLocalServiceUtil;
  */
 public class NotificationQueueEntryImpl extends NotificationQueueEntryBaseImpl {
 
+	@Override
 	public NotificationRecipient getNotificationRecipient() {
 		return NotificationRecipientLocalServiceUtil.
 			getNotificationRecipientByClassPK(getNotificationQueueEntryId());

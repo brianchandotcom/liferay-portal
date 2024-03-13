@@ -69,6 +69,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = IndexHelper.class)
 public class IndexHelperImpl implements IndexHelper {
 
+	@Override
 	public void createIndex(
 		String indexName, OpenSearchIndicesClient openSearchIndicesClient) {
 
@@ -100,6 +101,7 @@ public class IndexHelperImpl implements IndexHelper {
 		}
 	}
 
+	@Override
 	public void deleteIndex(
 		long companyId, String indexName,
 		OpenSearchIndicesClient openSearchIndicesClient,
@@ -128,14 +130,17 @@ public class IndexHelperImpl implements IndexHelper {
 		}
 	}
 
+	@Override
 	public List<IndexContributor> getIndexContributors() {
 		return _indexContributorServiceTrackerList.toList();
 	}
 
+	@Override
 	public String getIndexName(long companyId) {
 		return _indexNameBuilder.getIndexName(companyId);
 	}
 
+	@Override
 	public boolean hasIndex(
 		String indexName, OpenSearchIndicesClient openSearchIndicesClient) {
 
@@ -151,6 +156,7 @@ public class IndexHelperImpl implements IndexHelper {
 		}
 	}
 
+	@Override
 	public void updateMaxResultWindow() {
 		int maxResultWindow =
 			_openSearchConfigurationWrapper.indexMaxResultWindow();

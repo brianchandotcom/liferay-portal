@@ -172,6 +172,7 @@ public class SegmentsConfigurationProviderImpl
 		return true;
 	}
 
+	@Override
 	public boolean isSegmentsCompanyConfigurationDefined(long companyId)
 		throws ConfigurationException {
 
@@ -182,6 +183,7 @@ public class SegmentsConfigurationProviderImpl
 		return false;
 	}
 
+	@Override
 	public void resetSegmentsCompanyConfiguration(long companyId)
 		throws ConfigurationException {
 

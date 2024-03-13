@@ -14,26 +14,32 @@ import java.util.List;
  */
 public class ScopeSearchFacetDisplayContext implements FacetDisplayContext {
 
+	@Override
 	public List<BucketDisplayContext> getBucketDisplayContexts() {
 		return _bucketDisplayContexts;
 	}
 
+	@Override
 	public long getDisplayStyleGroupId() {
 		return _displayStyleGroupId;
 	}
 
+	@Override
 	public String getPaginationStartParameterName() {
 		return _paginationStartParameterName;
 	}
 
+	@Override
 	public String getParameterName() {
 		return _parameterName;
 	}
 
+	@Override
 	public String getParameterValue() {
 		return _parameterValue;
 	}
 
+	@Override
 	public List<String> getParameterValues() {
 		return _parameterValues;
 	}
@@ -44,14 +50,17 @@ public class ScopeSearchFacetDisplayContext implements FacetDisplayContext {
 		return _siteFacetPortletInstanceConfiguration;
 	}
 
+	@Override
 	public boolean isNothingSelected() {
 		return _nothingSelected;
 	}
 
+	@Override
 	public boolean isRenderNothing() {
 		return _renderNothing;
 	}
 
+	@Override
 	public void setBucketDisplayContexts(
 		List<BucketDisplayContext> bucketDisplayContexts) {
 
@@ -62,28 +71,34 @@ public class ScopeSearchFacetDisplayContext implements FacetDisplayContext {
 		_displayStyleGroupId = displayStyleGroupId;
 	}
 
+	@Override
 	public void setNothingSelected(boolean nothingSelected) {
 		_nothingSelected = nothingSelected;
 	}
 
+	@Override
 	public void setPaginationStartParameterName(
 		String paginationStartParameterName) {
 
 		_paginationStartParameterName = paginationStartParameterName;
 	}
 
+	@Override
 	public void setParameterName(String parameterName) {
 		_parameterName = parameterName;
 	}
 
+	@Override
 	public void setParameterValue(String parameterValue) {
 		_parameterValue = parameterValue;
 	}
 
+	@Override
 	public void setParameterValues(List<String> parameterValues) {
 		_parameterValues = parameterValues;
 	}
 
+	@Override
 	public void setRenderNothing(boolean renderNothing) {
 		_renderNothing = renderNothing;
 	}

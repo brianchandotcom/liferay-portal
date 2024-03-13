@@ -22,6 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CommerceQualifierHelper.class)
 public class CommerceQualifierHelperImpl implements CommerceQualifierHelper {
 
+	@Override
 	public CommerceQualifierEntryTable getAliasCommerceQualifierEntryTable(
 		String sourceCommerceQualifierMetadataKey,
 		String targetCommerceQualifierMetadataKey) {

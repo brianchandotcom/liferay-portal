@@ -33,6 +33,7 @@ public class DefaultWorkflowDefinition
 		return _content;
 	}
 
+	@Override
 	public String getContentAsXML() {
 		return _contentAsXML;
 	}

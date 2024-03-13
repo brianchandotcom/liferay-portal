@@ -69,6 +69,7 @@ public class UpgradeJavaScreenContributorClassCheck extends BaseUpgradeCheck {
 				matcher, oldJavaClassContent, oldMethods, oldVariables));
 	}
 
+	@Override
 	protected String[] getNewImports() {
 		return new String[] {
 			"com.liferay.configuration.admin.display.ConfigurationScreen",

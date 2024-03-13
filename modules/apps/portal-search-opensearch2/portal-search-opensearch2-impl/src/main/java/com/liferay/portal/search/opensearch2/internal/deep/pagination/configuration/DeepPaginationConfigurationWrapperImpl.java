@@ -23,6 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DeepPaginationConfigurationWrapperImpl
 	implements DeepPaginationConfigurationWrapper {
 
+	@Override
 	public DeepPaginationConfiguration getDeepPaginationConfiguration(
 		long companyId) {
 
@@ -43,10 +44,12 @@ public class DeepPaginationConfigurationWrapperImpl
 		}
 	}
 
+	@Override
 	public int getPointInTimeKeepAliveSeconds() {
 		return _deepPaginationConfiguration.pointInTimeKeepAliveSeconds();
 	}
 
+	@Override
 	public boolean isEnableDeepPagination(long companyId) {
 		_deepPaginationConfiguration = getDeepPaginationConfiguration(
 			companyId);

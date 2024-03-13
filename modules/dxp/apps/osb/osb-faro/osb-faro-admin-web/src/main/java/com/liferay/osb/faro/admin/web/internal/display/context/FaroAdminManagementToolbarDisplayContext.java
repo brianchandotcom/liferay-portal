@@ -56,6 +56,7 @@ public class FaroAdminManagementToolbarDisplayContext
 		).buildString();
 	}
 
+	@Override
 	public CreationMenu getCreationMenu() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();

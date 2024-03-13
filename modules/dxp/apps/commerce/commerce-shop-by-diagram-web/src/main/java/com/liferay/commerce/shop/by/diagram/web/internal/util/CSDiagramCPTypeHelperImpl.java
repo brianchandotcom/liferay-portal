@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CSDiagramCPTypeHelper.class)
 public class CSDiagramCPTypeHelperImpl implements CSDiagramCPTypeHelper {
 
+	@Override
 	public FileVersion getCPDiagramImageFileVersion(
 			long cpDefinitionId, CSDiagramSetting csDiagramSetting,
 			HttpServletRequest httpServletRequest)

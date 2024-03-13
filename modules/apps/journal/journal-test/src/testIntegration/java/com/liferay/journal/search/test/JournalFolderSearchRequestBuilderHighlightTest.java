@@ -45,6 +45,7 @@ public class JournalFolderSearchRequestBuilderHighlightTest
 		return JournalFolder.class;
 	}
 
+	@Override
 	protected String[] getFieldNames() {
 		return new String[] {"description_en_US", "title_en_US"};
 	}

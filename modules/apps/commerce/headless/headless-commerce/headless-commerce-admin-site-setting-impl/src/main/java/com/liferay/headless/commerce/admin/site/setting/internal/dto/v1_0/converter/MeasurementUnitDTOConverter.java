@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MeasurementUnitDTOConverter
 	implements DTOConverter<CPMeasurementUnit, MeasurementUnit> {
 
+	@Override
 	public String getContentType() {
 		return MeasurementUnit.class.getSimpleName();
 	}

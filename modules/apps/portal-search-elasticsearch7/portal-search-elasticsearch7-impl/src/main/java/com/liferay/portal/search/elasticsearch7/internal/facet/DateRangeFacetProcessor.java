@@ -26,6 +26,7 @@ public class DateRangeFacetProcessor
 	extends RangeFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 
+	@Override
 	protected AbstractRangeBuilder getRangeBuilder(String name) {
 		return AggregationBuilders.dateRange(name);
 	}

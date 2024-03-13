@@ -144,18 +144,21 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		};
 	}
 
+	@Override
 	protected Cart testDeleteCart_addCart() throws Exception {
 		Cart cart = randomCart();
 
 		return cartResource.postCartCheckout(cart.getId());
 	}
 
+	@Override
 	protected Cart testGetCart_addCart() throws Exception {
 		Cart cart = randomCart();
 
 		return cartResource.postCartCheckout(cart.getId());
 	}
 
+	@Override
 	protected Cart testGetChannelCartsPage_addCart(
 			Long accountId, Long channelId, Cart cart)
 		throws Exception {
@@ -163,20 +166,24 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		return cartResource.postCartCheckout(cart.getId());
 	}
 
+	@Override
 	protected Long testGetChannelCartsPage_getAccountId() throws Exception {
 		return _accountEntry.getAccountEntryId();
 	}
 
+	@Override
 	protected Long testGetChannelCartsPage_getChannelId() throws Exception {
 		return _commerceChannel.getCommerceChannelId();
 	}
 
+	@Override
 	protected Cart testGraphQLCart_addCart() throws Exception {
 		Cart cart = randomCart();
 
 		return cartResource.postCartCheckout(cart.getId());
 	}
 
+	@Override
 	protected Cart testPatchCart_addCart() throws Exception {
 		return randomCart();
 	}
@@ -186,6 +193,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		return cartResource.postCartCheckout(cart.getId());
 	}
 
+	@Override
 	protected Cart testPostCartCouponCode_addCart(Cart cart) throws Exception {
 		CouponCode couponCode = new CouponCode() {
 			{
@@ -196,6 +204,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		return cartResource.postCartCouponCode(cart.getId(), couponCode);
 	}
 
+	@Override
 	protected Cart testPutCart_addCart() throws Exception {
 		Cart cart = randomCart();
 

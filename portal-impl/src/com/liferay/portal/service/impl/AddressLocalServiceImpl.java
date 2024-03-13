@@ -216,6 +216,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			classPK);
 	}
 
+	@Override
 	public List<Address> getListTypeAddresses(
 		long companyId, String className, long classPK, long[] listTypeIds) {
 
@@ -224,6 +225,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			classPK, listTypeIds);
 	}
 
+	@Override
 	public List<Address> getListTypeAddresses(
 		long companyId, String className, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator) {

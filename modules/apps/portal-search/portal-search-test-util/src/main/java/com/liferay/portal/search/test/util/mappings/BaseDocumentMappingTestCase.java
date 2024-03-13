@@ -27,6 +27,7 @@ import org.junit.Test;
 public abstract class BaseDocumentMappingTestCase extends BaseDocumentTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

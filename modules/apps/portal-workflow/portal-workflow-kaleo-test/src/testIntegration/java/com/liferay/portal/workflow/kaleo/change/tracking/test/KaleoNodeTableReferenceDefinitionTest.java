@@ -23,6 +23,7 @@ public class KaleoNodeTableReferenceDefinitionTest
 	extends BaseKaleoTableReferenceDefinitionTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

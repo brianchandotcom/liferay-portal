@@ -319,6 +319,7 @@ public class PostgreSQLDB extends BaseDB {
 		return _POSTGRESQL;
 	}
 
+	@Override
 	protected boolean isSupportsDuplicatedIndexName() {
 		return false;
 	}

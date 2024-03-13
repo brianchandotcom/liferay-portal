@@ -95,6 +95,7 @@ public class ScopeSearchFacetDisplayContextTest
 		return group;
 	}
 
+	@Override
 	protected String getFilterValue(String term) {
 		return String.valueOf(_groupId);
 	}

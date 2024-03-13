@@ -31,6 +31,7 @@ public class KaleoTaskInstanceTokenTableReferenceDefinitionTest
 	extends BaseKaleoTableReferenceDefinitionTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

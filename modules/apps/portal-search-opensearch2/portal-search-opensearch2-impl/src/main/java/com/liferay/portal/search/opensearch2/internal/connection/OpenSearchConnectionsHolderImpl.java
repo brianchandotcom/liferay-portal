@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 public class OpenSearchConnectionsHolderImpl
 	implements OpenSearchConnectionsHolder {
 
+	@Override
 	public void addOpenSearchConnection(
 		OpenSearchConnection openSearchConnection) {
 
@@ -61,14 +62,17 @@ public class OpenSearchConnectionsHolderImpl
 		_openSearchConnections.put(connectionId, openSearchConnection);
 	}
 
+	@Override
 	public OpenSearchConnection getOpenSearchConnection(String connectionId) {
 		return _openSearchConnections.get(connectionId);
 	}
 
+	@Override
 	public Collection<OpenSearchConnection> getOpenSearchConnections() {
 		return _openSearchConnections.values();
 	}
 
+	@Override
 	public void removeOpenSearchConnection(String connectionId) {
 		if (connectionId == null) {
 			return;

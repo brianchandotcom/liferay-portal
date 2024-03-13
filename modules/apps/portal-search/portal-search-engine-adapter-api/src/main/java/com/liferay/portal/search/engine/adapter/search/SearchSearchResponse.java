@@ -42,6 +42,7 @@ public class SearchSearchResponse extends BaseSearchResponse {
 		_hits = hits;
 	}
 
+	@Override
 	public void setScrollId(String scrollId) {
 		_scrollId = scrollId;
 	}

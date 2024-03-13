@@ -55,6 +55,7 @@ public class CTCollectionTemplateServiceImpl
 			getUserId(), name, description, json);
 	}
 
+	@Override
 	public List<CTCollectionTemplate> getCTCollectionTemplates(
 		String keywords, int start, int end,
 		OrderByComparator<CTCollectionTemplate> orderByComparator) {
@@ -89,6 +90,7 @@ public class CTCollectionTemplateServiceImpl
 		return ctCollectionTemplatePersistence.dslQuery(dslQuery);
 	}
 
+	@Override
 	public int getCTCollectionTemplatesCount(String keywords) {
 		String[] keywordsArray = _customSQL.keywords(
 			keywords, true, WildcardMode.SURROUND);

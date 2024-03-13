@@ -351,6 +351,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			inputStream, mimeType);
 	}
 
+	@Override
 	public Layout copyLayout(
 			long groupId, boolean privateLayout,
 			Map<Locale, String> localeNamesMap, boolean hidden, boolean system,
@@ -450,6 +451,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layout;
 	}
 
+	@Override
 	public long fetchLayoutPlid(
 			String uuid, long groupId, boolean privateLayout)
 		throws PortalException {

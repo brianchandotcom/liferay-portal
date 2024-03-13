@@ -46,6 +46,7 @@ public class DLFileVersionVersionComparator
 		return _ORDER_BY_FIELDS;
 	}
 
+	@Override
 	public boolean isAscending() {
 		return _versionNumberComparator.isAscending();
 	}

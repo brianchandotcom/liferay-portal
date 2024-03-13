@@ -672,6 +672,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			groupId, userId, start, end);
 	}
 
+	@Override
 	public int getGroupUserMessageBoardMessagesActivityCount(
 			long groupId, long userId)
 		throws PortalException {

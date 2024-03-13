@@ -29,10 +29,12 @@ public interface WorkflowTask extends WorkflowModel, WorkflowNode {
 
 	public Date getDueDate();
 
+	@Override
 	public String getName();
 
 	public Map<String, Serializable> getOptionalAttributes();
 
+	@Override
 	public default Type getType() {
 		return Type.TASK;
 	}

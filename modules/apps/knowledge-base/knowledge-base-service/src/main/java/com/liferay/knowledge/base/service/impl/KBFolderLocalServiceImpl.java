@@ -395,6 +395,7 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		return moveKBFolder(kbFolderId, parentKBFolderId);
 	}
 
+	@Override
 	public KBFolder moveKBFolderToTrash(long userId, long kbFolderId)
 		throws PortalException {
 
@@ -425,6 +426,7 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		return kbFolder;
 	}
 
+	@Override
 	public KBFolder restoreKBFolderFromTrash(long userId, long kbFolderId)
 		throws PortalException {
 

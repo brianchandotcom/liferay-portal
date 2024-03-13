@@ -18,34 +18,40 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
  */
 public class CTCollectionTemplateImpl extends CTCollectionTemplateBaseImpl {
 
+	@Override
 	public JSONObject getJSONObject() {
 		return JSONStorageEntryLocalServiceUtil.getJSONObject(
 			ClassNameLocalServiceUtil.getClassNameId(getModelClassName()),
 			getCtCollectionTemplateId());
 	}
 
+	@Override
 	public String getParsedPublicationDescription() {
 		return CTCollectionTemplateLocalServiceUtil.parseTokens(
 			getCtCollectionTemplateId(), getPublicationDescription());
 	}
 
+	@Override
 	public String getParsedPublicationName() {
 		return CTCollectionTemplateLocalServiceUtil.parseTokens(
 			getCtCollectionTemplateId(), getPublicationName());
 	}
 
+	@Override
 	public String getPublicationDescription() {
 		JSONObject jsonObject = getJSONObject();
 
 		return String.valueOf(jsonObject.get("description"));
 	}
 
+	@Override
 	public String getPublicationName() {
 		JSONObject jsonObject = getJSONObject();
 
 		return String.valueOf(jsonObject.get("name"));
 	}
 
+	@Override
 	public String getUserName() {
 		User user = UserLocalServiceUtil.fetchUser(getUserId());
 

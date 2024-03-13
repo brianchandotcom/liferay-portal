@@ -56,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
+	@Override
 	public String getDestinationName() {
 		return AntivirusAsyncDestinationNames.ANTIVIRUS_BATCH;
 	}

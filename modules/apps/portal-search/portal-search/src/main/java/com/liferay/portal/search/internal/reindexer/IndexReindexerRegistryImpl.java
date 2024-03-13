@@ -25,14 +25,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = IndexReindexerRegistry.class)
 public class IndexReindexerRegistryImpl implements IndexReindexerRegistry {
 
+	@Override
 	public IndexReindexer getIndexReindexer(String className) {
 		return _serviceTrackerMap.getService(className);
 	}
 
+	@Override
 	public Set<String> getIndexReindexerClassNames() {
 		return _serviceTrackerMap.keySet();
 	}
 
+	@Override
 	public Collection<IndexReindexer> getIndexReindexers() {
 		return _serviceTrackerMap.values();
 	}

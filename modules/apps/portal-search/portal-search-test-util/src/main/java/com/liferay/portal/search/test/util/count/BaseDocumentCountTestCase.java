@@ -21,6 +21,7 @@ import org.junit.Test;
 public abstract class BaseDocumentCountTestCase extends BaseDocumentTestCase {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

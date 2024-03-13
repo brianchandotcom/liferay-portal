@@ -131,6 +131,7 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 			companyId, key, sku, null);
 	}
 
+	@Override
 	public CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
 		long cpInstanceId) {
 

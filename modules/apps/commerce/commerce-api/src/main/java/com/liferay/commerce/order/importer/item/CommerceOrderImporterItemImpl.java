@@ -77,6 +77,7 @@ public class CommerceOrderImporterItemImpl
 		return _sku;
 	}
 
+	@Override
 	public String getUnitOfMeasureKey() {
 		return _unitOfMeasureKey;
 	}

@@ -59,6 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = AnalyticsSettingsManager.class)
 public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 
+	@Override
 	public void deleteCompanyConfiguration(long companyId)
 		throws ConfigurationException {
 
@@ -84,6 +85,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			AnalyticsConfiguration.class, companyId);
 	}
 
+	@Override
 	public AnalyticsConfiguration getAnalyticsConfiguration(long companyId)
 		throws ConfigurationException {
 
@@ -91,6 +93,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			AnalyticsConfiguration.class, companyId);
 	}
 
+	@Override
 	public Long[] getCommerceChannelIds(
 			String analyticsChannelId, long companyId)
 		throws Exception {
@@ -126,6 +129,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return commerceChannelIds.toArray(new Long[0]);
 	}
 
+	@Override
 	public Long[] getSiteIds(String analyticsChannelId, long companyId)
 		throws Exception {
 
@@ -157,6 +161,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return groupIds.toArray(new Long[0]);
 	}
 
+	@Override
 	public boolean isAnalyticsEnabled(long companyId) throws Exception {
 		AnalyticsConfiguration analyticsConfiguration =
 			getAnalyticsConfiguration(companyId);
@@ -197,6 +202,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return false;
 	}
 
+	@Override
 	public boolean syncedAccountSettingsEnabled(long companyId)
 		throws Exception {
 
@@ -218,6 +224,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return false;
 	}
 
+	@Override
 	public boolean syncedContactSettingsEnabled(long companyId)
 		throws Exception {
 
@@ -239,6 +246,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 		return false;
 	}
 
+	@Override
 	public String[] updateCommerceChannelIds(
 			String analyticsChannelId, long companyId,
 			Long[] dataSourceCommerceChannelIds)
@@ -274,6 +282,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 				GetterUtil.getLong(commerceChannelId)));
 	}
 
+	@Override
 	public void updateCompanyConfiguration(
 			long companyId, Map<String, Object> properties)
 		throws Exception {
@@ -318,6 +327,7 @@ public class AnalyticsSettingsManagerImpl implements AnalyticsSettingsManager {
 			_toDictionary(configurationProperties));
 	}
 
+	@Override
 	public String[] updateSiteIds(
 			String analyticsChannelId, long companyId, Long[] dataSourceSiteIds)
 		throws Exception {

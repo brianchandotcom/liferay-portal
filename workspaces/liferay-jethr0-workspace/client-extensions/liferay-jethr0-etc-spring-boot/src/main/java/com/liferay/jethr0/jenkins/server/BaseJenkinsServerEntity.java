@@ -68,6 +68,7 @@ public abstract class BaseJenkinsServerEntity
 		return _jenkinsCohortEntity;
 	}
 
+	@Override
 	public long getJenkinsCohortEntityId() {
 		return _jenkinsCohortEntityId;
 	}

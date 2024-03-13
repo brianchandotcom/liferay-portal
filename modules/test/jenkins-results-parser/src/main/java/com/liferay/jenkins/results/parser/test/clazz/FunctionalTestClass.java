@@ -106,6 +106,7 @@ public class FunctionalTestClass extends BaseTestClass {
 			getTestClassMethodName());
 	}
 
+	@Override
 	protected String getTestName() {
 		return getTestClassMethodName();
 	}

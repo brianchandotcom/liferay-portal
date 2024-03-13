@@ -37,6 +37,7 @@ public class FileEntryRemoteStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		liveGroup = GroupTestUtil.addGroup();
 
@@ -59,6 +60,7 @@ public class FileEntryRemoteStagedModelDataHandlerTest
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
 		ServiceContextThreadLocal.popServiceContext();
 	}

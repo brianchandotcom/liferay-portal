@@ -12,6 +12,7 @@ import org.junit.Test;
  */
 public class PoshiResources71xTest extends BasePoshiResourcesTestCase {
 
+	@Override
 	@Test
 	public void testLatestVersion() throws Exception {
 		runTest("7.1.x");

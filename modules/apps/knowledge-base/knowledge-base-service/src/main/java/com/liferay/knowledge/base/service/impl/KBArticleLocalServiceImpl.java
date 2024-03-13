@@ -1519,6 +1519,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			userId, KBArticle.class.getName(), resourcePrimKey);
 	}
 
+	@Override
 	public KBArticle updateAndUnlockKBArticle(
 			long userId, long resourcePrimKey, String title, String content,
 			String description, String[] sections, String sourceURL,

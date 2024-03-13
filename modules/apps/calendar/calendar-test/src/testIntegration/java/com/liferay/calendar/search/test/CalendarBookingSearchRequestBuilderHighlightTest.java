@@ -61,6 +61,7 @@ public class CalendarBookingSearchRequestBuilderHighlightTest
 		return CalendarBooking.class;
 	}
 
+	@Override
 	protected String[] getFieldNames() {
 		return new String[] {"description_en_US", "title_en_US"};
 	}

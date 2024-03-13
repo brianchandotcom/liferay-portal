@@ -21,10 +21,12 @@ public class ObjectViewImpl extends ObjectViewBaseImpl {
 		return _objectViewColumns;
 	}
 
+	@Override
 	public List<ObjectViewFilterColumn> getObjectViewFilterColumns() {
 		return _objectViewFilterColumns;
 	}
 
+	@Override
 	public List<ObjectViewSortColumn> getObjectViewSortColumns() {
 		return _objectViewSortColumns;
 	}
@@ -34,12 +36,14 @@ public class ObjectViewImpl extends ObjectViewBaseImpl {
 		_objectViewColumns = objectViewColumns;
 	}
 
+	@Override
 	public void setObjectViewFilterColumns(
 		List<ObjectViewFilterColumn> objectViewFilterColumns) {
 
 		_objectViewFilterColumns = objectViewFilterColumns;
 	}
 
+	@Override
 	public void setObjectViewSortColumns(
 		List<ObjectViewSortColumn> objectViewSortColumns) {
 

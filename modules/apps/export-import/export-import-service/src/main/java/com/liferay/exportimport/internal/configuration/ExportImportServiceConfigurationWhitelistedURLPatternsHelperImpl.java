@@ -114,6 +114,7 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 			URLPatternMapperFactory.create(whitelistedURLPatternsMap));
 	}
 
+	@Override
 	public void rebuildURLPatternMappers() {
 		_companyLocalService.forEachCompanyId(
 			companyId -> {

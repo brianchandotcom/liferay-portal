@@ -82,6 +82,7 @@ public class KaleoDesignerManagementToolbarDisplayContext
 		return String.valueOf(getPortletURL());
 	}
 
+	@Override
 	public String getSearchContainerId() {
 		return "kaleoDefinitionVersions";
 	}

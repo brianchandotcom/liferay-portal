@@ -103,6 +103,7 @@ public class CTCollectionTemplateLocalServiceImpl
 			companyId, start, end);
 	}
 
+	@Override
 	public Set<String> getTokens() {
 		Map<String, String> tokensMap = _getTokensMap(0);
 

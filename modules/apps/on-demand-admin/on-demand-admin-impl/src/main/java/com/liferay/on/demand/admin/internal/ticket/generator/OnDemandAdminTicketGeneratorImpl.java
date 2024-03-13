@@ -56,6 +56,7 @@ public class OnDemandAdminTicketGeneratorImpl
 			company, justification, _userLocalService.getUser(requestorUserId));
 	}
 
+	@Override
 	public Ticket generate(
 			Company company, String justification, User requestorUser)
 		throws PortalException {

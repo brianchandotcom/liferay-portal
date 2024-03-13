@@ -10,10 +10,12 @@ package com.liferay.object.model.impl;
  */
 public class ObjectStateTransitionImpl extends ObjectStateTransitionBaseImpl {
 
+	@Override
 	public long getTargetObjectStateListTypeEntryId() {
 		return _targetObjectStateListTypeEntryId;
 	}
 
+	@Override
 	public void setTargetObjectStateListTypeEntryId(
 		long targetObjectStateListTypeEntryId) {
 

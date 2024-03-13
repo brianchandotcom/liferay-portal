@@ -27,12 +27,14 @@ public interface CommercePriceListCommerceQualifierConfiguration
 		deflt = "account|account-group,channel,order-type",
 		name = "allowed-target-keys", required = false
 	)
+	@Override
 	public String[] allowedTargetKeys();
 
 	@Meta.AD(
 		deflt = "account|order-type|channel,account|order-type,account|channel,account,account-group|order-type|channel,account-group|order-type,account-group|channel,account-group,order-type|channel,order-type,channel",
 		name = "order-by-target-keys", required = false
 	)
+	@Override
 	public String[] orderByTargetKeys();
 
 }

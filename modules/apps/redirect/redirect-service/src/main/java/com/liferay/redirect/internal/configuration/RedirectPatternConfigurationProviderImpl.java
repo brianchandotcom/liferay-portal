@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 public class RedirectPatternConfigurationProviderImpl
 	implements RedirectPatternConfigurationProvider {
 
+	@Override
 	public List<RedirectPatternEntry> getRedirectPatternEntries(long groupId) {
 		return _redirectProvider.getRedirectPatternEntries(groupId);
 	}

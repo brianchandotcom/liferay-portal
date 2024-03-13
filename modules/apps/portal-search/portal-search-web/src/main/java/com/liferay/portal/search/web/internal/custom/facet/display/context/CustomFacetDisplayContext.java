@@ -36,6 +36,7 @@ public class CustomFacetDisplayContext implements FacetDisplayContext {
 				CustomFacetPortletInstanceConfiguration.class, themeDisplay);
 	}
 
+	@Override
 	public List<BucketDisplayContext> getBucketDisplayContexts() {
 		return _bucketDisplayContexts;
 	}
@@ -50,6 +51,7 @@ public class CustomFacetDisplayContext implements FacetDisplayContext {
 		return _displayCaption;
 	}
 
+	@Override
 	public long getDisplayStyleGroupId() {
 		if (_displayStyleGroupId != 0) {
 			return _displayStyleGroupId;
@@ -65,30 +67,37 @@ public class CustomFacetDisplayContext implements FacetDisplayContext {
 		return _displayStyleGroupId;
 	}
 
+	@Override
 	public String getPaginationStartParameterName() {
 		return _paginationStartParameterName;
 	}
 
+	@Override
 	public String getParameterName() {
 		return _parameterName;
 	}
 
+	@Override
 	public String getParameterValue() {
 		return _parameterValue;
 	}
 
+	@Override
 	public List<String> getParameterValues() {
 		return _parameterValues;
 	}
 
+	@Override
 	public boolean isNothingSelected() {
 		return _nothingSelected;
 	}
 
+	@Override
 	public boolean isRenderNothing() {
 		return _renderNothing;
 	}
 
+	@Override
 	public void setBucketDisplayContexts(
 		List<BucketDisplayContext> bucketDisplayContexts) {
 
@@ -99,28 +108,34 @@ public class CustomFacetDisplayContext implements FacetDisplayContext {
 		_displayCaption = displayCaption;
 	}
 
+	@Override
 	public void setNothingSelected(boolean nothingSelected) {
 		_nothingSelected = nothingSelected;
 	}
 
+	@Override
 	public void setPaginationStartParameterName(
 		String paginationStartParameterName) {
 
 		_paginationStartParameterName = paginationStartParameterName;
 	}
 
+	@Override
 	public void setParameterName(String paramName) {
 		_parameterName = paramName;
 	}
 
+	@Override
 	public void setParameterValue(String paramValue) {
 		_parameterValue = paramValue;
 	}
 
+	@Override
 	public void setParameterValues(List<String> paramValues) {
 		_parameterValues = paramValues;
 	}
 
+	@Override
 	public void setRenderNothing(boolean renderNothing) {
 		_renderNothing = renderNothing;
 	}

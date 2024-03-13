@@ -110,6 +110,7 @@ public class CommerceOrdersCommerceOrderImporterTypeImpl
 			_commerceOrderService, _userLocalService);
 	}
 
+	@Override
 	public int getCommerceOrderImporterItemsCount(Object object)
 		throws Exception {
 

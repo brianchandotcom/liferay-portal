@@ -164,6 +164,7 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		return false;
 	}
 
+	@Override
 	protected boolean isBuildRunning() {
 		try {
 			JSONObject buildJSONObject = _getBuildJSONObject();

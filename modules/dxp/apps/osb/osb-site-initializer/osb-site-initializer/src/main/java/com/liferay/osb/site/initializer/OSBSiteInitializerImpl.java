@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = OSBSiteInitializer.class)
 public class OSBSiteInitializerImpl implements OSBSiteInitializer {
 
+	@Override
 	public void addOrUpdateSXPBlueprint(
 			ServiceContext serviceContext, ServletContext servletContext,
 			Map<String, String> stringUtilReplaceValues)

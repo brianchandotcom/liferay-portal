@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class DispatchTriggerResourceImpl
 	extends BaseDispatchTriggerResourceImpl {
 
+	@Override
 	public Page<DispatchTrigger> getDispatchTriggersPage() throws Exception {
 		return Page.of(
 			transform(
@@ -42,6 +43,7 @@ public class DispatchTriggerResourceImpl
 					dispatchTrigger)));
 	}
 
+	@Override
 	public DispatchTrigger postDispatchTrigger(DispatchTrigger dispatchTrigger)
 		throws Exception {
 
@@ -55,6 +57,7 @@ public class DispatchTriggerResourceImpl
 				dispatchTrigger.getName()));
 	}
 
+	@Override
 	public void postDispatchTriggerRun(Long dispatchTriggerId)
 		throws Exception {
 

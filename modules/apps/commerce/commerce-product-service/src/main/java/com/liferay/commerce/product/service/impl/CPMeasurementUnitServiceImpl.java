@@ -116,6 +116,7 @@ public class CPMeasurementUnitServiceImpl
 			companyId, type);
 	}
 
+	@Override
 	public CPMeasurementUnit fetchPrimaryCPMeasurementUnitByType(
 			long companyId, int type)
 		throws PortalException {
@@ -153,6 +154,7 @@ public class CPMeasurementUnitServiceImpl
 			companyId, key);
 	}
 
+	@Override
 	public List<CPMeasurementUnit> getCPMeasurementUnits(long companyId)
 		throws PortalException {
 

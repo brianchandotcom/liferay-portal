@@ -113,6 +113,7 @@ public class BillingAddressResourceTest
 		super.testPatchOrderIdBillingAddress();
 	}
 
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"city", "description", "name", "phoneNumber", "street1", "street2",

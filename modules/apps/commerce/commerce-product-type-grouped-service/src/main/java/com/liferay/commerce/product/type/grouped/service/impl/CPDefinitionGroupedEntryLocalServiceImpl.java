@@ -237,6 +237,7 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 			entryCProductId, start, end, orderByComparator);
 	}
 
+	@Override
 	public BaseModelSearchResult<CPDefinitionGroupedEntry>
 			searchCPDefinitionGroupedEntries(SearchContext searchContext)
 		throws PortalException {

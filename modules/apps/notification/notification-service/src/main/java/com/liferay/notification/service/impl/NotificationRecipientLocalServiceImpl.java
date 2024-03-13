@@ -21,6 +21,7 @@ import org.osgi.service.component.annotations.Component;
 public class NotificationRecipientLocalServiceImpl
 	extends NotificationRecipientLocalServiceBaseImpl {
 
+	@Override
 	public NotificationRecipient getNotificationRecipientByClassPK(
 		long classPK) {
 

@@ -110,6 +110,7 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 		assertEquals(postWarehouse, patchWarehouse);
 	}
 
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"city", "name"};
 	}

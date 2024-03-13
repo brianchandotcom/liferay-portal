@@ -15,6 +15,7 @@ import java.util.Locale;
 public class InfoItemActionExecutionPrincipalException
 	extends InfoItemActionExecutionException {
 
+	@Override
 	public String getLocalizedMessage(Locale locale) {
 		return LanguageUtil.get(
 			locale, "you-do-not-have-the-required-permissions");

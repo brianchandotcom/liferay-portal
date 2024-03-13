@@ -388,6 +388,7 @@ public class OracleDB extends BaseDB {
 		}
 	}
 
+	@Override
 	protected boolean isSupportsDDLRollback() {
 		return false;
 	}

@@ -127,6 +127,7 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 		return _user.getUserId();
 	}
 
+	@Override
 	protected Ticket testGraphQLGetUserAccountPasswordResetTicket_addTicket()
 		throws Exception {
 

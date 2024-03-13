@@ -23,6 +23,7 @@ public class GitHubEventProcessor extends BaseEventProcessor {
 	@JmsListener(
 		destination = "${JETHR0_JMS_QUEUE_GITHUB_TO_JETHR0:github-to-jethr0}"
 	)
+	@Override
 	public void receiveMessage(String message) {
 		super.receiveMessage(message);
 	}

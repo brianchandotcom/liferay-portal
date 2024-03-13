@@ -46,6 +46,7 @@ public class OpenSearchSpellCheckTest extends BaseSpellCheckTestCase {
 		assertSpellCheckMap("{searc=[search], spac=[space]}", "searc spac");
 	}
 
+	@Override
 	@Test
 	public void testQuotedWords() throws Exception {
 		indexSpellCheckWord("space");
@@ -55,6 +56,7 @@ public class OpenSearchSpellCheckTest extends BaseSpellCheckTestCase {
 		assertSpellCheck("space search", "\"spac searc\"");
 	}
 
+	@Override
 	@Test
 	public void testRepeated() throws Exception {
 		indexSpellCheckWord("space");
@@ -63,6 +65,7 @@ public class OpenSearchSpellCheckTest extends BaseSpellCheckTestCase {
 		assertSpellCheck("space search space search", "spac searc spac searc");
 	}
 
+	@Override
 	@Test
 	public void testRepeatedMap() throws Exception {
 		indexSpellCheckWord("space");
@@ -99,6 +102,7 @@ public class OpenSearchSpellCheckTest extends BaseSpellCheckTestCase {
 		assertSpellCheck("space search", "spac    Searc");
 	}
 
+	@Override
 	@Test
 	public void testWhitespaceMap() throws Exception {
 		indexSpellCheckWord("space");

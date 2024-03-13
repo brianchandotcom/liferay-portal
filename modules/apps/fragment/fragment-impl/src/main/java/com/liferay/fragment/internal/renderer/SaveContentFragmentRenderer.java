@@ -46,6 +46,7 @@ public class SaveContentFragmentRenderer extends BaseContentFragmentRenderer {
 		return _language.get(locale, "save-content");
 	}
 
+	@Override
 	public boolean hasViewPermission(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
@@ -57,6 +58,7 @@ public class SaveContentFragmentRenderer extends BaseContentFragmentRenderer {
 		return true;
 	}
 
+	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-197909")) {
 			return false;

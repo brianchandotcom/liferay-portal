@@ -67,6 +67,7 @@ public class CommerceOrderSystemObjectDefinitionManager
 			(CommerceOrder)baseModel);
 	}
 
+	@Override
 	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

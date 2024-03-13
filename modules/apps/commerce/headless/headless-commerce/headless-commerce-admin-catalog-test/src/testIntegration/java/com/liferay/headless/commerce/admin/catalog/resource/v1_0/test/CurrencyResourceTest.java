@@ -77,6 +77,7 @@ public class CurrencyResourceTest extends BaseCurrencyResourceTestCase {
 		return new String[] {"name", "formatPattern"};
 	}
 
+	@Override
 	protected Currency randomCurrency() throws Exception {
 		return new Currency() {
 			{

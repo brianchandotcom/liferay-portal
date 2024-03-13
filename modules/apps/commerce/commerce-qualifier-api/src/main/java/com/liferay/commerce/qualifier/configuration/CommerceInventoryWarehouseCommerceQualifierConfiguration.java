@@ -24,9 +24,11 @@ public interface CommerceInventoryWarehouseCommerceQualifierConfiguration
 	extends CommerceQualifierConfiguration {
 
 	@Meta.AD(name = "allowed-target-keys", required = false)
+	@Override
 	public String[] allowedTargetKeys();
 
 	@Meta.AD(name = "order-by-target-keys", required = false)
+	@Override
 	public String[] orderByTargetKeys();
 
 }

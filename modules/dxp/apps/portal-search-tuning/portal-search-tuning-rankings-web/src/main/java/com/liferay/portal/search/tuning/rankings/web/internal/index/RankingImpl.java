@@ -41,26 +41,32 @@ public class RankingImpl implements Ranking {
 			rankingImpl._sxpBlueprintExternalReferenceCode;
 	}
 
+	@Override
 	public List<String> getAliases() {
 		return Collections.unmodifiableList(_aliases);
 	}
 
+	@Override
 	public String getGroupExternalReferenceCode() {
 		return _groupExternalReferenceCode;
 	}
 
+	@Override
 	public List<String> getHiddenDocumentIds() {
 		return new ArrayList<>(_hiddenDocumentIds);
 	}
 
+	@Override
 	public String getIndexName() {
 		return _indexName;
 	}
 
+	@Override
 	public String getName() {
 		return _name;
 	}
 
+	@Override
 	public String getNameForDisplay() {
 		StringBundler sb = new StringBundler(4);
 
@@ -75,30 +81,37 @@ public class RankingImpl implements Ranking {
 		return sb.toString();
 	}
 
+	@Override
 	public List<Ranking.Pin> getPins() {
 		return Collections.unmodifiableList(_pins);
 	}
 
+	@Override
 	public String getQueryString() {
 		return _queryString;
 	}
 
+	@Override
 	public Collection<String> getQueryStrings() {
 		return _rankingHelper.getQueryStrings(_queryString, _aliases);
 	}
 
+	@Override
 	public String getRankingDocumentId() {
 		return _rankingDocumentId;
 	}
 
+	@Override
 	public String getStatus() {
 		return _status;
 	}
 
+	@Override
 	public String getSXPBlueprintExternalReferenceCode() {
 		return _sxpBlueprintExternalReferenceCode;
 	}
 
+	@Override
 	public boolean isPinned(String documentId) {
 		if (_pinnedDocumentIds.contains(documentId)) {
 			return true;

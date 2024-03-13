@@ -227,6 +227,7 @@ public class BlogsEntryAssetRenderer
 		return getURLViewInContext(themeDisplay, noSuchEntryRedirect);
 	}
 
+	@Override
 	public String getURLViewInContext(
 			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
 		throws PortalException {

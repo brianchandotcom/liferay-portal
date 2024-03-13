@@ -116,10 +116,12 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return "table";
 	}
 
+	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "data-set");
 	}
 
+	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-164563")) {
 			return false;

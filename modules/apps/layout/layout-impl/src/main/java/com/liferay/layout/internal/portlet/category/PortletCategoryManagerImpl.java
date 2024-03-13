@@ -77,6 +77,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PortletCategoryManager.class)
 public class PortletCategoryManagerImpl implements PortletCategoryManager {
 
+	@Override
 	public JSONArray getPortletsJSONArray(
 			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws Exception {

@@ -594,6 +594,7 @@ public class DownstreamBuild extends BaseBuild {
 		return null;
 	}
 
+	@Override
 	protected List<Element> getJenkinsReportBuildDurationsElements() {
 		String urlSuffix = "buildDurationsElements";
 
@@ -769,6 +770,7 @@ public class DownstreamBuild extends BaseBuild {
 		return jenkinsReportTableRowElements;
 	}
 
+	@Override
 	protected List<Element> getJenkinsReportTestDurationsElements() {
 		String batchName = getBatchName();
 

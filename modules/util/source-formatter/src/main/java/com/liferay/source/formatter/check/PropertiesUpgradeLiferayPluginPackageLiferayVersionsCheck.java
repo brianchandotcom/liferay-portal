@@ -21,6 +21,7 @@ public class PropertiesUpgradeLiferayPluginPackageLiferayVersionsCheck
 		return false;
 	}
 
+	@Override
 	protected String getLiferayVersion(String absolutePath) {
 		String upgradeToVersion = getAttributeValue(
 			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);

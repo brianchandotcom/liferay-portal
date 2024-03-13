@@ -378,6 +378,7 @@ public class AccountEntryUserRelLocalServiceImpl
 		return false;
 	}
 
+	@Override
 	public void inviteUser(
 			long accountEntryId, long[] accountRoleIds, String emailAddress,
 			User inviter, ServiceContext serviceContext)
@@ -398,6 +399,7 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 	}
 
+	@Override
 	public boolean isAccountEntryUser(long userId) {
 		if (accountEntryUserRelPersistence.countByAccountUserId(userId) > 0) {
 			return true;
@@ -406,6 +408,7 @@ public class AccountEntryUserRelLocalServiceImpl
 		return false;
 	}
 
+	@Override
 	public void setAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
 		throws PortalException {

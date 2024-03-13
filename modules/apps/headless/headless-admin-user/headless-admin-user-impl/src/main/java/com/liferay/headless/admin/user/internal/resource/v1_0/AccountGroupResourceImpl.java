@@ -175,6 +175,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		return _entityModel;
 	}
 
+	@Override
 	public AccountGroup postAccountGroup(AccountGroup accountGroup)
 		throws Exception {
 

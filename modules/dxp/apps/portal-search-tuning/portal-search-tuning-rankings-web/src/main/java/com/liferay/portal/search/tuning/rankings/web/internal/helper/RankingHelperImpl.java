@@ -31,6 +31,7 @@ public class RankingHelperImpl implements RankingHelper {
 	public static final String JOURNAL_ARTICLE_DOCUMENT_PREFIX =
 		"com.liferay.journal.model.JournalArticle_PORTLET_";
 
+	@Override
 	public String getDocumentId(String documentId) {
 		if (!documentId.startsWith(JOURNAL_ARTICLE_DOCUMENT_PREFIX)) {
 			return documentId;
@@ -54,6 +55,7 @@ public class RankingHelperImpl implements RankingHelper {
 		return JOURNAL_ARTICLE_DOCUMENT_PREFIX + latestJournalArticle.getId();
 	}
 
+	@Override
 	public Collection<String> getQueryStrings(
 		String queryString, List<String> aliases) {
 
@@ -72,6 +74,7 @@ public class RankingHelperImpl implements RankingHelper {
 		return ListUtil.sort(new ArrayList<>(queryStrings));
 	}
 
+	@Override
 	public List<String> translateDocumentIds(List<String> documentIds) {
 		List<String> ids = new ArrayList<>();
 

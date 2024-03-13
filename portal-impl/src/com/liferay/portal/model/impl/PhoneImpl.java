@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.ListTypeServiceUtil;
  */
 public class PhoneImpl extends PhoneBaseImpl {
 
+	@Override
 	public ListType getListType() throws PortalException {
 		return ListTypeServiceUtil.getListType(getListTypeId());
 	}

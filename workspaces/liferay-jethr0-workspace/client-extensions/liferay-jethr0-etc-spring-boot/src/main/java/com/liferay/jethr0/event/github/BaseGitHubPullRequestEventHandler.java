@@ -22,6 +22,7 @@ public abstract class BaseGitHubPullRequestEventHandler
 		super(eventHandlerContext, messageJSONObject);
 	}
 
+	@Override
 	protected GitHubPullRequest getGitHubPullRequest()
 		throws InvalidJSONException {
 

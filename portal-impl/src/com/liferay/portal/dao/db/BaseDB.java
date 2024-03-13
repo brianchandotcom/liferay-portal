@@ -123,6 +123,7 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
+	@Override
 	public void alterColumnName(
 			Connection connection, String tableName, String oldColumnName,
 			String newColumnDefinition)
@@ -140,6 +141,7 @@ public abstract class BaseDB implements DB {
 		runSQL(connection, sb.toString());
 	}
 
+	@Override
 	public void alterColumnType(
 			Connection connection, String tableName, String columnName,
 			String newColumnType)
@@ -157,6 +159,7 @@ public abstract class BaseDB implements DB {
 		runSQL(connection, sb.toString());
 	}
 
+	@Override
 	public void alterTableAddColumn(
 			Connection connection, String tableName, String columnName,
 			String columnType)
@@ -174,6 +177,7 @@ public abstract class BaseDB implements DB {
 		runSQL(connection, sb.toString());
 	}
 
+	@Override
 	public void alterTableDropColumn(
 			Connection connection, String tableName, String columnName)
 		throws Exception {

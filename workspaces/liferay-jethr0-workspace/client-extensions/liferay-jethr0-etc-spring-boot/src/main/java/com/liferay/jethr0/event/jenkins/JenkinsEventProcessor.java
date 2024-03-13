@@ -22,6 +22,7 @@ public class JenkinsEventProcessor extends BaseEventProcessor {
 	@JmsListener(
 		destination = "${JETHR0_JMS_QUEUE_JENKINS_TO_JETHR0:jenkins-to-jethr0}"
 	)
+	@Override
 	public void receiveMessage(String message) {
 		super.receiveMessage(message);
 	}

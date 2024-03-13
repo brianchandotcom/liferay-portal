@@ -89,6 +89,7 @@ public class ChannelAccountResourceImpl extends BaseChannelAccountResourceImpl {
 	}
 
 	@NestedField(parentClass = ChannelAccount.class, value = "channelAccounts")
+	@Override
 	public Page<ChannelAccount> getChannelIdChannelAccountsPage(
 			Long commerceChannelId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

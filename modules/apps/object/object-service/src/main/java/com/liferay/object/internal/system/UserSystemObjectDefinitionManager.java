@@ -64,6 +64,7 @@ public class UserSystemObjectDefinitionManager
 		return _userLocalService.deleteUser((User)baseModel);
 	}
 
+	@Override
 	public BaseModel<?> fetchBaseModelByExternalReferenceCode(
 		String externalReferenceCode, long companyId) {
 

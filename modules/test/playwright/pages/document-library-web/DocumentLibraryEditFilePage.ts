@@ -36,9 +36,9 @@ export class DocumentLibraryEditFilePage {
 		await this.titleSelector.fill(title);
 
 		const isClosed =
+			!(await this.scheduleButton.getAttribute('aria-expanded')) ||
 			(await this.scheduleButton.getAttribute('aria-expanded')) ===
-				'false' ||
-			!(await this.scheduleButton.getAttribute('aria-expanded'));
+				'false';
 
 		if (isClosed) {
 			await this.scheduleButton.click();
@@ -47,6 +47,7 @@ export class DocumentLibraryEditFilePage {
 		await this.publishDateSelector.click();
 		await this.publishDateSelector.fill(scheduleDate);
 		await this.publishDateSelector.click();
+		await this.publishDateSelector.press('Escape');
 		await this.page
 			.locator(
 				'[id="_com_liferay_document_library_web_portlet_DLAdminPortlet_displayDateTime"]'

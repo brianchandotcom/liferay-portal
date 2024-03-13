@@ -127,6 +127,7 @@ page import="com.liferay.journal.web.internal.display.context.JournalPreviewArti
 page import="com.liferay.journal.web.internal.display.context.JournalVersionTabDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalViewMoreMenuItemsDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalViewMoreMenuItemsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.journal.web.internal.display.context.helper.JournalWebRequestHelper" %><%@
 page import="com.liferay.journal.web.internal.exception.DDMStructureValidationModelListenerException" %><%@
 page import="com.liferay.journal.web.internal.frontend.taglib.clay.servlet.taglib.JournalArticleCommentsVerticalCard" %><%@
 page import="com.liferay.journal.web.internal.frontend.taglib.clay.servlet.taglib.JournalArticleHistoryVerticalCard" %><%@
@@ -227,7 +228,9 @@ JournalWebConfiguration journalWebConfiguration = (JournalWebConfiguration)reque
 
 JournalDisplayContext journalDisplayContext = (JournalDisplayContext)request.getAttribute(JournalDisplayContext.class.getName());
 
-JournalGroupServiceConfiguration journalGroupServiceConfiguration = journalDisplayContext.getJournalGroupServiceConfiguration();
+JournalWebRequestHelper journalWebRequestHelper = new JournalWebRequestHelper(request);
+
+JournalGroupServiceConfiguration journalGroupServiceConfiguration = journalWebRequestHelper.getJournalGroupServiceConfiguration();
 
 Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

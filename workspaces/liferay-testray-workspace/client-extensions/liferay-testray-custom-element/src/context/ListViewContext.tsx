@@ -43,6 +43,7 @@ export type InitialState = {
 	checkAll: boolean;
 	columns: ListViewColumns;
 	columnsFixed: string[];
+	customFilterFields: {projectId?: string};
 	filters: ListViewFilter;
 	id: string;
 	keywords: string;
@@ -57,6 +58,7 @@ const initialState: InitialState = {
 	checkAll: false,
 	columns: {},
 	columnsFixed: [],
+	customFilterFields: {projectId: ''},
 	filters: {
 		entries: [],
 		filter: {},
@@ -75,6 +77,7 @@ export enum ListViewTypes {
 	SET_CHECKED_ROW = 'SET_CHECKED_ROW',
 	SET_CLEAR = 'SET_CLEAR',
 	SET_COLUMNS = 'SET_COLUMNS',
+	SET_CUSTOM_FILTER_FIELDS = 'SET_CUSTOM_FILTER_FIELD',
 	SET_FILTERS = 'SET_FILTERS',
 	SET_PAGE = 'SET_PAGE',
 	SET_PAGE_SIZE = 'SET_PAGE_SIZE',
@@ -89,6 +92,7 @@ type ListViewPayload = {
 	[ListViewTypes.SET_CHECKED_ROW]: number | number[];
 	[ListViewTypes.SET_CLEAR]: null;
 	[ListViewTypes.SET_COLUMNS]: {columns: any};
+	[ListViewTypes.SET_CUSTOM_FILTER_FIELDS]: {customFilterFields: any};
 	[ListViewTypes.SET_FILTERS]: {filters?: any; pin?: any};
 	[ListViewTypes.SET_PAGE]: number;
 	[ListViewTypes.SET_PAGE_SIZE]: number;
@@ -173,6 +177,12 @@ const reducer = (state: InitialState, action: AppActions) => {
 			return {
 				...state,
 				columns,
+			};
+
+		case ListViewTypes.SET_CUSTOM_FILTER_FIELDS:
+			return {
+				...state,
+				customFilterFields: action.payload.customFilterFields,
 			};
 
 		case ListViewTypes.SET_PAGE:
@@ -276,7 +286,6 @@ export type ListViewContextProviderProps = Partial<InitialState>;
 const ListViewContextProvider: React.FC<
 	ListViewContextProviderProps & {children: ReactNode; id: string}
 > = ({children, id, ...initialStateProps}) => {
-	const {filterInitialContext, page, pageSize} = useQueryParams();
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const filter = searchParams.get('filter');
@@ -317,10 +326,12 @@ const ListViewContextProvider: React.FC<
 			pin: !!filterPinnedStorage.entries.length,
 		}),
 		...(columnsStorage && {columns: columnsStorage}),
-		...(page && {page: Number(page)}),
-		...(pageSize && {pageSize: Number(pageSize)}),
 		id,
 	});
+
+	const {filterInitialContext, page, pageSize} = useQueryParams(
+		state.customFilterFields
+	);
 
 	return (
 		<ListViewContext.Provider
@@ -330,6 +341,8 @@ const ListViewContextProvider: React.FC<
 					...(filter && {
 						filters: filterInitialContext as ListViewFilter,
 					}),
+					...(page && {page: Number(page)}),
+					...(pageSize && {pageSize: Number(pageSize)}),
 				},
 				dispatch,
 			]}

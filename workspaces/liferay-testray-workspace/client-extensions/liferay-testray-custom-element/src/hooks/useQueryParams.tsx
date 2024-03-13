@@ -33,7 +33,7 @@ type Params = {
 	[key: string]: string | number | boolean;
 };
 
-const useQueryParams = () => {
+const useQueryParams = (customFilterFields?: any) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
@@ -78,11 +78,26 @@ const useQueryParams = () => {
 
 			const filter = SearchBuilder.in('id', serializedFilter[field.name]);
 
-			const resourceFilter = resource.includes('filter=')
-				? resource.replace(/(filter=.*?)(&|$)/, `$1 and ${filter}$2`)
-				: `${resource}${
-						resource.includes('?') ? '&' : '?'
-				  }filter=${filter}`;
+			let resourceFilter;
+
+			if (resource.includes('filter=')) {
+				if (customFilterFields) {
+					resourceFilter = resource
+						.replace('undefined', customFilterFields?.projectId)
+						.replace(/(filter=.*?)(&|$)/, `$1 and ${filter}$2`);
+				}
+				else {
+					resourceFilter = resource.replace(
+						/(filter=.*?)(&|$)/,
+						`$1 and ${filter}$2`
+					);
+				}
+			}
+			else {
+				resourceFilter = `${resource}${
+					resource.includes('?') ? '&' : '?'
+				}filter=${filter}`;
+			}
 
 			const response = await fetcher(resourceFilter);
 
@@ -161,7 +176,13 @@ const useQueryParams = () => {
 		});
 
 		setFilterWithOptions(updatedFilterOptions);
-	}, [serializedFilter, filteredFields, routeParams, filterKeys]);
+	}, [
+		routeParams,
+		filteredFields,
+		serializedFilter,
+		customFilterFields,
+		filterKeys,
+	]);
 
 	const updateUrlParams = (param: Params) => {
 		const existingParams = new URLSearchParams(location.search);

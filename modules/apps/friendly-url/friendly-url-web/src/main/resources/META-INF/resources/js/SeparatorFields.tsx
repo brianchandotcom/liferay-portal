@@ -88,6 +88,7 @@ function Field({errors, field, url}: FieldProps) {
 				<ClayInput.GroupItem append>
 					<ClayInput
 						aria-describedby={descriptionId}
+						data-testid={name}
 						name={name}
 						onChange={(event) => setValue(event.target.value)}
 						ref={ref}
@@ -101,6 +102,7 @@ function Field({errors, field, url}: FieldProps) {
 							aria-label={Liferay.Language.get(
 								'reset-to-default-value'
 							)}
+							data-testid={name + '-reset-to-default-value'}
 							displayType="secondary"
 							onClick={() => {
 								setValue(defaultValue);

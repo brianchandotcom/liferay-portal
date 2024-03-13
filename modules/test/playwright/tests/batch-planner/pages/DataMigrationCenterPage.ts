@@ -7,6 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {getTempDir} from '../../../utils/temp';
+import {unzipFile} from '../../../utils/zip';
 
 export class DataMigrationCenterPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
@@ -134,6 +135,6 @@ export class DataMigrationCenterPage {
 		const filePath = getTempDir() + download.suggestedFilename();
 		await download.saveAs(filePath);
 
-		return filePath;
+		return unzipFile(filePath);
 	}
 }

@@ -31,7 +31,7 @@ public class GenerateTestrayCSVUtil {
 	public static void generate(
 		String projectBuildDir, String projectTestrayBuildId) {
 
-		System.out.println("LRCI-3940 inside of GenerateTestrayCSVUtil");
+		System.out.println("LRCI-3940 This is the first line of GenerateTestrayCSVUtil in jenkins-results-parser.");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -59,7 +59,7 @@ public class GenerateTestrayCSVUtil {
 			String testrayResultsCSVString = sb.toString();
 
 			System.out.println(
-				"LRCI-3940 restrayResultsCSVString: " +
+				"LRCI-3940 The value of restrayResultsCSVString is: " +
 					testrayResultsCSVString);
 
 			JenkinsResultsParserUtil.write(
@@ -76,7 +76,7 @@ public class GenerateTestrayCSVUtil {
 		TestrayCaseResult.Type testrayCaseResultType) {
 
 		System.out.println(
-			"LRCI-3940 inside of _generate function of GenerateTEstrayCSVUtil");
+			"LRCI-3940 Beginning of GenerateTestrayCSVUtil's _generate function.");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -104,9 +104,9 @@ public class GenerateTestrayCSVUtil {
 	private static List<TestrayCaseResult> _getTestrayCaseResults(
 		String projectTestrayBuildId) {
 
-		System.out.println("LRCI-3940 inside of _getTestrayCaseResults");
+		System.out.println("LRCI-3940 First line of GenerateTestrayCSVUtil's _getTestrayCaseResults function.");
 		System.out.println(
-			"LRCI-3940 projectTestrayBuildId: " + projectTestrayBuildId);
+			"LRCI-3940 The value of projectTestrayBuildId is: " + projectTestrayBuildId);
 
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
@@ -120,7 +120,7 @@ public class GenerateTestrayCSVUtil {
 				"&testrayBuildId=", projectTestrayBuildId, "&statuses=3");
 
 			System.out.println(
-				"LRCI-3940 testrayCaseResultsURL: " + testrayCaseResultsURL);
+				"LRCI-3940 The value of testrayCaseResultsURL is: " + testrayCaseResultsURL);
 
 			JSONObject jsonObject = null;
 

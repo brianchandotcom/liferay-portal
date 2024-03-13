@@ -207,9 +207,7 @@ public class DBInspector {
 			while (resultSet.next()) {
 				if (Objects.equals(
 						normalizeName(indexName, databaseMetaData),
-						normalizeName(
-							resultSet.getString("index_name"),
-							databaseMetaData))) {
+						resultSet.getString("index_name"))) {
 
 					return true;
 				}

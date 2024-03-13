@@ -8,6 +8,7 @@
 import {Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 export class UtilityPagesPage {
 	readonly page: Page;
@@ -18,9 +19,9 @@ export class UtilityPagesPage {
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
-			`/group${
-				siteUrl || '/guest'
-			}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages`
+			`/group${siteUrl || '/guest'}${
+				PORTLET_URLS.pages
+			}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages`
 		);
 	}
 

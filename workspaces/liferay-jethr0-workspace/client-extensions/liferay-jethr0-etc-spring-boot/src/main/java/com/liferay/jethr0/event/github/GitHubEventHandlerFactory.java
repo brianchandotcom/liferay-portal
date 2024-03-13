@@ -127,8 +127,12 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 					String repositoryName = repositoryJSONObject.getString(
 						"name");
 
-					if (repositoryName.equals("liferay-portal") ||
-						repositoryName.equals("liferay-portal-ee")) {
+					if (repositoryName.startsWith("com-liferay")) {
+						return new SubrepositoryOpenGitHubPullRequestEventHandler(
+							eventHandlerContext, messageJSONObject);
+					}
+					else if (repositoryName.equals("liferay-portal") ||
+							 repositoryName.equals("liferay-portal-ee")) {
 
 						return new PortalOpenGitHubPullRequestEventHandler(
 							eventHandlerContext, messageJSONObject);

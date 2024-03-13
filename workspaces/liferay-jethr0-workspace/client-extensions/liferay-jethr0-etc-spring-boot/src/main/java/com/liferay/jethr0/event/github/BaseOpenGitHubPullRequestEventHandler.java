@@ -170,7 +170,7 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 	protected abstract Set<JobEntity> createJobEntities()
 		throws InvalidJSONException, IOException;
 
-	protected Set<String> getTestSuites()
+	protected Set<String> getTestOptions()
 		throws InvalidJSONException, IOException {
 
 		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
@@ -196,7 +196,7 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 		GitHubUser receiverGitHubUser =
 			gitHubPullRequest.getReceiverGitHubUser();
 
-		Set<String> testSuites = new HashSet<>();
+		Set<String> testOptions = new HashSet<>();
 
 		for (String ciTestAutoRecipient : ciTestAutoRecipients) {
 			Matcher matcher = _ciTestAutoRecipientPattern.matcher(
@@ -209,12 +209,12 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 				continue;
 			}
 
-			String testSuitesString = matcher.group("testSuites");
+			String testOptionsString = matcher.group("testOptions");
 
-			Collections.addAll(testSuites, testSuitesString.split(","));
+			Collections.addAll(testOptions, testOptionsString.split(","));
 		}
 
-		return testSuites;
+		return testOptions;
 	}
 
 	protected void invokeJobEntities()
@@ -273,6 +273,6 @@ public abstract class BaseOpenGitHubPullRequestEventHandler
 	}
 
 	private static final Pattern _ciTestAutoRecipientPattern = Pattern.compile(
-		"(?<userName>[^\\]]+)\\[(?<testSuites>[^\\]]+)\\]");
+		"(?<userName>[^\\]]+)\\[(?<testOptions>[^\\]]+)\\]");
 
 }

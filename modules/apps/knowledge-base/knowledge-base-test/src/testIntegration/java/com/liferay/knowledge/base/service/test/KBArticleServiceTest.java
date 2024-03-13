@@ -8,6 +8,7 @@ package com.liferay.knowledge.base.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -62,12 +64,12 @@ public class KBArticleServiceTest {
 
 		_originalName = PrincipalThreadLocal.getName();
 
-		User user = TestPropsValues.getUser();
+		_user = TestPropsValues.getUser();
 
-		PrincipalThreadLocal.setName(user.getUserId());
+		PrincipalThreadLocal.setName(_user.getUserId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, user.getUserId());
+			_group, _user.getUserId());
 
 		_testPortletId = "TEST_PORTLET_" + RandomTestUtil.randomString();
 	}
@@ -75,6 +77,35 @@ public class KBArticleServiceTest {
 	@After
 	public void tearDown() {
 		PrincipalThreadLocal.setName(_originalName);
+	}
+
+	@FeatureFlags("LPD-11003")
+	@Test
+	public void testForceLockKBArticle() throws Exception {
+		KBArticle kbArticle = _addKbArticle(new Date());
+		User otherUser = UserTestUtil.addUser(_group.getGroupId());
+
+		_kbArticleLocalService.lockKBArticle(
+			otherUser.getUserId(), kbArticle.getResourcePrimKey());
+
+		Assert.assertTrue(
+			_kbArticleLocalService.hasKBArticleLock(
+				otherUser.getUserId(), kbArticle.getResourcePrimKey()));
+
+		Assert.assertFalse(
+			_kbArticleLocalService.hasKBArticleLock(
+				_user.getUserId(), kbArticle.getResourcePrimKey()));
+
+		_kbArticleService.forceLockKBArticle(
+			_group.getGroupId(), kbArticle.getResourcePrimKey());
+
+		Assert.assertFalse(
+			_kbArticleLocalService.hasKBArticleLock(
+				otherUser.getUserId(), kbArticle.getResourcePrimKey()));
+
+		Assert.assertTrue(
+			_kbArticleLocalService.hasKBArticleLock(
+				_user.getUserId(), kbArticle.getResourcePrimKey()));
 	}
 
 	@FeatureFlags("LPS-188058")
@@ -125,11 +156,15 @@ public class KBArticleServiceTest {
 	private Group _group;
 
 	@Inject
+	private KBArticleLocalService _kbArticleLocalService;
+
+	@Inject
 	private KBArticleService _kbArticleService;
 
 	private long _kbFolderClassNameId;
 	private String _originalName;
 	private ServiceContext _serviceContext;
 	private String _testPortletId;
+	private User _user;
 
 }

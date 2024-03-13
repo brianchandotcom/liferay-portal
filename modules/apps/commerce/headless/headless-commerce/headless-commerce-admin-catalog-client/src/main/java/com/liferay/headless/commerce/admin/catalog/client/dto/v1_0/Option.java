@@ -361,7 +361,7 @@ public class Option implements Cloneable, Serializable {
 
 		CHECKBOX("checkbox"), CHECKBOX_MULTIPLE("checkbox_multiple"),
 		DATE("date"), NUMERIC("numeric"), RADIO("radio"), SELECT("select"),
-		TEXT("text");
+		SELECT_DATE("select_date"), TEXT("text");
 
 		public static FieldType create(String value) {
 			for (FieldType fieldType : values()) {

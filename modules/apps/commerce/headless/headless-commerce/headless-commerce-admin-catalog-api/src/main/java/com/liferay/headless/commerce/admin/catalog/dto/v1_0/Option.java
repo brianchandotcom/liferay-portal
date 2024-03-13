@@ -897,7 +897,7 @@ public class Option implements Serializable {
 
 		CHECKBOX("checkbox"), CHECKBOX_MULTIPLE("checkbox_multiple"),
 		DATE("date"), NUMERIC("numeric"), RADIO("radio"), SELECT("select"),
-		TEXT("text");
+		SELECT_DATE("select_date"), TEXT("text");
 
 		@JsonCreator
 		public static FieldType create(String value) {

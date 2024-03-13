@@ -49,6 +49,7 @@ export type ListViewProps<T = any> = {
 	children?: (response: APIResponse, options: ChildrenOptions) => ReactNode;
 	forceRefetch?: number;
 	managementToolbarProps?: {
+		customFilterFields?: {};
 		visible?: boolean;
 	} & Omit<
 		ManagementToolbarProps,
@@ -91,6 +92,7 @@ const ListView: React.FC<ListViewProps> = ({
 	children,
 	forceRefetch,
 	managementToolbarProps: {
+		customFilterFields,
 		visible: managementToolbarVisible = true,
 		...managementToolbarProps
 	} = {},
@@ -230,7 +232,14 @@ const ListView: React.FC<ListViewProps> = ({
 		if (shouldCurrentPageBeChanged) {
 			dispatch({payload: page - 1, type: ListViewTypes.SET_PAGE});
 		}
-	}, [dispatch, itemsMemoized.length, lastPage, loading, page]);
+	}, [
+		customFilterFields,
+		dispatch,
+		itemsMemoized.length,
+		lastPage,
+		loading,
+		page,
+	]);
 
 	const listViewContextString = JSON.stringify(listViewContext);
 
@@ -241,6 +250,13 @@ const ListView: React.FC<ListViewProps> = ({
 	}, [listViewContextString]);
 
 	useEffect(() => {
+		if (customFilterFields) {
+			dispatch({
+				payload: {customFilterFields},
+				type: ListViewTypes.SET_CUSTOM_FILTER_FIELDS,
+			});
+		}
+
 		if (tableProps.rowSelectable) {
 			dispatch({
 				payload: itemsMemoized.every((item) =>
@@ -250,6 +266,7 @@ const ListView: React.FC<ListViewProps> = ({
 			});
 		}
 	}, [
+		customFilterFields,
 		dispatch,
 		itemsMemoized,
 		onSelectRowNormalizer,
@@ -296,6 +313,7 @@ const ListView: React.FC<ListViewProps> = ({
 				<ManagementToolbar
 					{...managementToolbarProps}
 					actions={actions}
+					customFilterFields={customFilterFields}
 					tableProps={tableProps}
 					totalItems={itemsMemoized.length}
 				/>

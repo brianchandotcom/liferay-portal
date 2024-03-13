@@ -21,6 +21,7 @@ export type ManagementToolbarProps = {
 	addButton?: () => void;
 	applyFilters?: boolean;
 	buttons?: ReactNode | ((actions: any) => ReactNode);
+	customFilterFields?: {};
 	display?: {
 		columns?: boolean;
 	};
@@ -39,6 +40,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	addButton,
 	applyFilters = true,
 	buttons,
+	customFilterFields,
 	display,
 	filterSchema,
 	tableProps,
@@ -64,6 +66,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 							: buttons
 					}
 					columns={tableProps.columns}
+					customFilterFields={customFilterFields}
 					disabled={disabled}
 					display={display}
 					filterSchema={(filterSchemas as any)[filterSchema ?? '']}

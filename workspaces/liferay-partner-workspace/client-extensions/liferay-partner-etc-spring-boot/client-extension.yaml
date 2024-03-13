@@ -5,7 +5,7 @@ liferay-partner-etc-spring-boot-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Partner Etc Spring Boot OAuth Application Headless Server
     scopes:
-        - C_PartnerLevel.everything.read
-        - C_ProxyAccount.everything.read
+        - c_partnerlevel.everything.read
+        - c_proxyaccount.everything.read
         - Liferay.Headless.Admin.User.everything
     type: oAuthApplicationHeadlessServer

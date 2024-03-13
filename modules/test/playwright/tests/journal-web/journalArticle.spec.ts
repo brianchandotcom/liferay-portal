@@ -12,6 +12,8 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
+import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
 
@@ -67,15 +69,26 @@ const translationTest = mergeTests(
 translationTest(
 	'LPD-17245: Add error message in Translation for concurrent users',
 	async ({
+		apiHelpers,
 		journalEditArticlePage,
 		journalEditArticleTranslationsPage,
+		journalPage,
 		site,
 	}) => {
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+		const contentStructureId = await getBasicWebContentStructureId(
+			apiHelpers
+		);
 
 		const title = getRandomString();
 
-		await journalEditArticlePage.publishNewBasicArticle(title);
+		await addApprovedStructuredContent(
+			apiHelpers,
+			site.id,
+			contentStructureId,
+			title
+		);
+
+		await journalPage.goto(site.friendlyUrlPath);
 
 		const editBasicArticleTranslationUrl =
 			await journalEditArticleTranslationsPage.editBasicArticleTranslations(
@@ -99,10 +112,11 @@ bulkTest(
 			{enabled: true, locator: '#guest_ACTION_PERMISSIONS'},
 		];
 
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+		// Create first article
 
 		const title1 = getRandomString();
-		const title2 = getRandomString();
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		await journalEditArticlePage.publishNewBasicArticle(title1);
 
@@ -113,6 +127,12 @@ bulkTest(
 			.filter({hasText: title1});
 
 		await article1.waitFor();
+
+		// Create second article
+
+		const title2 = getRandomString();
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		await journalEditArticlePage.publishNewBasicArticle(title2);
 
@@ -346,6 +366,10 @@ scheduleTest(
 
 		await page.getByRole('button', {exact: true, name: 'Publish'}).click();
 
+		await page
+			.getByText(`Success:${title} was created successfully.`)
+			.waitFor();
+
 		await page.getByLabel(`Actions for ${title}`).waitFor();
 
 		await clickAndExpectToBeVisible({
@@ -370,6 +394,8 @@ scheduleTest(
 		});
 
 		await journalPage.setPermissions(['#power-user_ACTION_DELETE']);
+
+		await journalPage.goto(site.friendlyUrlPath);
 
 		await journalPage.assertJournalArticlePermissions(title, [
 			{enabled: true, locator: '#power-user_ACTION_DELETE'},

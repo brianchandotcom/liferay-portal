@@ -480,7 +480,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 	private SearchPage<SearchResult> _assertFacetConfiguration(
 			boolean anyMatch, Map<String, Object> facetAttributes,
-			String facetName, Object facetValues, Object... expectedValues)
+			String facetName, Object facetValues, String... expectedValues)
 		throws Exception {
 
 		Arrays.sort(expectedValues);
@@ -524,11 +524,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		if (anyMatch) {
 			Assert.assertFalse(
 				Collections.disjoint(
-					Arrays.asList((String[])expectedValues),
-					Arrays.asList(termValues)));
+					Arrays.asList(expectedValues), Arrays.asList(termValues)));
 		}
 		else {
-			Assert.assertTrue(Objects.deepEquals(expectedValues, termValues));
+			Assert.assertArrayEquals(expectedValues, termValues);
 		}
 
 		return page;

@@ -142,10 +142,6 @@ export class JournalPage {
 			.click();
 
 		await this.permissionsFrameLocator
-			.getByText('Success:Your request completed successfully.')
-			.waitFor();
-
-		await this.permissionsFrameLocator
 			.getByRole('button', {name: 'Cancel'})
 			.click();
 	}

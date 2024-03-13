@@ -5,10 +5,8 @@
 
 import getRandomString from './getRandomString';
 
-export default async function fillAndClickOutside(page, element) {
-	const text = getRandomString();
-
+export default async function fillAndClickOutside(page, element, content?) {
 	await element.click();
-	await element.fill(text);
+	await element.fill(content || getRandomString());
 	await page.locator('body').click();
 }

@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {JournalPage} from './JournalPage';
 
 export class JournalEditArticlePage {
@@ -53,7 +54,7 @@ export class JournalEditArticlePage {
 
 		await this.propertiesTab.waitFor();
 
-		await this.titlePlaceholder.fill(title);
+		await fillAndClickOutside(this.page, this.titlePlaceholder, title);
 
 		await this.publishButton.waitFor();
 

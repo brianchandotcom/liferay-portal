@@ -66,6 +66,8 @@ public interface ObjectDefinition
 
 	public String getRESTContextPath();
 
+	public String getRootObjectDefinitionExternalReferenceCode();
+
 	public String getShortName();
 
 	public boolean isApproved();

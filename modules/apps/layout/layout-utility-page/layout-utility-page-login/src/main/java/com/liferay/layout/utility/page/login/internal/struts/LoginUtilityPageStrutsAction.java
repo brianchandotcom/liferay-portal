@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Olivér Kecskeméty
  */
-@Component(property = "path=/portal/sign_in", service = StrutsAction.class)
-public class SignInStrutsAction implements StrutsAction {
+@Component(property = "path=/portal/login_up", service = StrutsAction.class)
+public class LoginUtilityPageStrutsAction implements StrutsAction {
 
 	@Override
 	public String execute(

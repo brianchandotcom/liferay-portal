@@ -40,6 +40,7 @@
 
 		<action path="/portal/login" type="com.liferay.portal.action.LoginAction" />
 		<action forward="portal.login_disabled" path="/portal/login_disabled" />
+		<action forward="portal.login_up" path="/portal/login_up" />
 		<action path="/portal/logout" type="com.liferay.portal.action.LogoutAction" />
 		<action forward="portal.progress_poller" path="/portal/progress_poller" />
 		<action forward="/portal/protected.jsp" path="/portal/protected" />
@@ -56,7 +57,6 @@
 			<forward name="portal.setup_wizard" path="portal.setup_wizard" />
 		</action>
 
-		<action forward="portal.sign.in" path="/portal/sign_in" />
 		<action forward="portal.status" path="/portal/status" />
 
 		<!--<action path="/portal/test" type="com.liferay.portal.action.TestAction">

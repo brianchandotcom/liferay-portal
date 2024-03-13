@@ -1,0 +1,9 @@
+buildService {
+	apiDir = "../liferay-testray-api/src/main/java"
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "latest.release"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly project(":modules:testray-api")
+}

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Testray API
+Bundle-SymbolicName: com.liferay.testray.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.testray.service

@@ -21,11 +21,14 @@ const test = mergeTests(
 
 test('the Locked Items page is shown', async ({lockedItemsPage}) => {
 	await lockedItemsPage.goto();
+
 	await expect(lockedItemsPage.pageTitle).toBeVisible();
 	await expect(lockedItemsPage.lockedPagesMenuItem).toBeVisible();
 });
 
 test('the locked Pages page is shown', async ({lockedItemsPage}) => {
+	await lockedItemsPage.goto();
 	await lockedItemsPage.goToLockedPages();
+
 	await expect(lockedItemsPage.lockedPagesTitle).toBeVisible();
 });

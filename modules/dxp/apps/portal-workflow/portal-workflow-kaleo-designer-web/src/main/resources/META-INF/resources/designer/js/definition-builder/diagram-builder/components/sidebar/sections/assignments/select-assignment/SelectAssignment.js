@@ -5,8 +5,10 @@
 
 import ClayForm, {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useContext} from 'react';
 
+import {DefinitionBuilderContext} from '../../../../../../DefinitionBuilderContext';
+import {DisabledGroovyScriptAlert} from '../../../../shared-components/DisabledGroovyScriptAlert';
 import SidebarPanel from '../../../SidebarPanel';
 
 const options = [
@@ -37,45 +39,58 @@ const options = [
 ];
 
 const SelectAssignment = ({section, setSection, setSections}) => {
+	const {
+		allowScriptContentBeExecutedOrIncluded,
+		hasGroovyScript,
+	} = useContext(DefinitionBuilderContext);
+
 	return (
-		<SidebarPanel panelTitle={Liferay.Language.get('select-assignment')}>
-			<ClayForm.Group>
-				<label htmlFor="assignment-type">
-					{Liferay.Language.get('assignment-type')}
+		<>
+			{Liferay.FeatureFlags['LPD-11179'] &&
+				!allowScriptContentBeExecutedOrIncluded &&
+				hasGroovyScript && <DisabledGroovyScriptAlert />}
 
-					<span
-						className="ml-2"
-						title={Liferay.Language.get(
-							'select-the-assignment-type'
-						)}
+			<SidebarPanel
+				panelTitle={Liferay.Language.get('select-assignment')}
+			>
+				<ClayForm.Group>
+					<label htmlFor="assignment-type">
+						{Liferay.Language.get('assignment-type')}
+
+						<span
+							className="ml-2"
+							title={Liferay.Language.get(
+								'select-the-assignment-type'
+							)}
+						>
+							<ClayIcon
+								className="text-muted"
+								symbol="question-circle-full"
+							/>
+						</span>
+					</label>
+
+					<ClaySelect
+						aria-label="Select"
+						id="assignment-type"
+						onChange={(event) => {
+							setSection(event.target.value);
+							setSections([{identifier: `${Date.now()}-0`}]);
+						}}
 					>
-						<ClayIcon
-							className="text-muted"
-							symbol="question-circle-full"
-						/>
-					</span>
-				</label>
-
-				<ClaySelect
-					aria-label="Select"
-					id="assignment-type"
-					onChange={(event) => {
-						setSection(event.target.value);
-						setSections([{identifier: `${Date.now()}-0`}]);
-					}}
-				>
-					{options.map((item) => (
-						<ClaySelect.Option
-							disabled={item?.disabled}
-							key={item.assignmentType}
-							label={item.label}
-							selected={item.assignmentType === section}
-							value={item.assignmentType}
-						/>
-					))}
-				</ClaySelect>
-			</ClayForm.Group>
-		</SidebarPanel>
+						{options.map((item) => (
+							<ClaySelect.Option
+								disabled={item?.disabled}
+								key={item.assignmentType}
+								label={item.label}
+								selected={item.assignmentType === section}
+								value={item.assignmentType}
+							/>
+						))}
+					</ClaySelect>
+				</ClayForm.Group>
+			</SidebarPanel>
+		</>
 	);
 };
 

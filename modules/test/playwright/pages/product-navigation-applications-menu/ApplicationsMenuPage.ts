@@ -22,6 +22,7 @@ export class ApplicationsMenuPage {
 	private readonly gogoShellItem: Locator;
 	private readonly homePage: HomePage;
 	private readonly instanceSettingsMenuItem: Locator;
+	private readonly jobSchedulerMenuItem: Locator;
 	private readonly oAuth2Administration: Locator;
 	private readonly objectsMenuItem: Locator;
 	readonly page: Page;
@@ -72,6 +73,10 @@ export class ApplicationsMenuPage {
 		this.instanceSettingsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Instance Settings',
+		});
+		this.jobSchedulerMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Job Scheduler',
 		});
 		this.oAuth2Administration = page.getByRole('menuitem', {
 			exact: true,
@@ -167,6 +172,11 @@ export class ApplicationsMenuPage {
 	async goToInstanceSettings() {
 		await this.goToControlPanel();
 		await this.instanceSettingsMenuItem.click();
+	}
+
+	async goToJobScheduler() {
+		await this.goToControlPanel();
+		await this.jobSchedulerMenuItem.click();
 	}
 
 	async goToCommerceChannels() {

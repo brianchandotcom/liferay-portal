@@ -4,8 +4,8 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
 import {
 	useCallback,
@@ -39,22 +39,18 @@ type Option = {label: string; value: string};
 
 type FilterBodyProps = {
 	applyFilters?: boolean;
-	buttonRef: React.RefObject<HTMLButtonElement>;
 	fieldOptions?: FieldOptions;
 	filterSchema: FilterSchema | undefined;
 	isLoading?: boolean;
-	setPosition: React.Dispatch<React.SetStateAction<number>>;
 	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 	visible: boolean;
 };
 
 const FilterBody: React.FC<FilterBodyProps> = ({
 	applyFilters = true,
-	buttonRef,
 	fieldOptions = {},
 	filterSchema,
 	isLoading = false,
-	setPosition,
 	setVisible,
 	visible,
 }) => {
@@ -76,28 +72,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 	const fields = useMemo(() => filterSchema?.fields as RendererFields[], [
 		filterSchema?.fields,
 	]);
-
-	useEffect(() => {
-		const container = document.querySelector('.tr-main__body__page');
-
-		const scrollHandler = () => {
-			const screenHeight = (container as any)?.offsetHeight;
-			const buttonRelativePosition =
-				buttonRef?.current?.getBoundingClientRect().bottom ?? 0;
-
-			const calculatePosition = screenHeight - buttonRelativePosition;
-
-			const position = calculatePosition > 0 ? calculatePosition : 1;
-
-			setPosition(position);
-		};
-
-		container?.addEventListener('scroll', scrollHandler);
-
-		return () => {
-			container?.removeEventListener('scroll', scrollHandler);
-		};
-	}, [buttonRef, setPosition]);
 
 	const initialFilters = useMemo(() => {
 		const initialValues: {[key: string]: string} = {};
@@ -162,8 +136,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						(options: Option) => options.value || options
 					),
 				};
-			}
-			else {
+			} else {
 				return {
 					name: key,
 					value: filterCleaned[key],
@@ -213,7 +186,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 
 	return (
 		<div className="align-content-between d-flex flex-column">
-			<div className="dropdown-header">
+			<ClayDropDown.Section className="dropdown-header">
 				{fields.length > 1 && (
 					<>
 						<p className="font-weight-bold my-2">
@@ -240,10 +213,10 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 						<Form.Divider />
 					</>
 				)}
-			</div>
+			</ClayDropDown.Section>
 
 			<div className="management-toolbar-body">
-				<div className="popover-filter-content">
+				<div className="dropdown-filter-content" tabIndex={1}>
 					<Form.Renderer
 						fieldOptions={fieldOptions}
 						fields={fields}
@@ -256,7 +229,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 				</div>
 			</div>
 
-			<div className="popover-footer">
+			<ClayDropDown.Section className="dropdown-footer">
 				<Form.Divider />
 				<ClayButton onClick={onApply}>
 					{i18n.translate('apply')}
@@ -269,12 +242,10 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 				>
 					{i18n.translate('clear')}
 				</ClayButton>
-			</div>
+			</ClayDropDown.Section>
 		</div>
 	);
 };
-
-const MENU_POPOVER_HEIGHT = 580;
 
 const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	applyFilters = true,
@@ -282,55 +253,58 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	filterSchema,
 	isLoading = false,
 }) => {
+	const buttonRef = useRef<HTMLButtonElement | null>(null);
+
 	const [visible, setVisible] = useState(false);
-	const ref = useRef<HTMLButtonElement>(null);
 
-	const [position, setPosition] = useState<number>(MENU_POPOVER_HEIGHT);
+	const handleExpand = (
+		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		buttonRef.current = event.target as HTMLButtonElement;
 
-	const popoverAlignPosition =
-		position < MENU_POPOVER_HEIGHT ? 'top-right' : 'bottom-right';
+		setVisible(!visible);
+	};
 
 	return (
-		<ClayPopover
-			alignPosition={popoverAlignPosition}
-			className={classNames('popover-management-toolbar', {
-				'popover-management-toolbar-small':
-					filterSchema?.fields?.length === 1,
-			})}
-			closeOnClickOutside
-			disableScroll
-			onShowChange={setVisible}
-			show={visible && position > 0}
-			trigger={
-				<ClayButton
-					className="management-toolbar-buttons nav-link"
-					displayType="unstyled"
-					ref={ref}
-				>
-					<span className="navbar-breakpoint-down-d-none">
-						<ClayIcon
-							className="inline-item inline-item-after inline-item-before"
-							symbol="filter"
-						/>
-					</span>
+		<>
+			<ClayButton
+				className="management-toolbar-buttons nav-link"
+				displayType="unstyled"
+				onClick={handleExpand}
+			>
+				<span className="navbar-breakpoint-down-d-none">
+					<ClayIcon
+						className="inline-item inline-item-after inline-item-before"
+						symbol="filter"
+					/>
+				</span>
 
-					<span className="navbar-breakpoint-d-none">
-						<ClayIcon symbol="filter" />
-					</span>
-				</ClayButton>
-			}
-		>
-			<FilterBody
-				applyFilters={applyFilters}
-				buttonRef={ref}
-				fieldOptions={fieldOptions}
-				filterSchema={filterSchema}
-				isLoading={isLoading}
-				setPosition={setPosition}
-				setVisible={setVisible}
-				visible={visible}
-			/>
-		</ClayPopover>
+				<span className="navbar-breakpoint-d-none">
+					<ClayIcon symbol="filter" />
+				</span>
+			</ClayButton>
+
+			<ClayDropDown.Menu
+				active={visible}
+				alignElementRef={buttonRef}
+				alignmentPosition={3}
+				className={classNames('dropdown-management-toolbar', {
+					'dropdown-management-toolbar-small':
+						filterSchema?.fields?.length === 1,
+				})}
+				closeOnClickOutside
+				onActiveChange={() => setVisible(!visible)}
+			>
+				<FilterBody
+					applyFilters={applyFilters}
+					fieldOptions={fieldOptions}
+					filterSchema={filterSchema}
+					isLoading={isLoading}
+					setVisible={setVisible}
+					visible={visible}
+				/>
+			</ClayDropDown.Menu>
+		</>
 	);
 };
 

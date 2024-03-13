@@ -245,9 +245,13 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
+		String login = ParamUtil.getString(actionRequest, "login");
 
-		String redirect = null;
+		if (Validator.isNotNull(login)) {
+			SessionErrors.add(actionRequest, "login", login);
+		}
+
+		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
 
 		Layout signInUtilityPage =
 			LayoutUtilityPageEntryLayoutProviderUtil.
@@ -256,59 +260,64 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
 		if (signInUtilityPage != null) {
-			redirect = Portal.PATH_MAIN + "/portal/sign_in";
+			String redirect = Portal.PATH_MAIN + "/portal/sign_in";
 
 			redirect = HttpComponentsUtil.setParameter(
 				redirect, "p_l_id", layout.getPlid());
-		}
 
-		if (Validator.isNull(redirect)) {
-			LiferayPortletRequest liferayPortletRequest =
-				_portal.getLiferayPortletRequest(actionRequest);
+			String loginRedirect = ParamUtil.getString(
+				actionRequest, "redirect");
 
-			String portletName = liferayPortletRequest.getPortletName();
+			if (Validator.isNotNull(loginRedirect)) {
+				String loginPortletNamespace = _portal.getPortletNamespace(
+					PropsValues.AUTH_LOGIN_PORTLET_NAME);
 
-			PortletURL portletURL = PortletURLBuilder.create(
-				PortletURLFactoryUtil.create(
-					actionRequest, liferayPortletRequest.getPortlet(), layout,
-					PortletRequest.RENDER_PHASE)
-			).setParameter(
-				"saveLastPath", false
-			).buildPortletURL();
-
-			if (portletName.equals(LoginPortletKeys.LOGIN)) {
-				portletURL.setWindowState(WindowState.MAXIMIZED);
-			}
-			else {
-				portletURL.setWindowState(actionRequest.getWindowState());
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, "p_p_id", PropsValues.AUTH_LOGIN_PORTLET_NAME);
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, "p_p_lifecycle", "0");
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, loginPortletNamespace + "redirect",
+					loginRedirect);
 			}
 
-			redirect = portletURL.toString();
+			actionResponse.sendRedirect(redirect);
+
+			return;
 		}
 
-		String login = ParamUtil.getString(actionRequest, "login");
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(actionRequest);
 
-		if (Validator.isNotNull(login)) {
-			SessionErrors.add(actionRequest, "login", login);
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest, liferayPortletRequest.getPortlet(), layout,
+				PortletRequest.RENDER_PHASE)
+		).setRedirect(
+			() -> {
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				if (Validator.isNotNull(redirect)) {
+					return redirect;
+				}
+
+				return null;
+			}
+		).setParameter(
+			"saveLastPath", false
+		).buildPortletURL();
+
+		String portletName = liferayPortletRequest.getPortletName();
+
+		if (portletName.equals(LoginPortletKeys.LOGIN)) {
+			portletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+		else {
+			portletURL.setWindowState(actionRequest.getWindowState());
 		}
 
-		String loginRedirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(loginRedirect)) {
-			String loginPortletNamespace = _portal.getPortletNamespace(
-				PropsValues.AUTH_LOGIN_PORTLET_NAME);
-
-			String loginRedirectParameter = loginPortletNamespace + "redirect";
-
-			redirect = HttpComponentsUtil.setParameter(
-				redirect, "p_p_id", PropsValues.AUTH_LOGIN_PORTLET_NAME);
-			redirect = HttpComponentsUtil.setParameter(
-				redirect, "p_p_lifecycle", "0");
-			redirect = HttpComponentsUtil.setParameter(
-				redirect, loginRedirectParameter, loginRedirect);
-		}
-
-		actionResponse.sendRedirect(redirect);
+		actionResponse.sendRedirect(portletURL.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

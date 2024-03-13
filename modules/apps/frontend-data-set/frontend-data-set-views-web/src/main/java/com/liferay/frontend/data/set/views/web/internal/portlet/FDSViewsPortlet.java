@@ -689,6 +689,32 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsViewObjectDefinition.getObjectDefinitionId(),
 			labelObjectField.getObjectFieldId());
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
+			ObjectField defaultViewObjectField =
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					_language.get(locale, "default-view"), "defaultView",
+					false);
+
+			_objectFieldLocalService.addCustomObjectField(
+				defaultViewObjectField.getExternalReferenceCode(), userId,
+				defaultViewObjectField.getListTypeDefinitionId(),
+				fdsViewObjectDefinition.getObjectDefinitionId(),
+				defaultViewObjectField.getBusinessType(),
+				defaultViewObjectField.getDBType(),
+				defaultViewObjectField.isIndexed(),
+				defaultViewObjectField.isIndexedAsKeyword(),
+				defaultViewObjectField.getIndexedLanguageId(),
+				defaultViewObjectField.getLabelMap(), false,
+				defaultViewObjectField.getName(),
+				defaultViewObjectField.getReadOnly(),
+				defaultViewObjectField.getReadOnlyConditionExpression(),
+				defaultViewObjectField.isRequired(),
+				defaultViewObjectField.isState(),
+				defaultViewObjectField.getObjectFieldSettings());
+		}
+
 		_objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId, fdsViewObjectDefinition.getObjectDefinitionId());
 

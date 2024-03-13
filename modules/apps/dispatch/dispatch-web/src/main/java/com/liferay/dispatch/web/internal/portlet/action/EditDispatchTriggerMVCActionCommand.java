@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -122,8 +121,8 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 			deleteDispatchTriggerIds = new long[] {dispatchTriggerId};
 		}
 		else {
-			deleteDispatchTriggerIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "rowIds"), 0L);
+			deleteDispatchTriggerIds = ParamUtil.getLongValues(
+				actionRequest, "rowIds");
 		}
 
 		for (long deleteDispatchTriggerId : deleteDispatchTriggerIds) {

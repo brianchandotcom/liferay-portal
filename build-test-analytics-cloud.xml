@@ -177,7 +177,11 @@
 									return;
 								}
 
-								sb.append("time timeout 600 rsync -qs ");
+								long analyticsCloudRsyncTimeout = Long.valueOf(project.getProperty("analytics.cloud.rsync.timeout"));
+
+								sb.append("time timeout ");
+								sb.append(analyticsCloudRsyncTimeout / 1000)
+								sb.append(" rsync -qs ");
 								sb.append(distNode);
 								sb.append(":");
 								sb.append(distPath);
@@ -190,7 +194,7 @@
 								sb.append(".tar ");
 
 								try {
-									Process process = JenkinsResultsParserUtil.executeBashCommands(false, new File("."), 10 * 60 * 1000, new String[] {sb.toString()});
+									Process process = JenkinsResultsParserUtil.executeBashCommands(false, new File("."), analyticsCloudRsyncTimeout, new String[] {sb.toString()});
 
 									if (process.exitValue() != 0) {
 										continue;

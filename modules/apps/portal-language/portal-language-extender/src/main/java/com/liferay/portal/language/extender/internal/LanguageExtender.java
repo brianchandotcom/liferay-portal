@@ -91,6 +91,7 @@ public class LanguageExtender
 					_serviceListener,
 					"(&(!(javax.portlet.name=*))(language.id=*)(objectClass=" +
 						ResourceBundle.class.getName() + "))");
+
 				return null;
 			});
 	}

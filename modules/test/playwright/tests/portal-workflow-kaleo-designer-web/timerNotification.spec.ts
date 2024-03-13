@@ -1,0 +1,118 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {loginTest} from '../../fixtures/loginTest';
+import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
+import {getRandomInt} from '../../utils/getRandomInt';
+
+export const test = mergeTests(apiHelpersTest, loginTest(), workflowPagesTest);
+
+const timerNotifications = [
+	{
+		notificationDescription: 'notificationDescription0' + getRandomInt(),
+		notificationName: 'notificationName0' + getRandomInt(),
+		notificationTypeEmail: true,
+		notificationTypeUser: true,
+		recipientType: 'role',
+		recipientTypeData: {
+			roleName: 'Account Manager',
+		},
+		template: 'template0' + getRandomInt(),
+		templateLanguage: 'freemarker',
+	},
+	{
+		notificationDescription: 'notificationDescription1' + getRandomInt(),
+		notificationName: 'notificationName1' + getRandomInt(),
+		notificationTypeEmail: true,
+		notificationTypeUser: true,
+		recipientType: 'scriptedRecipient',
+		recipientTypeData: {
+			script: 'script' + getRandomInt(),
+			scriptLanguage: 'groovy',
+		},
+		template: 'template1' + getRandomInt(),
+		templateLanguage: 'text',
+	},
+] as Notification[];
+
+test('LPD-16281 can create timer notifications', async ({
+	apiHelpers,
+	diagramViewPage,
+	nodePropertiesSidebarPage,
+	page,
+	processBuilderPage,
+	sourceViewPage,
+	timerPage,
+}) => {
+	const singleApproverWorkflowDefinition =
+		await apiHelpers.headlessAdminWorkflow.getWorkflowDefinitionByName(
+			'Single Approver'
+		);
+
+	const workflowDefinitionName = 'Copy of Single Approver' + getRandomInt();
+
+	const workflowDefinition =
+		await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
+			workflowDefinitionName,
+			singleApproverWorkflowDefinition
+		);
+
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickReviewNodeLink();
+
+	await nodePropertiesSidebarPage.createTimerNotification(timerNotifications);
+
+	await diagramViewPage.clickSourceViewButton();
+
+	await page.waitForTimeout(2500);
+
+	await page
+		.getByText('SourceWrite your definition or import a file.')
+		.click();
+
+	await sourceViewPage.clickDiagramViewButton();
+
+	await diagramViewPage.clickReviewNodeLink();
+
+	const timerOption = processBuilderPage.page.getByRole('link', {
+		name: 'Duration: 3 week',
+	});
+
+	await expect(timerOption).toBeVisible();
+
+	await timerOption.click();
+
+	await timerPage.assertActionTimerNotifications(timerNotifications);
+
+	await diagramViewPage.saveWorkflowDefinition();
+
+	await diagramViewPage.goBack();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickReviewNodeLink();
+
+	await expect(timerOption).toBeVisible();
+
+	await timerOption.click();
+
+	await timerPage.assertActionTimerNotifications(timerNotifications);
+
+	// clean up
+
+	await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(
+		workflowDefinition.id
+	);
+});

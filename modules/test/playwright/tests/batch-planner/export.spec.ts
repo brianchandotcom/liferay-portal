@@ -9,7 +9,6 @@ import * as fs from 'fs';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {getTempFile} from '../../utils/temp';
 import {unzipFile} from '../../utils/zip';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 
@@ -69,13 +68,11 @@ test('can download jsont format file as json', async ({
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	await dataMigrationCenterPage.exportFile(
+	const exportPath = await dataMigrationCenterPage.exportFile(
 		'JSONT',
 		'C_Stock (v1_0 - Liferay Object REST)',
 		['name']
 	);
-
-	const exportPath = getTempFile('Export.zip');
 
 	const unzipedFile = JSON.parse(await unzipFile(exportPath));
 
@@ -102,13 +99,11 @@ test('verify users can exclude fields from being exported in JSON format', async
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	await dataMigrationCenterPage.exportFile(
+	const exportPath = await dataMigrationCenterPage.exportFile(
 		'JSON',
 		'C_Stock (v1_0 - Liferay Object REST)',
 		['name']
 	);
-
-	const exportPath = getTempFile('Export.zip');
 
 	expect(
 		require('./dependencies/json_objectEntry_export_excluded.json')
@@ -274,7 +269,7 @@ test('export custom object with all field types mapped', async ({
 		'c/stocks'
 	);
 
-	await dataMigrationCenterPage.exportFile(
+	const exportPath = await dataMigrationCenterPage.exportFile(
 		'JSON',
 		'C_Stock (v1_0 - Liferay Object REST)',
 		[
@@ -287,8 +282,6 @@ test('export custom object with all field types mapped', async ({
 			'name',
 		]
 	);
-
-	const exportPath = getTempFile('Export.zip');
 
 	const unzipedFile = JSON.parse(await unzipFile(exportPath));
 
@@ -327,13 +320,11 @@ test('verify users can exclude fields from being exported in JSONL format', asyn
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	await dataMigrationCenterPage.exportFile(
+	const exportPath = await dataMigrationCenterPage.exportFile(
 		'JSONL',
 		'C_Stock (v1_0 - Liferay Object REST)',
 		['name']
 	);
-
-	const exportPath = getTempFile('Export.zip');
 
 	expect(require('./dependencies/jsonl_objectEntry_import.json')).toEqual(
 		JSON.parse(await unzipFile(exportPath))

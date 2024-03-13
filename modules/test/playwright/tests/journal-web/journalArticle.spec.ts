@@ -89,8 +89,6 @@ translationTest(
 		await journalEditArticleTranslationsPage.assertErrorInEditBasicArticleTranslations(
 			editBasicArticleTranslationUrl
 		);
-
-		await journalPage.deleteJournalArticle(title);
 	}
 );
 
@@ -140,9 +138,6 @@ bulkTest(
 			title2,
 			PERMISSIONS_LOCATORS
 		);
-
-		await journalPage.deleteJournalArticle(title1);
-		await journalPage.deleteJournalArticle(title2);
 	}
 );
 

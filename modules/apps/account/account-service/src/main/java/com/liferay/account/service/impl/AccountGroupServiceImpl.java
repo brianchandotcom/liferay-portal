@@ -96,7 +96,7 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 			accountGroupId);
 
 		_accountGroupModelResourcePermission.check(
-			getPermissionChecker(), accountGroupId, ActionKeys.VIEW);
+			getPermissionChecker(), accountGroup, ActionKeys.VIEW);
 
 		return accountGroup;
 	}

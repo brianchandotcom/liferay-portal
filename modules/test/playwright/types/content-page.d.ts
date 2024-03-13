@@ -16,6 +16,7 @@ type PageElement = {
 		fragment?: {
 			key: string;
 		};
+		layout?: {};
 		widgetInstance?: {
 			widgetName: string;
 		};

@@ -1,0 +1,9 @@
+apiDir: "../testray-rest-api/src/main/java"
+apiPackagePath: "com.liferay.testray.rest"
+application:
+    baseURI: "/testray-rest"
+    className: "TestrayRestApplication"
+    name: "TestrayRest"
+author: "Nilton Vieira"
+compatibilityVersion: 4
+forcePredictableOperationId: true

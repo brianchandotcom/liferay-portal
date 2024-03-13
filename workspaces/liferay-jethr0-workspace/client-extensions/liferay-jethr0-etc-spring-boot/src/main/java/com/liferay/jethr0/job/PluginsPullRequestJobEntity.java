@@ -19,17 +19,8 @@ public class PluginsPullRequestJobEntity extends BasePullRequestJobEntity {
 	@Override
 	public String getJenkinsJobName() {
 		return StringUtil.combine(
-			"test-plugins-acceptance-pullrequest(",
-			getPluginsUpstreamBranchName(), ")");
-	}
-
-	public String getPluginsUpstreamBranchName() {
-		return getParameterValue("pluginsUpstreamBranchName");
-	}
-
-	public void setPluginsUpstreamBranchName(String pluginsUpstreamBranchName) {
-		setParameterValue(
-			"pluginsUpstreamBranchName", pluginsUpstreamBranchName);
+			"test-plugins-acceptance-pullrequest(", getUpstreamBranchName(),
+			")");
 	}
 
 	protected PluginsPullRequestJobEntity(JSONObject jsonObject) {

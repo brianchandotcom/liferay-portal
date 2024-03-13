@@ -74,47 +74,13 @@ test.describe('Data Set Settings', () => {
 		});
 
 		test('When there is only one visualization mode defined, that will be the default one.', async ({
+			dataSetManagerApiHelpers,
 			settingsPage,
-			visualizationModesPage,
 		}) => {
-			await test.step('Navigate to cards visualization mode', async () => {
-				await visualizationModesPage.goto({
-					dataSetLabel: DEFAULT_LABEL.DATA_SET,
-					viewLabel: DEFAULT_LABEL.VIEW,
-				});
-
-				await visualizationModesPage.selectTab('Cards');
-
-				await visualizationModesPage.page
-					.getByText('Cards Element', {exact: true})
-					.isVisible();
-			});
-
-			await test.step('Assign a field to title section', async () => {
-				const fieldName = 'name';
-				const sectionLabel = 'Title';
-
-				const container =
-					visualizationModesPage.cardsVisualizationModeContainer;
-
-				await visualizationModesPage.openAssignFieldModal({
-					container,
-					sectionLabel,
-				});
-
-				await visualizationModesPage.fieldSelectModalContainer
-					.getByLabel(fieldName)
-					.click();
-
-				await visualizationModesPage.saveFieldSelection();
-
-				const assignedFieldLocator =
-					await visualizationModesPage.getAssignedFieldLocator({
-						container,
-						sectionLabel,
-					});
-
-				expect(assignedFieldLocator).toHaveText(fieldName);
+			await test.step('Assign a field to a Card title section', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewCardsSection(
+					{}
+				);
 			});
 
 			await test.step('Navigate to Settings section', async () => {
@@ -134,87 +100,14 @@ test.describe('Data Set Settings', () => {
 		});
 
 		test('When there are more than one visualization mode defined, the user could select the default one.', async ({
+			dataSetManagerApiHelpers,
 			settingsPage,
-			visualizationModesPage,
 		}) => {
-			await test.step('Navigate to cards visualization mode', async () => {
-				await visualizationModesPage.goto({
-					dataSetLabel: DEFAULT_LABEL.DATA_SET,
-					viewLabel: DEFAULT_LABEL.VIEW,
-				});
-
-				await visualizationModesPage.selectTab('Cards');
-
-				await visualizationModesPage.page
-					.getByText('Cards Element', {exact: true})
-					.isVisible();
-			});
-
-			await test.step('Assign a field to title section', async () => {
-				const fieldName = 'name';
-				const sectionLabel = 'Title';
-
-				const container =
-					visualizationModesPage.cardsVisualizationModeContainer;
-
-				await visualizationModesPage.openAssignFieldModal({
-					container,
-					sectionLabel,
-				});
-
-				await visualizationModesPage.fieldSelectModalContainer
-					.getByLabel(fieldName)
-					.click();
-
-				await visualizationModesPage.saveFieldSelection();
-
-				const assignedFieldLocator =
-					await visualizationModesPage.getAssignedFieldLocator({
-						container,
-						sectionLabel,
-					});
-
-				expect(assignedFieldLocator).toHaveText(fieldName);
-			});
-
-			await test.step('Navigate to list visualization mode', async () => {
-				await visualizationModesPage.goto({
-					dataSetLabel: DEFAULT_LABEL.DATA_SET,
-					viewLabel: DEFAULT_LABEL.VIEW,
-				});
-
-				await visualizationModesPage.selectTab('List');
-
-				await visualizationModesPage.page
-					.getByText('List Element', {exact: true})
-					.isVisible();
-			});
-
-			await test.step('Assign a field to title section', async () => {
-				const fieldName = 'name';
-				const sectionLabel = 'Title';
-
-				const container =
-					visualizationModesPage.listVisualizationModeContainer;
-
-				await visualizationModesPage.openAssignFieldModal({
-					container,
-					sectionLabel,
-				});
-
-				await visualizationModesPage.fieldSelectModalContainer
-					.getByLabel(fieldName)
-					.click();
-
-				await visualizationModesPage.saveFieldSelection();
-
-				const assignedFieldLocator =
-					await visualizationModesPage.getAssignedFieldLocator({
-						container,
-						sectionLabel,
-					});
-
-				expect(assignedFieldLocator).toHaveText(fieldName);
+			await test.step('Assign a field to title section for Cards and List', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewCardsSection(
+					{}
+				);
+				await dataSetManagerApiHelpers.createDataSetViewListSection({});
 			});
 
 			await test.step('Navigate to Settings section', async () => {

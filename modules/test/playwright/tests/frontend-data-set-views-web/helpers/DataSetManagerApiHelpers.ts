@@ -66,6 +66,46 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		return this.post(url, data);
 	}
 
+	async createDataSetViewCardsSection({
+		fieldName = 'name',
+		name = 'Title',
+		r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC = 'sampleDataSetERC',
+	}: {
+		fieldName?: string;
+		name?: string;
+		r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC?: string;
+	}) {
+		const url = `${this.baseUrl}data-set-manager/cards-sections`;
+
+		const data = {
+			fieldName,
+			name,
+			r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC,
+		};
+
+		return this.post(url, data);
+	}
+
+	async createDataSetViewListSection({
+		fieldName = 'name',
+		name = 'Title',
+		r_fdsViewFDSListSectionRelationship_c_fdsViewERC = 'sampleDataSetERC',
+	}: {
+		fieldName?: string;
+		name?: string;
+		r_fdsViewFDSListSectionRelationship_c_fdsViewERC?: string;
+	}) {
+		const url = `${this.baseUrl}data-set-manager/list-sections`;
+
+		const data = {
+			fieldName,
+			name,
+			r_fdsViewFDSListSectionRelationship_c_fdsViewERC,
+		};
+
+		return this.post(url, data);
+	}
+
 	async deleteDataSet({erc = DEFAULT_DATA_SET_ERC}: {erc?: string}) {
 		const url = `${this.baseUrl}data-set-manager/entries/by-external-reference-code/${erc}`;
 

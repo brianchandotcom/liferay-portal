@@ -100,21 +100,12 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	}
 
 	private void _copyArchivedBuildData() {
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
 		String[] dateStrings = JenkinsResultsParserUtil.getDateStrings(
 			_REPORT_DURATION_DAYS,
 			LocalDate.parse(_START_DATE_STRING, _dateTimeFormatter));
 
 		File baseDir = new File(
-			buildProperties.getProperty("archive.ci.build.data.archive.dir"));
+			_buildProperties.getProperty("archive.ci.build.data.archive.dir"));
 
 		for (String dateString : dateStrings) {
 			File archiveFile = new File(baseDir, dateString + ".tar.gz");
@@ -139,22 +130,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private void _generateCISystemHistoryReport(String filePath)
 		throws IOException {
 
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			CISystemHistoryReportUtil.generateCISystemHistoryReport(
-				filePath,
-				buildProperties.getProperty(
-					"ci.system.history.report.job.name"),
-				buildProperties.getProperty(
-					"ci.system.history.report.test.suite.name"));
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-
-			throw exception;
-		}
+		CISystemHistoryReportUtil.generateCISystemHistoryReport(
+			filePath,
+			_buildProperties.getProperty("ci.system.history.report.job.name"),
+			_buildProperties.getProperty(
+				"ci.system.history.report.test.suite.name"));
 	}
 
 	private void _generateCISystemStatusReport(String filePath)
@@ -190,19 +170,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			return;
 		}
 
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
 		CISystemStatusReportUtil.writeTestrayDataJavaScriptFile(
 			filePath + "/js/testray-data.js",
-			buildProperties.getProperty("ci.system.status.report.job.name"),
-			buildProperties.getProperty(
+			_buildProperties.getProperty("ci.system.status.report.job.name"),
+			_buildProperties.getProperty(
 				"ci.system.status.report.test.suite.name"));
 	}
 
@@ -332,6 +303,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private static final String _TMP_REPORT_DIR_PATH =
 		_TMP_BASE_DIR_PATH + "reports/";
 
+	private static final Properties _buildProperties;
 	private static final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern("yyyyMMdd");
 	private static final Map<String, String> _reportDirNames =
@@ -351,6 +323,17 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		Report.PULL_REQUEST_HISTORY.toString());
 
 	static {
+		_buildProperties = new Properties() {
+			{
+				try {
+					putAll(JenkinsResultsParserUtil.getBuildProperties());
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+		};
+
 		Instant instant = Instant.now();
 
 		instant = instant.minus(Period.ofDays((int)_REPORT_DURATION_DAYS));

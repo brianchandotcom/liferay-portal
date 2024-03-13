@@ -7,13 +7,6 @@
 	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/sourceSans3/SourceSans3-VariableFont_wght.ttf$]);
 }
 
-.lfr-layout-structure-item-com-liferay-site-navigation-breadcrumb-web-portlet-sitenavigationbreadcrumbportlet {
-	background: #ffffff;
-	border-radius: 10px;
-	height: 40px;
-	padding: 0px 16px;
-}
-
 .lfr-layout-structure-item-com-liferay-portal-search-web-category-facet-portlet-categoryfacetportlet,
 .lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet {
 	border-radius: 10px;

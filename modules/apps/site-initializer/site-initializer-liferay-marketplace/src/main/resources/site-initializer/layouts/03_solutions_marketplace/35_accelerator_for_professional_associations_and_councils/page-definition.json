@@ -3,7 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0"},
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
@@ -14,7 +16,8 @@
 						}
 					],
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"id": "45ee60ae-565e-5290-b691-2e42d08a719f",
 				"pageElements": [
@@ -35,7 +38,9 @@
 								}
 							],
 							"indexed": true,
-							"layout": {"paddingBottom": 6}
+							"layout": {
+								"paddingBottom": 6
+							}
 						},
 						"id": "1366eace-1cbb-9a70-5558-881858778933",
 						"pageElements": [
@@ -46,21 +51,22 @@
 										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
-										"boxShadow": "",
-										"showIconBoxShadow": false,
-										"moveIcon": "-75px 0 0 0",
-										"containerWidth": "container",
-										"backgroundDarkOrLight": "light",
-										"borderRadius": "border-radius-none",
-										"lazyLoadingImage": true,
 										"background": "",
-										"backgroundSize": "cover",
-										"backgroundPosition": "center",
-										"showIcon": false,
+										"backgroundDarkOrLight": "light",
 										"backgroundImageUrl": "",
-										"blockAlignment": ""
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "container",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
@@ -75,7 +81,8 @@
 								"id": "fa0cd9de-e5eb-f221-14c7-ed402390dff3",
 								"pageElements": [
 									{
-										"definition": {},
+										"definition": {
+										},
 										"id": "09cc30ef-cee8-735a-a031-71cef35397de",
 										"pageElements": [
 											{
@@ -84,8 +91,10 @@
 														"key": "spacer",
 														"siteKey": "[$GROUP_KEY$]"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentStyle": {
 														"hidden": true,
 														"paddingBottom": "4",
@@ -104,7 +113,8 @@
 														"paddingTop": "4"
 													},
 													"widgetInstance": {
-														"widgetConfig": {},
+														"widgetConfig": {
+														},
 														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 													}
 												},
@@ -127,7 +137,8 @@
 														},
 														{
 															"id": "portraitMobile",
-															"rowViewportDefinition": {}
+															"rowViewportDefinition": {
+															}
 														},
 														{
 															"id": "tablet",
@@ -150,7 +161,8 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
@@ -188,7 +200,8 @@
 																		},
 																		{
 																			"id": "portraitMobile",
-																			"rowViewportDefinition": {}
+																			"rowViewportDefinition": {
+																			}
 																		},
 																		{
 																			"id": "tablet",
@@ -211,7 +224,8 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
@@ -248,7 +262,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -285,7 +300,8 @@
 																					"id": "landscapeMobile"
 																				},
 																				{
-																					"columnViewportDefinition": {},
+																					"columnViewportDefinition": {
+																					},
 																					"id": "portraitMobile"
 																				},
 																				{
@@ -315,11 +331,13 @@
 																						},
 																						{
 																							"id": "portraitMobile",
-																							"rowViewportDefinition": {}
+																							"rowViewportDefinition": {
+																							}
 																						},
 																						{
 																							"id": "tablet",
-																							"rowViewportDefinition": {}
+																							"rowViewportDefinition": {
+																							}
 																						}
 																					],
 																					"verticalAlignment": "top"
@@ -336,11 +354,13 @@
 																									"id": "landscapeMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "portraitMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "tablet"
 																								}
 																							],
@@ -363,7 +383,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "Accelerator for Professional Associations and Councils"
@@ -416,11 +437,13 @@
 																									"id": "landscapeMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "portraitMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "tablet"
 																								}
 																							],
@@ -447,12 +470,12 @@
 																															"itemReference": {
 																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
 																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/logo_khalibre.png#]"
-
 																															}
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -488,11 +511,13 @@
 																									"id": "landscapeMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "portraitMobile"
 																								},
 																								{
-																									"columnViewportDefinition": {},
+																									"columnViewportDefinition": {
+																									},
 																									"id": "tablet"
 																								}
 																							],
@@ -515,7 +540,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -573,7 +599,8 @@
 																	"id": "landscapeMobile"
 																},
 																{
-																	"columnViewportDefinition": {},
+																	"columnViewportDefinition": {
+																	},
 																	"id": "portraitMobile"
 																},
 																{
@@ -595,12 +622,13 @@
 																	},
 																	"fragmentConfig": {
 																		"alignItems": "align-items-start",
-																		"flexWrap": "",
 																		"flexDirection": "",
+																		"flexWrap": "",
 																		"items": 1,
 																		"justifyContent": "justify-content-center"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
@@ -626,7 +654,8 @@
 																"id": "4a48d1dc-df93-666d-a951-bd824820a03c",
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"id": "62eb1c93-44a2-d1be-b7fc-b459344cb031",
 																		"pageElements": [
 																			{
@@ -635,15 +664,16 @@
 																						"key": "BASIC_COMPONENT-button"
 																					},
 																					"fragmentConfig": {
+																						"buttonSize": "nm",
 																						"buttonType": "primary",
-																						"type": "link",
-																						"buttonSize": "nm"
+																						"type": "link"
 																					},
 																					"fragmentFields": [
 																						{
 																							"id": "link",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Contact Developer"
@@ -675,12 +705,14 @@
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"id": "9ea2a0f0-8d9c-2639-461d-38937eb75fa6",
 																		"type": "FragmentDropZone"
 																	},
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"id": "951f6ae6-ed54-e365-3583-faee0d245b43",
 																		"type": "FragmentDropZone"
 																	}
@@ -720,14 +752,19 @@
 								}
 							],
 							"indexed": true,
-							"layout": {"paddingBottom": 10, "paddingTop": 10}
+							"layout": {
+								"paddingBottom": 10,
+								"paddingTop": 10
+							}
 						},
 						"id": "736a6f24-0db9-9796-a0da-46639dabe544",
 						"pageElements": [
 							{
 								"definition": {
 									"indexed": true,
-									"layout": {"widthType": "Fixed"}
+									"layout": {
+										"widthType": "Fixed"
+									}
 								},
 								"id": "6ceb1af0-ad61-42ca-4965-c8667b827b31",
 								"pageElements": [
@@ -763,7 +800,8 @@
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -780,11 +818,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -807,7 +847,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Accelerator for Professional Associations and Councils"
@@ -857,7 +898,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Engage your professional associations and councils with a beautiful solution to advertise services, communicate accreditation and grow member engagement."
@@ -892,7 +934,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "The unique solution provides a powerful and valuable approach for your service providers and local chapters to have their own portal&nbsp;and publicly branded websites whilst leveraging the common&nbsp;needs for community management, training delivery and&nbsp;collaboration to better work together."
@@ -924,11 +967,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -943,17 +988,18 @@
 																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
-																"numberOfImages": "4",
+																"colorScheme": "dark",
 																"imageAspectRatio": "aspect-ratio-4-to-3",
-																"lazyLoadingImage": true,
 																"imageCarouselMaxWidth": "517px",
-																"colorScheme": "dark"
+																"lazyLoadingImage": true,
+																"numberOfImages": "4"
 															},
 															"fragmentFields": [
 																{
 																	"id": "imageCarousel0",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "FileEntry_previewImage",
@@ -968,7 +1014,8 @@
 																{
 																	"id": "imageCarousel1",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "FileEntry_previewImage",
@@ -983,7 +1030,8 @@
 																{
 																	"id": "imageCarousel2",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "FileEntry_previewImage",
@@ -998,7 +1046,8 @@
 																{
 																	"id": "imageCarousel3",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "FileEntry_previewImage",
@@ -1030,9 +1079,12 @@
 					},
 					{
 						"definition": {
-							"fragmentStyle": {"borderWidth": "0"},
+							"fragmentStyle": {
+								"borderWidth": "0"
+							},
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"id": "c50aa108-bb8f-e82c-bf65-6989d4f28bce",
 						"pageElements": [
@@ -1043,21 +1095,22 @@
 										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
-										"boxShadow": "",
-										"showIconBoxShadow": false,
-										"moveIcon": "-75px 0 0 0",
-										"containerWidth": "",
-										"backgroundDarkOrLight": "light",
-										"borderRadius": "border-radius-none",
-										"lazyLoadingImage": true,
 										"background": "",
-										"backgroundSize": "cover",
-										"backgroundPosition": "center",
-										"showIcon": false,
+										"backgroundDarkOrLight": "light",
 										"backgroundImageUrl": "",
-										"blockAlignment": ""
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
@@ -1078,7 +1131,8 @@
 								"id": "3b1b82f9-9903-bb46-5ed6-f9003d3d9bec",
 								"pageElements": [
 									{
-										"definition": {},
+										"definition": {
+										},
 										"id": "7e87c02c-892f-57fb-e29b-58800f4e3f6a",
 										"pageElements": [
 											{
@@ -1135,7 +1189,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Jumpstart your solution</h2>\n"
@@ -1190,7 +1245,8 @@
 																{
 																	"id": "text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Jumpstart the creation of a professional association solution using our solution package, then further tailor according to your needs with our service team’s years of expertise."
@@ -1231,7 +1287,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -1253,7 +1310,8 @@
 														"backgroundColor": "#EBEEF2"
 													},
 													"indexed": true,
-													"layout": {}
+													"layout": {
+													}
 												},
 												"id": "5aee2a3e-70af-8eba-dfb0-dc348c8ba80c",
 												"pageElements": [
@@ -1297,7 +1355,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Empower your partner organizations</h2>\n"
@@ -1352,7 +1411,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "We enable chapters to create and manage their own personalized environment, with their own content, communities, and courses. At the same time, we allow them to safely work together with the broader association to achieve common goals.<br />\n<br />\nWe believe in the power of collaboration - it promotes new ideas, richer content and removes duplication.<br />\n<br />\nAll association chapters benefit when they are working together!"
@@ -1382,7 +1442,8 @@
 														"backgroundColor": "#F7F8F9"
 													},
 													"indexed": true,
-													"layout": {}
+													"layout": {
+													}
 												},
 												"id": "3eecdf92-b61f-7190-60d3-601d83dd2f13",
 												"pageElements": [
@@ -1440,7 +1501,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Position your association and councils at the forefront of customer experience"
@@ -1486,7 +1548,8 @@
 																		"borderWidth": "0"
 																	},
 																	"indexed": true,
-																	"layout": {}
+																	"layout": {
+																	}
 																},
 																"id": "27001b53-d4cf-cc09-3768-ef1befd636ea",
 																"pageElements": [
@@ -1511,11 +1574,13 @@
 																				},
 																				{
 																					"id": "portraitMobile",
-																					"rowViewportDefinition": {}
+																					"rowViewportDefinition": {
+																					}
 																				},
 																				{
 																					"id": "tablet",
-																					"rowViewportDefinition": {}
+																					"rowViewportDefinition": {
+																					}
 																				}
 																			],
 																			"verticalAlignment": "top"
@@ -1532,11 +1597,13 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "tablet"
 																						}
 																					],
@@ -1598,7 +1665,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -1626,7 +1694,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<h3>Branding&nbsp;</h3>\n"
@@ -1658,7 +1727,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<div style=\"text-align:center\">\n<p>Enable each chapter to control their branding with their own domain and embed different features in their solution.</p>\n</div>\n"
@@ -1691,11 +1761,13 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "tablet"
 																						}
 																					],
@@ -1743,7 +1815,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -1771,7 +1844,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<h3>Power</h3>\n"
@@ -1803,7 +1877,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<div style=\"text-align:center\">Access core technology often out of bounds for associations such as a full Identity Provider solution, SSO, Mail Delivery, Chat, training platform etc.</div>\n"
@@ -1849,11 +1924,13 @@
 																				},
 																				{
 																					"id": "portraitMobile",
-																					"rowViewportDefinition": {}
+																					"rowViewportDefinition": {
+																					}
 																				},
 																				{
 																					"id": "tablet",
-																					"rowViewportDefinition": {}
+																					"rowViewportDefinition": {
+																					}
 																				}
 																			],
 																			"verticalAlignment": "top"
@@ -1870,11 +1947,13 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "tablet"
 																						}
 																					],
@@ -1936,7 +2015,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -1964,7 +2044,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<h3>Accreditation&nbsp;</h3>\n"
@@ -1996,7 +2077,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<div style=\"text-align:center\">Enable your association and chapters to offer training and accreditation services to their members.</div>\n"
@@ -2029,11 +2111,13 @@
 																							"id": "landscapeMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "portraitMobile"
 																						},
 																						{
-																							"columnViewportDefinition": {},
+																							"columnViewportDefinition": {
+																							},
 																							"id": "tablet"
 																						}
 																					],
@@ -2081,7 +2165,8 @@
 																														}
 																													}
 																												},
-																												"fragmentLink": {}
+																												"fragmentLink": {
+																												}
 																											}
 																										}
 																									],
@@ -2109,7 +2194,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<h3>Community Management and Subscriptions</h3>\n"
@@ -2141,7 +2227,8 @@
 																										{
 																											"id": "text",
 																											"value": {
-																												"fragmentLink": {},
+																												"fragmentLink": {
+																												},
 																												"text": {
 																													"value_i18n": {
 																														"en_US": "<div style=\"text-align:center\">Enable service providers to charge membership subscriptions and sell training and certifications.</div>\n"
@@ -2213,7 +2300,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "<div>A full service platform that:</div>\n"
@@ -2262,7 +2350,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "<ol>\n\t<li>Provides a safe place for community engagement.\n\t<ul>\n\t\t<li>Dashboard aggregating organization and community feeds, notifications,<br />\n\t\tdiscussion boards and chats.</li>\n\t\t<li>Global search for courses, communities, people, and files</li>\n\t\t<li>Secure portal to integrate all your apps</li>\n\t\t<li>Profiles - Full and granular&nbsp;&nbsp;control of your profile visibility for peace of mind and privacy</li>\n\t</ul>\n\t</li>\n\t<li>Equips and empowers your members, partners and communities.\n\t<ul>\n\t\t<li>Fully featured Community based Learning Management Solution</li>\n\t\t<li>Learning Paths, Course catalog, course activities, blended learning and reporting.</li>\n\t\t<li>Shared learning content marketplace</li>\n\t</ul>\n\t</li>\n\t<li>Helps you tell your stories, inspire your partners, and facilitate collaboration\n\t<ul>\n\t\t<li>Posts and Timelines to share your story.</li>\n\t\t<li>&nbsp;Community registration and administration tools to simplify onboarding.</li>\n\t\t<li>Newsletter subscriptions and bulk emailer integration for advertising.</li>\n\t</ul>\n\t</li>\n\t<li>Enables efficient associations and councils\n\t<ul>\n\t\t<li>Organization structure administration tools to define your network and assign chapter &amp; community leaders.</li>\n\t\t<li>Consent management tools to enable compliance to privacy and community rules.</li>\n\t\t<li>Define granular organization security standards, bandwidth, and storage constraints.</li>\n\t\t<li>Opensource identity access management and two factor authentication.</li>\n\t\t<li>White labelling / multi-domain for association chapters</li>\n\t</ul>\n\t</li>\n</ol>\n"
@@ -2294,7 +2383,8 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Company Profile"
@@ -2341,10 +2431,11 @@
 																		{
 																			"id": "text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "<p data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Khalibre was incorporated in 2010 in Singapore. We are trusted provider for organizations with a presence in more than 60 countries around the world.</p>\nWebsites<br />\n<a href=\"https://www.khalibre.com/\" target=\"_blank\">https://www.khalibre.com</a><br />\n<br />\nEmail<br />\n<a href=\"mailto:sales@khalibre.com\">sales@khalibre.com</a><br />\n "
+																						"en_US": "<p data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Khalibre was incorporated in 2010 in Singapore. We are trusted provider for organizations with a presence in more than 60 countries around the world.</p>\nWebsites<br />\n<a href=\"https://www.khalibre.com/\" target=\"_blank\">https://www.khalibre.com</a><br />\n<br />\nEmail<br />\n<a href=\"mailto:sales@khalibre.com\">sales@khalibre.com</a><br />\n "
 																					}
 																				}
 																			}
@@ -2409,7 +2500,10 @@
 								}
 							],
 							"indexed": true,
-							"layout": {"paddingBottom": 10, "paddingTop": 10}
+							"layout": {
+								"paddingBottom": 10,
+								"paddingTop": 10
+							}
 						},
 						"id": "a119e013-14f1-4819-b1ec-863343f2e5e3",
 						"pageElements": [
@@ -2420,21 +2514,22 @@
 										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
-										"boxShadow": "",
-										"showIconBoxShadow": false,
-										"moveIcon": "-75px 0 0 0",
-										"containerWidth": "container",
-										"backgroundDarkOrLight": "light",
-										"borderRadius": "border-radius-none",
-										"lazyLoadingImage": true,
 										"background": "",
-										"backgroundSize": "cover",
-										"backgroundPosition": "center",
-										"showIcon": false,
+										"backgroundDarkOrLight": "light",
 										"backgroundImageUrl": "",
-										"blockAlignment": ""
+										"backgroundPosition": "center",
+										"backgroundSize": "cover",
+										"blockAlignment": "",
+										"borderRadius": "border-radius-none",
+										"boxShadow": "",
+										"containerWidth": "container",
+										"lazyLoadingImage": true,
+										"moveIcon": "-75px 0 0 0",
+										"showIcon": false,
+										"showIconBoxShadow": false
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"backgroundColor": "gray200Color"
 									},
@@ -2443,7 +2538,8 @@
 								"id": "5e63734b-e8d2-50bc-dc44-296528872676",
 								"pageElements": [
 									{
-										"definition": {},
+										"definition": {
+										},
 										"id": "35e133f9-9b19-19a2-eba4-68f18b5bc89d",
 										"pageElements": [
 											{
@@ -2461,7 +2557,8 @@
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Contact Us"
@@ -2515,7 +2612,8 @@
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Accelerator for Professional Associations and Councils"

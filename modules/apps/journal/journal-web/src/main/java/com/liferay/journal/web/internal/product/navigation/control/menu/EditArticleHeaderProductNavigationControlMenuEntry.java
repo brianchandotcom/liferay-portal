@@ -6,14 +6,16 @@
 package com.liferay.journal.web.internal.product.navigation.control.menu;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
-import com.liferay.journal.web.internal.display.context.JournalEditArticleDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
@@ -77,14 +79,20 @@ public class EditArticleHeaderProductNavigationControlMenuEntry
 			(JournalDisplayContext)httpServletRequest.getAttribute(
 				JournalWebConstants.JOURNAL_DISPLAY_CONTEXT);
 
-		JournalEditArticleDisplayContext journalEditArticleDisplayContext =
-			(JournalEditArticleDisplayContext)httpServletRequest.getAttribute(
-				JournalEditArticleDisplayContext.class.getName());
+		if ((journalDisplayContext == null) ||
+			!StringUtil.equals(
+				"/journal/edit_article",
+				ParamUtil.getString(
+					httpServletRequest,
+					portletDisplay.getNamespace() + "mvcRenderCommandName"))) {
 
-		if (((journalDisplayContext == null) &&
-			 (journalEditArticleDisplayContext != null)) ||
-			journalDisplayContext.hasGuestViewPermission(
-				journalDisplayContext.getArticle())) {
+			return false;
+		}
+
+		JournalArticle journalArticle = journalDisplayContext.getArticle();
+
+		if ((journalArticle == null) ||
+			journalDisplayContext.hasGuestViewPermission(journalArticle)) {
 
 			return false;
 		}

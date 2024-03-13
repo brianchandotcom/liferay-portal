@@ -146,6 +146,19 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
+	public String getRootObjectDefinitionExternalReferenceCode() {
+		ObjectDefinition rootObjectDefinition =
+			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+				getRootObjectDefinitionId());
+
+		if (rootObjectDefinition == null) {
+			return null;
+		}
+
+		return rootObjectDefinition.getExternalReferenceCode();
+	}
+
+	@Override
 	public String getShortName() {
 		return getShortName(getName());
 	}

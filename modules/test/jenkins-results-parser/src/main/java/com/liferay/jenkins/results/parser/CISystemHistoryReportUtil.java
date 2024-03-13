@@ -334,7 +334,7 @@ public class CISystemHistoryReportUtil {
 		"ci.system.history.title\\[(?<buildType>[^\\]]+)\\]" +
 			"\\[(?<durationReportType>[^\\]]+)\\]");
 	private static final ExecutorService _executorService =
-		JenkinsResultsParserUtil.getNewThreadPoolExecutor(50, true);
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(20, true);
 
 	static {
 		_buildProperties = new Properties() {

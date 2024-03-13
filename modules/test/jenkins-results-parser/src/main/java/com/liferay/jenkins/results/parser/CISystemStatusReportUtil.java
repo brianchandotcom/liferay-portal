@@ -545,7 +545,7 @@ public class CISystemStatusReportUtil {
 	private static final Properties _buildProperties;
 	private static final List<String> _dateStrings = new ArrayList<>();
 	private static final ExecutorService _executorService =
-		JenkinsResultsParserUtil.getNewThreadPoolExecutor(25, true);
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(20, true);
 	private static final HashMap<LocalDate, List<Result>> _results;
 
 	private static class Result {

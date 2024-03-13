@@ -140,7 +140,7 @@ public class QueueListener {
 			channel.basicAck(deliveryTag, false);
 		}
 		catch (Exception exception1) {
-			_log.error(exception1);
+			_log.error(exception1.getMessage(), exception1);
 
 			try {
 				channel.basicReject(deliveryTag, false);

@@ -1,0 +1,2563 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {"borderWidth": "0"},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0"
+							},
+							"id": "tablet"
+						}
+					],
+					"indexed": true,
+					"layout": {}
+				},
+				"id": "45ee60ae-565e-5290-b691-2e42d08a719f",
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#F4F6F9",
+								"borderWidth": "0",
+								"paddingBottom": "6"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "landscapeMobile"
+								}
+							],
+							"indexed": true,
+							"layout": {"paddingBottom": 6}
+						},
+						"id": "1366eace-1cbb-9a70-5558-881858778933",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "content-container",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"boxShadow": "",
+										"showIconBoxShadow": false,
+										"moveIcon": "-75px 0 0 0",
+										"containerWidth": "container",
+										"backgroundDarkOrLight": "light",
+										"borderRadius": "border-radius-none",
+										"lazyLoadingImage": true,
+										"background": "",
+										"backgroundSize": "cover",
+										"backgroundPosition": "center",
+										"showIcon": false,
+										"backgroundImageUrl": "",
+										"blockAlignment": ""
+									},
+									"fragmentFields": [],
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "5",
+												"paddingRight": "5"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true
+								},
+								"id": "fa0cd9de-e5eb-f221-14c7-ed402390dff3",
+								"pageElements": [
+									{
+										"definition": {},
+										"id": "09cc30ef-cee8-735a-a031-71cef35397de",
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "spacer",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [],
+													"fragmentStyle": {
+														"hidden": true,
+														"paddingBottom": "4",
+														"paddingTop": "4"
+													},
+													"indexed": true
+												},
+												"id": "92068741-c971-d630-3b54-fb78f4538bee",
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginBottom": "6",
+														"paddingBottom": "4",
+														"paddingTop": "4"
+													},
+													"widgetInstance": {
+														"widgetConfig": {},
+														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+													}
+												},
+												"id": "629c5695-e3e9-6481-78be-3c4459b03419",
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"gutters": true,
+													"indexed": true,
+													"modulesPerRow": 2,
+													"numberOfColumns": 2,
+													"reverseOrder": false,
+													"rowViewports": [
+														{
+															"id": "landscapeMobile",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
+														},
+														{
+															"id": "portraitMobile",
+															"rowViewportDefinition": {}
+														},
+														{
+															"id": "tablet",
+															"rowViewportDefinition": {
+																"modulesPerRow": 1
+															}
+														}
+													],
+													"verticalAlignment": "top"
+												},
+												"id": "20d833e1-a6f7-5ef6-70c1-91090e539152",
+												"pageElements": [
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 9
+														},
+														"id": "d018b332-7e3d-ec0c-f3b0-fffb875755c5",
+														"pageElements": [
+															{
+																"definition": {
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"marginTop": "6"
+																			},
+																			"id": "landscapeMobile"
+																		}
+																	],
+																	"gutters": true,
+																	"indexed": true,
+																	"modulesPerRow": 2,
+																	"numberOfColumns": 2,
+																	"reverseOrder": false,
+																	"rowViewports": [
+																		{
+																			"id": "landscapeMobile",
+																			"rowViewportDefinition": {
+																				"modulesPerRow": 1
+																			}
+																		},
+																		{
+																			"id": "portraitMobile",
+																			"rowViewportDefinition": {}
+																		},
+																		{
+																			"id": "tablet",
+																			"rowViewportDefinition": {
+																				"modulesPerRow": 2
+																			}
+																		}
+																	],
+																	"verticalAlignment": "middle"
+																},
+																"id": "256559fe-47a9-1e02-4b9e-3624e60c958d",
+																"pageElements": [
+																	{
+																		"definition": {
+																			"columnViewports": [
+																				{
+																					"columnViewportDefinition": {
+																						"size": 12
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"columnViewportDefinition": {},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"columnViewportDefinition": {
+																						"size": 3
+																					},
+																					"id": "tablet"
+																				}
+																			],
+																			"size": 2
+																		},
+																		"id": "84873a03-03d2-8e7b-0c05-c7ca37dd8f73",
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-image"
+																					},
+																					"fragmentConfig": {
+																						"imageSize": "w-100"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "image-square",
+																							"value": {
+																								"fragmentImage": {
+																									"url": {
+																										"mapping": {
+																											"fieldKey": "FileEntry_previewImage",
+																											"itemReference": {
+																												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/community.png#]"
+																											}
+																										}
+																									}
+																								},
+																								"fragmentLink": {}
+																							}
+																						}
+																					],
+																					"fragmentStyle": {
+																						"marginLeft": "10",
+																						"marginRight": "10",
+																						"width": "120px"
+																					},
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"marginLeft": "10",
+																								"marginRight": "10",
+																								"width": "110px"
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"id": "e78aafb3-7bd9-d449-9f91-200f0e8cc3da",
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Column"
+																	},
+																	{
+																		"definition": {
+																			"columnViewports": [
+																				{
+																					"columnViewportDefinition": {
+																						"size": 12
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"columnViewportDefinition": {},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"columnViewportDefinition": {
+																						"size": 9
+																					},
+																					"id": "tablet"
+																				}
+																			],
+																			"size": 10
+																		},
+																		"id": "0f799d0d-21f3-1dd7-9ab2-df689513513b",
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"gutters": true,
+																					"indexed": true,
+																					"modulesPerRow": 1,
+																					"numberOfColumns": 3,
+																					"reverseOrder": false,
+																					"rowViewports": [
+																						{
+																							"id": "landscapeMobile",
+																							"rowViewportDefinition": {
+																								"modulesPerRow": 1
+																							}
+																						},
+																						{
+																							"id": "portraitMobile",
+																							"rowViewportDefinition": {}
+																						},
+																						{
+																							"id": "tablet",
+																							"rowViewportDefinition": {}
+																						}
+																					],
+																					"verticalAlignment": "top"
+																				},
+																				"id": "bdf8544d-d2d1-7412-638e-2ef0302701b6",
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"columnViewports": [
+																								{
+																									"columnViewportDefinition": {
+																										"size": 12
+																									},
+																									"id": "landscapeMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {},
+																									"id": "portraitMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {},
+																									"id": "tablet"
+																								}
+																							],
+																							"size": 12
+																						},
+																						"id": "b8d32653-0f14-1d58-5d6a-d9bfdd0ac0a0",
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-heading-f1",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {},
+																												"text": {
+																													"value_i18n": {
+																														"en_US": "Accelerator for Professional Associations and Councils"
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"fontWeight": "fontWeightBolder",
+																										"textColor": "bodyColor"
+																									},
+																									"fragmentViewports": [
+																										{
+																											"fragmentViewportStyle": {
+																												"marginTop": "6",
+																												"textAlign": "center"
+																											},
+																											"id": "landscapeMobile"
+																										},
+																										{
+																											"fragmentViewportStyle": {
+																												"textAlign": "center",
+																												"width": ""
+																											},
+																											"id": "portraitMobile"
+																										},
+																										{
+																											"fragmentViewportStyle": {
+																												"textAlign": "left"
+																											},
+																											"id": "tablet"
+																										}
+																									],
+																									"indexed": true
+																								},
+																								"id": "f2e27dc6-588f-bb44-753f-28c940ea9104",
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Column"
+																					},
+																					{
+																						"definition": {
+																							"columnViewports": [
+																								{
+																									"columnViewportDefinition": {
+																										"size": 12
+																									},
+																									"id": "landscapeMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {},
+																									"id": "portraitMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {},
+																									"id": "tablet"
+																								}
+																							],
+																							"size": 12
+																						},
+																						"id": "c6088c18-d0c1-877b-d2f8-bd30d0611815",
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "BASIC_COMPONENT-image"
+																									},
+																									"fragmentConfig": {
+																										"imageSize": "w-100"
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "image-square",
+																											"value": {
+																												"fragmentImage": {
+																													"url": {
+																														"mapping": {
+																															"fieldKey": "FileEntry_previewImage",
+																															"itemReference": {
+																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/logo_khalibre.png#]"
+
+																															}
+																														}
+																													}
+																												},
+																												"fragmentLink": {}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"marginRight": "4",
+																										"width": "120px"
+																									},
+																									"fragmentViewports": [
+																										{
+																											"fragmentViewportStyle": {
+																												"hidden": true,
+																												"marginLeft": "0",
+																												"marginRight": "0"
+																											},
+																											"id": "tablet"
+																										}
+																									],
+																									"indexed": true
+																								},
+																								"id": "e9defe8a-1fc0-9d29-37d2-bef2bdb7484f",
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Column"
+																					},
+																					{
+																						"definition": {
+																							"columnViewports": [
+																								{
+																									"columnViewportDefinition": {
+																										"size": 12
+																									},
+																									"id": "landscapeMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {},
+																									"id": "portraitMobile"
+																								},
+																								{
+																									"columnViewportDefinition": {},
+																									"id": "tablet"
+																								}
+																							],
+																							"size": 12
+																						},
+																						"id": "d24d38c4-025b-dc46-6f3f-82612ef0b7ac",
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-base",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"marginTop": "2"
+																									},
+																									"fragmentViewports": [
+																										{
+																											"fragmentViewportStyle": {
+																												"hidden": true
+																											},
+																											"id": "landscapeMobile"
+																										},
+																										{
+																											"fragmentViewportStyle": {
+																												"hidden": true
+																											},
+																											"id": "portraitMobile"
+																										},
+																										{
+																											"fragmentViewportStyle": {
+																												"marginLeft": "0",
+																												"marginRight": "0"
+																											},
+																											"id": "tablet"
+																										}
+																									],
+																									"indexed": true
+																								},
+																								"id": "e78d0fda-cc35-a0e7-87d1-117329d2982c",
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Column"
+																					}
+																				],
+																				"type": "Row"
+																			}
+																		],
+																		"type": "Column"
+																	}
+																],
+																"type": "Row"
+															}
+														],
+														"type": "Column"
+													},
+													{
+														"definition": {
+															"columnViewports": [
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"columnViewportDefinition": {},
+																	"id": "portraitMobile"
+																},
+																{
+																	"columnViewportDefinition": {
+																		"size": 12
+																	},
+																	"id": "tablet"
+																}
+															],
+															"size": 3
+														},
+														"id": "073b0258-9738-6409-6d87-686cfb6f4d54",
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "flex",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"alignItems": "align-items-start",
+																		"flexWrap": "",
+																		"flexDirection": "",
+																		"items": 1,
+																		"justifyContent": "justify-content-center"
+																	},
+																	"fragmentFields": [],
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"hidden": true
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"hidden": true
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"hidden": true
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true
+																},
+																"id": "4a48d1dc-df93-666d-a951-bd824820a03c",
+																"pageElements": [
+																	{
+																		"definition": {},
+																		"id": "62eb1c93-44a2-d1be-b7fc-b459344cb031",
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "BASIC_COMPONENT-button"
+																					},
+																					"fragmentConfig": {
+																						"buttonType": "primary",
+																						"type": "link",
+																						"buttonSize": "nm"
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "link",
+																							"value": {
+																								"fragmentLink": {},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "Contact Developer"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"fragmentViewports": [
+																						{
+																							"fragmentViewportStyle": {
+																								"hidden": false
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"fragmentViewportStyle": {
+																								"hidden": true
+																							},
+																							"id": "tablet"
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"id": "c432a1ff-0a33-a025-2791-d47e2874fce5",
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {},
+																		"id": "9ea2a0f0-8d9c-2639-461d-38937eb75fa6",
+																		"type": "FragmentDropZone"
+																	},
+																	{
+																		"definition": {},
+																		"id": "951f6ae6-ed54-e365-3583-faee0d245b43",
+																		"type": "FragmentDropZone"
+																	}
+																],
+																"type": "Fragment"
+															}
+														],
+														"type": "Column"
+													}
+												],
+												"type": "Row"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "#0B5FFF",
+								"borderWidth": "0",
+								"paddingBottom": "8",
+								"paddingTop": "8"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "landscapeMobile"
+								}
+							],
+							"indexed": true,
+							"layout": {"paddingBottom": 10, "paddingTop": 10}
+						},
+						"id": "736a6f24-0db9-9796-a0da-46639dabe544",
+						"pageElements": [
+							{
+								"definition": {
+									"indexed": true,
+									"layout": {"widthType": "Fixed"}
+								},
+								"id": "6ceb1af0-ad61-42ca-4965-c8667b827b31",
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginRight": "4",
+														"paddingLeft": "4"
+													},
+													"id": "tablet"
+												}
+											],
+											"gutters": true,
+											"indexed": true,
+											"modulesPerRow": 2,
+											"numberOfColumns": 2,
+											"reverseOrder": false,
+											"rowViewports": [
+												{
+													"id": "landscapeMobile",
+													"rowViewportDefinition": {
+														"modulesPerRow": 1,
+														"reverseOrder": true
+													}
+												},
+												{
+													"id": "portraitMobile",
+													"rowViewportDefinition": {
+														"reverseOrder": true
+													}
+												},
+												{
+													"id": "tablet",
+													"rowViewportDefinition": {}
+												}
+											],
+											"verticalAlignment": "top"
+										},
+										"id": "fcd63a9c-18b9-82b3-5329-037663200cf7",
+										"pageElements": [
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 7
+												},
+												"id": "a6f57244-02c1-f3e6-ae2e-96b82c6b0c75",
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-heading-f1",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Accelerator for Professional Associations and Councils"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontSize": "fontSizeLg",
+																"fontWeight": "fontWeightBolder",
+																"marginBottom": "6",
+																"textAlign": "justify",
+																"textColor": "whiteColor"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"textAlign": "center"
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"textAlign": "center"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
+															"indexed": true
+														},
+														"id": "66cdf53a-506c-e32c-6dff-67c347fff4b8",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-large",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Engage your professional associations and councils with a beautiful solution to advertise services, communicate accreditation and grow member engagement."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontSize": "18px",
+																"marginBottom": "4",
+																"textAlign": "justify",
+																"textColor": "whiteColor"
+															},
+															"indexed": true
+														},
+														"id": "e0311163-bef8-776c-6af2-68bf97a93c6f",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-large",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "The unique solution provides a powerful and valuable approach for your service providers and local chapters to have their own portal&nbsp;and publicly branded websites whilst leveraging the common&nbsp;needs for community management, training delivery and&nbsp;collaboration to better work together."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontSize": "18px",
+																"textAlign": "justify",
+																"textColor": "whiteColor"
+															},
+															"indexed": true
+														},
+														"id": "c7ad1614-d1c2-05de-fa93-d5b233ad3c00",
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											},
+											{
+												"definition": {
+													"columnViewports": [
+														{
+															"columnViewportDefinition": {
+																"size": 12
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "portraitMobile"
+														},
+														{
+															"columnViewportDefinition": {},
+															"id": "tablet"
+														}
+													],
+													"size": 5
+												},
+												"id": "c0b0a525-fae7-1df9-cc1b-237f6a92f39c",
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "image-carousel",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"numberOfImages": "4",
+																"imageAspectRatio": "aspect-ratio-4-to-3",
+																"lazyLoadingImage": true,
+																"imageCarouselMaxWidth": "517px",
+																"colorScheme": "dark"
+															},
+															"fragmentFields": [
+																{
+																	"id": "imageCarousel0",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/dashboard.png#]"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "imageCarousel1",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/list_communities.png#]"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "imageCarousel2",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/community.png#]"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "imageCarousel3",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "FileEntry_previewImage",
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																					"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/course.png#]"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"id": "eb56c4e1-8638-5888-8c03-af0a1e75a1a8",
+														"type": "Fragment"
+													}
+												],
+												"type": "Column"
+											}
+										],
+										"type": "Row"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {"borderWidth": "0"},
+							"indexed": true,
+							"layout": {}
+						},
+						"id": "c50aa108-bb8f-e82c-bf65-6989d4f28bce",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "content-container",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"boxShadow": "",
+										"showIconBoxShadow": false,
+										"moveIcon": "-75px 0 0 0",
+										"containerWidth": "",
+										"backgroundDarkOrLight": "light",
+										"borderRadius": "border-radius-none",
+										"lazyLoadingImage": true,
+										"background": "",
+										"backgroundSize": "cover",
+										"backgroundPosition": "center",
+										"showIcon": false,
+										"backgroundImageUrl": "",
+										"blockAlignment": ""
+									},
+									"fragmentFields": [],
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "0"
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "0",
+												"paddingRight": "0"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true
+								},
+								"id": "3b1b82f9-9903-bb46-5ed6-f9003d3d9bec",
+								"pageElements": [
+									{
+										"definition": {},
+										"id": "7e87c02c-892f-57fb-e29b-58800f4e3f6a",
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0",
+														"paddingBottom": "8",
+														"paddingTop": "8"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"paddingLeft": "4",
+																"paddingRight": "4"
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"paddingLeft": "4",
+																"paddingRight": "4"
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"paddingLeft": "4",
+																"paddingRight": "4"
+															},
+															"id": "tablet"
+														}
+													],
+													"indexed": true,
+													"layout": {
+														"paddingBottom": 10,
+														"paddingTop": 10,
+														"widthType": "Fixed"
+													}
+												},
+												"id": "4f645643-aa1b-07a3-d1f5-30cd4cb7ced4",
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-heading-f1",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Jumpstart your solution</h2>\n"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBolder",
+																"marginBottom": "6"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"textAlign": "center"
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "0",
+																		"paddingRight": "0",
+																		"textAlign": "center"
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "0"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true
+														},
+														"id": "c5543b96-7bc8-f612-335c-a1937c24bd42",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-paragraph-base",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Jumpstart the creation of a professional association solution using our solution package, then further tailor according to your needs with our service team’s years of expertise."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "6",
+																"textAlign": "justify"
+															},
+															"indexed": true
+														},
+														"id": "ed0dfded-35b0-2816-f812-d2bb855a4beb",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-100"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "FileEntry_previewImage",
+																					"itemReference": {
+																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/case_study_world_coffee_association.png#]"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginLeft": "10",
+																"marginRight": "10"
+															},
+															"indexed": true
+														},
+														"id": "bd25329a-1c9f-84e8-3f45-0fa297e8da02",
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": "#EBEEF2"
+													},
+													"indexed": true,
+													"layout": {}
+												},
+												"id": "5aee2a3e-70af-8eba-dfb0-dc348c8ba80c",
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"paddingBottom": "8",
+																"paddingTop": "8"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "5",
+																		"paddingRight": "5"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true,
+															"layout": {
+																"paddingBottom": 10,
+																"paddingTop": 10,
+																"widthType": "Fixed"
+															}
+														},
+														"id": "cd485d85-be60-1e0a-e436-845797752cc0",
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-heading-f1",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Empower your partner organizations</h2>\n"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBolder",
+																		"marginBottom": "6"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"textAlign": "center"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0",
+																				"paddingRight": "0",
+																				"textAlign": "center"
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0"
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true
+																},
+																"id": "b0eb0ac8-7034-a4f1-4b8b-9e71a12e199e",
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-paragraph-base",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "We enable chapters to create and manage their own personalized environment, with their own content, communities, and courses. At the same time, we allow them to safely work together with the broader association to achieve common goals.<br />\n<br />\nWe believe in the power of collaboration - it promotes new ideas, richer content and removes duplication.<br />\n<br />\nAll association chapters benefit when they are working together!"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontSize": "18px",
+																		"textAlign": "justify"
+																	},
+																	"indexed": true
+																},
+																"id": "e3001860-d3f8-e50c-0274-0af971b56ad2",
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": "#F7F8F9"
+													},
+													"indexed": true,
+													"layout": {}
+												},
+												"id": "3eecdf92-b61f-7190-60d3-601d83dd2f13",
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"paddingBottom": "8",
+																"paddingTop": "8"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "4",
+																		"paddingRight": "4"
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "4",
+																		"paddingRight": "4"
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "4",
+																		"paddingRight": "4"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true,
+															"layout": {
+																"paddingBottom": 10,
+																"paddingTop": 10,
+																"widthType": "Fixed"
+															}
+														},
+														"id": "4f3183b7-e225-739c-017c-7b1621ac6caf",
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-heading-f1",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Position your association and councils at the forefront of customer experience"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBolder",
+																		"marginBottom": "7"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"textAlign": "center"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0",
+																				"paddingRight": "0",
+																				"textAlign": "center"
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0"
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true
+																},
+																"id": "24da99ab-b45c-0fdd-2856-46a4b0f63d6a",
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentStyle": {
+																		"borderWidth": "0"
+																	},
+																	"indexed": true,
+																	"layout": {}
+																},
+																"id": "27001b53-d4cf-cc09-3768-ef1befd636ea",
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"marginBottom": "8",
+																				"marginTop": "8",
+																				"textAlign": "center"
+																			},
+																			"gutters": true,
+																			"indexed": true,
+																			"modulesPerRow": 2,
+																			"numberOfColumns": 2,
+																			"reverseOrder": false,
+																			"rowViewports": [
+																				{
+																					"id": "landscapeMobile",
+																					"rowViewportDefinition": {
+																						"modulesPerRow": 1
+																					}
+																				},
+																				{
+																					"id": "portraitMobile",
+																					"rowViewportDefinition": {}
+																				},
+																				{
+																					"id": "tablet",
+																					"rowViewportDefinition": {}
+																				}
+																			],
+																			"verticalAlignment": "top"
+																		},
+																		"id": "c710f36b-7c93-65ab-ca9a-20570a517762",
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"columnViewports": [
+																						{
+																							"columnViewportDefinition": {
+																								"size": 12
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {},
+																							"id": "tablet"
+																						}
+																					],
+																					"size": 6
+																				},
+																				"id": "2afad533-4b73-e609-5a39-0442fbcc3e72",
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragmentStyle": {
+																								"borderWidth": "0",
+																								"paddingLeft": "7",
+																								"paddingRight": "7"
+																							},
+																							"fragmentViewports": [
+																								{
+																									"fragmentViewportStyle": {
+																										"marginBottom": "7"
+																									},
+																									"id": "landscapeMobile"
+																								},
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingBottom": "6"
+																									},
+																									"id": "portraitMobile"
+																								}
+																							],
+																							"indexed": true,
+																							"layout": {
+																								"align": "Center",
+																								"contentDisplay": "FlexColumn",
+																								"paddingLeft": 8,
+																								"paddingRight": 8
+																							}
+																						},
+																						"id": "572eb944-972c-354d-3e61-2f648477521c",
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "BASIC_COMPONENT-image"
+																									},
+																									"fragmentConfig": {
+																										"imageSize": "w-100"
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "image-square",
+																											"value": {
+																												"fragmentImage": {
+																													"url": {
+																														"mapping": {
+																															"fieldKey": "FileEntry_previewImage",
+																															"itemReference": {
+																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/lr_icon_007.png#]"
+																															}
+																														}
+																													}
+																												},
+																												"fragmentLink": {}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"height": "64px",
+																										"width": "64px"
+																									},
+																									"indexed": true
+																								},
+																								"id": "f65cff7d-109a-6fc9-9d09-b9524c1c437d",
+																								"type": "Fragment"
+																							},
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-base",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {},
+																												"text": {
+																													"value_i18n": {
+																														"en_US": "<h3>Branding&nbsp;</h3>\n"
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"marginTop": "4"
+																									},
+																									"indexed": true
+																								},
+																								"id": "4bb4fadc-274d-3431-64a8-6f4f8f6c1da4",
+																								"type": "Fragment"
+																							},
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-base",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {},
+																												"text": {
+																													"value_i18n": {
+																														"en_US": "<div style=\"text-align:center\">\n<p>Enable each chapter to control their branding with their own domain and embed different features in their solution.</p>\n</div>\n"
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"paddingTop": "2"
+																									},
+																									"indexed": true
+																								},
+																								"id": "d60a55af-e8a8-2eac-35cd-fe2e64cd02b9",
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Section"
+																					}
+																				],
+																				"type": "Column"
+																			},
+																			{
+																				"definition": {
+																					"columnViewports": [
+																						{
+																							"columnViewportDefinition": {
+																								"size": 12
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {},
+																							"id": "tablet"
+																						}
+																					],
+																					"size": 6
+																				},
+																				"id": "1f9ba5c3-89d7-c79c-c322-31babbfc6d3a",
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragmentStyle": {
+																								"borderWidth": "0",
+																								"paddingLeft": "7",
+																								"paddingRight": "7"
+																							},
+																							"indexed": true,
+																							"layout": {
+																								"align": "Center",
+																								"contentDisplay": "FlexColumn",
+																								"paddingLeft": 8,
+																								"paddingRight": 8
+																							}
+																						},
+																						"id": "04b0f6a3-1c78-1e08-ea26-3c91dcd71130",
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "BASIC_COMPONENT-image"
+																									},
+																									"fragmentConfig": {
+																										"imageSize": "w-100"
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "image-square",
+																											"value": {
+																												"fragmentImage": {
+																													"url": {
+																														"mapping": {
+																															"fieldKey": "FileEntry_previewImage",
+																															"itemReference": {
+																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/lr_icon_109.png#]"
+																															}
+																														}
+																													}
+																												},
+																												"fragmentLink": {}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"height": "64px",
+																										"width": "64px"
+																									},
+																									"indexed": true
+																								},
+																								"id": "8b49a81b-9cc3-3e50-3cd2-e2f0d68b6881",
+																								"type": "Fragment"
+																							},
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-base",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {},
+																												"text": {
+																													"value_i18n": {
+																														"en_US": "<h3>Power</h3>\n"
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"marginTop": "4"
+																									},
+																									"indexed": true
+																								},
+																								"id": "7776fa0d-65e1-1ab9-998e-505560b276d6",
+																								"type": "Fragment"
+																							},
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-base",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {},
+																												"text": {
+																													"value_i18n": {
+																														"en_US": "<div style=\"text-align:center\">Access core technology often out of bounds for associations such as a full Identity Provider solution, SSO, Mail Delivery, Chat, training platform etc.</div>\n"
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"paddingTop": "2"
+																									},
+																									"indexed": true
+																								},
+																								"id": "cbb7c45a-4ff5-f199-bde2-f4e0795c4c42",
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Section"
+																					}
+																				],
+																				"type": "Column"
+																			}
+																		],
+																		"type": "Row"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"marginBottom": "6",
+																				"textAlign": "center"
+																			},
+																			"gutters": true,
+																			"indexed": true,
+																			"modulesPerRow": 2,
+																			"numberOfColumns": 2,
+																			"reverseOrder": false,
+																			"rowViewports": [
+																				{
+																					"id": "landscapeMobile",
+																					"rowViewportDefinition": {
+																						"modulesPerRow": 1
+																					}
+																				},
+																				{
+																					"id": "portraitMobile",
+																					"rowViewportDefinition": {}
+																				},
+																				{
+																					"id": "tablet",
+																					"rowViewportDefinition": {}
+																				}
+																			],
+																			"verticalAlignment": "top"
+																		},
+																		"id": "bcfe42e4-6e2b-6623-e485-6ece9cedcb1c",
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"columnViewports": [
+																						{
+																							"columnViewportDefinition": {
+																								"size": 12
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {},
+																							"id": "tablet"
+																						}
+																					],
+																					"size": 6
+																				},
+																				"id": "7c0f7442-0226-7951-2098-28c03f5f79fd",
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragmentStyle": {
+																								"borderWidth": "0",
+																								"paddingLeft": "7",
+																								"paddingRight": "7"
+																							},
+																							"fragmentViewports": [
+																								{
+																									"fragmentViewportStyle": {
+																										"marginBottom": "7"
+																									},
+																									"id": "landscapeMobile"
+																								},
+																								{
+																									"fragmentViewportStyle": {
+																										"paddingBottom": "6"
+																									},
+																									"id": "portraitMobile"
+																								}
+																							],
+																							"indexed": true,
+																							"layout": {
+																								"align": "Center",
+																								"contentDisplay": "FlexColumn",
+																								"paddingLeft": 8,
+																								"paddingRight": 8
+																							}
+																						},
+																						"id": "ee55b5e9-aa33-6723-e403-3599841bf782",
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "BASIC_COMPONENT-image"
+																									},
+																									"fragmentConfig": {
+																										"imageSize": "w-100"
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "image-square",
+																											"value": {
+																												"fragmentImage": {
+																													"url": {
+																														"mapping": {
+																															"fieldKey": "FileEntry_previewImage",
+																															"itemReference": {
+																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/lr_icon_147.png#]"
+																															}
+																														}
+																													}
+																												},
+																												"fragmentLink": {}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"height": "64px",
+																										"width": "64px"
+																									},
+																									"indexed": true
+																								},
+																								"id": "40112f5e-5a6d-7172-9cee-bc2d460ce317",
+																								"type": "Fragment"
+																							},
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-base",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {},
+																												"text": {
+																													"value_i18n": {
+																														"en_US": "<h3>Accreditation&nbsp;</h3>\n"
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"marginTop": "4"
+																									},
+																									"indexed": true
+																								},
+																								"id": "b26ee2e0-62ff-e14c-2f6e-a11870c23979",
+																								"type": "Fragment"
+																							},
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-base",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {},
+																												"text": {
+																													"value_i18n": {
+																														"en_US": "<div style=\"text-align:center\">Enable your association and chapters to offer training and accreditation services to their members.</div>\n"
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"paddingTop": "2"
+																									},
+																									"indexed": true
+																								},
+																								"id": "40ed8bc0-016e-4868-ad1c-a44e7f49be5e",
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Section"
+																					}
+																				],
+																				"type": "Column"
+																			},
+																			{
+																				"definition": {
+																					"columnViewports": [
+																						{
+																							"columnViewportDefinition": {
+																								"size": 12
+																							},
+																							"id": "landscapeMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {},
+																							"id": "portraitMobile"
+																						},
+																						{
+																							"columnViewportDefinition": {},
+																							"id": "tablet"
+																						}
+																					],
+																					"size": 6
+																				},
+																				"id": "bdb5ece0-8abf-e50a-8087-551028099190",
+																				"pageElements": [
+																					{
+																						"definition": {
+																							"fragmentStyle": {
+																								"borderWidth": "0",
+																								"paddingLeft": "7",
+																								"paddingRight": "7"
+																							},
+																							"indexed": true,
+																							"layout": {
+																								"align": "Center",
+																								"contentDisplay": "FlexColumn",
+																								"paddingLeft": 8,
+																								"paddingRight": 8
+																							}
+																						},
+																						"id": "5c6ed0b3-29da-ad79-64aa-9543554a792f",
+																						"pageElements": [
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "BASIC_COMPONENT-image"
+																									},
+																									"fragmentConfig": {
+																										"imageSize": "w-100"
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "image-square",
+																											"value": {
+																												"fragmentImage": {
+																													"url": {
+																														"mapping": {
+																															"fieldKey": "FileEntry_previewImage",
+																															"itemReference": {
+																																"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/solutions-details/accelerator-for-professional-associations-and-councils/lr_icon_003.png#]"
+																															}
+																														}
+																													}
+																												},
+																												"fragmentLink": {}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"height": "64px",
+																										"width": "64px"
+																									},
+																									"indexed": true
+																								},
+																								"id": "8b2698c9-6006-0d4d-a129-813f4047c00d",
+																								"type": "Fragment"
+																							},
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-base",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {},
+																												"text": {
+																													"value_i18n": {
+																														"en_US": "<h3>Community Management and Subscriptions</h3>\n"
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"marginTop": "4"
+																									},
+																									"indexed": true
+																								},
+																								"id": "b8700955-654a-577c-8c62-823adf1771a6",
+																								"type": "Fragment"
+																							},
+																							{
+																								"definition": {
+																									"fragment": {
+																										"key": "text",
+																										"siteKey": "[$GROUP_KEY$]"
+																									},
+																									"fragmentConfig": {
+																										"fontSize": "font-size-paragraph-base",
+																										"smallCaps": false,
+																										"tabletScreenCenter": false
+																									},
+																									"fragmentFields": [
+																										{
+																											"id": "text",
+																											"value": {
+																												"fragmentLink": {},
+																												"text": {
+																													"value_i18n": {
+																														"en_US": "<div style=\"text-align:center\">Enable service providers to charge membership subscriptions and sell training and certifications.</div>\n"
+																													}
+																												}
+																											}
+																										}
+																									],
+																									"fragmentStyle": {
+																										"paddingTop": "2"
+																									},
+																									"indexed": true
+																								},
+																								"id": "fb7f9181-a1c3-fe7e-127a-44ff160bf303",
+																								"type": "Fragment"
+																							}
+																						],
+																						"type": "Section"
+																					}
+																				],
+																				"type": "Column"
+																			}
+																		],
+																		"type": "Row"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"paddingBottom": "8",
+																"paddingTop": "8"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "5",
+																		"paddingRight": "5"
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true,
+															"layout": {
+																"paddingBottom": 10,
+																"paddingTop": 10,
+																"widthType": "Fixed"
+															}
+														},
+														"id": "005f023b-59ca-2b68-1e44-c2864c789ab0",
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-heading-f1",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "<div>A full service platform that:</div>\n"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBolder",
+																		"marginBottom": "6"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"textAlign": "center"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0",
+																				"paddingRight": "0",
+																				"textAlign": "center"
+																			},
+																			"id": "portraitMobile"
+																		}
+																	],
+																	"indexed": true
+																},
+																"id": "9649f7ae-21cb-22b9-ffd3-b9a7e443f744",
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-paragraph-large",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "<ol>\n\t<li>Provides a safe place for community engagement.\n\t<ul>\n\t\t<li>Dashboard aggregating organization and community feeds, notifications,<br />\n\t\tdiscussion boards and chats.</li>\n\t\t<li>Global search for courses, communities, people, and files</li>\n\t\t<li>Secure portal to integrate all your apps</li>\n\t\t<li>Profiles - Full and granular&nbsp;&nbsp;control of your profile visibility for peace of mind and privacy</li>\n\t</ul>\n\t</li>\n\t<li>Equips and empowers your members, partners and communities.\n\t<ul>\n\t\t<li>Fully featured Community based Learning Management Solution</li>\n\t\t<li>Learning Paths, Course catalog, course activities, blended learning and reporting.</li>\n\t\t<li>Shared learning content marketplace</li>\n\t</ul>\n\t</li>\n\t<li>Helps you tell your stories, inspire your partners, and facilitate collaboration\n\t<ul>\n\t\t<li>Posts and Timelines to share your story.</li>\n\t\t<li>&nbsp;Community registration and administration tools to simplify onboarding.</li>\n\t\t<li>Newsletter subscriptions and bulk emailer integration for advertising.</li>\n\t</ul>\n\t</li>\n\t<li>Enables efficient associations and councils\n\t<ul>\n\t\t<li>Organization structure administration tools to define your network and assign chapter &amp; community leaders.</li>\n\t\t<li>Consent management tools to enable compliance to privacy and community rules.</li>\n\t\t<li>Define granular organization security standards, bandwidth, and storage constraints.</li>\n\t\t<li>Opensource identity access management and two factor authentication.</li>\n\t\t<li>White labelling / multi-domain for association chapters</li>\n\t</ul>\n\t</li>\n</ol>\n"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"paddingLeft": "4"
+																	},
+																	"indexed": true
+																},
+																"id": "4b6c87de-812f-5973-0bb7-4a689e431a01",
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-heading-f4",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Company Profile"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBolder"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0",
+																				"paddingRight": "0"
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0"
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true
+																},
+																"id": "1da9b304-eb1f-c790-b26b-ef9d15d8944d",
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "text",
+																		"siteKey": "[$GROUP_KEY$]"
+																	},
+																	"fragmentConfig": {
+																		"fontSize": "font-size-paragraph-large",
+																		"smallCaps": false,
+																		"tabletScreenCenter": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "text",
+																			"value": {
+																				"fragmentLink": {},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "<p data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Khalibre was incorporated in 2010 in Singapore. We are trusted provider for organizations with a presence in more than 60 countries around the world.</p>\nWebsites<br />\n<a href=\"https://www.khalibre.com/\" target=\"_blank\">https://www.khalibre.com</a><br />\n<br />\nEmail<br />\n<a href=\"mailto:sales@khalibre.com\">sales@khalibre.com</a><br />\n "
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginTop": "1",
+																		"paddingTop": "2"
+																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"paddingLeft": "0",
+																				"paddingRight": "0"
+																			},
+																			"id": "portraitMobile"
+																		}
+																	],
+																	"indexed": true
+																},
+																"id": "99f39f33-c7eb-ccfb-dcad-e740d50503d1",
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundColor": "gray200Color",
+								"borderWidth": "0",
+								"paddingBottom": "8",
+								"paddingTop": "8"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"marginRight": "0",
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"id": "tablet"
+								}
+							],
+							"indexed": true,
+							"layout": {"paddingBottom": 10, "paddingTop": 10}
+						},
+						"id": "a119e013-14f1-4819-b1ec-863343f2e5e3",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "content-container",
+										"siteKey": "[$GROUP_KEY$]"
+									},
+									"fragmentConfig": {
+										"boxShadow": "",
+										"showIconBoxShadow": false,
+										"moveIcon": "-75px 0 0 0",
+										"containerWidth": "container",
+										"backgroundDarkOrLight": "light",
+										"borderRadius": "border-radius-none",
+										"lazyLoadingImage": true,
+										"background": "",
+										"backgroundSize": "cover",
+										"backgroundPosition": "center",
+										"showIcon": false,
+										"backgroundImageUrl": "",
+										"blockAlignment": ""
+									},
+									"fragmentFields": [],
+									"fragmentStyle": {
+										"backgroundColor": "gray200Color"
+									},
+									"indexed": true
+								},
+								"id": "5e63734b-e8d2-50bc-dc44-296528872676",
+								"pageElements": [
+									{
+										"definition": {},
+										"id": "35e133f9-9b19-19a2-eba4-68f18b5bc89d",
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "text",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"fontSize": "font-size-heading-f1",
+														"smallCaps": false,
+														"tabletScreenCenter": false
+													},
+													"fragmentFields": [
+														{
+															"id": "text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Contact Us"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "fontWeightBolder",
+														"textColor": "brandColor4"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"textAlign": "center"
+															},
+															"id": "landscapeMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"textAlign": "center"
+															},
+															"id": "portraitMobile"
+														},
+														{
+															"fragmentViewportStyle": {
+																"paddingLeft": "5",
+																"paddingRight": "5"
+															},
+															"id": "tablet"
+														}
+													],
+													"indexed": true
+												},
+												"id": "721c4918-bea8-f325-0311-c51c3547eeae",
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "text",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"fontSize": "font-size-paragraph-base",
+														"smallCaps": false,
+														"tabletScreenCenter": false
+													},
+													"fragmentFields": [
+														{
+															"id": "text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Accelerator for Professional Associations and Councils"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"paddingLeft": "5",
+																"paddingRight": "5",
+																"textAlign": "center"
+															},
+															"id": "portraitMobile"
+														}
+													],
+													"indexed": true
+												},
+												"id": "8d125fff-4117-13c7-395d-352fe36c3f93",
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		}
+	},
+	"version": 1.1
+}

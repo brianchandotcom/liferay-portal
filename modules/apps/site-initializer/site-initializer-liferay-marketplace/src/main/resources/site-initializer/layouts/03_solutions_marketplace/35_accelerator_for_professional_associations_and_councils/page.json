@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/accelerator-for-professional-associations-and-councils",
+	"hidden": true,
+	"name": "Accelerator for Professional Associations and Councils",
+	"name_i18n": {
+		"en_US": "Accelerator for Professional Associations and Councils"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

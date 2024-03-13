@@ -25,8 +25,11 @@ Liferay.on('contact-publisher', () => {
 });
 
 Liferay.on('start-trial', () => {
-	const finalURL = `purchase-product-form?productId=${configuration.productId}`;
-	window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/${finalURL}`;
+	const finalURL = `get-solution?productId=${configuration.productId}`;
+
+	Liferay.Util.navigate(
+		`${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/${finalURL}`
+	);
 });
 
 const getSiteURL = () => {

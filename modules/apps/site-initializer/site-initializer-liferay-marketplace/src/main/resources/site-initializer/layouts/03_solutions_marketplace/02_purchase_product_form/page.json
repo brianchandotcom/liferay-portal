@@ -1,23 +1,20 @@
 {
 	"description": "",
 	"fragmentCompositionDefinitionPath": "page-definition.json",
-	"friendlyURL": "/purchase-product-form",
+	"friendlyURL": "/get-solution",
 	"hidden": true,
-	"name": "Purchase Product Form",
+	"name": "Get Solution",
 	"name_i18n": {
-		"en_US": "Purchase Product Form"
+		"en_US": "Get Solution"
 	},
 	"permissions": [
 		{
-			"actionIds": [
-			],
+			"actionIds": [],
 			"roleName": "Guest",
 			"scope": 4
 		},
 		{
-			"actionIds": [
-				"VIEW"
-			],
+			"actionIds": ["VIEW"],
 			"roleName": "User",
 			"scope": 4
 		}

@@ -53,6 +53,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
@@ -7050,6 +7051,13 @@ public class ObjectEntryResourceTest {
 		String endpoint = _getEndpoint(
 			TestPropsValues.getGroupId(), _objectDefinition1);
 
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			_objectRelationship1.getObjectFieldId2());
+
 		BigDecimal randomBigDecimal = new BigDecimal(
 			RandomTestUtil.randomDouble());
 		Date randomDate1 = RandomTestUtil.nextDate();
@@ -7087,6 +7095,16 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_PRECISION_DECIMAL, randomBigDecimal
 			).put(
 				_OBJECT_FIELD_NAME_TEXT, "a" + randomString2
+			).put(
+				objectField.getName(),
+				() -> {
+					ObjectEntry relatedObjectEntry =
+						ObjectEntryTestUtil.addObjectEntry(
+							_objectDefinition2, _OBJECT_FIELD_NAME_2,
+							_OBJECT_FIELD_VALUE_2);
+
+					return relatedObjectEntry.getObjectEntryId();
+				}
 			).toString(),
 			endpoint, Http.Method.POST);
 
@@ -7121,6 +7139,16 @@ public class ObjectEntryResourceTest {
 				randomBigDecimal.add(BigDecimal.ONE)
 			).put(
 				_OBJECT_FIELD_NAME_TEXT, "b" + randomString2
+			).put(
+				objectField.getName(),
+				() -> {
+					ObjectEntry relatedObjectEntry =
+						ObjectEntryTestUtil.addObjectEntry(
+							_objectDefinition2, _OBJECT_FIELD_NAME_2,
+							_OBJECT_FIELD_VALUE_2);
+
+					return relatedObjectEntry.getObjectEntryId();
+				}
 			).toString(),
 			endpoint, Http.Method.POST);
 
@@ -7153,6 +7181,19 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_PRECISION_DECIMAL);
 			_testSortByCustomObjectField(
 				endpoint, jsonObject1, jsonObject2, _OBJECT_FIELD_NAME_TEXT);
+
+			// Many to one relationship fields
+
+			_testSortByCustomObjectField(
+				endpoint, jsonObject1, jsonObject2, objectField.getName());
+
+			_testSortByFieldName(
+				endpoint, jsonObject1, jsonObject2,
+				StringUtil.replaceLast(objectField.getName(), "Id", "ERC"));
+			_testSortByFieldName(
+				endpoint, jsonObject1, jsonObject2,
+				StringUtil.extractLast(
+					objectField.getName(), StringPool.UNDERLINE));
 		}
 		finally {
 			if (jsonObject1 != null) {
@@ -9776,6 +9817,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	private ObjectRelationship _objectRelationship1;
 	private ObjectRelationship _objectRelationship2;

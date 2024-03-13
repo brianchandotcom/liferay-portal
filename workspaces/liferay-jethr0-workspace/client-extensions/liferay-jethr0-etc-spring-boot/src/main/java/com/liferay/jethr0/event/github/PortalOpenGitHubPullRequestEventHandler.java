@@ -33,7 +33,7 @@ public class PortalOpenGitHubPullRequestEventHandler
 	public String process() throws InvalidJSONException, IOException {
 		if (checkLiferayGitHubUser() ||
 			closeInvalidUpstreamGitHubBranchName() ||
-			skipCISenderBlacklistGitHubUser()) {
+			_skipAutoTestReleaseBranch() || skipCISenderBlacklistGitHubUser()) {
 
 			return null;
 		}
@@ -133,8 +133,28 @@ public class PortalOpenGitHubPullRequestEventHandler
 		return true;
 	}
 
+	private boolean _skipAutoTestReleaseBranch() throws InvalidJSONException {
+		GitHubPullRequest gitHubPullRequest = getGitHubPullRequest();
+
+		Matcher releaseBranchNameMatcher = _releaseBranchNamePattern.matcher(
+			gitHubPullRequest.getHeadBranchName());
+
+		if (!releaseBranchNameMatcher.matches()) {
+			return false;
+		}
+
+		gitHubPullRequest.comment(
+			StringUtil.combine(
+				"To conserve resources, the PR Tester does not automatically ",
+				"run for portal release branches."));
+
+		return true;
+	}
+
 	private static final Pattern _branchSHAPattern = Pattern.compile(
 		"\\+(?<branchSHA>[0-9a-f]{40})");
+	private static final Pattern _releaseBranchNamePattern = Pattern.compile(
+		"release-\\d{4}\\.q\\d");
 
 	private static class GitRepo {
 

@@ -68,6 +68,8 @@ const TestFlowTasks = () => {
 	const {taskId} = useParams();
 	const {updateItemFromList} = useMutate();
 
+	const projectId = String(testrayTask.build?.project?.id);
+
 	const [{myUserAccount}] = useContext(TestrayContext);
 
 	useHeader({
@@ -289,6 +291,9 @@ const TestFlowTasks = () => {
 					forceRefetch={forceRefetch}
 					managementToolbarProps={{
 						applyFilters: true,
+						customFilterFields: {
+							projectId,
+						},
 						filterSchema: 'subtasks',
 						title: i18n.translate('subtasks'),
 					}}
@@ -386,7 +391,8 @@ const TestFlowTasks = () => {
 															0,
 															{},
 															{
-																revalidate: true,
+																revalidate:
+																	true,
 															}
 														);
 													})
@@ -412,9 +418,10 @@ const TestFlowTasks = () => {
 						{items},
 						{dispatch, listViewContext: {selectedRows}, mutate}
 					) => {
-						const selectedSubtasks: TestraySubTask[] = selectedRows.map(
-							(rowId) => items.find(({id}) => rowId === id)
-						);
+						const selectedSubtasks: TestraySubTask[] =
+							selectedRows.map((rowId) =>
+								items.find(({id}) => rowId === id)
+							);
 
 						const alerts = getFloatingBoxAlerts(selectedSubtasks);
 

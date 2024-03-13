@@ -1989,6 +1989,7 @@ rerun your task.
 					<propertyref name="baseline.jar.report.level" />
 					<propertyref name="baseline.jar.report.only.dirty.packages" />
 					<propertyref name="build.binaries.cache.dir" />
+					<propertyref if:set="build.java.override.version" name="build.java.override.version" unless:blank="${build.java.override.version}" />
 					<propertyref name="compile.jsp.include" />
 					<propertyref name="git.working.branch.name" />
 					<propertyref name="jacoco.agent.configuration" />

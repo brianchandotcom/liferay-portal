@@ -245,9 +245,6 @@ public class DBUpgrader {
 		if (isUpgradeDatabaseAutoRunEnabled()) {
 			IndexUpdaterUtil.updateAllIndexes();
 		}
-		else {
-			IndexUpdaterUtil.updatePortalIndexes();
-		}
 	}
 
 	public static void upgradePortal() throws Exception {

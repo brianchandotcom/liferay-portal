@@ -40,6 +40,7 @@ const TestFlow = () => {
 			<ListView
 				managementToolbarProps={{
 					addButton: () => modal.open(),
+					applyFilters: true,
 					filterSchema: 'testflow',
 					title: i18n.translate('tasks'),
 				}}

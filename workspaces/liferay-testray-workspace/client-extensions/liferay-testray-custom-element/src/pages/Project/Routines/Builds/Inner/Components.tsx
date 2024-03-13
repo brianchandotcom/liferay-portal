@@ -32,6 +32,7 @@ const Components = () => {
 					columnsFixed: ['name'],
 				}}
 				managementToolbarProps={{
+					applyFilters: true,
 					filterSchema: 'buildComponents',
 					title: i18n.translate('component'),
 				}}

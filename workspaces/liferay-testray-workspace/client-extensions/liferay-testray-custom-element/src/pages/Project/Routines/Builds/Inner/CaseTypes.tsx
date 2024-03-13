@@ -36,6 +36,7 @@ const CaseTypes = () => {
 					},
 				}}
 				managementToolbarProps={{
+					applyFilters: true,
 					filterSchema: 'buildCaseTypes',
 					title: i18n.translate('case-types'),
 				}}

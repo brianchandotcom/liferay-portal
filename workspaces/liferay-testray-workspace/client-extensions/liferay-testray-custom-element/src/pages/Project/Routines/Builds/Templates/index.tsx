@@ -55,6 +55,7 @@ const BuildTemplates = () => {
 				}}
 				managementToolbarProps={{
 					addButton: () => navigate('../create/template/true'),
+					applyFilters: true,
 					filterSchema: 'buildTemplates',
 					title: i18n.translate('templates'),
 				}}

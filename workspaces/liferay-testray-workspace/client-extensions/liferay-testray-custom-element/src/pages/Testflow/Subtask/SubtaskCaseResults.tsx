@@ -138,6 +138,7 @@ const SubtasksCaseResults = () => {
 	return (
 		<ListView
 			managementToolbarProps={{
+				applyFilters: true,
 				visible: false,
 			}}
 			resource={testraySubtaskCaseResultImpl.resource}

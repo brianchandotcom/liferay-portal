@@ -34,6 +34,7 @@ const Projects: React.FC<ProjectsProps> = ({PageContainer = Container}) => {
 			<ListView
 				managementToolbarProps={{
 					addButton: () => navigate('/project/create'),
+					applyFilters: true,
 					display: {columns: false},
 					title: i18n.translate('projects'),
 				}}

@@ -32,6 +32,7 @@ const Routines = () => {
 				}}
 				managementToolbarProps={{
 					addButton: () => navigate('create'),
+					applyFilters: true,
 					filterSchema: 'routines',
 					title: i18n.translate('routines'),
 				}}

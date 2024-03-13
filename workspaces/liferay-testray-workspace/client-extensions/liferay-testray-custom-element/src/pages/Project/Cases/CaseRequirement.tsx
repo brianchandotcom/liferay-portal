@@ -36,6 +36,7 @@ const CaseRequirement = () => {
 			<ListView
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
+					applyFilters: true,
 					buttons: (
 						<Button
 							displayType="secondary"

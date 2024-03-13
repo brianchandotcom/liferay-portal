@@ -45,6 +45,7 @@ const Build = () => {
 					columns: {environment: false},
 				}}
 				managementToolbarProps={{
+					applyFilters: true,
 					filterSchema: 'buildResults',
 					title: i18n.translate('tests'),
 				}}

@@ -46,6 +46,7 @@ const RequirementListView: React.FC<RequirementListViewProps> = ({
 			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
 				addButton: () => navigate('create'),
+				applyFilters: true,
 				buttons: (actions) =>
 					actions?.create && (
 						<>

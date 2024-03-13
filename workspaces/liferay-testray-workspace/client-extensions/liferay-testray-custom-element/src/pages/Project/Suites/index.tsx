@@ -22,6 +22,7 @@ const Suites = () => {
 			<ListView
 				managementToolbarProps={{
 					addButton: () => navigate('create'),
+					applyFilters: true,
 					filterSchema: 'suites',
 					title: i18n.translate('suites'),
 				}}

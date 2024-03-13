@@ -49,6 +49,7 @@ const RoutineArchived = () => {
 					},
 				}}
 				managementToolbarProps={{
+					applyFilters: true,
 					buttons: (actions) =>
 						actions?.create && (
 							<BuildAddButton routineId={routineId as string} />

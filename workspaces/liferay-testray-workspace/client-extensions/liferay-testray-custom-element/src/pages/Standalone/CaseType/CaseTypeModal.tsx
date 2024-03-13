@@ -23,6 +23,7 @@ const CaseTypeModal = () => {
 				}}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
+					applyFilters: true,
 				}}
 				resource="/casetypes"
 				tableProps={{

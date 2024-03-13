@@ -73,6 +73,7 @@ const Runs = () => {
 				}}
 				managementToolbarProps={{
 					addButton: () => formModal.modal.open(),
+					applyFilters: true,
 					filterSchema: 'buildRuns',
 					title: i18n.translate('runs'),
 				}}

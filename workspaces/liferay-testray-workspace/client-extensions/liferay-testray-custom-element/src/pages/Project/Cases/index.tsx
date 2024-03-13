@@ -44,6 +44,7 @@ const CaseListView: React.FC<CaseListViewProps> = ({
 			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
 				addButton: () => navigate('create', {state: {back: pathname}}),
+				applyFilters: true,
 				filterSchema: 'cases',
 				title: i18n.translate('cases'),
 			}}

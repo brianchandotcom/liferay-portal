@@ -98,6 +98,7 @@ const Requirement = () => {
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
+						applyFilters: true,
 						buttons: (
 							<ClayManagementToolbar.Item>
 								<Button

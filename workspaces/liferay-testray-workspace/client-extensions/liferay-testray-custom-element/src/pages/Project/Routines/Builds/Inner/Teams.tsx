@@ -88,6 +88,7 @@ const Teams = () => {
 					columnsFixed: ['name'],
 				}}
 				managementToolbarProps={{
+					applyFilters: true,
 					filterSchema: 'buildTeams',
 					title: i18n.translate('teams'),
 				}}

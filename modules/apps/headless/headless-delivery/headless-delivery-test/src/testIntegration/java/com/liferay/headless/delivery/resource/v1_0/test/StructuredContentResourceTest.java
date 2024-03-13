@@ -412,7 +412,8 @@ public class StructuredContentResourceTest
 		super.testGetStructuredContent();
 
 		_testGetStructuredContentAssetLibrary();
-		_testGetStructuredContentWithAllTypesOfContentFields();
+		_testGetStructuredContentWithAllTypesOfContentFields(false);
+		_testGetStructuredContentWithAllTypesOfContentFields(true);
 		_testGetStructuredContentWithDifferentFolder();
 		_testGetStructuredContentWithDifferentLocale();
 		_testGetStructuredContentWithDifferentTimeZone();
@@ -1142,8 +1143,14 @@ public class StructuredContentResourceTest
 
 		StructuredContent structuredContent = super.randomStructuredContent();
 
+		boolean useReference = true;
+
+		if (localizable) {
+			useReference = false;
+		}
+
 		structuredContent.setContentFields(
-			_randomContentFields(journalArticle));
+			_randomContentFields(journalArticle, useReference));
 		structuredContent.setContentStructureId(
 			complexDDMStructure.getStructureId());
 		structuredContent.setRelatedContents(
@@ -1161,7 +1168,9 @@ public class StructuredContentResourceTest
 		return structuredContent;
 	}
 
-	private ContentField[] _randomContentFields(JournalArticle journalArticle) {
+	private ContentField[] _randomContentFields(
+		JournalArticle journalArticle, boolean useReference) {
+
 		return new ContentField[] {
 			new ContentField() {
 				{
@@ -1179,6 +1188,16 @@ public class StructuredContentResourceTest
 						{
 							data = _COMPLETE_STRUCTURED_CONTENT_OPTIONS
 								[RandomTestUtil.randomInt(0, 2)];
+
+							setValue(
+								() -> {
+									if (!useReference) {
+										return null;
+									}
+
+									return _COMPLETE_STRUCTURED_CONTENT_OPTIONS
+										[RandomTestUtil.randomInt(0, 2)];
+								});
 						}
 					};
 					name = "SelectFromList";
@@ -1190,6 +1209,16 @@ public class StructuredContentResourceTest
 						{
 							data = _COMPLETE_STRUCTURED_CONTENT_OPTIONS
 								[RandomTestUtil.randomInt(0, 2)];
+
+							setValue(
+								() -> {
+									if (!useReference) {
+										return null;
+									}
+
+									return _COMPLETE_STRUCTURED_CONTENT_OPTIONS
+										[RandomTestUtil.randomInt(0, 2)];
+								});
 						}
 					};
 					name = "SingleSelection";
@@ -1203,6 +1232,18 @@ public class StructuredContentResourceTest
 								"[" +
 									_COMPLETE_STRUCTURED_CONTENT_OPTIONS
 										[RandomTestUtil.randomInt(0, 2)] + "]";
+
+							setValue(
+								() -> {
+									if (!useReference) {
+										return null;
+									}
+
+									return "[" +
+										_COMPLETE_STRUCTURED_CONTENT_OPTIONS
+											[RandomTestUtil.randomInt(0, 2)] +
+												"]";
+								});
 						}
 					};
 					name = "MultipleSelection";
@@ -1668,12 +1709,14 @@ public class StructuredContentResourceTest
 				getStructuredContent3.getStructuredContentFolderId()));
 	}
 
-	private void _testGetStructuredContentWithAllTypesOfContentFields()
+	private void _testGetStructuredContentWithAllTypesOfContentFields(
+			boolean localizable)
 		throws Exception {
 
 		StructuredContent postStructuredContent =
 			structuredContentResource.postSiteStructuredContent(
-				testGroup.getGroupId(), _randomCompleteStructuredContent(true));
+				testGroup.getGroupId(),
+				_randomCompleteStructuredContent(localizable));
 
 		StructuredContent getStructuredContent =
 			structuredContentResource.getStructuredContent(

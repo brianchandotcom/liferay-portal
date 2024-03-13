@@ -20,6 +20,10 @@ import {
 	filterSchema as filterSchemas,
 } from '../schema/filter';
 
+type CustomFilterFieldsProps = {
+	projectId: string;
+};
+
 type Options = {
 	label: string;
 	value: string;
@@ -33,7 +37,7 @@ type Params = {
 	[key: string]: string | number | boolean;
 };
 
-const useQueryParams = (customFilterFields?: any) => {
+const useQueryParams = (customFilterFields: CustomFilterFieldsProps) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();

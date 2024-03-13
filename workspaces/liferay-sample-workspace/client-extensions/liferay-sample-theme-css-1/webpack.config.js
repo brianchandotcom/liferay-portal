@@ -11,6 +11,19 @@ const webpack = require('webpack');
 const buildCSSDir = path.join(__dirname, 'build', 'buildTheme', 'css');
 const DEVELOPMENT = process.env.NODE_ENV === 'development';
 
+const includeReferencedAsset = (assetUrl) => {
+	const urlTokens = ['@base_url@', '@portal_ctx@', '@theme_image_path@']
+
+	if (!fs.existsSync(path.join(__dirname, 'src', 'css', assetUrl)) ||
+		assetUrl.startsWith("data:image") ||
+		urlTokens.some((token) => assetUrl.includes(token))) {
+
+		return false;
+	}
+
+	return true;
+}
+
 module.exports = {
 	context: buildCSSDir,
 	entry: {
@@ -28,8 +41,20 @@ module.exports = {
 					},
 					{
 						loader: "css-loader",
+						options: {
+							url: {
+								filter: includeReferencedAsset
+							}
+						}
 					}
 				]
+			},
+			{
+				generator: {
+					filename: '../assets/[name].[contenthash][ext]'
+				},
+				test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+				type: "asset/resource",
 			},
 		],
 	},

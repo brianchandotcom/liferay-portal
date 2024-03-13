@@ -189,19 +189,27 @@
 								sb.append(serviceName);
 								sb.append(".tar ");
 
-								Process process = JenkinsResultsParserUtil.executeBashCommands(false, new File("."), 10 * 60 * 1000, new String[] {sb.toString()});
+								try {
+									Process process = JenkinsResultsParserUtil.executeBashCommands(false, new File("."), 10 * 60 * 1000, new String[] {sb.toString()});
 
-								if (process.exitValue() != 0) {
+									if (process.exitValue() != 0) {
+										continue;
+									}
+
+									System.out.println(JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
+
+									break;
+								}
+								catch (Exception exception) {
+									continue;
+								}
+								finally {
 									if (retryCount >= 2) {
 										throw new Exception("Unable to download " + imageTarFileName + " after " + retryCount + " retries");
 									}
 
 									retryCount++;
-
-									continue;
 								}
-
-								System.out.println(JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
 
 								break;
 							}

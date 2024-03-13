@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Closeable;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -50,6 +51,13 @@ public class ImportTaskResourcePerformanceTest
 	public void testPostImportTaskWithUserAccount() throws Exception {
 		_testPostImportTask(
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
+	}
+
+	@Test
+	public void testPostImportTaskWithUserAccountDelegate() throws Exception {
+		_testPostImportTask(
+			"com.liferay.headless.admin.user.dto.v1_0.UserAccount#" +
+				"user-account-performance-test");
 	}
 
 	private static String _createUserAccountJSONTemplate() throws Exception {
@@ -178,7 +186,8 @@ public class ImportTaskResourcePerformanceTest
 
 		Map<String, String> classNamePartsMap = splitClassName(className);
 
-		String json = _createBatchJSON(className, recordsCount);
+		String json = _createBatchJSON(
+			classNamePartsMap.get("className"), recordsCount);
 
 		try (Closeable closeable = startTimer(_log)) {
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -228,6 +237,13 @@ public class ImportTaskResourcePerformanceTest
 					throw new AssertionError(importTask.getErrorMessage());
 				}
 			}
+
+			Date endTime = importTask.getEndTime();
+			Date startTime = importTask.getStartTime();
+
+			_log.info(
+				"Import task duration: " +
+					(endTime.getTime() - startTime.getTime()) + " ms");
 		}
 	}
 

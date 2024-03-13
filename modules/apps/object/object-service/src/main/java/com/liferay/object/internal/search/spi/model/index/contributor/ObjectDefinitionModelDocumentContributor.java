@@ -33,6 +33,10 @@ public class ObjectDefinitionModelDocumentContributor
 		document.addKeyword(
 			"objectFolderExternalReferenceCode",
 			objectDefinition.getObjectFolderExternalReferenceCode(), true);
+		document.addKeyword(
+			"rootObjectDefinitionExternalReferenceCode",
+			objectDefinition.getRootObjectDefinitionExternalReferenceCode(),
+			true);
 
 		document.remove(Field.USER_NAME);
 	}

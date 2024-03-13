@@ -43,7 +43,10 @@ public class ObjectDefinitionEntityModel implements EntityModel {
 				"name", locale -> Field.getSortableFieldName("name")),
 			new StringEntityField(
 				"objectFolderExternalReferenceCode",
-				locale -> "objectFolderExternalReferenceCode"));
+				locale -> "objectFolderExternalReferenceCode"),
+			new StringEntityField(
+				"rootObjectDefinitionExternalReferenceCode",
+				locale -> "rootObjectDefinitionExternalReferenceCode"));
 	}
 
 	@Override

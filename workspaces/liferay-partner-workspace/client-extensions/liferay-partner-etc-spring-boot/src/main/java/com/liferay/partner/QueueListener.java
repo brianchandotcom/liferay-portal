@@ -22,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.amqp.core.ExchangeTypes;
@@ -284,19 +285,27 @@ public class QueueListener {
 	}
 
 	private JSONObject _get(Function<UriBuilder, URI> uriFunction) {
-		return new JSONObject(
-			_getWebClient(
-			).get(
-			).uri(
-				uriBuilder -> uriFunction.apply(uriBuilder)
-			).accept(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION, _getAuthorization()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+		String response = _getWebClient(
+		).get(
+		).uri(
+			uriBuilder -> uriFunction.apply(uriBuilder)
+		).accept(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+
+		try {
+			return new JSONObject(response);
+		}
+		catch (JSONException jsonException) {
+			_log.error("Unable to create JSON object for: " + response);
+
+			throw jsonException;
+		}
 	}
 
 	private long _getAccountRoleId(

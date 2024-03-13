@@ -17,13 +17,7 @@ const GetSolutionForm = () => {
 		}
 	}, [accountForm.accountQuantity, accountForm.accountSelected, navigate]);
 
-	return (
-		<AccountForm
-			accountForm={accountForm}
-			disabledButton={false}
-			submitOrder={onSubmit}
-		/>
-	);
+	return <AccountForm accountForm={accountForm} submitOrder={onSubmit} />;
 };
 
 export default GetSolutionForm;

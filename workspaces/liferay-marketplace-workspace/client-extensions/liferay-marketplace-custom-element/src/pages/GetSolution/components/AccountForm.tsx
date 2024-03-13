@@ -8,8 +8,9 @@ import DropDown from '@clayui/drop-down/lib/DropDown';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import useSWR from 'swr';
 import {z} from 'zod';
 
 import {Header} from '../../../components/Header/Header';
@@ -28,7 +29,6 @@ export type UserForm = z.infer<typeof zodSchema.accountCreator>;
 
 type AccountFormType = {
 	accountForm: ReturnType<typeof useAccountForm>;
-	disabledButton: boolean;
 	submitOrder: (responeAccount?: Account) => Promise<void>;
 };
 
@@ -37,18 +37,20 @@ enum AccountQuantities {
 	NO_ACCOUNT = 0,
 }
 
-const AccountForm: React.FC<AccountFormType> = ({
-	accountForm,
-	disabledButton,
-	submitOrder,
-}) => {
+const AccountForm: React.FC<AccountFormType> = ({accountForm, submitOrder}) => {
 	const navigate = useNavigate();
 	const [currentPhonesFlags, setCurrentPhonesFlags] = useState({
 		code: '+1',
 		flag: 'en-us',
 	});
 
-	const [industries, setIndustries] = useState<Industries[]>();
+	const {
+		data: industriesListTypeEntries = {listTypeEntries: []},
+	} = useSWR('/industries', () =>
+		getListTypeDefinitionByExternalReferenceCode('INDUSTRIES')
+	);
+
+	const industries = industriesListTypeEntries.listTypeEntries;
 
 	const {mutateMyUserAccount, myUserAccount} = useMarketplaceContext();
 
@@ -57,23 +59,13 @@ const AccountForm: React.FC<AccountFormType> = ({
 		myUserAccount,
 	});
 
-	useEffect(() => {
-		(async () => {
-			const industriesListTypeEntries = await getListTypeDefinitionByExternalReferenceCode(
-				'INDUSTRIES'
-			);
-
-			setIndustries(industriesListTypeEntries?.listTypeEntries);
-		})();
-	}, []);
-
 	const inputProps = {
-		error: accountForm.formState.errors,
+		errors: accountForm.formState.errors,
 		register: accountForm.register,
 		required: true,
 	};
 
-	const handleNextStep = async () => {
+	const startTrial = async () => {
 		const form = accountForm.getValues();
 
 		if (AccountQuantities.SINGLE === accountForm.accountQuantity) {
@@ -115,7 +107,7 @@ const AccountForm: React.FC<AccountFormType> = ({
 				}
 			/>
 
-			<ClayForm>
+			<ClayForm onSubmit={accountForm.handleSubmit(startTrial)}>
 				<label className="font-weight-bold mr-4 title-label">
 					Profile Info
 				</label>
@@ -128,7 +120,6 @@ const AccountForm: React.FC<AccountFormType> = ({
 							<FormInput
 								{...inputProps}
 								boldLabel
-								disabled
 								label="First Name"
 								name="givenName"
 							/>
@@ -138,7 +129,6 @@ const AccountForm: React.FC<AccountFormType> = ({
 							<FormInput
 								{...inputProps}
 								boldLabel
-								disabled
 								label="Last Name"
 								name="familyName"
 							/>
@@ -175,7 +165,6 @@ const AccountForm: React.FC<AccountFormType> = ({
 						<FormInput
 							{...inputProps}
 							boldLabel
-							disabled
 							label="Email"
 							name="emailAddress"
 							type="email"
@@ -315,8 +304,11 @@ const AccountForm: React.FC<AccountFormType> = ({
 						</ClayButton>
 
 						<ClayButton
-							disabled={!hasAllValidations || disabledButton}
-							onClick={handleNextStep}
+							disabled={
+								!hasAllValidations ||
+								accountForm.formState.isSubmitting
+							}
+							type="submit"
 						>
 							Start Trial
 						</ClayButton>

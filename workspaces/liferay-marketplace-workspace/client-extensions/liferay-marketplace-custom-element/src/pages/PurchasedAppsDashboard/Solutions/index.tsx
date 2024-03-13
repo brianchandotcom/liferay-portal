@@ -16,7 +16,7 @@ const Solutions = () => {
 
 	const {data: placedOrders = {items: []}} = usePurchasedOrders({
 		accountId: selectedAccount?.id,
-		channelId: channel.id,
+		channelId: channel?.id,
 		orderTypeExternalReferenceCodes: ['SOLUTION30', 'SOLUTIONS7'],
 		page: 1,
 		pageSize: 20,

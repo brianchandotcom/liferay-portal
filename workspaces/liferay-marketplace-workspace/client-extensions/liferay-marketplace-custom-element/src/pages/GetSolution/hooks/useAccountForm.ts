@@ -22,14 +22,7 @@ const useAccountForm = () => {
 		myUserAccount?.accountBriefs,
 	]);
 
-	const {
-		formState: {errors, isValid},
-		getValues,
-		handleSubmit,
-		register,
-		setValue,
-		watch,
-	} = useForm<UserForm>({
+	const form = useForm<UserForm>({
 		defaultValues: {
 			accountSelected: undefined,
 			agreeToTermsAndConditions: false,
@@ -45,6 +38,8 @@ const useAccountForm = () => {
 		mode: 'all',
 		resolver: zodResolver(zodSchema.accountCreator),
 	});
+
+	const {setValue, watch} = form;
 
 	const fetchAccount = useCallback(async () => {
 		const fetchedAccounts = [];
@@ -83,17 +78,12 @@ const useAccountForm = () => {
 	}, [fetchAccount, myUserAccount, setValue]);
 
 	return {
+		...form,
 		SINGLE_ACCOUNT,
 		accountQuantity,
 		accountSelected: watch('accountSelected'),
 		accounts,
-		formState: {errors, isValid},
-		getValues,
-		handleSubmit,
-		register,
 		setAccounts,
-		setValue,
-		watch,
 	};
 };
 export default useAccountForm;

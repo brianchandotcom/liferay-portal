@@ -6,6 +6,7 @@
 package com.liferay.headless.batch.engine.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ExportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.headless.batch.engine.client.serdes.v1_0.ExportTaskSerDes;
@@ -23,6 +24,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.io.Closeable;
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
@@ -40,8 +42,29 @@ public class ExportTaskResourcePerformanceTest
 	@Test
 	public void testPostExportTaskWithUserAccount() throws Exception {
 		_generateTestUserAccounts(recordsCount);
+
 		_testPostExportTask(
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
+	}
+
+	@Test
+	public void testPostExportTaskWithUserAccountDelegate() throws Exception {
+		UserAccountPerformanceTestBatchEngineTaskItemDelegate
+			userAccountPerformanceTestBatchEngineTaskItemDelegate =
+				(UserAccountPerformanceTestBatchEngineTaskItemDelegate)
+					_batchEngineTaskItemDelegateRegistry.
+						getBatchEngineTaskItemDelegate(
+							0,
+							"com.liferay.headless.admin.user.dto.v1_0." +
+								"UserAccount",
+							"user-account-performance-test");
+
+		userAccountPerformanceTestBatchEngineTaskItemDelegate.generateTestData(
+			recordsCount);
+
+		_testPostExportTask(
+			"com.liferay.headless.admin.user.dto.v1_0.UserAccount#" +
+				"user-account-performance-test");
 	}
 
 	private void _generateTestUserAccounts(int count) throws Exception {
@@ -107,6 +130,13 @@ public class ExportTaskResourcePerformanceTest
 				}
 			}
 
+			Date endTime = exportTask.getEndTime();
+			Date startTime = exportTask.getStartTime();
+
+			_log.info(
+				"Export task duration: " +
+					(endTime.getTime() - startTime.getTime()) + " ms");
+
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(
@@ -136,6 +166,10 @@ public class ExportTaskResourcePerformanceTest
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportTaskResourcePerformanceTest.class);
+
+	@Inject
+	private BatchEngineTaskItemDelegateRegistry
+		_batchEngineTaskItemDelegateRegistry;
 
 	@Inject
 	private UserService _userService;

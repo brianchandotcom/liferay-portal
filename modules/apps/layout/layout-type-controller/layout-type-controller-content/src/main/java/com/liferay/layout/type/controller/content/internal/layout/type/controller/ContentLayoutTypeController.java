@@ -17,6 +17,7 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -85,6 +86,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 		Boolean hasUpdatePermissions = null;
 
+		String layoutMode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
 		if (layout.isDraftLayout()) {
 			Layout curLayout = _layoutLocalService.fetchLayout(
 				layout.getClassPK());
@@ -93,18 +97,30 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				curLayout = layout;
 			}
 
-			hasUpdatePermissions = _hasUpdatePermissions(
-				themeDisplay.getPermissionChecker(), curLayout);
+			if (FeatureFlagManagerUtil.isEnabled("LPD-11070") &&
+				(layoutMode.equals(Constants.PREVIEW) ||
+				 layoutMode.equals(Constants.VIEW))) {
 
-			if (!hasUpdatePermissions) {
-				throw new PrincipalException.MustHavePermission(
-					themeDisplay.getPermissionChecker(), Layout.class.getName(),
-					layout.getLayoutId(), ActionKeys.UPDATE);
+				if (!_hasPreviewPermission(curLayout, themeDisplay)) {
+					throw new PrincipalException.MustHavePermission(
+						themeDisplay.getPermissionChecker(),
+						Layout.class.getName(), layout.getLayoutId(),
+						ActionKeys.UPDATE);
+				}
+			}
+			else {
+				hasUpdatePermissions = _hasUpdatePermissions(
+					themeDisplay.getPermissionChecker(), curLayout);
+
+				if (!hasUpdatePermissions) {
+					throw new PrincipalException.MustHavePermission(
+						themeDisplay.getPermissionChecker(),
+						Layout.class.getName(), layout.getLayoutId(),
+						ActionKeys.UPDATE);
+				}
 			}
 		}
 
-		String layoutMode = ParamUtil.getString(
-			httpServletRequest, "p_l_mode", Constants.VIEW);
 		String redirect = StringPool.BLANK;
 
 		if (layoutMode.equals(Constants.EDIT)) {
@@ -360,6 +376,21 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		}
 
 		return layoutFullURL;
+	}
+
+	private boolean _hasPreviewPermission(
+			Layout layout, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if ((_fetchLayoutPageTemplateEntry(layout) != null) ||
+			(_fetchLayoutUtilityPageEntry(layout) != null)) {
+
+			return _hasUpdatePermissions(
+				themeDisplay.getPermissionChecker(), layout);
+		}
+
+		return _layoutPermission.containsLayoutPreviewDraftPermission(
+			themeDisplay.getPermissionChecker(), layout);
 	}
 
 	private boolean _hasUpdatePermissions(

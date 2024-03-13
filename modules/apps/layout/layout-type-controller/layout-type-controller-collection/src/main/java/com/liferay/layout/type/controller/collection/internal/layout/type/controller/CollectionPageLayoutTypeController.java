@@ -11,6 +11,7 @@ import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -20,7 +21,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -78,6 +79,9 @@ public class CollectionPageLayoutTypeController
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		String layoutMode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
 		if (layout.isDraftLayout()) {
 			Layout curLayout = _layoutLocalService.fetchLayout(
 				layout.getClassPK());
@@ -86,8 +90,21 @@ public class CollectionPageLayoutTypeController
 				curLayout = layout;
 			}
 
-			if (!_hasUpdatePermissions(
-					themeDisplay.getPermissionChecker(), curLayout)) {
+			if (FeatureFlagManagerUtil.isEnabled("LPD-11070") &&
+				(layoutMode.equals(Constants.PREVIEW) ||
+				 layoutMode.equals(Constants.VIEW))) {
+
+				if (!_layoutPermission.containsLayoutPreviewDraftPermission(
+						themeDisplay.getPermissionChecker(), curLayout)) {
+
+					throw new PrincipalException.MustHavePermission(
+						themeDisplay.getPermissionChecker(),
+						Layout.class.getName(), layout.getLayoutId(),
+						ActionKeys.UPDATE);
+				}
+			}
+			else if (!_hasUpdatePermissions(
+						themeDisplay.getPermissionChecker(), curLayout)) {
 
 				throw new PrincipalException.MustHavePermission(
 					themeDisplay.getPermissionChecker(), Layout.class.getName(),
@@ -96,9 +113,6 @@ public class CollectionPageLayoutTypeController
 		}
 
 		String redirect = StringPool.BLANK;
-
-		String layoutMode = ParamUtil.getString(
-			httpServletRequest, "p_l_mode", Constants.VIEW);
 
 		if (layoutMode.equals(Constants.EDIT)) {
 			if (!_hasUpdatePermissions(
@@ -262,7 +276,7 @@ public class CollectionPageLayoutTypeController
 		PermissionChecker permissionChecker, Layout layout) {
 
 		try {
-			if (LayoutPermissionUtil.containsLayoutUpdatePermission(
+			if (_layoutPermission.containsLayoutUpdatePermission(
 					permissionChecker, layout)) {
 
 				return true;
@@ -293,6 +307,9 @@ public class CollectionPageLayoutTypeController
 
 	@Reference
 	private LayoutLockManager _layoutLockManager;
+
+	@Reference
+	private LayoutPermission _layoutPermission;
 
 	@Reference
 	private Portal _portal;

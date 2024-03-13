@@ -23,6 +23,7 @@ import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.bundling.Jar;
@@ -139,11 +140,14 @@ public class AppTLDDocBuilderPlugin implements Plugin<Project> {
 			tldDocTask.getProject(), JAR_APP_TLDDOC_TASK_NAME, Jar.class);
 
 		jar.from(tldDocTask);
-		jar.setClassifier("taglibdoc");
 		jar.setDescription(
 			"Assembles a jar archive containing the tag library " +
 				"documentation files for this app.");
 		jar.setGroup(BasePlugin.BUILD_GROUP);
+
+		Property<String> property = jar.getArchiveClassifier();
+
+		property.set("taglibdoc");
 
 		return jar;
 	}

@@ -20,6 +20,7 @@ import java.util.concurrent.Callable;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ModuleVersionSelector;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 
 /**
@@ -82,15 +83,24 @@ public class LiferayExtension {
 
 			@SuppressWarnings("unused")
 			public String doCall(AbstractArchiveTask abstractArchiveTask) {
-				String fileName = abstractArchiveTask.getBaseName();
+				Property<String> property =
+					abstractArchiveTask.getArchiveBaseName();
 
-				String appendix = abstractArchiveTask.getAppendix();
+				String fileName = property.get();
 
-				if (Validator.isNotNull(appendix)) {
-					fileName += "-" + appendix;
+				property = abstractArchiveTask.getArchiveAppendix();
+
+				if (property != null) {
+					String archiveAppendix = property.getOrNull();
+
+					if (Validator.isNotNull(archiveAppendix)) {
+						fileName += "-" + archiveAppendix;
+					}
 				}
 
-				fileName += "." + abstractArchiveTask.getExtension();
+				property = abstractArchiveTask.getArchiveExtension();
+
+				fileName += "." + property.get();
 
 				return fileName;
 			}

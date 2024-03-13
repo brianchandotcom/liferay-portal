@@ -19,6 +19,7 @@ import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.bundling.Jar;
 
 /**
@@ -97,11 +98,14 @@ public class AppJSDocPlugin extends BaseJSDocPlugin {
 			jsDocTask.getProject(), JAR_APP_JSDOC_TASK_NAME, Jar.class);
 
 		jar.from(jsDocTask);
-		jar.setClassifier("jsdoc");
 		jar.setDescription(
 			"Assembles a jar archive containing the JavaScript documentation " +
 				"files for this app.");
 		jar.setGroup(BasePlugin.BUILD_GROUP);
+
+		Property<String> property = jar.getArchiveClassifier();
+
+		property.set("jsdoc");
 
 		return jar;
 	}

@@ -19,6 +19,7 @@ import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.War;
@@ -143,7 +144,10 @@ public class LiferayWarPlugin implements Plugin<Project> {
 							public String call() throws Exception {
 								War war = warTaskProvider.get();
 
-								return war.getBaseName();
+								Property<String> property =
+									war.getArchiveBaseName();
+
+								return property.get();
 							}
 
 						});

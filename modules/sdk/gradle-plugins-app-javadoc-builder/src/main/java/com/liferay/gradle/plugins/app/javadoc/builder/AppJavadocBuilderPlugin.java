@@ -35,6 +35,7 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.ReportingBasePlugin;
+import org.gradle.api.provider.Property;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
@@ -157,11 +158,14 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 			javadoc.getProject(), JAR_APP_JAVADOC_TASK_NAME, Jar.class);
 
 		jar.from(javadoc);
-		jar.setClassifier("javadoc");
 		jar.setDescription(
 			"Assembles a jar archive containing the Javadoc files for this " +
 				"app.");
 		jar.setGroup(BasePlugin.BUILD_GROUP);
+
+		Property<String> property = jar.getArchiveClassifier();
+
+		property.set("javadoc");
 
 		return jar;
 	}

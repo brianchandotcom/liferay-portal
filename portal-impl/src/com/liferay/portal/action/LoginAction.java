@@ -115,18 +115,18 @@ public class LoginAction implements Action {
 
 		String redirect = PortalUtil.getSiteLoginURL(themeDisplay);
 
-		Layout signInUtilityPage =
+		Layout loginUtilityPage =
 			LayoutUtilityPageEntryLayoutProviderUtil.
 				getDefaultLayoutUtilityPageEntryLayout(
 					themeDisplay.getScopeGroupId(),
 					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
-		if ((signInUtilityPage != null) &&
+		if ((loginUtilityPage != null) &&
 			!Objects.equals(
 				getWindowState(httpServletRequest),
 				LiferayWindowState.EXCLUSIVE)) {
 
-			redirect = Portal.PATH_MAIN + "/portal/sign_in";
+			redirect = Portal.PATH_MAIN + "/portal/login_up";
 
 			redirect = HttpComponentsUtil.setParameter(
 				redirect, "p_l_id", themeDisplay.getPlid());

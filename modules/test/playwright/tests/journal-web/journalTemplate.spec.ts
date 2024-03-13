@@ -7,14 +7,14 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
-import {loginTest} from '../../fixtures/loginTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
-	journalPagesTest,
-	loginTest()
+	isolatedSiteTest,
+	journalPagesTest
 );
 
 const RESERVED_VARIABLES = [
@@ -39,8 +39,9 @@ test('This is a test for LPS-177690. The tooltip of the back button should be Go
 	journalEditTemplatePage,
 	journalPage,
 	page,
+	site,
 }) => {
-	await journalPage.goto();
+	await journalPage.goto(site.friendlyUrlPath);
 	await journalEditTemplatePage.goto();
 
 	await expect(page.getByTitle('Go to Web Content')).toBeVisible();
@@ -50,8 +51,9 @@ test('This is a test for LPS-153976 and LPD-16407. Check Featured image and rese
 	journalEditTemplatePage,
 	journalPage,
 	page,
+	site,
 }) => {
-	await journalPage.goto();
+	await journalPage.goto(site.friendlyUrlPath);
 	await journalEditTemplatePage.goto();
 
 	// Featured image is present when we are editing a template.

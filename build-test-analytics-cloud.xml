@@ -209,7 +209,7 @@
 								}
 								finally {
 									if (retryCount >= 2) {
-										throw new Exception("Unable to download " + imageTarFileName + " after " + retryCount + " retries");
+										System.out.println("WARNING: Unable to download " + imageTarFileName + " after " + retryCount + " retries");
 									}
 
 									retryCount++;

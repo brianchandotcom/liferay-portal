@@ -52,7 +52,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsUnicodeProperties.get
 	%>
 
 	<react:component
-		module="js/Languages.es"
+		module="{Languages} from depot-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"availableLocales", DepotLanguageUtil.getAvailableLocalesJSONArray(locale)

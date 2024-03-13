@@ -30,7 +30,7 @@ DepotAdminDLDisplayContext depotAdminDLDisplayContext = (DepotAdminDLDisplayCont
 				<span aria-hidden="true" class="loading-animation"></span>
 
 				<react:component
-					module="js/FileSizePerMimeType"
+					module="{FileSizePerMimeType} from depot-web"
 					props="<%= depotAdminDLDisplayContext.getFileSizePerMimeTypeData() %>"
 				/>
 			</div>

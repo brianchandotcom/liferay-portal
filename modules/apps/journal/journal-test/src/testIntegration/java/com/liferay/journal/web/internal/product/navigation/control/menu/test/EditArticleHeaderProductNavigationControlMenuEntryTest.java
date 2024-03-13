@@ -14,6 +14,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -88,6 +89,29 @@ public class EditArticleHeaderProductNavigationControlMenuEntryTest {
 			"mvcRenderCommandName", "/journal/edit_article");
 
 		Assert.assertFalse(
+			_productNavigationControlMenuEntry.isShow(mockHttpServletRequest));
+	}
+
+	@Test
+	public void testIsShowJournalArticleHeaderWithoutGuestPermissions()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_resourcePermissionLocalService.deleteResourcePermissions(
+			_group.getCompanyId(), JournalArticle.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			journalArticle.getResourcePrimKey());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(journalArticle);
+
+		mockHttpServletRequest.addParameter(
+			"mvcRenderCommandName", "/journal/edit_article");
+
+		Assert.assertTrue(
 			_productNavigationControlMenuEntry.isShow(mockHttpServletRequest));
 	}
 

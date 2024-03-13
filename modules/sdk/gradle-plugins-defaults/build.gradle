@@ -1,3 +1,4 @@
+import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 
 apply plugin: "org.ysb33r.gradletest"
@@ -55,4 +56,8 @@ processResources {
 
 updateFileVersions {
 	match(/classpath group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.defaults", version: "(\d.+)"/, "../../../portal-web/build-test.gradle")
+
+	FileTree workspacesFileTree = fileTree(dir: new File(GradleUtil.getRootDir(project.getRootProject(), "portal-impl"), "workspaces"), include: "**/build.gradle")
+
+	match(/classpath group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.defaults", version: "(\d.+)"/, workspacesFileTree.files)
 }

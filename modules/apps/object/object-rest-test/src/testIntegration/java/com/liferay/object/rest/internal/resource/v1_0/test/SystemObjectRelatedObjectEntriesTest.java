@@ -62,6 +62,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 import org.springframework.http.HttpStatus;
 
 /**
@@ -650,6 +653,25 @@ public class SystemObjectRelatedObjectEntriesTest {
 		return objectRelationship;
 	}
 
+	private void _assertEquals(JSONArray nestedObjectEntriesJSONArray)
+		throws Exception {
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1
+				).put(
+					"externalReferenceCode", _ERC_VALUE_1
+				),
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_2
+				).put(
+					"externalReferenceCode", _ERC_VALUE_2
+				)
+			).toString(),
+			nestedObjectEntriesJSONArray.toString(), JSONCompareMode.LENIENT);
+	}
+
 	private void _assertNestedFieldsInRelationships(
 		int currentDepth, int depth, JSONObject jsonObject,
 		String nestedFieldName, String[][] objectFieldNamesAndObjectFieldValues,
@@ -920,12 +942,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 			Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 
-			_assertObjectEntryField(
-				(JSONObject)nestedObjectEntriesJSONArray.get(0),
-				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
-			_assertObjectEntryField(
-				(JSONObject)nestedObjectEntriesJSONArray.get(1),
-				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_2);
+			_assertEquals(nestedObjectEntriesJSONArray);
 
 			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -938,12 +955,7 @@ public class SystemObjectRelatedObjectEntriesTest {
 
 			Assert.assertEquals(2, nestedObjectEntriesJSONArray.length());
 
-			_assertObjectEntryField(
-				(JSONObject)nestedObjectEntriesJSONArray.get(0),
-				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_1);
-			_assertObjectEntryField(
-				(JSONObject)nestedObjectEntriesJSONArray.get(1),
-				_OBJECT_FIELD_NAME_1, _NEW_OBJECT_FIELD_VALUE_2);
+			_assertEquals(nestedObjectEntriesJSONArray);
 		}
 	}
 

@@ -46,11 +46,19 @@ const steps = [
 	{id: 2, path: '/form', title: 'Create Trial'},
 ];
 
+const getIcon = (image = '') => {
+	if (window.location.href.startsWith('https')) {
+		return image;
+	}
+
+	return image.replace('https', 'http');
+};
+
 const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 	const {channel} = useMarketplaceContext();
 	const accountForm = useAccountForm();
 	const account = accountForm.watch('accountSelected');
-	const sku = product.skus?.[0]?.id;
+	const sku = product?.skus?.[0]?.id;
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -104,7 +112,7 @@ const GetSolutionOutlet: React.FC<GetSolutionOutletProps> = ({product}) => {
 					<ClaySticker size="xl">
 						<ClaySticker.Image
 							alt="placeholder"
-							src={product?.urlImage?.replace('https', 'http')}
+							src={getIcon(product?.urlImage)}
 						/>
 					</ClaySticker>
 				</div>

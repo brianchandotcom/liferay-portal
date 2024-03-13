@@ -63,7 +63,7 @@ test('can export as JSONT', async ({apiHelpers, dataMigrationCenterPage}) => {
 
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
-	const exportedData = JSON.parse(
+	const exportedObject = JSON.parse(
 		await dataMigrationCenterPage.exportFile(
 			'JSONT',
 			'C_Stock (v1_0 - Liferay Object REST)',
@@ -72,9 +72,9 @@ test('can export as JSONT', async ({apiHelpers, dataMigrationCenterPage}) => {
 	);
 
 	expect(require('./dependencies/jsont_objectEntry_import.json')).toEqual({
-		...exportedData,
+		...exportedObject,
 		configuration: {
-			...exportedData.configuration,
+			...exportedObject.configuration,
 			companyId: expect.any(Number),
 			userId: expect.any(Number),
 		},
@@ -264,7 +264,7 @@ test('can export as JSON with all field types mapped', async ({
 		'c/stocks'
 	);
 
-	const exportedObjectEntry = JSON.parse(
+	const exportedObject = JSON.parse(
 		await dataMigrationCenterPage.exportFile(
 			'JSON',
 			'C_Stock (v1_0 - Liferay Object REST)',
@@ -278,20 +278,20 @@ test('can export as JSON with all field types mapped', async ({
 				'name',
 			]
 		)
-	);
+	)[0];
 
 	expect(require('./dependencies/json_objectEntry_export.json')).toEqual([
 		{
-			...exportedObjectEntry[0],
+			...exportedObject,
 			creator: {
-				...exportedObjectEntry[0].creator,
+				...exportedObject.creator,
 				id: expect.any(Number),
 			},
 			customAttachment: {
 				id: expect.any(Number),
 				link: {
 					href: expect.any(String),
-					label: exportedObjectEntry[0].customAttachment.link.label,
+					label: exportedObject.customAttachment.link.label,
 				},
 				name: expect.any(String),
 			},

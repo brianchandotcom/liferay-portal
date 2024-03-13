@@ -608,6 +608,20 @@ public class QueueListener {
 		String accountExternalReferenceCode, String accountName,
 		String contactEmailAddress) {
 
+		JSONObject userAccountRolesJSONObject = _get(
+			uriBuilder -> uriBuilder.path(
+				StringBundler.concat(
+					"/o/headless-admin-user/v1.0/accounts",
+					"/by-external-reference-code/",
+					accountExternalReferenceCode,
+					"/user-accounts/by-email-address/", contactEmailAddress,
+					"/account-roles")
+			).build());
+
+		if (userAccountRolesJSONObject.getLong("totalCount") > 0) {
+			return;
+		}
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(

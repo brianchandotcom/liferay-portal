@@ -134,9 +134,9 @@ html {
 .dropdown-management-toolbar {
 	&.dropdown-menu {
 		max-height: 800px !important;
+		max-width: 900px !important;
 		overflow-y: hidden !important;
 		width: 300px !important;
-		max-width: 900px !important;
 	}
 
 	&.dropdown-management-toolbar-small {

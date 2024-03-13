@@ -777,6 +777,7 @@ components:
                         - numeric
                         - radio
                         - select
+                        - select_date
                         - text
                     example: select
                     type: string

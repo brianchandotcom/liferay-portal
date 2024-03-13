@@ -465,7 +465,7 @@ public class CISystemHistoryReportUtil {
 			).put(
 				"id", _getID()
 			).put(
-				"modification_date", "new Date(" + _START_TIME + ")"
+				"modification_date", _START_TIME
 			).put(
 				"title", _title
 			);

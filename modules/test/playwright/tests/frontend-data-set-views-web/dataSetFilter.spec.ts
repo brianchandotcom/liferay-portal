@@ -54,9 +54,7 @@ test('Add the frontend data set sample widget', async ({
 			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		const tabHeading = await page
-			.getByRole('tablist')
-			.getByText('Customized');
+		const tabHeading = page.getByRole('tablist').getByText('Customized');
 
 		await expect(tabHeading).toBeInViewport();
 

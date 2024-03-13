@@ -28,7 +28,7 @@ public class CalendarBookingInfoItemCapabilitiesProvider
 
 	@Override
 	public List<InfoItemCapability> getInfoItemCapabilities() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-201853")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10945")) {
 			return Collections.emptyList();
 		}
 

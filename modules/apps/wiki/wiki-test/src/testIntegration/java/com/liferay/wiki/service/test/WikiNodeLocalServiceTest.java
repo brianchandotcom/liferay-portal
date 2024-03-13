@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.ProgressTrackerThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.wiki.exception.DuplicateWikiNodeExternalReferenceCodeException;
 import com.liferay.wiki.model.WikiNode;
@@ -125,15 +123,10 @@ public class WikiNodeLocalServiceTest {
 
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"org.apache.xmlbeans.impl.common.SAXHelper",
-				LoggerTestUtil.WARN)) {
-
-			WikiNodeLocalServiceUtil.importPages(
-				TestPropsValues.getUserId(), _node.getNodeId(),
-				new InputStream[] {inputStream, null, null},
-				Collections.<String, String[]>emptyMap());
-		}
+		WikiNodeLocalServiceUtil.importPages(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			new InputStream[] {inputStream, null, null},
+			Collections.<String, String[]>emptyMap());
 
 		WikiPage importedPage = WikiPageLocalServiceUtil.fetchPage(
 			_node.getNodeId(), "Liferay");
@@ -162,15 +155,10 @@ public class WikiNodeLocalServiceTest {
 
 		InputStream filesInputStream = new ByteArrayInputStream(filesBytes);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"org.apache.xmlbeans.impl.common.SAXHelper",
-				LoggerTestUtil.WARN)) {
-
-			WikiNodeLocalServiceUtil.importPages(
-				TestPropsValues.getUserId(), _node.getNodeId(),
-				new InputStream[] {pagesInputStream, null, filesInputStream},
-				Collections.<String, String[]>emptyMap());
-		}
+		WikiNodeLocalServiceUtil.importPages(
+			TestPropsValues.getUserId(), _node.getNodeId(),
+			new InputStream[] {pagesInputStream, null, filesInputStream},
+			Collections.<String, String[]>emptyMap());
 
 		WikiPage importedPage = WikiPageLocalServiceUtil.fetchPage(
 			_node.getNodeId(), "Media link migration test");

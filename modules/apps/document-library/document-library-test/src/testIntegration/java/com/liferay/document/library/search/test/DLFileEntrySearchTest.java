@@ -60,8 +60,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -232,10 +230,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		File file = null;
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"org.apache.xmlbeans.impl.common.SAXHelper",
-				LoggerTestUtil.WARN)) {
-
+		try {
 			String mimeType = MimeTypesUtil.getContentType(file, fileName);
 
 			file = FileUtil.createTempFile(inputStream);

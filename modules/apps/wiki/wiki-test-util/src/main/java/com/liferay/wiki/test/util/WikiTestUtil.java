@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.wiki.constants.WikiPageConstants;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -402,26 +400,21 @@ public class WikiTestUtil {
 			Class<?> clazz)
 		throws Exception {
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"org.apache.xmlbeans.impl.common.SAXHelper",
-				LoggerTestUtil.WARN)) {
+		byte[] fileBytes = FileUtil.getBytes(
+			clazz, "dependencies/OSX_Test.docx");
 
-			byte[] fileBytes = FileUtil.getBytes(
-				clazz, "dependencies/OSX_Test.docx");
+		File file = null;
 
-			File file = null;
-
-			if (ArrayUtil.isNotEmpty(fileBytes)) {
-				file = FileUtil.createTempFile(fileBytes);
-			}
-
-			String mimeType = MimeTypesUtil.getExtensionContentType("docx");
-
-			WikiPageLocalServiceUtil.addPageAttachment(
-				userId, nodeId, title, fileName, file, mimeType);
-
-			return file;
+		if (ArrayUtil.isNotEmpty(fileBytes)) {
+			file = FileUtil.createTempFile(fileBytes);
 		}
+
+		String mimeType = MimeTypesUtil.getExtensionContentType("docx");
+
+		WikiPageLocalServiceUtil.addPageAttachment(
+			userId, nodeId, title, fileName, file, mimeType);
+
+		return file;
 	}
 
 	public static WikiPage copyPage(

@@ -12,7 +12,6 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
-import {setSiteUrl} from '../../utils/siteUrl';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
 
@@ -191,8 +190,6 @@ translationTest(
 translationTest(
 	'LPD-19627: Translate all fields of a Web Content based on a custom structure with repeatable fields',
 	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
-		await setSiteUrl(page, site.friendlyUrlPath);
-
 		const localizableFieldName = 'Text5678';
 		const structureName = 'Structure 1';
 
@@ -260,8 +257,6 @@ translationTest(
 translationTest(
 	'LPD-19627: A non-localizabled field is disabled when another translation language is selected',
 	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
-		await setSiteUrl(page, site.friendlyUrlPath);
-
 		const nonLocalizableFieldName = 'Text1234';
 		const structureName = 'Structure 1';
 

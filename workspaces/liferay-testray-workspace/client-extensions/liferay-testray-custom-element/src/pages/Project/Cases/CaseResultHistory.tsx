@@ -32,6 +32,12 @@ const CaseResultHistory: React.FC<CaseResultHistoryProps> = ({
 
 	return (
 		<ListView
+			initialContext={{
+				sort: {
+					direction: 'DESC',
+					key: 'dateCreated',
+				},
+			}}
 			managementToolbarProps={{
 				filterSchema: 'buildResultsHistory',
 				title: i18n.translate('test-history'),

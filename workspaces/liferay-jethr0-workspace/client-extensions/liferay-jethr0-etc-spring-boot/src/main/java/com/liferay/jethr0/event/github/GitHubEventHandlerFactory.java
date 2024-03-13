@@ -121,8 +121,21 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 					messageJSONObject.optJSONObject("pull_request");
 
 				if (pullRequestJSONObject != null) {
-					return new OpenGitHubPullRequestEventHandler(
-						eventHandlerContext, messageJSONObject);
+					JSONObject repositoryJSONObject =
+						messageJSONObject.getJSONObject("repository");
+
+					String repositoryName = repositoryJSONObject.getString(
+						"name");
+
+					if (repositoryName.equals("liferay-portal") ||
+						repositoryName.equals("liferay-portal-ee")) {
+
+						return new PortalOpenGitHubPullRequestEventHandler(
+							eventHandlerContext, messageJSONObject);
+					}
+
+					throw new IllegalArgumentException(
+						"Invalid \"repository\" from message JSON");
 				}
 			}
 			else if (action.equals("synchronize")) {

@@ -771,14 +771,15 @@ const filterSchema = {
 				type: 'checkbox',
 			},
 			overrides(baseFilters.team, {
-				disabled: true,
+				name:
+					'subtaskToSubtasksCasesResults/caseResultToSubtasksCasesResults/componentToCaseResult/r_teamToComponents_c_teamId',
+				type: 'multiselect',
 			}),
-			{
-				disabled: true,
-				label: i18n.translate('component'),
-				name: 'commponent',
-				type: 'text',
-			},
+			overrides(baseFilters.component, {
+				name:
+					'subtaskToSubtasksCasesResults/caseResultToSubtasksCasesResults/r_componentToCaseResult_c_componentId',
+				type: 'multiselect',
+			}),
 		] as RendererFields[],
 		name: 'subtasks',
 	},

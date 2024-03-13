@@ -68,6 +68,8 @@ const TestFlowTasks = () => {
 	const {taskId} = useParams();
 	const {updateItemFromList} = useMutate();
 
+	const projectId = String(testrayTask.build?.project?.id);
+
 	const [{myUserAccount}] = useContext(TestrayContext);
 
 	useHeader({
@@ -288,6 +290,9 @@ const TestFlowTasks = () => {
 				<ListView
 					forceRefetch={forceRefetch}
 					managementToolbarProps={{
+						customFilterFields: {
+							projectId,
+						},
 						filterSchema: 'subtasks',
 						title: i18n.translate('subtasks'),
 					}}

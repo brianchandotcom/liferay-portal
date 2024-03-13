@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.InputDirectory;
@@ -37,12 +38,16 @@ public class BuildXSDTask extends Zip {
 	}
 
 	@Override
-	public File getDestinationDir() {
+	public DirectoryProperty getDestinationDirectory() {
+		DirectoryProperty destinationDirectory =
+			super.getDestinationDirectory();
+
 		if (_destinationDir != null) {
-			return GradleUtil.toFile(getProject(), _destinationDir);
+			destinationDirectory.set(
+				GradleUtil.toFile(getProject(), _destinationDir));
 		}
 
-		return super.getDestinationDir();
+		return destinationDirectory;
 	}
 
 	@InputDirectory

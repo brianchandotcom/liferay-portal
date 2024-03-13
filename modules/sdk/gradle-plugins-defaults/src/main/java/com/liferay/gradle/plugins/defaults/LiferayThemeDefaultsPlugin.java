@@ -35,6 +35,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
@@ -346,12 +347,15 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		zip.from(dir);
 		zip.setArchiveName(dir.getName() + "." + extension);
-		zip.setDestinationDir(destinationDir);
 
 		zip.setDescription(
 			"Assembles " + project.relativePath(zip.getArchivePath()) +
 				" with the contents of the " + project.relativePath(dir) +
 					" directory.");
+
+		DirectoryProperty directoryProperty = zip.getDestinationDirectory();
+
+		directoryProperty.set(destinationDir);
 
 		return zip;
 	}

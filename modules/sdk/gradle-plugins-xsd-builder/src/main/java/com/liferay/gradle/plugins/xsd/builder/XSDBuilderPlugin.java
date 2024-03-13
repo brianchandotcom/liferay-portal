@@ -18,6 +18,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaLibraryPlugin;
@@ -94,9 +95,13 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 
 		buildXSDTask.setDescription(
 			"Generates XMLBeans bindings and compiles them in a JAR file.");
-		buildXSDTask.setDestinationDir(project.file("lib"));
 		buildXSDTask.setGroup(BasePlugin.BUILD_GROUP);
 		buildXSDTask.setInputDir("xsd");
+
+		DirectoryProperty directoryProperty =
+			buildXSDTask.getDestinationDirectory();
+
+		directoryProperty.set(project.file("lib"));
 
 		PluginContainer pluginContainer = project.getPlugins();
 
@@ -133,7 +138,10 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 		File tmpBinDir = new File(
 			project.getBuildDir(), buildXSDTask.getName() + "/bin");
 
-		javaCompile.setDestinationDir(tmpBinDir);
+		DirectoryProperty directoryProperty =
+			javaCompile.getDestinationDirectory();
+
+		directoryProperty.set(tmpBinDir);
 
 		javaCompile.setSource(generateTask.getOutputs());
 

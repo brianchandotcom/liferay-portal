@@ -84,6 +84,7 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
@@ -453,7 +454,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		SourceDirectorySet javaSourceDirectorySet = javaMainSourceSet.getJava();
 
-		javaSourceDirectorySet.setOutputDir(javaClassesDir);
+		DirectoryProperty directoryProperty =
+			javaSourceDirectorySet.getDestinationDirectory();
+
+		directoryProperty.set(javaClassesDir);
 
 		SourceSetOutput sourceSetOutput = javaMainSourceSet.getOutput();
 
@@ -835,7 +839,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 										javaMainSourceSet.getOutput();
 
 									FileCollection buildDirs = project.files(
-										sourceDirectorySet.getOutputDir(),
+										sourceDirectorySet.
+											getClassesDirectory(),
 										sourceSetOutput.getResourcesDir());
 
 									Set<File> buildDirsFiles =
@@ -1635,8 +1640,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					zippableResourcesZip.from(zippableResourcesDir);
 					zippableResourcesZip.setArchiveName(
 						zippableResourcesDir.getName() + ".zip");
-					zippableResourcesZip.setDestinationDir(
-						project.file("classes"));
+
+					DirectoryProperty directoryProperty =
+						zippableResourcesZip.getDestinationDirectory();
+
+					directoryProperty.set(project.file("classes"));
 				}
 
 			});

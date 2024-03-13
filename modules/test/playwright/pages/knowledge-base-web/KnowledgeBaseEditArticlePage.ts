@@ -37,12 +37,13 @@ export class KnowledgeBaseEditArticlePage {
 		this.page = page;
 	}
 
-	async goto() {
+	async goto(siteUrl: Site['friendlyUrlPath']) {
+		await this.knowledgeBasePage.goto(siteUrl);
+
 		await this.knowledgeBasePage.goToCreateNewArticle();
 	}
 
 	async publishNewKnowledgeBaseArticle(content: string, title: string) {
-		await this.goto();
 		await this.titlePlaceholder.fill(title);
 		await this.contentTextBox.fill(content);
 		await this.publishButton.click();
@@ -52,7 +53,6 @@ export class KnowledgeBaseEditArticlePage {
 		content: string,
 		title: string
 	) {
-		await this.goto();
 		await this.titlePlaceholder.fill(title);
 		await this.contentTextBox.fill(content);
 		await clickAndExpectToBeVisible({
@@ -60,6 +60,10 @@ export class KnowledgeBaseEditArticlePage {
 			target: this.publishMenuItem,
 			trigger: this.publishButton,
 		});
+
+		await this.page
+			.getByText(`Success:${title} was successfully published.`)
+			.waitFor();
 	}
 
 	async scheduleNewKnowledgeBaseArticle(
@@ -67,7 +71,6 @@ export class KnowledgeBaseEditArticlePage {
 		scheduleDate: string,
 		title: string
 	) {
-		await this.goto();
 		await this.titlePlaceholder.fill(title);
 		await this.contentTextBox.fill(content);
 		await clickAndExpectToBeVisible({

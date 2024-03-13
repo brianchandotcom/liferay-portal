@@ -31,7 +31,8 @@ public class GenerateTestrayCSVUtil {
 	public static void generate(
 		String projectBuildDir, String projectTestrayBuildId) {
 
-		System.out.println("LRCI-3940 This is the first line of GenerateTestrayCSVUtil in jenkins-results-parser.");
+		System.out.println(
+			"LRCI-3940 This is the first line of GenerateTestrayCSVUtil in jenkins-results-parser.");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -104,9 +105,11 @@ public class GenerateTestrayCSVUtil {
 	private static List<TestrayCaseResult> _getTestrayCaseResults(
 		String projectTestrayBuildId) {
 
-		System.out.println("LRCI-3940 First line of GenerateTestrayCSVUtil's _getTestrayCaseResults function.");
 		System.out.println(
-			"LRCI-3940 The value of projectTestrayBuildId is: " + projectTestrayBuildId);
+			"LRCI-3940 First line of GenerateTestrayCSVUtil's _getTestrayCaseResults function.");
+		System.out.println(
+			"LRCI-3940 The value of projectTestrayBuildId is: " +
+				projectTestrayBuildId);
 
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
@@ -120,7 +123,8 @@ public class GenerateTestrayCSVUtil {
 				"&testrayBuildId=", projectTestrayBuildId, "&statuses=3");
 
 			System.out.println(
-				"LRCI-3940 The value of testrayCaseResultsURL is: " + testrayCaseResultsURL);
+				"LRCI-3940 The value of testrayCaseResultsURL is: " +
+					testrayCaseResultsURL);
 
 			JSONObject jsonObject = null;
 

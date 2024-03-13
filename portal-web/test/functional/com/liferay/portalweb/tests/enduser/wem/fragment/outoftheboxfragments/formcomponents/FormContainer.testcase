@@ -1521,7 +1521,7 @@ definition {
 					key_fragmentName = "Form Components",
 					locator1 = "Checkbox#ALLOWED_FRAGMENT");
 
-				for (var fragmentName : list "Form Container,CAPTCHA,Checkbox,File Upload,Select from List") {
+				for (var fragmentName : list "Form Container,CAPTCHA,Checkbox,File Upload,Select") {
 					Check.checkToggleSwitch(
 						key_fragmentName = ${fragmentName},
 						locator1 = "Checkbox#ALLOWED_FRAGMENT");

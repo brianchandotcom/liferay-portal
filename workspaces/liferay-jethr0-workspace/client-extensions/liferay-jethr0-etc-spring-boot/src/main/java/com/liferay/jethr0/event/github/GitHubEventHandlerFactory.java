@@ -131,6 +131,12 @@ public class GitHubEventHandlerFactory extends BaseEventHandlerFactory {
 						return new SubrepositoryOpenGitHubPullRequestEventHandler(
 							eventHandlerContext, messageJSONObject);
 					}
+					else if (repositoryName.equals(
+								"liferay-fix-pack-builder-ee")) {
+
+						return new FixpackOpenGitHubPullRequestEventHandler(
+							eventHandlerContext, messageJSONObject);
+					}
 					else if (repositoryName.equals("liferay-plugins") ||
 							 repositoryName.equals("liferay-plugins-ee")) {
 

@@ -48,8 +48,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	public void run() {
 		_validateBuildParameters();
 
-		_copyArchivedBuildData();
-
 		_generateReports();
 	}
 
@@ -99,7 +97,24 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		return buildData.getBuildParameter(key);
 	}
 
+	private void _archivedReport(String filePath) {
+		LocalDate localDate = LocalDate.parse(
+			_START_DATE_STRING, _dateTimeFormatter);
+
+		localDate = localDate.plusDays(_REPORT_DURATION_DAYS);
+
+		JenkinsResultsParserUtil.rsync(
+			"test-1-0",
+			_REPORT_RSYNC_DESTINATION_DIR_PATH + "archived-reports/" +
+				localDate.format(_dateTimeFormatter),
+			null, filePath);
+	}
+
 	private void _copyArchivedBuildData() {
+		if (_archivedBuildDataCopied) {
+			return;
+		}
+
 		String[] dateStrings = JenkinsResultsParserUtil.getDateStrings(
 			_REPORT_DURATION_DAYS,
 			LocalDate.parse(_START_DATE_STRING, _dateTimeFormatter));
@@ -115,16 +130,24 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 					archiveFile, new File(_TMP_ARCHIVE_DIR_PATH, dateString));
 			}
 		}
+
+		_archivedBuildDataCopied = true;
 	}
 
 	private void _generateBuildHistoryReport(String filePath)
 		throws IOException {
+
+		_copyArchivedBuildData();
 
 		BuildHistoryReport aggregateBuildHistoryReport =
 			BuildHistoryReport.newAggregateReport(
 				_REPORT_DURATION_DAYS, new File(filePath), _START_DATE_STRING);
 
 		aggregateBuildHistoryReport.write();
+
+		_updateReport(filePath);
+
+		_archivedReport(filePath);
 	}
 
 	private void _generateCISystemHistoryReport(String filePath)
@@ -135,6 +158,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			_buildProperties.getProperty("ci.system.history.report.job.name"),
 			_buildProperties.getProperty(
 				"ci.system.history.report.test.suite.name"));
+
+		_updateReport(filePath);
 	}
 
 	private void _generateCISystemStatusReport(String filePath)
@@ -175,16 +200,24 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			_buildProperties.getProperty("ci.system.status.report.job.name"),
 			_buildProperties.getProperty(
 				"ci.system.status.report.test.suite.name"));
+
+		_updateReport(filePath);
 	}
 
 	private void _generatePullRequestReport(String filePath)
 		throws IOException {
+
+		_copyArchivedBuildData();
 
 		BuildHistoryReport testSuiteBuildHistoryReport =
 			BuildHistoryReport.newTestSuiteReport(
 				_REPORT_DURATION_DAYS, new File(filePath), _START_DATE_STRING);
 
 		testSuiteBuildHistoryReport.write();
+
+		_updateReport(filePath);
+
+		_archivedReport(filePath);
 	}
 
 	private void _generateReports() {
@@ -224,21 +257,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				continue;
 			}
 
-			JenkinsResultsParserUtil.rsync(
-				"test-1-0", _REPORT_RSYNC_DESTINATION_DIR_PATH, null,
-				reportFilePath);
-
-			LocalDate localDate = LocalDate.parse(
-				_START_DATE_STRING, _dateTimeFormatter);
-
-			localDate = localDate.plusDays(_REPORT_DURATION_DAYS);
-
-			JenkinsResultsParserUtil.rsync(
-				"test-1-0",
-				_REPORT_RSYNC_DESTINATION_DIR_PATH + "archived-reports/" +
-					localDate.format(_dateTimeFormatter),
-				null, reportFilePath);
-
 			sb.append("<a href=\"http://test-1-0/userContent/reports/");
 
 			sb.append(_getReportDirName(reportName));
@@ -269,6 +287,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 
 		return buildParameter.split("\\s*,\\s*");
+	}
+
+	private void _updateReport(String filePath) {
+		JenkinsResultsParserUtil.rsync(
+			"test-1-0", _REPORT_RSYNC_DESTINATION_DIR_PATH, null, filePath);
 	}
 
 	private void _validateBuildParameters() {
@@ -343,6 +366,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		_START_DATE_STRING = zonedDateTime.format(_dateTimeFormatter);
 	}
 
+	private boolean _archivedBuildDataCopied;
 	private Workspace _workspace;
 
 }

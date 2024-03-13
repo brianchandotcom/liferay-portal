@@ -84,20 +84,16 @@ public class LayoutPrototypeLocalServiceTest {
 
 		_userLocalService.deleteUser(user);
 
-		try {
-			LayoutPrototype layoutPrototype =
-				_layoutPrototypeLocalService.fetchLayoutPrototype(
-					layoutPageTemplateEntry.getLayoutPrototypeId());
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeLocalService.fetchLayoutPrototype(
+				layoutPageTemplateEntry.getLayoutPrototypeId());
 
+		Assert.assertNotNull(
 			_layoutPrototypeLocalService.updateLayoutPrototype(
 				layoutPageTemplateEntry.getLayoutPrototypeId(),
 				layoutPrototype.getNameMap(), null, false,
 				ServiceContextTestUtil.getServiceContext(
-					_group, TestPropsValues.getUserId()));
-		}
-		catch (Exception exception) {
-			Assert.fail();
-		}
+					_group, TestPropsValues.getUserId())));
 	}
 
 	@Inject

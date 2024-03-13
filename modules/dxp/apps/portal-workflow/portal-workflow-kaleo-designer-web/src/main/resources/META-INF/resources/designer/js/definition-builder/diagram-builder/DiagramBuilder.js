@@ -33,6 +33,16 @@ import getCollidingElements from './util/collisionDetection';
 import populateAssignmentsData from './util/populateAssignmentsData';
 import populateNotificationsData from './util/populateNotificationsData';
 
+let ReactFlowDefault = ReactFlow;
+
+// `react-flow-renderer` provides both a commonjs and ESM version.
+// We need this logic here so that both work. Unit tests rely on commonjs and
+// our DXP runtime uses ESM.
+
+if (ReactFlowDefault.default) {
+	ReactFlowDefault = ReactFlowDefault.default;
+}
+
 const deserializeUtil = new DeserializeUtil();
 
 export default function DiagramBuilder() {
@@ -409,7 +419,7 @@ export default function DiagramBuilder() {
 		<DiagramBuilderContextProvider {...contextProps}>
 			<div className="diagram-builder">
 				<div className="diagram-area" ref={reactFlowWrapperRef}>
-					<ReactFlow
+					<ReactFlowDefault
 						connectionLineComponent={FloatingConnectionLine}
 						edgeTypes={edgeTypes}
 						elements={elements}

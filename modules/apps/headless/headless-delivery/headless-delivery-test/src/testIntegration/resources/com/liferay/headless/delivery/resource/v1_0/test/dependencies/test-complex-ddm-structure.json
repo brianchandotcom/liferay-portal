@@ -18,7 +18,7 @@
 			"label": {
 				"en_US": "Text"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Text91610572",
 			"nativeField": false,
 			"placeholder": {
@@ -52,7 +52,7 @@
 			"label": {
 				"en_US": "Select from List"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"multiple": false,
 			"name": "SelectFromList43392010",
 			"nativeField": false,
@@ -101,7 +101,7 @@
 			"label": {
 				"en_US": "Single Selection"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "SingleSelection90775749",
 			"nativeField": false,
 			"options": [
@@ -149,7 +149,7 @@
 			"label": {
 				"en_US": "Multiple Selection"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "MultipleSelection91429516",
 			"nativeField": false,
 			"options": [
@@ -220,7 +220,7 @@
 			"label": {
 				"en_US": "Grid"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Grid61505317",
 			"predefinedValue": {
 				"en_US": ""
@@ -267,7 +267,7 @@
 			"label": {
 				"en_US": "Date"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Date13994235",
 			"nativeField": false,
 			"predefinedValue": {
@@ -292,7 +292,7 @@
 				"en_US": "Fields Group"
 			},
 			"labelAtStructureLevel": true,
-			"localizable": false,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Fieldset39810423",
 			"nestedFields": [
 				{
@@ -315,7 +315,7 @@
 						"en_US": "Text"
 					},
 					"labelAtStructureLevel": true,
-					"localizable": true,
+					"localizable": "[#LOCALIZABLE#]",
 					"name": "Text97681688",
 					"nativeField": false,
 					"objectFieldName": "",
@@ -362,7 +362,7 @@
 						"en_US": "Text"
 					},
 					"labelAtStructureLevel": true,
-					"localizable": true,
+					"localizable": "[#LOCALIZABLE#]",
 					"name": "Text60420360",
 					"nativeField": false,
 					"objectFieldName": "",
@@ -428,7 +428,7 @@
 			"label": {
 				"en_US": "Numeric"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Numeric90681086",
 			"nativeField": false,
 			"placeholder": {
@@ -458,7 +458,7 @@
 			"label": {
 				"en_US": "Image"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Image09552700",
 			"predefinedValue": {
 				"en_US": ""
@@ -481,7 +481,7 @@
 			"label": {
 				"en_US": "Rich Text"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "RichText26302729",
 			"predefinedValue": {
 				"en_US": ""
@@ -505,7 +505,7 @@
 			"label": {
 				"en_US": "Upload"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Upload59174863",
 			"predefinedValue": {
 				"en_US": ""
@@ -528,7 +528,7 @@
 			"label": {
 				"en_US": "Color"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Color08878017",
 			"predefinedValue": {
 				"en_US": ""
@@ -551,7 +551,7 @@
 			"label": {
 				"en_US": "Web Content"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "WebContent62525280",
 			"predefinedValue": {
 				"en_US": ""
@@ -573,7 +573,7 @@
 			"label": {
 				"en_US": "Geolocation"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Geolocation12799577",
 			"predefinedValue": {
 			},
@@ -594,7 +594,7 @@
 			"label": {
 				"en_US": "Link to Page"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "LinkToPage24223121",
 			"predefinedValue": {
 				"en_US": ""
@@ -615,7 +615,7 @@
 			"label": {
 				"en_US": "Separator"
 			},
-			"localizable": true,
+			"localizable": "[#LOCALIZABLE#]",
 			"name": "Separator50058552",
 			"predefinedValue": {
 			},

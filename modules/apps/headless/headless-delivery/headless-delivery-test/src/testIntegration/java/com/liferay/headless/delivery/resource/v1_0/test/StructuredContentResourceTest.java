@@ -128,8 +128,6 @@ public class StructuredContentResourceTest
 		_blogsEntry = BlogsTestUtil.addEntryWithWorkflow(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(), true,
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
-		_complexDDMStructure = _addDDMStructure(
-			testGroup, "test-complex-ddm-structure.json");
 
 		_ddmStructure = _addDDMStructure(testGroup, "test-ddm-structure.json");
 
@@ -417,7 +415,7 @@ public class StructuredContentResourceTest
 
 		StructuredContent postStructuredContent =
 			structuredContentResource.postSiteStructuredContent(
-				testGroup.getGroupId(), _randomCompleteStructuredContent());
+				testGroup.getGroupId(), _randomCompleteStructuredContent(true));
 
 		StructuredContent getStructuredContent =
 			structuredContentResource.getStructuredContent(
@@ -432,7 +430,7 @@ public class StructuredContentResourceTest
 			structuredContentResource.
 				postStructuredContentFolderStructuredContent(
 					_journalFolder.getFolderId(),
-					_randomCompleteStructuredContent());
+					_randomCompleteStructuredContent(true));
 
 		getStructuredContent = structuredContentResource.getStructuredContent(
 			postStructuredContent.getId());
@@ -1344,8 +1342,24 @@ public class StructuredContentResourceTest
 			RandomTestUtil.randomInt(0, 100), RandomTestUtil.randomInt(0, 100));
 	}
 
-	private StructuredContent _randomCompleteStructuredContent()
+	private StructuredContent _randomCompleteStructuredContent(
+			boolean localizable)
 		throws Exception {
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(JournalArticle.class), testGroup);
+
+		DDMStructure complexDDMStructure = ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_deserialize(
+				StringUtil.replace(
+					_read("test-complex-ddm-structure.json"), "\"[#", "#]\"",
+					HashMapBuilder.put(
+						"LOCALIZABLE", String.valueOf(localizable)
+					).build())),
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			testGroup.getGroupId(), _journalFolder.getFolderId());
@@ -1355,7 +1369,7 @@ public class StructuredContentResourceTest
 		structuredContent.setContentFields(
 			_randomContentFields(journalArticle));
 		structuredContent.setContentStructureId(
-			_complexDDMStructure.getStructureId());
+			complexDDMStructure.getStructureId());
 		structuredContent.setRelatedContents(
 			new RelatedContent[] {
 				new RelatedContent() {
@@ -1911,7 +1925,6 @@ public class StructuredContentResourceTest
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private BlogsEntry _blogsEntry;
-	private DDMStructure _complexDDMStructure;
 
 	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;

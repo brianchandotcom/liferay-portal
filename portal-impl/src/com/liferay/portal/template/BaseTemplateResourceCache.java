@@ -31,7 +31,6 @@ public abstract class BaseTemplateResourceCache
 		}
 
 		_multiVMPortalCache.removeAll();
-		_singleVMPortalCache.removeAll();
 	}
 
 	public <T> PortalCache<TemplateResource, T> getSecondLevelPortalCache() {
@@ -44,12 +43,7 @@ public abstract class BaseTemplateResourceCache
 			return null;
 		}
 
-		TemplateResource templateResource = _singleVMPortalCache.get(
-			templateId);
-
-		if (templateResource == null) {
-			templateResource = _multiVMPortalCache.get(templateId);
-		}
+		TemplateResource templateResource = _multiVMPortalCache.get(templateId);
 
 		if ((templateResource != null) &&
 			(templateResource != DUMMY_TEMPLATE_RESOURCE) &&
@@ -89,10 +83,10 @@ public abstract class BaseTemplateResourceCache
 		}
 
 		if (templateResource == null) {
-			_singleVMPortalCache.put(templateId, DUMMY_TEMPLATE_RESOURCE);
+			_multiVMPortalCache.put(templateId, DUMMY_TEMPLATE_RESOURCE);
 		}
 		else if (templateResource instanceof URLTemplateResource) {
-			_singleVMPortalCache.put(
+			_multiVMPortalCache.put(
 				templateId, new CacheTemplateResource(templateResource));
 		}
 		else if (templateResource instanceof CacheTemplateResource ||
@@ -113,17 +107,12 @@ public abstract class BaseTemplateResourceCache
 		}
 
 		_multiVMPortalCache.remove(templateId);
-		_singleVMPortalCache.remove(templateId);
 	}
 
 	protected void destroy() {
 		PortalCacheHelperUtil.removePortalCache(
 			PortalCacheManagerNames.MULTI_VM,
 			_multiVMPortalCache.getPortalCacheName());
-
-		PortalCacheHelperUtil.removePortalCache(
-			PortalCacheManagerNames.SINGLE_VM,
-			_singleVMPortalCache.getPortalCacheName());
 
 		PortalCacheHelperUtil.removePortalCache(
 			PortalCacheManagerNames.SINGLE_VM,
@@ -138,8 +127,6 @@ public abstract class BaseTemplateResourceCache
 
 		_multiVMPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM, portalCacheName);
-		_singleVMPortalCache = PortalCacheHelperUtil.getPortalCache(
-			PortalCacheManagerNames.SINGLE_VM, portalCacheName);
 
 		_secondLevelPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.SINGLE_VM, secondLevelPortalCacheName);
@@ -165,8 +152,6 @@ public abstract class BaseTemplateResourceCache
 
 		_multiVMPortalCache.registerPortalCacheListener(
 			templateResourcePortalCacheListener);
-		_singleVMPortalCache.registerPortalCacheListener(
-			templateResourcePortalCacheListener);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -175,7 +160,6 @@ public abstract class BaseTemplateResourceCache
 	private volatile long _modificationCheckInterval;
 	private PortalCache<String, TemplateResource> _multiVMPortalCache;
 	private PortalCache<TemplateResource, ?> _secondLevelPortalCache;
-	private PortalCache<String, TemplateResource> _singleVMPortalCache;
 
 	private class TemplateResourcePortalCacheListener
 		implements PortalCacheListener<String, TemplateResource> {

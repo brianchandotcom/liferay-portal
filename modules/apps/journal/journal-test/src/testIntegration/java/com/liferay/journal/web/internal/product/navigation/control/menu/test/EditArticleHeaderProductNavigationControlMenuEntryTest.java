@@ -75,6 +75,17 @@ public class EditArticleHeaderProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
+	public void testIsShowJournalArticleHeaderInAnotherView() throws Exception {
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertFalse(
+			_productNavigationControlMenuEntry.isShow(
+				_getMockHttpServletRequest(journalArticle)));
+	}
+
+	@Test
 	public void testIsShowJournalArticleHeaderWithGuestPermissions()
 		throws Exception {
 

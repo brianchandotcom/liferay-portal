@@ -20,7 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.json.JSONObject;
@@ -155,30 +154,9 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		Set<JobProperty> includesJobProperties = new HashSet<>();
 
-		String moduleName = null;
-
-		Matcher matcher = _singleModuleBatchNamePattern.matcher(batchName);
-
-		if (matcher.find()) {
-			moduleName = matcher.group("moduleName");
-		}
-
 		for (File modifiedModuleDir : modifiedModuleDirsSet) {
 			if (modifiedPoshiModulesList.contains(modifiedModuleDir) &&
 				!modifiedNonposhiModulesList.contains(modifiedModuleDir)) {
-
-				continue;
-			}
-
-			String modifiedModuleAbsolutePath =
-				JenkinsResultsParserUtil.getCanonicalPath(modifiedModuleDir);
-
-			String modifiedModuleRelativePath =
-				modifiedModuleAbsolutePath.substring(
-					modifiedModuleAbsolutePath.indexOf("modules/"));
-
-			if ((moduleName != null) &&
-				!modifiedModuleRelativePath.contains("/" + moduleName)) {
 
 				continue;
 			}
@@ -187,11 +165,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				getJobProperty(
 					"test.batch.class.names.includes.modules",
 					modifiedModuleDir, JobProperty.Type.INCLUDE_GLOB));
-
-			includesJobProperties.add(
-				getJobProperty(
-					"modules.includes.required.test.batch.class.names.includes",
-					modifiedModuleDir, JobProperty.Type.MODULE_INCLUDE_GLOB));
 		}
 
 		for (File modifiedFile :
@@ -466,8 +439,5 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		return bndBndProperties.getProperty("Bundle-SymbolicName");
 	}
-
-	private static final Pattern _singleModuleBatchNamePattern =
-		Pattern.compile("modules-unit-(?<moduleName>\\S+)-jdk\\d+");
 
 }

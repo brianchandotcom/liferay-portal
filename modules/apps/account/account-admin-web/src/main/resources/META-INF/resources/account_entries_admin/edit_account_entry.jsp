@@ -12,8 +12,12 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 %>
 
 <liferay-frontend:screen-navigation
+	containerCssClass="col-lg-8"
+	containerWrapperCssClass="container-fluid container-fluid-max-xl"
 	context="<%= accountEntryDisplay %>"
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY %>"
+	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
+	navCssClass="col-lg-3"
 	portletURL='<%=
 		PortletURLBuilder.createRenderURL(
 			renderResponse

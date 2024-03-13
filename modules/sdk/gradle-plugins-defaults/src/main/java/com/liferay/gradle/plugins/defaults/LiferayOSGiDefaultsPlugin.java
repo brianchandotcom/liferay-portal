@@ -482,6 +482,22 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			jar.dependsOn(generatePomFileForMavenPublicationTask);
 
+			Task generateJSPJavaTask = GradleUtil.fetchTask(
+				project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
+
+			if (generateJSPJavaTask != null) {
+				generateJSPJavaTask.mustRunAfter(
+					generatePomFileForMavenPublicationTask);
+			}
+
+			Task javadocTask = GradleUtil.fetchTask(
+				project, JavaPlugin.JAVADOC_TASK_NAME);
+
+			if (javadocTask != null) {
+				javadocTask.mustRunAfter(
+					generatePomFileForMavenPublicationTask);
+			}
+
 			_configureTasksEnabledIfStaleSnapshot(
 				project, testProject,
 				MavenPublishPlugin.PUBLISH_LOCAL_LIFECYCLE_TASK_NAME,

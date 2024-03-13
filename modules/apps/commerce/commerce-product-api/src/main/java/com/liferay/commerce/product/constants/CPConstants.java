@@ -16,7 +16,7 @@ public class CPConstants {
 	public static final String MONTHLY_SUBSCRIPTION_TYPE = "monthly";
 
 	public static final String[] PRODUCT_OPTION_MULTIPLE_VALUES_FIELD_TYPES = {
-		"select", "radio", "checkbox", "checkbox_multiple"
+		"checkbox", "checkbox_multiple", "radio", "select", "select_date"
 	};
 
 	public static final String[] PRODUCT_OPTION_PRICE_CONTRIBUTOR_FIELD_TYPES =

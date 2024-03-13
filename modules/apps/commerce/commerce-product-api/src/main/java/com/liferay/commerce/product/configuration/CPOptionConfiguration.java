@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CPOptionConfiguration {
 
 	@Meta.AD(
-		deflt = "select|radio|date|checkbox|checkbox_multiple|numeric|text",
+		deflt = "select|select_date|radio|date|checkbox|checkbox_multiple|numeric|text",
 		name = "product-option-form-field-types-allowed", required = false
 	)
 	public String[] allowedCommerceOptionTypes();

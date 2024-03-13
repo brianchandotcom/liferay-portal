@@ -57,6 +57,9 @@ public class AccountScreenNavigationEntryConstants {
 	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_ADDRESS =
 		"edit.account.address.form";
 
+	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_CONTACT =
+		"edit.account.contact.form";
+
 	public static final String SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY =
 		"edit.account.entry.form";
 

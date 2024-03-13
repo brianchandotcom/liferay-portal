@@ -356,16 +356,12 @@ test('can export as JSONL with excluded fields', async ({
 	await apiHelpers.object.postObjectEntry(stockObjectEntry, 'c/stocks');
 
 	expect(
-		JSON.parse(
-			await dataMigrationCenterPage.exportFile(
-				'JSONL',
-				'C_Stock (v1_0 - Liferay Object REST)',
-				['name']
-			)
+		await dataMigrationCenterPage.exportFile(
+			'JSONL',
+			'C_Stock (v1_0 - Liferay Object REST)',
+			['name']
 		)
-	).toEqual({
-		name: 'Stock Entry',
-	});
+	).toBe('{"name":"Stock Entry"}\n');
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });

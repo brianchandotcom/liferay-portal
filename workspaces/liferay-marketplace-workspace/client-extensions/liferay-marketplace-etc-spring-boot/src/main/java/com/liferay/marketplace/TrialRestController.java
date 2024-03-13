@@ -99,23 +99,23 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	private boolean _checkAccountOrders(String accountId) throws Exception {
-		String filter = "(accountId/any(x:(x eq #)))".replace("#", accountId);
+		String filter = "(accountId/any(x:(x eq " + accountId + ")))";
 
 		Page<Order> ordersPage = _orderResource.getOrdersPage(
-			"", filter, Pagination.of(1, 100), "");
+			"", filter, Pagination.of(-1, -1), "");
 
-		boolean trialExist = false;
+		int trialCount = 0;
 
 		for (Order order : ordersPage.getItems()) {
 			if (Objects.equals(
 					order.getOrderTypeExternalReferenceCode(),
 					_ORDER_TYPE_EXTERNAL_REFERENCE_CODE)) {
 
-				if (trialExist) {
+				trialCount++;
+
+				if (trialCount > 1) {
 					return false;
 				}
-
-				trialExist = true;
 			}
 		}
 
@@ -123,12 +123,12 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	private void _initResourceBuilders() throws Exception {
-		String authorization = AuthorizationUtil.getOAuthAccessToken(
-			lxcDXPServerProtocol, lxcDXPMainDomain, _dxpAuthClientId,
-			_dxpAuthClientSecret, _authenticationMap);
-
 		URL liferayDXPURL = new URL(
 			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+
+		String authorization = AuthorizationUtil.getOAuthAccessToken(
+			_authenticationMap, liferayDXPURL, _dxpAuthClientId,
+			_dxpAuthClientSecret);
 
 		_orderResource = OrderResource.builder(
 		).endpoint(
@@ -151,17 +151,17 @@ public class TrialRestController extends BaseRestController {
 
 		Admin admin = new Admin();
 
-		String domain = "tryitnow-" + orderId + ".us.demo.lxc.liferay.com";
-
-		admin.setGivenName(
-			jwt.getClaim(
-				"username"
-			).toString());
+		admin.setEmailAddress(emailAddress);
 		admin.setFamilyName(
 			jwt.getClaim(
 				"username"
 			).toString());
-		admin.setEmailAddress(emailAddress);
+		admin.setGivenName(
+			jwt.getClaim(
+				"username"
+			).toString());
+
+		String domain = "tryitnow-" + orderId + ".us.demo.lxc.liferay.com";
 
 		PortalInstance portalInstance = new PortalInstance();
 

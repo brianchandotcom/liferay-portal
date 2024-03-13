@@ -30,8 +30,8 @@ import org.json.JSONObject;
 public class AuthorizationUtil {
 
 	public static String getOAuthAccessToken(
-			String dxpServerProtocol, String dxpDomain, String dxpAuthClientId,
-			String dxpAuthClientSecret, Map<String, String> authenticationMap)
+			Map<String, String> authenticationMap, URL dxpURL,
+			String dxpOAuthClientId, String dxpOAuthClientSecret)
 		throws Exception {
 
 		if ((authenticationMap.get("access_token") != null) &&
@@ -43,15 +43,14 @@ public class AuthorizationUtil {
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
-		HttpPost httpPost = new HttpPost(
-			new URL(dxpServerProtocol + "://" + dxpDomain) + "/o/oauth2/token");
+		HttpPost httpPost = new HttpPost(dxpURL + "/o/oauth2/token");
 
 		httpPost.setEntity(
 			new UrlEncodedFormEntity(
 				Arrays.asList(
-					new BasicNameValuePair("client_id", dxpAuthClientId),
+					new BasicNameValuePair("client_id", dxpOAuthClientId),
 					new BasicNameValuePair(
-						"client_secret", dxpAuthClientSecret),
+						"client_secret", dxpOAuthClientSecret),
 					new BasicNameValuePair(
 						"grant_type", "client_credentials"))));
 		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");

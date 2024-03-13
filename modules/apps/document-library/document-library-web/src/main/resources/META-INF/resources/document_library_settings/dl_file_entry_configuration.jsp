@@ -46,7 +46,7 @@ DLFileEntryConfigurationDisplayContext dlFileEntryConfigurationDisplayContext = 
 				<span aria-hidden="true" class="loading-animation"></span>
 
 				<react:component
-					module="document_library_settings/js/LimitedNumberInput"
+					module="{LimitedNumberInput} from document-library-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"errorMessage", dlFileEntryConfigurationDisplayContext.getPreviewableProcessorMaxSizeLimitExceededErrorMessage()
@@ -79,7 +79,7 @@ DLFileEntryConfigurationDisplayContext dlFileEntryConfigurationDisplayContext = 
 				<span aria-hidden="true" class="loading-animation"></span>
 
 				<react:component
-					module="document_library_settings/js/LimitedNumberInput"
+					module="{LimitedNumberInput} from document-library-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"errorMessage", dlFileEntryConfigurationDisplayContext.getMaxNumberOfPagesLimitExceededErrorMessage()

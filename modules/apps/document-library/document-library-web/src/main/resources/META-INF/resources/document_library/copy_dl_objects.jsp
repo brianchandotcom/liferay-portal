@@ -15,7 +15,7 @@ copyDLObjectsDisplayContext.setViewAttributes();
 
 <div class="c-mt-3 sheet sheet-lg">
 	<react:component
-		module="document_library/js/DLFolderSelector"
+		module="{DLFolderSelector} from document-library-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"copyActionURL", copyDLObjectsDisplayContext.getActionURL()

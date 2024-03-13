@@ -15,7 +15,7 @@ DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayCont
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new DLViewFileEntryMetadataSetsManagementToolbarDisplayContext(dLViewFileEntryMetadataSetsDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
-	propsTransformer="document_library/js/DDMStructuresManagementToolbarPropsTransformer"
+	propsTransformer="{DDMStructuresManagementToolbarPropsTransformer} from document-library-web"
 />
 
 <portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/document_library/delete_data_definition" var="deleteDataDefinitionURL" />

@@ -318,7 +318,7 @@ renderResponse.setTitle(headerTitle);
 
 							<c:if test="<%= fileVersion != null %>">
 								<react:component
-									module="document_library/js/FileNameInput.es"
+									module="{FileNameInput} from document-library-web"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
 											"initialValue", fileVersion.getFileName()
@@ -394,7 +394,7 @@ renderResponse.setTitle(headerTitle);
 								<c:if test="<%= showLanguageSelector %>">
 									<div class="mb-3">
 										<react:component
-											module="document_library/js/LanguageSelector"
+											module="{LanguageSelector} from document-library-web"
 											props='<%=
 												HashMapBuilder.<String, Object>put(
 													"ddmStructureIds", DDMStructureUtil.getDDMStructureIds(ddmStructures)

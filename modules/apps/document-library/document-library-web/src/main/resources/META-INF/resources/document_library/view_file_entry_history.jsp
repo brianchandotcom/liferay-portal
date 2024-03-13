@@ -73,7 +73,7 @@ renderResponse.setTitle(fileEntry.getTitle());
 				<clay:dropdown-actions
 					aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 					dropdownItems="<%= dlViewFileEntryHistoryDisplayContext.getActionDropdownItems() %>"
-					propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
+					propsTransformer="{DLFileEntryDropdownPropsTransformer} from document-library-web"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

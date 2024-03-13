@@ -15,7 +15,7 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 	<clay:dropdown-actions
 		aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 		dropdownItems="<%= folderActionDisplayContext.getActionDropdownItems() %>"
-		propsTransformer="document_library/js/DLFolderDropdownPropsTransformer"
+		propsTransformer="{DLFolderDropdownPropsTransformer} from document-library-web"
 	/>
 
 	<aui:script use="uploader">

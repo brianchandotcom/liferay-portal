@@ -6,15 +6,20 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +54,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 			).put(
 				"label", LanguageUtil.get(_httpServletRequest, "details")
 			).put(
-				"pluginEntryPoint",
-				npmResolvedPackageName +
-					"/document_library/js/data-engine/panels/index.es"
+				"pluginEntryPoint", getESModule()
 			).put(
 				"sidebarPanelId", "details"
 			).put(
@@ -76,9 +79,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 				LanguageUtil.get(
 					_httpServletRequest, "additional-metadata-fields")
 			).put(
-				"pluginEntryPoint",
-				npmResolvedPackageName +
-					"/document_library/js/data-engine/panels/index.es"
+				"pluginEntryPoint", getESModule()
 			).put(
 				"sidebarPanelId", "additionalMetadataFields"
 			).put(
@@ -107,9 +108,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 					"label",
 					LanguageUtil.get(_httpServletRequest, "permissions")
 				).put(
-					"pluginEntryPoint",
-					npmResolvedPackageName +
-						"/document_library/js/data-engine/panels/index.es"
+					"pluginEntryPoint", getESModule()
 				).put(
 					"sidebarPanelId", "permissions"
 				).put(
@@ -126,6 +125,23 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 
 		return additionalPanels;
 	}
+
+	public String getESModule() {
+		ESImport esImport = ESImportUtil.getESImport(
+			_absolutePortalURLBuilderFactorySnapshot.get(
+			).getAbsolutePortalURLBuilder(
+				_httpServletRequest
+			),
+			"{Panels} from document-library-web");
+
+		return StringBundler.concat(
+			"{", esImport.getSymbol(), "} from ", esImport.getModule());
+	}
+
+	private static final Snapshot<AbsolutePortalURLBuilderFactory>
+		_absolutePortalURLBuilderFactorySnapshot = new Snapshot<>(
+			DLEditFileEntryTypeDataEngineDisplayContext.class,
+			AbsolutePortalURLBuilderFactory.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

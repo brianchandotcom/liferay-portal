@@ -83,7 +83,7 @@ FileVersion fileVersion = dlViewFileEntryDisplayContext.getFileVersion();
 					<clay:dropdown-actions
 						aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 						dropdownItems="<%= dlViewFileEntryDisplayContext.getActionDropdownItems() %>"
-						propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
+						propsTransformer="{DLFileEntryDropdownPropsTransformer} from document-library-web"
 					/>
 				</li>
 			</ul>

@@ -574,5 +574,5 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 </div>
 
 <liferay-frontend:component
-	module="document_library/js/InfoPanel.es"
+	module="{InfoPanel} from document-library-web"
 />

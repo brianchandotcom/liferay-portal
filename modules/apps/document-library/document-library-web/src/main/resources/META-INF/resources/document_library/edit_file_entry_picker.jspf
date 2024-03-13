@@ -19,7 +19,7 @@ DLFilePicker dlFilePicker = dlEditFileEntryDisplayContext.getDLFilePicker(lifera
 			<aui:button value="select-file" />
 
 			<react:component
-				module="document_library/js/FileEntryPicker"
+				module="{FileEntryPicker} from document-library-web"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"maxFileSize", dlEditFileEntryDisplayContext.getMaximumUploadSize()

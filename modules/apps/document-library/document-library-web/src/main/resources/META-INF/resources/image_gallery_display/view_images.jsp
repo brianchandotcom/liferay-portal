@@ -135,7 +135,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 												<clay:dropdown-actions
 													aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 													dropdownItems="<%= igViewFileVersionDisplayContext.getActionDropdownItems() %>"
-													propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
+													propsTransformer="{DLFileEntryDropdownPropsTransformer} from document-library-web"
 												/>
 											</div>
 										</div>
@@ -164,7 +164,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				<liferay-ui:search-container-column-text>
 					<clay:horizontal-card
 						horizontalCard="<%= new FolderHorizontalCard(dlPortletInstanceSettingsHelper, dlTrashHelper, curFolder, request, renderResponse, null, viewFolderURL) %>"
-						propsTransformer="document_library/js/DLFolderDropdownPropsTransformer"
+						propsTransformer="{DLFolderDropdownPropsTransformer} from document-library-web"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:otherwise>

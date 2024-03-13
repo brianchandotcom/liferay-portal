@@ -110,7 +110,7 @@ if (portletTitleBasedNavigation) {
 						<clay:dropdown-actions
 							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
 							dropdownItems="<%= dlViewFileEntryDisplayContext.getActionDropdownItems() %>"
-							propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
+							propsTransformer="{DLFileEntryDropdownPropsTransformer} from document-library-web"
 						/>
 					</li>
 				</ul>
@@ -162,7 +162,7 @@ if (portletTitleBasedNavigation) {
 	<portlet:actionURL name="/document_library/edit_file_entry_image_editor" var="editImageURL" />
 
 	<react:component
-		module="document_library/js/image-editor/EditImageWithImageEditor"
+		module="{EditImageWithImageEditor} from document-library-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"editImageURL", editImageURL

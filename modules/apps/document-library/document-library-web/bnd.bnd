@@ -5,6 +5,6 @@ Import-Package:\
 	org.apache.xerces.parsers,\
 	\
 	*
-Liferay-JS-Config: /META-INF/resources/document_library/js/legacy/config.js
+Liferay-JS-Config: /META-INF/resources/js/legacy/config.js
 Web-ContextPath: /document-library-web
 -dsannotations-options: inherit

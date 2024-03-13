@@ -104,7 +104,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			"defaultLanguageId", defaultLanguageId
 		).build()
 	%>'
-	module="document_library/js/LocaleChangedHandler.es"
+	module="{LocaleChangedHandler} from document-library-web"
 	servletContext="<%= application %>"
 />
 
@@ -116,7 +116,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			"defaultLanguageId", defaultLanguageId
 		).build()
 	%>'
-	module="document_library/js/data-engine/DataEngineLayoutBuilderHandler.es"
+	module="{DataEngineLayoutBuilderHandler} from document-library-web"
 	servletContext="<%= application %>"
 />
 

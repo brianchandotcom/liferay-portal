@@ -180,7 +180,7 @@ else {
 							<c:if test="<%= showLanguageSelector %>">
 								<div class="mt-2">
 									<react:component
-										module="document_library/js/LanguageSelector"
+										module="{LanguageSelector} from document-library-web"
 										props='<%=
 											HashMapBuilder.<String, Object>put(
 												"ddmStructureIds", DDMStructureUtil.getDDMStructureIds(ddmStructures)

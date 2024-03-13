@@ -203,7 +203,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 														<clay:dropdown-actions
 															aria-label='<%= LanguageUtil.get(request, "actions") %>'
 															dropdownItems="<%= dlViewFileVersionDisplayContext.getActionDropdownItems() %>"
-															propsTransformer="document_library/js/DLFileEntryDropdownPropsTransformer"
+															propsTransformer="{DLFileEntryDropdownPropsTransformer} from document-library-web"
 														/>
 													</div>
 												</c:if>
@@ -441,7 +441,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 							>
 								<clay:horizontal-card
 									horizontalCard="<%= new FolderHorizontalCard(dlPortletInstanceSettingsHelper, dlTrashHelper, curFolder, request, renderResponse, searchContainer.getRowChecker(), viewFolderURL) %>"
-									propsTransformer="document_library/js/DLFolderDropdownPropsTransformer"
+									propsTransformer="{DLFolderDropdownPropsTransformer} from document-library-web"
 								/>
 							</liferay-ui:search-container-column-text>
 						</c:when>

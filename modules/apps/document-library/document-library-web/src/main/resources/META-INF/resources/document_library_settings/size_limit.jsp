@@ -46,7 +46,7 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 				<span aria-hidden="true" class="loading-animation"></span>
 
 				<react:component
-					module="document_library/js/file-size-limit/FileSizeMimetypes"
+					module="{FileSizeMimetypes} from document-library-web"
 					props="<%= dlSizeLimitConfigurationDisplayContext.getFileSizePerMimeTypeData() %>"
 				/>
 			</div>

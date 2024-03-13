@@ -9,7 +9,7 @@
 
 <div>
 	<react:component
-		module="document_library/js/checkin/Checkin.es"
+		module="{Checkin} from document-library-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"checkedOut", GetterUtil.getBoolean(request.getAttribute("edit_file_entry.jsp-checkedOut"))

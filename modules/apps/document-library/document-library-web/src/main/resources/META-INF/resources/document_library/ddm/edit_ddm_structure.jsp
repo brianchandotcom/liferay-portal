@@ -103,7 +103,7 @@ renderResponse.setTitle(title);
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "LocaleChangedHandlerComponent" %>'
 	context="<%= dlEditDDMStructureDisplayContext.getComponentContext() %>"
-	module="document_library/js/data-engine/DataEngineLayoutBuilderHandler.es"
+	module="{DataEngineLayoutBuilderHandler} from document-library-web"
 	servletContext="<%= application %>"
 />
 
@@ -114,6 +114,6 @@ renderResponse.setTitle(title);
 			"namespace", liferayPortletResponse.getNamespace()
 		).build()
 	%>'
-	module="document_library/js/saveDDMStructure.es"
+	module="{saveDDMStructure} from document-library-web"
 	servletContext="<%= application %>"
 />

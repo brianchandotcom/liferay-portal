@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
-import '../../css/file_size_mimetypes.scss';
+import '../../../document_library/css/file_size_mimetypes.scss';
 
 const NumberErrorMessage = `${Liferay.Language.get(
 	'error-colon'

@@ -89,7 +89,7 @@ public class ProjectControllerTest {
 		Assert.assertEquals(
 			productEntryId, osbOfferingEntry.getProductEntryId());
 		Assert.assertEquals(1, osbOfferingEntry.getQuantity());
-		Assert.assertNotNull(osbOfferingEntry.getStartDate());
+		Assert.assertNull(osbOfferingEntry.getStartDate());
 		Assert.assertEquals(
 			ProductConstants.OSB_OFFERING_ENTRY_STATUS_ACTIVE,
 			osbOfferingEntry.getStatus());

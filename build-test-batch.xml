@@ -7373,7 +7373,7 @@ ${output.content}</echo>
 							<isset property="env.PLAYWRIGHT_PROJECT_NAME" />
 						</condition>
 
-						<trycatch>
+						<trycatch property="exception.message">
 							<try>
 								<exec executable="/bin/bash">
 									<arg value="modules/test/playwright/env/set_up.sh" />
@@ -7428,6 +7428,9 @@ ${output.content}</echo>
 									${playwright.command}
 								</docker-execute>
 							</try>
+							<catch>
+								<echo>${exception.message}</echo>
+							</catch>
 							<finally>
 								<stop-docker-playwright />
 

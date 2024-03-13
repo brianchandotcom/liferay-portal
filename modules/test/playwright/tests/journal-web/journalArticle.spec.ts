@@ -141,7 +141,7 @@ prefixUrlTest(
 		await friendlyUrlInstanceSettingsPage.goto();
 
 		await friendlyUrlInstanceSettingsPage.resetSeparator(
-			'Web Content URL Separator'
+			'_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_com.liferay.journal.model.JournalArticle-reset-to-default-value'
 		);
 
 		expect(await page.request.get('/w/' + articleTitle)).toBeSuccessful();

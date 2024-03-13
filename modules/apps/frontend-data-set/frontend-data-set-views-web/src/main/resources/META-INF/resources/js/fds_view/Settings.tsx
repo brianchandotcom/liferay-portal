@@ -286,7 +286,7 @@ const Settings = ({
 				</ClayLayout.Row>
 			</ClayLayout.SheetSection>
 
-			<ClayLayout.SheetSection className="mt-4 invisible">
+			<ClayLayout.SheetSection className="invisible mt-4">
 				<h3 className="sheet-subtitle">
 					{Liferay.Language.get('user-customization')}
 				</h3>

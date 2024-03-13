@@ -373,6 +373,7 @@ module.exports = {
 			'@liferay/content-dashboard-web': [],
 			'@liferay/cookies-banner-web': [],
 			'@liferay/document-library-preview-css': [],
+			'@liferay/document-library-web': [],
 			'@liferay/flags-taglib': [],
 			'@liferay/fragment-renderer-collection-filter-impl': [],
 			'@liferay/frontend-data-set-web': [],

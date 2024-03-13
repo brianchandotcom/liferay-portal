@@ -124,6 +124,6 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 				"selectEventName", depotAdminRolesDisplayContext.getSelectDepotRolesEventName()
 			).build()
 		%>'
-		module="js/DepotRoles"
+		module="{DepotRoles} from depot-web"
 	/>
 </c:if>

@@ -45,7 +45,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 						displayType="secondary"
 						id='<%= liferayPortletResponse.getNamespace() + "addConnectedSiteButton" %>'
 						label="add"
-						propsTransformer="js/AddConnectedSitesButtonPropsTransformer"
+						propsTransformer="{AddConnectedSitesButtonPropsTransformer} from depot-web"
 						small="<%= true %>"
 						title="connect-to-a-site"
 					/>
@@ -129,7 +129,7 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 						dropdownItems="<%= depotAdminSitesDisplayContext.getConnectedSiteDropdownItems(depotEntryGroupRel) %>"
 						icon="ellipsis-v"
 						monospaced="<%= true %>"
-						propsTransformer="js/ConnectedSiteDropdownPropsTransformer"
+						propsTransformer="{ConnectedSiteDropdownPropsTransformer} from depot-web"
 						small="<%= true %>"
 					/>
 				</liferay-ui:search-container-column-text>

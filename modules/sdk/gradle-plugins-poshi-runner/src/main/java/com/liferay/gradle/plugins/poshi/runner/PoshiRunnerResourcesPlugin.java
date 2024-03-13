@@ -25,6 +25,7 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.bundling.Jar;
 
 /**
@@ -83,12 +84,21 @@ public class PoshiRunnerResourcesPlugin implements Plugin<Project> {
 			jar.from(dirs);
 		}
 
-		jar.setAppendix(appendix);
-		jar.setBaseName(baseName);
 		jar.setDescription(
 			"Assembles a jar archive containing the Poshi Runner resources.");
 		jar.setDuplicatesStrategy(DuplicatesStrategy.INCLUDE);
-		jar.setVersion(version);
+
+		Property<String> archiveAppendixProperty = jar.getArchiveAppendix();
+
+		archiveAppendixProperty.set(appendix);
+
+		Property<String> archiveBaseNameProperty = jar.getArchiveBaseName();
+
+		archiveBaseNameProperty.set(baseName);
+
+		Property<String> archiveVersionProperty = jar.getArchiveVersion();
+
+		archiveVersionProperty.set(version);
 
 		ArtifactHandler artifactHandler = project.getArtifacts();
 

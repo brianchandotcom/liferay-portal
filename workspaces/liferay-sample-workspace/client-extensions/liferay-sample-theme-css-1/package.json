@@ -2,10 +2,17 @@
 	"dependencies": {
 		"sassy-inputs": "1.0.6"
 	},
+	"devDependencies": {
+		"webpack": "5.90.1",
+		"webpack-cli": "5.1.4"
+	},
 	"liferayDesignPack": {
 		"baseTheme": "styled"
 	},
 	"main": "package.json",
 	"name": "@liferay/liferay-sample-theme-css-1",
+	"scripts": {
+		"build": "webpack"
+	},
 	"version": "0.0.0"
 }

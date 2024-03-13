@@ -126,15 +126,20 @@ public class EditArticleHeaderProductNavigationControlMenuEntryTest {
 			_productNavigationControlMenuEntry.isShow(mockHttpServletRequest));
 	}
 
-	private MockHttpServletRequest _getMockHttpServletRequest(
-			JournalArticle journalArticle)
+	@Test
+	public void testIsShowJournalArticleHeaderWithoutJournalArticle()
+		throws Exception {
+
+		Assert.assertFalse(
+			_productNavigationControlMenuEntry.isShow(
+				_getMockHttpServletRequest()));
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addParameter(
-			"articleId", journalArticle.getArticleId());
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
 			_getMockLiferayPortletRenderRequest(mockHttpServletRequest);
@@ -145,6 +150,19 @@ public class EditArticleHeaderProductNavigationControlMenuEntryTest {
 		_portlet.render(
 			mockLiferayPortletRenderRequest,
 			new MockLiferayPortletRenderResponse());
+
+		return mockHttpServletRequest;
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(
+			JournalArticle journalArticle)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest();
+
+		mockHttpServletRequest.addParameter(
+			"articleId", journalArticle.getArticleId());
 
 		return mockHttpServletRequest;
 	}

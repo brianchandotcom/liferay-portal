@@ -441,10 +441,10 @@ public class LayoutStagedModelDataHandler
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class + ".layout");
 
-		long layoutId = GetterUtil.getLong(
-			referenceElement.attributeValue("layout-id"));
+		long layoutPlid = GetterUtil.getLong(
+			referenceElement.attributeValue("layout-plid"));
 
-		layouts.put(layoutId, existingLayout);
+		layouts.put(layoutPlid, existingLayout);
 	}
 
 	@Override
@@ -460,8 +460,6 @@ public class LayoutStagedModelDataHandler
 
 		long layoutId = GetterUtil.getLong(
 			layoutElement.attributeValue("layout-id"));
-
-		long oldLayoutId = layoutId;
 
 		boolean privateLayout = false;
 
@@ -554,7 +552,7 @@ public class LayoutStagedModelDataHandler
 			if (_sites.isLayoutModifiedSinceLastMerge(existingLayout) ||
 				!_isLayoutOutdated(existingLayout, layout)) {
 
-				layouts.put(oldLayoutId, existingLayout);
+				layouts.put(layout.getPlid(), existingLayout);
 
 				return;
 			}

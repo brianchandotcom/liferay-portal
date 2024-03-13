@@ -34,6 +34,8 @@ Import-Package:\
 	\
 	!org.w3c.dom.svg,\
 	\
+	org.apache.xerces.util,\
+	\
 	*
 -exportcontents:\
 	org.apache.poi.*,\

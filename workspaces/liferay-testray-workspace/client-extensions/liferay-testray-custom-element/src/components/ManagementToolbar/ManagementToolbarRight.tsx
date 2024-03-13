@@ -50,6 +50,7 @@ type ManagementToolbarRightProps = {
 	applyFilters?: boolean;
 	buttons?: ReactNode | ((actions: any) => ReactNode);
 	columns: Column[];
+	customFilterFields?: {};
 	disabled: boolean;
 	display?: {
 		columns?: boolean;
@@ -63,6 +64,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 	applyFilters = true,
 	buttons,
 	columns,
+	customFilterFields,
 	display = {columns: true},
 	filterSchema,
 }) => {
@@ -106,8 +108,8 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 			return testrayModalParams.textContent!;
 		}
 
-		return JSON.stringify(params);
-	}, [params]);
+		return JSON.stringify({...params, ...customFilterFields});
+	}, [params, customFilterFields]);
 
 	const fieldsMemoized = useMemo(() => filterSchema?.fields, [filterSchema]);
 

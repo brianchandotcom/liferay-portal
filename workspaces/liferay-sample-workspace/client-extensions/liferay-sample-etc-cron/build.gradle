@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "10.1.87"
 		classpath group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "2.7.18"
 	}
 

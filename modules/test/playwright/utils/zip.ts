@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import * as os from 'node:os'; // eslint-disable-line @liferay/no-extraneous-dependencies
 import * as path from 'path';
 import {open} from 'yauzl';
 import {zip} from 'zip-a-folder';
 
 import {streamToString} from './stream';
+import {getTempDir} from './temp';
 
 export async function zipFolder(folderPath: string) {
-	const tempFilePath = path.join(os.tmpdir(), path.basename(folderPath));
+	const tempFilePath = path.join(getTempDir(), path.basename(folderPath));
 	await zip(folderPath, tempFilePath);
 
 	return tempFilePath;

@@ -130,7 +130,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			false, "category", _assetCategory.getCategoryId(),
+			false, null, "category", _assetCategory.getCategoryId(),
 			String.valueOf(_assetCategory.getCategoryId()));
 	}
 
@@ -234,7 +234,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			false, "folder", _journalArticle.getFolderId(),
+			false, null, "folder", _journalArticle.getFolderId(),
 			String.valueOf(_journalArticle.getFolderId()));
 	}
 
@@ -320,27 +320,24 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			true, "site", testGroup.getGroupId(),
+			true, null, "site", testGroup.getGroupId(),
 			String.valueOf(testGroup.getGroupId()));
 	}
 
 	@Test
 	public void testPostSearchPageWithTagFacetConfiguration() throws Exception {
 		_assertFacetConfiguration(
-			true, "tag", _assetTag.getName(), _assetTag.getName());
+			true, null, "tag", _assetTag.getName(), _assetTag.getName());
 	}
 
 	@Test
 	public void testPostSearchPageWithTypeFacetConfiguration()
 		throws Exception {
 
-		Class<JournalArticle> journalArticleClass = JournalArticle.class;
-		Class<JournalFolder> journalFolderClass = JournalFolder.class;
-		Class<User> userClass = User.class;
-
 		_assertFacetConfiguration(
-			false, "type", StringPool.BLANK, journalArticleClass.getName(),
-			journalFolderClass.getName(), userClass.getName());
+			false, null, "type", StringPool.BLANK,
+			JournalArticle.class.getName(), JournalFolder.class.getName(),
+			User.class.getName());
 	}
 
 	@Test
@@ -348,7 +345,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		throws Exception {
 
 		_assertFacetConfiguration(
-			true, "user", StringUtil.toLowerCase(_user.getFullName()),
+			true, null, "user", StringUtil.toLowerCase(_user.getFullName()),
 			String.valueOf(_user.getUserId()));
 	}
 
@@ -535,15 +532,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		}
 
 		return page;
-	}
-
-	private void _assertFacetConfiguration(
-			boolean anyMatch, String facetName, Object facetValues,
-			String... expectedValues)
-		throws Exception {
-
-		_assertFacetConfiguration(
-			anyMatch, null, facetName, facetValues, expectedValues);
 	}
 
 	private JSONObject _createSXPBlueprintHighlightConfigurationJSON() {

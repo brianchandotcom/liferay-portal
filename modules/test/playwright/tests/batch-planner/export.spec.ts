@@ -56,10 +56,7 @@ const stockObjectEntry = {
 	name: 'Stock Entry',
 };
 
-test('can download jsont format file as json', async ({
-	apiHelpers,
-	dataMigrationCenterPage,
-}) => {
+test('can export as JSONT', async ({apiHelpers, dataMigrationCenterPage}) => {
 	const objectDefinition = await apiHelpers.objectAdmin.postObjectDefinition(
 		stockObjectDefinition
 	);
@@ -86,7 +83,7 @@ test('can download jsont format file as json', async ({
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });
 
-test('verify users can exclude fields from being exported in JSON format', async ({
+test('can export as JSON with excluded fields', async ({
 	apiHelpers,
 	dataMigrationCenterPage,
 }) => {
@@ -111,7 +108,7 @@ test('verify users can exclude fields from being exported in JSON format', async
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });
 
-test('export custom object with all field types mapped', async ({
+test('can export as JSON with all field types mapped', async ({
 	apiHelpers,
 	dataMigrationCenterPage,
 }) => {
@@ -307,7 +304,7 @@ test('export custom object with all field types mapped', async ({
 	await apiHelpers.objectAdmin.deleteObjectDefinition(objectDefinition.id);
 });
 
-test('verify users can exclude fields from being exported in JSONL format', async ({
+test('can export as JSONL with excluded fields', async ({
 	apiHelpers,
 	dataMigrationCenterPage,
 }) => {

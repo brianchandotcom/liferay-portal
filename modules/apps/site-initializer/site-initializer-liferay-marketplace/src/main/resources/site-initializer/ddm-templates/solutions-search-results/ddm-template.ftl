@@ -13,12 +13,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		white-space: nowrap;
 		width: fit-content;
-	}
-
-	.card-image-title-container {
-		padding: 16px;
 	}
 
 	.developer-name-text {
@@ -35,6 +30,12 @@
 		overflow: hidden;
 	}
 
+	.product-name {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
 	.solution-search-image {
 		min-height: 200px;
 		min-width: 293px;
@@ -44,9 +45,9 @@
 	.solution-search-results-card {
 		border-radius: 10px;
 		border: 1px solid #E7EFFF;
-		min-height: 456px;
-		min-width: 293px;
+		height: 462px;
 		overflow: hidden;
+		width: 293px;
 	}
 
 	.adt-solutions-search-results .labels .category-names {
@@ -110,14 +111,12 @@
 	}
 </style>
 
-<#assign categoryName = "Solution" />
-
 <#if searchContainer?has_content>
 	<div class="color-neutral-3 d-md-block d-none pb-4">
 		<strong class="color-black">
 			${searchContainer.getTotal()}
 		</strong>
-		${categoryName}s Available
+		Solutions Available
 	</div>
 </#if>
 
@@ -140,17 +139,16 @@
 						portalURL = portalUtil.getLayoutURL(themeDisplay)
 						productId = entry.getClassPK() + 1
 						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
-						productCustomFields = product.customFields![]
 						productImage = (product.images![])?filter(item -> item.tags?seq_contains("app icon"))![]
 						remainingCategoriesText = []
 						catalogName = product.catalogName
+						productSpecifications = product.productSpecifications![]
 					/>
 
-					<#if product.categories?has_content && product.productSpecifications?has_content>
+					<#if product.categories?has_content>
 						<#assign
-							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary=="marketplace solution category")![]
+							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary=="marketplace-solution-category")![]
 							categoriesListSize = productCategories?size-1
-							productSpecifications = product.productSpecifications![]
 						/>
 					</#if>
 
@@ -212,33 +210,23 @@
 							/>
 						</div>
 
-						<div class="align-items-center card-image-title-container d-flex">
-							<div>
-								<#if productCustomFields?has_content>
-									<#assign solutionCustomFields = productCustomFields?filter(customField -> customField.name == 'Developer Name') />
-
-									<#list solutionCustomFields as customFieldItem>
-										<div class="developer-name font-size-paragraph-small">
-											${customFieldItem.customValue.data}
-										</div>
-									</#list>
-								</#if>
-
-								<#if catalogName?has_content>
-									<span class="developer-name-text">
-										${catalogName}
-									</span>
-								</#if>
-
-								<div class="font-weight-semi-bold h2 mt-1">
-									${productName}
-								</div>
-							</div>
-						</div>
-
 						<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between p-4">
-							<div class="font-weight-normal mb-2">
-								${productDescription}
+							<div class="card-image-title-container d-flex flex-column">
+								<div>
+									<#if catalogName?has_content>
+										<span class="developer-name-text">
+											${catalogName}
+										</span>
+									</#if>
+
+									<div class="font-weight-semi-bold h2 mt-1 product-name" title="${productName}">
+										${productName}
+									</div>
+								</div>
+
+								<div class="font-weight-normal mb-2">
+									${productDescription}
+								</div>
 							</div>
 
 							<#if principalCategory?has_content>
@@ -246,7 +234,6 @@
 									<span class="banner__product-tag rounded py-1 px-2 mr-2" title="${principalCategory.name}">
 										${principalCategory.name}
 									</span>
-
 									<#if categoriesListSize?has_content && remainingCategoriesText?has_content>
 										<span class="banner__product-tag rounded py-1 px-2" title="${remainingCategoriesText?join('\n')}">
 											+ ${categoriesListSize}

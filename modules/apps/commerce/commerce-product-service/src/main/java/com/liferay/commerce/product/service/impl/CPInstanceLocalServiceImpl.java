@@ -1226,6 +1226,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			throw new CPInstanceMaxPriceValueException();
 		}
 
+		BigDecimal minValue = BigDecimal.valueOf(
+			GetterUtil.getDouble(CommercePriceConstants.PRICE_VALUE_MIN));
+
+		if ((cost.compareTo(minValue) < 0) || (price.compareTo(minValue) < 0) ||
+			(promoPrice.compareTo(minValue) < 0)) {
+
+			throw new CPInstanceMinPriceValueException();
+		}
+
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
 			cpInstanceId);
 

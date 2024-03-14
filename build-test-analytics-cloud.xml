@@ -114,6 +114,8 @@
 
 			<mkdir dir="${project.dir}/dist" />
 
+			<get-host-git-dir />
+
 			<beanshell>
 				<![CDATA[
 					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
@@ -135,7 +137,7 @@
 							return;
 						}
 
-						File parentDir = imageTarFile.getParent();
+						File parentDir = imageTarFile.getParentFile();
 
 						parentDir.mkdirs();
 
@@ -191,7 +193,7 @@
 					}
 
 					public void downloadImageTarFiles() {
-						Fild distDir = new File(project.getProperty("project.dir") + "/dist");
+						File distDir = new File(project.getProperty("project.dir") + "/dist");
 
 						downloadImageTarFile(new File(distDir, "liferay-docker-asah.tar"));
 						downloadImageTarFile(new File(distDir, "liferay-docker-faro.tar"));
@@ -345,8 +347,6 @@
 						ports.add(project.getProperty("analytics.cloud.faro.osgi.console.port") + ":11311");
 
 						osbFaroFrontendServiceMap.put("ports", ports);
-
-						osbFaroFrontendServiceMap.put("tty", "true");
 					}
 
 					public void updateServiceImages(Map dockerComposeMap) {
@@ -367,6 +367,34 @@
 						}
 					}
 
+					public void updateVolumes(Map dockerComposeMap) {
+						String hostGitDir = project.getProperty("host.git.dir");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(hostGitDir)) {
+							return;
+						}
+
+						Map servicesMap = dockerComposeMap.get("services");
+
+						for (String serviceName : servicesMap.keySet()) {
+							Map serviceMap = servicesMap.get(serviceName);
+
+							List updatedVolumes = new ArrayList();
+
+							List currentVolumes = serviceMap.get("volumes");
+
+							if (currentVolumes == null) {
+								continue;
+							}
+
+							for (String currentVolume : currentVolumes) {
+								updatedVolumes.add(currentVolume.replaceAll("\\./", hostGitDir + "/com-liferay-osb-asah-private/"));
+							}
+
+							serviceMap.put("volumes", updatedVolumes);
+						}
+					}
+
 					downloadImageTarFiles();
 
 					Map dockerComposeMap = getDockerComposeMap();
@@ -374,6 +402,7 @@
 					updateDockerNetwork(dockerComposeMap);
 					updateOSBFaroFrontendService(dockerComposeMap);
 					updateServiceImages(dockerComposeMap);
+					updateVolumes(dockerComposeMap);
 
 					dumpYamlMap(dockerComposeMap);
 
@@ -662,12 +691,16 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 					sleep 30
 				done
 
+				echo "Docker compose is now healthy."
+
 				while [[ -z $(docker logs ${analytics.cloud.faro.container.name} | grep "Completed demo data creation") ]]
 				do
-					echo "Waiting for faro to startup."
+					echo "Waiting for Faro demo data to be created."
 
 					sleep 15
 				done
+
+				echo "Faro demo data is now created."
 
 				docker logs ${analytics.cloud.faro.container.name}
 
@@ -703,8 +736,6 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 					</trycatch>
 				</try>
 				<catch>
-					<echo>Failed to create Analytics Cloud demo data.</echo>
-
 					<fail message="${analytics.cloud.error}" />
 				</catch>
 			</trycatch>

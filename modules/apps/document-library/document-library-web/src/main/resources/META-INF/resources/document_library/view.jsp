@@ -363,5 +363,4 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 	</c:otherwise>
 </c:choose>
 
-<%@ include file="/document_library/friendly_url_changed_message.jspf" %>
 <%@ include file="/document_library/session_messages.jspf" %>

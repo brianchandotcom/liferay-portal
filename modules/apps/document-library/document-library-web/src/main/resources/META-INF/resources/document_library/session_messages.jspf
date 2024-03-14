@@ -6,8 +6,24 @@
 --%>
 
 <%
+String friendlyURLChangedMessage = GetterUtil.getString(SessionMessages.get(request, "friendlyURLChanged_requestProcessedWarning"));
 String scheduledDocumentMessage = GetterUtil.getString(SessionMessages.get(request, "scheduledDocumentRequestProcessedSuccess"));
 %>
+
+<c:if test="<%= Validator.isNotNull(friendlyURLChangedMessage) %>">
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"autoClose", 20000
+			).put(
+				"message", friendlyURLChangedMessage
+			).put(
+				"type", "warning"
+			).build()
+		%>'
+		module="{openToast} from frontend-js-web"
+	/>
+</c:if>
 
 <c:if test="<%= Validator.isNotNull(scheduledDocumentMessage) %>">
 	<liferay-frontend:component

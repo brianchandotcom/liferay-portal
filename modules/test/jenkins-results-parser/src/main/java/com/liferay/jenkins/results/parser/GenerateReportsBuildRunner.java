@@ -15,7 +15,6 @@ import java.nio.file.Paths;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -203,6 +202,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				"ci.system.status.report.test.suite.name"));
 
 		_updateReport(filePath);
+
+		_updateNodeDataFile(filePath);
 	}
 
 	private void _generatePullRequestReport(String filePath)
@@ -290,6 +291,30 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		return buildParameter.split("\\s*,\\s*");
 	}
 
+	private void _updateNodeDataFile(String filePath) throws IOException {
+		File dataArchiveDir = new File(
+			_buildProperties.getProperty("archive.ci.build.data.archive.dir"));
+
+		File baseArchiveDir = dataArchiveDir.getParentFile();
+
+		File nodeDataArchiveFile = new File(
+			baseArchiveDir, "reports/" + _CURRENT_DATE_STRING + "/node.json");
+
+		File nodeDataFile = new File(filePath, "node.json");
+
+		if (nodeDataArchiveFile.exists()) {
+			FileUtils.copyFile(nodeDataArchiveFile, nodeDataFile);
+		}
+
+		JenkinsCohort jenkinsCohort = JenkinsCohort.getInstance("test-1");
+
+		jenkinsCohort.writeNodeDataJSONFile(nodeDataFile.getPath());
+
+		FileUtils.copyFile(nodeDataFile, nodeDataArchiveFile);
+
+		FileUtils.delete(nodeDataFile);
+	}
+
 	private void _updateReport(String filePath) {
 		JenkinsResultsParserUtil.rsync(
 			"test-1-0", _REPORT_RSYNC_DESTINATION_DIR_PATH, null, filePath);
@@ -310,6 +335,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			}
 		}
 	}
+
+	private static final String _CURRENT_DATE_STRING;
 
 	private static final long _REPORT_DURATION_DAYS = 14;
 
@@ -360,9 +387,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		Instant instant = Instant.now();
 
-		instant = instant.minus(Period.ofDays((int)_REPORT_DURATION_DAYS));
-
 		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		_CURRENT_DATE_STRING = zonedDateTime.format(_dateTimeFormatter);
+
+		zonedDateTime = zonedDateTime.minusDays(_REPORT_DURATION_DAYS);
 
 		_START_DATE_STRING = zonedDateTime.format(_dateTimeFormatter);
 	}

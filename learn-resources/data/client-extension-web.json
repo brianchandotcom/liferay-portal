@@ -11,16 +11,16 @@
 			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-custom-element-type"
 		}
 	},
-	"learn-iframe": {
-		"en_US": {
-			"message": "Learn more about IFrame client extensions.",
-			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-iframe-type"
-		}
-	},
 	"learn-frontend-token-definitions": {
 		"en_US": {
 			"message": "Learn more about frontend token definitions.",
 			"url": "https://learn.liferay.com/w/dxp/site-building/site-appearance/style-books/developer-guide/frontend-token-definitions"
+		}
+	},
+	"learn-iframe": {
+		"en_US": {
+			"message": "Learn more about IFrame client extensions.",
+			"url": "https://learn.liferay.com/dxp/latest/en/building-applications/client-extensions/front-end-client-extensions/understanding-custom-element-and-iframe-client-extensions.html#using-the-iframe-type"
 		}
 	}
 }

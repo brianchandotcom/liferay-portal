@@ -14,21 +14,19 @@ import {fetch, navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../FDSView';
-import {API_URL, OBJECT_RELATIONSHIP} from '../utils/constants';
+import {
+	API_URL,
+	DEFAULT_VISUALIZATION_MODES,
+	OBJECT_RELATIONSHIP,
+} from '../utils/constants';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
+import {TVisualizationMode} from '../utils/types';
 
-interface IVisualizationMode {
-	label: string;
-	name: string;
-	thumbnail: string;
-	url: string;
-}
-
-const NOT_CONFIGURED_VISUALIZATION_MODE: Omit<IVisualizationMode, 'url'> = {
+const NOT_CONFIGURED_VISUALIZATION_MODE = {
 	label: Liferay.Language.get('go-to-visualization-modes'),
-	name: Liferay.Language.get('not-configured'),
 	thumbnail: 'plus',
+	type: Liferay.Language.get('not-configured'),
 };
 
 const Settings = ({
@@ -38,100 +36,74 @@ const Settings = ({
 	onFDSViewUpdate,
 	spritemap,
 }: IFDSViewSectionProps) => {
-	const FDS_VISUALIZATION_MODES: Array<IVisualizationMode> = [
-		{
-			label: Liferay.Language.get('cards'),
-			name: 'cards',
-			thumbnail: 'cards2',
-			url: `${API_URL.FDS_CARDS_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CARDS_SECTION_ERC} eq '${fdsView.externalReferenceCode}')`,
-		},
-		{
-			label: Liferay.Language.get('list'),
-			name: 'list',
-			thumbnail: 'list',
-			url: `${API_URL.FDS_LIST_SECTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_LIST_SECTION_ERC} eq '${fdsView.externalReferenceCode}')`,
-		},
-		{
-			label: Liferay.Language.get('table'),
-			name: 'table',
-			thumbnail: 'table',
-			url: `${API_URL.FDS_FIELDS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD}`,
-		},
-	];
 	const [defaultVisualizationMode, setDefaultVisualizationMode] = useState(
-		NOT_CONFIGURED_VISUALIZATION_MODE.name
+		NOT_CONFIGURED_VISUALIZATION_MODE.type
 	);
 	const [enableCustomView, setEnableCustomView] = useState(false);
 	const [visualizationModes, setVisualizationModes] = useState<
-		Array<IVisualizationMode>
+		Array<TVisualizationMode>
 	>([]);
 
 	const getActiveVisualizationModes = async () => {
-		const visualizationConfigRequests = FDS_VISUALIZATION_MODES.map(
-			(viewMode) => fetch(viewMode.url)
+		const fields = [
+			OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CARDS_SECTION,
+			OBJECT_RELATIONSHIP.FDS_VIEW_FDS_LIST_SECTION,
+			OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD,
+		].join(',');
+
+		const response = await fetch(
+			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}?fields=${fields}&nestedFields=${fields}`
 		);
 
-		Promise.all(visualizationConfigRequests)
-			.then((visualizationConfigResults) =>
-				Promise.all(
-					visualizationConfigResults.map((result) => result.json())
-				)
-			)
-			.then(
-				([cards, list, table]) => {
-					const activeViews: Array<IVisualizationMode> = [];
+		if (!response.ok) {
+			openDefaultFailureToast();
 
-					FDS_VISUALIZATION_MODES.forEach((view) => {
-						if (
-							view.name === 'cards' &&
-							cards.items &&
-							cards.items.length
-						) {
-							activeViews.push(view);
-						}
-						if (
-							view.name === 'list' &&
-							list.items &&
-							list.items.length
-						) {
-							activeViews.push(view);
-						}
-						if (
-							view.name === 'table' &&
-							table.items &&
-							table.items.length
-						) {
-							activeViews.push(view);
-						}
-					});
+			setVisualizationModes([]);
 
-					setVisualizationModes(activeViews);
+			return;
+		}
 
-					setDefaultVisualizationMode(() => {
-						if (
-							activeViews.find(
-								(view: IVisualizationMode) =>
-									view.name ===
-									fdsView.defaultVisualizationMode
-							)
-						) {
-							return fdsView.defaultVisualizationMode;
-						}
-						else {
-							return activeViews.length
-								? activeViews[0].name
-								: NOT_CONFIGURED_VISUALIZATION_MODE.name;
-						}
-					});
-				},
-				() => {
-					setVisualizationModes([]);
+		const responseJSON = await response.json();
 
-					setDefaultVisualizationMode(
-						NOT_CONFIGURED_VISUALIZATION_MODE.name
-					);
+		const {
+			fdsViewFDSCardsSectionRelationship: cards,
+			fdsViewFDSFieldRelationship: table,
+			fdsViewFDSListSectionRelationship: list,
+		} = responseJSON;
+
+		const activeViews: Array<TVisualizationMode> = [];
+
+		(DEFAULT_VISUALIZATION_MODES as Array<TVisualizationMode>).forEach(
+			(view) => {
+				if (view.type === 'cards' && cards && cards.length) {
+					activeViews.push(view);
 				}
-			);
+				if (view.type === 'list' && list && list.length) {
+					activeViews.push(view);
+				}
+				if (view.type === 'table' && table && table.length) {
+					activeViews.push(view);
+				}
+			}
+		);
+
+		setVisualizationModes(activeViews);
+
+		setDefaultVisualizationMode(() => {
+			if (
+				activeViews.find(
+					(view: TVisualizationMode) =>
+						view.type === fdsView.defaultVisualizationMode
+				)
+			) {
+				return fdsView.defaultVisualizationMode;
+			}
+			else {
+				return activeViews.length
+					? activeViews[0].type
+					: NOT_CONFIGURED_VISUALIZATION_MODE.type;
+			}
+		});
 	};
 
 	const updateFDSViewSettings = async () => {
@@ -228,7 +200,7 @@ const Settings = ({
 							onSelectionChange={(option: React.Key) => {
 								if (
 									option ===
-									NOT_CONFIGURED_VISUALIZATION_MODE.name
+									NOT_CONFIGURED_VISUALIZATION_MODE.type
 								) {
 									onActiveSectionChange(1);
 								}
@@ -238,12 +210,12 @@ const Settings = ({
 									);
 								}
 							}}
-							placeholder={NOT_CONFIGURED_VISUALIZATION_MODE.name}
+							placeholder={NOT_CONFIGURED_VISUALIZATION_MODE.type}
 							selectedKey={defaultVisualizationMode}
 						>
 							{visualizationModes.length ? (
-								({label, name, thumbnail}) => (
-									<Option key={name} textValue={label}>
+								({label, thumbnail, type}) => (
+									<Option key={type} textValue={label}>
 										<ClayIcon
 											className="mr-3"
 											symbol={thumbnail}
@@ -260,10 +232,10 @@ const Settings = ({
 								>
 									<Option
 										key={
-											NOT_CONFIGURED_VISUALIZATION_MODE.name
+											NOT_CONFIGURED_VISUALIZATION_MODE.type
 										}
 										textValue={
-											NOT_CONFIGURED_VISUALIZATION_MODE.name
+											NOT_CONFIGURED_VISUALIZATION_MODE.type
 										}
 									>
 										<ClayLayout.Row>

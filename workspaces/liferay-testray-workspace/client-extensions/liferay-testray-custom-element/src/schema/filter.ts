@@ -464,15 +464,10 @@ const filterSchema = {
 	},
 	builds: {
 		fields: [
-			overrides(baseFilters.priority, {
-				disabled: true,
-				type: 'select',
-			}),
 			overrides(baseFilters.productVersion, {
 				name: 'productVersionToBuilds/id',
 				type: 'select',
 			}),
-			overrides(baseFilters.caseType, {disabled: true, type: 'select'}),
 			{
 				label: i18n.translate('build-name'),
 				name: 'name',
@@ -502,7 +497,6 @@ const filterSchema = {
 				],
 				type: 'checkbox',
 			},
-			overrides(baseFilters.team, {disabled: true}),
 		] as RendererFields[],
 		name: 'builds',
 	},

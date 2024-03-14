@@ -11,6 +11,7 @@ import Avatar from '~/components/Avatar';
 import AssignToMe from '~/components/Avatar/AssignToMe';
 import Code from '~/components/Code';
 import FloatingBox from '~/components/FloatingBox/index';
+import JiraLink from '~/components/JiraLink';
 import Container from '~/components/Layout/Container';
 import ListView from '~/components/ListView';
 import Loading from '~/components/Loading';
@@ -332,6 +333,22 @@ const TestFlowTasks = () => {
 								render: (value) => <Code>{value}</Code>,
 								size: 'xl',
 								value: i18n.translate('errors'),
+							},
+							{
+								key: 'issues',
+								render: (issues) => {
+									return (
+										<>
+											{!!issues.length && (
+												<JiraLink
+													displayViewInJira={false}
+													issue={issues}
+												/>
+											)}
+										</>
+									);
+								},
+								value: i18n.translate('issues'),
 							},
 							{
 								key: 'user',

@@ -770,6 +770,10 @@ const filterSchema = {
 				],
 				type: 'checkbox',
 			},
+			overrides(baseFilters.issues, {
+				name: 'subtaskToSubtasksIssues/issueToSubtasksIssues/name',
+				operator: 'contains',
+			}),
 			overrides(baseFilters.team, {
 				disabled: true,
 			}),

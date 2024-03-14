@@ -51,9 +51,14 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 				r_userToSubtasks_userId,
 				score,
 			}),
-			nestedFields: 'tasks,users,subtask',
+			nestedFields:
+				'tasks,users,subtask,subtaskToSubtasksIssues,subtaskToSubtasksIssues.r_issueToSubtasksIssues_c_issue',
 			transformData: (subTask) => ({
 				...subTask,
+				issues: subTask.subtaskToSubtasksIssues.map(
+					(subtasksIssues) =>
+						subtasksIssues?.r_issueToSubtasksIssues_c_issue
+				),
 				mergedToSubtaskId: subTask.r_mergedToTestraySubtask_c_subtaskId,
 				splitFromSubtask: subTask.r_splitFromTestraySubtask_c_subtask,
 				task: subTask.r_taskToSubtasks_c_task,

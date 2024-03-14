@@ -333,6 +333,7 @@ export type TestraySubTask = {
 	score: number;
 	splitFromSubtask: TestraySubTask;
 	statusUpdateDate: string;
+	subtaskToSubtasksIssues: TestraySubTaskIssue[];
 	task: TestrayTask;
 	user: UserAccount;
 };

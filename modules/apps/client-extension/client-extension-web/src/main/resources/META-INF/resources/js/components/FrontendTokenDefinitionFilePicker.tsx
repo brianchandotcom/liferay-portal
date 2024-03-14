@@ -12,6 +12,8 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 
+import '../../admin/css/frontendTokenDefinitionFilePicker.scss';
+
 type TFeedback = {displayType: DisplayType; message: string};
 
 const EMPTY_FEEDBACK: TFeedback = {
@@ -47,6 +49,7 @@ const readInputFile = (file: File) => {
 const EMPTY_JSON_STRING = '{}';
 
 const FrontendTokenDefinitionFilePicker = ({
+	disabled,
 	frontendTokenDefinitionJSON: initialFrontendTokenDefinitionJSON,
 	learnResources,
 	portletNamespace,
@@ -191,97 +194,108 @@ const FrontendTokenDefinitionFilePicker = ({
 
 	return (
 		<LearnResourcesContext.Provider value={learnResources}>
-			<label
-				aria-describedby={frontendTokenDefinitionDescriptionId}
-				className="d-block"
-				htmlFor={fileInputId}
-				tabIndex={0}
+			<div
+				className={disabled ? 'disabled' : ''}
+				id="frontendTokenDefinitionFilePicker"
 			>
-				{Liferay.Language.get(
-					'frontend-token-definition-json-file-upload'
-				)}
-			</label>
-
-			<Text
-				as="p"
-				color="secondary"
-				id={frontendTokenDefinitionDescriptionId}
-				size={3}
-			>
-				{`${Liferay.Language.get(
-					'the-frontend-token-definition-is-a-json-file-that-allows-you-to-contribute-your-own-frontend-tokens-it-will-replace-the-current-frontend-tokens-contributed-by-the-theme'
-				)} `}
-
-				<LearnMessage
-					resource="client-extension-web"
-					resourceKey="learn-frontend-token-definitions"
-				/>
-			</Text>
-
-			<ClayInput
-				accept=".json"
-				className="d-none"
-				id={fileInputId}
-				name={fileInputId}
-				onChange={handleFileInputChange}
-				ref={fileInputRef}
-				type="file"
-			/>
-
-			<ClayInput
-				id={`${portletNamespace}frontendTokenDefinitionJSON`}
-				name={`${portletNamespace}frontendTokenDefinitionJSON`}
-				type="hidden"
-				value={frontendTokenDefinitionJSON}
-			/>
-
-			<div className="my-2">
-				<ClayButton
-					disabled={isValidatingJSON}
-					displayType="secondary"
-					onClick={() => fileInputRef.current?.click()}
-					ref={selectFileButtonRef}
+				<label
+					aria-describedby={frontendTokenDefinitionDescriptionId}
+					aria-disabled={disabled}
+					className="d-block"
+					htmlFor={fileInputId}
+					tabIndex={0}
 				>
-					{!frontendTokenDefinitionJSON
-						? Liferay.Language.get('select-file')
-						: Liferay.Language.get('replace-file')}
-				</ClayButton>
-
-				<div className="inline-item">
-					{!frontendTokenDefinitionJSON && !isValidatingJSON && (
-						<small className="inline-item inline-item-after">
-							<strong>
-								{Liferay.Language.get('no-file-is-selected')}
-							</strong>
-						</small>
+					{Liferay.Language.get(
+						'frontend-token-definition-json-file-upload'
 					)}
+				</label>
 
-					{frontendTokenDefinitionJSON && (
-						<ClayButtonWithIcon
-							borderless
-							className="ml-2"
-							displayType="secondary"
-							monospaced
-							onClick={clearSelection}
-							symbol="times-circle-full"
-							title={Liferay.Language.get('unselect-file')}
-						/>
-					)}
+				<Text
+					as="p"
+					color="secondary"
+					id={frontendTokenDefinitionDescriptionId}
+					size={3}
+				>
+					{`${Liferay.Language.get(
+						'the-frontend-token-definition-is-a-json-file-that-allows-you-to-contribute-your-own-frontend-tokens-it-will-replace-the-current-frontend-tokens-contributed-by-the-theme'
+					)} `}
+
+					<LearnMessage
+						resource="client-extension-web"
+						resourceKey="learn-frontend-token-definitions"
+					/>
+				</Text>
+
+				<ClayInput
+					accept=".json"
+					className="d-none"
+					disabled={disabled}
+					id={fileInputId}
+					name={fileInputId}
+					onChange={handleFileInputChange}
+					ref={fileInputRef}
+					type="file"
+				/>
+
+				<ClayInput
+					id={`${portletNamespace}frontendTokenDefinitionJSON`}
+					name={`${portletNamespace}frontendTokenDefinitionJSON`}
+					type="hidden"
+					value={frontendTokenDefinitionJSON}
+				/>
+
+				<div className="my-2">
+					<ClayButton
+						disabled={isValidatingJSON || disabled}
+						displayType="secondary"
+						onClick={() => fileInputRef.current?.click()}
+						ref={selectFileButtonRef}
+					>
+						{!frontendTokenDefinitionJSON
+							? Liferay.Language.get('select-file')
+							: Liferay.Language.get('replace-file')}
+					</ClayButton>
+
+					<div className="inline-item">
+						{!frontendTokenDefinitionJSON && !isValidatingJSON && (
+							<small className="inline-item inline-item-after">
+								<strong>
+									{Liferay.Language.get(
+										'no-file-is-selected'
+									)}
+								</strong>
+							</small>
+						)}
+
+						{frontendTokenDefinitionJSON && (
+							<ClayButtonWithIcon
+								borderless
+								className="ml-2"
+								disabled={disabled}
+								displayType="secondary"
+								monospaced
+								onClick={clearSelection}
+								symbol="times-circle-full"
+								title={Liferay.Language.get('unselect-file')}
+							/>
+						)}
+					</div>
 				</div>
-			</div>
 
-			<ClayAlert
-				displayType={feedback.displayType}
-				role={alertRole}
-				style={{display: feedback.message ? 'block' : 'none'}}
-				title={feedback.message}
-				variant="feedback"
-			/>
+				<ClayAlert
+					displayType={feedback.displayType}
+					role={alertRole}
+					style={{display: feedback.message ? 'block' : 'none'}}
+					title={feedback.message}
+					variant="feedback"
+				/>
+			</div>
 		</LearnResourcesContext.Provider>
 	);
 };
 
 FrontendTokenDefinitionFilePicker.propTypes = {
+	disabled: PropTypes.bool,
 	frontendTokenDefinitionJSON: PropTypes.string.isRequired,
 	learnResources: PropTypes.object.isRequired,
 	portletNamespace: PropTypes.string.isRequired,

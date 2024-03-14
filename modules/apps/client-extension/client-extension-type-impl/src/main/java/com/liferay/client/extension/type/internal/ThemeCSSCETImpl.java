@@ -55,6 +55,11 @@ public class ThemeCSSCETImpl extends BaseCETImpl implements ThemeCSSCET {
 	}
 
 	@Override
+	public String getViewJSP() {
+		return "/admin/view_theme_css.jsp";
+	}
+
+	@Override
 	public boolean hasProperties() {
 		return false;
 	}

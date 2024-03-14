@@ -12,7 +12,7 @@
 >
 	<div class="sheet">
 		<h2 class="sheet-title">
-			<liferay-ui:message arguments='<%= renderRequest.getParameter("ctCollectionName") %>' key="x-scheduled-publication-failed-with-an-unexpected-system-error" />
+			<liferay-ui:message arguments='<%= HtmlUtil.escape(renderRequest.getParameter("ctCollectionName")) %>' key="x-scheduled-publication-failed-with-an-unexpected-system-error" />
 		</h2>
 
 		<div class="sheet-section">

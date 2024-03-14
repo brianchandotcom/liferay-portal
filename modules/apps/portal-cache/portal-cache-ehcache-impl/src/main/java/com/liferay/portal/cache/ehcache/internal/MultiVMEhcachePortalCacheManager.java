@@ -147,13 +147,6 @@ public class MultiVMEhcachePortalCacheManager
 			for (String portalCacheName :
 					_replicatorProperties.stringPropertyNames()) {
 
-				Properties replicatorProperties = parseProperties(
-					_replicatorProperties.getProperty(portalCacheName),
-					StringPool.COMMA);
-
-				replicatorProperties.put(
-					PortalCacheReplicator.REPLICATOR, true);
-
 				PortalCacheConfiguration portalCacheConfiguration =
 					portalCacheManagerConfiguration.getPortalCacheConfiguration(
 						portalCacheName);
@@ -175,7 +168,9 @@ public class MultiVMEhcachePortalCacheManager
 					}
 				}
 
-				portalCacheListenerPropertiesSet.add(replicatorProperties);
+				_populateCacheReplicator(
+					portalCacheConfiguration,
+					_replicatorProperties.getProperty(portalCacheName));
 			}
 		}
 
@@ -201,6 +196,16 @@ public class MultiVMEhcachePortalCacheManager
 				replicatorPropertiesString = _defaultReplicatorPropertiesString;
 			}
 
+			_populateCacheReplicator(
+				portalCacheConfiguration, replicatorPropertiesString);
+
+			return portalCacheConfiguration;
+		}
+
+		private void _populateCacheReplicator(
+			PortalCacheConfiguration portalCacheConfiguration,
+			String replicatorPropertiesString) {
+
 			Properties replicatorProperties = parseProperties(
 				replicatorPropertiesString, StringPool.COMMA);
 
@@ -210,8 +215,6 @@ public class MultiVMEhcachePortalCacheManager
 				portalCacheConfiguration.getPortalCacheListenerPropertiesSet();
 
 			portalCacheListenerPropertiesSet.add(replicatorProperties);
-
-			return portalCacheConfiguration;
 		}
 
 	}

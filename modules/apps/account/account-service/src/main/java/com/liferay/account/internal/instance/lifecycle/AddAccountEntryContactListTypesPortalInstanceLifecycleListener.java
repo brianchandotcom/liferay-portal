@@ -52,47 +52,42 @@ public class AddAccountEntryContactListTypesPortalInstanceLifecycleListener
 		return false;
 	}
 
-	private final Map<String, String[]> _listTypeNamesMap =
-		HashMapBuilder.put(
-			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS,
-			new String[] {
-				AccountListTypeConstants.
-					ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_BILLING,
-				AccountListTypeConstants.
-					ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_OTHER,
-				AccountListTypeConstants.
-					ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_P_O_BOX,
-				AccountListTypeConstants.
-					ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_SHIPPING
-			}
-		).put(
-			AccountListTypeConstants.ACCOUNT_ENTRY_EMAIL_ADDRESS,
-			new String[] {
-				AccountListTypeConstants.
-					ACCOUNT_ENTRY_EMAIL_ADDRESS_TYPE_EMAIL_ADDRESS,
-				AccountListTypeConstants.
-					ACCOUNT_ENTRY_EMAIL_ADDRESS_TYPE_EMAIL_ADDRESS_2,
-				AccountListTypeConstants.
-					ACCOUNT_ENTRY_EMAIL_ADDRESS_TYPE_EMAIL_ADDRESS_3
-			}
-		).put(
-			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE,
-			new String[] {
-				AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_FAX,
-				AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_LOCAL,
-				AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_OTHER,
-				AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_TOOL_FREE,
-				AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_TTY
-			}
-		).put(
-			AccountListTypeConstants.ACCOUNT_ENTRY_WEBSITE,
-			new String[] {
-				AccountListTypeConstants.ACCOUNT_ENTRY_WEBSITE_TYPE_INTRANET,
-				AccountListTypeConstants.ACCOUNT_ENTRY_WEBSITE_TYPE_PUBLIC
-			}
-		).build();
-
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
+
+	private final Map<String, String[]> _listTypeNamesMap = HashMapBuilder.put(
+		AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS,
+		new String[] {
+			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_BILLING,
+			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_OTHER,
+			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_P_O_BOX,
+			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_SHIPPING
+		}
+	).put(
+		AccountListTypeConstants.ACCOUNT_ENTRY_EMAIL_ADDRESS,
+		new String[] {
+			AccountListTypeConstants.
+				ACCOUNT_ENTRY_EMAIL_ADDRESS_TYPE_EMAIL_ADDRESS,
+			AccountListTypeConstants.
+				ACCOUNT_ENTRY_EMAIL_ADDRESS_TYPE_EMAIL_ADDRESS_2,
+			AccountListTypeConstants.
+				ACCOUNT_ENTRY_EMAIL_ADDRESS_TYPE_EMAIL_ADDRESS_3
+		}
+	).put(
+		AccountListTypeConstants.ACCOUNT_ENTRY_PHONE,
+		new String[] {
+			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_FAX,
+			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_LOCAL,
+			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_OTHER,
+			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_TOOL_FREE,
+			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_TTY
+		}
+	).put(
+		AccountListTypeConstants.ACCOUNT_ENTRY_WEBSITE,
+		new String[] {
+			AccountListTypeConstants.ACCOUNT_ENTRY_WEBSITE_TYPE_INTRANET,
+			AccountListTypeConstants.ACCOUNT_ENTRY_WEBSITE_TYPE_PUBLIC
+		}
+	).build();
 
 }

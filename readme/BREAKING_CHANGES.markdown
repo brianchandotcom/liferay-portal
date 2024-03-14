@@ -1861,3 +1861,25 @@ Instead use the Component Blacklist to disable certain scheduler components. The
 ### Why was this change made?
 
 Now Scheduler jobs are bootstrapped by `SchedulerJobConfiguration` objects registered as OSGi services. If a job should not be bootstrapped, the configuration object must not be registered at all.
+
+---------------------------------------
+
+## Removed RemotePreference API
+- **Date:** 2024-Mar-14
+- **JIRA Ticket:** [LPD-20659](https://liferay.atlassian.net/browse/LPD-20659)
+
+### What changed?
+
+com.liferay.portal.kernel.util.RemotePreference API is removed.
+
+### Who is affected?
+
+This affects anyone using the User.getRemotePreference(String) and User.getRemotePreferences().
+
+### How should I update my code?
+
+User.getRemotePreference(String) and User.getRemotePreferences() were just a convenient shortcut to get the user's current request's cookies with "REMOTE_PREFERENCE_" name prefix. The same logic can be done by directly getting necessary cookies from request.
+
+### Why was this change made?
+
+RemotePreference API has never been used. But the api supporting logic has to collect and hold cookies in User object, causing unnecessary CPU and memory overhead.

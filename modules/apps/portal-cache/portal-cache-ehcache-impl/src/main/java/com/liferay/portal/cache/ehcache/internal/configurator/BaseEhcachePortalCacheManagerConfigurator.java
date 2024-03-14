@@ -101,18 +101,13 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		CacheConfiguration cacheConfiguration, ClassLoader classLoader,
 		boolean usingDefault) {
 
-		Set<Properties> portalCacheListenerPropertiesSet =
+		return new EhcachePortalCacheConfiguration(
+			cacheConfiguration.getName(),
 			_parseCacheEventListenerConfigurations(
 				(List<CacheEventListenerFactoryConfiguration>)
 					cacheConfiguration.getCacheEventListenerConfigurations(),
-				classLoader, usingDefault);
-
-		boolean requireSerialization = isRequireSerialization(
-			cacheConfiguration);
-
-		return new EhcachePortalCacheConfiguration(
-			cacheConfiguration.getName(), portalCacheListenerPropertiesSet,
-			requireSerialization);
+				classLoader, usingDefault),
+			isRequireSerialization(cacheConfiguration));
 	}
 
 	protected Properties parseProperties(

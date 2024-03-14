@@ -5,10 +5,14 @@
 
 import {getSpritemap} from '@liferay/frontend-icons-web';
 import {
+	fetch,
+	objectToFormData,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openSimpleInputModal,
+	openToast,
+	sub,
 } from 'frontend-js-web';
 
 import openContentTypeModal from '../commands/openContentTypeModal';
@@ -104,6 +108,51 @@ const ACTIONS = {
 		else {
 			send(markAsDefaultDisplayPageURL);
 		}
+	},
+
+	moveDisplayPage(
+		{
+			itemSelectorURL,
+			layoutPageTemplateEntryName,
+			moveLayoutPageTemplateEntryURL,
+		},
+		portletNamespace
+	) {
+		openSelectionModal({
+			onSelect: (selectedItems) => {
+				fetch(moveLayoutPageTemplateEntryURL, {
+					body: objectToFormData({
+						[`${portletNamespace}targetLayoutPageTemplateCollectionId`]: selectedItems.resourceid,
+					}),
+					method: 'POST',
+				})
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error();
+						}
+
+						window.location.reload();
+					})
+					.catch(
+						({
+							message = Liferay.Language.get(
+								'an-unexpected-error-occurred'
+							),
+						}) => {
+							openToast({
+								message,
+								type: 'danger',
+							});
+						}
+					);
+			},
+			selectEventName: 'selectFolder',
+			title: sub(
+				Liferay.Language.get('move-x-to'),
+				`"${layoutPageTemplateEntryName}"`
+			),
+			url: itemSelectorURL,
+		});
 	},
 
 	permissionsDisplayPage({permissionsDisplayPageURL}) {

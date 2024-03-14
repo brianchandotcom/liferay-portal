@@ -15,12 +15,14 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
+import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -154,6 +156,9 @@ public class DisplayPageActionDropdownItemsProvider {
 							_layoutPageTemplateEntry.getLayoutPrototypeId() ==
 								0,
 						_getExportDisplayPageActionUnsafeConsumer()
+					).add(
+						() -> hasUpdatePermission,
+						_getMoveDisplayPageActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -503,6 +508,25 @@ public class DisplayPageActionDropdownItemsProvider {
 				itemSelectorCriterion));
 	}
 
+	private String _getLayoutPageTemplateCollectionItemSelectorURL() {
+		LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion
+			layoutPageTemplateCollectionTreeNodeItemSelectorCriterion =
+				new LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion();
+
+		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
+			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
+
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				"selectFolder",
+				layoutPageTemplateCollectionTreeNodeItemSelectorCriterion)
+		).setParameter(
+			"layoutPageTemplateEntryId",
+			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).buildString();
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getMarkAsDefaultDisplayPageActionUnsafeConsumer() {
 
@@ -572,6 +596,38 @@ public class DisplayPageActionDropdownItemsProvider {
 
 			dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
 		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getMoveDisplayPageActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "moveDisplayPage");
+			dropdownItem.putData(
+				"itemSelectorURL",
+				_getLayoutPageTemplateCollectionItemSelectorURL());
+			dropdownItem.putData(
+				"layoutPageTemplateEntryName",
+				_layoutPageTemplateEntry.getName());
+			dropdownItem.putData(
+				"moveLayoutPageTemplateEntryURL", _getMoveDisplayPageURL());
+			dropdownItem.setIcon("move-folder");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "move"));
+		};
+	}
+
+	private String _getMoveDisplayPageURL() {
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/move_layout_page_template_entry"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"layoutPageTemplateEntryId",
+			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).buildString();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

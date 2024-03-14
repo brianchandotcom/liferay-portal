@@ -7,17 +7,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.jndi.JNDIUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-
-import java.util.Properties;
-
-import javax.mail.Session;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
 
 import javax.sql.DataSource;
 
@@ -30,10 +20,6 @@ public class InfrastructureUtil {
 
 	public static DataSource getDataSource() {
 		return _dataSource;
-	}
-
-	public static Session getMailSession() {
-		return _createMailSession();
 	}
 
 	public static Object getSessionFactory() {
@@ -65,31 +51,6 @@ public class InfrastructureUtil {
 	public static void setTransactionManager(Object transactionManager) {
 		_transactionManagerDefaultNoticeableFuture.set(transactionManager);
 	}
-
-	private static Session _createMailSession() {
-		Properties properties = PropsUtil.getProperties("mail.session.", true);
-
-		String jndiName = properties.getProperty("jndi.name");
-
-		if (Validator.isNotNull(jndiName)) {
-			try {
-				Properties jndiEnvironmentProperties = PropsUtil.getProperties(
-					PropsKeys.JNDI_ENVIRONMENT, true);
-
-				Context context = new InitialContext(jndiEnvironmentProperties);
-
-				return (Session)JNDIUtil.lookup(context, jndiName);
-			}
-			catch (Exception exception) {
-				_log.error("Unable to lookup " + jndiName, exception);
-			}
-		}
-
-		return Session.getInstance(properties);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		InfrastructureUtil.class);
 
 	private static DataSource _dataSource;
 	private static final DefaultNoticeableFuture<Object>

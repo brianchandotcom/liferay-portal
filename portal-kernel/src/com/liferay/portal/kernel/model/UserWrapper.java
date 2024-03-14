@@ -358,13 +358,6 @@ public class UserWrapper
 	}
 
 	@Override
-	public void addRemotePreference(
-		com.liferay.portal.kernel.util.RemotePreference remotePreference) {
-
-		model.addRemotePreference(remotePreference);
-	}
-
-	@Override
 	public User cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
 	}
@@ -1112,20 +1105,6 @@ public class UserWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getReminderQueryQuestions();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.RemotePreference getRemotePreference(
-		String name) {
-
-		return model.getRemotePreference(name);
-	}
-
-	@Override
-	public Iterable<com.liferay.portal.kernel.util.RemotePreference>
-		getRemotePreferences() {
-
-		return model.getRemotePreferences();
 	}
 
 	@Override

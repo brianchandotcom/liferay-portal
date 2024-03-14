@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.RemotePreference;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -65,13 +64,9 @@ import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UserInitialsGeneratorUtil;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
@@ -85,11 +80,6 @@ import java.util.TreeSet;
  * @author Wesley Gong
  */
 public class UserImpl extends UserBaseImpl {
-
-	@Override
-	public void addRemotePreference(RemotePreference remotePreference) {
-		_remotePreferences.put(remotePreference.getName(), remotePreference);
-	}
 
 	@Override
 	public Contact fetchContact() {
@@ -590,18 +580,6 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public RemotePreference getRemotePreference(String name) {
-		return _remotePreferences.get(name);
-	}
-
-	@Override
-	public Iterable<RemotePreference> getRemotePreferences() {
-		Collection<RemotePreference> values = _remotePreferences.values();
-
-		return Collections.unmodifiableCollection(values);
-	}
-
-	@Override
 	public long[] getRoleIds() {
 		if (_roleIds == null) {
 			_roleIds = UserLocalServiceUtil.getRolePrimaryKeys(getUserId());
@@ -1025,8 +1003,6 @@ public class UserImpl extends UserBaseImpl {
 	private boolean _passwordModified;
 	private PasswordPolicy _passwordPolicy;
 	private String _passwordUnencrypted;
-	private final transient Map<String, RemotePreference> _remotePreferences =
-		new HashMap<>();
 	private long[] _roleIds;
 	private long[] _teamIds;
 	private TimeZone _timeZone;

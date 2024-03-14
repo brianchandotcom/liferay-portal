@@ -46,9 +46,6 @@ public interface User extends PersistedModel, UserModel {
 
 		};
 
-	public void addRemotePreference(
-		com.liferay.portal.kernel.util.RemotePreference remotePreference);
-
 	public Contact fetchContact();
 
 	public String fetchPortraitURL(
@@ -270,12 +267,6 @@ public interface User extends PersistedModel, UserModel {
 
 	public java.util.Set<String> getReminderQueryQuestions()
 		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.portal.kernel.util.RemotePreference getRemotePreference(
-		String name);
-
-	public Iterable<com.liferay.portal.kernel.util.RemotePreference>
-		getRemotePreferences();
 
 	public long[] getRoleIds();
 

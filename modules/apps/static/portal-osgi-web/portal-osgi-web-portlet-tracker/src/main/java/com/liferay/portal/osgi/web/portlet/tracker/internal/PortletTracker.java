@@ -106,7 +106,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.http.runtime.HttpServiceRuntime;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -1464,9 +1463,6 @@ public class PortletTracker
 
 	@Reference
 	private DelegateProxyFactory _delegateProxyFactory;
-
-	@Reference
-	private HttpServiceRuntime _httpServiceRuntime;
 
 	@Reference(
 		target = ModuleServiceLifecycle.PORTLETS_INITIALIZED, unbind = "-"

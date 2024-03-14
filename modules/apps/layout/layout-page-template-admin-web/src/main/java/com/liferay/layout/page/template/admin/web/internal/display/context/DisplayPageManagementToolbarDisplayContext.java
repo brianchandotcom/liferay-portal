@@ -82,6 +82,26 @@ public class DisplayPageManagementToolbarDisplayContext
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
 							dropdownItem.putData(
+								"action", "moveSelectedEntries");
+							dropdownItem.putData(
+								"itemSelectorURL", _getItemSelectorURL());
+							dropdownItem.putData(
+								"moveSelectedEntriesURL",
+								_getMoveSelectedEntriesURL());
+							dropdownItem.setIcon("move-folder");
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "move"));
+							dropdownItem.setQuickAction(true);
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData(
 								"action", "deleteSelectedEntries");
 							dropdownItem.putData(
 								"deleteSelectedEntriesURL",
@@ -110,6 +130,13 @@ public class DisplayPageManagementToolbarDisplayContext
 			availableActions.add("deleteSelectedEntries");
 		}
 
+		if (LayoutPageTemplateCollectionPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				layoutPageTemplateCollection, ActionKeys.UPDATE)) {
+
+			availableActions.add("moveSelectedEntries");
+		}
+
 		return StringUtil.merge(availableActions, StringPool.COMMA);
 	}
 
@@ -130,6 +157,13 @@ public class DisplayPageManagementToolbarDisplayContext
 			!layoutPageTemplateEntry.isDraft()) {
 
 			availableActions.add("exportDisplayPages");
+		}
+
+		if (LayoutPageTemplateEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), layoutPageTemplateEntry,
+				ActionKeys.UPDATE)) {
+
+			availableActions.add("moveSelectedEntries");
 		}
 
 		return StringUtil.merge(availableActions, StringPool.COMMA);
@@ -278,6 +312,30 @@ public class DisplayPageManagementToolbarDisplayContext
 			liferayPortletResponse
 		).setResourceID(
 			"/layout_page_template_admin/export_display_pages"
+		).buildString();
+	}
+
+	private String _getItemSelectorURL() {
+		return PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/layout_page_template_admin" +
+				"/move_layout_page_template_entries_and_layout_page_" +
+					"template_collections"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).buildString();
+	}
+
+	private String _getMoveSelectedEntriesURL() {
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/layout_page_template_admin" +
+				"/move_layout_page_template_entries_and_layout_page_" +
+					"template_collections"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
 		).buildString();
 	}
 

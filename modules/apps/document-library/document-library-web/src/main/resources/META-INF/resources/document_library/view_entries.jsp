@@ -137,6 +137,15 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 														<%= latestFileVersion.getTitle() %>
 													</aui:a>
 
+													<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+														<clay:icon
+															aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+															cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
+															data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+															symbol="password-policies"
+														/>
+													</c:if>
+
 													<div class="card-subtitle text-truncate">
 														<%= LanguageUtil.format(request, "modified-x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(latestFileVersion.getUserName())}, false) %>
 													</div>
@@ -240,6 +249,15 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 															label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
 															translated="<%= false %>"
 														/>
+
+														<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+															<clay:icon
+																aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+																cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
+																data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+																symbol="password-policies"
+															/>
+														</c:if>
 
 														<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 															<span class="lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "locked-document") %>">

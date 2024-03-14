@@ -43,6 +43,16 @@ const Build = () => {
 			<ListView
 				initialContext={{
 					columns: {environment: false},
+					sort: [
+						{
+							direction: 'ASC',
+							key: 'dueStatus',
+						},
+						{
+							direction: 'ASC',
+							key: 'errors',
+						},
+					],
 				}}
 				managementToolbarProps={{
 					filterSchema: 'buildResults',

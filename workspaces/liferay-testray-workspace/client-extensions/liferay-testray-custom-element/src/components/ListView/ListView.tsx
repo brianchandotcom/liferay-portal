@@ -23,6 +23,7 @@ import ListViewContextProvider, {
 	ListViewContext,
 	ListViewContextProviderProps,
 	ListViewTypes,
+	Sort,
 } from '../../context/ListViewContext';
 import SearchBuilder from '../../core/SearchBuilder';
 import {useFetch} from '../../hooks/useFetch';
@@ -142,6 +143,21 @@ const ListView: React.FC<ListViewProps> = ({
 		[filters.filter, variables?.filter, filterSchema]
 	);
 
+	const buildSort = (sort: Sort | Sort[]) => {
+		if (Array.isArray(sort)) {
+			return sort
+				.reduce(
+					(prevSort, newSort) =>
+						prevSort +
+						`${newSort.key}:${newSort.direction.toLowerCase()},`,
+					''
+				)
+				.slice(0, -1);
+		}
+
+		return sort.key ? `${sort.key}:${sort.direction.toLowerCase()}` : '';
+	};
+
 	const getURLSearchParams = useCallback(
 		() => ({
 			filter: onApplyFilterMemo
@@ -150,7 +166,7 @@ const ListView: React.FC<ListViewProps> = ({
 			forceRefetch,
 			page: listViewContext.page,
 			pageSize: listViewContext.pageSize,
-			sort: sort.key ? `${sort.key}:${sort.direction.toLowerCase()}` : '',
+			sort: buildSort(sort),
 		}),
 		[
 			onApplyFilterMemo,
@@ -158,8 +174,7 @@ const ListView: React.FC<ListViewProps> = ({
 			forceRefetch,
 			listViewContext.page,
 			listViewContext.pageSize,
-			sort.key,
-			sort.direction,
+			sort,
 		]
 	);
 

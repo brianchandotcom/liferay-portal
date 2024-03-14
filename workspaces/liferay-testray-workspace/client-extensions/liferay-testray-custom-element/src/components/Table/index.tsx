@@ -54,7 +54,7 @@ export type TableProps<T = any> = {
 	rowSelectable?: boolean;
 	rowWrap?: boolean;
 	selectedRows?: number[];
-	sort?: Sort;
+	sort?: Sort | Sort[];
 };
 
 const Table: React.FC<TableProps> = ({
@@ -107,8 +107,15 @@ const Table: React.FC<TableProps> = ({
 			return '';
 		}
 
-		if (sort.key === key) {
-			return sort.direction === SortOption.ASC
+		let selectedSort = sort;
+
+		if (Array.isArray(selectedSort)) {
+			selectedSort =
+				selectedSort.find((_sort) => _sort.key === key) || ({} as Sort);
+		}
+
+		if (selectedSort?.key === key) {
+			return selectedSort.direction === SortOption.ASC
 				? 'caret-top-l'
 				: 'caret-bottom-l';
 		}

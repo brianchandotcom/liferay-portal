@@ -50,7 +50,7 @@ export type InitialState = {
 	pageSize: number;
 	pin: boolean;
 	selectedRows: number[];
-	sort: Sort;
+	sort: Sort | Sort[];
 };
 
 const initialState: InitialState = {

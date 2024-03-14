@@ -243,4 +243,4 @@ FolderItemSelectorURLProvider folderItemSelectorURLProvider = new FolderItemSele
 <liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view_file_entry.jsp#post" />
 
 <%@ include file="/document_library/friendly_url_changed_message.jspf" %>
-<%@ include file="/document_library/published_document_success_message.jspf" %>
+<%@ include file="/document_library/session_messages.jspf" %>

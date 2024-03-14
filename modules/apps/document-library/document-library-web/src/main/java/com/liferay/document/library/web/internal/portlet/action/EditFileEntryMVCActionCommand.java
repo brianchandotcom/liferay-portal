@@ -537,7 +537,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 		SessionMessages.add(
-			httpServletRequest, "publishedDocumentRequestProcessedSuccess",
+			httpServletRequest, "scheduledDocumentRequestProcessedSuccess",
 			_language.format(
 				_portal.getHttpServletRequest(actionRequest),
 				"x-will-be-published-on-x",

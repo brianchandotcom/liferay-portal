@@ -6,16 +6,16 @@
 --%>
 
 <%
-String publishedDocumentMessage = GetterUtil.getString(SessionMessages.get(request, "publishedDocumentRequestProcessedSuccess"));
+String scheduledDocumentMessage = GetterUtil.getString(SessionMessages.get(request, "scheduledDocumentRequestProcessedSuccess"));
 %>
 
-<c:if test="<%= Validator.isNotNull(publishedDocumentMessage) %>">
+<c:if test="<%= Validator.isNotNull(scheduledDocumentMessage) %>">
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
 				"autoClose", 20000
 			).put(
-				"message", publishedDocumentMessage
+				"message", scheduledDocumentMessage
 			).build()
 		%>'
 		module="{openToast} from frontend-js-web"

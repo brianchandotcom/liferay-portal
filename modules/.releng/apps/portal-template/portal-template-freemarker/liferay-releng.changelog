@@ -282,3 +282,8 @@ bdb2ed25528e5b20e4a9ef37ee18459d81ebdcad^..2ecdb17be18e6fc7c67ff29132332fa332436
 # Bundle Version 7.0.51
 #
 2ecdb17be18e6fc7c67ff29132332fa3324368dc^..803de67509d31ecbd6e9b0a969b7e2d165ebaaba=LPD-1948
+
+#
+# Bundle Version 7.0.52
+#
+803de67509d31ecbd6e9b0a969b7e2d165ebaaba^..e64312bcaef0528808b7cfbaa5295cb24c481aa5=LPD-18524 LPD-19182

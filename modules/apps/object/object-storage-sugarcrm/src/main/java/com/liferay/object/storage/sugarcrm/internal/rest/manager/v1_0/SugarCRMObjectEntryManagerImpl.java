@@ -210,6 +210,7 @@ public class SugarCRMObjectEntryManagerImpl
 				filterString, objectDefinition);
 
 			sb.append(URLCodec.encodeURL(filterSugarQueryString));
+
 			sb.append(StringPool.CLOSE_BRACKET);
 		}
 	}

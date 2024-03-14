@@ -200,29 +200,14 @@ public class SugarCRMObjectEntryManagerImplTest
 	public void testGetObjectEntries() throws Exception {
 		String firstName1 = "a" + RandomTestUtil.randomString();
 		String lastName1 = "a" + RandomTestUtil.randomString();
-		String firstName2 = "b" + RandomTestUtil.randomString();
-		String lastName2 = "b" + RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry1 = _addObjectEntry(firstName1, lastName1);
-		ObjectEntry objectEntry2 = _addObjectEntry(firstName2, lastName2);
-
-		// Test for standard filter format
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"filter", "[0][id]=" + objectEntry1.getExternalReferenceCode()
+				"filter", "firstName eq '" + firstName1 + "'"
 			).build(),
 			objectEntry1);
-
-		// Test for json filter format
-
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				"=[{\"id\":\"" + objectEntry2.getExternalReferenceCode() +
-					"\"}]"
-			).build(),
-			objectEntry2);
 	}
 
 	@Test

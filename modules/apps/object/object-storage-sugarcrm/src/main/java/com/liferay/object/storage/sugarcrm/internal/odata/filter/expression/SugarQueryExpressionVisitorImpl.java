@@ -56,11 +56,11 @@ public class SugarQueryExpressionVisitorImpl
 		}
 		else {
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				_objectDefinitionId, (String)left);
+				_objectDefinitionId, left.toString());
 
 			if (objectField != null) {
 				left = objectField.getExternalReferenceCode();
-				right = StringUtil.unquote((String)right);
+				right = StringUtil.unquote(right.toString());
 			}
 		}
 
@@ -160,17 +160,15 @@ public class SugarQueryExpressionVisitorImpl
 	private void _buildBinaryOperation(
 		Object left, String operator, Object right, StringBuilder sb) {
 
-		JSONObject subjsonObject = JSONFactoryUtil.createJSONObject(
-		).put(
-			operator, (String)right
-		);
-
-		JSONObject mainjsonObject = JSONFactoryUtil.createJSONObject(
-		).put(
-			(String)left, subjsonObject
-		);
-
-		sb.append(mainjsonObject.toString());
+		sb.append(
+			JSONFactoryUtil.createJSONObject(
+			).put(
+				left.toString(),
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					operator, right.toString()
+				)
+			).toString());
 	}
 
 	private void _buildBinaryOperationAndOr(
@@ -195,26 +193,15 @@ public class SugarQueryExpressionVisitorImpl
 			}
 
 			jsonArray.put(rightjsonObject);
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			).put(
-				operator, jsonArray
-			);
 
-			sb.append(jsonObject.toString());
+			sb.append(
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					operator, jsonArray
+				).toString());
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			throw new UnsupportedOperationException();
-		}
-	}
-
-	private void _insertBinaryOperationAndOr(
-		JSONArray jsonArray, Object object) {
-
-		try {
-			jsonArray.put(JSONFactoryUtil.createJSONObject(object.toString()));
-		}
-		catch (Exception e) {
-			jsonArray.put(object);
 		}
 	}
 

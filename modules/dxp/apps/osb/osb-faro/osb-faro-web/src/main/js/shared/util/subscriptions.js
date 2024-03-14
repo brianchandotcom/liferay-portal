@@ -300,7 +300,9 @@ export function formatPlanData(subscriptionIMap) {
 						SubscriptionStatuses.Ok
 					)
 				}),
-				usersCount: subscriptionIMap.get('usersCount')
+				syncedIndividualsCount: subscriptionIMap.get(
+					'syncedIndividualsCount'
+				)
 			},
 			name: subscriptionIMap.get('name'),
 			startDate: basicPlan

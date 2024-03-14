@@ -46,12 +46,6 @@ public class LoginUtilityPageStrutsAction implements StrutsAction {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			themeDisplay.getScopeGroupId(), false);
 
-		themeDisplay.setLayoutSet(layoutSet);
-		themeDisplay.setLookAndFeel(
-			layoutSet.getTheme(), layoutSet.getColorScheme());
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher("/login.jsp");
 

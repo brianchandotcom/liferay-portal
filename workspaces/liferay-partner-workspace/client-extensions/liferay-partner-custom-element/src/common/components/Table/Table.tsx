@@ -5,6 +5,7 @@
 
 import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import classNames from 'classnames';
 
 import TableColumn from '../../interfaces/tableColumn';
 
@@ -74,7 +75,9 @@ const Table = <T extends unknown>({
 										column.render(data, row, rowIndex)
 									) : (
 										<span
-											className="table-cell-items"
+											className={classNames("table-cell-items", {
+												"text-wrap": column.wrap
+											})}
 											data-tooltip-align="top"
 											title={data}
 										>

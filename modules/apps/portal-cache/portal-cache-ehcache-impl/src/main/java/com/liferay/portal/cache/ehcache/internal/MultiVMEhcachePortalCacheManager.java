@@ -144,6 +144,28 @@ public class MultiVMEhcachePortalCacheManager
 				return;
 			}
 
+			_populateCacheReplicator(
+				portalCacheManagerConfiguration.
+					getDefaultPortalCacheConfiguration(),
+				_defaultReplicatorPropertiesString);
+
+			for (String portalCacheName :
+					portalCacheManagerConfiguration.getPortalCacheNames()) {
+
+				String replicatorPropertiesString =
+					(String)_replicatorProperties.remove(portalCacheName);
+
+				if (Validator.isNull(replicatorPropertiesString)) {
+					replicatorPropertiesString =
+						_defaultReplicatorPropertiesString;
+				}
+
+				_populateCacheReplicator(
+					portalCacheManagerConfiguration.
+						getDefaultPortalCacheConfiguration(),
+					replicatorPropertiesString);
+			}
+
 			for (String portalCacheName :
 					_replicatorProperties.stringPropertyNames()) {
 
@@ -172,34 +194,6 @@ public class MultiVMEhcachePortalCacheManager
 					portalCacheConfiguration,
 					_replicatorProperties.getProperty(portalCacheName));
 			}
-		}
-
-		@Override
-		protected PortalCacheConfiguration parseCacheListenerConfigurations(
-			CacheConfiguration cacheConfiguration, ClassLoader classLoader,
-			boolean usingDefault) {
-
-			PortalCacheConfiguration portalCacheConfiguration =
-				super.parseCacheListenerConfigurations(
-					cacheConfiguration, classLoader, usingDefault);
-
-			if (!clusterEnabled) {
-				return portalCacheConfiguration;
-			}
-
-			String cacheName = cacheConfiguration.getName();
-
-			String replicatorPropertiesString =
-				(String)_replicatorProperties.remove(cacheName);
-
-			if (Validator.isNull(replicatorPropertiesString)) {
-				replicatorPropertiesString = _defaultReplicatorPropertiesString;
-			}
-
-			_populateCacheReplicator(
-				portalCacheConfiguration, replicatorPropertiesString);
-
-			return portalCacheConfiguration;
 		}
 
 		private void _populateCacheReplicator(

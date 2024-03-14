@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -147,16 +146,13 @@ public class MultiVMEhcachePortalCacheManager
 				return;
 			}
 
-			Map<String, ObjectValuePair<Properties, Properties>>
-				mergedPropertiesMap = _getMergedPropertiesMap();
+			Map<String, Properties> mergedPropertiesMap =
+				_getMergedPropertiesMap();
 
-			for (Map.Entry<String, ObjectValuePair<Properties, Properties>>
-					entry : mergedPropertiesMap.entrySet()) {
+			for (Map.Entry<String, Properties> entry :
+					mergedPropertiesMap.entrySet()) {
 
-				ObjectValuePair<Properties, Properties> propertiesPair =
-					entry.getValue();
-
-				if (propertiesPair.getValue() != null) {
+				if (entry.getValue() != null) {
 					PortalCacheConfiguration portalCacheConfiguration =
 						portalCacheManagerConfiguration.
 							getPortalCacheConfiguration(entry.getKey());
@@ -178,8 +174,7 @@ public class MultiVMEhcachePortalCacheManager
 						}
 					}
 
-					portalCacheListenerPropertiesSet.add(
-						propertiesPair.getValue());
+					portalCacheListenerPropertiesSet.add(entry.getValue());
 				}
 			}
 		}
@@ -219,11 +214,8 @@ public class MultiVMEhcachePortalCacheManager
 			return portalCacheConfiguration;
 		}
 
-		private Map<String, ObjectValuePair<Properties, Properties>>
-			_getMergedPropertiesMap() {
-
-			Map<String, ObjectValuePair<Properties, Properties>>
-				mergedPropertiesMap = new HashMap<>();
+		private Map<String, Properties> _getMergedPropertiesMap() {
+			Map<String, Properties> mergedPropertiesMap = new HashMap<>();
 
 			for (String portalCacheName :
 					_replicatorProperties.stringPropertyNames()) {
@@ -235,17 +227,7 @@ public class MultiVMEhcachePortalCacheManager
 				replicatorProperties.put(
 					PortalCacheReplicator.REPLICATOR, true);
 
-				ObjectValuePair<Properties, Properties> objectValuePair =
-					mergedPropertiesMap.get(portalCacheName);
-
-				if (objectValuePair == null) {
-					mergedPropertiesMap.put(
-						portalCacheName,
-						new ObjectValuePair<>(null, replicatorProperties));
-				}
-				else {
-					objectValuePair.setValue(replicatorProperties);
-				}
+				mergedPropertiesMap.put(portalCacheName, replicatorProperties);
 			}
 
 			return mergedPropertiesMap;

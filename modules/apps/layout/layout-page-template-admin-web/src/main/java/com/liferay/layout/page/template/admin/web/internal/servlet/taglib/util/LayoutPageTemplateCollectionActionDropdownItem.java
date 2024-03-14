@@ -286,9 +286,11 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());
 		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
-			setLayoutPageTemplateCollectionId(
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId());
+			setLayoutPageTemplateCollectionIds(
+				new long[] {
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId()
+				});
 
 		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
@@ -304,11 +306,13 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
-			"/layout_page_template_admin/move_layout_page_template_collection"
+			"/layout_page_template_admin" +
+				"/move_layout_page_template_entries_and_layout_page_" +
+					"template_collections"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
-			"layoutPageTemplateCollectionId",
+			"layoutPageTemplateCollectionsIds",
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
 		).buildString();
 	}

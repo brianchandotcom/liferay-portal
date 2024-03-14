@@ -97,7 +97,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		return buildData.getBuildParameter(key);
 	}
 
-	private void _archivedReport(String filePath) {
+	private void _archiveReport(String filePath) {
 		LocalDate localDate = LocalDate.parse(
 			_START_DATE_STRING, _dateTimeFormatter);
 
@@ -147,7 +147,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		_updateReport(filePath);
 
-		_archivedReport(filePath);
+		_archiveReport(filePath);
 	}
 
 	private void _generateCISystemHistoryReport(String filePath)
@@ -219,7 +219,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		_updateReport(filePath);
 
-		_archivedReport(filePath);
+		_archiveReport(filePath);
 	}
 
 	private void _generateReports() {

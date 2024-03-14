@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
@@ -55,30 +56,30 @@ public class BuildHistoryReport {
 		return buildHistoryReport;
 	}
 
-	public static BuildHistoryReport newTestSuiteReport(
+	public static BuildHistoryReport newPullRequestTestSuiteReport(
 		long durationDays, File outputDir, String startDateString) {
 
-		BuildHistoryReport buildHistoryReport = new BuildHistoryReport(
-			outputDir);
+		return _newTestSuiteReport(
+			durationDays, _portalMasterPullRequestJobNamePattern, outputDir,
+			"liferay-portal/master Pull Request History Report",
+			startDateString);
+	}
 
-		buildHistoryReport.addFilesFromResource(
-			"dependencies/metrics/test-suite-report", "/index.html");
+	public static BuildHistoryReport newReleaseTestSuiteReport(
+		long durationDays, File outputDir, String startDateString) {
 
-		long duration = TimeUnit.DAYS.toMillis(durationDays);
-		long startTime = _getStartTime(startDateString);
+		return _newTestSuiteReport(
+			durationDays, _portalReleaseJobNamePattern, outputDir,
+			"Portal Release History Report", startDateString);
+	}
 
-		Collection<BuildHistory> buildHistories =
-			BuildHistoryProcessor.newTestSuiteJobHistories(
-				duration, _portalMasterPullRequestJobNamePattern, startTime);
+	public static BuildHistoryReport newUpstreamTestSuiteReport(
+		long durationDays, File outputDir, String startDateString) {
 
-		buildHistoryReport.addFile(
-			"js/table-data.js",
-			_getTableDataJSFileContent(buildHistories, "Test Suite Name"));
-		buildHistoryReport.addFile(
-			"js/timeline-data.js",
-			_getTimelineDataJSFileContent(buildHistories, startTime, duration));
-
-		return buildHistoryReport;
+		return _newTestSuiteReport(
+			durationDays, new GroupByTopLevelTestSuiteAndUpstreamJob(),
+			_portalMasterUpstreamJobNamePattern, outputDir,
+			"liferay-portal/master Upstream History Report", startDateString);
 	}
 
 	public BuildHistoryReport(File outputDir) {
@@ -187,11 +188,99 @@ public class BuildHistoryReport {
 		return "var timelineData = " + jsonObject.toString();
 	}
 
+	private static BuildHistoryReport _newTestSuiteReport(
+		long durationDays, Function<BuildJSONObject, String> groupingFunction,
+		Pattern jobNamePattern, File outputDir, String reportName,
+		String startDateString) {
+
+		BuildHistoryReport buildHistoryReport = new BuildHistoryReport(
+			outputDir);
+
+		buildHistoryReport.addFilesFromResource(
+			"dependencies/metrics/test-suite-report", "/index.html");
+
+		long duration = TimeUnit.DAYS.toMillis(durationDays);
+
+		Collection<BuildHistory> buildHistories =
+			BuildHistoryProcessor.newTestSuiteJobHistories(
+				duration, groupingFunction, jobNamePattern,
+				_getStartTime(startDateString));
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			_getTableDataJSFileContent(buildHistories, "Test Suite Name"));
+
+		sb.append("\nvar reportName = \"");
+
+		sb.append(reportName);
+
+		sb.append("\";");
+
+		buildHistoryReport.addFile("js/table-data.js", sb.toString());
+
+		return buildHistoryReport;
+	}
+
+	private static BuildHistoryReport _newTestSuiteReport(
+		long durationDays, Pattern jobNamePattern, File outputDir,
+		String reportName, String startDateString) {
+
+		return _newTestSuiteReport(
+			durationDays, null, jobNamePattern, outputDir, reportName,
+			startDateString);
+	}
+
 	private static final Pattern _portalMasterPullRequestJobNamePattern =
 		Pattern.compile(
 			"test-portal-acceptance-pullrequest(|-downstream)\\(master\\)");
+	private static final Pattern _portalMasterUpstreamJobNamePattern =
+		Pattern.compile(
+			"test-portal-(acceptance-upstream-dxp|testsuite-upstream)" +
+				"(|-downstream)\\(master\\)");
+	private static final Pattern _portalReleaseJobNamePattern = Pattern.compile(
+		"test-portal(|-fixpack|-hotfix)-release(|-downstream)");
 
 	private final Map<File, String> _fileMap = new HashMap<>();
 	private final File _outputDir;
+
+	private static class GroupByTopLevelTestSuiteAndUpstreamJob
+		implements Function<BuildJSONObject, String> {
+
+		public String apply(BuildJSONObject buildJSONObject) {
+			String jobName = buildJSONObject.getJobName();
+
+			if (jobName.contains("acceptance-upstream-dxp")) {
+				return "acceptance-dxp";
+			}
+
+			if (buildJSONObject.isTopLevelBuild()) {
+				Map<String, String> parameters =
+					buildJSONObject.getParameters();
+
+				if (parameters.containsKey("CI_TEST_SUITE")) {
+					_topLevelBuildTestSuiteMap.put(
+						buildJSONObject.getURL(),
+						parameters.get("CI_TEST_SUITE"));
+
+					return parameters.get("CI_TEST_SUITE");
+				}
+
+				return "[Unknown]";
+			}
+
+			String topLevelBuildURL = buildJSONObject.getTopLevelBuildURL();
+
+			if (_topLevelBuildTestSuiteMap.containsKey(topLevelBuildURL)) {
+				return _topLevelBuildTestSuiteMap.get(topLevelBuildURL);
+			}
+
+			return "[Unknown]";
+		}
+
+		private final Map<String, String> _topLevelBuildTestSuiteMap =
+			new HashMap<>();
+
+	}
 
 }

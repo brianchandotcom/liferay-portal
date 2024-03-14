@@ -64,7 +64,8 @@ public class BuildHistoryProcessor {
 	}
 
 	public static Collection<BuildHistory> newTestSuiteJobHistories(
-		long duration, Pattern jobNamePattern, long startTime) {
+		long duration, Function<BuildJSONObject, String> groupingFunction,
+		Pattern jobNamePattern, long startTime) {
 
 		Set<BuildJSONObject> buildJSONObjects =
 			_getFilteredBuildDataJSONObjects(
@@ -82,17 +83,18 @@ public class BuildHistoryProcessor {
 			}
 		}
 
-		GroupByTopLevelTestSuite groupByTopLevelTestSuite =
-			new GroupByTopLevelTestSuite();
+		if (groupingFunction == null) {
+			groupingFunction = new GroupByTopLevelTestSuite();
+		}
 
 		Map<String, BuildHistory> groupedBuildHistoriesMap =
 			_getGroupedBuildHistoriesMap(
-				topLevelBuildJSONObjects, duration, groupByTopLevelTestSuite,
+				topLevelBuildJSONObjects, duration, groupingFunction,
 				startTime);
 
 		Map<String, Set<BuildJSONObject>> groupedBuildDataJSONObjectsMap =
 			_getGroupedBuildDataJSONObjectsMap(
-				downstreamBuildJSONObjects, groupByTopLevelTestSuite);
+				downstreamBuildJSONObjects, groupingFunction);
 
 		for (Map.Entry<String, Set<BuildJSONObject>> entry :
 				groupedBuildDataJSONObjectsMap.entrySet()) {

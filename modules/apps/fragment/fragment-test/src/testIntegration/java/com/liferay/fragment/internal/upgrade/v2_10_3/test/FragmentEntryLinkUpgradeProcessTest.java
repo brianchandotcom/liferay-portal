@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -122,10 +123,12 @@ public class FragmentEntryLinkUpgradeProcessTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.OFF)) {
 
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
+			UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
+				_upgradeStepRegistrator, new Version(2, 10, 3));
 
-			upgradeProcess.upgrade();
+			for (UpgradeProcess upgradeProcess : upgradeProcesses) {
+				upgradeProcess.upgrade();
+			}
 
 			_multiVMPool.clear();
 		}

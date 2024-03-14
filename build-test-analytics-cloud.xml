@@ -202,18 +202,6 @@
 						yaml.dump(yamlMap, fileWriter);
 					}
 
-					public String getAnalyticsCloudFaroServiceName(Map dockerComposeMap) {
-						Map servicesMap = dockerComposeMap.get("services");
-
-						for (String serviceName : servicesMap.keySet()) {
-							if (serviceName.contains("osbfaro")) {
-								return serviceName;
-							}
-						}
-
-						return null;
-					}
-
 					public String getAnalyticsCloudAsahImageNames(Map dockerComposeMap) {
 						StringBuilder sb = new StringBuilder();
 
@@ -232,33 +220,6 @@
 								imageName = "com-liferay-osb-asah-private-" + serviceName;
 							}
 
-							sb.append(imageName);
-							sb.append(",");
-						}
-
-						if (sb.length() > 0) {
-							sb.setLength(sb.length() - 1);
-						}
-
-						return sb.toString();
-					}
-
-					public String getAnalyticsCloudServiceImageNames(Map dockerComposeMap) {
-						StringBuilder sb = new StringBuilder();
-
-						Map servicesMap = dockerComposeMap.get("services");
-
-						for (String serviceName : servicesMap.keySet()) {
-							Map serviceMap = servicesMap.get(serviceName);
-
-							String imageName = serviceMap.get("image");
-
-							if (JenkinsResultsParserUtil.isNullOrEmpty(imageName)) {
-								imageName = "com-liferay-osb-asah-private-" + serviceName;
-							}
-
-							sb.append(serviceName);
-							sb.append("=");
 							sb.append(imageName);
 							sb.append(",");
 						}
@@ -415,9 +376,6 @@
 					dumpYamlMap(dockerComposeMap);
 
 					project.setProperty("analytics.cloud.asah.image.names", getAnalyticsCloudAsahImageNames(dockerComposeMap));
-					project.setProperty("analytics.cloud.faro.service.name", getAnalyticsCloudFaroServiceName(dockerComposeMap));
-					project.setProperty("analytics.cloud.service.image.names", getAnalyticsCloudServiceImageNames(dockerComposeMap));
-					project.setProperty("analytics.cloud.service.images.available", String.valueOf(serviceImagesAvailable(dockerComposeMap)));
 				]]>
 			</beanshell>
 

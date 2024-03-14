@@ -497,17 +497,18 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		Map<String, Object> typeSettings = clientExtension.typeSettings;
 
-		if (typeSettings.containsKey(_FRONTEND_TOKEN_DEFINITION_KEY)) {
+		if (typeSettings.containsKey(_FRONTEND_TOKEN_DEFINITION_JSON_KEY)) {
 			JsonSlurper jsonSlurper = new JsonSlurper();
 
 			Map<String, Object> jsonMap =
 				(Map<String, Object>)jsonSlurper.parse(
 					_project.file(
 						String.valueOf(
-							typeSettings.get(_FRONTEND_TOKEN_DEFINITION_KEY))));
+							typeSettings.get(
+								_FRONTEND_TOKEN_DEFINITION_JSON_KEY))));
 
 			typeSettings.put(
-				_FRONTEND_TOKEN_DEFINITION_KEY,
+				_FRONTEND_TOKEN_DEFINITION_JSON_KEY,
 				String.valueOf(JsonOutput.toJson(jsonMap)));
 		}
 	}
@@ -833,7 +834,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private static final String _CLIENT_EXTENSION_CONFIG_FILE_NAME =
 		".client-extension-config.json";
 
-	private static final String _FRONTEND_TOKEN_DEFINITION_KEY =
+	private static final String _FRONTEND_TOKEN_DEFINITION_JSON_KEY =
 		"frontendTokenDefinitionJSON";
 
 	private static final String _PLUGIN_PACKAGE_PROPERTIES_PATH =

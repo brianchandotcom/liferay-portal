@@ -381,3 +381,24 @@ Because these object fields types have their values obtained by runtime calculat
 Preventing the indexed attribute from being true avoids misinterpretation.
 ----
 ```
+----
+
+# 64fbb2481d5a6af40fb4882fc53bacb78384069e
+
+The breaking change message should not contain tab
+
+Correct message should be:
+```
+LPS-194004 generalize JSOnClickConfig to be passed as the default argument in the dynamically loaded JS module
+
+# breaking
+
+## What modules/apps/product-navigation/product-navigation-personal-menu-api/src/main/java/com/liferay/product/navigation/personal/menu/PersonalMenuEntry.java
+
+In modules/apps/product-navigation/product-navigation-personal-menu-api/src/main/java/com/liferay/product/navigation/personal/menu/PersonalMenuEntry.java the behavior of getJSOnClickConfigJSONObject has been changed so that it requires providing a Javascript function to getOnClickJSModuleURL that will be called with the value returned by getJSOnClickConfigJSONObject as it's parameter.
+
+## Why
+
+This makes getJSOnClickConfigJSONObject generic so that it can be used for any type of on click interaction, not just for opening a selection modal.
+----
+```

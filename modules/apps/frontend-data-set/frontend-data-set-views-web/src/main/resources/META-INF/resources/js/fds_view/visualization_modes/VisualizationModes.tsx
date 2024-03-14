@@ -22,7 +22,9 @@ const VISUALIZATION_MODE_COMPONENT_MAP: {
 	table: Table,
 };
 
-const ORDERED_DEFAULT_VISUALIZATION_MODES = [...DEFAULT_VISUALIZATION_MODES].reverse();
+const ORDERED_DEFAULT_VISUALIZATION_MODES = [
+	...DEFAULT_VISUALIZATION_MODES,
+].reverse();
 
 export default function VisualizationModes(props: IFDSViewSectionProps) {
 	const [

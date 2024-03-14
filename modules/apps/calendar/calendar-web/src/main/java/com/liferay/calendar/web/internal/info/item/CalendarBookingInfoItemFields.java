@@ -64,6 +64,15 @@ public class CalendarBookingInfoItemFields {
 			InfoLocalizedValue.localize(
 				CalendarBookingInfoItemFields.class, "event-url")
 		).build();
+	public static final InfoField<TextInfoFieldType> invitationsInfoField =
+		BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"invitations"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CalendarBookingInfoItemFields.class, "invitations")
+		).build();
 	public static final InfoField<TextInfoFieldType> locationInfoField =
 		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE

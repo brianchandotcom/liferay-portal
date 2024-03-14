@@ -8,7 +8,9 @@ package com.liferay.calendar.web.internal.info.item.provider;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.calendar.web.internal.info.item.CalendarBookingInfoItemFields;
+import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -17,6 +19,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -28,8 +31,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -125,7 +130,10 @@ public class CalendarBookingInfoItemFieldValuesProvider
 						calendarBooking.getDefaultLanguageId())
 				).values(
 					_getCalendarNameMap(calendarBooking)
-				).build()));
+				).build()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.invitationsInfoField,
+				_getInvitations(calendarBooking)));
 	}
 
 	/**
@@ -184,6 +192,50 @@ public class CalendarBookingInfoItemFieldValuesProvider
 		return calendar.getNameMap();
 	}
 
+	private String _getInvitations(CalendarBooking calendarBooking)
+		throws PortalException {
+
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		List<CalendarBooking> acceptedCalendarBookings =
+			_calendarBookingService.getChildCalendarBookings(
+				calendarBooking.getParentCalendarBookingId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		List<CalendarBooking> declinedCalendarBookings =
+			_calendarBookingService.getChildCalendarBookings(
+				calendarBooking.getParentCalendarBookingId(),
+				WorkflowConstants.STATUS_DENIED);
+
+		List<CalendarBooking> pendingCalendarBookings =
+			_calendarBookingService.getChildCalendarBookings(
+				calendarBooking.getParentCalendarBookingId(),
+				WorkflowConstants.STATUS_PENDING);
+
+		pendingCalendarBookings.addAll(
+			_calendarBookingService.getChildCalendarBookings(
+				calendarBooking.getParentCalendarBookingId(),
+				WorkflowConstants.STATUS_DRAFT));
+		pendingCalendarBookings.addAll(
+			_calendarBookingService.getChildCalendarBookings(
+				calendarBooking.getParentCalendarBookingId(),
+				CalendarBookingWorkflowConstants.STATUS_MASTER_PENDING));
+
+		List<CalendarBooking> maybeCalendarBookings =
+			_calendarBookingService.getChildCalendarBookings(
+				calendarBooking.getParentCalendarBookingId(),
+				CalendarBookingWorkflowConstants.STATUS_MAYBE);
+
+		return _language.format(
+			locale, "accepted-x-declined-x-pending-x-maybe-x",
+			new Integer[] {
+				acceptedCalendarBookings.size(),
+				declinedCalendarBookings.size(), pendingCalendarBookings.size(),
+				maybeCalendarBookings.size()
+			},
+			false);
+	}
+
 	private ThemeDisplay _getThemeDisplay() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -199,6 +251,9 @@ public class CalendarBookingInfoItemFieldValuesProvider
 		CalendarBookingInfoItemFieldValuesProvider.class);
 
 	@Reference
+	private CalendarBookingService _calendarBookingService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
@@ -207,6 +262,9 @@ public class CalendarBookingInfoItemFieldValuesProvider
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

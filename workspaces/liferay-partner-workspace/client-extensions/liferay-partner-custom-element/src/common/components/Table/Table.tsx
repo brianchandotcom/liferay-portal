@@ -75,9 +75,12 @@ const Table = <T extends unknown>({
 										column.render(data, row, rowIndex)
 									) : (
 										<span
-											className={classNames("table-cell-items", {
-												"text-wrap": column.wrap
-											})}
+											className={classNames(
+												'table-cell-items',
+												{
+													'text-wrap': column.wrap,
+												}
+											)}
 											data-tooltip-align="top"
 											title={data}
 										>

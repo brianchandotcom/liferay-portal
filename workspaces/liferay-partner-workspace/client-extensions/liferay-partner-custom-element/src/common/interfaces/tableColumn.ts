@@ -6,6 +6,6 @@
 export default interface TableColumn<T> {
 	columnKey: string;
 	label: string | JSX.Element;
-	wrap: boolean;
 	render?: (data: T[keyof T], item: T, index: number) => JSX.Element;
+	wrap?: boolean;
 }

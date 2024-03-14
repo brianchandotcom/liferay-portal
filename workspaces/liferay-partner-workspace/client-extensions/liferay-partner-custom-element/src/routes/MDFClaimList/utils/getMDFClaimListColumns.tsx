@@ -139,14 +139,12 @@ export default function getMDFClaimListColumns(
 			render: (data: string | undefined, row: MDFClaimListItem) => (
 				<a
 					className="link"
-					onClick={() =>
-						Liferay.Util.navigate(
-							`${siteURL}/l/${
-								row[MDFClaimColumnKey.CLAIM_ID]
-							}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`
-						)
-					}
-				>{data}</a>
+					href={`${siteURL}/l/${
+						row[MDFClaimColumnKey.CLAIM_ID]
+					}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`}
+				>
+					{data}
+				</a>
 			),
 		},
 		{
@@ -155,14 +153,12 @@ export default function getMDFClaimListColumns(
 			render: (data: string | undefined, row: MDFClaimListItem) => (
 				<a
 					className="link"
-					onClick={() =>
-						Liferay.Util.navigate(
-							`${siteURL}/l/${
-								row[MDFClaimColumnKey.REQUEST_ID]
-							}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`
-						)
-					}
-				>{data}</a>
+					href={`${siteURL}/l/${
+						row[MDFClaimColumnKey.REQUEST_ID]
+					}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`}
+				>
+					{data}
+				</a>
 			),
 		},
 		{

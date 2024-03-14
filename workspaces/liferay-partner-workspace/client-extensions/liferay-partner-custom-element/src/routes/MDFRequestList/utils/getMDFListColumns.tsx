@@ -181,14 +181,12 @@ export default function getMDFListColumns(
 			render: (data, row) => (
 				<a
 					className="link"
-					onClick={() =>
-						Liferay.Util.navigate(
-							`${siteURL}/l/${
-								row[MDFColumnKey.ID]
-							}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`
-						)
-					}
-				>{data}</a>
+					href={`${siteURL}/l/${
+						row[MDFColumnKey.ID]
+					}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`}
+				>
+					{data}
+				</a>
 			),
 		},
 		{
@@ -202,12 +200,12 @@ export default function getMDFListColumns(
 		},
 		{
 			columnKey: MDFColumnKey.NAME,
-			label: 'Campaign Name'
+			label: 'Campaign Name',
 		},
 		{
 			columnKey: MDFColumnKey.ACTIVITY_PERIOD,
 			label: 'Activity Period',
-			wrap: true
+			wrap: true,
 		},
 		{
 			columnKey: MDFColumnKey.REQUESTED,

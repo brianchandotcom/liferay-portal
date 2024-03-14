@@ -124,8 +124,8 @@
 					import org.yaml.snakeyaml.DumperOptions;
 					import org.yaml.snakeyaml.Yaml;
 
-					public void downloadServiceImages(Map dockerComposeMap) {
-						if (serviceImagesAvailable(dockerComposeMap)) {
+					public void downloadImageTarFile(File imageTarFile) {
+						if (imageTarFile.exists()) {
 							return;
 						}
 
@@ -135,63 +135,66 @@
 							return;
 						}
 
+						File parentDir = imageTarFile.getParent();
+
+						parentDir.mkdirs();
+
 						long analyticsCloudRsyncTimeout = Long.valueOf(project.getProperty("analytics.cloud.rsync.timeout"));
 
-						Map servicesMap = dockerComposeMap.get("services");
+						int retryCount = 0;
 
-						for (String serviceName : servicesMap.keySet()) {
-							int retryCount = 0;
+						while (true) {
+							String distNode = getDistNode();
 
-							String imageTarFileName = "liferay-docker-" + serviceName + ".tar";
+							if (JenkinsResultsParserUtil.isNullOrEmpty(distNode)) {
+								return;
+							}
 
-							while (true) {
-								String distNode = getDistNode();
+							StringBuilder sb = new StringBuilder();
 
-								if (JenkinsResultsParserUtil.isNullOrEmpty(distNode)) {
-									return;
-								}
+							sb.append("time timeout ");
+							sb.append(analyticsCloudRsyncTimeout / 1000);
+							sb.append(" rsync -qs ");
+							sb.append(distNode);
+							sb.append(":");
+							sb.append(distPath);
+							sb.append("/");
+							sb.append(imageTarFile.getName());
+							sb.append(" ");
+							sb.append(JenkinsResultsParserUtil.getCanonicalPath(imageTarFile));
+							sb.append(" ");
 
-								StringBuilder sb = new StringBuilder();
+							try {
+								Process process = JenkinsResultsParserUtil.executeBashCommands(false, new File("."), analyticsCloudRsyncTimeout, new String[] {sb.toString()});
 
-								sb.append("time timeout ");
-								sb.append(analyticsCloudRsyncTimeout / 1000);
-								sb.append(" rsync -qs ");
-								sb.append(distNode);
-								sb.append(":");
-								sb.append(distPath);
-								sb.append("/");
-								sb.append(imageTarFileName);
-								sb.append(" ");
-								sb.append(project.getProperty("project.dir"));
-								sb.append("/dist/liferay-docker-");
-								sb.append(serviceName);
-								sb.append(".tar ");
-
-								try {
-									Process process = JenkinsResultsParserUtil.executeBashCommands(false, new File("."), analyticsCloudRsyncTimeout, new String[] {sb.toString()});
-
-									if (process.exitValue() != 0) {
-										continue;
-									}
-
-									System.out.println(JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
-
-									break;
-								}
-								catch (Exception exception) {
+								if (process.exitValue() != 0) {
 									continue;
 								}
-								finally {
-									if (retryCount >= 2) {
-										System.out.println("WARNING: Unable to download " + imageTarFileName + " after " + retryCount + " retries");
-									}
 
-									retryCount++;
-								}
+								System.out.println(JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
 
 								break;
 							}
+							catch (Exception exception) {
+								continue;
+							}
+							finally {
+								if (retryCount >= 2) {
+									System.out.println("WARNING: Unable to download " + imageTarFile.getName() + " after " + retryCount + " retries");
+								}
+
+								retryCount++;
+							}
+
+							break;
 						}
+					}
+
+					public void downloadImageTarFiles() {
+						Fild distDir = new File(project.getProperty("project.dir") + "/dist");
+
+						downloadImageTarFile(new File(distDir, "liferay-docker-asah.tar"));
+						downloadImageTarFile(new File(distDir, "liferay-docker-faro.tar"));
 					}
 
 					public void dumpYamlMap(Map yamlMap) {
@@ -364,13 +367,12 @@
 						}
 					}
 
+					downloadImageTarFiles();
+
 					Map dockerComposeMap = getDockerComposeMap();
 
 					updateDockerNetwork(dockerComposeMap);
 					updateOSBFaroFrontendService(dockerComposeMap);
-
-					downloadServiceImages(dockerComposeMap);
-
 					updateServiceImages(dockerComposeMap);
 
 					dumpYamlMap(dockerComposeMap);

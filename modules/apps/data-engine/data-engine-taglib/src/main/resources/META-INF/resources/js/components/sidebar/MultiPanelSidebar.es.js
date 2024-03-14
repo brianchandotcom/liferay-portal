@@ -177,7 +177,7 @@ export default function MultiPanelSidebar({
 							);
 
 							return (
-								<>
+								<React.Fragment key={panelId}>
 									{isLink ? (
 										<a className={btnClasses} href={url}>
 											<ClayIcon symbol={icon} />
@@ -200,7 +200,7 @@ export default function MultiPanelSidebar({
 											title={label}
 										/>
 									)}
-								</>
+								</React.Fragment>
 							);
 						});
 
@@ -292,8 +292,7 @@ class ErrorBoundary extends React.Component {
 	render() {
 		if (this.state.hasError) {
 			return null;
-		}
-		else {
+		} else {
 			return this.props.children;
 		}
 	}

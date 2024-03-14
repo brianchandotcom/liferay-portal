@@ -161,6 +161,8 @@
 							return;
 						}
 
+						long analyticsCloudRsyncTimeout = Long.valueOf(project.getProperty("analytics.cloud.rsync.timeout"));
+
 						Map servicesMap = dockerComposeMap.get("services");
 
 						for (String serviceName : servicesMap.keySet()) {
@@ -169,18 +171,16 @@
 							String imageTarFileName = "liferay-docker-" + serviceName + ".tar";
 
 							while (true) {
-								StringBuilder sb = new StringBuilder();
-
 								String distNode = getDistNode();
 
 								if (JenkinsResultsParserUtil.isNullOrEmpty(distNode)) {
 									return;
 								}
 
-								long analyticsCloudRsyncTimeout = Long.valueOf(project.getProperty("analytics.cloud.rsync.timeout"));
+								StringBuilder sb = new StringBuilder();
 
 								sb.append("time timeout ");
-								sb.append(analyticsCloudRsyncTimeout / 1000)
+								sb.append(analyticsCloudRsyncTimeout / 1000);
 								sb.append(" rsync -qs ");
 								sb.append(distNode);
 								sb.append(":");

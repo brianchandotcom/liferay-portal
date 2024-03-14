@@ -834,8 +834,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Unable to index field ", ddmFormField.getName(),
-							" because it was deleted from the DDM structure ID",
+							"Unable to index ", ddmFormField.getName(),
+							" because it was deleted from the dynamic data ",
+							"mapping structure ID",
 							ddmStructure.getStructureId()));
 				}
 			}

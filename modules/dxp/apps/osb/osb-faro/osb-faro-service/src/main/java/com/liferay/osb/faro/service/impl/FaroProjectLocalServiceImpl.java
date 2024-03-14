@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.mail.internet.InternetAddress;
@@ -354,8 +355,9 @@ public class FaroProjectLocalServiceImpl
 			JSONObject newSubscriptionJSONObject =
 				_jsonFactory.createJSONObject(subscription);
 
-			if (oldSubscriptionJSONObject.get("name") !=
-					newSubscriptionJSONObject.get("name")) {
+			if (!Objects.equals(
+					oldSubscriptionJSONObject.get("name"),
+					newSubscriptionJSONObject.get("name"))) {
 
 				faroProject.setSubscriptionModifiedTime(currentTimeMillis);
 			}

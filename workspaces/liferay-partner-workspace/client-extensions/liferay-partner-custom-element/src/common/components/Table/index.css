@@ -1,12 +1,7 @@
-.campaign-name-column,
 .table-cell-items {
 	display: block;
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
-
-.campaign-name-column {
-	width: 120px;
 }
 
 .table-cell-items {

@@ -5,6 +5,7 @@
 
 import {defineConfig} from '@playwright/test';
 
+import {config as accountAdminWebConfig} from './tests/account-admin-web/config';
 import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-web/config';
 import {config as announcementsWebConfig} from './tests/announcements-web/config';
 import {config as batchPlannerConfig} from './tests/batch-planner/config';
@@ -35,6 +36,7 @@ export default defineConfig({
 	},
 	forbidOnly: !!process.env.CI,
 	projects: [
+		accountAdminWebConfig,
 		analyticsSettingsWebConfig,
 		announcementsWebConfig,
 		batchPlannerConfig,

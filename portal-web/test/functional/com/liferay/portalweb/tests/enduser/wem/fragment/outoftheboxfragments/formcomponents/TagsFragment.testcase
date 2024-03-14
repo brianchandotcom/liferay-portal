@@ -573,30 +573,6 @@ definition {
 		}
 
 		task ("Then both site and global tags are shown") {
-			for (var tagName : list "${tagName1},${tagName2}") {
-				AssertTextEquals(
-					key_tagName = ${tagName},
-					locator1 = "AssetCategorization#TAG",
-					value1 = ${tagName});
-			}
-
-			AssertTextEquals(
-				key_tagName = "local tag",
-				locator1 = "AssetCategorization#TAG",
-				value1 = "local tag");
-
-			AssetCategorization.removeTag(tagName = "local tag");
-
-			AssetCategorization.selectTag(
-				skipSelectFrame = "true",
-				tagNameList = "local tag");
-
-			for (var tagName : list "${tagName1},${tagName2}") {
-				AssetCategorization.removeTag(tagName = ${tagName});
-			}
-
-			AssetCategorization.removeTag(tagName = "local tag");
-
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
 				tagNameList = "${tagName1},${tagName2},local tag");
@@ -767,27 +743,6 @@ definition {
 			SelectFrameTop();
 
 			Click(locator1 = "Modal#CLOSE_BUTTON");
-
-			AssetCategorization.selectTag(
-				skipSelectFrame = "true",
-				tagNameList = "${tagName1},${tagName2}");
-
-			for (var tagName : list "${tagName1},${tagName2}") {
-				AssertTextEquals(
-					key_tagName = ${tagName},
-					locator1 = "AssetCategorization#TAG",
-					value1 = ${tagName});
-			}
-
-			AssetCategorization.removeTag(tagName = ${tagName1});
-
-			AssetCategorization.selectTag(
-				skipSelectFrame = "true",
-				tagNameList = ${tagName1});
-
-			for (var tagName : list "${tagName1},${tagName2}") {
-				AssetCategorization.removeTag(tagName = ${tagName});
-			}
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",

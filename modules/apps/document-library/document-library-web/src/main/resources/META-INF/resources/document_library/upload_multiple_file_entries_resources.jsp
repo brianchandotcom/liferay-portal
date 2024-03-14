@@ -381,7 +381,7 @@ else {
 				<liferay-ui:error exception="<%= FileEntryExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 				<liferay-ui:error exception="<%= FileEntryReviewDateException.class %>" message="please-enter-a-valid-review-date" />
 
-				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") %>'>
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-10701") %>'>
 					<p class="text-secondary">
 						<liferay-ui:message key="set-the-publication-date-and-time-for-your-document-to-be-published-automatically" />
 					</p>

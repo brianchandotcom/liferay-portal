@@ -538,12 +538,12 @@ renderResponse.setTitle(headerTitle);
 					</c:if>
 
 					<c:if test="<%= !RepositoryUtil.isExternalRepository(repositoryId) %>">
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") ? "schedule" : "expiration-date" %>'>
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label='<%= FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-10701") ? "schedule" : "expiration-date" %>'>
 							<liferay-ui:error exception="<%= FileEntryDisplayDateException.class %>" message="please-enter-a-valid-publish-date" />
 							<liferay-ui:error exception="<%= FileEntryExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 							<liferay-ui:error exception="<%= FileEntryReviewDateException.class %>" message="please-enter-a-valid-review-date" />
 
-							<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10701") %>'>
+							<c:if test='<%= FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-10701") %>'>
 								<p class="text-secondary">
 									<liferay-ui:message key="set-the-publication-date-and-time-for-your-document-to-be-published-automatically" />
 								</p>

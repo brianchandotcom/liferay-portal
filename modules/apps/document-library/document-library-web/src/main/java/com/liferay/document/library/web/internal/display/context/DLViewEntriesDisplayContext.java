@@ -289,7 +289,9 @@ public class DLViewEntriesDisplayContext {
 	}
 
 	public boolean hasApprovedVersion(long fileEntryId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10701")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-10701")) {
+
 			return false;
 		}
 

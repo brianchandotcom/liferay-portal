@@ -377,7 +377,7 @@ public class DLFileEntryLocalServiceImpl
 
 		long userId = _getActiveCompanyAdminUserId(companyId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10701")) {
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-10701")) {
 			_checkFileEntriesByDisplayDate(companyId, date, userId);
 		}
 
@@ -1992,7 +1992,9 @@ public class DLFileEntryLocalServiceImpl
 
 		int oldStatus = dlFileVersion.getStatus();
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10701")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				dlFileVersion.getCompanyId(), "LPD-10701")) {
+
 			Date date = new Date();
 
 			if ((status == WorkflowConstants.STATUS_APPROVED) &&

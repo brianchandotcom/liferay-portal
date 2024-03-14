@@ -256,7 +256,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean hasApprovedVersion() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10701")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_fileVersion.getCompanyId(), "LPD-10701")) {
+
 			return false;
 		}
 

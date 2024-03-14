@@ -24,6 +24,19 @@ export enum EFieldType {
 	STRING = 'string',
 }
 
+export interface IBaseVisualizationMode<Type extends string> {
+	label: string;
+	thumbnail: string;
+	type: Type;
+	visualizationModeId: string;
+}
+
+export interface ICards extends IBaseVisualizationMode<'cards'> {}
+export interface IList extends IBaseVisualizationMode<'list'> {}
+export interface ITable extends IBaseVisualizationMode<'table'> {}
+
+export type TVisualizationMode = ICards | IList | ITable;
+
 export interface IField {
 	children?: Array<IField>;
 	format?: EFieldFormat;

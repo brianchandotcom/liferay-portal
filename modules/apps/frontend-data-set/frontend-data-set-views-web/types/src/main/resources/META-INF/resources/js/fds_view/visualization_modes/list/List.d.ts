@@ -7,6 +7,4 @@
 
 import '../../../../css/ListVisualizationMode.scss';
 import {IFDSViewSectionProps} from '../../../FDSView';
-import {IBaseVisualizationMode} from '../VisualizationModes';
-export interface IList extends IBaseVisualizationMode<'list'> {}
 export default function List(props: IFDSViewSectionProps): JSX.Element;

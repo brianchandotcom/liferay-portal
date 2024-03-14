@@ -40,12 +40,10 @@ import '../../../../css/TableVisualizationMode.scss';
 import ClayIcon from '@clayui/icon';
 
 import {IFDSField, IField} from '../../../utils/types';
-import {IBaseVisualizationMode} from '../VisualizationModes';
 import AddFieldsModalContent from './modal_content/AddFieldsModalContent';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-export interface ITable extends IBaseVisualizationMode<'table'> {}
 interface ISaveFDSFieldsModalContentProps {
 	closeModal: Function;
 	fdsFields: Array<IFDSField>;

@@ -22,9 +22,7 @@ import {API_URL, OBJECT_RELATIONSHIP} from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IField} from '../../../utils/types';
-import {IBaseVisualizationMode} from '../VisualizationModes';
 
-export interface IList extends IBaseVisualizationMode<'list'> {}
 interface IFDSListSection {
 	externalReferenceCode: string;
 	fieldName: string;

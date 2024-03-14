@@ -60,10 +60,32 @@ const FDS_DEFAULT_PROPS = {
 	style: 'fluid' as const,
 };
 
+const DEFAULT_VISUALIZATION_MODES = [
+	{
+		label: Liferay.Language.get('cards'),
+		thumbnail: 'cards2',
+		type: 'cards',
+		visualizationModeId: 'defaultCards',
+	},
+	{
+		label: Liferay.Language.get('list'),
+		thumbnail: 'list',
+		type: 'list',
+		visualizationModeId: 'defaultList',
+	},
+	{
+		label: Liferay.Language.get('table'),
+		thumbnail: 'table',
+		type: 'table',
+		visualizationModeId: 'defaultTable',
+	},
+];
+
 const ALLOWED_ENDPOINTS_PARAMETERS = ['scopeKey', 'siteId', 'userId'];
 
 export {
 	API_URL,
+	DEFAULT_VISUALIZATION_MODES,
 	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,

@@ -7,8 +7,6 @@
 
 import {IFDSViewSectionProps} from '../../../FDSView';
 import '../../../../css/TableVisualizationMode.scss';
-import {IBaseVisualizationMode} from '../VisualizationModes';
-export interface ITable extends IBaseVisualizationMode<'table'> {}
 declare function Table({
 	fdsClientExtensionCellRenderers,
 	fdsView,

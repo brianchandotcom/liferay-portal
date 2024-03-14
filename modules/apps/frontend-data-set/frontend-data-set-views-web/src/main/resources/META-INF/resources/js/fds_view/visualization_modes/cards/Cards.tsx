@@ -19,9 +19,7 @@ import {API_URL, OBJECT_RELATIONSHIP} from '../../../utils/constants';
 import openDefaultFailureToast from '../../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../../utils/openDefaultSuccessToast';
 import {IField} from '../../../utils/types';
-import {IBaseVisualizationMode} from '../VisualizationModes';
 
-export interface ICards extends IBaseVisualizationMode<'cards'> {}
 interface IFDSCardsSection {
 	externalReferenceCode: string;
 	fieldName: string;

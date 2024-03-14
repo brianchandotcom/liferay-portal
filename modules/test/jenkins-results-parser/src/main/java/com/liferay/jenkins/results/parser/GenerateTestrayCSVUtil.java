@@ -32,7 +32,7 @@ public class GenerateTestrayCSVUtil {
 		String projectBuildDir, String projectTestrayBuildId) {
 
 		System.out.println(
-			"LRCI-3940 This is the first line of GenerateTestrayCSVUtil in jenkins-results-parser.");
+			"LRCI-3940 Generating Testray CSV.");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -57,15 +57,13 @@ public class GenerateTestrayCSVUtil {
 			_generate(allTestrayCaseResults, TestrayCaseResult.Type.COMMON));
 
 		try {
-			String testrayResultsCSVString = sb.toString();
-
 			System.out.println(
-				"LRCI-3940 The value of restrayResultsCSVString is: " +
-					testrayResultsCSVString);
+				"LRCI-3940 Setting testray results to: " +
+					sb.toString());
 
 			JenkinsResultsParserUtil.write(
 				new File(projectBuildDir, "testray-results.csv"),
-				testrayResultsCSVString);
+				sb.toString());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -77,7 +75,7 @@ public class GenerateTestrayCSVUtil {
 		TestrayCaseResult.Type testrayCaseResultType) {
 
 		System.out.println(
-			"LRCI-3940 Beginning of GenerateTestrayCSVUtil's _generate function.");
+			"LRCI-3940 Parsing Testray case results for " + testrayCaseResultType.toString() +".");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -106,10 +104,7 @@ public class GenerateTestrayCSVUtil {
 		String projectTestrayBuildId) {
 
 		System.out.println(
-			"LRCI-3940 First line of GenerateTestrayCSVUtil's _getTestrayCaseResults function.");
-		System.out.println(
-			"LRCI-3940 The value of projectTestrayBuildId is: " +
-				projectTestrayBuildId);
+			"LRCI-3940 Getting Testray case results for " + projectTestrayBuildId + ".");
 
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
@@ -123,7 +118,7 @@ public class GenerateTestrayCSVUtil {
 				"&testrayBuildId=", projectTestrayBuildId, "&statuses=3");
 
 			System.out.println(
-				"LRCI-3940 The value of testrayCaseResultsURL is: " +
+				"LRCI-3940 TestrayCaseResultsURL is set to: " +
 					testrayCaseResultsURL);
 
 			JSONObject jsonObject = null;

@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -146,36 +144,38 @@ public class MultiVMEhcachePortalCacheManager
 				return;
 			}
 
-			Map<String, Properties> mergedPropertiesMap =
-				_getMergedPropertiesMap();
+			for (String portalCacheName :
+					_replicatorProperties.stringPropertyNames()) {
 
-			for (Map.Entry<String, Properties> entry :
-					mergedPropertiesMap.entrySet()) {
+				Properties replicatorProperties = parseProperties(
+					_replicatorProperties.getProperty(portalCacheName),
+					StringPool.COMMA);
 
-				if (entry.getValue() != null) {
-					PortalCacheConfiguration portalCacheConfiguration =
-						portalCacheManagerConfiguration.
-							getPortalCacheConfiguration(entry.getKey());
+				replicatorProperties.put(
+					PortalCacheReplicator.REPLICATOR, true);
 
-					Set<Properties> portalCacheListenerPropertiesSet =
-						portalCacheConfiguration.
-							getPortalCacheListenerPropertiesSet();
+				PortalCacheConfiguration portalCacheConfiguration =
+					portalCacheManagerConfiguration.getPortalCacheConfiguration(
+						portalCacheName);
 
-					Iterator<Properties> iterator =
-						portalCacheListenerPropertiesSet.iterator();
+				Set<Properties> portalCacheListenerPropertiesSet =
+					portalCacheConfiguration.
+						getPortalCacheListenerPropertiesSet();
 
-					while (iterator.hasNext()) {
-						Properties properties = iterator.next();
+				Iterator<Properties> iterator =
+					portalCacheListenerPropertiesSet.iterator();
 
-						if ((Boolean)properties.get(
-								PortalCacheReplicator.REPLICATOR)) {
+				while (iterator.hasNext()) {
+					Properties properties = iterator.next();
 
-							iterator.remove();
-						}
+					if ((Boolean)properties.get(
+							PortalCacheReplicator.REPLICATOR)) {
+
+						iterator.remove();
 					}
-
-					portalCacheListenerPropertiesSet.add(entry.getValue());
 				}
+
+				portalCacheListenerPropertiesSet.add(replicatorProperties);
 			}
 		}
 
@@ -212,25 +212,6 @@ public class MultiVMEhcachePortalCacheManager
 			portalCacheListenerPropertiesSet.add(replicatorProperties);
 
 			return portalCacheConfiguration;
-		}
-
-		private Map<String, Properties> _getMergedPropertiesMap() {
-			Map<String, Properties> mergedPropertiesMap = new HashMap<>();
-
-			for (String portalCacheName :
-					_replicatorProperties.stringPropertyNames()) {
-
-				Properties replicatorProperties = parseProperties(
-					_replicatorProperties.getProperty(portalCacheName),
-					StringPool.COMMA);
-
-				replicatorProperties.put(
-					PortalCacheReplicator.REPLICATOR, true);
-
-				mergedPropertiesMap.put(portalCacheName, replicatorProperties);
-			}
-
-			return mergedPropertiesMap;
 		}
 
 	}

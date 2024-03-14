@@ -7,6 +7,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.blogs.web.internal.display.context.BlogsViewEntryDisplayContext" %>
+<%@ page import="com.liferay.blogs.web.internal.display.context.BlogsViewEntryDisplayContext" %><%@
+page import="com.liferay.friendly.url.exception.FriendlyURLCategoryException" %>
 
 <%@ include file="/blogs/init-ext.jsp" %>

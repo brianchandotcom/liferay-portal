@@ -26,6 +26,7 @@ import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
+import com.liferay.friendly.url.exception.FriendlyURLCategoryException;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
@@ -241,8 +242,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			   EntryDisplayDateException | EntrySmallImageNameException |
 			   EntrySmallImageScaleException | EntryTitleException |
 			   EntryUrlTitleException | FileSizeException |
-			   ImageResolutionException | LiferayFileItemException |
-			   SanitizerException | UploadRequestSizeException exception) {
+			   FriendlyURLCategoryException | ImageResolutionException |
+			   LiferayFileItemException | SanitizerException |
+			   UploadRequestSizeException exception) {
 
 			SessionErrors.add(actionRequest, exception.getClass());
 
@@ -537,6 +539,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		serviceContext.setAttribute(
 			"updateAutoTags",
 			ParamUtil.getBoolean(actionRequest, "updateAutoTags"));
+
+		serviceContext.setAttribute(
+			"friendlyURLAssetCategoryIds",
+			serviceContext.getAssetCategoryIds());
 
 		BlogsEntry entry = null;
 

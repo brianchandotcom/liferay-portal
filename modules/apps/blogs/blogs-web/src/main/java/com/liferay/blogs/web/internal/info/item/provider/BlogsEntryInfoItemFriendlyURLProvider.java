@@ -58,7 +58,7 @@ public class BlogsEntryInfoItemFriendlyURLProvider
 				blogsEntry.getEntryId(), mainFriendlyURLEntry);
 		}
 
-		return mainFriendlyURLEntry.getUrlTitle();
+		return mainFriendlyURLEntry.getCategorizedUrlTitle(languageId);
 	}
 
 	@Override

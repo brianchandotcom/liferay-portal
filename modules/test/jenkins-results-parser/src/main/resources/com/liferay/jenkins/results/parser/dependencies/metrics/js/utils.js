@@ -89,21 +89,21 @@ function createTable(table, tableElementID) {
 			let node = null;
 
 			if ((typeof cellValue === 'string') || (cellValue instanceof String)) {
-				let divElement = document.createElement("div");
-				let spanElement = document.createElement("span");
+				let divElement = document.createElement('div');
+				let spanElement = document.createElement('span');
 
 				spanElement.appendChild(document.createTextNode(cellValue));
 
 				divElement.appendChild(spanElement);
 
-				divElement.setAttribute("data-value", cellValue);
+				divElement.setAttribute('data-value', cellValue);
 
 				node = divElement;
 			}
 			else {
-				cellElement.setAttribute("data-value", cellValue);
+				cellElement.setAttribute('data-value', cellValue);
 
-				if (cellValues[1].includes("Duration")) {
+				if (cellValues[1].includes('Duration')) {
 					cellValue = getReadableDuration(cellValue);
 				}
 

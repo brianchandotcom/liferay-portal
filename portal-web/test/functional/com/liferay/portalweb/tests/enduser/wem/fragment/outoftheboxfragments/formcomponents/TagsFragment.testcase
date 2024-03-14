@@ -533,13 +533,6 @@ definition {
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Tags",
-				targetFragmentName = "Form Container");
-
-			Alert.viewErrorMessage(errorMessage = "Fragments cannot be placed inside an unmapped form container.");
-
 			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
 			PageEditor.viewInputStyle(
@@ -692,13 +685,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
-
-			PageEditor.addFragmentToFormContainer(
-				collectionName = "Form Components",
-				fragmentName = "Tags",
-				targetFragmentName = "Form Container");
-
-			Alert.viewErrorMessage(errorMessage = "Fragments cannot be placed inside an unmapped form container.");
 
 			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 

@@ -87,20 +87,16 @@ public class EditAccountEntryContactMVCActionCommand
 		long accountEntryId = ParamUtil.getLong(
 			actionRequest, "accountEntryId");
 
-		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
-			accountEntryId);
-
-		String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");
-		String skypeSn = ParamUtil.getString(actionRequest, "skypeSn");
 		String smsSn = ParamUtil.getString(actionRequest, "smsSn");
 		String facebookSn = ParamUtil.getString(actionRequest, "facebookSn");
+		String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");
+		String skypeSn = ParamUtil.getString(actionRequest, "skypeSn");
 		String twitterSn = ParamUtil.getString(actionRequest, "twitterSn");
 
 		_contactService.addContact(
 			themeDisplay.getUserId(), AccountEntry.class.getName(),
-			accountEntry.getAccountEntryId(), null, null, null, null, 0, 0,
-			true, 0, 1, 1970, smsSn, facebookSn, jabberSn, skypeSn, twitterSn,
-			null);
+			accountEntryId, null, null, null, null, 0, 0, true, 0, 1, 1970,
+			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, null);
 	}
 
 	private void _checkPermission(ActionRequest actionRequest)
@@ -126,10 +122,10 @@ public class EditAccountEntryContactMVCActionCommand
 
 		Contact contact = accountEntry.fetchContact();
 
-		String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");
-		String skypeSn = ParamUtil.getString(actionRequest, "skypeSn");
 		String smsSn = ParamUtil.getString(actionRequest, "smsSn");
 		String facebookSn = ParamUtil.getString(actionRequest, "facebookSn");
+		String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");
+		String skypeSn = ParamUtil.getString(actionRequest, "skypeSn");
 		String twitterSn = ParamUtil.getString(actionRequest, "twitterSn");
 
 		_contactService.updateContact(

@@ -14,7 +14,7 @@ AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(account
 
 Contact accountEntryContact = accountEntry.fetchContact();
 
-long selContactId = (accountEntryContact != null) ? accountEntryContact.getContactId() : 0;
+long contactId = (accountEntryContact != null) ? accountEntryContact.getContactId() : 0;
 
 request.setAttribute("contact_information.jsp-className", AccountEntry.class.getName());
 request.setAttribute("contact_information.jsp-classPK", accountEntry.getAccountEntryId());
@@ -36,24 +36,24 @@ renderResponse.setTitle(LanguageUtil.get(request, "contact-information"));
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntryContact == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryDisplay.getAccountEntryId() %>" />
-	<aui:input name="contactId" type="hidden" value="<%= selContactId %>" />
+	<aui:input name="contactId" type="hidden" value="<%= contactId %>" />
 
 	<liferay-frontend:edit-form-body>
 		<clay:sheet-section>
 			<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="emptyResultsMessage" value="this-contact-does-not-have-any-phone-numbers" />
+				<liferay-util:param name="emptyResultsMessage" value="this-account-does-not-have-any-phone-numbers" />
 			</liferay-util:include>
 		</clay:sheet-section>
 
 		<clay:sheet-section>
-			<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="emptyResultsMessage" value="this-contact-does-not-have-any-additional-email-addresses" />
+			<liferay-util:include page="/common/email_addresses.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="emptyResultsMessage" value="this-account-does-not-have-any-email-addresses" />
 			</liferay-util:include>
 		</clay:sheet-section>
 
 		<clay:sheet-section>
 			<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="emptyResultsMessage" value="this-contact-does-not-have-any-websites" />
+				<liferay-util:param name="emptyResultsMessage" value="this-account-does-not-have-any-websites" />
 			</liferay-util:include>
 		</clay:sheet-section>
 

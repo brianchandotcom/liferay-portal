@@ -188,8 +188,7 @@ export default function getMDFListColumns(
 							}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`
 						)
 					}
-					style={{cursor: 'pointer'}}
-				>{`${data}`}</a>
+				>{data}</a>
 			),
 		},
 		{
@@ -203,23 +202,12 @@ export default function getMDFListColumns(
 		},
 		{
 			columnKey: MDFColumnKey.NAME,
-			label: 'Campaign Name',
-			render: (_, row) => (
-				<span
-					className="campaign-name-column"
-					data-tooltip-align="top"
-					title={row.NAME}
-				>
-					{row.NAME}
-				</span>
-			),
+			label: 'Campaign Name'
 		},
 		{
 			columnKey: MDFColumnKey.ACTIVITY_PERIOD,
 			label: 'Activity Period',
-			render: (_, row) => (
-				<span className="text-wrap">{row['ACTIVITY-PERIOD']}</span>
-			),
+			wrap: true
 		},
 		{
 			columnKey: MDFColumnKey.REQUESTED,
@@ -262,7 +250,6 @@ export default function getMDFListColumns(
 			),
 			render: (_, row) => (
 				<div>
-					{' '}
 					<p className="border-0 font-weight-normal mb-0">
 						{row['DATE-SUBMITTED']}
 					</p>

@@ -146,10 +146,7 @@ export default function getMDFClaimListColumns(
 							}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`
 						)
 					}
-					style={{cursor: 'pointer'}}
-				>
-					{`${data}`}
-				</a>
+				>{data}</a>
 			),
 		},
 		{
@@ -165,8 +162,7 @@ export default function getMDFClaimListColumns(
 							}?&returnurl=${Liferay.ThemeDisplay.getLayoutRelativeURL()}`
 						)
 					}
-					style={{cursor: 'pointer'}}
-				>{`${data}`}</a>
+				>{data}</a>
 			),
 		},
 		{

@@ -33,11 +33,7 @@ public class InfrastructureUtil {
 	}
 
 	public static Session getMailSession() {
-		if (_mailSession == null) {
-			_mailSession = _createMailSession();
-		}
-
-		return _mailSession;
+		return _createMailSession();
 	}
 
 	public static Object getSessionFactory() {
@@ -96,7 +92,6 @@ public class InfrastructureUtil {
 		InfrastructureUtil.class);
 
 	private static DataSource _dataSource;
-	private static Session _mailSession;
 	private static final DefaultNoticeableFuture<Object>
 		_sessionFactoryDefaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();

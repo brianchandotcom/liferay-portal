@@ -17,139 +17,17 @@
 			"enableComments": false,
 			"enableLocalization": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "T4T14_FOLDER_TEMPLATES",
+			"externalReferenceCode": "T4T1_FOLDER_TEMPLATES",
 			"label": {
 				"en_US": "Folder Template"
 			},
 			"modifiable": true,
-			"name": "T4T14FolderTemplate",
+			"name": "T4T1FolderTemplate",
 			"objectFields": [
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "51fb3490-88ea-4618-5843-3e50f9a7e5ef",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Author"
-					},
-					"localized": false,
-					"name": "creator",
-					"readOnly": "true",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "Date",
-					"externalReferenceCode": "3185334d-4535-fac6-d823-f2a4d8cecdcc",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Create Date"
-					},
-					"localized": false,
-					"name": "createDate",
-					"objectFieldSettings": [
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Date"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "7155eafe-a828-424f-3694-444b52db524a",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "External Reference Code"
-					},
-					"localized": false,
-					"name": "externalReferenceCode",
-					"objectFieldSettings": [
-					],
-					"readOnly": "false",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "b581c22a-9bd7-7fcf-47ef-42c2bbb53a6d",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "ID"
-					},
-					"localized": false,
-					"name": "id",
-					"objectFieldSettings": [
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Long"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "Date",
-					"externalReferenceCode": "2c19e28c-fe42-2986-7645-ce64b4625547",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Modified Date"
-					},
-					"localized": false,
-					"name": "modifiedDate",
-					"objectFieldSettings": [
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Date"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "35a3b169-05a6-c142-c261-6ade8a96d253",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Status"
-					},
-					"localized": false,
-					"name": "status",
-					"objectFieldSettings": [
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "84afc7ed-1a07-d28e-0550-cff81ec5c2f3",
+					"externalReferenceCode": "TEMPLATENAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -174,7 +52,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "6220c42c-38f3-e947-91fa-90455abdad23",
+					"externalReferenceCode": "TEMPLATEDESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -200,10 +78,10 @@
 			"panelCategoryKey": "applications_menu.applications.custom.apps",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "T4T14 Folder Templates"
+				"en_US": "T4T1 Folder Templates"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/t4t14foldertemplates",
+			"restContextPath": "/o/c/T4T1foldertemplates",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -221,143 +99,17 @@
 			"enableComments": false,
 			"enableLocalization": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "T4T14_FOLDER_TEMPLATE_NODE",
+			"externalReferenceCode": "T4T1_FOLDER_TEMPLATE_NODE",
 			"label": {
 				"en_US": "Folder Template Node"
 			},
 			"modifiable": true,
-			"name": "T4T14FolderTemplateNode",
+			"name": "T4T1FolderTemplateNode",
 			"objectFields": [
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "c44f358f-7c19-90a3-a34d-d28dd40eea42",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Author"
-					},
-					"localized": false,
-					"name": "creator",
-					"objectFieldSettings": [
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "Date",
-					"externalReferenceCode": "14d55ae9-c9c9-50d7-aa21-53037165c480",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Create Date"
-					},
-					"localized": false,
-					"name": "createDate",
-					"objectFieldSettings": [
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Date"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "6458c199-8de9-90ae-9aa4-c5bfcecb5ddd",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "External Reference Code"
-					},
-					"localized": false,
-					"name": "externalReferenceCode",
-					"objectFieldSettings": [
-					],
-					"readOnly": "false",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "b23f8841-a1d6-034d-77a0-6ee832f5ce0a",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "ID"
-					},
-					"localized": false,
-					"name": "id",
-					"objectFieldSettings": [
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Long"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "Date",
-					"externalReferenceCode": "2f2a031a-87ae-24d2-2897-54e1fe91d612",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Modified Date"
-					},
-					"localized": false,
-					"name": "modifiedDate",
-					"objectFieldSettings": [
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Date"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "76d80459-7680-8a9a-693e-1692bbb6e018",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Status"
-					},
-					"localized": false,
-					"name": "status",
-					"objectFieldSettings": [
-					],
-					"readOnly": "true",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "2be66aa0-2b7b-6a1f-9884-9b1010fea589",
+					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -378,7 +130,7 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "12fcd597-6e33-e738-7dd9-d43639439b6d",
+					"externalReferenceCode": "PARENTID",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -399,7 +151,7 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "df041ef2-f3bc-4a95-3861-6cadae28df2b",
+					"externalReferenceCode": "ROOT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -420,7 +172,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "0b5065b7-fc99-1ff1-3aad-9107e146f4c5",
+					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -445,7 +197,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "aa58831c-0db3-16f2-5887-52d2559ce83c",
+					"externalReferenceCode": "TEMPLATEID",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -470,7 +222,7 @@
 				"en_US": "Folder Templates Nodes"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/t4t14foldernode",
+			"restContextPath": "/o/c/T4T1foldertemplatenodes",
 			"scope": "company",
 			"status": {
 				"code": 0,

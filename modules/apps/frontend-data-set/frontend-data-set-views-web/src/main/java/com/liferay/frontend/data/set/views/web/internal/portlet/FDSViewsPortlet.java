@@ -690,29 +690,31 @@ public class FDSViewsPortlet extends MVCPortlet {
 			labelObjectField.getObjectFieldId());
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10735")) {
-			ObjectField defaultViewObjectField =
+			ObjectField defaultVisualizationModeObjectField =
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					_language.get(locale, "default-view"), "defaultView",
-					false);
+					_language.get(locale, "default-visualization-mode"),
+					"defaultVisualizationMode", false);
 
 			_objectFieldLocalService.addCustomObjectField(
-				defaultViewObjectField.getExternalReferenceCode(), userId,
-				defaultViewObjectField.getListTypeDefinitionId(),
+				defaultVisualizationModeObjectField.getExternalReferenceCode(),
+				userId,
+				defaultVisualizationModeObjectField.getListTypeDefinitionId(),
 				fdsViewObjectDefinition.getObjectDefinitionId(),
-				defaultViewObjectField.getBusinessType(),
-				defaultViewObjectField.getDBType(),
-				defaultViewObjectField.isIndexed(),
-				defaultViewObjectField.isIndexedAsKeyword(),
-				defaultViewObjectField.getIndexedLanguageId(),
-				defaultViewObjectField.getLabelMap(), false,
-				defaultViewObjectField.getName(),
-				defaultViewObjectField.getReadOnly(),
-				defaultViewObjectField.getReadOnlyConditionExpression(),
-				defaultViewObjectField.isRequired(),
-				defaultViewObjectField.isState(),
-				defaultViewObjectField.getObjectFieldSettings());
+				defaultVisualizationModeObjectField.getBusinessType(),
+				defaultVisualizationModeObjectField.getDBType(),
+				defaultVisualizationModeObjectField.isIndexed(),
+				defaultVisualizationModeObjectField.isIndexedAsKeyword(),
+				defaultVisualizationModeObjectField.getIndexedLanguageId(),
+				defaultVisualizationModeObjectField.getLabelMap(), false,
+				defaultVisualizationModeObjectField.getName(),
+				defaultVisualizationModeObjectField.getReadOnly(),
+				defaultVisualizationModeObjectField.
+					getReadOnlyConditionExpression(),
+				defaultVisualizationModeObjectField.isRequired(),
+				defaultVisualizationModeObjectField.isState(),
+				defaultVisualizationModeObjectField.getObjectFieldSettings());
 		}
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(

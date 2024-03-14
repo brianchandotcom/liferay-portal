@@ -26,7 +26,7 @@ interface IVisualizationMode {
 }
 
 const NOT_CONFIGURED_VISUALIZATION_MODE: Omit<IVisualizationMode, 'url'> = {
-	label: Liferay.Language.get('configure-new-layout'),
+	label: Liferay.Language.get('go-to-visualization-modes'),
 	name: Liferay.Language.get('not-configured'),
 	thumbnail: 'plus',
 };
@@ -58,7 +58,7 @@ const Settings = ({
 			url: `${API_URL.FDS_FIELDS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_FIELD}`,
 		},
 	];
-	const [defaultView, setDefaultView] = useState(
+	const [defaultVisualizationMode, setDefaultVisualizationMode] = useState(
 		NOT_CONFIGURED_VISUALIZATION_MODE.name
 	);
 	const [enableCustomView, setEnableCustomView] = useState(false);
@@ -107,14 +107,15 @@ const Settings = ({
 
 					setVisualizationModes(activeViews);
 
-					setDefaultView(() => {
+					setDefaultVisualizationMode(() => {
 						if (
 							activeViews.find(
 								(view: IVisualizationMode) =>
-									view.name === fdsView.defaultView
+									view.name ===
+									fdsView.defaultVisualizationMode
 							)
 						) {
-							return fdsView.defaultView;
+							return fdsView.defaultVisualizationMode;
 						}
 						else {
 							return activeViews.length
@@ -126,14 +127,16 @@ const Settings = ({
 				() => {
 					setVisualizationModes([]);
 
-					setDefaultView(NOT_CONFIGURED_VISUALIZATION_MODE.name);
+					setDefaultVisualizationMode(
+						NOT_CONFIGURED_VISUALIZATION_MODE.name
+					);
 				}
 			);
 	};
 
 	const updateFDSViewSettings = async () => {
 		const body = {
-			defaultView,
+			defaultVisualizationMode,
 		};
 
 		const response = await fetch(
@@ -212,7 +215,7 @@ const Settings = ({
 
 						<div>
 							{Liferay.Language.get(
-								'default-visualization-mode-explanation'
+								'default-visualization-mode-help'
 							)}
 						</div>
 					</ClayLayout.Col>
@@ -227,14 +230,16 @@ const Settings = ({
 									option ===
 									NOT_CONFIGURED_VISUALIZATION_MODE.name
 								) {
-									onActiveSectionChage(1);
+									onActiveSectionChange(1);
 								}
 								else {
-									setDefaultView(option as string);
+									setDefaultVisualizationMode(
+										option as string
+									);
 								}
 							}}
 							placeholder={NOT_CONFIGURED_VISUALIZATION_MODE.name}
-							selectedKey={defaultView}
+							selectedKey={defaultVisualizationMode}
 						>
 							{visualizationModes.length ? (
 								({label, name, thumbnail}) => (

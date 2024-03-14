@@ -31,7 +31,7 @@ const DEFAULT_ITEMS_PER_PAGE = 20;
 type FDSViewType = {
 	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: FDSEntryType;
 	defaultItemsPerPage: number;
-	defaultView: string;
+	defaultVisualizationMode: string;
 	description: string;
 	externalReferenceCode: string;
 	fdsFiltersOrder: string;

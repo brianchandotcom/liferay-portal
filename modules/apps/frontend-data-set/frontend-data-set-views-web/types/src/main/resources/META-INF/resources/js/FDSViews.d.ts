@@ -10,7 +10,7 @@ import {OBJECT_RELATIONSHIP} from './utils/constants';
 declare type FDSViewType = {
 	[OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW]: FDSEntryType;
 	defaultItemsPerPage: number;
-	defaultView: string;
+	defaultVisualizationMode: string;
 	description: string;
 	externalReferenceCode: string;
 	fdsFiltersOrder: string;

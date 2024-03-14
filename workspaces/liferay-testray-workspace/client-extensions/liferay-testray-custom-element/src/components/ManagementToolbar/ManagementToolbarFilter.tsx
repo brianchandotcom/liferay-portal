@@ -42,8 +42,8 @@ type FilterBodyProps = {
 	fieldOptions?: FieldOptions;
 	filterSchema: FilterSchema | undefined;
 	isLoading?: boolean;
-	setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-	visible: boolean;
+	isVisible: boolean;
+	setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const FilterBody: React.FC<FilterBodyProps> = ({
@@ -51,8 +51,8 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 	fieldOptions = {},
 	filterSchema,
 	isLoading = false,
-	setVisible,
-	visible,
+	isVisible,
+	setIsVisible,
 }) => {
 	const [filter, setFilter] = useState('');
 	const {updateUrlParams} = useQueryParams();
@@ -61,13 +61,13 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
-			if (visible) {
+			if (isVisible) {
 				inputRef?.current?.focus();
 			}
 		}, 100);
 
 		return () => clearTimeout(timeout);
-	}, [visible]);
+	}, [isVisible]);
 
 	const fields = useMemo(() => filterSchema?.fields as RendererFields[], [
 		filterSchema?.fields,
@@ -171,7 +171,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			type: ListViewTypes.SET_FILTERS,
 		});
 
-		setVisible(false);
+		setIsVisible(false);
 	}, [
 		applyFilters,
 		dispatch,
@@ -179,7 +179,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		filterSchema,
 		form,
 		handleRemoveItemFromFilter,
-		setVisible,
+		setIsVisible,
 		updateUrlParams,
 	]);
 
@@ -256,14 +256,16 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 }) => {
 	const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-	const [visible, setVisible] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
+
+	const hasOneFilter = filterSchema?.fields?.length === 1;
 
 	const handleExpand = (
 		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
 	) => {
 		buttonRef.current = event.target as HTMLButtonElement;
 
-		setVisible(!visible);
+		setIsVisible((isVisible) => !isVisible);
 	};
 
 	return (
@@ -286,23 +288,22 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 			</ClayButton>
 
 			<ClayDropDown.Menu
-				active={visible}
+				active={isVisible}
 				alignElementRef={buttonRef}
 				alignmentPosition={3}
 				className={classNames('dropdown-management-toolbar', {
-					'dropdown-management-toolbar-small':
-						filterSchema?.fields?.length === 1,
+					'dropdown-management-toolbar-small': hasOneFilter,
 				})}
 				closeOnClickOutside
-				onActiveChange={() => setVisible(!visible)}
+				onActiveChange={() => setIsVisible((isVisible) => !isVisible)}
 			>
 				<FilterBody
 					applyFilters={applyFilters}
 					fieldOptions={fieldOptions}
 					filterSchema={filterSchema}
 					isLoading={isLoading}
-					setVisible={setVisible}
-					visible={visible}
+					isVisible={isVisible}
+					setIsVisible={setIsVisible}
 				/>
 			</ClayDropDown.Menu>
 		</>

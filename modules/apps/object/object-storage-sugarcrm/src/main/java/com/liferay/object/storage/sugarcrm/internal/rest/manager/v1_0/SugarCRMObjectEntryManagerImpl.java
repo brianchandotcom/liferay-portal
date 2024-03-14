@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -195,20 +194,23 @@ public class SugarCRMObjectEntryManagerImpl
 			objectDefinition);
 	}
 
-	private void _appendFilter(StringBuilder sb, String filterString) {
+	private void _appendFilter(
+		StringBuilder sb, ObjectDefinition objectDefinition,
+		String filterString) {
+
 		if (!filterString.trim(
 			).isEmpty()) {
 
-			sb.append("&");
+			sb.append(StringPool.AMPERSAND);
 			sb.append("filter");
+			sb.append(StringPool.EQUAL);
+			sb.append(StringPool.OPEN_BRACKET);
 
-			if (filterString.startsWith(StringPool.EQUAL)) {
-				sb.append(StringPool.EQUAL);
-				sb.append(URLCodec.encodeURL(filterString.substring(1)));
-			}
-			else {
-				sb.append(StringUtil.replace(filterString, ' ', "%20"));
-			}
+			String filterSugarQueryString = _filterFactory.create(
+				filterString, objectDefinition);
+
+			sb.append(URLCodec.encodeURL(filterSugarQueryString));
+			sb.append(StringPool.CLOSE_BRACKET);
 		}
 	}
 
@@ -296,7 +298,7 @@ public class SugarCRMObjectEntryManagerImpl
 
 		_appendPagination(sb, pagination);
 
-		_appendFilter(sb, filterString);
+		_appendFilter(sb, objectDefinition, filterString);
 
 		/* TODO: Add implementation for search */
 
@@ -398,12 +400,12 @@ public class SugarCRMObjectEntryManagerImpl
 			"modifiedDate", "date_modified"
 		).build();
 
-    @Reference(
-    target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_SUGARCRM + ")"
-    )
-    private FilterFactory<String> _filterFactory;
-    
-    @Reference
+	@Reference(
+		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_SUGARCRM + ")"
+	)
+	private FilterFactory<String> _filterFactory;
+
+	@Reference
 	private Http _http;
 
 	@Reference

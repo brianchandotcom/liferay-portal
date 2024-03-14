@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -42,8 +44,10 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,6 +68,17 @@ public class PingbackMethodImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() {
+		_inetAddressUtilMockedStatic = Mockito.mockStatic(
+			InetAddressUtil.class);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_inetAddressUtilMockedStatic.close();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_setUpBlogsEntryLocalService();
@@ -77,6 +92,15 @@ public class PingbackMethodImplTest {
 		_setUpPropsTestUtil();
 		_setUpUserLocalService();
 		_setUpXmlRpcUtil();
+
+		_inetAddressUtilMockedStatic.when(
+			() -> InetAddressUtil.isLocalInetAddress(
+				Mockito.argThat(
+					inetAddress -> ArrayUtil.contains(
+						_localAddresses, inetAddress)))
+		).thenReturn(
+			true
+		);
 	}
 
 	@After
@@ -720,6 +744,7 @@ public class PingbackMethodImplTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
+	private static MockedStatic<InetAddressUtil> _inetAddressUtilMockedStatic;
 	private static MockedStatic<XmlRpcUtil> _xmlRpcUtilMockedStatic;
 
 	private final BlogsEntry _blogsEntry = Mockito.mock(BlogsEntry.class);

@@ -21,7 +21,7 @@ import {
 } from '../schema/filter';
 
 type CustomFilterFieldsProps = {
-	projectId: string;
+	[key: string]: string;
 };
 
 type Options = {
@@ -37,7 +37,7 @@ type Params = {
 	[key: string]: string | number | boolean;
 };
 
-const useQueryParams = (customFilterFields: CustomFilterFieldsProps) => {
+const useQueryParams = (customFilterFields?: CustomFilterFieldsProps) => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
@@ -77,25 +77,18 @@ const useQueryParams = (customFilterFields: CustomFilterFieldsProps) => {
 		for (const field of resourceFields) {
 			const resource =
 				typeof field.resource === 'function'
-					? field.resource(parameters)
+					? field.resource({...parameters, ...customFilterFields})
 					: (field.resource as string);
 
 			const filter = SearchBuilder.in('id', serializedFilter[field.name]);
 
-			let resourceFilter;
+			let resourceFilter = resource;
 
 			if (resource.includes('filter=')) {
-				if (customFilterFields) {
-					resourceFilter = resource
-						.replace('undefined', customFilterFields?.projectId)
-						.replace(/(filter=.*?)(&|$)/, `$1 and ${filter}$2`);
-				}
-				else {
-					resourceFilter = resource.replace(
-						/(filter=.*?)(&|$)/,
-						`$1 and ${filter}$2`
-					);
-				}
+				resourceFilter = resource.replace(
+					/(filter=.*?)(&|$)/,
+					`$1 and ${filter}$2`
+				);
 			}
 			else {
 				resourceFilter = `${resource}${
@@ -181,11 +174,11 @@ const useQueryParams = (customFilterFields: CustomFilterFieldsProps) => {
 
 		setFilterWithOptions(updatedFilterOptions);
 	}, [
-		routeParams,
-		filteredFields,
-		serializedFilter,
 		customFilterFields,
+		filteredFields,
 		filterKeys,
+		routeParams,
+		serializedFilter,
 	]);
 
 	const updateUrlParams = (param: Params) => {

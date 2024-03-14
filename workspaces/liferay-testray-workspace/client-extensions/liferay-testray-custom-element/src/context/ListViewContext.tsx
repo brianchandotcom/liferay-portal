@@ -43,7 +43,7 @@ export type InitialState = {
 	checkAll: boolean;
 	columns: ListViewColumns;
 	columnsFixed: string[];
-	customFilterFields: {projectId?: string};
+	customFilterFields: {[key: string]: string};
 	filters: ListViewFilter;
 	id: string;
 	keywords: string;
@@ -58,7 +58,7 @@ const initialState: InitialState = {
 	checkAll: false,
 	columns: {},
 	columnsFixed: [],
-	customFilterFields: {projectId: ''},
+	customFilterFields: {key: ''},
 	filters: {
 		entries: [],
 		filter: {},

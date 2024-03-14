@@ -189,17 +189,16 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			System.out.println("Unable to get age of testray-data.js");
 		}
 
-		if ((testrayDataFilepath == null) ||
-			!testrayDataFilepath.contains("testray-data.js")) {
+		if ((testrayDataFilepath != null) &&
+			testrayDataFilepath.contains("testray-data.js")) {
 
-			return;
+			CISystemStatusReportUtil.writeTestrayDataJavaScriptFile(
+				filePath + "/js/testray-data.js",
+				_buildProperties.getProperty(
+					"ci.system.status.report.job.name"),
+				_buildProperties.getProperty(
+					"ci.system.status.report.test.suite.name"));
 		}
-
-		CISystemStatusReportUtil.writeTestrayDataJavaScriptFile(
-			filePath + "/js/testray-data.js",
-			_buildProperties.getProperty("ci.system.status.report.job.name"),
-			_buildProperties.getProperty(
-				"ci.system.status.report.test.suite.name"));
 
 		_updateReport(filePath);
 

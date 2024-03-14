@@ -510,7 +510,11 @@ public class QueueListener {
 		return WebClient.builder(
 		).clientConnector(
 			new ReactorClientHttpConnector(
-				HttpClient.create(connectionProvider))
+				HttpClient.create(
+					connectionProvider
+				).followRedirect(
+					true
+				))
 		).baseUrl(
 			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
 		).exchangeStrategies(

@@ -270,7 +270,9 @@ export default function ColorPicker({
 
 	return (
 		<ClayForm.Group aria-label={field.label} small>
-			{showLabel ? <label>{field.label}</label> : null}
+			<label className={classNames({'sr-only': !showLabel})}>
+				{field.label}
+			</label>
 
 			<div
 				className={classNames('layout__color-picker', {

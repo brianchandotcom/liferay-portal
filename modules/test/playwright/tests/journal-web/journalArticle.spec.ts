@@ -157,6 +157,63 @@ prefixUrlTest(
 );
 
 translationTest(
+	'LPD-13732: This is a test for reset translations button in web content',
+	async ({journalEditArticlePage, journalPage, page}) => {
+		await journalPage.goto();
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.goToCreateNewBasicArticle(title);
+
+		const translationButton = page.getByRole('combobox', {
+			name: 'Select a language',
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not Translated',
+			}),
+			trigger: translationButton,
+		});
+
+		await translateNameAndMetadataFields(page);
+
+		await translationButton.click();
+
+		await expect(
+			page.getByRole('option', {
+				name: 'Catalan Language: Translating 3/4',
+			})
+		).toBeVisible({timeout: 1000});
+
+		const translationOptionsButton = page.getByLabel('Translation Options');
+
+		await translationOptionsButton.click();
+
+		const resetTranslationButton = page.getByRole('button', {
+			name: 'Reset Translation',
+		});
+
+		await resetTranslationButton.click();
+
+		const deleteButton = page.getByRole('button', {name: 'Delete'});
+
+		await deleteButton.click();
+
+		await translationButton.click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Not Translated',
+			}),
+			trigger: translationButton,
+		});
+	}
+);
+
+translationTest(
 	'LPD-17245: Add error message in Translation for concurrent users',
 	async ({
 		apiHelpers,

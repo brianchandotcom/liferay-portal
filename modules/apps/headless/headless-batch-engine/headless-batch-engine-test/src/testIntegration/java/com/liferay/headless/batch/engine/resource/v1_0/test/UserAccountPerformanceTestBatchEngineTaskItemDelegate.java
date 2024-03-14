@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -71,11 +71,8 @@ public class UserAccountPerformanceTestBatchEngineTaskItemDelegate
 			endPos = _items.size();
 		}
 
-		List<UserAccount> items = _items.subList(
-			pagination.getStartPosition(), endPos);
-
 		return Page.of(
-			items,
+			_items.subList(pagination.getStartPosition(), endPos),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_items.size());
 	}

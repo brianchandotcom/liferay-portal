@@ -8,35 +8,11 @@ import ClayTabs from '@clayui/tabs';
 import React, {ComponentType, useState} from 'react';
 
 import {IFDSViewSectionProps} from '../../FDSView';
-import Cards, {ICards} from './cards/Cards';
-import List, {IList} from './list/List';
-import Table, {ITable} from './table/Table';
-
-export interface IBaseVisualizationMode<Type extends string> {
-	label: string;
-	type: Type;
-	visualizationModeId: string;
-}
-
-type TVisualizationMode = ICards | IList | ITable;
-
-const DEFAULT_VISUALIZATION_MODES: TVisualizationMode[] = [
-	{
-		label: Liferay.Language.get('table'),
-		type: 'table',
-		visualizationModeId: 'defaultTable',
-	},
-	{
-		label: Liferay.Language.get('list'),
-		type: 'list',
-		visualizationModeId: 'defaultList',
-	},
-	{
-		label: Liferay.Language.get('cards'),
-		type: 'cards',
-		visualizationModeId: 'defaultCards',
-	},
-];
+import {DEFAULT_VISUALIZATION_MODES} from '../../utils/constants';
+import {TVisualizationMode} from '../../utils/types';
+import Cards from './cards/Cards';
+import List from './list/List';
+import Table from './table/Table';
 
 const VISUALIZATION_MODE_COMPONENT_MAP: {
 	[key in TVisualizationMode['type']]: ComponentType<IFDSViewSectionProps>;
@@ -45,6 +21,8 @@ const VISUALIZATION_MODE_COMPONENT_MAP: {
 	list: List,
 	table: Table,
 };
+
+const ORDERED_DEFAULT_VISUALIZATION_MODES = DEFAULT_VISUALIZATION_MODES.reverse();
 
 export default function VisualizationModes(props: IFDSViewSectionProps) {
 	const [
@@ -66,31 +44,35 @@ export default function VisualizationModes(props: IFDSViewSectionProps) {
 					active={activeVisualizationModeIndex}
 					onActiveChange={setActiveVisualizationModeIndex}
 				>
-					{DEFAULT_VISUALIZATION_MODES.map((visualizationMode) => (
-						<ClayTabs.Item
-							key={visualizationMode.visualizationModeId}
-						>
-							{visualizationMode.label}
-						</ClayTabs.Item>
-					))}
+					{ORDERED_DEFAULT_VISUALIZATION_MODES.map(
+						(visualizationMode) => (
+							<ClayTabs.Item
+								key={visualizationMode.visualizationModeId}
+							>
+								{visualizationMode.label}
+							</ClayTabs.Item>
+						)
+					)}
 				</ClayTabs>
 
 				<ClayTabs.Content active={activeVisualizationModeIndex} fade>
-					{DEFAULT_VISUALIZATION_MODES.map((visualizationMode) => {
-						const Component =
-							VISUALIZATION_MODE_COMPONENT_MAP[
-								visualizationMode.type
-							];
+					{ORDERED_DEFAULT_VISUALIZATION_MODES.map(
+						(visualizationMode) => {
+							const Component =
+								VISUALIZATION_MODE_COMPONENT_MAP[
+									visualizationMode.type as TVisualizationMode['type']
+								];
 
-						return (
-							<ClayTabs.TabPane
-								className="px-0"
-								key={visualizationMode.visualizationModeId}
-							>
-								<Component {...props} />
-							</ClayTabs.TabPane>
-						);
-					})}
+							return (
+								<ClayTabs.TabPane
+									className="px-0"
+									key={visualizationMode.visualizationModeId}
+								>
+									<Component {...props} />
+								</ClayTabs.TabPane>
+							);
+						}
+					)}
 				</ClayTabs.Content>
 			</ClayLayout.Sheet>
 		</ClayLayout.ContainerFluid>

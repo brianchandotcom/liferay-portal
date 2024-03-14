@@ -50,9 +50,16 @@ declare const FDS_DEFAULT_PROPS: {
 	};
 	style: 'fluid';
 };
+declare const DEFAULT_VISUALIZATION_MODES: {
+	label: string;
+	thumbnail: string;
+	type: string;
+	visualizationModeId: string;
+}[];
 declare const ALLOWED_ENDPOINTS_PARAMETERS: string[];
 export {
 	API_URL,
+	DEFAULT_VISUALIZATION_MODES,
 	FDS_DEFAULT_PROPS,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,

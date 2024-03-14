@@ -7,6 +7,4 @@
 
 import '../../../../css/CardsVisualizationMode.scss';
 import {IFDSViewSectionProps} from '../../../FDSView';
-import {IBaseVisualizationMode} from '../VisualizationModes';
-export interface ICards extends IBaseVisualizationMode<'cards'> {}
 export default function Cards(props: IFDSViewSectionProps): JSX.Element;

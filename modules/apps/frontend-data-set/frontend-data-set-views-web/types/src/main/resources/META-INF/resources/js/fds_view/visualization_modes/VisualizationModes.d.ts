@@ -6,11 +6,6 @@
 /// <reference types="react" />
 
 import {IFDSViewSectionProps} from '../../FDSView';
-export interface IBaseVisualizationMode<Type extends string> {
-	label: string;
-	type: Type;
-	visualizationModeId: string;
-}
 export default function VisualizationModes(
 	props: IFDSViewSectionProps
 ): JSX.Element;

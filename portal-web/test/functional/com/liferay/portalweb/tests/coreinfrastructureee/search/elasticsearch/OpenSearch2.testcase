@@ -1,4 +1,4 @@
-@component-name = "portal-search-ee"
+@component-name = "portal-search"
 definition {
 
 	property portal.release = "true";

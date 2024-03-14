@@ -1028,6 +1028,15 @@ public class PullRequest {
 			}
 		}
 
+		public URL getURL() {
+			try {
+				return new URL(_commentJSONObject.getString("html_url"));
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new RuntimeException(malformedURLException);
+			}
+		}
+
 		public String getUserLogin() {
 			JSONObject userJSONObject = _commentJSONObject.getJSONObject(
 				"user");

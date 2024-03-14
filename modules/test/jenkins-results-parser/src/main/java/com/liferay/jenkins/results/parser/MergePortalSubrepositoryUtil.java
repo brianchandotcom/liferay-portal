@@ -437,18 +437,6 @@ public class MergePortalSubrepositoryUtil {
 			return;
 		}
 
-		GitHubRemoteGitCommit gitHubRemoteGitCommit =
-			GitCommitFactory.newGitHubRemoteGitCommit(
-				matcher.group("userName"), matcher.group("repositoryName"),
-				targetGitRepoCommitSHA);
-
-		gitHubRemoteGitCommit.setStatus(
-			GitHubRemoteGitCommit.Status.SUCCESS, "liferay/merged-into-central",
-			JenkinsResultsParserUtil.combine(
-				"Merged into ", portalPullRequest.getReceiverUsername(), "/",
-				portalPullRequest.getGitRepositoryName()),
-			String.valueOf(jenkinsBuildURL));
-
 		String message = JenkinsResultsParserUtil.combine(
 			"Completed subrepo merge process at ",
 			JenkinsResultsParserUtil.toDateString(new Date()), ".\n",
@@ -463,10 +451,22 @@ public class MergePortalSubrepositoryUtil {
 		JenkinsResultsParserUtil.updateBuildDescription(
 			message, jenkinsBuildURL);
 
-		portalPullRequest.addComment(
+		PullRequest.Comment pullRequestComment = portalPullRequest.addComment(
 			JenkinsResultsParserUtil.combine(
 				message, "\n\nFor more details click <a href=\"",
 				String.valueOf(jenkinsBuildURL), "\">here</a>."));
+
+		GitHubRemoteGitCommit gitHubRemoteGitCommit =
+			GitCommitFactory.newGitHubRemoteGitCommit(
+				matcher.group("userName"), matcher.group("repositoryName"),
+				targetGitRepoCommitSHA);
+
+		gitHubRemoteGitCommit.setStatus(
+			GitHubRemoteGitCommit.Status.SUCCESS, "liferay/merged-into-central",
+			JenkinsResultsParserUtil.combine(
+				"Merged into ", portalPullRequest.getReceiverUsername(), "/",
+				portalPullRequest.getGitRepositoryName()),
+			String.valueOf(pullRequestComment.getURL()));
 
 		portalPullRequest.close();
 	}

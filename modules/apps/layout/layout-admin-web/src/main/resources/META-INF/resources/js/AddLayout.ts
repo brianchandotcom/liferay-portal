@@ -22,6 +22,12 @@ export default function AddLayout({
 		`${namespace}addButton`
 	) as HTMLButtonElement;
 
+	const addLayoutForm = document.querySelector(
+		'.add-layout-form'
+	) as HTMLButtonElement;
+
+	addLayoutForm?.classList.remove('d-none');
+
 	const form = document.getElementById(`${namespace}fm`) as HTMLFormElement;
 
 	const onSubmit = async (event: Event) => {

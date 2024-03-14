@@ -17,7 +17,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 <clay:container-fluid>
 	<liferay-frontend:edit-form
 		action="<%= (sourcePlid <= 0) ? layoutsAdminDisplayContext.getAddLayoutURL() : layoutsAdminDisplayContext.getCopyLayoutActionURL(copyPermissions, sourcePlid) %>"
-		cssClass="add-layout-form"
+		cssClass="add-layout-form d-none"
 		method="post"
 		name="fm"
 		onSubmit="event.preventDefault();"
@@ -93,6 +93,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 					</c:choose>
 				</aui:fieldset>
 			</c:if>
+			</div>
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>

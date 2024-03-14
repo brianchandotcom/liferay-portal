@@ -30,7 +30,10 @@ export default function ItemConfigurationSidebar() {
 				className={classNames(
 					'flex-column page-editor__item-configuration-sidebar',
 					{
-						[`page-editor__item-configuration-sidebar--open`]: itemConfigurationOpen,
+						'page-editor__item-configuration-sidebar--open': itemConfigurationOpen,
+						'page-editor__old-sidebar': !Liferay.FeatureFlags[
+							'LPD-10988'
+						],
 					}
 				)}
 				tabIndex={activeItemId ? null : 0}

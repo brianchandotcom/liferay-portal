@@ -34,7 +34,7 @@ const NOT_CONFIGURED_VISUALIZATION_MODE: Omit<IVisualizationMode, 'url'> = {
 const Settings = ({
 	fdsView,
 	fdsViewsURL,
-	onActiveSectionChage,
+	onActiveSectionChange,
 	onFDSViewUpdate,
 	spritemap,
 }: IFDSViewSectionProps) => {

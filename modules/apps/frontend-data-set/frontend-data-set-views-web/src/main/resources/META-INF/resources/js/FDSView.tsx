@@ -70,7 +70,7 @@ interface IFDSViewSectionProps {
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
-	onActiveSectionChage: (section: number) => void;
+	onActiveSectionChange: (section: number) => void;
 	onFDSViewUpdate: (data: FDSViewType) => void;
 	saveFDSFieldsURL: string;
 	spritemap: string;
@@ -156,7 +156,7 @@ const FDSView = ({
 						fdsView={fdsView}
 						fdsViewsURL={fdsViewsURL}
 						namespace={namespace}
-						onActiveSectionChage={(tab) => setActiveIndex(tab)}
+						onActiveSectionChange={(tab) => setActiveIndex(tab)}
 						onFDSViewUpdate={(updatedFdsViewData) => {
 							setFDSView({...fdsView, ...updatedFdsViewData});
 						}}

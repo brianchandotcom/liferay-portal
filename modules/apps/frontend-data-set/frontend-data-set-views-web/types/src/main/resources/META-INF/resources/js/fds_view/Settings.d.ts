@@ -9,7 +9,7 @@ import {IFDSViewSectionProps} from '../FDSView';
 declare const Settings: ({
 	fdsView,
 	fdsViewsURL,
-	onActiveSectionChage,
+	onActiveSectionChange,
 	onFDSViewUpdate,
 	spritemap,
 }: IFDSViewSectionProps) => JSX.Element;

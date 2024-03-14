@@ -5,13 +5,15 @@
 
 export default function getFragmentDefinition(
 	id: string,
-	key: string
+	key: string,
+	fragmentConfig?: Record<string, string>
 ): PageElement {
 	return {
 		definition: {
 			fragment: {
 				key,
 			},
+			fragmentConfig,
 		},
 		id,
 		type: 'Fragment',

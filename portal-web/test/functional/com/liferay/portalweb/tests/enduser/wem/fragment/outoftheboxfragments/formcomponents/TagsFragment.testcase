@@ -9,6 +9,12 @@ definition {
 	static var randomSiteName = StringUtil.randomString(8);
 
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
+	var tagName1 = StringUtil.randomString(8);
+
+	var tagName1 = StringUtil.toLowerCase(${tagName1});
+	var tagName2 = StringUtil.randomString(8);
+
+	var tagName2 = StringUtil.toLowerCase(${tagName2});
 
 	setUp {
 		task ("Set up virtual instance") {
@@ -22,22 +28,8 @@ definition {
 		task ("Add a site") {
 			HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
-	}
 
-	@description = "This is a test for LPS-169877. 10 instances of Tags fragment can be added into the same form container"
-	@priority = 3
-	test CanAdd10TagsFragmentsToPage {
-		var tagName1 = StringUtil.randomString(8);
-
-		var tagName1 = StringUtil.toLowerCase(${tagName1});
-		var tagName2 = StringUtil.randomString(8);
-
-		var tagName2 = StringUtil.toLowerCase(${tagName2});
-		var labelName = StringUtil.randomString(8);
-
-		var objectName = "A${labelName}";
-
-		task ("Given an object with scope to a site") {
+		task ("Add tags") {
 			for (var tagName : list "${tagName1},${tagName2}") {
 				JSONAssettag.addTag(
 					groupName = "Global",
@@ -47,7 +39,17 @@ definition {
 			JSONAssettag.addTag(
 				groupName = ${randomSiteName},
 				tagName = "local tag");
+		}
+	}
 
+	@description = "This is a test for LPS-169877. 10 instances of Tags fragment can be added into the same form container"
+	@priority = 3
+	test CanAdd10TagsFragmentsToPage {
+		var labelName = StringUtil.randomString(8);
+
+		var objectName = "A${labelName}";
+
+		task ("Given an object with scope to a site") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = ${labelName},
 				objectName = ${objectName},
@@ -172,27 +174,11 @@ definition {
 	@description = "This is a test for LPS-169877. The tags fragment can be used in a master page"
 	@priority = 3
 	test CanUseTagsInMasterPage {
-		var tagName1 = StringUtil.randomString(8);
-
-		var tagName1 = StringUtil.toLowerCase(${tagName1});
-		var tagName2 = StringUtil.randomString(8);
-
-		var tagName2 = StringUtil.toLowerCase(${tagName2});
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
 
 		task ("Given a master page with the tags fragment") {
-			for (var tagName : list "${tagName1},${tagName2}") {
-				JSONAssettag.addTag(
-					groupName = "Global",
-					tagName = ${tagName});
-			}
-
-			JSONAssettag.addTag(
-				groupName = ${randomSiteName},
-				tagName = "local tag");
-
 			ObjectAdmin.addObjectViaAPI(
 				labelName = ${labelName},
 				objectName = ${objectName},
@@ -310,27 +296,11 @@ definition {
 	test CanUseTagsInPageTemplate {
 		property portal.acceptance = "true";
 
-		var tagName1 = StringUtil.randomString(8);
-
-		var tagName1 = StringUtil.toLowerCase(${tagName1});
-		var tagName2 = StringUtil.randomString(8);
-
-		var tagName2 = StringUtil.toLowerCase(${tagName2});
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
 
 		task ("Given a page template with the tags fragment") {
-			for (var tagName : list "${tagName1},${tagName2}") {
-				JSONAssettag.addTag(
-					groupName = "Global",
-					tagName = ${tagName});
-			}
-
-			JSONAssettag.addTag(
-				groupName = ${randomSiteName},
-				tagName = "local tag");
-
 			ObjectAdmin.addObjectViaAPI(
 				labelName = ${labelName},
 				objectName = ${objectName},
@@ -456,27 +426,11 @@ definition {
 	test ViewAllTagsShownInObjectSiteScoped {
 		property portal.acceptance = "true";
 
-		var tagName1 = StringUtil.randomString(8);
-
-		var tagName1 = StringUtil.toLowerCase(${tagName1});
-		var tagName2 = StringUtil.randomString(8);
-
-		var tagName2 = StringUtil.toLowerCase(${tagName2});
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
 
 		task ("Given an object with scope to a site") {
-			for (var tagName : list "${tagName1},${tagName2}") {
-				JSONAssettag.addTag(
-					groupName = "Global",
-					tagName = ${tagName});
-			}
-
-			JSONAssettag.addTag(
-				groupName = ${randomSiteName},
-				tagName = "local tag");
-
 			ObjectAdmin.addObjectViaAPI(
 				labelName = ${labelName},
 				objectName = ${objectName},
@@ -621,27 +575,11 @@ definition {
 	test ViewOnlyGlobalTagsShownInObjectInstanceScope {
 		property portal.acceptance = "true";
 
-		var tagName1 = StringUtil.randomString(8);
-
-		var tagName1 = StringUtil.toLowerCase(${tagName1});
-		var tagName2 = StringUtil.randomString(8);
-
-		var tagName2 = StringUtil.toLowerCase(${tagName2});
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
 
 		task ("Given an object with scope to an instance") {
-			for (var tagName : list "${tagName1},${tagName2}") {
-				JSONAssettag.addTag(
-					groupName = "Global",
-					tagName = ${tagName});
-			}
-
-			JSONAssettag.addTag(
-				groupName = ${randomSiteName},
-				tagName = "local tag");
-
 			ObjectAdmin.addObjectViaAPI(
 				labelName = ${labelName},
 				objectName = ${objectName},
@@ -785,12 +723,6 @@ definition {
 	@description = "This is a test for LPS-169877. A warning message is shown if the object does not have categorization enabled and we try to use tags"
 	@priority = 4
 	test ViewWarningMessageWithCategorizationDisabled {
-		var tagName1 = StringUtil.randomString(8);
-
-		var tagName1 = StringUtil.toLowerCase(${tagName1});
-		var tagName2 = StringUtil.randomString(8);
-
-		var tagName2 = StringUtil.toLowerCase(${tagName2});
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";

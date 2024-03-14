@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -120,23 +118,15 @@ public class FragmentEntryLinkUpgradeProcessTest {
 	}
 
 	private void _runUpgrade() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
+		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
+			_upgradeStepRegistrator, new Version(2, 10, 3));
 
-			UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
-				_upgradeStepRegistrator, new Version(2, 10, 3));
-
-			for (UpgradeProcess upgradeProcess : upgradeProcesses) {
-				upgradeProcess.upgrade();
-			}
-
-			_multiVMPool.clear();
+		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
+			upgradeProcess.upgrade();
 		}
-	}
 
-	private static final String _CLASS_NAME =
-		"com.liferay.fragment.internal.upgrade.v2_10_3." +
-			"FragmentEntryLinkUpgradeProcess";
+		_multiVMPool.clear();
+	}
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"

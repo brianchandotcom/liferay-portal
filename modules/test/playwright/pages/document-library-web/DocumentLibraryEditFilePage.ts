@@ -12,15 +12,20 @@ export class DocumentLibraryEditFilePage {
 	readonly page: Page;
 	readonly publishDateSelector: Locator;
 	readonly saveButton: Locator;
+	readonly publishButton: Locator;
 	readonly scheduleButton: Locator;
 	readonly titleSelector: Locator;
 
 	constructor(page: Page) {
 		this.documentLibraryPage = new DocumentLibraryPage(page);
+		this.page = page;
+		this.publishButton = page.getByRole('button', {
+			exact: true,
+			name: 'Publish',
+		});
+		this.publishDateSelector = page.getByLabel('Publish Date');
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 		this.scheduleButton = page.getByRole('button', {name: 'Schedule'});
-		this.page = page;
-		this.publishDateSelector = page.getByLabel('Publish Date');
 		this.titleSelector = page.getByLabel('Title');
 	}
 
@@ -54,6 +59,11 @@ export class DocumentLibraryEditFilePage {
 			)
 			.fill('00:00');
 
-		await this.saveButton.click();
+		if (await this.saveButton.isVisible()) {
+			await this.saveButton.click();
+		}
+		else {
+			await this.publishButton.click();
+		}
 	}
 }

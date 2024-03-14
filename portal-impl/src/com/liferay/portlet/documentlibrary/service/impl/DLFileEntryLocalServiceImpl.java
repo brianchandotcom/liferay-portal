@@ -2836,6 +2836,9 @@ public class DLFileEntryLocalServiceImpl
 				DLFileEntryTable.INSTANCE.companyId.eq(
 					companyId
 				).and(
+					DLFileEntryTable.INSTANCE.expirationDate.gte(
+						_dates.get(companyId))
+				).and(
 					DLFileEntryTable.INSTANCE.expirationDate.lte(expirationDate)
 				)
 			));

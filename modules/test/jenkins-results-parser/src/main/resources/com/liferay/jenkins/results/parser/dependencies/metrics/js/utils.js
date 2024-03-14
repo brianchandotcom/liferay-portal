@@ -1,3 +1,41 @@
+function addTotalColumn(tableElement) {
+	theadElement = tableElement.querySelector('thead tr');
+
+	let totalHeaderElement = document.createElement('th');
+
+	totalHeaderElement.textContent = 'Total';
+
+	theadElement.appendChild(totalHeaderElement);
+
+	var rowElements = tableElement.querySelectorAll('tbody tr');
+
+	rowElements.forEach(rowElement => {
+		let totalValue = 0;
+
+		let cellElements = rowElement.querySelectorAll('td');
+
+		for (let i = 2; i < cellElements.length; i++) {
+			let value = parseFloat(cellElements[i].getAttribute('data-value'));
+
+			if (!isNaN(value)) {
+				totalValue += value;
+			}
+		}
+
+		let totalCellElement = document.createElement('td');
+
+		totalCellElement.setAttribute('data-value', totalValue);
+
+		if (cellElements[1].textContent.includes('Duration')) {
+			totalValue = getReadableDuration(totalValue);
+		}
+
+		totalCellElement.textContent = totalValue;
+
+		rowElement.appendChild(totalCellElement);
+	});
+}
+
 function createTable(table, tableElementID) {
 	let tableElement = document.getElementById(tableElementID);
 
@@ -77,6 +115,8 @@ function createTable(table, tableElementID) {
 		});
 
 	});
+
+	addTotalColumn(tableElement);
 }
 
 function getElementByXpath(path) {

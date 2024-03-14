@@ -585,7 +585,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			serviceContext);
 
 		user = _userService.updateExternalReferenceCode(
-			userAccountId,
+			user,
 			GetterUtil.getString(
 				userAccount.getExternalReferenceCode(),
 				user.getExternalReferenceCode()));

@@ -267,15 +267,7 @@ const Settings = ({
 										}
 									>
 										<ClayLayout.Row>
-											<ClayLayout.Col className="align-self-center">
-												<ClayIcon
-													symbol={
-														NOT_CONFIGURED_VISUALIZATION_MODE.thumbnail
-													}
-												/>
-											</ClayLayout.Col>
-
-											<ClayLayout.Col size={10}>
+											<ClayLayout.Col>
 												<Text size={3}>
 													{
 														NOT_CONFIGURED_VISUALIZATION_MODE.label

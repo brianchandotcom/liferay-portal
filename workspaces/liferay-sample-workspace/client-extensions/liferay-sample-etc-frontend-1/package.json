@@ -1,11 +1,16 @@
 {
 	"devDependencies": {
-		"serve": "^14.2.0"
+		"copy-webpack-plugin": "12.0.2",
+		"css-loader": "6.10.0",
+		"style-loader": "3.3.4",
+		"webpack": "5.90.1",
+		"webpack-cli": "5.1.4"
 	},
 	"name": "@liferay/liferay-sample-etc-frontend-1",
+	"private": true,
 	"scripts": {
-		"start": "PORT=3000 serve --cors"
+		"build": "webpack",
+		"start": "webpack-dev-server"
 	},
-	"type": "module",
 	"version": "0.0.0"
 }

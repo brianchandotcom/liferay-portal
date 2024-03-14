@@ -181,7 +181,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 	};
 
 	window.<portlet:namespace />getSelectedClientProfile = function () {
-		return A.one('#<portlet:namespace />clientProfile option:selected');
+		return A.one('#<portlet:namespace />clientProfile').get('selectedOptions');
 	};
 
 	window.<portlet:namespace />isClientCredentialsSectionRequired = function () {

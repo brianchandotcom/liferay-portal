@@ -100,6 +100,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		super.setUp();
 
 		_locale = LocaleUtil.getSiteDefault();
+		_ddmStructure = _addJournalArticleDDMStructure();
+		_searchEngine = _searchEngineHelper.getSearchEngine();
 
 		_user = TestPropsValues.getUser();
 
@@ -108,9 +110,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		_assetCategory = _addAssetCategory();
 		_assetTag = _addAssetTag();
-		_ddmStructure = _addJournalArticleDDMStructure();
+
 		_journalArticle = _addJournalArticle(_assetCategory, _assetTag);
-		_searchEngine = _searchEngineHelper.getSearchEngine();
 
 		_addJournalArticleWithDDMStructure(_ddmStructure);
 	}

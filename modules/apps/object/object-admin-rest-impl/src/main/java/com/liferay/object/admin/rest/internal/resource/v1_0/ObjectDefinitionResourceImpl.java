@@ -33,6 +33,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
+import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.model.ObjectActionModel;
 import com.liferay.object.model.ObjectFieldModel;
@@ -411,6 +412,31 @@ public class ObjectDefinitionResourceImpl
 				_objectDefinitionService.getObjectDefinition(
 					objectDefinitionId);
 
+		Status objectDefinitionStatus = objectDefinition.getStatus();
+		int serviceBuilderObjectDefinitionStatus =
+			serviceBuilderObjectDefinition.getStatus();
+
+		if ((objectDefinitionStatus.getCode() !=
+				WorkflowConstants.STATUS_APPROVED) &&
+			(serviceBuilderObjectDefinitionStatus ==
+				WorkflowConstants.STATUS_APPROVED)) {
+
+			throw new ObjectDefinitionStatusException(
+				"Editing the status of a published object definition is not " +
+					"allowed");
+		}
+
+		String rootObjectDefinitionExternalReferenceCode =
+			objectDefinition.getRootObjectDefinitionExternalReferenceCode();
+
+		if (Validator.isNotNull(rootObjectDefinitionExternalReferenceCode) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+
+			_validateRootObjectDefinition(
+				serviceBuilderObjectDefinition.getStatus(),
+				rootObjectDefinitionExternalReferenceCode);
+		}
+
 		_addListTypeDefinition(objectDefinition);
 
 		long accountEntryRestrictedObjectFieldId = 0;
@@ -441,7 +467,9 @@ public class ObjectDefinitionResourceImpl
 
 		int statusInt = serviceBuilderObjectDefinition.getStatus();
 
-		if (objectDefinition.getStatus() != null) {
+		if ((objectDefinition.getStatus() != null) &&
+			Validator.isNull(rootObjectDefinitionExternalReferenceCode)) {
+
 			Status status = objectDefinition.getStatus();
 
 			statusInt = status.getCode();
@@ -689,6 +717,15 @@ public class ObjectDefinitionResourceImpl
 
 		if (objectViews != null) {
 			_objectViewLocalService.deleteObjectViews(objectDefinitionId);
+		}
+
+		if (Validator.isNotNull(rootObjectDefinitionExternalReferenceCode)) {
+			serviceBuilderObjectDefinition =
+				_bindObjectDefinitionToRootObjectDefinition(
+					rootObjectDefinitionExternalReferenceCode,
+					serviceBuilderObjectDefinition);
+
+			statusInt = WorkflowConstants.STATUS_DRAFT;
 		}
 
 		_addObjectDefinitionResources(

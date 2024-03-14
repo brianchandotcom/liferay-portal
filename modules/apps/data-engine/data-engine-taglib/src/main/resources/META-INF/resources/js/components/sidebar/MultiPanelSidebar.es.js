@@ -292,7 +292,8 @@ class ErrorBoundary extends React.Component {
 	render() {
 		if (this.state.hasError) {
 			return null;
-		} else {
+		}
+		else {
 			return this.props.children;
 		}
 	}

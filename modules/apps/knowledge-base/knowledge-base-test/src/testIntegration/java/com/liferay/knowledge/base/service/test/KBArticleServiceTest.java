@@ -91,7 +91,6 @@ public class KBArticleServiceTest {
 			Assert.assertTrue(
 				_kbArticleLocalService.hasKBArticleLock(
 					otherUser.getUserId(), kbArticle.getResourcePrimKey()));
-
 			Assert.assertFalse(
 				_kbArticleLocalService.hasKBArticleLock(
 					_user.getUserId(), kbArticle.getResourcePrimKey()));
@@ -102,7 +101,6 @@ public class KBArticleServiceTest {
 			Assert.assertFalse(
 				_kbArticleLocalService.hasKBArticleLock(
 					otherUser.getUserId(), kbArticle.getResourcePrimKey()));
-
 			Assert.assertTrue(
 				_kbArticleLocalService.hasKBArticleLock(
 					_user.getUserId(), kbArticle.getResourcePrimKey()));

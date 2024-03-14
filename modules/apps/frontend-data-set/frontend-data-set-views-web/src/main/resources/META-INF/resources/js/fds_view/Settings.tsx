@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import {Option, Picker, Text} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
-import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -39,7 +38,6 @@ const Settings = ({
 	const [defaultVisualizationMode, setDefaultVisualizationMode] = useState(
 		NOT_CONFIGURED_VISUALIZATION_MODE.type
 	);
-	const [enableCustomView, setEnableCustomView] = useState(false);
 	const [visualizationModes, setVisualizationModes] = useState<
 		Array<TVisualizationMode>
 	>([]);
@@ -251,46 +249,6 @@ const Settings = ({
 								</DropDown.Group>
 							)}
 						</Picker>
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-			</ClayLayout.SheetSection>
-
-			<ClayLayout.SheetSection className="invisible mt-4">
-				<h3 className="sheet-subtitle">
-					{Liferay.Language.get('user-customization')}
-				</h3>
-
-				<ClayLayout.Row className="align-items-center justify-content-between">
-					<ClayLayout.Col size={10}>
-						<div>
-							<label
-								htmlFor="custom-view-toggle"
-								id="custom-views"
-							>
-								{Liferay.Language.get('enable-custom-views')}
-							</label>
-						</div>
-
-						<div>
-							{Liferay.Language.get(
-								'enable-custom-views-explanation'
-							)}
-						</div>
-					</ClayLayout.Col>
-
-					<ClayLayout.Col
-						className="d-flex justify-content-end"
-						size={2}
-					>
-						<ClayToggle
-							aria-labelledby="custom-view-toggle"
-							id="custom-view-toggle"
-							onKeyDown={(_event) => {
-								setEnableCustomView(!enableCustomView);
-							}}
-							onToggle={setEnableCustomView}
-							toggled={enableCustomView}
-						/>
 					</ClayLayout.Col>
 				</ClayLayout.Row>
 			</ClayLayout.SheetSection>

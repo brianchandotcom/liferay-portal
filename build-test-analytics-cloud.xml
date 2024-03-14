@@ -8,25 +8,59 @@
 			<create-analytics-cloud-docker-compose start.analytics.cloud="false" />
 
 			<if>
-				<equals arg1="${analytics.cloud.service.images.available}" arg2="true" />
+				<available file="${project.dir}/dist/liferay-docker-asah.tar" />
 				<then>
-					<for list="${analytics.cloud.service.image.names}" param="analytics.cloud.service.image.name">
+					<execute>
+						docker load --input ${project.dir}/dist/liferay-docker-asah.tar
+					</execute>
+				</then>
+				<else>
+					<pull-docker-image-dependencies
+						analytics.cloud.image.names.excludes="${analytics.cloud.asah.image.names.excludes}"
+						analytics.cloud.repository.dir="${analytics.cloud.asah.dir}"
+					/>
+
+					<execute dir="${analytics.cloud.asah.dir}">
+						./gradlew jar -Dliferay.ci=true
+
+						./gradlew clean assemble -Dliferay.ci=true
+
+						docker compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} build
+
+						docker images
+					</execute>
+
+					<for list="${analytics.cloud.asah.image.names}" param="analytics.cloud.asah.image.name">
 						<sequential>
-							<local name="analytics.cloud.service.name" />
-
-							<propertyregex
-								input="@{analytics.cloud.service.image.name}"
-								override="true"
-								property="analytics.cloud.service.name"
-								regexp="([^=]+)=([^=]+)"
-								replace="\1"
-							/>
-
-							<execute dir="${project.dir}">
-								docker load --input dist/liferay-docker-${analytics.cloud.service.name}.tar
-							</execute>
+							<if>
+								<not>
+									<matches pattern=".*com-liferay-osb-.*" string="@{analytics.cloud.asah.image.name}" />
+								</not>
+								<then>
+									<execute dir="${project.dir}">
+										docker pull @{analytics.cloud.image.name}
+									</execute>
+								</then>
+							</if>
 						</sequential>
 					</for>
+
+					<antelope:stringutil property="analytics.cloud.asah.image.names.save" string="${analytics.cloud.asah.image.names}">
+						<antelope:replace regex="," replacement=" " />
+					</antelope:stringutil>
+
+					<execute dir="${project.dir}">
+						docker save --output ${project.dir}/dist/liferay-docker-asah.tar ${analytics.cloud.asah.image.names.save}
+					</execute>
+				</else>
+			</if>
+
+			<if>
+				<available file="${project.dir}/dist/liferay-docker-faro.tar" />
+				<then>
+					<execute>
+						docker load --input ${project.dir}/dist/liferay-docker-faro.tar
+					</execute>
 				</then>
 				<else>
 					<download-gradle-wrapper-binary />
@@ -60,68 +94,8 @@
 
 						docker rm ${analytics.cloud.faro.container.name}
 
-						docker save --output ${project.dir}/dist/liferay-docker-${analytics.cloud.faro.service.name}.tar ${analytics.cloud.faro.image.name}
+						docker save --output ${project.dir}/dist/liferay-docker-faro.tar ${analytics.cloud.faro.image.name}
 					</execute>
-
-					<pull-docker-image-dependencies
-						analytics.cloud.image.names.excludes="${analytics.cloud.asah.image.names.excludes}"
-						analytics.cloud.repository.dir="${analytics.cloud.asah.dir}"
-					/>
-
-					<execute dir="${analytics.cloud.asah.dir}">
-						./gradlew jar -Dliferay.ci=true
-
-						./gradlew clean assemble -Dliferay.ci=true
-
-						docker compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} build
-
-						docker images
-					</execute>
-
-					<for list="${analytics.cloud.service.image.names}" param="analytics.cloud.service.image.name">
-						<sequential>
-							<local name="analytics.cloud.image.name" />
-							<local name="analytics.cloud.service.name" />
-
-							<propertyregex
-								input="@{analytics.cloud.service.image.name}"
-								override="true"
-								property="analytics.cloud.image.name"
-								regexp="([^=]+)=([^=]+)"
-								replace="\2"
-							/>
-
-							<propertyregex
-								input="@{analytics.cloud.service.image.name}"
-								override="true"
-								property="analytics.cloud.service.name"
-								regexp="([^=]+)=([^=]+)"
-								replace="\1"
-							/>
-
-							<if>
-								<not>
-									<matches pattern=".*com-liferay-osb-.*" string="${analytics.cloud.image.name}" />
-								</not>
-								<then>
-									<execute dir="${project.dir}">
-										docker pull ${analytics.cloud.image.name}
-									</execute>
-								</then>
-							</if>
-
-							<if>
-								<not>
-									<contains string="${analytics.cloud.service.name}" substring="osbfaro" />
-								</not>
-								<then>
-									<execute dir="${project.dir}">
-										docker save --output ${project.dir}/dist/liferay-docker-${analytics.cloud.service.name}.tar ${analytics.cloud.image.name}
-									</execute>
-								</then>
-							</if>
-						</sequential>
-					</for>
 				</else>
 			</if>
 		</sequential>
@@ -238,6 +212,35 @@
 						}
 
 						return null;
+					}
+
+					public String getAnalyticsCloudAsahImageNames(Map dockerComposeMap) {
+						StringBuilder sb = new StringBuilder();
+
+						Map servicesMap = dockerComposeMap.get("services");
+
+						for (String serviceName : servicesMap.keySet()) {
+							Map serviceMap = servicesMap.get(serviceName);
+
+							if (serviceName.contains("faro")) {
+								continue;
+							}
+
+							String imageName = serviceMap.get("image");
+
+							if (JenkinsResultsParserUtil.isNullOrEmpty(imageName)) {
+								imageName = "com-liferay-osb-asah-private-" + serviceName;
+							}
+
+							sb.append(imageName);
+							sb.append(",");
+						}
+
+						if (sb.length() > 0) {
+							sb.setLength(sb.length() - 1);
+						}
+
+						return sb.toString();
 					}
 
 					public String getAnalyticsCloudServiceImageNames(Map dockerComposeMap) {
@@ -411,6 +414,7 @@
 
 					dumpYamlMap(dockerComposeMap);
 
+					project.setProperty("analytics.cloud.asah.image.names", getAnalyticsCloudAsahImageNames(dockerComposeMap));
 					project.setProperty("analytics.cloud.faro.service.name", getAnalyticsCloudFaroServiceName(dockerComposeMap));
 					project.setProperty("analytics.cloud.service.image.names", getAnalyticsCloudServiceImageNames(dockerComposeMap));
 					project.setProperty("analytics.cloud.service.images.available", String.valueOf(serviceImagesAvailable(dockerComposeMap)));

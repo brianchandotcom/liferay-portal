@@ -7,6 +7,7 @@ package com.liferay.commerce.pricing.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -65,6 +66,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	public CPInstanceCommercePriceEntryDisplayContext(
 		ActionHelper actionHelper,
 		CommercePriceEntryService commercePriceEntryService,
+		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommercePriceListService commercePriceListService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
@@ -72,6 +74,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		super(actionHelper, httpServletRequest);
 
 		_commercePriceEntryService = commercePriceEntryService;
+		_commercePriceFormatter = commercePriceFormatter;
 		_commercePriceListActionHelper = commercePriceListActionHelper;
 		_commercePriceListService = commercePriceListService;
 		_itemSelector = itemSelector;
@@ -303,6 +306,12 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		).buildPortletURL();
 	}
 
+	public String getPrice() throws PortalException {
+		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
+
+		return _commercePriceFormatter.format(commercePriceEntry.getPrice(), cpRequestHelper.getLocale());
+	}
+
 	@Override
 	public String getScreenNavigationCategoryKey() {
 		return "price-lists";
@@ -370,6 +379,9 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	}
 
 	private final CommercePriceEntryService _commercePriceEntryService;
+
+	private final CommercePriceFormatter _commercePriceFormatter;
+
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private final CommercePriceListService _commercePriceListService;
 	private CPInstance _cpInstance;

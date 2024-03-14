@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
@@ -64,7 +65,7 @@ public class EditCPInstanceCommercePriceEntryMVCRenderCommand
 			CPInstanceCommercePriceEntryDisplayContext
 				cpInstanceCommercePriceEntryDisplayContext =
 					new CPInstanceCommercePriceEntryDisplayContext(
-						_actionHelper, _commercePriceEntryService,
+						_actionHelper, _commercePriceEntryService, _commercePriceFormatter,
 						_commercePriceListActionHelper,
 						_commercePriceListService, httpServletRequest,
 						_itemSelector);
@@ -107,6 +108,9 @@ public class EditCPInstanceCommercePriceEntryMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.pricing.web)"

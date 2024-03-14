@@ -36,6 +36,9 @@ public class UploadImageUtil {
 
 		if (StringUtil.startsWith(
 				currentLogoURL,
+				themeDisplay.getPathImage() + "/organization_logo") ||
+			StringUtil.startsWith(
+				currentLogoURL,
 				themeDisplay.getPathImage() + "/user_female_portrait") ||
 			StringUtil.startsWith(
 				currentLogoURL,

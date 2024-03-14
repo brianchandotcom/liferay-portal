@@ -72,6 +72,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 											cssClass="component-action"
 											href="<%= editFragmentCollectionURL %>"
 											icon="plus"
+											title='<%= LanguageUtil.get(request, "add-fragment-set") %>'
 											type="button"
 										/>
 									</c:if>

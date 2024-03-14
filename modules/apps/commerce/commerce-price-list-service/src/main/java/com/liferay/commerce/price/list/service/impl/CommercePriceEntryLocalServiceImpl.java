@@ -10,6 +10,7 @@ import com.liferay.commerce.price.list.exception.CommercePriceEntryDisplayDateEx
 import com.liferay.commerce.price.list.exception.CommercePriceEntryExpirationDateException;
 import com.liferay.commerce.price.list.exception.CommercePriceEntryUnitOfMeasureKeyException;
 import com.liferay.commerce.price.list.exception.CommercePriceListMaxPriceValueException;
+import com.liferay.commerce.price.list.exception.CommercePriceListMinPriceValueException;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -1130,7 +1131,7 @@ public class CommercePriceEntryLocalServiceImpl
 			BigDecimal price, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
 			BigDecimal discountLevel4)
-		throws CommercePriceListMaxPriceValueException {
+		throws PortalException {
 
 		BigDecimal maxValue = BigDecimal.valueOf(
 			GetterUtil.getDouble(CommercePriceConstants.PRICE_VALUE_MAX));
@@ -1146,6 +1147,22 @@ public class CommercePriceEntryLocalServiceImpl
 			 (discountLevel4.compareTo(maxValue) > 0))) {
 
 			throw new CommercePriceListMaxPriceValueException();
+		}
+
+		BigDecimal minValue = BigDecimal.valueOf(
+			GetterUtil.getDouble(CommercePriceConstants.PRICE_VALUE_MIN));
+
+		if (((price != null) && (price.compareTo(minValue) < 0)) ||
+			((discountLevel1 != null) &&
+			 (discountLevel1.compareTo(minValue) < 0)) ||
+			((discountLevel2 != null) &&
+			 (discountLevel2.compareTo(minValue) < 0)) ||
+			((discountLevel3 != null) &&
+			 (discountLevel3.compareTo(minValue) < 0)) ||
+			((discountLevel4 != null) &&
+			 (discountLevel4.compareTo(minValue) < 0))) {
+
+			throw new CommercePriceListMinPriceValueException();
 		}
 	}
 

@@ -29,7 +29,7 @@ public class PostalAddressUtil {
 	public static long[] getAccountEntryContactAddressListTypeIds(
 		long companyId, ListTypeLocalService listTypeLocalService) {
 
-		String[] keys = {
+		String[] names = {
 			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_BILLING,
 			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_OTHER,
 			AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_P_O_BOX,
@@ -37,10 +37,10 @@ public class PostalAddressUtil {
 		};
 
 		return TransformUtil.transformToLongArray(
-			ListUtil.fromArray(keys),
-			key -> {
+			ListUtil.fromArray(names),
+			name -> {
 				ListType listType = listTypeLocalService.getListType(
-					companyId, key,
+					companyId, name,
 					AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS);
 
 				return listType.getListTypeId();

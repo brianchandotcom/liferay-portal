@@ -388,15 +388,6 @@ public class BuildHistory {
 				new ArrayList<Object>() {
 					{
 						add(getName());
-						add("Average Top Level Duration in Queue");
-						addAll(Arrays.asList(_averageTopLevelQueueDurations));
-					}
-				});
-
-			_rows.add(
-				new ArrayList<Object>() {
-					{
-						add(getName());
 						add("Total Server Duration");
 						addAll(Arrays.asList(_totalServerDurations));
 					}

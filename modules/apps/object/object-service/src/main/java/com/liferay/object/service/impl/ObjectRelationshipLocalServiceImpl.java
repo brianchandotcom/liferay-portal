@@ -514,6 +514,33 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
+	public void disableEdge(long objectDefinitionId2) throws PortalException {
+		ObjectDefinition objectDefinition2 =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
+
+		for (ObjectRelationship objectRelationship :
+				getObjectRelationshipsByObjectDefinitionId2(
+					objectDefinitionId2)) {
+
+			if (!objectRelationship.isEdge()) {
+				continue;
+			}
+
+			ObjectDefinition objectDefinition1 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId1());
+
+			if (objectDefinition1.getRootObjectDefinitionId() !=
+					objectDefinition2.getRootObjectDefinitionId()) {
+
+				objectRelationship.setEdge(false);
+
+				objectRelationshipPersistence.update(objectRelationship);
+			}
+		}
+	}
+
+	@Override
 	public ObjectRelationship enableEdge(
 			long objectRelationshipId, boolean edge)
 		throws PortalException {

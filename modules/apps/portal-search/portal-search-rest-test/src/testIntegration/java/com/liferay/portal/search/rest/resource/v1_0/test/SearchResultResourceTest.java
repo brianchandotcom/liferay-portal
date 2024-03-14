@@ -100,7 +100,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		super.setUp();
 
 		_locale = LocaleUtil.getSiteDefault();
-		_ddmStructure = _addJournalArticleDDMStructure();
+
+		_ddmStructure = _addJournalArticleDDMStructure(_locale);
+
 		_searchEngine = _searchEngineHelper.getSearchEngine();
 
 		_user = TestPropsValues.getUser();
@@ -108,10 +110,11 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testGroup, _user.getUserId());
 
-		_assetCategory = _addAssetCategory();
-		_assetTag = _addAssetTag();
+		_assetCategory = _addAssetCategory(_serviceContext, _user);
+		_assetTag = _addAssetTag(_serviceContext, _user);
 
-		_journalArticle = _addJournalArticle(_assetCategory, _assetTag);
+		_journalArticle = _addJournalArticle(
+			_assetCategory, _assetTag, _serviceContext, _user);
 	}
 
 	@Override
@@ -358,49 +361,56 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		Assert.assertEquals(0L, page.getTotalCount());
 	}
 
-	private AssetCategory _addAssetCategory() throws Exception {
+	private AssetCategory _addAssetCategory(
+			ServiceContext serviceContext, User user)
+		throws Exception {
+
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addDefaultVocabulary(
 				testGroup.getGroupId());
 
 		return _assetCategoryLocalService.addCategory(
-			_user.getUserId(), testGroup.getGroupId(),
-			StringUtil.randomString(), assetVocabulary.getVocabularyId(),
-			_serviceContext);
+			user.getUserId(), testGroup.getGroupId(), StringUtil.randomString(),
+			assetVocabulary.getVocabularyId(), serviceContext);
 	}
 
-	private AssetTag _addAssetTag() throws Exception {
+	private AssetTag _addAssetTag(ServiceContext serviceContext, User user)
+		throws Exception {
+
 		return _assetTagLocalService.addTag(
-			_user.getUserId(), testGroup.getGroupId(),
-			StringUtil.randomString(), _serviceContext);
+			user.getUserId(), testGroup.getGroupId(), StringUtil.randomString(),
+			serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(
-			AssetCategory assetCategory, AssetTag assetTag)
+			AssetCategory assetCategory, AssetTag assetTag,
+			ServiceContext serviceContext, User user)
 		throws Exception {
 
 		JournalFolder journalFolder = _journalFolderLocalService.addFolder(
-			null, _user.getUserId(), testGroup.getGroupId(),
+			null, user.getUserId(), testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), StringPool.BLANK, _serviceContext);
+			StringUtil.randomString(), StringPool.BLANK, serviceContext);
 
 		return JournalTestUtil.addArticle(
 			testGroup.getGroupId(), journalFolder.getFolderId(),
 			ServiceContextTestUtil.getServiceContext(
-				testGroup.getGroupId(), _user.getUserId(),
+				testGroup.getGroupId(), user.getUserId(),
 				new long[] {assetCategory.getCategoryId()},
 				new String[] {assetTag.getName()}));
 	}
 
-	private DDMStructure _addJournalArticleDDMStructure() throws Exception {
+	private DDMStructure _addJournalArticleDDMStructure(Locale locale)
+		throws Exception {
+
 		Class<JournalArticle> clazz = JournalArticle.class;
 
 		return DDMStructureTestUtil.addStructure(
 			testGroup.getGroupId(), clazz.getName(),
 			DDMStructureTestUtil.getSampleDDMForm(
 				"name", "string", "keyword", true, "text",
-				new Locale[] {_locale}, _locale),
-			_locale);
+				new Locale[] {locale}, locale),
+			locale);
 	}
 
 	private void _addJournalArticleWithDDMStructure() throws Exception {

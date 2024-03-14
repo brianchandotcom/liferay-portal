@@ -2463,17 +2463,16 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getLayoutActualURL(Layout layout, String mainPath) {
-		Map<String, String> variablesMap = _getVariablesMap(
+		Map<String, String> variables = _getVariables(
 			LayoutLocalServiceUtil.getBrowsableLayout(layout), mainPath);
 
-		variablesMap.putAll(layout.getTypeSettingsProperties());
+		variables.putAll(layout.getTypeSettingsProperties());
 
 		LayoutTypeController layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(
 				layout.getType());
 
-		return LayoutTypeImpl.getURL(
-			layoutTypeController.getURL(), variablesMap);
+		return LayoutTypeImpl.getURL(layoutTypeController.getURL(), variables);
 	}
 
 	@Override
@@ -8018,7 +8017,7 @@ public class PortalImpl implements Portal {
 		return group;
 	}
 
-	private Map<String, String> _getVariablesMap(
+	private Map<String, String> _getVariables(
 		Layout layout, String mainPath) {
 
 		if (layout == null) {

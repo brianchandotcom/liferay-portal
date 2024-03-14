@@ -1,5 +1,4 @@
 import React from 'react';
-import {getPercentage} from 'shared/util/util';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {toRounded} from 'shared/util/numbers';
@@ -12,7 +11,9 @@ export const CurrentUsage = ({
 	limit,
 	percentageText
 }) => {
-	const percentage = toRounded(getPercentage(count, limit));
+	const percentage = toRounded(
+		limit > 0 ? (count / limit >= 1 ? 100 : (count / limit) * 100) : 0
+	);
 
 	return (
 		<>

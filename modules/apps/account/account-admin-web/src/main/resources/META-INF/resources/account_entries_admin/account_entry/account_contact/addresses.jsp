@@ -30,7 +30,7 @@ portletDisplay.setURLBack(backURL);
 
 	<liferay-frontend:edit-form-body>
 		<liferay-util:include page="/common/addresses.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="emptyResultsMessage" value="this-contact-does-not-have-any-addresses" />
+			<liferay-util:param name="emptyResultsMessage" value="this-account-does-not-have-any-addresses" />
 		</liferay-util:include>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

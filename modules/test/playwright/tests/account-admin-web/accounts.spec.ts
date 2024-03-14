@@ -16,6 +16,8 @@ export const test = mergeTests(accountsPagesTest, apiHelpersTest, loginTest());
 test('LPD-18485 Update account contact information fields', async ({
 	accountsPage,
 	apiHelpers,
+	editAccountContactInformationPage,
+	editAccountContactPage,
 	editAccountPage,
 	page,
 }) => {
@@ -31,8 +33,8 @@ test('LPD-18485 Update account contact information fields', async ({
 	try {
 		await (await accountsPage.accountsTableRowLink(account.name)).click();
 		await editAccountPage.contactLink.click();
-		await editAccountPage.contactInformationLink.click();
-		await editAccountPage.updateContactInformation(
+		await editAccountContactPage.contactInformationLink.click();
+		await editAccountContactInformationPage.updateContactInformation(
 			'facebookInput',
 			'jabberInput',
 			'skypeInput',
@@ -43,6 +45,12 @@ test('LPD-18485 Update account contact information fields', async ({
 		await expect(
 			page.getByText('Success:Your request completed successfully.')
 		).toBeVisible();
+
+		await page.reload();
+
+		await expect(
+			editAccountContactInformationPage.facebookInput
+		).toHaveValue('facebookInput');
 	}
 	finally {
 		await apiHelpers.featureFlag.updateFeatureFlag('LPD-10855', false);

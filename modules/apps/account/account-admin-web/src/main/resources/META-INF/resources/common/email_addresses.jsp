@@ -22,13 +22,13 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 	<clay:content-col
 		expand="<%= true %>"
 	>
-		<span class="heading-text"><liferay-ui:message key="additional-email-addresses" /></span>
+		<span class="heading-text"><liferay-ui:message key="email-addresses" /></span>
 	</clay:content-col>
 
 	<clay:content-col>
 		<span class="heading-end">
 			<clay:link
-				aria-label='<%= LanguageUtil.format(request, "add-x", "additional-email-addresses") %>'
+				aria-label='<%= LanguageUtil.format(request, "add-x", "email-addresses") %>'
 				cssClass="add-email-address-link btn btn-secondary btn-sm"
 				displayType="null"
 				href='<%=

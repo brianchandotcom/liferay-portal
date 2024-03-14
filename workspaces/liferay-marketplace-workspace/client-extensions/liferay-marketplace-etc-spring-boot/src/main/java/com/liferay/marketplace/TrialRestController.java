@@ -28,7 +28,6 @@ import org.apache.http.HttpHeaders;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +51,7 @@ public class TrialRestController extends BaseRestController {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"New Trial Request for Order " +
+				"New trial request for order " +
 					jsonObject.getNumber("classPK"));
 		}
 
@@ -96,18 +95,19 @@ public class TrialRestController extends BaseRestController {
 			).toString());
 		customFields.put("trial-virtualhost", portalInstance.getVirtualHost());
 
+		order.setCustomFields(customFields);
+
 		order.setOrderStatus(_COMMERCE_ORDER_STATUS_COMPLETED);
 
 		_orderResource.patchOrder(order.getId(), order);
 	}
 
 	private boolean _checkAccountOrders(String accountId) throws Exception {
-		String filter = "(accountId/any(x:(x eq " + accountId + ")))";
+		int trialCount = 0;
 
 		Page<Order> ordersPage = _orderResource.getOrdersPage(
-			"", filter, Pagination.of(-1, -1), "");
-
-		int trialCount = 0;
+			"", "accountId/any(x:(x eq " + accountId + "))",
+			Pagination.of(-1, -1), "");
 
 		for (Order order : ordersPage.getItems()) {
 			if (Objects.equals(
@@ -126,13 +126,13 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	private void _initResourceBuilders() throws Exception {
+		URL liferayDXPURL = new URL(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+
 		String authorization =
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"liferay-marketplace-etc-spring-boot-oauth-application-" +
 					"headless-server");
-
-		URL liferayDXPURL = new URL(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 
 		_orderResource = OrderResource.builder(
 		).endpoint(
@@ -180,7 +180,7 @@ public class TrialRestController extends BaseRestController {
 			portalInstance);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Portal Instance created " + portalInstance);
+			_log.info("Portal instance created " + portalInstance);
 		}
 
 		return portalInstance;
@@ -197,12 +197,6 @@ public class TrialRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		TrialRestController.class);
-
-	@Value("${liferay.marketplace.dxp.auth.client.id}")
-	private String _dxpAuthClientId;
-
-	@Value("${liferay.marketplace.dxp.auth.client.secret}")
-	private String _dxpAuthClientSecret;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

@@ -3946,9 +3946,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		return TransformUtil.transform(
 			results,
-			columns -> new ChildLayout(
-				GetterUtil.getLong(columns[1]), GetterUtil.getLong(columns[0]),
-				GetterUtil.getString(columns[2])));
+			values -> new ChildLayout(
+				GetterUtil.getLong(values[1]), GetterUtil.getLong(values[0]),
+				GetterUtil.getString(values[2])));
 	}
 
 	private Map<Locale, String> _getDraftFriendlyURLMap(

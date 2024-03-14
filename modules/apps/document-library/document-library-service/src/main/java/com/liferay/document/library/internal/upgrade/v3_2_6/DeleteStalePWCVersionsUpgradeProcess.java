@@ -32,8 +32,8 @@ public class DeleteStalePWCVersionsUpgradeProcess extends UpgradeProcess {
 				resultSet.getLong(1), resultSet.getLong(2),
 				resultSet.getString(3)
 			},
-			columns -> _store.deleteFile(
-				(long)columns[0], (long)columns[1], (String)columns[2],
+			values -> _store.deleteFile(
+				(long)values[0], (long)values[1], (String)values[2],
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION),
 			"Unable to delete PWC version data in the store");
 	}

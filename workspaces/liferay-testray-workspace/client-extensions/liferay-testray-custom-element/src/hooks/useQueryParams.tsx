@@ -181,11 +181,11 @@ const useQueryParams = (customFilterFields: CustomFilterFieldsProps) => {
 
 		setFilterWithOptions(updatedFilterOptions);
 	}, [
-		routeParams,
-		filteredFields,
-		serializedFilter,
 		customFilterFields,
+		filteredFields,
 		filterKeys,
+		routeParams,
+		serializedFilter,
 	]);
 
 	const updateUrlParams = (param: Params) => {

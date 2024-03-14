@@ -138,8 +138,8 @@ public class FaroSubscriptionDisplay {
 		return new Date(_startDate.getTime());
 	}
 
-	public long getUsersCount() {
-		return _usersCount;
+	public long getSyncedIndividualsCount() {
+		return _syncedIndividualsCount;
 	}
 
 	public boolean isActive() {
@@ -184,7 +184,8 @@ public class FaroSubscriptionDisplay {
 		_pageViewsStatus = getStatus(
 			_pageViewsCountSinceLastAnniversary, _pageViewsLimit);
 
-		_usersCount = contactsEngineClient.getUsersCount(faroProject);
+		_syncedIndividualsCount =
+			contactsEngineClient.getSyncedIndividualsCount(faroProject);
 	}
 
 	public static class AddOn {
@@ -321,6 +322,6 @@ public class FaroSubscriptionDisplay {
 	private long _pageViewsLimit;
 	private int _pageViewsStatus;
 	private Date _startDate;
-	private long _usersCount;
+	private long _syncedIndividualsCount;
 
 }

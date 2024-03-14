@@ -187,8 +187,6 @@ public interface Rels {
 
 	public static final String SESSION_VALUES = "session-values";
 
-	public static final String USERS_COUNT = "users-count";
-
 	public static final String WORKSPACE = "workspace";
 
 	public interface Interests {

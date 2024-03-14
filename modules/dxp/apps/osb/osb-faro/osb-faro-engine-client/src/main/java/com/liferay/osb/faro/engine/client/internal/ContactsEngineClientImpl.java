@@ -2315,6 +2315,25 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public long getSyncedIndividualsCount(FaroProject faroProject) {
+		RestTemplate restTemplate = getRestTemplate(faroProject);
+
+		Map<String, Object> uriVariables = getUriVariables(faroProject);
+
+		uriVariables.put("includeSuppressed", true);
+
+		ResponseEntity<Long> responseEntity = restTemplate.exchange(
+			getTemplatedURL(faroProject, Rels.INDIVIDUALS_COUNT),
+			HttpMethod.GET, HttpEntity.EMPTY, Long.class, uriVariables);
+
+		if (responseEntity.getBody() == null) {
+			return 0L;
+		}
+
+		return responseEntity.getBody();
+	}
+
+	@Override
 	public void getToOutputStream(
 			FaroProject faroProject, Map<String, String> headers, String path,
 			Map<String, List<String>> queryParameters,
@@ -2369,21 +2388,6 @@ public class ContactsEngineClientImpl
 			uriVariables);
 
 		return pagedModel.getResults();
-	}
-
-	@Override
-	public long getUsersCount(FaroProject faroProject) {
-		RestTemplate restTemplate = getRestTemplate(faroProject);
-
-		ResponseEntity<Long> responseEntity = restTemplate.exchange(
-			getTemplatedURL(faroProject, Rels.USERS_COUNT), HttpMethod.GET,
-			HttpEntity.EMPTY, Long.class, getUriVariables(faroProject));
-
-		if (responseEntity.getBody() == null) {
-			return 0L;
-		}
-
-		return responseEntity.getBody();
 	}
 
 	@Override

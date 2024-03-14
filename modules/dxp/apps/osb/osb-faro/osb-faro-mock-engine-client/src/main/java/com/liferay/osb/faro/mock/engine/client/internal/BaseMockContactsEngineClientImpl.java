@@ -897,6 +897,11 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
+	public long getSyncedIndividualsCount(FaroProject faroProject) {
+		return contactsEngineClient.getSyncedIndividualsCount(faroProject);
+	}
+
+	@Override
 	public void getToOutputStream(
 			FaroProject faroProject, Map<String, String> headers, String path,
 			Map<String, List<String>> queryParameters,
@@ -914,11 +919,6 @@ public abstract class BaseMockContactsEngineClientImpl
 
 		return contactsEngineClient.getUnassignedIndividualSegments(
 			faroProject, cur, delta, orderByFields);
-	}
-
-	@Override
-	public long getUsersCount(FaroProject faroProject) {
-		return contactsEngineClient.getUsersCount(faroProject);
 	}
 
 	@Override

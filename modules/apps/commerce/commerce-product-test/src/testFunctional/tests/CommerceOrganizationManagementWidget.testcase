@@ -5,7 +5,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-	property testray.main.component.name = "Order Management";
+	property testray.main.component.name = "Users and Organizations";
 
 	setUp {
 		CommerceConfiguration.commerceSetUp(minium = "true");
@@ -270,7 +270,7 @@ definition {
 				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
 
 			AssertElementPresent(
-				key_searchResults = "0 Result for Org 2",
+				key_searchResults = "0 Results for Org 2",
 				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
 		}
 	}
@@ -482,7 +482,7 @@ definition {
 
 			task ("And the message 2 entities found is present") {
 				AssertElementPresent(
-					key_searchResults = "2 Result for Buyer User",
+					key_searchResults = "2 Results for Buyer User",
 					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
 			}
 
@@ -541,7 +541,7 @@ definition {
 
 			task ("And the message 2 entities found is still present") {
 				AssertElementPresent(
-					key_searchResults = "2 Result for Buyer User",
+					key_searchResults = "2 Results for Buyer User",
 					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
 			}
 		}
@@ -632,7 +632,7 @@ definition {
 
 			task ("And the message 2 entities found is present") {
 				AssertElementPresent(
-					key_searchResults = "2 Result for Account A",
+					key_searchResults = "2 Results for Account A",
 					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
 			}
 		}
@@ -1050,7 +1050,7 @@ definition {
 
 		task ("And the message “0 entities found” is present") {
 			AssertElementPresent(
-				key_searchResults = "0 Result for Commerce Account",
+				key_searchResults = "0 Results for Commerce Account",
 				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
 		}
 
@@ -1140,16 +1140,8 @@ definition {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
 		}
 
-		task ("Then even without any entity, the widget is still usable") {
-			AssertElementPresent(
-				key_text = "Collapse All",
-				locator1 = "Button#ANY");
-
-			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#REDUCE_ZOOM_BUTTON");
-
-			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#INCREASE_ZOOM_BUTTON");
-
-			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#EXPAND_BUTTON");
+		task ("Then when no entity is present, an alert message is displayed") {
+			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#ALERT_INFO_MESSAGE");
 		}
 	}
 
@@ -1564,7 +1556,7 @@ definition {
 				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
 
 			AssertElementPresent(
-				key_searchResults = "0 Result for Commerce Account",
+				key_searchResults = "0 Results for Commerce Account",
 				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
 		}
 	}
@@ -1657,7 +1649,7 @@ definition {
 				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
 
 			AssertElementPresent(
-				key_searchResults = "0 Result for New User",
+				key_searchResults = "0 Results for New User",
 				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
 		}
 

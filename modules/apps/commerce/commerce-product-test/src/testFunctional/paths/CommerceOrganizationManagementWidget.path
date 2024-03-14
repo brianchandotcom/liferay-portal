@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALERT_INFO_MESSAGE</td>
+	<td>//*[contains(@class, 'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REDUCE_ZOOM_BUTTON</td>
 	<td>//div[contains(@class,'org-chart-container')]//*[*[name()='svg'][contains(@class,'icon-hr')]]</td>
 	<td></td>
@@ -92,7 +97,7 @@
 </tr>
 <tr>
 	<td>CHART_SEARCH_RESULTS</td>
-	<td>//div[contains(@class,'org-chart-result-helper') and contains (.,'${key_searchResults}')]</td>
+	<td>//div[contains(@class,'tbar-section')]//span[contains(@class,'component-text')]//span[contains(@class, 'text-truncate') and contains (.,'${key_searchResults}')]</td>
 	<td></td>
 </tr>
 <tr>

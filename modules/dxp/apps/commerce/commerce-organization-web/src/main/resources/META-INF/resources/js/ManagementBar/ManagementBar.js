@@ -52,9 +52,6 @@ function ManagementBar({onSearchSelected}) {
 										: ''
 								}
 								inputName="search"
-								inputPlaceholder={Liferay.Language.get(
-									'search'
-								)}
 								itemsKey="id"
 								itemsLabel="name"
 								onValueUpdated={(

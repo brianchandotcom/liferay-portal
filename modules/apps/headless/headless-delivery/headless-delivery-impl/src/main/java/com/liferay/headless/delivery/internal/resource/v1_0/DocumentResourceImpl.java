@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -694,14 +693,11 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
 		try {
-			SiteConnectedGroupGroupProvider siteConnectedGroupGroupProvider =
-				_siteConnectedGroupGroupProviderSnapshot.get();
-
-			if (siteConnectedGroupGroupProvider == null) {
+			if (_siteConnectedGroupGroupProvider == null) {
 				return _portal.getAncestorSiteGroupIds(groupId);
 			}
 
-			return siteConnectedGroupGroupProvider.
+			return _siteConnectedGroupGroupProvider.
 				getAncestorSiteAndDepotGroupIds(groupId, true);
 		}
 		catch (PortalException portalException) {
@@ -1014,11 +1010,6 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentResourceImpl.class);
 
-	private static final Snapshot<SiteConnectedGroupGroupProvider>
-		_siteConnectedGroupGroupProviderSnapshot = new Snapshot<>(
-			DocumentResourceImpl.class, SiteConnectedGroupGroupProvider.class,
-			null, true);
-
 	@Reference
 	private Aggregations _aggregations;
 
@@ -1098,6 +1089,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 	@Reference
 	private Sorts _sorts;

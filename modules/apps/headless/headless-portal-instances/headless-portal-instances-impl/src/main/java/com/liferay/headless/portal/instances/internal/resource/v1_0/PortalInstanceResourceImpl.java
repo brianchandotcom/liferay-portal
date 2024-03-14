@@ -123,17 +123,23 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
 					company.getMx());
 
+			ScreenNameGenerator screenNameGenerator =
+				ScreenNameGeneratorFactory.getInstance();
+
+			String screenName = screenNameGenerator.generate(
+				company.getCompanyId(), defaultAdminUser.getUserId(),
+				admin.getEmailAddress());
+
+			defaultAdminUser = _userLocalService.getUserByEmailAddress(
+				company.getCompanyId(),
+				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
+					company.getMx());
+
 			defaultAdminUser.setEmailAddress(admin.getEmailAddress());
 			defaultAdminUser.setFirstName(admin.getGivenName());
 			defaultAdminUser.setLastName(admin.getFamilyName());
 
-			ScreenNameGenerator screenNameGenerator =
-				ScreenNameGeneratorFactory.getInstance();
-
-			defaultAdminUser.setScreenName(
-				screenNameGenerator.generate(
-					company.getCompanyId(), defaultAdminUser.getUserId(),
-					admin.getEmailAddress()));
+			defaultAdminUser.setScreenName(screenName);
 
 			_userLocalService.updateUser(defaultAdminUser);
 		}

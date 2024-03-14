@@ -1,0 +1,15 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-clarity-workflow-batch:
+    name: Liferay Clarity Workflow Batch
+    oAuthApplicationHeadlessServer: liferay-clarity-workflow-batch-oauth-application-headless-server
+    type: batch
+liferay-clarity-workflow-batch-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Clarity Workflow Batch OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Batch.Engine.everything
+    type: oAuthApplicationHeadlessServer

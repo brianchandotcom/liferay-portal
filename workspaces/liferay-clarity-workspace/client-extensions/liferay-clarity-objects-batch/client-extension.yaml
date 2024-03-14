@@ -1,0 +1,15 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-clarity-objects-batch:
+    name: Liferay Clarity Objects Batch
+    oAuthApplicationHeadlessServer: liferay-clarity-objects-batch-oauth-application-headless-server
+    type: batch
+liferay-clarity-objects-batch-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Clarity Objects Batch OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

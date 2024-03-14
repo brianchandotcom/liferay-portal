@@ -16,11 +16,11 @@
 				"#child-nodes": [
 					{
 						"#tag-name": "name",
-						"#value": "D4B8 Hybrid Approver"
+						"#value": "Distribution Manager Approval"
 					},
 					{
 						"#tag-name": "description",
-						"#value": "An automated approval process that requires human review when specified."
+						"#value": "An automated approval process that requires manager review when specified."
 					},
 					{
 						"#tag-name": "version",
@@ -357,7 +357,7 @@
 											},
 											{
 												"#tag-name": "script-language",
-												"#value": "function#liferay-clarity-etc-spring-boot-workflow-action-application"
+												"#value": "function#clarity-spring-boot-workflow-action-application"
 											},
 											{
 												"#tag-name": "priority",
@@ -664,8 +664,8 @@
 				"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
 				"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 			},
-			"description": "An automated approval process that requires human review when specified.",
-			"name": "D4B8 Hybrid Approver",
+			"description": "An automated approval process that requires manager review when specified.",
+			"name": "Distribution Manager Approval",
 			"nodes": [
 				{
 					"label": "Approved",
@@ -693,9 +693,9 @@
 					"type": "TASK"
 				}
 			],
-			"title": "D4B8 Hybrid Approver",
+			"title": "Distribution Manager Approval",
 			"title_i18n": {
-				"en_US": "D4B8 Hybrid Approver"
+				"en_US": "Distribution Manager Approval"
 			},
 			"transitions": [
 				{

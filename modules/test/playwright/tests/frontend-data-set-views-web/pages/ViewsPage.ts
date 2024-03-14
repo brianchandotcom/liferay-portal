@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {DEFAULT_LABEL} from '../utils/constants';
 import {DataSetsPage} from './DataSetsPage';
@@ -19,6 +19,7 @@ export class ViewsPage {
 		saveButton: Locator;
 	};
 	readonly page: Page;
+	private readonly pageContainer: Locator;
 
 	constructor(page: Page) {
 		this.dataSetsPage = new DataSetsPage(page);
@@ -31,6 +32,7 @@ export class ViewsPage {
 			saveButton: page.getByRole('button', {name: 'Save'}),
 		};
 		this.page = page;
+		this.pageContainer = page.locator('.fds-views');
 	}
 
 	async createDataSetView({
@@ -53,7 +55,10 @@ export class ViewsPage {
 
 	async goto(dataSetLabel: string = DEFAULT_LABEL.DATA_SET) {
 		await this.dataSetsPage.goto();
-		await this.dataSetsPage.gotoDataSet(dataSetLabel);
+
+		await this.dataSetsPage.openDataSet(dataSetLabel);
+
+		await expect(this.pageContainer).toBeInViewport();
 	}
 
 	async openDataSetView(viewLabel: string = DEFAULT_LABEL.VIEW) {

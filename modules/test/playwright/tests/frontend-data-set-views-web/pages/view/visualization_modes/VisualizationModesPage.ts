@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ViewPage} from '../ViewPage';
 
@@ -76,6 +76,31 @@ export class VisualizationModesPage {
 			.waitFor();
 	}
 
+	async openChangeFieldModal({
+		container,
+		sectionLabel,
+	}: {
+		container: Locator;
+		sectionLabel: string;
+	}) {
+		await container
+			.locator('tr')
+			.filter({has: this.page.getByText(sectionLabel)})
+			.getByTitle(`View ${sectionLabel} Options`)
+			.click();
+
+		const changeAssignmentButton = this.page.getByRole('menuitem', {
+			name: 'Change Assignment',
+		});
+
+		await changeAssignmentButton.waitFor();
+		await changeAssignmentButton.click();
+
+		await this.fieldSelectModalContainer
+			.getByPlaceholder('Search')
+			.waitFor();
+	}
+
 	async selectTab(tabLabel: string) {
 		const tab = this.container.getByRole('tab', {
 			exact: true,
@@ -96,9 +121,9 @@ export class VisualizationModesPage {
 			})
 			.click();
 
-		await this.fieldSelectModalContainer.isHidden();
+		await expect(this.fieldSelectModalContainer).not.toBeInViewport();
 
-		await this.toastContainer.isVisible();
+		await expect(this.toastContainer).toBeInViewport();
 
 		await this.page.getByText('Success').waitFor();
 
@@ -108,6 +133,6 @@ export class VisualizationModesPage {
 			})
 			.click();
 
-		await this.toastContainer.isHidden();
+		await expect(this.toastContainer).toBeHidden();
 	}
 }

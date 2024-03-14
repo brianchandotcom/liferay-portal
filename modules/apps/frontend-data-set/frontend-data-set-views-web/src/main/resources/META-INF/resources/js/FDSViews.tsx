@@ -316,40 +316,42 @@ const FDSViews = ({
 	];
 
 	return (
-		<FrontendDataSet
-			{...FDS_DEFAULT_PROPS}
-			apiURL={`${API_URL.FDS_VIEWS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
-			creationMenu={creationMenu}
-			emptyState={{
-				description: Liferay.Language.get(
-					'start-creating-one-to-show-your-data'
-				),
-				image: '/states/empty_state.gif',
-				title: Liferay.Language.get('no-views-created'),
-			}}
-			header={{
-				title: Liferay.Language.get('views'),
-			}}
-			id={`${namespace}FDSViews`}
-			itemsActions={[
-				{
-					icon: 'pencil',
-					label: Liferay.Language.get('edit'),
-					onClick: onEditClick,
-				},
-				{
-					separator: true,
-					type: 'group',
-				},
-				{
-					icon: 'trash',
-					label: Liferay.Language.get('delete'),
-					onClick: onDeleteClick,
-				},
-			]}
-			sorts={[{direction: 'desc', key: 'dateModified'}]}
-			views={views}
-		/>
+		<div className="fds-views">
+			<FrontendDataSet
+				{...FDS_DEFAULT_PROPS}
+				apiURL={`${API_URL.FDS_VIEWS}/?filter=(${OBJECT_RELATIONSHIP.FDS_ENTRY_FDS_VIEW_ID} eq '${fdsEntryId}')`}
+				creationMenu={creationMenu}
+				emptyState={{
+					description: Liferay.Language.get(
+						'start-creating-one-to-show-your-data'
+					),
+					image: '/states/empty_state.gif',
+					title: Liferay.Language.get('no-views-created'),
+				}}
+				header={{
+					title: Liferay.Language.get('views'),
+				}}
+				id={`${namespace}FDSViews`}
+				itemsActions={[
+					{
+						icon: 'pencil',
+						label: Liferay.Language.get('edit'),
+						onClick: onEditClick,
+					},
+					{
+						separator: true,
+						type: 'group',
+					},
+					{
+						icon: 'trash',
+						label: Liferay.Language.get('delete'),
+						onClick: onDeleteClick,
+					},
+				]}
+				sorts={[{direction: 'desc', key: 'dateModified'}]}
+				views={views}
+			/>
+		</div>
 	);
 };
 

@@ -6,9 +6,9 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
-import {DEFAULT_LABEL} from './utils/constants';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -16,161 +16,222 @@ export const test = mergeTests(
 	loginTest()
 );
 
+let dataSetERC: string;
+let viewERC: string;
+
+const dataSetLabel: string = getRandomString();
+const viewLabel: string = getRandomString();
+
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
-	await dataSetManagerApiHelpers.createDataSet({});
-	await dataSetManagerApiHelpers.createDataSetView({});
-});
+	dataSetERC = getRandomString();
 
-test('Assign field to a cards section @LPD-10735', async ({
-	visualizationModesPage,
-}) => {
-	await test.step('Navigate to cards visualization mode', async () => {
-		await visualizationModesPage.goto({
-			dataSetLabel: DEFAULT_LABEL.DATA_SET,
-			viewLabel: DEFAULT_LABEL.VIEW,
-		});
-
-		await visualizationModesPage.selectTab('Cards');
-
-		await visualizationModesPage.page
-			.getByText('Cards Element', {exact: true})
-			.isVisible();
+	await dataSetManagerApiHelpers.createDataSet({
+		erc: dataSetERC,
+		label: dataSetLabel,
 	});
-
-	await test.step('Assign a field to title section', async () => {
-		const fieldName = 'name';
-		const sectionLabel = 'Title';
-
-		const container =
-			visualizationModesPage.cardsVisualizationModeContainer;
-
-		await visualizationModesPage.openAssignFieldModal({
-			container,
-			sectionLabel,
-		});
-
-		await visualizationModesPage.fieldSelectModalContainer
-			.getByLabel(fieldName)
-			.click();
-
-		await visualizationModesPage.saveFieldSelection();
-
-		const assignedFieldLocator =
-			await visualizationModesPage.getAssignedFieldLocator({
-				container,
-				sectionLabel,
-			});
-
-		expect(assignedFieldLocator).toHaveText(fieldName);
-	});
-
-	await test.step('Edit field to title section', async () => {
-		const newFieldName = 'rendererType';
-		const oldFieldName = 'name';
-		const sectionLabel = 'Title';
-
-		const container =
-			visualizationModesPage.cardsVisualizationModeContainer;
-
-		await visualizationModesPage.openAssignFieldModal({
-			container,
-			sectionLabel,
-		});
-
-		expect(
-			visualizationModesPage.page.getByLabel(oldFieldName)
-		).toBeChecked();
-
-		await visualizationModesPage.fieldSelectModalContainer
-			.getByLabel(newFieldName)
-			.click();
-
-		await visualizationModesPage.saveFieldSelection();
-
-		const assignedFieldLocator =
-			await visualizationModesPage.getAssignedFieldLocator({
-				container,
-				sectionLabel,
-			});
-
-		expect(assignedFieldLocator).toHaveText(newFieldName);
-	});
-});
-
-test('Assign field to a list section @LPD-10735', async ({
-	visualizationModesPage,
-}) => {
-	await test.step('Navigate to list visualization mode', async () => {
-		await visualizationModesPage.goto({
-			dataSetLabel: DEFAULT_LABEL.DATA_SET,
-			viewLabel: DEFAULT_LABEL.VIEW,
-		});
-
-		await visualizationModesPage.selectTab('List');
-
-		await visualizationModesPage.page
-			.getByText('List Element', {exact: true})
-			.isVisible();
-	});
-
-	await test.step('Assign a field to title section', async () => {
-		const fieldName = 'name';
-		const sectionLabel = 'Title';
-
-		const container = visualizationModesPage.listVisualizationModeContainer;
-
-		await visualizationModesPage.openAssignFieldModal({
-			container,
-			sectionLabel,
-		});
-
-		await visualizationModesPage.fieldSelectModalContainer
-			.getByLabel(fieldName)
-			.click();
-
-		await visualizationModesPage.saveFieldSelection();
-
-		const assignedFieldLocator =
-			await visualizationModesPage.getAssignedFieldLocator({
-				container,
-				sectionLabel,
-			});
-
-		expect(assignedFieldLocator).toHaveText(fieldName);
-	});
-
-	await test.step('Edit field to title section', async () => {
-		const newFieldName = 'rendererType';
-		const oldFieldName = 'name';
-		const sectionLabel = 'Title';
-
-		const container = visualizationModesPage.listVisualizationModeContainer;
-
-		await visualizationModesPage.openAssignFieldModal({
-			container,
-			sectionLabel,
-		});
-
-		expect(
-			visualizationModesPage.page.getByLabel(oldFieldName)
-		).toBeChecked();
-
-		await visualizationModesPage.fieldSelectModalContainer
-			.getByLabel(newFieldName)
-			.click();
-
-		await visualizationModesPage.saveFieldSelection();
-
-		const assignedFieldLocator =
-			await visualizationModesPage.getAssignedFieldLocator({
-				container,
-				sectionLabel,
-			});
-
-		expect(assignedFieldLocator).toHaveText(newFieldName);
+	await dataSetManagerApiHelpers.createDataSetView({
+		erc: viewERC,
+		label: viewLabel,
+		r_fdsEntryFDSViewRelationship_c_fdsEntryERC: dataSetERC,
 	});
 });
 
 test.afterEach(async ({dataSetManagerApiHelpers}) => {
-	await dataSetManagerApiHelpers.deleteDataSet({});
+	await dataSetManagerApiHelpers.deleteDataSet({
+		erc: dataSetERC,
+	});
+});
+
+test('Configure cards visualization mode @LPD-10735', async ({
+	visualizationModesPage,
+}) => {
+	await test.step('Navigate to cards visualization mode page', async () => {
+		await visualizationModesPage.goto({
+			dataSetLabel,
+			viewLabel,
+		});
+
+		await visualizationModesPage.selectTab('Cards');
+
+		await expect(
+			visualizationModesPage.cardsVisualizationModeContainer
+		).toBeVisible();
+	});
+
+	await test.step('Check if cards sections are correct', async () => {
+		await expect(
+			visualizationModesPage.cardsVisualizationModeContainer.locator(
+				'.cards-section-label'
+			)
+		).toHaveText([
+			'Card Element',
+			'Title',
+			'Description',
+			'Image',
+			'Symbol',
+		]);
+	});
+
+	await test.step('Assign a field to title section', async () => {
+		const fieldName = 'name';
+		const sectionLabel = 'Title';
+
+		const container =
+			visualizationModesPage.cardsVisualizationModeContainer;
+
+		await visualizationModesPage.openAssignFieldModal({
+			container,
+			sectionLabel,
+		});
+
+		await visualizationModesPage.fieldSelectModalContainer
+			.getByLabel(fieldName)
+			.click();
+
+		await expect(
+			visualizationModesPage.page.getByLabel(fieldName)
+		).toBeChecked();
+
+		await visualizationModesPage.saveFieldSelection();
+
+		const assignedFieldLocator =
+			await visualizationModesPage.getAssignedFieldLocator({
+				container,
+				sectionLabel,
+			});
+
+		expect(assignedFieldLocator).toHaveText(fieldName);
+	});
+
+	await test.step('Edit field to title section', async () => {
+		const newFieldName = 'rendererType';
+		const oldFieldName = 'name';
+		const sectionLabel = 'Title';
+
+		const container =
+			visualizationModesPage.cardsVisualizationModeContainer;
+
+		await visualizationModesPage.openAssignFieldModal({
+			container,
+			sectionLabel,
+		});
+
+		await expect(
+			visualizationModesPage.page.getByLabel(oldFieldName)
+		).toBeChecked();
+
+		await visualizationModesPage.fieldSelectModalContainer
+			.getByLabel(newFieldName)
+			.click();
+
+		await expect(
+			visualizationModesPage.page.getByLabel(newFieldName)
+		).toBeChecked();
+
+		await visualizationModesPage.saveFieldSelection();
+
+		const assignedFieldLocator =
+			await visualizationModesPage.getAssignedFieldLocator({
+				container,
+				sectionLabel,
+			});
+
+		expect(assignedFieldLocator).toHaveText(newFieldName);
+	});
+});
+
+test('Configure list visualization mode @LPD-10735', async ({
+	visualizationModesPage,
+}) => {
+	await test.step('Navigate to list visualization mode page', async () => {
+		await visualizationModesPage.goto({
+			dataSetLabel,
+			viewLabel,
+		});
+
+		await visualizationModesPage.selectTab('List');
+
+		await expect(
+			visualizationModesPage.listVisualizationModeContainer
+		).toBeVisible();
+	});
+
+	await test.step('Check if list sections are correct', async () => {
+		await expect(
+			visualizationModesPage.listVisualizationModeContainer.locator(
+				'.list-section-label'
+			)
+		).toHaveText([
+			'List Element',
+			'Title',
+			'Description',
+			'Image',
+			'Symbol',
+		]);
+	});
+
+	await test.step('Assign a field to title section', async () => {
+		const fieldName = 'name';
+		const sectionLabel = 'Title';
+
+		const container = visualizationModesPage.listVisualizationModeContainer;
+
+		await visualizationModesPage.openAssignFieldModal({
+			container,
+			sectionLabel,
+		});
+
+		await visualizationModesPage.fieldSelectModalContainer
+			.getByLabel(fieldName)
+			.click();
+
+		await expect(
+			visualizationModesPage.page.getByLabel(fieldName)
+		).toBeChecked();
+
+		await visualizationModesPage.saveFieldSelection();
+
+		const assignedFieldLocator =
+			await visualizationModesPage.getAssignedFieldLocator({
+				container,
+				sectionLabel,
+			});
+
+		expect(assignedFieldLocator).toHaveText(fieldName);
+	});
+
+	await test.step('Edit field to title section', async () => {
+		const newFieldName = 'rendererType';
+		const oldFieldName = 'name';
+		const sectionLabel = 'Title';
+
+		const container = visualizationModesPage.listVisualizationModeContainer;
+
+		await visualizationModesPage.openChangeFieldModal({
+			container,
+			sectionLabel,
+		});
+
+		await expect(
+			visualizationModesPage.page.getByLabel(oldFieldName)
+		).toBeChecked();
+
+		await visualizationModesPage.fieldSelectModalContainer
+			.getByLabel(newFieldName)
+			.click();
+
+		await expect(
+			visualizationModesPage.page.getByLabel(newFieldName)
+		).toBeChecked();
+
+		await visualizationModesPage.saveFieldSelection();
+
+		const assignedFieldLocator =
+			await visualizationModesPage.getAssignedFieldLocator({
+				container,
+				sectionLabel,
+			});
+
+		expect(assignedFieldLocator).toHaveText(newFieldName);
+	});
 });

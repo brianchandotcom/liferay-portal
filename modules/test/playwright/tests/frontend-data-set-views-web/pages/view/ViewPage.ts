@@ -3,17 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ViewsPage} from '../ViewsPage';
 
 export class ViewPage {
 	readonly page: Page;
+	private readonly pageContainer: Locator;
 	private readonly tabsContainer: Locator;
 	private readonly viewsPage: ViewsPage;
 
 	constructor(page: Page) {
 		this.page = page;
+		this.pageContainer = page.locator('.fds-view');
 		this.tabsContainer = page.locator('nav.navbar');
 		this.viewsPage = new ViewsPage(page);
 	}
@@ -28,6 +30,8 @@ export class ViewPage {
 		await this.viewsPage.goto(dataSetLabel);
 
 		await this.viewsPage.openDataSetView(viewLabel);
+
+		await expect(this.pageContainer).toBeInViewport();
 	}
 
 	async selectTab(tabLabel: string) {

@@ -108,7 +108,7 @@ export class DataSetsPage {
 		await this.pageContainer.waitFor();
 	}
 
-	async gotoDataSet(name = DEFAULT_LABEL.DATA_SET) {
+	async openDataSet(name = DEFAULT_LABEL.DATA_SET) {
 		await this.pageContainer.waitFor();
 
 		await this.pageContainer.getByRole('link', {name}).first().click();

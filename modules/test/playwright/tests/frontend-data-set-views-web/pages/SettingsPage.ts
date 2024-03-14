@@ -20,7 +20,7 @@ export class SettingsPage {
 	constructor(page: Page) {
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.configureNewLayoutButton = page.getByRole('option', {
-			name: 'Configure New Layout',
+			name: 'Go to Visualization Modes',
 		});
 		this.defaultVisualizationModeLabel = page.getByLabel(
 			'Default Visualization Mode',

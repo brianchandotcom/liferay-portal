@@ -69,7 +69,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	async createDataSetViewCardsSection({
 		fieldName = 'name',
 		name = 'Title',
-		r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC = 'sampleDataSetERC',
+		r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
 	}: {
 		fieldName?: string;
 		name?: string;
@@ -89,7 +89,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	async createDataSetViewListSection({
 		fieldName = 'name',
 		name = 'Title',
-		r_fdsViewFDSListSectionRelationship_c_fdsViewERC = 'sampleDataSetERC',
+		r_fdsViewFDSListSectionRelationship_c_fdsViewERC = DEFAULT_DATA_SET_ERC,
 	}: {
 		fieldName?: string;
 		name?: string;

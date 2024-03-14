@@ -2010,6 +2010,19 @@ public class CommerceDiscountLocalServiceImpl
 			throw new CommerceDiscountMaxPriceValueException();
 		}
 
+		BigDecimal minValue = BigDecimal.valueOf(
+			GetterUtil.getDouble(CommercePriceConstants.PRICE_VALUE_MAX));
+
+		if (((maxDiscountAmount != null) &&
+			 (maxDiscountAmount.compareTo(minValue) < 0)) ||
+			((level1 != null) && (level1.compareTo(minValue) < 0)) ||
+			((level2 != null) && (level2.compareTo(minValue) < 0)) ||
+			((level3 != null) && (level3.compareTo(minValue) < 0)) ||
+			((level4 != null) && (level4.compareTo(minValue) < 0))) {
+
+			throw new CommerceDiscountMinPriceValueException();
+		}
+
 		if (commerceDiscountId > 0) {
 			List<CommerceDiscountRule> commerceDiscountRules =
 				_commerceDiscountRuleLocalService.getCommerceDiscountRules(

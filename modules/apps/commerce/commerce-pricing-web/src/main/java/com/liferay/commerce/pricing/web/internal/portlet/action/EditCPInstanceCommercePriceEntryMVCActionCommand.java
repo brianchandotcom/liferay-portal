@@ -6,6 +6,7 @@
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.price.list.exception.CommercePriceListMaxPriceValueException;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
@@ -136,8 +137,14 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (exception instanceof
-						DuplicateCommercePriceEntryException) {
+			else if (
+				exception instanceof
+					CommercePriceListMaxPriceValueException ||
+				exception instanceof
+					CommercePriceListMinPriceValueException ||
+				exception instanceof
+					DuplicateCommercePriceEntryException) {
+
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);

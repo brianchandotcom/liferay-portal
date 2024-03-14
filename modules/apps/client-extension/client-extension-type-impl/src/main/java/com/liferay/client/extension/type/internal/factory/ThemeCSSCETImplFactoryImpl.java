@@ -114,7 +114,7 @@ public class ThemeCSSCETImplFactoryImpl
 				"Invalid Frontend Token Definition JSON: " +
 					frontendTokenDefinitionJSON,
 				"the-format-is-not-valid-please-upload-a-valid-frontend-" +
-					"token-definition-json-file");
+					"token-definition-file");
 		}
 	}
 

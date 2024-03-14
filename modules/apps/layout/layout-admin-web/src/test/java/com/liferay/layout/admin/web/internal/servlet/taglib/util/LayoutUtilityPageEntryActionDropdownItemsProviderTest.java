@@ -8,7 +8,6 @@ package com.liferay.layout.admin.web.internal.servlet.taglib.util;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.web.internal.configuration.LayoutUtilityPageThumbnailConfiguration;
-import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutUtilityPageEntryPermission;
 import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
@@ -18,10 +17,11 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,6 +57,8 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Eudaldo Alonso
@@ -87,7 +90,6 @@ public class LayoutUtilityPageEntryActionDropdownItemsProviderTest {
 
 	@After
 	public void tearDown() {
-		_layoutUtilityPageEntryPermissionMockedStatic.close();
 		_groupPermissionUtilMockedStatic.close();
 		_permissionsURLTagMockedStatic.close();
 		_portletURLBuilderMockedStatic.close();
@@ -228,22 +230,27 @@ public class LayoutUtilityPageEntryActionDropdownItemsProviderTest {
 		);
 	}
 
-	private void _setUpLayoutUtilityPageEntryPermission() {
-		_layoutUtilityPageEntryPermissionMockedStatic.when(
-			() -> LayoutUtilityPageEntryPermission.contains(
-				_themeDisplay.getPermissionChecker(), _layoutUtilityPageEntry,
-				ActionKeys.UPDATE)
+	private void _setUpLayoutUtilityPageEntryPermission() throws Exception {
+		ModelResourcePermission<LayoutUtilityPageEntry>
+			layoutUtilityPageEntryPermission = Mockito.mock(
+				ModelResourcePermission.class);
+
+		Mockito.when(
+			layoutUtilityPageEntryPermission.contains(
+				Mockito.any(PermissionChecker.class),
+				Mockito.any(LayoutUtilityPageEntry.class), Mockito.anyString())
 		).thenReturn(
 			true
 		);
 
-		_layoutUtilityPageEntryPermissionMockedStatic.when(
-			() -> LayoutUtilityPageEntryPermission.contains(
-				_themeDisplay.getPermissionChecker(), _layoutUtilityPageEntry,
-				ActionKeys.DELETE)
-		).thenReturn(
-			true
-		);
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		bundleContext.registerService(
+			ModelResourcePermission.class, layoutUtilityPageEntryPermission,
+			MapUtil.singletonDictionary(
+				"model.class.name",
+				"com.liferay.layout.utility.page.model." +
+					"LayoutUtilityPageEntry"));
 	}
 
 	private void _setUpLayoutUtilityPageThumbnailConfiguration() {
@@ -406,9 +413,6 @@ public class LayoutUtilityPageEntryActionDropdownItemsProviderTest {
 	private final Layout _layout = Mockito.mock(Layout.class);
 	private final LayoutUtilityPageEntry _layoutUtilityPageEntry = Mockito.mock(
 		LayoutUtilityPageEntry.class);
-	private final MockedStatic<LayoutUtilityPageEntryPermission>
-		_layoutUtilityPageEntryPermissionMockedStatic = Mockito.mockStatic(
-			LayoutUtilityPageEntryPermission.class);
 	private final LayoutUtilityPageThumbnailConfiguration
 		_layoutUtilityPageThumbnailConfiguration = Mockito.mock(
 			LayoutUtilityPageThumbnailConfiguration.class);

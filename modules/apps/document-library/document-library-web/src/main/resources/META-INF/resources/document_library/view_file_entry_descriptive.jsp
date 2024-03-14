@@ -10,6 +10,8 @@
 <%
 DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
 
+DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Object result = row.getObject();
@@ -80,6 +82,17 @@ else {
 	>
 		<%= latestFileVersion.getTitle() %>
 	</aui:a>
+
+	<span>
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-16311") && !dlViewEntriesDisplayContext.hasGuestViewPermission(fileEntry) %>'>
+			<clay:icon
+				aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+				cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
+				data-title="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
+				symbol="password-policies"
+			/>
+		</c:if>
+	</span>
 </h2>
 
 <span>

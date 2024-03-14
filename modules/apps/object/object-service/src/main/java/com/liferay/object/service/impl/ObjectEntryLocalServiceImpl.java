@@ -99,7 +99,6 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
-import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -135,6 +134,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -1152,7 +1152,7 @@ public class ObjectEntryLocalServiceImpl
 	public List<Map<String, Serializable>> getValuesList(
 			long groupId, long companyId, long userId, long objectDefinitionId,
 			Predicate predicate, String search, int start, int end,
-			OrderByExpression[] orderByExpressions)
+			Sort[] sorts)
 		throws PortalException {
 
 		DynamicObjectDefinitionLocalizationTable

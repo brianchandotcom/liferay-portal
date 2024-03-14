@@ -233,34 +233,24 @@ public class DBPartitionMigrationValidator {
 			return;
 		}
 
-		boolean toolExecuted = false;
-
 		for (String arg : args) {
 			if (arg.equals("-e") || arg.equals("-export") ||
 				arg.equals("--export")) {
 
 				_executeDataExport(ArrayUtil.remove(args, arg));
-				toolExecuted = true;
 
-				break;
+				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 			}
 			else if (arg.equals("-v") || arg.equals("-validate") ||
 					 arg.equals("--validate")) {
 
 				_executeDataValidation(ArrayUtil.remove(args, arg));
-				toolExecuted = true;
 
-				break;
+				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
 			}
 		}
 
-		if (!toolExecuted) {
-			_printHelp();
-
-			return;
-		}
-
-		_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
+		_printHelp();
 	}
 
 	private static void _printHelp() {

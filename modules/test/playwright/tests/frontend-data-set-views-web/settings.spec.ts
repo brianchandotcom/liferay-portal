@@ -29,11 +29,6 @@ export const test = mergeTests(
 	visualizationModesPageTest
 );
 
-// test.beforeEach(async ({dataSetManagerApiHelpers}) => {
-// 	await dataSetManagerApiHelpers.createDataSet({erc: settingsDataSetERC});
-// 	await dataSetManagerApiHelpers.createDataSetView({erc: settingsDataSetERC});
-// });
-
 test.describe('Data Set Settings', () => {
 	test.describe('Default Visualization Mode', () => {
 		test('If Default Visualization Mode is not configured allows user to navigate to Visualization Mode section', async ({
@@ -236,7 +231,3 @@ test.describe('Data Set Settings', () => {
 		});
 	});
 });
-
-// test.afterEach(async ({dataSetManagerApiHelpers}) => {
-// 	await dataSetManagerApiHelpers.deleteDataSet({erc: settingsDataSetERC});
-// });

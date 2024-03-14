@@ -49,7 +49,7 @@ export type ListViewProps<T = any> = {
 	children?: (response: APIResponse, options: ChildrenOptions) => ReactNode;
 	forceRefetch?: number;
 	managementToolbarProps?: {
-		customFilterFields?: {};
+		customFilterFields?: {[key: string]: string};
 		visible?: boolean;
 	} & Omit<
 		ManagementToolbarProps,

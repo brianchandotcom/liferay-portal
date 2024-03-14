@@ -21,7 +21,7 @@ export type ManagementToolbarProps = {
 	addButton?: () => void;
 	applyFilters?: boolean;
 	buttons?: ReactNode | ((actions: any) => ReactNode);
-	customFilterFields?: {};
+	customFilterFields?: {[key: string]: string};
 	display?: {
 		columns?: boolean;
 	};

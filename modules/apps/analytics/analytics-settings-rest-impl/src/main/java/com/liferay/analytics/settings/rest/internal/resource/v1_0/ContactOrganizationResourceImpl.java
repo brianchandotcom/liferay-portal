@@ -11,10 +11,11 @@ import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.ContactOr
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.ContactOrganizationResource;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.OrganizationConstants;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.comparator.OrganizationNameComparator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -38,33 +39,34 @@ public class ContactOrganizationResourceImpl
 			String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		OrderByComparator<Organization> orderByComparator = null;
+
+		Sort sort = sorts[0];
+
+		if (StringUtil.equals(sort.getFieldName(), "name")) {
+			orderByComparator = new OrganizationNameComparator(
+				!sort.isReverse());
+		}
+
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextCompany.getCompanyId());
 
-		if (sorts == null) {
-			sorts = new Sort[] {new Sort("name", Sort.STRING_TYPE, false)};
-		}
-
-		Sort sort = sorts[0];
-
-		BaseModelSearchResult<Organization> organizationBaseModelSearchResult =
-			_organizationLocalService.searchOrganizations(
-				contextCompany.getCompanyId(),
-				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, keywords,
-				null, pagination.getStartPosition(),
-				pagination.getEndPosition(), sort);
-
 		return Page.of(
 			transform(
-				organizationBaseModelSearchResult.getBaseModels(),
+				_organizationLocalService.getOrganizations(
+					contextCompany.getCompanyId(), keywords,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					orderByComparator),
 				organization -> _contactOrganizationDTOConverter.toDTO(
 					new ContactOrganizationDTOConverterContext(
 						organization.getOrganizationId(),
 						contextAcceptLanguage.getPreferredLocale(),
 						analyticsConfiguration.syncedOrganizationIds()),
 					organization)),
-			pagination, organizationBaseModelSearchResult.getLength());
+			pagination,
+			_organizationLocalService.getOrganizationsCount(
+				contextCompany.getCompanyId(), keywords));
 	}
 
 	@Reference

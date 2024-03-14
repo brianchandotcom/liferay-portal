@@ -13,7 +13,6 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.rest.dto.v1_0.FacetConfiguration;
@@ -739,10 +737,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private DDMStructure _ddmStructure;
-
-	@Inject
-	private DDMStructureLocalService _ddmStructureLocalService;
-
 	private JournalArticle _journalArticle;
 
 	@Inject
@@ -755,10 +749,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private JSONFactory _jsonFactory;
 
 	private Locale _locale;
-
-	@Inject
-	private Portal _portal;
-
 	private SearchEngine _searchEngine;
 
 	@Inject

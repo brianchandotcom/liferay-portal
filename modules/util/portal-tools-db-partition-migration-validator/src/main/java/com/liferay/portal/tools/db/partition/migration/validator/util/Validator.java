@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,10 +7,10 @@ package com.liferay.portal.tools.db.partition.migration.validator.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.db.partition.migration.validator.common.Company;
-import com.liferay.portal.tools.db.partition.migration.validator.common.LiferayInstance;
-import com.liferay.portal.tools.db.partition.migration.validator.common.Release;
+import com.liferay.portal.tools.db.partition.migration.validator.Company;
+import com.liferay.portal.tools.db.partition.migration.validator.LiferayInstance;
 import com.liferay.portal.tools.db.partition.migration.validator.Recorder;
+import com.liferay.portal.tools.db.partition.migration.validator.Release;
 
 import java.util.ArrayList;
 import java.util.HashMap;

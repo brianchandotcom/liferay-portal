@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.tools.db.partition.migration.validator.DBPartitionMigrationValidator;
-import com.liferay.portal.tools.db.partition.migration.validator.common.LiferayInstance;
+import com.liferay.portal.tools.db.partition.migration.validator.LiferayInstance;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
 import com.liferay.portal.util.PropsValues;
 

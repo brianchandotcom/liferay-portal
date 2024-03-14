@@ -6,8 +6,8 @@
 package com.liferay.portal.tools.db.partition.migration.validator.util;
 
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.db.partition.migration.validator.common.Company;
-import com.liferay.portal.tools.db.partition.migration.validator.common.Release;
+import com.liferay.portal.tools.db.partition.migration.validator.Company;
+import com.liferay.portal.tools.db.partition.migration.validator.Release;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

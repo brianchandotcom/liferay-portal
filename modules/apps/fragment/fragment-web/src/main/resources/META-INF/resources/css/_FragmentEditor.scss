@@ -5,12 +5,18 @@
 	&__configuration {
 		margin-top: 24px;
 
-		.CodeMirror-scroll {
-			border: 1px solid $gray-200;
-			border-radius: 3px;
-			margin: 0 0 50px;
-			max-width: 100%;
-			min-height: 344px;
+		.CodeMirror {
+			&-scroll {
+				border: 1px solid $gray-200;
+				border-radius: 3px;
+				margin: 0 0 50px;
+				max-width: 100%;
+				min-height: 344px;
+			}
+
+			&-hscrollbar {
+				overflow-x: hidden;
+			}
 		}
 	}
 

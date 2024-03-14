@@ -10,6 +10,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -397,7 +398,12 @@ public class SugarCRMObjectEntryManagerImpl
 			"modifiedDate", "date_modified"
 		).build();
 
-	@Reference
+    @Reference(
+    target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_SUGARCRM + ")"
+    )
+    private FilterFactory<String> _filterFactory;
+    
+    @Reference
 	private Http _http;
 
 	@Reference

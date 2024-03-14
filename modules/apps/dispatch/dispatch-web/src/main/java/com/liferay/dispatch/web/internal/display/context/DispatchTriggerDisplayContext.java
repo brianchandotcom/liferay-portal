@@ -200,6 +200,12 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		return _searchContainer;
 	}
 
+	public int getTotalItems() {
+		SearchContainer<DispatchTrigger> searchContainer = getSearchContainer();
+
+		return searchContainer.getTotal();
+	}
+
 	public ViewTypeItemList getViewTypeItems() {
 		return new ViewTypeItemList(getPortletURL(), "list") {
 			{

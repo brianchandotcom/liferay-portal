@@ -417,7 +417,7 @@ public class StructuredContentResourceTest
 		_testGetStructuredContentWithDifferentFolder();
 		_testGetStructuredContentWithDifferentLocale();
 		_testGetStructuredContentWithDifferentTimeZone();
-		_testGetStructuredContentWithRoleAdminUser();
+		_testGetStructuredContentWithRoleAdministrator();
 		_testGetStructuredContentWithRoleOwner();
 		_testGetStructuredContentWithRoleRegularUser();
 	}
@@ -1822,7 +1822,9 @@ public class StructuredContentResourceTest
 		}
 	}
 
-	private void _testGetStructuredContentWithRoleAdminUser() throws Exception {
+	private void _testGetStructuredContentWithRoleAdministrator()
+		throws Exception {
+
 		StructuredContent postStructuredContent =
 			testGetStructuredContent_addStructuredContent();
 

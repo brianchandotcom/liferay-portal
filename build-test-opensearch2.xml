@@ -85,16 +85,6 @@ plugins.security.disabled: true</echo>
 					replace=""
 				/>
 
-				<exec dir="${opensearch.dir}/config" executable="/bin/bash" osfamily="unix">
-					<arg value="-c" />
-					<arg value="openssl pkcs12 -certpbe PBE-SHA1-3DES -keypbe PBE-SHA1-3DES -macalg sha1 -export -in esnode.pem -inkey esnode-key.pem -out esnode.p12 -passout pass:liferay" />
-				</exec>
-
-				<exec dir="${opensearch.dir}/config" executable="cmd" osfamily="windows" spawn="true">
-					<arg value="/c" />
-					<arg value="openssl pkcs12 -certpbe PBE-SHA1-3DES -keypbe PBE-SHA1-3DES -macalg sha1 -export -in esnode.pem -inkey esnode-key.pem -out esnode.p12 -passout pass:liferay" />
-				</exec>
-
 				<chmod
 					maxparallel="10"
 					perm="a+rwx"
@@ -108,6 +98,16 @@ plugins.security.disabled: true</echo>
 				<exec dir="${opensearch.dir}/plugins/opensearch-security/tools" executable="/bin/bash">
 					<arg value="-c" />
 					<arg value="printf '%s\n' y y N | ./install_demo_configuration.sh" />
+				</exec>
+
+				<exec dir="${opensearch.dir}/config" executable="/bin/bash" osfamily="unix">
+					<arg value="-c" />
+					<arg value="openssl pkcs12 -certpbe PBE-SHA1-3DES -keypbe PBE-SHA1-3DES -macalg sha1 -export -in esnode.pem -inkey esnode-key.pem -out esnode.p12 -passout pass:liferay" />
+				</exec>
+
+				<exec dir="${opensearch.dir}/config" executable="cmd" osfamily="windows" spawn="true">
+					<arg value="/c" />
+					<arg value="openssl pkcs12 -certpbe PBE-SHA1-3DES -keypbe PBE-SHA1-3DES -macalg sha1 -export -in esnode.pem -inkey esnode-key.pem -out esnode.p12 -passout pass:liferay" />
 				</exec>
 			</then>
 		</if>

@@ -61,8 +61,7 @@ public class VirtualInstanceMigrationToolTest extends BaseDBPartitionTestCase {
 		System.setSecurityManager(new DisallowExitSecurityManager());
 		_company = CompanyTestUtil.addCompany();
 
-		_outputDirectoryFile = new File(
-			PropsValues.LIFERAY_HOME, "extractions");
+		_outputDirectoryFile = new File(PropsValues.LIFERAY_HOME, "exports");
 
 		_outputDirectoryFile.mkdirs();
 	}
@@ -77,15 +76,15 @@ public class VirtualInstanceMigrationToolTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testFailure() throws Exception {
-		String sourceFilePath = _runExtractorTool(_company.getCompanyId());
+		String sourceFilePath = _runExport(_company.getCompanyId());
 
-		String targetFilePath = _runExtractorTool(_defaultCompanyId);
+		String targetFilePath = _runExport(_defaultCompanyId);
 
 		File[] files = _outputDirectoryFile.listFiles();
 
 		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
-		_runValidationTool(
+		_runValidation(
 			() -> {
 			},
 			runtimeException -> {
@@ -116,17 +115,17 @@ public class VirtualInstanceMigrationToolTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testSuccess() throws Exception {
-		String sourceFilePath = _runExtractorTool(_company.getCompanyId());
+		String sourceFilePath = _runExport(_company.getCompanyId());
 
 		_deleteCompany();
 
-		String targetFilePath = _runExtractorTool(_defaultCompanyId);
+		String targetFilePath = _runExport(_defaultCompanyId);
 
 		File[] files = _outputDirectoryFile.listFiles();
 
 		Assert.assertEquals(Arrays.toString(files), 2, files.length);
 
-		_runValidationTool(
+		_runValidation(
 			() -> {
 				Assert.assertTrue(
 					_outByteArrayOutputStream.toString(
@@ -146,7 +145,7 @@ public class VirtualInstanceMigrationToolTest extends BaseDBPartitionTestCase {
 		_company = null;
 	}
 
-	private String _runExtractorTool(long companyId) throws Exception {
+	private String _runExport(long companyId) throws Exception {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
@@ -158,7 +157,7 @@ public class VirtualInstanceMigrationToolTest extends BaseDBPartitionTestCase {
 		}
 	}
 
-	private void _runValidationTool(
+	private void _runValidation(
 			UnsafeRunnable<Exception> afterExecutionValidations,
 			UnsafeConsumer<RuntimeException, Exception> catchValidations,
 			String sourceFile, String targetFile)

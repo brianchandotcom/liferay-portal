@@ -4,7 +4,7 @@
 	<checkstyle>
 		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/util/DatabaseUtil\.java" />
 		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/util/Validator\.java" />
-		<suppress checks="CompanyIterationCheck" files="src/test/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/DBPartitionVirtualInstanceMigrationExtractionTest\.java" />
+		<suppress checks="CompanyIterationCheck" files="src/test/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/DBPartitionVirtualInstanceMigrationExportTest\.java" />
 		<suppress checks="CompanyIterationCheck" files="src/test/java/com/liferay/portal/tools/db/partition/virtual/instance/migration/util/DatabaseMockupUtil\.java" />
 	</checkstyle>
 </suppressions>

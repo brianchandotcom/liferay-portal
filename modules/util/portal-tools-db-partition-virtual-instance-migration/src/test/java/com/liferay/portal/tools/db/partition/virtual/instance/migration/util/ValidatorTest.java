@@ -265,8 +265,8 @@ public class ValidatorTest extends Validator {
 
 	private void _init(LiferayInstance liferayInstance) {
 		liferayInstance.setCompanies(new ArrayList<>());
-		liferayInstance.setExtractedCompanyId(RandomTestUtil.randomLong());
-		liferayInstance.setExtractedCompanyDefault(true);
+		liferayInstance.setExportedCompanyId(RandomTestUtil.randomLong());
+		liferayInstance.setExportedCompanyDefault(true);
 		liferayInstance.setReleases(new ArrayList<>());
 		liferayInstance.setTableNames(new ArrayList<>());
 	}
@@ -279,7 +279,7 @@ public class ValidatorTest extends Validator {
 
 		_sourceLiferayInstance.setCompanies(
 			Collections.singletonList(sourceCompany));
-		_sourceLiferayInstance.setExtractedCompanyId(
+		_sourceLiferayInstance.setExportedCompanyId(
 			sourceCompany.getCompanyId());
 
 		Company targetCompany = new Company(

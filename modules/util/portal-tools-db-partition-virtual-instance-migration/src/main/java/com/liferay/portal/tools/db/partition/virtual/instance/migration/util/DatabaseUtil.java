@@ -29,10 +29,9 @@ public class DatabaseUtil {
 
 		LiferayInstance liferayInstance = new LiferayInstance();
 
-		liferayInstance.setExtractedCompanyId(
-			_getExtractedCompanyId(connection));
+		liferayInstance.setExportedCompanyId(_getExportedCompanyId(connection));
 
-		liferayInstance.setExtractedCompanyDefault(
+		liferayInstance.setExportedCompanyDefault(
 			_isDefaultCompany(connection));
 
 		liferayInstance.setTableNames(_getPartitionedTableNames(connection));
@@ -107,7 +106,7 @@ public class DatabaseUtil {
 		return companyIds;
 	}
 
-	private static Long _getExtractedCompanyId(Connection connection)
+	private static Long _getExportedCompanyId(Connection connection)
 		throws Exception {
 
 		Long companyId = null;

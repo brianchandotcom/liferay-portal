@@ -72,7 +72,7 @@ That's how you link to Liferay Learn resources!
 
 ## Previewing Liferay Learn Resource Links
 
-If you want to test your link, you don't have to recompile your module. From this folder (`learn-resources`), you can run a quick dev server that's configured with only one property/environment variable: 
+If you want to test your link, you don't have to recompile your module. From this folder (`learn-resources`), you can run a quick dev server that's configured with only one portal property/environment variable: 
 
 ```properties
 learn.resources.mode=dev|off|on

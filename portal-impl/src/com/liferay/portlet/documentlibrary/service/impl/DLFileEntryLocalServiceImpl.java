@@ -2063,14 +2063,21 @@ public class DLFileEntryLocalServiceImpl
 
 				dlFileEntry.setVersion(newVersion);
 				dlFileEntry.setDisplayDate(dlFileVersion.getDisplayDate());
+				dlFileEntry.setExpirationDate(
+					dlFileVersion.getExpirationDate());
 
 				dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 			}
 			else if (!Objects.equals(
 						dlFileEntry.getDisplayDate(),
-						dlFileVersion.getDisplayDate())) {
+						dlFileVersion.getDisplayDate()) ||
+					 !Objects.equals(
+						 dlFileEntry.getExpirationDate(),
+						 dlFileVersion.getExpirationDate())) {
 
 				dlFileEntry.setDisplayDate(dlFileVersion.getDisplayDate());
+				dlFileEntry.setExpirationDate(
+					dlFileVersion.getExpirationDate());
 
 				dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 			}

@@ -7,6 +7,8 @@ package com.liferay.portal.upgrade.test.util;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 /**
@@ -24,7 +26,18 @@ public class UpgradeTestUtil {
 
 		upgradeStepRegistrator.register(searchRegistry);
 
-		return searchRegistry.getUpgradeStep();
+		return searchRegistry.getUpgradeSteps()[0];
+	}
+
+	public static UpgradeProcess[] getUpgradeSteps(
+		UpgradeStepRegistrator upgradeStepRegistrator,
+		Version toSchemaVersion) {
+
+		SearchRegistry searchRegistry = new SearchRegistry(toSchemaVersion);
+
+		upgradeStepRegistrator.register(searchRegistry);
+
+		return searchRegistry.getUpgradeSteps();
 	}
 
 	private static class SearchRegistry
@@ -34,8 +47,12 @@ public class UpgradeTestUtil {
 			_upgradeStepClassName = upgradeStepClassName;
 		}
 
-		public UpgradeProcess getUpgradeStep() {
-			return _upgradeStep;
+		public SearchRegistry(Version toSchemaVersion) {
+			_toSchemaVersion = toSchemaVersion;
+		}
+
+		public UpgradeProcess[] getUpgradeSteps() {
+			return _upgradeSteps;
 		}
 
 		@Override
@@ -44,18 +61,32 @@ public class UpgradeTestUtil {
 			UpgradeStep... upgradeSteps) {
 
 			for (UpgradeStep upgradeStep : upgradeSteps) {
-				Class<?> clazz = upgradeStep.getClass();
+				if (_upgradeStepClassName != null) {
+					Class<?> clazz = upgradeStep.getClass();
 
-				String className = clazz.getName();
+					String className = clazz.getName();
 
-				if (className.contains(_upgradeStepClassName)) {
-					_upgradeStep = (UpgradeProcess)upgradeStep;
+					if (className.contains(_upgradeStepClassName)) {
+						_upgradeSteps = ArrayUtil.append(
+							_upgradeSteps, (UpgradeProcess)upgradeStep);
+
+						break;
+					}
+				}
+				else {
+					if (toSchemaVersionString.equals(
+							_toSchemaVersion.toString())) {
+
+						_upgradeSteps = ArrayUtil.append(
+							_upgradeSteps, (UpgradeProcess)upgradeStep);
+					}
 				}
 			}
 		}
 
-		private UpgradeProcess _upgradeStep;
-		private final String _upgradeStepClassName;
+		private Version _toSchemaVersion;
+		private String _upgradeStepClassName;
+		private UpgradeProcess[] _upgradeSteps = new UpgradeProcess[0];
 
 	}
 

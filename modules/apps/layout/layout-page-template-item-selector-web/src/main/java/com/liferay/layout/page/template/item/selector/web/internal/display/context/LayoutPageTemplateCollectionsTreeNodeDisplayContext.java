@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.List;
 
@@ -76,13 +77,14 @@ public class LayoutPageTemplateCollectionsTreeNodeDisplayContext {
 				).put(
 					"disabled",
 					() -> {
-						long selectedLayoutPageTemplateCollectionId =
+						long[] selectedLayoutPageTemplateCollectionIds =
 							_layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
-								getLayoutPageTemplateCollectionId();
+								getLayoutPageTemplateCollectionIds();
 
-						if (selectedLayoutPageTemplateCollectionId ==
+						if (ArrayUtil.contains(
+								selectedLayoutPageTemplateCollectionIds,
 								layoutPageTemplateCollection.
-									getLayoutPageTemplateCollectionId()) {
+									getLayoutPageTemplateCollectionId())) {
 
 							return true;
 						}

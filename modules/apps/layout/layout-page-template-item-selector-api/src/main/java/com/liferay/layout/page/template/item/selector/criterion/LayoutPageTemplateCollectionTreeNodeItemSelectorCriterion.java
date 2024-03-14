@@ -13,16 +13,16 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 public class LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 
-	public long getLayoutPageTemplateCollectionId() {
-		return _layoutPageTemplateCollectionId;
+	public long[] getLayoutPageTemplateCollectionIds() {
+		return _layoutPageTemplateCollectionIds;
 	}
 
-	public void setLayoutPageTemplateCollectionId(
-		long layoutPageTemplateCollectionId) {
+	public void setLayoutPageTemplateCollectionIds(
+		long[] layoutPageTemplateCollectionIds) {
 
-		_layoutPageTemplateCollectionId = layoutPageTemplateCollectionId;
+		_layoutPageTemplateCollectionIds = layoutPageTemplateCollectionIds;
 	}
 
-	private long _layoutPageTemplateCollectionId;
+	private long[] _layoutPageTemplateCollectionIds;
 
 }

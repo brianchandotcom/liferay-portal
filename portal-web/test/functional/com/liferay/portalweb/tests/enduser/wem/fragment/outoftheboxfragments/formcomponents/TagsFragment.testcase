@@ -560,12 +560,23 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = "Test Name");
 
-			AssetCategorization.selectTag(
-				skipSelectFrame = "true",
-				tagNameList = "${tagName1},${tagName2},local tag");
+			Click(
+				key_fieldLabel = "Tags",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
 		}
 
 		task ("Then both site and global tags are shown") {
+			IFrame.selectTagFrame();
+
+			AssertElementPresent(
+				key_rowEntry = "local tag",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+
+			SelectFrameTop();
+
+			Click(locator1 = "Modal#CLOSE_BUTTON");
+
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
 				tagNameList = "${tagName1},${tagName2},local tag");

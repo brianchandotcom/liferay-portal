@@ -9,8 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.db.partition.migration.validator.common.Company;
-import com.liferay.portal.tools.db.partition.migration.validator.common.Release;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseMockupUtil;
 
 import java.io.BufferedReader;
@@ -89,8 +87,8 @@ public class DBPartitionMigrationValidatorExportTest
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private void _assertFileContent(
-			List<Company> companies, List<Long> companyInfoIds, String content,
-			boolean defaultPartition, List<Release> releases) {
+		List<Company> companies, List<Long> companyInfoIds, String content,
+		boolean defaultPartition, List<Release> releases) {
 
 		content = content.replaceAll("\n", "");
 		content = content.replaceAll("\r", "");

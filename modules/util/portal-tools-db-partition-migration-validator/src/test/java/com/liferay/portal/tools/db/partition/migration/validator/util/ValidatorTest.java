@@ -8,10 +8,10 @@ package com.liferay.portal.tools.db.partition.migration.validator.util;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.db.partition.migration.validator.common.Company;
-import com.liferay.portal.tools.db.partition.migration.validator.common.LiferayInstance;
-import com.liferay.portal.tools.db.partition.migration.validator.common.Release;
+import com.liferay.portal.tools.db.partition.migration.validator.Company;
+import com.liferay.portal.tools.db.partition.migration.validator.LiferayInstance;
 import com.liferay.portal.tools.db.partition.migration.validator.Recorder;
+import com.liferay.portal.tools.db.partition.migration.validator.Release;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

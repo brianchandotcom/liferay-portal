@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.db.partition.migration.validator.common.LiferayInstance;
 import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseUtil;
 import com.liferay.portal.tools.db.partition.migration.validator.util.Validator;
 import com.liferay.portal.tools.db.partition.migration.validator.util.VersionDeserializer;

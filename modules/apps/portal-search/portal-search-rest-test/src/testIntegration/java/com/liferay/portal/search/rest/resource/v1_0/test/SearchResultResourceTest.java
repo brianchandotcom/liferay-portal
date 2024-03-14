@@ -112,8 +112,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		_assetTag = _addAssetTag();
 
 		_journalArticle = _addJournalArticle(_assetCategory, _assetTag);
-
-		_addJournalArticleWithDDMStructure(_ddmStructure);
 	}
 
 	@Override
@@ -265,6 +263,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testPostSearchPageWithNestedFacetConfiguration()
 		throws Exception {
 
+		_addJournalArticleWithDDMStructure();
+
 		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
 			return;
 		}
@@ -403,11 +403,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			_locale);
 	}
 
-	private JournalArticle _addJournalArticleWithDDMStructure(
-			DDMStructure ddmStructure)
-		throws Exception {
-
-		return _journalArticleLocalService.addArticle(
+	private void _addJournalArticleWithDDMStructure() throws Exception {
+		_journalArticleLocalService.addArticle(
 			null, _user.getUserId(), testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			HashMapBuilder.put(
@@ -417,7 +414,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				_locale, StringUtil.randomString()
 			).build(),
 			DDMStructureTestUtil.getSampleStructuredContent("test"),
-			ddmStructure.getStructureId(), null, _serviceContext);
+			_ddmStructure.getStructureId(), null, _serviceContext);
 	}
 
 	private ObjectDefinition _addObjectDefinitionWithObjectEntry()

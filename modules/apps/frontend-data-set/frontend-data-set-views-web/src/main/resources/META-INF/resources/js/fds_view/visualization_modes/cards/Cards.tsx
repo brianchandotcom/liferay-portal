@@ -43,8 +43,6 @@ export default function Cards(props: IFDSViewSectionProps) {
 		{label: Liferay.Language.get('description'), name: 'description'},
 		{label: Liferay.Language.get('image'), name: 'image'},
 		{label: Liferay.Language.get('symbol'), name: 'symbol'},
-		{label: Liferay.Language.get('link'), name: 'link'},
-		{label: Liferay.Language.get('sticker'), name: 'sticker'},
 	]);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 

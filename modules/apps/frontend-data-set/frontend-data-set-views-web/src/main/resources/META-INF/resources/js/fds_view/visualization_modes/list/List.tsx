@@ -44,9 +44,8 @@ export default function List(props: IFDSViewSectionProps) {
 	const [listSections, setListSections] = useState<Array<IListSection>>([
 		{label: Liferay.Language.get('title'), name: 'title'},
 		{label: Liferay.Language.get('description'), name: 'description'},
+		{label: Liferay.Language.get('image'), name: 'image'},
 		{label: Liferay.Language.get('symbol'), name: 'symbol'},
-		{label: Liferay.Language.get('link'), name: 'link'},
-		{label: Liferay.Language.get('label'), name: 'label'},
 	]);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 

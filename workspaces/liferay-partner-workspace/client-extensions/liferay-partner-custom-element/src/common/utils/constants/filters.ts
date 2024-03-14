@@ -10,7 +10,7 @@ const currentYear = todayDate.getFullYear();
 
 const currentFiscalYearEnd = `${currentYear}-12-31`;
 const currentFiscalYearStart = `${currentYear}-01-01`;
-const previousFiscalYearStart = `${currentYear - 1}-01-01`;
+const previousFiscalYearStart = `${currentYear-1}-01-01`;
 
 const fiscalYearFilterCloseDate = `closeDate ge ${currentFiscalYearStart} and closeDate le ${currentFiscalYearEnd}`;
 const fiscalYearFilterCreatedDate = `createdDate ge ${currentFiscalYearStart}T00:00:00Z and createdDate le ${currentFiscalYearEnd}T23:59:59Z`;

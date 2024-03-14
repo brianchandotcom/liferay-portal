@@ -4,7 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
-import {format} from 'date-fns';
+import moment from 'moment';
 
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -40,7 +40,7 @@ testFeatureFlagsEnabled(
 			'Success:' +
 				title +
 				' will be published on ' +
-				format(new Date(scheduleDate), 'M/d/yy h:mm a') +
+				moment(new Date(scheduleDate)).format('M/D/YY h:mm A') +
 				'.'
 		);
 

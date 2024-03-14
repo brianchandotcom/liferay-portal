@@ -5,8 +5,13 @@
 
 package com.liferay.friendly.url.model.impl;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -14,12 +19,51 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Pavel Savinov
+ * @author Roberto Díaz
  */
 public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
+
+	@Override
+	public String getCategorizedUrlTitle(String languageId) {
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+			FriendlyURLEntryLocalServiceUtil.fetchFriendlyURLEntryLocalization(
+				getPrimaryKey(), languageId);
+
+		if (friendlyURLEntryLocalization == null) {
+			return StringPool.BLANK;
+		}
+
+		String urlTitle = friendlyURLEntryLocalization.getUrlTitle();
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			FriendlyURLEntry.class.getName(), getFriendlyURLEntryId());
+
+		if (assetEntry == null) {
+			return urlTitle;
+		}
+
+		List<AssetCategory> categories = assetEntry.getCategories();
+
+		if (categories.isEmpty()) {
+			return urlTitle;
+		}
+
+		StringBundler sb = new StringBundler(categories.size() * 2);
+
+		for (AssetCategory category : categories) {
+			sb.append(category.getTitle(languageId));
+			sb.append(StringPool.SLASH);
+		}
+
+		sb.append(urlTitle);
+
+		return sb.toString();
+	}
 
 	@Override
 	public String getUrlTitle() {

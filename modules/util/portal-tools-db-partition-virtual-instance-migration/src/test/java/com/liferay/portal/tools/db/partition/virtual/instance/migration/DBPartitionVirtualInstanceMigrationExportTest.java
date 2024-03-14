@@ -32,7 +32,7 @@ import org.junit.rules.TemporaryFolder;
 /**
  * @author Luis Ortiz
  */
-public class DBPartitionVirtualInstanceMigrationExtractionTest
+public class DBPartitionVirtualInstanceMigrationExportTest
 	extends DatabaseMockupUtil {
 
 	@Test
@@ -97,21 +97,21 @@ public class DBPartitionVirtualInstanceMigrationExtractionTest
 		content = content.replaceAll(" ", "");
 
 		if (companyInfoIds.size() > 1) {
-			Assert.assertTrue(content.contains("\"extractedCompanyId\":null"));
+			Assert.assertTrue(content.contains("\"exportedCompanyId\":null"));
 		}
 		else {
 			Assert.assertTrue(
 				content.contains(
-					"\"extractedCompanyId\":" + companyInfoIds.get(0)));
+					"\"exportedCompanyId\":" + companyInfoIds.get(0)));
 		}
 
 		if (defaultPartition) {
 			Assert.assertTrue(
-				content.contains("\"extractedCompanyDefault\":true"));
+				content.contains("\"exportedCompanyDefault\":true"));
 		}
 		else {
 			Assert.assertTrue(
-				content.contains("\"extractedCompanyDefault\":false"));
+				content.contains("\"exportedCompanyDefault\":false"));
 		}
 
 		Assert.assertTrue(

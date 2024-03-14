@@ -57,8 +57,8 @@ public class DBPartitionVirtualInstanceMigration {
 		}
 	}
 
-	private static void _executeDataExtraction(String[] args) throws Exception {
-		Options options = _getExtractionOptions();
+	private static void _executeDataExport(String[] args) throws Exception {
+		Options options = _getExportOptions();
 
 		try {
 			CommandLineParser commandLineParser = new DefaultParser();
@@ -144,7 +144,7 @@ public class DBPartitionVirtualInstanceMigration {
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 			}
 
-			if (!_targetLiferayInstance.isExtractedCompanyDefault()) {
+			if (!_targetLiferayInstance.isExportedCompanyDefault()) {
 				System.err.println("Target is not the default partition");
 
 				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
@@ -185,7 +185,7 @@ public class DBPartitionVirtualInstanceMigration {
 		}
 	}
 
-	private static Options _getExtractionOptions() {
+	private static Options _getExportOptions() {
 		Options options = new Options();
 
 		options.addOption("d", "output-dir", true, "Output directory.");
@@ -193,7 +193,7 @@ public class DBPartitionVirtualInstanceMigration {
 		options.addRequiredOption(
 			"p", "password", true, "Database user password.");
 		options.addOption(
-			"s", "schema-name", true, "Database schema name to be extracted.");
+			"s", "schema-name", true, "Database schema name to be exported.");
 		options.addRequiredOption("u", "user", true, "Database user name.");
 
 		return options;
@@ -203,7 +203,7 @@ public class DBPartitionVirtualInstanceMigration {
 		OptionGroup optionGroup = new OptionGroup();
 
 		optionGroup.addOption(
-			new Option("e", "extract", false, "Execute data extraction."));
+			new Option("e", "export", false, "Execute data export."));
 		optionGroup.addOption(
 			new Option("v", "validate", false, "Execute data validation."));
 
@@ -237,10 +237,10 @@ public class DBPartitionVirtualInstanceMigration {
 		boolean toolExecuted = false;
 
 		for (String arg : args) {
-			if (arg.equals("-e") || arg.equals("-extract") ||
-				arg.equals("--extract")) {
+			if (arg.equals("-e") || arg.equals("-export") ||
+				arg.equals("--export")) {
 
-				_executeDataExtraction(ArrayUtil.remove(args, arg));
+				_executeDataExport(ArrayUtil.remove(args, arg));
 				toolExecuted = true;
 
 				break;
@@ -280,9 +280,9 @@ public class DBPartitionVirtualInstanceMigration {
 			_HELP_DESC_PAD);
 		helpFormatter.printWrapped(
 			printWriter, _HELP_WIDTH, _HELP_DESC_PAD,
-			"\nData Extraction parameters:");
+			"\nData Export parameters:");
 		helpFormatter.printOptions(
-			printWriter, _HELP_WIDTH, _getExtractionOptions(), _HELP_LEFT_PAD,
+			printWriter, _HELP_WIDTH, _getExportOptions(), _HELP_LEFT_PAD,
 			_HELP_DESC_PAD);
 		helpFormatter.printWrapped(
 			printWriter, _HELP_WIDTH, "\nData Validation parameters:");
@@ -318,7 +318,7 @@ public class DBPartitionVirtualInstanceMigration {
 		File exportDir = null;
 
 		if (path == null) {
-			exportDir = new File(".", "extractions");
+			exportDir = new File(".", "exports");
 
 			if (!exportDir.exists()) {
 				exportDir.mkdirs();
@@ -348,9 +348,8 @@ public class DBPartitionVirtualInstanceMigration {
 		File exportFile = new File(
 			exportDir,
 			StringBundler.concat(
-				simpleDateFormat.format(liferayInstance.getDate()),
-				"_extraction_", liferayInstance.getExtractedCompanyId(),
-				".data"));
+				simpleDateFormat.format(liferayInstance.getDate()), "_export_",
+				liferayInstance.getExportedCompanyId(), ".data"));
 
 		objectMapper.writeValue(exportFile, liferayInstance);
 

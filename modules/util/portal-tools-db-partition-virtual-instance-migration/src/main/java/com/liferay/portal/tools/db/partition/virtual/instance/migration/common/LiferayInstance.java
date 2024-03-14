@@ -25,8 +25,8 @@ public class LiferayInstance {
 		return _date;
 	}
 
-	public Long getExtractedCompanyId() {
-		return _extractedCompanyId;
+	public Long getExportedCompanyId() {
+		return _exportedCompanyId;
 	}
 
 	public List<Release> getReleases() {
@@ -37,8 +37,8 @@ public class LiferayInstance {
 		return _tableNames;
 	}
 
-	public boolean isExtractedCompanyDefault() {
-		return _extractedCompanyDefault;
+	public boolean isExportedCompanyDefault() {
+		return _exportedCompanyDefault;
 	}
 
 	public void setCompanies(List<Company> companies) {
@@ -49,12 +49,12 @@ public class LiferayInstance {
 		_date = date;
 	}
 
-	public void setExtractedCompanyDefault(boolean extractedCompanyDefault) {
-		_extractedCompanyDefault = extractedCompanyDefault;
+	public void setExportedCompanyDefault(boolean exportedCompanyDefault) {
+		_exportedCompanyDefault = exportedCompanyDefault;
 	}
 
-	public void setExtractedCompanyId(Long companyId) {
-		_extractedCompanyId = companyId;
+	public void setExportedCompanyId(Long companyId) {
+		_exportedCompanyId = companyId;
 	}
 
 	public void setReleases(List<Release> releases) {
@@ -67,8 +67,8 @@ public class LiferayInstance {
 
 	private List<Company> _companies;
 	private Date _date;
-	private boolean _extractedCompanyDefault;
-	private Long _extractedCompanyId;
+	private boolean _exportedCompanyDefault;
+	private Long _exportedCompanyId;
 	private List<Release> _releases;
 	private List<String> _tableNames;
 

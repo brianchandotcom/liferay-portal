@@ -50,15 +50,14 @@ public class DatabaseUtilTest extends DatabaseMockupUtil {
 		_testCompanyId(
 			companyInfoIds,
 			liferayInstance -> Assert.assertEquals(
-				companyInfoIds.get(0),
-				liferayInstance.getExtractedCompanyId()));
+				companyInfoIds.get(0), liferayInstance.getExportedCompanyId()));
 
 		companyInfoIds.add(RandomTestUtil.randomLong());
 
 		_testCompanyId(
 			companyInfoIds,
 			liferayInstance -> Assert.assertNull(
-				liferayInstance.getExtractedCompanyId()));
+				liferayInstance.getExportedCompanyId()));
 	}
 
 	@Test
@@ -66,12 +65,12 @@ public class DatabaseUtilTest extends DatabaseMockupUtil {
 		_testDefaultPartition(
 			true,
 			liferayInstance -> Assert.assertTrue(
-				liferayInstance.isExtractedCompanyDefault()));
+				liferayInstance.isExportedCompanyDefault()));
 
 		_testDefaultPartition(
 			false,
 			liferayInstance -> Assert.assertFalse(
-				liferayInstance.isExtractedCompanyDefault()));
+				liferayInstance.isExportedCompanyDefault()));
 	}
 
 	@Test

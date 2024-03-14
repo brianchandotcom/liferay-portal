@@ -24,7 +24,7 @@ import java.util.Objects;
 public class Validator {
 
 	public static boolean isSingleCompany(LiferayInstance liferayInstance) {
-		if (liferayInstance.getExtractedCompanyId() != null) {
+		if (liferayInstance.getExportedCompanyId() != null) {
 			return true;
 		}
 
@@ -82,7 +82,7 @@ public class Validator {
 		for (Company company : sourceLiferayInstance.getCompanies()) {
 			if (Objects.equals(
 					company.getCompanyId(),
-					sourceLiferayInstance.getExtractedCompanyId())) {
+					sourceLiferayInstance.getExportedCompanyId())) {
 
 				sourceCompany = company;
 

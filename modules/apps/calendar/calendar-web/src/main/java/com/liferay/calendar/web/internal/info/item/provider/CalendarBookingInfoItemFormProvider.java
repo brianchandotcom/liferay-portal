@@ -56,6 +56,8 @@ public class CalendarBookingInfoItemFormProvider
 			CalendarBookingInfoItemFields.endDateInfoField
 		).infoFieldSetEntry(
 			CalendarBookingInfoItemFields.allDayInfoField
+		).infoFieldSetEntry(
+			CalendarBookingInfoItemFields.calendarNameInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(

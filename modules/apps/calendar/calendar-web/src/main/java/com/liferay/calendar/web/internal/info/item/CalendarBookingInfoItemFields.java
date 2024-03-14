@@ -28,6 +28,15 @@ public class CalendarBookingInfoItemFields {
 			InfoLocalizedValue.localize(
 				CalendarBookingInfoItemFields.class, "all-day")
 		).build();
+	public static final InfoField<TextInfoFieldType> calendarNameInfoField =
+		BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"calendarName"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CalendarBookingInfoItemFields.class, "calendar-name")
+		).build();
 	public static final InfoField<HTMLInfoFieldType> descriptionInfoField =
 		BuilderHolder._builder.infoFieldType(
 			HTMLInfoFieldType.INSTANCE

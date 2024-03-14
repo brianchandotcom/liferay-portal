@@ -6,6 +6,7 @@
 package com.liferay.calendar.web.internal.info.item.provider;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
+import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.web.internal.info.item.CalendarBookingInfoItemFields;
 import com.liferay.info.field.InfoFieldValue;
@@ -33,6 +34,8 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.WindowState;
 
@@ -67,13 +70,18 @@ public class CalendarBookingInfoItemFieldValuesProvider
 					calendarBooking.getCalendarBookingId())
 			).build();
 		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(
+				"Caught unexpected exception", portalException);
+		}
 		catch (Exception exception) {
 			throw new RuntimeException("Unexpected exception", exception);
 		}
 	}
 
 	private List<InfoFieldValue<Object>> _getCalendarBookingInfoFieldValues(
-		CalendarBooking calendarBooking) {
+			CalendarBooking calendarBooking)
+		throws PortalException {
 
 		return Arrays.asList(
 			new InfoFieldValue<>(
@@ -108,7 +116,16 @@ public class CalendarBookingInfoItemFieldValuesProvider
 				new Date(calendarBooking.getEndTime())),
 			new InfoFieldValue<>(
 				CalendarBookingInfoItemFields.allDayInfoField,
-				calendarBooking.isAllDay()));
+				calendarBooking.isAllDay()),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.calendarNameInfoField,
+				InfoLocalizedValue.<String>builder(
+				).defaultLocale(
+					LocaleUtil.fromLanguageId(
+						calendarBooking.getDefaultLanguageId())
+				).values(
+					_getCalendarNameMap(calendarBooking)
+				).build()));
 	}
 
 	/**
@@ -156,6 +173,15 @@ public class CalendarBookingInfoItemFieldValuesProvider
 
 			return StringPool.BLANK;
 		}
+	}
+
+	private Map<Locale, String> _getCalendarNameMap(
+			CalendarBooking calendarBooking)
+		throws PortalException {
+
+		Calendar calendar = calendarBooking.getCalendar();
+
+		return calendar.getNameMap();
 	}
 
 	private ThemeDisplay _getThemeDisplay() {

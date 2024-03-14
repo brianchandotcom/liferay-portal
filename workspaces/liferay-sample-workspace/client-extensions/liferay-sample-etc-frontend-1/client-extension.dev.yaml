@@ -1,8 +1,14 @@
 liferay-sample-etc-frontend-1-custom-element-header:
-    baseURL: http://localhost:3000/assets
+    baseURL: http://localhost:3000
+    urls:
+        - Header.js
 liferay-sample-etc-frontend-1-custom-element-sidebar:
-    baseURL: http://localhost:3000/assets
+    baseURL: http://localhost:3000
+    urls:
+        - Sidebar.js
 liferay-sample-etc-frontend-1-fds-cell-renderer:
-    baseURL: http://localhost:3000/assets
+    baseURL: http://localhost:3000
+    url: FDSIconCell.js
 liferay-sample-etc-frontend-1-theme-spritemap:
-    baseURL: http://localhost:3000/assets
+    baseURL: http://localhost:3000
+    url: spritemap.svg

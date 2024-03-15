@@ -5,4 +5,5 @@
 type Site = {
 	friendlyUrlPath: string;
 	id: string;
+	name?: string;
 };

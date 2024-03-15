@@ -64,9 +64,9 @@ export default async function submitForm(
 			mdfRequest.r_accToMDFReqs_accountEntryId
 		) {
 			submitMDFClaimDocuments(
-				submitValues.reimbursementInvoices,
 				mdfRequest.r_accToMDFReqs_accountEntryId,
-				dtoMDFClaim.id
+				dtoMDFClaim.id,
+				submitValues.reimbursementInvoices
 			);
 		}
 

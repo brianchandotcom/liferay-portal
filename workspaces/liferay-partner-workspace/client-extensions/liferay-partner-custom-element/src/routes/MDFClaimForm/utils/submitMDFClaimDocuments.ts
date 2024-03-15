@@ -8,9 +8,9 @@ import createMDFClaimDocuments from '../../../common/services/liferay/object/mdf
 import updateMDFClaimDocuments from '../../../common/services/liferay/object/mdf-claim-documents/updateMDFClaimDocuments';
 
 const submitMDFClaimDocuments = async (
-	reimbursementInvoices: LiferayFile[],
 	companyId: number,
-	dtoMDFClaimId: number
+	dtoMDFClaimId: number,
+	reimbursementInvoices?: LiferayFile[]
 ) => {
 	const dtoMDFClaimDocumentsCreate: LiferayFile[] = [];
 	const dtoMDFClaimDocumentsUpdate: LiferayFile[] = [];

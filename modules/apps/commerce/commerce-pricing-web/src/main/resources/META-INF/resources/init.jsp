@@ -27,6 +27,7 @@ page import="com.liferay.commerce.discount.constants.CommerceDiscountConstants" 
 page import="com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException" %><%@
 page import="com.liferay.commerce.discount.exception.CommerceDiscountExpirationDateException" %><%@
 page import="com.liferay.commerce.discount.exception.CommerceDiscountMaxPriceValueException" %><%@
+page import="com.liferay.commerce.discount.exception.CommerceDiscountMinPriceValueException" %><%@
 page import="com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeSettingsException" %><%@
 page import="com.liferay.commerce.discount.exception.DuplicateCommerceDiscountException" %><%@
 page import="com.liferay.commerce.discount.exception.DuplicateCommerceDiscountExternalReferenceCodeException" %><%@

@@ -40,6 +40,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -216,10 +217,14 @@ public class CommerceCartResource {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceOrderItem.class.getName(), httpServletRequest);
 
+			BigDecimal formattedQuantity =
+				_commerceOrderItemQuantityFormatter.parse(
+					quantity, LocaleUtil.fromLanguageId(languageId));
+
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId, options,
-					new BigDecimal(quantity), 0, BigDecimal.ZERO,
+					formattedQuantity, 0, BigDecimal.ZERO,
 					unitOfMeasureKey, commerceContext, serviceContext);
 
 			cart = _getCart(
@@ -632,6 +637,10 @@ public class CommerceCartResource {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
 
 	@Reference
 	private ProductHelper _productHelper;

@@ -9,6 +9,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 /**
  * @author Alessio Antonio Rendina
@@ -27,5 +28,7 @@ public interface CommerceQuantityFormatter {
 	public BigDecimal format(
 		long companyId, BigDecimal quantity, String sku,
 		String unitOfMeasureKey);
+
+	public String parse(BigDecimal quantity, Locale locale) throws Exception;
 
 }

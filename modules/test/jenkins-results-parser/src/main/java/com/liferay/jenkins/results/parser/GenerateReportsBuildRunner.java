@@ -68,7 +68,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		BUILD_HISTORY("Build History"), CI_SYSTEM_HISTORY("CI System History"),
 		CI_SYSTEM_STATUS("CI System Status"),
-		PULL_REQUEST_HISTORY("Pull Request History");
+		PULL_REQUEST_HISTORY("Pull Request History"),
+		RELEASE_HISTORY("Release History"),
+		UPSTREAM_HISTORY("Upstream History");
 
 		public String getDirName() {
 			return _reportDirNames.get(_string);
@@ -211,7 +213,21 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		_copyArchivedBuildData();
 
 		BuildHistoryReport testSuiteBuildHistoryReport =
-			BuildHistoryReport.newTestSuiteReport(
+			BuildHistoryReport.newPullRequestTestSuiteReport(
+				_REPORT_DURATION_DAYS, new File(filePath), _START_DATE_STRING);
+
+		testSuiteBuildHistoryReport.write();
+
+		_updateReport(filePath);
+
+		_archiveReport(filePath);
+	}
+
+	private void _generateReleaseReport(String filePath) throws IOException {
+		_copyArchivedBuildData();
+
+		BuildHistoryReport testSuiteBuildHistoryReport =
+			BuildHistoryReport.newReleaseTestSuiteReport(
 				_REPORT_DURATION_DAYS, new File(filePath), _START_DATE_STRING);
 
 		testSuiteBuildHistoryReport.write();
@@ -250,6 +266,14 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				if (reportName.equals(Report.PULL_REQUEST_HISTORY.toString())) {
 					_generatePullRequestReport(reportFilePath);
 				}
+
+				if (reportName.equals(Report.RELEASE_HISTORY.toString())) {
+					_generateReleaseReport(reportFilePath);
+				}
+
+				if (reportName.equals(Report.UPSTREAM_HISTORY.toString())) {
+					_generateUpstreamReport(reportFilePath);
+				}
 			}
 			catch (IOException ioException) {
 				System.out.println(
@@ -274,6 +298,20 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		buildData.setBuildDescription(sb.toString());
 
 		updateBuildDescription();
+	}
+
+	private void _generateUpstreamReport(String filePath) throws IOException {
+		_copyArchivedBuildData();
+
+		BuildHistoryReport testSuiteBuildHistoryReport =
+			BuildHistoryReport.newUpstreamTestSuiteReport(
+				_REPORT_DURATION_DAYS, new File(filePath), _START_DATE_STRING);
+
+		testSuiteBuildHistoryReport.write();
+
+		_updateReport(filePath);
+
+		_archiveReport(filePath);
 	}
 
 	private String _getReportDirName(String reportName) {
@@ -365,12 +403,15 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				put(
 					Report.PULL_REQUEST_HISTORY.toString(),
 					"pull-request-report");
+				put(Report.RELEASE_HISTORY.toString(), "release-report");
+				put(Report.UPSTREAM_HISTORY.toString(), "upstream-report");
 			}
 		};
 	private static final List<String> _validReportNames = Arrays.asList(
 		Report.BUILD_HISTORY.toString(), Report.CI_SYSTEM_HISTORY.toString(),
 		Report.CI_SYSTEM_STATUS.toString(),
-		Report.PULL_REQUEST_HISTORY.toString());
+		Report.PULL_REQUEST_HISTORY.toString(),
+		Report.RELEASE_HISTORY.toString(), Report.UPSTREAM_HISTORY.toString());
 
 	static {
 		_buildProperties = new Properties() {

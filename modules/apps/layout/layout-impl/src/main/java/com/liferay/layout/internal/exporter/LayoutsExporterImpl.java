@@ -222,13 +222,9 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
 
-			if (layoutPageTemplateEntry.getType() ==
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
-
-				_populateDisplayPagesZipWriter(
-					layoutPageTemplateEntry, pageDefinitionDTOConverter, path,
-					zipWriter);
-			}
+			_populateDisplayPagesZipWriter(
+				layoutPageTemplateEntry, pageDefinitionDTOConverter, path,
+				zipWriter);
 		}
 
 		_exportLayoutPageTemplateEntriesAndCollections(

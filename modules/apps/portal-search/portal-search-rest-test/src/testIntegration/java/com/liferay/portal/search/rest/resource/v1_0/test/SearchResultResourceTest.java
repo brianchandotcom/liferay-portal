@@ -118,11 +118,11 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	@Override
 	@Test
 	public void testPostSearchPage() throws Exception {
-		SearchPage<SearchResult> page = _postSearchPage(
+		SearchPage<SearchResult> searchPage = _postSearchPage(
 			_journalArticle.getArticleId());
 
-		Assert.assertEquals(1L, page.getTotalCount());
-		Assert.assertEquals(1L, page.getPage());
+		Assert.assertEquals(1L, searchPage.getTotalCount());
+		Assert.assertEquals(1L, searchPage.getPage());
 	}
 
 	@Test
@@ -185,7 +185,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				"range", range
 			));
 
-		SearchPage<SearchResult> page = _assertFacetConfiguration(
+		SearchPage<SearchResult> searchPage = _assertFacetConfiguration(
 			false,
 			HashMapBuilder.<String, Object>put(
 				"field", "modified"
@@ -197,7 +197,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			"date-range", range, range);
 
 		Map<String, Object> facetsMap =
-			(Map<String, Object>)page.getSearchFacets();
+			(Map<String, Object>)searchPage.getSearchFacets();
 
 		JSONArray termJSONArray = (JSONArray)facetsMap.get("date-range");
 
@@ -215,12 +215,12 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		ObjectDefinition objectDefinition =
 			_addObjectDefinitionWithObjectEntry();
 
-		SearchPage<SearchResult> page = _postSearchPage(
+		SearchPage<SearchResult> searchPage = _postSearchPage(
 			objectDefinition.getClassName(), null,
 			objectDefinition.getUserName(), "embedded",
 			new SearchRequestBody());
 
-		Collection<SearchResult> items = page.getItems();
+		Collection<SearchResult> items = searchPage.getItems();
 
 		Assert.assertFalse(items.isEmpty());
 
@@ -242,13 +242,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testPostSearchPageWithHighlightConfiguration()
 		throws Exception {
 
-		SearchPage<SearchResult> page =
+		SearchPage<SearchResult> searchPage =
 			_postSearchPageWithSXPBlueprintConfiguration(
 				_user.getModelClassName(), _user.getFullName(),
 				_addSXPBlueprint(true));
 
 		List<SearchResult> searchResults = ListUtil.fromCollection(
-			page.getItems());
+			searchPage.getItems());
 
 		Assert.assertFalse(searchResults.isEmpty());
 
@@ -293,13 +293,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testPostSearchPageWithoutHighlightConfiguration()
 		throws Exception {
 
-		SearchPage<SearchResult> page =
+		SearchPage<SearchResult> searchPage =
 			_postSearchPageWithSXPBlueprintConfiguration(
 				_user.getModelClassName(), _user.getFullName(),
 				_addSXPBlueprint(false));
 
 		List<SearchResult> searchResults = ListUtil.fromCollection(
-			page.getItems());
+			searchPage.getItems());
 
 		Assert.assertFalse(searchResults.isEmpty());
 
@@ -353,10 +353,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 	@Test
 	public void testPostSearchPageZeroResults() throws Exception {
-		SearchPage<SearchResult> page = _postSearchPage(
+		SearchPage<SearchResult> searchPage = _postSearchPage(
 			"shouldnotmatchanything");
 
-		Assert.assertEquals(0L, page.getTotalCount());
+		Assert.assertEquals(0L, searchPage.getTotalCount());
 	}
 
 	private AssetCategory _addAssetCategory(
@@ -489,18 +489,19 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			String facetName, Object facetValues, String... expectedValues)
 		throws Exception {
 
-		SearchPage<SearchResult> page = _postSearchPageWithFacetConfiguration(
-			new FacetConfiguration() {
-				{
-					attributes = facetAttributes;
-					frequencyThreshold = 1;
-					name = facetName;
-					values = new Object[] {facetValues};
-				}
-			});
+		SearchPage<SearchResult> searchPage =
+			_postSearchPageWithFacetConfiguration(
+				new FacetConfiguration() {
+					{
+						attributes = facetAttributes;
+						frequencyThreshold = 1;
+						name = facetName;
+						values = new Object[] {facetValues};
+					}
+				});
 
 		Map<String, Object> facetsMap =
-			(Map<String, Object>)page.getSearchFacets();
+			(Map<String, Object>)searchPage.getSearchFacets();
 
 		Assert.assertNotNull(facetsMap);
 
@@ -535,7 +536,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			Assert.assertArrayEquals(expectedValues, termValues);
 		}
 
-		return page;
+		return searchPage;
 	}
 
 	private JSONObject _createSXPBlueprintHighlightConfigurationJSON() {

@@ -8017,9 +8017,7 @@ public class PortalImpl implements Portal {
 		return group;
 	}
 
-	private Map<String, String> _getVariables(
-		Layout layout, String mainPath) {
-
+	private Map<String, String> _getVariables(Layout layout, String mainPath) {
 		if (layout == null) {
 			return HashMapBuilder.put(
 				"liferay:pvlsgid", "0"

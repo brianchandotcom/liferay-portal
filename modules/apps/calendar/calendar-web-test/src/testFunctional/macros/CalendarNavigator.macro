@@ -54,6 +54,19 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro gotoAddEventMonth() {
+		CalendarNavigator.gotoView(viewType = "Month");
+
+		AssertClick(
+			locator1 = "Calendar#ADD_EVENT_BUTTON",
+			value1 = "Add Event");
+
+		CalendarEvent.selectEventIframe();
+
+		CalendarEvent._viewNewEventIframe();
+	}
+
+	@summary = "Default summary"
 	macro gotoAddEventToday(viewType = null) {
 		var viewTypeUppercase = StringUtil.upperCase(${viewType});
 

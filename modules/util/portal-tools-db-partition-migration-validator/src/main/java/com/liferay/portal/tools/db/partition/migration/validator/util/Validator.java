@@ -23,14 +23,6 @@ import java.util.Objects;
  */
 public class Validator {
 
-	public static boolean isSingleCompany(LiferayInstance liferayInstance) {
-		if (liferayInstance.getExportedCompanyId() != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public static Recorder validateDatabases(
 		LiferayInstance sourceLiferayInstance,
 		LiferayInstance targetLiferayInstance) {

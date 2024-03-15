@@ -109,20 +109,20 @@ public class DatabaseUtil {
 	private static Long _getExportedCompanyId(Connection connection)
 		throws Exception {
 
-		Long companyId = null;
+		long companyId = 0;
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select companyId from CompanyInfo");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			int companyCount = 0;
-
 			while (resultSet.next()) {
-				companyId = resultSet.getLong(1);
-
-				if (++companyCount > 1) {
-					return null;
+				if (companyId > 0) {
+					throw new UnsupportedOperationException(
+						"Source multi company or target with DB Partitioning " +
+							"disabled environments are not supported");
 				}
+
+				companyId = resultSet.getLong(1);
 			}
 		}
 

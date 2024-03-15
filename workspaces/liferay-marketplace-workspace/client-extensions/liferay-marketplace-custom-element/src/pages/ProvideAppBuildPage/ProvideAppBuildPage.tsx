@@ -543,7 +543,10 @@ export function ProvideAppBuildPage({
 								{i18n.translate(
 									'the-app-submission-is-compatible-with-liferay-experience-cloud-and'
 								)}
-								<a href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions#client-extensions">
+								<a
+									href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions#client-extensions"
+									target="_blank"
+								>
 									{i18n.translate('client-extensions')}
 								</a>
 								.

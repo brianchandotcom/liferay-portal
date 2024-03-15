@@ -1398,6 +1398,10 @@ components:
                     description:
                         The document's file name.
                     type: string
+                friendlyUrlPath:
+                    description:
+                        The document's file relative URL.
+                    type: string
                 id:
                     description:
                         The document's ID.

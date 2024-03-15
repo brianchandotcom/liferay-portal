@@ -38,19 +38,19 @@
 								</not>
 								<then>
 									<execute dir="${project.dir}">
-										docker pull @{analytics.cloud.image.name}
+										docker pull @{analytics.cloud.asah.image.name}
 									</execute>
 								</then>
 							</if>
 						</sequential>
 					</for>
 
-					<antelope:stringutil property="analytics.cloud.asah.image.names.save" string="${analytics.cloud.asah.image.names}">
+					<antelope:stringutil property="analytics.cloud.asah.image.names.list" string="${analytics.cloud.asah.image.names}">
 						<antelope:replace regex="," replacement=" " />
 					</antelope:stringutil>
 
 					<execute dir="${project.dir}">
-						docker save --output ${project.dir}/dist/liferay-docker-asah.tar ${analytics.cloud.asah.image.names.save}
+						docker save --output ${project.dir}/dist/liferay-docker-asah.tar ${analytics.cloud.asah.image.names.list}
 					</execute>
 				</else>
 			</if>

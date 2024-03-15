@@ -21,20 +21,22 @@ for (Method method : methods) {
 
 	<c:choose>
 		<c:when test='<%= name.equals("frontendTokenDefinitionJSON") %>'>
-			<aui:field-wrapper cssClass="form-group">
-				<react:component
-					module="{FrontendTokenDefinitionFilePicker} from client-extension-web"
-					props='<%=
-						HashMapBuilder.<String, Object>put(
-							"disabled", true
-						).put(
-							"frontendTokenDefinitionJSON", value
-						).put(
-							"learnResources", LearnMessageUtil.getReactDataJSONObject("client-extension-web")
-						).build()
-					%>'
-				/>
-			</aui:field-wrapper>
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10773") %>'>
+				<aui:field-wrapper cssClass="form-group">
+					<react:component
+						module="{FrontendTokenDefinitionFilePicker} from client-extension-web"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"disabled", true
+							).put(
+								"frontendTokenDefinitionJSON", value
+							).put(
+								"learnResources", LearnMessageUtil.getReactDataJSONObject("client-extension-web")
+							).build()
+						%>'
+					/>
+				</aui:field-wrapper>
+			</c:if>
 		</c:when>
 		<c:when test="<%= cetProperty.type() == CETProperty.Type.Boolean %>">
 			<aui:input disabled="<%= true %>" label="<%= label %>" name="<%= label %>" type="checkbox" value="<%= value %>" />

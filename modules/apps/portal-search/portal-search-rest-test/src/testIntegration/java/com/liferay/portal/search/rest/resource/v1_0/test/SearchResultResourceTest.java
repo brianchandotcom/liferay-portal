@@ -167,14 +167,15 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testPostSearchPageWithDateRangeFacetConfiguration()
 		throws Exception {
 
-		LocalDateTime startOfDay = LocalDateTime.of(
+		LocalDateTime startOfDayLocalDateTime = LocalDateTime.of(
 			LocalDate.now(), LocalTime.MIN);
 
 		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
 
 		String range = StringBundler.concat(
 			DateFormatUtils.format(
-				Date.from(startOfDay.toInstant(ZoneOffset.ofHours(0))),
+				Date.from(
+					startOfDayLocalDateTime.toInstant(ZoneOffset.ofHours(0))),
 				"yyyyMMddHHmmss"),
 			" TO ", DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"));
 
@@ -220,12 +221,12 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			objectDefinition.getUserName(), "embedded",
 			new SearchRequestBody());
 
-		Collection<SearchResult> items = searchPage.getItems();
+		Collection<SearchResult> searchResults = searchPage.getItems();
 
-		Assert.assertFalse(items.isEmpty());
+		Assert.assertFalse(searchResults.isEmpty());
 
-		for (SearchResult item : items) {
-			Assert.assertNotNull(item.getEmbedded());
+		for (SearchResult searchResult : searchResults) {
+			Assert.assertNotNull(searchResult.getEmbedded());
 		}
 	}
 

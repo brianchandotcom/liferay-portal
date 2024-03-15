@@ -1014,6 +1014,41 @@ definition {
 		CalendarEvent.viewDescription(eventDescription = "Calendar Event Description");
 	}
 
+	@description = "LPD-20217 - verify that user can edit the event by the Month view"
+	@priority = 4
+	test CanEditEventMonthView {
+		CalendarEvent.enableEventBySiteCalendarName(calendarName = "Liferay DXP");
+
+		CalendarNavigator.gotoAddEventMonth();
+
+		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.setDatesToday();
+
+		CalendarEvent.setTimes(
+			endDateTime = " 8:00 PM",
+			startDateTime = " 7:00 PM");
+
+		Button.clickPublish();
+
+		IFrame.closeFrame();
+
+		CalendarEvent.view(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.addDescription(
+			eventTitle = "Calendar Event Title",
+			fieldName = "Description",
+			fieldValue = "Calendar Event Description");
+
+		Button.clickPublish();
+
+		IFrame.closeFrame();
+
+		CalendarNavigator.gotoEventDetails(eventTitle = "Calendar Event Title");
+
+		CalendarEvent.viewDescription(eventDescription = "Calendar Event Description");
+	}
+
 	@description = "LRQA-71887 - Verify that the user can Reject an event"
 	@priority = 3
 	test CanRejectEvent {

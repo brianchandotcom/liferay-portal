@@ -30,6 +30,7 @@ import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -91,16 +92,23 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Override
 	public Set<String> getAllowedNotificationRecipientSettingsNames() {
-		return SetUtil.fromArray(
+		Set<String> names = SetUtil.fromArray(
 			NotificationRecipientSettingConstants.NAME_BCC,
-			NotificationRecipientSettingConstants.NAME_BCC_TYPE,
 			NotificationRecipientSettingConstants.NAME_CC,
-			NotificationRecipientSettingConstants.NAME_CC_TYPE,
 			NotificationRecipientSettingConstants.NAME_FROM,
 			NotificationRecipientSettingConstants.NAME_FROM_NAME,
 			NotificationRecipientSettingConstants.NAME_SINGLE_RECIPIENT,
-			NotificationRecipientSettingConstants.NAME_TO,
-			NotificationRecipientSettingConstants.NAME_TO_TYPE);
+			NotificationRecipientSettingConstants.NAME_TO);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11165")) {
+			names.addAll(
+				SetUtil.fromArray(
+					NotificationRecipientSettingConstants.NAME_BCC_TYPE,
+					NotificationRecipientSettingConstants.NAME_CC_TYPE,
+					NotificationRecipientSettingConstants.NAME_TO_TYPE));
+		}
+
+		return names;
 	}
 
 	@Override

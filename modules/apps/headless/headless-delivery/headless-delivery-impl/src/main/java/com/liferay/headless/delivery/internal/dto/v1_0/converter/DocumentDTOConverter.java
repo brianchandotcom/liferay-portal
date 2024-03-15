@@ -31,6 +31,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.Document;
@@ -162,6 +164,20 @@ public class DocumentDTOConverter
 				setExternalReferenceCode(fileEntry::getExternalReferenceCode);
 				setFileExtension(fileEntry::getExtension);
 				setFileName(fileEntry::getFileName);
+				setFriendlyUrlPath(
+					() -> {
+						FriendlyURLEntry friendlyURLEntry =
+							_friendlyURLEntryLocalService.
+								fetchMainFriendlyURLEntry(
+									_portal.getClassNameId(FileEntry.class),
+									fileEntry.getFileEntryId());
+
+						if (friendlyURLEntry == null) {
+							return null;
+						}
+
+						return friendlyURLEntry.getUrlTitle();
+					});
 				setId(fileEntry::getFileEntryId);
 				setKeywords(
 					() -> ListUtil.toArray(
@@ -413,6 +429,9 @@ public class DocumentDTOConverter
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -23,3 +23,8 @@ liferay-marketplace-etc-spring-boot-oauth-application-user-agent:
     scopes:
         - Liferay.Headless.Admin.User.read
     type: oAuthApplicationUserAgent
+liferay-marketplace-etc-spring-boot-trial-provisioning:
+    name: Liferay Marketplace Etc Spring Boot Trial Provisioning
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /trial/provisioning
+    type: objectAction

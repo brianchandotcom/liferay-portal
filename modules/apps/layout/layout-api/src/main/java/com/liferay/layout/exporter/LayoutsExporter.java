@@ -14,16 +14,14 @@ import java.io.File;
  */
 public interface LayoutsExporter {
 
-	public File exportLayoutPageTemplateEntries(long groupId, String path)
-		throws Exception;
+	public File exportLayoutPageTemplateEntries(long groupId) throws Exception;
 
 	public File exportLayoutPageTemplateEntries(
 			long[] layoutPageTemplateEntryIds, int type)
 		throws Exception;
 
 	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
-			long[] layoutPageTemplateCollectionIds, String path,
-			ZipWriter zipWriter)
+			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter)
 		throws Exception;
 
 	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)

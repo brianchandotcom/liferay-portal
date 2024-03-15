@@ -39,9 +39,6 @@ for (Method method : methods) {
 		<c:when test="<%= cetProperty.type() == CETProperty.Type.Boolean %>">
 			<aui:input disabled="<%= true %>" label="<%= label %>" name="<%= label %>" type="checkbox" value="<%= value %>" />
 		</c:when>
-		<c:when test="<%= (cetProperty.type() == CETProperty.Type.String) || (cetProperty.type() == CETProperty.Type.URL) %>">
-			<aui:input disabled="<%= true %>" label="<%= label %>" name="<%= label %>" type="text" value="<%= value %>" />
-		</c:when>
 		<c:when test="<%= (cetProperty.type() == CETProperty.Type.StringList) || (cetProperty.type() == CETProperty.Type.URLList) %>">
 			<aui:input disabled="<%= true %>" label="<%= label %>" name="<%= label %>" type="textarea" value="<%= value %>" />
 		</c:when>

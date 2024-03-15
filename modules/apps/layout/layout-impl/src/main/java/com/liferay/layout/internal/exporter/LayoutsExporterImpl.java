@@ -71,14 +71,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
-				groupId);
+				groupId, WorkflowConstants.STATUS_APPROVED);
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
-
-			if (layoutPageTemplateEntry.isDraft()) {
-				continue;
-			}
 
 			if (layoutPageTemplateEntry.getType() ==
 					LayoutPageTemplateEntryTypeConstants.BASIC) {

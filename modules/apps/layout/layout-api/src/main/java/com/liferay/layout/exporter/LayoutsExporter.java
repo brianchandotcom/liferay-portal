@@ -9,9 +9,12 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.io.File;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Eudaldo Alonso
  */
+@ProviderType
 public interface LayoutsExporter {
 
 	public File exportLayoutPageTemplateEntries(long groupId) throws Exception;

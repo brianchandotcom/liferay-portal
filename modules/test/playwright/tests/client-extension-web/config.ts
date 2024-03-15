@@ -10,5 +10,6 @@ export const config = {
 	testDir: 'tests/client-extension-web',
 	use: {
 		...devices['Desktop Chrome'],
+		testIdAttribute: 'data-qa-id',
 	},
 };

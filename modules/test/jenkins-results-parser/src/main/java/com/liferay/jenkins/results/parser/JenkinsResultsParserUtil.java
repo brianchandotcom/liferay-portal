@@ -2341,6 +2341,10 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static JenkinsCohort getJenkinsCohort() {
+		return JenkinsCohort.getInstance(getCohortName());
+	}
+
 	public static String getJenkinsMasterName(String jenkinsSlaveName) {
 		jenkinsSlaveName = jenkinsSlaveName.replaceAll("([^\\.]+).*", "$1");
 
@@ -2394,12 +2398,22 @@ public class JenkinsResultsParserUtil {
 
 	public static List<JenkinsMaster> getJenkinsMasters(
 		Properties buildProperties, int minimumRAM, int maximumSlavesPerHost,
-		String prefix) {
+		String cohortName) {
+
+		return getJenkinsMasters(
+			buildProperties, minimumRAM, maximumSlavesPerHost, cohortName,
+			null);
+	}
+
+	public static List<JenkinsMaster> getJenkinsMasters(
+		Properties buildProperties, int minimumRAM, int maximumSlavesPerHost,
+		String cohortName, String networkName) {
 
 		List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(
-			"master\\.slaves\\((?<jenkinsMasterName>" + prefix + "-\\d+)\\)");
+			"master\\.slaves\\((?<jenkinsMasterName>" + cohortName +
+				"-\\d+)\\)");
 
 		for (String buildPropertyName : buildProperties.stringPropertyNames()) {
 			Matcher matcher = pattern.matcher(buildPropertyName);
@@ -2411,11 +2425,23 @@ public class JenkinsResultsParserUtil {
 			JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
 				matcher.group("jenkinsMasterName"));
 
-			if ((jenkinsMaster.getSlaveRAM() >= minimumRAM) &&
-				(jenkinsMaster.getSlavesPerHost() <= maximumSlavesPerHost)) {
+			if ((jenkinsMaster.getSlaveRAM() < minimumRAM) ||
+				(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost)) {
 
-				jenkinsMasters.add(jenkinsMaster);
+				continue;
 			}
+
+			if (isNullOrEmpty(networkName)) {
+				jenkinsMasters.add(jenkinsMaster);
+
+				continue;
+			}
+
+			if (!Objects.equals(jenkinsMaster.getNetworkName(), networkName)) {
+				continue;
+			}
+
+			jenkinsMasters.add(jenkinsMaster);
 		}
 
 		return jenkinsMasters;

@@ -33,15 +33,15 @@ Data Validation parameters:
 
 Data Export for the source database partition example:
 ```
-./db_partition_migration_validator.sh -e -j "jdbc:mysql://localhost:3306/sourceDefaultSchema" -u user -p password -s lpartition_1234 -d "/sourceExports"
+./db_partition_migration_validator.sh -e -j "jdbc:mysql://localhost:3306/sourceDefaultSchema" -u user -p password -s lpartition_1234 -d sourceExports
 ```
 
 Data Export for the target example:
 ```
-./db_partition_migration_validator.sh -e -j "jdbc:mysql://localhost:3306/targetDefaultSchema" -u user -p password -d "/targetExports"
+./db_partition_migration_validator.sh -e -j "jdbc:mysql://localhost:3306/targetDefaultSchema" -u user -p password -d targetExports
 ```
 
 Data Validation example:
 ```
-./db_partition_migration_validator.sh -v -s "/bundle/tools/portal-tools-db-partition-migration-validator/sourceExports/source.json" -t "/bundle/tools/portal-tools-db-partition-migration-validator/targetExports/target.json"
+./db_partition_migration_validator.sh -v -s sourceExports/source.json -t targetExports/target.json
 ```

@@ -321,13 +321,13 @@ public class DBPartitionMigrationValidator {
 		};
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ssXX");
+			"yyyyMMddHHmmss");
 
 		File exportFile = new File(
 			exportDir,
 			StringBundler.concat(
 				simpleDateFormat.format(liferayInstance.getDate()), "_export_",
-				liferayInstance.getExportedCompanyId(), ".data"));
+				liferayInstance.getExportedCompanyId(), ".json"));
 
 		objectMapper.writeValue(exportFile, liferayInstance);
 

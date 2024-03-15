@@ -24,7 +24,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -68,7 +70,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				groupId);
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
@@ -213,7 +215,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
+			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
@@ -228,7 +230,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		}
 
 		_exportLayoutPageTemplateEntriesAndCollections(
-			_layoutPageTemplateCollectionLocalService.
+			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollections(
 					layoutPageTemplateCollection.getGroupId(),
 					layoutPageTemplateCollection.
@@ -542,8 +544,15 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		_layoutPageTemplateCollectionLocalService;
 
 	@Reference
+	private LayoutPageTemplateCollectionService
+		_layoutPageTemplateCollectionService;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

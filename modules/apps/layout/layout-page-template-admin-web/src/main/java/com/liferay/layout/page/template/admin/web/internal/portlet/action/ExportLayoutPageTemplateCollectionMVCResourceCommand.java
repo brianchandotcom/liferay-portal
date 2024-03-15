@@ -42,23 +42,15 @@ public class ExportLayoutPageTemplateCollectionMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
-		long[] layoutPageTemplateCollectionsIds = null;
-
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			resourceRequest, "layoutPageTemplateCollectionId");
-
-		if (layoutPageTemplateCollectionId > 0) {
-			layoutPageTemplateCollectionsIds = new long[] {
-				layoutPageTemplateCollectionId
-			};
-		}
 
 		try {
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 			zipWriter =
 				_layoutsExporter.exportLayoutPageTemplateEntriesAndCollections(
-					layoutPageTemplateCollectionsIds, zipWriter,
+					new long[] {layoutPageTemplateCollectionId}, zipWriter,
 					StringPool.BLANK);
 
 			PortletResponseUtil.sendFile(

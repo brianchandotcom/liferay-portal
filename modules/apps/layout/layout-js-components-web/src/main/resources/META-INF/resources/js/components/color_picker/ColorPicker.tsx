@@ -178,10 +178,12 @@ export default function ColorPicker({
 	);
 
 	const onSetValue = ({
+		isReset,
 		label = null,
 		name = null,
 		value,
 	}: {
+		isReset?: boolean;
 		label?: string | null;
 		name?: string | null;
 		value: string;
@@ -190,7 +192,7 @@ export default function ColorPicker({
 		setTokenLabel(label);
 		onValueSelect(field.name, name ?? value);
 
-		if (value === '') {
+		if (value === '' && !isReset) {
 			setClearedValue(true);
 		}
 		else {
@@ -433,6 +435,7 @@ export default function ColorPicker({
 							setError({label: null, value: null});
 
 							onSetValue({
+								isReset: true,
 								label: field.defaultValue
 									? null
 									: defaultTokenValue,

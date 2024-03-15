@@ -311,6 +311,20 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return _masterName;
 	}
 
+	public String getNetworkName() {
+		String networkName = "default";
+
+		try {
+			networkName = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.network(" + getName(), ")");
+		}
+		catch (IOException ioException) {
+			return networkName;
+		}
+
+		return networkName;
+	}
+
 	public int getOfflineJenkinsSlavesCount() {
 		int offlineJenkinsSlavesCount = 0;
 

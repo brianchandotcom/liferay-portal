@@ -423,6 +423,14 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, int status) {
+
+		return _layoutPageTemplateEntryLocalService.
+			getLayoutPageTemplateEntries(groupId, status);
+	}
+
+	@Override
+	public java.util.List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId) {
 
 		return _layoutPageTemplateEntryLocalService.

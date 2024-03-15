@@ -78,6 +78,12 @@ const Table = <T extends unknown>({
 											className={classNames(
 												'table-cell-items',
 												{
+													'text-ellipsis-lg':
+														column.size === 'lg',
+													'text-ellipsis-md':
+														column.size === 'md',
+													'text-ellipsis-sm':
+														column.size === 'sm',
 													'text-wrap': column.wrap,
 												}
 											)}

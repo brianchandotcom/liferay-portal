@@ -4,8 +4,16 @@
 	text-overflow: ellipsis;
 }
 
-.table-cell-items {
-	max-width: 160px;
+.text-ellipsis-lg {
+	max-width: 170px;
+}
+
+.text-ellipsis-md {
+	max-width: 140px;
+}
+
+.text-ellipsis-sm {
+	max-width: 110px;
 }
 
 @media (min-width: 140px) {

@@ -136,6 +136,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			long[] layoutPageTemplateCollectionIds)
 		throws Exception {
 
+		DTOConverter<LayoutStructure, PageDefinition>
+			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		List<LayoutPageTemplateCollection> exportLayoutPageTemplateCollections =
@@ -151,7 +153,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		}
 
 		_exportLayoutPageTemplateEntriesAndCollections(
-			exportLayoutPageTemplateCollections, StringPool.BLANK, zipWriter);
+			exportLayoutPageTemplateCollections, pageDefinitionDTOConverter,
+			StringPool.BLANK, zipWriter);
 
 		return zipWriter.getFile();
 	}
@@ -208,11 +211,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 	private void _exportLayoutPageTemplateEntriesAndCollections(
 			LayoutPageTemplateCollection layoutPageTemplateCollection,
+			DTOConverter<LayoutStructure, PageDefinition>
+				pageDefinitionDTOConverter,
 			String path, ZipWriter zipWriter)
 		throws Exception {
-
-		DTOConverter<LayoutStructure, PageDefinition>
-			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
@@ -235,11 +237,13 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					layoutPageTemplateCollection.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId()),
-			path, zipWriter);
+			pageDefinitionDTOConverter, path, zipWriter);
 	}
 
 	private void _exportLayoutPageTemplateEntriesAndCollections(
 			List<LayoutPageTemplateCollection> layoutPageTemplateCollections,
+			DTOConverter<LayoutStructure, PageDefinition>
+				pageDefinitionDTOConverter,
 			String path, ZipWriter zipWriter)
 		throws Exception {
 
@@ -268,7 +272,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					).toString());
 
 				_exportLayoutPageTemplateEntriesAndCollections(
-					layoutPageTemplateCollection, path, zipWriter);
+					layoutPageTemplateCollection, pageDefinitionDTOConverter,
+					path, zipWriter);
 			}
 		}
 	}

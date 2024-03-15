@@ -7,19 +7,19 @@ import {act, cleanup, render} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import KeyValue from '../../../src/main/resources/META-INF/resources/KeyValue/KeyValue.es';
+import OptionFieldKeyValue from '../../../src/main/resources/META-INF/resources/OptionFieldKeyValue/OptionFieldKeyValue';
 
 const globalLanguageDirection = Liferay.Language.direction;
 
 const spritemap = 'icons.svg';
 
-const KeyValueWithProvider = (props) => (
+const OptionFieldKeyValueWithProvider = (props) => (
 	<PageProvider value={{editingLanguageId: 'en_US'}}>
-		<KeyValue {...props} />
+		<OptionFieldKeyValue {...props} />
 	</PageProvider>
 );
 
-describe('KeyValue', () => {
+describe('OptionFieldKeyValue', () => {
 	// eslint-disable-next-line no-console
 	const originalWarn = console.warn;
 
@@ -53,8 +53,8 @@ describe('KeyValue', () => {
 
 	it('is not editable', () => {
 		const {container} = render(
-			<KeyValueWithProvider
-				name="keyValue"
+			<OptionFieldKeyValueWithProvider
+				name="OptionFieldKeyValue"
 				readOnly={true}
 				spritemap={spritemap}
 			/>
@@ -69,8 +69,8 @@ describe('KeyValue', () => {
 
 	it('has a helptext', () => {
 		const {container} = render(
-			<KeyValueWithProvider
-				name="keyValue"
+			<OptionFieldKeyValueWithProvider
+				name="OptionFieldKeyValue"
 				spritemap={spritemap}
 				tip="Type something"
 			/>
@@ -85,9 +85,9 @@ describe('KeyValue', () => {
 
 	it('has an id', () => {
 		const {container} = render(
-			<KeyValueWithProvider
+			<OptionFieldKeyValueWithProvider
 				id="Id"
-				name="keyValue"
+				name="OptionFieldKeyValue"
 				spritemap={spritemap}
 			/>
 		);
@@ -101,9 +101,9 @@ describe('KeyValue', () => {
 
 	it('has a label', () => {
 		const {container} = render(
-			<KeyValueWithProvider
+			<OptionFieldKeyValueWithProvider
 				label="label"
-				name="keyValue"
+				name="OptionFieldKeyValue"
 				spritemap={spritemap}
 			/>
 		);
@@ -117,8 +117,8 @@ describe('KeyValue', () => {
 
 	it('has a predefined Value', () => {
 		const {container} = render(
-			<KeyValueWithProvider
-				name="keyValue"
+			<OptionFieldKeyValueWithProvider
+				name="OptionFieldKeyValue"
 				placeholder="Option 1"
 				spritemap={spritemap}
 			/>
@@ -133,22 +133,24 @@ describe('KeyValue', () => {
 
 	it('hides keyword input', () => {
 		const {container} = render(
-			<KeyValueWithProvider
-				name="keyValue"
+			<OptionFieldKeyValueWithProvider
+				name="OptionFieldKeyValue"
 				readOnly={true}
 				spritemap={spritemap}
 			/>
 		);
 
-		const keyValueInput = container.querySelectorAll('.key-value-input');
+		const OptionFieldKeyValueInput = container.querySelectorAll(
+			'.key-value-input'
+		);
 
-		expect(keyValueInput.length).toBe(0);
+		expect(OptionFieldKeyValueInput.length).toBe(0);
 	});
 
 	it('is not required', () => {
 		const {container} = render(
-			<KeyValueWithProvider
-				name="keyValue"
+			<OptionFieldKeyValueWithProvider
+				name="OptionFieldKeyValue"
 				required={false}
 				spritemap={spritemap}
 			/>
@@ -163,9 +165,9 @@ describe('KeyValue', () => {
 
 	it('renders Label if showLabel is true', () => {
 		const {container} = render(
-			<KeyValueWithProvider
+			<OptionFieldKeyValueWithProvider
 				label="text"
-				name="keyValue"
+				name="OptionFieldKeyValue"
 				showLabel={true}
 				spritemap={spritemap}
 			/>
@@ -180,8 +182,8 @@ describe('KeyValue', () => {
 
 	it('has a value', () => {
 		const {container} = render(
-			<KeyValueWithProvider
-				name="keyValue"
+			<OptionFieldKeyValueWithProvider
+				name="OptionFieldKeyValue"
 				spritemap={spritemap}
 				value="value"
 			/>
@@ -196,9 +198,9 @@ describe('KeyValue', () => {
 
 	it('renders component with a key', () => {
 		const {container} = render(
-			<KeyValueWithProvider
+			<OptionFieldKeyValueWithProvider
 				keyword="key"
-				name="keyValue"
+				name="OptionFieldKeyValue"
 				spritemap={spritemap}
 			/>
 		);
@@ -212,16 +214,18 @@ describe('KeyValue', () => {
 
 	it('shows keyword input', () => {
 		const {container} = render(
-			<KeyValueWithProvider
-				name="keyValue"
+			<OptionFieldKeyValueWithProvider
+				name="OptionFieldKeyValue"
 				readOnly={true}
 				showKeyword={true}
 				spritemap={spritemap}
 			/>
 		);
 
-		const keyValueInput = container.querySelectorAll('.key-value-input');
+		const OptionFieldKeyValueInput = container.querySelectorAll(
+			'[id*="keyValueName"]'
+		);
 
-		expect(keyValueInput.length).toBe(1);
+		expect(OptionFieldKeyValueInput.length).toBe(1);
 	});
 });

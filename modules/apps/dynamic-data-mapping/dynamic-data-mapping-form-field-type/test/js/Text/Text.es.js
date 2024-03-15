@@ -373,10 +373,6 @@ describe('Field Text', () => {
 			},
 		});
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
 		expect(input.value).toEqual('FieldReference');
 	});
 
@@ -398,10 +394,6 @@ describe('Field Text', () => {
 			target: {
 				value: '+9 (129) 993-9999',
 			},
-		});
-
-		act(() => {
-			jest.runAllTimers();
 		});
 
 		expect(input.value).toEqual('+9 (9) 99-9999');

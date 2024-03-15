@@ -33,86 +33,206 @@ exports[`Options shows the options 1`] = `
           class="ddm-option-entry"
         >
           <div
-            aria-labelledby="option0_fieldDetails"
-            class="form-group hide"
-            data-field-name="option0"
+            class="panel panel-secondary"
           >
-            <div
-              aria-labelledby="keyValueLabeloption0_fieldDetails"
-              class="form-group hide"
-              data-field-name="keyValueLabeloption0"
-            >
-              <div
-                data-tooltip-align="top"
-                title="Option 1"
-              >
-                <input
-                  aria-invalid="true"
-                  class="form-control ddm-field-text"
-                  id="keyValueLabeloption0"
-                  name="keyValueLabeloption0"
-                  placeholder="enter-an-option"
-                  type="text"
-                  value="Option 1"
-                />
-              </div>
-              <input
-                name="keyValueLabeloption0_edited"
-                type="hidden"
-                value="false"
-              />
-            </div>
             <button
-              aria-label="remove-x-option"
-              class="close close-modal"
+              aria-controls="clay-id-1"
+              aria-expanded="true"
+              class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle show btn btn-unstyled"
               type="button"
             >
-              <svg
-                class="lexicon-icon lexicon-icon-times"
-                role="presentation"
+              <span
+                class="panel-title"
               >
-                <use
-                  href="#times"
-                />
-              </svg>
+                Option 1
+              </span>
+              <span
+                class="collapse-icon-closed"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-angle-right"
+                  role="presentation"
+                >
+                  <use
+                    href="#angle-right"
+                  />
+                </svg>
+              </span>
+              <span
+                class="collapse-icon-open"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-angle-down"
+                  role="presentation"
+                >
+                  <use
+                    href="#angle-down"
+                  />
+                </svg>
+              </span>
             </button>
             <div
-              class="active form-text key-value-editor"
+              aria-labelledby="clay-id-1"
+              class="panel-collapse expanded"
+              id="clay-id-1"
+              role="region"
             >
-              <label
-                class="control-label key-value-label"
+              <div
+                class="panel-body collapsable-option-body"
               >
-                field-name
-                :
-              </label>
-              <input
-                class="key-value-input"
-                tabindex="0"
-                type="text"
-                value="Option1"
-              />
+                <label
+                  for="keyValueDisplayNameoption0"
+                >
+                  display-name
+                </label>
+                <div
+                  aria-labelledby="option0_fieldDetails"
+                  class="form-group hide"
+                  data-field-name="option0"
+                >
+                  <div
+                    aria-labelledby="keyValueDisplayNameoption0_fieldDetails"
+                    class="form-group hide"
+                    data-field-name="keyValueDisplayNameoption0"
+                  >
+                    <div
+                      data-tooltip-align="top"
+                      title="Option 1"
+                    >
+                      <input
+                        aria-invalid="true"
+                        class="form-control ddm-field-text"
+                        id="keyValueDisplayNameoption0"
+                        name="keyValueDisplayNameoption0"
+                        placeholder="Option"
+                        type="text"
+                        value="Option 1"
+                      />
+                    </div>
+                    <input
+                      name="keyValueDisplayNameoption0_edited"
+                      type="hidden"
+                      value="false"
+                    />
+                  </div>
+                  <button
+                    aria-label="remove-x-option"
+                    class="close close-modal"
+                    type="button"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-times"
+                      role="presentation"
+                    >
+                      <use
+                        href="#times"
+                      />
+                    </svg>
+                  </button>
+                  <input
+                    name="option0_edited"
+                    type="hidden"
+                    value="false"
+                  />
+                </div>
+                <label
+                  class="mt-3"
+                  for="keyValueReferenceOption1"
+                >
+                  option-reference
+                </label>
+                <div
+                  aria-labelledby="Option1_fieldDetails"
+                  class="form-group hide"
+                  data-field-name="Option1"
+                >
+                  <div
+                    aria-labelledby="keyValueReferenceOption1_fieldDetails"
+                    class="form-group hide"
+                    data-field-name="keyValueReferenceOption1"
+                  >
+                    <div
+                      data-tooltip-align="top"
+                      title="Option1"
+                    >
+                      <input
+                        aria-invalid="true"
+                        class="form-control ddm-field-text"
+                        id="keyValueReferenceOption1"
+                        name="keyValueReferenceOption1"
+                        type="text"
+                        value="Option1"
+                      />
+                    </div>
+                    <input
+                      name="keyValueReferenceOption1_edited"
+                      type="hidden"
+                      value="false"
+                    />
+                  </div>
+                  <input
+                    name="Option1_edited"
+                    type="hidden"
+                    value="false"
+                  />
+                </div>
+                <label
+                  class="mt-3"
+                  for="keyValueNameOption1"
+                >
+                  option-name
+                </label>
+                <span
+                  data-tooltip-align="top"
+                  title="modifying-the-option-name-may-result-in-data-loss"
+                >
+                   
+                  <svg
+                    class="lexicon-icon lexicon-icon-question-circle-full tooltip-icon"
+                    role="presentation"
+                  >
+                    <use
+                      href="#question-circle-full"
+                    />
+                  </svg>
+                </span>
+                <div
+                  aria-labelledby="Option1_fieldDetails"
+                  class="form-group hide"
+                  data-field-name="Option1"
+                >
+                  <div
+                    aria-labelledby="keyValueNameOption1_fieldDetails"
+                    class="form-group hide"
+                    data-field-name="keyValueNameOption1"
+                  >
+                    <div
+                      data-tooltip-align="top"
+                      title="Option1"
+                    >
+                      <input
+                        aria-invalid="true"
+                        class="form-control ddm-field-text"
+                        id="keyValueNameOption1"
+                        name="keyValueNameOption1"
+                        type="text"
+                        value="Option1"
+                      />
+                    </div>
+                    <input
+                      name="keyValueNameOption1_edited"
+                      type="hidden"
+                      value="false"
+                    />
+                  </div>
+                  <input
+                    name="Option1_edited"
+                    type="hidden"
+                    value="false"
+                  />
+                </div>
+              </div>
             </div>
-            <div
-              class="active form-text key-value-editor"
-            >
-              <label
-                class="control-label key-value-label"
-              >
-                field-reference
-                :
-              </label>
-              <input
-                class="key-value-reference-input"
-                tabindex="0"
-                type="text"
-                value="Option1"
-              />
-            </div>
-            <input
-              name="option0_edited"
-              type="hidden"
-              value="false"
-            />
           </div>
         </div>
       </div>
@@ -139,181 +259,217 @@ exports[`Options shows the options 1`] = `
           class="ddm-option-entry"
         >
           <div
-            aria-labelledby="option1_fieldDetails"
-            class="form-group hide"
-            data-field-name="option1"
+            class="panel panel-secondary"
           >
-            <div
-              aria-labelledby="keyValueLabeloption1_fieldDetails"
-              class="form-group hide"
-              data-field-name="keyValueLabeloption1"
-            >
-              <div
-                data-tooltip-align="top"
-                title="Option 2"
-              >
-                <input
-                  aria-invalid="true"
-                  class="form-control ddm-field-text"
-                  id="keyValueLabeloption1"
-                  name="keyValueLabeloption1"
-                  placeholder="enter-an-option"
-                  type="text"
-                  value="Option 2"
-                />
-              </div>
-              <input
-                name="keyValueLabeloption1_edited"
-                type="hidden"
-                value="false"
-              />
-            </div>
             <button
-              aria-label="remove-x-option"
-              class="close close-modal"
+              aria-controls="clay-id-2"
+              aria-expanded="true"
+              class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle show btn btn-unstyled"
               type="button"
             >
-              <svg
-                class="lexicon-icon lexicon-icon-times"
-                role="presentation"
+              <span
+                class="panel-title"
               >
-                <use
-                  href="#times"
-                />
-              </svg>
+                Option 2
+              </span>
+              <span
+                class="collapse-icon-closed"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-angle-right"
+                  role="presentation"
+                >
+                  <use
+                    href="#angle-right"
+                  />
+                </svg>
+              </span>
+              <span
+                class="collapse-icon-open"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-angle-down"
+                  role="presentation"
+                >
+                  <use
+                    href="#angle-down"
+                  />
+                </svg>
+              </span>
             </button>
             <div
-              class="active form-text key-value-editor"
-            >
-              <label
-                class="control-label key-value-label"
-              >
-                field-name
-                :
-              </label>
-              <input
-                class="key-value-input"
-                tabindex="0"
-                type="text"
-                value="Option2"
-              />
-            </div>
-            <div
-              class="active form-text key-value-editor"
-            >
-              <label
-                class="control-label key-value-label"
-              >
-                field-reference
-                :
-              </label>
-              <input
-                class="key-value-reference-input"
-                tabindex="0"
-                type="text"
-                value="Option2"
-              />
-            </div>
-            <input
-              name="option1_edited"
-              type="hidden"
-              value="false"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="ddm-options-target"
-      />
-      <div
-        class="ddm-field-options"
-      >
-        <span
-          class="ddm-options-drag"
-          draggable="true"
-        >
-          <svg
-            class="lexicon-icon lexicon-icon-drag"
-            role="presentation"
-          >
-            <use
-              href="#drag"
-            />
-          </svg>
-        </span>
-        <div
-          class="ddm-option-entry"
-        >
-          <div
-            aria-labelledby="option2_fieldDetails"
-            class="form-group hide"
-            data-field-name="option2"
-          >
-            <div
-              aria-labelledby="keyValueLabeloption2_fieldDetails"
-              class="form-group hide"
-              data-field-name="keyValueLabeloption2"
+              aria-labelledby="clay-id-2"
+              class="panel-collapse expanded"
+              id="clay-id-2"
+              role="region"
             >
               <div
-                data-tooltip-align="top"
-                title="enter-an-option"
+                class="panel-body collapsable-option-body"
               >
-                <input
-                  aria-invalid="true"
-                  class="form-control ddm-field-text"
-                  id="keyValueLabeloption2"
-                  name="keyValueLabeloption2"
-                  placeholder="enter-an-option"
-                  type="text"
-                  value=""
-                />
+                <label
+                  for="keyValueDisplayNameoption1"
+                >
+                  display-name
+                </label>
+                <div
+                  aria-labelledby="option1_fieldDetails"
+                  class="form-group hide"
+                  data-field-name="option1"
+                >
+                  <div
+                    aria-labelledby="keyValueDisplayNameoption1_fieldDetails"
+                    class="form-group hide"
+                    data-field-name="keyValueDisplayNameoption1"
+                  >
+                    <div
+                      data-tooltip-align="top"
+                      title="Option 2"
+                    >
+                      <input
+                        aria-invalid="true"
+                        class="form-control ddm-field-text"
+                        id="keyValueDisplayNameoption1"
+                        name="keyValueDisplayNameoption1"
+                        placeholder="Option"
+                        type="text"
+                        value="Option 2"
+                      />
+                    </div>
+                    <input
+                      name="keyValueDisplayNameoption1_edited"
+                      type="hidden"
+                      value="false"
+                    />
+                  </div>
+                  <button
+                    aria-label="remove-x-option"
+                    class="close close-modal"
+                    type="button"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-times"
+                      role="presentation"
+                    >
+                      <use
+                        href="#times"
+                      />
+                    </svg>
+                  </button>
+                  <input
+                    name="option1_edited"
+                    type="hidden"
+                    value="false"
+                  />
+                </div>
+                <label
+                  class="mt-3"
+                  for="keyValueReferenceOption2"
+                >
+                  option-reference
+                </label>
+                <div
+                  aria-labelledby="Option2_fieldDetails"
+                  class="form-group hide"
+                  data-field-name="Option2"
+                >
+                  <div
+                    aria-labelledby="keyValueReferenceOption2_fieldDetails"
+                    class="form-group hide"
+                    data-field-name="keyValueReferenceOption2"
+                  >
+                    <div
+                      data-tooltip-align="top"
+                      title="Option2"
+                    >
+                      <input
+                        aria-invalid="true"
+                        class="form-control ddm-field-text"
+                        id="keyValueReferenceOption2"
+                        name="keyValueReferenceOption2"
+                        type="text"
+                        value="Any<String>"
+                      />
+                    </div>
+                    <input
+                      name="keyValueReferenceOption2_edited"
+                      type="hidden"
+                      value="false"
+                    />
+                  </div>
+                  <input
+                    name="Option2_edited"
+                    type="hidden"
+                    value="false"
+                  />
+                </div>
+                <label
+                  class="mt-3"
+                  for="keyValueNameOption2"
+                >
+                  option-name
+                </label>
+                <span
+                  data-tooltip-align="top"
+                  title="modifying-the-option-name-may-result-in-data-loss"
+                >
+                   
+                  <svg
+                    class="lexicon-icon lexicon-icon-question-circle-full tooltip-icon"
+                    role="presentation"
+                  >
+                    <use
+                      href="#question-circle-full"
+                    />
+                  </svg>
+                </span>
+                <div
+                  aria-labelledby="Option2_fieldDetails"
+                  class="form-group hide"
+                  data-field-name="Option2"
+                >
+                  <div
+                    aria-labelledby="keyValueNameOption2_fieldDetails"
+                    class="form-group hide"
+                    data-field-name="keyValueNameOption2"
+                  >
+                    <div
+                      data-tooltip-align="top"
+                      title="Option2"
+                    >
+                      <input
+                        aria-invalid="true"
+                        class="form-control ddm-field-text"
+                        id="keyValueNameOption2"
+                        name="keyValueNameOption2"
+                        type="text"
+                        value="Any<String>"
+                      />
+                    </div>
+                    <input
+                      name="keyValueNameOption2_edited"
+                      type="hidden"
+                      value="false"
+                    />
+                  </div>
+                  <input
+                    name="Option2_edited"
+                    type="hidden"
+                    value="false"
+                  />
+                </div>
               </div>
-              <input
-                name="keyValueLabeloption2_edited"
-                type="hidden"
-                value="false"
-              />
             </div>
-            <div
-              class="active form-text key-value-editor"
-            >
-              <label
-                class="control-label key-value-label"
-              >
-                field-name
-                :
-              </label>
-              <input
-                class="key-value-input"
-                tabindex="0"
-                type="text"
-                value="Any<String>"
-              />
-            </div>
-            <div
-              class="active form-text key-value-editor"
-            >
-              <label
-                class="control-label key-value-label"
-              >
-                field-reference
-                :
-              </label>
-              <input
-                class="key-value-reference-input"
-                tabindex="0"
-                type="text"
-                value="Any<String>"
-              />
-            </div>
-            <input
-              name="option2_edited"
-              type="hidden"
-              value="false"
-            />
           </div>
         </div>
       </div>
+      <button
+        class="add-option-button btn btn-secondary"
+        type="button"
+      >
+        <span>
+          add-option
+        </span>
+      </button>
     </div>
     <input
       name="options_edited"

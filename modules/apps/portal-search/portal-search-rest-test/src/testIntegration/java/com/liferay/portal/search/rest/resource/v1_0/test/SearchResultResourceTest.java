@@ -222,12 +222,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			objectDefinition.getUserName(), "embedded",
 			new SearchRequestBody());
 
-		Collection<SearchResult> items = searchResultSearchPage.getItems();
+		Collection<SearchResult> searchResults =
+			searchResultSearchPage.getItems();
 
-		Assert.assertFalse(items.isEmpty());
+		Assert.assertFalse(searchResults.isEmpty());
 
-		for (SearchResult item : items) {
-			Assert.assertNotNull(item.getEmbedded());
+		for (SearchResult searchResult : searchResults) {
+			Assert.assertNotNull(searchResult.getEmbedded());
 		}
 	}
 

@@ -22,8 +22,8 @@ public interface LayoutsExporter {
 		throws Exception;
 
 	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
-			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter,
-			String path)
+			long[] layoutPageTemplateCollectionIds, String path,
+			ZipWriter zipWriter)
 		throws Exception;
 
 	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)

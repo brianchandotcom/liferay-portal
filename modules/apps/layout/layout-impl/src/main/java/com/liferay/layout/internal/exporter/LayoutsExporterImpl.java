@@ -136,7 +136,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
 			List<LayoutPageTemplateCollection> layoutPageTemplateCollections,
-			ZipWriter zipWriter, String path)
+			String path, ZipWriter zipWriter)
 		throws Exception {
 
 		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
@@ -172,8 +172,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	}
 
 	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
-			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter,
-			String path)
+			long[] layoutPageTemplateCollectionIds, String path,
+			ZipWriter zipWriter)
 		throws Exception {
 
 		List<LayoutPageTemplateCollection> exportLayoutPageTemplateCollections =
@@ -189,7 +189,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		}
 
 		return exportLayoutPageTemplateEntriesAndCollections(
-			exportLayoutPageTemplateCollections, zipWriter, path);
+			exportLayoutPageTemplateCollections, path, zipWriter);
 	}
 
 	@Override
@@ -278,7 +278,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					layoutPageTemplateCollection.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId()),
-			zipWriter, path);
+			path, zipWriter);
 
 		return zipWriter;
 	}

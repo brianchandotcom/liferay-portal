@@ -50,8 +50,8 @@ public class ExportLayoutPageTemplateCollectionMVCResourceCommand
 
 			zipWriter =
 				_layoutsExporter.exportLayoutPageTemplateEntriesAndCollections(
-					new long[] {layoutPageTemplateCollectionId}, zipWriter,
-					StringPool.BLANK);
+					new long[] {layoutPageTemplateCollectionId},
+					StringPool.BLANK, zipWriter);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,

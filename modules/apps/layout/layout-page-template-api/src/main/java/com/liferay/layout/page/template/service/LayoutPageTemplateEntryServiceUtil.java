@@ -164,6 +164,12 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, int status) {
+
+		return getService().getLayoutPageTemplateEntries(groupId, status);
+	}
+
+	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, int type, int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
@@ -193,6 +199,13 @@ public class LayoutPageTemplateEntryServiceUtil {
 
 		return getService().getLayoutPageTemplateEntries(
 			groupId, types, start, end, orderByComparator);
+	}
+
+	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long layoutPageTemplateCollectionId, int status) {
+
+		return getService().getLayoutPageTemplateEntries(
+			groupId, layoutPageTemplateCollectionId, status);
 	}
 
 	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(

@@ -355,6 +355,14 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_S() throws Exception {
+		_persistence.countByG_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_S(0L, 0);
+	}
+
+	@Test
 	public void testCountByG_L_LikeN() throws Exception {
 		_persistence.countByG_L_LikeN(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "");

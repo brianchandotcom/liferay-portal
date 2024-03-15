@@ -370,6 +370,12 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, int status) {
+
+		return getService().getLayoutPageTemplateEntries(groupId, status);
+	}
+
+	public static List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId) {
 
 		return getService().getLayoutPageTemplateEntries(

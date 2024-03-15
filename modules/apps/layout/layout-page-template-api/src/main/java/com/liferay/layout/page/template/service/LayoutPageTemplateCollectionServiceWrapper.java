@@ -104,6 +104,16 @@ public class LayoutPageTemplateCollectionServiceWrapper
 	@Override
 	public java.util.List<LayoutPageTemplateCollection>
 		getLayoutPageTemplateCollections(
+			long groupId, long layoutPageTemplateCollectionId) {
+
+		return _layoutPageTemplateCollectionService.
+			getLayoutPageTemplateCollections(
+				groupId, layoutPageTemplateCollectionId);
+	}
+
+	@Override
+	public java.util.List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(
 			long groupId, String name, int type, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<LayoutPageTemplateCollection> orderByComparator) {

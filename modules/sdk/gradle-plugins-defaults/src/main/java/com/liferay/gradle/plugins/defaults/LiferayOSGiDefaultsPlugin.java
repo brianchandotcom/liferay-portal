@@ -98,6 +98,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -4152,11 +4153,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Map<String, Object> args = new HashMap<>();
 
 		args.put("dir", dir);
-		args.put(
-			"excludes",
-			Arrays.asList(
-				"**/bin/", "**/build/", "**/classes/", "**/node_modules/",
-				"**/node_modules_cache/", "**/test-classes/", "**/tmp/"));
+
+		List<String> excludes = new ArrayList<>();
+
+		Collections.addAll(
+			excludes, "**/bin/", "**/build/", "**/classes/", "**/node_modules/",
+			"**/node_modules_cache/", "**/test-classes/", "**/tmp/");
+
+		String property = GradleUtil.getProperty(
+			project, "gradle.update.file.versions.excludes", (String)null);
+
+		if (Validator.isNotNull(property)) {
+			Collections.addAll(excludes, property.split(","));
+		}
+
+		args.put("excludes", excludes);
 		args.put(
 			"includes",
 			Arrays.asList("**/*.gradle", "**/sdk/*/README.markdown"));

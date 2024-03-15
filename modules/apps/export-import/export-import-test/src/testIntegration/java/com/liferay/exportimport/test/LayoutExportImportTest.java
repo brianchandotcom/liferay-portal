@@ -177,8 +177,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	public void testExportImportLayoutFromMasterLayoutPageTemplateAndDraftLayoutMappingOnImportSide()
 		throws Exception {
 
-		// make sure that the masterLayoutPageTemplate's layoutId is the
-		// same as contentLayout's layoutId
+		// This line is needed to reproduce LPD-18967
 
 		LayoutTestUtil.addTypePortletLayout(group, true);
 

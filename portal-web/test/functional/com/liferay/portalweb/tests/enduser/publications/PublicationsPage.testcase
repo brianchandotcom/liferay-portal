@@ -989,9 +989,7 @@ definition {
 
 		PageEditor.gotoStyle(fragmentName = "Paragraph");
 
-		PageEditor.configureFragment(
-			alignment = "Align Right",
-			textColor = "Warning");
+		PageEditor.configureFragment(alignment = "Align Right");
 
 		PageEditor.addWidget(
 			portletName = "Asset Publisher",

@@ -118,11 +118,11 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	@Override
 	@Test
 	public void testPostSearchPage() throws Exception {
-		SearchPage<SearchResult> searchPage = _postSearchPage(
+		SearchPage<SearchResult> searchResultSearchPage = _postSearchPage(
 			_journalArticle.getArticleId());
 
-		Assert.assertEquals(1L, searchPage.getTotalCount());
-		Assert.assertEquals(1L, searchPage.getPage());
+		Assert.assertEquals(1L, searchResultSearchPage.getTotalCount());
+		Assert.assertEquals(1L, searchResultSearchPage.getPage());
 	}
 
 	@Test
@@ -167,14 +167,15 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testPostSearchPageWithDateRangeFacetConfiguration()
 		throws Exception {
 
-		LocalDateTime startOfDay = LocalDateTime.of(
+		LocalDateTime startOfDayLocalDateTime = LocalDateTime.of(
 			LocalDate.now(), LocalTime.MIN);
 
 		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
 
 		String range = StringBundler.concat(
 			DateFormatUtils.format(
-				Date.from(startOfDay.toInstant(ZoneOffset.ofHours(0))),
+				Date.from(
+					startOfDayLocalDateTime.toInstant(ZoneOffset.ofHours(0))),
 				"yyyyMMddHHmmss"),
 			" TO ", DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"));
 
@@ -185,19 +186,20 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				"range", range
 			));
 
-		SearchPage<SearchResult> searchPage = _assertFacetConfiguration(
-			false,
-			HashMapBuilder.<String, Object>put(
-				"field", "modified"
-			).put(
-				"format", "yyyyMMddHHmmss"
-			).put(
-				"ranges", rangesJSONArray
-			).build(),
-			"date-range", range, range);
+		SearchPage<SearchResult> searchResultSearchPage =
+			_assertFacetConfiguration(
+				false,
+				HashMapBuilder.<String, Object>put(
+					"field", "modified"
+				).put(
+					"format", "yyyyMMddHHmmss"
+				).put(
+					"ranges", rangesJSONArray
+				).build(),
+				"date-range", range, range);
 
 		Map<String, Object> facetsMap =
-			(Map<String, Object>)searchPage.getSearchFacets();
+			(Map<String, Object>)searchResultSearchPage.getSearchFacets();
 
 		JSONArray termJSONArray = (JSONArray)facetsMap.get("date-range");
 
@@ -215,12 +217,12 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		ObjectDefinition objectDefinition =
 			_addObjectDefinitionWithObjectEntry();
 
-		SearchPage<SearchResult> searchPage = _postSearchPage(
+		SearchPage<SearchResult> searchResultSearchPage = _postSearchPage(
 			objectDefinition.getClassName(), null,
 			objectDefinition.getUserName(), "embedded",
 			new SearchRequestBody());
 
-		Collection<SearchResult> items = searchPage.getItems();
+		Collection<SearchResult> items = searchResultSearchPage.getItems();
 
 		Assert.assertFalse(items.isEmpty());
 
@@ -242,13 +244,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testPostSearchPageWithHighlightConfiguration()
 		throws Exception {
 
-		SearchPage<SearchResult> searchPage =
+		SearchPage<SearchResult> searchResultSearchPage =
 			_postSearchPageWithSXPBlueprintConfiguration(
 				_user.getModelClassName(), _user.getFullName(),
 				_addSXPBlueprint(true));
 
 		List<SearchResult> searchResults = ListUtil.fromCollection(
-			searchPage.getItems());
+			searchResultSearchPage.getItems());
 
 		Assert.assertFalse(searchResults.isEmpty());
 
@@ -293,13 +295,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testPostSearchPageWithoutHighlightConfiguration()
 		throws Exception {
 
-		SearchPage<SearchResult> searchPage =
+		SearchPage<SearchResult> searchResultSearchPage =
 			_postSearchPageWithSXPBlueprintConfiguration(
 				_user.getModelClassName(), _user.getFullName(),
 				_addSXPBlueprint(false));
 
 		List<SearchResult> searchResults = ListUtil.fromCollection(
-			searchPage.getItems());
+			searchResultSearchPage.getItems());
 
 		Assert.assertFalse(searchResults.isEmpty());
 
@@ -353,10 +355,10 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 	@Test
 	public void testPostSearchPageZeroResults() throws Exception {
-		SearchPage<SearchResult> searchPage = _postSearchPage(
+		SearchPage<SearchResult> searchResultSearchPage = _postSearchPage(
 			"shouldnotmatchanything");
 
-		Assert.assertEquals(0L, searchPage.getTotalCount());
+		Assert.assertEquals(0L, searchResultSearchPage.getTotalCount());
 	}
 
 	private AssetCategory _addAssetCategory(
@@ -489,7 +491,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			String facetName, Object facetValues, String... expectedValues)
 		throws Exception {
 
-		SearchPage<SearchResult> searchPage =
+		SearchPage<SearchResult> searchResultSearchPage =
 			_postSearchPageWithFacetConfiguration(
 				new FacetConfiguration() {
 					{
@@ -501,7 +503,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				});
 
 		Map<String, Object> facetsMap =
-			(Map<String, Object>)searchPage.getSearchFacets();
+			(Map<String, Object>)searchResultSearchPage.getSearchFacets();
 
 		Assert.assertNotNull(facetsMap);
 
@@ -536,7 +538,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			Assert.assertArrayEquals(expectedValues, termValues);
 		}
 
-		return searchPage;
+		return searchResultSearchPage;
 	}
 
 	private JSONObject _createSXPBlueprintHighlightConfigurationJSON() {

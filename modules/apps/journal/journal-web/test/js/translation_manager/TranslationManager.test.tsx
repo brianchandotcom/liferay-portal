@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fieldToTranslations} from '../../../src/main/resources/META-INF/resources/js/translation_manager/useTranslationProgress';
+
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import TranslationManager, {
-	fieldToTranslations,
-} from '../../../src/main/resources/META-INF/resources/js/translation_manager/TranslationManager';
+import TranslationManager from '../../../src/main/resources/META-INF/resources/js/translation_manager/TranslationManager';
 
 const FIELDS = {
 	description: {

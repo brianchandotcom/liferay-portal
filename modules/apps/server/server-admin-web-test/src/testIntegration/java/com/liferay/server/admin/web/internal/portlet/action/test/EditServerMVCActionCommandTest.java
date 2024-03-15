@@ -6,9 +6,13 @@
 package com.liferay.server.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.mail.kernel.model.Account;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -77,6 +81,10 @@ public class EditServerMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group, false);
@@ -151,6 +159,17 @@ public class EditServerMVCActionCommandTest {
 			layoutRevision.getLayoutRevisionId(),
 			RandomTestUtil.randomString());
 
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			_ctPortletPreferences = _addPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				layoutRevision.getLayoutRevisionId(),
+				RandomTestUtil.randomString());
+		}
+
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_cleanUpOrphanedPortletPreferences",
 			new Class<?>[0]);
@@ -158,6 +177,15 @@ public class EditServerMVCActionCommandTest {
 		Assert.assertNotNull(
 			_portletPreferencesLocalService.fetchPortletPreferences(
 				_portletPreferences.getPortletPreferencesId()));
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			Assert.assertNotNull(
+				_portletPreferencesLocalService.fetchPortletPreferences(
+					_ctPortletPreferences.getPortletPreferencesId()));
+		}
 	}
 
 	@Test
@@ -169,6 +197,16 @@ public class EditServerMVCActionCommandTest {
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
 			RandomTestUtil.randomString());
 
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			_ctPortletPreferences = _addPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				RandomTestUtil.randomString());
+		}
+
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_cleanUpOrphanedPortletPreferences",
 			new Class<?>[0]);
@@ -176,6 +214,15 @@ public class EditServerMVCActionCommandTest {
 		Assert.assertNull(
 			_portletPreferencesLocalService.fetchPortletPreferences(
 				_portletPreferences.getPortletPreferencesId()));
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			Assert.assertNull(
+				_portletPreferencesLocalService.fetchPortletPreferences(
+					_ctPortletPreferences.getPortletPreferencesId()));
+		}
 	}
 
 	@Test
@@ -196,6 +243,16 @@ public class EditServerMVCActionCommandTest {
 			PortletKeys.PREFS_OWNER_ID_DEFAULT,
 			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(), portletId);
 
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			_ctPortletPreferences = _addPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				portletId);
+		}
+
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_cleanUpOrphanedPortletPreferences",
 			new Class<?>[0]);
@@ -203,6 +260,15 @@ public class EditServerMVCActionCommandTest {
 		Assert.assertNotNull(
 			_portletPreferencesLocalService.fetchPortletPreferences(
 				_portletPreferences.getPortletPreferencesId()));
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			Assert.assertNotNull(
+				_portletPreferencesLocalService.fetchPortletPreferences(
+					_ctPortletPreferences.getPortletPreferencesId()));
+		}
 	}
 
 	@Test
@@ -367,8 +433,18 @@ public class EditServerMVCActionCommandTest {
 	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
+	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@DeleteAfterTestRun
+	private PortletPreferences _ctPortletPreferences;
+
+	@DeleteAfterTestRun
 	private Group _group;
 
+	@DeleteAfterTestRun
 	private Layout _layout;
 
 	@Inject
@@ -392,6 +468,7 @@ public class EditServerMVCActionCommandTest {
 	@Inject
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
+	@DeleteAfterTestRun
 	private PortletPreferences _portletPreferences;
 
 	@Inject

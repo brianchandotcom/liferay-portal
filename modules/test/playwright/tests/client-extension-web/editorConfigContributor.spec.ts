@@ -68,7 +68,7 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 
 	await clientExtensionsPage.openItemActionsDropdown({text: sampleName1});
 
-	await clientExtensionsPage.itemEditButton.click();
+	await clientExtensionsPage.editMenuItem.click();
 
 	const sampleName2 = 'Sample Name 2';
 
@@ -82,7 +82,7 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 
 	clientExtensionsPage.page.on('dialog', (dialog) => dialog.accept());
 
-	await clientExtensionsPage.itemDeleteButton.click();
+	await clientExtensionsPage.deleteMenuItem.click();
 });
 
 test('Add a toolbar button to a CKEditor, by applying editor config contributor client extension @LPS-186870', async ({

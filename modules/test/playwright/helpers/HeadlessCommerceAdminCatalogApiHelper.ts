@@ -4,7 +4,7 @@
  */
 
 import {getRandomInt} from '../utils/getRandomInt';
-import {ApiHelpers} from './ApiHelpers';
+import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TCatalog = {
 	accountId?: number;
@@ -19,6 +19,9 @@ type TProduct = {
 	catalogId: number;
 	name?: {
 		[key: string]: string;
+	};
+	productConfiguration?: {
+		allowBackOrder?: boolean;
 	};
 	productId?: number;
 	productOptions?: any[];
@@ -59,10 +62,10 @@ type TSkuUnitOfMeasure = {
 };
 
 export class HeadlessCommerceAdminCatalogApiHelper {
-	readonly apiHelpers: ApiHelpers;
+	readonly apiHelpers: ApiHelpers | DataApiHelpers;
 	readonly basePath: string;
 
-	constructor(apiHelpers: ApiHelpers) {
+	constructor(apiHelpers: ApiHelpers | DataApiHelpers) {
 		this.apiHelpers = apiHelpers;
 		this.basePath = 'headless-commerce-admin-catalog/v1.0';
 	}
@@ -73,7 +76,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
-	async deleteCatalog(catalogId: string) {
+	async deleteCatalog(catalogId: number | string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/catalog/${catalogId}`
 		);
@@ -162,7 +165,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	}
 
 	async postCatalog(catalog?: TCatalog) {
-		return await this.apiHelpers.post(
+		catalog = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/catalogs`,
 			{
 				accountId: 0,
@@ -172,6 +175,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 				...(catalog || {}),
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: catalog.id, type: 'catalog'});
+		}
+
+		return catalog;
 	}
 
 	async postOption(
@@ -191,6 +200,10 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 				priority,
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: postOption.id, type: 'option'});
+		}
 
 		return postOption;
 	}
@@ -214,7 +227,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	}
 
 	async postProduct(product: TProduct): Promise<TProduct> {
-		return await this.apiHelpers.post(
+		product = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products?nestedFields=productSpecifications,skus`,
 			{
 				active: true,
@@ -236,6 +249,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 				...product,
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: product.productId, type: 'product'});
+		}
+
+		return product;
 	}
 
 	async postProductRelatedProduct(
@@ -272,6 +291,13 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 				...skuUnitOfMeasure,
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: postSkuUnitOfMeasure.id,
+				type: 'skuUnitOfMeasure',
+			});
+		}
 
 		return postSkuUnitOfMeasure;
 	}

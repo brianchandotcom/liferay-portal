@@ -29,6 +29,11 @@ import {JSONWebServicesGroupApiHelper} from './json-web-services/JSONWebServices
 import {JSONWebServicesJournalApiHelper} from './json-web-services/JSONWebServicesJournalApiHelper';
 import {JSONWebServicesLayoutApiHelper} from './json-web-services/JSONWebServicesLayoutApiHelper';
 
+type TDataApiHelpersData = {
+	id: any;
+	type: string;
+};
+
 export class ApiHelpers {
 	readonly apiBuilder: ApiBuilderHelper;
 	readonly baseUrl: string;
@@ -187,5 +192,58 @@ export class ApiHelpers {
 		return {
 			'x-csrf-token': authToken,
 		};
+	}
+}
+
+export class DataApiHelpers extends ApiHelpers {
+	readonly data: TDataApiHelpersData[];
+
+	constructor(page: Page) {
+		super(page);
+
+		this.data = [];
+	}
+
+	async clearData() {
+		for await (const item of this.data.reverse()) {
+			switch (item.type) {
+				case 'catalog':
+					await this.headlessCommerceAdminCatalog.deleteCatalog(
+						item.id
+					);
+
+					break;
+				case 'channel':
+					await this.headlessCommerceAdminChannel.deleteChannel(
+						item.id
+					);
+
+					break;
+				case 'option':
+					await this.headlessCommerceAdminCatalog.deleteOption(
+						item.id
+					);
+
+					break;
+				case 'product':
+					await this.headlessCommerceAdminCatalog.deleteProduct(
+						item.id
+					);
+
+					break;
+				case 'site':
+					await this.headlessSite.deleteSite(item.id);
+
+					break;
+				case 'skuUnitOfMeasure':
+					await this.headlessCommerceAdminCatalog.deleteSkuUnitOfMeasure(
+						item.id
+					);
+
+					break;
+				default:
+					break;
+			}
+		}
 	}
 }

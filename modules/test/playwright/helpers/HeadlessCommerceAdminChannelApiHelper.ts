@@ -4,7 +4,7 @@
  */
 
 import {getRandomInt} from '../utils/getRandomInt';
-import {ApiHelpers} from './ApiHelpers';
+import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TChannel = {
 	currencyCode?: string;
@@ -15,10 +15,10 @@ type TChannel = {
 };
 
 export class HeadlessCommerceAdminChannelApiHelper {
-	readonly apiHelpers: ApiHelpers;
+	readonly apiHelpers: ApiHelpers | DataApiHelpers;
 	readonly basePath: string;
 
-	constructor(apiHelpers: ApiHelpers) {
+	constructor(apiHelpers: ApiHelpers | DataApiHelpers) {
 		this.apiHelpers = apiHelpers;
 		this.basePath = 'headless-commerce-admin-channel/v1.0/';
 	}
@@ -36,7 +36,7 @@ export class HeadlessCommerceAdminChannelApiHelper {
 	}
 
 	async postChannel(channel: TChannel): Promise<TChannel> {
-		return await this.apiHelpers.post(
+		channel = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels`,
 			{
 				currencyCode: 'USD',
@@ -46,5 +46,11 @@ export class HeadlessCommerceAdminChannelApiHelper {
 				...channel,
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: channel.id, type: 'channel'});
+		}
+
+		return channel;
 	}
 }

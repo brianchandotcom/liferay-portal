@@ -5,9 +5,9 @@
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
 			"importStrategy": "ON_ERROR_FAIL",
-			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
-		}
+		},
+		"taskItemDelegateName": "DEFAULT"
 	},
 	"items": [
 		{
@@ -17,9 +17,9 @@
 			"enableComments": false,
 			"enableLocalization": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "T4T1_FOLDER_TEMPLATES",
+			"externalReferenceCode": "T4T1_FOLDER_TEMPLATE",
 			"label": {
-				"en_US": "Folder Template"
+				"en_US": "T4T1 Folder Template"
 			},
 			"modifiable": true,
 			"name": "T4T1FolderTemplate",
@@ -27,15 +27,14 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "TEMPLATENAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Template Name"
+						"en_US": "Name"
 					},
 					"localized": false,
-					"name": "templateName",
+					"name": "name",
 					"objectFieldSettings": [
 						{
 							"name": "uniqueValues",
@@ -52,15 +51,14 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "TEMPLATEDESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Template Description"
+						"en_US": "Description"
 					},
 					"localized": false,
-					"name": "templateDescription",
+					"name": "description",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",
@@ -81,7 +79,7 @@
 				"en_US": "T4T1 Folder Templates"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/T4T1foldertemplates",
+			"restContextPath": "/o/c/t4t1foldertemplates",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -89,7 +87,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "templateName"
+			"titleObjectFieldName": "name"
 		},
 		{
 			"accountEntryRestricted": false,
@@ -101,7 +99,7 @@
 			"enableObjectEntryHistory": false,
 			"externalReferenceCode": "T4T1_FOLDER_TEMPLATE_NODE",
 			"label": {
-				"en_US": "Folder Template Node"
+				"en_US": "T4T1 Folder Template Node"
 			},
 			"modifiable": true,
 			"name": "T4T1FolderTemplateNode",
@@ -109,7 +107,6 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -130,7 +127,6 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "PARENTID",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -151,7 +147,6 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "ROOT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -172,7 +167,6 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -197,7 +191,6 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "TEMPLATEID",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -219,10 +212,10 @@
 			"panelCategoryKey": "applications_menu.applications.custom.apps",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Folder Templates Nodes"
+				"en_US": "T4T1 Folder Templates Nodes"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/T4T1foldertemplatenodes",
+			"restContextPath": "/o/c/t4t1foldertemplatenodes",
 			"scope": "company",
 			"status": {
 				"code": 0,

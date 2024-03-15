@@ -734,6 +734,9 @@ public class ObjectDefinitionResourceImpl
 					rootObjectDefinitionExternalReferenceCode,
 					serviceBuilderObjectDefinition);
 
+			_objectRelationshipLocalService.disableEdge(
+				serviceBuilderObjectDefinition.getObjectDefinitionId());
+
 			statusInt = WorkflowConstants.STATUS_DRAFT;
 		}
 
@@ -861,7 +864,8 @@ public class ObjectDefinitionResourceImpl
 								objectRelationship.getName());
 				}
 
-				boolean edge = objectRelationship.getEdge();
+				boolean edge = GetterUtil.getBoolean(
+					objectRelationship.getEdge());
 
 				if (serviceBuilderObjectRelationship != null) {
 					if (updateReverseObjectRelationshipNames.contains(
@@ -877,6 +881,11 @@ public class ObjectDefinitionResourceImpl
 						serviceBuilderObjectRelationship.
 							getObjectRelationshipId(),
 						objectRelationship);
+
+					_objectRelationshipLocalService.enableEdge(
+						serviceBuilderObjectRelationship.
+							getObjectRelationshipId(),
+						edge);
 
 					if (Objects.equals(
 							serviceBuilderObjectRelationship.getType(),

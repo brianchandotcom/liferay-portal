@@ -193,10 +193,7 @@ definition {
 				expectedDeliveryDate = ${deliveryDate},
 				quantity = 20);
 
-			var expectedDeliveryDate = DateUtil.format(${deliveryDate}, "MM/dd/yyyy", "MMM d, yyyy");
-
-			CommerceInventory.viewIncomingQuantityByWarehouse(
-				expectedDeliveryDate = ${expectedDeliveryDate},
+			CommerceInventory.viewIncomingQuantityByWarehouseWithCurrentDate(
 				quantity = 20,
 				warehouse = "TestWH");
 		}
@@ -699,10 +696,7 @@ definition {
 		}
 
 		task ("But can edit the incoming quantity entry") {
-			var expectedDeliveryDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
-
-			CommerceInventory.viewIncomingQuantityByWarehouse(
-				expectedDeliveryDate = ${expectedDeliveryDate},
+			CommerceInventory.viewIncomingQuantityByWarehouseWithCurrentDate(
 				quantity = 20,
 				warehouse = "Italy 2",
 				warehouseWithLink = "false");
@@ -711,8 +705,7 @@ definition {
 				quantity = 30,
 				warehouse = "Italy 2");
 
-			CommerceInventory.viewIncomingQuantityByWarehouse(
-				expectedDeliveryDate = ${expectedDeliveryDate},
+			CommerceInventory.viewIncomingQuantityByWarehouseWithCurrentDate(
 				quantity = 30,
 				warehouse = "Italy 2");
 		}
@@ -867,10 +860,7 @@ definition {
 		}
 
 		task ("But can edit the incoming quantity entry") {
-			var expectedDeliveryDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
-
-			CommerceInventory.viewIncomingQuantityByWarehouse(
-				expectedDeliveryDate = ${expectedDeliveryDate},
+			CommerceInventory.viewIncomingQuantityByWarehouseWithCurrentDate(
 				quantity = 20,
 				warehouse = "Italy 2",
 				warehouseWithLink = "false");
@@ -879,8 +869,7 @@ definition {
 				quantity = 30,
 				warehouse = "Italy 2");
 
-			CommerceInventory.viewIncomingQuantityByWarehouse(
-				expectedDeliveryDate = ${expectedDeliveryDate},
+			CommerceInventory.viewIncomingQuantityByWarehouseWithCurrentDate(
 				quantity = 30,
 				warehouse = "Italy 2");
 		}
@@ -1015,10 +1004,7 @@ definition {
 				expectedDeliveryDate = ${deliveryDate},
 				quantity = 20);
 
-			var expectedDeliveryDate = DateUtil.format(${deliveryDate}, "MM/dd/yyyy", "MMM d, yyyy");
-
-			CommerceInventory.viewIncomingQuantityByWarehouse(
-				expectedDeliveryDate = ${expectedDeliveryDate},
+			CommerceInventory.viewIncomingQuantityByWarehouseWithCurrentDate(
 				quantity = 20,
 				warehouse = "Italy");
 		}
@@ -1028,8 +1014,7 @@ definition {
 				quantity = 30,
 				warehouse = "Italy");
 
-			CommerceInventory.viewIncomingQuantityByWarehouse(
-				expectedDeliveryDate = ${expectedDeliveryDate},
+			CommerceInventory.viewIncomingQuantityByWarehouseWithCurrentDate(
 				quantity = 30,
 				warehouse = "Italy");
 		}
@@ -1409,10 +1394,7 @@ definition {
 				key_text = "",
 				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
-			var expectedDeliveryDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
-
-			CommerceInventory.viewIncomingQuantityByWarehouse(
-				expectedDeliveryDate = ${expectedDeliveryDate},
+			CommerceInventory.viewIncomingQuantityByWarehouseWithCurrentDate(
 				quantity = 20,
 				warehouse = "Italy",
 				warehouseWithLink = "false");
@@ -1541,10 +1523,7 @@ definition {
 				key_text = "",
 				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
 
-			var expectedDeliveryDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
-
-			CommerceInventory.viewIncomingQuantityByWarehouse(
-				expectedDeliveryDate = ${expectedDeliveryDate},
+			CommerceInventory.viewIncomingQuantityByWarehouseWithCurrentDate(
 				quantity = 20,
 				warehouse = "Italy",
 				warehouseWithLink = "false");

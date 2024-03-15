@@ -12,7 +12,7 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 
-import '../../admin/css/frontendTokenDefinitionFilePicker.scss';
+import '../../../admin/css/frontendTokenDefinitionFilePicker.scss';
 
 type TFeedback = {displayType: DisplayType; message: string};
 

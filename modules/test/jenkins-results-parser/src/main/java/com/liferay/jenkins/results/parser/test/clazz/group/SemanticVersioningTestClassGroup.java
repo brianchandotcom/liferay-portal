@@ -74,6 +74,6 @@ public class SemanticVersioningTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private static final Pattern _quarterlyReleaseNamePattern = Pattern.compile(
-		"release-\\d{4}.[qQ](.\\d)>)");
+		"(release-\\d{4}.[qQ](.\\d)?)");
 
 }

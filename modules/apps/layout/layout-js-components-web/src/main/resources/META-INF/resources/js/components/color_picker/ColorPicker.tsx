@@ -177,11 +177,15 @@ export default function ColorPicker({
 		}
 	);
 
-	const onSetValue = (
-		value: string,
-		label: string | null = null,
-		name: string | null = null
-	) => {
+	const onSetValue = ({
+		label = null,
+		name = null,
+		value,
+	}: {
+		label?: string | null;
+		name?: string | null;
+		value: string;
+	}) => {
 		setColor(value);
 		setTokenLabel(label);
 		onValueSelect(field.name, name ?? value);
@@ -290,7 +294,7 @@ export default function ColorPicker({
 						label={tokenLabel}
 						onSetActive={setActiveDropdownColorPicker}
 						onValueChange={({label, name, value}) =>
-							onSetValue(value, label, name)
+							onSetValue({label, name, value})
 						}
 						small
 						value={color || defaultTokenValue}
@@ -370,7 +374,9 @@ export default function ColorPicker({
 										),
 									]);
 
-									onSetValue(tokenValues[value].value);
+									onSetValue({
+										value: tokenValues[value].value,
+									});
 								}
 								else {
 									setCustomColors(
@@ -379,7 +385,7 @@ export default function ColorPicker({
 											: []
 									);
 
-									onSetValue(defaultTokenValue);
+									onSetValue({value: defaultTokenValue});
 								}
 							}}
 							size="sm"
@@ -394,7 +400,7 @@ export default function ColorPicker({
 						fieldLabel={showLabel ? null : field.label}
 						onSetActive={setActiveDropdownColorPicker}
 						onValueChange={({label, name, value}) => {
-							onSetValue(value, label, name);
+							onSetValue({label, name, value});
 
 							if (error.value) {
 								setError({
@@ -426,10 +432,12 @@ export default function ColorPicker({
 
 							setError({label: null, value: null});
 
-							onSetValue(
-								field.defaultValue ?? '',
-								field.defaultValue ? null : defaultTokenValue
-							);
+							onSetValue({
+								label: field.defaultValue
+									? null
+									: defaultTokenValue,
+								value: field.defaultValue ?? '',
+							});
 						}}
 						size="sm"
 						symbol="restore"

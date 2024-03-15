@@ -40,13 +40,22 @@ public class Sort implements Serializable {
 	}
 
 	public Sort(String fieldName, int type, boolean reverse) {
+		this(fieldName, fieldName, type, reverse);
+	}
+
+	public Sort(String fieldName, String fieldPath, int type, boolean reverse) {
 		_fieldName = fieldName;
+		_fieldPath = fieldPath;
 		_type = type;
 		_reverse = reverse;
 	}
 
 	public String getFieldName() {
 		return _fieldName;
+	}
+
+	public String getFieldPath() {
+		return _fieldPath;
 	}
 
 	public int getType() {
@@ -61,6 +70,10 @@ public class Sort implements Serializable {
 		_fieldName = fieldName;
 	}
 
+	public void setFieldPath(String fieldPath) {
+		_fieldPath = fieldPath;
+	}
+
 	public void setReverse(boolean reverse) {
 		_reverse = reverse;
 	}
@@ -72,11 +85,12 @@ public class Sort implements Serializable {
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{fieldName=", _fieldName, ", type=", _type, ", reverse=", _reverse,
-			"}");
+			"{fieldName=", _fieldName, ", fieldPath=", _fieldPath, ", type=",
+			_type, ", reverse=", _reverse, "}");
 	}
 
 	private String _fieldName;
+	private String _fieldPath;
 	private boolean _reverse;
 	private int _type;
 

@@ -17,7 +17,7 @@ import {initialDashboardNavigationItems} from './PublishedDashboardPageUtil';
 
 type PublishedAppsDashboardOutletProps = {
 	accountsSearch: ReturnType<typeof useAccounts>;
-	catalogId: any;
+	catalogId?: number;
 };
 
 const PublishedDashboardOutlet: React.FC<PublishedAppsDashboardOutletProps> = ({

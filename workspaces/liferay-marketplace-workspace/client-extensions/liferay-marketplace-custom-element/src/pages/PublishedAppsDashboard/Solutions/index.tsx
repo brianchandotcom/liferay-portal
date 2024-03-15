@@ -21,7 +21,7 @@ const Solutions = () => {
 	const [page, setPage] = useState(1);
 
 	const {data: publishedSolutionsTable = {}} = useSWR(
-		`/user-published-apps/${supplierAccount?.id}/${page}/${catalogId}`,
+		`/user-published-solutions/${supplierAccount?.id}/${page}/${catalogId}`,
 		() => {
 			if (!catalogId) {
 				return {items: [], totalCount: 0};
@@ -51,9 +51,8 @@ const Solutions = () => {
 			buttonDisabled={!(catalogId && catalogId > 0)}
 			buttonMessage="Add Solution Template"
 			messages={{
-				description:
-					'Manage solution trial and purchases from the Marketplace',
-				title: 'My Solutions',
+				description: 'Publish and manage your solutions',
+				title: 'Solutions',
 			}}
 		>
 			<PublishedSolutionsTable

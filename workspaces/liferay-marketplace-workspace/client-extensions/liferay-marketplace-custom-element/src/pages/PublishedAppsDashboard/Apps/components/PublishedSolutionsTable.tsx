@@ -18,7 +18,7 @@ import {
 } from '../../PublishedDashboardPageUtil';
 
 type PublishedSolutionsTableProps = {
-	items: any[];
+	items: Order[];
 };
 
 const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({

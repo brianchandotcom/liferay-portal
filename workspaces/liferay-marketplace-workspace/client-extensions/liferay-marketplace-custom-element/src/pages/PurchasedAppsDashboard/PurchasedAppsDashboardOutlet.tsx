@@ -51,7 +51,6 @@ const PurchasedAppsDashboardOutlet = () => {
 	return (
 		<div className="purchased-apps-dashboard-page-container">
 			<DashboardNavigation
-				accountAppsNumber={placedOrders.totalCount}
 				accountIcon={getAccountImage(selectedAccount?.logoURL)}
 				accountsSearch={accountsSearch}
 				currentAccount={selectedAccount as any}

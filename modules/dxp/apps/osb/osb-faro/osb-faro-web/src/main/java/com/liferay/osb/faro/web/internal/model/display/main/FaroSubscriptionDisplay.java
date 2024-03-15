@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -37,10 +38,12 @@ public class FaroSubscriptionDisplay {
 			createDate, DateUtil.getYear(new Date()));
 
 		if (DateUtil.compareTo(new Date(), lastAnniversaryDate) > 0) {
-			return lastAnniversaryDate;
+			return DateUtils.truncate(lastAnniversaryDate, Calendar.DATE);
 		}
 
-		return DateUtils.setYears(createDate, DateUtil.getYear(new Date()) - 1);
+		return DateUtils.truncate(
+			DateUtils.setYears(createDate, DateUtil.getYear(new Date()) - 1),
+			Calendar.DATE);
 	}
 
 	public FaroSubscriptionDisplay() {

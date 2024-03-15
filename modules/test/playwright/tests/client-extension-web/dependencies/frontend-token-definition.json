@@ -1,0 +1,51 @@
+{
+	"frontendTokenCategories": [
+		{
+			"frontendTokenSets": [
+				{
+					"frontendTokens": [
+						{
+							"defaultValue": "#0B5FFF",
+							"editorType": "ColorPicker",
+							"label": "primary",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "primary"
+								}
+							],
+							"name": "primaryColor",
+							"type": "String"
+						},
+						{
+							"defaultValue": "sans-serif",
+							"label": "font-family",
+							"mappings": [
+								{
+									"type": "cssVariable",
+									"value": "fontFamily"
+								}
+							],
+							"name": "fontFamily",
+							"type": "String",
+							"validValues": [
+								{
+									"label": "sans-serif",
+									"value": "sans-serif"
+								},
+								{
+									"label": "monospace",
+									"value": "Courier New"
+								}
+							]
+						}
+					],
+					"label": "primary-buttons",
+					"name": "primaryButtons"
+				}
+			],
+			"label": "buttons",
+			"name": "buttons"
+		}
+	]
+}

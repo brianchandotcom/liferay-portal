@@ -68,10 +68,4 @@ export class DisplayPageTemplatesPage {
 			.click();
 		await this.successfulMessage.waitFor();
 	}
-
-	async deleteDisplayPageTemplate(name: string) {
-		await this.clickPageTemplateMoreActions(name);
-		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
-		await this.page.getByRole('button', {name: 'Delete'}).click();
-	}
 }

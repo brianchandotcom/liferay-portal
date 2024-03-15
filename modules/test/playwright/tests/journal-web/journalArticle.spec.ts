@@ -112,7 +112,7 @@ prefixUrlTest(
 			articleTitle
 		);
 
-		await displayPageTemplatesPage.goto();
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
 		const displayPageTemplateName = getRandomString();
 
@@ -134,7 +134,14 @@ prefixUrlTest(
 		);
 
 		expect(
-			await page.request.get('/' + urlSeparator + '/' + articleTitle)
+			await page.request.get(
+				'/group' +
+					site.friendlyUrlPath +
+					'/' +
+					urlSeparator +
+					'/' +
+					articleTitle
+			)
 		).toBeSuccessful();
 
 		await friendlyUrlInstanceSettingsPage.goto();
@@ -143,15 +150,11 @@ prefixUrlTest(
 			'_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_com.liferay.journal.model.JournalArticle-reset-to-default-value'
 		);
 
-		expect(await page.request.get('/w/' + articleTitle)).toBeSuccessful();
-
-		await displayPageTemplatesPage.goto();
-
-		await displayPageTemplatesPage.deleteDisplayPageTemplate(
-			displayPageTemplateName
-		);
-
-		await journalPage.deleteJournalArticle(articleTitle);
+		expect(
+			await page.request.get(
+				'/group' + site.friendlyUrlPath + '/w/' + articleTitle
+			)
+		).toBeSuccessful();
 	}
 );
 

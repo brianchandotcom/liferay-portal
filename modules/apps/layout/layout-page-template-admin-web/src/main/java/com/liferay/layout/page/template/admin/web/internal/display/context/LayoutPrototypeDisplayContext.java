@@ -12,6 +12,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -104,10 +105,6 @@ public class LayoutPrototypeDisplayContext {
 	}
 
 	public SearchContainer<LayoutPageTemplateEntry> getSearchContainer() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		SearchContainer<LayoutPageTemplateEntry> searchContainer =
 			new SearchContainer(
 				_renderRequest, _renderResponse.createRenderURL(), null,
@@ -124,18 +121,32 @@ public class LayoutPrototypeDisplayContext {
 			() ->
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesByType(
-						themeDisplay.getScopeGroupId(), 0,
+						_getGroupId(), 0,
 						LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator()),
 			LayoutPageTemplateEntryServiceUtil.
 				getLayoutPageTemplateEntriesCountByType(
-					themeDisplay.getScopeGroupId(), 0,
+					_getGroupId(), 0,
 					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE));
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
 		return searchContainer;
+	}
+
+	private long _getGroupId() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isStagingGroup()) {
+			return group.getLiveGroupId();
+		}
+
+		return themeDisplay.getScopeGroupId();
 	}
 
 	private String _getNavigation() {

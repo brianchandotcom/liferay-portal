@@ -132,43 +132,6 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		return null;
 	}
 
-	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
-			List<LayoutPageTemplateCollection> layoutPageTemplateCollections,
-			String path, ZipWriter zipWriter)
-		throws Exception {
-
-		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
-				layoutPageTemplateCollections) {
-
-			if (layoutPageTemplateCollection.getType() ==
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE) {
-
-				String layoutPageTemplateCollectionKey =
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionKey();
-
-				path =
-					path + StringPool.SLASH + layoutPageTemplateCollectionKey;
-
-				zipWriter.addEntry(
-					path + StringPool.SLASH +
-						LayoutPageTemplateExportImportConstants.
-							FILE_NAME_PAGE_TEMPLATE_COLLECTION,
-					JSONUtil.put(
-						"description",
-						layoutPageTemplateCollection.getDescription()
-					).put(
-						"name", layoutPageTemplateCollection.getName()
-					).toString());
-
-				zipWriter = _exportLayoutPageTemplateEntriesAndCollections(
-					layoutPageTemplateCollection, path, zipWriter);
-			}
-		}
-
-		return zipWriter;
-	}
-
 	@Override
 	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
 			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter)
@@ -186,7 +149,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 						layoutPageTemplateCollectionId));
 		}
 
-		return exportLayoutPageTemplateEntriesAndCollections(
+		return _exportLayoutPageTemplateEntriesAndCollections(
 			exportLayoutPageTemplateCollections, StringPool.BLANK, zipWriter);
 	}
 
@@ -270,13 +233,50 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			}
 		}
 
-		exportLayoutPageTemplateEntriesAndCollections(
+		_exportLayoutPageTemplateEntriesAndCollections(
 			_layoutPageTemplateCollectionLocalService.
 				getLayoutPageTemplateCollections(
 					layoutPageTemplateCollection.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId()),
 			path, zipWriter);
+
+		return zipWriter;
+	}
+
+	private ZipWriter _exportLayoutPageTemplateEntriesAndCollections(
+			List<LayoutPageTemplateCollection> layoutPageTemplateCollections,
+			String path, ZipWriter zipWriter)
+		throws Exception {
+
+		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
+				layoutPageTemplateCollections) {
+
+			if (layoutPageTemplateCollection.getType() ==
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE) {
+
+				String layoutPageTemplateCollectionKey =
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionKey();
+
+				path =
+					path + StringPool.SLASH + layoutPageTemplateCollectionKey;
+
+				zipWriter.addEntry(
+					path + StringPool.SLASH +
+						LayoutPageTemplateExportImportConstants.
+							FILE_NAME_PAGE_TEMPLATE_COLLECTION,
+					JSONUtil.put(
+						"description",
+						layoutPageTemplateCollection.getDescription()
+					).put(
+						"name", layoutPageTemplateCollection.getName()
+					).toString());
+
+				zipWriter = _exportLayoutPageTemplateEntriesAndCollections(
+					layoutPageTemplateCollection, path, zipWriter);
+			}
+		}
 
 		return zipWriter;
 	}

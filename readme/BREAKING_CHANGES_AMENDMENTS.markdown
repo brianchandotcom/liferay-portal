@@ -283,10 +283,17 @@ WebDAV (or Digest Auth more generally) now requires each user to generate a sepa
 
 On the message of the commit 51895916ce756437c2ae1c11a734c9e640abbb05 the file path is not the complete path:
 
-so the correct message on **What** section should be
+Correct message should be:
+```
+LPS-200359 Allow configure No Cache for documents and make it the default option
 
-modules/apps/document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/configuration/CacheControlConfiguration.java
-
+# breaking
+## What modules/apps/document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/configuration/CacheControlConfiguration.java
+Default cacheControl configuration values were changed 
+## Why
+Add a new option to configure portal to do not cache documents and make it the default option (in order to improve security)
+----
+```
 ----
 
 # a35946f28515783df6d3de0a45ff8c9631dc416a

@@ -565,10 +565,10 @@ public class CommercePaymentServlet extends HttpServlet {
 	@Reference
 	private Language _language;
 
-	private String _redirect;
-
 	@Reference
 	private Portal _portal;
+
+	private String _redirect;
 
 	@Reference
 	private UserLocalService _userLocalService;

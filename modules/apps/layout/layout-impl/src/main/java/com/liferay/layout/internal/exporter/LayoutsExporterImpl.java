@@ -31,6 +31,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -51,7 +52,6 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -140,21 +140,14 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
-		List<LayoutPageTemplateCollection> exportLayoutPageTemplateCollections =
-			new ArrayList<>();
-
-		for (long layoutPageTemplateCollectionId :
-				layoutPageTemplateCollectionIds) {
-
-			exportLayoutPageTemplateCollections.add(
-				_layoutPageTemplateCollectionLocalService.
-					fetchLayoutPageTemplateCollection(
-						layoutPageTemplateCollectionId));
-		}
-
 		_exportLayoutPageTemplateEntriesAndCollections(
-			exportLayoutPageTemplateCollections, pageDefinitionDTOConverter,
-			StringPool.BLANK, zipWriter);
+			TransformUtil.transformToList(
+				layoutPageTemplateCollectionIds,
+				layoutPageTemplateCollectionId ->
+					_layoutPageTemplateCollectionLocalService.
+						fetchLayoutPageTemplateCollection(
+							layoutPageTemplateCollectionId)),
+			pageDefinitionDTOConverter, StringPool.BLANK, zipWriter);
 
 		return zipWriter.getFile();
 	}

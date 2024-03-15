@@ -149,7 +149,8 @@ public class DBPartitionMigrationValidator {
 		options.addRequiredOption(
 			"p", "password", true, "Database user password.");
 		options.addOption(
-			"s", "schema-name", true, "Database schema name to be exported.");
+			"s", "schema-name", true,
+			"Database schema name for the source partition.");
 		options.addRequiredOption("u", "user", true, "Database user name.");
 
 		return options;
@@ -187,7 +188,7 @@ public class DBPartitionMigrationValidator {
 
 		helpFormatter.printUsage(
 			printWriter, _HELP_WIDTH,
-			"./db_partition_migration_validator.sh [OPERATION_MODE] " +
+			"./db_partition_migration_validator.sh <OPERATION_MODE> " +
 				"[OPERATION_PARAMETERS]");
 		helpFormatter.printWrapped(
 			printWriter, _HELP_WIDTH, "\nOperation mode:");

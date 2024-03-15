@@ -7,7 +7,7 @@ This tool allows the export and validation of the database information required 
 
 ## Usage
 ```
-./db_partition_migration_validator.sh [OPERATION_MODE] [OPERATION_PARAMETERS]
+./db_partition_migration_validator.sh <OPERATION_MODE> [OPERATION_PARAMETERS]
 ```
 
 Operation mode:

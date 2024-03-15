@@ -7,6 +7,7 @@ package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.configuration.CommerceOrderItemDecimalQuantityConfiguration;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
@@ -22,6 +23,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -66,13 +68,14 @@ public class EditCommerceOrderBillingAddressMVCRenderCommand
 					_commerceNotificationQueueEntryLocalService,
 					_commerceOrderEngine,
 					_commerceOrderItemDecimalQuantityConfiguration,
+					_commerceOrderItemQuantityFormatter,
 					_commerceOrderItemService, _commerceOrderNoteService, null,
 					_commerceOrderService, _commerceOrderStatusRegistry,
 					_commerceOrderTypeService,
 					_commercePaymentMethodGroupRelLocalService,
-					_commerceShipmentService, _commerceTermEntryLocalService,
-					_cpMeasurementUnitService, _modelResourcePermission,
-					renderRequest);
+					_commercePriceFormatter, _commerceShipmentService,
+					_commerceTermEntryLocalService, _cpMeasurementUnitService,
+					_modelResourcePermission, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -116,6 +119,10 @@ public class EditCommerceOrderBillingAddressMVCRenderCommand
 		_commerceOrderItemDecimalQuantityConfiguration;
 
 	@Reference
+	private CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
+
+	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
@@ -133,6 +140,9 @@ public class EditCommerceOrderBillingAddressMVCRenderCommand
 	@Reference
 	private CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;

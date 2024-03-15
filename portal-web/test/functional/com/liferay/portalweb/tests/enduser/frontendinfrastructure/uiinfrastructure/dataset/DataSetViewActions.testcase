@@ -2975,7 +2975,7 @@ definition {
 
 		task ("Then the text “No actions were created. Start creating one action to interact with your data.” is displayed above the Create Item Action button") {
 			AssertElementPresent(
-				key_textName = "No actions were created.",
+				key_textName = "No actions were created.Start creating one action to interact with your data.",
 				locator1 = "DataSet#ACTIONS_EMPTY_TABLE");
 		}
 	}

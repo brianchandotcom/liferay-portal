@@ -99,9 +99,7 @@ public class DBPartitionMigrationValidator {
 			commandLine = commandLineParser.parse(options, args);
 		}
 		catch (ParseException parseException) {
-			System.err.println("Unable to parse command line properties:");
-
-			parseException.printStackTrace();
+			System.err.println(parseException.getMessage());
 
 			_printHelp();
 
@@ -238,9 +236,7 @@ public class DBPartitionMigrationValidator {
 			commandLine = commandLineParser.parse(options, args);
 		}
 		catch (ParseException parseException) {
-			System.err.println("Unable to parse command line properties:");
-
-			parseException.printStackTrace();
+			System.err.println(parseException.getMessage());
 
 			_printHelp();
 

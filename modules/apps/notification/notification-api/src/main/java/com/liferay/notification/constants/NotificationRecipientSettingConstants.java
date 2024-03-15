@@ -12,7 +12,11 @@ public class NotificationRecipientSettingConstants {
 
 	public static final String NAME_BCC = "bcc";
 
+	public static final String NAME_BCC_TYPE = "bccType";
+
 	public static final String NAME_CC = "cc";
+
+	public static final String NAME_CC_TYPE = "ccType";
 
 	public static final String NAME_FROM = "from";
 
@@ -26,6 +30,28 @@ public class NotificationRecipientSettingConstants {
 
 	public static final String NAME_TO = "to";
 
+	public static final String NAME_TO_TYPE = "toType";
+
 	public static final String NAME_USER_SCREEN_NAME = "userScreenName";
+
+	public static String getRecipientTypeName(String recipientName) {
+		if (recipientName.equals(
+				NotificationRecipientSettingConstants.NAME_BCC)) {
+
+			return NotificationRecipientSettingConstants.NAME_BCC_TYPE;
+		}
+		else if (recipientName.equals(
+					NotificationRecipientSettingConstants.NAME_CC)) {
+
+			return NotificationRecipientSettingConstants.NAME_CC_TYPE;
+		}
+		else if (recipientName.equals(
+					NotificationRecipientSettingConstants.NAME_TO)) {
+
+			return NotificationRecipientSettingConstants.NAME_TO_TYPE;
+		}
+
+		return null;
+	}
 
 }

@@ -19,9 +19,7 @@ export class UtilityPagesPage {
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
-			`/group${siteUrl || '/guest'}${
-				PORTLET_URLS.pages
-			}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages`
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.utilityPages}`
 		);
 	}
 

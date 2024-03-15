@@ -63,7 +63,9 @@ public class SortUtil {
 			sorts[i] = new Sort(
 				sortField.getSortableFieldName(
 					acceptLanguage.getPreferredLocale()),
-				!sortField.isAscending());
+				sortField.getSortableFieldPath(
+					acceptLanguage.getPreferredLocale()),
+				Sort.STRING_TYPE, !sortField.isAscending());
 		}
 
 		return sorts;

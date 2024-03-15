@@ -135,11 +135,10 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
 					company.getMx());
 
+			defaultAdminUser.setScreenName(screenName);
 			defaultAdminUser.setEmailAddress(admin.getEmailAddress());
 			defaultAdminUser.setFirstName(admin.getGivenName());
 			defaultAdminUser.setLastName(admin.getFamilyName());
-
-			defaultAdminUser.setScreenName(screenName);
 
 			_userLocalService.updateUser(defaultAdminUser);
 		}

@@ -35,11 +35,6 @@ export class JournalEditTemplatePage {
 		await this.journalPage.goto(siteUrl);
 		await this.journalPage.goToCreateNewTemplate();
 
-		// Do it twice so we decrease flakiness
-
-		await this.journalPage.goto();
-		await this.journalPage.goToCreateNewTemplate();
-
 		await this.basicInformation.waitFor();
 	}
 

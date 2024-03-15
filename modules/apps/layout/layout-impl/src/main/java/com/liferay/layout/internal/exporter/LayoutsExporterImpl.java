@@ -169,6 +169,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		return zipWriter;
 	}
 
+	@Override
 	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
 			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter)
 		throws Exception {

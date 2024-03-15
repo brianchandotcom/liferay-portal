@@ -30,6 +30,7 @@ export class ApplicationsMenuPage {
 	private readonly paymentsMenuItem: Locator;
 	private readonly processBuilderItem: Locator;
 	private readonly productsMenuItem: Locator;
+	private readonly publicationsItem: Locator;
 	private readonly queueMenuItem: Locator;
 	private readonly serviceAccountsItem: Locator;
 	private readonly sitesItem: Locator;
@@ -117,9 +118,13 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'Products',
 		});
+		this.publicationsItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Publications',
+		});
 		this.queueMenuItem = page.getByRole('menuitem', {
 			exact: true,
-			name: 'Queue',
+			name: 'Queue',		
 		});
 		this.serviceAccountsItem = page.getByRole('menuitem', {
 			exact: true,
@@ -258,6 +263,11 @@ export class ApplicationsMenuPage {
 	async goToProducts() {
 		await this.goToCommercePanel();
 		await this.productsMenuItem.click();
+	}
+
+	async goToPublications() {
+		await this.goToApplicationsMenu();
+		await this.publicationsItem.click();
 	}
 
 	async goToQueue() {

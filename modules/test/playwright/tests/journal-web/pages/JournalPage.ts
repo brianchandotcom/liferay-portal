@@ -14,7 +14,6 @@ export class JournalPage {
 	readonly createBasicWebContentLink: Locator;
 	readonly newButton: Locator;
 	readonly permissionsFrameLocator: FrameLocator;
-	readonly templatesLink: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -26,7 +25,6 @@ export class JournalPage {
 		this.permissionsFrameLocator = page.frameLocator(
 			'iframe[title="Permissions"]'
 		);
-		this.templatesLink = page.getByRole('link', {name: 'Templates'});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -49,11 +47,6 @@ export class JournalPage {
 		});
 	}
 
-	async goToCreateNewTemplate() {
-		await this.goToTemplates();
-		await this.newButton.click();
-	}
-
 	async goToJournalArticleAction(action: string, title: string) {
 		await this.page.getByLabel(`Actions for ${title}`).waitFor();
 
@@ -67,10 +60,6 @@ export class JournalPage {
 				exact: true,
 			}),
 		});
-	}
-
-	async goToTemplates() {
-		await this.templatesLink.click();
 	}
 
 	async assertJournalArticlePermissions(

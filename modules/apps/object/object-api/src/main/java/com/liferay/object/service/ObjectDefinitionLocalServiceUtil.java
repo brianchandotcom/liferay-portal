@@ -350,6 +350,13 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<ObjectDefinition> getBoundObjectDefinitions(
+		long companyId, long rootObjectDefinitionId) {
+
+		return getService().getBoundObjectDefinitions(
+			companyId, rootObjectDefinitionId);
+	}
+
 	public static List<ObjectDefinition> getCustomObjectDefinitions(
 		int status) {
 

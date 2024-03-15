@@ -8,6 +8,7 @@ create index IX_2B2CA94C on ObjectDefinition (accountEntryRestricted);
 create index IX_2A008543 on ObjectDefinition (companyId, className[$COLUMN_LENGTH:255$]);
 create unique index IX_F861636D on ObjectDefinition (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_3E56F38F on ObjectDefinition (companyId, name[$COLUMN_LENGTH:75$]);
+create index IX_66A8EEB3 on ObjectDefinition (companyId, rootObjectDefinitionId);
 create index IX_7D686D13 on ObjectDefinition (companyId, status, active_);
 create index IX_12BECBE8 on ObjectDefinition (companyId, system_, modifiable);
 create index IX_F8B95773 on ObjectDefinition (companyId, system_, status, active_);

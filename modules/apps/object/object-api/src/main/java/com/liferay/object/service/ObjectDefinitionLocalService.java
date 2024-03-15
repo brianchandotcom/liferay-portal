@@ -287,6 +287,10 @@ public interface ObjectDefinitionLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectDefinition> getBoundObjectDefinitions(
+		long companyId, long rootObjectDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectDefinition> getCustomObjectDefinitions(int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

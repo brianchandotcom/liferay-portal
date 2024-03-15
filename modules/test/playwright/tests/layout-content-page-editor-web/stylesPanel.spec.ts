@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -216,4 +217,52 @@ test('renders correct sections in color picker', async ({
 			).toBeAttached();
 		}
 	}
+});
+
+test('changes the value in the Color Picker when the reset button is clicked', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await page.goto('/');
+
+	const headingId = getRandomString();
+
+	const headingFragment = getFragmentDefinition(
+		headingId,
+		'BASIC_COMPONENT-heading'
+	);
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage(
+		site.id,
+		getRandomString(),
+		getPageDefinition([headingFragment])
+	);
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.selectFragment(headingId);
+
+	await pageEditorPage.goToConfigurationTab('Styles');
+
+	const backgroundColorInput = await page
+		.getByLabel('Background Color')
+		.locator('.layout__color-picker__input');
+
+	await fillAndClickOutside(page, backgroundColorInput, '#AAA');
+
+	await page.getByLabel('Reset to Initial Value').click();
+
+	// Click on the input and delete 5 times
+
+	await backgroundColorInput.click();
+
+	for (let i = 0; i < 5; i++) {
+		await page.keyboard.press('Backspace', {delay: 1000});
+	}
+
+	await backgroundColorInput.blur();
+
+	await expect(backgroundColorInput).toHaveValue('#000000');
 });

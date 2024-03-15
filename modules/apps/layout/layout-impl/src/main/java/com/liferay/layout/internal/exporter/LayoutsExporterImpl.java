@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -215,14 +216,11 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntries(
 				layoutPageTemplateCollection.getGroupId(),
 				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId());
+					getLayoutPageTemplateCollectionId(),
+				WorkflowConstants.STATUS_APPROVED);
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
-
-			if (layoutPageTemplateEntry.isDraft()) {
-				continue;
-			}
 
 			if (layoutPageTemplateEntry.getType() ==
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {

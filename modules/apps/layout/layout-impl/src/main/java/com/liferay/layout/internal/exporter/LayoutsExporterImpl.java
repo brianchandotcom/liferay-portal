@@ -61,9 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutsExporterImpl implements LayoutsExporter {
 
 	@Override
-	public File exportLayoutPageTemplateEntries(long groupId, String path)
-		throws Exception {
-
+	public File exportLayoutPageTemplateEntries(long groupId) throws Exception {
 		DTOConverter<LayoutStructure, PageDefinition>
 			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
@@ -90,8 +88,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 				_populateDisplayPagesZipWriter(
-					layoutPageTemplateEntry, pageDefinitionDTOConverter, path,
-					zipWriter);
+					layoutPageTemplateEntry, pageDefinitionDTOConverter,
+					StringPool.BLANK, zipWriter);
 			}
 			else if (layoutPageTemplateEntry.getType() ==
 						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) {
@@ -172,8 +170,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	}
 
 	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
-			long[] layoutPageTemplateCollectionIds, String path,
-			ZipWriter zipWriter)
+			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter)
 		throws Exception {
 
 		List<LayoutPageTemplateCollection> exportLayoutPageTemplateCollections =
@@ -189,7 +186,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		}
 
 		return exportLayoutPageTemplateEntriesAndCollections(
-			exportLayoutPageTemplateCollections, path, zipWriter);
+			exportLayoutPageTemplateCollections, StringPool.BLANK, zipWriter);
 	}
 
 	@Override

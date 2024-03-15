@@ -8,7 +8,6 @@ package com.liferay.layout.page.template.admin.web.internal.struts;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.layout.exporter.LayoutsExporter;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -48,8 +47,7 @@ public class ExportLayoutPageTemplateEntriesStrutsAction
 
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
-		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
-			groupId, StringPool.BLANK);
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(groupId);
 
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter(file);
 

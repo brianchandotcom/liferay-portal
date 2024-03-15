@@ -7,7 +7,6 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -50,8 +49,7 @@ public class ExportLayoutPageTemplateCollectionMVCResourceCommand
 
 			zipWriter =
 				_layoutsExporter.exportLayoutPageTemplateEntriesAndCollections(
-					new long[] {layoutPageTemplateCollectionId},
-					StringPool.BLANK, zipWriter);
+					new long[] {layoutPageTemplateCollectionId}, zipWriter);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,

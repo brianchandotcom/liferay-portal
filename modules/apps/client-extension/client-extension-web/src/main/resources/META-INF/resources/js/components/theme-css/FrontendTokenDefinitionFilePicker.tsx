@@ -7,11 +7,10 @@ import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Text} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
-
-import '../../../admin/css/frontendTokenDefinitionFilePicker.scss';
 
 type TFeedback = {displayType: DisplayType; message: string};
 
@@ -66,7 +65,7 @@ const FrontendTokenDefinitionFilePicker = ({
 	const [
 		frontendTokenDefinitionJSON,
 		setFrontendTokenDefinitionJSON,
-	] = useState<string|undefined>(
+	] = useState<string | undefined>(
 		initialFrontendTokenDefinitionJSON !== ''
 			? initialFrontendTokenDefinitionJSON
 			: undefined
@@ -207,7 +206,7 @@ const FrontendTokenDefinitionFilePicker = ({
 				<label
 					aria-describedby={frontendTokenDefinitionDescriptionId}
 					aria-disabled={disabled}
-					className="d-block"
+					className={classNames('d-block', {disabled})}
 					htmlFor={fileInputId}
 					tabIndex={0}
 				>

@@ -27,6 +27,18 @@ import org.json.JSONObject;
 public class SemVerModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
+	protected boolean isQuarterlyReleaseBranch() {
+		Matcher quarterlyReleaseNameMatcher =
+			_quarterlyReleaseNamePattern.matcher(
+				portalGitWorkingDirectory.getUpstreamBranchName());
+
+		if (quarterlyReleaseNameMatcher.find()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected SemVerModulesBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
@@ -37,6 +49,25 @@ public class SemVerModulesBatchTestClassGroup
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
+	}
+
+	@Override
+	protected boolean ignore() {
+		if (!isStableTestSuiteBatch() && testRelevantJUnitTestsOnly) {
+			return true;
+		}
+
+		if ((isStableTestSuiteBatch() && testRelevantJUnitTestsOnlyInStable)) {
+
+			return true;
+		}
+
+		if ((isQuarterlyReleaseBranch())) {
+			
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -89,5 +120,8 @@ public class SemVerModulesBatchTestClassGroup
 
 		Collections.sort(testClasses);
 	}
+
+	private static final Pattern _quarterlyReleaseNamePattern = Pattern.compile(
+		"(release-\\d{4}.[qQ](.\\d)?)");
 
 }

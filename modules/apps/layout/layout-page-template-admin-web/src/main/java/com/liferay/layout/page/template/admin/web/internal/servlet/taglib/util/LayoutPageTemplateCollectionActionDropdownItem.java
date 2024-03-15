@@ -270,9 +270,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 			_renderResponse
 		).setParameter(
 			"layoutPageTemplateCollectionId",
-			String.valueOf(
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId())
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
 		).setResourceID(
 			"/layout_page_template_admin/export_layout_page_template_collection"
 		).buildString();

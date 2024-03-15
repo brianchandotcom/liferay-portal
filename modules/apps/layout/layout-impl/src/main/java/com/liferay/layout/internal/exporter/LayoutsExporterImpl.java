@@ -68,8 +68,6 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			long[] layoutPageTemplateCollectionIds)
 		throws Exception {
 
-		DTOConverter<LayoutStructure, PageDefinition>
-			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		_exportLayoutPageTemplateCollections(
@@ -79,7 +77,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					_layoutPageTemplateCollectionLocalService.
 						fetchLayoutPageTemplateCollection(
 							layoutPageTemplateCollectionId)),
-			pageDefinitionDTOConverter, StringPool.BLANK, zipWriter);
+			_getPageDefinitionDTOConverter(), StringPool.BLANK, zipWriter);
 
 		return zipWriter.getFile();
 	}

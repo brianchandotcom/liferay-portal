@@ -74,36 +74,12 @@ public class DBPartitionMigrationValidator {
 	private static void _export(String[] args) throws Exception {
 		Options options = _getExportOptions();
 
+		CommandLine commandLine = null;
+
 		try {
 			CommandLineParser commandLineParser = new DefaultParser();
 
-			CommandLine commandLine = commandLineParser.parse(options, args);
-
-			String jdbcUrl = DatabaseUtil.replaceSchemaName(
-				commandLine.getOptionValue("jdbc-url"),
-				commandLine.getOptionValue("schema-name"));
-
-			try {
-				_connection = DriverManager.getConnection(
-					jdbcUrl, commandLine.getOptionValue("user"),
-					commandLine.getOptionValue("password"));
-			}
-			catch (SQLException sqlException) {
-				System.err.println(
-					"Unable to connect to database with the specified " +
-						"parameters:");
-
-				sqlException.printStackTrace();
-
-				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
-			}
-
-			String exportFilePath = _write(
-				DatabaseUtil.exportLiferayInstance(_connection),
-				commandLine.getOptionValue("output-dir"));
-
-			System.out.println(
-				"Export file generated successfully in " + exportFilePath);
+			commandLine = commandLineParser.parse(options, args);
 		}
 		catch (ParseException parseException) {
 			System.err.println("Unable to parse command line properties:");
@@ -114,6 +90,31 @@ public class DBPartitionMigrationValidator {
 
 			_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
 		}
+
+		String jdbcUrl = DatabaseUtil.replaceSchemaName(
+			commandLine.getOptionValue("jdbc-url"),
+			commandLine.getOptionValue("schema-name"));
+
+		try {
+			_connection = DriverManager.getConnection(
+				jdbcUrl, commandLine.getOptionValue("user"),
+				commandLine.getOptionValue("password"));
+		}
+		catch (SQLException sqlException) {
+			System.err.println(
+				"Unable to connect to database with the specified parameters:");
+
+			sqlException.printStackTrace();
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
+		}
+
+		String exportFilePath = _write(
+			DatabaseUtil.exportLiferayInstance(_connection),
+			commandLine.getOptionValue("output-dir"));
+
+		System.out.println(
+			"Export file generated successfully in " + exportFilePath);
 	}
 
 	private static Options _getExportOptions() {
@@ -233,59 +234,12 @@ public class DBPartitionMigrationValidator {
 	private static void _validate(String[] args) {
 		Options options = _getValidationOptions();
 
+		CommandLine commandLine = null;
+
 		try {
 			CommandLineParser commandLineParser = new DefaultParser();
 
-			CommandLine commandLine = commandLineParser.parse(options, args);
-
-			try {
-				_sourceLiferayInstance = _read(
-					commandLine.getOptionValue("source-file"));
-			}
-			catch (IOException ioException) {
-				System.err.println(
-					"Unable to read source file with the specified " +
-						"parameters:");
-
-				ioException.printStackTrace();
-
-				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
-			}
-
-			if (!Validator.isSingleCompany(_sourceLiferayInstance)) {
-				System.err.println("Source has more than one company");
-
-				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
-			}
-
-			try {
-				_targetLiferayInstance = _read(
-					commandLine.getOptionValue("target-file"));
-			}
-			catch (IOException ioException) {
-				System.err.println(
-					"Unable to read target file with the specified " +
-						"parameters:");
-
-				ioException.printStackTrace();
-
-				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
-			}
-
-			if (!_targetLiferayInstance.isExportedCompanyDefault()) {
-				System.err.println("Target is not the default partition");
-
-				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
-			}
-
-			Recorder recorder = Validator.validateDatabases(
-				_sourceLiferayInstance, _targetLiferayInstance);
-
-			if (recorder.hasErrors() || recorder.hasWarnings()) {
-				recorder.printMessages();
-
-				_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
-			}
+			commandLine = commandLineParser.parse(options, args);
 		}
 		catch (ParseException parseException) {
 			System.err.println("Unable to parse command line properties:");
@@ -295,6 +249,53 @@ public class DBPartitionMigrationValidator {
 			_printHelp();
 
 			_exit(_LIFERAY_COMMON_EXIT_CODE_HELP);
+		}
+
+		try {
+			_sourceLiferayInstance = _read(
+				commandLine.getOptionValue("source-file"));
+		}
+		catch (IOException ioException) {
+			System.err.println(
+				"Unable to read source file with the specified parameters:");
+
+			ioException.printStackTrace();
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
+		}
+
+		if (!Validator.isSingleCompany(_sourceLiferayInstance)) {
+			System.err.println("Source has more than one company");
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
+		}
+
+		try {
+			_targetLiferayInstance = _read(
+				commandLine.getOptionValue("target-file"));
+		}
+		catch (IOException ioException) {
+			System.err.println(
+				"Unable to read target file with the specified parameters:");
+
+			ioException.printStackTrace();
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
+		}
+
+		if (!_targetLiferayInstance.isExportedCompanyDefault()) {
+			System.err.println("Target is not the default partition");
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
+		}
+
+		Recorder recorder = Validator.validateDatabases(
+			_sourceLiferayInstance, _targetLiferayInstance);
+
+		if (recorder.hasErrors() || recorder.hasWarnings()) {
+			recorder.printMessages();
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 		}
 	}
 

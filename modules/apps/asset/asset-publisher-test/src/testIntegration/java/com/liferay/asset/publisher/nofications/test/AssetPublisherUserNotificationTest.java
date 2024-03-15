@@ -7,11 +7,13 @@ package com.liferay.asset.publisher.nofications.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -113,6 +115,44 @@ public class AssetPublisherUserNotificationTest {
 				_group.getDescriptiveName(_user.getLocale())));
 	}
 
+	@Test
+	public void testUserNotificationWithDifferentUserLocale() throws Exception {
+		_user = _userLocalService.updateLanguageId(
+			_user.getUserId(), LanguageUtil.getLanguageId(LocaleUtil.SPAIN));
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "Title"
+			).put(
+				LocaleUtil.SPAIN, "Titulo"
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "Content"
+			).put(
+				LocaleUtil.SPAIN, "Contenido"
+			).build(),
+			null, LocaleUtil.getDefault(), null, true, true,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
+
+		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
+
+		jobExecutorUnsafeRunnable.run();
+
+		_assertAssetPublisherNotifications(
+			_getExpectedMailBody(
+				journalArticle.getTitle(_user.getLanguageId()),
+				_portal.getPortletTitle(
+					AssetPublisherPortletKeys.ASSET_PUBLISHER,
+					_user.getLanguageId()),
+				_group.getDescriptiveName(_user.getLocale())));
+	}
+
 	private void _assertAssetPublisherNotifications(String expectedMailBody) {
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
 
@@ -192,5 +232,8 @@ public class AssetPublisherUserNotificationTest {
 	private SubscriptionLocalService _subscriptionLocalService;
 
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -9,7 +9,6 @@ import {Text} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 
 import '../../../admin/css/frontendTokenDefinitionFilePicker.scss';
@@ -48,19 +47,26 @@ const readInputFile = (file: File) => {
 
 const EMPTY_JSON_STRING = '{}';
 
+interface IProps {
+	disabled: boolean;
+	frontendTokenDefinitionJSON: string;
+	learnResources: object;
+	portletNamespace: string;
+}
+
 const FrontendTokenDefinitionFilePicker = ({
 	disabled,
 	frontendTokenDefinitionJSON: initialFrontendTokenDefinitionJSON,
 	learnResources,
 	portletNamespace,
-}) => {
+}: IProps) => {
 	const [feedback, setFeedback] = useState(EMPTY_FEEDBACK);
 	const [alertRole, setAlertRole] = useState<'alert' | null>(null);
 	const [isValidatingJSON, setIsValidatingJSON] = useState(false);
 	const [
 		frontendTokenDefinitionJSON,
 		setFrontendTokenDefinitionJSON,
-	] = useState<string>(
+	] = useState<string|undefined>(
 		initialFrontendTokenDefinitionJSON !== ''
 			? initialFrontendTokenDefinitionJSON
 			: undefined
@@ -292,13 +298,6 @@ const FrontendTokenDefinitionFilePicker = ({
 			</div>
 		</LearnResourcesContext.Provider>
 	);
-};
-
-FrontendTokenDefinitionFilePicker.propTypes = {
-	disabled: PropTypes.bool,
-	frontendTokenDefinitionJSON: PropTypes.string.isRequired,
-	learnResources: PropTypes.object.isRequired,
-	portletNamespace: PropTypes.string.isRequired,
 };
 
 export default FrontendTokenDefinitionFilePicker;

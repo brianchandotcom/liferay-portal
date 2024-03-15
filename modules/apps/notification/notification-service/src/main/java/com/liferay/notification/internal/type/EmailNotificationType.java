@@ -93,11 +93,14 @@ public class EmailNotificationType extends BaseNotificationType {
 	public Set<String> getAllowedNotificationRecipientSettingsNames() {
 		return SetUtil.fromArray(
 			NotificationRecipientSettingConstants.NAME_BCC,
+			NotificationRecipientSettingConstants.NAME_BCC_TYPE,
 			NotificationRecipientSettingConstants.NAME_CC,
+			NotificationRecipientSettingConstants.NAME_CC_TYPE,
 			NotificationRecipientSettingConstants.NAME_FROM,
 			NotificationRecipientSettingConstants.NAME_FROM_NAME,
 			NotificationRecipientSettingConstants.NAME_SINGLE_RECIPIENT,
-			NotificationRecipientSettingConstants.NAME_TO);
+			NotificationRecipientSettingConstants.NAME_TO,
+			NotificationRecipientSettingConstants.NAME_TO_TYPE);
 	}
 
 	@Override

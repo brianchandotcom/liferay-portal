@@ -1,12 +1,4 @@
 {
-	"eslintConfig": {
-		"globals": {
-			"Liferay": true
-		},
-		"extends": [
-			"react-app"
-		]
-	},
 	"browserslist": {
 		"development": [
 			"last 1 chrome version",
@@ -42,6 +34,14 @@
 		"react-dom": "^18.2.0",
 		"react-scripts": "5.0.1",
 		"react-to-webcomponent": "^2.0.0"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app"
+		],
+		"globals": {
+			"Liferay": true
+		}
 	},
 	"name": "@liferay/liferay-dlfoldertemplate-custom-element",
 	"private": true,

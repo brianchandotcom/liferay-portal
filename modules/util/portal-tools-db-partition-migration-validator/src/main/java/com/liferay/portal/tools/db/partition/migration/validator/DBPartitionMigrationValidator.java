@@ -44,16 +44,33 @@ import org.apache.commons.cli.ParseException;
 public class DBPartitionMigrationValidator {
 
 	public static void main(String[] args) {
-		try {
-			_main(args);
-		}
-		catch (Exception exception) {
-			System.err.println("Unexpected error:");
+		if ((args.length != 0) &&
+			(args[0].equals("-h") || args[0].equals("-help") ||
+			 args[0].equals("--help"))) {
 
-			exception.printStackTrace();
+			_printHelp();
 
-			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
+			return;
 		}
+
+		for (String arg : args) {
+			if (arg.equals("-e") || arg.equals("-export") ||
+				arg.equals("--export")) {
+
+				_export(ArrayUtil.remove(args, arg));
+
+				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
+			}
+			else if (arg.equals("-v") || arg.equals("-validate") ||
+					 arg.equals("--validate")) {
+
+				_validate(ArrayUtil.remove(args, arg));
+
+				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
+			}
+		}
+
+		_printHelp();
 	}
 
 	private static void _exit(int code) {
@@ -163,36 +180,6 @@ public class DBPartitionMigrationValidator {
 		options.addRequiredOption("t", "target-file", true, "Target file.");
 
 		return options;
-	}
-
-	private static void _main(String[] args) throws Exception {
-		if ((args.length != 0) &&
-			(args[0].equals("-h") || args[0].equals("-help") ||
-			 args[0].equals("--help"))) {
-
-			_printHelp();
-
-			return;
-		}
-
-		for (String arg : args) {
-			if (arg.equals("-e") || arg.equals("-export") ||
-				arg.equals("--export")) {
-
-				_export(ArrayUtil.remove(args, arg));
-
-				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
-			}
-			else if (arg.equals("-v") || arg.equals("-validate") ||
-					 arg.equals("--validate")) {
-
-				_validate(ArrayUtil.remove(args, arg));
-
-				_exit(_LIFERAY_COMMON_EXIT_CODE_OK);
-			}
-		}
-
-		_printHelp();
 	}
 
 	private static void _printHelp() {

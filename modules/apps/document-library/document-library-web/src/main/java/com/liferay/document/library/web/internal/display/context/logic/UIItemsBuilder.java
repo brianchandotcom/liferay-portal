@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -346,9 +347,10 @@ public class UIItemsBuilder {
 				"senna-off", "true"
 			).build()
 		).setHref(
-			_dlURLHelper.getDownloadURL(
-				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
-				appendVersion, true)
+			_addDoAsUserIdParameter(
+				_dlURLHelper.getDownloadURL(
+					_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
+					appendVersion, true))
 		).setIcon(
 			"download"
 		).setKey(
@@ -835,6 +837,17 @@ public class UIItemsBuilder {
 				"Unable to build UIItemsBuilder for " + fileVersion,
 				portalException);
 		}
+	}
+
+	private String _addDoAsUserIdParameter(String url) {
+		if (Validator.isNotNull(_themeDisplay.getDoAsUserId()) &&
+			Validator.isNotNull(url)) {
+
+			return HttpComponentsUtil.setParameter(
+				url, "doAsUserId", _themeDisplay.getDoAsUserId());
+		}
+
+		return url;
 	}
 
 	private PortletURL _getActionURL(String mvcActionCommandName) {

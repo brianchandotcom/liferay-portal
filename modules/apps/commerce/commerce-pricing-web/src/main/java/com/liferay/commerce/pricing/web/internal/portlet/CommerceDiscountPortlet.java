@@ -6,6 +6,7 @@
 package com.liferay.commerce.pricing.web.internal.portlet;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
@@ -68,7 +69,8 @@ public class CommerceDiscountPortlet extends MVCPortlet {
 				_commerceDiscountModelResourcePermission,
 				_commerceDiscountService, _commerceDiscountRuleService,
 				_commerceDiscountRuleTypeRegistry,
-				_commerceDiscountTargetRegistry, _percentageFormatter,
+				_commerceDiscountTargetRegistry, _commercePriceFormatter,
+				_percentageFormatter,
 				_portal.getHttpServletRequest(renderRequest), _portal);
 
 		renderRequest.setAttribute(
@@ -97,6 +99,9 @@ public class CommerceDiscountPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceDiscountTargetRegistry _commerceDiscountTargetRegistry;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private PercentageFormatter _percentageFormatter;

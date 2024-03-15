@@ -53,6 +53,10 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 		<liferay-ui:message arguments="<%= CommercePriceConstants.PRICE_VALUE_MAX %>" key="price-max-value-is-x" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= CommerceDiscountMinPriceValueException.class %>">
+		<liferay-ui:message arguments="<%= CommercePriceConstants.PRICE_VALUE_MIN %>" key="price-min-value-is-x" />
+	</liferay-ui:error>
+
 	<div class="row">
 		<div class="col-12 col-xl-8">
 			<commerce-ui:panel
@@ -107,7 +111,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 
 				<div class="row">
 					<div class="<%= colCssClass %>">
-						<aui:input ignoreRequestValue="<%= true %>" name="amount" suffix="<%= amountSuffix %>" type="text" value="<%= commerceDiscountDisplayContext.getCommerceDiscountAmount(locale) %>">
+						<aui:input ignoreRequestValue="<%= true %>" name="amount" suffix="<%= amountSuffix %>" type="currency" value="<%= commerceDiscountDisplayContext.getCommerceDiscountAmount(locale) %>">
 							<aui:validator name="min"><%= CommercePriceConstants.PRICE_VALUE_MIN %></aui:validator>
 							<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>
 							<aui:validator name="number" />
@@ -116,7 +120,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 
 					<c:if test="<%= usePercentage %>">
 						<div class="<%= colCssClass %>">
-							<aui:input ignoreRequestValue="<%= true %>" name="maximumDiscountAmount" suffix="<%= HtmlUtil.escape(commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode()) %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : commerceDiscountDisplayContext.round(commerceDiscount.getMaximumDiscountAmount()) %>">
+							<aui:input ignoreRequestValue="<%= true %>" name="maximumDiscountAmount" suffix="<%= HtmlUtil.escape(commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode()) %>" type="currency" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : commerceDiscountDisplayContext.getMaximumDiscountAmount() %>">
 								<aui:validator name="min"><%= CommercePriceConstants.PRICE_VALUE_MIN %></aui:validator>
 								<aui:validator name="max"><%= CommercePriceConstants.PRICE_VALUE_MAX %></aui:validator>
 								<aui:validator name="number" />

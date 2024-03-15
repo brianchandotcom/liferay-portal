@@ -11,6 +11,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
@@ -36,12 +37,14 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -453,7 +456,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _updateOrderSummary(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
@@ -461,17 +464,39 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		String subtotal = ParamUtil.getString(actionRequest, "subtotal");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String subtotal = ParamUtil.getString(
+			actionRequest, "subtotal", BigDecimal.ZERO.toString());
 		String subtotalDiscountAmount = ParamUtil.getString(
-			actionRequest, "subtotalDiscountAmount");
+			actionRequest, "subtotalDiscountAmount",
+			BigDecimal.ZERO.toString());
 		String shippingAmount = ParamUtil.getString(
-			actionRequest, "shippingAmount");
+			actionRequest, "shippingAmount", BigDecimal.ZERO.toString());
 		String shippingDiscountAmount = ParamUtil.getString(
-			actionRequest, "shippingDiscountAmount");
-		String taxAmount = ParamUtil.getString(actionRequest, "taxAmount");
-		String total = ParamUtil.getString(actionRequest, "total");
+			actionRequest, "shippingDiscountAmount",
+			BigDecimal.ZERO.toString());
+		String taxAmount = ParamUtil.getString(
+			actionRequest, "taxAmount", BigDecimal.ZERO.toString());
+		String total = ParamUtil.getString(
+			actionRequest, "total", BigDecimal.ZERO.toString());
 		String totalDiscountAmount = ParamUtil.getString(
-			actionRequest, "totalDiscountAmount");
+			actionRequest, "totalDiscountAmount", BigDecimal.ZERO.toString());
+
+		subtotal = _commercePriceFormatter.parse(
+			subtotal, themeDisplay.getLocale());
+		subtotalDiscountAmount = _commercePriceFormatter.parse(
+			subtotalDiscountAmount, themeDisplay.getLocale());
+		shippingAmount = _commercePriceFormatter.parse(
+			shippingAmount, themeDisplay.getLocale());
+		shippingDiscountAmount = _commercePriceFormatter.parse(
+			shippingDiscountAmount, themeDisplay.getLocale());
+		taxAmount = _commercePriceFormatter.parse(
+			taxAmount, themeDisplay.getLocale());
+		total = _commercePriceFormatter.parse(total, themeDisplay.getLocale());
+		totalDiscountAmount = _commercePriceFormatter.parse(
+			totalDiscountAmount, themeDisplay.getLocale());
 
 		_commerceOrderService.updateCommerceOrderPrices(
 			commerceOrder.getCommerceOrderId(), new BigDecimal(shippingAmount),
@@ -633,19 +658,28 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
-	private void _updateTotals(ActionRequest actionRequest)
-		throws PortalException {
-
+	private void _updateTotals(ActionRequest actionRequest) throws Exception {
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		String subtotal = ParamUtil.getString(actionRequest, "subtotal");
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String subtotal = ParamUtil.getString(
+			actionRequest, "subtotal", BigDecimal.ZERO.toString());
 		String shippingPrice = ParamUtil.getString(
-			actionRequest, "shippingPrice");
-		String total = ParamUtil.getString(actionRequest, "total");
+			actionRequest, "shippingPrice", BigDecimal.ZERO.toString());
+		String total = ParamUtil.getString(
+			actionRequest, "total", BigDecimal.ZERO.toString());
+
+		subtotal = _commercePriceFormatter.parse(
+			subtotal, themeDisplay.getLocale());
+		shippingPrice = _commercePriceFormatter.parse(
+			shippingPrice, themeDisplay.getLocale());
+		total = _commercePriceFormatter.parse(total, themeDisplay.getLocale());
 
 		CommerceContext commerceContext =
 			(CommerceContext)actionRequest.getAttribute(
@@ -694,6 +728,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;

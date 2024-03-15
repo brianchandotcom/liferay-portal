@@ -1037,7 +1037,7 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinitionId);
 
 		Tree tree = _treeFactory.createObjectDefinitionTree(
-			objectDefinition.getRootObjectDefinitionId());
+			objectDefinition.getObjectDefinitionId());
 
 		Iterator<Node> iterator = tree.iterator(
 			objectDefinition.getObjectDefinitionId());
@@ -1048,7 +1048,10 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinitionLocalService.updateRootObjectDefinitionId(
 				node.getPrimaryKey(), 0);
 
-			if (node.isRoot()) {
+			if (node.getEdge() == null) {
+				_objectRelationshipLocalService.disableEdge(
+					node.getPrimaryKey());
+
 				continue;
 			}
 

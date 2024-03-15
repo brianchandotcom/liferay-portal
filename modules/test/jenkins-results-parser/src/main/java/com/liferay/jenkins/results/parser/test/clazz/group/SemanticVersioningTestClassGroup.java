@@ -52,9 +52,13 @@ public class SemanticVersioningTestClassGroup extends BatchTestClassGroup {
 			return true;
 		}
 
-		if ((isStableTestSuiteBatch() && testRelevantJUnitTestsOnlyInStable) ||
-			isQuarterlyReleaseBranch()) {
+		if ((isStableTestSuiteBatch() && testRelevantJUnitTestsOnlyInStable)) {
 
+			return true;
+		}
+
+		if ((isQuarterlyReleaseBranch())) {
+			
 			return true;
 		}
 

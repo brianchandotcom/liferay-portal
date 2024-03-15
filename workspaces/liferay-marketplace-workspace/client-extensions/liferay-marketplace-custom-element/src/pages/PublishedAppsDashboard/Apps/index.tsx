@@ -4,16 +4,49 @@
  */
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {useState} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
+import useSWR from 'swr';
 
 import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
+import SearchBuilder from '../../../core/SearchBuilder';
+import {useAccount} from '../../../hooks/data/useAccounts';
+import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import PublishedAppsTable from './components/PublishedAppsTable';
 
 const Apps = () => {
-	const {catalogId, page, publishedProductTable, setPage} = useOutletContext<
-		any
-	>();
+	const {catalogId} = useOutletContext<any>();
 	const navigate = useNavigate();
+
+	const [page, setPage] = useState(1);
+
+	const {data: supplierAccount} = useAccount();
+
+	const {data: publishedProductTable = {}} = useSWR(
+		`/user-published-apps/${supplierAccount?.id}/${page}/${catalogId}`,
+		() => {
+			if (!catalogId) {
+				return {items: [], totalCount: 0};
+			}
+
+			return HeadlessCommerceAdminCatalogImpl.getProducts(
+				new URLSearchParams({
+					'accountId': '-1',
+					'attachments.accountId': '-1',
+					'filter': new SearchBuilder()
+						.eq('catalogId', catalogId as number, {unquote: true})
+						.and()
+						.lambda('categoryNames', 'App')
+						.build(),
+					'images.accountId': '-1',
+					'nestedFields':
+						'attachments,images,productChannels,productSpecifications',
+					'page': page.toString(),
+					'skus.accountId': '-1',
+				})
+			);
+		}
+	);
 
 	return (
 		<DashboardPage

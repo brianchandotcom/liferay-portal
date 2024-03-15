@@ -17,7 +17,7 @@ import App from './Apps/App';
 import {AppCreationFlow} from './Apps/AppCreationFlow/AppCreationFlow';
 import Members from './Members';
 import Projects from './Projects';
-import PublishedAppsDashboardOutlet from './PublishedAppsDashboardOutlet';
+import PublishedDashboardOutlet from './PublishedDashboardOutlet';
 import Solutions from './Solutions';
 
 const PublishedAppsDashboardRouter = () => {
@@ -58,7 +58,7 @@ const PublishedAppsDashboardRouter = () => {
 
 				<Route
 					element={
-						<PublishedAppsDashboardOutlet
+						<PublishedDashboardOutlet
 							accountsSearch={accountsSearch}
 							catalogId={catalogId}
 						/>

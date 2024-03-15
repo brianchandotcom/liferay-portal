@@ -3,29 +3,78 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import solutionsIcon from '../../../assets/icons/analytics_icon.svg';
-import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
-import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {useState} from 'react';
+import {useOutletContext} from 'react-router-dom';
+import useSWR from 'swr';
 
-const Solutions = () => (
-	<DashboardPage
-		messages={{
-			description:
-				'Manage solution trial and purchases from the Marketplace',
-			title: 'My Solutions',
-		}}
-	>
-		<DashboardTable
-			emptyStateMessage={{
-				description1: '',
-				description2: '',
-				title: 'No Solutions Yet',
+import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
+import SearchBuilder from '../../../core/SearchBuilder';
+import {useAccount} from '../../../hooks/data/useAccounts';
+import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
+import PublishedSolutionsTable from '../Apps/components/PublishedSolutionsTable';
+
+const Solutions = () => {
+	const {catalogId} = useOutletContext<any>();
+	const {data: supplierAccount} = useAccount();
+
+	const [page, setPage] = useState(1);
+
+	const {data: publishedSolutionsTable = {}} = useSWR(
+		`/user-published-apps/${supplierAccount?.id}/${page}/${catalogId}`,
+		() => {
+			if (!catalogId) {
+				return {items: [], totalCount: 0};
+			}
+
+			return HeadlessCommerceAdminCatalogImpl.getProducts(
+				new URLSearchParams({
+					'accountId': '-1',
+					'attachments.accountId': '-1',
+					'filter': new SearchBuilder()
+						.eq('catalogId', catalogId as number, {unquote: true})
+						.and()
+						.lambda('categoryNames', 'Solution')
+						.build(),
+					'images.accountId': '-1',
+					'nestedFields':
+						'attachments,images,productChannels,productSpecifications',
+					'page': page.toString(),
+					'skus.accountId': '-1',
+				})
+			);
+		}
+	);
+
+	return (
+		<DashboardPage
+			buttonDisabled={!(catalogId && catalogId > 0)}
+			buttonMessage="Add Solution Template"
+			messages={{
+				description:
+					'Manage solution trial and purchases from the Marketplace',
+				title: 'My Solutions',
 			}}
-			icon={solutionsIcon}
-			items={[]}
-			tableHeaders={[]}
-		/>
-	</DashboardPage>
-);
+		>
+			<PublishedSolutionsTable
+				items={publishedSolutionsTable?.items ?? []}
+			/>
+
+			{!!publishedSolutionsTable?.items?.length && (
+				<ClayPaginationBarWithBasicItems
+					active={page}
+					activeDelta={publishedSolutionsTable.pageSize}
+					ellipsisBuffer={3}
+					ellipsisProps={{
+						'aria-label': 'More',
+						'title': 'More',
+					}}
+					onActiveChange={setPage}
+					totalItems={publishedSolutionsTable.totalCount}
+				/>
+			)}
+		</DashboardPage>
+	);
+};
 
 export default Solutions;

@@ -30,7 +30,7 @@ export type DashboardListItems = {
 };
 
 type DashboardNavigationProps = {
-	accountAppsNumber: number;
+	accountAppsNumber?: number;
 	accountIcon: string;
 	accountsSearch: ReturnType<typeof useAccounts>;
 	currentAccount: Account;
@@ -82,7 +82,8 @@ const DropdownItems: React.FC<{
 };
 
 export function DashboardNavigation({
-	accountAppsNumber,
+	// accountAppsNumber,
+
 	accountIcon,
 	accountsSearch,
 	currentAccount,
@@ -115,11 +116,11 @@ export function DashboardNavigation({
 									{currentAccount?.name}
 								</span>
 
-								{!!accountAppsNumber && (
+								{/* {!!accountAppsNumber && (
 									<span className="dashboard-navigation-header-apps">
 										{accountAppsNumber} apps
 									</span>
-								)}
+								)} */}
 							</div>
 						</div>
 

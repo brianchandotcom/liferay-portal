@@ -132,9 +132,11 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	}
 
 	@Override
-	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
-			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter)
+	public File exportLayoutPageTemplateEntriesAndCollections(
+			long[] layoutPageTemplateCollectionIds)
 		throws Exception {
+
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		List<LayoutPageTemplateCollection> exportLayoutPageTemplateCollections =
 			new ArrayList<>();
@@ -148,8 +150,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 						layoutPageTemplateCollectionId));
 		}
 
-		return _exportLayoutPageTemplateEntriesAndCollections(
+		_exportLayoutPageTemplateEntriesAndCollections(
 			exportLayoutPageTemplateCollections, StringPool.BLANK, zipWriter);
+
+		return zipWriter.getFile();
 	}
 
 	@Override
@@ -202,7 +206,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		return zipWriter.getFile();
 	}
 
-	private ZipWriter _exportLayoutPageTemplateEntriesAndCollections(
+	private void _exportLayoutPageTemplateEntriesAndCollections(
 			LayoutPageTemplateCollection layoutPageTemplateCollection,
 			String path, ZipWriter zipWriter)
 		throws Exception {
@@ -232,11 +236,9 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId()),
 			path, zipWriter);
-
-		return zipWriter;
 	}
 
-	private ZipWriter _exportLayoutPageTemplateEntriesAndCollections(
+	private void _exportLayoutPageTemplateEntriesAndCollections(
 			List<LayoutPageTemplateCollection> layoutPageTemplateCollections,
 			String path, ZipWriter zipWriter)
 		throws Exception {
@@ -265,12 +267,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 						"name", layoutPageTemplateCollection.getName()
 					).toString());
 
-				zipWriter = _exportLayoutPageTemplateEntriesAndCollections(
+				_exportLayoutPageTemplateEntriesAndCollections(
 					layoutPageTemplateCollection, path, zipWriter);
 			}
 		}
-
-		return zipWriter;
 	}
 
 	private DTOConverterContext _getDTOConverterContext(

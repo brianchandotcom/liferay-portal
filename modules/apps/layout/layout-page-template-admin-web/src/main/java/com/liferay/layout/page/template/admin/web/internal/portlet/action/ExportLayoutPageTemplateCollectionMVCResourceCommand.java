@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.kernel.zip.ZipWriterFactory;
 
 import java.io.FileInputStream;
 
@@ -45,16 +43,13 @@ public class ExportLayoutPageTemplateCollectionMVCResourceCommand
 			resourceRequest, "layoutPageTemplateCollectionId");
 
 		try {
-			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
-
-			zipWriter =
-				_layoutsExporter.exportLayoutPageTemplateEntriesAndCollections(
-					new long[] {layoutPageTemplateCollectionId}, zipWriter);
-
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
 				"collections-" + Time.getTimestamp() + ".zip",
-				new FileInputStream(zipWriter.getFile()),
+				new FileInputStream(
+					_layoutsExporter.
+						exportLayoutPageTemplateEntriesAndCollections(
+							new long[] {layoutPageTemplateCollectionId})),
 				ContentTypes.APPLICATION_ZIP);
 		}
 		catch (Exception exception) {
@@ -66,8 +61,5 @@ public class ExportLayoutPageTemplateCollectionMVCResourceCommand
 
 	@Reference
 	private LayoutsExporter _layoutsExporter;
-
-	@Reference
-	private ZipWriterFactory _zipWriterFactory;
 
 }

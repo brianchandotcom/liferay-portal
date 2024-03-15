@@ -5,8 +5,6 @@
 
 package com.liferay.layout.exporter;
 
-import com.liferay.portal.kernel.zip.ZipWriter;
-
 import java.io.File;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -23,8 +21,8 @@ public interface LayoutsExporter {
 			long[] layoutPageTemplateEntryIds, int type)
 		throws Exception;
 
-	public ZipWriter exportLayoutPageTemplateEntriesAndCollections(
-			long[] layoutPageTemplateCollectionIds, ZipWriter zipWriter)
+	public File exportLayoutPageTemplateEntriesAndCollections(
+			long[] layoutPageTemplateCollectionIds)
 		throws Exception;
 
 	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)

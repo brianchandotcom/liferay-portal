@@ -47,9 +47,8 @@ public class ExportLayoutPageTemplateCollectionMVCResourceCommand
 				resourceRequest, resourceResponse,
 				"collections-" + Time.getTimestamp() + ".zip",
 				new FileInputStream(
-					_layoutsExporter.
-						exportLayoutPageTemplateEntriesAndCollections(
-							new long[] {layoutPageTemplateCollectionId})),
+					_layoutsExporter.exportLayoutPageTemplateCollections(
+						new long[] {layoutPageTemplateCollectionId})),
 				ContentTypes.APPLICATION_ZIP);
 		}
 		catch (Exception exception) {

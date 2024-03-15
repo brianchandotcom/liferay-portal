@@ -15,14 +15,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutsExporter {
 
+	public File exportLayoutPageTemplateCollections(
+			long[] layoutPageTemplateCollectionIds)
+		throws Exception;
+
 	public File exportLayoutPageTemplateEntries(long groupId) throws Exception;
 
 	public File exportLayoutPageTemplateEntries(
 			long[] layoutPageTemplateEntryIds, int type)
-		throws Exception;
-
-	public File exportLayoutPageTemplateEntriesAndCollections(
-			long[] layoutPageTemplateCollectionIds)
 		throws Exception;
 
 	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)

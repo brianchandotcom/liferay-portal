@@ -17,7 +17,6 @@ import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.MasterPageUti
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.PageTemplateCollectionUtil;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.PageTemplateUtil;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.UtilityPageTemplateUtil;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -250,31 +249,25 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
 				layoutPageTemplateCollections) {
 
-			if (layoutPageTemplateCollection.getType() ==
-					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE) {
+			String layoutPageTemplateCollectionKey =
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionKey();
 
-				String layoutPageTemplateCollectionKey =
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionKey();
+			path = path + StringPool.SLASH + layoutPageTemplateCollectionKey;
 
-				path =
-					path + StringPool.SLASH + layoutPageTemplateCollectionKey;
+			zipWriter.addEntry(
+				path + StringPool.SLASH +
+					LayoutPageTemplateExportImportConstants.
+						FILE_NAME_PAGE_TEMPLATE_COLLECTION,
+				JSONUtil.put(
+					"description", layoutPageTemplateCollection.getDescription()
+				).put(
+					"name", layoutPageTemplateCollection.getName()
+				).toString());
 
-				zipWriter.addEntry(
-					path + StringPool.SLASH +
-						LayoutPageTemplateExportImportConstants.
-							FILE_NAME_PAGE_TEMPLATE_COLLECTION,
-					JSONUtil.put(
-						"description",
-						layoutPageTemplateCollection.getDescription()
-					).put(
-						"name", layoutPageTemplateCollection.getName()
-					).toString());
-
-				_exportLayoutPageTemplateEntriesAndCollections(
-					layoutPageTemplateCollection, pageDefinitionDTOConverter,
-					path, zipWriter);
-			}
+			_exportLayoutPageTemplateEntriesAndCollections(
+				layoutPageTemplateCollection, pageDefinitionDTOConverter,
+				path, zipWriter);
 		}
 	}
 

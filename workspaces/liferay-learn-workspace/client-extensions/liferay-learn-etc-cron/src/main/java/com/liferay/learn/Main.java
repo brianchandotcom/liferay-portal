@@ -126,13 +126,6 @@ public class Main {
 			liferayDataDefinitionKey = "LEARN-ARTICLE";
 		}
 
-		String liferayLearnResourcesDomain = System.getenv(
-			"LIFERAY_LEARN_ETC_CRON_LIFERAY_LEARN_RESOURCES_DOMAIN");
-
-		if (liferayLearnResourcesDomain == null) {
-			liferayLearnResourcesDomain = "https://resources.learn.liferay.com";
-		}
-
 		String liferaySiteFriendlyUrlPath = System.getenv(
 			"LIFERAY_LEARN_ETC_CRON_LIFERAY_SITE_FRIENDLY_URL_PATH");
 
@@ -157,7 +150,6 @@ public class Main {
 
 		Main main = new Main(
 			lastestHashFileName, liferayDataDefinitionKey,
-			liferayLearnResourcesDomain,
 			System.getenv("LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID"),
 			System.getenv("LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
 			liferaySiteFriendlyUrlPath, new URL(liferayUrl), baseDirFile,
@@ -229,12 +221,11 @@ public class Main {
 
 	public Main(
 			String latestHashFileName, String liferayDataDefinitionKey,
-			String liferayLearnResourcesDomain, String liferayOAuthClientId,
-			String liferayOAuthClientSecret, String liferaySiteFriendlyUrlPath,
-			URL liferayURL, File baseDir, boolean offline)
+			String liferayOAuthClientId, String liferayOAuthClientSecret,
+			String liferaySiteFriendlyUrlPath, URL liferayURL, File baseDir,
+			boolean offline)
 		throws Exception {
 
-		_liferayLearnResourcesDomain = liferayLearnResourcesDomain;
 		_liferayOAuthClientId = liferayOAuthClientId;
 		_liferayOAuthClientSecret = liferayOAuthClientSecret;
 		_liferayURL = liferayURL;
@@ -1714,7 +1705,6 @@ public class Main {
 	private final Set<File> _landingPageFiles = new HashSet<>();
 	private final String _lastestHashFileName;
 	private final long _liferayContentStructureId;
-	private final String _liferayLearnResourcesDomain;
 	private final String _liferayOAuthClientId;
 	private final String _liferayOAuthClientSecret;
 	private final long _liferaySiteId;

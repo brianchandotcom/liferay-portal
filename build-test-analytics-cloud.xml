@@ -691,7 +691,7 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 					sleep 30
 				done
 
-				echo "Docker compose is now healthy."
+				echo "Docker compose is healthy."
 
 				while [[ -z $(docker logs ${analytics.cloud.faro.container.name} | grep "Completed demo data creation") ]]
 				do
@@ -700,7 +700,7 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 					sleep 15
 				done
 
-				echo "Faro demo data is now created."
+				echo "Faro demo data was created."
 
 				docker logs ${analytics.cloud.faro.container.name}
 

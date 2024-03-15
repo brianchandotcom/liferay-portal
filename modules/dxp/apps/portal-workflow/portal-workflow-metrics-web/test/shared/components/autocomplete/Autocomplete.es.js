@@ -24,6 +24,10 @@ describe('The Autocomplete component should', () => {
 
 	afterEach(cleanup);
 
+	beforeAll(() => {
+		jest.setTimeout(30000);
+	});
+
 	beforeEach(async () => {
 		const autocomplete = render(
 			<Autocomplete

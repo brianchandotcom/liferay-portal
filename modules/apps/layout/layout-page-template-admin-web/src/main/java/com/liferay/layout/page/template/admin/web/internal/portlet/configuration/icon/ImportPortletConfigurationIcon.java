@@ -95,6 +95,10 @@ public class ImportPortletConfigurationIcon
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
+		if (scopeGroup.isCompany()) {
+			return false;
+		}
+
 		if (_portletResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), scopeGroup.getGroupId(),
 				LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY)) {

@@ -6,12 +6,15 @@
 package com.liferay.object.internal.model.listener;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.event.generators.util.Attribute;
 import com.liferay.portal.security.audit.event.generators.util.AttributesBuilder;
@@ -28,6 +31,32 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ModelListener.class)
 public class ObjectDefinitionModelListener
 	extends BaseModelListener<ObjectDefinition> {
+
+	@Override
+	public void onAfterUpdate(
+			ObjectDefinition originalObjectDefinition,
+			ObjectDefinition objectDefinition)
+		throws ModelListenerException {
+
+		if (objectDefinition.isRootNode()) {
+			try {
+				for (ObjectDefinition boundObjectDefinition :
+						_objectDefinitionLocalService.getBoundObjectDefinitions(
+							objectDefinition.getCompanyId(),
+							objectDefinition.getObjectDefinitionId())) {
+
+					Indexer<ObjectDefinition> indexer =
+						IndexerRegistryUtil.nullSafeGetIndexer(
+							ObjectDefinition.class);
+
+					indexer.reindex(boundObjectDefinition);
+				}
+			}
+			catch (Exception exception) {
+				throw new ModelListenerException(exception);
+			}
+		}
+	}
 
 	@Override
 	public void onBeforeCreate(ObjectDefinition objectDefinition)
@@ -113,5 +142,8 @@ public class ObjectDefinitionModelListener
 
 	@Reference
 	private AuditRouter _auditRouter;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

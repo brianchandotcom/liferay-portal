@@ -9,6 +9,8 @@
 
 <%
 LayoutPrototypeDisplayContext layoutPrototypeDisplayContext = new LayoutPrototypeDisplayContext(request, renderRequest, renderResponse);
+
+portletDisplay.setShowStagingIcon(false);
 %>
 
 <clay:navigation-bar

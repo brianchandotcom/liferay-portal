@@ -42,6 +42,16 @@ definition {
 		}
 	}
 
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
 	@description = "This is a test for LPS-169877. 10 instances of Tags fragment can be added into the same form container"
 	@priority = 3
 	test CanAdd10TagsFragmentsToPage {

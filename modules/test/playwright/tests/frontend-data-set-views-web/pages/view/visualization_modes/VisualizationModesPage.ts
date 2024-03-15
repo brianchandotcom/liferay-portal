@@ -71,9 +71,17 @@ export class VisualizationModesPage {
 			.getByTitle('Assign Field')
 			.click();
 
-		await this.fieldSelectModalContainer
-			.getByPlaceholder('Search')
-			.waitFor();
+		await expect(
+			this.fieldSelectModalContainer
+				.locator('.custom-control-input')
+				.first()
+		).toBeEditable();
+
+		await expect(
+			this.fieldSelectModalContainer
+				.locator('.custom-control-label')
+				.first()
+		).toBeInViewport();
 	}
 
 	async openChangeFieldModal({

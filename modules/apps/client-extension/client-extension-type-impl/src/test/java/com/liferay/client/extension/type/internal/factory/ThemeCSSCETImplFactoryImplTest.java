@@ -50,7 +50,7 @@ public class ThemeCSSCETImplFactoryImplTest {
 
 			Assert.assertEquals(
 				"the-format-is-not-valid-please-upload-a-valid-frontend-" +
-					"token-definition-file",
+					"token-definition-json-file",
 				clientExtensionEntryTypeSettingsException.getMessageKey());
 		}
 	}

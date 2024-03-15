@@ -133,7 +133,7 @@ const FrontendTokenDefinitionFilePicker = ({
 		setFeedback({
 			displayType: 'info',
 			message: Liferay.Language.get(
-				'the-frontend-token-definition-file-is-being-uploaded-and-validated'
+				'the-frontend-token-definition-json-file-is-being-uploaded-and-validated'
 			),
 		});
 
@@ -143,7 +143,7 @@ const FrontendTokenDefinitionFilePicker = ({
 			setFeedback({
 				displayType: 'danger',
 				message: Liferay.Language.get(
-					'the-format-is-not-valid-please-upload-a-valid-frontend-token-definition-file'
+					'the-format-is-not-valid-please-upload-a-valid-frontend-token-definition-json-file'
 				),
 			});
 

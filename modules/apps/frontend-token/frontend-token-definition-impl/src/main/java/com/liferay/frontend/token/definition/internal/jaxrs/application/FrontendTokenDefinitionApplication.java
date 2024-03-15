@@ -103,7 +103,7 @@ public class FrontendTokenDefinitionApplication extends Application {
 				_language.get(
 					locale,
 					"the-format-is-not-valid-please-upload-a-valid-frontend-" +
-						"token-definition-file"),
+						"token-definition-json-file"),
 				Response.Status.BAD_REQUEST);
 		}
 	}
@@ -148,8 +148,8 @@ public class FrontendTokenDefinitionApplication extends Application {
 		return _getResponse(
 			_language.format(
 				locale,
-				"the-frontend-token-definition-file-was-uploaded-" +
-					"contributing-x-token-categories-x-token-sets-and-x-tokens",
+				"the-frontend-token-definition-json-file-was-uploaded-it-" +
+					"contributed-x-token-categories-x-token-sets-and-x-tokens",
 				new Object[] {
 					frontendTokenCategories.size(), frontendTokenSets.size(),
 					frontendTokens.size()

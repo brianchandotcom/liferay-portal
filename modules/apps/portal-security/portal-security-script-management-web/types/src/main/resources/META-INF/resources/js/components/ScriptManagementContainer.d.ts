@@ -6,15 +6,15 @@
 /// <reference types="react" />
 
 import './ScriptManagementContainer.scss';
+export declare type GroovyScriptUseItem = {
+	companyWebId: string;
+	sourceName: string;
+	sourceURL: string;
+};
 interface ScriptManagementContainerProps {
 	allowScriptContentBeExecutedOrIncluded: boolean;
 	baseResourceURL: string;
 }
-export declare type GroovyScriptUseItem = {
-	companyWebId: string;
-	redirectURL: string;
-	scriptSource: string;
-};
 export default function ScriptManagementContainer({
 	allowScriptContentBeExecutedOrIncluded,
 	baseResourceURL,

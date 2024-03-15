@@ -209,37 +209,6 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	}
 
 	private void _exportLayoutPageTemplateEntriesAndCollections(
-			LayoutPageTemplateCollection layoutPageTemplateCollection,
-			DTOConverter<LayoutStructure, PageDefinition>
-				pageDefinitionDTOConverter,
-			String path, ZipWriter zipWriter)
-		throws Exception {
-
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
-				layoutPageTemplateCollection.getGroupId(),
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				WorkflowConstants.STATUS_APPROVED);
-
-		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
-				layoutPageTemplateEntries) {
-
-			_populateDisplayPagesZipWriter(
-				layoutPageTemplateEntry, pageDefinitionDTOConverter, path,
-				zipWriter);
-		}
-
-		_exportLayoutPageTemplateEntriesAndCollections(
-			_layoutPageTemplateCollectionService.
-				getLayoutPageTemplateCollections(
-					layoutPageTemplateCollection.getGroupId(),
-					layoutPageTemplateCollection.
-						getLayoutPageTemplateCollectionId()),
-			pageDefinitionDTOConverter, path, zipWriter);
-	}
-
-	private void _exportLayoutPageTemplateEntriesAndCollections(
 			List<LayoutPageTemplateCollection> layoutPageTemplateCollections,
 			DTOConverter<LayoutStructure, PageDefinition>
 				pageDefinitionDTOConverter,
@@ -265,9 +234,28 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					"name", layoutPageTemplateCollection.getName()
 				).toString());
 
+			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
+					layoutPageTemplateCollection.getGroupId(),
+					layoutPageTemplateCollection.
+						getLayoutPageTemplateCollectionId(),
+					WorkflowConstants.STATUS_APPROVED);
+
+			for (LayoutPageTemplateEntry layoutPageTemplateEntry :
+					layoutPageTemplateEntries) {
+
+				_populateDisplayPagesZipWriter(
+					layoutPageTemplateEntry, pageDefinitionDTOConverter, path,
+					zipWriter);
+			}
+
 			_exportLayoutPageTemplateEntriesAndCollections(
-				layoutPageTemplateCollection, pageDefinitionDTOConverter,
-				path, zipWriter);
+				_layoutPageTemplateCollectionService.
+					getLayoutPageTemplateCollections(
+						layoutPageTemplateCollection.getGroupId(),
+						layoutPageTemplateCollection.
+							getLayoutPageTemplateCollectionId()),
+				pageDefinitionDTOConverter, path, zipWriter);
 		}
 	}
 

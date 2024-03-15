@@ -27,7 +27,7 @@ import org.mockito.stubbing.Answer;
 /**
  * @author Luis Ortiz
  */
-public class DatabaseMockupUtil {
+public class MockDatabaseUtil {
 
 	protected static void mockCompanies(List<Company> companies)
 		throws SQLException {

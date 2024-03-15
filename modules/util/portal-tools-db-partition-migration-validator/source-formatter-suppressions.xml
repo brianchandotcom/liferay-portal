@@ -5,6 +5,6 @@
 		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/migration/validator/util/DatabaseUtil\.java" />
 		<suppress checks="CompanyIterationCheck" files="src/main/java/com/liferay/portal/tools/db/partition/migration/validator/util/Validator\.java" />
 		<suppress checks="CompanyIterationCheck" files="src/test/java/com/liferay/portal/tools/db/partition/migration/validator/DBPartitionMigrationValidatorExportTest\.java" />
-		<suppress checks="CompanyIterationCheck" files="src/test/java/com/liferay/portal/tools/db/partition/migration/validator/util/DatabaseMockupUtil\.java" />
+		<suppress checks="CompanyIterationCheck" files="src/test/java/com/liferay/portal/tools/db/partition/migration/validator/util/MockDatabaseUtil\.java" />
 	</checkstyle>
 </suppressions>

@@ -43,9 +43,8 @@ public class DBPartitionMigrationValidatorValidationTest {
 
 	@Test
 	public void testSourceMultipleCompanies() throws Exception {
-		_testAndAssert(
-			() -> {
-			},
+		_validate(
+			"sourceMultipleCompanies.data", "targetSuccess.data",
 			runtimeException -> {
 				Assert.assertEquals("1", runtimeException.getMessage());
 				Assert.assertTrue(
@@ -57,14 +56,14 @@ public class DBPartitionMigrationValidatorValidationTest {
 					_outByteArrayOutputStream.toString(
 					).isEmpty());
 			},
-			"sourceMultipleCompanies.data", "targetSuccess.data");
+			() -> {
+			});
 	}
 
 	@Test
 	public void testTargetNondefaultPartition() throws Exception {
-		_testAndAssert(
-			() -> {
-			},
+		_validate(
+			"sourceSuccess.data", "targetNotDefault.data",
 			runtimeException -> {
 				Assert.assertEquals("1", runtimeException.getMessage());
 				Assert.assertTrue(
@@ -76,14 +75,14 @@ public class DBPartitionMigrationValidatorValidationTest {
 					_outByteArrayOutputStream.toString(
 					).isEmpty());
 			},
-			"sourceSuccess.data", "targetNotDefault.data");
+			() -> {
+			});
 	}
 
 	@Test
 	public void testValidationErrors() throws Exception {
-		_testAndAssert(
-			() -> {
-			},
+		_validate(
+			"sourceFailure.data", "targetFailure.data",
 			runtimeException -> {
 				Assert.assertEquals("1", runtimeException.getMessage());
 
@@ -160,12 +159,15 @@ public class DBPartitionMigrationValidatorValidationTest {
 							"target database. Please change it during " +
 								"migration."));
 			},
-			"sourceFailure.data", "targetFailure.data");
+			() -> {
+			});
 	}
 
 	@Test
 	public void testValidationSuccess() throws Exception {
-		_testAndAssert(
+		_validate(
+			"sourceSuccess.data", "targetSuccess.data",
+			runtimeException -> Assert.fail(),
 			() -> {
 				Assert.assertTrue(
 					_errByteArrayOutputStream.toString(
@@ -173,9 +175,7 @@ public class DBPartitionMigrationValidatorValidationTest {
 				Assert.assertTrue(
 					_outByteArrayOutputStream.toString(
 					).isEmpty());
-			},
-			runtimeException -> Assert.fail(), "sourceSuccess.data",
-			"targetSuccess.data");
+			});
 	}
 
 	private String _getResourceFilePath(String fileName)
@@ -188,10 +188,10 @@ public class DBPartitionMigrationValidatorValidationTest {
 		return String.valueOf(Paths.get(resource.toURI()));
 	}
 
-	private void _testAndAssert(
-			UnsafeRunnable<Exception> afterExecutionValidations,
+	private void _validate(
+			String sourceFile, String targetFile,
 			UnsafeConsumer<RuntimeException, Exception> catchValidations,
-			String sourceFile, String targetFile)
+			UnsafeRunnable<Exception> validations)
 		throws Exception {
 
 		try {
@@ -205,7 +205,7 @@ public class DBPartitionMigrationValidatorValidationTest {
 			catchValidations.accept(runtimeException);
 		}
 
-		afterExecutionValidations.run();
+		validations.run();
 	}
 
 	private final ByteArrayOutputStream _errByteArrayOutputStream =

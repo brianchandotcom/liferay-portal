@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * @author Luis Ortiz
  */
-public class DatabaseUtilTest extends DatabaseMockupUtil {
+public class DatabaseUtilTest extends MockDatabaseUtil {
 
 	@Before
 	public void setUp() throws SQLException {

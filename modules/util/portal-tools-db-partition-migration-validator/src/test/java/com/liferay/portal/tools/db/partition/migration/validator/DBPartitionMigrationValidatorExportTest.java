@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.tools.db.partition.migration.validator.util.DatabaseMockupUtil;
+import com.liferay.portal.tools.db.partition.migration.validator.util.MockDatabaseUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,14 +30,13 @@ import org.junit.rules.TemporaryFolder;
 /**
  * @author Luis Ortiz
  */
-public class DBPartitionMigrationValidatorExportTest
-	extends DatabaseMockupUtil {
+public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 
 	@Test
 	public void testMultipleCompanyDefaultDatabase()
 		throws IOException, SQLException {
 
-		_executeTest(
+		_export(
 			_generateCompanies(),
 			Arrays.asList(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
@@ -50,7 +49,7 @@ public class DBPartitionMigrationValidatorExportTest
 	public void testMultipleCompanyNondefaultDatabase()
 		throws IOException, SQLException {
 
-		_executeTest(
+		_export(
 			_generateCompanies(),
 			Arrays.asList(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
@@ -63,7 +62,7 @@ public class DBPartitionMigrationValidatorExportTest
 	public void testSingleCompanyDefaultDatabase()
 		throws IOException, SQLException {
 
-		_executeTest(
+		_export(
 			_generateCompanies(),
 			Arrays.asList(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
@@ -75,7 +74,7 @@ public class DBPartitionMigrationValidatorExportTest
 	public void testSingleCompanyNondefaultDatabase()
 		throws IOException, SQLException {
 
-		_executeTest(
+		_export(
 			_generateCompanies(),
 			Arrays.asList(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomLong()),
@@ -120,7 +119,7 @@ public class DBPartitionMigrationValidatorExportTest
 		Assert.assertTrue(content.contains(_getCompaniesOutput(companies)));
 	}
 
-	private void _executeTest(
+	private void _export(
 			List<Company> companies, List<Long> companyIds,
 			List<Long> companyInfoIds, boolean defaultPartition,
 			List<Release> releases)

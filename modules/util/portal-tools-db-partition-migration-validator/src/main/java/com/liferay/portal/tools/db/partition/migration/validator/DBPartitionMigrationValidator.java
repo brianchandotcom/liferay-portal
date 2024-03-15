@@ -83,9 +83,7 @@ public class DBPartitionMigrationValidator {
 			System.err.println(sqlException);
 		}
 
-		if (code != _LIFERAY_COMMON_EXIT_CODE_OK) {
-			System.exit(code);
-		}
+		System.exit(code);
 	}
 
 	private static void _export(String[] args) {

@@ -8,8 +8,17 @@ package com.liferay.login.web.internal.portlet;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,6 +54,42 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class ForgotPasswordPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (!_isAllowedToRenderView(renderRequest)) {
+			renderRequest.setAttribute(
+				getMVCPathAttributeName(renderResponse.getNamespace()),
+				"/login.jsp");
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	private boolean _isAllowedToRenderView(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isSignedIn()) {
+			String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
+
+			String mvcRenderCommandName = ParamUtil.getString(
+				renderRequest, "mvcRenderCommandName");
+
+			if ((Validator.isNull(mvcRenderCommandName) &&
+				 Validator.isNull(mvcPath)) ||
+				mvcRenderCommandName.equals("/login/forgot_password") ||
+				mvcPath.equals("/forgot_password.jsp")) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.login.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"

@@ -51,11 +51,15 @@ public interface Job {
 
 	public List<String> getDistNodes();
 
+	public List<String> getDistNodes(String networkName);
+
 	public DistType getDistType();
 
 	public Set<String> getDistTypes();
 
 	public Set<String> getDistTypesExcludingTomcat();
+
+	public Set<JenkinsCohort> getJenkinsCohorts();
 
 	public JobHistory getJobHistory();
 
@@ -68,6 +72,8 @@ public interface Job {
 	public String getJobURL(JenkinsMaster jenkinsMaster);
 
 	public JSONObject getJSONObject();
+
+	public Set<String> getNetworkNames();
 
 	public Set<String> getSegmentNames();
 

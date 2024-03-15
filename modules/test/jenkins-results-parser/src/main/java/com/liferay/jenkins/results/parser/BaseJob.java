@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -283,40 +284,65 @@ public abstract class BaseJob implements Job {
 
 	@Override
 	public List<String> getDistNodes() {
-		try {
-			List<JenkinsMaster> jenkinsMasters =
-				JenkinsResultsParserUtil.getJenkinsMasters(
-					JenkinsResultsParserUtil.getBuildProperties(),
-					_getSlaveRAMMinimumDefault(), _getSlavesPerHostDefault(),
-					JenkinsResultsParserUtil.getCohortName());
+		List<String> distNodes = new ArrayList<>();
 
-			int axisCount = getAxisCount();
-			int distNodeAxisCount = _getDistNodeAxisCount();
-
-			int distNodeCount = axisCount / distNodeAxisCount;
-
-			if ((axisCount % distNodeAxisCount) > 0) {
-				distNodeCount++;
-			}
-
-			distNodeCount = Math.min(distNodeCount, jenkinsMasters.size());
-
-			distNodeCount = Math.max(distNodeCount, _getDistNodeCountMinimum());
-
-			List<JenkinsSlave> jenkinsSlaves =
-				JenkinsResultsParserUtil.getReachableJenkinsSlaves(
-					jenkinsMasters, distNodeCount);
-
-			List<String> distNodes = new ArrayList<>();
-
-			for (JenkinsSlave jenkinsSlave : jenkinsSlaves) {
-				distNodes.add(jenkinsSlave.getName());
-			}
-
-			return distNodes;
+		for (String networkName : getNetworkNames()) {
+			distNodes.addAll(getDistNodes(networkName));
 		}
-		catch (IOException ioException) {
-			return new ArrayList<>();
+
+		return distNodes;
+	}
+
+	@Override
+	public List<String> getDistNodes(String networkName) {
+		synchronized (_distNodesMap) {
+			List<String> distNodes = _distNodesMap.get(networkName);
+
+			if (distNodes != null) {
+				return distNodes;
+			}
+
+			distNodes = new ArrayList<>();
+
+			try {
+				List<JenkinsMaster> jenkinsMasters =
+					JenkinsResultsParserUtil.getJenkinsMasters(
+						JenkinsResultsParserUtil.getBuildProperties(),
+						_getSlaveRAMMinimumDefault(),
+						_getSlavesPerHostDefault(),
+						JenkinsResultsParserUtil.getCohortName(), networkName);
+
+				int axisCount = getAxisCount();
+				int distNodeAxisCount = _getDistNodeAxisCount();
+
+				int distNodeCount = axisCount / distNodeAxisCount;
+
+				Set<String> networkNames = getNetworkNames();
+
+				distNodeCount = distNodeCount / networkNames.size();
+
+				if ((axisCount % distNodeAxisCount) > 0) {
+					distNodeCount++;
+				}
+
+				distNodeCount = Math.min(distNodeCount, jenkinsMasters.size());
+
+				distNodeCount = Math.max(
+					distNodeCount, _getDistNodeCountMinimum());
+
+				List<JenkinsSlave> jenkinsSlaves =
+					JenkinsResultsParserUtil.getReachableJenkinsSlaves(
+						jenkinsMasters, distNodeCount);
+
+				for (JenkinsSlave jenkinsSlave : jenkinsSlaves) {
+					distNodes.add(jenkinsSlave.getName());
+				}
+
+				return distNodes;
+			}
+			catch (IOException ioException) {
+				return new ArrayList<>();
+			}
 		}
 	}
 
@@ -339,6 +365,12 @@ public abstract class BaseJob implements Job {
 		distTypesExcludingTomcat.remove("tomcat");
 
 		return distTypesExcludingTomcat;
+	}
+
+	@Override
+	public Set<JenkinsCohort> getJenkinsCohorts() {
+		return Collections.singleton(
+			JenkinsResultsParserUtil.getJenkinsCohort());
 	}
 
 	@Override
@@ -452,6 +484,17 @@ public abstract class BaseJob implements Job {
 
 			return jsonObject;
 		}
+	}
+
+	@Override
+	public Set<String> getNetworkNames() {
+		Set<String> networkNames = new HashSet<>();
+
+		for (JenkinsCohort jenkinsCohort : getJenkinsCohorts()) {
+			networkNames.addAll(jenkinsCohort.getNetworkNames());
+		}
+
+		return networkNames;
 	}
 
 	@Override
@@ -1228,6 +1271,7 @@ public abstract class BaseJob implements Job {
 	private String _companyDefaultLocale;
 	private Document _configDocument;
 	private List<BatchTestClassGroup> _dependentBatchTestClassGroups;
+	private final Map<String, List<String>> _distNodesMap = new HashMap<>();
 	private boolean _initializeJobProperties;
 	private JobHistory _jobHistory;
 	private final String _jobName;

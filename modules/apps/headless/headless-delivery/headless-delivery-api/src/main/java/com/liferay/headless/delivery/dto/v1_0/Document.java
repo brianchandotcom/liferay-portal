@@ -795,6 +795,47 @@ public class Document implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fileNameSupplier;
 
+	@Schema(description = "The document's file relative URL.")
+	public String getFriendlyUrlPath() {
+		if (_friendlyUrlPathSupplier != null) {
+			friendlyUrlPath = _friendlyUrlPathSupplier.get();
+
+			_friendlyUrlPathSupplier = null;
+		}
+
+		return friendlyUrlPath;
+	}
+
+	public void setFriendlyUrlPath(String friendlyUrlPath) {
+		this.friendlyUrlPath = friendlyUrlPath;
+
+		_friendlyUrlPathSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFriendlyUrlPath(
+		UnsafeSupplier<String, Exception> friendlyUrlPathUnsafeSupplier) {
+
+		_friendlyUrlPathSupplier = () -> {
+			try {
+				return friendlyUrlPathUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The document's file relative URL.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String friendlyUrlPath;
+
+	@JsonIgnore
+	private Supplier<String> _friendlyUrlPathSupplier;
+
 	@Schema(description = "The document's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
@@ -1571,6 +1612,22 @@ public class Document implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(fileName));
+
+			sb.append("\"");
+		}
+
+		String friendlyUrlPath = getFriendlyUrlPath();
+
+		if (friendlyUrlPath != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(friendlyUrlPath));
 
 			sb.append("\"");
 		}

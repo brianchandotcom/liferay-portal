@@ -287,6 +287,20 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (document.getFriendlyUrlPath() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyUrlPath\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(document.getFriendlyUrlPath()));
+
+			sb.append("\"");
+		}
+
 		if (document.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -617,6 +631,15 @@ public class DocumentSerDes {
 			map.put("fileName", String.valueOf(document.getFileName()));
 		}
 
+		if (document.getFriendlyUrlPath() == null) {
+			map.put("friendlyUrlPath", null);
+		}
+		else {
+			map.put(
+				"friendlyUrlPath",
+				String.valueOf(document.getFriendlyUrlPath()));
+		}
+
 		if (document.getId() == null) {
 			map.put("id", null);
 		}
@@ -841,6 +864,11 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "fileName")) {
 				if (jsonParserFieldValue != null) {
 					document.setFileName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
+				if (jsonParserFieldValue != null) {
+					document.setFriendlyUrlPath((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

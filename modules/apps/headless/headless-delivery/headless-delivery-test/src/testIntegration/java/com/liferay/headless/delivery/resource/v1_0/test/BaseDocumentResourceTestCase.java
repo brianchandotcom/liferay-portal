@@ -204,6 +204,7 @@ public abstract class BaseDocumentResourceTestCase {
 		document.setExternalReferenceCode(regex);
 		document.setFileExtension(regex);
 		document.setFileName(regex);
+		document.setFriendlyUrlPath(regex);
 		document.setTitle(regex);
 
 		String json = DocumentSerDes.toJSON(document);
@@ -220,6 +221,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertEquals(regex, document.getExternalReferenceCode());
 		Assert.assertEquals(regex, document.getFileExtension());
 		Assert.assertEquals(regex, document.getFileName());
+		Assert.assertEquals(regex, document.getFriendlyUrlPath());
 		Assert.assertEquals(regex, document.getTitle());
 	}
 
@@ -3131,6 +3133,14 @@ public abstract class BaseDocumentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (document.getFriendlyUrlPath() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("keywords", additionalAssertFieldName)) {
 				if (document.getKeywords() == null) {
 					valid = false;
@@ -3570,6 +3580,17 @@ public abstract class BaseDocumentResourceTestCase {
 			if (Objects.equals("fileName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						document1.getFileName(), document2.getFileName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						document1.getFriendlyUrlPath(),
+						document2.getFriendlyUrlPath())) {
 
 					return false;
 				}
@@ -4351,6 +4372,52 @@ public abstract class BaseDocumentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("friendlyUrlPath")) {
+			Object object = document.getFriendlyUrlPath();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -4515,6 +4582,8 @@ public abstract class BaseDocumentResourceTestCase {
 				fileExtension = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				fileName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				numberOfComments = RandomTestUtil.randomInt();

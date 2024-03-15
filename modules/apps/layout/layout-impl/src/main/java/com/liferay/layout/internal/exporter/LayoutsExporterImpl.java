@@ -49,6 +49,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -224,15 +225,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 			path = path + StringPool.SLASH + layoutPageTemplateCollectionKey;
 
-			zipWriter.addEntry(
-				path + StringPool.SLASH +
-					LayoutPageTemplateExportImportConstants.
-						FILE_NAME_PAGE_TEMPLATE_COLLECTION,
-				JSONUtil.put(
-					"description", layoutPageTemplateCollection.getDescription()
-				).put(
-					"name", layoutPageTemplateCollection.getName()
-				).toString());
+			_populateDisplayPagesZipWriter(
+				layoutPageTemplateCollection, path, zipWriter);
 
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
@@ -306,6 +300,22 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		}
 
 		return null;
+	}
+
+	private void _populateDisplayPagesZipWriter(
+			LayoutPageTemplateCollection layoutPageTemplateCollection,
+			String path, ZipWriter zipWriter)
+		throws IOException {
+
+		zipWriter.addEntry(
+			path + StringPool.SLASH +
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_PAGE_TEMPLATE_COLLECTION,
+			JSONUtil.put(
+				"description", layoutPageTemplateCollection.getDescription()
+			).put(
+				"name", layoutPageTemplateCollection.getName()
+			).toString());
 	}
 
 	private void _populateDisplayPagesZipWriter(

@@ -105,6 +105,30 @@
 			"name": "T4T1FolderTemplateNode",
 			"objectFields": [
 				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"localized": false,
+					"name": "description",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"indexed": true,
@@ -163,30 +187,6 @@
 					"state": false,
 					"system": false,
 					"type": "Boolean"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Description"
-					},
-					"localized": false,
-					"name": "description",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
-					"readOnly": "false",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Clob"
 				},
 				{
 					"DBType": "Long",

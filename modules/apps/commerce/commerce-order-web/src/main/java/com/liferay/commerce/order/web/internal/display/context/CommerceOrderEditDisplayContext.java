@@ -9,6 +9,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.configuration.CommerceOrderItemDecimalQuantityConfiguration;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.model.StepModel;
 import com.liferay.commerce.model.CommerceAddress;
@@ -38,6 +39,7 @@ import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
+import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -90,6 +92,8 @@ public class CommerceOrderEditDisplayContext {
 			CommerceOrderEngine commerceOrderEngine,
 			CommerceOrderItemDecimalQuantityConfiguration
 				commerceOrderItemDecimalQuantityConfiguration,
+			CommerceOrderItemQuantityFormatter
+				commerceOrderItemQuantityFormatter,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderNoteService commerceOrderNoteService,
 			PortletResourcePermission commerceOrderPortletResourcePermission,
@@ -98,6 +102,7 @@ public class CommerceOrderEditDisplayContext {
 			CommerceOrderTypeService commerceOrderTypeService,
 			CommercePaymentMethodGroupRelLocalService
 				commercePaymentMethodGroupRelLocalService,
+			CommercePriceFormatter commercePriceFormatter,
 			CommerceShipmentService commerceShipmentService,
 			CommerceTermEntryLocalService commerceTermEntryLocalService,
 			CPMeasurementUnitService cpMeasurementUnitService,
@@ -111,6 +116,8 @@ public class CommerceOrderEditDisplayContext {
 		_commerceOrderEngine = commerceOrderEngine;
 		_commerceOrderItemDecimalQuantityConfiguration =
 			commerceOrderItemDecimalQuantityConfiguration;
+		_commerceOrderItemQuantityFormatter =
+			commerceOrderItemQuantityFormatter;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrderPortletResourcePermission =
@@ -120,6 +127,7 @@ public class CommerceOrderEditDisplayContext {
 		_commerceOrderTypeService = commerceOrderTypeService;
 		_commercePaymentMethodGroupRelLocalService =
 			commercePaymentMethodGroupRelLocalService;
+		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShipmentService = commerceShipmentService;
 		_commerceTermEntryLocalService = commerceTermEntryLocalService;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
@@ -502,6 +510,11 @@ public class CommerceOrderEditDisplayContext {
 		return sb.toString();
 	}
 
+	public String getFormattedValue(BigDecimal value) throws PortalException {
+		return _commercePriceFormatter.format(
+			value, _commerceOrderRequestHelper.getLocale());
+	}
+
 	public List<HeaderActionModel> getHeaderActionModels()
 		throws PortalException {
 
@@ -697,13 +710,11 @@ public class CommerceOrderEditDisplayContext {
 			CommerceTermEntryConstants.TYPE_PAYMENT_TERMS);
 	}
 
-	public BigDecimal getQuantity(CommerceOrderItem commerceOrderItem) {
-		BigDecimal quantity = commerceOrderItem.getQuantity();
+	public String getQuantity(CommerceOrderItem commerceOrderItem)
+		throws PortalException {
 
-		return quantity.setScale(
-			_commerceOrderItemDecimalQuantityConfiguration.
-				maximumFractionDigits(),
-			_commerceOrderItemDecimalQuantityConfiguration.roundingMode());
+		return _commerceOrderItemQuantityFormatter.format(
+			commerceOrderItem, _commerceOrderRequestHelper.getLocale());
 	}
 
 	public PortletURL getTransitionOrderPortletURL() {
@@ -824,6 +835,8 @@ public class CommerceOrderEditDisplayContext {
 	private CommerceOrderItem _commerceOrderItem;
 	private final CommerceOrderItemDecimalQuantityConfiguration
 		_commerceOrderItemDecimalQuantityConfiguration;
+	private final CommerceOrderItemQuantityFormatter
+		_commerceOrderItemQuantityFormatter;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final PortletResourcePermission
@@ -834,6 +847,7 @@ public class CommerceOrderEditDisplayContext {
 	private final CommerceOrderTypeService _commerceOrderTypeService;
 	private final CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private CommerceShipment _commerceShipment;
 	private final CommerceShipmentService _commerceShipmentService;
 	private final CommerceTermEntryLocalService _commerceTermEntryLocalService;

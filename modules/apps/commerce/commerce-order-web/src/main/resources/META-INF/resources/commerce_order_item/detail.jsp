@@ -52,7 +52,7 @@ Date requestedDeliveryDate = commerceOrderItem.getRequestedDeliveryDate();
 			</c:if>
 		</liferay-ui:error>
 
-		<aui:input name="decimalQuantity" type="text" value="<%= commerceOrderEditDisplayContext.getQuantity(commerceOrderItem) %>">
+		<aui:input name="decimalQuantity" type="quantity" value="<%= commerceOrderEditDisplayContext.getQuantity(commerceOrderItem) %>">
 			<aui:validator name="min">0</aui:validator>
 			<aui:validator name="number" />
 		</aui:input>
@@ -72,17 +72,17 @@ Date requestedDeliveryDate = commerceOrderItem.getRequestedDeliveryDate();
 		</aui:select>
 
 		<c:if test="<%= !commerceOrder.isOpen() %>">
-			<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(commerceOrderItem.getUnitPrice()) %>">
+			<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="currency" value="<%= commerceOrderEditDisplayContext.getFormattedValue(commerceOrderItem.getUnitPrice()) %>">
 				<aui:validator name="min">0</aui:validator>
 				<aui:validator name="number" />
 			</aui:input>
 
-			<aui:input label="discount" name="discountAmount" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(commerceOrderItem.getDiscountAmount()) %>">
+			<aui:input label="discount" name="discountAmount" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="currency" value="<%= commerceOrderEditDisplayContext.getFormattedValue(commerceOrderItem.getDiscountAmount()) %>">
 				<aui:validator name="min">0</aui:validator>
 				<aui:validator name="number" />
 			</aui:input>
 
-			<aui:input label="total" name="finalPrice" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(commerceOrderItem.getFinalPrice()) %>">
+			<aui:input label="total" name="finalPrice" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="currency" value="<%= commerceOrderEditDisplayContext.getFormattedValue(commerceOrderItem.getFinalPrice()) %>">
 				<aui:validator name="min">0</aui:validator>
 				<aui:validator name="number" />
 			</aui:input>

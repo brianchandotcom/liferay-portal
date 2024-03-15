@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeoutException;
@@ -93,6 +95,16 @@ public class JenkinsCohort {
 
 	public String getName() {
 		return _name;
+	}
+
+	public Set<String> getNetworkNames() {
+		Set<String> networkNames = new HashSet<>();
+
+		for (JenkinsMaster jenkinsMaster : getJenkinsMasters()) {
+			networkNames.add(jenkinsMaster.getNetworkName());
+		}
+
+		return networkNames;
 	}
 
 	public int getOfflineJenkinsSlaveCount() {

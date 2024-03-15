@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {__LIFERAY_REMOTE_APP_SDK__ as SDK} from '../../src/main/resources/META-INF/resources/js/index';
+import '../../src/main/resources/META-INF/resources/js/index';
 
+const SDK = window['__LIFERAY_REMOTE_APP_SDK__'];
 const {Client} = SDK;
 
 describe('SDK.Client()', () => {

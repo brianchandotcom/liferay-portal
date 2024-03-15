@@ -71,7 +71,7 @@ public class DBPartitionMigrationValidator {
 		}
 	}
 
-	private static void _export(String[] args) throws Exception {
+	private static void _export(String[] args) {
 		Options options = _getExportOptions();
 
 		CommandLine commandLine = null;
@@ -109,12 +109,21 @@ public class DBPartitionMigrationValidator {
 			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 		}
 
-		String exportFilePath = _write(
-			DatabaseUtil.exportLiferayInstance(_connection),
-			commandLine.getOptionValue("output-dir"));
+		try {
+			String exportFilePath = _write(
+				DatabaseUtil.exportLiferayInstance(_connection),
+				commandLine.getOptionValue("output-dir"));
 
-		System.out.println(
-			"Export file generated successfully in " + exportFilePath);
+			System.out.println(
+				"Export file generated successfully in " + exportFilePath);
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to generate the export file:");
+
+			exception.printStackTrace();
+
+			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
+		}
 	}
 
 	private static Options _getExportOptions() {
@@ -300,7 +309,7 @@ public class DBPartitionMigrationValidator {
 	}
 
 	private static String _write(LiferayInstance liferayInstance, String path)
-		throws Exception {
+		throws IOException {
 
 		File exportDir = null;
 
@@ -318,7 +327,7 @@ public class DBPartitionMigrationValidator {
 			if ((!exportDir.exists() && !exportDir.mkdirs()) ||
 				!Files.isWritable(exportDir.toPath())) {
 
-				throw new Exception("Unable to generate the export at " + path);
+				throw new IOException("Path " + path + " is not writable");
 			}
 		}
 

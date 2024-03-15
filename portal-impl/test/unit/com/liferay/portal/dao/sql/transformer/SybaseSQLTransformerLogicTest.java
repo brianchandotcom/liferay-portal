@@ -59,6 +59,11 @@ public class SybaseSQLTransformerLogicTest
 	}
 
 	@Override
+	protected String getCastLongTransformedSQL() {
+		return "select CONVERT(BIGINT, foo) from Foo";
+	}
+
+	@Override
 	protected String getCrossJoinTransformedSQL() {
 		return "select * from Foo , Bar";
 	}

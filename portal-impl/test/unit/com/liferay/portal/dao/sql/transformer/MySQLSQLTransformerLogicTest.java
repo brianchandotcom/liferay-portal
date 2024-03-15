@@ -105,21 +105,6 @@ public class MySQLSQLTransformerLogicTest
 	}
 
 	@Override
-	protected String getCastClobTextTransformedSQL() {
-		return "select foo from Foo";
-	}
-
-	@Override
-	protected String getCastLongOriginalSQL() {
-		return "select CAST_LONG(foo) from Foo";
-	}
-
-	@Override
-	protected String getCastLongTransformedSQL() {
-		return "select foo from Foo";
-	}
-
-	@Override
 	protected String getIntegerDivisionTransformedSQL() {
 		return "select foo DIV bar from Foo";
 	}

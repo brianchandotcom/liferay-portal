@@ -63,11 +63,6 @@ public class PostgreSQLTransformerLogicTest
 	}
 
 	@Override
-	protected String getCastLongOriginalSQL() {
-		return "select CAST_LONG(foo) from Foo";
-	}
-
-	@Override
 	protected String getCastLongTransformedSQL() {
 		return "select CAST(foo AS BIGINT) from Foo";
 	}

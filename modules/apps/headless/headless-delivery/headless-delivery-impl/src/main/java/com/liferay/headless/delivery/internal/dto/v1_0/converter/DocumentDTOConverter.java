@@ -54,6 +54,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -166,6 +167,10 @@ public class DocumentDTOConverter
 				setFileName(fileEntry::getFileName);
 				setFriendlyUrlPath(
 					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-19812")) {
+							return null;
+						}
+
 						FriendlyURLEntry friendlyURLEntry =
 							_friendlyURLEntryLocalService.
 								fetchMainFriendlyURLEntry(

@@ -56,8 +56,15 @@ public class DatabaseUtilTest extends MockDatabaseUtil {
 
 		_testCompanyId(
 			companyInfoIds,
-			liferayInstance -> Assert.assertNull(
-				liferayInstance.getExportedCompanyId()));
+			liferayInstance -> {
+				try {
+					liferayInstance.getExportedCompanyId();
+				}
+				catch (Exception exception) {
+					Assert.assertTrue(
+						exception instanceof UnsupportedOperationException);
+				}
+			});
 	}
 
 	@Test

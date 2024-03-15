@@ -255,12 +255,6 @@ public class DBPartitionMigrationValidator {
 			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
 		}
 
-		if (!Validator.isSingleCompany(_sourceLiferayInstance)) {
-			System.err.println("Source has more than one company");
-
-			_exit(_LIFERAY_COMMON_EXIT_CODE_BAD);
-		}
-
 		try {
 			_targetLiferayInstance = _read(
 				commandLine.getOptionValue("target-file"));

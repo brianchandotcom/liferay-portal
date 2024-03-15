@@ -116,13 +116,11 @@ prefixUrlTest(
 
 		const displayPageTemplateName = getRandomString();
 
-		await displayPageTemplatesPage.publishNewDisplayPageTemplate(
+		await displayPageTemplatesPage.publishNewTemplate(
 			displayPageTemplateName
 		);
 
-		await displayPageTemplatesPage.markPageTemplateAsDefault(
-			displayPageTemplateName
-		);
+		await displayPageTemplatesPage.markAsDefault(displayPageTemplateName);
 
 		await friendlyUrlInstanceSettingsPage.goto();
 

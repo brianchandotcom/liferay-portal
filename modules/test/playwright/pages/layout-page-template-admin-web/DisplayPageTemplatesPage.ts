@@ -30,7 +30,7 @@ export class DisplayPageTemplatesPage {
 		);
 	}
 
-	async publishNewDisplayPageTemplate(name: string) {
+	async publishNewTemplate(name: string) {
 		await this.newButton.click();
 		await this.page.getByRole('button', {name: 'Blank'}).click();
 		await this.page.getByLabel('Name').fill(name);
@@ -45,7 +45,7 @@ export class DisplayPageTemplatesPage {
 		await this.publishButton.click();
 	}
 
-	async clickPageTemplateMoreActions(name: string) {
+	async clickMoreActions(name: string) {
 		await this.page
 			.locator(
 				'#_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_displayPagesSearchContainer .card-page-item'
@@ -55,8 +55,8 @@ export class DisplayPageTemplatesPage {
 			.click();
 	}
 
-	async markPageTemplateAsDefault(name: string) {
-		await this.clickPageTemplateMoreActions(name);
+	async markAsDefault(name: string) {
+		await this.clickMoreActions(name);
 		await this.page.once('dialog', (dialog) => {
 			dialog.accept().catch(() => {});
 		});

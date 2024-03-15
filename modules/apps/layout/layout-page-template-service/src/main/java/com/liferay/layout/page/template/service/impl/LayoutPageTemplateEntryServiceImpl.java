@@ -318,6 +318,14 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, int status) {
+
+		return layoutPageTemplateEntryPersistence.filterFindByG_S(
+			groupId, status);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, int type, int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
@@ -356,6 +364,19 @@ public class LayoutPageTemplateEntryServiceImpl
 		return getLayoutPageTemplateEntries(
 			groupId, types, WorkflowConstants.STATUS_ANY, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long layoutPageTemplateCollectionId, int status) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return layoutPageTemplateEntryPersistence.filterFindByG_L(
+				groupId, layoutPageTemplateCollectionId);
+		}
+
+		return layoutPageTemplateEntryPersistence.filterFindByG_L_S(
+			groupId, layoutPageTemplateCollectionId, status);
 	}
 
 	@Override

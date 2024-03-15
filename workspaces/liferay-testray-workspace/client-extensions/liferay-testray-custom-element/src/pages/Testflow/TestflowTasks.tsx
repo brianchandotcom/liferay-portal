@@ -391,8 +391,7 @@ const TestFlowTasks = () => {
 															0,
 															{},
 															{
-																revalidate:
-																	true,
+																revalidate: true,
 															}
 														);
 													})
@@ -418,10 +417,9 @@ const TestFlowTasks = () => {
 						{items},
 						{dispatch, listViewContext: {selectedRows}, mutate}
 					) => {
-						const selectedSubtasks: TestraySubTask[] =
-							selectedRows.map((rowId) =>
-								items.find(({id}) => rowId === id)
-							);
+						const selectedSubtasks: TestraySubTask[] = selectedRows.map(
+							(rowId) => items.find(({id}) => rowId === id)
+						);
 
 						const alerts = getFloatingBoxAlerts(selectedSubtasks);
 

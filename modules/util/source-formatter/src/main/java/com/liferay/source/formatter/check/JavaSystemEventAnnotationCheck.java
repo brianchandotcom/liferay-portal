@@ -91,8 +91,13 @@ public class JavaSystemEventAnnotationCheck extends BaseFileCheck {
 
 			String localServiceImplFileName = sb.toString();
 
-			String localServiceImplContent = FileUtil.read(
-				new File(localServiceImplFileName));
+			File file = new File(localServiceImplFileName);
+
+			if (!file.exists()) {
+				return;
+			}
+
+			String localServiceImplContent = FileUtil.read(file);
 
 			if (localServiceImplContent == null) {
 				return;

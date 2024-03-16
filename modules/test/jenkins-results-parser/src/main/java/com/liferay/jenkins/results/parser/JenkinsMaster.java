@@ -312,17 +312,19 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public String getNetworkName() {
-		String networkName = "default";
-
 		try {
-			networkName = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.network(" + getName(), ")");
-		}
-		catch (IOException ioException) {
+			String networkName = JenkinsResultsParserUtil.getBuildProperty(
+				"master.network(" + getName() + ")");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(networkName)) {
+				return _NETWORK_NAME_DEFAULT;
+			}
+
 			return networkName;
 		}
-
-		return networkName;
+		catch (IOException ioException) {
+			return _NETWORK_NAME_DEFAULT;
+		}
 	}
 
 	public int getOfflineJenkinsSlavesCount() {
@@ -955,6 +957,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private static final long _MAXIMUM_BUILD_UPDATE_DURATION = 30 * 1000;
 
 	private static final long _MAXIMUM_QUEUE_UPDATE_DURATION = 15 * 1000;
+
+	private static final String _NETWORK_NAME_DEFAULT = "default-network";
 
 	private static final Map<String, JenkinsMaster> _jenkinsMasters =
 		Collections.synchronizedMap(new HashMap<String, JenkinsMaster>());

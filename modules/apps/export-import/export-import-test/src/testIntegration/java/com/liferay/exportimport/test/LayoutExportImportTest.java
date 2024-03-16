@@ -202,23 +202,19 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Layout contentLayout = LayoutTestUtil.addTypeContentLayout(
 			group, "Test Page From Master Layout Page Template");
 
-		String editableValuesJSON = _getContent(
-			"fragment_entry_link_editable_values_with_configuration.json");
-
-		String replacedValues = StringUtil.replace(
-			editableValuesJSON, "$GROUP_ID",
-			String.valueOf(group.getGroupId()));
-
-		replacedValues = StringUtil.replace(
-			replacedValues, "$LAYOUT_ID",
-			String.valueOf(contentLayout.getLayoutId()));
-		replacedValues = StringUtil.replace(
-			replacedValues, "$LAYOUT_UUID",
-			String.valueOf(contentLayout.getUuid()));
-		replacedValues = StringUtil.replace(
-			replacedValues, "$TITLE", contentLayout.getName("en_US"));
-
-		fragmentEntryLink.setEditableValues(replacedValues);
+		fragmentEntryLink.setEditableValues(
+			StringUtil.replace(
+				_getContent(
+					"fragment_entry_link_editable_values_with_configuration." +
+						"json"),
+				new String[] {
+					"$GROUP_ID", "$LAYOUT_ID", "$LAYOUT_UUID", "$TITLE"
+				},
+				new String[] {
+					String.valueOf(group.getGroupId()),
+					String.valueOf(contentLayout.getLayoutId()),
+					contentLayout.getUuid(), contentLayout.getName("en_US")
+				}));
 
 		fragmentEntryLink.setSegmentsExperienceId(
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(

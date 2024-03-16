@@ -229,9 +229,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLink);
 
-		long[] layoutIds = {contentLayout.getLayoutId()};
-
-		exportImportLayouts(layoutIds, getImportParameterMap());
+		exportImportLayouts(
+			new long[] {contentLayout.getLayoutId()}, getImportParameterMap());
 
 		Layout importedLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(

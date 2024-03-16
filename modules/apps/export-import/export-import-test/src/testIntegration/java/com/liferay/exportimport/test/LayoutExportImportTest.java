@@ -236,18 +236,19 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				contentLayout.getUuid(), importedGroup.getGroupId(), false);
 
+		Layout importedDraftLayout = importedLayout.fetchDraftLayout();
+
+		Assert.assertTrue(importedDraftLayout.isDraftLayout());
+		Assert.assertEquals(
+			importedLayout.getName(), importedDraftLayout.getName());
+
 		Layout importedMasterPageTemplateLayout =
 			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				masterPageTemplateLayout.getUuid(), importedGroup.getGroupId(),
 				true);
 
-		Layout importedDraftLayout = importedLayout.fetchDraftLayout();
 		Layout importedDraftLayoutOfMasterPageTemplate =
 			importedMasterPageTemplateLayout.fetchDraftLayout();
-
-		Assert.assertTrue(importedDraftLayout.isDraftLayout());
-		Assert.assertEquals(
-			importedLayout.getName(), importedDraftLayout.getName());
 
 		Assert.assertTrue(
 			importedDraftLayoutOfMasterPageTemplate.isDraftLayout());

@@ -107,9 +107,7 @@ definition {
 
 			UserNavigator.gotoDisplaySettings();
 
-			Select(
-				locator1 = "Select#TIME_ZONE",
-				value1 = "(UTC -03:00) Brasilia Time");
+			Click.clickNoMouseOver(locator1 = "//option[@value='America/Sao_Paulo']");
 
 			PortletEntry.save();
 

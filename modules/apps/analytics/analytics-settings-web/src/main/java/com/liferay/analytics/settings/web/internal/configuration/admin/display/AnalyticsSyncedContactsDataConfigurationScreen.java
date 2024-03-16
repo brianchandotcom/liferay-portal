@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.analytics.settings.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.analytics.settings.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 
@@ -13,20 +13,20 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marcellus Tavares
+ * @author Rachael Koestartyo
  */
 @Component(service = ConfigurationScreen.class)
-public class AnalyticsSyncedSitesConfigurationScreen
+public class AnalyticsSyncedContactsDataConfigurationScreen
 	extends BaseAnalyticsConfigurationScreen {
 
 	@Override
 	public String getKey() {
-		return "1-synced-sites";
+		return "2-synced-contact-data";
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/edit_synced_sites.jsp";
+		return "/edit_synced_contacts_data.jsp";
 	}
 
 	@Override

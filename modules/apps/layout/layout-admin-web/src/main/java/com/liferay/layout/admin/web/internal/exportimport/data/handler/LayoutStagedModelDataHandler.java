@@ -698,11 +698,11 @@ public class LayoutStagedModelDataHandler
 				portletDataContext.setPlid(originalPlid);
 			}
 
-			Layout draftLayout = layouts.get(
+			long draftLayoutPlid = layoutPlids.get(
 				GetterUtil.getLong(
 					layoutElement.attributeValue("draft-layout-plid")));
 
-			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
+			Layout draftLayout = _layoutLocalService.getLayout(draftLayoutPlid);
 
 			draftLayout.setClassNameId(_portal.getClassNameId(Layout.class));
 			draftLayout.setClassPK(importedLayout.getPlid());

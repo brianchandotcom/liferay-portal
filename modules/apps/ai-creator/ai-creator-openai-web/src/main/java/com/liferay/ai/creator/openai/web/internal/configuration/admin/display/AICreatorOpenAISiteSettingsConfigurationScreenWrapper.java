@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.creator.openai.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.ai.creator.openai.web.internal.configuration.admin.display;
 
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
-import com.liferay.ai.creator.openai.web.internal.display.context.AICreatorOpenAICompanyConfigurationDisplayContext;
+import com.liferay.ai.creator.openai.web.internal.display.context.AICreatorOpenAIGroupConfigurationDisplayContext;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
-import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenFactory;
 
 import java.util.Locale;
 
@@ -26,13 +26,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(service = ConfigurationScreen.class)
-public class AICreatorOpenAIPortalSettingsConfigurationScreenWrapper
+public class AICreatorOpenAISiteSettingsConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
-		return _portalSettingsConfigurationScreenFactory.create(
-			new AICreatorOpenAIPortalSettingsConfigurationScreenContributor());
+		return _siteSettingsConfigurationScreenFactory.create(
+			new AICreatorOpenAISiteSettingsConfigurationScreenContributor());
 	}
 
 	@Reference
@@ -42,17 +42,17 @@ public class AICreatorOpenAIPortalSettingsConfigurationScreenWrapper
 	@Reference
 	private Language _language;
 
-	@Reference
-	private PortalSettingsConfigurationScreenFactory
-		_portalSettingsConfigurationScreenFactory;
-
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.ai.creator.openai.web)"
 	)
 	private ServletContext _servletContext;
 
-	private class AICreatorOpenAIPortalSettingsConfigurationScreenContributor
-		implements PortalSettingsConfigurationScreenContributor {
+	@Reference
+	private SiteSettingsConfigurationScreenFactory
+		_siteSettingsConfigurationScreenFactory;
+
+	private class AICreatorOpenAISiteSettingsConfigurationScreenContributor
+		implements SiteSettingsConfigurationScreenContributor {
 
 		@Override
 		public String getCategoryKey() {
@@ -61,12 +61,12 @@ public class AICreatorOpenAIPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getJspPath() {
-			return "/configuration/openai_company_configuration.jsp";
+			return "/configuration/openai_group_configuration.jsp";
 		}
 
 		@Override
 		public String getKey() {
-			return "ai-creator-openai-company-configuration";
+			return "ai-creator-openai-group-configuration";
 		}
 
 		@Override
@@ -76,7 +76,7 @@ public class AICreatorOpenAIPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getSaveMVCActionCommandName() {
-			return "/instance_settings/save_company_configuration";
+			return "/site_settings/save_group_configuration";
 		}
 
 		@Override
@@ -90,9 +90,8 @@ public class AICreatorOpenAIPortalSettingsConfigurationScreenWrapper
 			HttpServletResponse httpServletResponse) {
 
 			httpServletRequest.setAttribute(
-				AICreatorOpenAICompanyConfigurationDisplayContext.class.
-					getName(),
-				new AICreatorOpenAICompanyConfigurationDisplayContext(
+				AICreatorOpenAIGroupConfigurationDisplayContext.class.getName(),
+				new AICreatorOpenAIGroupConfigurationDisplayContext(
 					_aiCreatorOpenAIConfigurationManager, httpServletRequest));
 		}
 

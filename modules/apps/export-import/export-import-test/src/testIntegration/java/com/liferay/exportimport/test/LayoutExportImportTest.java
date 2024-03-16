@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -86,13 +86,13 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Layout layout2 = LayoutTestUtil.addTypePortletLayout(group);
 
 		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(
-			LayoutLocalServiceUtil.getLayouts(group.getGroupId(), false));
+			_layoutLocalService.getLayouts(group.getGroupId(), false));
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
 		Assert.assertEquals(
-			LayoutLocalServiceUtil.getLayoutsCount(group, false),
-			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
+			_layoutLocalService.getLayoutsCount(group, false),
+			_layoutLocalService.getLayoutsCount(importedGroup, false));
 
 		LayoutTestUtil.addTypePortletLayout(importedGroup);
 
@@ -107,17 +107,17 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
 		Assert.assertEquals(
-			LayoutLocalServiceUtil.getLayoutsCount(group, false),
-			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
+			_layoutLocalService.getLayoutsCount(group, false),
+			_layoutLocalService.getLayoutsCount(importedGroup, false));
 
 		Layout importedLayout1 =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
 				layout1.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertNotNull(importedLayout1);
 
 		Layout importedLayout2 =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
 				layout2.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertNotNull(importedLayout2);
@@ -131,7 +131,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Group originalImportedGroup = importedGroup;
 		Group originalGroup = group;
 
-		Company company = CompanyLocalServiceUtil.getCompany(
+		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
 		importedGroup = company.getGroup();
@@ -192,7 +192,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		FragmentEntryLink fragmentEntryLink = FragmentEntryLinkUtil.create(
 			RandomTestUtil.randomLong());
 
-		Layout masterPageTemplateLayout = LayoutLocalServiceUtil.getLayout(
+		Layout masterPageTemplateLayout = _layoutLocalService.getLayout(
 			masterLayoutPageTemplateEntry.getPlid());
 
 		fragmentEntryLink.setPlid(
@@ -228,9 +228,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		exportImportLayouts(
 			new long[] {contentLayout.getLayoutId()}, getImportParameterMap());
 
-		Layout importedLayout =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				contentLayout.getUuid(), importedGroup.getGroupId(), false);
+		Layout importedLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			contentLayout.getUuid(), importedGroup.getGroupId(), false);
 
 		Layout importedDraftLayout = importedLayout.fetchDraftLayout();
 
@@ -239,7 +238,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			importedLayout.getName(), importedDraftLayout.getName());
 
 		Layout importedMasterPageTemplateLayout =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
 				masterPageTemplateLayout.getUuid(), importedGroup.getGroupId(),
 				true);
 
@@ -297,7 +296,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			}
 		}
 		finally {
-			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			_layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
 				layoutSetPrototype);
 
 			importedGroup = null;
@@ -310,12 +309,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		exportImportLayouts(
 			ExportImportHelperUtil.getLayoutIds(
-				LayoutLocalServiceUtil.getLayouts(group.getGroupId(), false)),
+				_layoutLocalService.getLayouts(group.getGroupId(), false)),
 			getImportParameterMap());
 
 		Assert.assertEquals(
-			LayoutLocalServiceUtil.getLayoutsCount(group, false),
-			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
+			_layoutLocalService.getLayoutsCount(group, false),
+			_layoutLocalService.getLayoutsCount(importedGroup, false));
 	}
 
 	@Test
@@ -359,7 +358,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			}
 		}
 		finally {
-			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			_layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
 				layoutSetPrototype);
 
 			importedGroup = null;
@@ -411,7 +410,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			}
 		}
 		finally {
-			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			_layoutSetPrototypeLocalService.deleteLayoutSetPrototype(
 				layoutSetPrototype);
 
 			group = null;
@@ -439,22 +438,22 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		layout3.setPriority(priority);
 
-		layout1 = LayoutLocalServiceUtil.updateLayout(layout1);
-		layout3 = LayoutLocalServiceUtil.updateLayout(layout3);
+		layout1 = _layoutLocalService.updateLayout(layout1);
+		layout3 = _layoutLocalService.updateLayout(layout3);
 
 		long[] layoutIds = {layout1.getLayoutId(), layout2.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
 		Layout importedLayout1 =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
 				layout1.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertNotEquals(
 			layout1.getPriority(), importedLayout1.getPriority());
 
 		Layout importedLayout2 =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
 				layout2.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertNotEquals(
@@ -462,23 +461,23 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		exportImportLayouts(
 			ExportImportHelperUtil.getLayoutIds(
-				LayoutLocalServiceUtil.getLayouts(group.getGroupId(), false)),
+				_layoutLocalService.getLayouts(group.getGroupId(), false)),
 			getImportParameterMap());
 
-		importedLayout1 = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+		importedLayout1 = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layout1.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertEquals(
 			layout1.getPriority(), importedLayout1.getPriority());
 
-		importedLayout2 = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+		importedLayout2 = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layout2.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertEquals(
 			layout2.getPriority(), importedLayout2.getPriority());
 
 		Layout importedLayout3 =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			_layoutLocalService.fetchLayoutByUuidAndGroupId(
 				layout3.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertEquals(
@@ -505,9 +504,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		Assert.assertEquals(
 			layoutIds.length,
-			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
+			_layoutLocalService.getLayoutsCount(importedGroup, false));
 
-		importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+		importedLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layout.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertNotNull(importedLayout);
@@ -526,7 +525,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			layout.getPlid(), false
 		).build();
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layouts = _layoutLocalService.getLayouts(
 			group.getGroupId(), false);
 
 		Map<String, String[]> exportParameterMap = getExportParameterMap();
@@ -541,9 +540,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		Assert.assertNotEquals(
 			layouts.size(),
-			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
+			_layoutLocalService.getLayoutsCount(importedGroup, false));
 
-		importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+		importedLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			childLayout.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertNull(importedLayout);
@@ -559,38 +558,38 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		String friendlyURLA = layoutA.getFriendlyURL();
 
-		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
+		layoutA = _layoutLocalService.updateFriendlyURL(
 			layoutA.getUserId(), layoutA.getPlid(), friendlyURLA + "-de", "de");
 
 		Layout layoutB = LayoutTestUtil.addTypePortletLayout(group);
 
 		String friendlyURLB = layoutB.getFriendlyURL();
 
-		layoutB = LayoutLocalServiceUtil.updateFriendlyURL(
+		layoutB = _layoutLocalService.updateFriendlyURL(
 			layoutB.getUserId(), layoutB.getPlid(), friendlyURLB + "-de", "de");
 
 		long[] layoutIds = {layoutA.getLayoutId(), layoutB.getLayoutId()};
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
 
-		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
+		layoutA = _layoutLocalService.updateFriendlyURL(
 			layoutA.getUserId(), layoutA.getPlid(), "/temp", defaultLanguageId);
 
-		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
+		layoutA = _layoutLocalService.updateFriendlyURL(
 			layoutA.getUserId(), layoutA.getPlid(), "/temp-de", "de");
 
-		layoutB = LayoutLocalServiceUtil.updateFriendlyURL(
+		layoutB = _layoutLocalService.updateFriendlyURL(
 			layoutB.getUserId(), layoutB.getPlid(), friendlyURLA,
 			defaultLanguageId);
 
-		LayoutLocalServiceUtil.updateFriendlyURL(
+		_layoutLocalService.updateFriendlyURL(
 			layoutB.getUserId(), layoutB.getPlid(), friendlyURLA + "-de", "de");
 
-		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
+		layoutA = _layoutLocalService.updateFriendlyURL(
 			layoutA.getUserId(), layoutA.getPlid(), friendlyURLB,
 			defaultLanguageId);
 
-		LayoutLocalServiceUtil.updateFriendlyURL(
+		_layoutLocalService.updateFriendlyURL(
 			layoutA.getUserId(), layoutA.getPlid(), friendlyURLB + "-de", "de");
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
@@ -641,11 +640,20 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		LayoutExportImportTest.class);
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

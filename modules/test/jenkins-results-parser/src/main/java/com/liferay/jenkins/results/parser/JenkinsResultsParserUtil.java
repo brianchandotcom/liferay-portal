@@ -3606,6 +3606,21 @@ public class JenkinsResultsParserUtil {
 		return false;
 	}
 
+	public static boolean isJenkinsSlaveInNetwork(
+		String jenkinsSlaveName, String networkName) {
+
+		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
+			getJenkinsMasterName(jenkinsSlaveName));
+
+		if ((jenkinsMaster == null) ||
+			!Objects.equals(jenkinsMaster.getNetworkName(), networkName)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public static boolean isJSONArray(String string) {
 		if (isNullOrEmpty(string)) {
 			return false;

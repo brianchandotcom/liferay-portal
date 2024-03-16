@@ -14,13 +14,13 @@ The links have two parts:
 
 Keeping the resources separate from your JSP code makes it easier to update link labels and URLs and add translations.
 
-**Note:** This is safe to use: the `liferay-learn:message` tag renders nothing if you accidentally reference a missing JSON file or an unspecified resource entry. 
+**Note:** This is safe to use: the `liferay-learn:message` tag renders nothing if you accidentally reference a missing JSON file or an unspecified resource entry.
 
 Start with specifying a resource.
 
 ## Adding Resources in a JSON File
 
-1. In this folder (`learn-resources`), create a JSON file named after your module. 
+1. In this folder (`learn-resources`), create a JSON file named after your module.
 
 1. Create an element for each resource on Liferay Learn. For example, the [`learn-resources/data/marketplace-store-web.json`](https://github.com/liferay/liferay-portal/blob/master/learn-resources/data/marketplace-store-web.json) file has these resource entries:
 
@@ -47,7 +47,7 @@ The example resource entries have the keys `download-app` and `purchase-app`. Th
 
 ## Adding `liferay-learn:message` Tags to a JSP
 
-In your module's JSP, link to the resources using `liferay-learn:message` tags. For example, use this code in the `marketplace-store-web` module's `view.jsp` file to reference the `learn-resources/data/marketplace-store-web.json` file's `download-app` resource: 
+In your module's JSP, link to the resources using `liferay-learn:message` tags. For example, use this code in the `marketplace-store-web` module's `view.jsp` file to reference the `learn-resources/data/marketplace-store-web.json` file's `download-app` resource:
 
 ```jsp
 <%@ taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %>
@@ -72,7 +72,7 @@ That's how you link to Liferay Learn resources!
 
 ## Previewing Liferay Learn Resource Links
 
-If you want to test your link, you don't have to recompile your module. From this folder (`learn-resources`), you can run a quick dev server that's configured with only one portal property/environment variable: 
+If you want to test your link, you don't have to recompile your module. From this folder (`learn-resources`), you can run a quick dev server that's configured with only one portal property/environment variable:
 
 ```properties
 learn.resources.mode=dev|off|on
@@ -84,13 +84,13 @@ or
 LIFERAY_LEARN_PERIOD_RESOURCES_PERIOD_MODE=dev|off|on
 ```
 
-Use the property with a local bundle and the environment variable with Docker. 
+Use the property with a local bundle and the environment variable with Docker.
 
-`dev`: Set this value and then run `docker compose up` from the `learn-resources` folder to start a small dev server. You can then access <http://localhost:3062/[json file name]> to access your resources. For example, if you're modifying `server-admin-web.json`, access <http://localhost:3062/server-admin-web.json>. 
+`dev`: Set this value and then run `docker compose up` from the `learn-resources` folder to start a small dev server. You can then access <http://localhost:3062/[json file name]> to access your resources. For example, if you're modifying `server-admin-web.json`, access <http://localhost:3062/server-admin-web.json>.
 
-`on`: Set this value to read Learn resources from <https://s3.amazonaws.com/learn-resources.liferay.com>. 
+`on`: Set this value to read Learn resources from <https://s3.amazonaws.com/learn-resources.liferay.com>.
 
-`off`: Set this value to disable the Learn tag library. 
+`off`: Set this value to disable the Learn tag library.
 
 ## Adding a Resource Link to a React Component
 

@@ -10,13 +10,13 @@ import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
-import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.persistence.FragmentEntryLinkUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -189,20 +189,22 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-		FragmentEntryLink fragmentEntryLink = FragmentEntryLinkUtil.create(
-			RandomTestUtil.randomLong());
-
 		Layout masterPageTemplateLayout = _layoutLocalService.getLayout(
 			masterLayoutPageTemplateEntry.getPlid());
 
-		fragmentEntryLink.setPlid(
-			masterPageTemplateLayout.fetchDraftLayout(
-			).getPlid());
+		Layout masterPageTemplateDraftLayout =
+			masterPageTemplateLayout.fetchDraftLayout();
 
 		Layout contentLayout = LayoutTestUtil.addTypeContentLayout(
 			group, "Test Page From Master Layout Page Template");
 
-		fragmentEntryLink.setEditableValues(
+		_fragmentEntryLinkLocalService.addFragmentEntryLink(
+			TestPropsValues.getUserId(), group.getGroupId(), 0,
+			RandomTestUtil.randomLong(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				masterPageTemplateDraftLayout.getPlid()),
+			masterPageTemplateDraftLayout.getPlid(), StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringUtil.replace(
 				_getContent(
 					"fragment_entry_link_editable_values_with_configuration." +
@@ -214,16 +216,10 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					String.valueOf(group.getGroupId()),
 					String.valueOf(contentLayout.getLayoutId()),
 					contentLayout.getUuid(), contentLayout.getName("en_US")
-				}));
-
-		fragmentEntryLink.setSegmentsExperienceId(
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				masterPageTemplateLayout.getPlid()));
-
-		fragmentEntryLink.setGroupId(group.getGroupId());
-
-		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
-			fragmentEntryLink);
+				}),
+			StringPool.BLANK, 0, StringPool.BLANK,
+			FragmentConstants.TYPE_COMPONENT,
+			ServiceContextTestUtil.getServiceContext());
 
 		exportImportLayouts(
 			new long[] {contentLayout.getLayoutId()}, getImportParameterMap());

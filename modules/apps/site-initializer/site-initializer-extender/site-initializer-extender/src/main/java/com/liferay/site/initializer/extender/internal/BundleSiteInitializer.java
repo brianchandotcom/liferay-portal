@@ -563,9 +563,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, ObjectDefinition>
 				accountEntryRestrictedObjectDefinitions = new HashMap<>();
 
+			List<Long> objectDefinitionIds = new ArrayList<>();
+
 			_invoke(
 				() -> _addObjectDefinitions(
-					accountEntryRestrictedObjectDefinitions, serviceContext,
+					accountEntryRestrictedObjectDefinitions,
+					objectDefinitionIds, serviceContext,
 					stringUtilReplaceValues));
 
 			_invoke(
@@ -574,6 +577,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(
 				() -> _addOrUpdateObjectFields(
 					serviceContext, stringUtilReplaceValues));
+			_invoke(
+				() -> _publishObjectDefinitions(
+					objectDefinitionIds, serviceContext));
 
 			_invoke(
 				() -> _addOrUpdateAccountEntryRestrictions(
@@ -1137,7 +1143,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addObjectDefinitions(
 			Map<String, ObjectDefinition>
 				accountEntryRestrictedObjectDefinitions,
-			ServiceContext serviceContext,
+			List<Long> objectDefinitionIds, ServiceContext serviceContext,
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
@@ -1211,8 +1217,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					objectDefinitionResource.postObjectDefinition(
 						objectDefinition);
 
-				objectDefinitionResource.postObjectDefinitionPublish(
-					objectDefinition.getId());
+				objectDefinitionIds.add(objectDefinition.getId());
 			}
 			else {
 				objectDefinition =
@@ -4897,6 +4902,28 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return t;
+	}
+
+	private void _publishObjectDefinitions(
+			List<Long> objectDefinitinIds, ServiceContext serviceContext)
+		throws Exception {
+
+		if (ListUtil.isEmpty(objectDefinitinIds)) {
+			return;
+		}
+
+		ObjectDefinitionResource.Builder objectDefinitionResourceBuilder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource =
+			objectDefinitionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		for (Long objectDefinitionId : objectDefinitinIds) {
+			objectDefinitionResource.postObjectDefinitionPublish(
+				objectDefinitionId);
+		}
 	}
 
 	private String _removeFirst(String s, String oldSub) {

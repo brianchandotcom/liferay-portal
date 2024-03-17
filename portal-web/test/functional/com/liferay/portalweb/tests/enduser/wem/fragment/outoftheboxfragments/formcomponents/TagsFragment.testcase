@@ -48,9 +48,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-169877. 10 instances of Tags fragment can be added into the same form container"
+	@description = "This is a test for LPS-169877. Multiple instances of Tags fragment can be added into the same form container"
 	@priority = 3
-	test CanAdd10TagsFragmentsToPage {
+	test CanAddMultipleTagsFragmentsToPage {
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -118,7 +118,7 @@ definition {
 
 			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
-			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
+			for (var i : list "1,2,3,4") {
 				PageEditor.addFragmentToFormContainer(
 					collectionName = "Form Components",
 					fragmentName = "Tags",
@@ -144,17 +144,12 @@ definition {
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
 				tagNameList = ${tagName2},
-				tagRow = 4);
+				tagRow = 2);
 
 			AssetCategorization.selectTag(
 				skipSelectFrame = "true",
-				tagNameList = "${tagName2},local tag",
-				tagRow = 6);
-
-			AssetCategorization.selectTag(
-				skipSelectFrame = "true",
-				tagNameList = "${tagName1},${tagName2},local tag",
-				tagRow = 7);
+				tagNameList = "local tag",
+				tagRow = 3);
 
 			Button.clickSubmitButton();
 

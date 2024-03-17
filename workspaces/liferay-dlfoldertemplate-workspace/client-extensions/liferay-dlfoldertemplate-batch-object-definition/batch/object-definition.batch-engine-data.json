@@ -17,12 +17,12 @@
 			"enableComments": false,
 			"enableLocalization": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "T4T1_FOLDER_TEMPLATE",
+			"externalReferenceCode": "T4T1_DL_FOLDER_TEMPLATE",
 			"label": {
-				"en_US": "T4T1 Folder Template"
+				"en_US": "T4T1 DL Folder Template"
 			},
 			"modifiable": true,
-			"name": "T4T1FolderTemplate",
+			"name": "T4T1DLFolderTemplate",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -79,7 +79,7 @@
 				"en_US": "T4T1 Folder Templates"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/t4t1foldertemplates",
+			"restContextPath": "/o/c/t4t1dlfoldertemplates",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -97,12 +97,12 @@
 			"enableComments": false,
 			"enableLocalization": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "T4T1_FOLDER_TEMPLATE_NODE",
+			"externalReferenceCode": "T4T1_DL_FOLDER_TEMPLATE_NODE",
 			"label": {
-				"en_US": "T4T1 Folder Template Node"
+				"en_US": "T4T1 DL Folder Template Node"
 			},
 			"modifiable": true,
-			"name": "T4T1FolderTemplateNode",
+			"name": "T4T1DLFolderTemplateNode",
 			"objectFields": [
 				{
 					"DBType": "Clob",
@@ -215,7 +215,7 @@
 				"en_US": "T4T1 Folder Templates Nodes"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/t4t1foldertemplatenodes",
+			"restContextPath": "/o/c/t4t1dlfoldertemplatenodes",
 			"scope": "company",
 			"status": {
 				"code": 0,

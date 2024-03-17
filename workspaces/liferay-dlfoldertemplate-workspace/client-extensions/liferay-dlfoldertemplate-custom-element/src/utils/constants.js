@@ -8,6 +8,6 @@ export const config = {
 	'apiHost': 'http://localhost:8080',
 	'external': false,
 	'folder.generate.service.url': 'jobs/create/folder/direct',
-	'templateInfoApi': 'o/c/T4T1foldertemplates',
-	'templateNodeApi': 'o/c/T4T1foldertemplatenodes',
+	'templateInfoApi': 'o/c/T4T1dlfoldertemplates',
+	'templateNodeApi': 'o/c/T4T1dlfoldertemplatenodes',
 };

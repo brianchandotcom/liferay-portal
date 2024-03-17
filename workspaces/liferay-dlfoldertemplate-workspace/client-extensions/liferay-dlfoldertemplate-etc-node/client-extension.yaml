@@ -7,8 +7,8 @@ liferay-dlfoldertemplate-etc-node-oauth-application-server:
     .serviceScheme: http
     name: Liferay DL Folder Template Etc Node OAuth Application Server
     scopes:
-        - C_T4T1FolderTemplate.everything
-        - C_T4T1FolderTemplateNode.everything
+        - C_T4T1DLFolderTemplate.everything
+        - C_T4T1DLFolderTemplateNode.everything
         - Liferay.Headless.Admin.User.everything.read
         - Liferay.Headless.Batch.Engine.everything
         - Liferay.Headless.Delivery.everything

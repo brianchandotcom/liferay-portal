@@ -9,12 +9,8 @@ definition {
 	static var randomSiteName = StringUtil.randomString(8);
 
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
-	var tagName1 = StringUtil.randomString(8);
-
-	var tagName1 = StringUtil.toLowerCase(${tagName1});
-	var tagName2 = StringUtil.randomString(8);
-
-	var tagName2 = StringUtil.toLowerCase(${tagName2});
+	var tagName1 = "tagname1";
+	var tagName2 = "tagname2";
 
 	setUp {
 		task ("Set up virtual instance") {

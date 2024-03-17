@@ -1,0 +1,30 @@
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java
+index 66c2342abdf3d..f39649d1ef20e 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java
++++ b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java
+@@ -14,6 +14,7 @@ package org.eclipse.osgi.internal.serviceregistry;
+ import java.util.*;
+ import org.eclipse.osgi.internal.debug.Debug;
+ import org.eclipse.osgi.internal.framework.BundleContextImpl;
++import org.eclipse.osgi.internal.framework.EquinoxBundle;
+ import org.eclipse.osgi.internal.loader.sources.PackageSource;
+ import org.eclipse.osgi.internal.messages.Msg;
+ import org.osgi.framework.*;
+@@ -42,7 +43,7 @@ public class ServiceRegistrationImpl<S> implements ServiceRegistration<S>, Compa
+ 	private final BundleContextImpl context;
+ 
+ 	/** bundle which registered this service. */
+-	private final Bundle bundle;
++	private final EquinoxBundle bundle;
+ 
+ 	/** service classes for this registration. */
+ 	private final String[] clazzes;
+@@ -313,7 +314,7 @@ public class ServiceRegistrationImpl<S> implements ServiceRegistration<S>, Compa
+ 
+ 		props.put(Constants.OBJECTCLASS, clazzes);
+ 		props.put(Constants.SERVICE_ID, Long.valueOf(serviceid));
+-		props.put(Constants.SERVICE_BUNDLEID, Long.valueOf(bundle.getBundleId()));
++		props.put(Constants.SERVICE_BUNDLEID, bundle.getModule().getId());
+ 		final String scope;
+ 		if (service instanceof ServiceFactory) {
+ 			if (service instanceof PrototypeServiceFactory) {

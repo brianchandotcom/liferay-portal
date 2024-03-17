@@ -3,19 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.google.places.web.internal.site.settings.configuration.admin.display;
+package com.liferay.google.places.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.google.places.constants.GooglePlacesWebKeys;
 import com.liferay.google.places.util.GooglePlacesUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
-import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenFactory;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
 
 import java.util.Locale;
 
@@ -30,30 +28,27 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rodrigo Paulino
  */
 @Component(service = ConfigurationScreen.class)
-public class GooglePlacesSiteSettingsConfigurationScreenWrapper
+public class GooglePlacesPortalSettingsConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
-		return _siteSettingsConfigurationScreenFactory.create(
-			new GooglePlacesSiteSettingsConfigurationScreenContributor());
+		return _portalSettingsConfigurationScreenFactory.create(
+			new GooglePlacesPortalSettingsConfigurationScreenContributor());
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;
 
+	@Reference
+	private PortalSettingsConfigurationScreenFactory
+		_portalSettingsConfigurationScreenFactory;
+
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.google.places.web)")
 	private ServletContext _servletContext;
 
-	@Reference
-	private SiteSettingsConfigurationScreenFactory
-		_siteSettingsConfigurationScreenFactory;
-
-	private class GooglePlacesSiteSettingsConfigurationScreenContributor
-		implements SiteSettingsConfigurationScreenContributor {
+	private class GooglePlacesPortalSettingsConfigurationScreenContributor
+		implements PortalSettingsConfigurationScreenContributor {
 
 		@Override
 		public String getCategoryKey() {
@@ -62,17 +57,22 @@ public class GooglePlacesSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getJspPath() {
-			return "/site_settings/google_places.jsp";
+			return "/portal_settings/google_places.jsp";
 		}
 
 		@Override
 		public String getKey() {
-			return "google-places-site-settings";
+			return "google-places-portal-settings";
 		}
 
 		@Override
 		public String getName(Locale locale) {
 			return _language.get(locale, "google-places");
+		}
+
+		@Override
+		public String getSaveMVCActionCommandName() {
+			return "/portal_settings/edit_company";
 		}
 
 		@Override
@@ -85,20 +85,17 @@ public class GooglePlacesSiteSettingsConfigurationScreenWrapper
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse) {
 
-			SiteSettingsConfigurationScreenContributor.super.setAttributes(
+			PortalSettingsConfigurationScreenContributor.super.setAttributes(
 				httpServletRequest, httpServletResponse);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			Group group = themeDisplay.getSiteGroup();
-
 			httpServletRequest.setAttribute(
 				GooglePlacesWebKeys.GOOGLE_PLACES_API_KEY,
 				GooglePlacesUtil.getGooglePlacesAPIKey(
-					themeDisplay.getCompanyId(), group.getGroupId(),
-					_groupLocalService));
+					themeDisplay.getCompanyId()));
 		}
 
 	}

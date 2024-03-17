@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.locked.layouts.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.layout.locked.layouts.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
-import com.liferay.layout.configuration.LockedLayoutsGroupConfiguration;
+import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration;
 import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
-import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsSiteSettingsConfigurationDisplayContext;
+import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsPortalSettingsConfigurationDisplayContext;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
-import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenFactory;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
+import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
 
 import java.io.IOException;
 
@@ -38,16 +38,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Mikel Lorza
+ * @author Lourdes Fernández Besada
  */
 @Component(service = ConfigurationScreen.class)
-public class LockedLayoutsSiteSettingsConfigurationScreenWrapper
+public class LockedLayoutsPortalSettingsConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
-		return _siteSettingsConfigurationScreenFactory.create(
-			new LockedLayoutsSiteSettingsConfigurationScreenContributor());
+		return _portalSettingsConfigurationScreenFactory.create(
+			new LockedLayoutsPortalSettingsConfigurationScreenContributor());
 	}
 
 	@Reference
@@ -59,17 +59,17 @@ public class LockedLayoutsSiteSettingsConfigurationScreenWrapper
 	@Reference
 	private Language _language;
 
+	@Reference
+	private PortalSettingsConfigurationScreenFactory
+		_portalSettingsConfigurationScreenFactory;
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.locked.layouts.web)"
 	)
 	private ServletContext _servletContext;
 
-	@Reference
-	private SiteSettingsConfigurationScreenFactory
-		_siteSettingsConfigurationScreenFactory;
-
-	private class LockedLayoutsSiteSettingsConfigurationScreenContributor
-		implements SiteSettingsConfigurationScreenContributor {
+	private class LockedLayoutsPortalSettingsConfigurationScreenContributor
+		implements PortalSettingsConfigurationScreenContributor {
 
 		@Override
 		public String getCategoryKey() {
@@ -83,7 +83,7 @@ public class LockedLayoutsSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getKey() {
-			return "site-configuration-locked-layouts";
+			return "locked-layouts-portal-settings";
 		}
 
 		@Override
@@ -93,7 +93,7 @@ public class LockedLayoutsSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getSaveMVCActionCommandName() {
-			return "/site_settings/save_locked_layouts_site_settings";
+			return "/instance_settings/save_locked_layouts_instance_settings";
 		}
 
 		@Override
@@ -113,26 +113,26 @@ public class LockedLayoutsSiteSettingsConfigurationScreenWrapper
 			try {
 				httpServletRequest.setAttribute(
 					LockedLayoutsConfigurationDisplayContext.class.getName(),
-					new LockedLayoutsSiteSettingsConfigurationDisplayContext(
-						_hasConfiguration(themeDisplay.getScopeGroupId()),
-						_configurationProvider.getGroupConfiguration(
-							LockedLayoutsGroupConfiguration.class,
-							themeDisplay.getScopeGroupId())));
+					new LockedLayoutsPortalSettingsConfigurationDisplayContext(
+						_hasConfiguration(themeDisplay.getCompanyId()),
+						_configurationProvider.getCompanyConfiguration(
+							LockedLayoutsCompanyConfiguration.class,
+							themeDisplay.getCompanyId())));
 			}
 			catch (PortalException portalException) {
 				ReflectionUtil.throwException(portalException);
 			}
 		}
 
-		private boolean _hasConfiguration(long groupId)
+		private boolean _hasConfiguration(long companyId)
 			throws ConfigurationException {
 
 			try {
 				String filterString = StringBundler.concat(
 					"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
 					StringPool.EQUAL,
-					LockedLayoutsGroupConfiguration.class.getName(), ".scoped",
-					")(groupId=", groupId, "))");
+					LockedLayoutsCompanyConfiguration.class.getName(),
+					".scoped)(companyId=", companyId, "))");
 
 				Configuration[] configuration =
 					_configurationAdmin.listConfigurations(filterString);

@@ -3,14 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {lookupConfig, lxcConfig} from '@rotty3000/config-node';
 import cors from 'cors';
-import fetch from 'node-fetch';
-import jwktopem from 'jwk-to-pem';
-import {applicationExternalReferenceCodes} from './constants.js';
-import {lxcConfig, lookupConfig} from '@rotty3000/config-node';
 import {verify} from 'jsonwebtoken';
+import jwktopem from 'jwk-to-pem';
+import fetch from 'node-fetch';
 
-let agentOauthApp = lxcConfig.oauthApplication(applicationExternalReferenceCodes.OAUTH_AGENT_EXTERNAL_REFERENCE_CODE);
+import {applicationExternalReferenceCodes} from './constants.js';
+
+const agentOauthApp = lxcConfig.oauthApplication(
+	applicationExternalReferenceCodes.OAUTH_AGENT_EXTERNAL_REFERENCE_CODE
+);
 
 const agentUriPath = agentOauthApp.jwksUri();
 
@@ -22,7 +25,9 @@ const lxcDXPServerProtocol = lxcConfig.dxpProtocol();
 
 const oauthAgentClientId = agentOauthApp.clientId();
 
-const allowList = domains ? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`) : '';
+const allowList = domains
+	? domains.split(',').map((domain) => `${lxcDXPServerProtocol}://${domain}`)
+	: '';
 
 const corsOptions = {
 	origin(origin, callback) {
@@ -31,7 +36,7 @@ const corsOptions = {
 };
 
 export async function corsWithReady(req, res, next) {
-	if (req.originalUrl === lookupConfig("ready.path")) {
+	if (req.originalUrl === lookupConfig('ready.path')) {
 		return next();
 	}
 
@@ -98,7 +103,7 @@ async function clientLiferayJWT(req, res, next) {
 }
 
 export async function liferayJWT(req, res, next) {
-	if (req.path === lookupConfig("ready.path")) {
+	if (req.path === lookupConfig('ready.path')) {
 		return next();
 	}
 	else {

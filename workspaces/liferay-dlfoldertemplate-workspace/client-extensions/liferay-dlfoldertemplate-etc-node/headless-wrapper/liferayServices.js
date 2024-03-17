@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {lookupConfig, lxcConfig} from '@rotty3000/config-node';
 import fetch from 'node-fetch';
-
-import {lxcConfig, lookupConfig} from '@rotty3000/config-node';
 
 import {getServerToken} from '../util/silent-authorization.js';
 
@@ -15,7 +14,9 @@ const lxcDXPServerProtocol = lxcConfig.dxpProtocol();
 
 const oauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}`;
 
-const folderTemplateNodesEndPoint= lookupConfig("folder.template.nodes.end.point");
+const folderTemplateNodesEndPoint = lookupConfig(
+	'folder.template.nodes.end.point'
+);
 
 export async function getFolderTemplateNodesPage(templateID) {
 	const token = await getServerToken();

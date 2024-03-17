@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {lxcConfig} from '@rotty3000/config-node';
 import axios from 'axios';
 import cache from 'memory-cache';
-import {applicationExternalReferenceCodes} from './constants.js';
-import {lxcConfig, lookupConfig} from '@rotty3000/config-node';
 
-let serverOauthApp = lxcConfig.oauthApplication(applicationExternalReferenceCodes.OAUTH_SERVER_EXTERNAL_REFERENCE_CODE);
+import {applicationExternalReferenceCodes} from './constants.js';
+
+const serverOauthApp = lxcConfig.oauthApplication(
+	applicationExternalReferenceCodes.OAUTH_SERVER_EXTERNAL_REFERENCE_CODE
+);
 
 const clientId = serverOauthApp.clientId();
 

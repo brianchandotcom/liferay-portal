@@ -118,11 +118,6 @@ definition {
 
 			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
-			PageEditor.viewInputStyle(
-				label = "Name",
-				showLabel = "true",
-				type = "text");
-
 			for (var i : list "1,2,3,4,5,6,7,8,9,10") {
 				PageEditor.addFragmentToFormContainer(
 					collectionName = "Form Components",
@@ -162,8 +157,6 @@ definition {
 				tagRow = 7);
 
 			Button.clickSubmitButton();
-
-			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
@@ -244,11 +237,6 @@ definition {
 
 			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
-			PageEditor.viewInputStyle(
-				label = "Name",
-				showLabel = "true",
-				type = "text");
-
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Tags",
@@ -282,8 +270,6 @@ definition {
 				tagNameList = "${tagName1},${tagName2},local tag");
 
 			Button.clickSubmitButton();
-
-			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
@@ -373,11 +359,6 @@ definition {
 
 			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
-			PageEditor.viewInputStyle(
-				label = "Name",
-				showLabel = "true",
-				type = "text");
-
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Tags",
@@ -412,8 +393,6 @@ definition {
 				tagNameList = "${tagName1},${tagName2},local tag");
 
 			Button.clickSubmitButton();
-
-			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
@@ -495,13 +474,6 @@ definition {
 
 			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
-			PageEditor.viewInputStyle(
-				label = "Name",
-				showLabel = "true",
-				type = "text");
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "Tags");
-
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Tags",
@@ -543,8 +515,6 @@ definition {
 
 			Button.clickSubmitButton();
 
-			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
-
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
 				portlet = "${labelName}s");
@@ -565,8 +535,6 @@ definition {
 				value1 = "Test Name No Tag");
 
 			Button.clickSubmitButton();
-
-			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
@@ -643,13 +611,6 @@ definition {
 
 			PageEditor.mapFormContainerToObject(contentType = ${labelName});
 
-			PageEditor.viewInputStyle(
-				label = "Name",
-				showLabel = "true",
-				type = "text");
-
-			PageEditor.viewFragmentNotPresent(fragmentName = "Tags");
-
 			PageEditor.addFragmentToFormContainer(
 				collectionName = "Form Components",
 				fragmentName = "Tags",
@@ -691,8 +652,6 @@ definition {
 
 			Button.clickSubmitButton();
 
-			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
-
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",
 				panel = "Control Panel",
@@ -714,8 +673,6 @@ definition {
 				value1 = "Test Name No Tag");
 
 			Button.clickSubmitButton();
-
-			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",

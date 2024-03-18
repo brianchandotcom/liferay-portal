@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
 
 import org.osgi.framework.BundleContext;
@@ -122,17 +121,6 @@ public class MultiVMEhcachePortalCacheManager
 
 	private class MultiVMEhcachePortalCacheManagerConfigurator
 		extends BaseEhcachePortalCacheManagerConfigurator {
-
-		@Override
-		protected boolean isRequireSerialization(
-			CacheConfiguration cacheConfiguration) {
-
-			if (clusterEnabled) {
-				return true;
-			}
-
-			return super.isRequireSerialization(cacheConfiguration);
-		}
 
 		@Override
 		protected void manageConfiguration(

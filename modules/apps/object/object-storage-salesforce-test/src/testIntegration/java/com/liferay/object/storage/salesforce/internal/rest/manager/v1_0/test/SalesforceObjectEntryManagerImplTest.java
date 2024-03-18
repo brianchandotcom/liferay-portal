@@ -293,6 +293,7 @@ public class SalesforceObjectEntryManagerImplTest
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			"completed", new Date(date.getTime() + Time.DAY), title3);
 		ObjectEntry objectEntry4 = _addObjectEntry("queued", date, title4);
+		ObjectEntry objectEntry5 = _addObjectEntry("queued", date, null);
 
 		// And/or with equals/not equals expression
 
@@ -401,6 +402,14 @@ public class SalesforceObjectEntryManagerImplTest
 					_buildNotEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry2, objectEntry3, objectEntry4);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					buildEqualsExpressionFilterString("title", null))
+			).build(),
+			objectEntry5);
 
 		// Range expression
 

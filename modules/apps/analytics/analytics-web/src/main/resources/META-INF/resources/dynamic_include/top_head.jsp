@@ -18,66 +18,239 @@
 		'<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CHANNEL_ID) %>';
 	var analyticsClientGroupIds = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS) %>;
 	var analyticsCookiesConsentMode = <%= (boolean)request.getAttribute(AnalyticsWebKeys.ANALYTICS_COOKIES_EXPLICIT_CONSENT_MODE) %>;
+	var analyticsFeatureFlagEnabled = <%= FeatureFlagManagerUtil.isEnabled("LPD-10588") %>;
+
+	var cookieManagers = {
+		'cookie.liferay': {
+			actions: {
+				getItem: (key) => {
+					var data;
+
+					try {
+						var cookie = Liferay.Util.Cookie.get(
+							key,
+							Liferay.Util.Cookie.TYPES.PERFORMANCE
+						);
+
+						data = JSON.parse(decodeURIComponent(cookie));
+					}
+					catch (error) {
+						return;
+					}
+
+					return data;
+				},
+				getItemFromLocalStorage: (key) => {
+					let data;
+
+					try {
+						const item = Liferay.Util.LocalStorage.getItem(
+							key,
+							Liferay.Util.LocalStorage.TYPES.PERFORMANCE
+						);
+						data = JSON.parse(item);
+					}
+					catch (error) {
+						return;
+					}
+
+					return data;
+				},
+				removeItem: (key) => {
+					Liferay.Util.Cookie.remove(
+						key,
+						Liferay.Util.Cookie.TYPES.PERFORMANCE
+					);
+				},
+				setItem: (key, value, encode = true) => {
+					var expires = new Date();
+
+					expires.setDate(expires.getDate() + 365);
+
+					try {
+						var jsonStr = JSON.stringify(value);
+						var data = encode ? encodeURIComponent(jsonStr) : jsonStr;
+
+						Liferay.Util.Cookie.set(
+							key,
+							data,
+							Liferay.Util.Cookie.TYPES.PERFORMANCE,
+							{
+								expires,
+								secure: true,
+							}
+						);
+					}
+					catch (error) {
+						return;
+					}
+				},
+			},
+			checkConsent: () => {
+				var performanceCookieEnabled = Liferay.Util.Cookie.get(
+					Liferay.Util.Cookie.TYPES.PERFORMANCE
+				);
+
+				return performanceCookieEnabled === 'true';
+			},
+			enabled: () => {
+				return Promise.resolve(
+					analyticsFeatureFlagEnabled && analyticsCookiesConsentMode
+				);
+			},
+			onConsentChange: (callbackFn) => {
+				Liferay.on('cookieBannerSetCookie', callbackFn);
+			},
+		},
+		'cookie.onetrust': {
+			enabled: () => {
+				if (!window.OneTrustStub) {
+					return Promise.resolve(false);
+				}
+
+				return new Promise((resolve, reject) => {
+					var startTime = Date.now();
+
+					var checkObject = () => {
+						if (window['OneTrust']) {
+							resolve(window['OneTrust']);
+						}
+						else if (Date.now() - startTime >= 5000) {
+							reject();
+						}
+						else {
+							setTimeout(checkObject, 100);
+						}
+					};
+
+					checkObject();
+				})
+					.then(() => {
+						return Promise.resolve(true);
+					})
+					.catch(() => {
+						return Promise.resolve(false);
+					});
+			},
+			checkConsent: () => {
+				var OptanonActiveGroups = window.OptanonActiveGroups;
+
+				return OptanonActiveGroups && OptanonActiveGroups.includes('C0002');
+			},
+			onConsentChange: (callbackFn) => {
+				var OneTrust = window.OneTrust;
+
+				OneTrust.OnConsentChanged(callbackFn);
+			},
+		},
+	};
 </aui:script>
 
 <aui:script id="liferayAnalyticsScript" senna="permanent" type="text/javascript">
-	(function (u, c, a, m, o, l) {
-		o = 'script';
-		l = document;
-		a = l.createElement(o);
-		m = l.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = u;
-		a.onload = c;
-		m.parentNode.insertBefore(a, m);
-	})('https://analytics-js-cdn.liferay.com', () => {
-		var config = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG) %>;
+	var allPromises = Object.keys(cookieManagers).map((key) =>
+		cookieManagers[key].enabled()
+	);
 
-		var dxpMiddleware = function (request) {
-			request.context.canonicalUrl = themeDisplay.getCanonicalURL();
-			request.context.channelId = analyticsClientChannelId;
-			request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+	Promise.all(allPromises).then((result) => {
+		var selectedIndex = result.findIndex((enabled) => enabled);
+		var selectedCookieManager = Object.values(cookieManagers)[selectedIndex];
 
-			return request;
-		};
+		function <portlet:namespace />initializeAnalyticsSDK() {
+			(function (u, c, a, m, o, l) {
+				o = 'script';
+				l = document;
+				a = l.createElement(o);
+				m = l.getElementsByTagName(o)[0];
+				a.async = 1;
+				a.src = u;
+				a.onload = c;
+				m.parentNode.insertBefore(a, m);
+			})('https://analytics-js-cdn.liferay.com', () => {
+				var config = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG) %>;
 
-		Analytics.create(config, [dxpMiddleware]);
+				config.cookieManager = selectedCookieManager;
 
-		if (themeDisplay.isSignedIn()) {
-			Analytics.setIdentity({
-				email: themeDisplay.getUserEmailAddress(),
-				name: themeDisplay.getUserName(),
-			});
-		}
+				var dxpMiddleware = function (request) {
+					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+					request.context.channelId = analyticsClientChannelId;
+					request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
-		runMiddlewares();
+					return request;
+				};
 
-		Analytics.send('pageViewed', 'Page');
+				Analytics.create(config, [dxpMiddleware]);
 
-		<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED)) %>">
-			Liferay.on('endNavigate', (event) => {
-				Analytics.dispose();
+				if (themeDisplay.isSignedIn()) {
+					Analytics.setIdentity({
+						email: themeDisplay.getUserEmailAddress(),
+						name: themeDisplay.getUserName(),
+					});
+				}
 
-				var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+				runMiddlewares();
 
-				if (
-					!themeDisplay.isControlPanel() &&
-					analyticsClientGroupIds.indexOf(groupId) >= 0
-				) {
-					Analytics.create(config, [dxpMiddleware]);
+				Analytics.send('pageViewed', 'Page');
 
-					if (themeDisplay.isSignedIn()) {
-						Analytics.setIdentity({
-							email: themeDisplay.getUserEmailAddress(),
-							name: themeDisplay.getUserName(),
+				<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED)) %>">
+					function <portlet:namespace />initializeAnalyticsSDKFromSPA() {
+						Liferay.on('endNavigate', (event) => {
+							Analytics.dispose();
+
+							var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+
+							if (
+								!themeDisplay.isControlPanel() &&
+								analyticsClientGroupIds.indexOf(groupId) >= 0
+							) {
+								Analytics.create(config, [dxpMiddleware]);
+
+								if (themeDisplay.isSignedIn()) {
+									Analytics.setIdentity({
+										email: themeDisplay.getUserEmailAddress(),
+										name: themeDisplay.getUserName(),
+									});
+								}
+
+								runMiddlewares();
+
+								Analytics.send('pageViewed', 'Page', {
+									page: event.path,
+								});
+							}
 						});
 					}
 
-					runMiddlewares();
+					if (selectedCookieManager) {
+						selectedCookieManager.onConsentChange(() => {
+							if (selectedCookieManager.checkConsent()) {
+								<portlet:namespace />initializeAnalyticsSDKFromSPA();
+							}
+						});
 
-					Analytics.send('pageViewed', 'Page', {page: event.path});
+						if (selectedCookieManager.checkConsent()) {
+							<portlet:namespace />initializeAnalyticsSDKFromSPA();
+						}
+					}
+					else {
+						<portlet:namespace />initializeAnalyticsSDKFromSPA();
+					}
+				</c:if>
+			});
+		}
+
+		if (selectedCookieManager) {
+			selectedCookieManager.onConsentChange(() => {
+				if (selectedCookieManager.checkConsent()) {
+					<portlet:namespace />initializeAnalyticsSDK();
 				}
 			});
-		</c:if>
+
+			if (selectedCookieManager.checkConsent()) {
+				<portlet:namespace />initializeAnalyticsSDK();
+			}
+		}
+		else {
+			<portlet:namespace />initializeAnalyticsSDK();
+		}
 	});
 </aui:script>

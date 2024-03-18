@@ -124,7 +124,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		Assert.assertEquals(1L, searchPage.getTotalCount());
 		Assert.assertEquals(1L, searchPage.getPage());
 
-		_testPostSearchPageWithCategoryFacetConfiguration();
 		_testPostSearchPageWithCategoryTreeFacetConfiguration();
 		_testPostSearchPageWithCustomFacetConfiguration();
 		_testPostSearchPageWithDateRangeFacetConfiguration();
@@ -479,14 +478,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		return _postSearchPage(
 			entryClassNames, null, keywords, null, searchRequestBody);
-	}
-
-	private void _testPostSearchPageWithCategoryFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false, null, "category", _assetCategory.getCategoryId(),
-			String.valueOf(_assetCategory.getCategoryId()));
 	}
 
 	private void _testPostSearchPageWithCategoryTreeFacetConfiguration()

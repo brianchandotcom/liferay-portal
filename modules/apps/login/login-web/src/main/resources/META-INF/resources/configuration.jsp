@@ -55,71 +55,71 @@ if (Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPa
 			</liferay-ui:section>
 
 			<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-6378") %>'>
-			<liferay-ui:section>
-				<liferay-frontend:fieldset>
-					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
-
-					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
-				</liferay-frontend:fieldset>
-			</liferay-ui:section>
-
-			<c:if test="<%= Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPasswordSentBody) %>">
 				<liferay-ui:section>
-					<liferay-frontend:fieldset
-						collapsed="<%= true %>"
-						collapsible="<%= true %>"
-						label="legacy-template-no-longer-used"
-						markupView="lexicon"
-					>
-						<aui:input checked="<%= false %>" label="discard" name="discardLegacyKey" type="checkbox" value="emailPasswordSentSubject,emailPasswordSentBody" />
+					<liferay-frontend:fieldset>
+						<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
 
-						<div class="alert alert-info">
-							<liferay-ui:message key="sending-of-passwords-by-email-is-no-longer-supported-the-template-below-is-not-used-and-can-be-discarded" />
-						</div>
-
-						<c:if test="<%= Validator.isNotNull(emailPasswordSentSubject) %>">
-							<aui:field-wrapper label="subject">
-								<liferay-ui:input-localized
-									fieldPrefix="settings"
-									fieldPrefixSeparator="--"
-									name="emailPasswordSentSubject"
-									readonly="<%= true %>"
-									xml="<%= emailPasswordSentSubject %>"
-								/>
-							</aui:field-wrapper>
-						</c:if>
-
-						<c:if test="<%= Validator.isNotNull(emailPasswordSentBody) %>">
-							<aui:field-wrapper label="body">
-								<liferay-ui:input-localized
-									fieldPrefix="settings"
-									fieldPrefixSeparator="--"
-									name="emailPasswordSentBody"
-									readonly="<%= true %>"
-									type="textarea"
-									xml="<%= emailPasswordSentBody %>"
-								/>
-							</aui:field-wrapper>
-						</c:if>
+						<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 					</liferay-frontend:fieldset>
 				</liferay-ui:section>
-			</c:if>
 
-			<liferay-ui:section>
-				<div class="alert alert-info">
-					<liferay-ui:message key="enter-custom-values-or-leave-it-blank-to-use-the-default-portal-settings" />
-				</div>
+				<c:if test="<%= Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPasswordSentBody) %>">
+					<liferay-ui:section>
+						<liferay-frontend:fieldset
+							collapsed="<%= true %>"
+							collapsible="<%= true %>"
+							label="legacy-template-no-longer-used"
+							markupView="lexicon"
+						>
+							<aui:input checked="<%= false %>" label="discard" name="discardLegacyKey" type="checkbox" value="emailPasswordSentSubject,emailPasswordSentBody" />
 
-				<liferay-frontend:fieldset>
-					<liferay-frontend:email-notification-settings
-						emailBody="<%= emailPasswordResetBody %>"
-						emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, true) %>"
-						emailParam="emailPasswordReset"
-						emailSubject="<%= emailPasswordResetSubject %>"
-						showEmailEnabled="<%= false %>"
-					/>
-				</liferay-frontend:fieldset>
-			</liferay-ui:section>
+							<div class="alert alert-info">
+								<liferay-ui:message key="sending-of-passwords-by-email-is-no-longer-supported-the-template-below-is-not-used-and-can-be-discarded" />
+							</div>
+
+							<c:if test="<%= Validator.isNotNull(emailPasswordSentSubject) %>">
+								<aui:field-wrapper label="subject">
+									<liferay-ui:input-localized
+										fieldPrefix="settings"
+										fieldPrefixSeparator="--"
+										name="emailPasswordSentSubject"
+										readonly="<%= true %>"
+										xml="<%= emailPasswordSentSubject %>"
+									/>
+								</aui:field-wrapper>
+							</c:if>
+
+							<c:if test="<%= Validator.isNotNull(emailPasswordSentBody) %>">
+								<aui:field-wrapper label="body">
+									<liferay-ui:input-localized
+										fieldPrefix="settings"
+										fieldPrefixSeparator="--"
+										name="emailPasswordSentBody"
+										readonly="<%= true %>"
+										type="textarea"
+										xml="<%= emailPasswordSentBody %>"
+									/>
+								</aui:field-wrapper>
+							</c:if>
+						</liferay-frontend:fieldset>
+					</liferay-ui:section>
+				</c:if>
+
+				<liferay-ui:section>
+					<div class="alert alert-info">
+						<liferay-ui:message key="enter-custom-values-or-leave-it-blank-to-use-the-default-portal-settings" />
+					</div>
+
+					<liferay-frontend:fieldset>
+						<liferay-frontend:email-notification-settings
+							emailBody="<%= emailPasswordResetBody %>"
+							emailDefinitionTerms="<%= LoginUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, true) %>"
+							emailParam="emailPasswordReset"
+							emailSubject="<%= emailPasswordResetSubject %>"
+							showEmailEnabled="<%= false %>"
+						/>
+					</liferay-frontend:fieldset>
+				</liferay-ui:section>
 			</c:if>
 		</liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>

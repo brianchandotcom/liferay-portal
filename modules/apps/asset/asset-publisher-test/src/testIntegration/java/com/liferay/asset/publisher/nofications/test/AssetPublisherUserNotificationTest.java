@@ -139,10 +139,10 @@ public class AssetPublisherUserNotificationTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId()));
 
-		UnsafeRunnable<Exception> _unsafeRunnable =
+		UnsafeRunnable<Exception> unsafeRunnable =
 			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 
-		_unsafeRunnable.run();
+		unsafeRunnable.run();
 
 		_assertAssetPublisherNotifications(
 			_getExpectedMailBody(

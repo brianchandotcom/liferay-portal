@@ -188,13 +188,13 @@ translationTest(
 
 		await translateNameAndMetadataFields(page);
 
-		await translationButton.click();
-
-		await expect(
-			page.getByRole('option', {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
 				name: 'Catalan Language: Translating 3/4',
-			})
-		).toBeVisible({timeout: 1000});
+			}),
+			trigger: translationButton,
+		});
 	}
 );
 
@@ -237,32 +237,36 @@ translationTest(
 
 		await fillAndClickOutside(page, localizableField);
 
-		await translationButton.click();
-
-		await expect(
-			page.getByRole('option', {name: 'Catalan Language: Translated'})
-		).toBeVisible({timeout: 1000});
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Translated',
+			}),
+			timeout: 1000,
+			trigger: translationButton,
+		});
 
 		await page.getByLabel('Add Duplicate Field Text').click();
 
-		await translationButton.click();
-
-		await expect(
-			page.getByRole('option', {
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {
 				name: 'Catalan Language: Translating 4/5',
-			})
-		).toBeVisible({timeout: 1000});
+			}),
+			timeout: 1000,
+			trigger: translationButton,
+		});
 
 		await fillAndClickOutside(
 			page,
 			page.locator('input.ddm-field-text').nth(1)
 		);
 
-		translationButton.click();
-
-		await expect(
-			page.getByRole('option', {name: 'Catalan Language: Translated'})
-		).toBeVisible({timeout: 1000});
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {
+				name: 'Catalan Language: Translated',
+			}),
+			timeout: 1000,
+			trigger: translationButton,
+		});
 	}
 );
 

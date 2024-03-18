@@ -10,6 +10,7 @@ import {IField} from '../utils/types';
 interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];
 	query?: string;
+	savedId?: string;
 	selected?: boolean;
 }
 declare const FieldSelectModalContent: ({

@@ -12,7 +12,7 @@ import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {useAccount} from '../../../hooks/data/useAccounts';
 import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
-import PublishedSolutionsTable from '../Apps/components/PublishedSolutionsTable';
+import PublishedSolutionsTable from './PublishedSolutionsTable';
 
 const Solutions = () => {
 	const {catalogId} = useOutletContext<any>();
@@ -49,7 +49,7 @@ const Solutions = () => {
 	return (
 		<DashboardPage
 			buttonDisabled={!(catalogId && catalogId > 0)}
-			buttonMessage="Add Solution Template"
+			buttonMessage="New Solution Template"
 			messages={{
 				description: 'Publish and manage your solutions',
 				title: 'Solutions',

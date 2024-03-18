@@ -3,19 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import solutionsIcon from '../../../../assets/icons/analytics_icon.svg';
-import {DashboardTable} from '../../../../components/DashboardTable/DashboardTable';
-import OrderStatus from '../../../../components/OrderStatus';
-import Table from '../../../../components/Table/Table';
+import solutionsIcon from '../../../assets/icons/analytics_icon.svg';
+import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
+import OrderStatus from '../../../components/OrderStatus';
+import Table from '../../../components/Table/Table';
 import {
 	getProductVersionFromSpecifications,
 	getThumbnailByProductAttachment,
 	showAppImage,
-} from '../../../../utils/util';
+} from '../../../utils/util';
 import {
 	formatDate,
-	getProductTypeFromSpecifications,
-} from '../../PublishedDashboardPageUtil';
+} from '../PublishedDashboardPageUtil';
 
 type PublishedSolutionsTableProps = {
 	items: Order[];
@@ -28,13 +27,9 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 		return (
 			<DashboardTable
 				emptyStateMessage={{
-					description1: '',
-					description2: '',
 					title: 'No Solutions Yet',
 				}}
 				icon={solutionsIcon}
-				items={[]}
-				tableHeaders={[]}
 			/>
 		);
 	}
@@ -71,9 +66,9 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 				},
 				{
 					key: 'solutionType',
-					render: (_, {productSpecifications}) =>
-						getProductTypeFromSpecifications(productSpecifications),
-					title: 'Type',
+					render: () =>
+						"Page",
+					title: 'Solution Type',
 				},
 				{
 					key: 'modifiedDate',

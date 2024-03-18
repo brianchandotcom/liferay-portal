@@ -36,13 +36,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -208,19 +208,9 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 	private String _getQueryQuestionByEmailHash(
 		Set<String> questions, String email) {
 
-		TreeSet<String> sortedQuestions = new TreeSet<>();
+		List<String> list = new SortedArrayList(questions);
 
-		sortedQuestions.addAll(questions);
-
-		int emailHash = Math.abs(email.hashCode());
-
-		int mappedQuestionIndex = emailHash % sortedQuestions.size();
-
-		return new ArrayList<>(
-			sortedQuestions
-		).get(
-			mappedQuestionIndex
-		);
+		return list.get(Math.abs(email.hashCode()) % list.size());
 	}
 
 	private User _getUser(ActionRequest actionRequest) throws Exception {

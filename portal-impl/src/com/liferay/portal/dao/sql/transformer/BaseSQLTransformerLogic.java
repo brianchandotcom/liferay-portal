@@ -236,34 +236,48 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 		Pattern castPattern, String castName,
 		Function<Matcher, String> castFunction) {
 
-		return (String sql) -> {
-			int start = sql.indexOf(castName + StringPool.OPEN_PARENTHESIS);
+		return new Function<String, String>() {
 
-			if (start == -1) {
+			@Override
+			public String apply(String sql) {
+				int start = sql.indexOf(castName + StringPool.OPEN_PARENTHESIS);
+
+				if (start == -1) {
+					return sql;
+				}
+
+				int parenthesisCount = 0;
+
+				for (int i = start + castName.length(); i < sql.length(); i++) {
+					char character = sql.charAt(i);
+
+					if (character == CharPool.OPEN_PARENTHESIS) {
+						parenthesisCount++;
+					}
+					else if (character == CharPool.CLOSE_PARENTHESIS) {
+						parenthesisCount--;
+					}
+
+					if (parenthesisCount == 0) {
+						Matcher matcher = castPattern.matcher(
+							sql.substring(0, i + 1));
+
+						return castFunction.apply(matcher) +
+							apply(_safeSubstring(sql, i + 1));
+					}
+				}
+
 				return sql;
 			}
 
-			int parenthesisCount = 0;
-
-			for (int i = start + castName.length(); i < sql.length(); i++) {
-				char character = sql.charAt(i);
-
-				if (character == CharPool.OPEN_PARENTHESIS) {
-					parenthesisCount++;
-				}
-				else if (character == CharPool.CLOSE_PARENTHESIS) {
-					parenthesisCount--;
+			private String _safeSubstring(String sql, int index) {
+				if (index >= sql.length()) {
+					return StringPool.BLANK;
 				}
 
-				if (parenthesisCount == 0) {
-					Matcher matcher = castPattern.matcher(
-						sql.substring(0, i + 1));
-
-					return castFunction.apply(matcher) + sql.substring(i + 1);
-				}
+				return sql.substring(index);
 			}
 
-			return sql;
 		};
 	}
 

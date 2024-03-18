@@ -4916,8 +4916,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_objectDefinitionResourceFactory.create();
 
 		ObjectDefinitionResource objectDefinitionResource = builder.user(
-				serviceContext.fetchUser()
-			).build();
+			serviceContext.fetchUser()
+		).build();
 
 		for (Long objectDefinitionId : objectDefinitinIds) {
 			objectDefinitionResource.postObjectDefinitionPublish(

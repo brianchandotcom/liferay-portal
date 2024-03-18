@@ -3,7 +3,7 @@
 		{
 			"DBType": "Boolean",
 			"businessType": "Boolean",
-			"externalReferenceCode": "Acitve_Partner__c",
+			"externalReferenceCode": "Active_Partner__c",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {

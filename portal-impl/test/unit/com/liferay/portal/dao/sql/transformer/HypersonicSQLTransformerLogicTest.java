@@ -57,7 +57,7 @@ public class HypersonicSQLTransformerLogicTest
 
 	@Override
 	protected String getCastLongTransformedSQL() {
-		return "select CONVERT(foo, SQL_BIGINT) from Foo";
+		return "select CONVERT(1 + (foo + 2) - (3 x 4), SQL_BIGINT) from Foo";
 	}
 
 	@Override

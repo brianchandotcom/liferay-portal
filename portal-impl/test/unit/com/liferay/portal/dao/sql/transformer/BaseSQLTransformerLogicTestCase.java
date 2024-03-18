@@ -182,11 +182,11 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	protected String getCastLongOriginalSQL() {
-		return "select CAST_LONG(foo) from Foo";
+		return "select CAST_LONG(1 + (foo + 2) - (3 x 4)) from Foo";
 	}
 
 	protected String getCastLongTransformedSQL() {
-		return "select foo from Foo";
+		return "select 1 + (foo + 2) - (3 x 4) from Foo";
 	}
 
 	protected String getCastTextOriginalSQL() {

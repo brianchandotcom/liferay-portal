@@ -205,26 +205,6 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			_ddmStructure.getStructureId(), null, _serviceContext);
 	}
 
-	private ObjectDefinition _addObjectDefinitionWithObjectEntry()
-		throws Exception {
-
-		ObjectField objectField = ObjectFieldUtil.createObjectField(
-			"Text", "String", true, true, null,
-			StringUtil.toLowerCase(RandomTestUtil.randomString()), "test",
-			false);
-
-		objectField.setExternalReferenceCode(RandomTestUtil.randomString());
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(objectField));
-
-		ObjectEntryTestUtil.addObjectEntry(
-			objectDefinition, "test", RandomTestUtil.randomString());
-
-		return objectDefinition;
-	}
-
 	private SXPBlueprint _addSXPBlueprint(boolean highlightingEnabled)
 		throws Exception {
 
@@ -557,8 +537,19 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageWithEmbeddedNestedFields()
 		throws Exception {
 
+		ObjectField objectField = ObjectFieldUtil.createObjectField(
+			"Text", "String", true, true, null,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()), "test",
+			false);
+
+		objectField.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		ObjectDefinition objectDefinition =
-			_addObjectDefinitionWithObjectEntry();
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(objectField));
+
+		ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, "test", RandomTestUtil.randomString());
 
 		SearchPage<SearchResult> searchPage = _postSearchPage(
 			objectDefinition.getClassName(), null,

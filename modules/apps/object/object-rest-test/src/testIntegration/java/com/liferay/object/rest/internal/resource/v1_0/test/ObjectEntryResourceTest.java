@@ -61,6 +61,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -157,6 +158,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.ComparisonFailure;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7810,28 +7812,6 @@ public class ObjectEntryResourceTest {
 				endpoint1, jsonObject1, jsonObject2,
 				String.format("%s/id", _objectRelationship1.getName()));
 
-			// TODO Uncomment when LPD-20288 is fixed
-
-			//_testSortByFieldName(
-			//	endpoint1, jsonObject2, jsonObject1,
-			//	String.format("%s/creatorId", _objectRelationship1.getName()));
-			//_testSortByFieldName(
-			//	endpoint1, jsonObject1, jsonObject2,
-			//	String.format("%s/objectDefinitionId",
-			//	_objectRelationship1.getName()));
-			//_testSortByFieldName(
-			//	endpoint1, jsonObject1, jsonObject2,
-			//	String.format("%s/siteId", _objectRelationship1.getName()));
-			//_testSortByFieldName(
-			//	endpoint1, jsonObject2, jsonObject1,
-			//	String.format("%s/userId", _objectRelationship1.getName()));
-
-			// TODO Uncomment when LPD-20530 is fixed
-
-			//_testSortByFieldName(
-			//	endpoint1, jsonObject2, jsonObject1,
-			//	String.format("%s/status", _objectRelationship1.getName());
-
 			// Sort by several fields
 
 			_testSortByFieldName(
@@ -7846,6 +7826,43 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/externalReferenceCode",
 					_objectRelationship1.getName()));
+
+			// TODO LPD-20288
+
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint1, jsonObject2, jsonObject1,
+					String.format(
+						"%s/creatorId", _objectRelationship1.getName())));
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint1, jsonObject1, jsonObject2,
+					String.format(
+						"%s/objectDefinitionId",
+						_objectRelationship1.getName())));
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint1, jsonObject1, jsonObject2,
+					String.format(
+						"%s/siteId", _objectRelationship1.getName())));
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint1, jsonObject2, jsonObject1,
+					String.format(
+						"%s/userId", _objectRelationship1.getName())));
+
+			// TODO LPD-20530
+
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint1, jsonObject2, jsonObject1,
+					String.format(
+						"%s/status", _objectRelationship1.getName())));
 		}
 		finally {
 			for (JSONObject jsonObject : oneToManyJSONObjects) {
@@ -7961,17 +7978,6 @@ public class ObjectEntryResourceTest {
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "status");
 
-			// TODO Uncomment when LPD-20288 is fixed
-
-			// _testSortByFieldName(
-			// 	endpoint, jsonObjects[1], jsonObjects[0], "creatorId");
-			// _testSortByFieldName(
-			// 	endpoint, jsonObjects[0], jsonObjects[1], "objectDefinitionId");
-			// _testSortByFieldName(
-			// 	endpoint, jsonObjects[0], jsonObjects[1], "siteId");
-			// _testSortByFieldName(
-			// 	endpoint, jsonObjects[1], jsonObjects[0], "userId");
-
 			// Sort by several fields
 
 			_testSortByFieldName(
@@ -7979,6 +7985,26 @@ public class ObjectEntryResourceTest {
 			_testSortByFieldName(
 				endpoint, jsonObjects[1], jsonObjects[0], "creator",
 				"dateModified", "externalReferenceCode");
+
+			// TODO LPD-20288
+
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint, jsonObjects[1], jsonObjects[0], "creatorId"));
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint, jsonObjects[0], jsonObjects[1],
+					"objectDefinitionId"));
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint, jsonObjects[0], jsonObjects[1], "siteId"));
+			_assertFailure(
+				ComparisonFailure.class,
+				() -> _testSortByFieldName(
+					endpoint, jsonObjects[1], jsonObjects[0], "userId"));
 		}
 		finally {
 			for (JSONObject jsonObject : jsonObjects) {
@@ -8114,6 +8140,24 @@ public class ObjectEntryResourceTest {
 				)
 			).toString(),
 			nestedObjectEntriesJSONArray.toString(), JSONCompareMode.LENIENT);
+	}
+
+	private void _assertFailure(
+		Class<?> clazz, UnsafeRunnable<Exception> unsafeRunnable) {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Throwable throwable) {
+			Class<?> throwableClass = throwable.getClass();
+
+			Assert.assertTrue(
+				throwableClass.getName() + " is not an instance of " +
+					clazz.getName(),
+				clazz.isInstance(throwable));
+		}
 	}
 
 	private void _assertFilteredObjectEntries(

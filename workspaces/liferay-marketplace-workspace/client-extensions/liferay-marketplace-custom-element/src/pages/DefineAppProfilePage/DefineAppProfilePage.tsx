@@ -106,19 +106,18 @@ export function DefineAppProfilePage({
 
 		if (appERC) {
 			response = await updateApp({
-				appDescription: appDescription.replace(/\n/g, '<br>'),
+				appDescription: appDescription?.replace(/\n/g, '<br>'),
 				appERC,
 				appName,
 			});
-		}
-		else {
+		} else {
 			response = await createApp({
 				appCategories: [
 					...appCategories,
 					...appTags,
 					productType as Categories,
 				],
-				appDescription: appDescription.replace(/\n/g, '<br>'),
+				appDescription: appDescription?.replace(/\n/g, '<br>'),
 				appName,
 				catalogId,
 				productChannels: [

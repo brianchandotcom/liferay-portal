@@ -184,7 +184,7 @@ export class PageEditorPage {
 	async createPageWithFragmentAndGoToEditMode({apiHelpers, fragment, site}) {
 		await this.page.goto(liferayConfig.environment.baseUrl);
 
-		// Create a page with a  fragment
+		// Create a page with a fragment
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage(
 			site.id,

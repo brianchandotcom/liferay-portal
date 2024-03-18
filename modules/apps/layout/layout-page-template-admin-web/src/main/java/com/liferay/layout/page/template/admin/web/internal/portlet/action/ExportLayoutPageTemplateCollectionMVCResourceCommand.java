@@ -39,10 +39,10 @@ public class ExportLayoutPageTemplateCollectionMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
-		long layoutPageTemplateCollectionId = ParamUtil.getLong(
-			resourceRequest, "layoutPageTemplateCollectionId");
-
 		try {
+			long layoutPageTemplateCollectionId = ParamUtil.getLong(
+				resourceRequest, "layoutPageTemplateCollectionId");
+
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
 				"collections-" + Time.getTimestamp() + ".zip",
@@ -50,12 +50,12 @@ public class ExportLayoutPageTemplateCollectionMVCResourceCommand
 					_layoutsExporter.exportLayoutPageTemplateCollections(
 						new long[] {layoutPageTemplateCollectionId})),
 				ContentTypes.APPLICATION_ZIP);
+
+			return false;
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
 		}
-
-		return false;
 	}
 
 	@Reference

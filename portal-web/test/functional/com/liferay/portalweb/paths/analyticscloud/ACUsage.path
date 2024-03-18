@@ -10,74 +10,25 @@
 </thead>
 
 <tbody>
+
+<!-- USAGE_LIMITS_CARD-->
+
 <tr>
 	<td>CURRENT_PLAN</td>
-	<td>//div[contains(@class,'panel-title')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//div[contains(@class,'label')][normalize-space()='Current Plan']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USAGE_BAR</td>
-	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//div[contains(@class,'bar')][@style]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USAGE_CURRENT_NUMBER</td>
-	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//span[contains(@class,'metric-current')]</td>
+	<td>//div[@data-testid='subscription-details']//span[text()='${key_planName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON</td>
-	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//div[contains(@class,'breakdown-content')]//div[contains(@class,'text-muted')]</td>
+	<td>//span[text()='${key_metricName}']//..//span[contains(text(),'${key_planLimit}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>USAGE_LIMIT_NUMBER</td>
-	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//span[contains(@class,'metric-limit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USAGE_SINCE</td>
-	<td>//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${key_metricName}']]//span[contains(@class,'usage-since')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PLAN_NAME</td>
-	<td>//h4[contains(.,'Plans')]/..//div[contains(@class,'plan-name') and contains(.,'${key_planName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USAGE_PLAN_BODY</td>
-	<td>//div[contains(@class,'panel-header')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//following-sibling::div[contains(@class,'panel-body')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USAGE_PLAN_ICON</td>
-	<td>//div[contains(@class,'panel-header')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//*[name()='svg'][contains(@class,'icon-${key_type}')]</td>
-	<td></td>
-</tr>
+
+<!-- SUBSCRIPTION_DETAILS_CARD-->
+
 <tr>
 	<td>USAGE_PLAN_LIMITS_TABLE</td>
-	<td>//div[h4[contains(.,'Plans')]]//div[contains(@class,'panel-header')][.//div[contains(@class,'plan-name')][normalize-space(text())='${key_planName}']]//following-sibling::div[contains(@class,'panel-body')]//li[.//span[contains(@class,'limit')][normalize-space()='${key_planLimit}'] and .//span[contains(@class,'text')][normalize-space()='${key_planItem}']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USAGE_ADDONS_LIMIT</td>
-	<td>//div[h4[contains(.,'Add-ons')]]//div[contains(@class,'plan-name')][.//span[contains(@class,'limit')][normalize-space()='+${key_planLimit}'] and .//span[contains(@class,'text')][normalize-space()='${key_addOnItem}']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USAGE_ADDONS_PRICE</td>
-	<td>//div[h4[contains(.,'Add-ons')]]//div[contains(@class,'plan-name')][.//b[contains(@class,'label')][normalize-space(text())='${key_addOnItem}']]//following-sibling::div[contains(@class,'annual-price')][normalize-space()='${key_annualPrice} / year']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USAGE_ADDONS_TIME</td>
-	<td>//div[h4[contains(.,'Add-ons')]]//div[contains(@class,'plan-name')][.//b[contains(@class,'label')][normalize-space(text())='${key_addOnItem}']]//following-sibling::div[contains(@class,'label')][normalize-space()='${key_time}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USAGE_CURRENT_PAGE_VIEWS</td>
-	<td>//h3[contains(.,'Page Views')]/..//span[contains(@class,'metric-current')]</td>
+	<td>//div[@data-testid='subscription-details']//span[text()='${key_planItem}']//following-sibling::span[text()='${key_planLimit}']</td>
 	<td></td>
 </tr>
 </tbody>

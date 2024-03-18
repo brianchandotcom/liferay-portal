@@ -31,8 +31,7 @@ public class GenerateTestrayCSVUtil {
 	public static void generate(
 		String projectBuildDir, String projectTestrayBuildId) {
 
-		System.out.println(
-			"LRCI-3940 Generating Testray CSV.");
+		System.out.println("LRCI-3940 Generating Testray CSV.");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -58,8 +57,7 @@ public class GenerateTestrayCSVUtil {
 
 		try {
 			System.out.println(
-				"LRCI-3940 Setting testray results to: " +
-					sb.toString());
+				"LRCI-3940 Setting testray results to: " + sb.toString());
 
 			JenkinsResultsParserUtil.write(
 				new File(projectBuildDir, "testray-results.csv"),
@@ -75,7 +73,8 @@ public class GenerateTestrayCSVUtil {
 		TestrayCaseResult.Type testrayCaseResultType) {
 
 		System.out.println(
-			"LRCI-3940 Parsing Testray case results for " + testrayCaseResultType.toString() +".");
+			"LRCI-3940 Parsing Testray case results for " +
+				testrayCaseResultType.toString() + ".");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -104,7 +103,8 @@ public class GenerateTestrayCSVUtil {
 		String projectTestrayBuildId) {
 
 		System.out.println(
-			"LRCI-3940 Getting Testray case results for " + projectTestrayBuildId + ".");
+			"LRCI-3940 Getting Testray case results for " +
+				projectTestrayBuildId + ".");
 
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 

@@ -372,45 +372,6 @@ public class QueueListener {
 		return "";
 	}
 
-	private String _getPartnerLevelExternalReferenceCode(
-		JSONObject proxyAccountJSONObject) {
-
-		if (!proxyAccountJSONObject.has("partnerLevelType")) {
-			return "";
-		}
-
-		JSONObject partnerLevelsJSONObject = _get(
-			uriBuilder -> uriBuilder.path(
-				"/o/c/partnerlevels/"
-			).queryParam(
-				"pageSize", "-1"
-			).build());
-
-		JSONObject proxyPartnerLevelTypeJSONObject =
-			proxyAccountJSONObject.getJSONObject("partnerLevelType");
-
-		JSONArray partnerLevelsJSONArray = partnerLevelsJSONObject.getJSONArray(
-			"items");
-
-		for (int i = 0; i < partnerLevelsJSONArray.length(); i++) {
-			JSONObject partnerLevelJSONObject =
-				partnerLevelsJSONArray.getJSONObject(i);
-
-			JSONObject partnerLevelTypeJSONObject =
-				partnerLevelJSONObject.getJSONObject("partnerLevelType");
-
-			if (StringUtil.equalsIgnoreCase(
-					partnerLevelTypeJSONObject.getString("key"),
-					proxyPartnerLevelTypeJSONObject.getString("key"))) {
-
-				return partnerLevelJSONObject.getString(
-					"externalReferenceCode");
-			}
-		}
-
-		return "";
-	}
-
 	private long _getRegionOrganizationId(String regionName) {
 		JSONObject globalOrganizationJSONObject = _get(
 			uriBuilder -> uriBuilder.path(
@@ -759,15 +720,6 @@ public class QueueListener {
 
 		if (!countryISOCode.equals("")) {
 			accountJSONObject.put("partnerCountry", countryISOCode);
-		}
-
-		String partnerLevelExternalReferenceCode =
-			_getPartnerLevelExternalReferenceCode(proxyAccountJSONObject);
-
-		if (!partnerLevelExternalReferenceCode.equals("")) {
-			accountJSONObject.put(
-				"r_prtLvlToAcc_c_partnerLevelERC",
-				partnerLevelExternalReferenceCode);
 		}
 
 		JSONObject updatedAccountJSONObject = _put(

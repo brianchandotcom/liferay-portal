@@ -64,6 +64,24 @@ export default function () {
 		}
 	};
 
+	const getExpirationText = (item: any) => {
+		if (item.expirationDays > 1) {
+			return `Expires in ${item.expirationDays} days`;
+		}
+		if (item.expirationDays === 1) {
+			return `Expires in 1 day`;
+		}
+		if (item.expirationDays === 0) {
+			return 'Expires today';
+		}
+		if (item.expirationDays === -1) {
+			return 'Expired 1 day ago';
+		}
+		if (item.expirationDays < -1) {
+			return `Expired ${Math.abs(item.expirationDays)} days ago`;
+		}
+	};
+
 	const buildChart = () => {
 		if (isLoading) {
 			return <ClayLoadingIndicator className="mb-10 mt-10" size="md" />;
@@ -104,23 +122,9 @@ export default function () {
 								</div>
 
 								<div>
-									{item.expirationDays &&
-									item.expirationDays >= 0 ? (
-										<span className="font-weight-semi-bold">
-											{item.expirationDays === 0
-												? 'Expires today'
-												: item.expirationDays === 1
-												? `Expires in ${item.expirationDays} day`
-												: `Expires in ${item.expirationDays} days`}
-										</span>
-									) : (
-										<span className="font-weight-semi-bold">
-											{`Expired ${
-												item.expirationDays &&
-												item.expirationDays * -1
-											} days ago`}
-										</span>
-									)}
+									<span className="font-weight-semi-bold">
+										{getExpirationText(item)}
+									</span>
 									&nbsp;
 									<span className="ml-2">
 										{item.closeDate}

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
@@ -31,13 +30,11 @@ public class FileUtil {
 		return FileUtils.readFileToByteArray(file);
 	}
 
-	public static String read(File file) throws IOException {
+	public static String read(File file) {
 		return read(file, true);
 	}
 
-	public static String read(File file, boolean escapeReturnCharacter)
-		throws IOException {
-
+	public static String read(File file, boolean escapeReturnCharacter) {
 		try {
 			String s = FileUtils.readFileToString(file, StringPool.UTF8);
 
@@ -48,9 +45,9 @@ public class FileUtil {
 			return StringUtil.replace(
 				s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 		}
-		catch (FileNotFoundException fileNotFoundException) {
+		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(fileNotFoundException);
+				_log.debug(ioException);
 			}
 
 			return null;

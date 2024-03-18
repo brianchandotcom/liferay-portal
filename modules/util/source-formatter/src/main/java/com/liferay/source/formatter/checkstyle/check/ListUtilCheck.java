@@ -7,8 +7,6 @@ package com.liferay.source.formatter.checkstyle.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -19,7 +17,6 @@ import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
@@ -267,21 +264,12 @@ public class ListUtilCheck extends BaseCheck {
 			File file = new File(buildGradleLocation + "build.gradle");
 
 			if (file.exists()) {
-				try {
-					buildGradleContent = FileUtil.read(file);
+				buildGradleContent = FileUtil.read(file);
 
-					_buildGradleContentsMap.put(
-						buildGradleLocation, buildGradleContent);
+				_buildGradleContentsMap.put(
+					buildGradleLocation, buildGradleContent);
 
-					return buildGradleContent;
-				}
-				catch (IOException ioException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(ioException);
-					}
-
-					return null;
-				}
+				return buildGradleContent;
 			}
 
 			buildGradleLocation = StringUtil.replaceLast(
@@ -356,8 +344,6 @@ public class ListUtilCheck extends BaseCheck {
 
 	private static final String _MSG_USE_LIST_UTIL_IS_EMPTY =
 		"list.util.is.empty.use";
-
-	private static final Log _log = LogFactoryUtil.getLog(ListUtilCheck.class);
 
 	private final Map<String, String> _buildGradleContentsMap =
 		new ConcurrentHashMap<>();

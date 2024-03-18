@@ -58,7 +58,9 @@ export default function getMDFListColumns(
 							Liferay.Util.navigate(
 								`${siteURL}/l/${
 									row[MDFColumnKey.ID]
-								}?p_l_back_url=${encodeURIComponent(Liferay.ThemeDisplay.getLayoutRelativeURL())}`
+								}?p_l_back_url=${encodeURIComponent(
+									Liferay.ThemeDisplay.getLayoutRelativeURL()
+								)}`
 							),
 					});
 				}
@@ -183,7 +185,9 @@ export default function getMDFListColumns(
 					className="link"
 					href={`${siteURL}/l/${
 						row[MDFColumnKey.ID]
-					}?p_l_back_url=${encodeURIComponent(Liferay.ThemeDisplay.getLayoutRelativeURL())}`}
+					}?p_l_back_url=${encodeURIComponent(
+						Liferay.ThemeDisplay.getLayoutRelativeURL()
+					)}`}
 				>
 					{data}
 				</a>

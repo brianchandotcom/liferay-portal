@@ -46,7 +46,9 @@ export default function getMDFClaimListColumns(
 							Liferay.Util.navigate(
 								`${siteURL}/l/${
 									row[MDFClaimColumnKey.CLAIM_ID]
-								}?p_l_back_url=${encodeURIComponent(Liferay.ThemeDisplay.getLayoutRelativeURL())}`
+								}?p_l_back_url=${encodeURIComponent(
+									Liferay.ThemeDisplay.getLayoutRelativeURL()
+								)}`
 							),
 					});
 				}
@@ -141,7 +143,9 @@ export default function getMDFClaimListColumns(
 					className="link"
 					href={`${siteURL}/l/${
 						row[MDFClaimColumnKey.CLAIM_ID]
-					}?p_l_back_url=${encodeURIComponent(Liferay.ThemeDisplay.getLayoutRelativeURL())}`}
+					}?p_l_back_url=${encodeURIComponent(
+						Liferay.ThemeDisplay.getLayoutRelativeURL()
+					)}`}
 				>
 					{data}
 				</a>
@@ -155,7 +159,9 @@ export default function getMDFClaimListColumns(
 					className="link"
 					href={`${siteURL}/l/${
 						row[MDFClaimColumnKey.REQUEST_ID]
-					}?p_l_back_url=${encodeURIComponent(Liferay.ThemeDisplay.getLayoutRelativeURL())}`}
+					}?p_l_back_url=${encodeURIComponent(
+						Liferay.ThemeDisplay.getLayoutRelativeURL()
+					)}`}
 				>
 					{data}
 				</a>

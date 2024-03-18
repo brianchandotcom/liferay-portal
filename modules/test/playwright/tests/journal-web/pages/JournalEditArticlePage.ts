@@ -76,4 +76,12 @@ export class JournalEditArticlePage {
 			.getByText(`Success:${title} was created successfully.`)
 			.waitFor();
 	}
+
+	async openDMItemSelectorForImages() {
+		await this.page.getByLabel('Image', {exact: true}).click();
+		await this.page
+			.frameLocator('iframe[title="Select Item"]')
+			.getByRole('link', {name: 'Documents and Media'})
+			.click();
+	}
 }

@@ -238,6 +238,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 														<clay:link
 															href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
 															label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
+															translated="<%= false %>"
 														/>
 
 														<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
@@ -481,6 +482,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 																).buildString()
 															%>'
 															label="<%= HtmlUtil.unescape(curFolder.getName()) %>"
+															translated="<%= false %>"
 														/>
 													</div>
 												</div>

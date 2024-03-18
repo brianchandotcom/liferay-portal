@@ -5,7 +5,7 @@
 export const PORTLET_URLS = {
 	documentLibrary:
 		'/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet',
-	fragmentPage: '/~/control_panel/manage/-/fragments/fragment_collections',
+	fragments: '/~/control_panel/manage/-/fragments/fragment_collections',
 	journal:
 		'/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet',
 	knowledgeBase:

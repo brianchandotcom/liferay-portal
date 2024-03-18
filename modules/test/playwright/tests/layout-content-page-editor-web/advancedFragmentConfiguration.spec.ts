@@ -53,7 +53,7 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 		getPageDefinition([widgetDefinition])
 	);
 
-	// Create a page with a fragment, change the text of the fragment and publish it
+	// Create a page with a fragment and publish it
 
 	const headingId = getRandomString();
 
@@ -71,13 +71,6 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 	await pageEditorPage.goToEditMode(layouts.fragment, site.friendlyUrlPath);
 
 	await pageEditorPage.selectFragment(headingId);
-
-	const headingFragment = await pageEditorPage.getFragment(headingId);
-
-	for (let i = 0; i < 2; i++) {
-		await headingFragment.click();
-		await page.waitForTimeout(1000);
-	}
 
 	await page.getByText('Publish').click();
 

@@ -61,6 +61,11 @@ public class DatabaseUtilTest extends MockDatabaseUtil {
 		catch (Exception exception) {
 			Assert.assertTrue(
 				exception instanceof UnsupportedOperationException);
+
+			Assert.assertEquals(
+				"Source multi company or target with DB Partitioning " +
+					"disabled environments are not supported",
+				exception.getMessage());
 		}
 	}
 

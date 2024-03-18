@@ -1392,7 +1392,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	private String _resolveModuleName(DDMFormFieldType ddmFormFieldType) {
 		String esModule = ddmFormFieldType.getESModule();
 
-		if (Validator.isNotNull(esModule)) {
+		if (Validator.isNotNull(esModule) &&
+			Validator.isNotNull(contextHttpServletRequest)) {
+
 			ESImport esImport = ESImportUtil.getESImport(
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					contextHttpServletRequest),

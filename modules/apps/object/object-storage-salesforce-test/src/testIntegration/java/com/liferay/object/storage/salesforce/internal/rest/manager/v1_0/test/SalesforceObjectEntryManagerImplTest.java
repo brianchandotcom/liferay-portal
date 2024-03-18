@@ -374,7 +374,7 @@ public class SalesforceObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				filterString.concat(
-					_buildEqualsExpressionFilterBoolean("flagged", true))
+					buildEqualsExpressionFilterString("flagged", true))
 			).build(),
 			objectEntry2, objectEntry4);
 
@@ -524,12 +524,6 @@ public class SalesforceObjectEntryManagerImplTest
 
 		Assert.assertEquals(
 			title, MapUtil.getString(objectEntry.getProperties(), "title"));
-	}
-
-	private String _buildEqualsExpressionFilterBoolean(
-		String fieldName, boolean value) {
-
-		return StringBundler.concat(fieldName, " eq ", value);
 	}
 
 	private String _buildNotEqualsExpressionFilterString(

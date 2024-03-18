@@ -24,6 +24,9 @@ export function getDTOFromMDFClaim(
 			mdfRequest.r_accToMDFReqs_accountEntry?.id,
 		r_mdfReqToMDFClms_c_mdfRequestId:
 			mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId,
+		r_usrToMDFClms_userId: mdfClaim.id
+			? mdfClaim.r_usrToMDFClms_userId
+			: Number(Liferay.ThemeDisplay.getUserId()),
 		submitDate: mdfClaim.submitDate,
 		submitted: mdfClaim.submitted,
 		totalClaimAmount: mdfClaim.totalClaimAmount,

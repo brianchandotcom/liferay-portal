@@ -6,7 +6,7 @@
 import useSWR from 'swr';
 
 import useMarketplaceSpringBootOAuth2 from '../../../hooks/useMarketplaceSpringBootOAuth2';
-import { Liferay } from '../../../liferay/liferay';
+import {Liferay} from '../../../liferay/liferay';
 
 const INSUFICIENT_RESOURCES = 0;
 const ONE_GB = 1024;
@@ -42,7 +42,9 @@ const useGetResourceInfo = ({
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
 	const {data: productUsages, isLoading} = useSWR(
-		shouldFetch ? `/product-usages/${Liferay.ThemeDisplay.getUserEmailAddress()}` : null,
+		shouldFetch
+			? `/product-usages/${Liferay.ThemeDisplay.getUserEmailAddress()}`
+			: null,
 		() => marketplaceSpringBootOAuth2.getProductUsages()
 	);
 

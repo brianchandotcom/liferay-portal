@@ -18,6 +18,9 @@ import React, {useEffect, useState} from 'react';
 import {defaultLanguageId} from '../util/constants';
 
 import './EditNotificationTemplate.scss';
+
+import classNames from 'classnames';
+
 import {BasicInfoContainer} from './BasicInfoContainer/BasicInfoContainer';
 import ContentContainer from './ContentContainer/ContentContainer';
 import DefinitionOfTermsContainer from './DefinitionOfTermsContainer/DefinitionOfTermsContainer';
@@ -294,8 +297,32 @@ export default function EditNotificationTemplate({
 
 			<div className="lfr__notification-template-container">
 				<div className="lfr__notification-template-cards">
-					<div className="row">
-						<div className="col-lg-6 lfr__notification-template-card">
+					<div
+						className={classNames(
+							{
+								row: !(
+									Liferay.FeatureFlags['LPD-6604'] &&
+									values.type === 'email'
+								),
+							},
+							{
+								'lfr__notification-template-basic-info':
+									Liferay.FeatureFlags['LPD-6604'] &&
+									values.type === 'email',
+							}
+						)}
+					>
+						<div
+							className={classNames(
+								{
+									'col-lg-6': !(
+										Liferay.FeatureFlags['LPD-6604'] &&
+										values.type === 'email'
+									),
+								},
+								'lfr__notification-template-card'
+							)}
+						>
 							<BasicInfoContainer
 								errors={errors}
 								setValues={setValues}
@@ -303,7 +330,14 @@ export default function EditNotificationTemplate({
 							/>
 						</div>
 
-						<div className="col-lg-6 lfr__notification-template-card">
+						<div
+							className={classNames({
+								'col-lg-6 lfr__notification-template-card': !(
+									Liferay.FeatureFlags['LPD-6604'] &&
+									values.type === 'email'
+								),
+							})}
+						>
 							<SettingsContainer
 								errors={errors}
 								selectedLocale={selectedLocale}

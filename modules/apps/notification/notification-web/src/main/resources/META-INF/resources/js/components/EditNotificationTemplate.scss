@@ -1,6 +1,10 @@
 @import 'atlas-variables';
 
 .lfr__notification-template {
+	&-basic-info {
+		display: grid;
+	}
+
 	&-container {
 		background-color: #f1f2f5;
 	}

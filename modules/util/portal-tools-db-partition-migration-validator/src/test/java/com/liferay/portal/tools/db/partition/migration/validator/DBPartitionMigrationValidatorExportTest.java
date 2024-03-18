@@ -12,9 +12,13 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.migration.validator.util.MockDatabaseUtil;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
+
+import java.security.Permission;
 
 import java.sql.SQLException;
 
@@ -22,7 +26,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -31,6 +37,21 @@ import org.junit.rules.TemporaryFolder;
  * @author Luis Ortiz
  */
 public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
+
+	@Before
+	public void setUp() {
+		System.setErr(new PrintStream(_errByteArrayOutputStream));
+		System.setOut(new PrintStream(_outByteArrayOutputStream));
+		System.setSecurityManager(
+			new DBPartitionMigrationValidatorExportTest.
+				DisallowExitSecurityManager());
+	}
+
+	@After
+	public void tearDown() {
+		System.setErr(_originalErr);
+		System.setOut(_originalOut);
+	}
 
 	@Test
 	public void testMultipleCompanyDefaultDatabase()
@@ -131,11 +152,28 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 
 		File outputDirectory = temporaryFolder.newFolder("tempExports");
 
-		DBPartitionMigrationValidator.main(
-			new String[] {
-				"-e", "-j", _URL, "-u", _USER, "-p", _PASSWORD, "-d",
-				outputDirectory.getAbsolutePath(), "-s", _SCHEMA_NAME
-			});
+		try {
+			DBPartitionMigrationValidator.main(
+				new String[] {
+					"-e", "-j", _URL, "-u", _USER, "-p", _PASSWORD, "-d",
+					outputDirectory.getAbsolutePath(), "-s", _SCHEMA_NAME
+				});
+		}
+		catch (RuntimeException runtimeException) {
+			if (companyInfoIds.size() > 1) {
+				Assert.assertEquals("1", runtimeException.getMessage());
+				Assert.assertTrue(
+					_errByteArrayOutputStream.toString(
+					).contains(
+						"Source multi company or target with DB Partitioning " +
+							"disabled environments are not supported"
+					));
+
+				return;
+			}
+
+			Assert.fail();
+		}
 
 		File[] files = outputDirectory.listFiles();
 
@@ -282,5 +320,29 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 		"jdbc:mysql://localhost:3306/lportal?useUnicode=true";
 
 	private static final String _USER = RandomTestUtil.randomString();
+
+	private final ByteArrayOutputStream _errByteArrayOutputStream =
+		new ByteArrayOutputStream();
+	private final PrintStream _originalErr = System.err;
+	private final PrintStream _originalOut = System.out;
+	private final ByteArrayOutputStream _outByteArrayOutputStream =
+		new ByteArrayOutputStream();
+
+	private class DisallowExitSecurityManager extends SecurityManager {
+
+		@Override
+		public void checkExit(int status) {
+			super.checkExit(status);
+
+			if (status != 0) {
+				throw new RuntimeException(String.valueOf(status));
+			}
+		}
+
+		@Override
+		public void checkPermission(Permission perm) {
+		}
+
+	}
 
 }

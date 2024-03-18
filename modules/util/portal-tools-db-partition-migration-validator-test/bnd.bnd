@@ -10,6 +10,6 @@ Import-Package:\
 	\
 	*
 -includeresource:\
-	@com.liferay.portal.tools.db.partition.migration-validator-*.jar!/com/liferay/portal/tools/db/partition/migration/validator/*.class,\
-	@com.liferay.portal.tools.db.partition.migration-validator-*.jar!/org/apache/commons/cli/*.class
+	@com.liferay.portal.tools.db.partition.migration.validator-*.jar!/com/liferay/portal/tools/db/partition/migration/validator/*.class,\
+	@com.liferay.portal.tools.db.partition.migration.validator-*.jar!/org/apache/commons/cli/*.class
 -removeheaders: Require-Capability

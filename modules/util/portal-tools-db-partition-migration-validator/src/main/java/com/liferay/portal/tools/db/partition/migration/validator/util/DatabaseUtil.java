@@ -106,7 +106,7 @@ public class DatabaseUtil {
 		return companyIds;
 	}
 
-	private static Long _getExportedCompanyId(Connection connection)
+	private static long _getExportedCompanyId(Connection connection)
 		throws Exception {
 
 		long companyId = 0;

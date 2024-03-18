@@ -41,9 +41,13 @@ definition {
 	macro terminateABTest(testName = null) {
 		if (isSet(testName)) {
 			ACNavigation.openItem(itemName = ${testName});
+
+			ACUtils.waitForLoading();
 		}
 
-		Button.click(button = "Terminate");
+		Click.mouseDownMouseUp(
+			key_buttonName = "terminate",
+			locator1 = "ACTests#REDIRECT_BUTTONS");
 
 		SelectWindow(value1 = "name=undefined");
 

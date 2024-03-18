@@ -4,9 +4,13 @@ definition {
 	macro deleteABTest(testName = null) {
 		if (isSet(testName)) {
 			ACNavigation.openItem(itemName = ${testName});
+
+			ACUtils.waitForLoading();
 		}
 
-		Button.clickDelete();
+		Click.mouseDownMouseUp(
+			key_buttonName = "delete",
+			locator1 = "ACTests#REDIRECT_BUTTONS");
 
 		SelectWindow(value1 = "name=undefined");
 

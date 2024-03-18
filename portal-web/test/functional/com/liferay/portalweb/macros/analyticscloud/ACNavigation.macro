@@ -58,6 +58,10 @@ definition {
 	@summary = "Default summary"
 	macro goToEventAnalysis() {
 		ACNavigation.goToSidebarOption(sidebarOption = "event-analysis");
+
+		WaitForElementPresent(
+			key_definitionsOptions = "event-analysis/create",
+			locator1 = "ACSettings#DEFINITIONS_OPTIONS");
 	}
 
 	@summary = "Default summary"

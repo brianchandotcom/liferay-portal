@@ -478,7 +478,8 @@ public class JournalTransformer {
 			}
 		}
 		else if (type.equals(DDMFormFieldTypeConstants.SELECT) &&
-				 ddmFormField.isMultiple()) {
+				 ddmFormField.isMultiple() && (dynamicContentElement != null) &&
+				 (dynamicContentElement.element("option") != null)) {
 
 			JSONArray dataJSONArray = JSONFactoryUtil.createJSONArray();
 

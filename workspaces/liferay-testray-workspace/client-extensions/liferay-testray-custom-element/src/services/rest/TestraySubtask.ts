@@ -14,7 +14,12 @@ import {testrayCaseResultImpl} from './TestrayCaseResult';
 import {testrayIssueImpl} from './TestrayIssues';
 import {testraySubtaskCaseResultImpl} from './TestraySubtaskCaseResults';
 import {testraySubtaskIssuesImpl} from './TestraySubtaskIssues';
-import {APIResponse, TestraySubTask, TestraySubTaskCaseResult} from './types';
+import {
+	APIResponse,
+	TestrayIssue,
+	TestraySubTask,
+	TestraySubTaskCaseResult,
+} from './types';
 
 type SubtaskForm = typeof yupSchema.subtask.__outputType & {
 	projectId: number;
@@ -52,12 +57,32 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 				score,
 			}),
 			nestedFields:
-				'tasks,users,subtask,subtaskToSubtasksIssues,subtaskToSubtasksIssues.r_issueToSubtasksIssues_c_issue',
+				'tasks,users,subtask,subtaskToSubtasksCasesResults,caseResultToSubtasksCasesResults,caseResultToCaseResultsIssues,issueToCaseResultsIssues',
+			nestedFieldsDepth: 4,
 			transformData: (subTask) => ({
 				...subTask,
-				issues: subTask.subtaskToSubtasksIssues.map(
-					(subtasksIssues) =>
-						subtasksIssues?.r_issueToSubtasksIssues_c_issue
+				issues: subTask.subtaskToSubtasksCasesResults.reduce(
+					(previousIssues: TestrayIssue[], subtasksIssues) => {
+						const newIssues =
+							subtasksIssues?.caseResultToSubtasksCasesResults?.caseResultToCaseResultsIssues.map(
+								(caseResultToCaseResultsIssues) =>
+									caseResultToCaseResultsIssues.issueToCaseResultsIssues
+							) || [];
+
+						newIssues?.forEach((issue?: TestrayIssue) => {
+							const issueExists = previousIssues.some(
+								(oldIssue: TestrayIssue) =>
+									oldIssue.id === issue?.id
+							);
+
+							if (!issueExists) {
+								previousIssues.push(issue as TestrayIssue);
+							}
+						});
+
+						return previousIssues;
+					},
+					[]
 				),
 				mergedToSubtaskId: subTask.r_mergedToTestraySubtask_c_subtaskId,
 				splitFromSubtask: subTask.r_splitFromTestraySubtask_c_subtask,
@@ -70,7 +95,9 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 
 	private async getCaseResultsFromSubtask(subTaskId: number) {
 		const subTaskCaseResultResponse = await testraySubtaskCaseResultImpl.getAll(
-			{filter: SearchBuilder.eq('subtaskId', subTaskId)}
+			{
+				filter: SearchBuilder.eq('subtaskId', subTaskId),
+			}
 		);
 
 		if (!subTaskCaseResultResponse) {

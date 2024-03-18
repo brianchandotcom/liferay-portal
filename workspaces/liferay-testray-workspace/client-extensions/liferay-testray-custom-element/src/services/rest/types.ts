@@ -198,6 +198,7 @@ export type TestrayCaseResultIssue = {
 	caseResult?: TestrayCaseResult;
 	id: number;
 	issue?: TestrayIssue;
+	issueToCaseResultsIssues?: TestrayIssue;
 	name: string;
 	r_caseResultToCaseResultsIssues_c_caseResult?: TestrayCaseResult;
 	r_issueToCaseResultsIssues_c_issue?: TestrayIssue;
@@ -333,13 +334,14 @@ export type TestraySubTask = {
 	score: number;
 	splitFromSubtask: TestraySubTask;
 	statusUpdateDate: string;
-	subtaskToSubtasksIssues: TestraySubTaskIssue[];
+	subtaskToSubtasksCasesResults: TestraySubTaskCaseResult[];
 	task: TestrayTask;
 	user: UserAccount;
 };
 
 export type TestraySubTaskCaseResult = {
 	caseResult?: TestrayCaseResult;
+	caseResultToSubtasksCasesResults?: TestrayCaseResult;
 	id: number;
 	name: string;
 	r_caseResultToSubtasksCasesResults_c_caseResult?: TestrayCaseResult;

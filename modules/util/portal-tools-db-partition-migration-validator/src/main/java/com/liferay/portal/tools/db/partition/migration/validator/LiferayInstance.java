@@ -25,7 +25,7 @@ public class LiferayInstance {
 		return _date;
 	}
 
-	public Long getExportedCompanyId() {
+	public long getExportedCompanyId() {
 		return _exportedCompanyId;
 	}
 
@@ -53,7 +53,7 @@ public class LiferayInstance {
 		_exportedCompanyDefault = exportedCompanyDefault;
 	}
 
-	public void setExportedCompanyId(Long companyId) {
+	public void setExportedCompanyId(long companyId) {
 		_exportedCompanyId = companyId;
 	}
 
@@ -68,7 +68,7 @@ public class LiferayInstance {
 	private List<Company> _companies;
 	private Date _date;
 	private boolean _exportedCompanyDefault;
-	private Long _exportedCompanyId;
+	private long _exportedCompanyId;
 	private List<Release> _releases;
 	private List<String> _tableNames;
 

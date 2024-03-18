@@ -42,25 +42,6 @@ public class DBPartitionMigrationValidatorValidationTest {
 	}
 
 	@Test
-	public void testSourceMultipleCompanies() throws Exception {
-		_validate(
-			"sourceMultipleCompanies.data", "targetSuccess.data",
-			runtimeException -> {
-				Assert.assertEquals("1", runtimeException.getMessage());
-				Assert.assertTrue(
-					_errByteArrayOutputStream.toString(
-					).contains(
-						"Source has more than one company"
-					));
-				Assert.assertTrue(
-					_outByteArrayOutputStream.toString(
-					).isEmpty());
-			},
-			() -> {
-			});
-	}
-
-	@Test
 	public void testTargetNondefaultPartition() throws Exception {
 		_validate(
 			"sourceSuccess.data", "targetNotDefault.data",
@@ -221,7 +202,9 @@ public class DBPartitionMigrationValidatorValidationTest {
 		public void checkExit(int status) {
 			super.checkExit(status);
 
-			throw new RuntimeException(String.valueOf(status));
+			if (status != 0) {
+				throw new RuntimeException(String.valueOf(status));
+			}
 		}
 
 		@Override

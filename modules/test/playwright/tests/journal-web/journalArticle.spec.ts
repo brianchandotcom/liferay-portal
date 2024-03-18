@@ -66,6 +66,13 @@ const translationTest = mergeTests(
 	})
 );
 
+const aiCreateImageTest = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-10793': true,
+	})
+);
+
 translationTest(
 	'LPD-17245: Add error message in Translation for concurrent users',
 	async ({
@@ -400,5 +407,23 @@ scheduleTest(
 		await journalPage.assertJournalArticlePermissions(title, [
 			{enabled: true, locator: '#power-user_ACTION_DELETE'},
 		]);
+	}
+);
+
+aiCreateImageTest.only(
+	'LPD-6800 Create AI Image option visible from Item Selector',
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.openDMItemSelectorForImages();
+
+		const DMItemSelectorPage = page.frameLocator(
+			'iframe[title="Select Item"]'
+		);
+
+		await DMItemSelectorPage.getByRole('button', {name: 'New'}).click();
+		await expect(
+			DMItemSelectorPage.getByRole('menuitem', {name: 'Create AI Image'})
+		).toBeVisible();
 	}
 );

@@ -153,7 +153,6 @@ export function ObjectActionContainer({
 	const disableGroovyAction =
 		Liferay.FeatureFlags['LPD-11179'] &&
 		!allowScriptContentBeExecutedOrIncluded &&
-		editingObjectAction &&
 		values.objectActionExecutorKey === 'groovy';
 
 	let newObjectActionExecutors = [...objectActionExecutors];

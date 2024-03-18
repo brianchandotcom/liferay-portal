@@ -60,7 +60,7 @@ public class SybaseSQLTransformerLogicTest
 
 	@Override
 	protected String getCastLongTransformedSQL() {
-		return "select CONVERT(BIGINT, foo) from Foo";
+		return "select CONVERT(BIGINT, 1 + (foo + 2) - (3 x 4)) from Foo";
 	}
 
 	@Override

@@ -82,10 +82,10 @@ public class FrontendTokenDefinitionApplication extends Application {
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		UploadServletRequest uploadServletRequest =
-			_portal.getUploadServletRequest(httpServletRequest);
-
 		try {
+			UploadServletRequest uploadServletRequest =
+				_portal.getUploadServletRequest(httpServletRequest);
+
 			return _getResponse(uploadServletRequest.getFile("file"), locale);
 		}
 		catch (IOException ioException) {
@@ -111,19 +111,17 @@ public class FrontendTokenDefinitionApplication extends Application {
 	private FrontendTokenDefinition _getFrontendTokenDefinition(File file)
 		throws IOException, JSONException, JSONValidatorException {
 
-		String frontendTokenDefinitionJSON = StringPool.BLANK;
+		String json = StringPool.BLANK;
 
 		if (file.exists()) {
-			frontendTokenDefinitionJSON = new String(
-				Files.readAllBytes(file.toPath()));
+			json = new String(Files.readAllBytes(file.toPath()));
 		}
 
-		_frontendTokenDefinitionJSONValidator.validate(
-			frontendTokenDefinitionJSON);
+		_frontendTokenDefinitionJSONValidator.validate(json);
 
 		return new FrontendTokenDefinitionImpl(
-			_jsonFactory.createJSONObject(frontendTokenDefinitionJSON),
-			_jsonFactory, null, StringPool.BLANK);
+			_jsonFactory.createJSONObject(json), _jsonFactory, null,
+			StringPool.BLANK);
 	}
 
 	private Response _getResponse(File file, Locale locale)

@@ -9,56 +9,61 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
 
-const LinkOrButton = ({
-	ariaLabel,
-	children,
-	className,
-	disabled,
-	href,
-	symbol,
-	title,
-	wide,
-	wideViewportTitleVisible = true,
-	...otherProps
-}) => {
-	const responsive = Boolean(symbol && children);
+const LinkOrButton = React.forwardRef(
+	(
+		{
+			ariaLabel,
+			children,
+			className,
+			disabled,
+			href,
+			symbol,
+			title,
+			wide,
+			wideViewportTitleVisible = true,
+			...otherProps
+		},
+		ref
+	) => {
+		const responsive = Boolean(symbol && children);
 
-	const Wrapper = href && !disabled ? ClayLink : ClayButton;
+		const Wrapper = href && !disabled ? ClayLink : ClayButton;
 
-	return (
-		<>
-			<Wrapper
-				aria-label={symbol && ariaLabel}
-				block={otherProps.button?.block}
-				className={classNames(className, {
-					'd-md-none': responsive,
-					'nav-btn-monospaced': responsive,
-					'pl-4 pr-4': wide && !symbol,
-				})}
-				disabled={disabled}
-				href={href}
-				{...otherProps}
-				title={symbol && title}
-			>
-				{symbol ? <ClayIcon symbol={symbol} /> : children}
-			</Wrapper>
-
-			{responsive && (
+		return (
+			<div ref={ref}>
 				<Wrapper
+					aria-label={symbol && ariaLabel}
 					block={otherProps.button?.block}
-					className={classNames(className, 'd-md-flex d-none', {
-						'pl-4 pr-4': wide,
+					className={classNames(className, {
+						'd-md-none': responsive,
+						'nav-btn-monospaced': responsive,
+						'pl-4 pr-4': wide && !symbol,
 					})}
 					disabled={disabled}
 					href={href}
 					{...otherProps}
-					title={wideViewportTitleVisible && title}
+					title={symbol && title}
 				>
-					{children}
+					{symbol ? <ClayIcon symbol={symbol} /> : children}
 				</Wrapper>
-			)}
-		</>
-	);
-};
 
-export default React.forwardRef(LinkOrButton);
+				{responsive && (
+					<Wrapper
+						block={otherProps.button?.block}
+						className={classNames(className, 'd-md-flex d-none', {
+							'pl-4 pr-4': wide,
+						})}
+						disabled={disabled}
+						href={href}
+						{...otherProps}
+						title={wideViewportTitleVisible && title}
+					>
+						{children}
+					</Wrapper>
+				)}
+			</div>
+		);
+	}
+);
+
+export default LinkOrButton;

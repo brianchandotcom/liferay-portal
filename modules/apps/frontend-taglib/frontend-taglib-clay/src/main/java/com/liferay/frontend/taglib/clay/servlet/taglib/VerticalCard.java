@@ -93,4 +93,8 @@ public interface VerticalCard extends BaseClayCard {
 		return null;
 	}
 
+	public default boolean isTranslated() {
+		return true;
+	}
+
 }

@@ -4,7 +4,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense} from 'react';
+import React, {lazy, Suspense, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Switch} from 'react-router';
@@ -40,15 +40,23 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 	const customEventTab =
 		matchedRoute === Routes.SETTINGS_DEFINITIONS_EVENTS_CUSTOM;
 
+	const initialItem =
+		NAV_ITEMS.find(item => item.route === matchedRoute) ?? NAV_ITEMS[0];
+
+	const [activeLabel, setActiveLabel] = useState(initialItem.label);
+
 	return (
 		<Card key='cardContainer' pageDisplay>
-			<ClayNavigationBar className='my-3' triggerLabel={matchedRoute}>
+			<ClayNavigationBar className='my-3' triggerLabel={activeLabel}>
 				{NAV_ITEMS.map(({label, route}) => (
 					<ClayNavigationBar.Item
 						active={matchedRoute === route}
 						key={route}
 					>
-						<ClayLink href={toRoute(route, {groupId})}>
+						<ClayLink
+							href={toRoute(route, {groupId})}
+							onClick={() => setActiveLabel(label)}
+						>
 							{label}
 						</ClayLink>
 					</ClayNavigationBar.Item>

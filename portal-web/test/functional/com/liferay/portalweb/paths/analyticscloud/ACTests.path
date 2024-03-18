@@ -22,8 +22,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_TEST</td>
-	<td>//*[contains(@class,'dropdown-item')and text()='Delete Test']</td>
+	<td>REDIRECT_BUTTONS</td>
+	<td>//a[contains(@href,'${key_buttonName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -181,26 +181,19 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertAddonsDetails(addOnItem = null, annualPrice = null, limit = null, time = null) {
-		if (isSet(limit)) {
-			AssertVisible(
-				key_addOnItem = ${addOnItem},
-				key_planLimit = ${limit},
-				locator1 = "ACUsage#USAGE_ADDONS_LIMIT");
+	macro assertAddonsDetails(individualsAddons = null, pageViewsAddons = null) {
+		if (isSet(individualsAddons)) {
+			AssertElementPresent(
+				key_planItem = "Individuals",
+				key_planLimit = ${individualsAddons},
+				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
 		}
 
-		if (isSet(time)) {
-			AssertVisible(
-				key_addOnItem = ${addOnItem},
-				key_time = ${time},
-				locator1 = "ACUsage#USAGE_ADDONS_TIME");
-		}
-
-		if (isSet(annualPrice)) {
-			AssertVisible(
-				key_addOnItem = ${addOnItem},
-				key_annualPrice = ${annualPrice},
-				locator1 = "ACUsage#USAGE_ADDONS_PRICE");
+		if (isSet(pageViewsAddons)) {
+			AssertElementPresent(
+				key_planItem = "Page Views",
+				key_planLimit = ${pageViewsAddons},
+				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
 		}
 	}
 
@@ -235,11 +228,20 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertCurrentPlanLimitAndAddOn(metricName = null, currentPlanLimitAndAddOn = null) {
-		AssertTextEquals(
-			key_metricName = ${metricName},
-			locator1 = "ACUsage#USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON",
-			value1 = ${currentPlanLimitAndAddOn});
+	macro assertCurrentPlanLimitAndAddOn(individualsLimit = null, pageViewsLimit = null) {
+		if (isSet(individualsLimit)) {
+			AssertElementPresent(
+				key_metricName = "KNOWN INDIVIDUALS",
+				key_planLimit = ${individualsLimit},
+				locator1 = "ACUsage#USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON");
+		}
+
+		if (isSet(pageViewsLimit)) {
+			AssertElementPresent(
+				key_metricName = "PAGE VIEWS",
+				key_planLimit = ${pageViewsLimit},
+				locator1 = "ACUsage#USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON");
+		}
 	}
 
 	@summary = "Default summary"
@@ -285,32 +287,20 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOverviewUsage(current = null, metricName = null, usageSince = null, limit = null, notEquals = null) {
+	macro assertOverviewUsage(current = null, metricName, planLimit, notEquals = null) {
 		if (isSet(current)) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				key_metricName = ${metricName},
-				locator1 = "ACUsage#USAGE_CURRENT_NUMBER",
+				key_planLimit = ${planLimit},
+				locator1 = "ACUsage#USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON",
 				value1 = ${current});
 		}
 
-		if (isSet(limit)) {
-			AssertTextEquals(
-				key_metricName = ${metricName},
-				locator1 = "ACUsage#USAGE_LIMIT_NUMBER",
-				value1 = ${limit});
-		}
-
-		if (isSet(usageSince)) {
-			AssertTextEquals.assertPartialText(
-				key_metricName = ${metricName},
-				locator1 = "ACUsage#USAGE_SINCE",
-				value1 = ${usageSince});
-		}
-
 		if (isSet(notEquals)) {
-			AssertTextNotEquals(
+			AssertTextNotEquals.assertNotPartialMatch(
 				key_metricName = ${metricName},
-				locator1 = "ACUsage#USAGE_CURRENT_NUMBER",
+				key_planLimit = ${planLimit},
+				locator1 = "ACUsage#USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON",
 				value1 = ${notEquals});
 		}
 	}
@@ -323,16 +313,15 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPlanDetails(individualsLimit = null, pageViewsLimit = null, planName = null, usersLimit = null) {
+	macro assertPlanDetails(individualsLimit = null, pageViewsLimit = null, planName, usersLimit = null) {
 		AssertElementPresent(
 			key_planName = ${planName},
-			locator1 = "ACUsage#PLAN_NAME");
+			locator1 = "ACUsage#CURRENT_PLAN");
 
 		if (isSet(individualsLimit)) {
 			AssertElementPresent(
 				key_planItem = "Individuals",
 				key_planLimit = ${individualsLimit},
-				key_planName = ${planName},
 				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
 		}
 
@@ -340,15 +329,13 @@ definition {
 			AssertElementPresent(
 				key_planItem = "Page Views",
 				key_planLimit = ${pageViewsLimit},
-				key_planName = ${planName},
 				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
 		}
 
 		if (isSet(usersLimit)) {
 			AssertElementPresent(
-				key_planItem = "Users",
+				key_planItem = "Workspace Users",
 				key_planLimit = ${usersLimit},
-				key_planName = ${planName},
 				locator1 = "ACUsage#USAGE_PLAN_LIMITS_TABLE");
 		}
 	}
@@ -783,12 +770,15 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getCurrentNumber(metricName = null) {
-		WaitForVisible(
-			key_metricName = ${metricName},
-			locator1 = "ACUsage#USAGE_CURRENT_NUMBER");
+	macro getCurrentNumber(metricName, planLimit) {
+		var key_planLimit = ${planLimit};
+		var key_metricName = ${metricName};
 
-		var current = selenium.getText("//div[contains(@class,'overview-usage')][.//h3[contains(@class,'metric-name')][normalize-space(text())='${metricName}']]//span[contains(@class,'metric-current')]");
+		WaitForVisible(locator1 = "ACUsage#USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON");
+
+		var current = selenium.getText("ACUsage#USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON");
+
+		var current = StringUtil.extractFirst(${current}, " of");
 
 		return ${current};
 	}

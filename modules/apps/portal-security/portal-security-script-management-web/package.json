@@ -10,6 +10,14 @@
 		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.js"
+		],
+		"testMatch": [
+			"<rootDir>/src/main/resources/META-INF/resources/js/tests/**/*.spec.tsx"
+		]
+	},
 	"main": "js/index.ts",
 	"name": "@liferay/portal-security-script-management-web",
 	"private": true,

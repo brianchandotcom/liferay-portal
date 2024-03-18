@@ -154,7 +154,7 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 				IconTag iconTag = new IconTag();
 
 				iconTag.setCssClass("c-mt-0");
-				iconTag.setSymbol("lock");
+				iconTag.setSymbol("password-policies");
 
 				try {
 					sb.append(

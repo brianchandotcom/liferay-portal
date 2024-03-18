@@ -269,7 +269,7 @@ function TreeItem({
 									data-title={Liferay.Language.get(
 										'restricted-page'
 									)}
-									symbol="lock"
+									symbol="password-policies"
 								/>
 							) : null}
 
@@ -371,7 +371,7 @@ function TreeItem({
 											data-title={Liferay.Language.get(
 												'restricted-page'
 											)}
-											symbol="lock"
+											symbol="password-policies"
 										/>
 									) : null}
 

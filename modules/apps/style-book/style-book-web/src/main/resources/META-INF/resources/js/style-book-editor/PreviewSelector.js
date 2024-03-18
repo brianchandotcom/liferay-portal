@@ -226,7 +226,7 @@ export function LayoutSelector({layoutType}) {
 									>
 										<ClayIcon
 											className="c-mt-0 text-4 text-dark"
-											symbol="lock"
+											symbol="password-policies"
 										/>
 									</span>
 								)}

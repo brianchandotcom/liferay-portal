@@ -187,7 +187,7 @@ function TreeItem({
 						>
 							<ClayIcon
 								className="c-mt-0 lfr-portal-tooltip text-4"
-								symbol="lock"
+								symbol="password-policies"
 							/>
 						</span>
 					) : null}
@@ -243,7 +243,7 @@ function TreeItem({
 								>
 									<ClayIcon
 										className="c-mt-0 lfr-portal-tooltip text-4"
-										symbol="lock"
+										symbol="password-policies"
 									/>
 								</span>
 							) : null}

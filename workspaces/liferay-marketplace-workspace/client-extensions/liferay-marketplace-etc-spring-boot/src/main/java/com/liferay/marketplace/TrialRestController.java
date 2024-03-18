@@ -103,8 +103,6 @@ public class TrialRestController extends BaseRestController {
 	}
 
 	private boolean _hasAccountOrders(String accountId) throws Exception {
-		int trialCount = 0;
-
 		Page<Order> ordersPage = _orderResource.getOrdersPage(
 			"", "accountId/any(x:(x eq " + accountId + "))",
 			Pagination.of(-1, -1), "");
@@ -113,11 +111,7 @@ public class TrialRestController extends BaseRestController {
 			if (Objects.equals(
 					order.getOrderTypeExternalReferenceCode(), "SOLUTIONS7")) {
 
-				trialCount++;
-
-				if (trialCount > 1) {
-					return true;
-				}
+				return true;
 			}
 		}
 

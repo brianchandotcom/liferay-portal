@@ -24,6 +24,7 @@ import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Status;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -96,8 +97,12 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 				setCreateDate(commerceOrder::getCreateDate);
 				setCreatorEmailAddress(
 					() -> {
-						User user = _userLocalService.getUser(
+						User user = _userLocalService.fetchUser(
 							commerceOrder.getUserId());
+
+						if (user == null) {
+							return StringPool.BLANK;
+						}
 
 						return user.getEmailAddress();
 					});

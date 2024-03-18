@@ -10,6 +10,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEvent;
 import com.liferay.portal.cache.multiple.internal.PortalCacheClusterEventType;
+import com.liferay.portal.cache.multiple.internal.cluster.link.ClusterLinkMessageUtil;
 import com.liferay.portal.cache.multiple.internal.constants.PortalCacheDestinationNames;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
 
@@ -89,9 +89,8 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		PortalCacheClusterEvent portalCacheClusterEvent =
-			(PortalCacheClusterEvent)SerializableUtil.deserialize(
-				(byte[])message.getPayload(),
-				ClusterLinkPortalCacheClusterListener.class.getClassLoader());
+			ClusterLinkMessageUtil.fetchPortalCacheClusterEventFromMessage(
+				message);
 
 		if (portalCacheClusterEvent == null) {
 			if (_log.isWarnEnabled()) {

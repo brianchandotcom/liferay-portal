@@ -30,6 +30,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -243,6 +244,16 @@ public class CPFileImporterImpl implements CPFileImporter {
 		throws Exception {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject layoutJSONObject = jsonArray.getJSONObject(i);
+
+			String layoutName = layoutJSONObject.getString("name");
+
+			if (layoutName.equals("Returns") &&
+				!FeatureFlagManagerUtil.isEnabled("LPD-10562")) {
+
+				continue;
+			}
+
 			_createLayout(
 				jsonArray.getJSONObject(i), parentLayout, classLoader,
 				dependenciesFilePath, serviceContext);

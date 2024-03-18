@@ -65,6 +65,10 @@ public class CommercePortletKeys {
 	public static final String COMMERCE_RETURN =
 		"com_liferay_commerce_order_web_internal_portlet_CommerceReturnPortlet";
 
+	public static final String COMMERCE_RETURN_CONTENT =
+		"com_liferay_commerce_order_content_web_internal_portlet_" +
+			"CommerceReturnContentPortlet";
+
 	public static final String COMMERCE_SHIPMENT =
 		"com_liferay_commerce_shipment_web_internal_portlet_" +
 			"CommerceShipmentPortlet";

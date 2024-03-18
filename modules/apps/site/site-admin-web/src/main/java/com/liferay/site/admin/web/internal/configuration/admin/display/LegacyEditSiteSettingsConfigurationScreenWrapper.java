@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.site.admin.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenFactory;
 
@@ -23,13 +22,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = ConfigurationScreen.class)
-public class DocumentsAndMediaSiteSettingsConfigurationScreenWrapper
+public class LegacyEditSiteSettingsConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
 		return _siteSettingsConfigurationScreenFactory.create(
-			new DocumentsAndMediaSiteSettingsConfigurationScreenContributor());
+			new LegacyEditSiteSettingsConfigurationScreenContributor());
 	}
 
 	@Reference
@@ -42,41 +41,32 @@ public class DocumentsAndMediaSiteSettingsConfigurationScreenWrapper
 	private SiteSettingsConfigurationScreenFactory
 		_siteSettingsConfigurationScreenFactory;
 
-	private class DocumentsAndMediaSiteSettingsConfigurationScreenContributor
+	private class LegacyEditSiteSettingsConfigurationScreenContributor
 		implements SiteSettingsConfigurationScreenContributor {
 
 		@Override
 		public String getCategoryKey() {
-			return "documents-and-media";
+			return "other";
 		}
 
 		@Override
 		public String getJspPath() {
-			return "/site_settings/documents_and_media.jsp";
+			return "/site_settings/site.jsp";
 		}
 
 		@Override
 		public String getKey() {
-			return "site-configuration-documents-and-media";
+			return "site-configuration-other";
 		}
 
 		@Override
 		public String getName(Locale locale) {
-			return _language.get(locale, "documents-and-media");
+			return _language.get(locale, "other");
 		}
 
 		@Override
 		public ServletContext getServletContext() {
 			return _servletContext;
-		}
-
-		@Override
-		public boolean isVisible(Group group) {
-			if (group.isCompany()) {
-				return false;
-			}
-
-			return true;
 		}
 
 	}

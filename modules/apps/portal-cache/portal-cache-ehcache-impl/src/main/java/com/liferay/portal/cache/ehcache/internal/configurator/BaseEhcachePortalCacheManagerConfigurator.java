@@ -166,9 +166,8 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 	}
 
 	private Set<Properties> _parseCacheEventListenerConfigurations(
-		List<CacheEventListenerFactoryConfiguration>
-			cacheEventListenerConfigurations,
-		ClassLoader classLoader, boolean usingDefault) {
+		CacheConfiguration cacheConfiguration, ClassLoader classLoader,
+		boolean usingDefault) {
 
 		if (usingDefault) {
 			return Collections.emptySet();
@@ -176,9 +175,12 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 
 		Set<Properties> portalCacheListenerPropertiesSet = new HashSet<>();
 
-		for (CacheEventListenerFactoryConfiguration
-				cacheEventListenerFactoryConfiguration :
-					cacheEventListenerConfigurations) {
+		for (Object element :
+				cacheConfiguration.getCacheEventListenerConfigurations()) {
+
+			CacheEventListenerFactoryConfiguration
+				cacheEventListenerFactoryConfiguration =
+					(CacheEventListenerFactoryConfiguration)element;
 
 			Properties properties = parseProperties(
 				cacheEventListenerFactoryConfiguration.getProperties(),
@@ -259,10 +261,7 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 			new EhcachePortalCacheConfiguration(
 				defaultCacheConfiguration.getName(),
 				_parseCacheEventListenerConfigurations(
-					(List<CacheEventListenerFactoryConfiguration>)
-						defaultCacheConfiguration.
-							getCacheEventListenerConfigurations(),
-					classLoader, usingDefault),
+					defaultCacheConfiguration, classLoader, usingDefault),
 				_isRequireSerialization(defaultCacheConfiguration));
 
 		Set<PortalCacheConfiguration> portalCacheConfigurations =
@@ -280,10 +279,7 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 				new EhcachePortalCacheConfiguration(
 					cacheConfiguration.getName(),
 					_parseCacheEventListenerConfigurations(
-						(List<CacheEventListenerFactoryConfiguration>)
-							cacheConfiguration.
-								getCacheEventListenerConfigurations(),
-						classLoader, usingDefault),
+						cacheConfiguration, classLoader, usingDefault),
 					_isRequireSerialization(cacheConfiguration)));
 		}
 

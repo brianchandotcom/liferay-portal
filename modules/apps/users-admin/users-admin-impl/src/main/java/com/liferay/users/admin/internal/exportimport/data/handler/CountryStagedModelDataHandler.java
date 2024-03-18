@@ -85,7 +85,7 @@ public class CountryStagedModelDataHandler
 		throws Exception {
 
 		Country existingCountry = _countryLocalService.fetchCountryByA2(
-			country.getCompanyId(), country.getA2());
+			portletDataContext.getCompanyId(), country.getA2());
 
 		Country importedCountry = null;
 

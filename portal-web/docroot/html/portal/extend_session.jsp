@@ -19,7 +19,7 @@ if (Validator.isNotNull(requestedSessionId)) {
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
 		if (_log.isWarnEnabled()) {
-			_log.warn("Unable to extend the HTTP session.");
+			_log.warn("Unable to extend the HTTP session");
 		}
 
 		if (_log.isDebugEnabled()) {

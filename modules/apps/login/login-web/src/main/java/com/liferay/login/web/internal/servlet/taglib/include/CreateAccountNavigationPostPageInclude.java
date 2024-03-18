@@ -5,18 +5,32 @@
 
 package com.liferay.login.web.internal.servlet.taglib.include;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.include.PageInclude;
 import com.liferay.taglib.ui.IconTag;
 
 import java.util.Objects;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -44,6 +58,20 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		String mvcRenderCommandName = httpServletRequest.getParameter(
 			"mvcRenderCommandName");
 
+		if (_featureFlagManager.isEnabled("LPD-6378")) {
+			PortletConfig portletConfig =
+				(PortletConfig)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
+
+			String portletName = portletConfig.getPortletName();
+
+			if (portletName.equals(LoginPortletKeys.CREATE_ACCOUNT) &&
+				Validator.isNull(mvcRenderCommandName)) {
+
+				return;
+			}
+		}
+
 		if (Objects.equals(mvcRenderCommandName, "/login/create_account")) {
 			return;
 		}
@@ -58,24 +86,24 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 			return;
 		}
 
-		PortletConfig portletConfig =
-			(PortletConfig)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		String portletName = portletConfig.getPortletName();
-
-		if (portletName.equals(PortletKeys.FAST_LOGIN)) {
-			return;
-		}
-
 		IconTag iconTag = new IconTag();
 
 		iconTag.setCssClass("text-4");
 		iconTag.setMessage("create-account");
 
 		try {
-			iconTag.setUrl(
-				_portal.getCreateAccountURL(httpServletRequest, themeDisplay));
+			String createAccountURL;
+
+			if (_featureFlagManager.isEnabled("LPD-6378")) {
+				createAccountURL = _getCreateAccountURL(
+					httpServletRequest, themeDisplay);
+			}
+			else {
+				createAccountURL = _portal.getCreateAccountURL(
+					httpServletRequest, themeDisplay);
+			}
+
+			iconTag.setUrl(createAccountURL);
 		}
 		catch (Exception exception) {
 			throw new JspException(exception);
@@ -83,6 +111,67 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 
 		iconTag.doTag(pageContext);
 	}
+
+	private String _getCreateAccountURL(
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (Validator.isNull(PropsValues.COMPANY_SECURITY_STRANGERS_URL)) {
+			long plid = themeDisplay.getPlid();
+
+			Layout layout = themeDisplay.getLayout();
+
+			if (layout.isPrivateLayout()) {
+				plid = _layoutLocalService.getDefaultPlid(
+					layout.getGroupId(), false);
+			}
+
+			PortletConfig portletConfig =
+				(PortletConfig)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
+
+			return PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest, portletConfig.getPortletName(), plid,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/login/create_account"
+			).setParameter(
+				"saveLastPath", false
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).buildString();
+		}
+
+		try {
+			Layout layout = _layoutLocalService.getFriendlyURLLayout(
+				themeDisplay.getScopeGroupId(), false,
+				PropsValues.COMPANY_SECURITY_STRANGERS_URL);
+
+			return _portal.getLayoutURL(layout, themeDisplay);
+		}
+		catch (NoSuchLayoutException noSuchLayoutException) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchLayoutException);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CreateAccountNavigationPostPageInclude.class);
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

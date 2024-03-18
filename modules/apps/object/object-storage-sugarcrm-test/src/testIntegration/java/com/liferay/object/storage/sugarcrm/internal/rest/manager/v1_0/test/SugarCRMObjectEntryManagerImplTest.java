@@ -7,7 +7,6 @@ package com.liferay.object.storage.sugarcrm.internal.rest.manager.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -131,7 +130,7 @@ public class SugarCRMObjectEntryManagerImplTest
 				Collections.emptyList());
 
 		ObjectFieldUtil.addCustomObjectField(
-			new DateObjectFieldBuilder(
+			new TextObjectFieldBuilder(
 			).externalReferenceCode(
 				"first_name"
 			).userId(

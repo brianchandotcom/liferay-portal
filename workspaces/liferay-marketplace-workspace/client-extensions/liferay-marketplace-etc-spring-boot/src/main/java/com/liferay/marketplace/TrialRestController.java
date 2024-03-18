@@ -145,23 +145,24 @@ public class TrialRestController extends BaseRestController {
 			Jwt jwt, String emailAddress, long orderId)
 		throws Exception {
 
-		Admin admin = new Admin();
-
-		admin.setEmailAddress(emailAddress);
-		admin.setFamilyName(
-			jwt.getClaim(
-				"username"
-			).toString());
-		admin.setGivenName(
-			jwt.getClaim(
-				"username"
-			).toString());
-
 		String domain = "tryitnow-" + orderId + ".us.demo.lxc.liferay.com";
 
 		PortalInstance portalInstance = new PortalInstance();
 
-		portalInstance.setAdmin(admin);
+		portalInstance.setAdmin(
+			new Admin() {
+				{
+					setEmailAddress(emailAddress);
+					setFamilyName(
+						jwt.getClaim(
+							"username"
+						).toString());
+					setGivenName(
+						jwt.getClaim(
+							"username"
+						).toString());
+				}
+			});
 		portalInstance.setDomain(domain);
 		portalInstance.setPortalInstanceId(domain);
 		portalInstance.setSiteInitializerKey(

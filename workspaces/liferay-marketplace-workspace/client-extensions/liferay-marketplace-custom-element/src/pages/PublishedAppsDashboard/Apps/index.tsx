@@ -40,7 +40,7 @@ const Apps = () => {
 						.build(),
 					'images.accountId': '-1',
 					'nestedFields':
-						'attachments,images,productChannels,productSpecifications',
+						'attachments,images,productChannels,productSpecifications,skus',
 					'page': page.toString(),
 					'skus.accountId': '-1',
 				})

@@ -11,6 +11,7 @@ import {useCatalogs} from '../../hooks/data/useCatalogs';
 import {useSupplierAccounts} from '../../hooks/data/useSupplierAccounts';
 import {Liferay} from '../../liferay/liferay';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
+import SolutionsDetails from '../PurchasedAppsDashboard/Solutions/SolutionsDetails';
 import Accounts from './Accounts/Accounts';
 import Apps from './Apps';
 import App from './Apps/App';
@@ -72,6 +73,9 @@ const PublishedAppsDashboardRouter = () => {
 					<Route element={<Members />} path="members" />
 					<Route element={<Projects />} path="projects" />
 					<Route element={<Solutions />} path="solutions" />
+					<Route path="solution/:appId">
+						<Route element={<SolutionsDetails />} index />
+					</Route>
 				</Route>
 			</Routes>
 		</HashRouter>

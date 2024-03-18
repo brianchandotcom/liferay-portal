@@ -7,13 +7,16 @@
 
 import {FormError} from '@liferay/object-js-components-web';
 import {NotificationTemplateError} from '../EditNotificationTemplate';
+import './EmailNotificationSettings.scss';
 interface EmailNotificationSettingsProps {
+	baseResourceURL: string;
 	errors: FormError<NotificationTemplate & NotificationTemplateError>;
 	selectedLocale: Locale;
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: NotificationTemplate;
 }
 export declare function EmailNotificationSettings({
+	baseResourceURL,
 	errors,
 	selectedLocale,
 	setValues,

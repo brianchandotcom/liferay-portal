@@ -106,9 +106,9 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9180 | Test Summary: Individuals limit corresponds correctly with the plan and add-ons purchased."
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9180 | Test Summary: Individuals and PageViews limits corresponds correctly with the plan and add-ons purchased."
 	@priority = 3
-	test IndividualsCardShowCurrentPlanLimitAndAddOnInfo {
+	test IndividualsAndPageViewsCardShowCurrentPlanLimitAndAddOnInfo {
 		task ("Sign in AC") {
 			ACUtils.launchAC();
 		}
@@ -288,44 +288,6 @@ definition {
 				actual = ${sumPageViews},
 				expected = ${newPageViewsNumber});
 		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8146 | Test Summary: Total number of individuals is shown"
-	@priority = 5
-	test PlanLimitNumberOfIndividualsIsShown {
-		task ("Go to Usage and assert that the plan number of individuals is '110,000'") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${propertyName});
-
-			ACNavigation.goToSettings();
-
-			ACSettings.goToUsage();
-
-			ACSettings.assertOverviewUsage(
-				limit = "110,000",
-				metricName = "Individuals");
-		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8149 | Test Summary: Total number of pages is shown"
-	@priority = 5
-	test PlanLimitNumberOfPageViewsIsShown {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToUsage();
-
-		ACSettings.assertOverviewUsage(
-			limit = "75,000,000",
-			metricName = "Page Views");
 	}
 
 }

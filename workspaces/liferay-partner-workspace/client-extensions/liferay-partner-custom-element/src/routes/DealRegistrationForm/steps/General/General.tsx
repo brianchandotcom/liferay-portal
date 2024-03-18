@@ -5,7 +5,7 @@
 
 import Button from '@clayui/button';
 import {useFormikContext} from 'formik';
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
@@ -43,6 +43,8 @@ const General = ({
 		values,
 		...formikHelpers
 	} = useFormikContext<DealRegistration>();
+
+	const [hasProceedButtonClicked, setProceedButtonClicked] = useState(false);
 
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries(
 		useCallback(
@@ -341,10 +343,10 @@ const General = ({
 
 				<div className="d-flex justify-content-between px-2 px-md-0">
 					<Button
-						disabled={!isValid || !dirty}
+						disabled={!dirty || (hasProceedButtonClicked && !isValid)}
 						onClick={() => {
+							setProceedButtonClicked(true);
 							onContinue?.(formikHelpers, StepType.REVIEW);
-
 							window.scrollTo(0, 0);
 						}}
 					>

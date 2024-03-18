@@ -102,6 +102,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 											href="<%= editURL %>"
 											label="<%= title %>"
 											title="<%= HtmlUtil.escape(title) %>"
+											translated="<%= false %>"
 										/>
 									</c:when>
 									<c:otherwise>
@@ -226,6 +227,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										<clay:link
 											href="<%= editURL %>"
 											label="<%= title %>"
+											translated="<%= false %>"
 										/>
 
 										<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10626") && !journalDisplayContext.hasGuestViewPermission(curArticle) %>'>
@@ -387,6 +389,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 											href="<%= rowURL.toString() %>"
 											label="<%= HtmlUtil.escape(curFolder.getName()) %>"
 											title="<%= HtmlUtil.escape(curFolder.getName()) %>"
+											translated="<%= false %>"
 										/>
 									</c:when>
 									<c:otherwise>
@@ -468,6 +471,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										<clay:link
 											href="<%= rowURL.toString() %>"
 											label="<%= HtmlUtil.escape(curFolder.getName()) %>"
+											translated="<%= false %>"
 										/>
 									</div>
 								</div>

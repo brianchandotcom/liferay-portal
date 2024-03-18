@@ -100,6 +100,11 @@ public class JournalFolderHorizontalCard extends BaseHorizontalCard {
 		return _folder.getName();
 	}
 
+	@Override
+	public boolean isTranslated() {
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFolderHorizontalCard.class);
 

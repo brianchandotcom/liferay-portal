@@ -216,6 +216,11 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 		return _article.getTitle(defaultLanguage);
 	}
 
+	@Override
+	public boolean isTranslated() {
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleVerticalCard.class);
 

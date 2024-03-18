@@ -56,8 +56,7 @@ public class GenerateTestrayCSVUtil {
 			_generate(allTestrayCaseResults, TestrayCaseResult.Type.COMMON));
 
 		try {
-			System.out.println(
-				"Setting testray results to: " + sb.toString());
+			System.out.println("Setting testray results to: " + sb.toString());
 
 			JenkinsResultsParserUtil.write(
 				new File(projectBuildDir, "testray-results.csv"),
@@ -103,8 +102,7 @@ public class GenerateTestrayCSVUtil {
 		String projectTestrayBuildId) {
 
 		System.out.println(
-			"Getting Testray case results for " +
-				projectTestrayBuildId + ".");
+			"Getting Testray case results for " + projectTestrayBuildId + ".");
 
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
@@ -118,8 +116,7 @@ public class GenerateTestrayCSVUtil {
 				"&testrayBuildId=", projectTestrayBuildId, "&statuses=3");
 
 			System.out.println(
-				"TestrayCaseResultsURL is set to: " +
-					testrayCaseResultsURL);
+				"TestrayCaseResultsURL is set to: " + testrayCaseResultsURL);
 
 			JSONObject jsonObject = null;
 

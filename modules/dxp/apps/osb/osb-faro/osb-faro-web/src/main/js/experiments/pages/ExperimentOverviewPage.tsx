@@ -55,7 +55,7 @@ const ExperimentOverviewPage = () => {
 	const {id} = useParams();
 
 	const {data, error, loading} = useQuery(EXPERIMENT_STATUS_QUERY, {
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'no-cache',
 		variables: {experimentId: id}
 	});
 

@@ -18,7 +18,7 @@ import i18n from '~/i18n';
 import {
 	PickList,
 	TestrayCaseResult,
-	TestrayCaseResultIssue,
+	TestrayIssue,
 	testrayCaseResultImpl,
 } from '~/services/rest';
 
@@ -178,14 +178,18 @@ const Build = () => {
 							value: i18n.translate('status'),
 						},
 						{
-							key: 'issues',
-							render: (issues: TestrayCaseResultIssue[]) =>
-								issues.map((caseResultIssue, index) => (
-									<JiraLink
-										issue={caseResultIssue}
-										key={index}
-									/>
-								)),
+							key: 'caseResultsIssues',
+							render: (caseResultsIssues: TestrayIssue[]) => {
+								return caseResultsIssues.map(
+									(caseResultIssue, index) => (
+										<JiraLink
+											issue={caseResultIssue}
+											key={index}
+										/>
+									)
+								);
+							},
+
 							value: i18n.translate('issues'),
 						},
 						{

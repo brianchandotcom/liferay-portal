@@ -13,7 +13,6 @@ import {KeyedMutator} from 'swr';
 import {InferType} from 'yup';
 import Form from '~/components/Form';
 import Footer from '~/components/Form/Footer';
-import {splitIssueName} from '~/components/JiraLink';
 import Container from '~/components/Layout/Container';
 import {TestrayContext} from '~/context/TestrayContext';
 import {withPagePermission} from '~/hoc/withPagePermission';
@@ -55,7 +54,7 @@ const CaseResultEditTest = () => {
 	const issues = caseResult.issues
 		.map(
 			(caseResultIssue: TestrayCaseResultIssue) =>
-				splitIssueName(caseResultIssue.name)[0]
+				caseResultIssue.r_issueToCaseResultsIssues_c_issue?.name
 		)
 		.join(', ');
 
@@ -121,8 +120,7 @@ const CaseResultEditTest = () => {
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};

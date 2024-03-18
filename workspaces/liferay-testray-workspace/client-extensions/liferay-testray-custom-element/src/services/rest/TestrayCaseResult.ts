@@ -45,7 +45,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 				startDate,
 			}),
 			nestedFields:
-				'case.caseType,component.team.name,team,build.productVersion,build.routine,run,user,caseResultToCaseResultsIssues',
+				'case.caseType,component.team.name,team,build.productVersion,build.routine,run,user,caseResultToCaseResultsIssues, caseResultToCaseResultsIssues.issueToCaseResultsIssues',
 			transformData: (caseResult) => ({
 				...caseResult,
 				...this.normalizeCaseResultAggregation(caseResult),
@@ -80,6 +80,12 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 								: undefined,
 					  }
 					: undefined,
+				caseResultsIssues: caseResult.caseResultToCaseResultsIssues
+					? caseResult.caseResultToCaseResultsIssues.map(
+							(caseResultsIssues) =>
+								caseResultsIssues.r_issueToCaseResultsIssues_c_issue
+					  )
+					: [],
 				component: caseResult?.r_componentToCaseResult_c_component
 					? {
 							...caseResult.r_componentToCaseResult_c_component,
@@ -89,6 +95,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 					  }
 					: undefined,
 				issues: caseResult.caseResultToCaseResultsIssues ?? [],
+
 				run: caseResult?.r_runToCaseResult_c_run
 					? {
 							...caseResult?.r_runToCaseResult_c_run,
@@ -227,8 +234,7 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 			);
 
 			return {mbMessage, mbThreadId};
-		}
-		catch {
+		} catch {
 			return {};
 		}
 	}

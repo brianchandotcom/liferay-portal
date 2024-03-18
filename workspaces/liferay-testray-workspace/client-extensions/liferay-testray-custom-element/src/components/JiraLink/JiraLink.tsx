@@ -9,11 +9,15 @@ import {useContext} from 'react';
 import {ApplicationPropertiesContext} from '../../context/ApplicationPropertiesContext';
 import SearchBuilder from '../../core/SearchBuilder';
 import i18n from '../../i18n';
-import {TestrayCaseResultIssue, testrayIssueImpl} from '../../services/rest';
+import {
+	TestrayCaseResultIssue,
+	TestrayIssue,
+	testrayIssueImpl,
+} from '../../services/rest';
 
 type JiraLinkProps = {
 	displayViewInJira?: boolean;
-	issue: TestrayCaseResultIssue | TestrayCaseResultIssue[];
+	issue: TestrayIssue | TestrayCaseResultIssue | TestrayCaseResultIssue[];
 };
 
 const splitIssueName = (name: string) => name.split(testrayIssueImpl.DELIMITER);

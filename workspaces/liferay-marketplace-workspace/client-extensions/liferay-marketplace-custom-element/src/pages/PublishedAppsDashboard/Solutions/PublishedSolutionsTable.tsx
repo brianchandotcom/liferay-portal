@@ -12,9 +12,7 @@ import {
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../utils/util';
-import {
-	formatDate,
-} from '../PublishedDashboardPageUtil';
+import {formatDate} from '../PublishedDashboardPageUtil';
 
 type PublishedSolutionsTableProps = {
 	items: Order[];
@@ -66,8 +64,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 				},
 				{
 					key: 'solutionType',
-					render: () =>
-						"Page",
+					render: () => 'Page',
 					title: 'Solution Type',
 				},
 				{

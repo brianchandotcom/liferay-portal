@@ -85,8 +85,8 @@ export function DashboardTable<T>({
 
 	return (
 		<DashboardEmptyTable
-			description1={description1 ?? ""}
-			description2={description2 ?? ""}
+			description1={description1 ?? ''}
+			description2={description2 ?? ''}
 			icon={icon}
 			title={title}
 		/>

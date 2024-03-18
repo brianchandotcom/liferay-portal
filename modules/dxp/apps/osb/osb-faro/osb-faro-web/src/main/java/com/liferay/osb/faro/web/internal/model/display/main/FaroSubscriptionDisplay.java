@@ -42,8 +42,7 @@ public class FaroSubscriptionDisplay {
 				createDate, DateUtil.getYear(new Date()) - 1);
 		}
 
-		return new Date(
-			lastAnniversaryDate.getTime() / Time.DAY * Time.DAY);
+		return new Date(lastAnniversaryDate.getTime() / Time.DAY * Time.DAY);
 	}
 
 	public FaroSubscriptionDisplay() {

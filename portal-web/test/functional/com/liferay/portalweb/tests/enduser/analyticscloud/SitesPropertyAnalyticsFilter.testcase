@@ -220,11 +220,7 @@ definition {
 		task ("Log in as the user corbin.murakami@faro.io and go to the properties menu") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
 			ACNavigation.goToSettings();
 
@@ -238,11 +234,7 @@ definition {
 		task ("Log in as the user test@liferay.com, go to the properties menu and delete all properties") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "test@liferay.com",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "test@liferay.com");
 
 			ACNavigation.goToSettings();
 
@@ -254,11 +246,7 @@ definition {
 		task ("Log in as the user corbin.murakami@faro.io, go to the properties menu and checks if the property has been deleted for the user") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
 			ACNavigation.goToSettings();
 
@@ -310,11 +298,7 @@ definition {
 		task ("Log in as the user corbin.murakami@faro.io and go to the properties menu") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
 			ACNavigation.goToSettings();
 

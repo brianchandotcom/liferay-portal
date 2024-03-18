@@ -931,11 +931,7 @@ definition {
 		task ("SingOut and Login as member") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 		}
 
 		task ("Switch the property in AC and go to event analysis") {

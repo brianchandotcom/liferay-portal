@@ -280,11 +280,7 @@ definition {
 
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "test@liferay.com",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "test@liferay.com");
 		}
 
 		task ("Navigation to custom events tab") {
@@ -306,11 +302,7 @@ definition {
 
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 		}
 
 		task ("Navigation to custom events tab") {

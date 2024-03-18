@@ -32,14 +32,10 @@ definition {
 		task ("sign out and login as member") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 		}
 
 		task ("go to user management and assert the add user button not present") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
@@ -52,14 +48,10 @@ definition {
 
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "michelle.hoshi@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
 		}
 
 		task ("go to user management and add user") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
@@ -126,14 +118,10 @@ definition {
 		task ("sign out and login as member") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 		}
 
 		task ("go to user management and assert the add user button not present") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
@@ -148,14 +136,10 @@ definition {
 		task ("sign out and login as member") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 		}
 
 		task ("go to user management and assert the add user button not present") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
@@ -168,14 +152,10 @@ definition {
 
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "bryan.cheung@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "bryan.cheung@faro.io");
 		}
 
 		task ("go to user management and add user") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();

@@ -18,66 +18,183 @@
 		'<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CHANNEL_ID) %>';
 	var analyticsClientGroupIds = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS) %>;
 	var analyticsCookiesConsentMode = <%= (boolean)request.getAttribute(AnalyticsWebKeys.ANALYTICS_COOKIES_EXPLICIT_CONSENT_MODE) %>;
+	var analyticsFeatureFlagEnabled = <%= FeatureFlagManagerUtil.isEnabled("LPD-10588") %>;
+
+	var liferayCookieManager = {
+		actions: {
+			getItem: (key) => {
+				var data;
+
+				try {
+					var cookie = Liferay.Util.Cookie.get(
+						key,
+						Liferay.Util.Cookie.TYPES.PERFORMANCE
+					);
+
+					data = JSON.parse(decodeURIComponent(cookie));
+				}
+				catch (error) {
+					return;
+				}
+
+				return data;
+			},
+			getItemFromLocalStorage: (key) => {
+				let data;
+
+				try {
+					const item = Liferay.Util.LocalStorage.getItem(
+						key,
+						Liferay.Util.LocalStorage.TYPES.PERFORMANCE
+					);
+					data = JSON.parse(item);
+				}
+				catch (error) {
+					return;
+				}
+
+				return data;
+			},
+			removeItem: (key) => {
+				Liferay.Util.Cookie.remove(
+					key,
+					Liferay.Util.Cookie.TYPES.PERFORMANCE
+				);
+			},
+			setItem: (key, value, encode = true) => {
+				var expires = new Date();
+
+				expires.setDate(expires.getDate() + 365);
+
+				try {
+					var jsonStr = JSON.stringify(value);
+					var data = encode ? encodeURIComponent(jsonStr) : jsonStr;
+
+					Liferay.Util.Cookie.set(
+						key,
+						data,
+						Liferay.Util.Cookie.TYPES.PERFORMANCE,
+						{
+							expires,
+							secure: true,
+						}
+					);
+				}
+				catch (error) {
+					return;
+				}
+			},
+		},
+		checkConsent: () => {
+			var performanceCookieEnabled = Liferay.Util.Cookie.get(
+				Liferay.Util.Cookie.TYPES.PERFORMANCE
+			);
+
+			return performanceCookieEnabled === 'true';
+		},
+		enabled: analyticsFeatureFlagEnabled && analyticsCookiesConsentMode,
+		onConsentChange: (callbackFn) => {
+			Liferay.on('cookieBannerSetCookie', callbackFn);
+		},
+	};
 </aui:script>
 
 <aui:script id="liferayAnalyticsScript" senna="permanent" type="text/javascript">
-	(function (u, c, a, m, o, l) {
-		o = 'script';
-		l = document;
-		a = l.createElement(o);
-		m = l.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = u;
-		a.onload = c;
-		m.parentNode.insertBefore(a, m);
-	})('https://analytics-js-cdn.liferay.com', () => {
-		var config = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG) %>;
+	var selectedCookieManager = [liferayCookieManager].find(({enabled}) => enabled);
 
-		var dxpMiddleware = function (request) {
-			request.context.canonicalUrl = themeDisplay.getCanonicalURL();
-			request.context.channelId = analyticsClientChannelId;
-			request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+	function <portlet:namespace />initializeAnalyticsSDK() {
+		(function (u, c, a, m, o, l) {
+			o = 'script';
+			l = document;
+			a = l.createElement(o);
+			m = l.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = u;
+			a.onload = c;
+			m.parentNode.insertBefore(a, m);
+		})('https://analytics-js-cdn.liferay.com', () => {
+			var config = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG) %>;
 
-			return request;
-		};
+			config.cookieManager = selectedCookieManager;
 
-		Analytics.create(config, [dxpMiddleware]);
+			var dxpMiddleware = function (request) {
+				request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+				request.context.channelId = analyticsClientChannelId;
+				request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
-		if (themeDisplay.isSignedIn()) {
-			Analytics.setIdentity({
-				email: themeDisplay.getUserEmailAddress(),
-				name: themeDisplay.getUserName(),
-			});
-		}
+				return request;
+			};
 
-		runMiddlewares();
+			Analytics.create(config, [dxpMiddleware]);
 
-		Analytics.send('pageViewed', 'Page');
+			if (themeDisplay.isSignedIn()) {
+				Analytics.setIdentity({
+					email: themeDisplay.getUserEmailAddress(),
+					name: themeDisplay.getUserName(),
+				});
+			}
 
-		<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED)) %>">
-			Liferay.on('endNavigate', (event) => {
-				Analytics.dispose();
+			runMiddlewares();
 
-				var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+			Analytics.send('pageViewed', 'Page');
 
-				if (
-					!themeDisplay.isControlPanel() &&
-					analyticsClientGroupIds.indexOf(groupId) >= 0
-				) {
-					Analytics.create(config, [dxpMiddleware]);
+			<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED)) %>">
+				function <portlet:namespace />initializeAnalyticsSDKFromSPA() {
+					Liferay.on('endNavigate', (event) => {
+						Analytics.dispose();
 
-					if (themeDisplay.isSignedIn()) {
-						Analytics.setIdentity({
-							email: themeDisplay.getUserEmailAddress(),
-							name: themeDisplay.getUserName(),
-						});
-					}
+						var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
-					runMiddlewares();
+						if (
+							!themeDisplay.isControlPanel() &&
+							analyticsClientGroupIds.indexOf(groupId) >= 0
+						) {
+							Analytics.create(config, [dxpMiddleware]);
 
-					Analytics.send('pageViewed', 'Page', {page: event.path});
+							if (themeDisplay.isSignedIn()) {
+								Analytics.setIdentity({
+									email: themeDisplay.getUserEmailAddress(),
+									name: themeDisplay.getUserName(),
+								});
+							}
+
+							runMiddlewares();
+
+							Analytics.send('pageViewed', 'Page', {page: event.path});
+						}
+					});
 				}
-			});
-		</c:if>
-	});
+
+				if (selectedCookieManager) {
+					selectedCookieManager.onConsentChange(() => {
+						if (selectedCookieManager.checkConsent()) {
+							<portlet:namespace />initializeAnalyticsSDKFromSPA();
+						}
+					});
+
+					if (selectedCookieManager.checkConsent()) {
+						<portlet:namespace />initializeAnalyticsSDKFromSPA();
+					}
+				}
+				else {
+					<portlet:namespace />initializeAnalyticsSDKFromSPA();
+				}
+			</c:if>
+		});
+	}
+
+	if (selectedCookieManager) {
+		selectedCookieManager.onConsentChange(() => {
+			if (selectedCookieManager.checkConsent()) {
+				<portlet:namespace />initializeAnalyticsSDK();
+			}
+		});
+
+		if (selectedCookieManager.checkConsent()) {
+			<portlet:namespace />initializeAnalyticsSDK();
+		}
+	}
+	else {
+		<portlet:namespace />initializeAnalyticsSDK();
+	}
 </aui:script>

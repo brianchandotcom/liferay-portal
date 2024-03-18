@@ -287,11 +287,10 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 			guestUser.getReminderQueryQuestions();
 
 		if (!reminderQueryQuestions.isEmpty()) {
-			String loginEmail = ParamUtil.getString(actionRequest, "login");
-
 			guestUser.setReminderQueryQuestion(
 				_getQueryQuestionByEmailHash(
-					reminderQueryQuestions, loginEmail));
+					reminderQueryQuestions,
+					ParamUtil.getString(actionRequest, "login")));
 		}
 		else {
 			guestUser.setReminderQueryQuestion(

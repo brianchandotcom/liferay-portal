@@ -514,14 +514,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro collapsePlan(planName = null) {
-		Click(
-			key_planName = ${planName},
-			key_type = "angle-up",
-			locator1 = "ACUsage#USAGE_PLAN_ICON");
-	}
-
-	@summary = "Default summary"
 	macro createRequestLogByEmail(jobType, email) {
 		var key_fieldType = ${jobType};
 

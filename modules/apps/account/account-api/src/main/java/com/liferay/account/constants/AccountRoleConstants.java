@@ -46,6 +46,8 @@ public class AccountRoleConstants {
 
 	public static final String ROLE_NAME_ACCOUNT_SUPPLIER = "Account Supplier";
 
+	public static final String ROLE_NAME_RETURNS_MANAGER = "Returns Manager";
+
 	public static final String ROLE_NAME_SUPPLIER = "Supplier";
 
 	public static final Map<String, Map<Locale, String>> roleDescriptionsMap =

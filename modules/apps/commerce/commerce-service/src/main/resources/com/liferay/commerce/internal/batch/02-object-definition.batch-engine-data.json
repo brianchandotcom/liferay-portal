@@ -1,0 +1,64 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-9361",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"accountEntryRestricted": false,
+			"enableCategorization": true,
+			"enableLocalization": false,
+			"externalReferenceCode": "L_COMMERCE_ORDER",
+			"objectFolderExternalReferenceCode": "default",
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"externalReferenceCode": "L_COMMERCE_ORDER_TO_L_COMMERCE_RETURNS",
+					"label": {
+						"en_US": "Commerce Order to Commerce Returns"
+					},
+					"name": "commerceOrderToCommerceReturns",
+					"objectDefinitionExternalReferenceCode1": "L_COMMERCE_ORDER",
+					"objectDefinitionExternalReferenceCode2": "L_COMMERCE_RETURN",
+					"objectDefinitionName2": "CommerceReturn",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": false,
+					"type": "oneToMany"
+				}
+			],
+			"titleObjectFieldName": "id"
+		},
+		{
+			"externalReferenceCode": "L_ACCOUNT",
+			"objectRelationships": [
+				{
+					"deletionType": "prevent",
+					"externalReferenceCode": "L_ACCOUNT_TO_L_COMMERCE_RETURN",
+					"label": {
+						"en_US": "Account To Commerce Returns"
+					},
+					"name": "accountToCommerceReturns",
+					"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+					"objectDefinitionExternalReferenceCode2": "L_COMMERCE_RETURN",
+					"objectDefinitionName2": "CommerceReturn",
+					"reverse": false,
+					"system": false,
+					"type": "oneToMany"
+				}
+			],
+			"titleObjectFieldName": "name"
+		}
+	]
+}

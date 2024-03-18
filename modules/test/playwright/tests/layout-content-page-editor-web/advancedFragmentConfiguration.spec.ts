@@ -11,7 +11,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
-import {PORTLET_URLS} from '../../utils/portletUrls';
+import {fragmentsPagesTest} from '../fragment-web/fixtures/fragmentPagesTest';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -23,6 +23,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': true,
 	}),
+	fragmentsPagesTest,
 	loginTest(),
 	isolatedSiteTest,
 	pageEditorPagesTest
@@ -135,6 +136,8 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 
 test('checks that the advanced configuration of a fragment appears in its corresponding tab', async ({
 	apiHelpers,
+	fragmentEditorPage,
+	fragmentsPage,
 	page,
 	pageEditorPage,
 	site,
@@ -142,72 +145,39 @@ test('checks that the advanced configuration of a fragment appears in its corres
 
 	// Go to fragment editor
 
-	await page.goto(
-		`/group${site.friendlyUrlPath}${PORTLET_URLS.fragmentPage}`
-	);
+	await fragmentsPage.goto(site.friendlyUrlPath);
 
-	// Add a new fragment set
+	// Add a new fragment set and a fragment inside it
 
-	await page.getByTitle('Add Fragment Set').click();
+	const setName = getRandomString();
+	await fragmentsPage.createFragmentSet(setName);
 
-	await page.getByPlaceholder('Name').fill('my fragment set');
-
-	await page.getByRole('button', {name: 'Save'}).click();
-
-	// Add a new fragment inside the new fragment set
-
-	await page.getByRole('button', {name: 'Add'}).click();
-
-	await page.getByRole('button', {name: 'Next'}).click();
-
-	await page.getByLabel('Name').fill('my fragment');
-
-	await page.getByText('Add', {exact: true}).click();
-
-	const sucessMessage = await page.getByText(
-		'Success:Your request completed successfully.'
-	);
-
-	await sucessMessage.waitFor();
+	await fragmentsPage.createFragment(setName, 'My Fragment');
 
 	// Add a configuration for the fragment
 
-	await page.getByRole('tab', {name: 'Configuration'}).click();
-
-	// Edit config: first delete the current config and then add the new config
-
-	const codeMirror = await page.locator('.CodeMirror-scroll').last();
-
-	codeMirror.waitFor();
-
-	codeMirror.click({timeout: 1000});
-
-	await page.getByText('fieldSets').click();
-
-	const config = {
-		configurationRole: 'advanced',
-		fields: [
-			{
-				dataType: 'string',
-				defaultValue: '1',
-				label: 'Advanced Config Field',
-				name: 'advancedConfigField',
-				type: 'select',
-				typeOptions: {
-					validValues: [{label: '1', value: '1'}],
+	await fragmentEditorPage.addConfiguration(
+		JSON.stringify({
+			fieldSets: [
+				{
+					configurationRole: 'advanced',
+					fields: [
+						{
+							dataType: 'string',
+							defaultValue: '1',
+							label: 'Advanced Config Field',
+							name: 'advancedConfigField',
+							type: 'select',
+							typeOptions: {
+								validValues: [{label: '1', value: '1'}],
+							},
+						},
+					],
+					label: 'Advanced Config Fieldset',
 				},
-			},
-		],
-		label: 'Advanced Config Fieldset',
-	};
-
-	await page.keyboard.type(JSON.stringify(config));
-
-	await page.waitForTimeout(3000);
-
-	await page.getByRole('button', {name: 'Publish'}).click({timeout: 3000});
-
-	await sucessMessage.waitFor();
+			],
+		})
+	);
 
 	// Create a content page with the fragment previously created
 

@@ -130,22 +130,12 @@ const SolutionsTable: React.FC<SolutionsTableProps> = ({items}) => {
 								}
 							>
 								<DropDown.ItemList>
-									<DropDown.Item>
-										{i18n.translate('go-to-dxp')}
-									</DropDown.Item>
-
-									<DropDown.Item>
-										{i18n.translate('go-to-console')}
-									</DropDown.Item>
-
-									<DropDown.Item>
-										{i18n.translate('contact-publisher')}
-									</DropDown.Item>
+									<DropDown.Item>Action</DropDown.Item>
 								</DropDown.ItemList>
 							</DropDown>
 						</div>
 					),
-					title: 'Installation',
+					title: 'View Details',
 				},
 			]}
 			rows={items}

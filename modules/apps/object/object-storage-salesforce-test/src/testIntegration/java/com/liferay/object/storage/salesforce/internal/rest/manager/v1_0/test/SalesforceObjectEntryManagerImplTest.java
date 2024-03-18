@@ -8,6 +8,7 @@ package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
@@ -214,6 +215,20 @@ public class SalesforceObjectEntryManagerImplTest
 				_objectDefinition.getObjectDefinitionId()
 			).build());
 
+		ObjectFieldUtil.addCustomObjectField(
+			new BooleanObjectFieldBuilder(
+			).externalReferenceCode(
+				"Flagged__c"
+			).userId(
+				adminUser.getUserId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Flagged")
+			).name(
+				"flagged"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).build());
+
 		_objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
 
 		_objectDefinition.setExternalReferenceCode("Ticket__c");
@@ -250,7 +265,7 @@ public class SalesforceObjectEntryManagerImplTest
 	@Test
 	public void testAddObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
-			null, null, RandomTestUtil.randomString());
+			null, null, RandomTestUtil.randomString(), false);
 
 		Assert.assertNotNull(objectEntry.getExternalReferenceCode());
 	}
@@ -258,7 +273,7 @@ public class SalesforceObjectEntryManagerImplTest
 	@Test
 	public void testAddOrUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
-			null, null, RandomTestUtil.randomString());
+			null, null, RandomTestUtil.randomString(), false);
 
 		String title = RandomTestUtil.randomString();
 
@@ -287,12 +302,14 @@ public class SalesforceObjectEntryManagerImplTest
 
 		Date date = RandomTestUtil.nextDate();
 
-		ObjectEntry objectEntry1 = _addObjectEntry("queued", date, title1);
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			"queued", date, title1, false);
 		ObjectEntry objectEntry2 = _addObjectEntry(
-			"started", new Date(date.getTime() - Time.DAY), title2);
+			"started", new Date(date.getTime() - Time.DAY), title2, true);
 		ObjectEntry objectEntry3 = _addObjectEntry(
-			"completed", new Date(date.getTime() + Time.DAY), title3);
-		ObjectEntry objectEntry4 = _addObjectEntry("queued", date, title4);
+			"completed", new Date(date.getTime() + Time.DAY), title3, false);
+		ObjectEntry objectEntry4 = _addObjectEntry(
+			"queued", date, title4, true);
 
 		// And/or with equals/not equals expression
 
@@ -352,6 +369,14 @@ public class SalesforceObjectEntryManagerImplTest
 			objectEntry2, objectEntry3, objectEntry4);
 
 		// Equals/not equals expression
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				filterString.concat(
+					_buildEqualsExpressionFilterBoolean("flagged", true))
+			).build(),
+			objectEntry2, objectEntry4);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
@@ -420,7 +445,7 @@ public class SalesforceObjectEntryManagerImplTest
 	public void testGetObjectEntry() throws Exception {
 		String title = RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry = _addObjectEntry(null, null, title);
+		ObjectEntry objectEntry = _addObjectEntry(null, null, title, false);
 
 		_assertObjectEntry(objectEntry.getExternalReferenceCode(), title);
 	}
@@ -428,7 +453,7 @@ public class SalesforceObjectEntryManagerImplTest
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
 		ObjectEntry objectEntry = _addObjectEntry(
-			null, null, RandomTestUtil.randomString());
+			null, null, RandomTestUtil.randomString(), false);
 
 		_objectEntryManager.partialUpdateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
@@ -461,7 +486,7 @@ public class SalesforceObjectEntryManagerImplTest
 	}
 
 	private ObjectEntry _addObjectEntry(
-			String customStatus, Date date, String title)
+			String customStatus, Date date, String title, boolean flagged)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
@@ -473,6 +498,8 @@ public class SalesforceObjectEntryManagerImplTest
 					).put(
 						"dueDate",
 						(date != null) ? _simpleDateFormat.format(date) : null
+					).put(
+						"flagged", flagged
 					).put(
 						"objectDefinitionId",
 						_objectDefinition.getObjectDefinitionId()
@@ -497,6 +524,12 @@ public class SalesforceObjectEntryManagerImplTest
 
 		Assert.assertEquals(
 			title, MapUtil.getString(objectEntry.getProperties(), "title"));
+	}
+
+	private String _buildEqualsExpressionFilterBoolean(
+		String fieldName, boolean value) {
+
+		return StringBundler.concat(fieldName, " eq ", value);
 	}
 
 	private String _buildNotEqualsExpressionFilterString(

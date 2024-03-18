@@ -338,8 +338,6 @@ class HtmlScreen extends RequestScreen {
 	runFaviconInElement_(elements) {
 		return new Promise((resolve) => {
 			elements.forEach((element) => {
-				element.href = element.href + '?q=' + Math.random();
-
 				document.head.appendChild(element);
 			});
 			resolve();

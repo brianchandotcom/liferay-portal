@@ -53,8 +53,8 @@ definition {
 		ACSettings.goToUsage();
 
 		var currentIndividuals = ACSettings.getCurrentNumber(
-			planLimit = "110,000",
-			metricName = "KNOWN INDIVIDUALS");
+			metricName = "KNOWN INDIVIDUALS",
+			planLimit = "110,000");
 
 		ACUtils.launchDXP();
 
@@ -172,8 +172,8 @@ definition {
 			ACSettings.goToUsage();
 
 			var currentIndividuals = ACSettings.getCurrentNumber(
-				planLimit = "110,000",
-				metricName = "KNOWN INDIVIDUALS");
+				metricName = "KNOWN INDIVIDUALS",
+				planLimit = "110,000");
 		}
 
 		task ("Add 3 new users and sync the Contact Data") {
@@ -241,8 +241,8 @@ definition {
 			ACSettings.goToUsage();
 
 			var oldPageViews = ACSettings.getCurrentNumber(
-				planLimit = "75,000,000",
-				metricName = "PAGE VIEWS");
+				metricName = "PAGE VIEWS",
+				planLimit = "75,000,000");
 
 			var pageViewsNumber = StringUtil.replace(${oldPageViews}, ",", "");
 
@@ -269,15 +269,15 @@ definition {
 			ACSettings.goToUsage();
 
 			var oldPageViews = ACSettings.getCurrentNumber(
-				planLimit = "75,000,000",
-				metricName = "PAGE VIEWS");
+				metricName = "PAGE VIEWS",
+				planLimit = "75,000,000");
 
 			while ((${currentPageViews} == ${oldPageViews}) && (maxIterations = "15")) {
 				Refresh();
 
 				var oldPageViews = ACSettings.getCurrentNumber(
-					planLimit = "75,000,000",
-					metricName = "PAGE VIEWS");
+					metricName = "PAGE VIEWS",
+					planLimit = "75,000,000");
 			}
 
 			var newPageViewsNumber = StringUtil.replace(${currentPageViews}, ",", "");

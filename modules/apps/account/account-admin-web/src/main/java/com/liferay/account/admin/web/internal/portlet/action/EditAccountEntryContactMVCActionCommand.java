@@ -5,7 +5,6 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
-import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
@@ -48,8 +47,6 @@ public class EditAccountEntryContactMVCActionCommand
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		_checkPermission(actionRequest);
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -97,18 +94,6 @@ public class EditAccountEntryContactMVCActionCommand
 			themeDisplay.getUserId(), AccountEntry.class.getName(),
 			accountEntryId, null, null, null, null, 0, 0, true, 0, 1, 1970,
 			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, null);
-	}
-
-	private void _checkPermission(ActionRequest actionRequest)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_accountEntryModelResourcePermission.check(
-			themeDisplay.getPermissionChecker(),
-			ParamUtil.getLong(actionRequest, "accountEntryId"),
-			AccountActionKeys.MANAGE_ADDRESSES);
 	}
 
 	private void _updateAccountEntryContact(ActionRequest actionRequest)

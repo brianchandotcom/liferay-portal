@@ -37,7 +37,7 @@ if (Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPa
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:tabs
-			names='<%= "general,email-from," + passwordChangedNotification + "password-reset-notification" %>'
+			names='<%= FeatureFlagManagerUtil.isEnabled("LPD-6378") ? "general" : "general,email-from," + passwordChangedNotification + "password-reset-notification" %>'
 			refresh="<%= false %>"
 		>
 			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
@@ -54,6 +54,7 @@ if (Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPa
 				</liferay-frontend:fieldset>
 			</liferay-ui:section>
 
+			<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-6378") %>'>
 			<liferay-ui:section>
 				<liferay-frontend:fieldset>
 					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
@@ -119,6 +120,7 @@ if (Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPa
 					/>
 				</liferay-frontend:fieldset>
 			</liferay-ui:section>
+			</c:if>
 		</liferay-ui:tabs>
 	</liferay-frontend:edit-form-body>
 

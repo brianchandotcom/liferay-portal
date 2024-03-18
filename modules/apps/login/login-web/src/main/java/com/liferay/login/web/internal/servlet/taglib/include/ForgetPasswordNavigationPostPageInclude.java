@@ -5,8 +5,12 @@
 
 package com.liferay.login.web.internal.servlet.taglib.include;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.include.PageInclude;
 import com.liferay.taglib.portlet.RenderURLTag;
@@ -14,6 +18,7 @@ import com.liferay.taglib.ui.IconTag;
 
 import java.util.Objects;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +26,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -40,6 +46,20 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 
 		String mvcRenderCommandName = httpServletRequest.getParameter(
 			"mvcRenderCommandName");
+
+		if (_featureFlagManager.isEnabled("LPD-6378")) {
+			PortletConfig portletConfig =
+				(PortletConfig)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
+
+			String portletName = portletConfig.getPortletName();
+
+			if (portletName.equals(LoginPortletKeys.FORGOT_PASSWORD) &&
+				Validator.isNull(mvcRenderCommandName)) {
+
+				return;
+			}
+		}
 
 		if (Objects.equals(mvcRenderCommandName, "/login/forgot_password")) {
 			return;
@@ -77,5 +97,8 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 
 		iconTag.doTag(pageContext);
 	}
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 }

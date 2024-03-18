@@ -34,14 +34,10 @@ definition {
 		task ("Logout AC and login as an admin user") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "michelle.hoshi@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
 		}
 
 		task ("Go to settings, data source, take token and launch dxp") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();
@@ -82,14 +78,10 @@ definition {
 		task ("SingOut and Login as administrator") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "michelle.hoshi@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
 		}
 
 		task ("Go to Data Sources") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
@@ -129,14 +121,10 @@ definition {
 		task ("Logout AC and login as an admin user") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "michelle.hoshi@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
 		}
 
 		task ("Go to settings, data source, take token and launch dxp") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();
@@ -381,14 +369,10 @@ definition {
 		task ("Login as user with member role") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 		}
 
 		task ("Go to Data Sources") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();
@@ -405,14 +389,10 @@ definition {
 		task ("Go to AC and Login as user with member role") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 		}
 
 		task ("Go to User Management") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToUserManagement();
@@ -445,14 +425,10 @@ definition {
 
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 		}
 
 		task ("Go to Data Sources") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();
@@ -474,14 +450,10 @@ definition {
 			task ("Logout AC and login as an admin/owner user") {
 				ACWorkspace.signOut();
 
-				ACLogin.loginAs(
-					emailAddress = ${userEmail},
-					password = "test");
+				ACUtils.launchAC(emailAddress = ${userEmail});
 			}
 
 			task ("Go To Settings then Go To Properties") {
-				ACWorkspace.openWorkspace();
-
 				ACNavigation.goToSettings();
 
 				ACSettings.goToProperties();
@@ -502,14 +474,10 @@ definition {
 		task ("Logout and Login as Member") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 		}
 
 		task ("Go To Settings then Go To Properties") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToProperties();
@@ -526,14 +494,10 @@ definition {
 		task ("Logout AC and login as an owner user") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "bryan.cheung@faro.io",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "bryan.cheung@faro.io");
 		}
 
 		task ("Go to settings, data source, take token and launch dxp") {
-			ACWorkspace.openWorkspace();
-
 			ACNavigation.goToSettings();
 
 			ACSettings.goToDataSources();
@@ -576,11 +540,7 @@ definition {
 		task ("Login with another Owner User") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "bryan.cheung@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "bryan.cheung@faro.io");
 		}
 
 		task ("Go to User Management") {
@@ -775,11 +735,7 @@ definition {
 		task ("Log in as member and go to the properties menu") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
 			ACNavigation.goToSettings();
 
@@ -795,11 +751,7 @@ definition {
 		task ("Login as owner user, go to properties then select one") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "test@liferay.com",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "test@liferay.com");
 
 			ACNavigation.goToSettings();
 
@@ -823,11 +775,7 @@ definition {
 		task ("Login as member, go to properties then assert if the property is no longer present") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "corbin.murakami@faro.io",
-				password = "test");
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
 			ACNavigation.goToSettings();
 
@@ -849,9 +797,7 @@ definition {
 		task ("Open URL and LogIn") {
 			Open.openNoError(value1 = ${workspaceURL});
 
-			ACLogin.loginAs(
-				emailAddress = "test@liferay.com",
-				password = "test");
+			ACUtils.launchAC(emailAddress = "test@liferay.com");
 		}
 
 		task ("Open the URL again") {
@@ -962,11 +908,7 @@ definition {
 	test ViewOwnerCanDeleteUser {
 		ACWorkspace.signOut();
 
-		ACLogin.loginAs(
-			emailAddress = "bryan.cheung@faro.io",
-			password = "test");
-
-		ACWorkspace.openWorkspace();
+		ACUtils.launchAC(emailAddress = "bryan.cheung@faro.io");
 
 		ACNavigation.goToSettings();
 
@@ -988,11 +930,7 @@ definition {
 
 		ACWorkspace.signOut();
 
-		ACLogin.loginAs(
-			emailAddress = "corbin.murakami@faro.io",
-			password = "test");
-
-		ACWorkspace.openWorkspace();
+		ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
 		ACNavigation.goToSettings();
 
@@ -1002,11 +940,7 @@ definition {
 
 		ACWorkspace.signOut();
 
-		ACLogin.loginAs(
-			emailAddress = "michelle.hoshi@faro.io",
-			password = "test");
-
-		ACWorkspace.openWorkspace();
+		ACUtils.launchAC(emailAddress = "michelle.hoshi@faro.io");
 
 		ACNavigation.goToSettings();
 

@@ -114,7 +114,7 @@ public class SegmentsCompanyConfigurationDisplayContextTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.segments.web.internal.configuration.display.SegmentsCompanyConfigurationScreen"
+		filter = "component.name=com.liferay.segments.web.internal.configuration.admin.display.SegmentsCompanyConfigurationScreen"
 	)
 	private ConfigurationScreen _configurationScreen;
 

@@ -250,6 +250,19 @@
 		"privateLayout": false
 	},
 	{
+		"icon": "icon_orders.png",
+		"layoutTemplateId": "1_column",
+		"name": "Returns",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_order_content_web_internal_portlet_CommerceReturnContentPortlet"
+			}
+		],
+		"privateLayout": false
+	},
+	{
 		"icon": "icon_account_management.png",
 		"layoutTemplateId": "1_column",
 		"name": "Account Management",

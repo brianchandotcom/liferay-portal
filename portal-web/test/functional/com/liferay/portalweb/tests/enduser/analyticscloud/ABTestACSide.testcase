@@ -165,15 +165,13 @@ definition {
 		}
 
 		task ("Click on the terminate button on the top") {
-			Button.click(button = "Terminate");
-		}
-
-		task ("Get site assigned property name and get data source name") {
-			var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
+			Click.mouseDownMouseUp(
+				key_buttonName = "terminate",
+				locator1 = "ACTests#REDIRECT_BUTTONS");
 		}
 
 		task ("Click on the new tab open and terminate the created AB test") {
-			SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
+			SelectWindow(value1 = "name=undefined");
 
 			ABTest.assertTerminateTest();
 		}

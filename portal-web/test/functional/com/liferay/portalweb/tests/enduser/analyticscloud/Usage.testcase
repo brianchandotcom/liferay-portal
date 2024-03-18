@@ -78,9 +78,9 @@ definition {
 			planLimit = "110,000");
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9183 | Test Summary: Current AC plan is collapsible."
+	@description = "Feature ID: Legacy | Automation ID: LRAC-9183 | Test Summary: Check current plan details"
 	@priority = 3
-	test CollapseCurrentPlan {
+	test CheckCurrentPlanDetails {
 		task ("Sign in AC") {
 			ACUtils.launchAC();
 		}

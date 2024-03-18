@@ -2,10 +2,10 @@
 	"friendlyURL": "/support-ticket-escalation",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Escalate a Ticket (BETA)",
-		"es_ES": "Escalar un billete (BETA)",
-		"ja_JP": "チケットのエスカレーション (BETA)",
-		"pt_BR": "Escalar um tíquete (BETA)"
+		"en_US": "Escalate a Ticket",
+		"es_ES": "Escalar un billete",
+		"ja_JP": "チケットのエスカレーション",
+		"pt_BR": "Escalar um tíquete"
 	},
 	"permissions": [
 		{

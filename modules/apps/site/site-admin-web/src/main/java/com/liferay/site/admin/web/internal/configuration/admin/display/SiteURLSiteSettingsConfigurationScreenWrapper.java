@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.site.admin.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenFactory;
 
@@ -25,13 +23,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = ConfigurationScreen.class)
-public class RecycleBinSiteSettingsConfigurationScreenWrapper
+public class SiteURLSiteSettingsConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
 		return _siteSettingsConfigurationScreenFactory.create(
-			new RecycleBinSiteSettingsConfigurationScreenContributor());
+			new SiteURLSiteSettingsConfigurationScreenContributor());
 	}
 
 	@Reference
@@ -44,32 +42,32 @@ public class RecycleBinSiteSettingsConfigurationScreenWrapper
 	private SiteSettingsConfigurationScreenFactory
 		_siteSettingsConfigurationScreenFactory;
 
-	private class RecycleBinSiteSettingsConfigurationScreenContributor
+	private class SiteURLSiteSettingsConfigurationScreenContributor
 		implements SiteSettingsConfigurationScreenContributor {
 
 		@Override
 		public String getCategoryKey() {
-			return "recycle-bin";
+			return "site-configuration";
 		}
 
 		@Override
 		public String getJspPath() {
-			return "/site_settings/recycle_bin.jsp";
+			return "/site_settings/site_url.jsp";
 		}
 
 		@Override
 		public String getKey() {
-			return "site-configuration-recycle-bin";
+			return "site-configuration-site-url";
 		}
 
 		@Override
 		public String getName(Locale locale) {
-			return _language.get(locale, "recycle-bin");
+			return _language.get(locale, "site-url");
 		}
 
 		@Override
 		public String getSaveMVCActionCommandName() {
-			return "/site_admin/edit_recycle_bin";
+			return "/site_admin/edit_site_url";
 		}
 
 		@Override
@@ -79,10 +77,7 @@ public class RecycleBinSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public boolean isVisible(Group group) {
-			boolean trashEnabled = PrefsPropsUtil.getBoolean(
-				group.getCompanyId(), PropsKeys.TRASH_ENABLED);
-
-			if (!trashEnabled) {
+			if (group.isCompany() || group.isPrivateLayoutsEnabled()) {
 				return false;
 			}
 

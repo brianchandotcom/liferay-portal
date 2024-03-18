@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.site.admin.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
@@ -23,13 +23,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = ConfigurationScreen.class)
-public class SiteURLSiteSettingsConfigurationScreenWrapper
+public class PublicPrivateSiteURLSiteSettingsConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
 		return _siteSettingsConfigurationScreenFactory.create(
-			new SiteURLSiteSettingsConfigurationScreenContributor());
+			new PublicPrivateSiteURLSiteSettingsConfigurationScreenContributor());
 	}
 
 	@Reference
@@ -42,7 +42,7 @@ public class SiteURLSiteSettingsConfigurationScreenWrapper
 	private SiteSettingsConfigurationScreenFactory
 		_siteSettingsConfigurationScreenFactory;
 
-	private class SiteURLSiteSettingsConfigurationScreenContributor
+	private class PublicPrivateSiteURLSiteSettingsConfigurationScreenContributor
 		implements SiteSettingsConfigurationScreenContributor {
 
 		@Override
@@ -52,12 +52,12 @@ public class SiteURLSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getJspPath() {
-			return "/site_settings/site_url.jsp";
+			return "/site_settings/public_private_site_url.jsp";
 		}
 
 		@Override
 		public String getKey() {
-			return "site-configuration-site-url";
+			return "site-configuration-public-private-site-url";
 		}
 
 		@Override
@@ -77,7 +77,7 @@ public class SiteURLSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public boolean isVisible(Group group) {
-			if (group.isCompany() || group.isPrivateLayoutsEnabled()) {
+			if (group.isCompany() || !group.isPrivateLayoutsEnabled()) {
 				return false;
 			}
 

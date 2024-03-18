@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.site.admin.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
-import com.liferay.map.constants.MapProviderWebKeys;
-import com.liferay.map.util.MapProviderHelperUtil;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.site.admin.web.internal.display.context.MenuAccessConfigurationDisplayContext;
+import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenFactory;
 
@@ -27,23 +27,32 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Mikel Lorza
  */
 @Component(service = ConfigurationScreen.class)
-public class MapsSiteSettingsConfigurationScreenWrapper
+public class MenuAccessConfigurationScreenWrapper
 	extends ConfigurationScreenWrapper {
 
 	@Override
 	protected ConfigurationScreen getConfigurationScreen() {
 		return _siteSettingsConfigurationScreenFactory.create(
-			new MapsSiteSettingsConfigurationScreenContributor());
+			new MenuAccessConfigurationScreenContributor());
 	}
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private MenuAccessConfigurationManager _menuAccessConfigurationManager;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
 	private ServletContext _servletContext;
@@ -52,27 +61,32 @@ public class MapsSiteSettingsConfigurationScreenWrapper
 	private SiteSettingsConfigurationScreenFactory
 		_siteSettingsConfigurationScreenFactory;
 
-	private class MapsSiteSettingsConfigurationScreenContributor
+	private class MenuAccessConfigurationScreenContributor
 		implements SiteSettingsConfigurationScreenContributor {
 
 		@Override
 		public String getCategoryKey() {
-			return "maps";
+			return "site-configuration";
 		}
 
 		@Override
 		public String getJspPath() {
-			return "/site_settings/maps.jsp";
+			return "/site_settings/menu_access.jsp";
 		}
 
 		@Override
 		public String getKey() {
-			return "site-settings-maps";
+			return "site-configuration-menu-access";
 		}
 
 		@Override
 		public String getName(Locale locale) {
-			return _language.get(locale, "maps");
+			return _language.get(locale, "menu-access");
+		}
+
+		@Override
+		public String getSaveMVCActionCommandName() {
+			return "/site_settings/edit_menu_access_configuration";
 		}
 
 		@Override
@@ -81,33 +95,25 @@ public class MapsSiteSettingsConfigurationScreenWrapper
 		}
 
 		@Override
+		public boolean isVisible(Group group) {
+			if (group.isCompany()) {
+				return false;
+			}
+
+			return true;
+		}
+
+		@Override
 		public void setAttributes(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse) {
 
-			SiteSettingsConfigurationScreenContributor.super.setAttributes(
-				httpServletRequest, httpServletResponse);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Group siteGroup = themeDisplay.getSiteGroup();
-
-			Group liveGroup = null;
-
-			if (siteGroup.isStagingGroup()) {
-				liveGroup = siteGroup.getLiveGroup();
-			}
-			else {
-				liveGroup = siteGroup;
-			}
-
 			httpServletRequest.setAttribute(
-				MapProviderWebKeys.MAP_PROVIDER_KEY,
-				MapProviderHelperUtil.getMapProviderKey(
-					_groupLocalService, themeDisplay.getCompanyId(),
-					liveGroup.getGroupId()));
+				MenuAccessConfigurationDisplayContext.class.getName(),
+				new MenuAccessConfigurationDisplayContext(
+					httpServletRequest, _itemSelector,
+					_menuAccessConfigurationManager, _portal,
+					_roleLocalService));
 		}
 
 	}

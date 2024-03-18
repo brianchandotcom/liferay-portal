@@ -164,7 +164,8 @@ public class FaroSubscriptionDisplay {
 				_startDate = new Date(faroProject.getCreateTime());
 			}
 
-			_lastAnniversaryDate = _startDate;
+			_lastAnniversaryDate = new Date(
+				_startDate.getTime() / Time.DAY * Time.DAY);
 		}
 		else {
 			_startDate = new Date(faroProject.getSubscriptionModifiedTime());

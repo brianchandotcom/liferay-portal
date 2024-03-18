@@ -87,13 +87,13 @@ public class ExportTranslationMVCRenderCommand implements MVCRenderCommand {
 			TranslationRequestHelper translationRequestHelper)
 		throws PortalException {
 
-		String className = translationRequestHelper.getModelClassName();
-		long[] classPKs = translationRequestHelper.getModelClassPKs();
-
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className,
+				InfoItemObjectProvider.class,
+				translationRequestHelper.getModelClassName(),
 				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		long[] classPKs = translationRequestHelper.getModelClassPKs();
 
 		List<Object> models = new ArrayList<>(classPKs.length);
 

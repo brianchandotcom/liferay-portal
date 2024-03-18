@@ -1,0 +1,142 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.account.admin.web.internal.portlet.action;
+
+import com.liferay.account.admin.web.internal.manager.ContactInfoManager;
+import com.liferay.account.admin.web.internal.manager.PhoneContactInfoManager;
+import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.exception.NoSuchEntryException;
+import com.liferay.portal.kernel.exception.NoSuchListTypeException;
+import com.liferay.portal.kernel.exception.PhoneNumberException;
+import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.PhoneLocalService;
+import com.liferay.portal.kernel.service.PhoneService;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Danny Situ
+ */
+@Component(
+	property = {
+		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
+		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT,
+		"mvc.command.name=/account_admin/update_contact_information"
+	},
+	service = MVCActionCommand.class
+)
+public class UpdateContactInformationMVCActionCommand
+	extends BaseMVCActionCommand {
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String className = ParamUtil.getString(actionRequest, "className");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+
+		try {
+			_updateContactInformation(actionRequest, className, classPK);
+
+			String redirect = _portal.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+		catch (Exception exception) {
+			if (exception instanceof NoSuchEntryException ||
+				exception instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (exception instanceof PhoneNumberException ||
+					 exception instanceof PhoneNumberExtensionException) {
+
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
+
+				String errorMVCPath = ParamUtil.getString(
+					actionRequest, "errorMVCPath");
+
+				if (Validator.isNotNull(errorMVCPath)) {
+					actionResponse.setRenderParameter("mvcPath", errorMVCPath);
+				}
+				else {
+					actionResponse.setRenderParameter(
+						"mvcPath", "/edit_account_entry.jsp");
+				}
+			}
+			else {
+				throw exception;
+			}
+		}
+	}
+
+	private ContactInfoManager _getContactInformationHelper(
+		String className, long classPK, String listType) {
+
+		if (listType.equals(ListTypeConstants.PHONE)) {
+			return new PhoneContactInfoManager(
+				className, classPK, _phoneLocalService, _phoneService);
+		}
+
+		return null;
+	}
+
+	private void _updateContactInformation(
+			ActionRequest actionRequest, String className, long classPK)
+		throws Exception {
+
+		String listType = ParamUtil.getString(actionRequest, "listType");
+
+		ContactInfoManager contactInformationHelper =
+			_getContactInformationHelper(className, classPK, listType);
+
+		if (contactInformationHelper == null) {
+			throw new NoSuchListTypeException();
+		}
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		long primaryKey = ParamUtil.getLong(actionRequest, "primaryKey");
+
+		if (cmd.equals(Constants.DELETE)) {
+			contactInformationHelper.delete(primaryKey);
+		}
+		else if (cmd.equals(Constants.EDIT)) {
+			contactInformationHelper.edit(actionRequest);
+		}
+		else if (cmd.equals("makePrimary")) {
+			contactInformationHelper.makePrimary(primaryKey);
+		}
+	}
+
+	@Reference
+	private PhoneLocalService _phoneLocalService;
+
+	@Reference
+	private PhoneService _phoneService;
+
+	@Reference
+	private Portal _portal;
+
+}

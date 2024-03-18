@@ -17,6 +17,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
+taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
 taglib uri="http://liferay.com/tld/text-localizer" prefix="liferay-text-localizer" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -45,6 +46,7 @@ page import="com.liferay.account.admin.web.internal.display.AddressDisplay" %><%
 page import="com.liferay.account.admin.web.internal.display.context.AccountEntryAccountGroupManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.AccountUsersAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.EditAccountEntryAccountUserDisplayContext" %><%@
+page import="com.liferay.account.admin.web.internal.display.context.EditContactInformationDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.InviteUsersDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.InvitedAccountUserDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.SelectAccountEntriesManagementToolbarDisplayContext" %><%@
@@ -68,6 +70,7 @@ page import="com.liferay.account.admin.web.internal.security.permission.resource
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountRolePermission" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountUserPermission" %><%@
 page import="com.liferay.account.admin.web.internal.servlet.taglib.util.AccountUserActionDropdownItemsProvider" %><%@
+page import="com.liferay.account.admin.web.internal.servlet.taglib.util.ContactInformationActionDropdownItemsProvider" %><%@
 page import="com.liferay.account.constants.AccountActionKeys" %><%@
 page import="com.liferay.account.constants.AccountConstants" %><%@
 page import="com.liferay.account.constants.AccountListTypeConstants" %><%@
@@ -89,7 +92,10 @@ page import="com.liferay.login.web.constants.LoginPortletKeys" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateRoleException" %><%@
+page import="com.liferay.portal.kernel.exception.NoSuchListTypeException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchTicketException" %><%@
+page import="com.liferay.portal.kernel.exception.PhoneNumberException" %><%@
+page import="com.liferay.portal.kernel.exception.PhoneNumberExtensionException" %><%@
 page import="com.liferay.portal.kernel.exception.RoleNameException" %><%@
 page import="com.liferay.portal.kernel.exception.UserEmailAddressException" %><%@
 page import="com.liferay.portal.kernel.exception.UserScreenNameException" %><%@
@@ -143,6 +149,7 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
 

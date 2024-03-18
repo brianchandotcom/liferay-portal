@@ -206,7 +206,7 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getQueryQuestionByEmailHash(
-		Set<String> questions, String email) {
+		String email, Set<String> questions) {
 
 		List<String> list = new SortedArrayList(questions);
 

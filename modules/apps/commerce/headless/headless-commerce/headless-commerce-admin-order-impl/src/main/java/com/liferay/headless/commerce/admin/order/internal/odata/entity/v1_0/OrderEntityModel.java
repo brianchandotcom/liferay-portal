@@ -41,7 +41,12 @@ public class OrderEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new DateTimeEntityField(
 				"orderDate", locale -> Field.getSortableFieldName("orderDate"),
-				locale -> "orderDate"));
+				locale -> "orderDate"),
+			new StringEntityField(
+				"orderTypeExternalReferenceCode",
+				locale -> "commerceOrderTypeExternalReferenceCode"),
+			new IntegerEntityField(
+				"orderTypeId", locale -> "commerceOrderTypeId"));
 	}
 
 	@Override

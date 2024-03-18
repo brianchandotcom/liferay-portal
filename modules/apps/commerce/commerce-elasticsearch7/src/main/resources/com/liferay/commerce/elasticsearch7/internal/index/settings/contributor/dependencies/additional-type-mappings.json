@@ -112,6 +112,10 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"orderTypeId": {
+			"store": true,
+			"type": "keyword"
+		},
 		"productTypeName": {
 			"store": true,
 			"type": "keyword"

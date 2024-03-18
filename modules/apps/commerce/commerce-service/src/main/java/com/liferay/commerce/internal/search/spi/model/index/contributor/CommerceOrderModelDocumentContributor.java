@@ -9,8 +9,10 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -66,6 +68,20 @@ public class CommerceOrderModelDocumentContributor
 				"commerceAccountId", commerceOrder.getCommerceAccountId());
 			document.addKeyword(
 				"commerceChannelId", commerceChannel.getCommerceChannelId());
+
+			CommerceOrderType commerceOrderType =
+				_commerceOrderTypeLocalService.fetchCommerceOrderType(
+					commerceOrder.getCommerceOrderTypeId());
+
+			if (commerceOrderType != null) {
+				document.addKeyword(
+					"commerceOrderTypeExternalReferenceCode",
+					commerceOrderType.getExternalReferenceCode());
+			}
+
+			document.addKeyword(
+				"commerceOrderTypeId", commerceOrder.getCommerceOrderTypeId());
+
 			document.addKeyword(
 				"externalReferenceCode",
 				commerceOrder.getExternalReferenceCode());
@@ -155,6 +171,9 @@ public class CommerceOrderModelDocumentContributor
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	@Reference
 	private Language _language;

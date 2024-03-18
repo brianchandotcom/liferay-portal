@@ -3,7 +3,7 @@ definition {
 	@summary = "Default summary"
 	macro exportObject(objectName = null, objectLabel = null) {
 		ObjectAdmin.selectSpecificKebabMenuOption(
-			kebabOption = "Export as JSON",
+			kebabOption = "Export Object Definition",
 			objectLabel = ${objectLabel});
 
 		DownloadTempFile();

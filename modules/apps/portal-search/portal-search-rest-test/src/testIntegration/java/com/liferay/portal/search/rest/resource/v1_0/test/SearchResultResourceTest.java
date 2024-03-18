@@ -682,25 +682,14 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		Assert.assertEquals(0L, searchPage.getTotalCount());
 	}
 
-	private SearchPage<SearchResult> _toSearchPage(JSONObject jsonObject) {
-		List<SearchResult> searchResults = new ArrayList<>();
-
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
-
-		if (itemsJSONArray == null) {
-			itemsJSONArray = JSONFactoryUtil.createJSONArray();
-		}
-
-		for (int i = 0; i < itemsJSONArray.length(); i++) {
-			searchResults.add(
-				SearchResult.toDTO(
-					itemsJSONArray.get(
-						i
-					).toString()));
-		}
+	private SearchPage<SearchResult> _toSearchPage(JSONObject jsonObject)
+		throws Exception {
 
 		return SearchPage.of(
-			null, null, _getSearchFacets(jsonObject), searchResults,
+			null, null, _getSearchFacets(jsonObject),
+			JSONUtil.toList(
+				jsonObject.getJSONArray("items"),
+				itemJSONObject -> SearchResult.toDTO(jsonObject.toString())),
 			Pagination.of(
 				jsonObject.getInt("page"), jsonObject.getInt("pageSize")),
 			jsonObject.getLong("totalCount"));

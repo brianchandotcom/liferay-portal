@@ -134,6 +134,30 @@
 							{
 								"definition": {
 									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_appropriateEmailAddress",
+										"inputLabel": {
+											"es_ES": "Si has abierto este escalado en nombre de otro usuario, por favor indícanos el email al que debemos contactar:",
+											"ja_JP": "別のユーザーに代わって作成する場合は、連絡先となる適切なメールアドレスをご共有ください。",
+											"pt_BR": "Se a solicitação estiver sendo aberta em nome de outro usuário, por favor compartilhe o endereço de e-mail que devemos contatar:"
+										},
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
 										"key": "INPUTS-textarea"
 									},
 									"fragmentConfig": {

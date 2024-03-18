@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useContext, useMemo} from 'react';
+import {useMemo} from 'react';
 import {useParams} from 'react-router-dom';
 import ProgressBar from '~/components/ProgressBar';
-import {TestrayContext, TestrayTypes} from '~/context/TestrayContext';
 import {useFetch} from '~/hooks/useFetch';
 
 import Container from '../../../../../../components/Layout/Container';
@@ -32,7 +31,6 @@ const getCategoryName = (name = '') =>
 const Runs = () => {
 	const {actions, formModal} = useRunActions();
 	const {buildId, routineId} = useParams();
-	const [, dispatch] = useContext(TestrayContext);
 
 	const {data: factorsData} = useFetch<APIResponse<TestrayFactor>>(
 		testrayFactorRest.resource,
@@ -158,12 +156,6 @@ const Runs = () => {
 							}),
 							filterSchema: 'buildResults',
 						})}`,
-					onClickRow(item) {
-						dispatch({
-							payload: item.number,
-							type: TestrayTypes.SET_RUN,
-						});
-					},
 				}}
 				transformData={(response) =>
 					testrayRunImpl.transformDataFromList(response)

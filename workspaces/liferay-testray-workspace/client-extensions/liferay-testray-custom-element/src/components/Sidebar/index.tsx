@@ -13,7 +13,7 @@ import {CONSENT_TYPE} from '~/util/enum';
 import useStorage from '../../hooks/useStorage';
 import i18n from '../../i18n';
 import {TestrayIcon, TestrayIconBrand} from '../../images';
-import CompareRunsPopover from '../CompareRunsPopover';
+import ComparePopover from '../ComparePopover';
 import TestrayIcons from '../Icons/TestrayIcon';
 import Tooltip from '../Tooltip';
 import SidebarFooter from './SidebarFooter';
@@ -150,7 +150,7 @@ const Sidebar = () => {
 							)}
 						</div>
 
-						<CompareRunsPopover
+						<ComparePopover
 							expanded={expanded}
 							setVisible={setVisible}
 							triggedRef={ref}

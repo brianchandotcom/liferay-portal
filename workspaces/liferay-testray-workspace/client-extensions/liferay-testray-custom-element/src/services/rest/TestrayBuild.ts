@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {DISPATCH_TRIGGER_TYPE} from '~/util/enum';
+
 import {TestrayBuildsCases} from '.';
 import TestrayError from '../../TestrayError';
 import Rest from '../../core/Rest';
@@ -10,9 +12,11 @@ import SearchBuilder from '../../core/SearchBuilder';
 import i18n from '../../i18n';
 import {CategoryOptions} from '../../pages/Project/Routines/Builds/BuildForm/Stack/RunsList';
 import yupSchema from '../../schema/yup';
-import {CaseResultStatuses} from '../../util/statuses';
+import {CaseResultStatuses, DispatchTriggerStatuses} from '../../util/statuses';
 import fetcher from '../fetcher';
+import {liferayDispatchTriggerImpl} from './LiferayDispatchTrigger';
 import {testrayCaseResultImpl} from './TestrayCaseResult';
+import {testrayDispatchTriggerImpl} from './TestrayDispatchTrigger';
 import {testrayFactorRest} from './TestrayFactor';
 import {testrayRunImpl} from './TestrayRun';
 
@@ -204,6 +208,44 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 		await this.fetcher.patch(`/builds/${id}`, {
 			archived: !archived,
 		});
+	}
+
+	public async autofill(objectEntryId1: number, objectEntryId2: number) {
+		const autofillType = 'Build';
+
+		const name = `AUTOFILL-${objectEntryId1}/${objectEntryId2}-${autofillType}-${new Date().getTime()}`;
+
+		const response = await liferayDispatchTriggerImpl.create({
+			active: true,
+			dispatchTaskExecutorType: DISPATCH_TRIGGER_TYPE.AUTO_FILL,
+			dispatchTaskSettings: {
+				autofillType,
+				objectEntryId1,
+				objectEntryId2,
+			},
+			externalReferenceCode: name,
+			name,
+			overlapAllowed: false,
+		});
+
+		const body = {
+			dueStatus: DispatchTriggerStatuses.INPROGRESS,
+			output: '',
+		};
+
+		try {
+			await liferayDispatchTriggerImpl.run(
+				response.liferayDispatchTrigger.id
+			);
+		} catch (error) {
+			body.dueStatus = DispatchTriggerStatuses.FAILED;
+			body.output = (error as TestrayError)?.message;
+		}
+
+		await testrayDispatchTriggerImpl.update(
+			response.testrayDispatchTrigger.id,
+			body
+		);
 	}
 
 	public async getCurrentCaseIds(buildId: string | number) {

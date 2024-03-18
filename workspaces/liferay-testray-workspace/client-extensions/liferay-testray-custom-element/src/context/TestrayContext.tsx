@@ -18,15 +18,21 @@ import {
 import {testrayDispatchTriggerImpl} from '../services/rest/TestrayDispatchTrigger';
 import {ActionMap} from '../types';
 
+export type BuildId = number | null;
 export type RunId = number | null;
+
+export type AutofillBuild = {
+	buildA?: BuildId;
+	buildB?: BuildId;
+};
 
 export type CompareRuns = {
 	runA?: RunId;
 	runB?: RunId;
-	runId?: RunId;
 };
 
 type InitialState = {
+	autoFillBuild: AutofillBuild;
 	compareRuns: CompareRuns;
 	myUserAccount?: UserAccount;
 	runNumber: number;
@@ -34,6 +40,10 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
+	autoFillBuild: {
+		buildA: null,
+		buildB: null,
+	},
 	compareRuns: {
 		runA: null,
 		runB: null,
@@ -52,17 +62,21 @@ const initialState: InitialState = {
 };
 
 export const enum TestrayTypes {
+	SET_BUILD_A = 'SET_BUILD_A',
+	SET_BUILD_B = 'SET_BUILD_B',
 	SET_MY_USER_ACCOUNT = 'SET_MY_USER_ACCOUNT',
-	SET_RUN = 'SET_RUN',
+
 	SET_RUN_A = 'SET_RUN_A',
 	SET_RUN_B = 'SET_RUN_B',
 }
 
 type TestrayPayload = {
+	[TestrayTypes.SET_BUILD_A]: BuildId;
+	[TestrayTypes.SET_BUILD_B]: BuildId;
 	[TestrayTypes.SET_MY_USER_ACCOUNT]: {
 		account: UserAccount;
 	};
-	[TestrayTypes.SET_RUN]: number;
+
 	[TestrayTypes.SET_RUN_A]: RunId;
 	[TestrayTypes.SET_RUN_B]: RunId;
 };
@@ -87,6 +101,18 @@ const reducer = (state: InitialState, action: AppActions) => {
 				myUserAccount: account,
 			};
 
+		case TestrayTypes.SET_BUILD_A:
+			return {
+				...state,
+				autoFillBuild: {...state.autoFillBuild, buildA: action.payload},
+			};
+
+		case TestrayTypes.SET_BUILD_B:
+			return {
+				...state,
+				autoFillBuild: {...state.autoFillBuild, buildB: action.payload},
+			};
+
 		case TestrayTypes.SET_RUN_A:
 			return {
 				...state,
@@ -99,15 +125,6 @@ const reducer = (state: InitialState, action: AppActions) => {
 				compareRuns: {...state.compareRuns, runB: action.payload},
 			};
 
-		case TestrayTypes.SET_RUN: {
-			const runNumber = action.payload;
-
-			return {
-				...state,
-				runNumber,
-			};
-		}
-
 		default:
 			return state;
 	}
@@ -116,7 +133,14 @@ const reducer = (state: InitialState, action: AppActions) => {
 const TestrayContextProvider: React.FC<{
 	children: ReactNode;
 }> = ({children}) => {
-	const [storageValue, setStorageValue] = useStorage<{
+	const [autoFillBuildValue, setAutoFillBuildValue] = useStorage<{
+		autoFillBuild: AutofillBuild;
+	}>(STORAGE_KEYS.COMPARE_RUNS, {
+		initialValue: initialState,
+		storageType: 'temporary',
+	});
+
+	const [compareRunsValue, setcompareRunsValue] = useStorage<{
 		compareRuns: CompareRuns;
 	}>(STORAGE_KEYS.COMPARE_RUNS, {
 		initialValue: initialState,
@@ -125,7 +149,8 @@ const TestrayContextProvider: React.FC<{
 
 	const [state, dispatch] = useReducer(reducer, {
 		...initialState,
-		compareRuns: storageValue?.compareRuns,
+		autoFillBuild: autoFillBuildValue?.autoFillBuild,
+		compareRuns: compareRunsValue?.compareRuns,
 	});
 
 	const {data: testrayDispatchTriggers} = useFetch<
@@ -158,11 +183,24 @@ const TestrayContextProvider: React.FC<{
 
 	const compareRuns = useMemo(() => state.compareRuns, [state.compareRuns]);
 
+	const autoFillBuild = useMemo(() => state.autoFillBuild, [
+		state.autoFillBuild,
+	]);
+
 	useEffect(() => {
 		if (compareRuns) {
-			setStorageValue({compareRuns});
+			setcompareRunsValue({compareRuns});
 		}
-	}, [setStorageValue, compareRuns]);
+
+		if (autoFillBuild) {
+			setAutoFillBuildValue({autoFillBuild});
+		}
+	}, [
+		autoFillBuild,
+		compareRuns,
+		setAutoFillBuildValue,
+		setcompareRunsValue,
+	]);
 
 	useEffect(() => {
 		if (myUserAccount) {

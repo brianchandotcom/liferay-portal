@@ -5,6 +5,8 @@
 
 import {useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
+import useAutoFillBuild from '~/hooks/useAutofillBuild';
+import {Liferay} from '~/services/liferay';
 
 import useFormModal from '../../../../hooks/useFormModal';
 import useMutate from '../../../../hooks/useMutate';
@@ -15,6 +17,7 @@ import {Action, ActionsHookParameter} from '../../../../types';
 const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 	const formModal = useFormModal();
 	const {removeItemFromList, updateItemFromList} = useMutate();
+	const {setBuildA, setBuildB} = useAutoFillBuild();
 	const navigate = useNavigate();
 
 	const modal = formModal.modal;
@@ -92,6 +95,28 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 			icon: 'trash',
 			name: i18n.translate(isHeaderActions ? 'delete-build' : 'delete'),
 			permission: 'DELETE',
+		},
+		{
+			action: ({id}) => {
+				setBuildA(id);
+
+				return Liferay.Util.openToast({
+					message: i18n.translate('build-a-successfully-added'),
+				});
+			},
+			icon: 'select-from-list',
+			name: i18n.translate('select-build-a'),
+		},
+		{
+			action: ({id}) => {
+				setBuildB(id);
+
+				return Liferay.Util.openToast({
+					message: i18n.translate('build-b-successfully-added'),
+				});
+			},
+			icon: 'select-from-list',
+			name: i18n.translate('select-build-b'),
 		},
 	] as Action<TestrayBuild>[]);
 

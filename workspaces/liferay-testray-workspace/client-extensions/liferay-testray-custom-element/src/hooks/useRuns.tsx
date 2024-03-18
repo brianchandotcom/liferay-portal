@@ -3,14 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useContext, useMemo} from 'react';
-import {useSearchParams} from 'react-router-dom';
+import {useCallback, useContext} from 'react';
 
 import {RunId, TestrayContext, TestrayTypes} from '../context/TestrayContext';
 
 const useRuns = () => {
 	const [{compareRuns}, dispatch] = useContext(TestrayContext);
-	const [searchParams] = useSearchParams();
 
 	const setRunA = useCallback(
 		(runA: RunId) =>
@@ -23,19 +21,12 @@ const useRuns = () => {
 			dispatch({payload: runB, type: TestrayTypes.SET_RUN_B}),
 		[dispatch]
 	);
-	const serializedFilter = useMemo(() => {
-		return JSON.parse(searchParams.get('filter') as string) || '';
-	}, [searchParams]);
-
-	const runId = serializedFilter
-		? serializedFilter['runToCaseResult/id']
-		: null;
 
 	return {
 		compareRuns: {
 			...compareRuns,
-			runId: Number(runId),
 		},
+
 		setRunA,
 		setRunB,
 	};

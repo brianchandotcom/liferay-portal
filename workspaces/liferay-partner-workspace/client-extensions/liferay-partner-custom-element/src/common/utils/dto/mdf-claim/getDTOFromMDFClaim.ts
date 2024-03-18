@@ -6,6 +6,7 @@
 import MDFClaimDTO from '../../../interfaces/dto/mdfClaimDTO';
 import MDFRequestDTO from '../../../interfaces/dto/mdfRequestDTO';
 import MDFClaim from '../../../interfaces/mdfClaim';
+import {Liferay} from '../../../services/liferay';
 
 export function getDTOFromMDFClaim(
 	mdfClaim: MDFClaim,

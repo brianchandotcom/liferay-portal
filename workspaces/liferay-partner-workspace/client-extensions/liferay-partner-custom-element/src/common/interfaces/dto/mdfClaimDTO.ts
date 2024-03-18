@@ -6,8 +6,8 @@
 import AccountEntry from '../accountEntry';
 import LiferayPicklist from '../liferayPicklist';
 import MDFClaim from '../mdfClaim';
+import MDFClaimDocument from '../mdfClaimDocument';
 import MDFClaimActivityDTO from './mdfClaimActivityDTO';
-import MDFClaimDocument from './mdfClaimDocument';
 
 export default interface MDFClaimDTO extends MDFClaim {
 	claimPaid?: number;

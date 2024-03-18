@@ -97,19 +97,6 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 	}
 
-	protected PortalCacheConfiguration parseCacheListenerConfigurations(
-		CacheConfiguration cacheConfiguration, ClassLoader classLoader,
-		boolean usingDefault) {
-
-		return new EhcachePortalCacheConfiguration(
-			cacheConfiguration.getName(),
-			_parseCacheEventListenerConfigurations(
-				(List<CacheEventListenerFactoryConfiguration>)
-					cacheConfiguration.getCacheEventListenerConfigurations(),
-				classLoader, usingDefault),
-			isRequireSerialization(cacheConfiguration));
-	}
-
 	protected Properties parseProperties(
 		String propertiesString, String propertySeparator) {
 
@@ -269,8 +256,14 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 			PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT);
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
-			parseCacheListenerConfigurations(
-				defaultCacheConfiguration, classLoader, usingDefault);
+			new EhcachePortalCacheConfiguration(
+				defaultCacheConfiguration.getName(),
+				_parseCacheEventListenerConfigurations(
+					(List<CacheEventListenerFactoryConfiguration>)
+						defaultCacheConfiguration.
+							getCacheEventListenerConfigurations(),
+					classLoader, usingDefault),
+				isRequireSerialization(defaultCacheConfiguration));
 
 		Set<PortalCacheConfiguration> portalCacheConfigurations =
 			new HashSet<>();
@@ -281,9 +274,17 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		for (Map.Entry<String, CacheConfiguration> entry :
 				cacheConfigurations.entrySet()) {
 
+			CacheConfiguration cacheConfiguration = entry.getValue();
+
 			portalCacheConfigurations.add(
-				parseCacheListenerConfigurations(
-					entry.getValue(), classLoader, usingDefault));
+				new EhcachePortalCacheConfiguration(
+					cacheConfiguration.getName(),
+					_parseCacheEventListenerConfigurations(
+						(List<CacheEventListenerFactoryConfiguration>)
+							cacheConfiguration.
+								getCacheEventListenerConfigurations(),
+						classLoader, usingDefault),
+					isRequireSerialization(cacheConfiguration)));
 		}
 
 		return new PortalCacheManagerConfiguration(

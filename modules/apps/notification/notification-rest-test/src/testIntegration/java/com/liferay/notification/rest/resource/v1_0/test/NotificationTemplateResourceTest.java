@@ -5,18 +5,33 @@
 
 package com.liferay.notification.rest.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationRecipientConstants;
+import com.liferay.notification.constants.NotificationRecipientSettingConstants;
+import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Gabriel Albuquerque
@@ -78,6 +93,57 @@ public class NotificationTemplateResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetNotificationTemplatesPage() throws Exception {
+	}
+
+	@FeatureFlags("LPD-11165")
+	@Override
+	@Test
+	public void testPostNotificationTemplate() throws Exception {
+		super.testPostNotificationTemplate();
+
+		JSONArray jsonArray = JSONUtil.putAll(
+			JSONUtil.put(
+				NotificationRecipientSettingConstants.NAME_FROM,
+				RandomTestUtil.randomString()
+			).put(
+				NotificationRecipientSettingConstants.NAME_FROM_NAME,
+				RandomTestUtil.randomString()
+			).put(
+				NotificationRecipientSettingConstants.NAME_TO,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
+						AccountRoleConstants.
+							REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
+					JSONUtil.put(
+						NotificationRecipientSettingConstants.NAME_ROLE_NAME,
+						AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER))
+			).put(
+				NotificationRecipientSettingConstants.NAME_TO_TYPE,
+				NotificationRecipientConstants.TYPE_ROLE
+			));
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"editorType",
+				NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"recipients", jsonArray
+			).put(
+				"subject",
+				JSONUtil.put(
+					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					RandomTestUtil.randomString())
+			).put(
+				"type", NotificationConstants.TYPE_EMAIL
+			).toString(),
+			"notification/v1.0/notification-templates", Http.Method.POST);
+
+		JSONAssert.assertEquals(
+			jsonArray.toString(), jsonObject.getString("recipients"),
+			JSONCompareMode.NON_EXTENSIBLE);
 	}
 
 	@Override
@@ -197,5 +263,8 @@ public class NotificationTemplateResourceTest
 		return notificationTemplateResource.postNotificationTemplate(
 			notificationTemplate);
 	}
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 }

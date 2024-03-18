@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 import com.liferay.translation.constants.TranslationPortletKeys;
+import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
 import java.util.Date;
@@ -74,6 +75,14 @@ public class UpdateTranslationMVCActionCommandTest {
 	@Test
 	public void testDoProcessAction() throws Exception {
 		JournalArticle journalArticle = _addArticle();
+
+		TranslationEntry translationEntry =
+			_translationEntryLocalService.fetchTranslationEntry(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey(),
+				LocaleUtil.SPAIN.toString());
+
+		Assert.assertNull(translationEntry);
 
 		_mvcActionCommand.processAction(
 			_getMockActionRequest(
@@ -115,11 +124,19 @@ public class UpdateTranslationMVCActionCommandTest {
 		Assert.assertNotNull(value);
 		Assert.assertEquals("name spanish", value.getString(LocaleUtil.SPAIN));
 
-		Assert.assertNotNull(
-			_translationEntryLocalService.fetchTranslationEntry(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey(),
-				LocaleUtil.SPAIN.toString()));
+		translationEntry = _translationEntryLocalService.fetchTranslationEntry(
+			JournalArticle.class.getName(), journalArticle.getResourcePrimKey(),
+			LocaleUtil.SPAIN.toString());
+
+		try {
+			Assert.assertNotNull(translationEntry);
+		}
+		finally {
+			if (translationEntry != null) {
+				_translationEntryLocalService.deleteTranslationEntry(
+					translationEntry);
+			}
+		}
 	}
 
 	@FeatureFlags("LPD-11253")

@@ -123,241 +123,21 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		Assert.assertEquals(1L, searchPage.getTotalCount());
 		Assert.assertEquals(1L, searchPage.getPage());
-	}
 
-	@Test
-	public void testPostSearchPageWithCategoryFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false, null, "category", _assetCategory.getCategoryId(),
-			String.valueOf(_assetCategory.getCategoryId()));
-	}
-
-	@Test
-	public void testPostSearchPageWithCategoryTreeFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false,
-			HashMapBuilder.<String, Object>put(
-				"mode", "tree"
-			).put(
-				"vocabularyIds",
-				new String[] {String.valueOf(_assetCategory.getVocabularyId())}
-			).build(),
-			"category", _assetCategory.getCategoryId(),
-			String.valueOf(_assetCategory.getCategoryId()));
-	}
-
-	@Test
-	public void testPostSearchPageWithCustomFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false,
-			HashMapBuilder.<String, Object>put(
-				"field", Field.COMPANY_ID
-			).build(),
-			"custom", testCompany.getCompanyId(),
-			String.valueOf(testCompany.getCompanyId()));
-	}
-
-	@Test
-	public void testPostSearchPageWithDateRangeFacetConfiguration()
-		throws Exception {
-
-		LocalDateTime startOfDayLocalDateTime = LocalDateTime.of(
-			LocalDate.now(), LocalTime.MIN);
-
-		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
-
-		String range = StringBundler.concat(
-			DateFormatUtils.format(
-				Date.from(
-					startOfDayLocalDateTime.toInstant(ZoneOffset.ofHours(0))),
-				"yyyyMMddHHmmss"),
-			" TO ", DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"));
-
-		rangesJSONArray.put(
-			JSONUtil.put(
-				"label", "1"
-			).put(
-				"range", range
-			));
-
-		SearchPage<SearchResult> searchPage = _assertFacetConfiguration(
-			false,
-			HashMapBuilder.<String, Object>put(
-				"field", "modified"
-			).put(
-				"format", "yyyyMMddHHmmss"
-			).put(
-				"ranges", rangesJSONArray
-			).build(),
-			"date-range", range, range);
-
-		Map<String, Object> facetsMap =
-			(Map<String, Object>)searchPage.getSearchFacets();
-
-		JSONArray termJSONArray = (JSONArray)facetsMap.get("date-range");
-
-		Assert.assertEquals(
-			"1",
-			_jsonFactory.createJSONObject(
-				termJSONArray.getString(0)
-			).getString(
-				"displayName"
-			));
-	}
-
-	@Test
-	public void testPostSearchPageWithEmbeddedNestedFields() throws Exception {
-		ObjectDefinition objectDefinition =
-			_addObjectDefinitionWithObjectEntry();
-
-		SearchPage<SearchResult> searchPage = _postSearchPage(
-			objectDefinition.getClassName(), null,
-			objectDefinition.getUserName(), "embedded",
-			new SearchRequestBody());
-
-		Collection<SearchResult> searchResults = searchPage.getItems();
-
-		Assert.assertFalse(searchResults.isEmpty());
-
-		for (SearchResult searchResult : searchResults) {
-			Assert.assertNotNull(searchResult.getEmbedded());
-		}
-	}
-
-	@Test
-	public void testPostSearchPageWithFolderFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false, null, "folder", _journalArticle.getFolderId(),
-			String.valueOf(_journalArticle.getFolderId()));
-	}
-
-	@Test
-	public void testPostSearchPageWithHighlightConfiguration()
-		throws Exception {
-
-		SearchPage<SearchResult> searchPage =
-			_postSearchPageWithSXPBlueprintConfiguration(
-				_user.getModelClassName(), _user.getFullName(),
-				_addSXPBlueprint(true));
-
-		List<SearchResult> searchResults = ListUtil.fromCollection(
-			searchPage.getItems());
-
-		Assert.assertFalse(searchResults.isEmpty());
-
-		Assert.assertTrue(
-			ListUtil.count(
-				searchResults,
-				searchResult -> Objects.equals(
-					searchResult.getTitle(), _getUserHighlightedFullName())) >=
-						1);
-	}
-
-	@Test
-	public void testPostSearchPageWithNestedFacetConfiguration()
-		throws Exception {
-
-		_addJournalArticleWithDDMStructure();
-
-		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
-			return;
-		}
-
-		_assertFacetConfiguration(
-			false,
-			HashMapBuilder.<String, Object>put(
-				"field",
-				"ddmFieldArray.ddmFieldValueKeyword_" +
-					LocaleUtil.toLanguageId(_locale)
-			).put(
-				"filterField", "ddmFieldArray.ddmFieldName"
-			).put(
-				"filterValue",
-				StringBundler.concat(
-					"ddm__keyword__", _ddmStructure.getStructureId(), "__name_",
-					LocaleUtil.toLanguageId(_locale))
-			).put(
-				"path", "ddmFieldArray"
-			).build(),
-			"nested", "test", "test");
-	}
-
-	@Test
-	public void testPostSearchPageWithoutHighlightConfiguration()
-		throws Exception {
-
-		SearchPage<SearchResult> searchPage =
-			_postSearchPageWithSXPBlueprintConfiguration(
-				_user.getModelClassName(), _user.getFullName(),
-				_addSXPBlueprint(false));
-
-		List<SearchResult> searchResults = ListUtil.fromCollection(
-			searchPage.getItems());
-
-		Assert.assertFalse(searchResults.isEmpty());
-
-		Assert.assertTrue(
-			ListUtil.count(
-				searchResults,
-				searchResult -> Objects.equals(
-					searchResult.getTitle(), _user.getFullName())) >= 1);
-
-		Assert.assertEquals(
-			0,
-			ListUtil.count(
-				searchResults,
-				searchResult -> Objects.equals(
-					searchResult.getTitle(), _getUserHighlightedFullName())));
-	}
-
-	@Test
-	public void testPostSearchPageWithSiteFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			true, null, "site", testGroup.getGroupId(),
-			String.valueOf(testGroup.getGroupId()));
-	}
-
-	@Test
-	public void testPostSearchPageWithTagFacetConfiguration() throws Exception {
-		_assertFacetConfiguration(
-			true, null, "tag", _assetTag.getName(), _assetTag.getName());
-	}
-
-	@Test
-	public void testPostSearchPageWithTypeFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			false, null, "type", StringPool.BLANK,
-			JournalArticle.class.getName(), JournalFolder.class.getName(),
-			User.class.getName());
-	}
-
-	@Test
-	public void testPostSearchPageWithUserFacetConfiguration()
-		throws Exception {
-
-		_assertFacetConfiguration(
-			true, null, "user", StringUtil.toLowerCase(_user.getFullName()),
-			String.valueOf(_user.getUserId()));
-	}
-
-	@Test
-	public void testPostSearchPageZeroResults() throws Exception {
-		SearchPage<SearchResult> searchPage = _postSearchPage(
-			"shouldnotmatchanything");
-
-		Assert.assertEquals(0L, searchPage.getTotalCount());
+		_testPostSearchPageWithCategoryFacetConfiguration();
+		_testPostSearchPageWithCategoryTreeFacetConfiguration();
+		_testPostSearchPageWithCustomFacetConfiguration();
+		_testPostSearchPageWithDateRangeFacetConfiguration();
+		_testPostSearchPageWithEmbeddedNestedFields();
+		_testPostSearchPageWithFolderFacetConfiguration();
+		_testPostSearchPageWithHighlightConfiguration();
+		_testPostSearchPageWithNestedFacetConfiguration();
+		_testPostSearchPageWithSiteFacetConfiguration();
+		_testPostSearchPageWithTagFacetConfiguration();
+		_testPostSearchPageWithTypeFacetConfiguration();
+		_testPostSearchPageWithUserFacetConfiguration();
+		_testPostSearchPageWithoutHighlightConfiguration();
+		_testPostSearchPageZeroResults();
 	}
 
 	private AssetCategory _addAssetCategory(
@@ -699,6 +479,231 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		return _postSearchPage(
 			entryClassNames, null, keywords, null, searchRequestBody);
+	}
+
+	private void _testPostSearchPageWithCategoryFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			false, null, "category", _assetCategory.getCategoryId(),
+			String.valueOf(_assetCategory.getCategoryId()));
+	}
+
+	private void _testPostSearchPageWithCategoryTreeFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			false,
+			HashMapBuilder.<String, Object>put(
+				"mode", "tree"
+			).put(
+				"vocabularyIds",
+				new String[] {String.valueOf(_assetCategory.getVocabularyId())}
+			).build(),
+			"category", _assetCategory.getCategoryId(),
+			String.valueOf(_assetCategory.getCategoryId()));
+	}
+
+	private void _testPostSearchPageWithCustomFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			false,
+			HashMapBuilder.<String, Object>put(
+				"field", Field.COMPANY_ID
+			).build(),
+			"custom", testCompany.getCompanyId(),
+			String.valueOf(testCompany.getCompanyId()));
+	}
+
+	private void _testPostSearchPageWithDateRangeFacetConfiguration()
+		throws Exception {
+
+		LocalDateTime startOfDayLocalDateTime = LocalDateTime.of(
+			LocalDate.now(), LocalTime.MIN);
+
+		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
+
+		String range = StringBundler.concat(
+			DateFormatUtils.format(
+				Date.from(
+					startOfDayLocalDateTime.toInstant(ZoneOffset.ofHours(0))),
+				"yyyyMMddHHmmss"),
+			" TO ", DateFormatUtils.format(new Date(), "yyyyMMddHHmmss"));
+
+		rangesJSONArray.put(
+			JSONUtil.put(
+				"label", "1"
+			).put(
+				"range", range
+			));
+
+		SearchPage<SearchResult> searchPage = _assertFacetConfiguration(
+			false,
+			HashMapBuilder.<String, Object>put(
+				"field", "modified"
+			).put(
+				"format", "yyyyMMddHHmmss"
+			).put(
+				"ranges", rangesJSONArray
+			).build(),
+			"date-range", range, range);
+
+		Map<String, Object> facetsMap =
+			(Map<String, Object>)searchPage.getSearchFacets();
+
+		JSONArray termJSONArray = (JSONArray)facetsMap.get("date-range");
+
+		Assert.assertEquals(
+			"1",
+			_jsonFactory.createJSONObject(
+				termJSONArray.getString(0)
+			).getString(
+				"displayName"
+			));
+	}
+
+	private void _testPostSearchPageWithEmbeddedNestedFields()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_addObjectDefinitionWithObjectEntry();
+
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			objectDefinition.getClassName(), null,
+			objectDefinition.getUserName(), "embedded",
+			new SearchRequestBody());
+
+		Collection<SearchResult> searchResults = searchPage.getItems();
+
+		Assert.assertFalse(searchResults.isEmpty());
+
+		for (SearchResult searchResult : searchResults) {
+			Assert.assertNotNull(searchResult.getEmbedded());
+		}
+	}
+
+	private void _testPostSearchPageWithFolderFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			false, null, "folder", _journalArticle.getFolderId(),
+			String.valueOf(_journalArticle.getFolderId()));
+	}
+
+	private void _testPostSearchPageWithHighlightConfiguration()
+		throws Exception {
+
+		SearchPage<SearchResult> searchPage =
+			_postSearchPageWithSXPBlueprintConfiguration(
+				_user.getModelClassName(), _user.getFullName(),
+				_addSXPBlueprint(true));
+
+		List<SearchResult> searchResults = ListUtil.fromCollection(
+			searchPage.getItems());
+
+		Assert.assertFalse(searchResults.isEmpty());
+
+		Assert.assertTrue(
+			ListUtil.count(
+				searchResults,
+				searchResult -> Objects.equals(
+					searchResult.getTitle(), _getUserHighlightedFullName())) >=
+						1);
+	}
+
+	private void _testPostSearchPageWithNestedFacetConfiguration()
+		throws Exception {
+
+		_addJournalArticleWithDDMStructure();
+
+		if (Objects.equals(_searchEngine.getVendor(), "Solr")) {
+			return;
+		}
+
+		_assertFacetConfiguration(
+			false,
+			HashMapBuilder.<String, Object>put(
+				"field",
+				"ddmFieldArray.ddmFieldValueKeyword_" +
+					LocaleUtil.toLanguageId(_locale)
+			).put(
+				"filterField", "ddmFieldArray.ddmFieldName"
+			).put(
+				"filterValue",
+				StringBundler.concat(
+					"ddm__keyword__", _ddmStructure.getStructureId(), "__name_",
+					LocaleUtil.toLanguageId(_locale))
+			).put(
+				"path", "ddmFieldArray"
+			).build(),
+			"nested", "test", "test");
+	}
+
+	private void _testPostSearchPageWithoutHighlightConfiguration()
+		throws Exception {
+
+		SearchPage<SearchResult> searchPage =
+			_postSearchPageWithSXPBlueprintConfiguration(
+				_user.getModelClassName(), _user.getFullName(),
+				_addSXPBlueprint(false));
+
+		List<SearchResult> searchResults = ListUtil.fromCollection(
+			searchPage.getItems());
+
+		Assert.assertFalse(searchResults.isEmpty());
+
+		Assert.assertTrue(
+			ListUtil.count(
+				searchResults,
+				searchResult -> Objects.equals(
+					searchResult.getTitle(), _user.getFullName())) >= 1);
+
+		Assert.assertEquals(
+			0,
+			ListUtil.count(
+				searchResults,
+				searchResult -> Objects.equals(
+					searchResult.getTitle(), _getUserHighlightedFullName())));
+	}
+
+	private void _testPostSearchPageWithSiteFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			true, null, "site", testGroup.getGroupId(),
+			String.valueOf(testGroup.getGroupId()));
+	}
+
+	private void _testPostSearchPageWithTagFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			true, null, "tag", _assetTag.getName(), _assetTag.getName());
+	}
+
+	private void _testPostSearchPageWithTypeFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			false, null, "type", StringPool.BLANK,
+			JournalArticle.class.getName(), JournalFolder.class.getName(),
+			User.class.getName());
+	}
+
+	private void _testPostSearchPageWithUserFacetConfiguration()
+		throws Exception {
+
+		_assertFacetConfiguration(
+			true, null, "user", StringUtil.toLowerCase(_user.getFullName()),
+			String.valueOf(_user.getUserId()));
+	}
+
+	private void _testPostSearchPageZeroResults() throws Exception {
+		SearchPage<SearchResult> searchPage = _postSearchPage(
+			"shouldnotmatchanything");
+
+		Assert.assertEquals(0L, searchPage.getTotalCount());
 	}
 
 	private SearchPage<SearchResult> _toSearchPage(JSONObject jsonObject) {

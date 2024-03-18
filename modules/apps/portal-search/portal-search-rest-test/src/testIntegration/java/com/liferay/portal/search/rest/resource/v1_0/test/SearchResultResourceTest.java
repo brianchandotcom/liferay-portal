@@ -327,7 +327,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	private String _getEndpoint(
-			String entryClassNames, String filter, String keywords,
+			String entryClassNames, String filterString, String keywords,
 			String nestedFields)
 		throws Exception {
 
@@ -339,9 +339,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 					URLEncoder.encode(entryClassNames, StringPool.UTF8);
 		}
 
-		if (!Validator.isBlank(filter)) {
+		if (!Validator.isBlank(filterString)) {
 			endpoint +=
-				"&filter=" + URLEncoder.encode(filter, StringPool.UTF8);
+				"&filter=" + URLEncoder.encode(filterString, StringPool.UTF8);
 		}
 
 		if (!Validator.isBlank(nestedFields)) {
@@ -398,7 +398,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	}
 
 	private SearchPage<SearchResult> _postSearchPage(
-			String entryClassNames, String filter, String keywords,
+			String entryClassNames, String filterString, String keywords,
 			String nestedFields, SearchRequestBody searchRequestBody)
 		throws Exception {
 
@@ -406,7 +406,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			HTTPTestUtil.invokeToJSONObject(
 				searchRequestBody.toString(),
 				_getEndpoint(
-					entryClassNames, filter, keywords, nestedFields),
+					entryClassNames, filterString, keywords, nestedFields),
 				Http.Method.POST));
 	}
 

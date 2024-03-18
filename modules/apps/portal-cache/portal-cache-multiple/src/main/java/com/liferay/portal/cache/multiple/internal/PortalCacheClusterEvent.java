@@ -27,16 +27,6 @@ public class PortalCacheClusterEvent implements Serializable {
 		Serializable elementKey,
 		PortalCacheClusterEventType portalCacheClusterEventType) {
 
-		this(
-			portalCacheManagerName, portalCacheName, elementKey, null,
-			PortalCache.DEFAULT_TIME_TO_LIVE, portalCacheClusterEventType);
-	}
-
-	public PortalCacheClusterEvent(
-		String portalCacheManagerName, String portalCacheName,
-		Serializable elementKey, Serializable elementValue, int timeToLive,
-		PortalCacheClusterEventType portalCacheClusterEventType) {
-
 		if (portalCacheManagerName == null) {
 			throw new NullPointerException("Portal cache manager name is null");
 		}
@@ -57,17 +47,10 @@ public class PortalCacheClusterEvent implements Serializable {
 			throw new NullPointerException("Element key is null");
 		}
 
-		if (timeToLive < 0) {
-			throw new IllegalArgumentException("Time to live is negative");
-		}
-
 		_portalCacheManagerName = portalCacheManagerName;
 		_portalCacheName = portalCacheName;
 		_elementKey = new SerializableObjectWrapper(elementKey);
-		_timeToLive = timeToLive;
 		_portalCacheClusterEventType = portalCacheClusterEventType;
-
-		setElementValue(elementValue);
 	}
 
 	public long getCompanyId() {
@@ -174,6 +157,6 @@ public class PortalCacheClusterEvent implements Serializable {
 	private final PortalCacheClusterEventType _portalCacheClusterEventType;
 	private final String _portalCacheManagerName;
 	private final String _portalCacheName;
-	private int _timeToLive;
+	private int _timeToLive = PortalCache.DEFAULT_TIME_TO_LIVE;
 
 }

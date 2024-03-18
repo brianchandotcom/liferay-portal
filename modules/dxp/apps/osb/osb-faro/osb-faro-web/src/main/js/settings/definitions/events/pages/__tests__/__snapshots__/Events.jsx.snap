@@ -79,7 +79,9 @@ exports[`Events should render 1`] = `
             >
               <span
                 class="navbar-text-truncate"
-              />
+              >
+                Default Events
+              </span>
               <svg
                 class="lexicon-icon lexicon-icon-caret-bottom"
                 role="presentation"

@@ -254,15 +254,11 @@ test('changes the value in the Color Picker when the reset button is clicked', a
 
 	await page.getByLabel('Reset to Initial Value').click();
 
-	// Click on the input and delete 5 times
+	// Check the value gets at least six characters
 
 	await backgroundColorInput.click();
 
-	for (let i = 0; i < 5; i++) {
-		await page.keyboard.press('Backspace', {delay: 1000});
-	}
-
-	await backgroundColorInput.blur();
+	await fillAndClickOutside(page, backgroundColorInput, '#000');
 
 	await expect(backgroundColorInput).toHaveValue('#000000');
 });

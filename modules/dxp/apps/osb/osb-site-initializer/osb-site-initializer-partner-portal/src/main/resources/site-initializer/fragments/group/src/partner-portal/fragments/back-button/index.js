@@ -11,10 +11,10 @@ if (backButton) {
 	backButton.onclick = () => {
 		const urlParams = new URLSearchParams(window.location.href);
 
-		if (urlParams.has('returnurl')) {
-			const returnUrl = urlParams.get('returnurl');
+		if (urlParams.has('p_l_back_url')) {
+			const backURL = urlParams.get('p_l_back_url');
 
-			location.assign(`${siteURL}${returnUrl}`);
+			location.assign(`${siteURL}${decodeURIComponent(backURL)}`);
 		}
 		else {
 			history.back();

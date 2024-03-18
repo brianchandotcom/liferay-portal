@@ -76,7 +76,7 @@ const Table = <T extends unknown>({
 									) : (
 										<span
 											className={classNames(
-												'table-cell-items',
+												'table-cell-item',
 												{
 													'text-ellipsis-lg':
 														column.size === 'lg',

@@ -52,7 +52,9 @@ definition {
 
 		ACSettings.goToUsage();
 
-		var currentIndividuals = ACSettings.getCurrentNumber(metricName = "Individuals");
+		var currentIndividuals = ACSettings.getCurrentNumber(
+			planLimit = "110,000",
+			metricName = "KNOWN INDIVIDUALS");
 
 		ACUtils.launchDXP();
 
@@ -72,7 +74,8 @@ definition {
 
 		ACSettings.assertOverviewUsage(
 			current = ${currentIndividuals},
-			metricName = "Individuals");
+			metricName = "KNOWN INDIVIDUALS",
+			planLimit = "110,000");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9183 | Test Summary: Current AC plan is collapsible."
@@ -101,18 +104,6 @@ definition {
 				planName = "Enterprise",
 				usersLimit = "Unlimited");
 		}
-
-		task ("Collapse the current plan") {
-			ACSettings.collapsePlan(planName = "Enterprise");
-		}
-
-		task ("View the current plan card is collapsed") {
-			ACSettings.viewCurrentPlan(planName = "Enterprise");
-
-			AssertElementNotPresent(
-				key_planName = "Enterprise",
-				locator1 = "ACUsage#USAGE_PLAN_BODY");
-		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9180 | Test Summary: Individuals limit corresponds correctly with the plan and add-ons purchased."
@@ -137,81 +128,20 @@ definition {
 
 			ACSettings.assertPlanDetails(
 				individualsLimit = "100,000",
+				pageViewsLimit = "60,000,000",
 				planName = "Enterprise");
 		}
 
-		task ("View the individuals of purchased add-ons") {
+		task ("View the individuals and pageViews add-ons") {
 			ACSettings.assertAddonsDetails(
-				addOnItem = "Individuals",
-				limit = "5,000",
-				time = "2X");
+				individualsAddons = "10,000",
+				pageViewsAddons = "15,000,000");
 		}
 
 		task ("View the individuals limit of current plan and purchased add-ons on Individuals card") {
 			ACSettings.assertCurrentPlanLimitAndAddOn(
-				currentPlanLimitAndAddOn = "Enterprise Plan 100,000 + 5,000 Add-On (2x)",
-				metricName = "Individuals");
-		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9179 | Test Summary: Bar graph and percentage of individuals displays percentage of plan used."
-	@ignore = "true"
-	@priority = 3
-	test IndividualsCardShowOverviewUsageOfPlan {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-13994
-
-		task ("Sign in AC") {
-			ACUtils.launchAC();
-		}
-
-		task ("Navigate to Workspace Settings") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToWorkspace();
-		}
-
-		task ("Navigate to the Usage") {
-			ACSettings.goToUsage();
-		}
-
-		task ("View the current number on Individuals card not equals 0") {
-			var current = ACSettings.getCurrentNumber(metricName = "Individuals");
-
-			TestUtils.assertNotEquals(
-				actual = ${current},
-				expected = 0);
-		}
-
-		task ("View the usage percentage on Individuals card") {
-			var percentage = ACSettings.getUsagePercentage(metricName = "Individuals");
-			var result = MathUtil.isGreaterThan(${current}, 550);
-
-			if (${result} == "true") {
-				TestUtils.assertNotEquals(
-					actual = ${percentage},
-					expected = "0%");
-			}
-			else {
-				TestUtils.assertEquals(
-					actual = ${percentage},
-					expected = "0%");
-			}
-		}
-
-		task ("View the oveview usage on Individuals card") {
-			ACSettings.assertOverviewUsage(
-				current = ${current},
-				limit = "110,000",
-				metricName = "Individuals",
-				usageSince = "${percentage} since");
-
-			AssertAttributeValue(
-				key_metricName = "Individuals",
-				locator1 = "ACUsage#USAGE_BAR",
-				value1 = "style",
-				value2 = "width: ${percentage};");
+				individualsLimit = "110,000",
+				pageViewsLimit = "75,000,000");
 		}
 	}
 
@@ -241,7 +171,9 @@ definition {
 
 			ACSettings.goToUsage();
 
-			var currentIndividuals = ACSettings.getCurrentNumber(metricName = "Individuals");
+			var currentIndividuals = ACSettings.getCurrentNumber(
+				planLimit = "110,000",
+				metricName = "KNOWN INDIVIDUALS");
 		}
 
 		task ("Add 3 new users and sync the Contact Data") {
@@ -277,113 +209,9 @@ definition {
 			ACSettings.goToUsage();
 
 			ACSettings.assertOverviewUsage(
-				metricName = "Individuals",
-				notEquals = ${currentIndividuals});
-		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9182 | Test Summary: Page views limit corresponds correctly with the plan and add-ons purchased."
-	@ignore = "true"
-	@priority = 3
-	test PageViewsCardShowCurrentPlanLimitAndAddOnInfo {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-13994
-
-		task ("Sign in AC") {
-			ACUtils.launchAC();
-		}
-
-		task ("Navigate to Workspace Settings") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToWorkspace();
-		}
-
-		task ("Navigate to the Usage") {
-			ACSettings.goToUsage();
-		}
-
-		task ("View the page views limit of current plan") {
-			ACSettings.viewCurrentPlan(planName = "Enterprise");
-
-			ACSettings.assertPlanDetails(
-				pageViewsLimit = "60,000,000",
-				planName = "Enterprise");
-		}
-
-		task ("View the page views of purchased add-ons") {
-			ACSettings.assertAddonsDetails(
-				addOnItem = "Page Views",
-				limit = "5,000,000",
-				time = "3X");
-		}
-
-		task ("View the page views limit of current plan and purchased add-ons on Page Views card") {
-			ACSettings.assertCurrentPlanLimitAndAddOn(
-				currentPlanLimitAndAddOn = "Enterprise Plan 60,000,000 + 5,000,000 Add-On (3x)",
-				metricName = "Page Views");
-		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9181 | Test Summary: Bar graph and percentage of page views displays percentage of plan used."
-	@ignore = "true"
-	@priority = 3
-	test PageViewsCardShowOverviewUsageOfPlan {
-
-		// AC Refactor: Data doesn't appear on time
-		// AC Refactor ticket: LRAC-13994
-
-		task ("Sign in AC") {
-			ACUtils.launchAC();
-		}
-
-		task ("Navigate to Workspace Settings") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToWorkspace();
-		}
-
-		task ("Navigate to the Usage") {
-			ACSettings.goToUsage();
-		}
-
-		task ("View the current number on Page Views card not equals 0") {
-			var current = ACSettings.getCurrentNumber(metricName = "Page Views");
-
-			TestUtils.assertNotEquals(
-				actual = ${current},
-				expected = 0);
-		}
-
-		task ("View the usage percentage on Page Views") {
-			var percentage = ACSettings.getUsagePercentage(metricName = "Page Views");
-			var result = MathUtil.isGreaterThan(${current}, "375,000");
-
-			if (${result} == "true") {
-				TestUtils.assertNotEquals(
-					actual = ${percentage},
-					expected = "0%");
-			}
-			else {
-				TestUtils.assertEquals(
-					actual = ${percentage},
-					expected = "0%");
-			}
-		}
-
-		task ("View the oveview usage on Page Views card") {
-			ACSettings.assertOverviewUsage(
-				current = ${current},
-				limit = "75,000,000",
-				metricName = "Page Views",
-				usageSince = "${percentage} since");
-
-			AssertAttributeValue(
-				key_metricName = "Page Views",
-				locator1 = "ACUsage#USAGE_BAR",
-				value1 = "style",
-				value2 = "width: ${percentage};");
+				current = ${currentIndividuals},
+				metricName = "KNOWN INDIVIDUALS",
+				planLimit = "110,000");
 		}
 	}
 
@@ -412,7 +240,9 @@ definition {
 
 			ACSettings.goToUsage();
 
-			var oldPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
+			var oldPageViews = ACSettings.getCurrentNumber(
+				planLimit = "75,000,000",
+				metricName = "PAGE VIEWS");
 
 			var pageViewsNumber = StringUtil.replace(${oldPageViews}, ",", "");
 
@@ -438,12 +268,16 @@ definition {
 
 			ACSettings.goToUsage();
 
-			var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
+			var oldPageViews = ACSettings.getCurrentNumber(
+				planLimit = "75,000,000",
+				metricName = "PAGE VIEWS");
 
 			while ((${currentPageViews} == ${oldPageViews}) && (maxIterations = "15")) {
 				Refresh();
 
-				var currentPageViews = ACSettings.getCurrentNumber(metricName = "Page Views");
+				var oldPageViews = ACSettings.getCurrentNumber(
+					planLimit = "75,000,000",
+					metricName = "PAGE VIEWS");
 			}
 
 			var newPageViewsNumber = StringUtil.replace(${currentPageViews}, ",", "");

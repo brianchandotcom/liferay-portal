@@ -1171,6 +1171,7 @@ public class ObjectDefinitionLocalServiceImpl
 			pluralLabelMap, scope, status);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition updateExternalReferenceCode(
 			long objectDefinitionId, String externalReferenceCode)
@@ -1229,6 +1230,7 @@ public class ObjectDefinitionLocalServiceImpl
 		return objectDefinition;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition updateRootObjectDefinitionId(
 			long objectDefinitionId, long rootObjectDefinitionId)

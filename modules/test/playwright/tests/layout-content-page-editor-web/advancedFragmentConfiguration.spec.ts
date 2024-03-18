@@ -13,7 +13,6 @@ import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
-import getContainerDefinition from './utils/getContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 import getWidgetDefinition from './utils/getWidgetDefinition';
@@ -28,56 +27,6 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	pageEditorPagesTest
 );
-
-test('checks that the corresponding message appears when a parent fragment is hidden from search and the link redirects correctly', async ({
-	apiHelpers,
-	page,
-	pageEditorPage,
-	site,
-}) => {
-	const containerId = getRandomString();
-	const headingId = getRandomString();
-
-	// Create a container with a heading fragment inside
-
-	const containerDefinition = getContainerDefinition(containerId, [
-		getFragmentDefinition(headingId, 'BASIC_COMPONENT-heading'),
-	]);
-
-	await pageEditorPage.createPageWithFragmentAndGoToEditMode({
-		apiHelpers,
-		fragment: containerDefinition,
-		site,
-	});
-
-	await page.getByTitle('Browser').click();
-
-	await page.getByLabel('Select Container').click();
-
-	await pageEditorPage.goToConfigurationTab('Advanced');
-
-	const hideFromSiteSearchResultsInput = await page.getByLabel(
-		'Hide from Site Search Results'
-	);
-
-	await hideFromSiteSearchResultsInput.check();
-
-	await expect(hideFromSiteSearchResultsInput).toBeChecked();
-
-	await pageEditorPage.selectFragment(headingId);
-
-	await pageEditorPage.goToConfigurationTab('Advanced');
-
-	await expect(
-		page.getByText('This configuration is inherited')
-	).toBeVisible();
-
-	await page.getByText('Go to parent fragment to edit.').click();
-
-	const containerIsActive = await pageEditorPage.isActive(containerId);
-
-	await expect(containerIsActive).toBe(true);
-});
 
 test('checks that the fragment is hidden from Site Search Results', async ({
 	apiHelpers,

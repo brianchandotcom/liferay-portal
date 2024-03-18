@@ -169,6 +169,10 @@ public class DBPartitionMigrationValidatorExportTest extends MockDatabaseUtil {
 							"disabled environments are not supported"
 					));
 
+				File[] files = outputDirectory.listFiles();
+
+				Assert.assertEquals(Arrays.toString(files), 0, files.length);
+
 				return;
 			}
 

@@ -72,7 +72,7 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 
 	await pageEditorPage.selectFragment(headingId);
 
-	await page.getByText('Publish').click();
+	await pageEditorPage.publishPage();
 
 	// Go to the Search Bar page and search for the fragment text
 
@@ -109,7 +109,7 @@ test('checks that the fragment is hidden from Site Search Results', async ({
 
 	await expect(hideFromSiteSearchResultsInput).toBeChecked();
 
-	await page.getByText('Publish').click();
+	await pageEditorPage.publishPage();
 
 	// Go to the Search Bar page and search for the fragment text
 

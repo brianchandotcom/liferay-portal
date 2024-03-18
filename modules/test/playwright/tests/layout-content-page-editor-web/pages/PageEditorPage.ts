@@ -13,6 +13,8 @@ import getPageDefinition from '../utils/getPageDefinition';
 
 export class PageEditorPage {
 	readonly page: Page;
+
+	readonly publishButton: Locator;
 	readonly redoButton: Locator;
 	readonly undoButton: Locator;
 	readonly undoHistory: Locator;
@@ -20,6 +22,7 @@ export class PageEditorPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.publishButton = page.getByText('Publish');
 		this.redoButton = page.getByTitle('Redo');
 		this.undoButton = page.getByTitle('Undo');
 		this.undoHistory = page.locator('.page-editor__undo-history');
@@ -159,6 +162,14 @@ export class PageEditorPage {
 		await this.goToConfigurationTab('Styles');
 
 		await this.page.getByLabel(spacingType, {exact: true}).click();
+	}
+
+	async publishPage() {
+		await this.publishButton.click();
+
+		await this.page
+			.getByText('Success:The page was published successfully.')
+			.waitFor();
 	}
 
 	async resetSpacing(fragmentId: string, spacingType: SpacingType) {

@@ -278,20 +278,13 @@ public class SiteInitializerSerializerImpl
 		);
 
 		if (!Objects.equals(layout.getTypeSettings(), "")) {
-			String[] tokens = layout.getTypeSettings(
-			).split(
-				"="
-			);
+			String[] tokens = StringUtil.split(
+				layout.getTypeSettings(), CharPool.EQUAL);
 
 			JSONObject typeSettingsjsonObject = JSONUtil.put("key", tokens[0]);
 
-			if (Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
-				typeSettingsjsonObject.put(
-					"value", tokens[1].replace("\n", ""));
-			}
-			else if (Objects.equals(
-						layout.getType(),
-						LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+			if (Objects.equals(
+					layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
 
 				Layout targetLayout = null;
 
@@ -310,6 +303,12 @@ public class SiteInitializerSerializerImpl
 					"value",
 					"[$LAYOUT_ID:" + targetLayout.getName(LocaleUtil.US) +
 						"$]");
+			}
+			else if (Objects.equals(
+						layout.getType(), LayoutConstants.TYPE_URL)) {
+
+				typeSettingsjsonObject.put(
+					"value", tokens[1].replace("\n", ""));
 			}
 
 			pagejsonObject.put(

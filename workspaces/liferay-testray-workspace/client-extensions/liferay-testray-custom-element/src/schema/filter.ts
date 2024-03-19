@@ -765,7 +765,8 @@ const filterSchema = {
 				type: 'checkbox',
 			},
 			overrides(baseFilters.issues, {
-				name: 'subtaskToSubtasksIssues/issueToSubtasksIssues/name',
+				name:
+					'subtaskToSubtasksCasesResults/caseResultToSubtasksCasesResults/caseResultToCaseResultsIssues/issueToCaseResultsIssues/name',
 				operator: 'contains',
 			}),
 			overrides(baseFilters.team, {

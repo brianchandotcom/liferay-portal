@@ -14,6 +14,9 @@ import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThr
 import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration;
 import com.liferay.portal.k8s.agent.mutator.PortalK8sConfigurationPropertiesMutator;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -40,6 +43,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import org.apache.felix.configurator.impl.json.BinUtil;
@@ -74,6 +80,8 @@ public class AgentPortalK8sConfigMapModifier
 	@Activate
 	public AgentPortalK8sConfigMapModifier(
 			BundleContext bundleContext,
+			@Reference ClusterExecutor clusterExecutor,
+			@Reference ClusterMasterExecutor clusterMasterExecutor,
 			@Reference ConfigurationAdmin configurationAdmin,
 			@Reference(
 				target = "(config.plugin.id=org.apache.felix.configadmin.plugin.interpolation)"
@@ -93,6 +101,8 @@ public class AgentPortalK8sConfigMapModifier
 			_log.info("Initializing K8s agent with " + properties);
 		}
 
+		_clusterExecutor = clusterExecutor;
+		_clusterMasterExecutor = clusterMasterExecutor;
 		_configurationAdmin = configurationAdmin;
 		_portalK8sConfigurationPropertiesMutators =
 			portalK8sConfigurationPropertiesMutators;
@@ -104,6 +114,9 @@ public class AgentPortalK8sConfigMapModifier
 
 		_kubernetesClient = new DefaultKubernetesClient(
 			_toConfig(_portalK8sAgentConfiguration));
+
+		_scheduledExecutorService =
+			Executors.newSingleThreadScheduledExecutor();
 
 		_sharedIndexInformer = _toSharedIndexInformer(
 			_kubernetesClient, _portalK8sAgentConfiguration);
@@ -289,6 +302,8 @@ public class AgentPortalK8sConfigMapModifier
 		_sharedIndexInformer.close();
 
 		_kubernetesClient.close();
+
+		_scheduledExecutorService.shutdown();
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Deactivated K8s agent");
@@ -617,6 +632,36 @@ public class AgentPortalK8sConfigMapModifier
 		}
 	}
 
+	private void _run(Runnable runnable) {
+		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
+
+		if (_clusterMasterExecutor.isEnabled() &&
+			!_clusterMasterExecutor.isMaster()) {
+
+			_scheduledExecutorService.schedule(
+				() -> {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Deferred execution on secondary node " +
+								localClusterNode.getClusterNodeId());
+					}
+
+					runnable.run();
+				},
+				_portalK8sAgentConfiguration.deferSecondaryNodeMillis(),
+				TimeUnit.MILLISECONDS);
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Execution on master node " +
+						localClusterNode.getClusterNodeId());
+			}
+
+			runnable.run();
+		}
+	}
+
 	private Config _toConfig(
 		PortalK8sAgentConfiguration portalK8sAgentConfiguration) {
 
@@ -676,21 +721,21 @@ public class AgentPortalK8sConfigMapModifier
 
 				@Override
 				public void onAdd(ConfigMap configMap) {
-					_add(configMap);
+					_run(() -> _add(configMap));
 				}
 
 				@Override
 				public void onDelete(
 					ConfigMap configMap, boolean deletedFinalStateUnknown) {
 
-					_delete(configMap);
+					_run(() -> _delete(configMap));
 				}
 
 				@Override
 				public void onUpdate(
 					ConfigMap oldConfigMap, ConfigMap newConfigMap) {
 
-					_update(oldConfigMap, newConfigMap);
+					_run(() -> _update(oldConfigMap, newConfigMap));
 				}
 
 			}
@@ -856,11 +901,14 @@ public class AgentPortalK8sConfigMapModifier
 		AgentPortalK8sConfigMapModifier.class);
 
 	private final Bundle _bundle;
+	private final ClusterExecutor _clusterExecutor;
+	private final ClusterMasterExecutor _clusterMasterExecutor;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final KubernetesClient _kubernetesClient;
 	private final PortalK8sAgentConfiguration _portalK8sAgentConfiguration;
 	private final List<PortalK8sConfigurationPropertiesMutator>
 		_portalK8sConfigurationPropertiesMutators;
+	private final ScheduledExecutorService _scheduledExecutorService;
 	private final SharedIndexInformer<ConfigMap> _sharedIndexInformer;
 
 }

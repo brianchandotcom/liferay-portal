@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -276,6 +276,89 @@ public class SiteInitializerSerializerImpl
 		}
 	}
 
+	private void _serializeLayout(
+			Layout layout, List<Layout> layouts, ZipWriter zipWriter)
+		throws Exception {
+
+		PageDefinition pageDefinition = _getPageDefinition(layout);
+
+		JSONObject pagejsonObject = JSONUtil.put(
+			"friendlyURL", layout.getFriendlyURL()
+		).put(
+			"friendlyURL", layout.getFriendlyURL()
+		).put(
+			"hidden", layout.isHidden()
+		).put(
+			"name_i18n", JSONUtil.put("en_US", layout.getName(LocaleUtil.US))
+		).put(
+			"priority", layout.getPriority()
+		).put(
+			"private", layout.isPrivateLayout()
+		).put(
+			"system", layout.isSystem()
+		).put(
+			"type", layout.getType()
+		);
+
+		if (!Objects.equals(layout.getTypeSettings(), "")) {
+			String[] tokens = layout.getTypeSettings(
+			).split(
+				"="
+			);
+
+			JSONObject typeSettingsjsonObject = JSONUtil.put("key", tokens[0]);
+
+			if (Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
+				typeSettingsjsonObject.put(
+					"value", tokens[1].replace("\n", ""));
+			}
+			else if (Objects.equals(
+						layout.getType(),
+						LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+
+				Layout targetLayout = null;
+
+				for (Layout loopLayout : layouts) {
+					if (Objects.equals(
+							GetterUtil.getLong(tokens[1].replace("\n", "")),
+							loopLayout.getLayoutId())) {
+
+						targetLayout = loopLayout;
+
+						break;
+					}
+				}
+
+				typeSettingsjsonObject.put(
+					"value",
+					"[$LAYOUT_ID:" + targetLayout.getName(LocaleUtil.US) +
+						"$]");
+			}
+
+			pagejsonObject.put(
+				"typeSettings",
+				_jsonFactory.createJSONArray(
+				).put(
+					typeSettingsjsonObject
+				));
+		}
+
+		String dirName = "layouts/" + _getLayoutDirectory(layout, layouts);
+
+		_addZipEntry(dirName + "/page.json", pagejsonObject, zipWriter);
+
+		if (pageDefinition != null) {
+			_addZipEntry(
+				dirName + "/page-definition.json",
+				JSONUtil.put(
+					"pageElement", pageDefinition.getPageElement()
+				).put(
+					"settings", pageDefinition.getSettings()
+				),
+				zipWriter);
+		}
+	}
+
 	private void _serializeLayouts(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
@@ -283,87 +366,7 @@ public class SiteInitializerSerializerImpl
 			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (Layout layout : layouts) {
-			PageDefinition pageDefinition = _getPageDefinition(layout);
-
-			JSONObject pagejsonObject = JSONUtil.put(
-				"friendlyURL", layout.getFriendlyURL()
-			).put(
-				"friendlyURL", layout.getFriendlyURL()
-			).put(
-				"hidden", layout.isHidden()
-			).put(
-				"name_i18n",
-				JSONUtil.put("en_US", layout.getName(LocaleUtil.US))
-			).put(
-				"priority", layout.getPriority()
-			).put(
-				"private", layout.isPrivateLayout()
-			).put(
-				"system", layout.isSystem()
-			).put(
-				"type", layout.getType()
-			);
-
-			if (!Objects.equals(layout.getTypeSettings(), "")) {
-				String[] tokens = layout.getTypeSettings(
-				).split(
-					"="
-				);
-
-				JSONObject typeSettingsjsonObject = JSONUtil.put(
-					"key", tokens[0]);
-
-				if (Objects.equals(
-						layout.getType(), LayoutConstants.TYPE_URL)) {
-
-					typeSettingsjsonObject.put(
-						"value", tokens[1].replace("\n", ""));
-				}
-				else if (Objects.equals(
-							layout.getType(),
-							LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
-
-					Layout targetLayout = null;
-
-					for (Layout loopLayout : layouts) {
-						if (Objects.equals(
-								GetterUtil.getLong(tokens[1].replace("\n", "")),
-								loopLayout.getLayoutId())) {
-
-							targetLayout = loopLayout;
-
-							break;
-						}
-					}
-
-					typeSettingsjsonObject.put(
-						"value",
-						"[$LAYOUT_ID:" + targetLayout.getName(LocaleUtil.US) +
-							"$]");
-				}
-
-				pagejsonObject.put(
-					"typeSettings",
-					_jsonFactory.createJSONArray(
-					).put(
-						typeSettingsjsonObject
-					));
-			}
-
-			String dirName = "layouts/" + _getLayoutDirectory(layout, layouts);
-
-			_addZipEntry(dirName + "/page.json", pagejsonObject, zipWriter);
-
-			if (pageDefinition != null) {
-				_addZipEntry(
-					dirName + "/page-definition.json",
-					JSONUtil.put(
-						"pageElement", pageDefinition.getPageElement()
-					).put(
-						"settings", pageDefinition.getSettings()
-					),
-					zipWriter);
-			}
+			_serializeLayout(layout, layouts, zipWriter);
 		}
 	}
 

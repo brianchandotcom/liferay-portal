@@ -8,3 +8,7 @@ completed-tasks-cleaner-scan-interval=Completed Tasks Cleaner Scan Interval
 csv-file-column-delimiter=CSV File Column Delimiter
 orphan-scan-interval=Orphan scan Interval
 orphanage-threshold=
+
+test.batch.class.names.excludes=\
+    **/asset-auto-tagger-service/**/*Test.java,\
+    **/asset-auto-tagger-test/**/*Test.java

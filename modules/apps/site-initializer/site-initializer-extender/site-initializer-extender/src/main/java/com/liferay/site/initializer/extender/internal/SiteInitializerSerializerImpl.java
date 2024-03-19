@@ -11,12 +11,21 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -26,6 +35,9 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.site.exception.SerializationException;
 import com.liferay.site.initializer.SiteInitializerSerializer;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -36,6 +48,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,6 +75,7 @@ public class SiteInitializerSerializerImpl
 			_serializeDDMStructures(groupId, zipWriter);
 			_serializeDDMTemplates(groupId, zipWriter);
 			_serializeStyleBookEntries(groupId, zipWriter);
+			_serializeLayouts(groupId, zipWriter);
 
 			return zipWriter.getFile();
 		}
@@ -89,6 +103,69 @@ public class SiteInitializerSerializerImpl
 		throws Exception {
 
 		zipWriter.addEntry("site-initializer/" + fileName, string);
+	}
+
+	private String _getLayoutDirectory(Layout layout, List<Layout> layouts)
+		throws Exception {
+
+		String layoutDirName = _normalize(layout.getName(LocaleUtil.US));
+
+		if (layout.getParentLayoutId() == 0) {
+			return layoutDirName;
+		}
+
+		Layout parentLayout = null;
+
+		for (Layout loopLayout : layouts) {
+			if (Objects.equals(
+					loopLayout.getLayoutId(), layout.getParentLayoutId())) {
+
+				parentLayout = loopLayout;
+
+				break;
+			}
+		}
+
+		return _getLayoutDirectory(parentLayout, layouts) + "/" + layoutDirName;
+	}
+
+	private LayoutStructure _getLayoutStructure(Layout layout) {
+		if (layout.getType(
+			).equalsIgnoreCase(
+				LayoutConstants.TYPE_CONTENT
+			)) {
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						layout.getGroupId(), layout.getPlid());
+
+			return LayoutStructure.of(
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+		}
+
+		return null;
+	}
+
+	private PageDefinition _getPageDefinition(Layout layout) throws Exception {
+		DefaultDTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				true, null, _dtoConverterRegistry, null, layout.getPlid(), null,
+				null, null);
+
+		dtoConverterContext.setAttribute(
+			"embeddedPageDefinition", Boolean.TRUE);
+		dtoConverterContext.setAttribute("groupId", layout.getGroupId());
+		dtoConverterContext.setAttribute("layout", layout);
+
+		LayoutStructure layoutStructure = _getLayoutStructure(layout);
+
+		if (layoutStructure != null) {
+			return _pageDefinitionDTOConverter.toDTO(
+				dtoConverterContext, layoutStructure);
+		}
+
+		return null;
 	}
 
 	private String _normalize(String string) {
@@ -200,6 +277,97 @@ public class SiteInitializerSerializerImpl
 		}
 	}
 
+	private void _serializeLayouts(long groupId, ZipWriter zipWriter)
+		throws Exception {
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (Layout layout : layouts) {
+			PageDefinition pageDefinition = _getPageDefinition(layout);
+
+			JSONObject pagejsonObject = JSONUtil.put(
+				"friendlyURL", layout.getFriendlyURL()
+			).put(
+				"friendlyURL", layout.getFriendlyURL()
+			).put(
+				"hidden", layout.isHidden()
+			).put(
+				"name_i18n",
+				JSONUtil.put("en_US", layout.getName(LocaleUtil.US))
+			).put(
+				"priority", layout.getPriority()
+			).put(
+				"private", layout.isPrivateLayout()
+			).put(
+				"system", layout.isSystem()
+			).put(
+				"type", layout.getType()
+			);
+
+			if (!Objects.equals(layout.getTypeSettings(), "")) {
+				String[] tokens = layout.getTypeSettings(
+				).split(
+					"="
+				);
+
+				JSONObject typeSettingsjsonObject = JSONUtil.put(
+					"key", tokens[0]);
+
+				if (Objects.equals(
+						layout.getType(), LayoutConstants.TYPE_URL)) {
+
+					typeSettingsjsonObject.put(
+						"value", tokens[1].replace("\n", ""));
+				}
+				else if (Objects.equals(
+							layout.getType(),
+							LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+
+					Layout targetLayout = null;
+
+					for (Layout loopLayout : layouts) {
+						if (Objects.equals(
+								GetterUtil.getLong(tokens[1].replace("\n", "")),
+								loopLayout.getLayoutId())) {
+
+							targetLayout = loopLayout;
+
+							break;
+						}
+					}
+
+					typeSettingsjsonObject.put(
+						"value",
+						"[$LAYOUT_ID:" + targetLayout.getName(LocaleUtil.US) +
+							"$]");
+				}
+
+				pagejsonObject.put(
+					"typeSettings",
+					_jsonFactoryUtil.createJSONArray(
+					).put(
+						typeSettingsjsonObject
+					));
+			}
+
+			String dirName = "layouts/" + _getLayoutDirectory(layout, layouts);
+
+			_addZipEntry(dirName + "/page.json", pagejsonObject, zipWriter);
+
+			if (pageDefinition != null) {
+				_addZipEntry(
+					dirName + "/page-definition.json",
+					JSONUtil.put(
+						"pageElement", pageDefinition.getPageElement()
+					).put(
+						"settings", pageDefinition.getSettings()
+					),
+					zipWriter);
+			}
+		}
+	}
+
 	private void _serializeStyleBookEntries(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
@@ -224,7 +392,26 @@ public class SiteInitializerSerializerImpl
 	private DLAppService _dlAppService;
 
 	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private JSONFactoryUtil _jsonFactoryUtil;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.PageDefinitionDTOConverter)"
+	)
+	private DTOConverter<LayoutStructure, PageDefinition>
+		_pageDefinitionDTOConverter;
 
 	@Reference
 	private SAXReader _saxReader;

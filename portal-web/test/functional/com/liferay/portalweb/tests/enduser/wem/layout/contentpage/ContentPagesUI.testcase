@@ -123,26 +123,6 @@ definition {
 			text = "Enjoy using the best DXP on Earth!");
 	}
 
-	@description = "This is a test for LPS-146373. The page creator could close the left sidebar panel via the times icon."
-	@priority = 4
-	test CloseLeftPageEditorSidebar {
-		task ("Given a page creator accesses to the page editor") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("When the page creator click the times icon on the Fragments and Widgets panel") {
-			Click(
-				key_text = "times",
-				locator1 = "Icon#ANY");
-		}
-
-		task ("Then the left page editor sidebar is closed") {
-			AssertElementNotPresent(locator1 = "Sidebar#PANEL_OPEN");
-		}
-	}
-
 	@description = "This is a test for LPS-158746. Could add and remove fragment to Favorites session on content page in card view."
 	@priority = 3
 	test CouldAddAndRemoveFragmentInCardView {

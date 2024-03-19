@@ -1,0 +1,53 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
+import getPageDefinition from './utils/getPageDefinition';
+
+export const test = mergeTests(
+	apiHelpersTest,
+	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+	}),
+	isolatedSiteTest,
+	pageEditorPagesTest
+);
+
+const PANELS = [
+	'Fragments and Widgets',
+	'Browser',
+	'Page Design Options',
+	'Page Rules',
+	'Page Content',
+	'Comments',
+];
+
+test('renders all panel buttons in the vertical bar', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await page.goto('/');
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage(
+		site.id,
+		'home',
+		getPageDefinition([])
+	);
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	for (const panel of PANELS) {
+		await expect(page.getByLabel(panel, {exact: true})).toBeVisible();
+	}
+});

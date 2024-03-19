@@ -11,7 +11,7 @@ import ClayManagementToolbar, {
 	ClayResultsBar,
 } from '@clayui/management-toolbar';
 import ClayModal from '@clayui/modal';
-import {fetch, sub} from 'frontend-js-web';
+import {fetch} from 'frontend-js-web';
 import React, {ComponentProps, useEffect, useState} from 'react';
 
 import {FDSViewType} from '../../../../FDSViews';
@@ -312,17 +312,15 @@ const AddFieldsModalContent = ({
 								<ClayResultsBar.Item expand>
 									<span className="component-text text-truncate-inline">
 										<span className="text-truncate">
-											{sub(
-												selectedKeys.size === 1
-													? Liferay.Language.get(
-															'x-result-for-x'
-													  )
-													: Liferay.Language.get(
-															'x-results-for-x'
-													  ),
-												selectedKeys.size,
-												query
-											)}
+											{selectedKeys.size}
+											&nbsp;
+											{selectedKeys.size === 1
+												? Liferay.Language.get(
+														'item-selected'
+												  )
+												: Liferay.Language.get(
+														'items-selected'
+												  )}
 										</span>
 									</span>
 								</ClayResultsBar.Item>

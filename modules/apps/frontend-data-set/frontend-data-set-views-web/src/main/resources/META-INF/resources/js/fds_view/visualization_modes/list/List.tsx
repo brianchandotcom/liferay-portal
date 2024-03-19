@@ -288,7 +288,7 @@ function ListSection({
 					selectedFields={field ? [field] : []}
 				/>
 			),
-			size: 'full-screen'
+			size: 'full-screen',
 		});
 	};
 

@@ -250,7 +250,7 @@ function CardsSection({
 					selectedFields={field ? [field] : []}
 				/>
 			),
-			size: 'full-screen'
+			size: 'full-screen',
 		});
 	};
 

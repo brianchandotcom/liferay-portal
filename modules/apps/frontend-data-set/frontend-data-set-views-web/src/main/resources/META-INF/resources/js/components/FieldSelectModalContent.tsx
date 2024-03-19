@@ -22,7 +22,7 @@ import AutoSearch from './AutoSearch';
 interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];
 	query?: string;
-    savedId?: string;
+	savedId?: string;
 	selected?: boolean;
 }
 
@@ -54,7 +54,7 @@ const initializeFields = ({
 		if (selectedField) {
 			selectedKeys.add(selectedField.name);
 
-            field.savedId = selectedField.id;
+			field.savedId = selectedField.id;
 		}
 
 		field.id = field.name;
@@ -162,7 +162,7 @@ const FieldSelectModalContent = ({
 	onSaveButtonClick,
 	saveButtonDisabled,
 	selectedFields,
-	selectionMode = 'single'
+	selectionMode = 'single',
 }: {
 	closeModal: Function;
 	fdsView: FDSViewType;
@@ -204,7 +204,7 @@ const FieldSelectModalContent = ({
 	}, [selectedFields, fdsView]);
 
 	const onSearch = (query: string) => {
-        setQuery(query);
+		setQuery(query);
 
 		const {filteredItems, filteredKeys} = applyFilter({
 			fields: initialFields ?? [],
@@ -216,7 +216,7 @@ const FieldSelectModalContent = ({
 	};
 
 	return (
-        <>
+		<>
 			<ClayModal.Header>
 				{sub(
 					Liferay.Language.get('select-x'),
@@ -237,21 +237,20 @@ const FieldSelectModalContent = ({
 							</ClayManagementToolbar.Search>
 						</ClayManagementToolbar>
 
-
-                        {selectedKeys.size > 0 && (
+						{selectedKeys.size > 0 && (
 							<ClayResultsBar>
 								<ClayResultsBar.Item expand>
 									<span className="component-text text-truncate-inline">
 										<span className="text-truncate">
-                                            {selectedKeys.size}
-                                            &nbsp;
-                                            {selectedKeys.size === 1
-													? Liferay.Language.get(
-															'item-selected'
-													  )
-													: Liferay.Language.get(
-															'items-selected'
-													  )}
+											{selectedKeys.size}
+											&nbsp;
+											{selectedKeys.size === 1
+												? Liferay.Language.get(
+														'item-selected'
+												  )
+												: Liferay.Language.get(
+														'items-selected'
+												  )}
 										</span>
 									</span>
 								</ClayResultsBar.Item>

@@ -843,7 +843,7 @@ function Table({
 					/>
 				),
 				size: 'full-screen',
-			}); 
+			});
 		}
 		else {
 			openModal({

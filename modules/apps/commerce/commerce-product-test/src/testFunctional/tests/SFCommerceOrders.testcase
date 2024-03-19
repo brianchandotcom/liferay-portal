@@ -63,12 +63,13 @@ definition {
 		}
 
 		task ("Then the order date and time is shown") {
-			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
 
-			AssertTextEquals.assertPartialText(
-				key_orderId = "",
-				locator1 = "CommerceOrders#PLACED_ORDERS_LIST_DATE",
-				value1 = ${currentDate});
+			// TODO Clean up after CLDR update is finished
+
+			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
+			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy K", "UTC");
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'table-list-title')]/a[contains(.,'')]/following::div[4 and (contains(text(),'${currentDateYYYY}') or contains(text(),'${currentDateYY}'))]");
 		}
 
 		task ("When the user views the order from the placed orders details page") {
@@ -76,9 +77,13 @@ definition {
 		}
 
 		task ("Then the order date and time is shown") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = ${currentDate});
+
+			// TODO Clean up after CLDR update is finished
+
+			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
+			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yy K", "UTC");
+
+			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
 		}
 	}
 

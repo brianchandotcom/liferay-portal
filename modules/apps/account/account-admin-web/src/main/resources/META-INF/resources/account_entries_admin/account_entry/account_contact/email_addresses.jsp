@@ -8,10 +8,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("contact_information.jsp-className");
-long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
-String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
+AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryDisplay.getAccountEntryId());
+
+String className = AccountEntry.class.getName();
+long classPK = accountEntry.getAccountEntryId();
 
 List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(className, classPK);
 %>
@@ -35,7 +37,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
-						"/common/edit_email_address.jsp"
+						"/account_entries_admin/account_entry/account_contact/edit_email_address.jsp"
 					).setRedirect(
 						currentURL
 					).setParameter(
@@ -56,7 +58,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 	cssClass="lfr-search-container-wrapper"
 	curParam="emailAddressesCur"
 	deltaParam="emailAddressesDelta"
-	emptyResultsMessage="<%= emptyResultsMessage %>"
+	emptyResultsMessage='<%= ParamUtil.getString(request, "emptyResultsMessage") %>'
 	headerNames="email-address,type,"
 	id="emailAddressesSearchContainer"
 	iteratorURL="<%= currentURLObj %>"
@@ -104,7 +106,7 @@ List<EmailAddress> emailAddresses = EmailAddressServiceUtil.getEmailAddresses(cl
 
 		<liferay-ui:search-container-column-jsp
 			cssClass="entry-action-column"
-			path="/common/email_address_action.jsp"
+			path="/account_entries_admin/account_entry/account_contact/email_address_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

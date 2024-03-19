@@ -8,12 +8,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("contact_information.jsp-className");
-long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
-String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
+AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryDisplay.getAccountEntryId());
 
-List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
+String className = AccountEntry.class.getName();
+long classPK = accountEntry.getAccountEntryId();
+
+List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 %>
 
 <clay:content-row
@@ -22,20 +24,20 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 	<clay:content-col
 		expand="<%= true %>"
 	>
-		<span class="heading-text"><liferay-ui:message key="websites" /></span>
+		<span class="heading-text"><liferay-ui:message key="phone-numbers" /></span>
 	</clay:content-col>
 
 	<clay:content-col>
 		<span class="heading-end">
 			<clay:link
-				aria-label='<%= LanguageUtil.format(request, "add-x", "websites") %>'
-				cssClass="add-website-link btn btn-secondary btn-sm"
+				aria-label='<%= LanguageUtil.format(request, "add-x", "phone-numbers") %>'
+				cssClass="add-phone-number-link btn btn-secondary btn-sm"
 				displayType="null"
 				href='<%=
 					PortletURLBuilder.createRenderURL(
 						liferayPortletResponse
 					).setMVCPath(
-						"/common/edit_website.jsp"
+						"/account_entries_admin/account_entry/account_contact/edit_phone_number.jsp"
 					).setRedirect(
 						currentURL
 					).setParameter(
@@ -54,45 +56,53 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
 	cssClass="lfr-search-container-wrapper"
-	curParam="websitesCur"
-	deltaParam="websitesDelta"
-	emptyResultsMessage="<%= emptyResultsMessage %>"
-	headerNames="website,type,"
-	id="websitesSearchContainer"
+	curParam="phoneNumberCur"
+	deltaParam="phoneNumbersDelta"
+	emptyResultsMessage='<%= ParamUtil.getString(request, "emptyResultsMessage") %>'
+	headerNames="phone-number,type,extension,"
+	id="phonesSearchContainer"
 	iteratorURL="<%= currentURLObj %>"
-	total="<%= websites.size() %>"
+	total="<%= phones.size() %>"
 >
 	<liferay-ui:search-container-results
 		calculateStartAndEnd="<%= true %>"
-		results="<%= websites %>"
+		results="<%= phones %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.Website"
+		className="com.liferay.portal.kernel.model.Phone"
 		escapedModel="<%= true %>"
-		keyProperty="websiteId"
-		modelVar="website"
+		keyProperty="phoneId"
+		modelVar="phone"
 	>
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand"
-			name="website"
-			property="url"
+			name="phone-number"
+			property="number"
 		/>
 
 		<%
-		ListType listType = website.getListType();
+		ListType phoneListType = ListTypeServiceUtil.getListType(phone.getListTypeId());
+
+		String phoneTypeKey = phoneListType.getName();
 		%>
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand-small"
 			name="type"
-			value="<%= LanguageUtil.get(request, listType.getName()) %>"
+			value="<%= LanguageUtil.get(request, phoneTypeKey) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-small"
+			name="extension"
+			property="extension"
 		/>
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand-smaller"
 		>
-			<c:if test="<%= website.isPrimary() %>">
+			<c:if test="<%= phone.isPrimary() %>">
 				<clay:label
 					displayType="primary"
 					label="primary"
@@ -102,7 +112,7 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 
 		<liferay-ui:search-container-column-jsp
 			cssClass="entry-action-column"
-			path="/common/website_action.jsp"
+			path="/account_entries_admin/account_entry/account_contact/phone_number_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

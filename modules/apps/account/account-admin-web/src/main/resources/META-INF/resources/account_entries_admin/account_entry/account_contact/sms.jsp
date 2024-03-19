@@ -7,11 +7,17 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
+
+AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryDisplay.getAccountEntryId());
+%>
+
 <liferay-ui:error-marker
 	key="<%= WebKeys.ERROR_SECTION %>"
 	value="sms"
 />
 
-<aui:model-context bean='<%= (Contact)request.getAttribute("accountEntryContact") %>' model="<%= Contact.class %>" />
+<aui:model-context bean="<%= accountEntry.fetchContact() %>" model="<%= Contact.class %>" />
 
 <aui:input label="sms" name="smsSn" />

@@ -8,7 +8,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Contact accountEntryContact = (Contact)request.getAttribute("accountEntryContact");
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
+
+AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryDisplay.getAccountEntryId());
+
+Contact accountEntryContact = accountEntry.fetchContact();
 %>
 
 <aui:model-context bean="<%= accountEntryContact %>" model="<%= Contact.class %>" />

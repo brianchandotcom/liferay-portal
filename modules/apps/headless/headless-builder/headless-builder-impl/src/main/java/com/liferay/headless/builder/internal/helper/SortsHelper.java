@@ -57,6 +57,7 @@ public class SortsHelper {
 							sort.getFieldName());
 
 					sort.setFieldName(apiPropertyEntityField.getInternalName());
+					sort.setFieldPath(apiPropertyEntityField.getInternalName());
 
 					return sort;
 				},

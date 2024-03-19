@@ -8131,7 +8131,6 @@ public class ObjectEntryResourceTest {
 					"externalReferenceCode", externalReferenceCode2
 				).toString(),
 				endpoint1, Http.Method.POST));
-
 		Assert.assertEquals(
 			400,
 			HTTPTestUtil.invokeToHttpCode(

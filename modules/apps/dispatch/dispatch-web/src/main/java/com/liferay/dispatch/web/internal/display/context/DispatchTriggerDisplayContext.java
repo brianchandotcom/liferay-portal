@@ -15,9 +15,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -25,8 +27,10 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.text.Format;
@@ -225,11 +229,24 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		_searchContainer.setOrderByComparator(null);
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setResultsAndTotal(
-			() -> _dispatchTriggerLocalService.getDispatchTriggers(
-				dispatchRequestHelper.getCompanyId(),
-				_searchContainer.getStart(), _searchContainer.getEnd()),
-			_dispatchTriggerLocalService.getDispatchTriggersCount(
-				dispatchRequestHelper.getCompanyId()));
+			ListUtil.filter(
+				_dispatchTriggerLocalService.getDispatchTriggers(
+					dispatchRequestHelper.getCompanyId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+				dispatchTrigger -> {
+					UnicodeProperties unicodeProperties =
+						dispatchTrigger.
+							getDispatchTaskSettingsUnicodeProperties();
+
+					if (!unicodeProperties.containsKey("featureFlagKey") ||
+						FeatureFlagManagerUtil.isEnabled(
+							unicodeProperties.getProperty("featureFlagKey"))) {
+
+						return true;
+					}
+
+					return false;
+				}));
 		_searchContainer.setRowChecker(getRowChecker());
 
 		return _searchContainer;

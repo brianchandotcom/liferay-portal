@@ -163,12 +163,12 @@ public class JournalArticleInfoItemProviderTest {
 	public void testGetPendingArticleJournalInfoItemProviderWithSignedOutUser()
 		throws Exception {
 
-		JournalArticle article = JournalTestUtil.addArticle(
+		JournalArticle approvedArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		JournalArticleLocalServiceUtil.updateStatus(
-			article.getUserId(), article.getId(),
+			approvedArticle.getUserId(), approvedArticle.getId(),
 			WorkflowConstants.STATUS_PENDING, null, _serviceContext);
 
 		PermissionChecker originalPermissionChecker =
@@ -177,10 +177,12 @@ public class JournalArticleInfoItemProviderTest {
 		try {
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(
-					UserLocalServiceUtil.getGuestUser(article.getCompanyId())));
+					UserLocalServiceUtil.getGuestUser(
+						approvedArticle.getCompanyId())));
 
 			InfoItemIdentifier infoItemIdentifier =
-				new ClassPKInfoItemIdentifier(article.getResourcePrimKey());
+				new ClassPKInfoItemIdentifier(
+					approvedArticle.getResourcePrimKey());
 
 			InfoItemObjectProvider<JournalArticle>
 				journalArticleInfoItemProvider =
@@ -190,7 +192,8 @@ public class JournalArticleInfoItemProviderTest {
 							JournalArticle.class.getName(),
 							infoItemIdentifier.getInfoItemServiceFilter());
 
-			Assert.assertNull(
+			Assert.assertEquals(
+				approvedArticle,
 				journalArticleInfoItemProvider.getInfoItem(infoItemIdentifier));
 		}
 		finally {

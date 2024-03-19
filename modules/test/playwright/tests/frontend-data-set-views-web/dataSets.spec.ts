@@ -7,9 +7,9 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
-import {DEFAULT_LABEL} from './utils/constants';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -20,14 +20,16 @@ export const test = mergeTests(
 	loginTest()
 );
 
+const DATASET_LABEL = getRandomString();
+
 const dataSetConfig = {
-	name: DEFAULT_LABEL.DATA_SET,
+	name: DATASET_LABEL,
 	restApplication: '/data-set-manager/fields',
 	restEndpoint: '/',
 	restSchema: 'FDSField',
 };
 
-const DEFAULT_DATA_SET_ERC = 'sampleDataSetERC';
+const DEFAULT_DATA_SET_ERC = getRandomString();
 
 test.describe('Data Set Table', () => {
 	test('Data Set created via UI', async ({dataSetsPage, page}) => {
@@ -113,6 +115,7 @@ test.describe('Data Set Table', () => {
 			await dataSetManagerApiHelpers.createDataSet({
 				...dataSetConfig,
 				erc: DEFAULT_DATA_SET_ERC,
+				label: dataSetConfig.name,
 			});
 		});
 

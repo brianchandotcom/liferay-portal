@@ -44,7 +44,17 @@ public class ImportTaskResourcePerformanceTest
 		_jsonTemplates = LinkedHashMapBuilder.put(
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount",
 			_createUserAccountJSONTemplate()
+		).put(
+			"com.liferay.headless.batch.engine.resource.v1_0.test.DummyEntity",
+			_createDummyEntityJSONTemplate()
 		).build();
+	}
+
+	@Test
+	public void testPostImportTaskWithDummyEntityDelegate() throws Exception {
+		_testPostImportTask(
+			"com.liferay.headless.batch.engine.resource.v1_0.test." +
+				"DummyEntity#dummy-entity-performance-test");
 	}
 
 	@Test
@@ -53,11 +63,12 @@ public class ImportTaskResourcePerformanceTest
 			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
 	}
 
-	@Test
-	public void testPostImportTaskWithUserAccountDelegate() throws Exception {
-		_testPostImportTask(
-			"com.liferay.headless.admin.user.dto.v1_0.UserAccount#" +
-				"user-account-performance-test");
+	private static String _createDummyEntityJSONTemplate() throws Exception {
+		return JSONUtil.put(
+			"intValue", "[$INT_VALUE$]"
+		).put(
+			"textValue", "[$TEXT_VALUE$]"
+		).toString();
 	}
 
 	private static String _createUserAccountJSONTemplate() throws Exception {
@@ -162,12 +173,23 @@ public class ImportTaskResourcePerformanceTest
 						8, UniqueStringRandomizerBumper.INSTANCE),
 					true, ""));
 
-			batchJsonSB.append(
-				StringUtil.replace(
-					json, "[$EMAIL_ADDRESS$]",
-					StringBundler.concat(
-						alternateName, "@", RandomTestUtil.randomString(),
-						".com")));
+			json = StringUtil.replace(
+				json, "[$EMAIL_ADDRESS$]",
+				StringBundler.concat(
+					alternateName, "@", RandomTestUtil.randomString(), ".com"));
+
+			json = StringUtil.replace(
+				json, "[$TEXT_VALUE$]",
+				StringUtil.getTitleCase(
+					RandomTestUtil.randomString(
+						8, UniqueStringRandomizerBumper.INSTANCE),
+					true, ""));
+
+			json = StringUtil.replace(
+				json, "\"[$INT_VALUE$]\"",
+				String.valueOf(RandomTestUtil.nextInt()));
+
+			batchJsonSB.append(json);
 
 			if (i < (recordsCount - 1)) {
 				batchJsonSB.append(StringPool.COMMA);

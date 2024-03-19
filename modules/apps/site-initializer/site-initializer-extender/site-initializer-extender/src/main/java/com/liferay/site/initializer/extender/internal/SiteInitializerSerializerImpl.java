@@ -74,7 +74,9 @@ public class SiteInitializerSerializerImpl
 				"documents/group", zipWriter);
 			_serializeDDMStructures(groupId, zipWriter);
 			_serializeDDMTemplates(groupId, zipWriter);
-			_serializeLayouts(groupId, zipWriter);
+			_serializeLayouts(
+				groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layouts",
+				zipWriter);
 			_serializeStyleBookEntries(groupId, zipWriter);
 
 			return zipWriter.getFile();
@@ -105,20 +107,6 @@ public class SiteInitializerSerializerImpl
 		zipWriter.addEntry("site-initializer/" + fileName, string);
 	}
 
-	private String _getLayoutDirName(Layout layout) throws Exception {
-		String dirName = _normalize(layout.getName(LocaleUtil.US));
-
-		if (layout.getParentLayoutId() == 0) {
-			return dirName;
-		}
-
-		Layout parentLayout = _layoutLocalService.getLayout(
-			layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getParentLayoutId());
-
-		return _getLayoutDirName(parentLayout) + "/" + dirName;
-	}
-
 	private LayoutStructure _getLayoutStructure(Layout layout) {
 		if (layout.getType(
 			).equalsIgnoreCase(
@@ -141,6 +129,21 @@ public class SiteInitializerSerializerImpl
 		string = StringUtil.toLowerCase(string);
 
 		return StringUtil.replace(string, CharPool.SPACE, CharPool.DASH);
+	}
+
+	private void _processLayouts(
+			long groupId, List<Layout> layouts, String zipDirName,
+			ZipWriter zipWriter)
+		throws Exception {
+
+		for (Layout layout : layouts) {
+			String zipPageDirName =
+				zipDirName + "/" + _normalize(layout.getName(LocaleUtil.US));
+
+			_serializeLayout(layout, zipPageDirName, zipWriter);
+			_serializeLayouts(
+				groupId, layout.getLayoutId(), zipPageDirName, zipWriter);
+		}
 	}
 
 	private void _serializeDDMStructure(
@@ -246,13 +249,12 @@ public class SiteInitializerSerializerImpl
 		}
 	}
 
-	private void _serializeLayout(Layout layout, ZipWriter zipWriter)
+	private void _serializeLayout(
+			Layout layout, String zipDirName, ZipWriter zipWriter)
 		throws Exception {
 
-		String dirName = "layouts/" + _getLayoutDirName(layout);
-
 		_addZipEntry(
-			dirName + "/page.json",
+			zipDirName + "/page.json",
 			JSONUtil.put(
 				"friendlyURL", layout.getFriendlyURL()
 			).put(
@@ -328,7 +330,7 @@ public class SiteInitializerSerializerImpl
 			layoutStructure);
 
 		_addZipEntry(
-			dirName + "/page-definition.json",
+			zipDirName + "/page-definition.json",
 			JSONUtil.put(
 				"pageElement", pageDefinition.getPageElement()
 			).put(
@@ -337,15 +339,20 @@ public class SiteInitializerSerializerImpl
 			zipWriter);
 	}
 
-	private void _serializeLayouts(long groupId, ZipWriter zipWriter)
+	private void _serializeLayouts(
+			long groupId, Long parentLayoutId, String zipDirName,
+			ZipWriter zipWriter)
 		throws Exception {
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
+			groupId, false, parentLayoutId);
 
-		for (Layout layout : layouts) {
-			_serializeLayout(layout, zipWriter);
-		}
+		_processLayouts(groupId, publicLayouts, zipDirName, zipWriter);
+
+		List<Layout> privateLayouts = _layoutLocalService.getLayouts(
+			groupId, true, parentLayoutId);
+
+		_processLayouts(groupId, privateLayouts, zipDirName, zipWriter);
 	}
 
 	private void _serializeStyleBookEntries(long groupId, ZipWriter zipWriter)

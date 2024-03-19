@@ -254,6 +254,10 @@ public interface KaleoDefinitionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoDefinition> getKaleoDefinitions(
+		boolean active, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDefinition> getKaleoDefinitions(
 		boolean active, int start, int end,
 		OrderByComparator<KaleoDefinition> orderByComparator,
 		ServiceContext serviceContext);

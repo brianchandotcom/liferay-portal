@@ -347,6 +347,14 @@ public class KaleoDefinitionLocalServiceWrapper
 
 	@Override
 	public java.util.List<KaleoDefinition> getKaleoDefinitions(
+		boolean active, int start, int end) {
+
+		return _kaleoDefinitionLocalService.getKaleoDefinitions(
+			active, start, end);
+	}
+
+	@Override
+	public java.util.List<KaleoDefinition> getKaleoDefinitions(
 		boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KaleoDefinition>
 			orderByComparator,

@@ -304,6 +304,12 @@ public class KaleoDefinitionLocalServiceUtil {
 	}
 
 	public static List<KaleoDefinition> getKaleoDefinitions(
+		boolean active, int start, int end) {
+
+		return getService().getKaleoDefinitions(active, start, end);
+	}
+
+	public static List<KaleoDefinition> getKaleoDefinitions(
 		boolean active, int start, int end,
 		OrderByComparator<KaleoDefinition> orderByComparator,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {

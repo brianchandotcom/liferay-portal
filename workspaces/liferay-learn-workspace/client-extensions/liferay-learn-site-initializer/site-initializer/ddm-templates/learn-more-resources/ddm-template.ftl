@@ -1,5 +1,3 @@
-<#include "${templatesPath}/SVG">
-
 <div class="col-12 m-0 more-resources row">
 	<#if entries?has_content>
 		<#list entries as navigationEntry>

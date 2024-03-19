@@ -27,7 +27,7 @@ public class ClusterLinkMessageUtil {
 	}
 
 	public static Serializable getKey(Message message) {
-		return SerializableObjectWrapper.unwrap(message.get(_KEY));
+		return _deserialize(message.get(_KEY));
 	}
 
 	public static PortalCacheClusterEventType getPortalCacheClusterEventType(
@@ -50,23 +50,7 @@ public class ClusterLinkMessageUtil {
 	}
 
 	public static Serializable getValue(Message message) {
-		Object value = message.get(_VALUE);
-
-		if (value == null) {
-			return null;
-		}
-
-		Deserializer deserializer = new Deserializer(
-			ByteBuffer.wrap((byte[])value));
-
-		try {
-			return deserializer.readObject();
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			_log.error("Unable to deserialize object", classNotFoundException);
-		}
-
-		return null;
+		return _deserialize(message.get(_VALUE));
 	}
 
 	public static void populateMessageFromPortalCacheClusterEvent(
@@ -80,25 +64,43 @@ public class ClusterLinkMessageUtil {
 		message.put(
 			_EVENT_TYPE,
 			String.valueOf(portalCacheClusterEvent.getEventType()));
-		message.put(
-			_KEY,
-			new SerializableObjectWrapper(
-				portalCacheClusterEvent.getElementKey()));
+		message.put(_KEY, _serialize(portalCacheClusterEvent.getElementKey()));
 		message.put(_TIME_TO_LIVE, portalCacheClusterEvent.getTimeToLive());
+		message.put(
+			_VALUE, _serialize(portalCacheClusterEvent.getElementValue()));
+	}
 
-		Serializable elementValue = portalCacheClusterEvent.getElementValue();
+	private static Serializable _deserialize(Object object) {
+		if (object instanceof byte[]) {
+			byte[] bytes = (byte[])object;
 
-		if (elementValue == null) {
-			return;
+			Deserializer deserializer = new Deserializer(
+				ByteBuffer.wrap(bytes));
+
+			try {
+				return deserializer.readObject();
+			}
+			catch (ClassNotFoundException classNotFoundException) {
+				_log.error(
+					"Unable to deserialize object", classNotFoundException);
+			}
+		}
+
+		return null;
+	}
+
+	private static byte[] _serialize(Serializable serializable) {
+		if (serializable == null) {
+			return null;
 		}
 
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(elementValue);
+		serializer.writeObject(serializable);
 
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
-		message.put(_VALUE, byteBuffer.array());
+		return byteBuffer.array();
 	}
 
 	private static final String _CACHE_MANAGER_NAME = "cache.manager.name";

@@ -191,13 +191,13 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			Portlet.class.getName());
 
 		_assertLayoutClassedModelUsage(
-			expectedPublicLayoutPortletId, portletClassNameId,
-			_publicLayout.getPlid(), _journalArticle.getResourcePrimKey(),
+			expectedPublicLayoutPortletId, portletClassNameId, _publicLayout,
+			_journalArticle.getResourcePrimKey(),
 			journalArticle1.getResourcePrimKey(),
 			journalArticle2.getResourcePrimKey());
 		_assertLayoutClassedModelUsage(
-			expectedPrivateLayoutPortletId, portletClassNameId,
-			_privateLayout.getPlid(), _journalArticle.getResourcePrimKey(),
+			expectedPrivateLayoutPortletId, portletClassNameId, _privateLayout,
+			_journalArticle.getResourcePrimKey(),
 			journalArticle1.getResourcePrimKey(),
 			journalArticle2.getResourcePrimKey());
 	}
@@ -268,11 +268,11 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				Portlet.class.getName());
 
 			_assertLayoutClassedModelUsage(
-				expectedPortletId, portletClassNameId, stagingLayout.getPlid(),
+				expectedPortletId, portletClassNameId, stagingLayout,
 				_journalArticle.getResourcePrimKey());
 
 			_assertLayoutClassedModelUsage(
-				expectedPortletId, portletClassNameId, _publicLayout.getPlid(),
+				expectedPortletId, portletClassNameId, _publicLayout,
 				_journalArticle.getResourcePrimKey());
 
 			_publishToLive(stagingLayout);
@@ -445,14 +445,19 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 	}
 
 	private void _assertLayoutClassedModelUsage(
-		String containerKey, long containerType, long plid, long... classPKs) {
+		String containerKey, long containerType, Layout layout,
+		long... classPKs) {
 
 		for (long classPK : classPKs) {
-			Assert.assertNotNull(
+			LayoutClassedModelUsage layoutClassedModelUsage =
 				_layoutClassedModelUsageLocalService.
 					fetchLayoutClassedModelUsage(
 						_journalArticleClassNameId, classPK, StringPool.BLANK,
-						containerKey, containerType, plid));
+						containerKey, containerType, layout.getPlid());
+
+			Assert.assertNotNull(layoutClassedModelUsage);
+			Assert.assertEquals(
+				layout.getGroupId(), layoutClassedModelUsage.getGroupId());
 		}
 	}
 
@@ -481,7 +486,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 			for (String expectedPortletId : layoutPortletIdsEntry.getValue()) {
 				_assertLayoutClassedModelUsage(
-					expectedPortletId, portletClassNameId, layout.getPlid(),
+					expectedPortletId, portletClassNameId, layout,
 					_journalArticle.getResourcePrimKey());
 				count++;
 			}

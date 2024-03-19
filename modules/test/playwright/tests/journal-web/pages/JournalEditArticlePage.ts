@@ -65,18 +65,6 @@ export class JournalEditArticlePage {
 			.waitFor();
 	}
 
-	async publishNewBasicArticle(title: string) {
-		await this.fillTitle(title);
-
-		await this.publishButton.waitFor();
-
-		await this.publishButton.click();
-
-		await this.page
-			.getByText(`Success:${title} was created successfully.`)
-			.waitFor();
-	}
-
 	async openDMItemSelectorForImages() {
 		await this.page.getByLabel('Image', {exact: true}).click();
 		await this.page

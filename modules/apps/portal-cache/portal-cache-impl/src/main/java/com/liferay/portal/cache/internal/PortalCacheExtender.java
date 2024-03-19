@@ -14,9 +14,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.Serializable;
 
+import java.net.URI;
 import java.net.URL;
 
 import org.osgi.framework.Bundle;
@@ -52,10 +55,16 @@ public class PortalCacheExtender {
 						"/META-INF/module-multi-vm.xml"),
 					classLoader, _multiVMPortalCacheManager);
 				_configure(
+					_getURL(bundle.getSymbolicName(), "-multi-vm-ext.xml"),
+					classLoader, _multiVMPortalCacheManager);
+				_configure(
 					_getURL(
 						classLoader,
 						PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION,
 						"/META-INF/module-single-vm.xml"),
+					classLoader, _singleVMPortalCacheManager);
+				_configure(
+					_getURL(bundle.getSymbolicName(), "-single-vm-ext.xml"),
 					classLoader, _singleVMPortalCacheManager);
 
 				return null;
@@ -83,8 +92,8 @@ public class PortalCacheExtender {
 			_log.info(
 				StringBundler.concat(
 					"Reconfiguring caches in cache manager ",
-					portalCacheManager.getPortalCacheManagerName(),
-					" using ", configurationURL));
+					portalCacheManager.getPortalCacheManagerName(), " using ",
+					configurationURL));
 		}
 
 		portalCacheManager.reconfigurePortalCaches(
@@ -110,6 +119,30 @@ public class PortalCacheExtender {
 		}
 
 		return classLoader.getResource(configurationFile);
+	}
+
+	private URL _getURL(String symbolicName, String postfix) {
+		File configFile = new File(
+			StringBundler.concat(
+				PropsValues.MODULE_FRAMEWORK_BASE_DIR, "/ehcache/",
+				symbolicName, postfix));
+
+		if (!configFile.exists()) {
+			return null;
+		}
+
+		URI uri = configFile.toURI();
+
+		try {
+			return uri.toURL();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

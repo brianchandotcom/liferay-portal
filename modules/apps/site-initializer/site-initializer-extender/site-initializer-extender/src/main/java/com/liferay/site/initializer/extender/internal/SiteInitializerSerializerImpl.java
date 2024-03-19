@@ -249,62 +249,64 @@ public class SiteInitializerSerializerImpl
 	private void _serializeLayout(Layout layout, ZipWriter zipWriter)
 		throws Exception {
 
-		JSONObject pagejsonObject = JSONUtil.put(
-			"friendlyURL", layout.getFriendlyURL()
-		).put(
-			"friendlyURL", layout.getFriendlyURL()
-		).put(
-			"hidden", layout.isHidden()
-		).put(
-			"name_i18n", JSONUtil.put("en_US", layout.getName(LocaleUtil.US))
-		).put(
-			"priority", layout.getPriority()
-		).put(
-			"private", layout.isPrivateLayout()
-		).put(
-			"system", layout.isSystem()
-		).put(
-			"type", layout.getType()
-		).put(
-			"typeSettings",
-			() -> {
-				if (Validator.isNull(layout.getTypeSettings())) {
-					return null;
-				}
-
-				String[] parts = StringUtil.split(
-					layout.getTypeSettings(), CharPool.EQUAL);
-
-				JSONObject typeSettingsjsonObject = JSONUtil.put(
-					"key", parts[0]);
-
-				if (Objects.equals(
-						layout.getType(),
-						LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
-
-					Layout linkToLayout = _layoutLocalService.getLayout(
-						layout.getGroupId(), layout.isPrivateLayout(),
-						GetterUtil.getLong(parts[1].replace("\n", "")));
-
-					typeSettingsjsonObject.put(
-						"value",
-						"[$LAYOUT_ID:" + linkToLayout.getName(LocaleUtil.US) +
-							"$]");
-				}
-				else if (Objects.equals(
-							layout.getType(), LayoutConstants.TYPE_URL)) {
-
-					typeSettingsjsonObject.put(
-						"value", parts[1].replace("\n", ""));
-				}
-
-				return JSONUtil.put(typeSettingsjsonObject);
-			}
-		);
-
 		String dirName = "layouts/" + _getLayoutDirName(layout);
 
-		_addZipEntry(dirName + "/page.json", pagejsonObject, zipWriter);
+		_addZipEntry(
+			dirName + "/page.json",
+			JSONUtil.put(
+				"friendlyURL", layout.getFriendlyURL()
+			).put(
+				"friendlyURL", layout.getFriendlyURL()
+			).put(
+				"hidden", layout.isHidden()
+			).put(
+				"name_i18n",
+				JSONUtil.put("en_US", layout.getName(LocaleUtil.US))
+			).put(
+				"priority", layout.getPriority()
+			).put(
+				"private", layout.isPrivateLayout()
+			).put(
+				"system", layout.isSystem()
+			).put(
+				"type", layout.getType()
+			).put(
+				"typeSettings",
+				() -> {
+					if (Validator.isNull(layout.getTypeSettings())) {
+						return null;
+					}
+
+					String[] parts = StringUtil.split(
+						layout.getTypeSettings(), CharPool.EQUAL);
+
+					JSONObject typeSettingsjsonObject = JSONUtil.put(
+						"key", parts[0]);
+
+					if (Objects.equals(
+							layout.getType(),
+							LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+
+						Layout linkToLayout = _layoutLocalService.getLayout(
+							layout.getGroupId(), layout.isPrivateLayout(),
+							GetterUtil.getLong(parts[1].replace("\n", "")));
+
+						typeSettingsjsonObject.put(
+							"value",
+							"[$LAYOUT_ID:" +
+								linkToLayout.getName(LocaleUtil.US) + "$]");
+					}
+					else if (Objects.equals(
+								layout.getType(), LayoutConstants.TYPE_URL)) {
+
+						typeSettingsjsonObject.put(
+							"value", parts[1].replace("\n", ""));
+					}
+
+					return JSONUtil.put(typeSettingsjsonObject);
+				}
+			),
+			zipWriter);
 
 		LayoutStructure layoutStructure = _getLayoutStructure(layout);
 

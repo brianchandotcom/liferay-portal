@@ -1,4 +1,8 @@
 {
+	"borderRadiusLg": {
+		"cssVariableMapping": "border-radius-lg",
+		"value": "1rem"
+	},
 	"colorAccent1": {
 		"cssVariableMapping": "color-accent-1",
 		"value": "#1AA0E8"
@@ -294,6 +298,22 @@
 	"colorStateWarningLighten2": {
 		"cssVariableMapping": "color-state-warning-lighten-2",
 		"value": "#F7EAE0"
+	},
+	"containerMaxLg": {
+		"cssVariableMapping": "container-max-lg",
+		"value": "1024px"
+	},
+	"containerMaxMd": {
+		"cssVariableMapping": "container-max-md",
+		"value": "960px"
+	},
+	"containerMaxSm": {
+		"cssVariableMapping": "container-max-sm",
+		"value": "600px"
+	},
+	"containerMaxXL": {
+		"cssVariableMapping": "container-max-xl",
+		"value": "1600px"
 	},
 	"display4Size": {
 		"cssVariableMapping": "display4-size",

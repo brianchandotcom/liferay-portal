@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -266,18 +267,18 @@ public class SiteInitializerSerializerImpl
 			"type", layout.getType()
 		);
 
-		if (!Objects.equals(layout.getTypeSettings(), "")) {
-			String[] tokens = StringUtil.split(
+		if (Validator.isNotNull(layout.getTypeSettings())) {
+			String[] parts = StringUtil.split(
 				layout.getTypeSettings(), CharPool.EQUAL);
 
-			JSONObject typeSettingsjsonObject = JSONUtil.put("key", tokens[0]);
+			JSONObject typeSettingsjsonObject = JSONUtil.put("key", parts[0]);
 
 			if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
 
 				Layout linkToLayout = _layoutLocalService.getLayout(
 					layout.getGroupId(), layout.isPrivateLayout(),
-					GetterUtil.getLong(tokens[1].replace("\n", "")));
+					GetterUtil.getLong(parts[1].replace("\n", "")));
 
 				typeSettingsjsonObject.put(
 					"value",
@@ -287,8 +288,7 @@ public class SiteInitializerSerializerImpl
 			else if (Objects.equals(
 						layout.getType(), LayoutConstants.TYPE_URL)) {
 
-				typeSettingsjsonObject.put(
-					"value", tokens[1].replace("\n", ""));
+				typeSettingsjsonObject.put("value", parts[1].replace("\n", ""));
 			}
 
 			pagejsonObject.put(

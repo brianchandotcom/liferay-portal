@@ -9,6 +9,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.ObjectDefinitionNameException;
+import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -77,6 +78,9 @@ public class ImportObjectDefinitionMVCActionCommand
 				jsonObject = JSONUtil.put(
 					"type",
 					"ObjectDefinitionNameException." + clazz.getSimpleName());
+			}
+			else if (exception instanceof ObjectDefinitionStatusException) {
+				jsonObject = JSONUtil.put("title", exception.getMessage());
 			}
 			else if (exception instanceof ObjectViewColumnFieldNameException) {
 				jsonObject = JSONUtil.put(

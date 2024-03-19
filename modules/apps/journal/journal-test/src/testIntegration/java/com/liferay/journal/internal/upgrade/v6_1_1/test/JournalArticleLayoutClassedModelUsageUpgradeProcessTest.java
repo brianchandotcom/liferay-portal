@@ -45,13 +45,16 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -543,9 +546,46 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			Collections::emptyList
 		).build();
 
-		_exportImportChangesetMVCActionCommandHelper.publish(
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse(), changeset);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.background.task.internal.messaging." +
+					"BackgroundTaskMessageListener",
+				LoggerTestUtil.ERROR)) {
+
+			_exportImportChangesetMVCActionCommandHelper.publish(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse(), changeset);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(
+				ListUtil.toString(
+					logEntries,
+					new Accessor<LogEntry, String>() {
+
+						@Override
+						public String get(LogEntry logEntry) {
+							Throwable throwable = logEntry.getThrowable();
+
+							while (throwable.getCause() != null) {
+								throwable = throwable.getCause();
+							}
+
+							return throwable.getMessage();
+						}
+
+						@Override
+						public Class<String> getAttributeClass() {
+							return String.class;
+						}
+
+						@Override
+						public Class<LogEntry> getTypeClass() {
+							return LogEntry.class;
+						}
+
+					}),
+				ListUtil.isEmpty(logEntries));
+		}
 	}
 
 	private void _pushServiceContext(Group group, Layout layout)

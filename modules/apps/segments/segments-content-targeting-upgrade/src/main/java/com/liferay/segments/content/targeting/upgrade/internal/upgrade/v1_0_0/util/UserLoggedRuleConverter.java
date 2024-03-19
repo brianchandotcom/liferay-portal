@@ -19,7 +19,7 @@ public class UserLoggedRuleConverter implements RuleConverter {
 	public void convert(
 		long companyId, Criteria criteria, String typeSettings) {
 
-		SegmentsCriteriaContributor.contributeToCriteria(
+		SegmentsCriteriaContributor.contribute(
 			criteria, "(signedIn eq " + Boolean.TRUE + ")",
 			Criteria.Conjunction.AND, "context", Criteria.Type.CONTEXT);
 	}

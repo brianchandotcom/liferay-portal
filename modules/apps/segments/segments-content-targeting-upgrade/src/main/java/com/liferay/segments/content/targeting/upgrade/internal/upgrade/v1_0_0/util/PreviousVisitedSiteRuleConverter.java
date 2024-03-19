@@ -37,7 +37,7 @@ public class PreviousVisitedSiteRuleConverter implements RuleConverter {
 
 				String value = jsonObject.getString("value");
 
-				SegmentsCriteriaContributor.contributeToCriteria(
+				SegmentsCriteriaContributor.contribute(
 					criteria, "contains(referrerURL, '" + value + "')",
 					Criteria.Conjunction.AND, "context", Criteria.Type.CONTEXT);
 			}

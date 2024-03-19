@@ -19,7 +19,7 @@ public class BrowseRuleConverter implements RuleConverter {
 	public void convert(
 		long companyId, Criteria criteria, String typeSettings) {
 
-		SegmentsCriteriaContributor.contributeToCriteria(
+		SegmentsCriteriaContributor.contribute(
 			criteria, "(browser eq '" + typeSettings + "')",
 			Criteria.Conjunction.AND, "context", Criteria.Type.CONTEXT);
 	}

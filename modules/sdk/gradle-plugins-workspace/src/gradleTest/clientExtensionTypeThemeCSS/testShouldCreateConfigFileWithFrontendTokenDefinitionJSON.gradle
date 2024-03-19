@@ -1,4 +1,3 @@
-import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 task runGradleTest
@@ -19,14 +18,11 @@ runGradleTest {
 
 		def jsonData = jsonSlurper.parse(configJSONFile)
 
-		String expectedJSON = "{\"frontendTokenCategories\":[{\"frontendTokenSets\":[{\"frontendTokens\":[{\"defaultValue\":\"#0b5fff\",\"editorType\":\"ColorPicker\",\"label\":\"brand-color-1\",\"mappings\":[{\"type\":\"cssVariable\",\"value\":\"brand-color-1\"}],\"name\":\"brandColor1\",\"type\":\"String\"}]}]}]}"
-
 		jsonData.each {
 			key, value ->
 			assert value instanceof Map
 
-			assert value.get("typeSettings") == ["frontendTokenDefinitionJSON=${expectedJSON}"]
-
+			assert value.get("typeSettings") == ["frontendTokenDefinitionJSON={\"frontendTokenCategories\":[{\"frontendTokenSets\":[{\"frontendTokens\":[{\"defaultValue\":\"#0b5fff\",\"editorType\":\"ColorPicker\",\"label\":\"brand-color-1\",\"mappings\":[{\"type\":\"cssVariable\",\"value\":\"brand-color-1\"}],\"name\":\"brandColor1\",\"type\":\"String\"}]}]}]}"]
 		}
 	}
 }

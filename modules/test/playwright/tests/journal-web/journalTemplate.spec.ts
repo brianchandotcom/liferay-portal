@@ -6,13 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	isolatedSiteTest,
 	journalPagesTest
 );

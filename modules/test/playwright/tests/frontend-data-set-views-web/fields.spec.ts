@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
@@ -15,7 +14,6 @@ import {viewsPageTest} from './fixtures/viewsPageTest';
 import {DEFAULT_LABEL} from './utils/constants';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	dataSetsPageTest,
 	fdsFragmentPageTest,
 	featureFlagsTest({

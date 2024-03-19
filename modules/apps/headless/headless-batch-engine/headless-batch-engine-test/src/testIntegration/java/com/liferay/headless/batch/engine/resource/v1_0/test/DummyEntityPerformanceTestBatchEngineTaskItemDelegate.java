@@ -54,14 +54,10 @@ public class DummyEntityPerformanceTestBatchEngineTaskItemDelegate
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		int endPos = pagination.getEndPosition();
-
-		if (endPos > _items.size()) {
-			endPos = _items.size();
-		}
-
 		return Page.of(
-			_items.subList(pagination.getStartPosition(), endPos),
+			_items.subList(
+				pagination.getStartPosition(),
+				Math.min(pagination.getEndPosition(), _items.size())),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_items.size());
 	}

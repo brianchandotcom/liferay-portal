@@ -9,13 +9,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.change.tracking.test.util.PerformanceTestTimer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -27,7 +24,6 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -41,7 +37,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -111,7 +106,9 @@ public class CTRowUtilPerformanceTest {
 
 		DDMFormTestUtil.addTextDDMFormFields(ddmForm, formFieldName);
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (PerformanceTestTimer performanceTestTimer =
+				new PerformanceTestTimer(2000)) {
+
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection1.getUserId(), _ctCollection1.getCtCollectionId());
 		}
@@ -150,7 +147,9 @@ public class CTRowUtilPerformanceTest {
 
 		journalArticle = JournalTestUtil.updateArticle(journalArticle);
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (PerformanceTestTimer performanceTestTimer =
+				new PerformanceTestTimer(2000)) {
+
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection1.getUserId(), _ctCollection1.getCtCollectionId());
 		}
@@ -204,12 +203,16 @@ public class CTRowUtilPerformanceTest {
 			siteInitializer.initialize(group.getGroupId());
 		}
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (PerformanceTestTimer performanceTestTimer =
+				new PerformanceTestTimer(20000)) {
+
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection2.getUserId(), _ctCollection2.getCtCollectionId());
 		}
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (PerformanceTestTimer performanceTestTimer =
+				new PerformanceTestTimer(1000)) {
+
 			_ctCollectionLocalService.checkConflicts(_ctCollection1);
 		}
 
@@ -234,21 +237,19 @@ public class CTRowUtilPerformanceTest {
 			LayoutTestUtil.addTypeContentLayout(_group, layoutName);
 		}
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (PerformanceTestTimer performanceTestTimer =
+				new PerformanceTestTimer(2000)) {
+
 			_ctProcessLocalService.addCTProcess(
 				_ctCollection2.getUserId(), _ctCollection2.getCtCollectionId());
 		}
 
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+		try (PerformanceTestTimer performanceTestTimer =
+				new PerformanceTestTimer(1000)) {
+
 			_ctCollectionLocalService.checkConflicts(_ctCollection1);
 		}
 	}
-
-	@Inject
-	private BackgroundTaskLocalService _backgroundTaskLocalService;
-
-	@Inject
-	private CounterLocalService _counterLocalService;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection1;
@@ -261,15 +262,6 @@ public class CTRowUtilPerformanceTest {
 
 	@Inject
 	private CTProcessLocalService _ctProcessLocalService;
-
-	@Inject
-	private DDMFieldLocalService _ddmFieldLocalService;
-
-	@Inject
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -104,28 +104,18 @@ public class SiteInitializerSerializerImpl
 		zipWriter.addEntry("site-initializer/" + fileName, string);
 	}
 
-	private String _getLayoutDirectory(Layout layout, List<Layout> layouts)
-		throws Exception {
-
-		String layoutDirName = _normalize(layout.getName(LocaleUtil.US));
+	private String _getLayoutDirName(Layout layout) throws Exception {
+		String dirName = _normalize(layout.getName(LocaleUtil.US));
 
 		if (layout.getParentLayoutId() == 0) {
-			return layoutDirName;
+			return dirName;
 		}
 
-		Layout parentLayout = null;
+		Layout parentLayout = _layoutLocalService.getLayout(
+			layout.getGroupId(), layout.isPrivateLayout(),
+			layout.getParentLayoutId());
 
-		for (Layout loopLayout : layouts) {
-			if (Objects.equals(
-					loopLayout.getLayoutId(), layout.getParentLayoutId())) {
-
-				parentLayout = loopLayout;
-
-				break;
-			}
-		}
-
-		return _getLayoutDirectory(parentLayout, layouts) + "/" + layoutDirName;
+		return _getLayoutDirName(parentLayout) + "/" + dirName;
 	}
 
 	private LayoutStructure _getLayoutStructure(Layout layout) {
@@ -255,8 +245,7 @@ public class SiteInitializerSerializerImpl
 		}
 	}
 
-	private void _serializeLayout(
-			Layout layout, List<Layout> layouts, ZipWriter zipWriter)
+	private void _serializeLayout(Layout layout, ZipWriter zipWriter)
 		throws Exception {
 
 		JSONObject pagejsonObject = JSONUtil.put(
@@ -286,22 +275,13 @@ public class SiteInitializerSerializerImpl
 			if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
 
-				Layout targetLayout = null;
-
-				for (Layout loopLayout : layouts) {
-					if (Objects.equals(
-							GetterUtil.getLong(tokens[1].replace("\n", "")),
-							loopLayout.getLayoutId())) {
-
-						targetLayout = loopLayout;
-
-						break;
-					}
-				}
+				Layout linkToLayout = _layoutLocalService.getLayout(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					GetterUtil.getLong(tokens[1].replace("\n", "")));
 
 				typeSettingsjsonObject.put(
 					"value",
-					"[$LAYOUT_ID:" + targetLayout.getName(LocaleUtil.US) +
+					"[$LAYOUT_ID:" + linkToLayout.getName(LocaleUtil.US) +
 						"$]");
 			}
 			else if (Objects.equals(
@@ -319,7 +299,7 @@ public class SiteInitializerSerializerImpl
 				));
 		}
 
-		String dirName = "layouts/" + _getLayoutDirectory(layout, layouts);
+		String dirName = "layouts/" + _getLayoutDirName(layout);
 
 		_addZipEntry(dirName + "/page.json", pagejsonObject, zipWriter);
 
@@ -359,7 +339,7 @@ public class SiteInitializerSerializerImpl
 			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (Layout layout : layouts) {
-			_serializeLayout(layout, layouts, zipWriter);
+			_serializeLayout(layout, zipWriter);
 		}
 	}
 

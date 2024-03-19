@@ -19,7 +19,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -345,7 +344,7 @@ public class SiteInitializerSerializerImpl
 
 				pagejsonObject.put(
 					"typeSettings",
-					_jsonFactoryUtil.createJSONArray(
+					_jsonFactory.createJSONArray(
 					).put(
 						typeSettingsjsonObject
 					));
@@ -396,9 +395,6 @@ public class SiteInitializerSerializerImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private JSONFactoryUtil _jsonFactoryUtil;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -802,7 +802,7 @@ export const sitePagesListColumns = {
 		cellRendererProps: {
 			nameKey: 'assetTitle',
 			renderSecondaryInfo: ({assetId}) => (
-				<TextTruncate title={assetId} />
+				<TextTruncate title={decodeURIComponent(assetId)} />
 			),
 			routeFn: ({data: {assetId, assetTitle}}) =>
 				setUriQueryValues(

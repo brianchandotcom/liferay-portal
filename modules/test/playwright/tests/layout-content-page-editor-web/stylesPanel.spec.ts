@@ -55,7 +55,7 @@ const COLOR_PICKER_PALETTES = [
 	},
 ];
 
-test('allows changing and resetting spacing', async ({
+test('allows changing, resetting spacing and verify that the save icon appears when changes are made', async ({
 	apiHelpers,
 	page,
 	pageEditorPage,
@@ -80,6 +80,10 @@ test('allows changing and resetting spacing', async ({
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
+	const savedIcon = await page.getByLabel('Saved');
+
+	expect(savedIcon).not.toBeVisible();
+
 	// Change Margin Top with custom value and check change is applied
 
 	await pageEditorPage.changeFragmentSpacing(
@@ -102,9 +106,17 @@ test('allows changing and resetting spacing', async ({
 	// Reset to initial value and check change is applied
 
 	await pageEditorPage.resetSpacing(headingId, 'Margin Top');
+
 	expect(await pageEditorPage.getFragmentStyle(headingId, 'marginTop')).toBe(
 		'0px'
 	);
+
+	expect(savedIcon).toBeVisible();
+	expect(
+		page.getByText(
+			'Changes have been saved. Page editor will autosave new changes.'
+		)
+	).toBeVisible();
 });
 
 test('renders all selectors with correct default values', async ({

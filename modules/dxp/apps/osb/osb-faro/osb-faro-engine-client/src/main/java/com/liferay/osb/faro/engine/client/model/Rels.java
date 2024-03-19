@@ -102,6 +102,8 @@ public interface Rels {
 
 	public static final String FIELDS = "fields";
 
+	public static final String IDENTITIES_COUNT = "identities-count";
+
 	public static final String INDIVIDUAL = "individual";
 
 	public static final String INDIVIDUAL_INDIVIDUAL_SEGMENTS =

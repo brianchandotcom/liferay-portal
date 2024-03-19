@@ -203,7 +203,7 @@ export function CardSectionsBody({
 							className="card-section-body-section-files"
 							key={id}
 						>
-							<strong>{priority}</strong>
+							<strong>{isApp ?? priority}</strong>
 
 							<div className="card-section-body-section-files-container">
 								<img

@@ -6,17 +6,14 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
 import circleFullIcon from '../../../assets/icons/circle_fill_icon.svg';
-
-// import {useNavigate, useParams} from 'react-router-dom';
-
-// import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-
 import i18n from '../../../i18n';
 import {useAppContext} from '../../../manage-app-state/AppManageState';
 import {TYPES} from '../../../manage-app-state/actionTypes';
@@ -30,8 +27,7 @@ import {ReviewAndSubmitSolutions} from './ReviewAndSubmitSolutions/ReviewAndSubm
 
 const SolutionsDetails = () => {
 	const [, dispatch] = useAppContext();
-
-	// const [loading, setLoading] = useState(false);
+	const [active, setActive] = useState('Details');
 
 	const {appId} = useParams();
 	const navigate = useNavigate();
@@ -91,62 +87,78 @@ const SolutionsDetails = () => {
 
 	return (
 		<div className="solutions-details-page-container">
-			<ClayButton
-				className="align-items-center d-flex"
-				displayType="unstyled"
-				onClick={() => navigate('../solutions')}
-			>
-				<ClayIcon className="mr-2" symbol="order-arrow-left" />
-				<h5 className="mt-1">{i18n.translate('back-to-solutions')}</h5>
-			</ClayButton>
-
-			<div className="app-details-page-app-info-main-container mt-4">
-				<div className="app-details-page-app-info-left-container">
-					<div>
-						<img
-							alt="App Logo"
-							className="app-details-page-icon"
-							src={showAppImage(thumbnail)}
-						/>
-					</div>
-
-					<div>
-						<span className="app-details-page-app-info-title">
-							{selectedApp.name?.en_US}
-						</span>
-
-						<div className="app-details-page-app-info-subtitle-container">
-							{appVersion && (
-								<span className="app-details-page-app-info-subtitle-text">
-									{appVersion}
-								</span>
-							)}
-
+			<div className="solutions-details-header">
+				<ClayButton
+					className="align-items-center d-flex"
+					displayType="unstyled"
+					onClick={() => navigate('../solutions')}
+				>
+					<ClayIcon className="mr-2" symbol="order-arrow-left" />
+					<h5 className="mt-1">
+						{i18n.translate('back-to-solutions')}
+					</h5>
+				</ClayButton>
+				<div className="app-details-page-app-info-main-container mt-4">
+					<div className="app-details-page-app-info-left-container">
+						<div>
 							<img
-								alt="status icon"
-								className={classNames(
-									'app-details-page-app-info-subtitle-icon',
-									{
-										'app-details-page-app-info-subtitle-icon-hidden':
-											selectedApp.workflowStatusInfo
-												.label === 'draft',
-										'app-details-page-app-info-subtitle-icon-pending':
-											selectedApp.workflowStatusInfo
-												.label === 'pending',
-										'app-details-page-app-info-subtitle-icon-published':
-											selectedApp.workflowStatusInfo
-												.label === 'approved',
-									}
-								)}
-								src={circleFullIcon}
+								alt="App Logo"
+								className="app-details-page-icon"
+								src={showAppImage(thumbnail)}
 							/>
+						</div>
 
-							<span className="app-details-page-app-info-subtitle-text">
-								{selectedApp.workflowStatusInfo.label_i18n}
+						<div>
+							<span className="app-details-page-app-info-title">
+								{selectedApp.name?.en_US}
 							</span>
+
+							<div className="app-details-page-app-info-subtitle-container">
+								{appVersion && (
+									<span className="app-details-page-app-info-subtitle-text">
+										{appVersion}
+									</span>
+								)}
+
+								<img
+									alt="status icon"
+									className={classNames(
+										'app-details-page-app-info-subtitle-icon',
+										{
+											'app-details-page-app-info-subtitle-icon-hidden':
+												selectedApp.workflowStatusInfo
+													.label === 'draft',
+											'app-details-page-app-info-subtitle-icon-pending':
+												selectedApp.workflowStatusInfo
+													.label === 'pending',
+											'app-details-page-app-info-subtitle-icon-published':
+												selectedApp.workflowStatusInfo
+													.label === 'approved',
+										}
+									)}
+									src={circleFullIcon}
+								/>
+
+								<span className="app-details-page-app-info-subtitle-text">
+									{selectedApp.workflowStatusInfo.label_i18n}
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
+
+				<ClayNavigationBar className="w-100" triggerLabel={active}>
+					<ClayNavigationBar.Item active={active === 'Details'}>
+						<ClayLink href="#" onClick={() => setActive('Details')}>
+							Details
+						</ClayLink>
+					</ClayNavigationBar.Item>
+					<ClayNavigationBar.Item active={active === 'Advertisement'}>
+						<ClayButton onClick={() => setActive('Advertisement')}>
+							Advertisement
+						</ClayButton>
+					</ClayNavigationBar.Item>
+				</ClayNavigationBar>
 			</div>
 
 			{status === 'Draft' && (

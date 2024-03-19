@@ -5,6 +5,8 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -13,6 +15,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
@@ -28,7 +31,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,6 +103,27 @@ public class UpdatePasswordAction implements Action {
 					httpServletRequest.setAttribute(
 						WebKeys.TITLE_SET_PASSWORD, "set-password");
 				}
+			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Layout createAccountUtilityPage =
+				LayoutUtilityPageEntryLayoutProviderUtil.
+					getDefaultLayoutUtilityPageEntryLayout(
+						themeDisplay.getScopeGroupId(),
+						LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD);
+
+			if (createAccountUtilityPage != null) {
+				String redirect = Portal.PATH_MAIN + "/portal/forgot_password";
+
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, "p_l_id", themeDisplay.getPlid());
+
+				httpServletResponse.sendRedirect(redirect);
+
+				return null;
 			}
 
 			return actionMapping.getActionForward("portal.update_password");

@@ -253,6 +253,17 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 			_assertLayoutClassedModelUsagesCount(
 				_journalArticle.getResourcePrimKey(), 2);
 
+			Assert.assertEquals(
+				1,
+				_getLayoutClassedModelUsagesCount(
+					_journalArticle.getResourcePrimKey(),
+					stagingGroup.getGroupId()));
+
+			Assert.assertEquals(
+				1,
+				_getLayoutClassedModelUsagesCount(
+					_journalArticle.getResourcePrimKey(), _group.getGroupId()));
+
 			long portletClassNameId = _classNameLocalService.getClassNameId(
 				Portlet.class.getName());
 
@@ -506,6 +517,24 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 				JournalContentPortletKeys.JOURNAL_CONTENT, privateLayout);
 
 		return portletPreferences.size();
+	}
+
+	private int _getLayoutClassedModelUsagesCount(long classPK, long groupId) {
+		List<LayoutClassedModelUsage> layoutClassedModelUsages =
+			_layoutClassedModelUsageLocalService.getLayoutClassedModelUsages(
+				_journalArticleClassNameId, classPK);
+
+		int count = 0;
+
+		for (LayoutClassedModelUsage layoutClassedModelUsage :
+				layoutClassedModelUsages) {
+
+			if (layoutClassedModelUsage.getGroupId() == groupId) {
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 	private Layout _getStagingLayout(long stagingGroupId) {

@@ -61,7 +61,7 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			nestedFieldsDepth: 4,
 			transformData: (subTask) => ({
 				...subTask,
-				issues: subTask.subtaskToSubtasksCasesResults.reduce(
+				issues: subTask.subtaskToSubtasksCasesResults?.reduce(
 					(previousIssues: TestrayIssue[], subtasksIssues) => {
 						const newIssues =
 							subtasksIssues?.caseResultToSubtasksCasesResults?.caseResultToCaseResultsIssues.map(

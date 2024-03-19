@@ -6,7 +6,6 @@
 import {APIResponse, expect as baseExpect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
@@ -41,7 +40,6 @@ const translateNameAndMetadataFields = async (
 
 const baseTest = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	isolatedSiteTest,
 	journalPagesTest,
 	workflowPagesTest

@@ -7,7 +7,6 @@ import {expect, mergeTests} from '@playwright/test';
 import * as path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
@@ -16,7 +15,6 @@ import {OBJECT_ENTRY_ENTITY_TYPE} from './utils/constants';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	featureFlagsTest({
 		'COMMERCE-8087': true,
 		'LPS-164948': true,

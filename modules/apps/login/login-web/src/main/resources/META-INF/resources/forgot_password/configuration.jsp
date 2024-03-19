@@ -16,11 +16,7 @@ String emailPasswordResetBody = LoginUtil.getEmailTemplateXML(portletPreferences
 String emailPasswordSentSubject = LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentSubject", "preferences", StringPool.BLANK);
 String emailPasswordSentBody = LocalizationUtil.getLocalizationXmlFromPreferences(portletPreferences, renderRequest, "emailPasswordSentBody", "preferences", StringPool.BLANK);
 
-String passwordChangedNotification = StringPool.BLANK;
-
-if (Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPasswordSentBody)) {
-	passwordChangedNotification = "password-changed-notification,";
-}
+ForgotPasswordConfigurationDisplayContext forgotPasswordConfigurationDisplayContext = (ForgotPasswordConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -36,23 +32,22 @@ if (Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPa
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:tabs
-			names='<%= "email-from," + passwordChangedNotification + "password-reset-notification" %>'
-			refresh="<%= false %>"
+		<clay:tabs
+			tabsItems="<%= forgotPasswordConfigurationDisplayContext.getTabsItems() %>"
 		>
 			<liferay-ui:error key="emailFromAddress" message="please-enter-a-valid-email-address" />
 			<liferay-ui:error key="emailFromName" message="please-enter-a-valid-name" />
 
-			<liferay-ui:section>
+			<clay:tabs-panel>
 				<liferay-frontend:fieldset>
 					<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
 
 					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" />
 				</liferay-frontend:fieldset>
-			</liferay-ui:section>
+			</clay:tabs-panel>
 
 			<c:if test="<%= Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPasswordSentBody) %>">
-				<liferay-ui:section>
+				<clay:tabs-panel>
 					<liferay-frontend:fieldset
 						collapsed="<%= true %>"
 						collapsible="<%= true %>"
@@ -90,10 +85,10 @@ if (Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPa
 							</aui:field-wrapper>
 						</c:if>
 					</liferay-frontend:fieldset>
-				</liferay-ui:section>
+				</clay:tabs-panel>
 			</c:if>
 
-			<liferay-ui:section>
+			<clay:tabs-panel>
 				<div class="alert alert-info">
 					<liferay-ui:message key="enter-custom-values-or-leave-it-blank-to-use-the-default-portal-settings" />
 				</div>
@@ -107,8 +102,8 @@ if (Validator.isNotNull(emailPasswordSentSubject) || Validator.isNotNull(emailPa
 						showEmailEnabled="<%= false %>"
 					/>
 				</liferay-frontend:fieldset>
-			</liferay-ui:section>
-		</liferay-ui:tabs>
+			</clay:tabs-panel>
+		</clay:tabs>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

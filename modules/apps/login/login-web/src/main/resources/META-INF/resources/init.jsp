@@ -20,6 +20,7 @@ taglib uri="http://liferay.com/tld/user" prefix="liferay-user" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.captcha.configuration.CaptchaConfiguration" %><%@
+page import="com.liferay.login.web.internal.display.context.ForgotPasswordConfigurationDisplayContext" %><%@
 page import="com.liferay.login.web.internal.portlet.util.LoginUtil" %><%@
 page import="com.liferay.login.web.internal.servlet.taglib.include.NavigationPageIncludeUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

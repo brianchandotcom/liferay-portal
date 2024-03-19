@@ -224,7 +224,7 @@ exports[`InterestDetails renders 1`] = `
                     >
                       <a
                         class="text-truncate"
-                        href="/workspace/23/321321/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Dashboard%20-%20Retail?rangeKey=30"
+                        href="/workspace/23/321321/sites/pages/overview/https%3A%2F%2Fwww.liferay.com/Dashboard - Retail?rangeKey=30"
                       >
                         Dashboard - Retail
                       </a>

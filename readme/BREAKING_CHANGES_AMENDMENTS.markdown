@@ -248,20 +248,6 @@ This class has been deprecated since 7.1.x, its only usage in rules_user_custom_
 ```
 ----
 
-# f46f1e49076f31484ad6cceede099bb16c9ef911
-Incorrect format on breaking change
-
-Correct message should be:
-```
-# breaking
-## What portal-kernel/src/com/liferay/portal/kernel/dao/orm/IndexableActionableDynamicQuery.java
-setIndexWriterHelper() method is being removed.
-## Why
-This setter was added for the class UserIndexer (see 73427a8). UserIndexer has been deprecated and removed from the portal though.
-----
-```
-----
-
 # 76c2d3b68c19a1b33f18e9221d83f34310daed45
 
 Typo in file path.

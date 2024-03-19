@@ -18,10 +18,6 @@ Contact accountEntryContact = accountEntry.fetchContact();
 
 long contactId = (accountEntryContact != null) ? accountEntryContact.getContactId() : 0;
 
-request.setAttribute("contact_information.jsp-className", AccountEntry.class.getName());
-request.setAttribute("contact_information.jsp-classPK", accountEntry.getAccountEntryId());
-request.setAttribute("accountEntryContact", accountEntryContact);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
@@ -40,19 +36,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "contact-information"));
 
 	<liferay-frontend:edit-form-body>
 		<clay:sheet-section>
-			<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
+			<liferay-util:include page="/account_entries_admin/account_entry/account_contact/phone_numbers.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="emptyResultsMessage" value="this-account-does-not-have-any-phone-numbers" />
 			</liferay-util:include>
 		</clay:sheet-section>
 
 		<clay:sheet-section>
-			<liferay-util:include page="/common/email_addresses.jsp" servletContext="<%= application %>">
+			<liferay-util:include page="/account_entries_admin/account_entry/account_contact/email_addresses.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="emptyResultsMessage" value="this-account-does-not-have-any-email-addresses" />
 			</liferay-util:include>
 		</clay:sheet-section>
 
 		<clay:sheet-section>
-			<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
+			<liferay-util:include page="/account_entries_admin/account_entry/account_contact/websites.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="emptyResultsMessage" value="this-account-does-not-have-any-websites" />
 			</liferay-util:include>
 		</clay:sheet-section>

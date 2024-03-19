@@ -7,7 +7,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:model-context bean='<%= (Contact)request.getAttribute("accountEntryContact") %>' model="<%= Contact.class %>" />
+<%
+AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
+
+AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryDisplay.getAccountEntryId());
+%>
+
+<aui:model-context bean="<%= accountEntry.fetchContact() %>" model="<%= Contact.class %>" />
 
 <div class="social-network">
 	<aui:input label="facebook" name="facebookSn" />

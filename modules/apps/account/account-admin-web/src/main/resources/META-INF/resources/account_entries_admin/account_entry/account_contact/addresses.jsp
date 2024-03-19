@@ -12,8 +12,10 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 
 AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryDisplay.getAccountEntryId());
 
-request.setAttribute("contact_information.jsp-className", AccountEntry.class.getName());
-request.setAttribute("contact_information.jsp-classPK", accountEntry.getAccountEntryId());
+String className = AccountEntry.class.getName();
+long classPK = accountEntry.getAccountEntryId();
+
+List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
@@ -27,8 +29,110 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(accountEntry.getAccountEntryId()) %>" />
 
 	<liferay-frontend:edit-form-body>
-		<liferay-util:include page="/common/addresses.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="emptyResultsMessage" value="this-account-does-not-have-any-addresses" />
-		</liferay-util:include>
+		<clay:sheet-header>
+			<clay:content-row
+				cssClass="sheet-title"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h2 class="heading-text"><liferay-ui:message key="addresses" /></h2>
+				</clay:content-col>
+
+				<clay:content-col>
+					<span class="heading-end">
+						<clay:link
+							aria-label='<%= LanguageUtil.format(request, "add-x", "addresses") %>'
+							cssClass="add-address-link btn btn-secondary btn-sm"
+							displayType="null"
+							href='<%=
+								PortletURLBuilder.createRenderURL(
+									liferayPortletResponse
+								).setMVCPath(
+									"/account_entries_admin/account_entry/account_contact/edit_address.jsp"
+								).setRedirect(
+									currentURL
+								).setParameter(
+									"className", className
+								).setParameter(
+									"classPK", classPK
+								).buildString()
+							%>'
+							label="add"
+							role="button"
+						/>
+					</span>
+				</clay:content-col>
+			</clay:content-row>
+		</clay:sheet-header>
+
+		<c:if test="<%= addresses.isEmpty() %>">
+			<div class="contact-information-empty-results-message-wrapper">
+				<liferay-frontend:empty-result-message
+					animationType="<%= EmptyResultMessageKeys.AnimationType.EMPTY %>"
+					title='<%= LanguageUtil.get(resourceBundle, "this-account-does-not-have-any-addresses") %>'
+				/>
+			</div>
+		</c:if>
+
+		<div class="<%= addresses.isEmpty() ? "addresses-table-wrapper hide" : "addresses-table-wrapper" %>">
+			<ul class="list-group list-group-flush">
+
+				<%
+				for (Address address : addresses) {
+				%>
+
+					<li class="list-group-item list-group-item-flex">
+						<clay:content-col>
+							<clay:sticker
+								cssClass="sticker-static"
+								displayType="secondary"
+								icon="picture"
+							/>
+						</clay:content-col>
+
+						<clay:content-col
+							expand="<%= true %>"
+						>
+							<span class="h3">
+
+								<%
+								ListType listType = address.getListType();
+								%>
+
+								<liferay-ui:message key="<%= listType.getName() %>" />
+							</span>
+
+							<div class="address-display-wrapper list-group-text">
+								<liferay-text-localizer:address-display
+									address="<%= address %>"
+								/>
+							</div>
+
+							<c:if test="<%= address.isPrimary() %>">
+								<div class="address-primary-label-wrapper">
+									<clay:label
+										displayType="primary"
+										label="primary"
+									/>
+								</div>
+							</c:if>
+						</clay:content-col>
+
+						<clay:content-col
+							cssClass="lfr-search-container-wrapper"
+						>
+							<liferay-util:include page="/account_entries_admin/account_entry/account_contact/address_action.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="addressId" value="<%= String.valueOf(address.getAddressId()) %>" />
+							</liferay-util:include>
+						</clay:content-col>
+					</li>
+
+				<%
+				}
+				%>
+
+			</ul>
+		</div>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

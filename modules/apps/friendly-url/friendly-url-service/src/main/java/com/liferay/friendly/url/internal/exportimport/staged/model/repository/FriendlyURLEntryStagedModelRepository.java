@@ -171,7 +171,8 @@ public class FriendlyURLEntryStagedModelRepository
 			existingFriendlyURLEntry.getClassNameId(),
 			existingFriendlyURLEntry.getClassPK(),
 			existingFriendlyURLEntry.getDefaultLanguageId(),
-			_getLocalizationMap(portletDataContext, friendlyURLEntry));
+			_getLocalizationMap(portletDataContext, friendlyURLEntry),
+			portletDataContext.createServiceContext(friendlyURLEntry));
 	}
 
 	private Map<String, String> _getLocalizationMap(

@@ -11,12 +11,14 @@ import {AccountsPage} from '../pages/account-admin-web/AccountsPage';
 import {EditAccountContactInformationPage} from '../pages/account-admin-web/EditAccountContactInformationPage';
 import {EditAccountContactPage} from '../pages/account-admin-web/EditAccountContactPage';
 import {EditAccountPage} from '../pages/account-admin-web/EditAccountPage';
+import {EditAccountPhonePage} from '../pages/account-admin-web/EditAccountPhonePage';
 
 const accountsPagesTest = test.extend<{
 	accountsPage: AccountsPage;
 	editAccountContactInformationPage: EditAccountContactInformationPage;
 	editAccountContactPage: EditAccountContactPage;
 	editAccountPage: EditAccountPage;
+	editAccountPhonePage: EditAccountPhonePage;
 }>({
 	accountsPage: async ({page}, use) => {
 		await use(new AccountsPage(page));
@@ -29,6 +31,9 @@ const accountsPagesTest = test.extend<{
 	},
 	editAccountPage: async ({page}, use) => {
 		await use(new EditAccountPage(page));
+	},
+	editAccountPhonePage: async ({page}, use) => {
+		await use(new EditAccountPhonePage(page));
 	},
 });
 

@@ -49,9 +49,9 @@ public class DBResourceUtilTest {
 
 	private InputStream _getSQLFileInputStream(String lineSeparator) {
 		String sqlFile = StringBundler.concat(
-			"create index IX_AAAAAAAA on Table1 (field1);", lineSeparator,
-			"create index IX_BBBBBBBB on Table1 (field2);", lineSeparator,
-			lineSeparator, "create index IX_CCCCCCCC on Table2 (field1);",
+			"create index IX_TEST1 on Table1 (field1);", lineSeparator,
+			"create index IX_TEST2 on Table1 (field2);", lineSeparator,
+			lineSeparator, "create index IX_TEST3 on Table2 (field);",
 			lineSeparator);
 
 		return new ByteArrayInputStream(sqlFile.getBytes());

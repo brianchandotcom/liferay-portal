@@ -36,8 +36,6 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 		);
 	}
 
-	console.log('items', items);
-
 	return (
 		<Table
 			columns={[

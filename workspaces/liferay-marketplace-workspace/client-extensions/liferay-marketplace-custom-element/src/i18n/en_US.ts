@@ -27,6 +27,7 @@ export default {
 	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
 	'back-to-my-apps': 'Back to My Apps',
+	'back-to-solutions': 'Back to Solutions',
 	'becoming-a-liferay-marketplace-customer':
 		'Becoming a Liferay Marketplace Customer',
 	'becoming-a-liferay-marketplace-publisher':

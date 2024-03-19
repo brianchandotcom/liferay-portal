@@ -68,18 +68,20 @@ export default function () {
 		if (item.expirationDays > 1) {
 			return `Expires in ${item.expirationDays} days`;
 		}
+
 		if (item.expirationDays === 1) {
 			return `Expires in 1 day`;
 		}
+
 		if (item.expirationDays === 0) {
 			return 'Expires today';
 		}
+
 		if (item.expirationDays === -1) {
 			return 'Expired 1 day ago';
 		}
-		if (item.expirationDays < -1) {
-			return `Expired ${Math.abs(item.expirationDays)} days ago`;
-		}
+
+		return `Expired ${Math.abs(item.expirationDays)} days ago`;
 	};
 
 	const buildChart = () => {

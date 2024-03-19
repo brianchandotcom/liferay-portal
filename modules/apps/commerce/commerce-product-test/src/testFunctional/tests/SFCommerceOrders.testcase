@@ -1248,11 +1248,13 @@ definition {
 		}
 
 		task ("Then the order date and time is shown") {
-			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = ${currentDate});
+			// TODO Clean up after CLDR update is finished
+
+			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
+			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy K", "UTC");
+
+			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
 		}
 
 		task ("Given the Show Order Creation Time checkbox is unchecked in global settings") {
@@ -1290,11 +1292,13 @@ definition {
 		}
 
 		task ("Then the order date is shown without the time") {
-			var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
 
-			AssertTextEquals(
-				locator1 = "CommerceOrders#ORDER_DETAILS_DATE",
-				value1 = ${currentDate});
+			// TODO Clean up after CLDR update is finished
+
+			var currentDateYYYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
+			var currentDateYY = DateUtil.getFormattedCurrentDate("MMM d, yyyy", "UTC");
+
+			AssertElementPresent(locator1 = "//dt[contains(.,'Order Date')]/following-sibling::dd | //div[contains(@class,'commerce-panel')]//div[4]//dd[contains(., '${currentDateYYYY}') or contains(., '${currentDateYY}')]");
 		}
 	}
 

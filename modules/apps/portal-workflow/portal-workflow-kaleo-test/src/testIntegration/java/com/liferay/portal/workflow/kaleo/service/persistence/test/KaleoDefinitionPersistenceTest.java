@@ -205,6 +205,13 @@ public class KaleoDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByActive() throws Exception {
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
+
+		_persistence.countByActive(RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByC_N() throws Exception {
 		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
 

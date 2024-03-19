@@ -607,6 +607,516 @@ public class KaleoDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
 		"kaleoDefinition.companyId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByActive;
+	private FinderPath _finderPathWithoutPaginationFindByActive;
+	private FinderPath _finderPathCountByActive;
+
+	/**
+	 * Returns all the kaleo definitions where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the matching kaleo definitions
+	 */
+	@Override
+	public List<KaleoDefinition> findByActive(boolean active) {
+		return findByActive(active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the kaleo definitions where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of kaleo definitions
+	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
+	 * @return the range of matching kaleo definitions
+	 */
+	@Override
+	public List<KaleoDefinition> findByActive(
+		boolean active, int start, int end) {
+
+		return findByActive(active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo definitions where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of kaleo definitions
+	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo definitions
+	 */
+	@Override
+	public List<KaleoDefinition> findByActive(
+		boolean active, int start, int end,
+		OrderByComparator<KaleoDefinition> orderByComparator) {
+
+		return findByActive(active, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo definitions where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of kaleo definitions
+	 * @param end the upper bound of the range of kaleo definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo definitions
+	 */
+	@Override
+	public List<KaleoDefinition> findByActive(
+		boolean active, int start, int end,
+		OrderByComparator<KaleoDefinition> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinition.class)) {
+
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByActive;
+					finderArgs = new Object[] {active};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByActive;
+				finderArgs = new Object[] {
+					active, start, end, orderByComparator
+				};
+			}
+
+			List<KaleoDefinition> list = null;
+
+			if (useFinderCache) {
+				list = (List<KaleoDefinition>)finderCache.getResult(
+					finderPath, finderArgs, this);
+
+				if ((list != null) && !list.isEmpty()) {
+					for (KaleoDefinition kaleoDefinition : list) {
+						if (active != kaleoDefinition.isActive()) {
+							list = null;
+
+							break;
+						}
+					}
+				}
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
+
+				sb.append(_SQL_SELECT_KALEODEFINITION_WHERE);
+
+				sb.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(KaleoDefinitionModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(active);
+
+					list = (List<KaleoDefinition>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first kaleo definition in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo definition
+	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
+	 */
+	@Override
+	public KaleoDefinition findByActive_First(
+			boolean active,
+			OrderByComparator<KaleoDefinition> orderByComparator)
+		throws NoSuchDefinitionException {
+
+		KaleoDefinition kaleoDefinition = fetchByActive_First(
+			active, orderByComparator);
+
+		if (kaleoDefinition != null) {
+			return kaleoDefinition;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("active=");
+		sb.append(active);
+
+		sb.append("}");
+
+		throw new NoSuchDefinitionException(sb.toString());
+	}
+
+	/**
+	 * Returns the first kaleo definition in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	@Override
+	public KaleoDefinition fetchByActive_First(
+		boolean active, OrderByComparator<KaleoDefinition> orderByComparator) {
+
+		List<KaleoDefinition> list = findByActive(
+			active, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last kaleo definition in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo definition
+	 * @throws NoSuchDefinitionException if a matching kaleo definition could not be found
+	 */
+	@Override
+	public KaleoDefinition findByActive_Last(
+			boolean active,
+			OrderByComparator<KaleoDefinition> orderByComparator)
+		throws NoSuchDefinitionException {
+
+		KaleoDefinition kaleoDefinition = fetchByActive_Last(
+			active, orderByComparator);
+
+		if (kaleoDefinition != null) {
+			return kaleoDefinition;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("active=");
+		sb.append(active);
+
+		sb.append("}");
+
+		throw new NoSuchDefinitionException(sb.toString());
+	}
+
+	/**
+	 * Returns the last kaleo definition in the ordered set where active = &#63;.
+	 *
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo definition, or <code>null</code> if a matching kaleo definition could not be found
+	 */
+	@Override
+	public KaleoDefinition fetchByActive_Last(
+		boolean active, OrderByComparator<KaleoDefinition> orderByComparator) {
+
+		int count = countByActive(active);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<KaleoDefinition> list = findByActive(
+			active, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the kaleo definitions before and after the current kaleo definition in the ordered set where active = &#63;.
+	 *
+	 * @param kaleoDefinitionId the primary key of the current kaleo definition
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kaleo definition
+	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
+	 */
+	@Override
+	public KaleoDefinition[] findByActive_PrevAndNext(
+			long kaleoDefinitionId, boolean active,
+			OrderByComparator<KaleoDefinition> orderByComparator)
+		throws NoSuchDefinitionException {
+
+		KaleoDefinition kaleoDefinition = findByPrimaryKey(kaleoDefinitionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KaleoDefinition[] array = new KaleoDefinitionImpl[3];
+
+			array[0] = getByActive_PrevAndNext(
+				session, kaleoDefinition, active, orderByComparator, true);
+
+			array[1] = kaleoDefinition;
+
+			array[2] = getByActive_PrevAndNext(
+				session, kaleoDefinition, active, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KaleoDefinition getByActive_PrevAndNext(
+		Session session, KaleoDefinition kaleoDefinition, boolean active,
+		OrderByComparator<KaleoDefinition> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_KALEODEFINITION_WHERE);
+
+		sb.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(KaleoDefinitionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(active);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						kaleoDefinition)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<KaleoDefinition> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the kaleo definitions where active = &#63; from the database.
+	 *
+	 * @param active the active
+	 */
+	@Override
+	public void removeByActive(boolean active) {
+		for (KaleoDefinition kaleoDefinition :
+				findByActive(
+					active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(kaleoDefinition);
+		}
+	}
+
+	/**
+	 * Returns the number of kaleo definitions where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the number of matching kaleo definitions
+	 */
+	@Override
+	public int countByActive(boolean active) {
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					KaleoDefinition.class)) {
+
+			FinderPath finderPath = _finderPathCountByActive;
+
+			Object[] finderArgs = new Object[] {active};
+
+			Long count = (Long)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
+
+				sb.append(_SQL_COUNT_KALEODEFINITION_WHERE);
+
+				sb.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2);
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(active);
+
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return count.intValue();
+		}
+	}
+
+	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 =
+		"kaleoDefinition.active = ?";
+
 	private FinderPath _finderPathFetchByC_N;
 	private FinderPath _finderPathCountByC_N;
 
@@ -4172,6 +4682,24 @@ public class KaleoDefinitionPersistenceImpl
 		_finderPathCountByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			false);
+
+		_finderPathWithPaginationFindByActive = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
+			new String[] {
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"active_"}, true);
+
+		_finderPathWithoutPaginationFindByActive = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
+			new String[] {Boolean.class.getName()}, new String[] {"active_"},
+			true);
+
+		_finderPathCountByActive = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
+			new String[] {Boolean.class.getName()}, new String[] {"active_"},
 			false);
 
 		_finderPathFetchByC_N = new FinderPath(

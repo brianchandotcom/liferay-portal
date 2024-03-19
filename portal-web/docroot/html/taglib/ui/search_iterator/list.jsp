@@ -320,24 +320,11 @@ if (fixedHeader) {
 						%>
 
 							<td class="<%= columnClassName %>" colspan="<%= entry.getColspan() %>">
-								<c:choose>
-									<c:when test="<%= truncate %>">
-										<span class="text-truncate">
 
-											<%
-											entry.print(pageContext.getOut(), request, response);
-											%>
+								<%
+								entry.print(pageContext.getOut(), request, response);
+								%>
 
-										</span>
-									</c:when>
-									<c:otherwise>
-
-										<%
-										entry.print(pageContext.getOut(), request, response);
-										%>
-
-									</c:otherwise>
-								</c:choose>
 							</td>
 
 						<%

@@ -105,7 +105,16 @@ public class TextSearchEntry extends SearchEntry {
 			}
 
 			sb.append(">");
-			sb.append(getName(httpServletRequest));
+
+			if (isTruncate()) {
+				sb.append("<span class=\"text-truncate\">");
+				sb.append(getName(httpServletRequest));
+				sb.append("</span>");
+			}
+			else {
+				sb.append(getName(httpServletRequest));
+			}
+
 			sb.append("</a>");
 
 			writer.write(sb.toString());

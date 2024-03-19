@@ -83,7 +83,6 @@ public class EditAccountEntryContactMVCActionCommand
 
 		long accountEntryId = ParamUtil.getLong(
 			actionRequest, "accountEntryId");
-
 		String smsSn = ParamUtil.getString(actionRequest, "smsSn");
 		String facebookSn = ParamUtil.getString(actionRequest, "facebookSn");
 		String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");

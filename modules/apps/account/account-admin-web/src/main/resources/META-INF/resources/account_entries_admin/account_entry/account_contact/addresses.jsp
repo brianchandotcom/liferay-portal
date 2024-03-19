@@ -15,10 +15,8 @@ AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(account
 request.setAttribute("contact_information.jsp-className", AccountEntry.class.getName());
 request.setAttribute("contact_information.jsp-classPK", accountEntry.getAccountEntryId());
 
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
 %>
 
 <portlet:actionURL name="/account_admin/edit_account_entry_contact" var="editAccountEntryContactURL" />

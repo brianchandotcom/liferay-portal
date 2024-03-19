@@ -11,8 +11,6 @@
 String className = (String)request.getAttribute("contact_information.jsp-className");
 long classPK = (long)request.getAttribute("contact_information.jsp-classPK");
 
-String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage");
-
 List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 %>
 
@@ -57,7 +55,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 	<div class="contact-information-empty-results-message-wrapper">
 		<liferay-frontend:empty-result-message
 			animationType="<%= EmptyResultMessageKeys.AnimationType.EMPTY %>"
-			title="<%= LanguageUtil.get(resourceBundle, emptyResultsMessage) %>"
+			title="<%= LanguageUtil.get(resourceBundle, ParamUtil.getString(request, "emptyResultsMessage")) %>"
 		/>
 	</div>
 </c:if>

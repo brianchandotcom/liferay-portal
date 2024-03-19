@@ -8,6 +8,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+
 AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 
 AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryDisplay.getAccountEntryId());
@@ -19,8 +21,6 @@ long contactId = (accountEntryContact != null) ? accountEntryContact.getContactI
 request.setAttribute("contact_information.jsp-className", AccountEntry.class.getName());
 request.setAttribute("contact_information.jsp-classPK", accountEntry.getAccountEntryId());
 request.setAttribute("accountEntryContact", accountEntryContact);
-
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);

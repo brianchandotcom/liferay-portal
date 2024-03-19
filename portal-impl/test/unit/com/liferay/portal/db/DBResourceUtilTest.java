@@ -34,14 +34,14 @@ public class DBResourceUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetModuleIndexesSQLWithUnixLikeSeparator()
+	public void testGetModuleIndexesSQLWithUnixLineSeparator()
 		throws Exception {
 
 		_testGetModuleIndexesSQL(StringPool.NEW_LINE);
 	}
 
 	@Test
-	public void testGetModuleIndexesSQLWithWindowsLikeSeparator()
+	public void testGetModuleIndexesSQLWithWindowsLineSeparator()
 		throws Exception {
 
 		_testGetModuleIndexesSQL(StringPool.RETURN_NEW_LINE);

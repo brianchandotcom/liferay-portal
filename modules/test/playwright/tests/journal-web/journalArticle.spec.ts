@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {APIResponse, expect as baseExpect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
@@ -51,6 +51,23 @@ const bulkTest = mergeTests(
 	})
 );
 
+const expect = baseExpect.extend({
+	toBeSuccessful: (response: APIResponse) => ({
+		message: () =>
+			response.ok()
+				? 'Response is successful'
+				: 'Response is not successful',
+		pass: response.ok(),
+	}),
+});
+
+const prefixUrlTest = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPS-203351': true,
+	})
+);
+
 const scheduleTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
@@ -71,6 +88,72 @@ const aiCreateImageTest = mergeTests(
 	featureFlagsTest({
 		'LPD-10793': true,
 	})
+);
+
+prefixUrlTest(
+	'LPD-6813: Make prefix URLs configurable',
+	async ({
+			   friendlyUrlInstanceSettingsPage,
+			   journalEditArticlePage,
+			   journalPage,
+			   page,
+			   pageTemplatePage,
+		   }) => {
+		await journalPage.goto();
+
+		const articleTitle = getRandomString();
+
+		await journalEditArticlePage.publishNewBasicArticle(articleTitle);
+
+		const article = page
+			.locator(
+				'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
+			)
+			.filter({hasText: articleTitle});
+
+		await article.waitFor();
+
+		await pageTemplatePage.goToDisplayPageTemplates();
+
+		const displayPageTemplateName = getRandomString();
+
+		await pageTemplatePage.publishNewDisplayPageTemplate(
+			displayPageTemplateName
+		);
+
+		await pageTemplatePage.markPageTemplateAsDefault(
+			displayPageTemplateName
+		);
+
+		await friendlyUrlInstanceSettingsPage.goto();
+
+		const urlSeparator = 'content';
+
+		await friendlyUrlInstanceSettingsPage.modifySeparator(
+			'_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_com.liferay.journal.model.JournalArticle',
+			urlSeparator
+		);
+
+		expect(
+			await page.request.get('/' + urlSeparator + '/' + articleTitle)
+		).toBeSuccessful();
+
+		await friendlyUrlInstanceSettingsPage.goto();
+
+		await friendlyUrlInstanceSettingsPage.resetSeparator(
+			'Web Content URL Separator'
+		);
+
+		expect(await page.request.get('/w/' + articleTitle)).toBeSuccessful();
+
+		await pageTemplatePage.goToDisplayPageTemplates();
+
+		await pageTemplatePage.deleteDisplayPageTemplate(
+			displayPageTemplateName
+		);
+
+		await journalPage.deleteJournalArticle(articleTitle);
+	}
 );
 
 translationTest(

@@ -22,7 +22,9 @@ runGradleTest {
 			key, value ->
 			assert value instanceof Map
 
-			assert !value.get("typeSettings").toString().contains("frontendTokenDefinitionJSON")
+			String typeSettings = String.valueOf(value.get("typeSettings"))
+
+			assert !typeSettings.contains("frontendTokenDefinitionJSON")
 		}
 	}
 }

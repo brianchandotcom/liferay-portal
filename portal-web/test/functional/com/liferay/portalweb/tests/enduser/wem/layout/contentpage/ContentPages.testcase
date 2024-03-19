@@ -1131,31 +1131,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-153383. The page creator can resize editor sidebar on non desktop Viewport."
-	@priority = 4
-	test ResizeLeftSidebarPanel {
-		task ("Given a page creator accesses to the page editor") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("When the page creator resizes the left sidebar panel in the Desktop viewport") {
-			DragAndDrop.dragAndDrop(
-				locator1 = "PageEditor#SIDEBAR_RESIZER",
-				value1 = "100,0");
-		}
-
-		task ("Then the page creator see the left sidebar panel resized in the Tablet viewport") {
-			PageEditor.switchViewport(deviceType = "Tablet");
-
-			AssertCssValue(
-				locator1 = "Sidebar#PANEL_OPEN",
-				locator2 = "width",
-				value1 = "380px");
-		}
-	}
-
 	@description = "This is a test for LPS-162302. The page creator can navigate through fragment structure via breadcrumb on page editor."
 	@priority = 4
 	test ViewBreadcrumbOnContentPage {

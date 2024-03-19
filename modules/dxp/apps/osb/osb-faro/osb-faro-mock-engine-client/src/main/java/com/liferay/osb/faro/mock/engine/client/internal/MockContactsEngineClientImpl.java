@@ -107,11 +107,8 @@ public class MockContactsEngineClientImpl
 	}
 
 	@Override
-	public long getIndividualsCount(
-		FaroProject faroProject, boolean includeAnonymousUsers) {
-
-		return contactsEngineClient.getIndividualsCount(
-			faroProject, includeAnonymousUsers);
+	public long getIdentitiesCount(FaroProject faroProject) {
+		return contactsEngineClient.getIdentitiesCount(faroProject);
 	}
 
 	@Override

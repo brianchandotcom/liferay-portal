@@ -5,17 +5,24 @@
 
 import {test} from '@playwright/test';
 
+import {FriendlyUrlInstanceSettingsPage} from '../pages/FriendlyUrlInstanceSettingsPage';
 import {JournalEditArticlePage} from '../pages/JournalEditArticlePage';
 import {JournalEditArticleTranslationsPage} from '../pages/JournalEditArticleTranslationsPage';
 import {JournalEditTemplatePage} from '../pages/JournalEditTemplatePage';
 import {JournalPage} from '../pages/JournalPage';
+import {PageTemplatePage} from '../pages/PageTemplatePage';
 
 const journalPagesTest = test.extend<{
+	friendlyUrlInstanceSettingsPage: FriendlyUrlInstanceSettingsPage;
 	journalEditArticlePage: JournalEditArticlePage;
 	journalEditArticleTranslationsPage: JournalEditArticleTranslationsPage;
 	journalEditTemplatePage: JournalEditTemplatePage;
 	journalPage: JournalPage;
+	pageTemplatePage: PageTemplatePage;
 }>({
+	friendlyUrlInstanceSettingsPage: async ({page}, use) => {
+		await use(new FriendlyUrlInstanceSettingsPage(page));
+	},
 	journalEditArticlePage: async ({page}, use) => {
 		await use(new JournalEditArticlePage(page));
 	},
@@ -27,6 +34,9 @@ const journalPagesTest = test.extend<{
 	},
 	journalPage: async ({page}, use) => {
 		await use(new JournalPage(page));
+	},
+	pageTemplatePage: async ({page}, use) => {
+		await use(new PageTemplatePage(page));
 	},
 });
 

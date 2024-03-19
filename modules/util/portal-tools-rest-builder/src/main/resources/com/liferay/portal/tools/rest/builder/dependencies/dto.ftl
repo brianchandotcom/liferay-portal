@@ -202,10 +202,6 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		</#if>
 
 		<#if propertySchema.isJsonMap()>
-			public Map<String, UnsafeSupplier<Object, Exception>> getLazy${capitalizedPropertyName}() {
-				return _lazy${capitalizedPropertyName};
-			}
-
 			public ${propertyType} get${capitalizedPropertyName}() {
 				if (_lazy${capitalizedPropertyName} != null) {
 					${propertyName} = new HashMap<>();
@@ -236,6 +232,10 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 				return ${propertyName};
 			}
+
+			public Map<String, UnsafeSupplier<Object, Exception>> getLazy${capitalizedPropertyName}() {
+            	return _lazy${capitalizedPropertyName};
+            }
 
 			@JsonIgnore
 			public void setLazy${capitalizedPropertyName}(Map<String, UnsafeSupplier<Object, Exception>> lazy${capitalizedPropertyName}) {

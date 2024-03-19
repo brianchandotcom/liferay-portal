@@ -72,9 +72,10 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		throws Exception {
 
 		String sql = StringBundler.concat(
-			"select distinct AssetEntry.groupId, AssetEntry.companyId, ",
+			"select distinct Layout.groupId, AssetEntry.companyId, ",
 			"AssetEntry.classPK, PortletPreferences.plid, ",
 			"PortletPreferences.portletId from PortletPreferences inner join ",
+			"Layout on Layout.plid = PortletPreferences.plid inner join ",
 			"(select SUBSTR(value, INSTR(value, '<asset-entry-uuid>') + ",
 			"LENGTH('<asset-entry-uuid>'), INSTR(value, ",
 			"'</asset-entry-uuid>') - (INSTR(value, '<asset-entry-uuid>') + ",
@@ -180,11 +181,12 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 		throws Exception {
 
 		String sql = StringBundler.concat(
-			"select distinct AssetEntry.groupId, AssetEntry.companyId, ",
+			"select distinct Layout.groupId, AssetEntry.companyId, ",
 			"AssetEntry.classPK, PortletPreferences.plid, ",
 			"PortletPreferences.portletId from PortletPreferences inner join ",
-			"PortletPreferenceValue on name = 'assetEntryId' inner join ",
-			"AssetEntry on AssetEntry.entryId = ",
+			"Layout on Layout.plid = PortletPreferences.plid inner join ",
+			"PortletPreferenceValue on PortletPreferenceValue.name = ",
+			"'assetEntryId' inner join AssetEntry on AssetEntry.entryId = ",
 			"CAST_LONG(PortletPreferenceValue.smallValue) and ",
 			"AssetEntry.classNameId = ", _journalArticleClassNameId,
 			" and AssetEntry.visible = [$TRUE$] where ",

@@ -246,11 +246,10 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		ACUtils.navigateToSitePage(
+		ACUtils.navigateToSitePageWithUser(
+			actionType = "View WC",
+			documentTitleList = "1,2,3,4",
+			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
 
@@ -312,6 +311,8 @@ definition {
 
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

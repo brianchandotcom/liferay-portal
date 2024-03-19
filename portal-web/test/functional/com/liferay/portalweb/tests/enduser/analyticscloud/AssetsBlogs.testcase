@@ -718,7 +718,7 @@ definition {
 
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
@@ -731,7 +731,7 @@ definition {
 
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			emailList = "userac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");

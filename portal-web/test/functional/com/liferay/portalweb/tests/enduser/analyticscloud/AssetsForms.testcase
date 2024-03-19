@@ -106,10 +106,13 @@ definition {
 		task ("Go to form and submit") {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "Submit Form",
+				documentTitleList = "1,2,3,4",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name",
 				submitText = "Test Assets");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Download the document with anonymous user") {
@@ -119,6 +122,7 @@ definition {
 
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
+				documentTitleList = "1,2,3,4",
 				pageName = "AC Page",
 				siteName = "Site Name",
 				submitText = "Test Assets");
@@ -648,6 +652,7 @@ definition {
 
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "Submit Form",
+			documentTitleList = "1,2,3,4",
 			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name",

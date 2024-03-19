@@ -140,6 +140,8 @@ definition {
 				userLoginFullName = "ac ac");
 
 			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -271,6 +273,8 @@ definition {
 				userLoginFullName = "ac ac");
 
 			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

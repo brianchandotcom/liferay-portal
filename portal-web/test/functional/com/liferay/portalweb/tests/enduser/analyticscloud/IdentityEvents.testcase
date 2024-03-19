@@ -87,13 +87,9 @@ definition {
 		task ("Visit the document") {
 			ACUtils.navigateToSitePage(
 				actionType = "View DM",
-				documentTitleList = "DM AC Title",
+				documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
-		}
-
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Get the userId number of the identity event") {
@@ -112,6 +108,10 @@ definition {
 				expected = ${localStorageItem1});
 		}
 
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
 		task ("Sign out") {
 			UserBar.signOut();
 		}
@@ -123,7 +123,7 @@ definition {
 		task ("Download the document") {
 			ACUtils.navigateToSitePage(
 				actionType = "Download DM",
-				documentTitleList = "DM AC Title",
+				documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

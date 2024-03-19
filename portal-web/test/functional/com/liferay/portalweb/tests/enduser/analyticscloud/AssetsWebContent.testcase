@@ -160,15 +160,21 @@ definition {
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		ACUtils.navigateToSitePageWithUser(
+			actionType = "View WC",
+			documentTitleList = "1,2,3,4",
 			emailList = ${emailList},
 			pageName = "AC Page",
 			siteName = "Site Name");
+
+		ACUtils.closeAllSessionsAndWait();
 
 		User.logoutPG();
 
 		ACUtils.clearLocalStorage();
 
 		ACUtils.navigateToSitePage(
+			actionType = "View WC",
+			documentTitleList = "1,2,3,4",
 			pageName = "AC Page",
 			siteName = "Site Name");
 

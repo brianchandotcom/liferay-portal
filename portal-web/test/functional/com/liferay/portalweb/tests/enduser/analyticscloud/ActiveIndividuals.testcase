@@ -297,7 +297,7 @@ definition {
 	@description = "Assert an Individual's Segments"
 	@priority = 5
 	test CanAssertIndividualSegment {
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud();
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -307,13 +307,18 @@ definition {
 
 		ACDXPSettings.syncNewContactData();
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		ACUtils.navigateToSitePageWithUser(
+			actionType = "View WC",
+			documentTitleList = "1,2,3,4",
+			emailList = "userea@liferay.com",
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ACUtils.closeAllSessionsAndWait();
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 

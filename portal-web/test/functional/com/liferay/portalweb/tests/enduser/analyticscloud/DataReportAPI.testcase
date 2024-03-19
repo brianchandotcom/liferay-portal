@@ -977,9 +977,13 @@ definition {
 
 		task ("Visit the site page") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Create a data report using analytics cloud API with the type individuals") {

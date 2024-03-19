@@ -198,6 +198,8 @@ definition {
 
 		task ("View the page as different users") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				emailList = "user1@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");

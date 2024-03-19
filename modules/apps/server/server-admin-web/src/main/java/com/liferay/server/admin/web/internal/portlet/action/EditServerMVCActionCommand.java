@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -460,7 +461,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		CacheRegistryUtil.setActive(true);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable1 =
+			SafeCloseable safeCloseable =
 				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(
 					CTSQLModeThreadLocal.CTSQLMode.CT_ALL)) {
 
@@ -483,59 +484,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			actionableDynamicQuery.setParallel(true);
 			actionableDynamicQuery.setPerformActionMethod(
 				(com.liferay.portal.kernel.model.PortletPreferences
-					portletPreferences) -> {
-
-					try (SafeCloseable safeCloseable2 =
-							CTCollectionThreadLocal.
-								setCTCollectionIdWithSafeCloseable(
-									portletPreferences.getCtCollectionId())) {
-
-						if ((portletPreferences.getOwnerId() !=
-								PortletKeys.PREFS_OWNER_ID_DEFAULT) ||
-							(portletPreferences.getOwnerType() !=
-								PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) {
-
-							return;
-						}
-
-						Layout layout = _layoutLocalService.getLayout(
-							portletPreferences.getPlid());
-
-						if (layout.isTypeContent() ||
-							layout.isTypeControlPanel()) {
-
-							return;
-						}
-
-						UnicodeProperties typeSettingsUnicodeProperties =
-							layout.getTypeSettingsProperties();
-
-						Set<String> keys =
-							typeSettingsUnicodeProperties.keySet();
-
-						boolean orphan = true;
-
-						for (String key : keys) {
-							String value =
-								typeSettingsUnicodeProperties.getProperty(key);
-
-							if (value.contains(
-									portletPreferences.getPortletId())) {
-
-								orphan = false;
-
-								break;
-							}
-						}
-
-						if (orphan) {
-							_portletPreferencesLocalService.
-								deletePortletPreferences(
-									portletPreferences.
-										getPortletPreferencesId());
-						}
-					}
-				});
+					portletPreferences) -> _performAction(portletPreferences));
 
 			actionableDynamicQuery.performActions();
 		}
@@ -643,6 +592,54 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		Runtime runtime = Runtime.getRuntime();
 
 		runtime.gc();
+	}
+
+	private void _performAction(
+			com.liferay.portal.kernel.model.PortletPreferences
+				portletPreferences)
+		throws PortalException {
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					portletPreferences.getCtCollectionId())) {
+
+			if ((portletPreferences.getOwnerId() !=
+					PortletKeys.PREFS_OWNER_ID_DEFAULT) ||
+				(portletPreferences.getOwnerType() !=
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) {
+
+				return;
+			}
+
+			Layout layout = _layoutLocalService.getLayout(
+				portletPreferences.getPlid());
+
+			if (layout.isTypeContent() || layout.isTypeControlPanel()) {
+				return;
+			}
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				layout.getTypeSettingsProperties();
+
+			Set<String> keys = typeSettingsUnicodeProperties.keySet();
+
+			boolean orphan = true;
+
+			for (String key : keys) {
+				String value = typeSettingsUnicodeProperties.getProperty(key);
+
+				if (value.contains(portletPreferences.getPortletId())) {
+					orphan = false;
+
+					break;
+				}
+			}
+
+			if (orphan) {
+				_portletPreferencesLocalService.deletePortletPreferences(
+					portletPreferences.getPortletPreferencesId());
+			}
+		}
 	}
 
 	private void _runScript(

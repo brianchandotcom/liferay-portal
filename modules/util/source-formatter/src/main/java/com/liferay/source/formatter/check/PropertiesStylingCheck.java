@@ -35,6 +35,7 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 			"$1$2=$6$7");
 
 		content = content.replaceAll("(?m)^(.*,) +(\\\\)$", "$1$2");
+		content = content.replaceAll("(,\\\\)(\n\n|\\Z)", "$2");
 
 		if (fileName.endsWith("test.properties")) {
 			return _sortTestProperties(

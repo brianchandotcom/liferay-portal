@@ -9,13 +9,11 @@ import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
-import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -29,38 +27,29 @@ import org.osgi.service.component.annotations.Component;
  * @author Vendel Toreki
  */
 @Component(
-	property = "batch.engine.task.item.delegate.name=user-account-performance-test",
+	property = "batch.engine.task.item.delegate.name=dummy-entity-performance-test",
 	service = BatchEngineTaskItemDelegate.class
 )
-public class UserAccountPerformanceTestBatchEngineTaskItemDelegate
-	extends BaseBatchEngineTaskItemDelegate<UserAccount> {
+public class DummyEntityPerformanceTestBatchEngineTaskItemDelegate
+	extends BaseBatchEngineTaskItemDelegate<DummyEntity> {
 
 	public void generateTestData(int count) {
 		for (int i = 0; i < count; i++) {
-			UserAccount userAccount = new UserAccount();
+			DummyEntity dummyEntity = new DummyEntity();
 
-			String alternateName = RandomTestUtil.randomString(
-				NumericStringRandomizerBumper.INSTANCE,
-				UniqueStringRandomizerBumper.INSTANCE);
+			dummyEntity.setTextValue(
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					UniqueStringRandomizerBumper.INSTANCE));
 
-			userAccount.setAlternateName(alternateName);
-			userAccount.setEmailAddress(alternateName + "@liferay.com");
+			dummyEntity.setIntValue(RandomTestUtil.nextInt());
 
-			String familyName = StringUtil.getTitleCase(
-				RandomTestUtil.randomString(), true, "");
-			String givenName = StringUtil.getTitleCase(
-				RandomTestUtil.randomString(), true, "");
-
-			userAccount.setFamilyName(familyName);
-			userAccount.setGivenName(givenName);
-			userAccount.setName(givenName + " " + familyName);
-
-			_items.add(userAccount);
+			_items.add(dummyEntity);
 		}
 	}
 
 	@Override
-	public Page<UserAccount> read(
+	public Page<DummyEntity> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
@@ -77,6 +66,6 @@ public class UserAccountPerformanceTestBatchEngineTaskItemDelegate
 			_items.size());
 	}
 
-	private final List<UserAccount> _items = new ArrayList<>();
+	private final List<DummyEntity> _items = new ArrayList<>();
 
 }

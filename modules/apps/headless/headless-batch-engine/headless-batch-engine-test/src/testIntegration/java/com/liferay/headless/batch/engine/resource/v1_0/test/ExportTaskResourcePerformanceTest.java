@@ -40,31 +40,31 @@ public class ExportTaskResourcePerformanceTest
 	extends BaseTaskResourcePerformanceTestCase {
 
 	@Test
-	public void testPostExportTaskWithUserAccount() throws Exception {
-		_generateTestUserAccounts(recordsCount);
-
-		_testPostExportTask(
-			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
-	}
-
-	@Test
-	public void testPostExportTaskWithUserAccountDelegate() throws Exception {
-		UserAccountPerformanceTestBatchEngineTaskItemDelegate
+	public void testPostExportTaskWithDummyEntityDelegate() throws Exception {
+		DummyEntityPerformanceTestBatchEngineTaskItemDelegate
 			userAccountPerformanceTestBatchEngineTaskItemDelegate =
-				(UserAccountPerformanceTestBatchEngineTaskItemDelegate)
+				(DummyEntityPerformanceTestBatchEngineTaskItemDelegate)
 					_batchEngineTaskItemDelegateRegistry.
 						getBatchEngineTaskItemDelegate(
 							0,
-							"com.liferay.headless.admin.user.dto.v1_0." +
-								"UserAccount",
-							"user-account-performance-test");
+							"com.liferay.headless.batch.engine.resource.v1_0." +
+								"test.DummyEntity",
+							"dummy-entity-performance-test");
 
 		userAccountPerformanceTestBatchEngineTaskItemDelegate.generateTestData(
 			recordsCount);
 
 		_testPostExportTask(
-			"com.liferay.headless.admin.user.dto.v1_0.UserAccount#" +
-				"user-account-performance-test");
+			"com.liferay.headless.batch.engine.resource.v1_0.test." +
+				"DummyEntity#dummy-entity-performance-test");
+	}
+
+	@Test
+	public void testPostExportTaskWithUserAccount() throws Exception {
+		_generateTestUserAccounts(recordsCount);
+
+		_testPostExportTask(
+			"com.liferay.headless.admin.user.dto.v1_0.UserAccount");
 	}
 
 	private void _generateTestUserAccounts(int count) throws Exception {

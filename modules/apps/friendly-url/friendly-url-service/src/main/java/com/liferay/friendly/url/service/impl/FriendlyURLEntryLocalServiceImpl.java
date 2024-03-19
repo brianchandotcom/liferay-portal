@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
+import com.liferay.friendly.url.exception.FriendlyURLCategoryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -91,6 +93,8 @@ public class FriendlyURLEntryLocalServiceImpl
 		throws PortalException {
 
 		validate(groupId, classNameId, classPK, urlTitleMap);
+
+		_validateAssetCategories(urlTitleMap, serviceContext);
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
 			_friendlyURLEntryMappingPersistence.fetchByC_C(
@@ -585,6 +589,8 @@ public class FriendlyURLEntryLocalServiceImpl
 		validate(
 			friendlyURLEntry.getGroupId(), classNameId, classPK, urlTitleMap);
 
+		_validateAssetCategories(urlTitleMap, serviceContext);
+
 		friendlyURLEntry.setDefaultLanguageId(defaultLanguageId);
 		friendlyURLEntry.setClassNameId(classNameId);
 		friendlyURLEntry.setClassPK(classPK);
@@ -881,6 +887,26 @@ public class FriendlyURLEntryLocalServiceImpl
 							entry.getKey());
 					}
 				}
+			}
+		}
+	}
+
+	private void _validateAssetCategories(
+			Map<String, String> urlTitleMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		long[] friendlyURLAssetCategoryIds = GetterUtil.getLongValues(
+			serviceContext.getAttribute("friendlyURLAssetCategoryIds"));
+
+		if (ArrayUtil.isEmpty(friendlyURLAssetCategoryIds)) {
+			return;
+		}
+
+		for (Map.Entry<String, String> entry : urlTitleMap.entrySet()) {
+			String value = entry.getValue();
+
+			if (value.contains(StringPool.SLASH)) {
+				throw new FriendlyURLCategoryException();
 			}
 		}
 	}

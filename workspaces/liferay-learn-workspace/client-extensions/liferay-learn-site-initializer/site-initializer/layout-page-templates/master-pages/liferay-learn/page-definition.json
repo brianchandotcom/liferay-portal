@@ -1414,6 +1414,10 @@
 			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
+		},
+		"themeSpritemapClientExtension": {
+			"externalReferenceCode": "LXC:liferay-learn-theme-spritemap",
+			"name": "Liferay Learn Theme Spritemap"
 		}
 	},
 	"version": 1.0

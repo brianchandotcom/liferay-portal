@@ -1,332 +1,3 @@
-<#include "${templatesPath}/SVG">
-
-<script>
-	function removeEndSlash() {
-		let href = window.location.href;
-
-		if (href.endsWith("/")) {
-			href = href.substring(0, href.length - 1);
-			window.location.href = href;
-		}
-	}
-
-	removeEndSlash();
-</script>
-
-<style>
-	a.other-level:hover {
-		color: var(--color-action-primary-hover, #0053F0) !important;
-	}
-
-	.adt-nav-title.align-items-center.d-flex {
-		color: var(--color-neutral-10, #282934);
-		font-weight: 700;
-	}
-
-	.adt-submenu-item-link {
-		color: var(--color-neutral-10, #282934);
-		display: contents;
-	}
-
-	.align-items-baseline .col-10 {
-		gap: 1rem;
-	}
-
-	.align-items-baseline.d-flex.flex-wrap.mr-2 {
-		color: var(--color-neutral-10, #282934);
-		font-family: Source Sans 3;
-		font-size: 0.875rem;
-		font-style: normal;
-		font-weight: 600;
-		line-height: 1rem;
-	}
-
-	.bg-color-1 {
-		background-color: var(--color-neutral-1, #F7F7F8);
-	}
-
-	.br-5 {
-		border-radius: 0.5rem;
-	}
-
-	.br-13.dropdown-menu {
-		overflow-x:hidden;
-		width: max-content;
-		will-change: transform;
-		z-index: 1;
-	}
-
-	.br-20 {
-		border-radius: 2.0rem;
-	}
-
-	.callout-title {
-		color: var(--color-neutral-10, #282934);
-		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 1.5rem;
-		font-style: normal;
-		font-weight: 600;
-		line-height: 1.75rem;
-	}
-
-	.current-level {
-		color: var(--color-action-primary-active, #004AD7) !important;
-		background-color: var(--color-action-primary-active-20, #E6EDFB);
-	}
-
-	.current-level:hover a {
-		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
-		color: var(--color-brand-primary-darken-2, #004AD7) !important;
-	}
-
-	.d-flex>.lexicon-icon-angle-left {
-		display: block;
-		height: 0.6rem;
-		transform: rotate(180deg);
-		width: 0.6rem;
-	}
-
-	.doc-nav {
-		overflow-x: hidden !important;
-	}
-
-	.doc-nav-wrapper-inner {
-		min-width: fit-content;
-		position: sticky !important;
-		top: 135px;
-		width: 110%;
-	}
-
-	.doc-nav::-webkit-scrollbar {
-		background: transparent;
-		width: 18px;
-	}
-
-	.doc-nav::-webkit-scrollbar-thumb {
-		background: var(--color-neutral-4, #B1B2B9);
-		border: 5px solid var(--color-neutral-1, #F7F7F8);
-		border-radius: 12px;
-		height: 20px;
-	}
-
-	.doc-nav::-webkit-scrollbar-thumb:hover {
-		background: var(--color-neutral-4, #B1B2B9);
-	}
-
-	.doc-nav::-webkit-scrollbar-track-piece:end {
-		background: transparent;
-		margin-bottom: 10px;
-	}
-
-	.doc-nav::-webkit-scrollbar-track-piece:start {
-		background: transparent;
-		margin-top: 10px;
-	}
-
-	.doc-nav>.align-items-center {
-		border-bottom: solid;
-		border-color: var(--color-action-neutral-hover-10, #EAECEE);
-	}
-
-	.dropdown-item {
-		align-items: center;
-		align-self: stretch;
-		display: flex;
-		gap: 0.75rem;
-		padding: 0.75rem;
-	}
-
-	.dropdown-item:hover {
-		background-color: var(--color-action-primary-hover-10, #EDF3FE);
-	}
-
-	.dropdown-menu .row {
-		margin: 0 !important;
-	}
-
-	.reference:hover {
-		color: var(--color-brand-primary-darken-1, #0053F0) !important;
-	}
-
-	.rounded-10 {
-		border-radius: 10px;
-	}
-
-	.section-card:hover {
-		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
-		border-bottom: 1px solid var(--color-brand-primary-darken-1, #0053F0) !important;
-		border-color: var(--color-brand-primary-darken-1, #0053F0) !important;
-		box-shadow: none !important;
-		margin-bottom: 0px !important;
-		transform: none !important;
-	}
-
-	.show #dropdown-products {
-		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
-	}
-
-	.show #dropdown-products svg {
-		color: var(--color-action-primary-hover);
-		transform: rotate(180deg);
-	}
-
-	.side-nav>.other-level{
-		color: var(--color-neutral-10, #282934) !important;
-		font-size: 1rem;
-		font-weight:600;
-		gap: 10px;
-		width: 100%;
-	}
-
-	.side-nav:hover {
-		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
-		color: var(--color-brand-primary-darken-1, #0053F0) !important;
-	}
-
-	.tag-container {
-		border-radius: 1.5rem;
-		border: 1px solid var(--color-brand-primary, #0B5FFF);
-		background: var(--color-neutral-0, #FFFFFF);
-		padding: 0.25rem 0.75rem;
-		gap: 0.25rem;
-	}
-
-	.tags-container {
-		flex-wrap: wrap;
-		font-size: 0.875rem;
-	}
-
-	.toctree:hover a {
-		background-image: clay-icon(angle-right, $color-action-primary-hover);
-		background-position: right 0.8rem top $spacing-md;
-		background-repeat: no-repeat;
-		background-size: 0.65rem;
-		color: var(--color-action-primary-hover) !important;
-	}
-
-	@media only screen and (max-width:1100px) {
-		.documentations .doc-nav {
-			padding: 0;
-		}
-	}
-
-	@media only screen and (min-width: 768px) and (max-width: 1000px) {
-		.doc-nav-wrapper-inner {
-			max-width: 20% !important;
-		}
-	}
-
-	@media only screen and (min-width:768px) {
-		.doc-nav {
-			max-height: 66vh;
-		}
-	}
-
-	@media only screen and (min-width:1100px) {
-		.br-5 .side-nav {
-			margin: 0.3rem 1rem;
-		}
-	}
-
-	#articleTOC {
-		align-items: flex-start;
-		display: flex;
-		flex-direction: row;
-		gap: 8px;
-		min-width: 20%;
-		padding: 0px 20px 20px 20px;
-	}
-
-	#articleTOC > li {
-		align-items: center;
-		margin-left: 10px;
-		min-width: 100%;
-	}
-
-	#articleTOC > li .active {
-		color: var(--color-neutral-10, #282934) !important;
-		border-left: 4px solid var(--color-brand-primary, #0B5FFF);
-		padding: 0 0 0 6px !important;
-	}
-
-	#articleTOC > li > a {
-		color: var(--color-neutral-6, #82828C) !important;
-		font-family: Source Sans 3;
-		font-size: 1rem;
-		font-style: normal;
-		font-weight: 600;
-		line-height: 1.5rem;
-		padding: 0 0 0 10px !important;
-	}
-
-	#articleTOC > li > a:hover {
-		color: var(--color-neutral-10, #282934) !important;
-	}
-
-	#backLink {
-		border-left-width: 0px;
-		color: var(--color-neutral-10, #282934);
-	}
-
-	#backLink:hover {
-		background-color: var(--color-action-neutral-hover-10, #EAECEE);
-		transition: box-shadow 0.1s linear, background-color 0.1s linear;
-	}
-
-	#dropdown-products:hover {
-		background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
-	}
-
-	#dropdown-products:hover svg {
-		color: var(--color-action-primary-hover, #0053F0);
-	}
-
-	#parentTitle {
-		color: var(--color-neutral-10, #282934);
-		font-weight: 700;
-	}
-
-	#productIcon {
-		background-color: var(--color-brand-primary-lighten-5, #E7EFFF);
-		border: 1px solid;
-		border-color: var(--color-neutral-0, #FFFFFF);
-		height: 3.25rem;
-		width: 3.25rem;
-	}
-
-	#productIcon>img {
-		height: 3.5rem;
-		margin-left: -0.125rem;
-		max-width: none;
-		width: 3.5rem;
-	}
-
-	#productsIcon {
-		border: 1px solid;
-		border-color: var(--color-neutral-1, #F7F7F8);
-		height: 2.25rem;
-		width: 2.25rem;
-	}
-
-	#productsIcon>img {
-		height: 25px;
-		margin-left: 5px;
-		max-width: none;
-		width: 25px;
-	}
-
-	#submit-feedback {
-		color: var(--color-brand-primary, #0B5FFF);
-		font-family: 'Source Sans Pro', sans-serif;
-		font-size: 1rem;
-		font-style: normal;
-		font-weight: 600;
-		line-height: 1.5rem;
-		padding-right: 3rem;
-		text-align: center;
-	}
-</style>
-
 <#assign
 	journalArticleId = .vars["reserved-article-id"].data
 	taxonomyCategoriesMap = {}
@@ -384,8 +55,8 @@
 </#if>
 
 <div class="container-fluid documentations main-content" role="main">
-	<div class="row">
-		<div class="col-12 col-md-2 mobile-nav-hide mt-3">
+	<div class="m-0 row">
+		<div class="col-12 col-md-2 mobile-nav-hide p-0">
 			<div class="doc-nav-wrapper-inner">
 				<#if !topLevelArticle>
 					<#assign
@@ -581,53 +252,53 @@
 			</div>
 		</div>
 
-		<div class="col-12 col-md-10 doc-body">
-			<div class="border-bottom-0 h-auto p-0">
-				<div class="mt-3 offset-1">
-					<div class="align-items-baseline d-flex justify-content-between">
-						<ul
-							aria-label="breadcrumb navigation"
-							class="article-breadcrumb"
-							role="navigation"
-						>
-							<li>
-								<a href="${groupPathFriendlyURLPublic}"><@clay["icon"] symbol="home-full" /></a>
-							</li>
-
-							<#if !topLevelArticle>
-								<#list breadcrumbLinksJSONArray.length()-1..0 as i>
-									<#assign breadcrumbLink = breadcrumbLinksJSONArray.getJSONObject(i)?eval />
-
-									<li>
-										<a href="${breadcrumbLink.url}">${breadcrumbLink.title}</a>
-									</li>
-								</#list>
-							</#if>
-
-							<li>
-								${.vars['reserved-article-title'].getData()}
-							</li>
-						</ul>
-
-						<div id="submit-feedback">
-							<a
-								class="text-decoration-none"
-								href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
+		<div class="col-12 col-md-10 justify-content-around p-0 row">
+			<div class="doc-body">
+				<div class="border-bottom-0 h-auto p-0">
+					<div>
+						<div class="align-items-baseline d-flex justify-content-between">
+							<ul
+								aria-label="breadcrumb navigation"
+								class="article-breadcrumb"
+								role="navigation"
 							>
-								${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}
-								<@clay["icon"] symbol="message-boards" />
-							</a>
+								<li>
+									<a href="${groupPathFriendlyURLPublic}"><@clay["icon"] symbol="home-full" /></a>
+								</li>
+
+								<#if !topLevelArticle>
+									<#list breadcrumbLinksJSONArray.length()-1..0 as i>
+										<#assign breadcrumbLink = breadcrumbLinksJSONArray.getJSONObject(i)?eval />
+
+										<li>
+											<a href="${breadcrumbLink.url}">${breadcrumbLink.title}</a>
+										</li>
+									</#list>
+								</#if>
+
+								<li>
+									${.vars['reserved-article-title'].getData()}
+								</li>
+							</ul>
+
+							<div id="submit-feedback">
+								<a
+									class="text-decoration-none"
+									href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
+								>
+									${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}
+									<@clay["icon"] symbol="message-boards" />
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div
-				class="col-12 doc-content mt-0 ${isLandingPage?then("landing-page-container", "")}"
-				id="docContent"
-			>
-				<div class="overflow-hidden row">
-					<div class="article-body col-12 col-md-9 language-log">
+				<div
+					class="col-12 doc-content mt-0 p-0 ${isLandingPage?then("landing-page-container", "")}"
+					id="docContent"
+				>
+					<div class="article-body col-12 language-log p-0">
 						<#if (content.getData())??>
 							${content.getData()}
 						</#if>

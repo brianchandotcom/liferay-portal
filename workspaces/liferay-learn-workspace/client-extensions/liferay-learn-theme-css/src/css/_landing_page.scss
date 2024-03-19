@@ -1,6 +1,7 @@
 .landing-page {
 	display: flex;
 	flex-wrap: wrap;
+	gap: var(--spacer-4);
 
 	@include media-breakpoint-down(sm) {
 		justify-content: center;
@@ -23,22 +24,11 @@
 		@include card;
 
 		cursor: pointer;
-		margin-left: $spacing-md;
-		margin-right: $spacing-xs;
-		margin-top: $spacing-default;
-		padding: 1.25rem $spacing-default;
-		transition: transform 0.2s ease;
+		padding: var(--spacer-4);
 		width: 45%;
-
-		@include media-breakpoint-down(md) {
-			margin-left: 0;
-			margin-right: 0;
-			width: 100%;
-		}
 
 		@include media-breakpoint-down(sm) {
 			flex: 1 0 100%;
-			margin: 0.5rem !important;
 		}
 
 		a:hover {

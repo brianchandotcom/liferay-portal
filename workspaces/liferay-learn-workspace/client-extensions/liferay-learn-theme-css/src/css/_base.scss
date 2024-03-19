@@ -1,6 +1,6 @@
 @mixin card {
 	border: 1px solid rgba(9, 16, 24, 0.12);
-	border-radius: $border-radius;
+	border-radius: var(--border-radius-lg);
 	box-shadow: 0 6px 15px -6px rgb(9 16 29 / 6%);
 
 	&:hover {
@@ -14,4 +14,12 @@
 			text-decoration: none;
 		}
 	}
+}
+
+.container-fluid-max-lg {
+	max-width: var(--container-max-lg);
+}
+
+.container-fluid-max-xl {
+	max-width: var(--container-max-xl);
 }

@@ -168,7 +168,7 @@
 										"key": "INPUTS-text-input"
 									},
 									"fragmentConfig": {
-										"inputFieldId": "ObjectField_appropriateEmailAddress",
+										"inputFieldId": "ObjectField_customerEmailAddress",
 										"inputLabel": {
 											"es_ES": "Si has abierto este escalado en nombre de otro usuario, por favor indícanos el email al que debemos contactar:",
 											"ja_JP": "別のユーザーに代わって作成する場合は、連絡先となる適切なメールアドレスをご共有ください。",

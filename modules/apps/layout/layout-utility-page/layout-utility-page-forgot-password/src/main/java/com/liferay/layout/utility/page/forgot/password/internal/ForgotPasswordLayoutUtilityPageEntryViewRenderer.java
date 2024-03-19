@@ -13,22 +13,23 @@ import java.io.IOException;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alvaro Saugar
  */
-@Component(
-	property = "utility.page.type=" + LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD,
-	service = LayoutUtilityPageEntryViewRenderer.class
-)
 public class ForgotPasswordLayoutUtilityPageEntryViewRenderer
 	implements LayoutUtilityPageEntryViewRenderer {
+
+	public ForgotPasswordLayoutUtilityPageEntryViewRenderer(
+		Language language, ServletContext servletContext) {
+
+		_language = language;
+		_servletContext = servletContext;
+	}
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -47,7 +48,7 @@ public class ForgotPasswordLayoutUtilityPageEntryViewRenderer
 		throws IOException, ServletException {
 	}
 
-	@Reference
-	private Language _language;
+	private final Language _language;
+	private final ServletContext _servletContext;
 
 }

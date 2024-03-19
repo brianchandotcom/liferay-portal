@@ -18,11 +18,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
@@ -144,56 +143,25 @@ public class MultiVMEhcachePortalCacheManager
 				return;
 			}
 
+			Set<String> portalCacheNames = new HashSet<>(
+				_replicatorProperties.stringPropertyNames());
+
+			portalCacheNames.addAll(
+				portalCacheManagerConfiguration.getPortalCacheNames());
+
+			for (String portalCacheName : portalCacheNames) {
+				_populateCacheReplicator(
+					portalCacheManagerConfiguration.getPortalCacheConfiguration(
+						portalCacheName),
+					GetterUtil.getString(
+						_replicatorProperties.getProperty(portalCacheName),
+						_defaultReplicatorPropertiesString));
+			}
+
 			_populateCacheReplicator(
 				portalCacheManagerConfiguration.
 					getDefaultPortalCacheConfiguration(),
 				_defaultReplicatorPropertiesString);
-
-			for (String portalCacheName :
-					portalCacheManagerConfiguration.getPortalCacheNames()) {
-
-				String replicatorPropertiesString =
-					(String)_replicatorProperties.remove(portalCacheName);
-
-				if (Validator.isNull(replicatorPropertiesString)) {
-					replicatorPropertiesString =
-						_defaultReplicatorPropertiesString;
-				}
-
-				_populateCacheReplicator(
-					portalCacheManagerConfiguration.
-						getDefaultPortalCacheConfiguration(),
-					replicatorPropertiesString);
-			}
-
-			for (String portalCacheName :
-					_replicatorProperties.stringPropertyNames()) {
-
-				PortalCacheConfiguration portalCacheConfiguration =
-					portalCacheManagerConfiguration.getPortalCacheConfiguration(
-						portalCacheName);
-
-				Set<Properties> portalCacheListenerPropertiesSet =
-					portalCacheConfiguration.
-						getPortalCacheListenerPropertiesSet();
-
-				Iterator<Properties> iterator =
-					portalCacheListenerPropertiesSet.iterator();
-
-				while (iterator.hasNext()) {
-					Properties properties = iterator.next();
-
-					if ((Boolean)properties.get(
-							PortalCacheReplicator.REPLICATOR)) {
-
-						iterator.remove();
-					}
-				}
-
-				_populateCacheReplicator(
-					portalCacheConfiguration,
-					_replicatorProperties.getProperty(portalCacheName));
-			}
 		}
 
 		private void _populateCacheReplicator(

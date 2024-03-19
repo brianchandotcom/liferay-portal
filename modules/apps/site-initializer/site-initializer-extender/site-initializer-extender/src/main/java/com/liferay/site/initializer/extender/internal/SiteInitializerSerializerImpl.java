@@ -280,8 +280,6 @@ public class SiteInitializerSerializerImpl
 			Layout layout, List<Layout> layouts, ZipWriter zipWriter)
 		throws Exception {
 
-		PageDefinition pageDefinition = _getPageDefinition(layout);
-
 		JSONObject pagejsonObject = JSONUtil.put(
 			"friendlyURL", layout.getFriendlyURL()
 		).put(
@@ -346,6 +344,8 @@ public class SiteInitializerSerializerImpl
 		String dirName = "layouts/" + _getLayoutDirectory(layout, layouts);
 
 		_addZipEntry(dirName + "/page.json", pagejsonObject, zipWriter);
+
+		PageDefinition pageDefinition = _getPageDefinition(layout);
 
 		if (pageDefinition != null) {
 			_addZipEntry(

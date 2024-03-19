@@ -130,6 +130,11 @@ public class FriendlyURLEntryWrapper
 		return model.getAvailableLanguageIds();
 	}
 
+	@Override
+	public String getCategorizedUrlTitle(String languageId) {
+		return model.getCategorizedUrlTitle(languageId);
+	}
+
 	/**
 	 * Returns the fully qualified class name of this friendly url entry.
 	 *

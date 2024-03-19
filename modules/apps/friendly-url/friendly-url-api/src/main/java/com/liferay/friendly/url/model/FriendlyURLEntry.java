@@ -51,6 +51,8 @@ public interface FriendlyURLEntry
 
 			};
 
+	public String getCategorizedUrlTitle(String languageId);
+
 	public boolean isMain()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

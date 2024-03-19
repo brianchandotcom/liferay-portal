@@ -268,6 +268,10 @@ public class DDMFormValuesJSONDeserializer
 		JSONObject jsonObject, DDMFormField ddmFormField,
 		DDMFormFieldValue ddmFormFieldValue) {
 
+		if ((ddmFormField != null) && ddmFormField.isTransient()) {
+			return;
+		}
+
 		String valueString = jsonObject.getString("value", null);
 
 		if (valueString == null) {

@@ -94,12 +94,17 @@ public class ClaySampleDisplayContext {
 		).add(
 			tabsItem -> {
 				tabsItem.setLabel("Stickers");
-				tabsItem.setPanelId("Stickers");
+				tabsItem.setPanelId("stickers");
 			}
 		).add(
 			tabsItem -> {
 				tabsItem.setLabel("Tabs");
 				tabsItem.setPanelId("tabs");
+			}
+		).add(
+			tabsItem -> {
+				tabsItem.setLabel("Toggle");
+				tabsItem.setPanelId("toggle");
 			}
 		).add(
 			tabsItem -> {

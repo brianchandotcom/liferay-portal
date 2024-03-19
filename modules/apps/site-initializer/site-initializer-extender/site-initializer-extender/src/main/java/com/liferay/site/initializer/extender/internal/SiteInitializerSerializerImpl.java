@@ -74,8 +74,8 @@ public class SiteInitializerSerializerImpl
 				"documents/group", zipWriter);
 			_serializeDDMStructures(groupId, zipWriter);
 			_serializeDDMTemplates(groupId, zipWriter);
-			_serializeStyleBookEntries(groupId, zipWriter);
 			_serializeLayouts(groupId, zipWriter);
+			_serializeStyleBookEntries(groupId, zipWriter);
 
 			return zipWriter.getFile();
 		}

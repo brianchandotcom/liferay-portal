@@ -5,11 +5,10 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ProductMenuPage} from '../product-navigation-product-menu/ProductMenuPage';
+import {PORTLET_URLS} from '../../utils/portletUrls';
 
-export class PageTemplatePage {
+export class DisplayPageTemplatesPage {
 	readonly page: Page;
-	readonly productMenuPage: ProductMenuPage;
 
 	readonly newButton: Locator;
 	readonly publishButton: Locator;
@@ -17,7 +16,6 @@ export class PageTemplatePage {
 
 	constructor(page: Page) {
 		this.page = page;
-		this.productMenuPage = new ProductMenuPage(page);
 
 		this.newButton = page.getByText('New', {exact: true});
 		this.publishButton = page.getByLabel('Publish', {exact: true});
@@ -26,22 +24,10 @@ export class PageTemplatePage {
 		);
 	}
 
-	async goto() {
-		await this.productMenuPage.goToPageTemplatesMenuItem();
-	}
-
-	async goToDisplayPageTemplates() {
-		await this.goto();
-		await this.page
-			.getByRole('link', {
-				name: 'Display Page Templates',
-			})
-			.click();
-
-		await this.page
-			.locator('a.active')
-			.filter({hasText: 'Display Page Templates'})
-			.waitFor();
+	async goto(siteUrl?: Site['friendlyUrlPath']) {
+		await this.page.goto(
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.displayPageTemplates}`
+		);
 	}
 
 	async publishNewDisplayPageTemplate(name: string) {

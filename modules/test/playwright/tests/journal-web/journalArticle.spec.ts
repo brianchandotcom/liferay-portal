@@ -93,12 +93,12 @@ const aiCreateImageTest = mergeTests(
 prefixUrlTest(
 	'LPD-6813: Make prefix URLs configurable',
 	async ({
-			   friendlyUrlInstanceSettingsPage,
-			   journalEditArticlePage,
-			   journalPage,
-			   page,
-			   pageTemplatePage,
-		   }) => {
+		displayPageTemplatesPage,
+		friendlyUrlInstanceSettingsPage,
+		journalEditArticlePage,
+		journalPage,
+		page,
+	}) => {
 		await journalPage.goto();
 
 		const articleTitle = getRandomString();
@@ -113,15 +113,15 @@ prefixUrlTest(
 
 		await article.waitFor();
 
-		await pageTemplatePage.goToDisplayPageTemplates();
+		await displayPageTemplatesPage.goto();
 
 		const displayPageTemplateName = getRandomString();
 
-		await pageTemplatePage.publishNewDisplayPageTemplate(
+		await displayPageTemplatesPage.publishNewDisplayPageTemplate(
 			displayPageTemplateName
 		);
 
-		await pageTemplatePage.markPageTemplateAsDefault(
+		await displayPageTemplatesPage.markPageTemplateAsDefault(
 			displayPageTemplateName
 		);
 
@@ -146,9 +146,9 @@ prefixUrlTest(
 
 		expect(await page.request.get('/w/' + articleTitle)).toBeSuccessful();
 
-		await pageTemplatePage.goToDisplayPageTemplates();
+		await displayPageTemplatesPage.goto();
 
-		await pageTemplatePage.deleteDisplayPageTemplate(
+		await displayPageTemplatesPage.deleteDisplayPageTemplate(
 			displayPageTemplateName
 		);
 

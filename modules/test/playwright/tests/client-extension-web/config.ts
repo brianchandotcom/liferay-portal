@@ -6,7 +6,7 @@
 import {devices} from '@playwright/test';
 
 export const config = {
-	name: 'client-extension',
+	name: 'client-extension-web',
 	testDir: 'tests/client-extension-web',
 	use: {
 		...devices['Desktop Chrome'],

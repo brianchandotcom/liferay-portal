@@ -17,11 +17,13 @@ interface ModalImportContentProps extends ModalImportProperties {
 	modalImportKey: string;
 	name: string;
 	nameMaxLength: string;
+	objectDefinitions?: ObjectDefinition[];
 	portletNamespace: string;
 	setError: (value?: API.ErrorDetails) => void;
 	setExternalReferenceCode: (value: string) => void;
 	setFile: (value: TFile) => void;
 	setName: (value: string) => void;
+	setObjectDefinitions: (value?: ObjectDefinition[]) => void;
 }
 export declare function ModalImportContent({
 	JSONInputId,
@@ -34,10 +36,12 @@ export declare function ModalImportContent({
 	modalImportKey,
 	name,
 	nameMaxLength,
+	objectDefinitions,
 	portletNamespace,
 	setError,
 	setExternalReferenceCode,
 	setFile,
 	setName,
+	setObjectDefinitions,
 }: ModalImportContentProps): JSX.Element;
 export {};

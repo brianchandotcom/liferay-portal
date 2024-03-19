@@ -49,6 +49,9 @@ export default function ModalImport({
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
 		''
 	);
+	const [objectDefinitions, setObjectDefinitions] = useState<
+		ObjectDefinition[]
+	>();
 	const [{fileName, inputFile}, setFile] = useState<TFile>({});
 	const [importFormData, setImportFormData] = useState<FormData>();
 	const importModalComponentId = `${portletNamespace}importModal`;
@@ -83,10 +86,10 @@ export default function ModalImport({
 		},
 	});
 
-	const handleImport = async (formData: FormData) => {
+	const handleImport = async (item: FormData | ObjectDefinition[]) => {
 		try {
 			await API.save({
-				item: formData,
+				item,
 				method: 'POST',
 				url: importURL,
 			});
@@ -105,9 +108,7 @@ export default function ModalImport({
 		}
 	};
 
-	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-
+	const handleDefaultImport = async (event: FormEvent<HTMLFormElement>) => {
 		const formData = new FormData(event.currentTarget);
 		const formDataObject: FormDataJSONFormat = {};
 		formData.forEach((value, key) => {
@@ -137,6 +138,22 @@ export default function ModalImport({
 			setImportFormData(newFormData);
 			setWarningModalVisible(true);
 		}
+	};
+
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+
+		if (
+			Liferay.FeatureFlags['LPS-187142'] &&
+			objectDefinitions &&
+			objectDefinitions.length > 1
+		) {
+			handleImport(objectDefinitions);
+
+			return;
+		}
+
+		handleDefaultImport(event);
 	};
 
 	useEffect(() => {
@@ -184,11 +201,13 @@ export default function ModalImport({
 					modalImportKey={modalImportKey}
 					name={name}
 					nameMaxLength={nameMaxLength}
+					objectDefinitions={objectDefinitions}
 					portletNamespace={portletNamespace}
 					setError={setError}
 					setExternalReferenceCode={setExternalReferenceCode}
 					setFile={setFile}
 					setName={setName}
+					setObjectDefinitions={setObjectDefinitions}
 				/>
 			)}
 		</ClayModal>

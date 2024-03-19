@@ -27,11 +27,13 @@ interface ModalImportContentProps extends ModalImportProperties {
 	modalImportKey: string;
 	name: string;
 	nameMaxLength: string;
+	objectDefinitions?: ObjectDefinition[];
 	portletNamespace: string;
 	setError: (value?: API.ErrorDetails) => void;
 	setExternalReferenceCode: (value: string) => void;
 	setFile: (value: TFile) => void;
 	setName: (value: string) => void;
+	setObjectDefinitions: (value?: ObjectDefinition[]) => void;
 }
 
 export function ModalImportContent({
@@ -45,17 +47,27 @@ export function ModalImportContent({
 	modalImportKey,
 	name,
 	nameMaxLength,
+	objectDefinitions,
 	portletNamespace,
 	setError,
 	setExternalReferenceCode,
 	setFile,
 	setName,
+	setObjectDefinitions,
 }: ModalImportContentProps) {
 	const importFormId = `${portletNamespace}importForm`;
 	const inputFileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 	const nameInputId = `${portletNamespace}name`;
 
 	const getImportButtonDisableState = () => {
+		if (
+			Liferay.FeatureFlags['LPS-187142'] &&
+			inputFile &&
+			objectDefinitions
+		) {
+			return false;
+		}
+
 		if (!inputFile || !name) {
 			return true;
 		}
@@ -99,20 +111,24 @@ export function ModalImportContent({
 						)}
 					</ClayAlert>
 
-					<ClayForm.Group>
-						<label htmlFor={nameInputId}>
-							{Liferay.Language.get('name')}
-						</label>
+					{!objectDefinitions && (
+						<ClayForm.Group>
+							<label htmlFor={nameInputId}>
+								{Liferay.Language.get('name')}
+							</label>
 
-						<ClayInput
-							id={nameInputId}
-							maxLength={Number(nameMaxLength)}
-							name={nameInputId}
-							onChange={(event) => setName(event.target.value)}
-							type="text"
-							value={name}
-						/>
-					</ClayForm.Group>
+							<ClayInput
+								id={nameInputId}
+								maxLength={Number(nameMaxLength)}
+								name={nameInputId}
+								onChange={(event) =>
+									setName(event.target.value)
+								}
+								type="text"
+								value={name}
+							/>
+						</ClayForm.Group>
+					)}
 
 					<ClayForm.Group>
 						<label htmlFor={`${portletNamespace}${JSONInputId}`}>
@@ -148,6 +164,7 @@ export function ModalImportContent({
 												fileName: '',
 												inputFile: null,
 											});
+											setObjectDefinitions(undefined);
 											inputFileRef.current.value = '';
 										}}
 									>
@@ -158,7 +175,7 @@ export function ModalImportContent({
 						</ClayInput.Group>
 					</ClayForm.Group>
 
-					{externalReferenceCode && (
+					{externalReferenceCode && !objectDefinitions && (
 						<Input
 							disabled
 							feedbackMessage={
@@ -195,11 +212,30 @@ export function ModalImportContent({
 									try {
 										const JSONFile = JSON.parse(
 											fileReader.result as string
-										) as {externalReferenceCode: string};
-										setError(undefined);
-										setExternalReferenceCode(
-											JSONFile.externalReferenceCode
-										);
+										) as
+											| {externalReferenceCode: string}
+											| ObjectDefinition[];
+
+										if (
+											Liferay.FeatureFlags[
+												'LPS-187142'
+											] &&
+											Array.isArray(JSONFile) &&
+											JSONFile[0].scope
+										) {
+											setError(undefined);
+											setObjectDefinitions(JSONFile);
+											setExternalReferenceCode('');
+										}
+										else {
+											setError(undefined);
+											setExternalReferenceCode(
+												(JSONFile as {
+													externalReferenceCode: string;
+												}).externalReferenceCode
+											);
+											setObjectDefinitions(undefined);
+										}
 									}
 									catch (error) {
 										setError({

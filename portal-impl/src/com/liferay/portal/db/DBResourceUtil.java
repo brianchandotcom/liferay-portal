@@ -34,29 +34,15 @@ public class DBResourceUtil {
 	}
 
 	public static String getPortalIndexesSQL() {
-		try {
-			return StringUtil.read(
-				DBResourceUtil.class,
-				"/com/liferay/portal/tools/sql/dependencies/indexes.sql");
-		}
-		catch (Exception exception) {
-			_log.error("Unable to read portal indexes SQL", exception);
-
-			return null;
-		}
+		return StringUtil.read(
+			DBResourceUtil.class,
+			"/com/liferay/portal/tools/sql/dependencies/indexes.sql");
 	}
 
 	public static String getPortalTablesSQL() {
-		try {
-			return StringUtil.read(
-				DBResourceUtil.class,
-				"/com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
-		}
-		catch (Exception exception) {
-			_log.error("Unable to read portal tables SQL", exception);
-
-			return null;
-		}
+		return StringUtil.read(
+			DBResourceUtil.class,
+			"/com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
 	}
 
 	private static String _getSQLTemplateString(

@@ -1536,17 +1536,21 @@ definition {
 		}
 
 		if (isSet(estimatedDeliveryDate)) {
-			AssertTextEquals(
-				key_estimatedDate = "Estimated Delivery Date",
-				locator1 = "CommerceOrders#ORDER_SHIPMENTS_ESTIMATED_DATE",
-				value1 = ${estimatedDeliveryDate});
+
+			// TODO Clean up after CLDR update is finished
+
+			var estimatedDeliveryDateYY = DateUtil.format(${estimatedDeliveryDate}, "MMM d, yyyy", "MMM d, yy");
+
+			AssertElementPresent(locator1 = "//h5[contains(.,'Estimated Delivery Date')]/../../div[contains(.,'${estimatedDeliveryDate}') or contains(.,'${estimatedDeliveryDateYY}')]");
 		}
 
 		if (isSet(estimatedShippingDate)) {
-			AssertTextEquals(
-				key_estimatedDate = "Estimated Shipping Date",
-				locator1 = "CommerceOrders#ORDER_SHIPMENTS_ESTIMATED_DATE",
-				value1 = ${estimatedShippingDate});
+
+			// TODO Clean up after CLDR update is finished
+
+			var estimatedShippingDateYY = DateUtil.format(${estimatedShippingDate}, "MMM d, yyyy", "MMM d, yy");
+
+			AssertElementPresent(locator1 = "//h5[contains(.,'Estimated Shipping Date')]/../../div[contains(.,'${estimatedShippingDate}') or contains(.,'${estimatedShippingDateYY}')]");
 		}
 	}
 

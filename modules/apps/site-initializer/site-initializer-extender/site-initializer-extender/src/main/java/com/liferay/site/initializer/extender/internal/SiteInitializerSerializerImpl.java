@@ -146,27 +146,6 @@ public class SiteInitializerSerializerImpl
 		return null;
 	}
 
-	private PageDefinition _getPageDefinition(Layout layout) throws Exception {
-		DefaultDTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(
-				true, null, _dtoConverterRegistry, null, layout.getPlid(), null,
-				null, null);
-
-		dtoConverterContext.setAttribute(
-			"embeddedPageDefinition", Boolean.TRUE);
-		dtoConverterContext.setAttribute("groupId", layout.getGroupId());
-		dtoConverterContext.setAttribute("layout", layout);
-
-		LayoutStructure layoutStructure = _getLayoutStructure(layout);
-
-		if (layoutStructure != null) {
-			return _pageDefinitionDTOConverter.toDTO(
-				dtoConverterContext, layoutStructure);
-		}
-
-		return null;
-	}
-
 	private String _normalize(String string) {
 		string = StringUtil.toLowerCase(string);
 
@@ -345,18 +324,33 @@ public class SiteInitializerSerializerImpl
 
 		_addZipEntry(dirName + "/page.json", pagejsonObject, zipWriter);
 
-		PageDefinition pageDefinition = _getPageDefinition(layout);
+		LayoutStructure layoutStructure = _getLayoutStructure(layout);
 
-		if (pageDefinition != null) {
-			_addZipEntry(
-				dirName + "/page-definition.json",
-				JSONUtil.put(
-					"pageElement", pageDefinition.getPageElement()
-				).put(
-					"settings", pageDefinition.getSettings()
-				),
-				zipWriter);
+		if (layoutStructure == null) {
+			return;
 		}
+
+		PageDefinition pageDefinition = _pageDefinitionDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				true, null, _dtoConverterRegistry, null, layout.getPlid(), null,
+				null, null) {
+
+				{
+					setAttribute("embeddedPageDefinition", Boolean.TRUE);
+					setAttribute("groupId", layout.getGroupId());
+					setAttribute("layout", layout);
+				}
+			},
+			layoutStructure);
+
+		_addZipEntry(
+			dirName + "/page-definition.json",
+			JSONUtil.put(
+				"pageElement", pageDefinition.getPageElement()
+			).put(
+				"settings", pageDefinition.getSettings()
+			),
+			zipWriter);
 	}
 
 	private void _serializeLayouts(long groupId, ZipWriter zipWriter)

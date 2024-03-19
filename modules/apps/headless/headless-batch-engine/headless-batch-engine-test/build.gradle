@@ -9,7 +9,6 @@ dependencies {
 	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation project(":apps:batch-engine:batch-engine-api")
-	testIntegrationImplementation project(":apps:headless:headless-admin-user:headless-admin-user-api")
 	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-api")
 	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:object:object-api")

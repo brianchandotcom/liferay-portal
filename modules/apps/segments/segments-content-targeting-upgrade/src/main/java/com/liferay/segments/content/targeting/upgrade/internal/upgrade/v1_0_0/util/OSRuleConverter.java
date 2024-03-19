@@ -19,7 +19,7 @@ public class OSRuleConverter implements RuleConverter {
 	public void convert(
 		long companyId, Criteria criteria, String typeSettings) {
 
-		SegmentsCriteriaContributor.contributeToCriteria(
+		SegmentsCriteriaContributor.contribute(
 			criteria, "contains(userAgent, '" + typeSettings + "')",
 			Criteria.Conjunction.AND, "context", Criteria.Type.CONTEXT);
 	}

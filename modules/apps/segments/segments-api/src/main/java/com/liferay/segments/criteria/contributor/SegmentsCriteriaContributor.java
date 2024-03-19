@@ -24,7 +24,7 @@ import javax.portlet.PortletRequest;
  */
 public interface SegmentsCriteriaContributor {
 
-	public static void contributeToCriteria(
+	public static void contribute(
 		Criteria criteria, String filterString,
 		Criteria.Conjunction conjunction, String key, Criteria.Type type) {
 
@@ -43,7 +43,7 @@ public interface SegmentsCriteriaContributor {
 		Criteria criteria, String filterString,
 		Criteria.Conjunction conjunction) {
 
-		SegmentsCriteriaContributor.contributeToCriteria(
+		SegmentsCriteriaContributor.contribute(
 			criteria, filterString, conjunction, getKey(), getType());
 	}
 

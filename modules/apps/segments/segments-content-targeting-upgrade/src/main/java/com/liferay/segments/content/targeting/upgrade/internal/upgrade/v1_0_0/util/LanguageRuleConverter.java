@@ -19,7 +19,7 @@ public class LanguageRuleConverter implements RuleConverter {
 	public void convert(
 		long companyId, Criteria criteria, String typeSettings) {
 
-		SegmentsCriteriaContributor.contributeToCriteria(
+		SegmentsCriteriaContributor.contribute(
 			criteria, "(languageId eq '" + typeSettings + "')",
 			Criteria.Conjunction.AND, "context", Criteria.Type.CONTEXT);
 	}

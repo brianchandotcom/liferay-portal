@@ -104,7 +104,7 @@ public class LastLoginDateRuleConverter implements RuleConverter {
 					")");
 			}
 
-			SegmentsCriteriaContributor.contributeToCriteria(
+			SegmentsCriteriaContributor.contribute(
 				criteria, filterString, Criteria.Conjunction.AND, "context",
 				Criteria.Type.CONTEXT);
 		}

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.editor.constants.EditorConstants;
 import com.liferay.portal.kernel.exception.ImageResolutionException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -536,13 +537,15 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
 
+		if (_featureFlagManager.isEnabled("LPD-11147")) {
+			serviceContext.setAttribute(
+				"friendlyURLAssetCategoryIds",
+				serviceContext.getAssetCategoryIds());
+		}
+
 		serviceContext.setAttribute(
 			"updateAutoTags",
 			ParamUtil.getBoolean(actionRequest, "updateAutoTags"));
-
-		serviceContext.setAttribute(
-			"friendlyURLAssetCategoryIds",
-			serviceContext.getAssetCategoryIds());
 
 		BlogsEntry entry = null;
 
@@ -642,6 +645,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Portal _portal;

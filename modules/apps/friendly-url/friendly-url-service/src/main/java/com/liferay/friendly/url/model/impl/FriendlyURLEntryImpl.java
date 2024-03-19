@@ -14,6 +14,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -30,6 +31,10 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 
 	@Override
 	public String getCategorizedUrlTitle(String languageId) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
+			return getUrlTitle();
+		}
+
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			FriendlyURLEntryLocalServiceUtil.fetchFriendlyURLEntryLocalization(
 				getPrimaryKey(), languageId);

@@ -84,24 +84,25 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Phone Number"
 			},
-			"localized": false,
 			"name": "phoneNumber",
-			"objectFieldSettings": [
-			],
-			"readOnly": "false",
-			"readOnlyConditionExpression": "",
 			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String",
-			"unique": false
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "If opening on behalf of another user, please share the appropriate email address to contact:"
+			},
+			"name": "customerEmailAddress",
+			"required": false,
+			"type": "String"
 		},
 		{
 			"DBType": "Clob",
@@ -119,17 +120,6 @@
 			],
 			"required": true,
 			"type": "Clob"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "If opening on behalf of another user, please share the appropriate email address to contact:"
-			},
-			"name": "appropriateEmailAddress",
-			"required": false,
-			"type": "String"
 		}
 	],
 	"panelCategoryKey": "control_panel.object",

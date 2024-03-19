@@ -1,0 +1,19 @@
+@import 'atlas-variables';
+
+.toggle-switch {
+	.help-text-icon {
+		color: $secondary;
+
+		&:hover {
+			color: $dark;
+		}
+	}
+
+	&.disabled .help-text-icon {
+		color: inherit;
+
+		&:hover {
+			color: $secondary;
+		}
+	}
+}

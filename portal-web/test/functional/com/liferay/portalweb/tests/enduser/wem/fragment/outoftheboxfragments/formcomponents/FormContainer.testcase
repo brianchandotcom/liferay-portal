@@ -1554,7 +1554,7 @@ definition {
 		}
 
 		task ("Then the page creator sees the following error message") {
-			Alert.viewErrorMessage(errorMessage = "Some fragments are missing. Date, Long Text, Number, Submit Button and Text fields cannot have an associated fragment or cannot be available in master.");
+			Alert.viewErrorMessage(errorMessage = "Some fragments are missing. Date, Number, Submit Button and Text fields cannot have an associated fragment or cannot be available in master.");
 
 			AssertVisible(
 				key_fragmentName = "Form Container",

@@ -1,0 +1,15 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-clarity-batch-list-type-definition:
+    name: Liferay Clarity Batch List Type Definition
+    oAuthApplicationHeadlessServer: liferay-clarity-batch-list-type-definition-oauth-application-server
+    type: batch
+liferay-clarity-batch-list-type-definition-oauth-application-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Clarity Batch List Type Definition OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Admin.List.Type.everything
+        - Liferay.Headless.Batch.Engine.everything
+    type: oAuthApplicationHeadlessServer

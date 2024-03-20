@@ -851,6 +851,15 @@ public abstract class BaseJob implements Job {
 								return _call();
 							}
 							catch (Exception exception) {
+								String message = exception.getMessage();
+
+								if ((message != null) &&
+									message.contains(
+										"Errors found in Playwright tests")) {
+
+									throw exception;
+								}
+
 								System.out.println(
 									JenkinsResultsParserUtil.combine(
 										"[", batchName, "] Retry creating a ",

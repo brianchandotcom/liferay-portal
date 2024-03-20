@@ -21,6 +21,7 @@
 				"Error",
 				"ErrorCode404",
 				"ErrorCode500",
+				"ForgotPassword",
 				"Login",
 				"TermsOfUse"
 			],

@@ -60,7 +60,19 @@ const MDFRequestList = () => {
 		openRequestFilter,
 		isChannel
 	);
-	const pagination = usePagination();
+	const urlParams = new URLSearchParams(window.location.href);
+
+	const pagination = usePagination(
+		urlParams.has('activepage') ? Number(urlParams.get('activepage')) : 1
+	);
+
+	if (urlParams.has('activepage')) {
+		window.history.replaceState(
+			null,
+			'',
+			Liferay.ThemeDisplay.getLayoutRelativeURL()
+		);
+	}
 
 	const {data, isValidating, mutate} = useGet<LiferayItems<MDFRequestDTO[]>>(
 		filtersTerm &&
@@ -102,6 +114,7 @@ const MDFRequestList = () => {
 					mdfRequestItems?.[index].r_accToMDFReqs_accountEntryId
 			),
 		siteURL,
+		pagination.activePage,
 		actions,
 		mutate,
 		isChannel

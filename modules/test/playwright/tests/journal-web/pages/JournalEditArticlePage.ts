@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {JournalPage} from './JournalPage';
 
 export class JournalEditArticlePage {
@@ -72,5 +74,86 @@ export class JournalEditArticlePage {
 			.frameLocator('iframe[title="Select Item"]')
 			.getByRole('link', {name: 'Documents and Media'})
 			.click();
+	}
+
+	async scheduleArticle(
+		title: string,
+		date: string,
+		{workflow} = {workflow: false}
+	) {
+		await this.fillTitle(title);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: workflow
+					? 'Schedule Publication and Submit for Workflow'
+					: 'Schedule Publication',
+			}),
+			trigger: this.page.getByLabel(
+				workflow
+					? 'Select and Confirm Submit for Workflow Settings'
+					: 'Select and Confirm Publish Settings',
+				{
+					exact: true,
+				}
+			),
+		});
+
+		await this.page.getByPlaceholder('YYYY-MM-DD HH:mm').fill(date);
+
+		await this.page
+			.locator('.modal-footer')
+			.getByRole('button', {
+				name: workflow ? 'Submit for Workflow' : 'Schedule',
+			})
+			.click();
+
+		await waitForSuccessAlert(
+			this.page,
+			workflow
+				? `Success:${title} has been scheduled and submitted for workflow.`
+				: `Success:${title} will be published on`
+		);
+
+		const row = await this.page
+			.locator('.list-group-item')
+			.filter({hasText: title});
+
+		await row
+			.locator('span.label')
+			.filter({hasText: workflow ? 'Pending' : 'Scheduled'})
+			.waitFor();
+	}
+
+	async assertScheduleDate(
+		title: string,
+		date: string,
+		{workflow} = {workflow: false}
+	) {
+		await this.editArticle(title);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: workflow
+					? 'Schedule Publication and Submit for Workflow'
+					: 'Schedule Publication',
+			}),
+			trigger: this.page.getByLabel(
+				workflow
+					? 'Select and Confirm Submit for Workflow Settings'
+					: 'Select and Confirm Publish Settings',
+				{
+					exact: true,
+				}
+			),
+		});
+
+		await expect(
+			this.page.getByPlaceholder('YYYY-MM-DD HH:mm')
+		).toHaveValue(date);
 	}
 }

@@ -525,64 +525,20 @@ aiCreateImageTest(
 
 scheduleTest(
 	'Create a web content scheduled',
-	async ({journalEditArticlePage, page, site}) => {
+	async ({journalEditArticlePage, site}) => {
 		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
-		const title = getRandomString();
+		const articleTitle = getRandomString();
+		const scheduleDate = '9987-11-26 13:00';
 
-		await journalEditArticlePage.fillTitle(title);
+		await journalEditArticlePage.scheduleArticle(
+			articleTitle,
+			scheduleDate
+		);
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Schedule Publication',
-			}),
-			trigger: page.getByRole('button', {
-				name: 'Select and Confirm Publish Settings',
-			}),
-		});
-
-		await page
-			.getByPlaceholder('YYYY-MM-DD HH:mm')
-			.fill('9987-11-26 13:00');
-
-		await page.getByRole('button', {exact: true, name: 'Schedule'}).click();
-
-		await page
-			.getByText(
-				`Success:${title} will be published on 11/26/87 1:00 PM.`
-			)
-			.waitFor();
-
-		await expect(
-			page.locator('span.label').filter({hasText: 'Scheduled'})
-		).toBeVisible();
-
-		await page.getByLabel(`Actions for ${title}`).waitFor();
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				exact: true,
-				name: 'Edit',
-			}),
-			trigger: page.getByLabel(`Actions for ${title}`, {
-				exact: true,
-			}),
-		});
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				name: 'Schedule Publication',
-			}),
-			trigger: page.getByRole('button', {
-				name: 'Select and Confirm Publish Settings',
-			}),
-		});
-
-		await expect(page.getByPlaceholder('YYYY-MM-DD HH:mm')).toHaveValue(
-			'9987-11-26 13:00'
+		await journalEditArticlePage.assertScheduleDate(
+			articleTitle,
+			scheduleDate
 		);
 	}
 );

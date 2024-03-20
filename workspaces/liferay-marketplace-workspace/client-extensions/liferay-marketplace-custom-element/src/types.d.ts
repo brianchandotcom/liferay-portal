@@ -197,6 +197,7 @@ type DefaultProperties = {
 	cloudBaseURL: string;
 	contactSupportUrl: string;
 	eulaBaseURL: string;
+	marketoFormId: string;
 };
 
 interface CommerceAccount extends Omit<Account, 'description'> {
@@ -566,7 +567,6 @@ type UserForm = {
 	accountQuantity: number;
 	accountSelected: Account | undefined;
 	accounts: Account[];
-	agreeToTermsAndConditions: boolean;
 	companyName: string;
 	emailAddress: string;
 	extension?: string | undefined;

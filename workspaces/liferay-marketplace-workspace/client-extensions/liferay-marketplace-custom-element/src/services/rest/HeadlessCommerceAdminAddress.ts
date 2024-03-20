@@ -26,9 +26,9 @@ export type Region = {
 export type RegionsAPI = APIResponse<Region>;
 
 class HeadlessCommerceAdminAddress {
-	async getRegions() {
+	async getRegions(searchParams = new URLSearchParams()) {
 		return fetcher<RegionsAPI>(
-			`/o/headless-admin-address/v1.0/countries?pageSize=-1&fields=a2,active,name,regions.name,regions.regionCode,title_i18n`
+			`/o/headless-admin-address/v1.0/countries?${searchParams.toString()}`
 		);
 	}
 }

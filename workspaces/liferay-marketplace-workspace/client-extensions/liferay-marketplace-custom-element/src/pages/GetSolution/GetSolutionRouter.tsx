@@ -12,7 +12,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import GetSolutionOutlet from './GetSolutionOutlet';
 import GetSolutionAccount from './pages/account';
-import SolutionCreated from './pages/finish';
+import SolutionCreated from './pages/done';
 import GetSolutionForm from './pages/form';
 
 const queryString = window.location.search;

@@ -100,8 +100,9 @@ public class GetGroovyScriptUsesMVCResourceCommand
 	}
 
 	private void _addGroovyScriptUses(
-		List<GroovyScriptUse> groovyScriptUses,
-		ResourceRequest resourceRequest) {
+			List<GroovyScriptUse> groovyScriptUses,
+			ResourceRequest resourceRequest)
+		throws Exception {
 
 		Iterator<GroovyScriptUsesFactory> iterator =
 			_serviceTrackerList.iterator();

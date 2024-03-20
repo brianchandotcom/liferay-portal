@@ -535,7 +535,11 @@ public class JournalConverterImpl implements JournalConverter {
 				fieldValue = field.getValue(field.getDefaultLocale(), count);
 			}
 
-			String valueString = String.valueOf(fieldValue);
+			String valueString = StringPool.BLANK;
+
+			if (fieldValue != null) {
+				valueString = String.valueOf(fieldValue);
+			}
 
 			if (StringUtil.equals(valueString, DDM.FIELD_EMPTY_VALUE)) {
 				continue;

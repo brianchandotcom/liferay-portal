@@ -9,7 +9,7 @@ import {useOutletContext} from 'react-router-dom';
 import AccountForm from '../components/AccountForm';
 
 const GetSolutionForm = () => {
-	const {accountForm, navigate, onSubmit} = useOutletContext<any>();
+	const {accountForm, navigate} = useOutletContext<any>();
 
 	useLayoutEffect(() => {
 		if (accountForm.accountQuantity > 1 && !accountForm.accountSelected) {
@@ -17,7 +17,7 @@ const GetSolutionForm = () => {
 		}
 	}, [accountForm.accountQuantity, accountForm.accountSelected, navigate]);
 
-	return <AccountForm accountForm={accountForm} submitOrder={onSubmit} />;
+	return <AccountForm />;
 };
 
 export default GetSolutionForm;

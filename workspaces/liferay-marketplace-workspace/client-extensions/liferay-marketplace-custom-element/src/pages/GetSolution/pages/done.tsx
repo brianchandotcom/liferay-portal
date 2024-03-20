@@ -8,7 +8,6 @@ import ClayIcon from '@clayui/icon';
 
 import createdProjectIcon from '../../../assets/images/created_project.svg';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
-import {Liferay} from '../../../liferay/liferay';
 
 type GetSolutionFinishProps = {
 	product: DeliveryProduct;
@@ -39,9 +38,8 @@ const GetSolutionFinish: React.FC<GetSolutionFinishProps> = ({product}) => (
 			<ClayButton
 				className="mt-6 py-3"
 				onClick={() => {
-					Liferay.Util.navigate(
-						getSiteURL() + '/customer-dashboard/#/solutions'
-					);
+					window.location.href =
+						getSiteURL() + '/customer-dashboard/#/solutions';
 				}}
 			>
 				Return to Dashboard

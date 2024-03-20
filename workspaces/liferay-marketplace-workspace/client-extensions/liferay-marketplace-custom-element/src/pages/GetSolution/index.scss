@@ -66,9 +66,7 @@
 			}
 
 			.custom-control {
-				margin-bottom: 0 !important;
-				width: -moz-fit-content;
-				width: fit-content;
+				min-width: 400px;
 			}
 
 			.form-group {

@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLink from '@clayui/link';
-import {useEffect, useState} from 'react';
+import {useEffect, useLayoutEffect, useState} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import {Header} from '../../../components/Header/Header';
@@ -22,6 +22,12 @@ const GetSolutionAccount = () => {
 	const navigate = useNavigate();
 	const accountSelected = accountForm.watch('accountSelected');
 	const emailAddress = accountForm.watch('emailAddress');
+
+	useLayoutEffect(() => {
+		if (accountForm.accountQuantity === 1) {
+			navigate('/form', {replace: true});
+		}
+	}, [accountForm.accountQuantity, accountForm.accountSelected, navigate]);
 
 	const [accounts, setAccounts] = useState<RadioCardContent<Account>[]>([]);
 

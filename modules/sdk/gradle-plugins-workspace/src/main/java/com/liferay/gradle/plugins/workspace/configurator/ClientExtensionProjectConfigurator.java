@@ -1194,8 +1194,8 @@ public class ClientExtensionProjectConfigurator
 
 			if (Objects.equals(entry.getKey(), "src")) {
 				throw new GradleException(
-					"Use the 'url' property instead of the script attribute " +
-						"'src'");
+					"The key 'src' is not allowed as a script element " +
+						"attribute. Use 'url' instead.");
 			}
 
 			Object value = entry.getValue();
@@ -1203,14 +1203,16 @@ public class ClientExtensionProjectConfigurator
 			if (value == null) {
 				throw new GradleException(
 					String.format(
-						"A value for the attribute '%s' must be specified",
+						"The value for the script element attribute '%s' " +
+							"must be specified",
 						entry.getKey()));
 			}
 
 			if (value instanceof List || value instanceof Map) {
 				throw new GradleException(
 					String.format(
-						"The value for the attribute '%s' must be a scalar",
+						"The value for the script element attribute '%s' " +
+							"must be a scalar",
 						entry.getKey()));
 			}
 		}

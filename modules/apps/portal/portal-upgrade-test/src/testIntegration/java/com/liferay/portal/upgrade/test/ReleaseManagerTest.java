@@ -64,14 +64,14 @@ public class ReleaseManagerTest {
 	public void testUnsuccessfulUpgradeByMissingModuleUpgrade()
 		throws Exception {
 
-		_testUnsuccessfulUpgradeByMissingModuleUpgrade("false", "unresolved");
+		_testUnsuccessfulUpgradeByMissingModuleUpgrade(false, "unresolved");
 	}
 
 	@Test
 	public void testUnsuccessfulUpgradeByMissingModuleUpgradeWithAutorun()
 		throws Exception {
 
-		_testUnsuccessfulUpgradeByMissingModuleUpgrade("true", "failure");
+		_testUnsuccessfulUpgradeByMissingModuleUpgrade(true, "failure");
 	}
 
 	@Test
@@ -100,10 +100,10 @@ public class ReleaseManagerTest {
 	}
 
 	private void _testUnsuccessfulUpgradeByMissingModuleUpgrade(
-			String autorun, String status)
+			boolean autorun, String status)
 		throws Exception {
 
-		PropsUtil.set("upgrade.database.auto.run", autorun);
+		PropsUtil.set("upgrade.database.auto.run", String.valueOf(autorun));
 
 		Bundle bundle = FrameworkUtil.getBundle(ReleaseManagerTest.class);
 

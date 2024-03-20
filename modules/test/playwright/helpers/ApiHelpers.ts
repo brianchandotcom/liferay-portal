@@ -76,16 +76,21 @@ export class ApiHelpers {
 		this.headlessAdminContent = new HeadlessAdminContentApiHelper(this);
 		this.headlessAdminUser = new HeadlessAdminUserApiHelper(this);
 		this.headlessAdminWorkflow = new HeadlessAdminWorkflowApiHelper(this);
-		this.headlessCommerceAdminCatalog =
-			new HeadlessCommerceAdminCatalogApiHelper(this);
-		this.headlessCommerceAdminChannel =
-			new HeadlessCommerceAdminChannelApiHelper(this);
-		this.headlessCommerceAdminPaymentApiHelper =
-			new HeadlessCommerceAdminPaymentApiHelper(this);
-		this.headlessCommerceDeliveryCatalog =
-			new HeadlessCommerceDeliveryCatalogApiHelper(this);
-		this.headlessCommerceDeliveryCart =
-			new HeadlessCommerceDeliveryCartApiHelper(this);
+		this.headlessCommerceAdminCatalog = new HeadlessCommerceAdminCatalogApiHelper(
+			this
+		);
+		this.headlessCommerceAdminChannel = new HeadlessCommerceAdminChannelApiHelper(
+			this
+		);
+		this.headlessCommerceAdminPaymentApiHelper = new HeadlessCommerceAdminPaymentApiHelper(
+			this
+		);
+		this.headlessCommerceDeliveryCatalog = new HeadlessCommerceDeliveryCatalogApiHelper(
+			this
+		);
+		this.headlessCommerceDeliveryCart = new HeadlessCommerceDeliveryCartApiHelper(
+			this
+		);
 		this.headlessDelivery = new HeadlessDeliveryApiHelper(this);
 		this.headlessSite = new HeadlessSiteApiHelper(this);
 		this.jsonWebServicesClassName = new JSONWebServicesClassNameApiHelper(
@@ -96,8 +101,9 @@ export class ApiHelpers {
 		this.jsonWebServicesGroup = new JSONWebServicesGroupApiHelper(this);
 		this.jsonWebServicesJournal = new JSONWebServicesJournalApiHelper(this);
 		this.jsonWebServicesLayout = new JSONWebServicesLayoutApiHelper(this);
-		this.jsonWebServicesLayoutSetPrototype =
-			new JSONWebServicesLayoutSetPrototypeApiHelper(this);
+		this.jsonWebServicesLayoutSetPrototype = new JSONWebServicesLayoutSetPrototypeApiHelper(
+			this
+		);
 		this.listTypeAdmin = new ListTypeAdminApiHelper(this);
 		this.object = new ObjectApiHelper(this);
 		this.objectAdmin = new ObjectAdminApiHelper(this);
@@ -129,6 +135,10 @@ export class ApiHelpers {
 			failOnStatusCode,
 			headers
 		);
+
+		if (response.status() === 204) {
+			return;
+		}
 
 		return response.json();
 	}

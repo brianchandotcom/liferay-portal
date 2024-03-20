@@ -270,6 +270,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			contextAcceptLanguage.getPreferredLocale(), sitePage.getTitle(),
 			sitePage.getTitle_i18n());
 
+		contextHttpServletRequest.setAttribute(
+			WebKeys.CTX, ServletContextPool.get(StringPool.BLANK));
+
 		Layout layout = _addLayout(
 			siteId, sitePage, titleMap,
 			LocalizedMapUtil.getLocalizedMap(

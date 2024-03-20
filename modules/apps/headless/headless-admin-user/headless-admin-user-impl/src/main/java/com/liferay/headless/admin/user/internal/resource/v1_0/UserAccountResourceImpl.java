@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -651,7 +652,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			_accountEntryUserRelService.addAccountEntryUserRel(
 				accountId, contextUser.getUserId(),
 				userAccount.getAlternateName(), userAccount.getEmailAddress(),
-				contextAcceptLanguage.getPreferredLocale(),
+				LocaleUtil.fromLanguageId(userAccount.getLanguageId()),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(null, userAccount),
 				_getSuffixId(null, userAccount), userAccount.getJobTitle(),
@@ -830,7 +831,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				contextCompany.getCompanyId(), autoPassword, password, password,
 				false, userAccount.getAlternateName(),
 				userAccount.getEmailAddress(),
-				contextAcceptLanguage.getPreferredLocale(),
+				LocaleUtil.fromLanguageId(userAccount.getLanguageId()),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(null, userAccount),
 				_getSuffixId(null, userAccount), true,
@@ -861,7 +862,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				contextCompany.getCompanyId(), autoPassword, password, password,
 				false, userAccount.getAlternateName(),
 				userAccount.getEmailAddress(),
-				contextAcceptLanguage.getPreferredLocale(),
+				LocaleUtil.fromLanguageId(userAccount.getLanguageId()),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(null, userAccount),
 				_getSuffixId(null, userAccount), true,
@@ -1030,7 +1031,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			contextCompany.getCompanyId(), autoPassword, password, password,
 			false, userAccount.getAlternateName(),
 			userAccount.getEmailAddress(),
-			contextAcceptLanguage.getPreferredLocale(),
+			LocaleUtil.fromLanguageId(userAccount.getLanguageId()),
 			userAccount.getGivenName(), userAccount.getAdditionalName(),
 			userAccount.getFamilyName(), _getPrefixId(null, userAccount),
 			_getSuffixId(null, userAccount), true,

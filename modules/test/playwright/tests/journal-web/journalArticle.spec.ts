@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
@@ -42,7 +43,8 @@ const baseTest = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	isolatedSiteTest,
-	journalPagesTest
+	journalPagesTest,
+	workflowPagesTest
 );
 
 const bulkTest = mergeTests(
@@ -596,6 +598,51 @@ scheduleTest(
 		await journalEditArticlePage.assertScheduleDate(
 			articleTitle,
 			scheduleDate
+		);
+	}
+);
+
+scheduleTest(
+	'Create a web content scheduled with workflow activated',
+	async ({
+		apiHelpers,
+		journalEditArticlePage,
+		journalPage,
+		workflowPage,
+		workflowTasksPage,
+	}) => {
+		const site = await apiHelpers.headlessSite.createSite('papite');
+
+		await workflowPage.goto(site.friendlyUrlPath);
+
+		await workflowPage.changeWorkflow(
+			'Web Content Article',
+			'Single Approver'
+		);
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const articleTitle = getRandomString();
+		const articleDate = '9987-11-26 13:00';
+
+		await journalEditArticlePage.scheduleArticle(
+			articleTitle,
+			articleDate,
+			{workflow: true}
+		);
+
+		await workflowTasksPage.goToAssignedToMyRoles(site.friendlyUrlPath);
+
+		await workflowTasksPage.assignToMe(articleTitle);
+
+		await workflowTasksPage.approve(articleTitle);
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await journalEditArticlePage.assertScheduleDate(
+			articleTitle,
+			articleDate,
+			{workflow: true}
 		);
 	}
 );

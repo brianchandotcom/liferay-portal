@@ -7,7 +7,6 @@ package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DCLSingleton;
-import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -24,8 +23,6 @@ import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -64,9 +61,6 @@ public class DBUpgraderTest {
 		_db = DBManagerUtil.getDB();
 
 		_dbInspector = new DBInspector(_connection);
-
-		_processedServletContextNames = ReflectionTestUtil.getFieldValue(
-			IndexUpdaterUtil.class, "_processedServletContextNames");
 	}
 
 	@AfterClass
@@ -79,7 +73,6 @@ public class DBUpgraderTest {
 	@After
 	public void tearDown() throws Exception {
 		_updatePortalRelease(_currentBuildNumber, _currentState);
-		_processedServletContextNames.clear();
 	}
 
 	@Test
@@ -158,7 +151,6 @@ public class DBUpgraderTest {
 	private static int _currentState;
 	private static DB _db;
 	private static DBInspector _dbInspector;
-	private static Set<String> _processedServletContextNames;
 	private static boolean _upgrading;
 
 }

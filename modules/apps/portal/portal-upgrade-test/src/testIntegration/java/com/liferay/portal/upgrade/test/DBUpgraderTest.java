@@ -83,7 +83,16 @@ public class DBUpgraderTest {
 	}
 
 	@Test
-	public void testRegenerateModuleIndexes() throws Exception {
+	public void testUpgrade() throws Exception {
+		_updatePortalRelease(
+			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
+			ReleaseConstants.STATE_GOOD);
+
+		DBUpgrader.upgradePortal();
+	}
+
+	@Test
+	public void testUpgradeModuleIndexes() throws Exception {
 		_db.runSQL("create index IX_TEST on Lock_ (createDate)");
 
 		PropsUtil.set("upgrade.database.auto.run", "false");
@@ -97,15 +106,6 @@ public class DBUpgraderTest {
 		DBUpgrader.upgradeModules(false);
 
 		Assert.assertFalse(_dbInspector.hasIndex("Lock_", "IX_TEST"));
-	}
-
-	@Test
-	public void testUpgrade() throws Exception {
-		_updatePortalRelease(
-			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
-			ReleaseConstants.STATE_GOOD);
-
-		DBUpgrader.upgradePortal();
 	}
 
 	@Test

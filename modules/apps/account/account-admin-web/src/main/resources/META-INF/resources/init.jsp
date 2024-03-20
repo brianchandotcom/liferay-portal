@@ -92,6 +92,7 @@ page import="com.liferay.login.web.constants.LoginPortletKeys" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.DuplicateRoleException" %><%@
+page import="com.liferay.portal.kernel.exception.EmailAddressException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchListTypeException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchTicketException" %><%@
 page import="com.liferay.portal.kernel.exception.PhoneNumberException" %><%@

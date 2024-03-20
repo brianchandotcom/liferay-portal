@@ -6,9 +6,11 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.admin.web.internal.manager.ContactInfoManager;
+import com.liferay.account.admin.web.internal.manager.EmailAddressContactInfoManager;
 import com.liferay.account.admin.web.internal.manager.PhoneContactInfoManager;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.NoSuchEntryException;
+import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
@@ -16,6 +18,8 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
+import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -68,7 +72,8 @@ public class UpdateContactInformationMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (exception instanceof PhoneNumberException ||
+			else if (exception instanceof EmailAddressException ||
+					 exception instanceof PhoneNumberException ||
 					 exception instanceof PhoneNumberExtensionException) {
 
 				SessionErrors.add(
@@ -94,7 +99,12 @@ public class UpdateContactInformationMVCActionCommand
 	private ContactInfoManager _getContactInformationHelper(
 		String className, long classPK, String listType) {
 
-		if (listType.equals(ListTypeConstants.PHONE)) {
+		if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
+			return new EmailAddressContactInfoManager(
+				className, classPK, _emailAddressLocalService,
+				_emailAddressService);
+		}
+		else if (listType.equals(ListTypeConstants.PHONE)) {
 			return new PhoneContactInfoManager(
 				className, classPK, _phoneLocalService, _phoneService);
 		}
@@ -129,6 +139,12 @@ public class UpdateContactInformationMVCActionCommand
 			contactInformationHelper.makePrimary(primaryKey);
 		}
 	}
+
+	@Reference
+	private EmailAddressLocalService _emailAddressLocalService;
+
+	@Reference
+	private EmailAddressService _emailAddressService;
 
 	@Reference
 	private PhoneLocalService _phoneLocalService;

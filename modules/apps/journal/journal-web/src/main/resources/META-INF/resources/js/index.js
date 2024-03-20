@@ -7,6 +7,7 @@ export {default as BasicInfoPanel} from './data_engine/panels/index.es';
 export {default as DataEngineLayoutRendererLanguageProxy} from './DataEngineLayoutRendererLanguageProxy.es';
 export {default as HighlightedDDMStructuresConfiguration} from './configuration_browse/HighlightedDDMStructuresConfiguration';
 export {default as TranslationManager} from './translation_manager/TranslationManager';
+export {default as TranslationOptions} from './translation_manager/TranslationOptions';
 export {default as SaveButtons} from './SaveButtons';
 export {default as CloseConfigurationPanelPropsTransformer} from './CloseConfigurationPanelPropsTransformer';
 export {default as JournalPortlet} from './JournalPortlet.es';

@@ -97,7 +97,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 									</div>
 
 									<react:component
-										module="js/translation_manager/TranslationOptions"
+										module="{TranslationOptions} from journal-web"
 										props='<%=
 											HashMapBuilder.<String, Object>put(
 												"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()

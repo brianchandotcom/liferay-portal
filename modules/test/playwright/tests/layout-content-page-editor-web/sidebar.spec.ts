@@ -51,3 +51,37 @@ test('renders all panel buttons in the vertical bar', async ({
 		await expect(page.getByLabel(panel, {exact: true})).toBeVisible();
 	}
 });
+
+test('renders sidebars visible at desktop size and sidebars not visible at small resolutions', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await page.goto('/');
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage(
+		site.id,
+		'home',
+		getPageDefinition([])
+	);
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	const panel = await page.getByLabel('Fragments and Widgets Panel');
+	const configurationPanel = await page.getByLabel('Configuration Panel', {
+		exact: true,
+	});
+
+	await expect(panel).toBeVisible();
+
+	await expect(configurationPanel).toBeVisible();
+
+	// Set small resolution
+
+	await page.setViewportSize({height: 600, width: 600});
+
+	await expect(panel).not.toBeVisible();
+
+	await expect(configurationPanel).not.toBeVisible();
+});

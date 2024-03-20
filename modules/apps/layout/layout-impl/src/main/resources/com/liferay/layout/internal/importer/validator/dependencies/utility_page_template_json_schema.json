@@ -17,6 +17,7 @@
 		},
 		"type": {
 			"enum": [
+				"CreateAccount",
 				"Error",
 				"ErrorCode404",
 				"ErrorCode500",

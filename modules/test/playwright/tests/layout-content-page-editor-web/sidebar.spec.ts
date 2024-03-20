@@ -85,3 +85,48 @@ test('renders sidebars visible at desktop size and sidebars not visible at small
 
 	await expect(configurationPanel).not.toBeVisible();
 });
+
+test('checks if sidebars are open or closed depending on Product Menu', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await page.goto('/');
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage(
+		site.id,
+		'home',
+		getPageDefinition([])
+	);
+
+	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
+
+	const panel = await page.getByLabel('Fragments and Widgets Panel');
+	const configurationPanel = await page.getByLabel('Configuration Panel', {
+		exact: true,
+	});
+
+	await expect(panel).toBeVisible();
+
+	await expect(configurationPanel).toBeVisible();
+
+	// Check if sidebars are not visible when Product Menu is open
+
+	await page.getByLabel('Open Product Menu').click();
+
+	await expect(panel).not.toBeVisible();
+
+	await expect(configurationPanel).not.toBeVisible();
+
+	// Check if sidebars are visible when Product Menu is closed
+
+	await page
+		.getByLabel('Product Menu', {exact: true})
+		.getByLabel('Close')
+		.click();
+
+	await expect(panel).toBeVisible();
+
+	await expect(configurationPanel).toBeVisible();
+});

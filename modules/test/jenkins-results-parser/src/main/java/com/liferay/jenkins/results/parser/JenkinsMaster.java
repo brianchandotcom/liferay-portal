@@ -243,6 +243,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			return _globalEnvironmentVariables;
 		}
 
+		if (!isAvailable()) {
+			return new HashMap<>();
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("import jenkins.model.Jenkins;\n");
@@ -381,7 +385,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			"MASTER_NETWORK_NAME");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(networkName)) {
-			return _NETWORK_NAME_DEFAULT;
+			return null;
 		}
 
 		return networkName;
@@ -1017,8 +1021,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private static final long _MAXIMUM_BUILD_UPDATE_DURATION = 30 * 1000;
 
 	private static final long _MAXIMUM_QUEUE_UPDATE_DURATION = 15 * 1000;
-
-	private static final String _NETWORK_NAME_DEFAULT = "default-network";
 
 	private static final Pattern _globalEnvironmentVariablesPattern =
 		Pattern.compile("[^\\{]+(?<json>\\{.*\\})\\s+");

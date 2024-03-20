@@ -287,6 +287,10 @@ public abstract class BaseJob implements Job {
 		List<String> distNodes = new ArrayList<>();
 
 		for (String networkName : getNetworkNames()) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(networkName)) {
+				continue;
+			}
+
 			distNodes.addAll(getDistNodes(networkName));
 		}
 
@@ -493,6 +497,8 @@ public abstract class BaseJob implements Job {
 		for (JenkinsCohort jenkinsCohort : getJenkinsCohorts()) {
 			networkNames.addAll(jenkinsCohort.getNetworkNames());
 		}
+
+		networkNames.removeAll(Collections.singleton(null));
 
 		return networkNames;
 	}

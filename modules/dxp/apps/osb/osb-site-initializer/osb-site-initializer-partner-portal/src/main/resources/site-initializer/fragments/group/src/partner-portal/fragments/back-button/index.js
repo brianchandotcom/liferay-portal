@@ -17,7 +17,7 @@ if (backButton) {
 			location.assign(`${siteURL}${decodeURIComponent(backURL)}`);
 		}
 		else {
-			history.back();
+			location.assign(decodeURIComponent(configuration.backURL));
 		}
 	};
 }

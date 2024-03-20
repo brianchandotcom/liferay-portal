@@ -43,10 +43,7 @@ export class StyleBooksPage {
 
 		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
 
-		await this.page
-			.getByRole('button', {name: 'Delete'})
-			.and(this.page.locator('.btn.btn-danger'))
-			.click();
+		await this.page.getByRole('button', {name: 'Delete'}).click();
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

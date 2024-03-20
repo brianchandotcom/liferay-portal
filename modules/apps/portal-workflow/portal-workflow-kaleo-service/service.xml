@@ -157,6 +157,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="Active" return-type="Collection">
+			<finder-column name="active" />
+		</finder>
 		<finder name="C_N" return-type="KaleoDefinition">
 			<finder-column name="companyId" />
 			<finder-column name="name" />

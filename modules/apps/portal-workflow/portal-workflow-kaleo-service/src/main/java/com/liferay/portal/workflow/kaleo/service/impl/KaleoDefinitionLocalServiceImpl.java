@@ -244,6 +244,13 @@ public class KaleoDefinitionLocalServiceImpl
 
 	@Override
 	public List<KaleoDefinition> getKaleoDefinitions(
+		boolean active, int start, int end) {
+
+		return kaleoDefinitionPersistence.findByActive(true, start, end);
+	}
+
+	@Override
+	public List<KaleoDefinition> getKaleoDefinitions(
 		boolean active, int start, int end,
 		OrderByComparator<KaleoDefinition> orderByComparator,
 		ServiceContext serviceContext) {

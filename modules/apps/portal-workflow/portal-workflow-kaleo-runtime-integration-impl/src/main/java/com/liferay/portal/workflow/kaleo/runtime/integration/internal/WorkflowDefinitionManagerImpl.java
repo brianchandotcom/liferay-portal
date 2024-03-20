@@ -76,6 +76,24 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
+			int start, int end)
+		throws WorkflowException {
+
+		try {
+			List<KaleoDefinition> kaleoDefinitions =
+				_kaleoDefinitionLocalService.getKaleoDefinitions(
+					true, start, end);
+
+			return _toWorkflowDefinitions(
+				kaleoDefinitions.toArray(new KaleoDefinition[0]), null);
+		}
+		catch (Exception exception) {
+			throw new WorkflowException(exception);
+		}
+	}
+
+	@Override
+	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {

@@ -7,7 +7,6 @@ package com.liferay.layout.taglib.internal.struts;
 
 import com.liferay.layout.taglib.internal.util.LayoutUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -99,9 +98,7 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 			int end = ParamUtil.getInteger(
 				httpServletRequest, "end", start + pageSize);
 
-			if (!FeatureFlagManagerUtil.isEnabled("LPD-15607") ||
-				(start == QueryUtil.ALL_POS) || (pageSize <= 0)) {
-
+			if ((start == QueryUtil.ALL_POS) || (pageSize <= 0)) {
 				start = QueryUtil.ALL_POS;
 				end = QueryUtil.ALL_POS;
 			}

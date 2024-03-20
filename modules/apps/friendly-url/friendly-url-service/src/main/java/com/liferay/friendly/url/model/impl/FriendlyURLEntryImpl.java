@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
-import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -35,15 +34,7 @@ public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 			return getUrlTitle();
 		}
 
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			FriendlyURLEntryLocalServiceUtil.fetchFriendlyURLEntryLocalization(
-				getPrimaryKey(), languageId);
-
-		if (friendlyURLEntryLocalization == null) {
-			return StringPool.BLANK;
-		}
-
-		String urlTitle = friendlyURLEntryLocalization.getUrlTitle();
+		String urlTitle = super.getUrlTitle(languageId, false);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			FriendlyURLEntry.class.getName(), getFriendlyURLEntryId());

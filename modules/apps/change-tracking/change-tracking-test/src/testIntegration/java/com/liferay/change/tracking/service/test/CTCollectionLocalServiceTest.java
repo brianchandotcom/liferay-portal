@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -40,8 +41,10 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Comparator;
 import java.util.List;
@@ -63,7 +66,9 @@ public class CTCollectionLocalServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -441,6 +446,58 @@ public class CTCollectionLocalServiceTest {
 	}
 
 	@Test
+	public void testMoveCTEntryFromExpiredCTCollection() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+
+		CTCollection ctCollection1 = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, CTCollectionLocalServiceTest.class.getSimpleName(), null);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection1.getCtCollectionId())) {
+
+			journalArticle = _journalArticleLocalService.updateArticle(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				journalArticle.getFolderId(), journalArticle.getArticleId(),
+				journalArticle.getVersion(), journalArticle.getContent(),
+				serviceContext);
+		}
+
+		ctCollection1.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+		ctCollection1 = _ctCollectionLocalService.updateCTCollection(
+			ctCollection1);
+
+		CTCollection ctCollection2 = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
+		_ctCollectionService.moveCTEntry(
+			ctCollection1.getCtCollectionId(),
+			ctCollection2.getCtCollectionId(),
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			journalArticle.getId());
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection2.getCtCollectionId())) {
+
+			journalArticle = _journalArticleLocalService.getArticle(
+				journalArticle.getId());
+		}
+
+		Assert.assertEquals(
+			ctCollection2.getCtCollectionId(),
+			journalArticle.getCtCollectionId());
+	}
+
+	@Test
 	public void testUndoCTCollection() throws Exception {
 		Layout addedLayout = null;
 
@@ -569,10 +626,6 @@ public class CTCollectionLocalServiceTest {
 	private static CTProcessLocalService _ctProcessLocalService;
 
 	private static long _journalArticleClassNameId;
-
-	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
-
 	private static long _journalFolderClassNameId;
 
 	@Inject
@@ -595,7 +648,13 @@ public class CTCollectionLocalServiceTest {
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection4;
 
+	@Inject
+	private CTCollectionService _ctCollectionService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

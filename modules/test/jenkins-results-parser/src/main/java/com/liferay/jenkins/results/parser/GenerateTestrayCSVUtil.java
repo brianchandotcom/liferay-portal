@@ -116,7 +116,7 @@ public class GenerateTestrayCSVUtil {
 				"&testrayBuildId=", projectTestrayBuildId, "&statuses=3");
 
 			System.out.println(
-				"TestrayCaseResultsURL is set to: " + testrayCaseResultsURL);
+				"Testray case results URL is set to: " + testrayCaseResultsURL);
 
 			JSONObject jsonObject = null;
 

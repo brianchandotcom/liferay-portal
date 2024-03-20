@@ -334,32 +334,6 @@ public abstract class BaseNotificationType implements NotificationType {
 		return notificationRecipientSettings;
 	}
 
-	protected String formatContent(
-			String settingName, NotificationContext notificationContext,
-			long notificationTemplateRecipientId)
-		throws PortalException {
-
-		NotificationRecipientSetting notificationTemplateRecipientSetting =
-			notificationRecipientSettingLocalService.
-				fetchNotificationRecipientSetting(
-					notificationTemplateRecipientId, settingName);
-
-		if (notificationTemplateRecipientSetting == null) {
-			return "";
-		}
-
-		String content = NotificationTypeUtil.evaluateTerms(
-			notificationTemplateRecipientSetting.getValue(),
-			notificationContext, notificationTermEvaluatorTracker);
-
-		if (Validator.isNull(content)) {
-			return NotificationTypeUtil.evaluateTerms(
-				content, notificationContext, notificationTermEvaluatorTracker);
-		}
-
-		return content;
-	}
-
 	protected String formatLocalizedContent(
 			Map<Locale, String> contentMap,
 			NotificationContext notificationContext)

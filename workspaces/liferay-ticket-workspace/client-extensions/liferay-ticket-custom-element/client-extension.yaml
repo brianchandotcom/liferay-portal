@@ -3,7 +3,7 @@ assemble:
       into: static
 liferay-ticket-custom-element:
     cssURLs:
-        - "**/*.css?t=${modifiedTimestamp}"
+        - "**/*.css"
     friendlyURLMapping: liferay-ticket-custom-element
     htmlElementName: liferay-ticket-custom-element
     instanceable: false
@@ -13,5 +13,5 @@ liferay-ticket-custom-element:
         defaultScreen: dashboard
     type: customElement
     urls:
-        - "*.js?t=${modifiedTimestamp}"
+        - "*.js"
     useESM: true

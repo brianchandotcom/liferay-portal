@@ -1,4 +1,4 @@
-ext.expectedErrorMessage = "The value for the attribute 'att' must be a scalar"
+ext.expectedErrorMessage = "The value for the script element attribute 'att' must be a scalar"
 ext.taskPath = ":with-map-attribute-global-js-client-extension:validateClientExtensions"
 
 apply from: "./_baseShouldFailTestCase.gradle"

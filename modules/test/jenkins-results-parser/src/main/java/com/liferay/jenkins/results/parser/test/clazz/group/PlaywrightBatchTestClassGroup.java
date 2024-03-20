@@ -333,17 +333,50 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			if ((errorsJSONArray != null) && (errorsJSONArray.length() > 0)) {
 				StringBuilder sb = new StringBuilder();
 
+				sb.append("Errors found in Playwright tests.\n");
+
 				for (int i = 0; i < errorsJSONArray.length(); i++) {
 					JSONObject errorJSONObject = errorsJSONArray.getJSONObject(
 						i);
 
-					sb.append(errorJSONObject.getString("stack"));
+					System.out.println(errorJSONObject);
+
+					String errorMessage = errorJSONObject.optString("message");
+
+					if ((errorMessage != null) && !errorMessage.isEmpty()) {
+						sb.append(errorMessage);
+					}
+
+					JSONObject errorLocationJSONObject =
+						errorJSONObject.optJSONObject("location");
+
+					if (errorLocationJSONObject != null) {
+						sb.append(" [file://");
+						sb.append(errorLocationJSONObject.opt("file"));
+						sb.append(":");
+						sb.append(errorLocationJSONObject.opt("line"));
+						sb.append(":");
+						sb.append(errorLocationJSONObject.opt("column"));
+						sb.append("]");
+					}
+
+					String errorStack = errorJSONObject.optString("stack");
+
+					if ((errorStack != null) && !errorStack.isEmpty()) {
+						sb.append("\n");
+
+						sb.append(errorStack);
+					}
+
+					String errorSnippet = errorJSONObject.optString("snippet");
+
+					if ((errorSnippet != null) && !errorSnippet.isEmpty()) {
+						sb.append("\n");
+
+						sb.append(StringEscapeUtils.unescapeJava(errorSnippet));
+					}
 
 					sb.append("\n");
-					sb.append(
-						StringEscapeUtils.unescapeJava(
-							errorJSONObject.getString("snippet")));
-					sb.append("\n\n");
 				}
 
 				System.out.println(sb.toString());

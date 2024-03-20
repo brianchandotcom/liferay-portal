@@ -96,3 +96,44 @@ test('LPD-18482 Add account phone', async ({
 		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
 	}
 });
+
+test('LPD-18483 Add account email address', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountContactInformationPage,
+	editAccountContactPage,
+	editAccountEmailAddressPage,
+	editAccountPage,
+	page,
+}) => {
+	await apiHelpers.featureFlag.updateFeatureFlag('LPD-10855', true);
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'test',
+		type: 'business',
+	});
+
+	await accountsPage.goto();
+
+	try {
+		await (await accountsPage.accountsTableRowLink(account.name)).click();
+		await editAccountPage.contactLink.click();
+		await editAccountContactPage.contactInformationLink.click();
+		await editAccountContactInformationPage.addEmailAddressesButton.click();
+		await editAccountEmailAddressPage.updateEmailAddress(
+			'emailAddress@liferay.com'
+		);
+
+		await expect(
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {name: 'emailAddress@liferay.com'})
+		).toBeVisible();
+	}
+	finally {
+		await apiHelpers.featureFlag.updateFeatureFlag('LPD-10855', false);
+		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
+	}
+});

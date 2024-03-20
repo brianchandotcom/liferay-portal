@@ -8,6 +8,7 @@
 import {Locator, Page} from '@playwright/test';
 
 export class EditAccountContactInformationPage {
+	readonly addEmailAddressesButton: Locator;
 	readonly addPhoneNumbersButton: Locator;
 	readonly facebookInput: Locator;
 	readonly jabberInput: Locator;
@@ -18,6 +19,7 @@ export class EditAccountContactInformationPage {
 	readonly twitterInput: Locator;
 
 	constructor(page: Page) {
+		this.addEmailAddressesButton = page.getByLabel('Add Email Addresses');
 		this.addPhoneNumbersButton = page.getByLabel('Add Phone Numbers');
 		this.facebookInput = page.getByLabel('Facebook');
 		this.jabberInput = page.getByLabel('Jabber');

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
@@ -84,19 +85,28 @@ public class DBUpgraderTest {
 
 		db.runSQL("create index IX_TEST on Lock_ (createDate)");
 
-		PropsUtil.set("upgrade.database.auto.run", "false");
+		String upgradeDatabaseAutoRun = PropsUtil.get(
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 
-		DBUpgrader.upgradeModules(false);
+		try {
+			PropsUtil.set("upgrade.database.auto.run", "false");
 
-		DBInspector dbInspector = new DBInspector(_connection);
+			DBUpgrader.upgradeModules(false);
 
-		Assert.assertTrue(dbInspector.hasIndex("Lock_", "IX_TEST"));
+			DBInspector dbInspector = new DBInspector(_connection);
 
-		PropsUtil.set("upgrade.database.auto.run", "true");
+			Assert.assertTrue(dbInspector.hasIndex("Lock_", "IX_TEST"));
 
-		DBUpgrader.upgradeModules(false);
+			PropsUtil.set("upgrade.database.auto.run", "true");
 
-		Assert.assertFalse(dbInspector.hasIndex("Lock_", "IX_TEST"));
+			DBUpgrader.upgradeModules(false);
+
+			Assert.assertFalse(dbInspector.hasIndex("Lock_", "IX_TEST"));
+		}
+		finally {
+			PropsUtil.set(
+				PropsKeys.UPGRADE_DATABASE_AUTO_RUN, upgradeDatabaseAutoRun);
+		}
 	}
 
 	@Test

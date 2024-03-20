@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.ReleaseManager;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
@@ -103,33 +104,43 @@ public class ReleaseManagerTest {
 			boolean autorun, String status)
 		throws Exception {
 
-		PropsUtil.set("upgrade.database.auto.run", String.valueOf(autorun));
-
-		Bundle bundle = FrameworkUtil.getBundle(ReleaseManagerTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_serviceRegistration = bundleContext.registerService(
-			UpgradeStepRegistrator.class,
-			new ReleaseManagerTest.TestUpgradeStepRegistrator(), null);
-
-		Release release = _releaseLocalService.fetchRelease(
-			bundle.getSymbolicName());
+		String upgradeDatabaseAutoRun = PropsUtil.get(
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 
 		try {
-			release.setSchemaVersion("0.0.0");
+			PropsUtil.set(
+				PropsKeys.UPGRADE_DATABASE_AUTO_RUN, String.valueOf(autorun));
 
-			release = _releaseLocalService.updateRelease(release);
+			Bundle bundle = FrameworkUtil.getBundle(ReleaseManagerTest.class);
 
-			Assert.assertEquals(status, _releaseManager.getStatus());
-			Assert.assertFalse(
-				Validator.isBlank(
-					_releaseManager.getShortStatusMessage(false)));
-			Assert.assertFalse(
-				Validator.isBlank(_releaseManager.getStatusMessage(false)));
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			_serviceRegistration = bundleContext.registerService(
+				UpgradeStepRegistrator.class,
+				new ReleaseManagerTest.TestUpgradeStepRegistrator(), null);
+
+			Release release = _releaseLocalService.fetchRelease(
+				bundle.getSymbolicName());
+
+			try {
+				release.setSchemaVersion("0.0.0");
+
+				release = _releaseLocalService.updateRelease(release);
+
+				Assert.assertEquals(status, _releaseManager.getStatus());
+				Assert.assertFalse(
+					Validator.isBlank(
+						_releaseManager.getShortStatusMessage(false)));
+				Assert.assertFalse(
+					Validator.isBlank(_releaseManager.getStatusMessage(false)));
+			}
+			finally {
+				_releaseLocalService.deleteRelease(release);
+			}
 		}
 		finally {
-			_releaseLocalService.deleteRelease(release);
+			PropsUtil.set(
+				PropsKeys.UPGRADE_DATABASE_AUTO_RUN, upgradeDatabaseAutoRun);
 		}
 	}
 

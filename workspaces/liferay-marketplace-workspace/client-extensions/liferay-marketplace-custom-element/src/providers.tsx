@@ -1,0 +1,38 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ClayIconSpriteContext} from '@clayui/icon';
+import React, {ReactNode} from 'react';
+import {SWRConfig} from 'swr';
+
+import MarketplaceContextProvider from './context/MarketplaceContext';
+import {getIconSpriteMap} from './liferay/constants';
+import {AppContextProvider} from './manage-app-state/AppManageState';
+import SWRCacheProvider from './services/SWRCacheProvider';
+
+type ProviderProps = {
+	children: ReactNode;
+	properties: DefaultProperties;
+};
+
+const Providers: React.FC<ProviderProps> = ({children, properties}) => (
+	<SWRConfig
+		value={{
+			provider: SWRCacheProvider,
+			revalidateIfStale: true,
+			revalidateOnFocus: false,
+		}}
+	>
+		<MarketplaceContextProvider properties={properties}>
+			<AppContextProvider>
+				<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+					{children}
+				</ClayIconSpriteContext.Provider>
+			</AppContextProvider>
+		</MarketplaceContextProvider>
+	</SWRConfig>
+);
+
+export default Providers;

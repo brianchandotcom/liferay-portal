@@ -27,9 +27,7 @@ export class PagesAdminPage {
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.page.locator(
-				'a:text("Configuration"):near(:text("Import"))'
-			),
+			target: this.page.getByRole('menuitem', {name: 'Configuration'}),
 			trigger: this.page.getByTestId('headerOptions'),
 		});
 	}
@@ -43,17 +41,17 @@ export class PagesAdminPage {
 			)
 			.click();
 
-		const iframe = this.page.locator('#selectThemeCSSClientExtension_iframe_');
-
-		await iframe.waitFor(
-			{
-				state: 'visible',
-			}
+		const iframe = this.page.locator(
+			'#selectThemeCSSClientExtension_iframe_'
 		);
+
+		await iframe.waitFor({
+			state: 'visible',
+		});
 
 		const clientExtension = this.page
 			.frameLocator('#selectThemeCSSClientExtension_iframe_')
-			.getByRole('paragraph')
+			.getByTestId('rowItemContent')
 			.filter({hasText: clientExtensionName});
 
 		await clickAndExpectToBeHidden({

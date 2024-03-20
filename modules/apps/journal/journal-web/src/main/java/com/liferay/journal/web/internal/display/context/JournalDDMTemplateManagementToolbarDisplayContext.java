@@ -10,6 +10,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -112,32 +113,27 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							liferayPortletResponse.createRenderURL(), "mvcPath",
-							"/edit_ddm_template.jsp", "redirect",
-							themeDisplay.getURLCurrent(), "classPK",
-							_journalDDMTemplateDisplayContext.getClassPK());
-						dropdownItem.setLabel(
-							LanguageUtil.format(
-								httpServletRequest, "add-x",
-								StringBundler.concat(
-									LanguageUtil.get(
-										httpServletRequest,
-										TemplateConstants.LANG_TYPE_FTL +
-											"[stands-for]"),
-									StringPool.SPACE,
-									StringPool.OPEN_PARENTHESIS,
-									StringPool.PERIOD,
-									TemplateConstants.LANG_TYPE_FTL,
-									StringPool.CLOSE_PARENTHESIS),
-								false));
-					});
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					liferayPortletResponse.createRenderURL(), "mvcPath",
+					"/edit_ddm_template.jsp", "redirect",
+					themeDisplay.getURLCurrent(), "classPK",
+					_journalDDMTemplateDisplayContext.getClassPK());
+				dropdownItem.setLabel(
+					LanguageUtil.format(
+						httpServletRequest, "add-x",
+						StringBundler.concat(
+							LanguageUtil.get(
+								httpServletRequest,
+								TemplateConstants.LANG_TYPE_FTL +
+									"[stands-for]"),
+							StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+							StringPool.PERIOD, TemplateConstants.LANG_TYPE_FTL,
+							StringPool.CLOSE_PARENTHESIS),
+						false));
 			}
-		};
+		).build();
 	}
 
 	@Override

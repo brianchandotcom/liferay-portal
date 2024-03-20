@@ -16,6 +16,7 @@ import javax.portlet.ResourceRequest;
  */
 public interface GroovyScriptUsesFactory {
 
-	public List<GroovyScriptUse> create(ResourceRequest resourceRequest);
+	public List<GroovyScriptUse> create(ResourceRequest resourceRequest)
+		throws Exception;
 
 }

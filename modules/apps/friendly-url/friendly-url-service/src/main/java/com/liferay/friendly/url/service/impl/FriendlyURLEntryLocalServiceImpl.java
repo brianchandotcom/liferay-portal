@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -215,17 +216,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		// Asset
 
-		try {
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				FriendlyURLEntry.class.getName(), friendlyURLEntryId);
-
-			if (assetEntry != null) {
-				_assetEntryLocalService.deleteEntry(assetEntry.getEntryId());
-			}
-		}
-		catch (PortalException portalException) {
-			return ReflectionUtil.throwException(portalException);
-		}
+		_deleteAssetEntry(FriendlyURLEntry.class.getName(), friendlyURLEntryId);
 
 		return deletedFriendlyURLEntry;
 	}
@@ -270,17 +261,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		// Asset
 
-		try {
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				classNameId, classPK);
-
-			if (assetEntry != null) {
-				_assetEntryLocalService.deleteEntry(assetEntry.getEntryId());
-			}
-		}
-		catch (PortalException portalException) {
-			ReflectionUtil.throwException(portalException);
-		}
+		_deleteAssetEntry(_portal.getClassName(classNameId), classPK);
 	}
 
 	@Override
@@ -311,17 +292,7 @@ public class FriendlyURLEntryLocalServiceImpl
 
 		// Asset
 
-		try {
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				FriendlyURLEntry.class.getName(), friendlyURLEntryId);
-
-			if (assetEntry != null) {
-				_assetEntryLocalService.deleteEntry(assetEntry.getEntryId());
-			}
-		}
-		catch (PortalException portalException) {
-			ReflectionUtil.throwException(portalException);
-		}
+		_deleteAssetEntry(FriendlyURLEntry.class.getName(), friendlyURLEntryId);
 	}
 
 	@Override
@@ -358,18 +329,9 @@ public class FriendlyURLEntryLocalServiceImpl
 
 				// Asset
 
-				try {
-					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-						classNameId, friendlyURLEntry.getFriendlyURLEntryId());
-
-					if (assetEntry != null) {
-						_assetEntryLocalService.deleteEntry(
-							assetEntry.getEntryId());
-					}
-				}
-				catch (PortalException portalException) {
-					ReflectionUtil.throwException(portalException);
-				}
+				_deleteAssetEntry(
+					_portal.getClassName(classNameId),
+					friendlyURLEntry.getFriendlyURLEntryId());
 			});
 
 		try {
@@ -713,6 +675,22 @@ public class FriendlyURLEntryLocalServiceImpl
 		return true;
 	}
 
+	private void _deleteAssetEntry(String className, long classPK) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			className, classPK);
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		try {
+			_assetEntryLocalService.deleteEntry(assetEntry.getEntryId());
+		}
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
+		}
+	}
+
 	private String _getURLEncodedSubstring(
 		String decodedString, String encodedString, int maxLength) {
 
@@ -940,5 +918,8 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

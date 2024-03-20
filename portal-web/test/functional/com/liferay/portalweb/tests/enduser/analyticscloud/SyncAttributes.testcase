@@ -21,43 +21,16 @@ definition {
 			ACUtils.launchDXP();
 		}
 
-		task ("Create DXP Site with Commerce") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-		}
-
-		task ("Connect Commerce and AC") {
+		task ("Connect AC to DXP") {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
 
-		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Portal";
-			var siteName = "Minium";
-
-			ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Enable commerce and sync the commerce channel and the related site") {
-			ACDXPSettings.syncChannel(
-				channelName = ${channelName},
-				propertyName = ${assignedPropertyName});
-
-			ACDXPSettings.syncSites(
-				propertyName = ${assignedPropertyName},
-				siteName = ${siteName});
-		}
-
-		task ("Go to the next page to configure people data") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Click on sync all contacts and accounts") {
-			ACDXPSettings.syncContactsAndAccountstData();
-		}
-
-		task ("Go to the next page to configure attributes") {
-			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		task ("Go to the Attributes step in the wizard") {
+			for (var n : list "1,2") {
+				Click(
+					key_text = "Next",
+					locator1 = "Button#ANY");
+			}
 		}
 	}
 

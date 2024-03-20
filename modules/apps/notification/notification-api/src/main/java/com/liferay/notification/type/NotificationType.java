@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.User;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -27,6 +28,14 @@ public interface NotificationType {
 	public List<NotificationRecipientSetting>
 		createNotificationRecipientSettings(
 			long notificationRecipientId, Object[] recipients, User user);
+
+	public default Map<String, String> evaluateNotificationRecipientSettings(
+			long companyId, NotificationContext notificationContext,
+			Map<String, Object> notificationRecipientSettings)
+		throws PortalException {
+
+		return Collections.emptyMap();
+	}
 
 	public default Set<String> getAllowedNotificationRecipientSettingsNames() {
 		return Collections.emptySet();

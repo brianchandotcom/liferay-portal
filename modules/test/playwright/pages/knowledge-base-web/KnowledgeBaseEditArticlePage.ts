@@ -6,6 +6,7 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {KnowledgeBasePage} from './KnowledgeBasePage';
 
 export class KnowledgeBaseEditArticlePage {
@@ -61,9 +62,10 @@ export class KnowledgeBaseEditArticlePage {
 			trigger: this.publishButton,
 		});
 
-		await this.page
-			.getByText(`Success:${title} was successfully published.`)
-			.waitFor();
+		await waitForSuccessAlert(
+			this.page,
+			`Success:${title} was successfully published.`
+		);
 	}
 
 	async scheduleNewKnowledgeBaseArticle(

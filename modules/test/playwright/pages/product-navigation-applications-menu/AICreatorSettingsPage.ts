@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {ApplicationsMenuPage} from './ApplicationsMenuPage';
 
 const MOCK_API_KEY = 'VALID_API_KEY';
@@ -38,9 +39,7 @@ export class AICreatorInstanceSettingsPage {
 		await this.dalleCheckbox.check();
 		await this.saveButton.click();
 
-		await this.page
-			.getByText('Success:Your request completed successfully.')
-			.waitFor();
+		await waitForSuccessAlert(this.page);
 
 		await this.page.waitForLoadState();
 	}
@@ -51,9 +50,7 @@ export class AICreatorInstanceSettingsPage {
 		await this.dalleCheckbox.uncheck();
 		await this.saveButton.click();
 
-		await this.page
-			.getByText('Success:Your request completed successfully.')
-			.waitFor();
+		await waitForSuccessAlert(this.page);
 
 		await this.page.waitForLoadState();
 	}

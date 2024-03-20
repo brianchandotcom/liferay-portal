@@ -3,21 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 
 export class FragmentsPage {
 	readonly page: Page;
 
-	readonly successMessage: Locator;
-
 	constructor(page: Page) {
 		this.page = page;
-
-		this.successMessage = this.page.getByText(
-			'Success:Your request completed successfully.'
-		);
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -33,7 +28,7 @@ export class FragmentsPage {
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
-		await this.successMessage.waitFor();
+		await waitForSuccessAlert(this.page);
 	}
 
 	async createFragment(setName: string, name: string) {
@@ -53,6 +48,6 @@ export class FragmentsPage {
 
 		await this.page.getByText('Add', {exact: true}).click();
 
-		await this.successMessage.waitFor();
+		await waitForSuccessAlert(this.page);
 	}
 }

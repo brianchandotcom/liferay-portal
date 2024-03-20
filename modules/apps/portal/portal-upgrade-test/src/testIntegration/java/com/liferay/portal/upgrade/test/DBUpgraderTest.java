@@ -46,21 +46,15 @@ public class DBUpgraderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		try (Connection connection = DataAccess.getConnection()) {
-			_currentBuildNumber = PortalUpgradeProcess.getCurrentBuildNumber(
-				connection);
+		_connection = DataAccess.getConnection();
 
-			_currentState = PortalUpgradeProcess.getCurrentState(connection);
-		}
+		_currentBuildNumber = PortalUpgradeProcess.getCurrentBuildNumber(
+			_connection);
+
+		_currentState = PortalUpgradeProcess.getCurrentState(_connection);
 
 		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
 			StartupHelperUtil.class, "_upgrading", true);
-
-		_connection = DataAccess.getConnection();
-
-		_db = DBManagerUtil.getDB();
-
-		_dbInspector = new DBInspector(_connection);
 	}
 
 	@AfterClass
@@ -86,19 +80,23 @@ public class DBUpgraderTest {
 
 	@Test
 	public void testUpgradeModuleIndexes() throws Exception {
-		_db.runSQL("create index IX_TEST on Lock_ (createDate)");
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL("create index IX_TEST on Lock_ (createDate)");
 
 		PropsUtil.set("upgrade.database.auto.run", "false");
 
 		DBUpgrader.upgradeModules(false);
 
-		Assert.assertTrue(_dbInspector.hasIndex("Lock_", "IX_TEST"));
+		DBInspector dbInspector = new DBInspector(_connection);
+
+		Assert.assertTrue(dbInspector.hasIndex("Lock_", "IX_TEST"));
 
 		PropsUtil.set("upgrade.database.auto.run", "true");
 
 		DBUpgrader.upgradeModules(false);
 
-		Assert.assertFalse(_dbInspector.hasIndex("Lock_", "IX_TEST"));
+		Assert.assertFalse(dbInspector.hasIndex("Lock_", "IX_TEST"));
 	}
 
 	@Test
@@ -149,8 +147,6 @@ public class DBUpgraderTest {
 	private static Connection _connection;
 	private static int _currentBuildNumber;
 	private static int _currentState;
-	private static DB _db;
-	private static DBInspector _dbInspector;
 	private static boolean _upgrading;
 
 }

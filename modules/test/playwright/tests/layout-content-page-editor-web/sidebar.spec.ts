@@ -23,7 +23,7 @@ export const test = mergeTests(
 	pageEditorPagesTest
 );
 
-const PANELS = [
+const PANELS: SidebarTab[] = [
 	'Fragments and Widgets',
 	'Browser',
 	'Page Design Options',

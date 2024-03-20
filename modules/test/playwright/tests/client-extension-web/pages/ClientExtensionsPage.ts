@@ -8,32 +8,51 @@ import {Locator, Page} from '@playwright/test';
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ClientExtensionsPage {
+	readonly addThemeCSSMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly deleteMenuItem: Locator;
+	readonly editMenuItem: Locator;
 	readonly editorConfigContributorMenuItem: Locator;
-	readonly itemDeleteButton: Locator;
-	readonly itemEditButton: Locator;
 	readonly newClientExtensionButton: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.addThemeCSSMenuItem = page.getByRole('menuitem', {
+			name: 'Add Theme CSS',
+		});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-
+		this.deleteMenuItem = page.getByRole('menuitem', {
+			name: 'Delete',
+		});
+		this.editMenuItem = page.getByRole('menuitem', {
+			name: 'Edit',
+		});
 		this.editorConfigContributorMenuItem = page.getByRole('menuitem', {
 			name: 'Add Editor Config Contributor',
 		});
-
-		this.itemDeleteButton = page.getByRole('menuitem', {
-			name: 'Delete',
-		});
-		this.itemEditButton = page.getByRole('menuitem', {
-			name: 'Edit',
-		});
-
 		this.newClientExtensionButton = page
 			.getByRole('button')
 			.and(page.getByTitle('New'));
-
 		this.page = page;
+	}
+
+	async deleteClientExtension(clientExtensionName: string) {
+		await this.goto();
+
+		await this.page
+			.getByRole('search')
+			.locator('[placeholder="Search"]')
+			.fill(clientExtensionName);
+
+		await this.page.keyboard.press('Enter');
+
+		await this.page.waitForLoadState('domcontentloaded');
+
+		await this.page.getByRole('button', {name: 'Actions'}).click();
+
+		this.page.on('dialog', (dialog) => dialog.accept());
+
+		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
 	}
 
 	async goto() {

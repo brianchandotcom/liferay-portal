@@ -33,6 +33,13 @@ const marketoCallback = function (form) {
 	if (buttonElem) {
 		buttonElem.html(Liferay.Language.get(configuration.submitButtonText));
 	}
+
+	Liferay.on(`submit-marketo-form/${configuration.formId}`, (event) => {
+		const formData = event.details[0];
+
+		form.vals(formData);
+		form.submit();
+	});
 };
 
 MktoForms2.loadForm(

@@ -12,6 +12,7 @@ liferay-marketplace-custom-element:
     properties:
         cloudBaseURL: https://console.liferay.cloud
         eulaBaseURL: https://www.liferay.com/legal/marketplace-terms-of-service
+        marketoFormId: 3738
     type: customElement
     urls:
         - "*.js"

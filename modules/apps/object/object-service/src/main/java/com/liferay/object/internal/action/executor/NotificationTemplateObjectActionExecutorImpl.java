@@ -106,6 +106,9 @@ public class NotificationTemplateObjectActionExecutorImpl
 		Map<String, Object> termValues = (Map<String, Object>)variables.get(
 			"baseModel");
 
+		termValues.put(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId());
+
 		for (ObjectField objectField :
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId())) {

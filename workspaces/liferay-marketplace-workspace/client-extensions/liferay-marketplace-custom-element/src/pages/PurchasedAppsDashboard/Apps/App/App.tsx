@@ -13,6 +13,7 @@ import {ReactNode} from 'react';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import i18n from '../../../../i18n';
 import formatLocaleCurrency from '../../../../utils/formatLocaleCurrency';
+import {safeJSONParse} from '../../../../utils/util';
 import getProductPriceModel from '../../../GetApp/utils/getProductPriceModel';
 import {formatDate} from '../../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
@@ -94,8 +95,9 @@ const App = () => {
 						<div className="col-8">
 							{placedOrder.placedOrderItems.map(
 								(order: PlacedOrderItems) => {
-									const optionName = JSON.parse(
-										order.options
+									const optionName = safeJSONParse(
+										order.options,
+										[]
 									);
 
 									return (

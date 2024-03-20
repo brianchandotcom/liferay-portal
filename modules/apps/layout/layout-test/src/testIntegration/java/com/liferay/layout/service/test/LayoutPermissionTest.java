@@ -6,7 +6,10 @@
 package com.liferay.layout.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -42,10 +45,12 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -66,6 +71,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Lourdes Fernández Besada
  */
+@FeatureFlags("LPD-11070")
 @RunWith(Arquillian.class)
 public class LayoutPermissionTest {
 
@@ -79,6 +85,149 @@ public class LayoutPermissionTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionOnAssetDisplayLayoutWithPreviewDraftPermission()
+		throws Exception {
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.PREVIEW_DRAFT),
+				_addDisplayPageTemplateLayout()));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionOnAssetDisplayLayoutWithRestrictedUpdatePermission()
+		throws Exception {
+
+		Layout layout = _addDisplayPageTemplateLayout();
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_BASIC), layout));
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_CONTENT),
+				layout));
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_LIMITED),
+				layout));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionOnAssetDisplayLayoutWithUpdatePermission()
+		throws Exception {
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE),
+				_addDisplayPageTemplateLayout()));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionOnAssetDisplayLayoutWithViewPermission()
+		throws Exception {
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.VIEW),
+				_addDisplayPageTemplateLayout()));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionOnPortletTypeLayoutWithPreviewDraftPermission()
+		throws Exception {
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.PREVIEW_DRAFT),
+				LayoutTestUtil.addTypePortletLayout(_group)));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionOnPortletTypeLayoutWithRestrictedUpdatePermission()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_BASIC), layout));
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_CONTENT),
+				layout));
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_LIMITED),
+				layout));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionOnPortletTypeLayoutWithUpdatePermission()
+		throws Exception {
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE),
+				LayoutTestUtil.addTypePortletLayout(_group)));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionWithPreviewDraftPermission()
+		throws Exception {
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.PREVIEW_DRAFT),
+				LayoutTestUtil.addTypeContentLayout(_group)));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionWithRestrictedUpdatePermission()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_BASIC), layout));
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_CONTENT),
+				layout));
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_LIMITED),
+				layout));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionWithUpdatePermission()
+		throws Exception {
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.UPDATE),
+				LayoutTestUtil.addTypeContentLayout(_group)));
+	}
+
+	@Test
+	public void testContainsPreviewDraftPermissionWithViewPermission()
+		throws Exception {
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(ActionKeys.VIEW),
+				LayoutTestUtil.addTypeContentLayout(_group)));
 	}
 
 	@Test
@@ -273,6 +422,30 @@ public class LayoutPermissionTest {
 		}
 	}
 
+	private Layout _addDisplayPageTemplateLayout() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				_group.getGroupId(), 0,
+				_portal.getClassNameId(AssetCategory.class.getName()), 0,
+				RandomTestUtil.randomString(), 0,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		return _layoutLocalService.getLayout(layout.getPlid());
+	}
+
 	private Layout _addTypeContentLayout(boolean publish) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -414,7 +587,13 @@ public class LayoutPermissionTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Inject
 	private LayoutPermission _layoutPermission;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

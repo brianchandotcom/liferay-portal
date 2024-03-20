@@ -24,15 +24,15 @@
 
 	[#if (claim.mdfClmToMDFClmDocs?has_content)!false]
 		[#list claim.mdfClmToMDFClmDocs as document]
-		<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.file.link.href}">
-			<span class="mr-2 text-neutral-5">
-				[@clay.icon symbol="document-default" /]
-			</span>
+			<a class="align-items-end card-interactive d-flex mb-1 p-3 panel panel-secondary text-decoration-none" href="${document.file.link.href}">
+				<span class="mr-2 text-neutral-5">
+					[@clay.icon symbol="document-default" /]
+				</span>
 
-			<div class="text-neutral-9">
-				${document.file.name?keep_before("#")}
-			</div>
-		</a>
+				<div class="text-neutral-9">
+					${document.file.name?keep_before("#")}
+				</div>
+			</a>
 		[/#list]
 	[/#if]
 [#else]

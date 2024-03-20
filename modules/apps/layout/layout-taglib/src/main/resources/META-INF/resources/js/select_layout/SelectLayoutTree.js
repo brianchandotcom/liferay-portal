@@ -574,9 +574,7 @@ function SearchResult({filter, layout, multiSelection, onSelect, selection}) {
 
 			{multiSelection ? (
 				<span className="font-weight-semi-bold p-0">
-					{Liferay.FeatureFlags['LPD-15607']
-						? getMarkedText()
-						: layout.name}
+					{getMarkedText()}
 				</span>
 			) : (
 				<ClayButton
@@ -585,9 +583,7 @@ function SearchResult({filter, layout, multiSelection, onSelect, selection}) {
 					displayType="unstyled"
 					onClick={() => onSelect(layout)}
 				>
-					{Liferay.FeatureFlags['LPD-15607']
-						? getMarkedText()
-						: layout.name}
+					{getMarkedText()}
 				</ClayButton>
 			)}
 		</div>
@@ -609,7 +605,7 @@ function findLayouts(
 			[`groupId`]: groupId,
 			[`itemSelectorReturnType`]: itemSelectorReturnType,
 			[`keywords`]: keywords,
-			[`searchOnlyByTitle`]: Liferay.FeatureFlags['LPD-15607'],
+			[`searchOnlyByTitle`]: true,
 			[`start`]: start,
 		}),
 		method: 'post',

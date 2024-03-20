@@ -29,26 +29,28 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 
 	<clay:content-col>
 		<span class="heading-end">
-			<clay:link
-				aria-label='<%= LanguageUtil.format(request, "add-x", "websites") %>'
-				cssClass="add-website-link btn btn-secondary btn-sm"
-				displayType="null"
-				href='<%=
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setMVCPath(
-						"/account_entries_admin/account_entry/account_contact/edit_website.jsp"
-					).setRedirect(
-						currentURL
-					).setParameter(
-						"className", className
-					).setParameter(
-						"classPK", classPK
-					).buildString()
-				%>'
-				label="add"
-				role="button"
-			/>
+			<c:if test="<%= AccountEntryPermission.contains(permissionChecker, classPK, AccountActionKeys.MANAGE_ADDRESSES) %>">
+				<clay:link
+					aria-label='<%= LanguageUtil.format(request, "add-x", "websites") %>'
+					cssClass="add-website-link btn btn-secondary btn-sm"
+					displayType="null"
+					href='<%=
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCPath(
+							"/account_entries_admin/account_entry/account_contact/edit_website.jsp"
+						).setRedirect(
+							currentURL
+						).setParameter(
+							"className", className
+						).setParameter(
+							"classPK", classPK
+						).buildString()
+					%>'
+					label="add"
+					role="button"
+				/>
+			</c:if>
 		</span>
 	</clay:content-col>
 </clay:content-row>
@@ -102,10 +104,12 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 			</c:if>
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/account_entries_admin/account_entry/account_contact/website_action.jsp"
-		/>
+		<c:if test="<%= AccountEntryPermission.contains(permissionChecker, classPK, AccountActionKeys.MANAGE_ADDRESSES) %>">
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/account_entries_admin/account_entry/account_contact/website_action.jsp"
+			/>
+		</c:if>
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator

@@ -100,6 +100,7 @@ page import="com.liferay.portal.kernel.exception.PhoneNumberExtensionException" 
 page import="com.liferay.portal.kernel.exception.RoleNameException" %><%@
 page import="com.liferay.portal.kernel.exception.UserEmailAddressException" %><%@
 page import="com.liferay.portal.kernel.exception.UserScreenNameException" %><%@
+page import="com.liferay.portal.kernel.exception.WebsiteURLException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Address" %><%@
 page import="com.liferay.portal.kernel.model.Contact" %><%@

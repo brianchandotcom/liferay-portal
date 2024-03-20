@@ -8,12 +8,14 @@ package com.liferay.account.admin.web.internal.portlet.action;
 import com.liferay.account.admin.web.internal.manager.ContactInfoManager;
 import com.liferay.account.admin.web.internal.manager.EmailAddressContactInfoManager;
 import com.liferay.account.admin.web.internal.manager.PhoneContactInfoManager;
+import com.liferay.account.admin.web.internal.manager.WebsiteContactInfoManager;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
+import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -22,6 +24,8 @@ import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.PhoneService;
+import com.liferay.portal.kernel.service.WebsiteLocalService;
+import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -74,7 +78,8 @@ public class UpdateContactInformationMVCActionCommand
 			}
 			else if (exception instanceof EmailAddressException ||
 					 exception instanceof PhoneNumberException ||
-					 exception instanceof PhoneNumberExtensionException) {
+					 exception instanceof PhoneNumberExtensionException ||
+					 exception instanceof WebsiteURLException) {
 
 				SessionErrors.add(
 					actionRequest, exception.getClass(), exception);
@@ -107,6 +112,10 @@ public class UpdateContactInformationMVCActionCommand
 		else if (listType.equals(ListTypeConstants.PHONE)) {
 			return new PhoneContactInfoManager(
 				className, classPK, _phoneLocalService, _phoneService);
+		}
+		else if (listType.equals(ListTypeConstants.WEBSITE)) {
+			return new WebsiteContactInfoManager(
+				className, classPK, _websiteLocalService, _websiteService);
 		}
 
 		return null;
@@ -154,5 +163,11 @@ public class UpdateContactInformationMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private WebsiteLocalService _websiteLocalService;
+
+	@Reference
+	private WebsiteService _websiteService;
 
 }

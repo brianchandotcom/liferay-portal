@@ -73,6 +73,12 @@ public class BuildJSONObject extends JSONObject {
 	}
 
 	public long getStartTime() {
+		String jobName = getJobName();
+
+		if (jobName.equals("maintenance-daily")) {
+			return optLong("startTime") + optLong("queueDuration");
+		}
+
 		return optLong("startTime");
 	}
 

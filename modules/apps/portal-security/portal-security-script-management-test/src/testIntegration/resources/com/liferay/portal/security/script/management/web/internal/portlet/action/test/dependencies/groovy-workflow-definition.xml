@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>Workflow Definition 2</name>
+	<version>1</version>
+	<state>
+		<name>eb0b45b3-be9f-4159-86db-77138355a206</name>
+		<description>Begin a workflow.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						295,
+						-14
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">Start</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">Transition Label</label>
+				</labels>
+				<name>1c185ec9-ed64-4cad-ac58-2c3b3bcd43bf</name>
+				<target>5dd87399-678f-434c-bed7-29e8749f449b</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>04ad5c21-6503-4d92-84e9-80e0376bd6c0</name>
+		<description>Conclude the workflow.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						296,
+						400
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">End</label>
+		</labels>
+	</state>
+	<task>
+		<name>5dd87399-678f-434c-bed7-29e8749f449b</name>
+		<description>Ask a user to work on the item.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						294.8333435058594,
+						202
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Action 1</name>
+				<description></description>
+				<script>
+					<![CDATA[System.out.println("Action 1");
+]]>
+				</script>
+				<script-language>groovy</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<assignments>
+			<user></user>
+		</assignments>
+		<labels>
+			<label language-id="en_US">Task</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">Transition Label</label>
+				</labels>
+				<name>912cd659-65f1-4a2b-b7d3-fcf674edf12d</name>
+				<target>04ad5c21-6503-4d92-84e9-80e0376bd6c0</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>

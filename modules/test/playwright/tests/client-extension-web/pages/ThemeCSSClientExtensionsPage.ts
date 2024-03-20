@@ -11,6 +11,7 @@ import {ClientExtensionsPage} from './ClientExtensionsPage';
 export class ThemeCSSClientExtensionsPage {
 	readonly clientExtensionsPage: ClientExtensionsPage;
 	readonly editClientExtensionSubmitButton: Locator;
+	readonly nameInput: Locator;
 	readonly page: Page;
 	readonly themeCSSFrontendTokenDefinitionSelectFileButton: Locator;
 
@@ -19,6 +20,7 @@ export class ThemeCSSClientExtensionsPage {
 		this.editClientExtensionSubmitButton = page.getByRole('button', {
 			name: 'Publish',
 		});
+		this.nameInput = page.getByLabel('Name');
 		this.page = page;
 		this.themeCSSFrontendTokenDefinitionSelectFileButton = page
 			.getByRole('button', {exact: true, name: 'Select File'})

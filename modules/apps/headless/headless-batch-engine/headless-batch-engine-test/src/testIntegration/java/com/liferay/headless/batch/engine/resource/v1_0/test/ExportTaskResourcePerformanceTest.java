@@ -24,7 +24,6 @@ import com.liferay.portal.test.rule.Inject;
 import java.io.Closeable;
 import java.io.InputStream;
 
-import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
@@ -78,10 +77,14 @@ public class ExportTaskResourcePerformanceTest
 			_log.info("ClassName: " + className);
 		}
 
+		HttpInvoker httpInvoker = null;
+
+		String externalReferenceCode = null;
+
 		Map<String, String> classNamePartsMap = splitClassName(className);
 
-		try (Closeable closeable = startTimer(_log)) {
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+		try (Closeable closeable = startTimer(_log, "export_items")) {
+			httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(
 				HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
@@ -108,8 +111,7 @@ public class ExportTaskResourcePerformanceTest
 			ExportTask exportTask = ExportTaskSerDes.toDTO(
 				response.getContent());
 
-			String externalReferenceCode =
-				exportTask.getExternalReferenceCode();
+			externalReferenceCode = exportTask.getExternalReferenceCode();
 
 			while (true) {
 				exportTask = ExportTaskSerDes.toDTO(
@@ -129,14 +131,9 @@ public class ExportTaskResourcePerformanceTest
 					throw new AssertionError(exportTask.getErrorMessage());
 				}
 			}
+		}
 
-			Date endTime = exportTask.getEndTime();
-			Date startTime = exportTask.getStartTime();
-
-			_log.info(
-				"Export task duration: " +
-					(endTime.getTime() - startTime.getTime()) + " ms");
-
+		try (Closeable closeable = startTimer(_log, "download")) {
 			httpInvoker = HttpInvoker.newHttpInvoker();
 
 			httpInvoker.header(

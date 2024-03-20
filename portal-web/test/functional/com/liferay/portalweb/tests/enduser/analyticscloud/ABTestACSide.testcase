@@ -80,12 +80,8 @@ definition {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Delete");
 		}
 
-		task ("Get site assigned property name and get data source name") {
-			var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
-		}
-
 		task ("Click on the new tab open and delete the created AB test") {
-			SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
+			SelectWindow(value1 = "name=undefined");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Modal#MODAL_CONTENT",
@@ -130,13 +126,9 @@ definition {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Review");
 		}
 
-		task ("Get site assigned property name and get data source name") {
-			var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
-		}
-
 		task ("See the redirection to the review and run test modal in DXP") {
 			task ("Go to the new tab open") {
-				SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
+				SelectWindow(value1 = "name=undefined");
 			}
 
 			task ("Assert the review and run modal is open") {

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
@@ -76,16 +77,17 @@ public class ExternalDataSourceControllerTest {
 		_apiBundle.start();
 
 		String originalUpgradeDatabaseAutoRun = PropsUtil.get(
-			"upgrade.database.auto.run");
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 
 		try {
-			PropsUtil.set("upgrade.database.auto.run", "true");
+			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 
 			_serviceBundle.start();
 		}
 		finally {
 			PropsUtil.set(
-				"upgrade.database.auto.run", originalUpgradeDatabaseAutoRun);
+				PropsKeys.UPGRADE_DATABASE_AUTO_RUN,
+				originalUpgradeDatabaseAutoRun);
 		}
 	}
 

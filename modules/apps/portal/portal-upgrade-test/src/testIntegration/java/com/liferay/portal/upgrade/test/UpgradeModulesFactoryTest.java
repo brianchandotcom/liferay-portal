@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -47,15 +48,16 @@ public class UpgradeModulesFactoryTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
-			"upgrade.database.auto.run");
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 
-		PropsUtil.set("upgrade.database.auto.run", "true");
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		PropsUtil.set(
-			"upgrade.database.auto.run", _originalUpgradeDatabaseAutoRun);
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN,
+			_originalUpgradeDatabaseAutoRun);
 	}
 
 	@After

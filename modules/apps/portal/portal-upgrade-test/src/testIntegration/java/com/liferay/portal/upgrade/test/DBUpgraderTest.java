@@ -89,7 +89,7 @@ public class DBUpgraderTest {
 			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 
 		try {
-			PropsUtil.set("upgrade.database.auto.run", "false");
+			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
 
 			DBUpgrader.upgradeModules(false);
 
@@ -97,7 +97,7 @@ public class DBUpgraderTest {
 
 			Assert.assertTrue(dbInspector.hasIndex("Lock_", "IX_TEST"));
 
-			PropsUtil.set("upgrade.database.auto.run", "true");
+			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 
 			DBUpgrader.upgradeModules(false);
 

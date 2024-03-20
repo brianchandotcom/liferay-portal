@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -42,15 +43,16 @@ public class UpgradeRegistryTest {
 	@Before
 	public void setUp() throws Exception {
 		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
-			"upgrade.database.auto.run");
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 
-		PropsUtil.set("upgrade.database.auto.run", "true");
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		PropsUtil.set(
-			"upgrade.database.auto.run", _originalUpgradeDatabaseAutoRun);
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN,
+			_originalUpgradeDatabaseAutoRun);
 
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();

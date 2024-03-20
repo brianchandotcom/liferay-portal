@@ -8,6 +8,7 @@ package com.liferay.portal.upgrade.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
@@ -47,13 +48,14 @@ public class UpgradeManagerTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
-			"upgrade.database.auto.run");
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		PropsUtil.set(
-			"upgrade.database.auto.run", _originalUpgradeDatabaseAutoRun);
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN,
+			_originalUpgradeDatabaseAutoRun);
 	}
 
 	@After
@@ -144,7 +146,7 @@ public class UpgradeManagerTest {
 		promise.getValue();
 
 		PropsUtil.set(
-			"upgrade.database.auto.run",
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN,
 			String.valueOf(upgradeDatabaseAutoRun));
 
 		promise = _serviceComponentRuntime.enableComponent(

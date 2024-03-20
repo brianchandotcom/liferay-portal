@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -43,13 +44,14 @@ public class AutoUpgradeProcessTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_originalUpgradeDatabaseAutoRun = PropsUtil.get(
-			"upgrade.database.auto.run");
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		PropsUtil.set(
-			"upgrade.database.auto.run", _originalUpgradeDatabaseAutoRun);
+			PropsKeys.UPGRADE_DATABASE_AUTO_RUN,
+			_originalUpgradeDatabaseAutoRun);
 
 		_upgradeProcessRun = false;
 
@@ -67,7 +69,7 @@ public class AutoUpgradeProcessTest {
 
 	@Test
 	public void testInitializationWhenAutoUpgradeDisabled() throws Exception {
-		PropsUtil.set("upgrade.database.auto.run", "false");
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
 
 		Assert.assertEquals(
 			"2.0.0", _registerNewUpgradeProcess().getSchemaVersion());
@@ -83,7 +85,7 @@ public class AutoUpgradeProcessTest {
 			_upgradeExecutor, "_portalUpgraded", false);
 
 		try {
-			PropsUtil.set("upgrade.database.auto.run", "false");
+			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
 
 			Assert.assertNull(_registerNewUpgradeProcess());
 		}
@@ -99,7 +101,7 @@ public class AutoUpgradeProcessTest {
 
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
-		PropsUtil.set("upgrade.database.auto.run", "false");
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
 
 		Assert.assertEquals(
 			"1.0.0", _registerNewUpgradeProcess().getSchemaVersion());
@@ -111,7 +113,7 @@ public class AutoUpgradeProcessTest {
 	public void testUpgradeProcessWhenAutoUpgradeEnabled() throws Exception {
 		_releaseLocalService.addRelease(_SERVLET_CONTEXT_NAME, "1.0.0");
 
-		PropsUtil.set("upgrade.database.auto.run", "true");
+		PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 
 		Assert.assertEquals(
 			"2.0.0", _registerNewUpgradeProcess().getSchemaVersion());

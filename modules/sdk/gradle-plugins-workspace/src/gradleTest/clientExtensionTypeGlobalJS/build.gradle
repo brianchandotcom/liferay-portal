@@ -6,9 +6,7 @@ runGradleTest {
 	doLast {
 		Project clientExtensionProject = project ":global-js-client-extension"
 
-		File clientExtensionConfigJSONFile = new File(
-			new File(clientExtensionProject.buildDir, "liferay-client-extension-build"),
-			"global-js-client-extension.client-extension-config.json")
+		File clientExtensionConfigJSONFile = clientExtensionProject.file("${clientExtensionProject.buildDir}/liferay-client-extension-build/global-js-client-extension.client-extension-config.json")
 
 		assert clientExtensionConfigJSONFile.exists()
 

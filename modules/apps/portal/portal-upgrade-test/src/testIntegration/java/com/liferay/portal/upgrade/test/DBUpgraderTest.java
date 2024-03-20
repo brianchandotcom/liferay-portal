@@ -7,8 +7,6 @@ package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DCLSingleton;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -28,8 +26,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -39,11 +35,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleEvent;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.BundleTracker;
 
 /**
  * @author Luis Ortiz
@@ -68,32 +59,6 @@ public class DBUpgraderTest {
 		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
 			StartupHelperUtil.class, "_upgrading", true);
 
-		Bundle bundle = FrameworkUtil.getBundle(DBUpgraderTest.class);
-
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		BundleTracker<Bundle> bundleTracker = new BundleTracker<Bundle>(
-			bundle.getBundleContext(), Bundle.ACTIVE, null) {
-
-			@Override
-			public Bundle addingBundle(Bundle bundle, BundleEvent event) {
-				String symbolicName = bundle.getSymbolicName();
-
-				if (symbolicName.equals("com.liferay.portal.lock.service")) {
-					_moduleBundle = bundle;
-
-					countDownLatch.countDown();
-
-					close();
-				}
-
-				return null;
-			}
-
-		};
-
-		bundleTracker.open();
-
 		_connection = DataAccess.getConnection();
 
 		_db = DBManagerUtil.getDB();
@@ -102,10 +67,6 @@ public class DBUpgraderTest {
 
 		_processedServletContextNames = ReflectionTestUtil.getFieldValue(
 			IndexUpdaterUtil.class, "_processedServletContextNames");
-
-		countDownLatch.await(10, TimeUnit.SECONDS);
-
-		_initIndexNames();
 	}
 
 	@AfterClass
@@ -123,21 +84,19 @@ public class DBUpgraderTest {
 
 	@Test
 	public void testRegenerateModuleIndexes() throws Exception {
-		_dropIndex(_moduleTableIndexName, _moduleIndexName);
+		_db.runSQL("create index IX_TEST on Lock_ (createDate)");
 
 		PropsUtil.set("upgrade.database.auto.run", "false");
 
 		DBUpgrader.upgradeModules(false);
 
-		Assert.assertFalse(
-			_dbInspector.hasIndex(_moduleTableIndexName, _moduleIndexName));
+		Assert.assertTrue(_dbInspector.hasIndex("Lock_", "IX_TEST"));
 
 		PropsUtil.set("upgrade.database.auto.run", "true");
 
 		DBUpgrader.upgradeModules(false);
 
-		Assert.assertTrue(
-			_dbInspector.hasIndex(_moduleTableIndexName, _moduleIndexName));
+		Assert.assertFalse(_dbInspector.hasIndex("Lock_", "IX_TEST"));
 	}
 
 	@Test
@@ -173,31 +132,6 @@ public class DBUpgraderTest {
 		DBUpgrader.upgradePortal();
 	}
 
-	private static String _getIndexName(String indexesSQL) {
-		return indexesSQL.substring(
-			indexesSQL.indexOf("IX_"), indexesSQL.indexOf(" on"));
-	}
-
-	private static String _getTableIndexName(String indexesSQL) {
-		return indexesSQL.substring(
-			indexesSQL.indexOf("on ") + 3, indexesSQL.indexOf(" ("));
-	}
-
-	private static void _initIndexNames() throws Exception {
-		String moduleIndexesSQL = DBResourceUtil.getModuleIndexesSQL(
-			_moduleBundle);
-
-		_moduleIndexName = _getIndexName(moduleIndexesSQL);
-		_moduleTableIndexName = _getTableIndexName(moduleIndexesSQL);
-	}
-
-	private void _dropIndex(String tableName, String indexName)
-		throws Exception {
-
-		_db.runSQL(
-			StringBundler.concat("drop index ", indexName, " on ", tableName));
-	}
-
 	private void _updatePortalRelease(int buildNumber, int state)
 		throws Exception {
 
@@ -224,9 +158,6 @@ public class DBUpgraderTest {
 	private static int _currentState;
 	private static DB _db;
 	private static DBInspector _dbInspector;
-	private static Bundle _moduleBundle;
-	private static String _moduleIndexName;
-	private static String _moduleTableIndexName;
 	private static Set<String> _processedServletContextNames;
 	private static boolean _upgrading;
 

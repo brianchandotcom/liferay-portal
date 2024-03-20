@@ -3854,7 +3854,9 @@ public class DLFileEntryLocalServiceImpl
 
 		validateFile(groupId, folderId, fileEntryId, fileName, title);
 
-		if ((expirationDate != null) && expirationDate.before(new Date())) {
+		if (!ExportImportThreadLocal.isImportInProcess() &&
+			(expirationDate != null) && expirationDate.before(new Date())) {
+
 			throw new FileEntryExpirationDateException(
 				"Expiration date " + expirationDate + " is in the past");
 		}

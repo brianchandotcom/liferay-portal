@@ -9,6 +9,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import getPageDefinition from '../utils/getPageDefinition';
 
 export class PageEditorPage {
@@ -167,9 +168,10 @@ export class PageEditorPage {
 	async publishPage() {
 		await this.publishButton.click();
 
-		await this.page
-			.getByText('Success:The page was published successfully.')
-			.waitFor();
+		await waitForSuccessAlert(
+			this.page,
+			'Success:The page was published successfully.'
+		);
 	}
 
 	async resetSpacing(fragmentId: string, spacingType: SpacingType) {

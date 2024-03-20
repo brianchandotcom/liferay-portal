@@ -14,6 +14,7 @@ import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import getRandomString from '../../utils/getRandomString';
 import addApprovedStructuredContent from '../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
 
@@ -466,9 +467,10 @@ scheduleTest(
 
 		await page.getByRole('button', {exact: true, name: 'Publish'}).click();
 
-		await page
-			.getByText(`Success:${title} was created successfully.`)
-			.waitFor();
+		await waitForSuccessAlert(
+			page,
+			`Success:${title} was created successfully.`
+		);
 
 		await page.getByLabel(`Actions for ${title}`).waitFor();
 

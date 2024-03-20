@@ -61,17 +61,17 @@ public class ReleaseManagerTest {
 	}
 
 	@Test
+	public void testUnsuccessfulUpgradeByMissingModuleUpgrade()
+		throws Exception {
+
+		_testUnsuccessfulUpgradeByMissingModuleUpgrade("false", "unresolved");
+	}
+
+	@Test
 	public void testUnsuccessfulUpgradeByMissingModuleUpgradeWithAutorun()
 		throws Exception {
 
 		_testUnsuccessfulUpgradeByMissingModuleUpgrade("true", "failure");
-	}
-
-	@Test
-	public void testUnsuccessfulUpgradeByMissingModuleUpgradeWithoutAutorun()
-		throws Exception {
-
-		_testUnsuccessfulUpgradeByMissingModuleUpgrade("false", "unresolved");
 	}
 
 	@Test

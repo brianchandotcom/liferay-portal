@@ -17,6 +17,10 @@ public class WorkflowPortletKeys {
 		"com_liferay_portal_workflow_web_internal_portlet_" +
 			"ControlPanelWorkflowInstancePortlet";
 
+	public static final String KALEO_DESIGNER =
+		"com_liferay_portal_workflow_kaleo_designer_web_portlet_" +
+			"KaleoDesignerPortlet";
+
 	public static final String SITE_ADMINISTRATION_WORKFLOW =
 		"com_liferay_portal_workflow_web_internal_portlet_" +
 			"SiteAdministrationWorkflowPortlet";

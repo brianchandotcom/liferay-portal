@@ -3,55 +3,32 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
 import {Root, createRoot} from 'react-dom/client';
-import {SWRConfig} from 'swr';
 
 import AppRoutes, {RouteType} from './Routes';
-import MarketplaceContextProvider from './context/MarketplaceContext';
-import {getIconSpriteMap} from './liferay/constants';
-import {AppContextProvider} from './manage-app-state/AppManageState';
-import SWRCacheProvider from './services/SWRCacheProvider';
 
 import './index.scss';
-
-const GRAVATAR_API = 'https://www.gravatar.com/avatar';
+import Providers from './providers';
 
 class WebComponent extends HTMLElement {
 	private root: Root | undefined;
 
 	connectedCallback() {
-		const properties = {
-			cloudBaseURL: this.getAttribute('cloudBaseURL') || '',
-			contactSupportUrl: this.getAttribute('contactSupportUrl') || '',
-			eulaBaseURL: this.getAttribute('eulaBaseURL') || '',
-		};
-
 		if (!this.root) {
 			this.root = createRoot(this);
 
 			this.root.render(
-				<SWRConfig
-					value={{
-						provider: SWRCacheProvider,
-						revalidateIfStale: true,
-						revalidateOnFocus: false,
+				<Providers
+					properties={{
+						cloudBaseURL: this.getAttribute('cloudBaseURL') || '',
+						contactSupportUrl:
+							this.getAttribute('contactSupportUrl') || '',
+						eulaBaseURL: this.getAttribute('eulaBaseURL') || '',
+						marketoFormId: this.getAttribute('marketoFormId') || '',
 					}}
 				>
-					<MarketplaceContextProvider properties={properties}>
-						<AppContextProvider gravatarAPI={GRAVATAR_API}>
-							<ClayIconSpriteContext.Provider
-								value={getIconSpriteMap()}
-							>
-								<AppRoutes
-									path={
-										this.getAttribute('path') as RouteType
-									}
-								/>
-							</ClayIconSpriteContext.Provider>
-						</AppContextProvider>
-					</MarketplaceContextProvider>
-				</SWRConfig>
+					<AppRoutes path={this.getAttribute('path') as RouteType} />
+				</Providers>
 			);
 		}
 	}

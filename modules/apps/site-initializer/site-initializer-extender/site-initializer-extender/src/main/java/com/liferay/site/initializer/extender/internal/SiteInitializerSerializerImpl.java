@@ -318,8 +318,8 @@ public class SiteInitializerSerializerImpl
 			groupId, privateLayout, layoutId);
 
 		for (Layout layout : layouts) {
-			zipDirName =
-				zipDirName + "/" + _normalize(layout.getName(LocaleUtil.US));
+			zipDirName +=
+				CharPool.SLASH + _normalize(layout.getName(LocaleUtil.US));
 
 			_serializeLayout(layout, zipDirName, zipWriter);
 			_serializeLayouts(

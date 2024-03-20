@@ -20,10 +20,12 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.NotFoundException;
@@ -81,7 +83,10 @@ public class AcceptLanguageImpl implements AcceptLanguage {
 					return null;
 				});
 
-			if (ListUtil.isEmpty(locales)) {
+			if (ListUtil.isEmpty(locales) &&
+				!Objects.equals(
+					_httpServletRequest.getMethod(), HttpMethod.GET)) {
+
 				throw new NotAcceptableException(
 					"No locales match the accepted languages: " +
 						acceptLanguage);

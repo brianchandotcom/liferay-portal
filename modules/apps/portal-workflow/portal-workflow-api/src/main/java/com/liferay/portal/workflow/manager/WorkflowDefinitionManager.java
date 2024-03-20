@@ -37,6 +37,10 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
+			int start, int end)
+		throws WorkflowException;
+
+	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException;

@@ -734,8 +734,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 
 			if (!FeatureFlagManagerUtil.isEnabled("LPD-6378") &&
+				((utilityPageTemplate.getType() ==
+					UtilityPageTemplate.Type.CREATE_ACCOUNT) ||
 				(utilityPageTemplate.getType() ==
-					UtilityPageTemplate.Type.LOGIN)) {
+					UtilityPageTemplate.Type.LOGIN))) {
 
 				continue;
 			}

@@ -281,7 +281,6 @@
 					},
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n\n}",
 							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
@@ -289,7 +288,6 @@
 								"marginLeft": 0,
 								"marginRight": 0,
 								"marginTop": 0,
-								"maxWidth": "var(--container-max-lg)",
 								"opacity": 100,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
@@ -308,6 +306,7 @@
 										"marginLeft": "",
 										"marginRight": "",
 										"marginTop": "",
+										"maxWidth": "var(--container-max-lg)",
 										"paddingBottom": "",
 										"paddingLeft": "2",
 										"paddingRight": "2",

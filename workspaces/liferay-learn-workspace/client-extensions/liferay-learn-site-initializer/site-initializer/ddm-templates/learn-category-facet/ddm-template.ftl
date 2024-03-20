@@ -55,9 +55,9 @@
 		border-radius: 10px;
 		display: flex;
 		flex-direction: column;
-		gap: 15px;
-		margin-top: 40px;
-		padding: 16px;
+		gap: var(--spacer-3);
+		margin-top: var(--spacer-4);
+		padding: var(--spacer-3);
 	}
 
 	.treeview.treeview-light.treeview-nested.treeview-vocabulary-display .treeview-item {

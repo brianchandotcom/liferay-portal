@@ -100,7 +100,7 @@
 		padding: 1rem;
 	}
 
-	.search-results .search-results-entry .search-results-entry-title .modified-date {
+	.search-results .search-results-entry .search-results-entry-title .published-date {
 		color: var(--color-state-neutral-darken-1, #6C6C75);
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 0.8125rem;
@@ -143,8 +143,8 @@
 							${searchEntryContent}
 						</div>
 
-						<div class="modified-date pt-2">
-							${languageUtil.get(locale, "last-modified")}: ${searchEntry.getModifiedDateString()}
+						<div class="published-date pt-2">
+							${languageUtil.get(locale, "published-date")}: ${searchEntry.getPublishedDateString()}
 						</div>
 					</a>
 				</div>

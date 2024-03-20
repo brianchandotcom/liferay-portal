@@ -3,133 +3,52 @@
 		"pageElements": [
 			{
 				"definition": {
-					"customCSSViewports": [
-						{
-							"customCSS": ".[$FRAGMENT_CLASS$] {\nflex-direction: column !important;\nalign-items: center !important;\n}\n\ndiv.pb-4.search-results-entry.align-items-stretch {\nwidth:90vw;\n}\n\na.font-weight-bold.search-results-entry-title.text-decoration-none.unstyled {\nwidth:90vw;\n}\n\ndiv.search-results, div.input-group {\nwidth: 90%;\n}",
-							"id": "landscapeMobile"
-						},
-						{
-							"customCSS": ".[$FRAGMENT_CLASS$] {\nflex-direction: column !important;\nalign-items: center !important;\n}\n\ndiv.portlet-content-container {\n\n}",
-							"id": "portraitMobile"
-						},
-						{
-							"customCSS": ".[$FRAGMENT_CLASS$] {\nflex-direction: column !important;\n\nalign-items: center !important;\n}\n\ndiv.pb-4.search-results-entry.align-items-stretch {\nwidth:90vw;\n}",
-							"id": "tablet"
-						}
-					],
+					"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-4);\n}",
 					"fragmentStyle": {
-						"marginTop": "5",
-						"maxWidth": "90vw"
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
 					},
-					"fragmentViewports": [
-						{
-							"fragmentViewportStyle": {
-								"marginLeft": "0",
-								"marginRight": "0",
-								"maxWidth": "90vw",
-								"paddingLeft": "3"
-							},
-							"id": "portraitMobile"
-						},
-						{
-							"fragmentViewportStyle": {
-								"marginLeft": "3",
-								"marginRight": "3",
-								"marginTop": "3",
-								"overflow": ""
-							},
-							"id": "tablet"
-						}
-					],
 					"indexed": true,
 					"layout": {
-						"align": "Start",
 						"contentDisplay": "FlexRow",
-						"flexWrap": "Wrap",
-						"justify": "SpaceAround",
-						"marginTop": 4
+						"flexWrap": "NoWrap",
+						"widthType": "Fixed"
 					}
 				},
 				"pageElements": [
 					{
 						"definition": {
-							"customCSSViewports": [
-								{
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n\nalign-items: stretch !important;\n}",
-									"id": "portraitMobile"
-								},
-								{
-									"customCSS": ".[$FRAGMENT_CLASS$] {\nwidth:90vw;\nalign-items: stretch !important;\n}",
-									"id": "tablet"
-								}
-							],
-							"fragmentStyle": {
-								"marginLeft": "4",
-								"maxWidth": "24%",
-								"minWidth": "24%"
-							},
-							"fragmentViewports": [
-								{
-									"fragmentViewportStyle": {
-										"marginLeft": "0"
-									},
-									"id": "landscapeMobile"
-								},
-								{
-									"fragmentViewportStyle": {
-										"marginLeft": "0",
-										"maxWidth": ""
-									},
-									"id": "portraitMobile"
-								},
-								{
-									"fragmentViewportStyle": {
-										"marginLeft": "0",
-										"maxWidth": "100%",
-										"minWidth": "100%"
-									},
-									"id": "tablet"
-								}
-							],
 							"indexed": true,
+							"fragmentStyle": {
+								"width": "22rem"
+							},
 							"layout": {
-								"align": "Start",
 								"contentDisplay": "FlexColumn",
-								"flexWrap": "Wrap",
-								"justify": "SpaceBetween",
-								"marginLeft": 2
+								"flexWrap": "Wrap"
 							}
 						},
 						"pageElements": [
 							{
 								"definition": {
 									"fragmentStyle": {
-										"backgroundColor": "#F7F7F8",
-										"borderRadius": "10px",
-										"maxWidth": "100%",
-										"minWidth": "100%",
-										"paddingBottom": "3",
-										"paddingLeft": "3",
-										"paddingRight": "3",
-										"paddingTop": "3"
+										"backgroundColor": "var(--color-neutral-1)",
+										"borderRadius": "var(--border-radius-lg)",
+										"paddingBottom": "4",
+										"paddingLeft": "4",
+										"paddingRight": "4",
+										"paddingTop": "4"
 									},
 									"indexed": true,
 									"layout": {
-										"align": "Baseline",
-										"contentDisplay": "FlexColumn",
-										"flexWrap": "Wrap",
-										"justify": "SpaceAround",
-										"paddingBottom": 1,
-										"paddingLeft": 1,
-										"paddingRight": 1,
-										"paddingTop": 1,
+										"contentDisplay": "Block",
 										"widthType": "Fixed"
 									}
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\n}\nh4 {\ncolor: var(--neutral-10, #282934);\nfont-family: 'Source Sans Pro', sans-serif;\nfont-size: 18px;\nfont-style: normal;\nfont-weight: 600;\nline-height: 20px;\n}",
 											"fragment": {
 												"key": "BASIC_COMPONENT-heading"
 											},
@@ -156,11 +75,8 @@
 									},
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
 											"fragmentStyle": {
-												"marginTop": "3",
-												"maxWidth": "100%",
-												"minWidth": "100%"
+												"marginTop": "4"
 											},
 											"widgetInstance": {
 												"widgetConfig": {
@@ -189,34 +105,14 @@
 								"definition": {
 									"fragmentStyle": {
 										"backgroundColor": "#FFFFFF",
-										"borderRadius": "4px",
-										"borderWidth": "0",
-										"maxWidth": "100%",
-										"minWidth": "100%"
+										"borderRadius": "var(--border-radius-lg)",
+										"borderWidth": "0"
 									},
-									"fragmentViewports": [
-										{
-											"fragmentViewportStyle": {
-												"hidden": false
-											},
-											"id": "tablet"
-										}
-									],
-									"indexed": true,
-									"layout": {
-										"contentDisplay": "FlexRow",
-										"flexWrap": "Wrap",
-										"widthType": "Fixed"
-									}
+									"indexed": true
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
-											"fragmentStyle": {
-												"maxWidth": "100%",
-												"minWidth": "100%"
-											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayStyle": "ddmTemplate_LEARN_CATEGORY_FACET",
@@ -269,86 +165,56 @@
 					},
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\nwidth:90vw;\n}",
-							"customCSSViewports": [
-								{
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n}\n",
-									"id": "portraitMobile"
-								}
-							],
-							"fragmentStyle": {
-								"maxWidth": "70%"
-							},
-							"fragmentViewports": [
-								{
-									"fragmentViewportStyle": {
-										"minWidth": "100%"
-									},
-									"id": "landscapeMobile"
-								},
-								{
-									"fragmentViewportStyle": {
-										"maxWidth": "",
-										"minWidth": "100%",
-										"width": ""
-									},
-									"id": "portraitMobile"
-								},
-								{
-									"fragmentViewportStyle": {
-										"maxWidth": "100%",
-										"minWidth": "100%",
-										"overflow": "",
-										"width": ""
-									},
-									"id": "tablet"
-								}
-							],
 							"indexed": true,
+							"fragmentStyle": {
+								"width": "var(--container-max-lg)"
+							},
 							"layout": {
-								"align": "Start",
-								"contentDisplay": "FlexColumn",
-								"flexWrap": "Wrap"
+								"contentDisplay": "Block",
+								"widthType": "Fixed"
 							}
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentStyle": {
-										"width": "100%"
-									},
 									"indexed": true,
 									"layout": {
+										"contentDisplay": "FlexRow",
+										"flexWrap": "NoWrap",
+										"justify": "End",
+										"widthType": "Fluid"
 									}
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\nfloat: right;\n}",
-											"fragmentStyle": {
-												"width": "200px"
-											},
-											"widgetInstance": {
-												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LEARN_SEARCH_SORT",
-													"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"modified-\",\"label\":\"Modified Date\"}]"
-												},
-												"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
-											}
+											"indexed": true
 										},
-										"id": "59b185b9-7e6e-b0bc-3e64-7f47db77dcbe",
-										"type": "Widget"
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"width": "200px"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyle": "ddmTemplate_LEARN_SEARCH_SORT",
+															"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"published-date\",\"label\":\"Published Date\"}]"
+														},
+														"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
+													}
+												},
+												"id": "59b185b9-7e6e-b0bc-3e64-7f47db77dcbe",
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
 									}
 								],
 								"type": "Section"
 							},
 							{
 								"definition": {
-									"customCSS": ".[$FRAGMENT_CLASS$] {\nmin-width: 850px;\n}\n\ndiv.c-empty-state-image.taglib-empty-state {\ndisplay: none;\n}\n\ndiv.sheet {\nborder-width: 0px;\n}\n\ndiv.taglib-empty-result-message.c-empty-state-animation {\nalign-items: flex-start;\ndisplay: flex;\nflex-direction: column;\nmargin: 0px;\n}\n\nh1.taglib-empty-result-message-title {\ncolor: var(--neutral-10, #282934);\nmargin: 0px !important;\nfont-family: 'Source Sans Pro', sans-serif;\nfont-size: 28px !important;\nfont-style: normal;\nfont-weight: 700 !important;\nline-height: 32px;\n}\n\np.taglib-empty-result-message-description {\ncolor: var(--neutral-08, #54555F) !important;\nfont-family: 'Source Sans Pro', sans-serif;\nfont-size: 16px !important;\nfont-style: normal;\nfont-weight: 400;\nline-height: 24px;\ntext-align: left !important;\nwidth: max-content;\n}",
-									"fragmentStyle": {
-										"maxWidth": "100%",
-										"minWidth": "100%"
-									},
 									"widgetInstance": {
 										"widgetConfig": {
 											"displayInDocumentForm": "false",

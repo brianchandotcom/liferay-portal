@@ -126,6 +126,10 @@
 		margin-top: var(--spacer-4);
 	}
 
+	.article-body h2 {
+		scroll-padding-top: 12rem; 
+	}
+
 	.bg-color-1 {
 		background-color: var(--color-neutral-1, #F7F7F8);
 	}
@@ -479,7 +483,7 @@
 	.toc {
 		margin-top: $spacing-default;
 		max-width: 12%;
-		position: fixed;
+		position: sticky;
 	}
 	
 	.toctree:hover a {

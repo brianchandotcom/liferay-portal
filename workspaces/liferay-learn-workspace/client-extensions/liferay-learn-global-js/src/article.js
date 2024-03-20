@@ -53,30 +53,7 @@ function initArticle() {
 		}
 	};
 
-	const headerSelectors = [
-		'.control-menu-container',
-		'.info-bar',
-		'.public-sites-navigation',
-	];
-
-	const headerOffset = headerSelectors
-		.map((headerSelector) => {
-			const headerElement = document.querySelector(headerSelector);
-			if (headerElement) {
-				return -1 * headerElement.offsetHeight;
-			}
-
-			return 0;
-		})
-		.reduce(
-			(previousValue, currentValue) => previousValue + currentValue,
-			0
-		);
-
-	const observer = new IntersectionObserver(callback, {
-		rootMargin: headerOffset + 'px',
-		threshold: [0, 0.2, 0.4, 0.6, 0.8, 1],
-	});
+	const observer = new IntersectionObserver(callback);
 
 	const setActiveIndex = () => {
 		activeIndex = targets.findIndex(
@@ -105,15 +82,6 @@ function initArticle() {
 
 		if (node) {
 			observer.observe(node);
-
-			const offsetMargin =
-				'margin-top: ' +
-				headerOffset +
-				'px; padding-top: ' +
-				headerOffset * -1 +
-				'px;';
-
-			node.style.cssText = offsetMargin;
 		}
 	});
 

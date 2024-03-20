@@ -12,6 +12,7 @@ import com.liferay.notification.model.NotificationTemplate;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -33,6 +34,10 @@ public class NotificationContext {
 
 	public long getClassPK() {
 		return _classPK;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
 	}
 
 	public String getExternalReferenceCode() {
@@ -73,6 +78,10 @@ public class NotificationContext {
 		return _portletId;
 	}
 
+	public Locale getSiteDefaultLocale() {
+		return _siteDefaultLocale;
+	}
+
 	public Map<String, Object> getTermValues() {
 		return _termValues;
 	}
@@ -83,6 +92,10 @@ public class NotificationContext {
 
 	public long getUserId() {
 		return _userId;
+	}
+
+	public Locale getUserLocale() {
+		return _userLocale;
 	}
 
 	public void setAttachmentObjectFieldIds(
@@ -97,6 +110,10 @@ public class NotificationContext {
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
@@ -139,6 +156,10 @@ public class NotificationContext {
 		_portletId = portletId;
 	}
 
+	public void setSiteDefaultLocale(Locale siteDefaultLocale) {
+		_siteDefaultLocale = siteDefaultLocale;
+	}
+
 	public void setTermValues(Map<String, Object> termValues) {
 		_termValues = termValues;
 	}
@@ -151,9 +172,14 @@ public class NotificationContext {
 		_userId = userId;
 	}
 
+	public void setUserLocale(Locale userLocale) {
+		_userLocale = userLocale;
+	}
+
 	private List<Long> _attachmentObjectFieldIds;
 	private String _className;
 	private long _classPK;
+	private long _companyId;
 	private String _externalReferenceCode;
 	private List<Long> _fileEntryIds;
 	private long _groupId;
@@ -162,8 +188,10 @@ public class NotificationContext {
 	private List<NotificationRecipientSetting> _notificationRecipientSettings;
 	private NotificationTemplate _notificationTemplate;
 	private String _portletId;
+	private Locale _siteDefaultLocale;
 	private Map<String, Object> _termValues;
 	private String _type;
 	private long _userId;
+	private Locale _userLocale;
 
 }

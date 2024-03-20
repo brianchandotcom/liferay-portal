@@ -45,8 +45,7 @@ export class PagesAdminPage {
 
 		const iframe = this.page.locator('#selectThemeCSSClientExtension_iframe_');
 
-		await this.page.waitForSelector(
-			iframe,
+		await iframe.waitFor(
 			{
 				state: 'visible',
 			}

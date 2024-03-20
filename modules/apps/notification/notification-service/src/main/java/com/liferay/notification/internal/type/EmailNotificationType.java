@@ -30,6 +30,7 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalService;
 import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationType;
+import com.liferay.notification.type.util.NotificationTypeUtil;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -78,14 +79,11 @@ import java.io.StringWriter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.mail.internet.InternetAddress;
 
@@ -101,6 +99,42 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = NotificationType.class)
 public class EmailNotificationType extends BaseNotificationType {
+
+	@Override
+	public Map<String, String> evaluateNotificationRecipientSettings(
+			long companyId, NotificationContext notificationContext,
+			Map<String, Object> notificationRecipientSettings)
+		throws PortalException {
+
+		return HashMapBuilder.put(
+			NotificationRecipientSettingConstants.NAME_BCC,
+			_getValue(
+				companyId, notificationContext,
+				NotificationRecipientSettingConstants.NAME_BCC,
+				notificationRecipientSettings)
+		).put(
+			NotificationRecipientSettingConstants.NAME_BCC_TYPE,
+			NotificationRecipientConstants.TYPE_EMAIL
+		).put(
+			NotificationRecipientSettingConstants.NAME_CC,
+			_getValue(
+				companyId, notificationContext,
+				NotificationRecipientSettingConstants.NAME_CC,
+				notificationRecipientSettings)
+		).put(
+			NotificationRecipientSettingConstants.NAME_CC_TYPE,
+			NotificationRecipientConstants.TYPE_EMAIL
+		).put(
+			NotificationRecipientSettingConstants.NAME_TO,
+			_getValue(
+				companyId, notificationContext,
+				NotificationRecipientSettingConstants.NAME_TO,
+				notificationRecipientSettings)
+		).put(
+			NotificationRecipientSettingConstants.NAME_TO_TYPE,
+			NotificationRecipientConstants.TYPE_EMAIL
+		).build();
+	}
 
 	@Override
 	public Set<String> getAllowedNotificationRecipientSettingsNames() {
@@ -214,78 +248,42 @@ public class EmailNotificationType extends BaseNotificationType {
 		String subject = formatLocalizedContent(
 			notificationTemplate.getSubjectMap(), notificationContext);
 
+		Map<String, Object> notificationRecipientSettings =
+			NotificationRecipientSettingUtil.toMap(
+				notificationRecipient.getNotificationRecipientSettings());
+
 		Map<String, String> evaluatedNotificationRecipientSettings =
 			HashMapBuilder.put(
-				NotificationRecipientSettingConstants.NAME_BCC,
-				formatContent(
-					NotificationRecipientSettingConstants.NAME_BCC,
-					notificationContext,
-					notificationRecipient.getNotificationRecipientId())
-			).put(
-				NotificationRecipientSettingConstants.NAME_CC,
-				formatContent(
-					NotificationRecipientSettingConstants.NAME_CC,
-					notificationContext,
-					notificationRecipient.getNotificationRecipientId())
-			).put(
 				NotificationRecipientSettingConstants.NAME_FROM,
-				formatContent(
-					NotificationRecipientSettingConstants.NAME_FROM,
-					notificationContext,
-					notificationRecipient.getNotificationRecipientId())
+				NotificationTypeUtil.evaluateTerms(
+					(String)notificationRecipientSettings.get(
+						NotificationRecipientSettingConstants.NAME_FROM),
+					notificationContext, notificationTermEvaluatorTracker)
 			).put(
 				NotificationRecipientSettingConstants.NAME_FROM_NAME,
-				() -> {
-					NotificationRecipientSetting notificationRecipientSetting =
-						notificationRecipientSettingLocalService.
-							fetchNotificationRecipientSetting(
-								notificationRecipient.
-									getNotificationRecipientId(),
-								NotificationRecipientSettingConstants.
-									NAME_FROM_NAME);
-
-					return formatLocalizedContent(
-						notificationRecipientSetting.getValueMap(),
-						notificationContext);
-				}
+				formatLocalizedContent(
+					(Map<Locale, String>)notificationRecipientSettings.get(
+						NotificationRecipientSettingConstants.NAME_FROM_NAME),
+					notificationContext)
 			).put(
 				NotificationRecipientSettingConstants.NAME_SINGLE_RECIPIENT,
 				() -> {
-					NotificationRecipientSetting notificationRecipientSetting =
-						notificationRecipientSettingLocalService.
-							fetchNotificationRecipientSetting(
-								notificationRecipient.
-									getNotificationRecipientId(),
-								NotificationRecipientSettingConstants.
-									NAME_SINGLE_RECIPIENT);
+					if (!notificationRecipientSettings.containsKey(
+							NotificationRecipientSettingConstants.
+								NAME_SINGLE_RECIPIENT)) {
 
-					if (notificationRecipientSetting == null) {
 						return Boolean.TRUE.toString();
 					}
 
-					return notificationRecipientSetting.getValue();
+					return String.valueOf(
+						notificationRecipientSettings.get(
+							NotificationRecipientSettingConstants.
+								NAME_SINGLE_RECIPIENT));
 				}
-			).put(
-				NotificationRecipientSettingConstants.NAME_TO,
-				() -> {
-					NotificationRecipientSetting notificationRecipientSetting =
-						notificationRecipientSettingLocalService.
-							fetchNotificationRecipientSetting(
-								notificationRecipient.
-									getNotificationRecipientId(),
-								NotificationRecipientSettingConstants.NAME_TO);
-
-					String to = notificationRecipientSetting.getValue(
-						user.getLocale());
-
-					if (Validator.isNull(to)) {
-						to = notificationRecipientSetting.getValue(
-							siteDefaultLocale);
-					}
-
-					return _formatTo(
-						formatLocalizedContent(to, notificationContext));
-				}
+			).putAll(
+				evaluateNotificationRecipientSettings(
+					notificationTemplate.getCompanyId(), notificationContext,
+					notificationRecipientSettings)
 			).build();
 
 		String validEmailAddresses = _getValidEmailAddresses(
@@ -577,22 +575,6 @@ public class EmailNotificationType extends BaseNotificationType {
 		return stringWriter.toString();
 	}
 
-	private String _formatTo(String to) {
-		if (Validator.isNull(to)) {
-			return StringPool.BLANK;
-		}
-
-		Set<String> emailAddresses = new HashSet<>();
-
-		Matcher matcher = _emailAddressPattern.matcher(to);
-
-		while (matcher.find()) {
-			emailAddresses.add(matcher.group());
-		}
-
-		return StringUtil.merge(emailAddresses);
-	}
-
 	private ServiceContext _getServiceContext(Group group, long userId) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -639,6 +621,29 @@ public class EmailNotificationType extends BaseNotificationType {
 		return sb.toString();
 	}
 
+	private String _getValue(
+			long companyId, NotificationContext notificationContext,
+			String notificationRecipientSettingName,
+			Map<String, Object> notificationRecipientSettings)
+		throws PortalException {
+
+		EmailProvider emailProvider = _emailProviders.get(
+			GetterUtil.getString(
+				notificationRecipientSettings.get(
+					NotificationRecipientSettingConstants.getRecipientTypeName(
+						notificationRecipientSettingName)),
+				NotificationRecipientConstants.TYPE_EMAIL));
+
+		notificationContext.setCompanyId(companyId);
+		notificationContext.setSiteDefaultLocale(siteDefaultLocale);
+		notificationContext.setUserLocale(userLocale);
+
+		return emailProvider.provide(
+			notificationContext,
+			notificationRecipientSettings.get(
+				notificationRecipientSettingName));
+	}
+
 	private InternetAddress[] _toInternetAddresses(String string)
 		throws Exception {
 
@@ -682,10 +687,6 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmailNotificationType.class);
-
-	private static final Pattern _emailAddressPattern = Pattern.compile(
-		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
-			"(?:\\w(?:[\\w-]*\\w)?\\.)+(\\w(?:[\\w-]*\\w))");
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

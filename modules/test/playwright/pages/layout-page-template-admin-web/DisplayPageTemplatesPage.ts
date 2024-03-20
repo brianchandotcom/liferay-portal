@@ -6,22 +6,19 @@
 import {Locator, Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {waitForSuccessAlert} from '../../utils/waitForSuccessAlert';
 
 export class DisplayPageTemplatesPage {
 	readonly page: Page;
 
 	readonly newButton: Locator;
 	readonly publishButton: Locator;
-	readonly successfulMessage: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		this.newButton = page.getByText('New', {exact: true});
 		this.publishButton = page.getByLabel('Publish', {exact: true});
-		this.successfulMessage = page.getByText(
-			'Success:Your request completed successfully.'
-		);
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
@@ -57,15 +54,18 @@ export class DisplayPageTemplatesPage {
 
 	async markAsDefault(name: string) {
 		await this.clickMoreActions(name);
+
 		await this.page.once('dialog', (dialog) => {
 			dialog.accept().catch(() => {});
 		});
+
 		await this.page
 			.getByRole('menuitem', {
 				exact: true,
 				name: 'Mark as Default',
 			})
 			.click();
-		await this.successfulMessage.waitFor();
+
+		await waitForSuccessAlert(this.page);
 	}
 }

@@ -7,6 +7,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForSuccessAlert} from '../../../utils/waitForSuccessAlert';
 import {UtilityPagesPage} from '../../layout-admin-web/pages/UtilityPagesPage';
 
 export class UtilityPageConfigurationPage {
@@ -44,8 +45,9 @@ export class UtilityPageConfigurationPage {
 
 		await this.saveButton.click();
 
-		await this.page
-			.getByText('The page was updated successfully.')
-			.waitFor();
+		await waitForSuccessAlert(
+			this.page,
+			'The page was updated successfully.'
+		);
 	}
 }

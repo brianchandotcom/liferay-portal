@@ -60,9 +60,10 @@ export class JournalEditArticlePage {
 
 		await this.publishButton.click();
 
-		await this.page
-			.getByText(`Success:${title} was updated successfully.`)
-			.waitFor();
+		await waitForSuccessAlert(
+			this.page,
+			`Success:${title} was updated successfully.`
+		);
 	}
 
 	async openDMItemSelectorForImages() {

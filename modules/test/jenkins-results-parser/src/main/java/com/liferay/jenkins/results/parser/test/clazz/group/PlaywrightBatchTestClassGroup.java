@@ -189,6 +189,10 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	private String _callNPMCommand(File baseDir, String npmCommand) {
 		StringBuilder sb = new StringBuilder();
 
+		if (JenkinsResultsParserUtil.isCINode()) {
+			sb.append("export CI=true\n");
+		}
+
 		sb.append("export PATH=");
 
 		String npmHome = _getPortalProperty("npm.home");

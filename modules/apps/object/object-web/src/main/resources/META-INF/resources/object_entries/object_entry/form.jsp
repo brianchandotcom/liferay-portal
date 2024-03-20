@@ -315,6 +315,9 @@ portletDisplay.setURLBack(backURL);
 							});
 					}
 				}
+				else {
+					loadingElement.remove();
+				}
 			});
 		});
 	</aui:script>

@@ -1,13 +1,13 @@
 {
-    "fieldSets": [
-        {
-            "fields": [
-                {
-                    "label": "backURL",
-                    "name": "backURL",
-                    "type": "url"
-                }
-            ]
-        }
-    ]
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "backURL",
+					"name": "backURL",
+					"type": "url"
+				}
+			]
+		}
+	]
 }

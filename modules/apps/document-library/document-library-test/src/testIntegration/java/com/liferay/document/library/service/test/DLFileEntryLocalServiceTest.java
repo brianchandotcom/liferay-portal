@@ -259,7 +259,8 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		Date displayDate = new Date();
-		Date expirationDate = new Date();
+		Date expirationDate = new Date(
+			System.currentTimeMillis() + Time.MINUTE);
 		Date reviewDate = new Date();
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
@@ -399,7 +400,8 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		Date displayDate = new Date();
-		Date expirationDate = new Date();
+		Date expirationDate = new Date(
+			System.currentTimeMillis() + Time.MINUTE);
 		Date reviewDate = new Date();
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
@@ -441,7 +443,8 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		Date reviewDate = new Date();
-		Date expitationDate = new Date();
+		Date expirationDate = new Date(
+			System.currentTimeMillis() + Time.MINUTE);
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -449,11 +452,11 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
-			new ByteArrayInputStream(new byte[0]), 0, null, expitationDate,
+			new ByteArrayInputStream(new byte[0]), 0, null, expirationDate,
 			reviewDate, serviceContext);
 
 		Assert.assertNull(dlFileEntry.getDisplayDate());
-		Assert.assertEquals(expitationDate, dlFileEntry.getExpirationDate());
+		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
 		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
 	}
 
@@ -485,7 +488,8 @@ public class DLFileEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Date expirationDate = new Date();
+		Date expirationDate = new Date(
+			System.currentTimeMillis() + Time.MINUTE);
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -1218,7 +1222,8 @@ public class DLFileEntryLocalServiceTest {
 		Assert.assertNull(dlFileVersion.getReviewDate());
 
 		Date displayDate = new Date();
-		Date expirationDate = new Date();
+		Date expirationDate = new Date(
+			System.currentTimeMillis() + Time.MINUTE);
 		Date reviewDate = new Date();
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(

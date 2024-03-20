@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Date;
@@ -82,11 +83,14 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 			addMimeType, addFileName, null, description, changeLog, addBytes,
 			null, null, null, serviceContext);
 
+		Date expirationDate = new Date(
+			System.currentTimeMillis() + Time.MINUTE);
+
 		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), updateFileName, updateMimeType,
 			updateFileName, null, description, changeLog,
-			DLVersionNumberIncrease.MINOR, updateBytes, new Date(), new Date(),
-			new Date(), serviceContext);
+			DLVersionNumberIncrease.MINOR, updateBytes, new Date(),
+			expirationDate, new Date(), serviceContext);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 

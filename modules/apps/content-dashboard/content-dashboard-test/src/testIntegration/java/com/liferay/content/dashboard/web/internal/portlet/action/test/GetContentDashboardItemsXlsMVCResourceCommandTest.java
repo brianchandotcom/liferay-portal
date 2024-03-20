@@ -87,7 +87,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommandTest {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			"Site", TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
-			"application/pdf", new byte[0], createDate, createDate, createDate,
+			"application/pdf", new byte[0], createDate, null, createDate,
 			serviceContext);
 
 		List<String> expectedWorkbookHeaders = ListUtil.fromArray(

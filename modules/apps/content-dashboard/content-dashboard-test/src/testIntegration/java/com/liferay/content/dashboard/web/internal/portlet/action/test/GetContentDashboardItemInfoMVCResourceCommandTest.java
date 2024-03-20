@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -352,7 +353,8 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			"Site", TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "fileName.pdf",
-			"application/pdf", new byte[0], new Date(150000), new Date(150000),
+			"application/pdf", new byte[0], new Date(150000),
+			new Date(System.currentTimeMillis() + Time.MINUTE),
 			new Date(150000), _serviceContext);
 
 		return _contentDashboardFileItemFactory.create(

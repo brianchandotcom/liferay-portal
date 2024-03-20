@@ -63,22 +63,32 @@ public class CheckFileEntrySchedulerJobConfigurationTest {
 
 	@Test
 	public void testExpireFileEntry() throws Exception {
-		Date expirationDate = new Date(System.currentTimeMillis() - Time.DAY);
-
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			null, _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), (byte[])null, null, expirationDate,
-			null,
+			RandomTestUtil.randomString(), (byte[])null, null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		_dlFileEntryLocalService.checkFileEntries(_group.getCompanyId(), 1);
-
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+			fileEntry.getFileEntryId());
+
+		Date expirationDate = new Date(
+			System.currentTimeMillis() - Time.MINUTE);
+
+		dlFileEntry.setExpirationDate(expirationDate);
+
+		dlFileEntry = _dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, dlFileEntry.getStatus());
+
+		_dlFileEntryLocalService.checkFileEntries(_group.getCompanyId(), 2);
+
+		dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			fileEntry.getFileEntryId());
 
 		Assert.assertEquals(

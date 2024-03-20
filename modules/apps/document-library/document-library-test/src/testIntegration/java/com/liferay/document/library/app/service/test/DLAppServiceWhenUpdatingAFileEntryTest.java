@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -213,7 +214,8 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		Assert.assertNull(fileEntry.getExpirationDate());
 		Assert.assertNull(fileEntry.getReviewDate());
 
-		Date expirationDate = new Date();
+		Date expirationDate = new Date(
+			System.currentTimeMillis() + Time.MINUTE);
 
 		fileEntry = dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), RandomTestUtil.randomString(), null,

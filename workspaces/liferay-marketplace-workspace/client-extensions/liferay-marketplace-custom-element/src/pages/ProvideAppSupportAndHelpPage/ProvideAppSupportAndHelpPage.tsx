@@ -149,7 +149,8 @@ export function ProvideAppSupportAndHelpPage({
 							},
 							type: TYPES.UPDATE_APP_SUPPORT_URL,
 						});
-					} else {
+					}
+					else {
 						dispatch({
 							payload: {
 								id: supportURL?.id,
@@ -175,7 +176,8 @@ export function ProvideAppSupportAndHelpPage({
 								},
 								type: TYPES.UPDATE_APP_PUBLISHER_WEBSITE_URL,
 							});
-						} else {
+						}
+						else {
 							dispatch({
 								payload: {
 									id: publisherWebsiteURL?.id,
@@ -201,7 +203,8 @@ export function ProvideAppSupportAndHelpPage({
 								},
 								type: TYPES.UPDATE_APP_USAGE_TERMS_URL,
 							});
-						} else {
+						}
+						else {
 							dispatch({
 								payload: {
 									id: appUsageTermsURL?.id,
@@ -227,7 +230,8 @@ export function ProvideAppSupportAndHelpPage({
 								},
 								type: TYPES.UPDATE_APP_DOCUMENTATION_URL,
 							});
-						} else {
+						}
+						else {
 							dispatch({
 								payload: {
 									id: appDocumentationURL?.id,
@@ -254,7 +258,8 @@ export function ProvideAppSupportAndHelpPage({
 								type:
 									TYPES.UPDATE_APP_INSTALLATION_AND_UNINSTALLATION_GUIDE_URL,
 							});
-						} else {
+						}
+						else {
 							dispatch({
 								payload: {
 									id: appInstallationGuideURL?.id,

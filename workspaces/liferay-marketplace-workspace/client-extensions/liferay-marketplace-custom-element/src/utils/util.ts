@@ -222,7 +222,7 @@ export function removeProtocolURL(url: string) {
 	return url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '').split('/')[0];
 }
 
-async function submitSpecification(
+export async function submitSpecification(
 	productId: number,
 	productSpecificationId: number,
 	key: string,
@@ -258,20 +258,6 @@ async function submitSpecification(
 
 		return id;
 	}
-}
-
-export async function saveSpecification(
-	productId: number,
-	productSpecificationId: number,
-	key: string,
-	value: string
-) {
-	return await submitSpecification(
-		productId,
-		productSpecificationId,
-		key,
-		value
-	);
 }
 
 export async function submitFile({

@@ -88,7 +88,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 
 	const clientExtensionName = getRandomString();
 
-	await page.getByLabel('Name').fill(clientExtensionName);
+	await themeCSSClientExtensionsPage.nameInput.fill(clientExtensionName);
 
 	await uploadAndValidateFile(
 		'frontend-token-definition.json',

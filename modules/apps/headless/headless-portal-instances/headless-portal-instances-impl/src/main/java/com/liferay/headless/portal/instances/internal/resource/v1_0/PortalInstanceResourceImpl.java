@@ -102,6 +102,12 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	public PortalInstance postPortalInstance(PortalInstance portalInstance)
 		throws Exception {
 
+		Admin admin = portalInstance.getAdmin();
+
+		if (admin != null) {
+			_validateAdmin(admin, -1);
+		}
+
 		Long companyId = portalInstance.getCompanyId();
 
 		if (companyId == null) {
@@ -113,11 +119,7 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 			portalInstance.getVirtualHost(), portalInstance.getDomain(), 0,
 			true);
 
-		Admin admin = portalInstance.getAdmin();
-
 		if (admin != null) {
-			_validateAdmin(admin, company.getCompanyId());
-
 			User defaultAdminUser = _userLocalService.getUserByEmailAddress(
 				company.getCompanyId(),
 				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +

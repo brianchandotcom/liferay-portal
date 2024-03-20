@@ -104,26 +104,6 @@ export async function getTierPrice(
 	return tierPrices;
 }
 
-export async function createAppLicensePrice({
-	appProductId,
-	body,
-}: {
-	appProductId: number;
-	body: Object;
-}) {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${appProductId}/skus
-	  `,
-		{
-			body: JSON.stringify(body),
-			headers,
-			method: 'POST',
-		}
-	);
-
-	return await response.json();
-}
-
 export async function getLicenseDescription() {
 	const response = await fetch(`${baseURL}/o/c/licensetypesdescriptions/`, {
 		headers,
@@ -280,16 +260,6 @@ export async function deleteTrialSKU(skuTrialId: number) {
 			method: 'DELETE',
 		}
 	);
-}
-
-export async function getAccountGroup(accountId: number) {
-	const response = await fetch(
-		`${baseURL}/o/headless-commerce-admin-account/v1.0/accounts/${accountId}/accountGroups`,
-		{headers, method: 'GET'}
-	);
-	const {items} = await response.json();
-
-	return items as AccountGroup[];
 }
 
 export async function getAccountInfoFromCommerce(accountId?: number) {
@@ -954,19 +924,6 @@ export async function updateMyUserAccount(
 			}
 		});
 	}
-
-	return await response.json();
-}
-
-export async function getListTypeDefinitionByExternalReferenceCode(
-	externalReferenceCode: string
-) {
-	const response = await fetch(
-		`${baseURL}/o/headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}`,
-		{
-			headers,
-		}
-	);
 
 	return await response.json();
 }

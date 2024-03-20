@@ -34,6 +34,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -130,10 +131,21 @@ public class NotificationQueueEntryResourceImpl
 
 		notificationContext.setNotificationRecipient(
 			NotificationUtil.toNotificationRecipient(contextUser, 0L));
+
+		for (Object recipient : notificationQueueEntry.getRecipients()) {
+			Map<String, Object> recipientMap = (Map<String, Object>)recipient;
+
+			recipientMap.putAll(
+				notificationType.evaluateNotificationRecipientSettings(
+					contextCompany.getCompanyId(), notificationContext,
+					recipientMap));
+		}
+
 		notificationContext.setNotificationRecipientSettings(
 			NotificationUtil.toNotificationRecipientSetting(
 				0L, notificationType, notificationQueueEntry.getRecipients(),
 				contextUser));
+
 		notificationContext.setType(NotificationConstants.TYPE_EMAIL);
 
 		com.liferay.notification.model.NotificationQueueEntry

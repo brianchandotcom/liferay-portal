@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.plugin.Version;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -25,7 +26,10 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
 
 import javax.portlet.PortletPreferences;
 
@@ -727,6 +731,19 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return totalModelCount;
 	}
 
+	protected StagedModelType[] getStagedModelTypes(
+		Supplier<List<StagedModelType>> stagedModelTypesSupplier) {
+
+		return _companyStagedModelTypes.computeIfAbsent(
+			CompanyThreadLocal.getCompanyId(),
+			companyId -> {
+				List<StagedModelType> stagedModelTypes =
+					stagedModelTypesSupplier.get();
+
+				return stagedModelTypes.toArray(new StagedModelType[0]);
+			});
+	}
+
 	protected void setDataAlwaysStaged(boolean dataAlwaysStaged) {
 		_dataAlwaysStaged = dataAlwaysStaged;
 	}
@@ -815,6 +832,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePortletDataHandler.class);
 
+	private final Map<Long, StagedModelType[]> _companyStagedModelTypes =
+		new ConcurrentHashMap<>();
 	private boolean _dataAlwaysStaged;
 	private DataLevel _dataLevel = DataLevel.SITE;
 	private boolean _dataLocalized;

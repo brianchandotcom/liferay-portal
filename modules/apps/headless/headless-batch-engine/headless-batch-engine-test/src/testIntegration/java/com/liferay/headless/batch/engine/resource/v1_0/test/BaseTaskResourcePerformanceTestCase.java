@@ -88,6 +88,10 @@ public abstract class BaseTaskResourcePerformanceTestCase {
 	}
 
 	protected Closeable startTimer(Log log) {
+		return startTimer(log, null);
+	}
+
+	protected Closeable startTimer(Log log, String message) {
 		Thread thread = Thread.currentThread();
 
 		StackTraceElement stackTraceElement = thread.getStackTrace()[3];
@@ -102,14 +106,18 @@ public abstract class BaseTaskResourcePerformanceTestCase {
 			if (log.isInfoEnabled()) {
 				long totalTimeMillis = System.currentTimeMillis() - startTime;
 
-				double speed =
-					(double)(recordsCount * 1000) / (double)totalTimeMillis;
+				double speed = (totalTimeMillis > 0) ?
+					(double)(recordsCount * 1000) / (double)totalTimeMillis :
+						Double.NaN;
 
 				log.info(
 					StringBundler.concat(
-						invokerName, " used ", totalTimeMillis, " ms, for ",
-						recordsCount, " records, speed: ",
-						String.format("%.2f", speed), " records/s"));
+						invokerName,
+						Validator.isNotNull(message) ? (" (" + message + ") ") :
+							"",
+						" used ", totalTimeMillis, " ms, for ", recordsCount,
+						" records, speed: ", String.format("%.2f", speed),
+						" records/s"));
 			}
 		};
 	}

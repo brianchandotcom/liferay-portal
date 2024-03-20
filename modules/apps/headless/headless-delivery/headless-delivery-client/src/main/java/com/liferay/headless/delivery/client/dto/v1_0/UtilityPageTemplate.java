@@ -148,7 +148,8 @@ public class UtilityPageTemplate implements Cloneable, Serializable {
 
 		CREATE_ACCOUNT("CreateAccount"), ERROR("Error"),
 		ERROR_CODE404("ErrorCode404"), ERROR_CODE500("ErrorCode500"),
-		LOGIN("Login"), TERMS_OF_USE("TermsOfUse");
+		FORGOT_PASSWORD("ForgotPassword"), LOGIN("Login"),
+		TERMS_OF_USE("TermsOfUse");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

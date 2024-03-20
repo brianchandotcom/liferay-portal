@@ -1,7 +1,7 @@
 task runGradleTest
 
 runGradleTest {
-	dependsOn ":global-js-client-extension:deploy"
+	dependsOn ":global-js-client-extension:createClientExtensionConfig"
 
 	doLast {
 		Project clientExtensionProject = project ":global-js-client-extension"

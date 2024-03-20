@@ -16,6 +16,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	featureFlagsTest({
+		'LPS-169837': true,
 		'LPS-178052': true,
 	}),
 	isolatedSiteTest,

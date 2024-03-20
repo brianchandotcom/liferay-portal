@@ -11,10 +11,12 @@ import i18n from '../i18n';
 const zodSchema = {
 	accountCreator: z.object({
 		accounts: z.any().array().optional(),
-		agreeToTermsAndConditions: z.boolean().optional(),
 		companyName: z
 			.string()
 			.min(1, {message: 'Please enter a company name to continue'}),
+		country: z
+			.string()
+			.min(2, {message: 'Please select the country to continue'}),
 		emailAddress: z
 			.string()
 			.email(i18n.translate('this-field-is-required')),
@@ -23,9 +25,6 @@ const zodSchema = {
 			.string()
 			.min(3, {message: i18n.translate('this-field-is-required')}),
 		givenName: z.string(),
-		industry: z
-			.string()
-			.min(3, {message: 'Please select an industry to continue'}),
 		phone: z.object({
 			code: z.string(),
 			flag: z.string(),

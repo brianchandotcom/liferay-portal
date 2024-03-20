@@ -6,12 +6,17 @@
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
+import {z} from 'zod';
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import zodSchema from '../../../schema/zod';
 import fetcher from '../../../services/fetcher';
 
 const SINGLE_ACCOUNT = 1;
+
+export type UserForm = z.infer<typeof zodSchema.accountCreator> & {
+	accountSelected: Account | undefined;
+};
 
 const useAccountForm = () => {
 	const [accountQuantity, setAccountQuantity] = useState<number>(0);
@@ -25,13 +30,12 @@ const useAccountForm = () => {
 	const form = useForm<UserForm>({
 		defaultValues: {
 			accountSelected: undefined,
-			agreeToTermsAndConditions: false,
 			companyName: '',
+			country: '',
 			emailAddress: '',
 			extension: '',
 			familyName: '',
 			givenName: '',
-			industry: '',
 			phone: {code: '+1', flag: 'en-us'},
 			phoneNumber: undefined,
 		},

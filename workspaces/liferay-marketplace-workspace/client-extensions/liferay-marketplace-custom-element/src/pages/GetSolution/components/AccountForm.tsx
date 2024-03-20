@@ -9,8 +9,7 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import useSWR from 'swr';
+import {useNavigate, useOutletContext} from 'react-router-dom';
 import {z} from 'zod';
 
 import {Header} from '../../../components/Header/Header';
@@ -18,46 +17,34 @@ import FormInput from '../../../components/Input/formInput';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import Select from '../../../components/Select/Select';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import useCommerceRegions from '../../../hooks/useCommerceRegions';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema from '../../../schema/zod';
-import {getListTypeDefinitionByExternalReferenceCode} from '../../../utils/api';
 import {phones} from '../../../utils/phones';
-import useAccountForm from '../hooks/useAccountForm';
-import useHandleAccount from '../hooks/useHandleAccount';
 
 export type UserForm = z.infer<typeof zodSchema.accountCreator>;
-
-type AccountFormType = {
-	accountForm: ReturnType<typeof useAccountForm>;
-	submitOrder: (responeAccount?: Account) => Promise<void>;
-};
 
 enum AccountQuantities {
 	SINGLE = 1,
 	NO_ACCOUNT = 0,
 }
 
-const AccountForm: React.FC<AccountFormType> = ({accountForm, submitOrder}) => {
-	const navigate = useNavigate();
+const AccountForm = () => {
+	const {properties} = useMarketplaceContext();
+	const {data: commerceRegionsResponse} = useCommerceRegions(
+		new URLSearchParams({fields: 'name,title_i18n', pageSize: '-1'})
+	);
+	const [agreeToTermsAndConditions, setAgreeToTermsAndConditions] = useState(
+		false
+	);
 	const [currentPhonesFlags, setCurrentPhonesFlags] = useState({
 		code: '+1',
 		flag: 'en-us',
 	});
+	const navigate = useNavigate();
+	const {accountForm, onSubmit} = useOutletContext<any>();
 
-	const {
-		data: industriesListTypeEntries = {listTypeEntries: []},
-	} = useSWR('/industries', () =>
-		getListTypeDefinitionByExternalReferenceCode('INDUSTRIES')
-	);
-
-	const industries = industriesListTypeEntries.listTypeEntries;
-
-	const {mutateMyUserAccount, myUserAccount} = useMarketplaceContext();
-
-	const {formDataTransform, updateAccount} = useHandleAccount({
-		mutateMyUserAccount,
-		myUserAccount,
-	});
+	const commerceRegions = commerceRegionsResponse?.items ?? [];
 
 	const inputProps = {
 		errors: accountForm.formState.errors,
@@ -65,25 +52,21 @@ const AccountForm: React.FC<AccountFormType> = ({accountForm, submitOrder}) => {
 		required: true,
 	};
 
-	const startTrial = async () => {
-		const form = accountForm.getValues();
+	const submitTrial = async (form: UserForm) => {
+		Liferay.fire(`submit-marketo-form/${properties.marketoFormId}`, {
+			Company: form.companyName,
+			Country: form.country,
+			Email: form.emailAddress,
+			FirstName: form.givenName,
+			LastName: form.familyName,
+			Phone: `${form.phone.code} ${form.phoneNumber} ${
+				form.extension || ''
+			}`,
+			Title: 'Developer',
+		});
 
-		if (AccountQuantities.SINGLE === accountForm.accountQuantity) {
-			await updateAccount({
-				accountId: Number(form?.accountSelected?.id),
-				data: formDataTransform(form),
-			});
-		}
-
-		await submitOrder();
+		await onSubmit();
 	};
-
-	const agreeToTermsAndConditions = accountForm.watch(
-		'agreeToTermsAndConditions'
-	);
-
-	const hasAllValidations =
-		agreeToTermsAndConditions && accountForm.formState.isValid;
 
 	return (
 		<div className="align-items-center d-flex flex-column justify-content-center">
@@ -107,7 +90,7 @@ const AccountForm: React.FC<AccountFormType> = ({accountForm, submitOrder}) => {
 				}
 			/>
 
-			<ClayForm onSubmit={accountForm.handleSubmit(startTrial)}>
+			<ClayForm onSubmit={accountForm.handleSubmit(submitTrial)}>
 				<label className="font-weight-bold mr-4 title-label">
 					Profile Info
 				</label>
@@ -148,11 +131,24 @@ const AccountForm: React.FC<AccountFormType> = ({accountForm, submitOrder}) => {
 						boldLabel
 						className="p-2"
 						defaultOption
-						defaultOptionLabel="Select an industry"
-						label="Industry"
-						name="industry"
-						options={industries}
-						placeholder="Select an industry"
+						defaultOptionLabel="Select..."
+						label="Country"
+						name="country"
+						options={commerceRegions.map((region) => {
+							const country =
+								region.title_i18n[
+									Liferay.ThemeDisplay.getLanguageId()
+								] ||
+								region.title_i18n[
+									Liferay.ThemeDisplay.getDefaultLanguageId()
+								] ||
+								region.name;
+
+							return {
+								key: country,
+								name: country,
+							};
+						})}
 					/>
 
 					<ClayForm.Group>
@@ -246,42 +242,32 @@ const AccountForm: React.FC<AccountFormType> = ({accountForm, submitOrder}) => {
 						</div>
 					</ClayForm.Group>
 
-					<ClayForm.Group>
-						<div className="d-flex justify-content-start">
-							<ClayCheckbox
-								checked={accountForm.watch(
-									'agreeToTermsAndConditions'
-								)}
-								className="danger"
-								id="newsSubscription"
-								onChange={() =>
-									accountForm.setValue(
-										'agreeToTermsAndConditions',
-										!accountForm.watch(
-											'agreeToTermsAndConditions'
-										)
-									)
-								}
-							/>
+					<ClayCheckbox
+						checked={agreeToTermsAndConditions}
+						id="agreeToTermsAndConditions"
+						label={
+							((
+								<span>
+									I agree to the
+									<ClayLink
+										className="ml-1"
+										displayType="primary"
+										href="https://www.liferay.com/en/legal/marketplace-terms-of-service"
+										target="_blank"
+									>
+										Terms & Conditions
+									</ClayLink>
+								</span>
+							) as unknown) as string
+						}
+						onChange={() =>
+							setAgreeToTermsAndConditions(
+								!agreeToTermsAndConditions
+							)
+						}
+					/>
 
-							<label
-								className="ml-4"
-								htmlFor="agreeToTermsAndConditions"
-							>
-								I agree to the
-							</label>
-
-							<ClayLink
-								className="ml-2"
-								displayType="primary"
-								href="https://www.liferay.com/en/legal/marketplace-terms-of-service"
-							>
-								Terms & Conditions
-							</ClayLink>
-						</div>
-					</ClayForm.Group>
-
-					<div className="align-items-center d-flex justify-content-between mb-4 w-100">
+					<div className="align-items-center d-flex justify-content-between mb-4 mt-4 w-100">
 						<ClayButton
 							displayType="unstyled"
 							onClick={() => {
@@ -305,8 +291,9 @@ const AccountForm: React.FC<AccountFormType> = ({accountForm, submitOrder}) => {
 
 						<ClayButton
 							disabled={
-								!hasAllValidations ||
-								accountForm.formState.isSubmitting
+								accountForm.formState.isSubmitting ||
+								!accountForm.formState.isValid ||
+								!agreeToTermsAndConditions
 							}
 							type="submit"
 						>

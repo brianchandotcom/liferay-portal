@@ -24,8 +24,8 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.service.NotificationRecipientLocalService;
 import com.liferay.notification.service.NotificationRecipientSettingLocalService;
-import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
+import com.liferay.notification.type.util.NotificationTypeUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -54,8 +53,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -351,12 +348,13 @@ public abstract class BaseNotificationType implements NotificationType {
 			return "";
 		}
 
-		String content = formatLocalizedContent(
+		String content = NotificationTypeUtil.evaluateTerms(
 			notificationTemplateRecipientSetting.getValue(),
-			notificationContext);
+			notificationContext, notificationTermEvaluatorTracker);
 
 		if (Validator.isNull(content)) {
-			return formatLocalizedContent(content, notificationContext);
+			return NotificationTypeUtil.evaluateTerms(
+				content, notificationContext, notificationTermEvaluatorTracker);
 		}
 
 		return content;
@@ -367,47 +365,17 @@ public abstract class BaseNotificationType implements NotificationType {
 			NotificationContext notificationContext)
 		throws PortalException {
 
-		String content = formatLocalizedContent(
-			contentMap.get(userLocale), notificationContext);
+		String content = NotificationTypeUtil.evaluateTerms(
+			contentMap.get(userLocale), notificationContext,
+			notificationTermEvaluatorTracker);
 
 		if (Validator.isNotNull(content)) {
 			return content;
 		}
 
-		return formatLocalizedContent(
-			contentMap.get(siteDefaultLocale), notificationContext);
-	}
-
-	protected String formatLocalizedContent(
-			String content, NotificationContext notificationContext)
-		throws PortalException {
-
-		if (Validator.isNull(content)) {
-			return "";
-		}
-
-		List<String> termNames = new ArrayList<>();
-
-		Matcher matcher = _termNamePattern.matcher(content);
-
-		while (matcher.find()) {
-			termNames.add(matcher.group());
-		}
-
-		for (NotificationTermEvaluator notificationTermEvaluator :
-				notificationTermEvaluatorTracker.getNotificationTermEvaluators(
-					notificationContext.getClassName())) {
-
-			for (String termName : termNames) {
-				content = StringUtil.replace(
-					content, termName,
-					notificationTermEvaluator.evaluate(
-						NotificationTermEvaluator.Context.CONTENT,
-						notificationContext.getTermValues(), termName));
-			}
-		}
-
-		return content;
+		return NotificationTypeUtil.evaluateTerms(
+			contentMap.get(siteDefaultLocale), notificationContext,
+			notificationTermEvaluatorTracker);
 	}
 
 	protected void prepareNotificationContext(
@@ -510,8 +478,5 @@ public abstract class BaseNotificationType implements NotificationType {
 
 		notificationRecipientSettings.add(notificationRecipientSetting);
 	}
-
-	private static final Pattern _termNamePattern = Pattern.compile(
-		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 
 }

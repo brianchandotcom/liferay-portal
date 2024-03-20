@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -419,9 +418,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			).buildString();
 		}
 
-		if (!_featureFlagManager.isEnabled("LPD-6378")) {
-			actionResponse.sendRedirect(redirect);
-		}
+		actionResponse.sendRedirect(redirect);
 	}
 
 	protected void updateIncompleteUser(
@@ -620,9 +617,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

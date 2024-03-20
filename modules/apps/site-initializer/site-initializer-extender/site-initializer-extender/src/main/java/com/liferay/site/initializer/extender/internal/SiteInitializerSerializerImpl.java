@@ -74,9 +74,7 @@ public class SiteInitializerSerializerImpl
 				"documents/group", zipWriter);
 			_serializeDDMStructures(groupId, zipWriter);
 			_serializeDDMTemplates(groupId, zipWriter);
-			_serializeLayouts(
-				groupId, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layouts",
-				zipWriter);
+			_serializeLayouts(groupId, "layouts", zipWriter);
 			_serializeStyleBookEntries(groupId, zipWriter);
 
 			return zipWriter.getFile();
@@ -129,21 +127,6 @@ public class SiteInitializerSerializerImpl
 		string = StringUtil.toLowerCase(string);
 
 		return StringUtil.replace(string, CharPool.SPACE, CharPool.DASH);
-	}
-
-	private void _processLayouts(
-			long groupId, List<Layout> layouts, String zipDirName,
-			ZipWriter zipWriter)
-		throws Exception {
-
-		for (Layout layout : layouts) {
-			String zipPageDirName =
-				zipDirName + "/" + _normalize(layout.getName(LocaleUtil.US));
-
-			_serializeLayout(layout, zipPageDirName, zipWriter);
-			_serializeLayouts(
-				groupId, layout.getLayoutId(), zipPageDirName, zipWriter);
-		}
 	}
 
 	private void _serializeDDMStructure(
@@ -340,19 +323,34 @@ public class SiteInitializerSerializerImpl
 	}
 
 	private void _serializeLayouts(
-			long groupId, Long parentLayoutId, String zipDirName,
-			ZipWriter zipWriter)
+			long groupId, boolean privateLayout, long layoutId,
+			String zipDirName, ZipWriter zipWriter)
 		throws Exception {
 
-		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
-			groupId, false, parentLayoutId);
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			groupId, privateLayout, layoutId);
 
-		_processLayouts(groupId, publicLayouts, zipDirName, zipWriter);
+		for (Layout layout : layouts) {
+			zipDirName =
+				zipDirName + "/" + _normalize(layout.getName(LocaleUtil.US));
 
-		List<Layout> privateLayouts = _layoutLocalService.getLayouts(
-			groupId, true, parentLayoutId);
+			_serializeLayout(layout, zipDirName, zipWriter);
+			_serializeLayouts(
+				groupId, layout.isPrivateLayout(), layout.getLayoutId(),
+				zipDirName, zipWriter);
+		}
+	}
 
-		_processLayouts(groupId, privateLayouts, zipDirName, zipWriter);
+	private void _serializeLayouts(
+			long groupId, String zipDirName, ZipWriter zipWriter)
+		throws Exception {
+
+		_serializeLayouts(
+			groupId, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			zipDirName, zipWriter);
+		_serializeLayouts(
+			groupId, true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, zipDirName,
+			zipWriter);
 	}
 
 	private void _serializeStyleBookEntries(long groupId, ZipWriter zipWriter)

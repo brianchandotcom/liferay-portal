@@ -18,6 +18,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.friendly.url.service.base.FriendlyURLEntryLocalServiceBaseImpl;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryCreateDateComparator;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -223,7 +224,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 		}
 		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
+			return ReflectionUtil.throwException(portalException);
 		}
 
 		return deletedFriendlyURLEntry;
@@ -278,7 +279,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 		}
 		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
+			ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -319,7 +320,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			}
 		}
 		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
+			ReflectionUtil.throwException(portalException);
 		}
 	}
 
@@ -367,7 +368,7 @@ public class FriendlyURLEntryLocalServiceImpl
 					}
 				}
 				catch (PortalException portalException) {
-					throw new RuntimeException(portalException);
+					ReflectionUtil.throwException(portalException);
 				}
 			});
 

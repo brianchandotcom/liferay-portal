@@ -33,7 +33,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_ROOT_FOLDER_FIELD</td>
-	<td>//input[contains(@id,'rootFolderName')]</td>
+	<td>//input[contains(@id,'resourceName')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -6,10 +6,9 @@
 import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
-import useSWR from 'swr';
 
 import {Input} from '../../../components/Input/Input';
-import headlessCommerceAdminAddress from '../../../services/rest/HeadlessCommerceAdminAddress';
+import useCommerceRegions from '../../../hooks/useCommerceRegions';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {GetAppOutletContext} from '../GetAppOutlet';
 import {BillingAddress} from '../components/SelectPaymentMethod/BillingAddress/BillingAddress';
@@ -39,10 +38,7 @@ export default function SelectPaymentMethod() {
 		dispatch,
 	] = useGetAppContext();
 
-	const {data: regionsResponse} = useSWR(
-		'/commerce-regions',
-		headlessCommerceAdminAddress.getRegions
-	);
+	const {data: regionsResponse} = useCommerceRegions();
 
 	const [selectedAddress, setSelectedAddress] = useState('');
 	const [showNewAddressButton, setShowNewAddressButton] = useState(true);

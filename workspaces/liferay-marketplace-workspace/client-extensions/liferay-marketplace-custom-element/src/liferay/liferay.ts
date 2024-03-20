@@ -62,6 +62,7 @@ interface ILiferay {
 	};
 	authToken: string;
 	detach: Function;
+	fire: (event: string, data: unknown) => null;
 	on: Function;
 }
 declare global {
@@ -98,6 +99,7 @@ export const Liferay = window.Liferay || {
 		type: keyof WindowEventMap,
 		callback: EventListenerOrEventListenerObject
 	) => window.removeEventListener(type, callback),
+	fire: () => null,
 	on: (
 		type: keyof WindowEventMap,
 		callback: EventListenerOrEventListenerObject

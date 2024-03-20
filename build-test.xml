@@ -7824,7 +7824,13 @@ ${docker.start.error}</fail>
 
 			<get-host-git-dir />
 
-			<local name="portal.url" />
+			<local name="env.ci.arg" />
+
+			<condition else="" property="env.ci.arg" value="--env=CI=true">
+				<isset property="env.JENKINS_HOME" />
+			</condition>
+
+			<local name="env.portal.url.arg" />
 
 			<condition else="" property="env.portal.url.arg" value="--env=PORTAL_URL=http://${env.HOSTNAME}:8080">
 				<isset property="env.HOSTNAME" />
@@ -7835,6 +7841,7 @@ ${docker.start.error}</fail>
 			<start-docker-container image="${playwright.docker.image}" name="${playwright.docker.host}">\
 				${docker.add.host.hostname.arg} \
 				${docker.add.host.node.name.arg} \
+				${env.ci.arg} \
 				${env.portal.url.arg} \
 				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \
 			</start-docker-container>

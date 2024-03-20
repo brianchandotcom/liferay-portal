@@ -85,7 +85,7 @@ public class BuildHistory {
 
 	protected static class Timeline {
 
-		public static final long TIMELINE_SAMPLE_PERIOD_MINUTES = 10;
+		public static final long TIMELINE_SAMPLE_PERIOD_MINUTES = 15;
 
 		public static JSONArray getTimeJSONArray(
 			long duration, long startTime) {

@@ -153,11 +153,6 @@ public class BuildHistory {
 
 			for (BuildJSONObject buildJSONObject : buildJSONObjects) {
 				long buildDuration = buildJSONObject.getDuration();
-
-				if (buildDuration < (5 * 60 * 1000)) {
-					continue;
-				}
-
 				long buildStartTime = buildJSONObject.getStartTime();
 				long queueDuration = buildJSONObject.getQueueDuration();
 
@@ -168,20 +163,38 @@ public class BuildHistory {
 
 				buildCountsForAverage[startIndex]++;
 
-				int endIndex =
-					startIndex + _getDurationIndexSize(buildDuration);
+				long relativeStartTime = buildStartTime - _startTime;
 
-				if (endIndex > (_size - 1)) {
-					endIndex = _size - 1;
+				long relativeEndTime = relativeStartTime + buildDuration;
+
+				long timelineSamplePeriodMillis = TimeUnit.MINUTES.toMillis(
+					TIMELINE_SAMPLE_PERIOD_MINUTES);
+
+				if ((relativeStartTime >
+						(startIndex * timelineSamplePeriodMillis)) &&
+					(relativeEndTime <
+						((startIndex + 1) * timelineSamplePeriodMillis))) {
+
+					continue;
 				}
 
-				for (int i = startIndex; i < endIndex; i++) {
-					_buildCounts[i]++;
+				if (relativeEndTime >
+						(startIndex * timelineSamplePeriodMillis)) {
 
-					if (buildHistory.containsTopLevelBuildURL(
-							buildJSONObject.getURL())) {
+					int endIndex = _getIndex(buildStartTime + buildDuration);
 
-						_topLevelBuildCounts[i]++;
+					if (startIndex < (_size - 1)) {
+						startIndex++;
+					}
+
+					for (int i = startIndex; i <= endIndex; i++) {
+						_buildCounts[i]++;
+
+						if (buildHistory.containsTopLevelBuildURL(
+								buildJSONObject.getURL())) {
+
+							_topLevelBuildCounts[i]++;
+						}
 					}
 				}
 			}
@@ -202,23 +215,6 @@ public class BuildHistory {
 				_averageQueueTime[i] =
 					totalQueueTime[i] / buildCountsForAverage[i];
 			}
-		}
-
-		private int _getDurationIndexSize(long duration) {
-			long durationIndexSize = getTimelineSize(duration);
-
-			long timelineSamplePeriodMillis = TimeUnit.MINUTES.toMillis(
-				TIMELINE_SAMPLE_PERIOD_MINUTES);
-
-			long roundingSize = timelineSamplePeriodMillis / 2;
-
-			long durationRemainder = duration % timelineSamplePeriodMillis;
-
-			if (durationRemainder >= roundingSize) {
-				durationIndexSize++;
-			}
-
-			return (int)durationIndexSize;
 		}
 
 		private int _getIndex(long timeMillis) {

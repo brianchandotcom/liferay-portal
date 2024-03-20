@@ -16,6 +16,10 @@ export const PORTLET_URLS = {
 		'/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet',
 	lockedItems:
 		'/~/control_panel/manage?p_p_id=com_liferay_locked_items_web_internal_portlet_LockedItemsPortlet',
+	myWorkflowTasks:
+		'/~/control_panel/manage?p_p_id=com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet',
 	utilityPages:
 		'/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages',
+	workflow:
+		'/~/control_panel/manage?p_p_id=com_liferay_portal_workflow_web_internal_portlet_SiteAdministrationWorkflowPortlet',
 };

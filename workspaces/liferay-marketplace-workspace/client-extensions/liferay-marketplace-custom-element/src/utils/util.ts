@@ -200,11 +200,9 @@ export function getSkuPrice(appLicensePrice: LicenceTiersPrices, sku: SKU) {
 
 	if (dxpLicenseUsageTypeValue === 'standard') {
 		return appLicensePrice['standard'][0]?.value;
-	}
-	else if (dxpLicenseUsageTypeValue === 'developer') {
+	} else if (dxpLicenseUsageTypeValue === 'developer') {
 		return appLicensePrice['developer'][0]?.value;
-	}
-	else {
+	} else {
 		return 0;
 	}
 }
@@ -247,8 +245,7 @@ async function submitSpecification(
 		});
 
 		return -1;
-	}
-	else {
+	} else {
 		const {id} = await createProductSpecification({
 			body: {
 				productId,
@@ -321,17 +318,14 @@ export async function submitBase64EncodedFile({
 
 				if (result?.includes('application/zip')) {
 					result = result?.substring(28);
-				}
-				else if (
+				} else if (
 					result?.includes('image/gif') ||
 					result?.includes('image/png')
 				) {
 					result = result?.substring(22);
-				}
-				else if (result?.includes('image/jpeg')) {
+				} else if (result?.includes('image/jpeg')) {
 					result = result?.substring(23);
-				}
-				else if (
+				} else if (
 					result?.includes('application/octet-stream') ||
 					result?.includes('application/java-archive')
 				) {
@@ -358,4 +352,19 @@ export async function submitBase64EncodedFile({
 		);
 		reader.readAsDataURL(file as File);
 	});
+}
+
+export function safeJSONParse(
+	value: string | null,
+	defaultValue: unknown = null
+) {
+	if (defaultValue && typeof value !== 'string') {
+		return defaultValue;
+	}
+
+	try {
+		return JSON.parse(value as string);
+	} catch (error) {
+		return defaultValue;
+	}
 }

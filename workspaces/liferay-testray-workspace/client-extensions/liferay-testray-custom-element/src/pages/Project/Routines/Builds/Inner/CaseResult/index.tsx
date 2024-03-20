@@ -236,16 +236,14 @@ const CaseResult = () => {
 									value: caseResult
 										.caseResultToCaseResultsIssues?.length
 										? caseResult.caseResultToCaseResultsIssues.map(
-												(caseResultIssue, index) => {
-													return (
-														<JiraLink
-															issue={
-																caseResultIssue.r_issueToCaseResultsIssues_c_issue as TestrayIssue
-															}
-															key={index}
-														/>
-													);
-												}
+												(caseResultIssue, index) => (
+													<JiraLink
+														issue={
+															caseResultIssue.r_issueToCaseResultsIssues_c_issue as TestrayIssue
+														}
+														key={index}
+													/>
+												)
 										  )
 										: '-',
 								},

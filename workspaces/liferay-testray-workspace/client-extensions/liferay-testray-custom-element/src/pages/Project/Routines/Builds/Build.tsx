@@ -179,17 +179,15 @@ const Build = () => {
 						},
 						{
 							key: 'caseResultsIssues',
-							render: (caseResultsIssues: TestrayIssue[]) => {
-								return caseResultsIssues.map(
+							render: (caseResultsIssues: TestrayIssue[]) =>
+								caseResultsIssues.map(
 									(caseResultIssue, index) => (
 										<JiraLink
 											issue={caseResultIssue}
 											key={index}
 										/>
 									)
-								);
-							},
-
+								),
 							value: i18n.translate('issues'),
 						},
 						{

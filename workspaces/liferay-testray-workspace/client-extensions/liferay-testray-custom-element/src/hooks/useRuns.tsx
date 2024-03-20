@@ -26,7 +26,6 @@ const useRuns = () => {
 		compareRuns: {
 			...compareRuns,
 		},
-
 		setRunA,
 		setRunB,
 	};

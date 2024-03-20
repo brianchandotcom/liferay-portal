@@ -9,8 +9,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from './fixtures/pageEditorPagesTest';
-import getPageDefinition from './utils/getPageDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -42,8 +42,7 @@ test('renders all panel buttons in the vertical bar', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage(
 		site.id,
-		'home',
-		getPageDefinition([])
+		getRandomString()
 	);
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
@@ -63,8 +62,7 @@ test('renders sidebars visible at desktop size and sidebars not visible at small
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage(
 		site.id,
-		'home',
-		getPageDefinition([])
+		getRandomString()
 	);
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
@@ -97,8 +95,7 @@ test('checks if sidebars are open or closed depending on Product Menu', async ({
 
 	const layout = await apiHelpers.headlessDelivery.createSitePage(
 		site.id,
-		'home',
-		getPageDefinition([])
+		getRandomString()
 	);
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);

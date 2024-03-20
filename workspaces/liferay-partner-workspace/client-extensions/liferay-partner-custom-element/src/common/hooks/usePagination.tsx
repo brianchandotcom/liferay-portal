@@ -5,9 +5,35 @@
 
 import {useState} from 'react';
 
-export default function usePagination(initialActivePage = 1) {
+import {Liferay} from '../services/liferay';
+
+export default function usePagination() {
+	const urlParams = new URLSearchParams(window.location.href.split('?')[1]);
+
+	if (!urlParams.has('activepage')) {
+		urlParams.set('activepage', '1');
+
+		window.history.replaceState(
+			null,
+			'',
+			`${Liferay.ThemeDisplay.getLayoutRelativeURL()}?${urlParams.toString()}`
+		);
+	}
+
 	const [activeDelta, setActiveDelta] = useState<number>(20);
-	const [activePage, setActivePage] = useState<number>(initialActivePage);
+	const [activePage, setActivePage] = useState<number>(
+		Number(urlParams.get('activepage'))
+	);
+
+	const handlePageChange = (newPage: number) => {
+		urlParams.set('activepage', `${newPage}`);
+		window.history.replaceState(
+			null,
+			'',
+			`${Liferay.ThemeDisplay.getLayoutRelativeURL()}?${urlParams.toString()}`
+		);
+		setActivePage(newPage);
+	};
 
 	const deltas = [
 		{
@@ -29,6 +55,6 @@ export default function usePagination(initialActivePage = 1) {
 		activePage,
 		deltas,
 		onDeltaChange: setActiveDelta,
-		onPageChange: setActivePage,
+		onPageChange: handlePageChange,
 	};
 }

@@ -26,7 +26,6 @@ export default function getMDFListColumns(
 		index: number
 	) => boolean | undefined,
 	siteURL: string,
-	activePage: number,
 	actions?: PermissionActionType[],
 	mutated?: KeyedMutator<LiferayItems<MDFRequestDTO[]>>,
 	isChannel?: boolean

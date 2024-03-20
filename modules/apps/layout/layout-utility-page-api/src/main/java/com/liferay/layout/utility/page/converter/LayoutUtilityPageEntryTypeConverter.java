@@ -37,6 +37,8 @@ public class LayoutUtilityPageEntryTypeConverter {
 
 	private static final Map<String, String> _externalToInternalValuesMap =
 		HashMapBuilder.put(
+			"CreateAccount", LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT
+		).put(
 			"Error", LayoutUtilityPageEntryConstants.TYPE_STATUS
 		).put(
 			"ErrorCode404", LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND

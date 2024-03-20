@@ -1,0 +1,6 @@
+{
+	"defaultTemplate": false,
+	"externalReferenceCode": "LFR-CREATE-ACCOUNT",
+	"name": "Create Account",
+	"type": "CreateAccount"
+}

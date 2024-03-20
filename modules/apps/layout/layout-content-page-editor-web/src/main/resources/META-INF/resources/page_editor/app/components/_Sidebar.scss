@@ -35,12 +35,13 @@ html#{$cadmin-selector} .cadmin .page-editor__item-configuration-sidebar {
 	right: 0;
 	transition: transform ease $defaultTransitionDuration,
 		width ease $defaultTransitionDuration;
-	width: $defaultSidebarContentWidth;
-
 	transform: translateX(100%);
+	visibility: hidden;
+	width: $defaultSidebarContentWidth;
 
 	&--open {
 		transform: translateX(0);
+		visibility: visible;
 	}
 }
 
@@ -182,11 +183,13 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		transition: transform ease $defaultTransitionDuration,
 			left ease $defaultTransitionDuration;
 
+		visibility: hidden;
 		width: var(--sidebar-content-width, $defaultSidebarContentWidth);
 		z-index: $zIndexContent;
 
 		&--open {
 			transform: translateX(0);
+			visibility: visible;
 		}
 
 		&:focus-visible {

@@ -1,5 +1,9 @@
 import {useLocation} from 'react-router-dom';
 
+function decodeQueryParam(param) {
+	return decodeURIComponent(param.replace(/\+/g, ' '));
+}
+
 function queryStringToObject(initialQueryString: string): any {
 	if (!initialQueryString) return {};
 
@@ -10,7 +14,7 @@ function queryStringToObject(initialQueryString: string): any {
 
 	params.forEach(param => {
 		const [key, value] = param.split('=');
-		query[key] = value;
+		query[key] = decodeQueryParam(value);
 	});
 
 	return query;

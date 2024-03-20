@@ -5,6 +5,7 @@
 
 import {Page} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
@@ -42,8 +43,10 @@ export class PagesAdminPage {
 			)
 			.click();
 
+		const iframe = this.page.locator('#selectThemeCSSClientExtension_iframe_');
+
 		await this.page.waitForSelector(
-			'#selectThemeCSSClientExtension_iframe_',
+			iframe,
 			{
 				state: 'visible',
 			}
@@ -54,21 +57,10 @@ export class PagesAdminPage {
 			.getByRole('paragraph')
 			.filter({hasText: clientExtensionName});
 
-		const currentClientExtensionInput = this.page.locator(
-			'input[name="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_themeCSSCETExternalReferenceCode"]'
-		);
-
-		const currentClientExtensionId =
-			await currentClientExtensionInput.inputValue();
-
-		// Prevents flaky errors due to the click event not being immediately available
-
-		do {
-			await clientExtension.click();
-		} while (
-			currentClientExtensionId ===
-			(await currentClientExtensionInput.inputValue())
-		);
+		await clickAndExpectToBeHidden({
+			target: iframe,
+			trigger: clientExtension,
+		});
 
 		await this.page
 			.getByRole('button', {

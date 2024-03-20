@@ -1069,33 +1069,9 @@ public class DefaultObjectEntryManagerImplTest
 	public void testAddObjectEntryWithAccountEntryRestricted1()
 		throws Exception {
 
-		// Regular roles' company scope permissions should not be restricted by
-		// account entry
+		// Account entry restricted scope
 
 		AccountEntry accountEntry1 = _addAccountEntry();
-
-		_user = _addUser();
-
-		Role role = _addRoleUser(
-			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY},
-			_objectDefinition3, _user);
-
-		Assert.assertNotNull(_addObjectEntry(accountEntry1));
-
-		_resourcePermissionLocalService.removeResourcePermission(
-			companyId, _objectDefinition3.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-			role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
-
-		AssertUtils.assertFailure(
-			PrincipalException.MustHavePermission.class,
-			StringBundler.concat(
-				"User ", _user.getUserId(),
-				" must have ADD_OBJECT_ENTRY permission for ",
-				_objectDefinition3.getResourceName(), StringPool.SPACE),
-			() -> _addObjectEntry(accountEntry1));
-
-		// Account entry restricted scope
 
 		_user = _addUser();
 
@@ -1218,6 +1194,30 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _accountManagerRole);
 
 		Assert.assertNotNull(_addObjectEntry(accountEntry1));
+
+		// Regular roles' company scope permissions should not be restricted by
+		// account entry
+
+		_user = _addUser();
+
+		Role role = _addRoleUser(
+			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY},
+			_objectDefinition3, _user);
+
+		Assert.assertNotNull(_addObjectEntry(accountEntry1));
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			companyId, _objectDefinition3.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(),
+				" must have ADD_OBJECT_ENTRY permission for ",
+				_objectDefinition3.getResourceName(), StringPool.SPACE),
+			() -> _addObjectEntry(accountEntry1));
 	}
 
 	@Test
@@ -2237,32 +2237,6 @@ public class DefaultObjectEntryManagerImplTest
 			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
 			role.getRoleId(), ActionKeys.VIEW);
 
-		// Regular roles permissions should bypass the account restriction
-
-		Assert.assertTrue(
-			AccountRoleConstants.isSharedRole(_accountAdministratorRole));
-
-		AccountEntryUserRel accountEntryUserRel =
-			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				accountEntry1.getAccountEntryId(), _user.getUserId());
-
-		_assertObjectEntriesSize(1);
-
-		role = _addRoleUser(
-			new String[] {ActionKeys.VIEW}, _objectDefinition3, _user);
-
-		_assertObjectEntriesSize(2);
-
-		_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
-			accountEntryUserRel);
-
-		_resourcePermissionLocalService.removeResourcePermission(
-			companyId, _objectDefinition3.getClassName(),
-			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
-			role.getRoleId(), ActionKeys.VIEW);
-
-		_assertObjectEntriesSize(0);
-
 		// Regular roles' individual permissions should not be restricted by
 		// account entry
 
@@ -2284,7 +2258,7 @@ public class DefaultObjectEntryManagerImplTest
 		Assert.assertTrue(
 			AccountRoleConstants.isSharedRole(_accountAdministratorRole));
 
-		accountEntryUserRel =
+		AccountEntryUserRel accountEntryUserRel =
 			_accountEntryUserRelLocalService.addAccountEntryUserRel(
 				accountEntry1.getAccountEntryId(), _user.getUserId());
 

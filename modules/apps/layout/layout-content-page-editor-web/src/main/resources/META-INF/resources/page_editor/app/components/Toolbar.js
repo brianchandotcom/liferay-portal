@@ -242,11 +242,7 @@ function ToolbarBody({className}) {
 					<NetworkStatusBar {...network} />
 				</li>
 
-				<li
-					className={classNames('nav-item', {
-						'd-lg-flex d-none': Liferay.FeatureFlags['LPD-10988'],
-					})}
-				>
+				<li className="d-lg-flex d-none nav-item">
 					<Undo />
 				</li>
 
@@ -254,11 +250,7 @@ function ToolbarBody({className}) {
 					<EditModeSelector />
 				</li>
 
-				<li
-					className={classNames('nav-item', {
-						'd-lg-flex d-none': Liferay.FeatureFlags['LPD-10988'],
-					})}
-				>
+				<li className="d-lg-flex d-none nav-item">
 					<ul className="navbar-nav">
 						<li className="nav-item">
 							<HideSidebarButton />
@@ -266,11 +258,7 @@ function ToolbarBody({className}) {
 					</ul>
 				</li>
 
-				<li
-					className={classNames('nav-item', {
-						'd-lg-flex d-none': Liferay.FeatureFlags['LPD-10988'],
-					})}
-				>
+				<li className="d-lg-flex d-none nav-item">
 					<form
 						action={config.discardDraftURL}
 						method="POST"
@@ -280,13 +268,11 @@ function ToolbarBody({className}) {
 					</form>
 				</li>
 
-				{Liferay.FeatureFlags['LPD-10988'] ? (
-					<li className="d-lg-none nav-item">
-						<ToolbarActionsDropdown
-							discardDraftFormRef={discardDraftFormRef}
-						/>
-					</li>
-				) : null}
+				<li className="d-lg-none nav-item">
+					<ToolbarActionsDropdown
+						discardDraftFormRef={discardDraftFormRef}
+					/>
+				</li>
 
 				<li className="nav-item">
 					<PublishButton
@@ -297,11 +283,9 @@ function ToolbarBody({className}) {
 					/>
 				</li>
 
-				{Liferay.FeatureFlags['LPD-10988'] ? (
-					<li className="d-md-none nav-item">
-						<ToggleConfigurationSidebarButton />
-					</li>
-				) : null}
+				<li className="d-md-none nav-item">
+					<ToggleConfigurationSidebarButton />
+				</li>
 			</ul>
 		</ClayLayout.ContainerFluid>
 	);

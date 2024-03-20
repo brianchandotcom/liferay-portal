@@ -33,16 +33,12 @@ describe('ViewportSizeSelector', () => {
 	});
 
 	it('renders ViewportSizeSelector dropdown button and makes sure it has tooltip and aria-label', () => {
-		Liferay.FeatureFlags['LPD-10988'] = true;
-
 		renderComponent();
 
 		expect(screen.getByTitle('select-a-viewport')).toBeInTheDocument();
 		expect(
 			screen.getByLabelText('select-a-viewport.-current-viewport-x')
 		).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPD-10988'] = false;
 	});
 
 	it('calls onSizeSelected with sizeId when a size is selected', () => {
@@ -57,8 +53,6 @@ describe('ViewportSizeSelector', () => {
 	});
 
 	it('calls onSizeSelected with sizeId when a size is selected from the dropdown', async () => {
-		Liferay.FeatureFlags['LPD-10988'] = true;
-
 		const onSelect = jest.fn();
 
 		renderComponent({
@@ -74,7 +68,5 @@ describe('ViewportSizeSelector', () => {
 
 			expect(onSelect).toHaveBeenLastCalledWith('mobile');
 		});
-
-		Liferay.FeatureFlags['LPD-10988'] = false;
 	});
 });

@@ -31,39 +31,34 @@ export default function ItemConfigurationSidebar() {
 					'flex-column page-editor__item-configuration-sidebar',
 					{
 						'page-editor__item-configuration-sidebar--open': itemConfigurationOpen,
-						'page-editor__old-sidebar': !Liferay.FeatureFlags[
-							'LPD-10988'
-						],
 					}
 				)}
 				tabIndex={activeItemId ? null : 0}
 			>
-				{Liferay.FeatureFlags['LPD-10988'] ? (
-					<div className="d-flex d-md-none justify-content-end mr-2 mt-3">
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('close')}
-							borderless
-							displayType="unstyled"
-							monospaced
-							onClick={() => {
-								dispatch(
-									switchSidebarPanel({
-										itemConfigurationOpen: false,
-									})
-								);
+				<div className="d-flex d-md-none justify-content-end mr-2 mt-3">
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('close')}
+						borderless
+						displayType="unstyled"
+						monospaced
+						onClick={() => {
+							dispatch(
+								switchSidebarPanel({
+									itemConfigurationOpen: false,
+								})
+							);
 
-								document
-									.getElementById(
-										'page-editor__toolbar__configuration-button'
-									)
-									?.focus();
-							}}
-							size="sm"
-							symbol="times"
-							title={Liferay.Language.get('close')}
-						/>
-					</div>
-				) : null}
+							document
+								.getElementById(
+									'page-editor__toolbar__configuration-button'
+								)
+								?.focus();
+						}}
+						size="sm"
+						symbol="times"
+						title={Liferay.Language.get('close')}
+					/>
+				</div>
 
 				{activeItemId ? (
 					<ItemConfiguration

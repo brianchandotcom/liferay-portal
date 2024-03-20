@@ -45,8 +45,7 @@ const Trigger = React.forwardRef<HTMLButtonElement, any>(
 		<ClayButton
 			{...otherProps}
 			className={classNames('form-control-select', {
-				'd-lg-block d-none':
-					Liferay.FeatureFlags['LPD-10988'] && !symbol,
+				'd-lg-block d-none': !symbol,
 				'd-lg-none': symbol,
 			})}
 			displayType="secondary"
@@ -132,16 +131,14 @@ export default function EditModeSelector() {
 		<Form.Group className="mb-0">
 			<EditModePicker {...props} />
 
-			{Liferay.FeatureFlags['LPD-10988'] ? (
-				<EditModePicker
-					symbol={editMode.symbol}
-					title={sub(
-						Liferay.Language.get('select-x'),
-						Liferay.Language.get('edit-mode')
-					)}
-					{...props}
-				/>
-			) : null}
+			<EditModePicker
+				symbol={editMode.symbol}
+				title={sub(
+					Liferay.Language.get('select-x'),
+					Liferay.Language.get('edit-mode')
+				)}
+				{...props}
+			/>
 		</Form.Group>
 	);
 }

@@ -11,7 +11,7 @@
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
 %>
 
-<div class="management-bar navbar navbar-expand-md page-editor__toolbar <%= FeatureFlagManagerUtil.isEnabled("LPD-10988") ? StringPool.BLANK : "page-editor__old-toolbar" %> <%= contentPageEditorDisplayContext.isMasterLayout() ? "page-editor__toolbar--master-layout" : StringPool.BLANK %>" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
+<div class="management-bar navbar navbar-expand-md page-editor__toolbar <%= contentPageEditorDisplayContext.isMasterLayout() ? "page-editor__toolbar--master-layout" : StringPool.BLANK %>" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
 	<clay:container-fluid
 		fullWidth='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
 	>
@@ -37,185 +37,89 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 		<ul class="end navbar-nav">
 			<li class="nav-item"></li>
 
-			<c:choose>
-				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
-					<li class="d-lg-flex d-none nav-item">
-						<div class="btn-group flex-nowrap" role="group">
-							<clay:button
-								disabled="<%= true %>"
-								displayType="secondary"
-								icon="undo"
-								monospaced="<%= true %>"
-								small="<%= true %>"
-								title="undo"
-							/>
-
-							<clay:button
-								disabled="<%= true %>"
-								displayType="secondary"
-								icon="redo"
-								monospaced="<%= true %>"
-								small="<%= true %>"
-								title="redo"
-							/>
-						</div>
-
-						<span class="d-none d-sm-block ml-2">
-							<clay:button
-								cssClass="dropdown-toggle"
-								disabled="<%= true %>"
-								displayType="secondary"
-								icon="time"
-								monospaced="<%= true %>"
-								small="<%= true %>"
-								title="history"
-							/>
-						</span>
-					</li>
-				</c:when>
-				<c:otherwise>
-					<li class="nav-item">
-						<div class="btn-group flex-nowrap" role="group">
-							<clay:button
-								disabled="<%= true %>"
-								displayType="secondary"
-								icon="undo"
-								monospaced="<%= true %>"
-								small="<%= true %>"
-								title="undo"
-							/>
-
-							<clay:button
-								disabled="<%= true %>"
-								displayType="secondary"
-								icon="redo"
-								monospaced="<%= true %>"
-								small="<%= true %>"
-								title="redo"
-							/>
-						</div>
-
-						<span class="d-none d-sm-block">
-							<div class="dropdown ml-2">
-								<clay:button
-									cssClass="dropdown-toggle"
-									disabled="<%= true %>"
-									displayType="secondary"
-									icon="time"
-									monospaced="<%= true %>"
-									small="<%= true %>"
-									title="history"
-								/>
-							</div>
-						</span>
-					</li>
-				</c:otherwise>
-			</c:choose>
-
-			<c:choose>
-				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
-					<li class="d-lg-flex d-none nav-item">
-						<div class="dropdown">
-							<clay:button
-								cssClass="form-control-select"
-								disabled="<%= true %>"
-								displayType="secondary"
-								small="<%= true %>"
-							>
-								<liferay-ui:message key="page-design" />
-							</clay:button>
-						</div>
-					</li>
-					<li class="d-lg-none nav-item">
-						<clay:button
-							cssClass="form-control-select"
-							disabled="<%= true %>"
-							displayType="secondary"
-							icon="format"
-							monospaced="<%= false %>"
-							small="<%= true %>"
-						/>
-					</li>
-				</c:when>
-				<c:otherwise>
-					<li class="nav-item">
-						<div class="dropdown">
-							<clay:button
-								cssClass="dropdown-toggle form-control-select page-editor__edit-mode-selector text-left"
-								disabled="<%= true %>"
-								displayType="secondary"
-								small="<%= true %>"
-							>
-								<liferay-ui:message key="page-design" />
-							</clay:button>
-						</div>
-					</li>
-				</c:otherwise>
-			</c:choose>
-
-			<c:choose>
-				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
-					<li class="d-lg-flex d-none nav-item">
-						<clay:button
-							disabled="<%= true %>"
-							displayType="secondary"
-							icon="view"
-							monospaced="<%= true %>"
-							small="<%= true %>"
-							title="view"
-						/>
-					</li>
-				</c:when>
-				<c:otherwise>
-					<li class="nav-item">
-						<clay:button
-							disabled="<%= true %>"
-							displayType="secondary"
-							icon="view"
-							monospaced="<%= true %>"
-							small="<%= true %>"
-							title="view"
-						/>
-					</li>
-				</c:otherwise>
-			</c:choose>
-
-			<c:choose>
-				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
-					<li class="d-lg-flex d-none nav-item">
-						<clay:button
-							disabled="<%= true %>"
-							displayType="secondary"
-							small="<%= true %>"
-						>
-							<liferay-ui:message key="discard-draft" />
-						</clay:button>
-					</li>
-				</c:when>
-				<c:otherwise>
-					<li class="nav-item">
-						<clay:button
-							disabled="<%= true %>"
-							displayType="secondary"
-							small="<%= true %>"
-						>
-							<liferay-ui:message key="discard-draft" />
-						</clay:button>
-					</li>
-				</c:otherwise>
-			</c:choose>
-
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
-				<li class="d-lg-none nav-item">
+			<li class="d-lg-flex d-none nav-item">
+				<div class="btn-group flex-nowrap" role="group">
 					<clay:button
 						disabled="<%= true %>"
 						displayType="secondary"
-						icon="ellipsis-v"
+						icon="undo"
 						monospaced="<%= true %>"
 						small="<%= true %>"
+						title="undo"
 					/>
-				</li>
-			</c:if>
+
+					<clay:button
+						disabled="<%= true %>"
+						displayType="secondary"
+						icon="redo"
+						monospaced="<%= true %>"
+						small="<%= true %>"
+						title="redo"
+					/>
+				</div>
+
+				<span class="d-none d-sm-block ml-2">
+					<clay:button
+						cssClass="dropdown-toggle"
+						disabled="<%= true %>"
+						displayType="secondary"
+						icon="time"
+						monospaced="<%= true %>"
+						small="<%= true %>"
+						title="history"
+					/>
+				</span>
+			</li>
+			<li class="d-lg-flex d-none nav-item">
+				<div class="dropdown">
+					<clay:button
+						cssClass="form-control-select"
+						disabled="<%= true %>"
+						displayType="secondary"
+						small="<%= true %>"
+					>
+						<liferay-ui:message key="page-design" />
+					</clay:button>
+				</div>
+			</li>
+			<li class="d-lg-none nav-item">
+				<clay:button
+					cssClass="form-control-select"
+					disabled="<%= true %>"
+					displayType="secondary"
+					icon="format"
+					monospaced="<%= false %>"
+					small="<%= true %>"
+				/>
+			</li>
+			<li class="d-lg-flex d-none nav-item">
+				<clay:button
+					disabled="<%= true %>"
+					displayType="secondary"
+					icon="view"
+					monospaced="<%= true %>"
+					small="<%= true %>"
+					title="view"
+				/>
+			</li>
+			<li class="d-lg-flex d-none nav-item">
+				<clay:button
+					disabled="<%= true %>"
+					displayType="secondary"
+					small="<%= true %>"
+				>
+					<liferay-ui:message key="discard-draft" />
+				</clay:button>
+			</li>
+			<li class="d-lg-none nav-item">
+				<clay:button
+					disabled="<%= true %>"
+					displayType="secondary"
+					icon="ellipsis-v"
+					monospaced="<%= true %>"
+					small="<%= true %>"
+				/>
+			</li>
 
 			<c:if test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 				<li class="nav-item">
@@ -252,19 +156,16 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 					</c:choose>
 				</clay:button>
 			</li>
-
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10988") %>'>
-				<li class="d-md-none nav-item">
-					<clay:button
-						cssClass="text-secondary"
-						disabled="<%= true %>"
-						displayType="unstyled"
-						icon="cog"
-						monospaced="<%= true %>"
-						small="<%= true %>"
-					/>
-				</li>
-			</c:if>
+			<li class="d-md-none nav-item">
+				<clay:button
+					cssClass="text-secondary"
+					disabled="<%= true %>"
+					displayType="unstyled"
+					icon="cog"
+					monospaced="<%= true %>"
+					small="<%= true %>"
+				/>
+			</li>
 		</ul>
 	</clay:container-fluid>
 </div>

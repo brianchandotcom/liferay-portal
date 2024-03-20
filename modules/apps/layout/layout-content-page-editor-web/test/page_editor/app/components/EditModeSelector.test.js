@@ -75,8 +75,6 @@ describe('EditModeSelector', () => {
 	});
 
 	it('renders EditModeSelector component and make sure it has tooltip and aria-label', () => {
-		Liferay.FeatureFlags['LPD-10988'] = true;
-
 		renderComponent();
 
 		expect(
@@ -85,8 +83,6 @@ describe('EditModeSelector', () => {
 			)
 		).toHaveLength(2);
 		expect(screen.getByTitle('select-edit-mode')).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPD-10988'] = false;
 	});
 
 	it('disables the selectors when the LOCKED_SEGMENTS_EXPERIMENT and SWITCH_EDIT_MODE permissions are "true" and "false" respectively', () => {
@@ -134,8 +130,6 @@ describe('EditModeSelector', () => {
 
 	describe('Mobile selector', () => {
 		it('calls mockDispatch and togglePermissions with its corresponding parameters when Content Editing option is selected', async () => {
-			Liferay.FeatureFlags['LPD-10988'] = true;
-
 			renderComponent();
 
 			userEvent.click(screen.getByTitle('select-edit-mode'));
@@ -147,13 +141,9 @@ describe('EditModeSelector', () => {
 			await waitFor(() => {
 				selectContentEditingOption(option);
 			});
-
-			Liferay.FeatureFlags['LPD-10988'] = false;
 		});
 
 		it('calls mockDispatch and togglePermissions with its corresponding parameters when Page Design option is selected', async () => {
-			Liferay.FeatureFlags['LPD-10988'] = true;
-
 			renderComponent();
 
 			userEvent.click(screen.getByTitle('select-edit-mode'));
@@ -163,8 +153,6 @@ describe('EditModeSelector', () => {
 			await waitFor(() => {
 				selectPageDesignOption(option);
 			});
-
-			Liferay.FeatureFlags['LPD-10988'] = false;
 		});
 	});
 });

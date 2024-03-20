@@ -371,14 +371,7 @@ export default function Sidebar() {
 	return (
 		<ReactPortal className="cadmin">
 			<div
-				className={classNames(
-					'page-editor__sidebar page-editor__theme-adapter-forms',
-					{
-						'page-editor__old-sidebar': !Liferay.FeatureFlags[
-							'LPD-10988'
-						],
-					}
-				)}
+				className="page-editor__sidebar page-editor__theme-adapter-forms"
 				ref={dropClearRef}
 				style={{'--sidebar-content-width': `${sidebarWidth}px`}}
 			>

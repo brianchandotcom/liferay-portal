@@ -38,8 +38,6 @@ describe('ItemConfiguration', () => {
 	});
 
 	it('closes the configuration sidebar when close button is pressed and make sure that this button has title', () => {
-		Liferay.FeatureFlags['LPD-10988'] = true;
-
 		renderComponent();
 
 		const closeButton = screen.getByTitle('close');
@@ -49,7 +47,5 @@ describe('ItemConfiguration', () => {
 		expect(switchSidebarPanel).toBeCalledWith({
 			itemConfigurationOpen: false,
 		});
-
-		Liferay.FeatureFlags['LPD-10988'] = false;
 	});
 });

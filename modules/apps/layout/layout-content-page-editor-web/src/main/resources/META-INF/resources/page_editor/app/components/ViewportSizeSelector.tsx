@@ -45,11 +45,7 @@ export default function ViewportSizeSelector({
 
 	return (
 		<>
-			<ClayButton.Group
-				className={classNames('flex-nowrap flex-shrink-0', {
-					'd-lg-block d-none': Liferay.FeatureFlags['LPD-10988'],
-				})}
-			>
+			<ClayButton.Group className="d-lg-block d-none flex-nowrap flex-shrink-0">
 				{Object.values(availableViewportSizes).map(
 					({icon, label, sizeId}) => (
 						<ClayButtonWithIcon
@@ -72,30 +68,28 @@ export default function ViewportSizeSelector({
 				)}
 			</ClayButton.Group>
 
-			{Liferay.FeatureFlags['LPD-10988'] ? (
-				<Picker
-					UNSAFE_menuClassName="cadmin"
-					as={Trigger}
-					icon={availableViewportSizes[selectedSize].icon}
-					items={Object.values(availableViewportSizes)}
-					label={availableViewportSizes[selectedSize].label}
-					onSelectionChange={(size: Key) =>
-						onSizeSelected(size as ViewportSize)
-					}
-					selectedItem={selectedSize}
-					selectedKey={selectedSize}
-				>
-					{({icon, label, sizeId}) => (
-						<Option key={sizeId} textValue={label}>
-							<span className="inline-item inline-item-before ml-1 mr-3">
-								<ClayIcon symbol={icon} />
-							</span>
+			<Picker
+				UNSAFE_menuClassName="cadmin"
+				as={Trigger}
+				icon={availableViewportSizes[selectedSize].icon}
+				items={Object.values(availableViewportSizes)}
+				label={availableViewportSizes[selectedSize].label}
+				onSelectionChange={(size: Key) =>
+					onSizeSelected(size as ViewportSize)
+				}
+				selectedItem={selectedSize}
+				selectedKey={selectedSize}
+			>
+				{({icon, label, sizeId}) => (
+					<Option key={sizeId} textValue={label}>
+						<span className="inline-item inline-item-before ml-1 mr-3">
+							<ClayIcon symbol={icon} />
+						</span>
 
-							{label}
-						</Option>
-					)}
-				</Picker>
-			) : null}
+						{label}
+					</Option>
+				)}
+			</Picker>
 		</>
 	);
 }

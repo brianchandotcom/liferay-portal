@@ -22,10 +22,6 @@ export default function useDetectSmallResolution() {
 	const [isSmallResolution, setIsSmallResolution] = useState(false);
 
 	useEffect(() => {
-		if (!Liferay.FeatureFlags['LPD-10988']) {
-			return;
-		}
-
 		const onChange = (event) => {
 			setIsSmallResolution(event.matches);
 		};

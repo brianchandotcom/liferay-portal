@@ -361,7 +361,7 @@ public class QueueListener {
 					if (StringUtil.equalsIgnoreCase(
 							postalAddressesJSONObject.getString(
 								"addressCountry"),
-							countryNameLocale.toString())) {
+							countryNameLocale.getDisplayCountry())) {
 
 						return countryISOCode;
 					}

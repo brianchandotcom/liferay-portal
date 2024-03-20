@@ -9,9 +9,17 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 
-export const test = mergeTests(accountsPagesTest, apiHelpersTest, loginTest());
+export const test = mergeTests(
+	accountsPagesTest,
+	apiHelpersTest,
+	featureFlagsTest({
+		'LPD-10855': true,
+	}),
+	loginTest()
+);
 
 test('LPD-18485 Update account contact information fields', async ({
 	accountsPage,
@@ -21,8 +29,6 @@ test('LPD-18485 Update account contact information fields', async ({
 	editAccountPage,
 	page,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPD-10855', true);
-
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'test',
 		type: 'business',
@@ -53,7 +59,6 @@ test('LPD-18485 Update account contact information fields', async ({
 		).toHaveValue('facebookInput');
 	}
 	finally {
-		await apiHelpers.featureFlag.updateFeatureFlag('LPD-10855', false);
 		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
 	}
 });
@@ -67,8 +72,6 @@ test('LPD-18482 Add account phone', async ({
 	editAccountPhonePage,
 	page,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPD-10855', true);
-
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'test',
 		type: 'business',
@@ -92,7 +95,6 @@ test('LPD-18482 Add account phone', async ({
 		).toBeVisible();
 	}
 	finally {
-		await apiHelpers.featureFlag.updateFeatureFlag('LPD-10855', false);
 		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
 	}
 });
@@ -106,8 +108,6 @@ test('LPD-18483 Add account email address', async ({
 	editAccountPage,
 	page,
 }) => {
-	await apiHelpers.featureFlag.updateFeatureFlag('LPD-10855', true);
-
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: 'test',
 		type: 'business',
@@ -133,7 +133,42 @@ test('LPD-18483 Add account email address', async ({
 		).toBeVisible();
 	}
 	finally {
-		await apiHelpers.featureFlag.updateFeatureFlag('LPD-10855', false);
+		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
+	}
+});
+
+test('LPD-18484 Add account website', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountContactInformationPage,
+	editAccountContactPage,
+	editAccountPage,
+	editAccountWebsitePage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'test',
+		type: 'business',
+	});
+
+	await accountsPage.goto();
+
+	try {
+		await (await accountsPage.accountsTableRowLink(account.name)).click();
+		await editAccountPage.contactLink.click();
+		await editAccountContactPage.contactInformationLink.click();
+		await editAccountContactInformationPage.addWebsitesButton.click();
+		await editAccountWebsitePage.updateWebsite('https://www.website.com');
+
+		await expect(
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {name: 'https://www.website.com'})
+		).toBeVisible();
+	}
+	finally {
 		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
 	}
 });

@@ -13,6 +13,7 @@ import {EditAccountContactPage} from '../pages/account-admin-web/EditAccountCont
 import {EditAccountEmailAddressPage} from '../pages/account-admin-web/EditAccountEmailAddressPage';
 import {EditAccountPage} from '../pages/account-admin-web/EditAccountPage';
 import {EditAccountPhonePage} from '../pages/account-admin-web/EditAccountPhonePage';
+import {EditAccountWebsitePage} from '../pages/account-admin-web/EditAccountWebsitePage';
 
 const accountsPagesTest = test.extend<{
 	accountsPage: AccountsPage;
@@ -21,6 +22,7 @@ const accountsPagesTest = test.extend<{
 	editAccountEmailAddressPage: EditAccountEmailAddressPage;
 	editAccountPage: EditAccountPage;
 	editAccountPhonePage: EditAccountPhonePage;
+	editAccountWebsitePage: EditAccountWebsitePage;
 }>({
 	accountsPage: async ({page}, use) => {
 		await use(new AccountsPage(page));
@@ -39,6 +41,9 @@ const accountsPagesTest = test.extend<{
 	},
 	editAccountPhonePage: async ({page}, use) => {
 		await use(new EditAccountPhonePage(page));
+	},
+	editAccountWebsitePage: async ({page}, use) => {
+		await use(new EditAccountWebsitePage(page));
 	},
 });
 

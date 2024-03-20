@@ -7,29 +7,45 @@ package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.dynamic.data.mapping.item.selector.DDMStructureItemSelectorReturnType;
 import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMStructureItemSelectorCriterion;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.util.JournalUtil;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.constants.PortletPreferencesFactoryConstants;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -100,6 +116,62 @@ public class JournalConfigurationDisplayContext {
 			_journalGroupServiceConfiguration.emailFromName());
 
 		return _emailFromName;
+	}
+
+	public List<DDMStructure> getHighlightedDDMStructures() {
+		List<DDMStructure> highlightedDDMStructuresList = new ArrayList<>();
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPreferences(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
+				JournalConstants.SERVICE_NAME, null);
+
+		String highlightedDDMStructures = portletPreferences.getValue(
+			"highlightedDDMStructures", null);
+
+		if (Validator.isNull(highlightedDDMStructures)) {
+			return highlightedDDMStructuresList;
+		}
+
+		List<String> highlightedDDMStructureIds = StringUtil.split(
+			highlightedDDMStructures, CharPool.COMMA);
+
+		for (String highlightedDDMStructureId : highlightedDDMStructureIds) {
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchDDMStructure(
+					GetterUtil.getLong(highlightedDDMStructureId));
+
+			if (ddmStructure != null) {
+				highlightedDDMStructuresList.add(ddmStructure);
+			}
+		}
+
+		return highlightedDDMStructuresList;
+	}
+
+	public JSONArray getHighlightedDDMStructuresJSONArray() throws Exception {
+		return JSONUtil.toJSONArray(
+			getHighlightedDDMStructures(),
+			ddmStructure -> JSONUtil.put(
+				"ddmStructureId", String.valueOf(ddmStructure.getStructureId())
+			).put(
+				"name", ddmStructure.getName(_themeDisplay.getLocale())
+			).put(
+				"scope",
+				() -> {
+					Group group = GroupLocalServiceUtil.fetchGroup(
+						ddmStructure.getGroupId());
+
+					if (group != null) {
+						return LanguageUtil.get(
+							_themeDisplay.getLocale(),
+							group.getScopeLabel(_themeDisplay));
+					}
+
+					return StringPool.BLANK;
+				}
+			));
 	}
 
 	public String getNavigation() {

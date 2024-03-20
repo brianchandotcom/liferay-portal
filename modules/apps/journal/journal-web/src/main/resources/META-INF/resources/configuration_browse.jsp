@@ -102,7 +102,7 @@ portletDisplay.setURLBackTitle("web-content");
 									module="js/configuration_browse/HighlightedDDMStructuresConfiguration"
 									props='<%=
 										HashMapBuilder.<String, Object>put(
-											"ddmStructures", journalDisplayContext.getHighlightedDDMStructuresJSONArray()
+											"ddmStructures", journalConfigurationDisplayContext.getHighlightedDDMStructuresJSONArray()
 										).put(
 											"selectDDMStructureURL", journalConfigurationDisplayContext.getSelectDDMStructureURL()
 										).build()

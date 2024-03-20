@@ -6,6 +6,7 @@
 	.dropdown-full .adt-nav-item {
 		background-color: rgba(0, 0, 0, 0);
 		border: none;
+		border-radius: 0 !important;
 	}
 
 	.dropdown-full .adt-nav-item .adt-nav-text {
@@ -14,9 +15,15 @@
 		justify-content: flex-start;
 	}
 
+	.dropdown-full .dropdown-menu > .row {
+		margin: 0 auto;
+		max-width: var(--container-max-xl);
+		padding: var(--spacer-4);
+	}
+
 	.dropdown-full.show .adt-nav-item {
 		border-bottom: 1px solid white;
-		border-radius: 2px;
+		border-radius: var(--border-radius-lg);
 	}
 
 	.dropdown-full.show .adt-nav-item .adt-nav-text .lexicon-icon {
@@ -25,23 +32,20 @@
 
 	.dropdown-menu {
 		border: none;
-		border-radius: 0px 0px 8px 8px;
+		border-radius: 0px 0px var(--border-radius-lg) var(--border-radius-lg);
 		box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.15);
 	}
 
-	.dropdown-menu .row {
-		margin: 25px !important;
-		min-width: auto !important;
+	.dropdown-menu .row .dropdown-item-div {
+		flex-basis: 25%;
 	}
 
-	.dropdown-menu .row .dropdown-item-div {
-		padding: 0 1rem;
-		margin-bottom: 0;
+	.dropdown-menu .products-section.row .dropdown-item-div {
+		flex-basis: 33%;
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item {
-		border-radius: 10px;
-		height: 150px;
+		border-radius: var(--border-radius-lg);
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item:hover {
@@ -59,41 +63,24 @@
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item .subtitle {
 		color: var(--color-neutral-8, #54555F);
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 13px;
-		font-style: normal;
 		font-weight: 400;
 		line-height: 16px;
 	}
 
 	.dropdown-menu .row .dropdown-item-div .dropdown-item .title {
 		color: var(--color-neutral-10, #282934);
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 18px;
-		font-style: normal;
 		font-weight: 600;
 		line-height: 20px;
 	}
 
-	.dropdown-menu.show .product{
-		height: 290px;
-		min-height: -webkit-fill-available;
-	}
-
-	.maxh-90 {
-	  	max-height: 90px;
-	}
-
-	.product-box {
-	  	padding: 1rem;
-		margin-bottom: 1.5rem !important;
-	}
 
 	.responsive-text {
 		display: -webkit-box;
-	  	overflow: hidden;
-	  	text-overflow: ellipsis;
-	  	-webkit-box-orient: vertical;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 	}
 </style>
@@ -130,10 +117,10 @@
 				columns = "4"
 				customFields = navPrimaryItem.getExpandoAttributes()!{}
 				navItemType = customFields["Primary Nav Item Type"]!""
-				cssClassName = "maxh-90 product-box"
+				cssClassName = "products-section"
 			/>
 
-			<#if stringUtil.equals(navItemType, "CAPABILITIES")>
+			<#if stringUtil.equals(navItemType, "CAPABILITY")>
 				<#assign
 					columns = "3"
 					cssClassName = ""
@@ -165,11 +152,11 @@
 					aria-labelledby=${navPrimaryItem.getName()}
 					class="dropdown-menu"
 				>
-					<div class="row">
+					<div class="row ${cssClassName}">
 						<#list navPrimaryItem.getChildren() as navSecondaryItem>
 							<#if taxonomyVocabulary?has_content && stringUtil.equals(navItemType, "CAPABILITIES")>
 								<#if taxonomyVocabulary[navSecondaryItem.getName()]?has_content>
-									<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
+									<div class="dropdown-item-div col-12 col-lg-${columns} m-0 p-0">
 										<#assign capabilityFields = taxonomyVocabulary[navSecondaryItem.getName()] />
 
 										<a class="d-flex dropdown-item p-3 text-decoration-none" href="${groupFriendlyURL}/search?category=${capabilityFields['id']}" tabindex="4">
@@ -194,7 +181,7 @@
 									</div>
 								</#if>
 							<#else>
-								<div class="dropdown-item-div col-12 col-lg-${columns} ${cssClassName}">
+								<div class="dropdown-item-div col-12 col-lg-${columns} m-0 p-0">
 									<#assign
 										customFields = navSecondaryItem.getExpandoAttributes()!{}
 										navItemDescription = customFields["Description"]!""

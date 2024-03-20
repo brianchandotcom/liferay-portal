@@ -295,10 +295,10 @@
 				</div>
 
 				<div
-					class="col-12 doc-content mt-0 p-0 ${isLandingPage?then("landing-page-container", "")}"
+					class="doc-content d-flex mt-0 p-0 ${isLandingPage?then("landing-page-container", "")}"
 					id="docContent"
 				>
-					<div class="article-body col-12 language-log p-0">
+					<div class="article-body language-log p-0">
 						<#if (content.getData())??>
 							${content.getData()}
 						</#if>
@@ -306,29 +306,29 @@
 						<#if isLandingPage>
 							<#include "${templatesPath}/LANDING-PAGE">
 						</#if>
-					<#list taxonomyVocabularies as vocabulary>
-						<div class="align-items-baseline col-10 d-flex mt-2 pl-0">
-							<div class="align-items-baseline d-flex flex-wrap mr-2">
-								${vocabulary}:
-							</div>
+						<#list taxonomyVocabularies as vocabulary>
+							<div class="align-items-baseline col-10 d-flex mt-2 pl-0">
+								<div class="align-items-baseline d-flex flex-wrap mr-2">
+									${vocabulary}:
+								</div>
 
-							<div class="d-flex font-weight-bold mr-2 tags-container">
-								<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
-									<div class="d-flex">
-										<a
-											class="align-items-center d-flex label label-primary tag-container"
-											href="/search?category=${taxonomyCategory.categoryId}"
-										>
-											<span class="label-item label-item-expand">${taxonomyCategory.categoryName}</span>
-										</a>
-									</div>
-								</#list>
+								<div class="d-flex font-weight-bold mr-2 tags-container">
+									<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
+										<div class="d-flex">
+											<a
+												class="align-items-center d-flex label label-primary tag-container"
+												href="/search?category=${taxonomyCategory.categoryId}"
+											>
+												<span class="label-item label-item-expand">${taxonomyCategory.categoryName}</span>
+											</a>
+										</div>
+									</#list>
+								</div>
 							</div>
-						</div>
-					</#list>
+						</#list>
 					</div>
 
-					<div class="col-md-3 d-none d-sm-block">
+					<div class="article-page-nav d-none d-sm-block">
 						<ul class="nav nav-stacked toc" id="articleTOC"></ul>
 					</div>
 				</div>

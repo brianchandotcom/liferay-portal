@@ -6,24 +6,22 @@
 		align-items: flex-start;
 		display: flex;
 		flex-direction: row;
-		gap: 8px;
-		min-width: 20%;
-		padding: 0px 20px 20px 20px;
+		gap: var(--spacer-2);
 	}
 
-	#articleTOC>li {
+	#articleTOC > li {
 		align-items: center;
 		margin-left: 10px;
 		min-width: 100%;
 	}
 
-	#articleTOC>li .active {
+	#articleTOC > li .active {
 		border-left: 4px solid var(--color-brand-primary, #0B5FFF);
 		color: var(--color-neutral-10, #282934) !important;
 		padding: 0 0 0 6px !important;
 	}
 
-	#articleTOC>li>a {
+	#articleTOC > li > a {
 		color: var(--color-neutral-6, #82828C) !important;
 		font-family: Source Sans 3;
 		font-size: 1rem;
@@ -33,7 +31,7 @@
 		padding: 0 0 0 10px !important;
 	}
 
-	#articleTOC>li>a:hover {
+	#articleTOC > li > a:hover {
 		color: var(--color-neutral-10, #282934) !important;
 	}
 
@@ -68,7 +66,7 @@
 		width: 3.25rem;
 	}
 
-	#productIcon>img {
+	#productIcon > img {
 		height: 3.5rem;
 		margin-left: -0.125rem;
 		max-width: none;
@@ -82,7 +80,7 @@
 		width: 2.25rem;
 	}
 
-	#productsIcon>img {
+	#productsIcon > img {
 		height: 25px;
 		margin-left: 5px;
 		max-width: none;
@@ -124,10 +122,15 @@
 
 	.article-body {
 		margin-top: var(--spacer-4);
+		flex: 1;
 	}
 
 	.article-body h2 {
 		scroll-padding-top: 12rem; 
+	}
+
+	.article-page-nav {
+		flex: 0 0 16rem;
 	}
 
 	.bg-color-1 {
@@ -481,9 +484,9 @@
 	}
 
 	.toc {
-		margin-top: $spacing-default;
-		max-width: 12%;
+		margin-top: var(--spacer-4);
 		position: sticky;
+		top: 135px;
 	}
 	
 	.toctree:hover a {

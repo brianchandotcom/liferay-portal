@@ -55,12 +55,12 @@ nav.public-sites-navigation.dark-nav .primary-nav .menu-btn,
 nav.public-sites-navigation.dark-nav .primary-nav .nav-items-wrapper {
 	background-color: var(--color-brand-primary-darken-5, #00256c);
 }
-@media (max-width: var(--container-max-lg)) {
+@media (max-width: 1024px) {
 	nav.public-sites-navigation.dark-nav .primary-nav .nav-items-wrapper {
 		background-color: var(--white);
 	}
 }
-@media (min-width: var(--container-max-lg)) {
+@media (min-width: 1024px) {
 	nav.public-sites-navigation.dark-nav
 		.primary-nav
 		.nav-items-wrapper
@@ -717,7 +717,7 @@ nav.public-sites-navigation .utility-nav {
 		display: flex !important;
 	}
 }
-@media (min-width: var(--container-max-sm)) and (max-width: var(--container-max-lg)) {
+@media (min-width: 600px) and (max-width: 1024px) {
 	nav.public-sites-navigation .nav-items-wrapper {
 		position: absolute;
 		transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
@@ -732,7 +732,7 @@ nav.public-sites-navigation .utility-nav {
 		z-index: -1;
 	}
 }
-@media (min-width: var(--container-max-sm)) {
+@media (min-width: 600px) {
 	nav.public-sites-navigation .cta-container-mobile {
 		display: none;
 	}
@@ -740,7 +740,7 @@ nav.public-sites-navigation .utility-nav {
 nav.public-sites-navigation .menu-button-group {
 	display: none;
 }
-@media (max-width: var(--container-max-sm)) {
+@media (max-width: 600px) {
 	nav.public-sites-navigation .account-text {
 		display: none;
 	}
@@ -825,7 +825,7 @@ nav.public-sites-navigation .menu-button-group {
 html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	margin-top: 3.5rem;
 }
-@media (min-width: var(--container-max-lg)) {
+@media (min-width: 1024px) {
 	nav.public-sites-navigation.dark-nav
 		.nav-items-wrapper
 		.adt-nav-item
@@ -1239,7 +1239,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	.adt-submenu-item-content.grid-column-span-12 {
 	grid-column-start: span 12;
 }
-@media (min-width: var(--container-max-sm)) and (max-width: var(--container-max-lg)) {
+@media (min-width: 600px) and (max-width: 1024px) {
 	.adt-nav-item .adt-submenu {
 		box-shadow: none;
 		grid-row-gap: 0;
@@ -1340,7 +1340,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 		right: 1.5rem;
 	}
 }
-@media (max-width: var(--container-max-sm)) {
+@media (max-width: 600px) {
 	.language-selector-text {
 		display: none;
 	}

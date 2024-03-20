@@ -115,10 +115,10 @@ export function NextSteps({
 								Your Order ID is: <strong>{orderId}</strong>
 							</p>
 							<p>
-								To download your app, you can click Continue
-								Configuration below. To find your app download,
-								find your Order ID and choose Manage → Download
-								App.
+								To download your app, you can click &quot;Go to
+								Dashboard&quot; button below. To find your app
+								download, find your Order ID and click Manage →
+								Download App.
 							</p>
 						</p>
 					)

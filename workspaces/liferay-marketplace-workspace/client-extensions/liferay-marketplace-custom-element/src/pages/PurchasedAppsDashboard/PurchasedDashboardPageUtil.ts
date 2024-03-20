@@ -6,37 +6,6 @@
 import solutionsIcon from '../../assets/icons/analytics_icon.svg';
 import appsIcon from '../../assets/icons/apps_fill_icon.svg';
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
-import {AppProps} from '../../components/DashboardTable/DashboardTable';
-
-export const initialAppState: AppProps = {
-	attachments: [
-		{
-			externalReferenceCode: '',
-			id: 0,
-			src: '',
-			title: {},
-		},
-	],
-	catalogId: 0,
-	externalReferenceCode: '',
-	images: [
-		{
-			externalReferenceCode: '',
-			id: 0,
-			src: '',
-			title: {},
-		},
-	],
-	lastUpdatedBy: '',
-	name: '',
-	productId: 0,
-	selected: false,
-	status: '',
-	thumbnail: '',
-	type: '',
-	updatedDate: '',
-	version: '',
-};
 
 export const customerAppPermissionDescriptions: PermissionDescription[] = [
 	{
@@ -106,7 +75,7 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{
 		itemIcon: solutionsIcon,
 		itemName: 'solutions',
-		itemTitle: 'Solutions',
+		itemTitle: 'My Solutions',
 		path: '/solutions',
 	},
 ];

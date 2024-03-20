@@ -91,28 +91,30 @@ journalEditArticleDisplayContext.setViewAttributes();
 									/>
 								</div>
 
-								<div class="c-ml-2">
-									<div class="inline-item my-5 p-5 w-100">
-										<span aria-hidden="true" class="loading-animation"></span>
-									</div>
+								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11253") %>'>
+									<div class="c-ml-2">
+										<div class="inline-item my-5 p-5 w-100">
+											<span aria-hidden="true" class="loading-animation"></span>
+										</div>
 
-									<react:component
-										module="{TranslationOptions} from journal-web"
-										props='<%=
-											HashMapBuilder.<String, Object>put(
-												"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
-											).put(
-												"fields", journalEditArticleDisplayContext.getFieldMap()
-											).put(
-												"locales", journalEditArticleDisplayContext.getLocales()
-											).put(
-												"namespace", liferayPortletResponse.getNamespace()
-											).put(
-												"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
-											).build()
-										%>'
-									/>
-								</div>
+										<react:component
+											module="{TranslationOptions} from journal-web"
+											props='<%=
+												HashMapBuilder.<String, Object>put(
+													"defaultLanguageId", journalEditArticleDisplayContext.getDefaultArticleLanguageId()
+												).put(
+													"fields", journalEditArticleDisplayContext.getFieldMap()
+												).put(
+													"locales", journalEditArticleDisplayContext.getLocales()
+												).put(
+													"namespace", liferayPortletResponse.getNamespace()
+												).put(
+													"selectedLanguageId", journalEditArticleDisplayContext.getSelectedLanguageId()
+												).build()
+											%>'
+										/>
+									</div>
+								</c:if>
 
 								<div class="autofit-col autofit-col-expand c-ml-3">
 									<aui:input cssClass="form-control-inline form-control-sm" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" label='<%= LanguageUtil.get(request, "name") %>' labelCssClass="sr-only" languagesDropdownDirection="down" languagesDropdownVisible="<%= false %>" localized="<%= true %>" name="titleMapAsXML" placeholder='<%= LanguageUtil.format(request, "untitled-x", HtmlUtil.escape(ddmStructure.getName(locale))) %>' required="<%= journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASS_NAME_ID_DEFAULT %>" selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>" type="text" wrapperCssClass="article-content-title mb-0" />

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -62,7 +63,7 @@ public class CETFactoryImpl implements CETFactory {
 		throws PortalException {
 
 		CETImplFactory cetImplFactory = _getCETImplFactory(
-			cetConfiguration.type());
+			companyId, cetConfiguration.type());
 
 		String baseURL = cetConfiguration.baseURL();
 
@@ -149,7 +150,7 @@ public class CETFactoryImpl implements CETFactory {
 		}
 
 		CETImplFactory cetImplFactory = _getCETImplFactory(
-			clientExtensionEntry.getType());
+			companyId, clientExtensionEntry.getType());
 
 		if (replaceVariables) {
 			typeSettingsUnicodeProperties = _replaceVariables(
@@ -167,11 +168,12 @@ public class CETFactoryImpl implements CETFactory {
 
 	@Override
 	public CET create(PortletRequest portletRequest) throws PortalException {
-		CETImplFactory cetImplFactory = _getCETImplFactory(
-			ParamUtil.getString(portletRequest, "type"));
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		CETImplFactory cetImplFactory = _getCETImplFactory(
+			themeDisplay.getCompanyId(),
+			ParamUtil.getString(portletRequest, "type"));
 
 		try {
 			return cetImplFactory.create(
@@ -203,7 +205,8 @@ public class CETFactoryImpl implements CETFactory {
 			UnicodeProperties oldTypeSettingsUnicodeProperties, String type)
 		throws PortalException {
 
-		CETImplFactory cetImplFactory = _getCETImplFactory(type);
+		CETImplFactory cetImplFactory = _getCETImplFactory(
+			CompanyThreadLocal.getCompanyId(), type);
 
 		CET oldCET = null;
 
@@ -282,7 +285,7 @@ public class CETFactoryImpl implements CETFactory {
 			new TreeSet<>(_cetImplFactories.keySet()));
 	}
 
-	private CETImplFactory _getCETImplFactory(String type)
+	private CETImplFactory _getCETImplFactory(long companyId, String type)
 		throws ClientExtensionEntryTypeException {
 
 		CETImplFactory cetImplFactory = _cetImplFactories.get(type);
@@ -290,7 +293,9 @@ public class CETFactoryImpl implements CETFactory {
 		if (cetImplFactory != null) {
 			String key = FEATURE_FLAG_KEYS.get(type);
 
-			if ((key == null) || FeatureFlagManagerUtil.isEnabled(key)) {
+			if ((key == null) ||
+				FeatureFlagManagerUtil.isEnabled(companyId, key)) {
+
 				return cetImplFactory;
 			}
 		}

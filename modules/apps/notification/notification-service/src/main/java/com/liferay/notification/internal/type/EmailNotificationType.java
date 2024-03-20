@@ -291,6 +291,15 @@ public class EmailNotificationType extends BaseNotificationType {
 			evaluatedNotificationRecipientSettings.get(
 				NotificationRecipientSettingConstants.NAME_TO));
 
+		if (Validator.isNull(validEmailAddresses) &&
+			Objects.equals(
+				notificationRecipientSettings.get(
+					NotificationRecipientSettingConstants.NAME_TO_TYPE),
+				NotificationRecipientConstants.TYPE_ROLE)) {
+
+			return;
+		}
+
 		if (!GetterUtil.getBoolean(
 				evaluatedNotificationRecipientSettings.get(
 					NotificationRecipientSettingConstants.

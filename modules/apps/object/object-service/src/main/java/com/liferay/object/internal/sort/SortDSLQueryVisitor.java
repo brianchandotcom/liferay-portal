@@ -16,6 +16,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.odata.sort.InvalidSortException;
@@ -82,6 +83,10 @@ public class SortDSLQueryVisitor extends BaseSortDSLQueryVisitor {
 			ObjectRelationship objectRelationship, String path,
 			ObjectDefinition relatedObjectDefinition, Sort sort)
 		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-18730")) {
+			throw new InvalidSortException("Unable to sort by a related field");
+		}
 
 		if (!Objects.equals(
 				objectRelationship.getType(),

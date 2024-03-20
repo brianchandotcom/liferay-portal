@@ -7284,6 +7284,7 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
+	@FeatureFlags("LPD-18730")
 	@Test
 	public void testSortByOneToManyRelationshipCustomObjectFields()
 		throws Exception {
@@ -7627,6 +7628,7 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
+	@FeatureFlags("LPD-18730")
 	@Test
 	public void testSortByOneToManyRelationshipSystemObjectFields()
 		throws Exception {

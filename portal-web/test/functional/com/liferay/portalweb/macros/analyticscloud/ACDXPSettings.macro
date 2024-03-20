@@ -455,6 +455,8 @@ definition {
 			var propertyName = ${newPropertyName};
 		}
 
+		ACUtils.waitForSendingRequest();
+
 		Check.checkToggleSwitch(
 			key_propertyName = ${propertyName},
 			locator1 = "ACDXPSettings#COMMERCE_PROPERTY_TOGGLE");

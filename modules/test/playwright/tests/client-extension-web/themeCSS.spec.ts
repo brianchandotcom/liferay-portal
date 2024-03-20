@@ -82,7 +82,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 	themeCSSClientExtensionsPage,
 }) => {
 
-	// Create Theme CSS Client Extension
+	// Create Theme CSS client extension.
 
 	await themeCSSClientExtensionsPage.goto();
 
@@ -99,7 +99,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 
 	await themeCSSClientExtensionsPage.editClientExtensionSubmitButton.click();
 
-	// Apply Theme CSS Client Extension to all pages
+	// Apply Theme CSS client extension to all pages.
 
 	await pagesAdminPage.selectThemeCSSClientExtension(clientExtensionName);
 
@@ -107,9 +107,13 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 
 	await styleBooksPage.createStyleBook(styleBookName);
 
-	// Assert that the Token Set defined on the frontend token is available on the style book
+	// Assert that the frontend token set defined in the frontendTokenDefinition.json file is available in the style book.
 
-	await expect(page.getByText('primary-buttons')).toBeVisible();
+	const frontendTokenSetLabel = page.getByText('primary-buttons');
+
+	await expect(frontendTokenSetLabel).toBeVisible();
+
+	// Clean up
 
 	await styleBooksPage.deleteStyleBook(styleBookName);
 

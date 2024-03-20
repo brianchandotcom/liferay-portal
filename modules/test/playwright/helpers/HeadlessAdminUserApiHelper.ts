@@ -82,4 +82,21 @@ export class HeadlessAdminUserApiHelper {
 			{name: 'Organization' + getRandomInt(), ...(organization || {})}
 		);
 	}
+
+	async getAccountRoles(accountId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/${accountId}/account-roles`
+		);
+	}
+
+	async assignAccountRoles(
+		accountERC: string,
+		roleId: number,
+		userEmail: string
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/accounts/by-external-reference-code/${accountERC}/account-roles/${roleId}/user-accounts/by-email-address/${userEmail}`,
+			{}
+		);
+	}
 }

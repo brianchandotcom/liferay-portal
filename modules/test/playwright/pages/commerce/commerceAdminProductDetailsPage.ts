@@ -6,14 +6,22 @@
 import {Locator, Page} from '@playwright/test';
 
 export class CommerceAdminProductDetailsPage {
-	readonly productRelationsTab: Locator;
 	readonly page: Page;
+	readonly productDiagramTab: Locator;
+	readonly productRelationsTab: Locator;
 
 	constructor(page: Page) {
+		this.page = page;
+		this.productDiagramTab = page.getByRole('link', {
+			name: 'Diagram',
+		});
 		this.productRelationsTab = page.getByRole('link', {
 			name: 'Product Relations',
 		});
-		this.page = page;
+	}
+
+	async goToProductDiagram() {
+		await this.productDiagramTab.click();
 	}
 
 	async goToProductRelations() {

@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -38,6 +40,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletPreferences;
@@ -186,9 +189,26 @@ public class LoginUtil {
 			HttpServletRequest httpServletRequest, long plid)
 		throws PortletModeException, WindowStateException {
 
+		String portletName = LoginPortletKeys.LOGIN;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
+			PortletConfig portletConfig =
+				(PortletConfig)httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_CONFIG);
+
+			portletName = portletConfig.getPortletName();
+
+			if (!portletName.equals(LoginPortletKeys.CREATE_ACCOUNT) &&
+				!portletName.equals(LoginPortletKeys.LOGIN) &&
+				!portletName.equals(LoginPortletKeys.FORGOT_PASSWORD)) {
+
+				portletName = LoginPortletKeys.LOGIN;
+			}
+		}
+
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
-				httpServletRequest, LoginPortletKeys.LOGIN, plid,
+				httpServletRequest, portletName, plid,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/login/login"

@@ -5,6 +5,7 @@
 
 package com.liferay.notification.internal.type;
 
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -13,10 +14,14 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
+import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.constants.NotificationTemplateConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.exception.NotificationRecipientSettingValueException;
+import com.liferay.notification.internal.type.email.provider.DefaultEmailProvider;
+import com.liferay.notification.internal.type.email.provider.EmailProvider;
+import com.liferay.notification.internal.type.email.provider.RoleEmailProvider;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.model.NotificationRecipient;
@@ -27,6 +32,8 @@ import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,8 +51,10 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -68,6 +77,7 @@ import com.liferay.template.transformer.TemplateNodeFactory;
 import java.io.StringWriter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -81,6 +91,8 @@ import javax.mail.internet.InternetAddress;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -435,6 +447,19 @@ public class EmailNotificationType extends BaseNotificationType {
 				notificationContext.getNotificationRecipientSettings()));
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_emailProviders.put(
+			NotificationRecipientConstants.TYPE_EMAIL,
+			new DefaultEmailProvider(notificationTermEvaluatorTracker));
+		_emailProviders.put(
+			NotificationRecipientConstants.TYPE_ROLE,
+			new RoleEmailProvider(
+				_accountEntryLocalService, _objectDefinitionLocalService,
+				_objectFieldLocalService, _roleLocalService,
+				_userGroupRoleLocalService));
+	}
+
 	private void _addFileAttachments(
 		MailMessage mailMessage, long notificationQueueEntryId) {
 
@@ -663,6 +688,11 @@ public class EmailNotificationType extends BaseNotificationType {
 			"(?:\\w(?:[\\w-]*\\w)?\\.)+(\\w(?:[\\w-]*\\w))");
 
 	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	private final Map<String, EmailProvider> _emailProviders = new HashMap<>();
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -676,9 +706,21 @@ public class EmailNotificationType extends BaseNotificationType {
 		_notificationQueueEntryAttachmentLocalService;
 
 	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
 	private PortletFileRepository _portletFileRepository;
 
 	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private TemplateNodeFactory _templateNodeFactory;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

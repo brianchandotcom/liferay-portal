@@ -37,22 +37,17 @@ export class ClientExtensionsPage {
 	}
 
 	async deleteClientExtension(clientExtensionName: string) {
-		await this.goto();
-
-		await this.page
-			.getByRole('search')
-			.locator('[placeholder="Search"]')
-			.fill(clientExtensionName);
-
-		await this.page.keyboard.press('Enter');
-
-		await this.page.waitForLoadState('domcontentloaded');
-
-		await this.page.getByRole('button', {name: 'Actions'}).click();
+		await this.openItemActionsDropdown(clientExtensionName);
 
 		this.page.on('dialog', (dialog) => dialog.accept());
 
-		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
+		await this.deleteMenuItem.click();
+	}
+
+	async editClientExtension(clientExtensionName: string) {
+		await this.openItemActionsDropdown(clientExtensionName);
+
+		await this.editMenuItem.click();
 	}
 
 	async goto() {
@@ -66,10 +61,10 @@ export class ClientExtensionsPage {
 		await this.editorConfigContributorMenuItem.click();
 	}
 
-	async openItemActionsDropdown({text}: {text: string}) {
+	async openItemActionsDropdown(clientExtensionName: string) {
 		await this.page
 			.locator('.dnd-tr')
-			.filter({has: this.page.getByText(text)})
+			.filter({has: this.page.getByText(clientExtensionName)})
 			.getByRole('button', {
 				name: 'Actions',
 			})

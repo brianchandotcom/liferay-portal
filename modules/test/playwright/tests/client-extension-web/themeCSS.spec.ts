@@ -113,5 +113,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 
 	await styleBooksPage.deleteStyleBook(styleBookName);
 
+	await clientExtensionsPage.goto();
+
 	await clientExtensionsPage.deleteClientExtension(clientExtensionName);
 });

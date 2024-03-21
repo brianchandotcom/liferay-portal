@@ -481,10 +481,8 @@ public class CommerceOrderLocalServiceImpl
 
 			// Commerce order items
 
-			User user = _userService.getCurrentUser();
-
 			_commerceOrderItemLocalService.deleteCommerceOrderItems(
-				user.getUserId(), commerceOrder.getCommerceOrderId());
+				_getUserId(commerceOrder), commerceOrder.getCommerceOrderId());
 
 			// Commerce order notes
 
@@ -2332,6 +2330,21 @@ public class CommerceOrderLocalServiceImpl
 			commerceAddress.getCommerceAddressId(),
 			CommerceOrder.class.getName(), commerceOrder.getCommerceOrderId(),
 			serviceContext);
+	}
+
+	private long _getUserId(CommerceOrder commerceOrder) {
+		try {
+			User user = _userService.getCurrentUser();
+
+			return user.getUserId();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return commerceOrder.getUserId();
 	}
 
 	private boolean _hasWorkflowDefinition(long groupId, long typePK)

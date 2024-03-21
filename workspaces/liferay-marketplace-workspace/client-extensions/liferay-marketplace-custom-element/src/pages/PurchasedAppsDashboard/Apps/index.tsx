@@ -4,15 +4,68 @@
  */
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 
+import appsIcon from '../../../assets/icons/apps_fill_icon.svg';
 import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
+import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import {Liferay} from '../../../liferay/liferay';
+import {usePurchasedOrders} from '../usePurchasedOrders';
 import PurchasedAppsTable from './components/PurchasedAppsTable';
 
 const Apps = () => {
-	const {page, purchasedAppTable, setPage} = useOutletContext<any>();
+	const channelId = Number(Liferay.CommerceContext.commerceChannelId);
+	const [page, setPage] = useState(1);
+	const {selectedAccount} = useOutletContext<any>();
+
+	const {
+		data: placedOrders = {items: [], pageSize: 1, totalCount: 0},
+		error,
+	} = usePurchasedOrders({
+		accountId: selectedAccount?.id as number,
+		channelId,
+		orderTypeExternalReferenceCodes: ['CLOUDAPP', 'DXPAPP'],
+		page,
+		pageSize: 10,
+	});
+
+	const purchasedAppTable = {
+		...placedOrders,
+		items: placedOrders.items.map((order) => {
+			const [placeOrderItem] = order.placedOrderItems;
+
+			return {
+				...order,
+				name: placeOrderItem.name,
+				productId: order.placedOrderItems[0].productId,
+				thumbnail: placeOrderItem.thumbnail,
+				type: placeOrderItem.subscription
+					? 'Subscription'
+					: 'Perpetual',
+				virtualURL: placeOrderItem?.virtualItemURLs,
+			};
+		}),
+	};
+
+	if (error) {
+		return (
+			<DashboardPage
+				messages={{
+					description: 'Manage apps purchase from the Marketplace',
+					title: 'My Apps',
+				}}
+			>
+				<DashboardEmptyTable
+					description1="An error has occurred in retrieving you App."
+					description2="Please try again. If the issue persists please contact marketplace-admin@liferay.com"
+					icon={appsIcon}
+					title="An error occurred while fetching the data."
+				/>
+			</DashboardPage>
+		);
+	}
 
 	return (
 		<DashboardPage
@@ -25,7 +78,9 @@ const Apps = () => {
 				Liferay.Util.navigate(getSiteURL() || '/');
 			}}
 		>
-			<PurchasedAppsTable items={purchasedAppTable.items ?? []} />
+			<PurchasedAppsTable
+				items={(purchasedAppTable.items ?? []) as any}
+			/>
 
 			{!!purchasedAppTable.items.length && (
 				<ClayPaginationBarWithBasicItems

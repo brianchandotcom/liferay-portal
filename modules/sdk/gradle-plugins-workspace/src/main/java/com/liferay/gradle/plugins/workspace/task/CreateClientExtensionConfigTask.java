@@ -112,13 +112,11 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 				batchType = "batch";
 			}
-
-			if (Objects.equals(type, "globalJS")) {
+			else if (Objects.equals(type, "globalJS")) {
 				_mapGlobalJSScriptElementAttributesToJSONString(
 					clientExtension);
 			}
-
-			if (Objects.equals(type, "siteInitializer")) {
+			else if (Objects.equals(type, "siteInitializer")) {
 				pluginPackageProperties.put(
 					"Liferay-Client-Extension-Site-Initializer",
 					"site-initializer/");
@@ -126,6 +124,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				batchType = StringUtil.getDockerSafeName(type);
 
 				_createSiteInitializerJsonFile(clientExtension);
+			}
+			else if (Objects.equals(type, "themeCSS")) {
+				_inlineFrontendTokenDefinitionJSON(clientExtension);
 			}
 
 			if (Objects.equals(
@@ -135,10 +136,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 				pluginPackageProperties.put(
 					"Liferay-Client-Extension-Frontend", "static/");
-			}
-
-			if (Objects.equals(type, "themeCSS")) {
-				_inlineFrontendTokenDefinitionJSON(clientExtension);
 			}
 
 			jsonMap.putAll(clientExtension.toJSONMap());

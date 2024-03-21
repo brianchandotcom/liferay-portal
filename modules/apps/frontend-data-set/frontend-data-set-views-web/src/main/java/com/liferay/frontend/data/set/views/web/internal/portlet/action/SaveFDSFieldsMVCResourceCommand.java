@@ -84,7 +84,9 @@ public class SaveFDSFieldsMVCResourceCommand
 				).put(
 					"renderer", "default"
 				).put(
-					"sortable", true
+					"sortable",
+					Boolean.valueOf(
+						String.valueOf(creationDataJSONObject.get("sortable")))
 				).put(
 					"type", String.valueOf(creationDataJSONObject.get("type"))
 				).build(),

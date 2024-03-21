@@ -17,10 +17,13 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -195,6 +198,56 @@ public class PortalCacheExtenderTest {
 
 				overridingBundle.uninstall();
 			}
+		}
+	}
+
+	@Test
+	public void testUpdateConfigByExtFile() throws Exception {
+		_multiVmXML = _generateXMLContent(
+			1, new String[] {_CACHE_NAME_MULTI}, 1001, 51);
+		_singleVmXML = _generateXMLContent(
+			1, new String[] {_CACHE_NAME_SINGLE}, 1001, 51);
+
+		_bundle = _installBundle(
+			_BUNDLE_SYMBOLIC_NAME, _multiVmXML, _singleVmXML);
+
+		_assertCacheConfig(
+			PortalCacheManagerNames.MULTI_VM, 1001, _CACHE_NAME_MULTI + "1",
+			51L);
+		_assertCacheConfig(
+			PortalCacheManagerNames.SINGLE_VM, 1001, _CACHE_NAME_SINGLE + "1",
+			51L);
+
+		_bundle.stop();
+
+		File ehcacheFolder = new File(
+			_props.get(PropsKeys.MODULE_FRAMEWORK_BASE_DIR) + "/ehcache/");
+
+		try {
+			_file.write(
+				new File(
+					ehcacheFolder, _BUNDLE_SYMBOLIC_NAME + "-multi-vm-ext.xml"),
+				_generateXMLContent(
+					1, new String[] {_CACHE_NAME_MULTI}, 2001, 101));
+
+			_file.write(
+				new File(
+					ehcacheFolder,
+					_BUNDLE_SYMBOLIC_NAME + "-single-vm-ext.xml"),
+				_generateXMLContent(
+					1, new String[] {_CACHE_NAME_SINGLE}, 2001, 101));
+
+			_bundle.start();
+
+			_assertCacheConfig(
+				PortalCacheManagerNames.MULTI_VM, 2001, _CACHE_NAME_MULTI + "1",
+				101L);
+			_assertCacheConfig(
+				PortalCacheManagerNames.SINGLE_VM, 2001,
+				_CACHE_NAME_SINGLE + "1", 101L);
+		}
+		finally {
+			_file.deltree(ehcacheFolder);
 		}
 	}
 
@@ -374,10 +427,16 @@ public class PortalCacheExtenderTest {
 	private static String _multiVmXML;
 	private static String _singleVmXML;
 
+	@Inject
+	private com.liferay.portal.kernel.util.File _file;
+
 	@Inject(
 		filter = "component.name=com.liferay.portal.cache.ehcache.internal.MultiVMEhcachePortalCacheManager"
 	)
 	private PortalCacheManager<? extends Serializable, ? extends Serializable>
 		_multiVMPortalCacheManager;
+
+	@Inject
+	private Props _props;
 
 }

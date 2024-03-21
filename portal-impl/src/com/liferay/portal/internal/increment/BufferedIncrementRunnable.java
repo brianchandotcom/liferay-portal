@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import java.io.Serializable;
 
@@ -35,15 +34,11 @@ public class BufferedIncrementRunnable implements Runnable {
 		if (bufferedIncrementConfiguration.isStandbyEnabled()) {
 			_queueLengthTracker.incrementAndGet();
 		}
-
-		_companyId = CompanyThreadLocal.getCompanyId();
 	}
 
 	@Override
 	@SuppressWarnings("rawtypes")
 	public void run() {
-		CompanyThreadLocal.setCompanyId(_companyId);
-
 		while (true) {
 			BufferedIncreasableEntry bufferedIncreasableEntry =
 				(BufferedIncreasableEntry)_batchablePipe.take();
@@ -95,7 +90,6 @@ public class BufferedIncrementRunnable implements Runnable {
 	private final BatchablePipe<Serializable, Increment<?>> _batchablePipe;
 	private final BufferedIncrementConfiguration
 		_bufferedIncrementConfiguration;
-	private final long _companyId;
 	private final Thread _dispatchThread;
 	private final AtomicInteger _queueLengthTracker;
 

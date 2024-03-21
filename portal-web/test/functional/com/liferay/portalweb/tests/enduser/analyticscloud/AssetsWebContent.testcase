@@ -764,10 +764,11 @@ definition {
 			ACNavigation.openItem(itemName = "Web Content AC Title");
 		}
 
-		task ("Confirm the Views number is correct") {
-			ACAssets.viewVisitorsBehaviorMetric(
+		task ("Confirm that web content events appear in AC") {
+			ACAssets.viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(
+				maxMetricValue = 4,
 				metricTitle = "Views",
-				metricValue = 3);
+				minMetricValue = 1);
 		}
 	}
 

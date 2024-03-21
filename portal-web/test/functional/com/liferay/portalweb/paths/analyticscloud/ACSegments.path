@@ -517,7 +517,7 @@
 </tr>
 <tr>
 	<td>BREAKDOWN_CHART</td>
-	<td>//div[contains(@class,'chart-container')]</td>
+	<td>//div[contains(@class,'chart-container')]//div[@class='recharts-responsive-container']</td>
 	<td></td>
 </tr>
 

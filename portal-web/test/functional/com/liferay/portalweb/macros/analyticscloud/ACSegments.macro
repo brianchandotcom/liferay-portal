@@ -709,6 +709,8 @@ definition {
 
 	@summary = "Default summary"
 	macro viewBreakdownChartsEntry(key_entry = null) {
+		WaitForElementPresent(locator1 = "ACSegments#BREAKDOWN_CHART");
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "ACSegments#BREAKDOWN_CHART",
 			value1 = ${key_entry});

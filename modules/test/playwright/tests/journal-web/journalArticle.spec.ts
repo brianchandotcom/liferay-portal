@@ -161,12 +161,12 @@ prefixUrlTest(
 
 translationTest(
 	'LPD-13732: This is a test for reset translations button in web content',
-	async ({journalEditArticlePage, journalPage, page}) => {
-		await journalPage.goto();
-
+	async ({journalEditArticlePage, page, site}) => {
 		const title = getRandomString();
 
-		await journalEditArticlePage.goToCreateNewBasicArticle(title);
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.fillTitle(title);
 
 		const translationButton = page.getByRole('combobox', {
 			name: 'Select a language',

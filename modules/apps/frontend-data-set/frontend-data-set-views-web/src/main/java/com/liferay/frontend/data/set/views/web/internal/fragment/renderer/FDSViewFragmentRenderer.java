@@ -256,6 +256,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		Map<String, Object> fdsViewObjectEntryProperties =
 			fdsViewObjectEntry.getProperties();
 
+		String fdsDefaultVisualizationMode = String.valueOf(
+			fdsViewObjectEntryProperties.get("defaultVisualizationMode"));
+
 		String fdsEntryObjectEntryERC = String.valueOf(
 			fdsViewObjectEntryProperties.get(
 				"r_fdsEntryFDSViewRelationship_c_fdsEntryERC"));
@@ -318,8 +321,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				"views",
 				_getFDSViewsJSONArray(
 					fragmentEntryLink.getCompanyId(),
-					fdsCardsSectionObjectEntries, fdsFieldObjectEntries,
-					fdsListSectionObjectEntries, httpServletRequest)
+					fdsCardsSectionObjectEntries, fdsDefaultVisualizationMode,
+					fdsFieldObjectEntries, fdsListSectionObjectEntries,
+					httpServletRequest)
 			).build(),
 			httpServletRequest, writer);
 
@@ -423,13 +427,14 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	private JSONObject _getFDSCardsViewJSONObject(
 			Collection<ObjectEntry> fdsCardsSectionObjectEntries,
+			String fdsDefaultVisualizationMode,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return JSONUtil.put(
 			"contentRenderer", "cards"
 		).put(
-			"default", false
+			"default", fdsDefaultVisualizationMode.equals("cards")
 		).put(
 			"label", _language.get(httpServletRequest, "cards")
 		).put(
@@ -465,6 +470,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSListViewJSONObject(
+			String fdsDefaultVisualizationMode,
 			Collection<ObjectEntry> fdsListSectionObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -472,7 +478,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return JSONUtil.put(
 			"contentRenderer", "list"
 		).put(
-			"default", false
+			"default", fdsDefaultVisualizationMode.equals("list")
 		).put(
 			"label", _language.get(httpServletRequest, "list")
 		).put(
@@ -485,14 +491,15 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getFDSTableViewJSONObject(
-			long companyId, Set<ObjectEntry> fdsFieldObjectEntries,
+			long companyId, String fdsDefaultVisualizationMode,
+			Set<ObjectEntry> fdsFieldObjectEntries,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		return JSONUtil.put(
 			"contentRenderer", "table"
 		).put(
-			"default", !FeatureFlagManagerUtil.isEnabled("LPD-10735")
+			"default", fdsDefaultVisualizationMode.equals("table")
 		).put(
 			"label", _language.get(httpServletRequest, "table")
 		).put(
@@ -509,6 +516,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	private JSONArray _getFDSViewsJSONArray(
 			long companyId,
 			Collection<ObjectEntry> fdsCardsSectionObjectEntries,
+			String fdsDefaultVisualizationMode,
 			Set<ObjectEntry> fdsFieldObjectEntries,
 			Collection<ObjectEntry> fdsListSectionObjectEntries,
 			HttpServletRequest httpServletRequest)
@@ -520,19 +528,22 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			if (!fdsCardsSectionObjectEntries.isEmpty()) {
 				viewsJSONArray.put(
 					_getFDSCardsViewJSONObject(
-						fdsCardsSectionObjectEntries, httpServletRequest));
+						fdsCardsSectionObjectEntries,
+						fdsDefaultVisualizationMode, httpServletRequest));
 			}
 
 			if (!fdsListSectionObjectEntries.isEmpty()) {
 				viewsJSONArray.put(
 					_getFDSListViewJSONObject(
+						fdsDefaultVisualizationMode,
 						fdsListSectionObjectEntries, httpServletRequest));
 			}
 
 			if (!fdsFieldObjectEntries.isEmpty()) {
 				viewsJSONArray.put(
 					_getFDSTableViewJSONObject(
-						companyId, fdsFieldObjectEntries, httpServletRequest));
+						companyId, fdsDefaultVisualizationMode,
+						fdsFieldObjectEntries, httpServletRequest));
 			}
 		}
 
@@ -543,7 +554,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 			viewsJSONArray.put(
 				_getFDSTableViewJSONObject(
-					companyId, fdsFieldObjectEntries, httpServletRequest));
+					companyId, fdsDefaultVisualizationMode,
+					fdsFieldObjectEntries, httpServletRequest));
 		}
 
 		return viewsJSONArray;

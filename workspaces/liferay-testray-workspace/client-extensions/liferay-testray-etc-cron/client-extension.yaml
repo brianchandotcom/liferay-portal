@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: fatJar
+    - fromTask: bootJar
 liferay-testray-etc-cron-oauth-application-headless-server:
     .serviceAddress: localhost:8080
     .serviceScheme: http

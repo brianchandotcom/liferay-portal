@@ -22,6 +22,7 @@ public class AMDocumentLibraryThumbnailsUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
+		registry.registerInitialization();
 
 		// See LPS-86356
 

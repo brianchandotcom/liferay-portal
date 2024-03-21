@@ -115,13 +115,7 @@ export class PageEditorPage {
 		style: string,
 		isDesktop = true
 	) {
-		const topper = isDesktop
-			? this.page.locator(
-					`.lfr-layout-structure-item-topper-${fragmentId}`
-			  )
-			: this.page
-					.frameLocator('.page-editor__global-context-iframe')
-					.locator(`.lfr-layout-structure-item-topper-${fragmentId}`);
+		const topper = this.getTopper(fragmentId, isDesktop);
 
 		const styles = await topper.evaluate((element) =>
 			window.getComputedStyle(element)
@@ -208,5 +202,17 @@ export class PageEditorPage {
 				.frameLocator('.page-editor__global-context-iframe')
 				.locator(`.lfr-layout-structure-item-${fragmentId}`);
 		}
+	}
+
+	getTopper(fragmentId: string, isDesktop = true) {
+		const topper = isDesktop
+			? this.page.locator(
+					`.lfr-layout-structure-item-topper-${fragmentId}`
+			  )
+			: this.page
+					.frameLocator('.page-editor__global-context-iframe')
+					.locator(`.lfr-layout-structure-item-topper-${fragmentId}`);
+
+		return topper;
 	}
 }

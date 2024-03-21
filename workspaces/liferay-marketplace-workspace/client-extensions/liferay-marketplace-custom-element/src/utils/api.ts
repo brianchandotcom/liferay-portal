@@ -409,28 +409,6 @@ export async function getOptions() {
 	return items as CommerceOption[];
 }
 
-export async function getPlacedOrders(
-	accountId: number,
-	channelId: number | string,
-	page?: number,
-	pageSize?: number
-) {
-	let url = `${baseURL}/o/headless-commerce-delivery-order/v1.0/channels/${channelId}/accounts/${accountId}/placed-orders`;
-
-	if (page && pageSize) {
-		url =
-			url +
-			`?nestedFields=placedOrderItems&page=${page}&pageSize=${pageSize}`;
-	}
-
-	const response = await fetch(url, {headers, method: 'GET'});
-
-	return (await response.json()) as {
-		items: PlacedOrder[];
-		totalCount: number;
-	};
-}
-
 export async function getOrderTypes() {
 	const response = await fetch(
 		`${baseURL}/o/headless-commerce-admin-order/v1.0/order-types`,

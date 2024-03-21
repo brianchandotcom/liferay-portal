@@ -11,11 +11,3 @@ export function getIconSpriteMap() {
 
 	return spritemap;
 }
-
-export function getCompanyId() {
-	return Liferay.ThemeDisplay.getCompanyId();
-}
-
-export function Service() {
-	return Liferay.Service();
-}

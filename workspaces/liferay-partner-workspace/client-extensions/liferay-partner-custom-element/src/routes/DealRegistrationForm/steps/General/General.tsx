@@ -347,7 +347,10 @@ const General = ({
 						onClick={() => {
 							setIsButtonClicked(true);
 							onContinue?.(formikHelpers, StepType.REVIEW);
-							window.scrollTo(0, 0);
+							window.scrollTo({
+								behavior: isValid ? 'instant' : 'smooth',
+								top: 0
+							});
 						}}
 					>
 						Proceed

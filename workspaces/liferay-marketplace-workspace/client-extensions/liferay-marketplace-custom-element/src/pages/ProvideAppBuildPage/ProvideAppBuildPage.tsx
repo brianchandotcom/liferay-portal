@@ -28,7 +28,6 @@ import {ProductUploadType} from '../../enums/ProductUploadType';
 import {ProductVersionOption} from '../../enums/ProductVersionOption';
 import {ProductVocabulary} from '../../enums/ProductVocabulary';
 import i18n from '../../i18n';
-import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
@@ -49,6 +48,7 @@ import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 
 import './ProvideAppBuildPage.scss';
 import ResourceRequirements from './ResourceRequirements';
+import {Liferay} from '../../liferay/liferay';
 
 type ProvideAppBuildPageProps = {
 	onClickBack: () => void;
@@ -191,9 +191,8 @@ export function ProvideAppBuildPage({
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		string[]
 	>([]);
-	const [visibleSelectVersionModal, setVisibleSelectVersionModal] = useState(
-		false
-	);
+	const [visibleSelectVersionModal, setVisibleSelectVersionModal] =
+		useState(false);
 
 	const bodySpecification = useMemo(
 		() => [
@@ -323,8 +322,7 @@ export function ProvideAppBuildPage({
 			}
 
 			newCategories = [...categories.items, ...newCategories];
-		}
-		else {
+		} else {
 			newCategories = [
 				...categories.items.filter((category) => {
 					if (
@@ -412,12 +410,11 @@ export function ProvideAppBuildPage({
 						className:
 							'com.liferay.commerce.product.model.CPAttachmentFileEntry',
 						classPK: buildAppPackageId as number,
-						companyId: getCompanyId(),
+						companyId: Liferay.ThemeDisplay.getCompanyId(),
 						tableName: 'CUSTOM_FIELDS',
 					});
 				}
-			}
-			catch (error) {
+			} catch (error) {
 				console.error(
 					'Failed during the submitAppBuildPackages',
 					error
@@ -583,9 +580,9 @@ export function ProvideAppBuildPage({
 							<OfferingTypeCheckbox
 								handleSelectCheckbox={handleSelectCheckbox}
 								offeringTypes={
-									(offeringTypesDescription[
+									offeringTypesDescription[
 										appType.value as ProductType
-									] as unknown) as OfferingType[]
+									] as unknown as OfferingType[]
 								}
 								selectedValue={selectedCheckboxValue}
 							/>
@@ -806,8 +803,7 @@ export function ProvideAppBuildPage({
 								bodySpecification
 							);
 						}
-					}
-					catch (error) {
+					} catch (error) {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

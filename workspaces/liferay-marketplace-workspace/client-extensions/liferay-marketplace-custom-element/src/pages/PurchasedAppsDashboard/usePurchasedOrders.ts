@@ -5,7 +5,7 @@
 
 import useSWR from 'swr';
 
-import {getPlacedOrders} from '../../utils/api';
+import HeadlessCommerceDeliveryOrder from '../../services/rest/HeadlessCommerceDeliveryOrder';
 
 type Props = {
 	accountId: number;
@@ -27,11 +27,14 @@ const usePurchasedOrders = ({
 	const swr = useSWR(
 		`/placed-orders/${accountId}/${channelId}/${page}/${pageSize}`,
 		async () => {
-			const placedOrders = await getPlacedOrders(
-				accountId,
+			const placedOrders = await HeadlessCommerceDeliveryOrder.getPlacedOrders(
 				channelId,
-				page,
-				pageSize
+				accountId,
+				new URLSearchParams({
+					nestedFields: 'placedOrderItems',
+					page: page.toString(),
+					pageSize: pageSize.toString(),
+				})
 			);
 
 			return {

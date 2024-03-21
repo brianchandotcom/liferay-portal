@@ -6,9 +6,13 @@
 import fetcher from '../fetcher';
 
 class HeadlessCommerceDeliveryOrder {
-	getPlacedOrders() {
-		return fetcher(
-			'o/headless-commerce-delivery-order/v1.0/placed-orders?nestedFields=placedOrderItems'
+	getPlacedOrders(
+		channelId: number | string,
+		accountId: number | string,
+		params = new URLSearchParams()
+	) {
+		return fetcher<APIResponse<PlacedOrder>>(
+			`/o/headless-commerce-delivery-order/v1.0/channels/${channelId}/accounts/${accountId}/placed-orders?${params}`
 		);
 	}
 

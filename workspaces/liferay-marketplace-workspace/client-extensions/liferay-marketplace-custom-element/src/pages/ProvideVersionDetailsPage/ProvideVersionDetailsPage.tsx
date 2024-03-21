@@ -7,7 +7,7 @@ import {Header} from '../../components/Header/Header';
 import {Input} from '../../components/Input/Input';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../components/Section/Section';
-import {getCompanyId} from '../../liferay/constants';
+import {Liferay} from '../../liferay/liferay';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import {
@@ -74,7 +74,7 @@ export function ProvideVersionDetailsPage({
 			},
 			className: 'com.liferay.commerce.product.model.CPInstance',
 			classPK: skuId,
-			companyId: getCompanyId(),
+			companyId: Liferay.ThemeDisplay.getCompanyId(),
 			tableName: 'CUSTOM_FIELDS',
 		});
 	};
@@ -93,8 +93,7 @@ export function ProvideVersionDetailsPage({
 			newOptionId = await postOption(
 				isDXP ? getDxpOptionBody() : getTrialOptionBody()
 			);
-		}
-		else {
+		} else {
 			newOptionId = optionId ?? targetOption!.id;
 		}
 
@@ -118,15 +117,18 @@ export function ProvideVersionDetailsPage({
 		});
 
 		if (isDXP) {
-			const [
-				standardOptionId,
-				developerOptionId,
-				trialOptionId,
-			] = await Promise.all([
-				postOptionValue(getOptionStandardBody(), newProductOptionId),
-				postOptionValue(getOptionDeveloperBody(), newProductOptionId),
-				postOptionValue(getOptionTrialBody(), newProductOptionId),
-			]);
+			const [standardOptionId, developerOptionId, trialOptionId] =
+				await Promise.all([
+					postOptionValue(
+						getOptionStandardBody(),
+						newProductOptionId
+					),
+					postOptionValue(
+						getOptionDeveloperBody(),
+						newProductOptionId
+					),
+					postOptionValue(getOptionTrialBody(), newProductOptionId),
+				]);
 
 			return {
 				developerOptionId,
@@ -191,8 +193,7 @@ export function ProvideVersionDetailsPage({
 			if (sku === 'TRIAL') {
 				value = skuProductOptions.trialOptionId;
 			}
-		}
-		else {
+		} else {
 			value = skuProductOptions.noOptionId;
 		}
 

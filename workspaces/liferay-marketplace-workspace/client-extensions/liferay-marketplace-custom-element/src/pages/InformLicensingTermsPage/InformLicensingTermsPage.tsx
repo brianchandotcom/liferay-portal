@@ -13,7 +13,6 @@ import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
-import {getCompanyId} from '../../liferay/constants';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
 import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
@@ -30,6 +29,7 @@ import {
 import {createSkuName, getSkuPrice} from '../../utils/util';
 
 import './InformLicensingTermsPage.scss';
+import {Liferay} from '../../liferay/liferay';
 
 type InformLicensingTermsPageProps = {
 	onClickBack: () => void;
@@ -96,9 +96,8 @@ export function InformLicensingTermsPage({
 	};
 
 	const submitLicenseTermsPage = async () => {
-		const {
-			items: skus,
-		} = await HeadlessCommerceAdminCatalogImpl.getProductSkus(appProductId);
+		const {items: skus} =
+			await HeadlessCommerceAdminCatalogImpl.getProductSkus(appProductId);
 
 		for (const sku of skus) {
 			const freeOrPerpertual =
@@ -133,8 +132,7 @@ export function InformLicensingTermsPage({
 
 		if (trialSku) {
 			_skuTrialId = trialSku.id;
-		}
-		else if (!isDXP) {
+		} else if (!isDXP) {
 			const response = await createAppSKU({
 				appProductId,
 				body: {
@@ -169,7 +167,7 @@ export function InformLicensingTermsPage({
 			},
 			className: 'com.liferay.commerce.product.model.CPInstance',
 			classPK: skuTrialId,
-			companyId: getCompanyId(),
+			companyId: Liferay.ThemeDisplay.getCompanyId(),
 			tableName: 'CUSTOM_FIELDS',
 		});
 	};

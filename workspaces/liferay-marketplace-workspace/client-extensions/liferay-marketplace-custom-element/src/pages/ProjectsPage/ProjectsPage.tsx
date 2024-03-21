@@ -10,7 +10,6 @@ import {CreateProjectModal} from '../../components/CreateProjectModal/CreateProj
 import {ProjectDetailsCard} from '../../components/CreateProjectModal/ProjectDetailsCard';
 import {DashboardPage} from '../../components/DashBoardPage/DashboardPage';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
-import {getPlacedOrders} from '../../utils/api';
 import {NextSteps} from '../NextSteps';
 import {ProjectsTableRow} from './ProjectsTableRow';
 
@@ -19,6 +18,7 @@ import './ProjectsPage.scss';
 import ClayIcon from '@clayui/icon';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import HeadlessCommerceDeliveryOrder from '../../services/rest/HeadlessCommerceDeliveryOrder';
 
 type ProjectsPageProps = {
 	icon: string;
@@ -57,13 +57,14 @@ export function ProjectsPage({icon, selectedAccount}: ProjectsPageProps) {
 		const makeFetch = async () => {
 			setLoading(true);
 
-			const {items} = await getPlacedOrders(
+			const {items} = await HeadlessCommerceDeliveryOrder.getPlacedOrders(
+				channel.id,
 				selectedAccount?.id,
-				channel.id
+				new URLSearchParams({nestedFields: 'placedOrderItems'})
 			);
 
 			const filteredOrders = items?.filter(
-				({orderTypeExternalReferenceCode}) =>
+				({orderTypeExternalReferenceCode}: any) =>
 					orderTypeExternalReferenceCode === 'PROJECT60'
 			);
 

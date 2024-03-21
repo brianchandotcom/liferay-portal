@@ -1,26 +1,26 @@
 [
-    {
-        "accountBriefs": [
-            {
-                "externalReferenceCode": "M2H8_ADMIN_ADAM"
-            }
-        ],
-        "emailAddress": "m2h8.admin.adam@liferay.com"
-    },
-    {
-        "accountBriefs": [
-            {
-                "externalReferenceCode": "M2H8_CUSTOMER_CARL"
-            }
-        ],
-        "emailAddress": "m2h8.customer.carl@liferay.com"
-    },
-    {
-        "accountBriefs": [
-            {
-                "externalReferenceCode": "M2H8_SUPPORT_SAM"
-            }
-        ],
-        "emailAddress": "m2h8.support.sam@liferay.com"
-    }
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "M2H8_ADMIN_ADAM"
+			}
+		],
+		"emailAddress": "m2h8.admin.adam@liferay.com"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "M2H8_CUSTOMER_CARL"
+			}
+		],
+		"emailAddress": "m2h8.customer.carl@liferay.com"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "M2H8_SUPPORT_SAM"
+			}
+		],
+		"emailAddress": "m2h8.support.sam@liferay.com"
+	}
 ]

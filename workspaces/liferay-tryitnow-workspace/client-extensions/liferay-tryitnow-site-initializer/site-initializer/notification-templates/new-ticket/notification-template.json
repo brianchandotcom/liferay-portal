@@ -4,19 +4,19 @@
 	"externalReferenceCode": "NEW_TICKET_USER_TEMPLATE",
 	"name": "New Ticket User Template",
 	"name_i18n": {
-	  "en_US": "New Ticket User Template"
+		"en_US": "New Ticket User Template"
 	},
 	"objectDefinitionExternalReferenceCode": "J3Y7_TICKET",
 	"recipientType": "role",
 	"recipients": [
-	  {
-		"roleName": "M2H8 Ticket Solvers"
-	  }
+		{
+			"roleName": "M2H8 Ticket Solvers"
+		}
 	],
 	"subject": {
-	  "en_US": "Hello ,\\nA new ticket was created with the following subject : [%J3Y7TICKET_SUBJECT%]"
+		"en_US": "Hello ,\\nA new ticket was created with the following subject : [%J3Y7TICKET_SUBJECT%]"
 	},
 	"system": false,
 	"type": "userNotification",
 	"typeLabel": "User Notification"
-  }
+}

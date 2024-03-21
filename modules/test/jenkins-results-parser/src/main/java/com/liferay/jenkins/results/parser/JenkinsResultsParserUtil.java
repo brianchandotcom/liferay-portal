@@ -3609,8 +3609,27 @@ public class JenkinsResultsParserUtil {
 	public static boolean isJenkinsSlaveInNetwork(
 		String jenkinsSlaveName, String networkName) {
 
+		String jenkinsMasterName = getJenkinsMasterName(jenkinsSlaveName);
+
+		try {
+			String jenkinsMasterNetworkName = getBuildProperty(
+				"master.property(" + jenkinsMasterName +
+					"/master.network.name)");
+
+			if (!isNullOrEmpty(jenkinsMasterNetworkName)) {
+				if (jenkinsMasterNetworkName.equals(networkName)) {
+					return true;
+				}
+
+				return false;
+			}
+		}
+		catch (IOException ioException) {
+			System.out.println("WARNING: Failed to get build properties");
+		}
+
 		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
-			getJenkinsMasterName(jenkinsSlaveName));
+			jenkinsMasterName);
 
 		if ((jenkinsMaster == null) ||
 			!Objects.equals(jenkinsMaster.getNetworkName(), networkName)) {

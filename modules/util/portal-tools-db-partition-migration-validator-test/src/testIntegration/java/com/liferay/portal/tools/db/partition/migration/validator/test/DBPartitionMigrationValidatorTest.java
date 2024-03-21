@@ -134,7 +134,9 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 					_errByteArrayOutputStream.toString(
 					).isEmpty());
 			},
-			runtimeException -> Assert.fail(), sourceFilePath, targetFilePath);
+			runtimeException -> Assert.assertEquals(
+				"0", runtimeException.getMessage()),
+			sourceFilePath, targetFilePath);
 	}
 
 	private void _deleteCompany() throws PortalException {
@@ -150,7 +152,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
 			return ReflectionTestUtil.invoke(
-				DBPartitionMigrationValidator.class, "_writeToFile",
+				DBPartitionMigrationValidator.class, "_write",
 				new Class<?>[] {LiferayInstance.class, String.class},
 				DatabaseUtil.exportLiferayInstance(connection),
 				_outputDirectoryFile.getAbsolutePath());

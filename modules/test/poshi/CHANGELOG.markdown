@@ -1,5 +1,44 @@
 # Poshi Runner Change Log
 
+## 1.0.490
+
+### Core
+
+* [POSHI-696](https://liferay.atlassian.net/browse/POSHI-696) - Allow Poshi Context file reading timeout to be configurable
+
+### Gradle
+
+* [POSHI-695](https://liferay.atlassian.net/browse/POSHI-695) - Update ChromeDriver's base URL for downloads
+
+### Other
+
+* [LPS-105380](https://liferay.atlassian.net/browse/LPS-105380) - SourceFormatter Improvements
+* [LRCI-4072](https://liferay.atlassian.net/browse/LRCI-4072) - Update Quarterly Release branches to latest Poshi version for compatibility with latest Jenkins slave image.
+
+### Prose
+
+* [POSHI-654](https://liferay.atlassian.net/browse/POSHI-654) - Delete poshi prose
+
+### Runner
+
+* [POSHI-697](https://liferay.atlassian.net/browse/POSHI-697) - Refactor SelectWindow.selectPopUp to accept value2 as a param.
+
+### Utils
+
+* [POSHI-692](https://liferay.atlassian.net/browse/POSHI-692) - Use of library with known vulnerability: Jayway JsonPath 2.1.0 (poshi-runner)
+
+### Validation
+
+* [POSHI-629](https://liferay.atlassian.net/browse/POSHI-629) - Validate for double quoted or variable reference arguments in util methods
+
+### WebDriver
+
+* [POSHI-675](https://liferay.atlassian.net/browse/POSHI-675) - Make JSONUtil.getWithJSONPath support expression with null
+* [POSHI-687](https://liferay.atlassian.net/browse/POSHI-687) - Make DEFAULT_PATH_LEAF_TO_NULL work
+* [POSHI-690](https://liferay.atlassian.net/browse/POSHI-690) - Remove robot screenshot from Poshi
+* [POSHI-693](https://liferay.atlassian.net/browse/POSHI-693) - Stop using net.jsourcerer.webdriver:JSErrorCollector
+* [POSHI-694](https://liferay.atlassian.net/browse/POSHI-694) - Add new method to return a CDP command
+
 ## 1.0.481
 
 ### Documentation

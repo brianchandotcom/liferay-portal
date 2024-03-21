@@ -10,6 +10,7 @@ import 'react-data-grid/lib/styles.css';
 
 import {Liferay} from '../services/liferay';
 import {Ticket} from '../types';
+import React from 'react';
 
 const TicketGrid = ({tickets}: {tickets: Ticket[]}) => (
 	<DataGrid

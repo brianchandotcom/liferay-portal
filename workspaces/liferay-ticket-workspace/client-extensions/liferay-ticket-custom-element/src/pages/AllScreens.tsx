@@ -5,7 +5,7 @@
 
 import ClayLayout from '@clayui/layout';
 import {ClayVerticalNav} from '@clayui/nav';
-import {ReactNode} from 'react';
+import React from 'react';
 
 import {useHash} from '../hooks/useHash';
 import {ScreenType} from '../types';
@@ -25,7 +25,7 @@ const ROUTES = [
 	},
 ];
 
-const HREF_COMPONENT_MAP: {[key: string]: ReactNode} = {};
+const HREF_COMPONENT_MAP: {[key: string]: React.ReactElement} = {};
 
 ROUTES.forEach((route) => {
 	HREF_COMPONENT_MAP[route.href] = route.element;

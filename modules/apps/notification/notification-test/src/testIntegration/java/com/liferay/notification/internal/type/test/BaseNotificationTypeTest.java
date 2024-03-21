@@ -182,7 +182,7 @@ public class BaseNotificationTypeTest {
 
 		dtoConverterContext = new DefaultDTOConverterContext(
 			false, Collections.emptyMap(),
-			BaseNotificationTypeTest._dtoConverterRegistry, null,
+			BaseNotificationTypeTest.dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, user1);
 
 		ListType prefixListType = _listTypeLocalService.getListType(
@@ -210,7 +210,7 @@ public class BaseNotificationTypeTest {
 	@Before
 	public void setUp() throws Exception {
 		childObjectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
+			objectDefinitionLocalService.addCustomObjectDefinition(
 				user1.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -324,12 +324,12 @@ public class BaseNotificationTypeTest {
 					).build()));
 
 		childObjectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
+			objectDefinitionLocalService.publishCustomObjectDefinition(
 				user1.getUserId(),
 				childObjectDefinition.getObjectDefinitionId());
 
 		parentObjectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
+			objectDefinitionLocalService.addCustomObjectDefinition(
 				user1.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -359,12 +359,12 @@ public class BaseNotificationTypeTest {
 					).build()));
 
 		parentObjectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
+			objectDefinitionLocalService.publishCustomObjectDefinition(
 				user1.getUserId(),
 				parentObjectDefinition.getObjectDefinitionId());
 
 		objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
+			objectRelationshipLocalService.addObjectRelationship(
 				null, TestPropsValues.getUserId(),
 				parentObjectDefinition.getObjectDefinitionId(),
 				childObjectDefinition.getObjectDefinitionId(), 0,
@@ -427,14 +427,14 @@ public class BaseNotificationTypeTest {
 			getTermName(true, "AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
 		).build();
 
-		_resourcePermissionLocalService.addResourcePermission(
+		resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
 			childObjectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
 
-		_resourcePermissionLocalService.addResourcePermission(
+		resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
 			parentObjectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY,
@@ -555,13 +555,24 @@ public class BaseNotificationTypeTest {
 
 	protected static LinkedHashMap<String, Object> childObjectEntryValues;
 	protected static DTOConverterContext dtoConverterContext;
+
+	@Inject
+	protected static DTOConverterRegistry dtoConverterRegistry;
+
 	protected static Group group;
+
+	@Inject
+	protected static ObjectDefinitionLocalService objectDefinitionLocalService;
 
 	@Inject
 	protected static ObjectFieldLocalService objectFieldLocalService;
 
 	@DeleteAfterTestRun
 	protected static ObjectRelationship objectRelationship;
+
+	@Inject
+	protected static ObjectRelationshipLocalService
+		objectRelationshipLocalService;
 
 	@DeleteAfterTestRun
 	protected static ObjectDefinition parentObjectDefinition;
@@ -593,6 +604,9 @@ public class BaseNotificationTypeTest {
 	)
 	protected ObjectEntryManager objectEntryManager;
 
+	@Inject
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
 	private String _getListType(String type, User user) throws Exception {
 		Contact contact = user.fetchContact();
 
@@ -615,9 +629,6 @@ public class BaseNotificationTypeTest {
 		return listType.getName();
 	}
 
-	@Inject
-	private static DTOConverterRegistry _dtoConverterRegistry;
-
 	private static ListTypeDefinition _listTypeDefinition;
 
 	@Inject
@@ -631,13 +642,6 @@ public class BaseNotificationTypeTest {
 	private static ListTypeLocalService _listTypeLocalService;
 
 	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private static ObjectRelationshipLocalService
-		_objectRelationshipLocalService;
-
-	@Inject
 	private static UserLocalService _userLocalService;
 
 	private Map<String, Object> _childAuthorTermValues;
@@ -648,8 +652,5 @@ public class BaseNotificationTypeTest {
 		_notificationRecipientSettingLocalService;
 
 	private Map<String, Object> _parentAuthorTermValues;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

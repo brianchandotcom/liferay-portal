@@ -5,15 +5,21 @@
 
 package com.liferay.friendly.url.internal.exportimport.data.handler;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -63,6 +69,8 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 		Element friendlyURLEntryElement =
 			portletDataContext.getExportDataElement(friendlyURLEntry);
+
+		_exportAssetCategories(portletDataContext, friendlyURLEntry);
 
 		friendlyURLEntryElement.addAttribute(
 			"resource-class-name", friendlyURLEntry.getClassName());
@@ -178,8 +186,44 @@ public class FriendlyURLEntryStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
+	private void _exportAssetCategories(
+			PortletDataContext portletDataContext,
+			FriendlyURLEntry friendlyURLEntry)
+		throws Exception {
+
+		if (!_featureFlagManager.isEnabled("LPD-11147")) {
+			return;
+		}
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			FriendlyURLEntry.class.getName(),
+			friendlyURLEntry.getFriendlyURLEntryId());
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		List<AssetCategory> assetCategories = assetEntry.getCategories();
+
+		if (ListUtil.isEmpty(assetCategories)) {
+			return;
+		}
+
+		for (AssetCategory assetCategory : assetCategories) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, friendlyURLEntry, assetCategory,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

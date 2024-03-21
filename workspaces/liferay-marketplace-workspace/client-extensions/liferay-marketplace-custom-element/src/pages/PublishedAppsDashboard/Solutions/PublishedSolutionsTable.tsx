@@ -5,7 +5,7 @@
 
 import {useNavigate} from 'react-router-dom';
 
-import solutionsIcon from '../../../../assets/icons/analytics_icon.svg';
+import solutionsIcon from '../../../assets/icons/analytics_icon.svg';
 import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
 import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';

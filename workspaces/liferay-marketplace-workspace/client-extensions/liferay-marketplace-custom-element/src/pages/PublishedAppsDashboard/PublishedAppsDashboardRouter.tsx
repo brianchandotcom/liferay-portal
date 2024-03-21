@@ -11,7 +11,7 @@ import {useCatalogs} from '../../hooks/data/useCatalogs';
 import {useSupplierAccounts} from '../../hooks/data/useSupplierAccounts';
 import {Liferay} from '../../liferay/liferay';
 import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
-import SolutionsDetails from '../PurchasedAppsDashboard/Solutions/SolutionsDetails';
+import SolutionsDetails from '../PurchasedAppsDashboard/Solutions/ReviewAndSubmitSolutions/SolutionsDetails';
 import Accounts from './Accounts/Accounts';
 import Apps from './Apps';
 import App from './Apps/App';

@@ -44,7 +44,7 @@ const General = ({
 		...formikHelpers
 	} = useFormikContext<DealRegistration>();
 
-	const [hasProceedButtonClicked, setProceedButtonClicked] = useState(false);
+	const [isButtonClicked, setIsButtonClicked] = useState(false);
 
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries(
 		useCallback(
@@ -343,9 +343,9 @@ const General = ({
 
 				<div className="d-flex justify-content-between px-2 px-md-0">
 					<Button
-						disabled={!dirty || (hasProceedButtonClicked && !isValid)}
+						disabled={!dirty || (isButtonClicked && !isValid)}
 						onClick={() => {
-							setProceedButtonClicked(true);
+							setIsButtonClicked(true);
 							onContinue?.(formikHelpers, StepType.REVIEW);
 							window.scrollTo(0, 0);
 						}}

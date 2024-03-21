@@ -58,8 +58,6 @@ public class DefaultPortalJob
 				portalUpstreamBranchName, portalRepositoryDir,
 				portalRepositoryName);
 
-		gitWorkingDirectory.setCacheBashCommands(true);
-
 		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
 			throw new RuntimeException("Invalid portal Git working directory");
 		}

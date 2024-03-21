@@ -7351,6 +7351,63 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPD-18730")
 	@Test
+	public void testSortByNotSupportedRelationshipObjectFields()
+		throws Exception {
+
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectRelationship2 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		String endpoint = _getEndpoint(
+			TestPropsValues.getGroupId(), _objectDefinition1);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.ERROR)) {
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					"status", "BAD_REQUEST"
+				).put(
+					"title", "Unable to sort by a many to many related field"
+				).toString(),
+				HTTPTestUtil.invokeToString(
+					null,
+					StringBundler.concat(
+						endpoint, "?sort=",
+						URLCodec.encodeURL(
+							String.format(
+								"%s/%s:asc", _objectRelationship1.getName(),
+								_OBJECT_FIELD_NAME_TEXT))),
+					Http.Method.GET),
+				JSONCompareMode.STRICT);
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					"status", "BAD_REQUEST"
+				).put(
+					"title", "Unable to sort by a many to one related field"
+				).toString(),
+				HTTPTestUtil.invokeToString(
+					null,
+					StringBundler.concat(
+						endpoint, "?sort=",
+						URLCodec.encodeURL(
+							String.format(
+								"%s/%s:asc", _objectRelationship2.getName(),
+								_OBJECT_FIELD_NAME_TEXT))),
+					Http.Method.GET),
+				JSONCompareMode.STRICT);
+		}
+	}
+
+	@FeatureFlags("LPD-18730")
+	@Test
 	public void testSortByOneToManyRelationshipCustomObjectFields()
 		throws Exception {
 
@@ -8479,6 +8536,39 @@ public class ObjectEntryResourceTest {
 				_objectEntryLocalService.deleteObjectEntry(
 					jsonObject2.getLong("id"));
 			}
+		}
+	}
+
+	@Test
+	public void testSortByRelationshipObjectFields() throws Exception {
+		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		String endpoint = _getEndpoint(
+			TestPropsValues.getGroupId(), _objectDefinition1);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.ERROR)) {
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					"status", "BAD_REQUEST"
+				).put(
+					"title", "Unable to sort by a related field"
+				).toString(),
+				HTTPTestUtil.invokeToString(
+					null,
+					StringBundler.concat(
+						endpoint, "?sort=",
+						URLCodec.encodeURL(
+							String.format(
+								"%s/%s:asc", _objectRelationship1.getName(),
+								_OBJECT_FIELD_NAME_TEXT))),
+					Http.Method.GET),
+				JSONCompareMode.STRICT);
 		}
 	}
 

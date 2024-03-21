@@ -860,9 +860,7 @@ definition {
 		}
 
 		task ("Check the analysis result appears") {
-			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "(");
-
-			var dataSourceName = StringUtil.trim(${dataSourceName});
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
 			ACTimeFilter.clickTimeFilterButton();
 

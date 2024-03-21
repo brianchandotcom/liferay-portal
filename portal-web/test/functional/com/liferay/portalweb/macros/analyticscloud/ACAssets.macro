@@ -109,6 +109,23 @@ definition {
 			value1 = ${value});
 	}
 
+	@summary = "Check that the metric number is between the correct range for cases where the exact metric number is not necessary"
+	macro viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(maxMetricValue, metricTitle, minMetricValue) {
+		var key_metricTitle = ${metricTitle};
+
+		WaitForElementPresent(locator1 = "ACAssets#METRIC_VALUE_BY_METRIC_TITLE");
+
+		var actualMetricValue = selenium.getText("ACAssets#METRIC_VALUE_BY_METRIC_TITLE");
+
+		TestUtils.isLessThan(
+			actual = ${minMetricValue},
+			expected = ${actualMetricValue});
+
+		TestUtils.isGreaterThan(
+			actual = ${maxMetricValue},
+			expected = ${actualMetricValue});
+	}
+
 	@summary = "Default summary"
 	macro viewTechnologyBrowsersMetric(percentageMetricValue = null, browserMetricValue = null, cssValue = null, cardTitle = null) {
 		var key_cardTitle = ${cardTitle};

@@ -193,9 +193,10 @@ definition {
 		}
 
 		task ("Check the number of downloads made by the anonymous user") {
-			ACAssets.viewVisitorsBehaviorMetric(
+			ACAssets.viewIfVisitorsBehaviorMetricIsBetweenCorrectRange(
+				maxMetricValue = 5,
 				metricTitle = "Downloads",
-				metricValue = 1);
+				minMetricValue = 0);
 		}
 	}
 

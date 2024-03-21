@@ -91,6 +91,45 @@ const aiCreateImageTest = mergeTests(
 	})
 );
 
+const privateContentIconTest = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-10626': true,
+	})
+);
+
+privateContentIconTest(
+	'LPD-15807: Identify at a glance if a Web Content is visible for guests in content management',
+	async ({apiHelpers, journalEditArticlePage, journalPage, site}) => {
+		const contentStructureId = await getBasicWebContentStructureId(
+			apiHelpers
+		);
+
+		const title = getRandomString();
+
+		await addApprovedStructuredContent(
+			apiHelpers,
+			site.id,
+			contentStructureId,
+			title
+		);
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await journalPage.assertPrivateContentIcon();
+
+		await journalPage.changeView('table');
+
+		await journalPage.assertPrivateContentIcon();
+
+		await journalPage.changeView('list');
+
+		await journalEditArticlePage.editArticle(title);
+
+		await journalPage.assertPrivateContentIcon();
+	}
+);
+
 prefixUrlTest(
 	'LPD-6813: Make prefix URLs configurable',
 	async ({

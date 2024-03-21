@@ -96,6 +96,12 @@ export class JournalPage {
 			.click();
 	}
 
+	async assertPrivateContentIcon() {
+		await expect(
+			this.page.getByLabel('Not Visible to Guest Users').locator('use')
+		).toBeVisible({timeout: 1000});
+	}
+
 	async changeView(viewName: string) {
 		await this.page
 			.getByLabel('Select View, Currently Selected: ')

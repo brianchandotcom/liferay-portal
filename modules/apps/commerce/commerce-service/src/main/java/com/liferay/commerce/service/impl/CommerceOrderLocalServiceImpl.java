@@ -556,10 +556,17 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public void deleteCommerceOrdersByAccountId(
-		long commerceAccountId, Date date, int status) {
+			long commerceAccountId, Date date, int status)
+		throws PortalException {
 
-		commerceOrderPersistence.removeByC_LtC_O(
-			date, commerceAccountId, status);
+		List<CommerceOrder> commerceOrderList =
+			commerceOrderPersistence.findByC_LtC_O(
+				date, commerceAccountId, status, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (CommerceOrder commerceOrder : commerceOrderList) {
+			commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
+		}
 	}
 
 	@Override

@@ -1,6 +1,0 @@
-{
-	"className": "com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortlet",
-	"ddmTemplateKey": "LEARN_CATEGORY_FACET",
-	"name": "Learn Category Facet",
-	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
-}

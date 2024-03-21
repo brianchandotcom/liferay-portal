@@ -1195,7 +1195,7 @@ public class ClientExtensionProjectConfigurator
 			if (Objects.equals(entry.getKey(), "src")) {
 				throw new GradleException(
 					"The key 'src' is not allowed as a script element " +
-						"attribute. Use 'url' instead.");
+						"attribute");
 			}
 
 			Object value = entry.getValue();

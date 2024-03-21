@@ -13,6 +13,7 @@ import com.liferay.object.web.internal.object.definitions.display.context.Object
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 
 import java.io.IOException;
 
@@ -58,7 +59,8 @@ public class ValidationsObjectDefinitionsScreeNavigationEntry
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsValidationsDisplayContext(
 				httpServletRequest, _objectDefinitionModelResourcePermission,
-				_objectValidationRuleEngineRegistry));
+				_objectValidationRuleEngineRegistry,
+				_scriptManagementConfigurationHelper));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
@@ -72,5 +74,9 @@ public class ValidationsObjectDefinitionsScreeNavigationEntry
 	@Reference
 	private ObjectValidationRuleEngineRegistry
 		_objectValidationRuleEngineRegistry;
+
+	@Reference
+	private ScriptManagementConfigurationHelper
+		_scriptManagementConfigurationHelper;
 
 }

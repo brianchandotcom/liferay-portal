@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -63,7 +64,8 @@ public class EditObjectValidationRuleMVCRenderCommand
 				new ObjectDefinitionsValidationsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionModelResourcePermission,
-					_objectValidationRuleEngineRegistry));
+					_objectValidationRuleEngineRegistry,
+					_scriptManagementConfigurationHelper));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -90,5 +92,9 @@ public class EditObjectValidationRuleMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ScriptManagementConfigurationHelper
+		_scriptManagementConfigurationHelper;
 
 }

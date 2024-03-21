@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -41,12 +42,16 @@ public class ObjectDefinitionsValidationsDisplayContext
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
-		ObjectValidationRuleEngineRegistry objectValidationRuleEngineRegistry) {
+		ObjectValidationRuleEngineRegistry objectValidationRuleEngineRegistry,
+		ScriptManagementConfigurationHelper
+			scriptManagementConfigurationHelper) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_objectValidationRuleEngineRegistry =
 			objectValidationRuleEngineRegistry;
+		_scriptManagementConfigurationHelper =
+			scriptManagementConfigurationHelper;
 	}
 
 	public String getEditObjectValidationURL() throws Exception {
@@ -110,6 +115,9 @@ public class ObjectDefinitionsValidationsDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"creationLanguageId", objectDefinition.getDefaultLanguageId()
 		).put(
+			"isAllowScriptContentBeExecutedOrIncluded",
+			isAllowScriptContentBeExecutedOrIncluded()
+		).put(
 			"learnResources",
 			LearnMessageUtil.getReactDataJSONObject("object-web")
 		).put(
@@ -129,6 +137,11 @@ public class ObjectDefinitionsValidationsDisplayContext
 		).put(
 			"readOnly", !hasUpdateObjectDefinitionPermission()
 		).build();
+	}
+
+	public boolean isAllowScriptContentBeExecutedOrIncluded() {
+		return _scriptManagementConfigurationHelper.
+			isAllowScriptContentBeExecutedOrIncluded();
 	}
 
 	@Override
@@ -167,5 +180,7 @@ public class ObjectDefinitionsValidationsDisplayContext
 
 	private final ObjectValidationRuleEngineRegistry
 		_objectValidationRuleEngineRegistry;
+	private final ScriptManagementConfigurationHelper
+		_scriptManagementConfigurationHelper;
 
 }

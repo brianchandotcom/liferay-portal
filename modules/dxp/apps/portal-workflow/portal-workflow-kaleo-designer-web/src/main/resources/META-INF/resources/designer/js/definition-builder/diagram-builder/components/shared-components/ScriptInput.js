@@ -10,6 +10,7 @@ import React, {useContext, useState} from 'react';
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DEFAULT_LANGUAGE} from '../../../source-builder/constants';
 import {DiagramBuilderContext} from '../../DiagramBuilderContext';
+import {filterGroovyOption} from '../../util/filterGroovyOption';
 
 const scriptLanguageOptions = [
 	{
@@ -37,20 +38,11 @@ const ScriptInput = ({
 		defaultScriptLanguage || DEFAULT_LANGUAGE
 	);
 
-	const getScriptLanguageOptions = () => {
-		if (
-			Liferay.FeatureFlags['LPD-11179'] &&
-			!allowScriptContentBeExecutedOrIncluded &&
-			!hadGroovyScriptBefore
-		) {
-			return scriptLanguageOptions.filter(
-				(scriptLanguageOption) =>
-					scriptLanguageOption.value !== 'groovy'
-			);
-		}
-
-		return scriptLanguageOptions;
-	};
+	const filteredScriptLanguageOptions = filterGroovyOption(
+		allowScriptContentBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+		scriptLanguageOptions
+	);
 
 	return (
 		<>
@@ -67,7 +59,7 @@ const ScriptInput = ({
 				}}
 				onClickCapture={() => handleClickCapture(scriptLanguage)}
 			>
-				{getScriptLanguageOptions().map((item) => (
+				{filteredScriptLanguageOptions.map((item) => (
 					<ClaySelect.Option
 						key={item.value}
 						label={item.label}

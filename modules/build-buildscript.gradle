@@ -8,7 +8,7 @@ dependencies {
 	}
 
 	if (Boolean.getBoolean("gradle.test.enabled")) {
-		classpath group: "org.ysb33r.gradle", name: "gradletest", version: "3.0.0-alpha.4"
+		classpath group: "org.ysb33r.gradle", name: "gradletest", version: "3.0.0-alpha.5"
 	}
 }
 

@@ -1,5 +1,5 @@
 assemble:
-    - from: assets
+    - from: build/static
       into: static
 liferay-sample-etc-frontend-3-custom-element:
     htmlElementName: liferay-sample-etc-frontend-3-custom-element
@@ -8,10 +8,10 @@ liferay-sample-etc-frontend-3-custom-element:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - custom-element/index.js
+        - custom-element.*.js
     useESM: true
 liferay-sample-etc-frontend-3-js-import-maps-entry:
     bareSpecifier: my-utils
     name: Liferay Sample Etc Frontend 3 JS Import Maps Entry
     type: jsImportMapsEntry
-    url: my-utils/index.js
+    url: my-utils.*.js

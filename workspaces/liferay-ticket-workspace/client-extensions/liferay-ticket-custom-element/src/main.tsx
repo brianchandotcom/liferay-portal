@@ -4,6 +4,7 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
+import React from 'react';
 import * as ReactDOM from 'react-dom';
 import {QueryClient, QueryClientProvider} from 'react-query';
 
@@ -12,7 +13,6 @@ import TicketsDashboard from './pages/TicketsDashboard';
 import TicketsOverview from './pages/TicketsOverview';
 import {Liferay} from './services/liferay';
 import {ScreenType} from './types';
-import React from 'react';
 
 export type LiferayTicketWorkspaceComponentsType = {
 	[key: string]: JSX.Element;

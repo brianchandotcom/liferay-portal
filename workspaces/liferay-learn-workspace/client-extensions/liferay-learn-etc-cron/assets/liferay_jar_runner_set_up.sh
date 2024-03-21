@@ -21,7 +21,7 @@ function clone_repository {
 
 	local github_url=git@github.com:${github_user}/liferay-learn.git
 
-	GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q"
+	export GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -q"
 
 	if [ -d "${LIFERAY_LEARN_ETC_CRON_GIT_REPOSITORY_DIR}" ]
 	then

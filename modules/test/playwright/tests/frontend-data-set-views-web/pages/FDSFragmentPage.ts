@@ -27,7 +27,7 @@ export class FDSFragmentPage {
 		this.fdsTableWrapper = page.getByTestId('visualization-mode-table');
 		this.fragmentWidgetSearchInput = page.getByLabel(
 			'Search Fragments and Widgets'
-			);
+		);
 		this.page = page;
 		this.publishPageButton = page.getByRole('button', {
 			name: 'Publish',
@@ -38,7 +38,11 @@ export class FDSFragmentPage {
 		await this.page.goto('/');
 	}
 
-	async configureDataSetFragment({layout, site, viewLabel = DEFAULT_LABEL.VIEW}) {
+	async configureDataSetFragment({
+		layout,
+		site,
+		viewLabel = DEFAULT_LABEL.VIEW,
+	}) {
 		await this.editPage({layout, site});
 
 		await this.searchFragmentOrWidget('Data Set');
@@ -48,48 +52,46 @@ export class FDSFragmentPage {
 		);
 
 		await this.page
-				.getByText('Select a data set view. Beta')
-				.waitFor({state: 'visible'});
+			.getByText('Select a data set view. Beta')
+			.waitFor({state: 'visible'});
 
 		await this.page
-				.getByText('Select a data set view. Beta')
-				.first()
-				.click();
+			.getByText('Select a data set view. Beta')
+			.first()
+			.click();
 
 		await this.page
-				.getByRole('button', {name: 'Select Data Set View'})
-				.click();
+			.getByRole('button', {name: 'Select Data Set View'})
+			.click();
 
 		await this.page.getByRole('dialog').isVisible();
 
-		await this.page
-				.getByRole('heading', {name: 'Select'})
-				.isVisible();
+		await this.page.getByRole('heading', {name: 'Select'}).isVisible();
 
 		await this.page
-				.frameLocator('iframe[title="Select"]')
-				.locator('.fds-view-item-selector')
-				.waitFor({state: 'visible'});
+			.frameLocator('iframe[title="Select"]')
+			.locator('.fds-view-item-selector')
+			.waitFor({state: 'visible'});
 
 		await this.page
-				.frameLocator('iframe[title="Select"]')
-				.locator('li')
-				.filter({hasText: viewLabel})
-				.first()
-				.click();
+			.frameLocator('iframe[title="Select"]')
+			.locator('li')
+			.filter({hasText: viewLabel})
+			.first()
+			.click();
 
 		await this.page
-				.frameLocator('iframe[title="Select"]')
-				.getByRole('button', {name: 'Save'})
-				.click();
+			.frameLocator('iframe[title="Select"]')
+			.getByRole('button', {name: 'Save'})
+			.click();
 
 		await this.publishPage();
 
 		await this.goToPage({layout, site});
 
 		await this.page
-				.locator('.data-set-wrapper')
-				.waitFor({state: 'visible'});
+			.locator('.data-set-wrapper')
+			.waitFor({state: 'visible'});
 	}
 
 	async createPage({

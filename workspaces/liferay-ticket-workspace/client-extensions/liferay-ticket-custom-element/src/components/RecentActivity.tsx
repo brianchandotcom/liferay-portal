@@ -6,6 +6,7 @@
 import RelativeTime from '@yaireo/relative-time';
 
 import {Ticket} from '../types';
+import React from 'react';
 
 const relativeTime = new RelativeTime();
 

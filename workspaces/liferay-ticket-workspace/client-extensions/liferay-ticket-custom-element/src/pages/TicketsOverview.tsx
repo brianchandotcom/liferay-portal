@@ -21,6 +21,7 @@ import {Liferay} from '../services/liferay';
 import {generateNewTicket} from '../services/tickets';
 import {Filter} from '../types';
 import {INITIAL_FILTER_STATE} from '../utils/constants';
+import React from 'react';
 
 const DEBOUNCE_DELAY = 300;
 

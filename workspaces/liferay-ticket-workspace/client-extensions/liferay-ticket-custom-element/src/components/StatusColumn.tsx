@@ -7,6 +7,7 @@ import {useDroppable} from '@dnd-kit/core';
 
 import {Ticket} from '../types';
 import TicketCard from './TicketCard';
+import React from 'react';
 
 const StatusColumn = ({
 	name,

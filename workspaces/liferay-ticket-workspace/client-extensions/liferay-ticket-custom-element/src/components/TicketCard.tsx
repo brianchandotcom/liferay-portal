@@ -17,6 +17,7 @@ import {QueryClient, useMutation, useQueryClient} from 'react-query';
 import {Liferay} from '../services/liferay';
 import {assignTicketToMe} from '../services/tickets';
 import {Ticket} from '../types';
+import React from 'react';
 
 const TicketCard = ({ticket}: {ticket: Ticket}) => {
 	const [isLoading, setIsLoading] = useState(false);

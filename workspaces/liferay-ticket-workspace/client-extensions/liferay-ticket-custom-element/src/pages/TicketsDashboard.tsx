@@ -162,7 +162,7 @@ const TicketsDashboard = ({screenType}: {screenType: ScreenType}) => {
 					}}
 				>
 					{ALLOWED_DASHBOARD_STATUSES.map((status) => (
-						<div className="autofit-col w-25" key={status}>
+						<div className="autofit-col mx-3 w-25" key={status}>
 							<StatusColumn
 								name={status}
 								relatedTickets={

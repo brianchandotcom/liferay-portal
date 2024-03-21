@@ -8,7 +8,6 @@ import ClayIcon from '@clayui/icon';
 import React, {useContext, useEffect} from 'react';
 
 import {DefinitionBuilderContext} from '../../../../../../DefinitionBuilderContext';
-import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 
 const options = [
 	{
@@ -42,10 +41,10 @@ const SelectReassignment = ({
 	setSection,
 	setSubSections,
 }) => {
-	const {hadGroovyScriptBefore} = useContext(DiagramBuilderContext);
-	const {allowScriptContentBeExecutedOrIncluded} = useContext(
-		DefinitionBuilderContext
-	);
+	const {
+		allowScriptContentBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+	} = useContext(DefinitionBuilderContext);
 
 	useEffect(() => {
 		if (!currentAssignmentType) {

@@ -26,12 +26,11 @@ const scriptLanguageOptions = [
 ];
 
 const ScriptedAssignment = ({setContentName}) => {
-	const {hadGroovyScriptBefore, selectedItem, setSelectedItem} = useContext(
-		DiagramBuilderContext
-	);
-	const {allowScriptContentBeExecutedOrIncluded} = useContext(
-		DefinitionBuilderContext
-	);
+	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+	const {
+		allowScriptContentBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+	} = useContext(DefinitionBuilderContext);
 
 	const [showScriptData, setShowScriptData] = useState(
 		selectedItem?.data.assignments?.script

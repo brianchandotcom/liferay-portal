@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect} from 'react';
 
 import {DefinitionBuilderContext} from '../../../../../DefinitionBuilderContext';
-import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import {filterGroovyOption} from '../../../../util/filterGroovyOption';
 import {sortElements} from '../utils';
 
@@ -39,10 +38,10 @@ const BaseActionsInfo = ({
 	statuses,
 	updateActionInfo,
 }) => {
-	const {hadGroovyScriptBefore} = useContext(DiagramBuilderContext);
-	const {allowScriptContentBeExecutedOrIncluded} = useContext(
-		DefinitionBuilderContext
-	);
+	const {
+		allowScriptContentBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+	} = useContext(DefinitionBuilderContext);
 
 	useEffect(() => {
 		if (executionTypeOptions) {

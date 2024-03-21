@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.script.management.web.internal.display.context;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 
 /**
@@ -23,6 +24,13 @@ public class ScriptManagementConfigurationDisplayContext {
 	public boolean isAllowScriptContentBeExecutedOrIncluded() {
 		return _scriptManagementConfigurationHelper.
 			isAllowScriptContentBeExecutedOrIncluded();
+	}
+
+	public boolean isScriptManagementConfigurationDefined()
+		throws ConfigurationException {
+
+		return _scriptManagementConfigurationHelper.
+			isScriptManagementConfigurationDefined();
 	}
 
 	private final ScriptManagementConfigurationHelper

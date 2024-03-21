@@ -5,11 +5,16 @@
 
 package com.liferay.portal.security.script.management.configuration.helper;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+
 /**
  * @author Feliphe Marinho
  */
 public interface ScriptManagementConfigurationHelper {
 
 	public boolean isAllowScriptContentBeExecutedOrIncluded();
+
+	public boolean isScriptManagementConfigurationDefined()
+		throws ConfigurationException;
 
 }

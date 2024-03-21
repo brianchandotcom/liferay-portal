@@ -4,7 +4,6 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import de.undercouch.gradle.tasks.download.Download
 
-apply plugin: "de.undercouch.download"
 apply plugin: "org.ysb33r.gradletest"
 
 task copyBundle(type: Copy)

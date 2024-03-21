@@ -189,7 +189,7 @@ public class PortletRenderUtil {
 		return allPortlets;
 	}
 
-	private static Collection<String> _getComboServletURLs(
+	private static List<String> _getComboServletURLs(
 		Collection<PortletResourceAccessor> portletResourceAccessors,
 		Collection<Portlet> portlets, Predicate<String> predicate,
 		long timestamp, String urlPrefix, Set<String> visitedURLs) {
@@ -336,7 +336,7 @@ public class PortletRenderUtil {
 		return rootPortlet.getPortletId();
 	}
 
-	private static Collection<String> _getStaticURLs(
+	private static List<String> _getStaticURLs(
 		HttpServletRequest httpServletRequest,
 		Collection<PortletResourceAccessor> portletResourceAccessors,
 		Collection<Portlet> portlets, Set<String> visitedURLs) {
@@ -445,10 +445,12 @@ public class PortletRenderUtil {
 				WebKeys.PORTLET_RESOURCE_STATIC_URLS, visitedURLs);
 		}
 
+		List<String> urls;
+
 		if (fastLoad) {
 			Theme theme = themeDisplay.getTheme();
 
-			return _getComboServletURLs(
+			urls = _getComboServletURLs(
 				portletResourceAccessors, portlets, predicate,
 				theme.getTimestamp(),
 				PortalUtil.getStaticResourceURL(
@@ -461,23 +463,29 @@ public class PortletRenderUtil {
 					-1),
 				visitedURLs);
 		}
+		else {
+			urls = _getStaticURLs(
+				httpServletRequest, portletResourceAccessors, portlets,
+				visitedURLs);
+		}
 
-		return _getStaticURLs(
-			httpServletRequest, portletResourceAccessors, portlets,
-			visitedURLs);
+		// Remove nocombo: but leave module: since the latter must be honored
+		// browser side.
+
+		for (int i = 0; i < urls.size(); i++) {
+			String url = urls.get(i);
+
+			if (url.startsWith("nocombo:")) {
+				urls.set(i, url.substring(8));
+			}
+		}
+
+		return urls;
 	}
 
 	private static void _writeCSSPath(
 		PrintWriter printWriter, String cssPath,
 		Map<String, String> attributes) {
-
-		for (String specialProtocol : _specialPrefixes) {
-			if (cssPath.startsWith(specialProtocol)) {
-				cssPath = cssPath.substring(specialProtocol.length());
-
-				break;
-			}
-		}
 
 		printWriter.print("<link href=\"");
 		printWriter.print(HtmlUtil.escape(cssPath));
@@ -503,16 +511,8 @@ public class PortletRenderUtil {
 		String type = "text/javascript";
 
 		if (javaScriptPath.startsWith("module:")) {
+			javaScriptPath = javaScriptPath.substring(7);
 			type = FrontendESMUtil.getScriptType();
-		}
-
-		for (String specialProtocol : _specialPrefixes) {
-			if (javaScriptPath.startsWith(specialProtocol)) {
-				javaScriptPath = javaScriptPath.substring(
-					specialProtocol.length());
-
-				break;
-			}
 		}
 
 		printWriter.print("<script");

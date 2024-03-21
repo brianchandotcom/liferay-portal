@@ -409,6 +409,12 @@ gradle.beforeProject {
 			}
 		}
 
+		if (project.path.startsWith(":util:") && tasks.findByName("copyCSS")) {
+			copyCSS {
+				mustRunAfter "buildPluginDescriptor"
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.ant.plugin") {
 			task buildLang(dependsOn: "build-lang")
 

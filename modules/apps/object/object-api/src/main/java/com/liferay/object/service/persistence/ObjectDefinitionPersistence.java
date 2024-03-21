@@ -1305,7 +1305,7 @@ public interface ObjectDefinitionPersistence
 	 * @param rootObjectDefinitionId the root object definition ID
 	 * @return the matching object definitions
 	 */
-	public java.util.List<ObjectDefinition> findByC_R(
+	public java.util.List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId);
 
 	/**
@@ -1321,7 +1321,7 @@ public interface ObjectDefinitionPersistence
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions
 	 */
-	public java.util.List<ObjectDefinition> findByC_R(
+	public java.util.List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end);
 
 	/**
@@ -1338,7 +1338,7 @@ public interface ObjectDefinitionPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object definitions
 	 */
-	public java.util.List<ObjectDefinition> findByC_R(
+	public java.util.List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 			orderByComparator);
@@ -1358,7 +1358,7 @@ public interface ObjectDefinitionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching object definitions
 	 */
-	public java.util.List<ObjectDefinition> findByC_R(
+	public java.util.List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 			orderByComparator,
@@ -1373,7 +1373,7 @@ public interface ObjectDefinitionPersistence
 	 * @return the first matching object definition
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
-	public ObjectDefinition findByC_R_First(
+	public ObjectDefinition findByC_RODI_First(
 			long companyId, long rootObjectDefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
@@ -1387,7 +1387,7 @@ public interface ObjectDefinitionPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
-	public ObjectDefinition fetchByC_R_First(
+	public ObjectDefinition fetchByC_RODI_First(
 		long companyId, long rootObjectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 			orderByComparator);
@@ -1401,7 +1401,7 @@ public interface ObjectDefinitionPersistence
 	 * @return the last matching object definition
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
-	public ObjectDefinition findByC_R_Last(
+	public ObjectDefinition findByC_RODI_Last(
 			long companyId, long rootObjectDefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 				orderByComparator)
@@ -1415,7 +1415,7 @@ public interface ObjectDefinitionPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
-	public ObjectDefinition fetchByC_R_Last(
+	public ObjectDefinition fetchByC_RODI_Last(
 		long companyId, long rootObjectDefinitionId,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 			orderByComparator);
@@ -1430,7 +1430,7 @@ public interface ObjectDefinitionPersistence
 	 * @return the previous, current, and next object definition
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
-	public ObjectDefinition[] findByC_R_PrevAndNext(
+	public ObjectDefinition[] findByC_RODI_PrevAndNext(
 			long objectDefinitionId, long companyId,
 			long rootObjectDefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
@@ -1444,7 +1444,7 @@ public interface ObjectDefinitionPersistence
 	 * @param rootObjectDefinitionId the root object definition ID
 	 * @return the matching object definitions that the user has permission to view
 	 */
-	public java.util.List<ObjectDefinition> filterFindByC_R(
+	public java.util.List<ObjectDefinition> filterFindByC_RODI(
 		long companyId, long rootObjectDefinitionId);
 
 	/**
@@ -1460,7 +1460,7 @@ public interface ObjectDefinitionPersistence
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions that the user has permission to view
 	 */
-	public java.util.List<ObjectDefinition> filterFindByC_R(
+	public java.util.List<ObjectDefinition> filterFindByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end);
 
 	/**
@@ -1477,7 +1477,7 @@ public interface ObjectDefinitionPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object definitions that the user has permission to view
 	 */
-	public java.util.List<ObjectDefinition> filterFindByC_R(
+	public java.util.List<ObjectDefinition> filterFindByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
 			orderByComparator);
@@ -1492,7 +1492,7 @@ public interface ObjectDefinitionPersistence
 	 * @return the previous, current, and next object definition
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
-	public ObjectDefinition[] filterFindByC_R_PrevAndNext(
+	public ObjectDefinition[] filterFindByC_RODI_PrevAndNext(
 			long objectDefinitionId, long companyId,
 			long rootObjectDefinitionId,
 			com.liferay.portal.kernel.util.OrderByComparator<ObjectDefinition>
@@ -1505,7 +1505,7 @@ public interface ObjectDefinitionPersistence
 	 * @param companyId the company ID
 	 * @param rootObjectDefinitionId the root object definition ID
 	 */
-	public void removeByC_R(long companyId, long rootObjectDefinitionId);
+	public void removeByC_RODI(long companyId, long rootObjectDefinitionId);
 
 	/**
 	 * Returns the number of object definitions where companyId = &#63; and rootObjectDefinitionId = &#63;.
@@ -1514,7 +1514,7 @@ public interface ObjectDefinitionPersistence
 	 * @param rootObjectDefinitionId the root object definition ID
 	 * @return the number of matching object definitions
 	 */
-	public int countByC_R(long companyId, long rootObjectDefinitionId);
+	public int countByC_RODI(long companyId, long rootObjectDefinitionId);
 
 	/**
 	 * Returns the number of object definitions that the user has permission to view where companyId = &#63; and rootObjectDefinitionId = &#63;.
@@ -1523,7 +1523,7 @@ public interface ObjectDefinitionPersistence
 	 * @param rootObjectDefinitionId the root object definition ID
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
-	public int filterCountByC_R(long companyId, long rootObjectDefinitionId);
+	public int filterCountByC_RODI(long companyId, long rootObjectDefinitionId);
 
 	/**
 	 * Returns the object definition where companyId = &#63; and className = &#63; or throws a <code>NoSuchObjectDefinitionException</code> if it could not be found.

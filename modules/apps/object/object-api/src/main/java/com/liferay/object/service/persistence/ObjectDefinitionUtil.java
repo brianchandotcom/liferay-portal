@@ -1644,10 +1644,10 @@ public class ObjectDefinitionUtil {
 	 * @param rootObjectDefinitionId the root object definition ID
 	 * @return the matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_R(
+	public static List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId) {
 
-		return getPersistence().findByC_R(companyId, rootObjectDefinitionId);
+		return getPersistence().findByC_RODI(companyId, rootObjectDefinitionId);
 	}
 
 	/**
@@ -1663,10 +1663,10 @@ public class ObjectDefinitionUtil {
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_R(
+	public static List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end) {
 
-		return getPersistence().findByC_R(
+		return getPersistence().findByC_RODI(
 			companyId, rootObjectDefinitionId, start, end);
 	}
 
@@ -1684,11 +1684,11 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_R(
+	public static List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().findByC_R(
+		return getPersistence().findByC_RODI(
 			companyId, rootObjectDefinitionId, start, end, orderByComparator);
 	}
 
@@ -1707,12 +1707,12 @@ public class ObjectDefinitionUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_R(
+	public static List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end,
 		OrderByComparator<ObjectDefinition> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_R(
+		return getPersistence().findByC_RODI(
 			companyId, rootObjectDefinitionId, start, end, orderByComparator,
 			useFinderCache);
 	}
@@ -1726,12 +1726,12 @@ public class ObjectDefinitionUtil {
 	 * @return the first matching object definition
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
-	public static ObjectDefinition findByC_R_First(
+	public static ObjectDefinition findByC_RODI_First(
 			long companyId, long rootObjectDefinitionId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
-		return getPersistence().findByC_R_First(
+		return getPersistence().findByC_RODI_First(
 			companyId, rootObjectDefinitionId, orderByComparator);
 	}
 
@@ -1743,11 +1743,11 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
-	public static ObjectDefinition fetchByC_R_First(
+	public static ObjectDefinition fetchByC_RODI_First(
 		long companyId, long rootObjectDefinitionId,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().fetchByC_R_First(
+		return getPersistence().fetchByC_RODI_First(
 			companyId, rootObjectDefinitionId, orderByComparator);
 	}
 
@@ -1760,12 +1760,12 @@ public class ObjectDefinitionUtil {
 	 * @return the last matching object definition
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
-	public static ObjectDefinition findByC_R_Last(
+	public static ObjectDefinition findByC_RODI_Last(
 			long companyId, long rootObjectDefinitionId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
-		return getPersistence().findByC_R_Last(
+		return getPersistence().findByC_RODI_Last(
 			companyId, rootObjectDefinitionId, orderByComparator);
 	}
 
@@ -1777,11 +1777,11 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
-	public static ObjectDefinition fetchByC_R_Last(
+	public static ObjectDefinition fetchByC_RODI_Last(
 		long companyId, long rootObjectDefinitionId,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().fetchByC_R_Last(
+		return getPersistence().fetchByC_RODI_Last(
 			companyId, rootObjectDefinitionId, orderByComparator);
 	}
 
@@ -1795,13 +1795,13 @@ public class ObjectDefinitionUtil {
 	 * @return the previous, current, and next object definition
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
-	public static ObjectDefinition[] findByC_R_PrevAndNext(
+	public static ObjectDefinition[] findByC_RODI_PrevAndNext(
 			long objectDefinitionId, long companyId,
 			long rootObjectDefinitionId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
-		return getPersistence().findByC_R_PrevAndNext(
+		return getPersistence().findByC_RODI_PrevAndNext(
 			objectDefinitionId, companyId, rootObjectDefinitionId,
 			orderByComparator);
 	}
@@ -1813,10 +1813,10 @@ public class ObjectDefinitionUtil {
 	 * @param rootObjectDefinitionId the root object definition ID
 	 * @return the matching object definitions that the user has permission to view
 	 */
-	public static List<ObjectDefinition> filterFindByC_R(
+	public static List<ObjectDefinition> filterFindByC_RODI(
 		long companyId, long rootObjectDefinitionId) {
 
-		return getPersistence().filterFindByC_R(
+		return getPersistence().filterFindByC_RODI(
 			companyId, rootObjectDefinitionId);
 	}
 
@@ -1833,10 +1833,10 @@ public class ObjectDefinitionUtil {
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions that the user has permission to view
 	 */
-	public static List<ObjectDefinition> filterFindByC_R(
+	public static List<ObjectDefinition> filterFindByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end) {
 
-		return getPersistence().filterFindByC_R(
+		return getPersistence().filterFindByC_RODI(
 			companyId, rootObjectDefinitionId, start, end);
 	}
 
@@ -1854,11 +1854,11 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object definitions that the user has permission to view
 	 */
-	public static List<ObjectDefinition> filterFindByC_R(
+	public static List<ObjectDefinition> filterFindByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().filterFindByC_R(
+		return getPersistence().filterFindByC_RODI(
 			companyId, rootObjectDefinitionId, start, end, orderByComparator);
 	}
 
@@ -1872,13 +1872,13 @@ public class ObjectDefinitionUtil {
 	 * @return the previous, current, and next object definition
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
-	public static ObjectDefinition[] filterFindByC_R_PrevAndNext(
+	public static ObjectDefinition[] filterFindByC_RODI_PrevAndNext(
 			long objectDefinitionId, long companyId,
 			long rootObjectDefinitionId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
-		return getPersistence().filterFindByC_R_PrevAndNext(
+		return getPersistence().filterFindByC_RODI_PrevAndNext(
 			objectDefinitionId, companyId, rootObjectDefinitionId,
 			orderByComparator);
 	}
@@ -1889,10 +1889,10 @@ public class ObjectDefinitionUtil {
 	 * @param companyId the company ID
 	 * @param rootObjectDefinitionId the root object definition ID
 	 */
-	public static void removeByC_R(
+	public static void removeByC_RODI(
 		long companyId, long rootObjectDefinitionId) {
 
-		getPersistence().removeByC_R(companyId, rootObjectDefinitionId);
+		getPersistence().removeByC_RODI(companyId, rootObjectDefinitionId);
 	}
 
 	/**
@@ -1902,8 +1902,11 @@ public class ObjectDefinitionUtil {
 	 * @param rootObjectDefinitionId the root object definition ID
 	 * @return the number of matching object definitions
 	 */
-	public static int countByC_R(long companyId, long rootObjectDefinitionId) {
-		return getPersistence().countByC_R(companyId, rootObjectDefinitionId);
+	public static int countByC_RODI(
+		long companyId, long rootObjectDefinitionId) {
+
+		return getPersistence().countByC_RODI(
+			companyId, rootObjectDefinitionId);
 	}
 
 	/**
@@ -1913,10 +1916,10 @@ public class ObjectDefinitionUtil {
 	 * @param rootObjectDefinitionId the root object definition ID
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
-	public static int filterCountByC_R(
+	public static int filterCountByC_RODI(
 		long companyId, long rootObjectDefinitionId) {
 
-		return getPersistence().filterCountByC_R(
+		return getPersistence().filterCountByC_RODI(
 			companyId, rootObjectDefinitionId);
 	}
 

@@ -5671,9 +5671,9 @@ public class ObjectDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_SYSTEM_SYSTEM_2_SQL =
 		"objectDefinition.system_ = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_R;
-	private FinderPath _finderPathWithoutPaginationFindByC_R;
-	private FinderPath _finderPathCountByC_R;
+	private FinderPath _finderPathWithPaginationFindByC_RODI;
+	private FinderPath _finderPathWithoutPaginationFindByC_RODI;
+	private FinderPath _finderPathCountByC_RODI;
 
 	/**
 	 * Returns all the object definitions where companyId = &#63; and rootObjectDefinitionId = &#63;.
@@ -5683,10 +5683,10 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_R(
+	public List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId) {
 
-		return findByC_R(
+		return findByC_RODI(
 			companyId, rootObjectDefinitionId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -5705,10 +5705,11 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_R(
+	public List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end) {
 
-		return findByC_R(companyId, rootObjectDefinitionId, start, end, null);
+		return findByC_RODI(
+			companyId, rootObjectDefinitionId, start, end, null);
 	}
 
 	/**
@@ -5726,11 +5727,11 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_R(
+	public List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return findByC_R(
+		return findByC_RODI(
 			companyId, rootObjectDefinitionId, start, end, orderByComparator,
 			true);
 	}
@@ -5751,7 +5752,7 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_R(
+	public List<ObjectDefinition> findByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end,
 		OrderByComparator<ObjectDefinition> orderByComparator,
 		boolean useFinderCache) {
@@ -5763,12 +5764,12 @@ public class ObjectDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_R;
+				finderPath = _finderPathWithoutPaginationFindByC_RODI;
 				finderArgs = new Object[] {companyId, rootObjectDefinitionId};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_R;
+			finderPath = _finderPathWithPaginationFindByC_RODI;
 			finderArgs = new Object[] {
 				companyId, rootObjectDefinitionId, start, end, orderByComparator
 			};
@@ -5807,9 +5808,9 @@ public class ObjectDefinitionPersistenceImpl
 
 			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_R_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_RODI_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_R_ROOTOBJECTDEFINITIONID_2);
+			sb.append(_FINDER_COLUMN_C_RODI_ROOTOBJECTDEFINITIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -5864,12 +5865,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition findByC_R_First(
+	public ObjectDefinition findByC_RODI_First(
 			long companyId, long rootObjectDefinitionId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_R_First(
+		ObjectDefinition objectDefinition = fetchByC_RODI_First(
 			companyId, rootObjectDefinitionId, orderByComparator);
 
 		if (objectDefinition != null) {
@@ -5900,11 +5901,11 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the first matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition fetchByC_R_First(
+	public ObjectDefinition fetchByC_RODI_First(
 		long companyId, long rootObjectDefinitionId,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		List<ObjectDefinition> list = findByC_R(
+		List<ObjectDefinition> list = findByC_RODI(
 			companyId, rootObjectDefinitionId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5924,12 +5925,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition findByC_R_Last(
+	public ObjectDefinition findByC_RODI_Last(
 			long companyId, long rootObjectDefinitionId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_R_Last(
+		ObjectDefinition objectDefinition = fetchByC_RODI_Last(
 			companyId, rootObjectDefinitionId, orderByComparator);
 
 		if (objectDefinition != null) {
@@ -5960,17 +5961,17 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition fetchByC_R_Last(
+	public ObjectDefinition fetchByC_RODI_Last(
 		long companyId, long rootObjectDefinitionId,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		int count = countByC_R(companyId, rootObjectDefinitionId);
+		int count = countByC_RODI(companyId, rootObjectDefinitionId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ObjectDefinition> list = findByC_R(
+		List<ObjectDefinition> list = findByC_RODI(
 			companyId, rootObjectDefinitionId, count - 1, count,
 			orderByComparator);
 
@@ -5992,7 +5993,7 @@ public class ObjectDefinitionPersistenceImpl
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
-	public ObjectDefinition[] findByC_R_PrevAndNext(
+	public ObjectDefinition[] findByC_RODI_PrevAndNext(
 			long objectDefinitionId, long companyId,
 			long rootObjectDefinitionId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
@@ -6008,13 +6009,13 @@ public class ObjectDefinitionPersistenceImpl
 
 			ObjectDefinition[] array = new ObjectDefinitionImpl[3];
 
-			array[0] = getByC_R_PrevAndNext(
+			array[0] = getByC_RODI_PrevAndNext(
 				session, objectDefinition, companyId, rootObjectDefinitionId,
 				orderByComparator, true);
 
 			array[1] = objectDefinition;
 
-			array[2] = getByC_R_PrevAndNext(
+			array[2] = getByC_RODI_PrevAndNext(
 				session, objectDefinition, companyId, rootObjectDefinitionId,
 				orderByComparator, false);
 
@@ -6028,7 +6029,7 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	protected ObjectDefinition getByC_R_PrevAndNext(
+	protected ObjectDefinition getByC_RODI_PrevAndNext(
 		Session session, ObjectDefinition objectDefinition, long companyId,
 		long rootObjectDefinitionId,
 		OrderByComparator<ObjectDefinition> orderByComparator,
@@ -6047,9 +6048,9 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_R_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_RODI_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_R_ROOTOBJECTDEFINITIONID_2);
+		sb.append(_FINDER_COLUMN_C_RODI_ROOTOBJECTDEFINITIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -6151,10 +6152,10 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_R(
+	public List<ObjectDefinition> filterFindByC_RODI(
 		long companyId, long rootObjectDefinitionId) {
 
-		return filterFindByC_R(
+		return filterFindByC_RODI(
 			companyId, rootObjectDefinitionId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -6173,10 +6174,10 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the range of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_R(
+	public List<ObjectDefinition> filterFindByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end) {
 
-		return filterFindByC_R(
+		return filterFindByC_RODI(
 			companyId, rootObjectDefinitionId, start, end, null);
 	}
 
@@ -6195,12 +6196,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_R(
+	public List<ObjectDefinition> filterFindByC_RODI(
 		long companyId, long rootObjectDefinitionId, int start, int end,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_R(
+			return findByC_RODI(
 				companyId, rootObjectDefinitionId, start, end,
 				orderByComparator);
 		}
@@ -6223,9 +6224,9 @@ public class ObjectDefinitionPersistenceImpl
 				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_C_R_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_RODI_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_R_ROOTOBJECTDEFINITIONID_2);
+		sb.append(_FINDER_COLUMN_C_RODI_ROOTOBJECTDEFINITIONID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(
@@ -6299,14 +6300,14 @@ public class ObjectDefinitionPersistenceImpl
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
-	public ObjectDefinition[] filterFindByC_R_PrevAndNext(
+	public ObjectDefinition[] filterFindByC_RODI_PrevAndNext(
 			long objectDefinitionId, long companyId,
 			long rootObjectDefinitionId,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_R_PrevAndNext(
+			return findByC_RODI_PrevAndNext(
 				objectDefinitionId, companyId, rootObjectDefinitionId,
 				orderByComparator);
 		}
@@ -6321,13 +6322,13 @@ public class ObjectDefinitionPersistenceImpl
 
 			ObjectDefinition[] array = new ObjectDefinitionImpl[3];
 
-			array[0] = filterGetByC_R_PrevAndNext(
+			array[0] = filterGetByC_RODI_PrevAndNext(
 				session, objectDefinition, companyId, rootObjectDefinitionId,
 				orderByComparator, true);
 
 			array[1] = objectDefinition;
 
-			array[2] = filterGetByC_R_PrevAndNext(
+			array[2] = filterGetByC_RODI_PrevAndNext(
 				session, objectDefinition, companyId, rootObjectDefinitionId,
 				orderByComparator, false);
 
@@ -6341,7 +6342,7 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	protected ObjectDefinition filterGetByC_R_PrevAndNext(
+	protected ObjectDefinition filterGetByC_RODI_PrevAndNext(
 		Session session, ObjectDefinition objectDefinition, long companyId,
 		long rootObjectDefinitionId,
 		OrderByComparator<ObjectDefinition> orderByComparator,
@@ -6366,9 +6367,9 @@ public class ObjectDefinitionPersistenceImpl
 				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_C_R_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_RODI_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_R_ROOTOBJECTDEFINITIONID_2);
+		sb.append(_FINDER_COLUMN_C_RODI_ROOTOBJECTDEFINITIONID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(
@@ -6508,9 +6509,9 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param rootObjectDefinitionId the root object definition ID
 	 */
 	@Override
-	public void removeByC_R(long companyId, long rootObjectDefinitionId) {
+	public void removeByC_RODI(long companyId, long rootObjectDefinitionId) {
 		for (ObjectDefinition objectDefinition :
-				findByC_R(
+				findByC_RODI(
 					companyId, rootObjectDefinitionId, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
@@ -6526,8 +6527,8 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the number of matching object definitions
 	 */
 	@Override
-	public int countByC_R(long companyId, long rootObjectDefinitionId) {
-		FinderPath finderPath = _finderPathCountByC_R;
+	public int countByC_RODI(long companyId, long rootObjectDefinitionId) {
+		FinderPath finderPath = _finderPathCountByC_RODI;
 
 		Object[] finderArgs = new Object[] {companyId, rootObjectDefinitionId};
 
@@ -6538,9 +6539,9 @@ public class ObjectDefinitionPersistenceImpl
 
 			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_R_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_RODI_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_R_ROOTOBJECTDEFINITIONID_2);
+			sb.append(_FINDER_COLUMN_C_RODI_ROOTOBJECTDEFINITIONID_2);
 
 			String sql = sb.toString();
 
@@ -6580,18 +6581,20 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public int filterCountByC_R(long companyId, long rootObjectDefinitionId) {
+	public int filterCountByC_RODI(
+		long companyId, long rootObjectDefinitionId) {
+
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_R(companyId, rootObjectDefinitionId);
+			return countByC_RODI(companyId, rootObjectDefinitionId);
 		}
 
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_R_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_RODI_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_R_ROOTOBJECTDEFINITIONID_2);
+		sb.append(_FINDER_COLUMN_C_RODI_ROOTOBJECTDEFINITIONID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
 			sb.toString(), ObjectDefinition.class.getName(),
@@ -6625,10 +6628,10 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_C_R_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_RODI_COMPANYID_2 =
 		"objectDefinition.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_R_ROOTOBJECTDEFINITIONID_2 =
+	private static final String _FINDER_COLUMN_C_RODI_ROOTOBJECTDEFINITIONID_2 =
 		"objectDefinition.rootObjectDefinitionId = ?";
 
 	private FinderPath _finderPathFetchByC_C;
@@ -13206,8 +13209,8 @@ public class ObjectDefinitionPersistenceImpl
 			new String[] {Boolean.class.getName()}, new String[] {"system_"},
 			false);
 
-		_finderPathWithPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
+		_finderPathWithPaginationFindByC_RODI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_RODI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -13215,13 +13218,13 @@ public class ObjectDefinitionPersistenceImpl
 			},
 			new String[] {"companyId", "rootObjectDefinitionId"}, true);
 
-		_finderPathWithoutPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
+		_finderPathWithoutPaginationFindByC_RODI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_RODI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "rootObjectDefinitionId"}, true);
 
-		_finderPathCountByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
+		_finderPathCountByC_RODI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_RODI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "rootObjectDefinitionId"}, false);
 

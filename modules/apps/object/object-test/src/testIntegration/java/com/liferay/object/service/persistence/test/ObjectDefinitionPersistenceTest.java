@@ -385,11 +385,11 @@ public class ObjectDefinitionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_R() throws Exception {
-		_persistence.countByC_R(
+	public void testCountByC_RODI() throws Exception {
+		_persistence.countByC_RODI(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_R(0L, 0L);
+		_persistence.countByC_RODI(0L, 0L);
 	}
 
 	@Test

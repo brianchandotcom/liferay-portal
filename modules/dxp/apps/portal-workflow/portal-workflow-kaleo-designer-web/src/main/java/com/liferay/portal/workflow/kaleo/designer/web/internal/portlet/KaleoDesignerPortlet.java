@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.KaleoDesignerDisplayContext;
@@ -446,7 +447,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 				_actionExecutorManager, renderRequest,
 				_kaleoDefinitionVersionLocalService, _portletResourcePermission,
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
-				_userLocalService);
+				_scriptManagementConfigurationHelper, _userLocalService);
 
 		renderRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,
@@ -506,6 +507,10 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private ScriptManagementConfigurationHelper
+		_scriptManagementConfigurationHelper;
 
 	@Reference
 	private UserLocalService _userLocalService;

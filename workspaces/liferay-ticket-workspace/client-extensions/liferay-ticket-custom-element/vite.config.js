@@ -19,9 +19,7 @@ export default defineConfig({
 		},
 		target: 'esnext',
 	},
-	plugins: [
-		react({ jsxRuntime: 'classic' })
-	],
+	plugins: [react({jsxRuntime: 'classic'})],
 	server: {
 		origin: 'http://localhost:5173',
 	},

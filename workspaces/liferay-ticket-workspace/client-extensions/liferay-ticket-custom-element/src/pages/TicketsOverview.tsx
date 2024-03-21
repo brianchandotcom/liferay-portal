@@ -9,7 +9,7 @@ import {Option, Picker} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {QueryClient, useMutation, useQueryClient} from 'react-query';
 
 import {RecentActivity} from '../components/RecentActivity';
@@ -21,7 +21,6 @@ import {Liferay} from '../services/liferay';
 import {generateNewTicket} from '../services/tickets';
 import {Filter} from '../types';
 import {INITIAL_FILTER_STATE} from '../utils/constants';
-import React from 'react';
 
 const DEBOUNCE_DELAY = 300;
 

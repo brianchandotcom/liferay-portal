@@ -71,6 +71,7 @@ export class PagesAdminPage {
 		pageName: string,
 		permissionIds: string[]
 	) {
+
 		// Select the page
 
 		const pageInput = await this.page.getByLabel(`Select ${pageName}`, {

@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {pageEditorPagesTest} from '../layout-content-page-editor-web/fixtures/pageEditorPagesTest';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
@@ -60,7 +61,7 @@ test('Add the frontend data set sample widget', async ({
 
 		await tabHeading.click();
 
-		const filterButton = await page
+		const filterButton = page
 			.locator('.filters-dropdown')
 			.getByText('Filter');
 
@@ -68,12 +69,50 @@ test('Add the frontend data set sample widget', async ({
 
 		filterButton.click();
 
-		const filterDropdown = await page.locator('.dropdown-menu', {
+		const filterDropdown = page.locator('.dropdown-menu', {
 			hasText: 'Filters',
 		});
 
 		await expect(
 			filterDropdown.getByText('Client Extension')
 		).toBeInViewport();
+	});
+
+	await test.step('Assert that the filter client extension is working', async () => {
+		const filterButton = page
+			.locator('.filters-dropdown')
+			.getByText('Filter');
+
+		const clientExtensionMenuItem = page.getByRole('menuitem', {
+			name: 'Client Extension',
+		});
+
+		await expect(filterButton).toBeInViewport();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: clientExtensionMenuItem,
+			trigger: filterButton,
+		});
+
+		const filterInput = page.getByPlaceholder('Search with Odata');
+
+		await expect(filterInput).toBeInViewport();
+
+		filterInput.fill("title eq 'Sample2'");
+
+		await expect(filterInput).toHaveValue("title eq 'Sample2'");
+
+		const submitButton = page.getByRole('button', {name: 'Submit'});
+
+		await expect(submitButton).toBeInViewport();
+
+		await submitButton.click();
+
+		await expect(page.getByText('Sample2', {exact: true})).toBeVisible();
+
+		const rowCount = await page.locator('.dnd-tbody > .dnd-tr').count();
+
+		await expect(rowCount).toEqual(1);
 	});
 });

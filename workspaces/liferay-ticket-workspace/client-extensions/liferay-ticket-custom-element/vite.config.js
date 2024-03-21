@@ -4,12 +4,10 @@
  */
 
 import react from '@vitejs/plugin-react';
-import vitePluginRequire from "vite-plugin-require";
 import {defineConfig} from 'vite';
 
 export default defineConfig({
 	build: {
-		commonjsOptions: {transformMixedEsModules: true},
 		outDir: 'build/vite',
 		rollupOptions: {
 			external: [/@clayui\/*/, 'react', 'react-dom'],
@@ -19,25 +17,10 @@ export default defineConfig({
 				entryFileNames: '[name]-[hash].js',
 			},
 		},
-
 		target: 'esnext',
 	},
-
 	plugins: [
-		react({
-			babel: {
-				presets: [
-					['@babel/preset-env', {targets: 'defaults'}],
-					'@babel/preset-react','@babel/preset-typescript'
-				],
-				plugins: [
-					[
-						'@babel/plugin-transform-react-jsx',
-						{runtime: 'automatic'}
-					],
-				],
-			},
-		})
+		react({ jsxRuntime: 'classic' })
 	],
 	server: {
 		origin: 'http://localhost:5173',

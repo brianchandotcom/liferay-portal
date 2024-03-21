@@ -4,76 +4,46 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import DataGrid from 'react-data-grid';
 
-import 'react-data-grid/lib/styles.css';
 
 import {Liferay} from '../services/liferay';
 import {Ticket} from '../types';
 import React from 'react';
 
-const TicketGrid = ({tickets}: {tickets: Ticket[]}) => (
-	<DataGrid
-		columns={[
-			{
-				formatter: ({row}: {row: Ticket}) => (
-					<span>
-						{!!row.suggestions.length && (
-							<ClayIcon
-								className="mr-1"
-								spritemap={Liferay.Icons.spritemap}
-								symbol="link"
-							/>
-						)}
-						{row.subject}
-					</span>
-				),
-				key: 'subject',
-				name: 'Subject',
-				resizable: true,
-				width: '50%',
-			} as any,
-			{
-				key: 'resolution',
-				name: 'Resolution',
-				resizable: true,
-				width: '15%',
-			},
-			{
-				formatter: ({row}: {row: Ticket}) => (
-					<span>
-						{row.ticketStatus === 'Queued' && (
-							<ClayIcon
-								className="mr-1"
-								spritemap={Liferay.Icons.spritemap}
-								symbol="bolt"
-							/>
-						)}
-						{row.ticketStatus}
-					</span>
-				),
-				key: 'ticketStatus',
-				name: 'Status',
-				resizable: true,
-				width: '15%',
-			},
-			{
-				key: 'priority',
-				name: 'Priority',
-				resizable: true,
-				width: '10%',
-			},
-			{key: 'type', name: 'Type', resizable: true, width: '10%'},
-			{
-				key: 'region',
-				name: 'Region',
-				resizable: true,
-				width: '10%',
-			},
-		]}
-		rowKeyGetter={(row) => row.id}
-		rows={tickets}
-	/>
-);
+const TicketGrid = ({tickets}: {tickets: Ticket[]}) => {
+	return (
+		<div className='border border-light rounded w-100 p-1'>
+			<table className="table table-borderless">
+			<thead>
+				<tr>
+					<th>
+					<ClayIcon
+							className="mr-1"
+							spritemap={Liferay.Icons.spritemap}
+							symbol="link"
+						/>
+						Subject
+					</th>
+					<th>Resolution</th>
+					<th>Status</th>
+					<th>Priority</th>
+					<th>Region</th>
+				</tr>
+			</thead>
+			<tbody>
+				{tickets.map((ticket) => (
+					<tr className='border-top'> 
+						<td>{ticket.subject}</td>
+						<td>{ticket.resolution ? ticket.resolution : 'N/A'}</td>
+						<td>{ticket.ticketStatus}</td>
+						<td>{ticket.priority}</td>
+						<td>{ticket.region}</td>
+					</tr>
+				))}
+			</tbody>
+		</table>
+		</div>
+	);
+};
 
 export {TicketGrid};

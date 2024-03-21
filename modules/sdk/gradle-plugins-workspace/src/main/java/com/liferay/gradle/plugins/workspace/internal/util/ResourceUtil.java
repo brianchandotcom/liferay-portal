@@ -37,7 +37,9 @@ import org.gradle.api.logging.Logging;
  */
 public class ResourceUtil {
 
-	public static Resolver getClassLoaderResolver(String resourcePath) {
+	public static Resolver getClassLoaderResolver(
+		Class<?> clazz, String resourcePath) {
+
 		return () -> {
 			if (_logger.isInfoEnabled()) {
 				_logger.info(
@@ -45,9 +47,13 @@ public class ResourceUtil {
 			}
 
 			return Objects.requireNonNull(
-				ResourceUtil.class.getResourceAsStream(resourcePath),
+				clazz.getResourceAsStream(resourcePath),
 				"Unable to get resource from class path: " + resourcePath);
 		};
+	}
+
+	public static Resolver getClassLoaderResolver(String resourcePath) {
+		return getClassLoaderResolver(ResourceUtil.class, resourcePath);
 	}
 
 	public static Resolver getLocalFileResolver(File file) {

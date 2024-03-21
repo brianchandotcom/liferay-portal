@@ -43,11 +43,11 @@ test('allows moving through layout content with keyboard', async ({
 		'BASIC_COMPONENT-card'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString(),
-		getPageDefinition([cardDefinition, headingDefinition])
-	);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([cardDefinition, headingDefinition]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	// Go to edit mode of page
 
@@ -114,11 +114,11 @@ test('focus order is correct', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString(),
-		getPageDefinition([headingDefinition])
-	);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingDefinition]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	// Go to edit mode of page
 

@@ -29,13 +29,19 @@ test('load more works properly in search results', async ({
 	// Create 15 Lemon pages
 
 	for (let i = 1; i <= 15; i++) {
-		await apiHelpers.headlessDelivery.createSitePage(site.id, `Lemon ${i}`);
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: `Lemon ${i}`,
+		});
 	}
 
 	// Create 30 Apple pages
 
 	for (let i = 1; i <= 30; i++) {
-		await apiHelpers.headlessDelivery.createSitePage(site.id, `Apple ${i}`);
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: `Apple ${i}`,
+		});
 	}
 
 	// Create a navigation menu and open pages selector

@@ -40,10 +40,10 @@ test('renders all panel buttons in the vertical bar', async ({
 }) => {
 	await page.goto('/');
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString()
-	);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
@@ -60,10 +60,10 @@ test('renders sidebars visible at desktop size and sidebars not visible at small
 }) => {
 	await page.goto('/');
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString()
-	);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
@@ -95,10 +95,10 @@ test('checks if sidebars are open or closed depending on Product Menu', async ({
 }) => {
 	await page.goto('/');
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString()
-	);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 

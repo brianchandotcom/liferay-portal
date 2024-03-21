@@ -38,6 +38,29 @@ type PageElement = {
 		| 'Widget';
 };
 
+type PagePermission = {
+	actionKeys: PermissionActionKeys[];
+	roleKey: 'Owner' | 'Site Member' | 'Guest';
+};
+
+type PermissionActionKeys =
+	| 'ADD_DISCUSSION'
+	| 'ADD_LAYOUT'
+	| 'CONFIGURE_PORTLETS'
+	| 'CUSTOMIZE'
+	| 'DELETE'
+	| 'DELETE_DISCUSSION'
+	| 'LAYOUT_RULE_BUILDER'
+	| 'PERMISSIONS'
+	| 'PREVIEW_DRAFT'
+	| 'UPDATE'
+	| 'UPDATE_DISCUSSION'
+	| 'UPDATE_LAYOUT_ADVANCED_OPTIONS'
+	| 'UPDATE_LAYOUT_BASIC'
+	| 'UPDATE_LAYOUT_CONTENT'
+	| 'UPDATE_LAYOUT_LIMITED'
+	| 'VIEW';
+
 type SpacingType =
 	| 'Margin Bottom'
 	| 'Margin Left'

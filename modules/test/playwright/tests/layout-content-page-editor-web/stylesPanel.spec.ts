@@ -72,11 +72,11 @@ test('allows changing and resetting spacing', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString(),
-		getPageDefinition([headingFragment])
-	);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
@@ -129,11 +129,11 @@ test('renders all selectors with correct default values', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString(),
-		getPageDefinition([headingFragment])
-	);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
@@ -191,11 +191,11 @@ test('renders correct sections in color picker', async ({
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString(),
-		getPageDefinition([headingFragment])
-	);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 
@@ -237,11 +237,11 @@ test('changes the value in the Color Picker when the reset button is clicked', a
 		'BASIC_COMPONENT-heading'
 	);
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage(
-		site.id,
-		getRandomString(),
-		getPageDefinition([headingFragment])
-	);
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([headingFragment]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
 
 	await pageEditorPage.goToEditMode(layout, site.friendlyUrlPath);
 

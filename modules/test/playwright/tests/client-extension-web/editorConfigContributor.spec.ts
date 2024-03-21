@@ -108,11 +108,11 @@ test('Add a toolbar button to an Alloy Editor @LPD-11056', async ({
 				'com_liferay_editor_ckeditor_sample_web_internal_portlet_CKEditorSamplePortlet',
 		});
 
-		layout = await apiHelpers.headlessDelivery.createSitePage(
-			site.id,
-			getRandomString(),
-			getPageDefinition([widgetDefinition])
-		);
+		layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 	});
 
 	await test.step('Navigate to the page with Alloy Editor sample', async () => {

@@ -9,6 +9,7 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingService;
+import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.web.internal.info.item.CalendarBookingInfoItemFields;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
 import com.liferay.info.field.InfoFieldValue;
@@ -133,7 +134,11 @@ public class CalendarBookingInfoItemFieldValuesProvider
 				).build()),
 			new InfoFieldValue<>(
 				CalendarBookingInfoItemFields.invitationsInfoField,
-				_getInvitations(calendarBooking)));
+				_getInvitations(calendarBooking)),
+			new InfoFieldValue<>(
+				CalendarBookingInfoItemFields.repetitionsInfoField,
+				RecurrenceUtil.getSummary(
+					calendarBooking, calendarBooking.getRecurrenceObj())));
 	}
 
 	/**

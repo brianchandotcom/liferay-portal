@@ -12,19 +12,28 @@ import com.google.ical.values.DateValue;
 import com.google.ical.values.DateValueImpl;
 
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.recurrence.Frequency;
 import com.liferay.calendar.recurrence.PositionalWeekday;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.Weekday;
 import com.liferay.calendar.util.comparator.CalendarBookingStartTimeComparator;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.text.ParseException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -219,6 +228,87 @@ public class RecurrenceUtil {
 		return lastCalendarBooking;
 	}
 
+	public static String getSummary(
+		CalendarBooking calendarBooking, Recurrence recurrence) {
+
+		if (recurrence == null) {
+			return LanguageUtil.get(
+				LocaleThreadLocal.getThemeDisplayLocale(), "false");
+		}
+
+		List<Object> params = new ArrayList<>();
+
+		StringBundler sb = new StringBundler(4);
+
+		Frequency frequency = recurrence.getFrequency();
+
+		if (recurrence.getInterval() == 1) {
+			sb.append(StringUtil.toLowerCase(frequency.toString()));
+		}
+		else {
+			sb.append("every-x-");
+			sb.append(_intervalUnits.get(frequency));
+
+			params.add(recurrence.getInterval());
+		}
+
+		PositionalWeekday positionalWeekday = recurrence.getPositionalWeekday();
+
+		List<Weekday> weekdays = recurrence.getWeekdays();
+
+		if ((positionalWeekday != null) && (frequency != Frequency.WEEKLY)) {
+			Weekday weekday = positionalWeekday.getWeekday();
+
+			if (frequency == Frequency.MONTHLY) {
+				sb.append("-on-x-x");
+
+				params.add(
+					_positionLabels.get(positionalWeekday.getPosition()));
+				params.add(_weekdayLabels.get(weekday.toString()));
+			}
+			else {
+				Date startDate = new Date(calendarBooking.getStartTime());
+
+				sb.append("-on-x-x-of-x");
+
+				params.add(
+					_positionLabels.get(positionalWeekday.getPosition()));
+				params.add(_weekdayLabels.get(weekday.toString()));
+				params.add(_monthLabels.get(startDate.getMonth()));
+			}
+		}
+		else if ((frequency == Frequency.WEEKLY) && !weekdays.isEmpty()) {
+			sb.append("-on-x");
+
+			List<String> formattedWeekdays = new ArrayList<>();
+
+			for (Weekday weekday : weekdays) {
+				formattedWeekdays.add(_weekdayLabels.get(weekday.toString()));
+			}
+
+			params.add(ListUtil.toString(formattedWeekdays, StringPool.BLANK));
+		}
+
+		Calendar untilJCalendar = recurrence.getUntilJCalendar();
+
+		if (recurrence.getCount() > 0) {
+			sb.append("-x-times");
+
+			params.add(recurrence.getCount());
+		}
+		else if (untilJCalendar != null) {
+			sb.append("-until-x-x-x");
+
+			params.add(_monthLabels.get(untilJCalendar.get(Calendar.MONTH)));
+			params.add(untilJCalendar.get(Calendar.DATE));
+			params.add(untilJCalendar.get(Calendar.YEAR));
+		}
+
+		return LanguageUtil.format(
+			LocaleThreadLocal.getThemeDisplayLocale(), sb.toString(),
+			params.toArray(new Object[0]));
+	}
+
 	public static Recurrence inTimeZone(
 		Recurrence recurrence, Calendar startTimeJCalendar, TimeZone timeZone) {
 
@@ -324,5 +414,69 @@ public class RecurrenceUtil {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RecurrenceUtil.class);
+
+	private static final Map<Frequency, String> _intervalUnits =
+		HashMapBuilder.put(
+			Frequency.DAILY, "days"
+		).put(
+			Frequency.MONTHLY, "months"
+		).put(
+			Frequency.WEEKLY, "weeks"
+		).put(
+			Frequency.YEARLY, "years"
+		).build();
+	private static final Map<Integer, String> _monthLabels = HashMapBuilder.put(
+		0, "january"
+	).put(
+		1, "february"
+	).put(
+		2, "march"
+	).put(
+		3, "april"
+	).put(
+		4, "may"
+	).put(
+		5, "june"
+	).put(
+		6, "july"
+	).put(
+		7, "august"
+	).put(
+		8, "september"
+	).put(
+		9, "october"
+	).put(
+		10, "november"
+	).put(
+		11, "december"
+	).build();
+	private static final Map<Integer, String> _positionLabels =
+		HashMapBuilder.put(
+			-1, "position.last"
+		).put(
+			1, "position.first"
+		).put(
+			2, "position.second"
+		).put(
+			3, "position.third"
+		).put(
+			4, "position.fourth"
+		).build();
+	private static final Map<String, String> _weekdayLabels =
+		HashMapBuilder.put(
+			"FR", "weekday.FR"
+		).put(
+			"MO", "weekday.MO"
+		).put(
+			"SA", "weekday.SA"
+		).put(
+			"SU", "weekday.SU"
+		).put(
+			"TH", "weekday.TH"
+		).put(
+			"TU", "weekday.TU"
+		).put(
+			"WE", "weekday.WE"
+		).build();
 
 }

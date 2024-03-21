@@ -82,6 +82,15 @@ public class CalendarBookingInfoItemFields {
 			InfoLocalizedValue.localize(
 				CalendarBookingInfoItemFields.class, "location")
 		).build();
+	public static final InfoField<TextInfoFieldType> repetitionsInfoField =
+		BuilderHolder._builder.infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"repetitions"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				CalendarBookingInfoItemFields.class, "repetitions")
+		).build();
 	public static final InfoField<DateInfoFieldType> startDateInfoField =
 		BuilderHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE

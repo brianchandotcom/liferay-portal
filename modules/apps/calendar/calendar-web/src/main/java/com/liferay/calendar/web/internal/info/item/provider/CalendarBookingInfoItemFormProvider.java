@@ -60,6 +60,8 @@ public class CalendarBookingInfoItemFormProvider
 			CalendarBookingInfoItemFields.calendarNameInfoField
 		).infoFieldSetEntry(
 			CalendarBookingInfoItemFields.invitationsInfoField
+		).infoFieldSetEntry(
+			CalendarBookingInfoItemFields.repetitionsInfoField
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(

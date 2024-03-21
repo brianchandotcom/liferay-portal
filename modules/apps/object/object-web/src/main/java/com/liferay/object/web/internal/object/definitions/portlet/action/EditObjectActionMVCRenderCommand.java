@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -67,7 +68,8 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 					_notificationTemplateLocalService,
 					_objectActionExecutorRegistry, _objectActionTriggerRegistry,
 					_objectDefinitionLocalService,
-					_objectDefinitionModelResourcePermission));
+					_objectDefinitionModelResourcePermission,
+					_scriptManagementConfigurationHelper));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -105,5 +107,9 @@ public class EditObjectActionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ScriptManagementConfigurationHelper
+		_scriptManagementConfigurationHelper;
 
 }

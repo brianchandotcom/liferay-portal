@@ -20,6 +20,8 @@ ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = 
 	module="{AddObjectAction} from object-web"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"allowScriptContentBeExecutedOrIncluded", objectDefinitionsActionsDisplayContext.isAllowScriptContentBeExecutedOrIncluded()
+		).put(
 			"apiURL", objectDefinitionsActionsDisplayContext.getAPIURL()
 		).put(
 			"objectActionCodeEditorElements", objectDefinitionsActionsDisplayContext.getObjectActionCodeEditorElements()

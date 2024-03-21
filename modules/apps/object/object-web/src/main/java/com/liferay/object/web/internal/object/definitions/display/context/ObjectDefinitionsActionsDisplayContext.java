@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +54,9 @@ public class ObjectDefinitionsActionsDisplayContext
 		ObjectActionTriggerRegistry objectActionTriggerRegistry,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission) {
+			objectDefinitionModelResourcePermission,
+		ScriptManagementConfigurationHelper
+			scriptManagementConfigurationHelper) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
@@ -62,6 +65,8 @@ public class ObjectDefinitionsActionsDisplayContext
 		_objectActionExecutorRegistry = objectActionExecutorRegistry;
 		_objectActionTriggerRegistry = objectActionTriggerRegistry;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_scriptManagementConfigurationHelper =
+			scriptManagementConfigurationHelper;
 	}
 
 	public String getEditObjectActionURL() throws Exception {
@@ -281,6 +286,11 @@ public class ObjectDefinitionsActionsDisplayContext
 		).buildString();
 	}
 
+	public boolean isAllowScriptContentBeExecutedOrIncluded() {
+		return _scriptManagementConfigurationHelper.
+			isAllowScriptContentBeExecutedOrIncluded();
+	}
+
 	@Override
 	protected String getAPIURI() {
 		return "/object-actions";
@@ -312,5 +322,7 @@ public class ObjectDefinitionsActionsDisplayContext
 	private final ObjectActionExecutorRegistry _objectActionExecutorRegistry;
 	private final ObjectActionTriggerRegistry _objectActionTriggerRegistry;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ScriptManagementConfigurationHelper
+		_scriptManagementConfigurationHelper;
 
 }

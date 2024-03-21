@@ -3,104 +3,102 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayTable from '@clayui/table';
-import {ClayTooltipProvider} from '@clayui/tooltip';
-import classNames from 'classnames';
+import {
+	Body,
+	Cell,
+	Head,
+	Row as ClayRow,
+	Table as ClayTable,
+} from '@clayui/core';
 
 import TableColumn from '../../interfaces/tableColumn';
 
-import './index.css';
+interface BasicRow {
+	[key: string]: string | number | boolean | string[] | undefined;
+}
 
 interface TableProps<T> {
 	className?: string;
 	columns: TableColumn<T>[];
-	customClickOnRow?: (row: T) => void;
+	customClickOnRow?: (item: T) => void;
 	rows: T[];
 }
 
-const Table = <T extends unknown>({
+interface RowProps<T> {
+	columns: TableColumn<T>[];
+	customClickOnRow?: (item: T) => void;
+	row: T;
+}
+
+type ChildrenRender<T> = ((item: T) => React.ReactElement) & string;
+
+const Row = <T extends BasicRow>({
+	columns,
+	customClickOnRow,
+	row,
+}: RowProps<T>) => {
+	const id = Math.random().toString(16).slice(2);
+
+	return (
+		<ClayRow items={columns}>
+			{
+				((column) => {
+					const data = row[column.columnKey];
+
+					return (
+						<Cell
+							key={`${id}:${column.columnKey}`}
+							onClick={() => {
+								if (customClickOnRow) {
+									return customClickOnRow(row);
+								}
+							}}
+						>
+							{column.render
+								? column.render(data as T[keyof T], row, 0)
+								: data}
+						</Cell>
+					);
+				}) as ChildrenRender<TableColumn<T>>
+			}
+		</ClayRow>
+	);
+};
+
+const PRMTable = <T extends BasicRow>({
 	className,
 	columns,
 	customClickOnRow,
 	rows,
-}: TableProps<T>) => (
-	<ClayTooltipProvider>
+}: TableProps<T>) => {
+	return (
 		<ClayTable
 			borderless
 			className={className}
-			noWrap
-			responsive
-			tableVerticalAlignment="middle"
+			columnsVisibility={false}
+			size="sm"
 		>
-			<ClayTable.Head>
-				<ClayTable.Row>
-					{columns.map((column: TableColumn<T>, index: number) => (
-						<ClayTable.Cell
-							align="left"
-							className="align-baseline border-neutral-2 rounded-0"
-							headingCell
-							key={index}
-						>
-							{column.label instanceof String ? (
-								<p className="mb-0 mt-4 text-neutral-10">
-									{column.label}
-								</p>
-							) : (
-								column.label
-							)}
-						</ClayTable.Cell>
-					))}
-				</ClayTable.Row>
-			</ClayTable.Head>
+			<Head items={columns}>
+				{
+					((item) => <Cell>{item.label}</Cell>) as ChildrenRender<
+						TableColumn<T>
+					>
+				}
+			</Head>
 
-			<ClayTable.Body>
-				{rows.map((row, rowIndex) => (
-					<ClayTable.Row key={rowIndex}>
-						{columns.map((column, colIndex) => {
-							const data: any = row[column.columnKey as keyof T];
-
-							return (
-								<ClayTable.Cell
-									align="left"
-									className="border-0 font-weight-normal py-4 table-cell"
-									headingCell
-									key={colIndex}
-									onClick={() => {
-										if (customClickOnRow) {
-											return customClickOnRow(row);
-										}
-									}}
-								>
-									{column.render ? (
-										column.render(data, row, rowIndex)
-									) : (
-										<span
-											className={classNames(
-												'table-cell-item',
-												{
-													'text-ellipsis-lg':
-														column.size === 'lg',
-													'text-ellipsis-md':
-														column.size === 'md',
-													'text-ellipsis-sm':
-														column.size === 'sm',
-													'text-wrap': column.wrap,
-												}
-											)}
-											data-tooltip-align="top"
-											title={data}
-										>
-											{data}
-										</span>
-									)}
-								</ClayTable.Cell>
-							);
-						})}
-					</ClayTable.Row>
-				))}
-			</ClayTable.Body>
+			<Body defaultItems={rows}>
+				{
+					((row) => (
+						<Row
+							columns={columns}
+							customClickOnRow={customClickOnRow}
+							row={row}
+						/>
+					)) as ChildrenRender<T>
+				}
+			</Body>
 		</ClayTable>
-	</ClayTooltipProvider>
-);
+	);
+};
 
-export default Table;
+export default PRMTable;

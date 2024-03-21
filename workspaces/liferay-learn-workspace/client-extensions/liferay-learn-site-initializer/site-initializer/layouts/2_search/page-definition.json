@@ -20,10 +20,10 @@
 				"pageElements": [
 					{
 						"definition": {
-							"indexed": true,
 							"fragmentStyle": {
 								"width": "22rem"
 							},
+							"indexed": true,
 							"layout": {
 								"contentDisplay": "FlexColumn",
 								"flexWrap": "Wrap"
@@ -165,10 +165,10 @@
 					},
 					{
 						"definition": {
-							"indexed": true,
 							"fragmentStyle": {
 								"width": "var(--container-max-lg)"
 							},
+							"indexed": true,
 							"layout": {
 								"contentDisplay": "Block",
 								"widthType": "Fixed"

@@ -75,7 +75,6 @@
 		line-height: 20px;
 	}
 
-
 	.responsive-text {
 		display: -webkit-box;
 		overflow: hidden;

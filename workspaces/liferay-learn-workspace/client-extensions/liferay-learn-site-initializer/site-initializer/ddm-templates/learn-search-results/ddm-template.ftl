@@ -143,7 +143,7 @@
 							${searchEntryContent}
 						</div>
 
-						<div class="published-date pt-2">
+						<div class="pt-2 published-date">
 							${languageUtil.get(locale, "published-date")}: ${searchEntry.getPublishedDateString()}
 						</div>
 					</a>

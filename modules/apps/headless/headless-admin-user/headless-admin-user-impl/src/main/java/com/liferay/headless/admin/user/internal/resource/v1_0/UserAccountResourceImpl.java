@@ -106,6 +106,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -652,7 +653,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			_accountEntryUserRelService.addAccountEntryUserRel(
 				accountId, contextUser.getUserId(),
 				userAccount.getAlternateName(), userAccount.getEmailAddress(),
-				LocaleUtil.fromLanguageId(userAccount.getLanguageId()),
+				_getLocale(userAccount.getLanguageId()),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(null, userAccount),
 				_getSuffixId(null, userAccount), userAccount.getJobTitle(),
@@ -831,7 +832,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				contextCompany.getCompanyId(), autoPassword, password, password,
 				false, userAccount.getAlternateName(),
 				userAccount.getEmailAddress(),
-				LocaleUtil.fromLanguageId(userAccount.getLanguageId()),
+				_getLocale(userAccount.getLanguageId()),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(null, userAccount),
 				_getSuffixId(null, userAccount), true,
@@ -862,7 +863,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				contextCompany.getCompanyId(), autoPassword, password, password,
 				false, userAccount.getAlternateName(),
 				userAccount.getEmailAddress(),
-				LocaleUtil.fromLanguageId(userAccount.getLanguageId()),
+				_getLocale(userAccount.getLanguageId()),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
 				userAccount.getFamilyName(), _getPrefixId(null, userAccount),
 				_getSuffixId(null, userAccount), true,
@@ -1031,11 +1032,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			contextCompany.getCompanyId(), autoPassword, password, password,
 			false, userAccount.getAlternateName(),
 			userAccount.getEmailAddress(),
-			LocaleUtil.fromLanguageId(userAccount.getLanguageId()),
-			userAccount.getGivenName(), userAccount.getAdditionalName(),
-			userAccount.getFamilyName(), _getPrefixId(null, userAccount),
-			_getSuffixId(null, userAccount), true,
-			_getBirthdayMonth(Calendar.JANUARY, userAccount),
+			_getLocale(userAccount.getLanguageId()), userAccount.getGivenName(),
+			userAccount.getAdditionalName(), userAccount.getFamilyName(),
+			_getPrefixId(null, userAccount), _getSuffixId(null, userAccount),
+			true, _getBirthdayMonth(Calendar.JANUARY, userAccount),
 			_getBirthdayDay(1, userAccount),
 			_getBirthdayYear(1977, userAccount), userAccount.getJobTitle(),
 			_getAddresses(null, userAccount),
@@ -1325,6 +1325,14 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			null, contextHttpServletRequest, userId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
+	}
+
+	private Locale _getLocale(String languageId) {
+		if (Validator.isNull(languageId)) {
+			return contextAcceptLanguage.getPreferredLocale();
+		}
+
+		return LocaleUtil.fromLanguageId(languageId);
 	}
 
 	private Map<String, Map<String, String>> _getModelActions(

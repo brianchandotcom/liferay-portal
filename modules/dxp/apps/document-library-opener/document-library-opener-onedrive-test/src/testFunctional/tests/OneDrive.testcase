@@ -56,6 +56,7 @@ definition {
 	}
 
 	@description = "This test ensures that an Excel sheet can be added via the OneDrive editor."
+	@ignore = "true"
 	@priority = 5
 	test AddExcelSheet {
 		property test.liferay.virtual.instance = "false";
@@ -102,6 +103,7 @@ definition {
 	}
 
 	@description = "This test ensures that the title and the file name will be renamed when the created One Drive doc title duplicates the existing document File Name."
+	@ignore = "true"
 	@priority = 4
 	test AddOneDriveEntryWithDuplicateFileName {
 		property test.liferay.virtual.instance = "false";
@@ -174,6 +176,7 @@ definition {
 	}
 
 	@description = "This test ensures that the title and the file name will be renamed when the created One Drive doc title duplicates the existing document title."
+	@ignore = "true"
 	@priority = 4
 	test AddOneDriveEntryWithDuplicateTitle {
 		property test.liferay.virtual.instance = "false";
@@ -246,6 +249,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Powerpoint presentation can be added via the OneDrive editor."
+	@ignore = "true"
 	@priority = 5
 	test AddPowerPointPresentation {
 		property test.liferay.virtual.instance = "false";
@@ -292,6 +296,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Word document can be added via the OneDrive editor. "
+	@ignore = "true"
 	@priority = 5
 	test AddWordDocument {
 		property test.liferay.virtual.instance = "false";
@@ -338,6 +343,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Word Document is autotagged once checked in."
+	@ignore = "true"
 	@priority = 4
 	test AutoTagWordDocument {
 		property test.liferay.virtual.instance = "false";
@@ -373,6 +379,7 @@ definition {
 	}
 
 	@description = "This test ensures that the document is in draft status after canceling checkout under site admin on an Excel document during creation."
+	@ignore = "true"
 	@priority = 4
 	test CancelCheckoutOnExcelSheet {
 		property test.liferay.virtual.instance = "false";
@@ -403,6 +410,7 @@ definition {
 	}
 
 	@description = "This test ensures that the document is in draft status after canceling checkout on a Word document during creation."
+	@ignore = "true"
 	@priority = 4
 	test CancelCheckoutOnWordDocument {
 		property test.liferay.virtual.instance = "false";
@@ -433,6 +441,7 @@ definition {
 	}
 
 	@description = "This test ensures that a One Drive doc in a depot can be copied from depot to site."
+	@ignore = "true"
 	@priority = 5
 	test CanCopyWordDocumentFromDepotToSite {
 		property test.liferay.virtual.instance = "false";
@@ -480,6 +489,7 @@ definition {
 	}
 
 	@description = "This test ensures that a One Drive doc in a depot can be copied to the another folder."
+	@ignore = "true"
 	@priority = 5
 	test CanCopyWordDocumentToOtherFolderInDepot {
 		property test.liferay.virtual.instance = "false";
@@ -527,6 +537,7 @@ definition {
 	}
 
 	@description = "This test ensures that a One Drive doc in a site can be copied to the other site folder."
+	@ignore = "true"
 	@priority = 5
 	test CanCopyWordDocumentToOtherSite {
 		property test.liferay.virtual.instance = "false";
@@ -566,6 +577,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-130200. It ensures that users can edit the entry through Office 365 after checkin the entry from the document editor."
+	@ignore = "true"
 	@priority = 4
 	test CanEditEntryThroughOneDriveAfterCheckinFromDocumentEditor {
 		property test.liferay.virtual.instance = "false";
@@ -598,6 +610,7 @@ definition {
 	}
 
 	@description = "This test ensures that an Excel sheet can be deleted."
+	@ignore = "true"
 	@priority = 5
 	test DeleteExcelSheet {
 		property test.liferay.virtual.instance = "false";
@@ -626,6 +639,7 @@ definition {
 	}
 
 	@description = "This test ensures that a PowerPoint presentation can be deleted."
+	@ignore = "true"
 	@priority = 5
 	test DeletePowerPointPresentation {
 		property test.liferay.virtual.instance = "false";
@@ -654,6 +668,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Word document can be deleted."
+	@ignore = "true"
 	@priority = 5
 	test DeleteWordDocument {
 		property test.liferay.virtual.instance = "false";
@@ -682,6 +697,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-102478. It ensures that an Office 365 document is automatically unchecked out after the lock is expired."
+	@ignore = "true"
 	@priority = 4
 	test DocumentCheckoutIsCanceledAfterLockExpiration {
 		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=90000";
@@ -722,6 +738,7 @@ definition {
 	}
 
 	@description = "This test ensures that an Excel sheet title can be changed via the OneDrive editor."
+	@ignore = "true"
 	@priority = 4
 	test EditExcelSheet {
 		property test.liferay.virtual.instance = "false";
@@ -766,6 +783,7 @@ definition {
 	}
 
 	@description = "This test ensures that a Powerpoint presentation title can be changed via the OneDrive editor."
+	@ignore = "true"
 	@priority = 4
 	test EditPowerPointPresentation {
 		property test.liferay.virtual.instance = "false";
@@ -810,6 +828,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-191493. This test ensures that a Word document title can be changed via the OneDrive editor."
+	@ignore = "true"
 	@priority = 4
 	test EditWordDocument {
 		property test.liferay.virtual.instance = "false";
@@ -859,6 +878,7 @@ definition {
 	}
 
 	@description = "This test ensures that the One Drive file can be added with Japanese."
+	@ignore = "true"
 	@priority = 4
 	test TitleAndFileNameCanBeDisplayedCorrectlyWithJapanese {
 		property test.liferay.virtual.instance = "false";

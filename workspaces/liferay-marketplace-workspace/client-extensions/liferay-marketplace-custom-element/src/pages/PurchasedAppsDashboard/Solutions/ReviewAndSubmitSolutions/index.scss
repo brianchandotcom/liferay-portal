@@ -1,0 +1,68 @@
+.solution-details-page {
+	&-content {
+		width: 700px;
+	}
+
+	&-icon {
+		border-radius: 8px;
+		max-height: 56px;
+		object-fit: contain;
+	}
+
+	&-header {
+		&-left-container {
+			gap: 1rem;
+		}
+
+		&-title {
+			color: #282934;
+			font-size: 1.5rem;
+			font-weight: 600;
+			line-height: 1.75rem;
+		}
+
+		&-subtitle {
+			&-container {
+				gap: 0.5rem;
+			}
+
+			&-icon {
+				height: 0.5rem;
+				width: 0.5rem;
+
+				&-hidden {
+					filter: invert(56%) sepia(4%) saturate(723%)
+						hue-rotate(202deg) brightness(91%) contrast(83%);
+				}
+
+				&-pending {
+					color: #b95000;
+				}
+
+				&-published {
+					color: #2e5aac;
+				}
+			}
+
+			&-text {
+				color: #54555f;
+				font-size: 0.875rem;
+				font-weight: 600;
+				line-height: 1.625rem;
+			}
+		}
+
+		&-table-icon {
+			border-radius: 4px;
+			max-height: 36px;
+			object-fit: contain;
+			width: 36px;
+		}
+	}
+}
+
+.navbar-collapse {
+	.container-fluid {
+		cursor: pointer;
+	}
+}

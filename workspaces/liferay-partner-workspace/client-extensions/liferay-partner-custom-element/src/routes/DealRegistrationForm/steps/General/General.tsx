@@ -348,7 +348,7 @@ const General = ({
 							setIsButtonClicked(true);
 							onContinue?.(formikHelpers, StepType.REVIEW);
 							window.scrollTo({
-								behavior: isValid ? 'instant' : 'smooth',
+								behavior: (isValid ? 'instant' : 'smooth') as ScrollBehavior,
 								top: 0
 							});
 						}}

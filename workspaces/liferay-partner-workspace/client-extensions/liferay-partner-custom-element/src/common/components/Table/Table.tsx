@@ -47,7 +47,7 @@ const Row = <T extends BasicRow>({
 
 					return (
 						<Cell
-							key={`${id}:${column.columnKey}`}
+							key={id + ":" + column.columnKey}
 							onClick={() => {
 								if (customClickOnRow) {
 									return customClickOnRow(row);
@@ -80,9 +80,9 @@ const PRMTable = <T extends BasicRow>({
 		>
 			<Head items={columns}>
 				{
-					((item) => <Cell>{item.label}</Cell>) as ChildrenRender<
-						TableColumn<T>
-					>
+					((column) => (
+						<Cell key={column.columnKey}>{column.label}</Cell>
+					)) as ChildrenRender<TableColumn<T>>
 				}
 			</Head>
 

@@ -10,6 +10,7 @@ import React, {useContext, useEffect} from 'react';
 
 import {DefinitionBuilderContext} from '../../../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
+import {filterGroovyOption} from '../../../../util/filterGroovyOption';
 import {sortElements} from '../utils';
 
 const BaseActionsInfo = ({
@@ -58,19 +59,11 @@ const BaseActionsInfo = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const getActionTypes = () => {
-		if (
-			Liferay.FeatureFlags['LPD-11179'] &&
-			!allowScriptContentBeExecutedOrIncluded &&
-			!hadGroovyScriptBefore
-		) {
-			return actionTypes.filter(
-				(actionType) => actionType.value !== 'groovy'
-			);
-		}
-
-		return actionTypes;
-	};
+	const filteredActionTypes = filterGroovyOption(
+		allowScriptContentBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+		actionTypes
+	);
 
 	return (
 		<>
@@ -168,7 +161,7 @@ const BaseActionsInfo = ({
 					/>
 
 					{actionTypes &&
-						getActionTypes().map((item, index) => (
+						filteredActionTypes.map((item, index) => (
 							<ClaySelect.Option
 								className="select-options"
 								key={index + 1}

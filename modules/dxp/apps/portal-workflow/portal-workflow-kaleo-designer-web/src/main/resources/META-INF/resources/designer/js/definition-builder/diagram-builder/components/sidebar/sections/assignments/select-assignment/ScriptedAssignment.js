@@ -11,6 +11,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import {DefinitionBuilderContext} from '../../../../../../DefinitionBuilderContext';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
+import {filterGroovyOption} from '../../../../../util/filterGroovyOption';
 import SidebarPanel from '../../../SidebarPanel';
 
 const scriptLanguageOptions = [
@@ -53,20 +54,11 @@ const ScriptedAssignment = ({setContentName}) => {
 		});
 	};
 
-	const getScriptLanguageOptions = () => {
-		if (
-			Liferay.FeatureFlags['LPD-11179'] &&
-			!allowScriptContentBeExecutedOrIncluded &&
-			!hadGroovyScriptBefore
-		) {
-			return scriptLanguageOptions.filter(
-				(scriptLanguageOption) =>
-					scriptLanguageOption.value !== 'groovy'
-			);
-		}
-
-		return scriptLanguageOptions;
-	};
+	const filteredScriptLanguageOptions = filterGroovyOption(
+		allowScriptContentBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+		scriptLanguageOptions
+	);
 
 	useEffect(() => {
 		setShowScriptData(selectedItem?.data.assignments?.script);
@@ -100,7 +92,7 @@ const ScriptedAssignment = ({setContentName}) => {
 				}}
 			>
 				{scriptLanguageOptions &&
-					getScriptLanguageOptions().map((item) => (
+					filteredScriptLanguageOptions.map((item) => (
 						<ClaySelect.Option
 							key={item.value}
 							label={item.label}

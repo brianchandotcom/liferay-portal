@@ -18,6 +18,8 @@ export const PORTLET_URLS = {
 		'/~/control_panel/manage?p_p_id=com_liferay_locked_items_web_internal_portlet_LockedItemsPortlet',
 	myWorkflowTasks:
 		'/~/control_panel/manage?p_p_id=com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet',
+	navigationMenus:
+		'/~/control_panel/manage?p_p_id=com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet',
 	pages: '/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet',
 	styleBooks: '/~/control_panel/manage/-/style_books/style_books',
 	utilityPages:

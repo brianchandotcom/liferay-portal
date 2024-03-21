@@ -5,23 +5,23 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from './fixtures/dataSetManagerApiHelpersTest';
-import {dataSetsPageTest} from './fixtures/dataSetsPageTest';
+import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {fieldsPageTest} from './fixtures/fieldsPageTest';
 import {settingsPageTest} from './fixtures/settingsPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
 import {DEFAULT_LABEL} from './utils/constants';
 
 export const test = mergeTests(
-	dataSetsPageTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
 		'LPD-10735': true,
 		'LPS-164563': true,
-		'LPS-178052': true,
 	}),
 	fieldsPageTest,
 	loginTest(),
@@ -29,25 +29,30 @@ export const test = mergeTests(
 	visualizationModesPageTest
 );
 
+let settingsDataSetERC: string;
+let settingsDataSetViewERC: string;
+
+test.beforeEach(async ({dataSetManagerApiHelpers}) => {
+	settingsDataSetERC = getRandomString();
+	settingsDataSetViewERC = getRandomString();
+
+	await dataSetManagerApiHelpers.createDataSet({erc: settingsDataSetERC});
+	await dataSetManagerApiHelpers.createDataSetView({
+		erc: settingsDataSetViewERC,
+		r_fdsEntryFDSViewRelationship_c_fdsEntryERC: settingsDataSetERC,
+	});
+});
+
+test.afterEach(async ({dataSetManagerApiHelpers}) => {
+	await dataSetManagerApiHelpers.deleteDataSet({erc: settingsDataSetERC});
+});
+
 test.describe('Data Set Settings', () => {
 	test.describe('Default Visualization Mode', () => {
 		test('If Default Visualization Mode is not configured allows user to navigate to Visualization Mode section', async ({
-			dataSetManagerApiHelpers,
 			settingsPage,
 			visualizationModesPage,
 		}) => {
-			const customDataSetERC = getRandomString();
-
-			await test.step('Navigate to Settings section', async () => {
-				await dataSetManagerApiHelpers.createDataSet({
-					erc: customDataSetERC,
-				});
-				await dataSetManagerApiHelpers.createDataSetView({
-					r_fdsEntryFDSViewRelationship_c_fdsEntryERC:
-						customDataSetERC,
-				});
-			});
-
 			await test.step('Navigate to Settings section', async () => {
 				await settingsPage.goto({
 					dataSetLabel: DEFAULT_LABEL.DATA_SET,
@@ -80,40 +85,20 @@ test.describe('Data Set Settings', () => {
 					)
 				).toBeInViewport();
 			});
-
-			await test.step('Clean data', async () => {
-				await dataSetManagerApiHelpers.deleteDataSet({
-					erc: customDataSetERC,
-				});
-			});
 		});
 
 		test('When there is only one visualization mode defined, that will be the default one.', async ({
 			dataSetManagerApiHelpers,
+			page,
 			settingsPage,
 		}) => {
-			const customDataSetERC = getRandomString();
-
-			const customViewERC =
-				await test.step('Navigate to Settings section', async () => {
-					await dataSetManagerApiHelpers.createDataSet({
-						erc: customDataSetERC,
-					});
-
-					const viewERC =
-						await dataSetManagerApiHelpers.createDataSetView({
-							r_fdsEntryFDSViewRelationship_c_fdsEntryERC:
-								customDataSetERC,
-						});
-
-					return viewERC.externalReferenceCode;
-				});
-
 			await test.step('Assign a field to a Card title section', async () => {
 				await dataSetManagerApiHelpers.createDataSetViewCardsSection({
 					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-						customViewERC,
+						settingsDataSetViewERC,
 				});
+
+				await page.reload();
 			});
 
 			await test.step('Navigate to Settings section', async () => {
@@ -132,44 +117,24 @@ test.describe('Data Set Settings', () => {
 					settingsPage.defaultVisualizationModeLabel
 				).toContainText('Cards');
 			});
-
-			await test.step('Clean data', async () => {
-				await dataSetManagerApiHelpers.deleteDataSet({
-					erc: customDataSetERC,
-				});
-			});
 		});
 
 		test('When there are more than one visualization mode defined, the user could select the default one.', async ({
 			dataSetManagerApiHelpers,
+			page,
 			settingsPage,
 		}) => {
-			const customDataSetERC = getRandomString();
-
-			const customViewERC =
-				await test.step('Navigate to Settings section', async () => {
-					await dataSetManagerApiHelpers.createDataSet({
-						erc: customDataSetERC,
-					});
-
-					const viewERC =
-						await dataSetManagerApiHelpers.createDataSetView({
-							r_fdsEntryFDSViewRelationship_c_fdsEntryERC:
-								customDataSetERC,
-						});
-
-					return viewERC.externalReferenceCode;
-				});
-
 			await test.step('Assign a field to title section for Cards and List', async () => {
 				await dataSetManagerApiHelpers.createDataSetViewCardsSection({
 					r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
-						customViewERC,
+						settingsDataSetViewERC,
 				});
 				await dataSetManagerApiHelpers.createDataSetViewListSection({
 					r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
-						customViewERC,
+						settingsDataSetViewERC,
 				});
+
+				await page.reload();
 			});
 
 			await test.step('Navigate to Settings section', async () => {
@@ -222,12 +187,442 @@ test.describe('Data Set Settings', () => {
 					settingsPage.defaultVisualizationModeLabel
 				).toContainText('List');
 			});
-
-			await test.step('Clean data', async () => {
-				await dataSetManagerApiHelpers.deleteDataSet({
-					erc: customDataSetERC,
-				});
-			});
 		});
 	});
+});
+
+export const fragmentTest = mergeTests(
+	apiHelpersTest,
+	dataSetManagerApiHelpersTest,
+	featureFlagsTest({
+		'LPD-10735': true,
+		'LPS-164563': true,
+		'LPS-178052': true,
+	}),
+	fdsFragmentPageTest,
+	isolatedSiteTest
+);
+
+fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
+	fragmentTest(
+		'Default Visualization Mode is not configured (no field for any section). Use Table as default',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			await test.step('Create random data (fields) for other Data Sets', async () => {
+				await dataSetManagerApiHelpers.createDataSetViewFields({});
+			});
+
+			const layout = await fragmentTest.step(
+				'Create a new page',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage(
+							site.id,
+							getRandomString()
+						);
+
+					return pageLayout;
+				}
+			);
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+					});
+				}
+			);
+
+			fragmentTest.step('Empty Data Set is in the page', async () => {
+				await expect(page.locator('.data-set-wrapper')).toBeVisible();
+
+				expect(
+					await page
+						.locator('.dnd-tbody > div')
+						.first()
+						.locator('.dnd-td')
+						.allInnerTexts()
+				).toEqual(['']);
+			});
+		}
+	);
+
+	fragmentTest(
+		'When there is only one visualization mode defined, that will be the default one. Cards',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			await fragmentTest.step(
+				'Assign a field to a Card title section',
+				async () => {
+					await dataSetManagerApiHelpers.createDataSetViewCardsSection(
+						{
+							r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+								settingsDataSetViewERC,
+						}
+					);
+				}
+			);
+
+			const layout = await fragmentTest.step(
+				'Create a page with a Data Set fragment',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage(
+							site.id,
+							getRandomString()
+						);
+
+					return pageLayout;
+				}
+			);
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+					});
+				}
+			);
+
+			await fragmentTest.step('Data Set (Card) is present', async () => {
+				await page
+					.getByTestId('visualization-mode-cards')
+					.waitFor({state: 'visible'});
+
+				expect(await fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
+			});
+		}
+	);
+
+	fragmentTest(
+		'When there are more than one visualization mode defined (cards & list), the user could change the visualization option.',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			await fragmentTest.step(
+				'Assign a field to a Card and List title sections',
+				async () => {
+					await dataSetManagerApiHelpers.createDataSetViewCardsSection(
+						{
+							r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+								settingsDataSetViewERC,
+						}
+					);
+					await dataSetManagerApiHelpers.createDataSetViewListSection(
+						{
+							r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+								settingsDataSetViewERC,
+						}
+					);
+				}
+			);
+
+			const layout = await fragmentTest.step(
+				'Create a page with a Data Set fragment',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage(
+							site.id,
+							getRandomString()
+						);
+
+					return pageLayout;
+				}
+			);
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+					});
+				}
+			);
+
+			await fragmentTest.step('Check Data Set is present', async () => {
+				await page
+					.getByTestId('visualization-mode-cards')
+					.waitFor({state: 'visible'});
+
+				expect(await fdsFragmentPage.fdsCardsWrapper).toBeInViewport();
+			});
+
+			await fragmentTest.step(
+				'Change Data Set Visualization option',
+				async () => {
+					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+						state: 'visible',
+					});
+					await fdsFragmentPage.fdsActiveViewSelector.click();
+
+					await page
+						.getByRole('listbox', {name: 'View Options'})
+						.getByRole('option', {name: 'Cards', selected: true})
+						.isVisible();
+
+					await page
+						.getByRole('listbox')
+						.getByRole('option', {name: 'List'})
+						.click();
+				}
+			);
+
+			await fragmentTest.step(
+				'Check Data Set Visualization option is list',
+				async () => {
+					await page
+						.getByTestId('visualization-mode-list')
+						.waitFor({state: 'visible'});
+
+					expect(
+						await fdsFragmentPage.fdsListWrapper
+					).toBeInViewport();
+				}
+			);
+		}
+	);
+
+	fragmentTest(
+		'When there are more than one visualization modes defined, with a default selected (List), this will be the default one in the fragment.',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			await fragmentTest.step(
+				'Assign a field to a Card and List title sections',
+				async () => {
+					await dataSetManagerApiHelpers.createDataSetViewCardsSection(
+						{
+							r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+								settingsDataSetViewERC,
+						}
+					);
+					await dataSetManagerApiHelpers.createDataSetViewListSection(
+						{
+							r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+								settingsDataSetViewERC,
+						}
+					);
+				}
+			);
+
+			await fragmentTest.step(
+				'Set List as default visualization mode',
+				async () => {
+					await dataSetManagerApiHelpers.updateDataSetView({
+						defaultVisualizationMode: 'list',
+						erc: settingsDataSetViewERC,
+					});
+				}
+			);
+
+			const layout = await fragmentTest.step(
+				'Create a page with a Data Set fragment',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage(
+							site.id,
+							getRandomString()
+						);
+
+					return pageLayout;
+				}
+			);
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+					});
+				}
+			);
+
+			await fragmentTest.step(
+				'Check Data Set is present (List)',
+				async () => {
+					await page
+						.getByTestId('visualization-mode-list')
+						.waitFor({state: 'visible'});
+
+					expect(
+						await fdsFragmentPage.fdsListWrapper
+					).toBeInViewport();
+				}
+			);
+
+			await fragmentTest.step(
+				'Check Default Visualization Mode option',
+				async () => {
+					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+						state: 'visible',
+					});
+					await fdsFragmentPage.fdsActiveViewSelector.click();
+
+					await page
+						.getByRole('listbox', {name: 'View Options'})
+						.getByRole('option', {name: 'Cards', selected: false})
+						.isVisible();
+
+					await page
+						.getByRole('listbox', {name: 'View Options'})
+						.getByRole('option', {name: 'List', selected: true})
+						.isVisible();
+				}
+			);
+		}
+	);
+
+	fragmentTest(
+		'When the default visualization mode is changed in the Data Set Manager, the change is reflected in the fragment',
+		async ({
+			apiHelpers,
+			dataSetManagerApiHelpers,
+			fdsFragmentPage,
+			page,
+			site,
+		}) => {
+			await fragmentTest.step(
+				'Assign a field to a Card and List title sections',
+				async () => {
+					await dataSetManagerApiHelpers.createDataSetViewCardsSection(
+						{
+							r_fdsViewFDSCardsSectionRelationship_c_fdsViewERC:
+								settingsDataSetViewERC,
+						}
+					);
+					await dataSetManagerApiHelpers.createDataSetViewListSection(
+						{
+							r_fdsViewFDSListSectionRelationship_c_fdsViewERC:
+								settingsDataSetViewERC,
+						}
+					);
+				}
+			);
+
+			await fragmentTest.step(
+				'Set List as default visualization mode',
+				async () => {
+					await dataSetManagerApiHelpers.updateDataSetView({
+						defaultVisualizationMode: 'list',
+						erc: settingsDataSetViewERC,
+					});
+				}
+			);
+
+			const layout = await fragmentTest.step(
+				'Create a page with a Data Set fragment',
+				async () => {
+					const pageLayout =
+						await apiHelpers.headlessDelivery.createSitePage(
+							site.id,
+							getRandomString()
+						);
+
+					return pageLayout;
+				}
+			);
+
+			await fragmentTest.step(
+				'Configure Data Set in the page',
+				async () => {
+					await fdsFragmentPage.configureDataSetFragment({
+						layout,
+						site,
+					});
+				}
+			);
+
+			await fragmentTest.step(
+				'Check Data Set is present (List)',
+				async () => {
+					await page
+						.getByTestId('visualization-mode-list')
+						.waitFor({state: 'visible'});
+
+					expect(
+						await fdsFragmentPage.fdsListWrapper
+					).toBeInViewport();
+				}
+			);
+
+			await fragmentTest.step(
+				'Check default visualization mode option',
+				async () => {
+					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+						state: 'visible',
+					});
+					await fdsFragmentPage.fdsActiveViewSelector.click();
+
+					await page
+						.getByRole('listbox', {name: 'View Options'})
+						.getByRole('option', {name: 'Cards', selected: false})
+						.isVisible();
+
+					await page
+						.getByRole('listbox', {name: 'View Options'})
+						.getByRole('option', {name: 'List', selected: true})
+						.isVisible();
+				}
+			);
+
+			await fragmentTest.step(
+				'Change default visualization mode to Cards',
+				async () => {
+					await dataSetManagerApiHelpers.updateDataSetView({
+						defaultVisualizationMode: 'cards',
+						erc: settingsDataSetViewERC,
+					});
+				}
+			);
+
+			await fragmentTest.step(
+				'Reload page and check the default visualization mode',
+				async () => {
+					await page.reload();
+
+					await page
+						.getByTestId('visualization-mode-cards')
+						.waitFor({state: 'visible'});
+
+					expect(
+						await fdsFragmentPage.fdsCardsWrapper
+					).toBeInViewport();
+
+					await fdsFragmentPage.fdsActiveViewSelector.waitFor({
+						state: 'visible',
+					});
+					await fdsFragmentPage.fdsActiveViewSelector.click();
+
+					await page
+						.getByRole('listbox', {name: 'View Options'})
+						.getByRole('option', {name: 'Cards', selected: true})
+						.isVisible();
+				}
+			);
+		}
+	);
 });

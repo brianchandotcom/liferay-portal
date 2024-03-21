@@ -1172,11 +1172,15 @@ definition {
 
 			WaitForPageLoad();
 
+			ACUtils.waitForLoading();
+
 			while ((IsElementNotPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
 				ACSegments.searchSegment(findSegment = ${name});
 
 				ACUtils.clearSearchBar();
 			}
+
+			ACUtils.waitForLoading();
 
 			AssertTextEquals(
 				locator1 = "ACUtils#NAME_LIST",
@@ -1207,11 +1211,15 @@ definition {
 
 			WaitForPageLoad();
 
+			ACUtils.waitForLoading();
+
 			while ((IsElementPresent(locator1 = "ACUtils#NAME_LIST")) && (maxIterations = "50")) {
 				ACSegments.searchSegment(findSegment = ${name});
 
 				ACUtils.clearSearchBar();
 			}
+
+			ACUtils.waitForLoading();
 
 			AssertElementNotPresent(locator1 = "ACUtils#NAME_LIST");
 		}

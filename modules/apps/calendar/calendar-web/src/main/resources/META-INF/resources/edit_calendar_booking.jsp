@@ -1068,7 +1068,10 @@ while (manageableCalendarsIterator.hasNext()) {
 		var startTimePicker = intervalSelector.get('startTimePicker');
 
 		startTimePicker.selectDates([startDate]);
+		startTimePicker.updateTime(startDate);
+
 		endTimePicker.selectDates([endDate]);
+		endTimePicker.updateTime(endDate);
 	};
 
 	scheduler.load();

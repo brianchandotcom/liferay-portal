@@ -18,6 +18,10 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -175,6 +179,10 @@ public class FriendlyURLEntryStagedModelDataHandler
 			}
 		}
 
+		_importAssetCategories(
+			portletDataContext, friendlyURLEntry,
+			importedFriendlyURLEntry);
+
 		portletDataContext.importClassedModel(
 			friendlyURLEntry, importedFriendlyURLEntry);
 	}
@@ -214,6 +222,62 @@ public class FriendlyURLEntryStagedModelDataHandler
 				portletDataContext, friendlyURLEntry, assetCategory,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
+	}
+
+	private void _importAssetCategories(
+			PortletDataContext portletDataContext,
+			FriendlyURLEntry friendlyURLEntry,
+			FriendlyURLEntry importedFriendlyURL)
+		throws Exception {
+
+		if (!_featureFlagManager.isEnabled("LPD-11147")) {
+			return;
+		}
+
+		List<Element> assetCategoryElements =
+			portletDataContext.getReferenceDataElements(
+				friendlyURLEntry, AssetCategory.class);
+
+		if (ListUtil.isEmpty(assetCategoryElements)) {
+			return;
+		}
+
+		long[] assetCategoryIds = {};
+
+		for (Element assetCategoryElement : assetCategoryElements) {
+			String assetCategoryPath = assetCategoryElement.attributeValue(
+				"path");
+
+			AssetCategory assetCategory =
+				(AssetCategory)portletDataContext.getZipEntryAsObject(
+					assetCategoryPath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, assetCategory);
+
+			Map<Long, Long> assetCategoryNewPrimaryKeys =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					AssetCategory.class);
+
+			assetCategoryIds = ArrayUtil.append(
+				assetCategoryIds,
+				MapUtil.getLong(
+					assetCategoryNewPrimaryKeys, assetCategory.getCategoryId(),
+					assetCategory.getCategoryId()));
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		_assetEntryLocalService.updateEntry(
+			serviceContext.getUserId(), importedFriendlyURL.getGroupId(),
+			importedFriendlyURL.getCreateDate(),
+			importedFriendlyURL.getModifiedDate(),
+			FriendlyURLEntry.class.getName(),
+			importedFriendlyURL.getFriendlyURLEntryId(),
+			importedFriendlyURL.getUuid(), 0, assetCategoryIds, new String[0],
+			true, false, null, null, null, null, ContentTypes.TEXT_PLAIN, null,
+			null, null, null, null, 0, 0, serviceContext.getAssetPriority());
 	}
 
 	@Reference

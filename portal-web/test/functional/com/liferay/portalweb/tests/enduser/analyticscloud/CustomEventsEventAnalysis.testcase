@@ -701,7 +701,7 @@ definition {
 
 			ACCustomEvents.createCustomEvent(
 				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
+				timeToSendCustomEvent = 4);
 		}
 
 		task ("Close sessions") {

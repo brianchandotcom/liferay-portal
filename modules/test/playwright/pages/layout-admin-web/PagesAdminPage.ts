@@ -66,4 +66,46 @@ export class PagesAdminPage {
 			})
 			.click();
 	}
+
+	async selectPageAndChangePermissions(
+		pageName: string,
+		permissionIds: string[]
+	) {
+		// Select the page
+
+		const pageInput = await this.page.getByLabel(`Select ${pageName}`, {
+			exact: true,
+		});
+
+		await pageInput.check({trial: true});
+		await pageInput.check({timeout: 1000});
+
+		// Open the permissions modal
+
+		await this.page.getByRole('button', {name: 'Permissions'}).click();
+
+		await this.page.waitForTimeout(3000);
+
+		// Check the permissions
+
+		for (const permissionId of permissionIds) {
+			const permission = await this.page
+				.frameLocator('iframe[title="Permissions"]')
+				.locator(`#${permissionId}`);
+
+			await permission.uncheck({trial: true});
+			await permission.uncheck({timeout: 1000});
+		}
+
+		// Save and close the modal
+
+		await this.page
+			.frameLocator('iframe[title="Permissions"]')
+			.getByRole('button', {name: 'Save'})
+			.click();
+
+		await this.page.waitForTimeout(3000);
+
+		await this.page.getByLabel('close', {exact: true}).click();
+	}
 }

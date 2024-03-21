@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -90,7 +91,7 @@ public class CalendarBookingInfoItemFormProviderTest {
 			Comparator.comparing(
 				InfoField::getName, String::compareToIgnoreCase));
 
-		Assert.assertEquals(infoFields.toString(), 8, infoFields.size());
+		Assert.assertEquals(infoFields.toString(), 11, infoFields.size());
 
 		Iterator<InfoField<?>> iterator = infoFields.iterator();
 
@@ -99,6 +100,13 @@ public class CalendarBookingInfoItemFormProviderTest {
 		Assert.assertEquals(
 			BooleanInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 		Assert.assertEquals("allDay", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = iterator.next();
+
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("calendarName", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
 
 		infoField = iterator.next();
@@ -133,7 +141,21 @@ public class CalendarBookingInfoItemFormProviderTest {
 
 		Assert.assertEquals(
 			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("invitations", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = iterator.next();
+
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 		Assert.assertEquals("location", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = iterator.next();
+
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals("repetitions", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
 
 		infoField = iterator.next();
@@ -153,6 +175,8 @@ public class CalendarBookingInfoItemFormProviderTest {
 
 	@Test
 	public void testGetInfoItemFieldValues() throws Exception {
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+
 		InfoItemFieldValuesProvider<CalendarBooking>
 			infoItemFieldValuesProvider =
 				(InfoItemFieldValuesProvider<CalendarBooking>)
@@ -188,12 +212,19 @@ public class CalendarBookingInfoItemFormProviderTest {
 			infoItemFieldValues.getInfoFieldValues();
 
 		Assert.assertEquals(
-			infoFieldValues.toString(), 7, infoFieldValues.size());
+			infoFieldValues.toString(), 10, infoFieldValues.size());
 
 		InfoFieldValue<Object> allDayInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("allDay");
 
 		Assert.assertFalse((Boolean)allDayInfoFieldValue.getValue());
+
+		InfoFieldValue<Object> calendarNameInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("calendarName");
+
+		Assert.assertEquals(
+			_calendar.getName(LocaleUtil.getDefault()),
+			calendarNameInfoFieldValue.getValue(LocaleUtil.getDefault()));
 
 		InfoFieldValue<Object> descriptionInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("description");
@@ -214,11 +245,23 @@ public class CalendarBookingInfoItemFormProviderTest {
 
 		Assert.assertNotNull(eventURLInfoFieldValue.getValue());
 
+		InfoFieldValue<Object> invitationsInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("invitations");
+
+		Assert.assertEquals(
+			"Accepted (1), Declined (0), Pending (0), Maybe (0)",
+			invitationsInfoFieldValue.getValue());
+
 		InfoFieldValue<Object> locationInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("location");
 
 		Assert.assertEquals(
 			_calendarBooking.getLocation(), locationInfoFieldValue.getValue());
+
+		InfoFieldValue<Object> repetitionsInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("repetitions");
+
+		Assert.assertEquals("False", repetitionsInfoFieldValue.getValue());
 
 		InfoFieldValue<Object> startDateInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("startDate");

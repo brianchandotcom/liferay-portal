@@ -1,0 +1,91 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {pagesAdminPageTest} from '../../fixtures/PagesAdminPageTest';
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import getRandomString from '../../utils/getRandomString';
+
+export const test = mergeTests(
+	apiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': true,
+		'LPS-196847': true,
+	}),
+	isolatedSiteTest,
+	pagesAdminPageTest
+);
+
+test('changes the permissions of a group of pages', async ({
+	apiHelpers,
+	page,
+	pagesAdminPage,
+	site,
+}) => {
+
+	// Create two random pages
+
+	const pageNames = [getRandomString(), getRandomString()];
+
+	for (const pageName of pageNames) {
+		await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: pageName,
+		});
+	}
+
+	// Go to admin page
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	// Select the first page and change the Guest-View permission
+
+	await pagesAdminPage.selectPageAndChangePermissions(pageNames[0], [
+		'guest_ACTION_VIEW',
+	]);
+
+	// Select the second page (keeping the first page checked) and open the modal of permissions
+
+	await page
+		.getByLabel(`Select ${pageNames[1]}`, {
+			exact: true,
+		})
+		.check();
+
+	await page.getByRole('button', {name: 'Permissions'}).click();
+
+	await page.waitForTimeout(3000);
+
+	// Check that the Guest-View permission value for both pages is indeterminate
+
+	const permission = await page
+		.frameLocator('iframe[title="Permissions"]')
+		.locator('#guest_ACTION_VIEW');
+
+	await expect(permission).toHaveValue('indeterminate');
+
+	await page.getByLabel('close', {exact: true}).click();
+
+	// Change the Guest-View permission for both pages
+
+	await pagesAdminPage.selectPageAndChangePermissions(pageNames[1], [
+		'guest_ACTION_VIEW',
+	]);
+
+	// Refresh the admin page
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	// Check if the pages are retricted pages
+
+	for (const pageName of pageNames) {
+		await expect(
+			page.getByLabel(`${pageName}. Restricted Page`)
+		).toBeVisible();
+	}
+});

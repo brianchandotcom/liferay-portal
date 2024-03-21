@@ -2,11 +2,11 @@
 	"dependencies": {
 		"glob": "9.3.4"
 	},
-	"description": "Liferay Sample Theme Spritemap 2",
+	"description": "Liferay Learn Theme Spritemap",
 	"devDependencies": {
 		"@clayui/css": "^3.92.0"
 	},
-	"name": "@liferay/liferay-sample-theme-spritemap-2",
+	"name": "@liferay/liferay-learn-theme-spritemap",
 	"scripts": {
 		"build": "node ./buildSpritemap.js"
 	},

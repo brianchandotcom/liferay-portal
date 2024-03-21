@@ -96,6 +96,14 @@ export class JournalPage {
 			.click();
 	}
 
+	async changeView(viewName: string) {
+		await this.page
+			.getByLabel('Select View, Currently Selected: ')
+			.waitFor();
+		await this.page.getByLabel('Select View, Currently Selected: ').click();
+		await this.page.getByRole('menuitem', {name: viewName}).click();
+	}
+
 	async setJournalArticlePermissions(
 		articles: Locator[],
 		permissionLocators: string[]

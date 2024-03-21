@@ -206,7 +206,8 @@ public interface CommerceOrderLocalService
 	public void deleteCommerceOrders(long userId, Date date, int status);
 
 	public void deleteCommerceOrdersByAccountId(
-		long commerceAccountId, Date date, int status);
+			long commerceAccountId, Date date, int status)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

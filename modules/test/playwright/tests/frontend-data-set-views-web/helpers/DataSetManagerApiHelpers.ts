@@ -36,6 +36,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 	async createDataSetView({
 		defaultItemsPerPage = 20,
+		defaultVisualizationMode,
 		description = 'Sample description',
 		erc = 'sampleDataSetERC',
 		label = DEFAULT_LABEL.VIEW,
@@ -44,6 +45,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		symbol = 'catalog',
 	}: {
 		defaultItemsPerPage?: number;
+		defaultVisualizationMode?: string;
 		description?: string;
 		erc?: string;
 		label?: string;
@@ -55,6 +57,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 		const data = {
 			defaultItemsPerPage,
+			defaultVisualizationMode,
 			description,
 			externalReferenceCode: erc,
 			label,
@@ -86,6 +89,26 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		return this.post(url, data);
 	}
 
+	async createDataSetViewFields({
+		label = 'Title',
+		name = 'title',
+		type = 'string',
+	}: {
+		label?: string;
+		name?: string;
+		type?: string;
+	}) {
+		const url = `${this.baseUrl}data-set-manager/fields`;
+
+		const data = {
+			label,
+			name,
+			type,
+		};
+
+		return this.post(url, data);
+	}
+
 	async createDataSetViewListSection({
 		fieldName = 'name',
 		name = 'Title',
@@ -110,5 +133,24 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}data-set-manager/entries/by-external-reference-code/${erc}`;
 
 		return this.delete(url);
+	}
+
+	async updateDataSetView({
+		defaultVisualizationMode,
+		erc = DEFAULT_DATA_SET_ERC,
+		label,
+	}: {
+		defaultVisualizationMode?: string;
+		erc?: string;
+		label?: string;
+	}) {
+		const url = `${this.baseUrl}data-set-manager/views/by-external-reference-code/${erc}`;
+
+		const data = {
+			defaultVisualizationMode,
+			label,
+		};
+
+		return this.patch(url, data);
 	}
 }

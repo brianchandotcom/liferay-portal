@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -180,8 +181,7 @@ public class FriendlyURLEntryStagedModelDataHandler
 		}
 
 		_importAssetCategories(
-			portletDataContext, friendlyURLEntry,
-			importedFriendlyURLEntry);
+			portletDataContext, friendlyURLEntry, importedFriendlyURLEntry);
 
 		portletDataContext.importClassedModel(
 			friendlyURLEntry, importedFriendlyURLEntry);
@@ -230,7 +230,10 @@ public class FriendlyURLEntryStagedModelDataHandler
 			FriendlyURLEntry importedFriendlyURL)
 		throws Exception {
 
-		if (!_featureFlagManager.isEnabled("LPD-11147")) {
+		if (!_featureFlagManager.isEnabled("LPD-11147") ||
+			(friendlyURLEntry.getClassNameId() == _portal.getClassNameId(
+				AssetCategory.class.getName()))) {
+
 			return;
 		}
 
@@ -291,6 +294,9 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.friendly.url.model.FriendlyURLEntry)"

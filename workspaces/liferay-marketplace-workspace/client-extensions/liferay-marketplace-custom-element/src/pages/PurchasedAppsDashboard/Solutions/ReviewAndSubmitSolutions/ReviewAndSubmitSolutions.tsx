@@ -8,11 +8,12 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Section} from '../../../../components/Section/Section';
 import {CardSectionsBody} from '../../../ReviewAndSubmitAppPage/CardSectionsBody';
 import {App} from '../../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPageUtil';
+import {Solution} from './SolutionsDetails';
 
 type ReviewAndSubmitSolutions = {
 	loading?: boolean;
 	readonly?: boolean;
-	solution?: any;
+	solution?: Solution;
 };
 
 export function ReviewAndSubmitSolutions({

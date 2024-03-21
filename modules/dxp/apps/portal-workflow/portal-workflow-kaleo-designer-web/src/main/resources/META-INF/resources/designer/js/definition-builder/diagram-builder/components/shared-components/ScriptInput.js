@@ -9,7 +9,6 @@ import React, {useContext, useState} from 'react';
 
 import {DefinitionBuilderContext} from '../../../DefinitionBuilderContext';
 import {DEFAULT_LANGUAGE} from '../../../source-builder/constants';
-import {DiagramBuilderContext} from '../../DiagramBuilderContext';
 import {filterGroovyOption} from '../../util/filterGroovyOption';
 
 const scriptLanguageOptions = [
@@ -29,10 +28,10 @@ const ScriptInput = ({
 	inputValue,
 	updateSelectedItem,
 }) => {
-	const {hadGroovyScriptBefore} = useContext(DiagramBuilderContext);
-	const {allowScriptContentBeExecutedOrIncluded} = useContext(
-		DefinitionBuilderContext
-	);
+	const {
+		allowScriptContentBeExecutedOrIncluded,
+		hadGroovyScriptBefore,
+	} = useContext(DefinitionBuilderContext);
 	const [script, setScript] = useState(inputValue);
 	const [scriptLanguage, setScriptLanguage] = useState(
 		defaultScriptLanguage || DEFAULT_LANGUAGE

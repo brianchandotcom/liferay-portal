@@ -57,6 +57,7 @@ export default function UpperToolbar({
 		setDefinitionTitleTranslations,
 		setDeserialize,
 		setElements,
+		setHadGroovyScriptBefore,
 		setHasGroovyScript,
 		setSelectedLanguageId,
 		setShowAlert,
@@ -231,6 +232,13 @@ export default function UpperToolbar({
 				version,
 			}).then((response) => {
 				if (response.ok) {
+					if (
+						Liferay.FeatureFlags['LPD-11179'] &&
+						!allowScriptContentBeExecutedOrIncluded
+					) {
+						setHadGroovyScriptBefore(false);
+					}
+
 					response.json().then(({name, version}) => {
 						setDefinitionName(name);
 						setVersion(parseInt(version, 10));
@@ -280,6 +288,13 @@ export default function UpperToolbar({
 				version,
 			}).then((response) => {
 				if (response.ok) {
+					if (
+						Liferay.FeatureFlags['LPD-11179'] &&
+						!allowScriptContentBeExecutedOrIncluded
+					) {
+						setHadGroovyScriptBefore(false);
+					}
+
 					response.json().then(({name, version}) => {
 						setDefinitionName(name);
 						setVersion(parseInt(version, 10));

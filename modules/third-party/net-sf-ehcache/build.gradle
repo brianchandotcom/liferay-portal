@@ -25,6 +25,9 @@ jarManifest {
 }
 
 jarPatched {
+	mustRunAfter "compileJava"
+	mustRunAfter "processResources"
+
 	archiveFileName = jar.archiveFileName
 	destinationDirectory = jar.destinationDirectory
 	duplicatesStrategy = "exclude"

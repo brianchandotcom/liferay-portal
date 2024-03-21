@@ -5,6 +5,13 @@
 
 import {ApiHelpers} from './ApiHelpers';
 
+interface createSitePageProps {
+	pageDefinition?: PageDefinition;
+	pagePermissions?: PagePermission[];
+	siteId: string;
+	title: string;
+}
+
 export class HeadlessDeliveryApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -25,14 +32,15 @@ export class HeadlessDeliveryApiHelper {
 	 * @param pageDefinition the definition of the page in case that we want
 	 * to specify some content for it, for example some fragments+
 	 */
-	async createSitePage(
-		siteId: string,
-		title: string,
-		pageDefinition?: PageDefinition
-	): Promise<Layout> {
+	async createSitePage({
+		pageDefinition,
+		pagePermissions,
+		siteId,
+		title,
+	}: createSitePageProps): Promise<Layout> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/site-pages`,
-			{pageDefinition, title}
+			{pageDefinition, pagePermissions, title}
 		);
 	}
 

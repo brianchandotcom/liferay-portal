@@ -98,11 +98,11 @@ export class PageEditorPage {
 
 		// Create a page with a fragment
 
-		const layout = await apiHelpers.headlessDelivery.createSitePage(
-			site.id,
-			getRandomString(),
-			getPageDefinition([fragment])
-		);
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([fragment]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
 		// Go to edit mode of page
 

@@ -37,10 +37,10 @@ export class FDSFragmentPage {
 		title: string;
 	}): Promise<Layout> {
 		const pageLayout =
-			await this.apiHelpers.headlessDelivery.createSitePage(
+			await this.apiHelpers.headlessDelivery.createSitePage({
 				siteId,
-				title
-			);
+				title,
+			});
 
 		return pageLayout;
 	}

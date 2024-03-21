@@ -9,6 +9,7 @@ import {FDSViewType} from '../FDSViews';
 import {IField} from '../utils/types';
 interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];
+	initialChildren?: IFieldTreeItem[];
 	query?: string;
 	savedId?: string;
 	selected?: boolean;

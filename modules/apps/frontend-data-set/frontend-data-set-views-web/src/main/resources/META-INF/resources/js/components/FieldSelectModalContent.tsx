@@ -21,6 +21,7 @@ import AutoSearch from './AutoSearch';
 
 interface IFieldTreeItem extends IField {
 	children?: IFieldTreeItem[];
+	initialChildren?: IFieldTreeItem[];
 	query?: string;
 	savedId?: string;
 	selected?: boolean;
@@ -57,6 +58,7 @@ const initializeFields = ({
 			field.savedId = selectedField.id;
 		}
 
+		field.initialChildren = field.children;
 		field.id = field.name;
 	});
 
@@ -289,9 +291,22 @@ const FieldSelectModalContent = ({
 								selectionMode={selectionMode}
 								showExpanderOnHover={false}
 							>
-								{({children, label, query}: IFieldTreeItem) => (
+								{({
+									children,
+									initialChildren,
+									label,
+									query,
+								}: IFieldTreeItem) => (
 									<TreeView.Item>
-										<TreeView.ItemStack>
+										<TreeView.ItemStack
+											disabled={
+												initialChildren &&
+												!!initialChildren.length
+													? true
+													: false
+											}
+											expanderDisabled={false}
+										>
 											<ClayCheckbox checked>
 												<span className="font-weight-normal pl-1 text-3">
 													<Highlight

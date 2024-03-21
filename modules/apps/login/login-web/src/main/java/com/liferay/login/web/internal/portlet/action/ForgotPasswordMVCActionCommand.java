@@ -206,9 +206,9 @@ public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getQueryQuestionByEmailHash(
-		String email, Set<String> questions) {
+		String email, Set<String> reminderQueryQuestions) {
 
-		List<String> list = new SortedArrayList(questions);
+		List<String> list = new SortedArrayList(reminderQueryQuestions);
 
 		return list.get(Math.abs(email.hashCode()) % list.size());
 	}

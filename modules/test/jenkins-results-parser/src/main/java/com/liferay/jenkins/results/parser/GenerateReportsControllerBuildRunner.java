@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Kenji Heigel
@@ -206,7 +207,7 @@ public class GenerateReportsControllerBuildRunner
 			return _DEFAULT_REPORT_STALE_DURATION;
 		}
 
-		return Long.parseLong(reportStaleDuration);
+		return TimeUnit.MINUTES.toMillis(Long.parseLong(reportStaleDuration));
 	}
 
 	private List<String> _getSelectedReportNames() {

@@ -369,7 +369,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "footer-text",
+																"key": "text",
 																"siteKey": "Liferay Learn"
 															},
 															"fragmentConfig": {
@@ -406,7 +406,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "footer-text",
+																"key": "text",
 																"siteKey": "Liferay Learn"
 															},
 															"fragmentConfig": {
@@ -443,7 +443,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "footer-text",
+																"key": "text",
 																"siteKey": "Liferay Learn"
 															},
 															"fragmentConfig": {
@@ -480,7 +480,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "footer-text",
+																"key": "text",
 																"siteKey": "Liferay Learn"
 															},
 															"fragmentConfig": {
@@ -585,7 +585,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "footer-text",
+																		"key": "text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
@@ -634,7 +634,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "footer-text",
+																		"key": "text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
@@ -698,7 +698,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "footer-text",
+																		"key": "text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
@@ -752,7 +752,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "footer-text",
+																		"key": "text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
@@ -789,7 +789,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "footer-text",
+																		"key": "text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
@@ -826,7 +826,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "footer-text",
+																		"key": "text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
@@ -863,7 +863,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "footer-text",
+																		"key": "text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
@@ -900,7 +900,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "footer-text",
+																		"key": "text",
 																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
@@ -981,7 +981,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "footer-text",
+																				"key": "text",
 																				"siteKey": "Liferay Learn"
 																			},
 																			"fragmentConfig": {
@@ -1028,7 +1028,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "footer-text",
+																				"key": "text",
 																				"siteKey": "Liferay Learn"
 																			},
 																			"fragmentConfig": {
@@ -1092,7 +1092,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "footer-text",
+																				"key": "text",
 																				"siteKey": "Liferay Learn"
 																			},
 																			"fragmentConfig": {

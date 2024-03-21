@@ -49,7 +49,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -209,9 +208,6 @@ public class ClientExtensionProjectConfigurator
 						if (Validator.isNull(clientExtension.type)) {
 							clientExtension.type = fieldName;
 						}
-
-						clientExtension.classification = _getClassification(
-							clientExtension.id, clientExtension.type);
 
 						clientExtension.projectId =
 							StringUtil.toAlphaNumericLowerCase(
@@ -672,9 +668,6 @@ public class ClientExtensionProjectConfigurator
 					createClientExtensionConfigTask.getInputs();
 
 				taskInputs.file(clientExtensionYamlFile);
-
-				createClientExtensionConfigTask.addClientExtensionProperties(
-					_getClientExtensionProperties());
 			});
 
 		File clientExtensionBuildDir = new File(
@@ -1025,43 +1018,6 @@ public class ClientExtensionProjectConfigurator
 		copy.from(buildClientExtensionZipTaskProvider);
 	}
 
-	private String _getClassification(String id, String type) {
-		Properties clientExtensionProperties = _getClientExtensionProperties();
-
-		String classification = clientExtensionProperties.getProperty(
-			type + ".classification");
-
-		if (classification != null) {
-			return classification;
-		}
-
-		throw new GradleException(
-			StringUtil.concat(
-				"Client extension ", id, " with type ", type,
-				" is of unkown classification"));
-	}
-
-	private Properties _getClientExtensionProperties() {
-		if (_clientExtensionProperties == null) {
-			try {
-				Properties properties = new Properties();
-
-				properties.load(
-					ClientExtension.class.getResourceAsStream(
-						"client-extension.properties"));
-
-				return _clientExtensionProperties = properties;
-			}
-			catch (Exception exception) {
-				throw new GradleException(
-					"Unable to parse client-extension.properties file",
-					exception);
-			}
-		}
-
-		return _clientExtensionProperties;
-	}
-
 	private String _getDockerImageId(Project project) {
 		String propertyName = "imageId";
 
@@ -1295,7 +1251,6 @@ public class ClientExtensionProjectConfigurator
 
 	private final Map<String, Set<Project>> _clientExtensionIds =
 		new HashMap<>();
-	private Properties _clientExtensionProperties;
 	private final boolean _defaultRepositoryEnabled;
 	private final NodeBuildConfigurer _nodeBuildConfigurer =
 		new NodeBuildConfigurer();

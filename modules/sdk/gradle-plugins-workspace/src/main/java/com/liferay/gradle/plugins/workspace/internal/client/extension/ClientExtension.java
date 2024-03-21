@@ -10,15 +10,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.liferay.gradle.plugins.workspace.internal.util.ResourceUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.gradle.api.GradleException;
 
 /**
  * @author Gregory Amerson
@@ -26,12 +31,38 @@ import java.util.stream.Stream;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ClientExtension {
 
+	public String getClassification() {
+		String classification = _clientExtensionProperties.getProperty(
+			type + ".classification");
+
+		if (classification != null) {
+			return classification;
+		}
+
+		throw new GradleException(
+			String.format(
+				"Client extension %s with type %s is of unknown classification",
+				id, type));
+	}
+
 	@JsonAnySetter
 	public void ignored(String name, Object value) {
 		typeSettings.put(name, value);
 	}
 
-	public Map<String, Object> toJSONMap(String pid) {
+	public Map<String, Object> toJSONMap() {
+		HashMap<String, Object> typeSettings = new HashMap<>(this.typeSettings);
+
+		String pid = _clientExtensionProperties.getProperty(type + ".pid");
+
+		if (Objects.equals(type, "instanceSettings")) {
+			pid = typeSettings.remove("pid") + ".scoped";
+		}
+
+		if (pid == null) {
+			return Collections.emptyMap();
+		}
+
 		Map<String, Object> jsonMap = new HashMap<>();
 
 		Map<String, Object> configMap = new HashMap<>();
@@ -55,14 +86,9 @@ public class ClientExtension {
 			"webContextPath",
 			typeSettings.getOrDefault("webContextPath", "/" + projectName));
 
-		Set<Map.Entry<String, Object>> set = typeSettings.entrySet();
-
-		set.forEach(
-			entry -> {
-				if (!pid.contains("CETConfiguration")) {
-					configMap.put(entry.getKey(), entry.getValue());
-				}
-			});
+		if (!pid.contains("CETConfiguration")) {
+			configMap.putAll(typeSettings);
+		}
 
 		if (type.equals("oAuthApplicationHeadlessServer") ||
 			type.equals("oAuthApplicationUserAgent")) {
@@ -81,7 +107,6 @@ public class ClientExtension {
 		return jsonMap;
 	}
 
-	public String classification = "static";
 	public String description = "";
 	public String id;
 	public String name = "";
@@ -117,5 +142,10 @@ public class ClientExtension {
 			Collectors.toList()
 		);
 	}
+
+	private static final Properties _clientExtensionProperties =
+		ResourceUtil.readProperties(
+			ResourceUtil.getClassLoaderResolver(
+				ClientExtension.class, "client-extension.properties"));
 
 }

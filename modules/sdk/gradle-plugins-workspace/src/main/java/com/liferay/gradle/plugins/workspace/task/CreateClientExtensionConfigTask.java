@@ -92,12 +92,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		}
 	}
 
-	public void addClientExtensionProperties(
-		Properties clientExtensionProperties) {
-
-		_clientExtensionProperties = clientExtensionProperties;
-	}
-
 	@TaskAction
 	public void createClientExtensionConfig() {
 		Properties pluginPackageProperties = _getPluginPackageProperties();
@@ -134,7 +128,9 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				_createSiteInitializerJsonFile(clientExtension);
 			}
 
-			if (Objects.equals(clientExtension.classification, "frontend")) {
+			if (Objects.equals(
+					clientExtension.getClassification(), "frontend")) {
+
 				_expandWildcards(clientExtension.typeSettings);
 
 				pluginPackageProperties.put(
@@ -145,15 +141,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				_inlineFrontendTokenDefinitionJSON(clientExtension);
 			}
 
-			String pid = _clientExtensionProperties.getProperty(type + ".pid");
-
-			if (Objects.equals(type, "instanceSettings")) {
-				pid = clientExtension.typeSettings.remove("pid") + ".scoped";
-			}
-
-			if (pid != null) {
-				jsonMap.putAll(clientExtension.toJSONMap(pid));
-			}
+			jsonMap.putAll(clientExtension.toJSONMap());
 		}
 
 		Map<String, String> substitutionMap = new HashMap<>();
@@ -425,7 +413,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	private String _getIdOrBatchType(ClientExtension clientExtension) {
 		String id = clientExtension.id;
 
-		if (Objects.equals(clientExtension.classification, "batch")) {
+		if (Objects.equals(clientExtension.getClassification(), "batch")) {
 			id = "batch";
 		}
 
@@ -718,7 +706,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		clientExtensions.forEach(
 			clientExtension -> classifications.add(
-				clientExtension.classification));
+				clientExtension.getClassification()));
 
 		if (_groupConfiguration.containsAll(classifications)) {
 
@@ -867,7 +855,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 	private final Base64.Encoder _base64Encoder = Base64.getEncoder();
 	private final Object _clientExtensionConfigFile;
-	private Properties _clientExtensionProperties;
 	private final Set<ClientExtension> _clientExtensions = new HashSet<>();
 	private Object _dockerFile;
 	private Object _lcpJsonFile;

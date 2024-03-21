@@ -145,11 +145,11 @@ public class CommerceOrderHttpHelperImplTest {
 
 	@After
 	public void tearDown() throws PortalException {
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
-
 		for (CommerceOrder commerceOrder : _commerceOrders) {
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
+
+		CentralizedThreadLocal.clearShortLivedThreadLocals();
 	}
 
 	@Test

@@ -155,6 +155,8 @@ public class CommerceOrderEngineTest {
 	public void tearDown() throws PortalException {
 		_commerceOrderLocalService.deleteCommerceOrder(_commerceOrder);
 
+		CentralizedThreadLocal.clearShortLivedThreadLocals();
+
 		CompanyThreadLocal.setCompanyId(_originalCompanyId);
 	}
 
@@ -855,8 +857,6 @@ public class CommerceOrderEngineTest {
 		Assert.assertEquals(
 			CommerceOrderConstants.ORDER_STATUS_COMPLETED,
 			_commerceOrder.getOrderStatus());
-
-		CentralizedThreadLocal.clearShortLivedThreadLocals();
 
 		for (ComponentDescriptionDTO componentDescriptionDTO :
 				componentDescriptionDTOs) {

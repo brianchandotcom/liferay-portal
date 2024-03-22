@@ -488,7 +488,7 @@ definition {
 
 		task ("Assert the page is using the client extension sample favicon") {
 			AssertElementPresent(
-				imageFileName = "liferay-sample-theme-favicon/favicon.ico",
+				imageFileName = "liferay-sample-theme-favicon/favicon.",
 				locator1 = "Icon#FAVICON");
 		}
 	}

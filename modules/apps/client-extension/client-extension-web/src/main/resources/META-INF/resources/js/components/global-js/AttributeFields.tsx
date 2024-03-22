@@ -133,7 +133,9 @@ export default function AttributeFields({
 							id={valueId}
 							items={BOOLEAN_VALUE_ITEMS}
 							onSelectionChange={(value) =>
-								onAttributeChange(index, {value})
+								onAttributeChange(index, {
+									value: JSON.parse(value),
+								})
 							}
 						>
 							{(item) => (
@@ -169,7 +171,7 @@ export default function AttributeFields({
 								)}
 								className="btn btn-primary btn-xs dm-field-repeatable-add-button ml-1 rounded-pill"
 								onClick={() =>
-									name
+									name.trim()
 										? onAddClick(index)
 										: setErrorMessage(
 												Liferay.Language.get(

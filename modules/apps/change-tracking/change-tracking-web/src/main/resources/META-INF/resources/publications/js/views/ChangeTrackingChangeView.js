@@ -402,8 +402,10 @@ export default function ChangeTrackingChangeView({
 								moveChangesURL={getMoveChangesURL(initialNode)}
 								parentEntries={initialNode.parents}
 								showDropdown={initialNode.modelClassNameId}
+								showWorkflow={initialNode.showWorkflow}
 								spritemap={spritemap}
 								title={initialNode.title}
+								workflowStatus={initialNode.workflowStatus}
 							/>
 						) : (
 							<ClayLayout.Sheet>

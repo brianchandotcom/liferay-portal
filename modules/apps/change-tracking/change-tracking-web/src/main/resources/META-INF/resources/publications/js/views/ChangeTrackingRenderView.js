@@ -24,6 +24,7 @@ import {
 import React, {useEffect, useState} from 'react';
 
 import ExperienceDropdown from '../components/ExperienceDropdown';
+import {WorkflowStatusLabel} from '../components/WorkflowStatusLabel';
 
 const LocalizationDropdown = ({
 	currentLocale,
@@ -138,8 +139,10 @@ export default function ChangeTrackingRenderView({
 	parentEntries,
 	showDropdown,
 	showHeader = true,
+	showWorkflow,
 	spritemap,
 	title,
+	workflowStatus,
 }) {
 	const CHANGE_TYPE_ADDED = 'added';
 	const CHANGE_TYPE_DELETED = 'deleted';
@@ -148,6 +151,7 @@ export default function ChangeTrackingRenderView({
 	const CONTENT_TYPE_PARENTS = 'parents';
 	const CONTENT_TYPE_RENDER = 'data';
 	const CONTENT_TYPE_PREVIEW = 'display';
+	const CONTENT_TYPE_WORKFLOW = 'workflow';
 	const VIEW_LEFT = 'VIEW_LEFT';
 	const VIEW_RIGHT = 'VIEW_RIGHT';
 	const VIEW_SPLIT = 'VIEW_SPLIT';
@@ -648,6 +652,32 @@ export default function ChangeTrackingRenderView({
 		);
 	};
 
+	const renderWorkflowView = () => {
+		if (
+			state.contentType === CONTENT_TYPE_WORKFLOW &&
+			Object.prototype.hasOwnProperty.call(
+				state.renderData,
+				'workflowView'
+			)
+		) {
+			return (
+				<div
+					dangerouslySetInnerHTML={{
+						__html: state.renderData.workflowView,
+					}}
+				/>
+			);
+		}
+
+		return (
+			<ClayAlert displayType="danger" spritemap={spritemap}>
+				{Liferay.Language.get(
+					'unable-to-display-content-due-to-an-unexpected-error'
+				)}
+			</ClayAlert>
+		);
+	};
+
 	const renderDiffLegend = () => {
 		if (
 			(state.contentType !== CONTENT_TYPE_PREVIEW &&
@@ -1128,6 +1158,12 @@ export default function ChangeTrackingRenderView({
 
 					{state.contentType === CONTENT_TYPE_CHILDREN &&
 						getTableRows(state.children)}
+
+					{state.contentType === CONTENT_TYPE_WORKFLOW && (
+						<td className="publications-render-view-content">
+							{renderWorkflowView()}
+						</td>
+					)}
 				</ClayTable.Body>
 			</ClayTable>
 		);
@@ -1301,6 +1337,21 @@ export default function ChangeTrackingRenderView({
 			);
 		}
 
+		if (workflowStatus && showWorkflow) {
+			items.push(
+				<ClayNavigationBar.Item
+					active={state.contentType === CONTENT_TYPE_WORKFLOW}
+					key="workflow"
+				>
+					<ClayLink
+						onClick={() => setContentType(CONTENT_TYPE_WORKFLOW)}
+					>
+						{Liferay.Language.get('workflow')}
+					</ClayLink>
+				</ClayNavigationBar.Item>
+			);
+		}
+
 		return (
 			<tr>
 				<td
@@ -1386,7 +1437,19 @@ export default function ChangeTrackingRenderView({
 								)}
 						</div>
 
-						<div className="entry-description">{description}</div>
+						<div className="entry-description">
+							<span>{description} </span>
+
+							<span>
+								{Liferay.Language.get('workflow-status')}
+
+								{': '}
+							</span>
+
+							<WorkflowStatusLabel
+								workflowStatus={workflowStatus}
+							/>
+						</div>
 					</div>
 
 					{renderDropdownMenu()}

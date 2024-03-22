@@ -1459,6 +1459,16 @@ public class ViewChangesDisplayContext {
 						"groupId", groupedModel.getGroupId());
 				}
 
+				int changeType = _ctDisplayRendererRegistry.getChangeType(
+					ctEntry, model);
+
+				if (_ctDisplayRendererRegistry.isWorkflowEnabled(
+						ctEntry, model) &&
+					(changeType != CTConstants.CT_CHANGE_TYPE_DELETION)) {
+
+					modelInfo._jsonObject.put("showWorkflow", true);
+				}
+
 				modelInfo._site = _isSite(model);
 			}
 		}

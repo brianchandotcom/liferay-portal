@@ -35,14 +35,19 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -50,6 +55,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -58,10 +65,14 @@ import com.liferay.segments.model.SegmentsExperienceTable;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.text.Format;
+
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -522,6 +533,20 @@ public class GetEntryRenderDataMVCResourceCommand
 			}
 		}
 
+		String workflowView = null;
+
+		Map<String, String> workflowData = new LinkedHashMap<>();
+
+		if (_ctDisplayRendererRegistry.isWorkflowEnabled(ctEntry, rightModel) &&
+			(ctEntry.getChangeType() != CTConstants.CT_CHANGE_TYPE_DELETION)) {
+
+			workflowData = _getWorkflowData(ctEntry, rightModel, themeDisplay);
+		}
+
+		if (!workflowData.isEmpty()) {
+			workflowView = _getWorkflowViewHTML(themeDisplay, workflowData);
+		}
+
 		JSONObject jsonObject = JSONUtil.put("changeType", changeType);
 
 		if (defaultLanguageId != null) {
@@ -589,6 +614,10 @@ public class GetEntryRenderDataMVCResourceCommand
 				_diffHtml.diff(
 					new UnsyncStringReader(leftPreview),
 					new UnsyncStringReader(rightPreview)));
+		}
+
+		if (workflowView != null) {
+			jsonObject.put("workflowView", workflowView);
 		}
 
 		if (ctDisplayRenderer.showPreviewDiff() &&
@@ -990,6 +1019,122 @@ public class GetEntryRenderDataMVCResourceCommand
 		jsonObject.put("segmentsExperiences", jsonArray);
 	}
 
+	private <T extends BaseModel<T>> Map<String, String> _getWorkflowData(
+			CTEntry ctEntry, T model, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Map<String, String> workflowData = new LinkedHashMap<>();
+
+		long groupId = 0;
+
+		if (model instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)model;
+
+			groupId = groupedModel.getGroupId();
+		}
+
+		WorkflowInstanceLink workflowInstanceLink =
+			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+				ctEntry.getCompanyId(), groupId,
+				_portal.getClassName(ctEntry.getModelClassNameId()),
+				ctEntry.getModelClassPK());
+
+		if (workflowInstanceLink == null) {
+			return workflowData;
+		}
+
+		List<WorkflowTask> workflowTasks =
+			_workflowTaskManager.getWorkflowTasksByWorkflowInstance(
+				ctEntry.getCompanyId(), null,
+				workflowInstanceLink.getWorkflowInstanceId(), false, 0, 1,
+				null);
+
+		if (workflowTasks.isEmpty()) {
+			return workflowData;
+		}
+
+		WorkflowTask workflowTask = workflowTasks.get(0);
+
+		Map<String, Object> modelAttributes = model.getModelAttributes();
+
+		workflowData.put(
+			"status", String.valueOf(modelAttributes.get("status")));
+
+		if (workflowTask.isAssignedToSingleUser()) {
+			workflowData.put(
+				"assigned-to",
+				_portal.getUserName(
+					workflowTask.getAssigneeUserId(),
+					String.valueOf(workflowTask.getAssigneeUserId())));
+		}
+		else {
+			workflowData.put(
+				"assigned-to",
+				_language.get(themeDisplay.getLocale(), "nobody"));
+		}
+
+		workflowData.put(
+			"task-name", workflowTask.getLabel(themeDisplay.getLocale()));
+
+		Format format = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
+
+		workflowData.put(
+			"create-date", format.format(workflowTask.getCreateDate()));
+
+		if (workflowTask.getDueDate() != null) {
+			workflowData.put(
+				"due-date", format.format(workflowTask.getDueDate()));
+		}
+		else {
+			workflowData.put(
+				"due-date", _language.get(themeDisplay.getLocale(), "never"));
+		}
+
+		return workflowData;
+	}
+
+	private String _getWorkflowViewHTML(
+		ThemeDisplay themeDisplay, Map<String, String> workflowData) {
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("<div class=\"table-responsive\"><table class=\"");
+		sb.append("publications-render-table table table-autofit ");
+		sb.append("table-nowrap\">");
+
+		for (Map.Entry<String, String> entry : workflowData.entrySet()) {
+			sb.append("<tr><td class=\"publications-key-td ");
+			sb.append("table-cell-expand-small\">");
+			sb.append(_language.get(themeDisplay.getLocale(), entry.getKey()));
+			sb.append("</td><td class=\"table-cell-expand\">");
+
+			if (Objects.equals(entry.getKey(), "status")) {
+				int status = Integer.valueOf(entry.getValue());
+
+				sb.append("<span class=\"label label-");
+				sb.append(WorkflowConstants.getStatusStyle(status));
+				sb.append("\"");
+				sb.append("<span class=\"label-item label-item-expand\">");
+				sb.append(
+					_language.get(
+						themeDisplay.getLocale(),
+						WorkflowConstants.getStatusLabel(status)));
+				sb.append("</span");
+				sb.append("</span");
+			}
+			else {
+				sb.append(HtmlUtil.escape(String.valueOf(entry.getValue())));
+			}
+
+			sb.append("</td></tr>");
+		}
+
+		sb.append("</table></div>");
+
+		return sb.toString();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetEntryRenderDataMVCResourceCommand.class);
 
@@ -1025,5 +1170,11 @@ public class GetEntryRenderDataMVCResourceCommand
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
+
+	@Reference
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

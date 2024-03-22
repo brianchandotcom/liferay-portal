@@ -6,11 +6,19 @@
 package com.liferay.blogs.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -25,8 +33,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -131,6 +143,72 @@ public class BlogsEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			coverImageFileEntryId,
 			importedUpdatedEntry.getCoverImageFileEntryId());
+	}
+
+	@FeatureFlags("LPD-11147")
+	@Test
+	public void testImportedFriendlyURLCategoriesAfterUpdate()
+		throws Exception {
+
+		initExport();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
+
+		serviceContext.setAttribute(
+			"friendlyURLAssetCategoryIds",
+			new long[] {assetCategory.getCategoryId()});
+
+		BlogsEntry entry = _addBlogsEntry(
+			null, new ImageSelector(StringUtil.randomString()), serviceContext);
+
+		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, entry);
+
+		initImport();
+
+		BlogsEntry exportedEntry = (BlogsEntry)readExportedStagedModel(entry);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedEntry);
+
+		BlogsEntry importedEntry = (BlogsEntry)getStagedModel(
+			entry.getUuid(), liveGroup);
+
+		FriendlyURLEntry mainFriendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+				_portal.getClassNameId(BlogsEntry.class.getName()),
+				importedEntry.getEntryId());
+
+		Assert.assertNotNull(mainFriendlyURLEntry);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			_portal.getClassNameId(FriendlyURLEntry.class.getName()),
+			mainFriendlyURLEntry.getFriendlyURLEntryId());
+
+		Assert.assertNotNull(assetEntry);
+
+		List<AssetCategory> assetCategories = assetEntry.getCategories();
+
+		Assert.assertTrue(ListUtil.isNotEmpty(assetCategories));
+
+		Assert.assertEquals(
+			assetCategories.toString(), 1, assetCategories.size());
+
+		AssetCategory importedAssetCategory = assetCategories.get(0);
+
+		Assert.assertEquals(
+			assetCategory.getName(), importedAssetCategory.getName());
 	}
 
 	@Test
@@ -407,5 +485,20 @@ public class BlogsEntryStagedModelDataHandlerTest
 		"{\"height\": 10, \"width\": 10, \"x\": 0, \"y\": 0}";
 
 	private static final String _IMAGE_TITLE = "test.jpg";
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

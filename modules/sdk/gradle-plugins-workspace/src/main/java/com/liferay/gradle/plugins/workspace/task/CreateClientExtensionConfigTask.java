@@ -7,6 +7,7 @@ package com.liferay.gradle.plugins.workspace.task;
 
 import aQute.bnd.osgi.Constants;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -18,10 +19,8 @@ import com.google.common.collect.Sets;
 import com.liferay.gradle.plugins.workspace.configurator.ClientExtensionProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.ResourceUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
-
-import groovy.json.JsonOutput;
-import groovy.json.JsonSlurper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -483,19 +482,23 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		Map<String, Object> typeSettings = clientExtension.typeSettings;
 
-		if (typeSettings.containsKey(_FRONTEND_TOKEN_DEFINITION_JSON_KEY)) {
-			JsonSlurper jsonSlurper = new JsonSlurper();
+		Object frontendTokenDefinitionFile = typeSettings.remove(
+			_FRONTEND_TOKEN_DEFINITION_JSON_KEY);
 
-			Map<String, Object> jsonMap =
-				(Map<String, Object>)jsonSlurper.parse(
-					_project.file(
-						String.valueOf(
-							typeSettings.get(
-								_FRONTEND_TOKEN_DEFINITION_JSON_KEY))));
-
-			typeSettings.put(
-				_FRONTEND_TOKEN_DEFINITION_JSON_KEY,
-				String.valueOf(JsonOutput.toJson(jsonMap)));
+		if (frontendTokenDefinitionFile != null) {
+			try {
+				typeSettings.put(
+					_FRONTEND_TOKEN_DEFINITION_JSON_KEY,
+					_objectMapper.writeValueAsString(
+						ResourceUtil.readJson(
+							Map.class,
+							ResourceUtil.getLocalFileResolver(
+								_project.file(frontendTokenDefinitionFile)))));
+			}
+			catch (JsonProcessingException jsonProcessingException) {
+				throw new GradleException(
+					"Could not write json", jsonProcessingException);
+			}
 		}
 	}
 

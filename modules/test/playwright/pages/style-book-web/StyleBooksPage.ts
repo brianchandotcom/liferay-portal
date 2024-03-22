@@ -20,6 +20,8 @@ export class StyleBooksPage {
 	) {
 		await this.goto(siteUrl);
 
+		await this.page.getByRole('button', {exact: true, name: 'Add'}).click();
+
 		await this.page.getByPlaceholder('Name').fill(styleBookName);
 
 		await this.page.getByRole('button', {name: 'Save'}).click();

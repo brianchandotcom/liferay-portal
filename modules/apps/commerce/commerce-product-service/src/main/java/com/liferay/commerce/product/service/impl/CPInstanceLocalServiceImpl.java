@@ -1050,18 +1050,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
-		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
-				cpInstance.getCPDefinitionId())) {
-
-			CPDefinition newCPDefinition =
-				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
-					cpInstance.getCPDefinitionId());
-
-			cpInstance = cpInstancePersistence.findByC_C(
-				newCPDefinition.getCPDefinitionId(),
-				cpInstance.getCPInstanceUuid());
-		}
-
 		Date expirationDate = null;
 		Date date = new Date();
 
@@ -1106,7 +1094,21 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					deliverySubscriptionTypeSettingsUnicodeProperties);
 		}
 
-		cpInstance.setExternalReferenceCode(externalReferenceCode);
+		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
+				cpInstance.getCPDefinitionId())) {
+
+			CPDefinition newCPDefinition =
+				CPDefinitionLocalServiceCircularDependencyUtil.copyCPDefinition(
+					cpInstance.getCPDefinitionId());
+
+			cpInstance = cpInstancePersistence.findByC_C(
+				newCPDefinition.getCPDefinitionId(),
+				cpInstance.getCPInstanceUuid());
+		}
+		else {
+			cpInstance.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		cpInstance.setSku(sku);
 		cpInstance.setGtin(gtin);
 		cpInstance.setManufacturerPartNumber(manufacturerPartNumber);

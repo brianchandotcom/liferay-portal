@@ -47,6 +47,15 @@ export class JournalEditArticlePage {
 		await this.propertiesTab.waitFor();
 	}
 
+	async assertPrivateContentIconInRelatedAssetPopUp(assetType: string) {
+		await expect(
+			this.page
+				.frameLocator(`iframe[title="Select ${assetType}"]`)
+				.getByLabel('Not Visible to Guest Users')
+				.locator('use')
+		).toBeVisible({timeout: 1000});
+	}
+
 	async changeViewInRelatedAssetPopUp(assetType: string, viewType: string) {
 		await this.page
 			.frameLocator(`iframe[title="Select ${assetType}"]`)
@@ -99,14 +108,18 @@ export class JournalEditArticlePage {
 			.click();
 	}
 
-	async openFieldSet(assetType: string,fieldSetId : string){
-		if (!await this.page.$eval("#"+fieldSetId+"Content", item => item.classList.contains("show"))) {
+	async openFieldSet(assetType: string, fieldSetId: string) {
+		if (
+			!(await this.page.$eval('#' + fieldSetId + 'Content', (item) =>
+				item.classList.contains('show')
+			))
+		) {
 			await this.page.getByRole('link', {name: assetType}).click();
 		}
 	}
 
 	async openRelatedAsset(assetType: string) {
-		await this.openFieldSet('Related Assets','relatedAssets');
+		await this.openFieldSet('Related Assets', 'relatedAssets');
 		await this.page.getByLabel('Select Items').click();
 		await this.page.getByRole('menuitem', {name: assetType}).click();
 	}

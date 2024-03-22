@@ -130,6 +130,50 @@ privateContentIconTest(
 	}
 );
 
+privateContentIconTest(
+	'LPD-15807: Identify at a glance if a Web Content is visible for guests in the item selector',
+	async ({apiHelpers, journalEditArticlePage, journalPage, site}) => {
+		const contentStructureId = await getBasicWebContentStructureId(
+			apiHelpers
+		);
+
+		await addApprovedStructuredContent(
+			apiHelpers,
+			site.id,
+			contentStructureId,
+			getRandomString()
+		);
+
+		const title = getRandomString();
+
+		await addApprovedStructuredContent(
+			apiHelpers,
+			site.id,
+			contentStructureId,
+			title
+		);
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await journalEditArticlePage.editArticle(title);
+
+		await journalEditArticlePage.openRelatedAsset('Basic Web Content');
+
+		await journalEditArticlePage.assertPrivateContentIconInRelatedAssetPopUp(
+			'Basic Web Content'
+		);
+
+		await journalEditArticlePage.changeViewInRelatedAssetPopUp(
+			'Basic Web Content',
+			'table'
+		);
+
+		await journalEditArticlePage.assertPrivateContentIconInRelatedAssetPopUp(
+			'Basic Web Content'
+		);
+	}
+);
+
 prefixUrlTest(
 	'LPD-6813: Make prefix URLs configurable',
 	async ({

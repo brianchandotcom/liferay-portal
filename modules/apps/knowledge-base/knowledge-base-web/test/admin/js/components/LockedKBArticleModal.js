@@ -29,30 +29,14 @@ describe('LockedKBArticleModal', () => {
 		jest.useFakeTimers();
 	});
 
-	it('does not render the modal first as non group admin', () => {
-		const {queryByText} = render(
-			<LockedKBArticleModal groupAdmin={false} open={false} />
-		);
+	it('does not render the modal first', () => {
+		const {queryByText} = render(<LockedKBArticleModal open={false} />);
 
 		act(() => {
 			jest.runAllTimers();
 		});
 
 		expect(queryByText('article-in-edition')).not.toBeInTheDocument();
-	});
-
-	it('does not render the modal first as group admin', () => {
-		const {queryByText} = render(
-			<LockedKBArticleModal groupAdmin={true} open={false} />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(
-			queryByText('article-in-edition-by-user-x-description')
-		).not.toBeInTheDocument();
 	});
 
 	it('renders the modal as non group admin when try to edit/expire/delete a locked article', () => {
@@ -92,29 +76,6 @@ describe('LockedKBArticleModal', () => {
 			'href',
 			actionURL
 		);
-	});
-
-	it('renders the modal as non group admin when try to move a locked article', async () => {
-		const {getByText} = await render(
-			<LockedKBArticleModal
-				groupAdmin={false}
-				open={false}
-				portletNamespace="_portletNamespace_"
-			/>
-		);
-
-		await act(() =>
-			Liferay.componentReady(bridgeComponentId).then(({open}) => {
-				open();
-			})
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(getByText('article-in-edition')).toBeInTheDocument();
-		expect(getByText('ok')).toBeInTheDocument();
 	});
 
 	it('renders the modal as group admin when try to move a locked article', async () => {

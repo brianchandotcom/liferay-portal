@@ -77,6 +77,8 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 			publishTime: publishDate.getTime(),
 		});
 
+		this.setState({scheduleButtonDisabled: true});
+
 		fetch(portletURL, {
 			method: 'GET',
 		})

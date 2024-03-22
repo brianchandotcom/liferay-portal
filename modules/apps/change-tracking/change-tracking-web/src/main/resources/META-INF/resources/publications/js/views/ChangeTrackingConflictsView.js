@@ -56,6 +56,11 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 			date: null,
 			dateError: '',
 			formError: null,
+			scheduleButtonDisabled:
+				!!this.unresolvedConflicts.length ||
+				(this.hasUnapprovedChanges && !this.unapprovedChangesAllowed)
+					? true
+					: false,
 			time: null,
 			timeError: '',
 			validationError: null,
@@ -270,13 +275,8 @@ class ChangeTrackingConflictsView extends ChangeTrackingBaseScheduleView {
 								</button>
 							) : (
 								<button
-									className={
-										!!this.unresolvedConflicts.length ||
-										(this.hasUnapprovedChanges &&
-											!this.unapprovedChangesAllowed)
-											? 'btn btn-primary disabled'
-											: 'btn btn-primary'
-									}
+									className="btn btn-primary"
+									disabled={this.state.scheduleButtonDisabled}
 									onClick={() => this.handleSubmit()}
 									type="button"
 								>

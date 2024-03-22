@@ -44,7 +44,7 @@ public class CommerceReturnPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-9361")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10562")) {
 			return false;
 		}
 

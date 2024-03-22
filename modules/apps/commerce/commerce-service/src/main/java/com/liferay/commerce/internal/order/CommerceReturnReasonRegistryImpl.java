@@ -36,7 +36,7 @@ public class CommerceReturnReasonRegistryImpl
 	@Override
 	public CommerceReturnReason getCommerceReturnReason(String key) {
 		if (Validator.isNull(key) ||
-			!FeatureFlagManagerUtil.isEnabled("LPD-9361")) {
+			!FeatureFlagManagerUtil.isEnabled("LPD-10562")) {
 
 			return null;
 		}
@@ -56,7 +56,7 @@ public class CommerceReturnReasonRegistryImpl
 
 	@Override
 	public List<CommerceReturnReason> getCommerceReturnReasons() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-9361")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10562")) {
 			return Collections.emptyList();
 		}
 

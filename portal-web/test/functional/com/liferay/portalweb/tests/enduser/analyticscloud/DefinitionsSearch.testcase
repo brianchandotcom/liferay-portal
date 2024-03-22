@@ -126,7 +126,11 @@ definition {
 		}
 
 		task ("Use search bar") {
-			SearchPage.searchWidget(searchTerm = "test parameter");
+			for (var n : list "1,2,3,4") {
+				SearchPage.searchWidget(searchTerm = "test parameter");
+
+				ACUtils.waitForSendingRequest();
+			}
 		}
 
 		task ("Close sessions") {

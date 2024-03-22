@@ -143,7 +143,15 @@ definition {
 		}
 
 		task ("Go to the search bar and search for a keyword") {
-			SearchPage.searchEmbedded(searchTerm = ${keyword});
+			for (var n : list "1,2,3,4") {
+				SearchPage.searchEmbedded(searchTerm = ${keyword});
+
+				ACUtils.waitForSendingRequest();
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Run curl command to get keyword results using group Guest") {
@@ -348,7 +356,13 @@ definition {
 		task ("Type keyword in search bar") {
 			for (var keyword : list "${keyword1},${keyword1},${keyword2}") {
 				SearchPage.searchEmbedded(searchTerm = ${keyword});
+
+				ACUtils.waitForSendingRequest();
 			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Run curl command to get keyword results") {

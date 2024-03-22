@@ -119,6 +119,24 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 								ActionKeys.UPDATE),
 						dropdownItem -> {
 							dropdownItem.setHref(
+								_getCopyLayoutPageTemplateCollectionURL(
+									layoutPageTemplateCollection));
+							dropdownItem.setIcon("copy");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "make-a-copy"));
+						}
+					).add(
+						() ->
+							(layoutPageTemplateCollection.getType() ==
+								LayoutPageTemplateCollectionTypeConstants.
+									DISPLAY_PAGE) &&
+							LayoutPageTemplateCollectionPermission.contains(
+								_themeDisplay.getPermissionChecker(),
+								layoutPageTemplateCollection,
+								ActionKeys.UPDATE),
+						dropdownItem -> {
+							dropdownItem.setHref(
 								_getExportLayoutPageTemplateCollectionURL(
 									layoutPageTemplateCollection));
 							dropdownItem.setIcon("export");
@@ -208,6 +226,26 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
+	}
+
+	private String _getCopyLayoutPageTemplateCollectionURL(
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/copy_layout_page_template_entries_" +
+				"and_layout_page_template_collections"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"layoutPageTemplateCollectionsIds",
+			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
+		).setParameter(
+			"layoutParentPageTemplateCollectionId",
+			layoutPageTemplateCollection.
+				getParentLayoutPageTemplateCollectionId()
+		).buildString();
 	}
 
 	private String _getDeleteDialogTitle(

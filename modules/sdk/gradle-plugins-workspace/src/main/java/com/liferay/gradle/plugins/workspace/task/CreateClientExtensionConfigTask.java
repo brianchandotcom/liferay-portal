@@ -500,20 +500,27 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		Object frontendTokenDefinitionFile = typeSettings.remove(
 			_FRONTEND_TOKEN_DEFINITION_JSON_KEY);
 
-		if (frontendTokenDefinitionFile != null) {
-			try {
-				typeSettings.put(
-					_FRONTEND_TOKEN_DEFINITION_JSON_KEY,
-					_objectMapper.writeValueAsString(
-						ResourceUtil.readJson(
-							Map.class,
-							ResourceUtil.getLocalFileResolver(
-								_project.file(frontendTokenDefinitionFile)))));
-			}
-			catch (JsonProcessingException jsonProcessingException) {
-				throw new GradleException(
-					"Could not write json", jsonProcessingException);
-			}
+		if (frontendTokenDefinitionFile == null) {
+			return;
+		}
+
+		String jsonString = ResourceUtil.readString(
+			ResourceUtil.getLocalFileResolver(
+				_project.file(frontendTokenDefinitionFile)));
+
+		if (jsonString.isEmpty()) {
+			jsonString = "{}";
+		}
+
+		try {
+			typeSettings.put(
+				_FRONTEND_TOKEN_DEFINITION_JSON_KEY,
+				_objectMapper.writeValueAsString(
+					_objectMapper.readValue(jsonString, Map.class)));
+		}
+		catch (JsonProcessingException jsonProcessingException) {
+			throw new GradleException(
+				"Could not write json", jsonProcessingException);
 		}
 	}
 

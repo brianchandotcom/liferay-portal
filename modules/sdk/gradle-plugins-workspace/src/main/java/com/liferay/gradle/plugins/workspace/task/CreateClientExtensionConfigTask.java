@@ -7,6 +7,7 @@ package com.liferay.gradle.plugins.workspace.task;
 
 import aQute.bnd.osgi.Constants;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -517,6 +518,11 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				_FRONTEND_TOKEN_DEFINITION_JSON_KEY,
 				_objectMapper.writeValueAsString(
 					_objectMapper.readValue(jsonString, Map.class)));
+		}
+		catch (JsonParseException jsonParseException) {
+			throw new GradleException(
+				"Could not parse json from file " + frontendTokenDefinitionFile,
+				jsonParseException);
 		}
 		catch (JsonProcessingException jsonProcessingException) {
 			throw new GradleException(

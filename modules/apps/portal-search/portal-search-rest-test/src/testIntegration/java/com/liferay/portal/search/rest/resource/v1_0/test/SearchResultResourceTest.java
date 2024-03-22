@@ -682,7 +682,8 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			null, null, _getSearchFacets(jsonObject),
 			JSONUtil.toList(
 				jsonObject.getJSONArray("items"),
-				itemJSONObject -> SearchResult.toDTO(jsonObject.toString())),
+				itemJSONObject -> SearchResult.toDTO(
+					itemJSONObject.toString())),
 			Pagination.of(
 				jsonObject.getInt("page"), jsonObject.getInt("pageSize")),
 			jsonObject.getLong("totalCount"));

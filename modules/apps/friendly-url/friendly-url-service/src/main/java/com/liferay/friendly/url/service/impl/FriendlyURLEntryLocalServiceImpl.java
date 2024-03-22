@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -797,7 +797,7 @@ public class FriendlyURLEntryLocalServiceImpl
 		throws PortalException {
 
 		if ((serviceContext == null) ||
-			!_featureFlagManager.isEnabled("LPD-11147")) {
+			!FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
 
 			return;
 		}
@@ -882,7 +882,7 @@ public class FriendlyURLEntryLocalServiceImpl
 			Map<String, String> urlTitleMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!_featureFlagManager.isEnabled("LPD-11147")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
 			return;
 		}
 
@@ -907,9 +907,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private FriendlyURLEntryMappingPersistence

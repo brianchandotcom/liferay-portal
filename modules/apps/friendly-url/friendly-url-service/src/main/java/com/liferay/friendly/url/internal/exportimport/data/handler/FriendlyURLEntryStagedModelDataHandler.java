@@ -16,7 +16,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -199,7 +199,7 @@ public class FriendlyURLEntryStagedModelDataHandler
 			FriendlyURLEntry friendlyURLEntry)
 		throws Exception {
 
-		if (!_featureFlagManager.isEnabled("LPD-11147")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11147")) {
 			return;
 		}
 
@@ -230,7 +230,7 @@ public class FriendlyURLEntryStagedModelDataHandler
 			FriendlyURLEntry importedFriendlyURL)
 		throws Exception {
 
-		if (!_featureFlagManager.isEnabled("LPD-11147") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11147") ||
 			(friendlyURLEntry.getClassNameId() == _portal.getClassNameId(
 				AssetCategory.class.getName()))) {
 
@@ -288,9 +288,6 @@ public class FriendlyURLEntryStagedModelDataHandler
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

@@ -5,7 +5,9 @@ definition {
 		var index = 0;
 
 		for (var queryString : list ${queryStringList}) {
-			Click(locator1 = "Icon#PLUS");
+			if (IsElementPresent(locator1 = "Icon#PLUS")) {
+				Click(locator1 = "Icon#PLUS");
+			}
 
 			Type(
 				key_index = ${index},

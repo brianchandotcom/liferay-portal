@@ -47,6 +47,21 @@ export class JournalEditArticlePage {
 		await this.propertiesTab.waitFor();
 	}
 
+	async changeViewInRelatedAssetPopUp(assetType: string, viewType: string) {
+		await this.page
+			.frameLocator(`iframe[title="Select ${assetType}"]`)
+			.getByLabel('Select View, Currently Selected: ')
+			.waitFor();
+		await this.page
+			.frameLocator(`iframe[title="Select ${assetType}"]`)
+			.getByLabel('Select View, Currently Selected: ')
+			.click();
+		await this.page
+			.frameLocator(`iframe[title="Select ${assetType}"]`)
+			.getByRole('menuitem', {name: viewType})
+			.click();
+	}
+
 	async editArticle(title: string) {
 		await this.journalPage.goToJournalArticleAction('Edit', title);
 
@@ -82,6 +97,18 @@ export class JournalEditArticlePage {
 			.frameLocator('iframe[title="Select Item"]')
 			.getByRole('link', {name: 'Documents and Media'})
 			.click();
+	}
+
+	async openFieldSet(assetType: string,fieldSetId : string){
+		if (!await this.page.$eval("#"+fieldSetId+"Content", item => item.classList.contains("show"))) {
+			await this.page.getByRole('link', {name: assetType}).click();
+		}
+	}
+
+	async openRelatedAsset(assetType: string) {
+		await this.openFieldSet('Related Assets','relatedAssets');
+		await this.page.getByLabel('Select Items').click();
+		await this.page.getByRole('menuitem', {name: assetType}).click();
 	}
 
 	async scheduleArticle(

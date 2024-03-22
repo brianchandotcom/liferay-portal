@@ -80,6 +80,8 @@ test('renders sidebars visible at desktop size and sidebars not visible at small
 
 	await page.setViewportSize({height: 600, width: 600});
 
+	await panel.waitFor({state: 'hidden'});
+
 	await expect(panel).not.toBeVisible();
 
 	await expect(configurationPanel).not.toBeVisible();

@@ -74,7 +74,7 @@ public class AssetEntrySXPBlueprintInfoCollectionProvider
 	@Override
 	public String getKey() {
 		return StringBundler.concat(
-			SingleFormVariationInfoCollectionProvider.super.getKey(),
+			AssetEntrySXPBlueprintInfoCollectionProvider.class.getName(),
 			StringPool.UNDERLINE, sxpBlueprint.getCompanyId(),
 			StringPool.UNDERLINE, sxpBlueprint.getExternalReferenceCode());
 	}

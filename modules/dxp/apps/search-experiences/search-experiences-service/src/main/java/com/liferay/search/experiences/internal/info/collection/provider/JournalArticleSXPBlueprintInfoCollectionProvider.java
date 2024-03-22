@@ -114,7 +114,7 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 	@Override
 	public String getKey() {
 		return StringBundler.concat(
-			SingleFormVariationInfoCollectionProvider.super.getKey(),
+			JournalArticleSXPBlueprintInfoCollectionProvider.class.getName(),
 			StringPool.UNDERLINE, sxpBlueprint.getCompanyId(),
 			StringPool.UNDERLINE, sxpBlueprint.getExternalReferenceCode(),
 			StringPool.UNDERLINE, JournalArticle.class.getName());

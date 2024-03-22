@@ -3,9 +3,17 @@ import groovy.json.JsonSlurper
 task runGradleTest
 
 runGradleTest {
-	dependsOn ":theme-css-with-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-without-frontend-token-definition-json:createClientExtensionConfig"
+	dependsOn ":theme-css-with-empty-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-with-frontend-token-definition-json:createClientExtensionConfig", ":theme-css-without-frontend-token-definition-json:createClientExtensionConfig"
 
 	doLast {
+		_testClientExtensionConfigJSON("theme-css-with-empty-frontend-token-definition-json") {
+			value ->
+
+			assert value instanceof Map
+
+			assert value.get("typeSettings") == ["frontendTokenDefinitionJSON={}"]
+		}
+
 		_testClientExtensionConfigJSON("theme-css-with-frontend-token-definition-json") {
 			value ->
 

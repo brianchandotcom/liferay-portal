@@ -70,7 +70,7 @@ public class EhcachePortalCacheManagerConfigurator {
 
 		_clearListenerConfigrations(configuration);
 
-		_manageConfiguration(portalCacheManagerConfiguration);
+		_populateCacheReplicator(portalCacheManagerConfiguration);
 
 		return new ObjectValuePair<>(
 			configuration, portalCacheManagerConfiguration);
@@ -168,34 +168,6 @@ public class EhcachePortalCacheManagerConfigurator {
 		}
 
 		return false;
-	}
-
-	private void _manageConfiguration(
-		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
-
-		if (_replicatorProperties == null) {
-			return;
-		}
-
-		Set<String> portalCacheNames = new HashSet<>(
-			_replicatorProperties.stringPropertyNames());
-
-		portalCacheNames.addAll(
-			portalCacheManagerConfiguration.getPortalCacheNames());
-
-		for (String portalCacheName : portalCacheNames) {
-			_populateCacheReplicator(
-				portalCacheManagerConfiguration.getPortalCacheConfiguration(
-					portalCacheName),
-				GetterUtil.getString(
-					_replicatorProperties.getProperty(portalCacheName),
-					_defaultReplicatorPropertiesString));
-		}
-
-		_populateCacheReplicator(
-			portalCacheManagerConfiguration.
-				getDefaultPortalCacheConfiguration(),
-			_defaultReplicatorPropertiesString);
 	}
 
 	private Set<Properties> _parseCacheEventListenerConfigurations(
@@ -334,6 +306,34 @@ public class EhcachePortalCacheManagerConfigurator {
 			portalCacheConfiguration.getPortalCacheListenerPropertiesSet();
 
 		portalCacheListenerPropertiesSet.add(replicatorProperties);
+	}
+
+	private void _populateCacheReplicator(
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
+
+		if (_replicatorProperties == null) {
+			return;
+		}
+
+		Set<String> portalCacheNames = new HashSet<>(
+			_replicatorProperties.stringPropertyNames());
+
+		portalCacheNames.addAll(
+			portalCacheManagerConfiguration.getPortalCacheNames());
+
+		for (String portalCacheName : portalCacheNames) {
+			_populateCacheReplicator(
+				portalCacheManagerConfiguration.getPortalCacheConfiguration(
+					portalCacheName),
+				GetterUtil.getString(
+					_replicatorProperties.getProperty(portalCacheName),
+					_defaultReplicatorPropertiesString));
+		}
+
+		_populateCacheReplicator(
+			portalCacheManagerConfiguration.
+				getDefaultPortalCacheConfiguration(),
+			_defaultReplicatorPropertiesString);
 	}
 
 	private static final Map<NotificationScope, PortalCacheListenerScope>

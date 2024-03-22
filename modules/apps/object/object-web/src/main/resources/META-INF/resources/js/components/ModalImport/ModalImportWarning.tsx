@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayModal from '@clayui/modal';
+import {stringUtils} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import {
@@ -16,6 +17,7 @@ import {
 
 interface ModalImportWarningProps {
 	errorMessage: string;
+	existingObjectDefinitions?: ObjectDefinition[];
 	handleImport: () => void;
 	handleOnClose: () => void;
 	modalImportKey: string;
@@ -23,6 +25,7 @@ interface ModalImportWarningProps {
 
 export function ModalImportWarning({
 	errorMessage,
+	existingObjectDefinitions,
 	handleImport,
 	handleOnClose,
 	modalImportKey,
@@ -48,6 +51,31 @@ export function ModalImportWarning({
 							);
 						}
 					)}
+
+					{Liferay.FeatureFlags['LPS-187142'] &&
+						!!existingObjectDefinitions?.length && (
+							<>
+								{existingObjectDefinitions.map(
+									(objectDefinition) => (
+										<li key={objectDefinition.name}>
+											{stringUtils.getLocalizableLabel(
+												objectDefinition.defaultLanguageId,
+												objectDefinition.label,
+												objectDefinition.name
+											)}
+										</li>
+									)
+								)}
+
+								<br />
+
+								<Text as="p" color="secondary">
+									{Liferay.Language.get(
+										'before-importing-the-new-object-definition-you-may-want-to-back-up-its-entries-to-prevent-data-loss'
+									)}
+								</Text>
+							</>
+						)}
 
 					<Text as="p" color="secondary">
 						{Liferay.Language.get(

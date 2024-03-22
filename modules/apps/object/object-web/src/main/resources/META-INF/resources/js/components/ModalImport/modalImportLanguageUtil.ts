@@ -33,6 +33,9 @@ export const modalImportWarningBodyTexts: ModalImportLanguage[] = [
 		objectDefinition: Liferay.Language.get(
 			'another-object-definition-has-the-same-external-reference-code'
 		),
+		objectDefinitions: Liferay.Language.get(
+			'there-are-object-definitions-with-the-same-external-reference-code-as-the-imported-ones'
+		),
 		objectFolder: Liferay.Language.get(
 			'another-object-folder-has-the-same-external-reference-code'
 		),
@@ -53,5 +56,8 @@ export const modalImportWarningBodyTexts: ModalImportLanguage[] = [
 export const modalImportWarningTitle: ModalImportLanguage = {
 	listTypeDefinition: Liferay.Language.get('update-existing-picklist'),
 	objectDefinition: Liferay.Language.get('update-existing-object-definition'),
+	objectDefinitions: Liferay.Language.get(
+		'update-existing-object-definitions'
+	),
 	objectFolder: Liferay.Language.get('update-existing-object-folder'),
 };

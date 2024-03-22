@@ -77,10 +77,8 @@ definition {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByGroupKey(
-			grandParentGroupName = ${grandParentGroupName},
-			groupKey = ${groupKey},
-			parentGroupName = ${parentGroupName},
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = ${groupKey},
 			site = ${site});
 
 		return ${groupId};

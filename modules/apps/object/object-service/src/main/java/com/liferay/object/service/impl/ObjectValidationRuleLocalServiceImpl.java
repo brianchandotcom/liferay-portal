@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.util.ArrayList;
@@ -596,6 +597,15 @@ public class ObjectValidationRuleLocalServiceImpl
 			throw new ObjectValidationRuleEngineException.MustNotBeNull();
 		}
 
+		if (Objects.equals(
+				engine, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY) &&
+			!_scriptManagementConfigurationHelper.
+				isAllowScriptContentBeExecutedOrIncluded()) {
+
+			throw new ObjectValidationRuleEngineException.NotAllowedEngine(
+				ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY);
+		}
+
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		if ((nameMap == null) || Validator.isNull(nameMap.get(locale))) {
@@ -644,18 +654,14 @@ public class ObjectValidationRuleLocalServiceImpl
 				_objectScriptingValidator.validate("groovy", script);
 			}
 		}
+		catch (ObjectScriptingException objectScriptingException) {
+			throw new ObjectValidationRuleScriptException(
+				objectScriptingException.getMessage(),
+				objectScriptingException.getMessageKey());
+		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
-			}
-
-			if (portalException instanceof ObjectScriptingException) {
-				ObjectScriptingException objectScriptingException =
-					(ObjectScriptingException)portalException;
-
-				throw new ObjectValidationRuleScriptException(
-					objectScriptingException.getMessage(),
-					objectScriptingException.getMessageKey());
 			}
 
 			throw new ObjectValidationRuleScriptException(
@@ -834,6 +840,10 @@ public class ObjectValidationRuleLocalServiceImpl
 	@Reference
 	private ObjectValidationRuleSettingPersistence
 		_objectValidationRuleSettingPersistence;
+
+	@Reference
+	private ScriptManagementConfigurationHelper
+		_scriptManagementConfigurationHelper;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

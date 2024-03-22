@@ -71,6 +71,15 @@ public class ObjectValidationRuleEngineException extends PortalException {
 
 	}
 
+	public static class NotAllowedEngine
+		extends ObjectValidationRuleEngineException {
+
+		public NotAllowedEngine(String engine) {
+			super("Engine \"" + engine + "\" is not allowed");
+		}
+
+	}
+
 	private ObjectValidationRuleEngineException(String message) {
 		super(message);
 

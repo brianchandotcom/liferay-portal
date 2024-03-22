@@ -28,6 +28,7 @@ import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
 import {config as portalWebConfig} from './tests/portal-web/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/config';
 import {config as productNavigationControlMenuWebConfig} from './tests/product-navigation-control-menu-web/config';
+import {config as productNavigationProductMenuWebConfig} from './tests/product-navigation-product-menu-web/config';
 import {config as productNavigationUserPersonalBarWebConfig} from './tests/product-navigation-user-personal-bar-web/config';
 import {config as stableConfig} from './tests/stable/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
@@ -61,6 +62,7 @@ export default defineConfig({
 		portalWebConfig,
 		portalWorkflowKaleoDesignerWebConfig,
 		productNavigationControlMenuWebConfig,
+		productNavigationProductMenuWebConfig,
 		productNavigationUserPersonalBarWebConfig,
 		stableConfig,
 		usersAdminWebConfig,

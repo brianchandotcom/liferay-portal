@@ -1,0 +1,4 @@
+theme-css-with-empty-frontend-token-definition-json:
+    frontendTokenDefinitionJSON: src/frontend-token-definition.json
+    name: theme-css-with-empty-frontend-token-definition-json
+    type: themeCSS

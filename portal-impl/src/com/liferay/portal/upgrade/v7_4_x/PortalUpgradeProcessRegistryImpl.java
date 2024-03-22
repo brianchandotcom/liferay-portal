@@ -384,6 +384,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(30, 0, 0),
 			new UpgradePartitionedControlTable("Counter"));
+
+		upgradeVersionTreeMap.put(new Version(30, 1, 0), new UpgradeRelease());
 	}
 
 }

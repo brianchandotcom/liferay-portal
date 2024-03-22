@@ -310,17 +310,18 @@ public class DisplayPageActionDropdownItemsProvider {
 		return PortletURLBuilder.createActionURL(
 			_renderResponse
 		).setActionName(
-			"/layout_page_template_admin/copy_layout_page_template_entry"
+			"/layout_page_template_admin/copy_layout_page_template_entries_" +
+				"and_layout_page_template_collections"
 		).setRedirect(
 			_themeDisplay.getURLCurrent()
 		).setParameter(
 			"copyPermissions", copyPermissions
 		).setParameter(
-			"layoutPageTemplateCollectionId",
-			_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
-		).setParameter(
-			"layoutPageTemplateEntryId",
+			"layoutPageTemplateEntriesIds",
 			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).setParameter(
+			"layoutParentPageTemplateCollectionId",
+			_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
 		).buildString();
 	}
 

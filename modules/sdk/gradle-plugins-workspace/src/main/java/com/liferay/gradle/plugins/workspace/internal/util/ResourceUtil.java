@@ -191,22 +191,35 @@ public class ResourceUtil {
 	private static <T> T _withInputStream(
 		Transformer<T> transformer, Resolver... resolvers) {
 
-		for (Resolver resolver : resolvers) {
-			try (InputStream inputStream = resolver.resolve()) {
-				if (inputStream != null) {
-					if (_logger.isInfoEnabled()) {
-						_logger.info("Found resource");
-					}
+		InputStream inputStream1 = null;
 
-					return transformer.transform(inputStream);
-				}
+		for (Resolver resolver : resolvers) {
+			try {
+				inputStream1 = resolver.resolve();
 			}
 			catch (Exception exception) {
 				_logger.lifecycle(exception.getMessage());
 			}
+
+			if (inputStream1 != null) {
+				if (_logger.isInfoEnabled()) {
+					_logger.info("Found resource");
+				}
+
+				break;
+			}
 		}
 
-		throw new GradleException("Unable to get resource");
+		if (inputStream1 == null) {
+			throw new GradleException("Unable to get resource");
+		}
+
+		try (InputStream inputStream2 = inputStream1) {
+			return transformer.transform(inputStream2);
+		}
+		catch (Exception exception) {
+			throw new GradleException("Could not process resource", exception);
+		}
 	}
 
 	private static final Logger _logger = Logging.getLogger(ResourceUtil.class);

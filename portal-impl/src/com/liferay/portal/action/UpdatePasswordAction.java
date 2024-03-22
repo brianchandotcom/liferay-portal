@@ -31,9 +31,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -116,14 +114,8 @@ public class UpdatePasswordAction implements Action {
 						LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD);
 
 			if (createAccountUtilityPage != null) {
-				String redirect = Portal.PATH_MAIN + "/portal/forgot_password";
-
-				redirect = HttpComponentsUtil.setParameter(
-					redirect, "p_l_id", themeDisplay.getPlid());
-
-				httpServletResponse.sendRedirect(redirect);
-
-				return null;
+				return actionMapping.getActionForward(
+					"portal.update_password_uc");
 			}
 
 			return actionMapping.getActionForward("portal.update_password");

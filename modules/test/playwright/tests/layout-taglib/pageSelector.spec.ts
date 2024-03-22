@@ -15,6 +15,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': true,
+		'LPS-196847': true,
 	}),
 	isolatedSiteTest,
 	navigationMenusPagesTest
@@ -107,4 +108,44 @@ test('load more works properly in search results', async ({
 	).toHaveCount(30);
 
 	await expect(loadMoreButton).not.toBeVisible();
+});
+
+test('checks the correct label for restricted page in the layout tree', async ({
+	apiHelpers,
+	navigationMenusPage,
+	site,
+}) => {
+
+	// Create a page with only one permission
+
+	const pageName = getRandomString();
+
+	await apiHelpers.headlessDelivery.createSitePage({
+		pagePermissions: [
+			{
+				actionKeys: ['VIEW'],
+				roleKey: 'Owner',
+			},
+		],
+		siteId: site.id,
+		title: pageName,
+	});
+
+	// Create a navigation menu and open pages selector
+
+	await navigationMenusPage.goto(site.friendlyUrlPath);
+
+	await navigationMenusPage.createNavigationMenu(getRandomString());
+
+	const modal = await navigationMenusPage.openAddPageModal();
+
+	// Check the correct label for restricted page
+
+	await expect(
+		modal
+			.locator('div', {
+				hasText: pageName,
+			})
+			.getByLabel('Restricted Page')
+	).toBeVisible();
 });

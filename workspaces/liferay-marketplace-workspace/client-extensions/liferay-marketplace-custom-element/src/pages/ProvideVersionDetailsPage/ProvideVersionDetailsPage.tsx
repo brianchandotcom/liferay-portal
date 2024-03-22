@@ -93,7 +93,8 @@ export function ProvideVersionDetailsPage({
 			newOptionId = await postOption(
 				isDXP ? getDxpOptionBody() : getTrialOptionBody()
 			);
-		} else {
+		}
+		else {
 			newOptionId = optionId ?? targetOption!.id;
 		}
 
@@ -117,18 +118,15 @@ export function ProvideVersionDetailsPage({
 		});
 
 		if (isDXP) {
-			const [standardOptionId, developerOptionId, trialOptionId] =
-				await Promise.all([
-					postOptionValue(
-						getOptionStandardBody(),
-						newProductOptionId
-					),
-					postOptionValue(
-						getOptionDeveloperBody(),
-						newProductOptionId
-					),
-					postOptionValue(getOptionTrialBody(), newProductOptionId),
-				]);
+			const [
+				standardOptionId,
+				developerOptionId,
+				trialOptionId,
+			] = await Promise.all([
+				postOptionValue(getOptionStandardBody(), newProductOptionId),
+				postOptionValue(getOptionDeveloperBody(), newProductOptionId),
+				postOptionValue(getOptionTrialBody(), newProductOptionId),
+			]);
 
 			return {
 				developerOptionId,
@@ -193,7 +191,8 @@ export function ProvideVersionDetailsPage({
 			if (sku === 'TRIAL') {
 				value = skuProductOptions.trialOptionId;
 			}
-		} else {
+		}
+		else {
 			value = skuProductOptions.noOptionId;
 		}
 

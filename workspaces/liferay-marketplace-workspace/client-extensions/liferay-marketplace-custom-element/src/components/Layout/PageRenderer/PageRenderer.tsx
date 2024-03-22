@@ -5,9 +5,9 @@
 
 import React, {ReactElement} from 'react';
 
+import FetcherError from '../../../services/fetcher/FetcherError';
 import EmptyState from '../../EmptyState';
 import Loading from '../../Loading';
-import FetcherError from '../../../services/fetcher/FetcherError';
 
 export type PageRendererProps = {
 	children: ReactElement;

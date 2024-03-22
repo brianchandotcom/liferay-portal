@@ -6,12 +6,14 @@
 package com.liferay.portal.cache.ehcache.internal.configurator;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cache.PortalCacheReplicator;
 import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.internal.EhcachePortalCacheConfiguration;
 import com.liferay.portal.cache.ehcache.internal.constants.EhcacheConstants;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -38,7 +40,15 @@ import net.sf.ehcache.event.NotificationScope;
 /**
  * @author Tina Tian
  */
-public abstract class BaseEhcachePortalCacheManagerConfigurator {
+public class BaseEhcachePortalCacheManagerConfigurator {
+
+	public BaseEhcachePortalCacheManagerConfigurator(
+		Properties replicatorProperties,
+		String defaultReplicatorPropertiesString) {
+
+		_replicatorProperties = replicatorProperties;
+		_defaultReplicatorPropertiesString = defaultReplicatorPropertiesString;
+	}
 
 	public ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 		getConfigurationObjectValuePair(
@@ -60,15 +70,10 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 
 		_clearListenerConfigrations(configuration);
 
-		manageConfiguration(configuration, portalCacheManagerConfiguration);
+		_manageConfiguration(configuration, portalCacheManagerConfiguration);
 
 		return new ObjectValuePair<>(
 			configuration, portalCacheManagerConfiguration);
-	}
-
-	protected void manageConfiguration(
-		Configuration configuration,
-		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 	}
 
 	protected Properties parseProperties(
@@ -163,6 +168,35 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 		}
 
 		return false;
+	}
+
+	private void _manageConfiguration(
+		Configuration configuration,
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
+
+		if (_replicatorProperties == null) {
+			return;
+		}
+
+		Set<String> portalCacheNames = new HashSet<>(
+			_replicatorProperties.stringPropertyNames());
+
+		portalCacheNames.addAll(
+			portalCacheManagerConfiguration.getPortalCacheNames());
+
+		for (String portalCacheName : portalCacheNames) {
+			_populateCacheReplicator(
+				portalCacheManagerConfiguration.getPortalCacheConfiguration(
+					portalCacheName),
+				GetterUtil.getString(
+					_replicatorProperties.getProperty(portalCacheName),
+					_defaultReplicatorPropertiesString));
+		}
+
+		_populateCacheReplicator(
+			portalCacheManagerConfiguration.
+				getDefaultPortalCacheConfiguration(),
+			_defaultReplicatorPropertiesString);
 	}
 
 	private Set<Properties> _parseCacheEventListenerConfigurations(
@@ -288,6 +322,21 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 			portalCacheConfigurations);
 	}
 
+	private void _populateCacheReplicator(
+		PortalCacheConfiguration portalCacheConfiguration,
+		String replicatorPropertiesString) {
+
+		Properties replicatorProperties = parseProperties(
+			replicatorPropertiesString, StringPool.COMMA);
+
+		replicatorProperties.put(PortalCacheReplicator.REPLICATOR, true);
+
+		Set<Properties> portalCacheListenerPropertiesSet =
+			portalCacheConfiguration.getPortalCacheListenerPropertiesSet();
+
+		portalCacheListenerPropertiesSet.add(replicatorProperties);
+	}
+
 	private static final Map<NotificationScope, PortalCacheListenerScope>
 		_portalCacheListenerScopes =
 			new EnumMap<NotificationScope, PortalCacheListenerScope>(
@@ -303,5 +352,8 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 						PortalCacheListenerScope.REMOTE);
 				}
 			};
+
+	private final String _defaultReplicatorPropertiesString;
+	private final Properties _replicatorProperties;
 
 }

@@ -6,7 +6,6 @@
 package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.petra.concurrent.DCLSingleton;
-import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.cache.test.util.TestPortalCacheListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -82,14 +81,6 @@ public class BaseEhcachePortalCacheTest {
 
 		BaseEhcachePortalCacheManager baseEhcachePortalCacheManager =
 			new BaseEhcachePortalCacheManager() {
-
-				@Override
-				protected BaseEhcachePortalCacheManagerConfigurator
-					getBaseEhcachePortalCacheManagerConfigurator() {
-
-					return null;
-				}
-
 			};
 
 		ReflectionTestUtil.setFieldValue(
@@ -619,14 +610,6 @@ public class BaseEhcachePortalCacheTest {
 	public void testSerializable() {
 		BaseEhcachePortalCacheManager baseEhcachePortalCacheManager =
 			new BaseEhcachePortalCacheManager() {
-
-				@Override
-				protected BaseEhcachePortalCacheManagerConfigurator
-					getBaseEhcachePortalCacheManagerConfigurator() {
-
-					return null;
-				}
-
 			};
 
 		ReflectionTestUtil.setFieldValue(

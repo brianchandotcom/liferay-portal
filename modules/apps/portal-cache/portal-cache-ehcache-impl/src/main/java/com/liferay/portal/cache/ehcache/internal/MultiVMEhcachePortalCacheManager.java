@@ -7,10 +7,6 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.cache.PortalCacheReplicator;
-import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
-import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
-import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
@@ -21,11 +17,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.io.Serializable;
 
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
-
-import net.sf.ehcache.config.Configuration;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -71,11 +63,20 @@ public class MultiVMEhcachePortalCacheManager
 		destroy();
 	}
 
-	@Override
-	protected BaseEhcachePortalCacheManagerConfigurator
-		getBaseEhcachePortalCacheManagerConfigurator() {
+	protected String getDefaultReplicatorPropertiesString() {
+		if (clusterEnabled) {
+			return _defaultReplicatorPropertiesString;
+		}
 
-		return _multiVMEhcachePortalCacheManagerConfigurator;
+		return null;
+	}
+
+	protected Properties getReplicatorProperties() {
+		if (clusterEnabled) {
+			return _replicatorProperties;
+		}
+
+		return null;
 	}
 
 	protected boolean clusterEnabled;
@@ -110,63 +111,10 @@ public class MultiVMEhcachePortalCacheManager
 		MultiVMEhcachePortalCacheManager.class);
 
 	private String _defaultReplicatorPropertiesString;
-	private final MultiVMEhcachePortalCacheManagerConfigurator
-		_multiVMEhcachePortalCacheManagerConfigurator =
-			new MultiVMEhcachePortalCacheManagerConfigurator();
 
 	@Reference
 	private Props _props;
 
 	private Properties _replicatorProperties;
-
-	private class MultiVMEhcachePortalCacheManagerConfigurator
-		extends BaseEhcachePortalCacheManagerConfigurator {
-
-		@Override
-		protected void manageConfiguration(
-			Configuration configuration,
-			PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
-
-			if (!clusterEnabled) {
-				return;
-			}
-
-			Set<String> portalCacheNames = new HashSet<>(
-				_replicatorProperties.stringPropertyNames());
-
-			portalCacheNames.addAll(
-				portalCacheManagerConfiguration.getPortalCacheNames());
-
-			for (String portalCacheName : portalCacheNames) {
-				_populateCacheReplicator(
-					portalCacheManagerConfiguration.getPortalCacheConfiguration(
-						portalCacheName),
-					GetterUtil.getString(
-						_replicatorProperties.getProperty(portalCacheName),
-						_defaultReplicatorPropertiesString));
-			}
-
-			_populateCacheReplicator(
-				portalCacheManagerConfiguration.
-					getDefaultPortalCacheConfiguration(),
-				_defaultReplicatorPropertiesString);
-		}
-
-		private void _populateCacheReplicator(
-			PortalCacheConfiguration portalCacheConfiguration,
-			String replicatorPropertiesString) {
-
-			Properties replicatorProperties = parseProperties(
-				replicatorPropertiesString, StringPool.COMMA);
-
-			replicatorProperties.put(PortalCacheReplicator.REPLICATOR, true);
-
-			Set<Properties> portalCacheListenerPropertiesSet =
-				portalCacheConfiguration.getPortalCacheListenerPropertiesSet();
-
-			portalCacheListenerPropertiesSet.add(replicatorProperties);
-		}
-
-	}
 
 }

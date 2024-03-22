@@ -554,7 +554,7 @@ function SearchResult({filter, layout, multiSelection, onSelect, selection}) {
 	};
 
 	return (
-		<div className="align-items-center d-flex pb-2">
+		<div className="align-items-center d-flex pb-2 search-result">
 			{multiSelection && (
 				<ClayCheckbox
 					checked={selection.has(layout.id)}

@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -505,6 +506,16 @@ public class ObjectActionLocalServiceImpl
 			return;
 		}
 
+		if (Objects.equals(
+				ObjectActionExecutorConstants.KEY_GROOVY,
+				objectActionExecutorKey) &&
+			!_scriptManagementConfigurationHelper.
+				isAllowScriptContentBeExecutedOrIncluded()) {
+
+			throw new ObjectActionExecutorKeyException(
+				"Groovy script based object actions are not allowed");
+		}
+
 		ObjectActionExecutor objectActionExecutor =
 			_objectActionExecutorRegistry.getObjectActionExecutor(
 				objectDefinition.getCompanyId(), objectActionExecutorKey);
@@ -896,6 +907,10 @@ public class ObjectActionLocalServiceImpl
 
 	@Reference
 	private ResourceActions _resourceActions;
+
+	@Reference
+	private ScriptManagementConfigurationHelper
+		_scriptManagementConfigurationHelper;
 
 	@Reference
 	private TreeFactory _treeFactory;

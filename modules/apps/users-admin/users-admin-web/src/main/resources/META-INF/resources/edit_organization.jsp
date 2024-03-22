@@ -46,6 +46,7 @@ if (organization != null) {
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 String headerTitle = null;
 

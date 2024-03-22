@@ -874,7 +874,7 @@ definition {
 		}
 
 		task ("Check that the breakdown information does not appear in the result") {
-			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Check that the breakdown does not appear on the dashboard") {

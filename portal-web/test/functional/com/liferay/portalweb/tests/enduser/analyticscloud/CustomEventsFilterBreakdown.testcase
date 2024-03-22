@@ -785,7 +785,7 @@ definition {
 		}
 
 		task ("Check that the analysis result does not appear") {
-			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Remove the filter from the analysis") {
@@ -813,7 +813,7 @@ definition {
 		}
 
 		task ("Check that the analysis result does not appear") {
-			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 	}
 
@@ -888,7 +888,7 @@ definition {
 		}
 
 		task ("Check that the analysis result does not appear") {
-			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Remove the filter from the analysis") {
@@ -994,7 +994,7 @@ definition {
 		}
 
 		task ("Check that the analysis result does not appear") {
-			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformationNotPresent(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Remove the filter from the analysis") {

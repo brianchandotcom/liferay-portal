@@ -177,7 +177,7 @@ export default function ModalContent({content, onClose}: ModalContentProps) {
 				{content[DealRegistrationColumnKey.ADDITIONAL_CONTACTS] && (
 					<div>
 						<div className="mb-0 text-paragraph-md">
-							Additional Contacts
+							Additional Contact
 						</div>
 
 						<hr className="mt-0" />

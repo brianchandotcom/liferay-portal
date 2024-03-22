@@ -39,3 +39,4 @@ export {default as Template} from './article/Template';
 export {default as ImportDataDefinitionModal} from './modals/ImportDataDefinitionModal';
 export {default as ImportScript} from './configuration/icon/ImportScript';
 export {default as ImageInput} from './ImageInput.es';
+export {default as showWarningAlert} from './showWarningAlert';

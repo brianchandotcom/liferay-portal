@@ -10,15 +10,14 @@ String friendlyURLChangedMessage = GetterUtil.getString(SessionMessages.get(requ
 %>
 
 <c:if test="<%= Validator.isNotNull(friendlyURLChangedMessage) %>">
-	<aui:script>
-		Liferay.Util.openToast({
-			message: '<%= friendlyURLChangedMessage %>',
-			toastProps: {
-				autoClose: 20000,
-			},
-			type: 'warning',
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"message", friendlyURLChangedMessage
+			).build()
+		%>'
+		module="{showWarningAlert} from journal-web"
+	/>
 </c:if>
 
 <%
@@ -26,13 +25,12 @@ String friendlyURLDuplicatedMessage = GetterUtil.getString(SessionMessages.get(r
 %>
 
 <c:if test="<%= Validator.isNotNull(friendlyURLDuplicatedMessage) %>">
-	<aui:script>
-		Liferay.Util.openToast({
-			message: '<%= friendlyURLDuplicatedMessage %>',
-			toastProps: {
-				autoClose: 20000,
-			},
-			type: 'warning',
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"message", friendlyURLDuplicatedMessage
+			).build()
+		%>'
+		module="{showWarningAlert} from journal-web"
+	/>
 </c:if>

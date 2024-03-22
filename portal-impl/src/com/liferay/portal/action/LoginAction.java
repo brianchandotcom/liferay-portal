@@ -5,7 +5,10 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.kernel.provider.util.LayoutUtilityPageEntryLayoutProviderUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -113,9 +116,21 @@ public class LoginAction implements Action {
 		}
 
 		if (Validator.isNull(redirect)) {
+			Layout loginUtilityPage =
+				LayoutUtilityPageEntryLayoutProviderUtil.
+					getDefaultLayoutUtilityPageEntryLayout(
+						themeDisplay.getScopeGroupId(),
+						LayoutUtilityPageEntryConstants.TYPE_LOGIN);
+
+			long plid = themeDisplay.getPlid();
+
+			if (loginUtilityPage != null) {
+				plid = loginUtilityPage.getPlid();
+			}
+
 			redirect = PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(
-					httpServletRequest, PortletKeys.LOGIN,
+					httpServletRequest, PortletKeys.LOGIN, plid,
 					PortletRequest.RENDER_PHASE)
 			).setMVCRenderCommandName(
 				"/login/login"

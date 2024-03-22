@@ -192,13 +192,9 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 	public void reconfigurePortalCaches(
 		URL configurationURL, ClassLoader classLoader) {
 
-		BaseEhcachePortalCacheManagerConfigurator
-			baseEhcachePortalCacheManagerConfigurator =
-				getBaseEhcachePortalCacheManagerConfigurator();
-
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
-				baseEhcachePortalCacheManagerConfigurator.
+				_baseEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						_portalCacheManagerName, configurationURL, classLoader,
 						_usingDefault);
@@ -275,8 +271,13 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 		_aggregatedPortalCacheManagerListener.clearAll();
 	}
 
-	protected abstract BaseEhcachePortalCacheManagerConfigurator
-		getBaseEhcachePortalCacheManagerConfigurator();
+	protected String getDefaultReplicatorPropertiesString() {
+		return null;
+	}
+
+	protected Properties getReplicatorProperties() {
+		return null;
+	}
 
 	protected void initialize() {
 		if (_portalCacheManagerConfiguration != null) {
@@ -311,13 +312,14 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 
 		_usingDefault = _configFile.equals(_defaultConfigFile);
 
-		BaseEhcachePortalCacheManagerConfigurator
-			baseEhcachePortalCacheManagerConfigurator =
-				getBaseEhcachePortalCacheManagerConfigurator();
+		_baseEhcachePortalCacheManagerConfigurator =
+			new BaseEhcachePortalCacheManagerConfigurator(
+				getReplicatorProperties(),
+				getDefaultReplicatorPropertiesString());
 
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			configurationObjectValuePair =
-				baseEhcachePortalCacheManagerConfigurator.
+				_baseEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						_portalCacheManagerName, configFileURL, classLoader,
 						_usingDefault);
@@ -457,13 +459,9 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		BaseEhcachePortalCacheManagerConfigurator
-			baseEhcachePortalCacheManagerConfigurator =
-				getBaseEhcachePortalCacheManagerConfigurator();
-
 		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 			extConfigurationObjectValuePair =
-				baseEhcachePortalCacheManagerConfigurator.
+				_baseEhcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
 						_portalCacheManagerName, extConfigFileURL, classLoader,
 						false);
@@ -669,6 +667,8 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 	private final AggregatedPortalCacheManagerListener
 		_aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();
+	private BaseEhcachePortalCacheManagerConfigurator
+		_baseEhcachePortalCacheManagerConfigurator;
 	private CacheManager _cacheManager;
 	private String _configFile;
 	private ServiceTracker<?, ?> _configuratorSettingsServiceTracker;

@@ -59,7 +59,15 @@ definition {
 		}
 
 		task ("Type keyword in search bar") {
-			SearchPage.searchEmbedded(searchTerm = ${keyword});
+			for (var n : list "1,2,3,4") {
+				SearchPage.searchEmbedded(searchTerm = ${keyword});
+
+				ACUtils.waitForSendingRequest();
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Run curl command to get keyword results") {

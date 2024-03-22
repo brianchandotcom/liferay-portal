@@ -405,6 +405,12 @@ public class BuildHistoryProcessor {
 		implements Function<BuildJSONObject, String> {
 
 		public String apply(BuildJSONObject buildJSONObject) {
+			String jobName = buildJSONObject.getJobName();
+
+			if (jobName.contains("acceptance-upstream-dxp")) {
+				return "acceptance-dxp";
+			}
+
 			if (buildJSONObject.isTopLevelBuild()) {
 				Map<String, String> parameters =
 					buildJSONObject.getParameters();

@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
@@ -231,44 +230,5 @@ public class BuildHistoryReport {
 
 	private final Map<File, String> _fileMap = new HashMap<>();
 	private final File _outputDir;
-
-	private static class GroupByTopLevelTestSuiteAndUpstreamJob
-		implements Function<BuildJSONObject, String> {
-
-		public String apply(BuildJSONObject buildJSONObject) {
-			String jobName = buildJSONObject.getJobName();
-
-			if (jobName.contains("acceptance-upstream-dxp")) {
-				return "acceptance-dxp";
-			}
-
-			if (buildJSONObject.isTopLevelBuild()) {
-				Map<String, String> parameters =
-					buildJSONObject.getParameters();
-
-				if (parameters.containsKey("CI_TEST_SUITE")) {
-					_topLevelBuildTestSuiteMap.put(
-						buildJSONObject.getURL(),
-						parameters.get("CI_TEST_SUITE"));
-
-					return parameters.get("CI_TEST_SUITE");
-				}
-
-				return "[Unknown]";
-			}
-
-			String topLevelBuildURL = buildJSONObject.getTopLevelBuildURL();
-
-			if (_topLevelBuildTestSuiteMap.containsKey(topLevelBuildURL)) {
-				return _topLevelBuildTestSuiteMap.get(topLevelBuildURL);
-			}
-
-			return "[Unknown]";
-		}
-
-		private final Map<String, String> _topLevelBuildTestSuiteMap =
-			new HashMap<>();
-
-	}
 
 }

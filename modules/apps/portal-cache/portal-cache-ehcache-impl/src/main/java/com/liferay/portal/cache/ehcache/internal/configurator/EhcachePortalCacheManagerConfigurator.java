@@ -40,9 +40,9 @@ import net.sf.ehcache.event.NotificationScope;
 /**
  * @author Tina Tian
  */
-public class BaseEhcachePortalCacheManagerConfigurator {
+public class EhcachePortalCacheManagerConfigurator {
 
-	public BaseEhcachePortalCacheManagerConfigurator(
+	public EhcachePortalCacheManagerConfigurator(
 		Properties replicatorProperties,
 		String defaultReplicatorPropertiesString) {
 

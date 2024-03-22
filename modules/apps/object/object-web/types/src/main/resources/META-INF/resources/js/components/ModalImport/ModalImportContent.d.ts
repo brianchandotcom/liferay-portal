@@ -6,24 +6,24 @@
 import {API} from '@liferay/object-js-components-web';
 import {FormEvent} from 'react';
 import {ModalImportProperties} from '../ViewObjectDefinitions/ViewObjectDefinitions';
-import {TFile} from './ModalImport';
+import {ModalImportKeys, TFile} from './ModalImport';
 interface ModalImportContentProps extends ModalImportProperties {
 	error?: API.ErrorDetails;
 	externalReferenceCode: string;
 	fileName: string;
 	handleOnClose: () => void;
 	handleSubmit: (value: FormEvent<HTMLFormElement>) => void;
+	importedObjectDefinitions?: ObjectDefinition[];
 	inputFile: File;
-	modalImportKey: string;
+	modalImportKey: ModalImportKeys;
 	name: string;
 	nameMaxLength: string;
-	objectDefinitions?: ObjectDefinition[];
 	portletNamespace: string;
 	setError: (value?: API.ErrorDetails) => void;
 	setExternalReferenceCode: (value: string) => void;
 	setFile: (value: TFile) => void;
+	setImportedObjectDefinitions: (value?: ObjectDefinition[]) => void;
 	setName: (value: string) => void;
-	setObjectDefinitions: (value?: ObjectDefinition[]) => void;
 }
 export declare function ModalImportContent({
 	JSONInputId,
@@ -32,16 +32,16 @@ export declare function ModalImportContent({
 	fileName,
 	handleOnClose,
 	handleSubmit,
+	importedObjectDefinitions,
 	inputFile,
 	modalImportKey,
 	name,
 	nameMaxLength,
-	objectDefinitions,
 	portletNamespace,
 	setError,
 	setExternalReferenceCode,
 	setFile,
+	setImportedObjectDefinitions,
 	setName,
-	setObjectDefinitions,
 }: ModalImportContentProps): JSX.Element;
 export {};

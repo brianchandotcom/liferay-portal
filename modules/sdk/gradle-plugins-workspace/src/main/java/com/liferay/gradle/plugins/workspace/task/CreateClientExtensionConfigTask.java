@@ -57,11 +57,13 @@ import org.gradle.api.file.ProjectLayout;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.provider.Provider;
+import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 
 /**
@@ -87,6 +89,20 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 			_siteInitializerJsonFile = _addTaskOutputFile(
 				_SITE_INITIALIZER_JSON_PATH);
+		}
+
+		if (Objects.equals(clientExtension.type, "themeCSS") &&
+			clientExtension.typeSettings.containsKey(
+				"frontendTokenDefinitionJSON")) {
+
+			TaskInputs taskInputs = getInputs();
+
+			ProviderFactory providerFactory = _project.getProviders();
+
+			taskInputs.file(
+				providerFactory.provider(
+					() -> clientExtension.typeSettings.get(
+						"frontendTokenDefinitionJSON")));
 		}
 	}
 

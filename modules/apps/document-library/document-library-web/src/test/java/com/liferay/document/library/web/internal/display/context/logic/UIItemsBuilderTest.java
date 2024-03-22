@@ -24,7 +24,6 @@ import java.net.URISyntaxException;
 import org.assertj.core.api.AbstractUriAssert;
 import org.assertj.core.api.Assertions;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -44,15 +43,10 @@ public class UIItemsBuilderTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		LanguageUtil languageUtil = new LanguageUtil();
-		PortalUtil portalUtil = new PortalUtil();
+		_dlurlHelper = Mockito.mock(DLURLHelper.class);
+		_fileEntry = Mockito.mock(FileEntry.class);
+		_fileVersion = Mockito.mock(FileVersion.class);
 
-		languageUtil.setLanguage(Mockito.mock(Language.class));
-		portalUtil.setPortal(new PortalImpl());
-	}
-
-	@Before
-	public void setUp() {
 		Mockito.when(
 			_dlurlHelper.getDownloadURL(
 				Mockito.nullable(FileEntry.class),
@@ -62,6 +56,12 @@ public class UIItemsBuilderTest {
 		).thenReturn(
 			"http://localhost/"
 		);
+
+		LanguageUtil languageUtil = new LanguageUtil();
+		PortalUtil portalUtil = new PortalUtil();
+
+		languageUtil.setLanguage(Mockito.mock(Language.class));
+		portalUtil.setPortal(new PortalImpl());
 	}
 
 	@Test
@@ -113,8 +113,8 @@ public class UIItemsBuilderTest {
 			_dlurlHelper);
 	}
 
-	private final DLURLHelper _dlurlHelper = Mockito.mock(DLURLHelper.class);
-	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
-	private final FileVersion _fileVersion = Mockito.mock(FileVersion.class);
+	private static DLURLHelper _dlurlHelper;
+	private static FileEntry _fileEntry;
+	private static FileVersion _fileVersion;
 
 }

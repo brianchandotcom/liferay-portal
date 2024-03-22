@@ -278,6 +278,19 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 				layoutSetPrototypeLinkEnabled = false;
 			}
 
+			if (!layoutSetPrototypeUuid.equals(
+					layoutSet.getLayoutSetPrototypeUuid())) {
+
+				UnicodeProperties unicodeProperties =
+					layoutSet.getSettingsProperties();
+
+				unicodeProperties.remove(Sites.LAST_MERGE_TIME);
+				unicodeProperties.remove(Sites.LAST_RESET_TIME);
+				unicodeProperties.remove(Sites.LAST_MERGE_VERSION);
+
+				layoutSet.setSettingsProperties(unicodeProperties);
+			}
+
 			layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);

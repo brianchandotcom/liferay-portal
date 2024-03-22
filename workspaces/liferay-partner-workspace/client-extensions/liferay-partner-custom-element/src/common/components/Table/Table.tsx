@@ -47,7 +47,7 @@ const Row = <T extends BasicRow>({
 
 					return (
 						<Cell
-							key={id + ":" + column.columnKey}
+							key={id + ':' + column.columnKey}
 							onClick={() => {
 								if (customClickOnRow) {
 									return customClickOnRow(row);
@@ -65,7 +65,7 @@ const Row = <T extends BasicRow>({
 	);
 };
 
-const PRMTable = <T extends BasicRow>({
+const Table = <T extends BasicRow>({
 	className,
 	columns,
 	customClickOnRow,
@@ -101,4 +101,4 @@ const PRMTable = <T extends BasicRow>({
 	);
 };
 
-export default PRMTable;
+export default Table;

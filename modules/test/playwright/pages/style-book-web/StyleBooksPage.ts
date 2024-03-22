@@ -14,10 +14,11 @@ export class StyleBooksPage {
 		this.page = page;
 	}
 
-	async createStyleBook(styleBookName: string) {
-		await this.goto();
-
-		await this.page.getByRole('button', {name: 'Add'}).click();
+	async createStyleBook(
+		styleBookName: string,
+		siteUrl?: Site['friendlyUrlPath']
+	) {
+		await this.goto(siteUrl);
 
 		await this.page.getByPlaceholder('Name').fill(styleBookName);
 

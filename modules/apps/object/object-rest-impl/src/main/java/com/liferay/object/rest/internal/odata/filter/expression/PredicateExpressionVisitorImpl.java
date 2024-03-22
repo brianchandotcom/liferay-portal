@@ -675,7 +675,7 @@ public class PredicateExpressionVisitorImpl
 				Collections.singletonMap(entityFieldName, right));
 
 			if (value == null) {
-				return right;
+				value = right;
 			}
 
 			if (Objects.equals(

@@ -111,7 +111,7 @@ test('Configure cards visualization mode @LPD-10735', async ({
 		const container =
 			visualizationModesPage.cardsVisualizationModeContainer;
 
-		await visualizationModesPage.openAssignFieldModal({
+		await visualizationModesPage.openChangeFieldModal({
 			container,
 			sectionLabel,
 		});

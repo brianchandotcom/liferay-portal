@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTabs from '@clayui/tabs';
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
@@ -56,11 +56,24 @@ const MDFRequestList = () => {
 	const {userAccount} = useDynamicFieldEntries();
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
 
+	const [urlParams] = useState(
+		new URLSearchParams(window.location.href.split('?')[1])
+	);
+	const urlParamsEntries = urlParams.entries();
+	useEffect(() => {
+		window.history.replaceState(
+			null,
+			'',
+			`${Liferay.ThemeDisplay.getLayoutRelativeURL()}?${urlParams.toString()}`
+		);
+	}, [urlParams, urlParamsEntries]);
+
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
 		openRequestFilter,
+		urlParams,
 		isChannel
 	);
-	const pagination = usePagination();
+	const pagination = usePagination(urlParams);
 
 	const {data, isValidating, mutate} = useGet<LiferayItems<MDFRequestDTO[]>>(
 		filtersTerm &&
@@ -248,6 +261,7 @@ const MDFRequestList = () => {
 									searchTerm,
 								})
 							}
+							urlParams={urlParams}
 						/>
 
 						<div className="bd-highlight flex-shrink-2 mt-1">

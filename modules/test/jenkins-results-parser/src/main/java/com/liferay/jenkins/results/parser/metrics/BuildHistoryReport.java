@@ -182,7 +182,7 @@ public class BuildHistoryReport {
 		jsonObject.put(
 			"jobTimelines", jsonArray
 		).put(
-			"time", BuildHistory.Timeline.getTimeJSONArray(duration, startTime)
+			"time", BuildHistory.getTimeJSONArray(duration, startTime)
 		);
 
 		return "var timelineData = " + jsonObject.toString();

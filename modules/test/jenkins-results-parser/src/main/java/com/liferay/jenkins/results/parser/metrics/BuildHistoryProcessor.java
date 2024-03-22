@@ -110,7 +110,7 @@ public class BuildHistoryProcessor {
 
 			BuildHistory buildHistory = groupedBuildHistoriesMap.get(key);
 
-			buildHistory.addBuildDataJSONObjects(
+			buildHistory.addBuildJSONObjects(
 				groupedBuildDataJSONObjectsMap.get(key));
 		}
 
@@ -210,7 +210,7 @@ public class BuildHistoryProcessor {
 			BuildHistory buildHistory = new BuildHistory(
 				duration, entry.getKey(), startTime);
 
-			buildHistory.addBuildDataJSONObjects(entry.getValue());
+			buildHistory.addBuildJSONObjects(entry.getValue());
 
 			groupedBuildHistories.put(entry.getKey(), buildHistory);
 		}
@@ -231,15 +231,12 @@ public class BuildHistoryProcessor {
 				public int compare(
 					BuildHistory buildHistory1, BuildHistory buildHistory2) {
 
-					Set<BuildJSONObject> buildJSONObjects1 =
-						buildHistory1.getBuildDataJSONObjects();
-					Set<BuildJSONObject> buildJSONObjects2 =
-						buildHistory2.getBuildDataJSONObjects();
+					Integer buildCount1 =
+						(int)buildHistory1.getInvokedBuildCount();
+					Integer buildCount2 =
+						(int)buildHistory2.getInvokedBuildCount();
 
-					Integer size1 = buildJSONObjects1.size();
-					Integer size2 = buildJSONObjects2.size();
-
-					return size2.compareTo(size1);
+					return buildCount2.compareTo(buildCount1);
 				}
 
 			});
@@ -291,29 +288,14 @@ public class BuildHistoryProcessor {
 	private static BuildHistory _mergeBuildHistories(
 		List<BuildHistory> buildHistories, String name) {
 
-		Set<BuildJSONObject> buildJSONObjects = new HashSet<>();
-		long duration = 0;
-		long startTime = System.currentTimeMillis();
-		Set<String> topLevelBuildURLs = new HashSet<>();
+		BuildHistory mergedBuildHistory = new BuildHistory(
+			0, name, System.currentTimeMillis());
 
 		for (BuildHistory buildHistory : buildHistories) {
-			if (buildHistory.getDuration() > duration) {
-				duration = buildHistory.getDuration();
-			}
-
-			if (buildHistory.getStartTime() < startTime) {
-				startTime = buildHistory.getStartTime();
-			}
-
-			buildJSONObjects.addAll(buildHistory.getBuildDataJSONObjects());
-			topLevelBuildURLs.addAll(buildHistory.getTopLevelBuildURLs());
+			mergedBuildHistory.merge(buildHistory);
 		}
 
-		BuildHistory buildHistory = new BuildHistory(duration, name, startTime);
-
-		buildHistory.addBuildDataJSONObjects(buildJSONObjects);
-
-		return buildHistory;
+		return mergedBuildHistory;
 	}
 
 	private static final File _BASE_DIR = new File(

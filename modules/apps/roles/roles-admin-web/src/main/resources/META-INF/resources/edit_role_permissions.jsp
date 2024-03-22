@@ -52,6 +52,7 @@ request.setAttribute("edit_role_permissions.jsp-portletResource", portletResourc
 if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
+	portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 	renderResponse.setTitle(role.getTitle(locale));
 }

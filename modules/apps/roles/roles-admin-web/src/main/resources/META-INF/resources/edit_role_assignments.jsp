@@ -35,6 +35,7 @@ String tabs2 = editRoleAssignmentsManagementToolbarDisplayContext.getTabs2();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(role.getTitle(locale));
 %>

@@ -5,6 +5,7 @@
 
 package com.liferay.partner;
 
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.string.StringBundler;
 
 import java.net.URI;
@@ -25,7 +26,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -73,7 +73,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 					_log.info(
 						StringBundler.concat(
 							"Activating activity ",
-							itemJSONObject.getString("id"), " with name ",
+							itemJSONObject.getLong("id"), " with name ",
 							itemJSONObject.getString("name")));
 				}
 			}
@@ -117,9 +117,8 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Expiring activity ",
-							itemJSONObject.getString("id"), " with name ",
-							itemJSONObject.getString("name")));
+							"Expiring activity ", itemJSONObject.getLong("id"),
+							" with name ", itemJSONObject.getString("name")));
 				}
 			}
 
@@ -232,12 +231,16 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 			).accept(
 				MediaType.APPLICATION_JSON
 			).header(
-				HttpHeaders.AUTHORIZATION,
-				"Bearer " + _oAuth2AccessToken.getTokenValue()
+				HttpHeaders.AUTHORIZATION, _getAuthorization()
 			).retrieve(
 			).bodyToMono(
 				String.class
 			).block());
+	}
+
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-partner-etc-cron-oauth-application-headless-server");
 	}
 
 	private WebClient _getWebClient() {
@@ -267,8 +270,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 		).contentType(
 			MediaType.APPLICATION_JSON
 		).header(
-			HttpHeaders.AUTHORIZATION,
-			"Bearer " + _oAuth2AccessToken.getTokenValue()
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
 		).bodyValue(
 			bodyValue
 		).retrieve(
@@ -316,7 +318,7 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 					StringBundler.concat(
 						"Triggering a ", plusDays,
 						" day notification for activity ",
-						activityJSONObject.getString("id"), " with name ",
+						activityJSONObject.getLong("id"), " with name ",
 						activityJSONObject.getString("name")));
 			}
 		}
@@ -347,13 +349,13 @@ public class PartnerCommandLineRunner implements CommandLineRunner {
 	private static final Log _log = LogFactory.getLog(
 		PartnerCommandLineRunner.class);
 
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _lxcDXPMainDomain;
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
-
-	@Autowired
-	private OAuth2AccessToken _oAuth2AccessToken;
 
 }

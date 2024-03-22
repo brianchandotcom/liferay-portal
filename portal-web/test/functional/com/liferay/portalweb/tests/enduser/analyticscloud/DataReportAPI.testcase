@@ -354,8 +354,8 @@ definition {
 	@priority = 4
 	test RequestToAccessDataForAllIndividuals {
 		var type = "individuals";
-		var userNameList = "ac,bq";
-		var emailList = "ac@liferay.com,bq@liferay.com";
+		var userNameList = "brazil,spain";
+		var emailList = "brazil@liferay.com,spain@liferay.com";
 
 		task ("Copy the token value for the API and copy the token for the AC and DXP connection") {
 			var token = ACApi.getTokenValue();

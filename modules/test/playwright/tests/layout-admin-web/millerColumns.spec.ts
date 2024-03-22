@@ -89,3 +89,36 @@ test('changes the permissions of a group of pages', async ({
 		).toBeVisible();
 	}
 });
+
+test('checks the correct label for restricted pages in Miller Columns', async ({
+	apiHelpers,
+	page,
+	pagesAdminPage,
+	site,
+}) => {
+
+	// Create a page with only one permission
+
+	const pageName = getRandomString();
+
+	await apiHelpers.headlessDelivery.createSitePage({
+		pagePermissions: [
+			{
+				actionKeys: ['VIEW'],
+				roleKey: 'Owner',
+			},
+		],
+		siteId: site.id,
+		title: pageName,
+	});
+
+	// Go to admin page and check if the Restricted Page label is in the Miller Columns item
+
+	await pagesAdminPage.goto(site.friendlyUrlPath);
+
+	await expect(
+		page
+			.locator('.miller-columns-item')
+			.getByLabel(`${pageName}. Restricted Page`)
+	).toBeVisible();
+});

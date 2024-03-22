@@ -25,7 +25,6 @@ import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringReader;
 
 import java.nio.file.FileSystem;
@@ -767,39 +766,14 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		String classificationGrouping, File inputFile, File outputFile,
 		Map<String, String> substitutionMap) {
 
-		InputStream inputStream1 = null;
-
 		try {
-			if (inputFile.exists()) {
-				inputStream1 = Files.newInputStream(inputFile.toPath());
-			}
-		}
-		catch (IOException ioException) {
-			throw new GradleException(
-				String.format(
-					"Unable to read file %s",
-					StringUtil.quote(inputFile.getName())),
-				ioException);
-		}
-
-		if (inputStream1 == null) {
-			inputStream1 =
-				CreateClientExtensionConfigTask.class.getResourceAsStream(
+			String fileContent = ResourceUtil.readString(
+				ResourceUtil.getLocalFileResolver(inputFile),
+				ResourceUtil.getClassLoaderResolver(
+					CreateClientExtensionConfigTask.class,
 					String.format(
 						"dependencies/templates/%s/%s.tpl",
-						classificationGrouping, inputFile.getName()));
-		}
-
-		if (inputStream1 == null) {
-			throw new GradleException(
-				String.format(
-					"Required file %s not found in project %s",
-					StringUtil.quote(inputFile.getName()),
-					StringUtil.quote(_project.getName())));
-		}
-
-		try (InputStream inputStream2 = inputStream1) {
-			String fileContent = StringUtil.read(inputStream2);
+						classificationGrouping, inputFile.getName())));
 
 			for (Map.Entry<String, String> entry : substitutionMap.entrySet()) {
 				fileContent = fileContent.replace(
@@ -807,6 +781,13 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			}
 
 			Files.write(outputFile.toPath(), fileContent.getBytes());
+		}
+		catch (GradleException gradleException) {
+			throw new GradleException(
+				String.format(
+					"Required file %s not found in project %s",
+					StringUtil.quote(inputFile.getName()),
+					StringUtil.quote(_project.getName())));
 		}
 		catch (IOException ioException) {
 			throw new GradleException(

@@ -162,6 +162,10 @@ public class ResourceUtil {
 			resolvers);
 	}
 
+	public static String readString(Resolver... resolvers) {
+		return _withInputStream(StringUtil::read, resolvers);
+	}
+
 	@FunctionalInterface
 	public interface Resolver {
 

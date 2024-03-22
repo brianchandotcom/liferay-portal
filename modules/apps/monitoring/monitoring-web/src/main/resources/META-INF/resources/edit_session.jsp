@@ -21,6 +21,7 @@ userTracker = userTracker.toEscapedModel();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.format(request, "session-id-x", sessionId, false));
 %>

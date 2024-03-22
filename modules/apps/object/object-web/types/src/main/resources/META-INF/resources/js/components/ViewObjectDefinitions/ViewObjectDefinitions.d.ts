@@ -11,10 +11,7 @@ import './ViewObjectDefinitions.scss';
 export interface ModalImportProperties {
 	JSONInputId: string;
 	apiURL: string;
-	importExtendedInfo?: {
-		key: string;
-		value: string;
-	};
+	importExtendedInfo?: KeyValueObject;
 	importURL: string;
 	modalImportKey: ModalImportKeys;
 }

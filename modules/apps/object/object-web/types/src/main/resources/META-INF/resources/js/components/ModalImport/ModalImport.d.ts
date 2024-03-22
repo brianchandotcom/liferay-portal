@@ -14,10 +14,7 @@ interface ModalImportProps {
 	JSONInputId: string;
 	apiURL: string;
 	handleOnClose?: () => void;
-	importExtendedInfo?: {
-		key: string;
-		value: string;
-	};
+	importExtendedInfo: KeyValueObject;
 	importURL: string;
 	modalImportKey: ModalImportKeys;
 	nameMaxLength: string;

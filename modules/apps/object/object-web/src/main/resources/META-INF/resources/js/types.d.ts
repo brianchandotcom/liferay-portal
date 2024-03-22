@@ -75,6 +75,11 @@ type IncludesFilterOperator = {
 	in: string[] | number[];
 };
 
+interface KeyValueObject {
+	key: string;
+	value: string;
+}
+
 interface LabelKeyObject {
 	key: string;
 	label: string;

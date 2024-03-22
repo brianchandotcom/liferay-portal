@@ -5,12 +5,15 @@
 
 import ClayModal, {useModal} from '@clayui/modal';
 import {API} from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useState} from 'react';
 
-import {FormDataJSONFormat, jsonToFormData} from '../../utils/formData';
 import {ModalImportContent} from './ModalImportContent';
 import {ModalImportWarning} from './ModalImportWarning';
+import {
+	handleDefaultImport,
+	handleImport,
+	handleImportMultiplesObjectDefinitions,
+} from './handleImportUtil';
 
 export type ModalImportKeys =
 	| 'listTypeDefinition'
@@ -21,10 +24,7 @@ interface ModalImportProps {
 	JSONInputId: string;
 	apiURL: string;
 	handleOnClose?: () => void;
-	importExtendedInfo?: {
-		key: string;
-		value: string;
-	};
+	importExtendedInfo: KeyValueObject;
 	importURL: string;
 	modalImportKey: ModalImportKeys;
 	nameMaxLength: string;
@@ -97,115 +97,37 @@ export default function ModalImport({
 		},
 	});
 
-	const handleImport = async (item: FormData | ObjectDefinition[]) => {
-		try {
-			await API.save({
-				item,
-				method: 'POST',
-				url: importURL,
-			});
-
-			if (onAfterImport) {
-				onAfterImport();
-
-				onClose();
-			}
-			else {
-				window.location.reload();
-			}
-		}
-		catch (error) {
-			setError(error as API.ErrorDetails);
-		}
-	};
-
-	const handleDefaultImport = async (event: FormEvent<HTMLFormElement>) => {
-		const formData = new FormData(event.currentTarget);
-		const formDataObject: FormDataJSONFormat = {};
-
-		formData.forEach((value, key) => {
-			if (key.includes(JSONInputId)) {
-				formDataObject[key] = inputFile as File;
-
-				return;
-			}
-
-			formDataObject[key] = value;
-
-			return;
-		});
-
-		if (importExtendedInfo) {
-			formDataObject[importExtendedInfo.key] = importExtendedInfo.value;
-		}
-
-		const newFormData = jsonToFormData(formDataObject);
-
-		const response = await fetch(`${apiURL}${externalReferenceCode}`);
-
-		if (response.status === 204 || response.status === 404) {
-			handleImport(newFormData);
-		}
-		else {
-			setImportFormData(newFormData);
-			setWarningModalVisible(true);
-		}
-	};
-
-	const handleImportMultiplesObjectDefinitions = async (
-		importedObjectDefinitions: ObjectDefinition[]
-	) => {
-		const {items} = await API.getAllObjectDefinitions();
-
-		const objectDefinitionsMap = new Map<string, ObjectDefinition>(
-			items.map((objectDefinition) => [
-				objectDefinition.externalReferenceCode,
-				objectDefinition,
-			])
-		);
-
-		const newAlreadyImportedObjectDefinitions: ObjectDefinition[] = [];
-
-		importedObjectDefinitions.forEach((objectDefinition) => {
-			if (
-				objectDefinitionsMap.has(objectDefinition.externalReferenceCode)
-			) {
-				newAlreadyImportedObjectDefinitions.push(
-					objectDefinitionsMap.get(
-						objectDefinition.externalReferenceCode
-					) as ObjectDefinition
-				);
-			}
-		});
-
-		if (newAlreadyImportedObjectDefinitions.length) {
-			setAlreadyImportedObjectDefinitions(
-				newAlreadyImportedObjectDefinitions
-			);
-
-			setModalImportKeyState('objectDefinitions');
-
-			setWarningModalVisible(true);
-
-			return;
-		}
-
-		handleImport(importedObjectDefinitions);
-	};
-
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		if (
-			Liferay.FeatureFlags['LPS-187142'] &&
-			importedObjectDefinitions
-		) {
-			handleImportMultiplesObjectDefinitions(importedObjectDefinitions);
+		if (Liferay.FeatureFlags['LPS-187142'] && importedObjectDefinitions) {
+			handleImportMultiplesObjectDefinitions({
+				importURL,
+				importedObjectDefinitions,
+				onClose,
+				setError,
+				setExistingObjectDefinitions,
+				setModalImportKeyState,
+				setWarningModalVisible,
+			});
 
 			return;
 		}
 
-		handleDefaultImport(event);
+		handleDefaultImport({
+			JSONInputId,
+			apiURL,
+			event,
+			externalReferenceCode,
+			importExtendedInfo,
+			importURL,
+			inputFile,
+			onAfterImport,
+			onClose,
+			setError,
+			setImportFormData,
+			setWarningModalVisible,
+		});
 	};
 
 	useEffect(() => {
@@ -235,7 +157,13 @@ export default function ModalImport({
 					errorMessage={error?.message ?? ''}
 					existingObjectDefinitions={existingObjectDefinitions}
 					handleImport={() =>
-						handleImport(importFormData as FormData)
+						handleImport({
+							importURL,
+							item: importFormData as FormData,
+							onAfterImport,
+							onClose,
+							setError,
+						})
 					}
 					handleOnClose={onClose}
 					modalImportKey={modalImportKeyState}

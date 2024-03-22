@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -94,6 +95,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 				irrelevantDocument.getId()));
 	}
 
+	@FeatureFlags("LPD-19812")
 	@Override
 	@Test
 	public void testGetDocument() throws Exception {
@@ -104,6 +106,8 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 		Assert.assertTrue(Validator.isNotNull(document1.getContentUrl()));
 
+		Assert.assertTrue(Validator.isNotNull(document1.getFriendlyUrlPath()));
+
 		Document document2 = documentResource.postSiteDocument(
 			testGroup.getGroupId(), randomDocument(),
 			HashMapBuilder.put(
@@ -111,6 +115,8 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 			).build());
 
 		Assert.assertTrue(Validator.isNull(document2.getContentUrl()));
+
+		Assert.assertTrue(Validator.isNotNull(document2.getFriendlyUrlPath()));
 
 		Role guestRole = _roleLocalService.getRole(
 			testCompany.getCompanyId(), RoleConstants.GUEST);
@@ -139,6 +145,8 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		document1 = regularUserDocumentResource.getDocument(document1.getId());
 
 		Assert.assertTrue(Validator.isNull(document1.getContentUrl()));
+
+		Assert.assertTrue(Validator.isNotNull(document1.getFriendlyUrlPath()));
 	}
 
 	@Override

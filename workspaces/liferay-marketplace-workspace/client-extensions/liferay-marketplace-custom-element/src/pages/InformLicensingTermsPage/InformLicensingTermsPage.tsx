@@ -96,8 +96,9 @@ export function InformLicensingTermsPage({
 	};
 
 	const submitLicenseTermsPage = async () => {
-		const {items: skus} =
-			await HeadlessCommerceAdminCatalogImpl.getProductSkus(appProductId);
+		const {
+			items: skus,
+		} = await HeadlessCommerceAdminCatalogImpl.getProductSkus(appProductId);
 
 		for (const sku of skus) {
 			const freeOrPerpertual =
@@ -132,7 +133,8 @@ export function InformLicensingTermsPage({
 
 		if (trialSku) {
 			_skuTrialId = trialSku.id;
-		} else if (!isDXP) {
+		}
+		else if (!isDXP) {
 			const response = await createAppSKU({
 				appProductId,
 				body: {

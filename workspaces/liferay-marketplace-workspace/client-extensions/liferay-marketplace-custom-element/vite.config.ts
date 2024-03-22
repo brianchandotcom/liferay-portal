@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import path from 'path';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig({
@@ -31,12 +31,12 @@ export default defineConfig({
 			return filename;
 		},
 	},
+	plugins: [react()],
 	resolve: {
 		alias: {
 			'~': path.resolve(__dirname, './src/'),
 		},
 	},
-	plugins: [react()],
 	server: {
 		origin: 'http://localhost:5173',
 	},

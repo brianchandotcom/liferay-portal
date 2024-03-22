@@ -101,16 +101,13 @@ public class ObjectStateFlowUtil {
 			ObjectStateLocalServiceUtil.fetchObjectStateFlowObjectState(
 				listTypeEntry.getListTypeEntryId(), objectStateFlowId);
 
-		if (targetObjectState == null) {
-			serviceBuilderObjectStateTransition.
-				setTargetObjectStateListTypeEntryId(
-					listTypeEntry.getListTypeEntryId());
-
-			return serviceBuilderObjectStateTransition;
+		if (targetObjectState != null) {
+			serviceBuilderObjectStateTransition.setTargetObjectStateId(
+				targetObjectState.getObjectStateId());
 		}
 
-		serviceBuilderObjectStateTransition.setTargetObjectStateId(
-			targetObjectState.getObjectStateId());
+		serviceBuilderObjectStateTransition.setTargetObjectStateListTypeEntryId(
+			listTypeEntry.getListTypeEntryId());
 
 		return serviceBuilderObjectStateTransition;
 	}

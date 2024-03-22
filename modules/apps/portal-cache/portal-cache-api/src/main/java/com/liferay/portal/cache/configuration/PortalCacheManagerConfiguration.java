@@ -82,7 +82,13 @@ public class PortalCacheManagerConfiguration {
 			portalCacheName, portalCacheConfiguration);
 	}
 
-	private final PortalCacheConfiguration _defaultPortalCacheConfiguration;
+	public void setDefaultPortalCacheConfiguration(
+		PortalCacheConfiguration defaultPortalCacheConfiguration) {
+
+		_defaultPortalCacheConfiguration = defaultPortalCacheConfiguration;
+	}
+
+	private PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private final Map<String, PortalCacheConfiguration>
 		_portalCacheConfigurations = new ConcurrentHashMap<>();
 	private final Set<Properties> _portalCacheManagerListenerPropertiesSet;

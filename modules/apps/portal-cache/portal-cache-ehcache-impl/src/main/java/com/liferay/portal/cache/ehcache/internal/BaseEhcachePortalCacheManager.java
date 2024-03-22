@@ -322,6 +322,8 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 						_portalCacheManagerName, configFileURL, classLoader,
 						_usingDefault);
 
+		_overrideConfigurationsByExtFile(configurationObjectValuePair);
+
 		_cacheManager = new CacheManager(configurationObjectValuePair.getKey());
 
 		_portalCacheManagerConfiguration =
@@ -430,6 +432,79 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 
 			portalCache.registerPortalCacheListener(
 				portalCacheListener, portalCacheListenerScope);
+		}
+	}
+
+	private void _overrideConfigurationsByExtFile(
+		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
+			configurationObjectValuePair) {
+
+		String extConfigFile = StringUtil.replace(
+			_configFile, ".xml", "-ext.xml");
+
+		ClassLoader classLoader =
+			BaseEhcachePortalCacheManagerConfigurator.class.getClassLoader();
+
+		URL extConfigFileURL = classLoader.getResource(extConfigFile);
+
+		if (extConfigFileURL == null) {
+			classLoader = PortalClassLoaderUtil.getClassLoader();
+
+			extConfigFileURL = classLoader.getResource(extConfigFile);
+		}
+
+		if (extConfigFileURL == null) {
+			return;
+		}
+
+		BaseEhcachePortalCacheManagerConfigurator
+			baseEhcachePortalCacheManagerConfigurator =
+				getBaseEhcachePortalCacheManagerConfigurator();
+
+		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
+			extConfigurationObjectValuePair =
+				baseEhcachePortalCacheManagerConfigurator.
+					getConfigurationObjectValuePair(
+						_portalCacheManagerName, extConfigFileURL, classLoader,
+						false);
+
+		Configuration extConfiguration =
+			extConfigurationObjectValuePair.getKey();
+
+		PortalCacheManagerConfiguration extPortalCacheManagerConfiguration =
+			extConfigurationObjectValuePair.getValue();
+
+		CacheConfiguration extDefaultCacheConfiguration =
+			extConfiguration.getDefaultCacheConfiguration();
+
+		Configuration configuration = configurationObjectValuePair.getKey();
+
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
+			configurationObjectValuePair.getValue();
+
+		if (extDefaultCacheConfiguration != null) {
+			configuration.setDefaultCacheConfiguration(
+				extDefaultCacheConfiguration);
+
+			portalCacheManagerConfiguration.setDefaultPortalCacheConfiguration(
+				extPortalCacheManagerConfiguration.
+					getDefaultPortalCacheConfiguration());
+		}
+
+		Map<String, CacheConfiguration> cacheConfigurations =
+			configuration.getCacheConfigurations();
+
+		Map<String, CacheConfiguration> extCacheConfigurations =
+			extConfiguration.getCacheConfigurations();
+
+		for (Map.Entry<String, CacheConfiguration> entry :
+				extCacheConfigurations.entrySet()) {
+
+			cacheConfigurations.put(entry.getKey(), entry.getValue());
+			portalCacheManagerConfiguration.putPortalCacheConfiguration(
+				entry.getKey(),
+				extPortalCacheManagerConfiguration.getPortalCacheConfiguration(
+					entry.getKey()));
 		}
 	}
 

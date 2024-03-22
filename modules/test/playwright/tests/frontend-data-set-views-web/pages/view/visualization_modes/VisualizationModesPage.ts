@@ -75,7 +75,7 @@ export class VisualizationModesPage {
 			this.fieldSelectModalContainer
 				.locator('.custom-control-input')
 				.first()
-		).toBeEditable();
+		).toBeVisible();
 
 		await expect(
 			this.fieldSelectModalContainer

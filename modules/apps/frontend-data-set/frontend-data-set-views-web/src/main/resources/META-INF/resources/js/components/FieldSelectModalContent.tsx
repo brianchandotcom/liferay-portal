@@ -226,7 +226,7 @@ const FieldSelectModalContent = ({
 				)}
 			</ClayModal.Header>
 
-			<ClayModal.Body className="pt-0 px-0">
+			<ClayModal.Body className="field-select-modal pt-0 px-0">
 				{fields === null ? (
 					<ClayLoadingIndicator />
 				) : (

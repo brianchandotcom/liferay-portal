@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -423,9 +424,14 @@ public abstract class BaseTaxCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteTaxCategory() throws Exception {
-		TaxCategory taxCategory = testGraphQLDeleteTaxCategory_addTaxCategory();
+
+		// No namespace
+
+		TaxCategory taxCategory1 =
+			testGraphQLDeleteTaxCategory_addTaxCategory();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -434,23 +440,61 @@ public abstract class BaseTaxCategoryResourceTestCase {
 						"deleteTaxCategory",
 						new HashMap<String, Object>() {
 							{
-								put("id", taxCategory.getId());
+								put("id", taxCategory1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteTaxCategory"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"taxCategory",
 					new HashMap<String, Object>() {
 						{
-							put("id", taxCategory.getId());
+							put("id", taxCategory1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		TaxCategory taxCategory2 =
+			testGraphQLDeleteTaxCategory_addTaxCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"deleteTaxCategory",
+							new HashMap<String, Object>() {
+								{
+									put("id", taxCategory2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+				"Object/deleteTaxCategory"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminSiteSetting_v1_0",
+					new GraphQLField(
+						"taxCategory",
+						new HashMap<String, Object>() {
+							{
+								put("id", taxCategory2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected TaxCategory testGraphQLDeleteTaxCategory_addTaxCategory()
@@ -475,9 +519,12 @@ public abstract class BaseTaxCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxCategory() throws Exception {
 		TaxCategory taxCategory = testGraphQLGetTaxCategory_addTaxCategory();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -494,11 +541,36 @@ public abstract class BaseTaxCategoryResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/taxCategory"))));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertTrue(
+			equals(
+				taxCategory,
+				TaxCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminSiteSetting_v1_0",
+								new GraphQLField(
+									"taxCategory",
+									new HashMap<String, Object>() {
+										{
+											put("id", taxCategory.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+						"Object/taxCategory"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxCategoryNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -512,6 +584,25 @@ public abstract class BaseTaxCategoryResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"taxCategory",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -492,6 +493,7 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetContactAccountGroupsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -504,6 +506,8 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject contactAccountGroupsJSONObject =
 			JSONUtil.getValueAsJSONObject(
@@ -519,6 +523,29 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 
 		contactAccountGroupsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/contactAccountGroups");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			contactAccountGroupsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			contactAccountGroup1,
+			Arrays.asList(
+				ContactAccountGroupSerDes.toDTOs(
+					contactAccountGroupsJSONObject.getString("items"))));
+		assertContains(
+			contactAccountGroup2,
+			Arrays.asList(
+				ContactAccountGroupSerDes.toDTOs(
+					contactAccountGroupsJSONObject.getString("items"))));
+
+		// Using the namespace analyticsSettings_v1_0
+
+		contactAccountGroupsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("analyticsSettings_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/analyticsSettings_v1_0",
 			"JSONObject/contactAccountGroups");
 
 		Assert.assertEquals(

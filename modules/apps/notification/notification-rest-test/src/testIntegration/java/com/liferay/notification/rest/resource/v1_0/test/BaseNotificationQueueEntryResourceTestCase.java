@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -620,6 +621,7 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationQueueEntriesPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -632,6 +634,8 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject notificationQueueEntriesJSONObject =
 			JSONUtil.getValueAsJSONObject(
@@ -648,6 +652,29 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 		notificationQueueEntriesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/notificationQueueEntries");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			notificationQueueEntriesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			notificationQueueEntry1,
+			Arrays.asList(
+				NotificationQueueEntrySerDes.toDTOs(
+					notificationQueueEntriesJSONObject.getString("items"))));
+		assertContains(
+			notificationQueueEntry2,
+			Arrays.asList(
+				NotificationQueueEntrySerDes.toDTOs(
+					notificationQueueEntriesJSONObject.getString("items"))));
+
+		// Using the namespace notification_v1_0
+
+		notificationQueueEntriesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("notification_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/notification_v1_0",
 			"JSONObject/notificationQueueEntries");
 
 		Assert.assertEquals(
@@ -727,9 +754,13 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteNotificationQueueEntry() throws Exception {
-		NotificationQueueEntry notificationQueueEntry =
+
+		// No namespace
+
+		NotificationQueueEntry notificationQueueEntry1 =
 			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
 
 		Assert.assertTrue(
@@ -741,11 +772,12 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 							{
 								put(
 									"notificationQueueEntryId",
-									notificationQueueEntry.getId());
+									notificationQueueEntry1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteNotificationQueueEntry"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"notificationQueueEntry",
@@ -753,13 +785,53 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 						{
 							put(
 								"notificationQueueEntryId",
-								notificationQueueEntry.getId());
+								notificationQueueEntry1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace notification_v1_0
+
+		NotificationQueueEntry notificationQueueEntry2 =
+			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"notification_v1_0",
+						new GraphQLField(
+							"deleteNotificationQueueEntry",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"notificationQueueEntryId",
+										notificationQueueEntry2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/notification_v1_0",
+				"Object/deleteNotificationQueueEntry"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"notification_v1_0",
+					new GraphQLField(
+						"notificationQueueEntry",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"notificationQueueEntryId",
+									notificationQueueEntry2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected NotificationQueueEntry
@@ -790,10 +862,13 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationQueueEntry() throws Exception {
 		NotificationQueueEntry notificationQueueEntry =
 			testGraphQLGetNotificationQueueEntry_addNotificationQueueEntry();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -812,13 +887,39 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/notificationQueueEntry"))));
+
+		// Using the namespace notification_v1_0
+
+		Assert.assertTrue(
+			equals(
+				notificationQueueEntry,
+				NotificationQueueEntrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"notification_v1_0",
+								new GraphQLField(
+									"notificationQueueEntry",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"notificationQueueEntryId",
+												notificationQueueEntry.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/notification_v1_0",
+						"Object/notificationQueueEntry"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationQueueEntryNotFound()
 		throws Exception {
 
 		Long irrelevantNotificationQueueEntryId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -834,6 +935,27 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace notification_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"notification_v1_0",
+						new GraphQLField(
+							"notificationQueueEntry",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"notificationQueueEntryId",
+										irrelevantNotificationQueueEntryId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

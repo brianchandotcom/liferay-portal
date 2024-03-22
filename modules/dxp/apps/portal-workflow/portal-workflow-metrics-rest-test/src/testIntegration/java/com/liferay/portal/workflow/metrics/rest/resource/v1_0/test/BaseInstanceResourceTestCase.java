@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -563,9 +564,12 @@ public abstract class BaseInstanceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProcessInstance() throws Exception {
 		Instance instance = testGraphQLGetProcessInstance_addInstance();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -587,6 +591,33 @@ public abstract class BaseInstanceResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/processInstance"))));
+
+		// Using the namespace portalWorkflowMetrics_v1_0
+
+		Assert.assertTrue(
+			equals(
+				instance,
+				InstanceSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"portalWorkflowMetrics_v1_0",
+								new GraphQLField(
+									"processInstance",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"processId",
+												testGraphQLGetProcessInstance_getProcessId(
+													instance));
+
+											put("instanceId", instance.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/portalWorkflowMetrics_v1_0",
+						"Object/processInstance"))));
 	}
 
 	protected Long testGraphQLGetProcessInstance_getProcessId(Instance instance)
@@ -595,10 +626,13 @@ public abstract class BaseInstanceResourceTestCase {
 		return instance.getProcessId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProcessInstanceNotFound() throws Exception {
 		Long irrelevantProcessId = RandomTestUtil.randomLong();
 		Long irrelevantInstanceId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -613,6 +647,26 @@ public abstract class BaseInstanceResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace portalWorkflowMetrics_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"portalWorkflowMetrics_v1_0",
+						new GraphQLField(
+							"processInstance",
+							new HashMap<String, Object>() {
+								{
+									put("processId", irrelevantProcessId);
+									put("instanceId", irrelevantInstanceId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

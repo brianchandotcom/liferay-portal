@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -563,6 +564,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -575,6 +577,8 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject measurementUnitsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -589,6 +593,30 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		measurementUnitsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/measurementUnits");
+
+		Assert.assertEquals(
+			totalCount + 2, measurementUnitsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			measurementUnit1,
+			Arrays.asList(
+				MeasurementUnitSerDes.toDTOs(
+					measurementUnitsJSONObject.getString("items"))));
+		assertContains(
+			measurementUnit2,
+			Arrays.asList(
+				MeasurementUnitSerDes.toDTOs(
+					measurementUnitsJSONObject.getString("items"))));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		measurementUnitsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminSiteSetting_v1_0", graphQLField)),
+			"JSONObject/data",
+			"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
 			"JSONObject/measurementUnits");
 
 		Assert.assertEquals(
@@ -690,12 +718,15 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitByExternalReferenceCode()
 		throws Exception {
 
 		MeasurementUnit measurementUnit =
 			testGraphQLGetMeasurementUnitByExternalReferenceCode_addMeasurementUnit();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -718,14 +749,44 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/measurementUnitByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertTrue(
+			equals(
+				measurementUnit,
+				MeasurementUnitSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminSiteSetting_v1_0",
+								new GraphQLField(
+									"measurementUnitByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													measurementUnit.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+						"Object/measurementUnitByExternalReferenceCode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -741,6 +802,27 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"measurementUnitByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -809,10 +891,13 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitByKey() throws Exception {
 		MeasurementUnit measurementUnit =
 			testGraphQLGetMeasurementUnitByKey_addMeasurementUnit();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -832,11 +917,40 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/measurementUnitByKey"))));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertTrue(
+			equals(
+				measurementUnit,
+				MeasurementUnitSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminSiteSetting_v1_0",
+								new GraphQLField(
+									"measurementUnitByKey",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"key",
+												"\"" +
+													measurementUnit.getKey() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+						"Object/measurementUnitByKey"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitByKeyNotFound() throws Exception {
 		String irrelevantKey = "\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -850,6 +964,25 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"measurementUnitByKey",
+							new HashMap<String, Object>() {
+								{
+									put("key", irrelevantKey);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -1241,9 +1374,13 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteMeasurementUnit() throws Exception {
-		MeasurementUnit measurementUnit =
+
+		// No namespace
+
+		MeasurementUnit measurementUnit1 =
 			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
 
 		Assert.assertTrue(
@@ -1253,23 +1390,61 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 						"deleteMeasurementUnit",
 						new HashMap<String, Object>() {
 							{
-								put("id", measurementUnit.getId());
+								put("id", measurementUnit1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteMeasurementUnit"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"measurementUnit",
 					new HashMap<String, Object>() {
 						{
-							put("id", measurementUnit.getId());
+							put("id", measurementUnit1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		MeasurementUnit measurementUnit2 =
+			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"deleteMeasurementUnit",
+							new HashMap<String, Object>() {
+								{
+									put("id", measurementUnit2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+				"Object/deleteMeasurementUnit"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminSiteSetting_v1_0",
+					new GraphQLField(
+						"measurementUnit",
+						new HashMap<String, Object>() {
+							{
+								put("id", measurementUnit2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected MeasurementUnit
@@ -1299,10 +1474,13 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnit() throws Exception {
 		MeasurementUnit measurementUnit =
 			testGraphQLGetMeasurementUnit_addMeasurementUnit();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1319,11 +1497,36 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/measurementUnit"))));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertTrue(
+			equals(
+				measurementUnit,
+				MeasurementUnitSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminSiteSetting_v1_0",
+								new GraphQLField(
+									"measurementUnit",
+									new HashMap<String, Object>() {
+										{
+											put("id", measurementUnit.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+						"Object/measurementUnit"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMeasurementUnitNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1337,6 +1540,25 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"measurementUnit",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

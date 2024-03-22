@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -550,6 +551,7 @@ public abstract class BaseSpecificationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSpecificationsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -562,6 +564,8 @@ public abstract class BaseSpecificationResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject specificationsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -576,6 +580,29 @@ public abstract class BaseSpecificationResourceTestCase {
 
 		specificationsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/specifications");
+
+		Assert.assertEquals(
+			totalCount + 2, specificationsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			specification1,
+			Arrays.asList(
+				SpecificationSerDes.toDTOs(
+					specificationsJSONObject.getString("items"))));
+		assertContains(
+			specification2,
+			Arrays.asList(
+				SpecificationSerDes.toDTOs(
+					specificationsJSONObject.getString("items"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		specificationsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessCommerceAdminCatalog_v1_0",
 			"JSONObject/specifications");
 
 		Assert.assertEquals(
@@ -647,9 +674,13 @@ public abstract class BaseSpecificationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteSpecification() throws Exception {
-		Specification specification =
+
+		// No namespace
+
+		Specification specification1 =
 			testGraphQLDeleteSpecification_addSpecification();
 
 		Assert.assertTrue(
@@ -659,23 +690,61 @@ public abstract class BaseSpecificationResourceTestCase {
 						"deleteSpecification",
 						new HashMap<String, Object>() {
 							{
-								put("id", specification.getId());
+								put("id", specification1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteSpecification"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"specification",
 					new HashMap<String, Object>() {
 						{
-							put("id", specification.getId());
+							put("id", specification1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Specification specification2 =
+			testGraphQLDeleteSpecification_addSpecification();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteSpecification",
+							new HashMap<String, Object>() {
+								{
+									put("id", specification2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteSpecification"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"specification",
+						new HashMap<String, Object>() {
+							{
+								put("id", specification2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected Specification testGraphQLDeleteSpecification_addSpecification()
@@ -703,10 +772,13 @@ public abstract class BaseSpecificationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSpecification() throws Exception {
 		Specification specification =
 			testGraphQLGetSpecification_addSpecification();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -723,11 +795,36 @@ public abstract class BaseSpecificationResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/specification"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				specification,
+				SpecificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"specification",
+									new HashMap<String, Object>() {
+										{
+											put("id", specification.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/specification"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSpecificationNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -741,6 +838,25 @@ public abstract class BaseSpecificationResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"specification",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

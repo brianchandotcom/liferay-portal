@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -588,6 +589,7 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroupsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -601,6 +603,8 @@ public abstract class BaseUserGroupResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject userGroupsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/userGroups");
@@ -612,6 +616,28 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		userGroupsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/userGroups");
+
+		Assert.assertEquals(
+			totalCount + 2, userGroupsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			userGroup1,
+			Arrays.asList(
+				UserGroupSerDes.toDTOs(
+					userGroupsJSONObject.getString("items"))));
+		assertContains(
+			userGroup2,
+			Arrays.asList(
+				UserGroupSerDes.toDTOs(
+					userGroupsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		userGroupsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
 			"JSONObject/userGroups");
 
 		Assert.assertEquals(
@@ -704,12 +730,15 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroupByExternalReferenceCode()
 		throws Exception {
 
 		UserGroup userGroup =
 			testGraphQLGetUserGroupByExternalReferenceCode_addUserGroup();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -732,14 +761,43 @@ public abstract class BaseUserGroupResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/userGroupByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				userGroup,
+				UserGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"userGroupByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													userGroup.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/userGroupByExternalReferenceCode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroupByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -755,6 +813,27 @@ public abstract class BaseUserGroupResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"userGroupByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -873,9 +952,13 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteUserGroup() throws Exception {
-		UserGroup userGroup = testGraphQLDeleteUserGroup_addUserGroup();
+
+		// No namespace
+
+		UserGroup userGroup1 = testGraphQLDeleteUserGroup_addUserGroup();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -884,23 +967,59 @@ public abstract class BaseUserGroupResourceTestCase {
 						"deleteUserGroup",
 						new HashMap<String, Object>() {
 							{
-								put("userGroupId", userGroup.getId());
+								put("userGroupId", userGroup1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteUserGroup"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"userGroup",
 					new HashMap<String, Object>() {
 						{
-							put("userGroupId", userGroup.getId());
+							put("userGroupId", userGroup1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		UserGroup userGroup2 = testGraphQLDeleteUserGroup_addUserGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"deleteUserGroup",
+							new HashMap<String, Object>() {
+								{
+									put("userGroupId", userGroup2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+				"Object/deleteUserGroup"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminUser_v1_0",
+					new GraphQLField(
+						"userGroup",
+						new HashMap<String, Object>() {
+							{
+								put("userGroupId", userGroup2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected UserGroup testGraphQLDeleteUserGroup_addUserGroup()
@@ -925,9 +1044,12 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroup() throws Exception {
 		UserGroup userGroup = testGraphQLGetUserGroup_addUserGroup();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -944,11 +1066,37 @@ public abstract class BaseUserGroupResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/userGroup"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				userGroup,
+				UserGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"userGroup",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"userGroupId",
+												userGroup.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/userGroup"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserGroupNotFound() throws Exception {
 		Long irrelevantUserGroupId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -962,6 +1110,25 @@ public abstract class BaseUserGroupResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"userGroup",
+							new HashMap<String, Object>() {
+								{
+									put("userGroupId", irrelevantUserGroupId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

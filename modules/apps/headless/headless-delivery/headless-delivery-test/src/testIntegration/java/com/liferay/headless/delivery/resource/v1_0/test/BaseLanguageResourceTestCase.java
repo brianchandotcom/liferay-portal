@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -341,6 +342,7 @@ public abstract class BaseLanguageResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteLanguagesPage() throws Exception {
 		Long siteId = testGetSiteLanguagesPage_getSiteId();
@@ -355,6 +357,8 @@ public abstract class BaseLanguageResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject languagesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/languages");
@@ -366,6 +370,26 @@ public abstract class BaseLanguageResourceTestCase {
 
 		languagesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/languages");
+
+		Assert.assertEquals(
+			totalCount + 2, languagesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			language1,
+			Arrays.asList(
+				LanguageSerDes.toDTOs(languagesJSONObject.getString("items"))));
+		assertContains(
+			language2,
+			Arrays.asList(
+				LanguageSerDes.toDTOs(languagesJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		languagesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 			"JSONObject/languages");
 
 		Assert.assertEquals(

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -234,12 +235,15 @@ public abstract class BaseBillingAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCodeBillingAddress()
 		throws Exception {
 
 		BillingAddress billingAddress =
 			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_addBillingAddress();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -261,6 +265,32 @@ public abstract class BaseBillingAddressResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderByExternalReferenceCodeBillingAddress"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				billingAddress,
+				BillingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderByExternalReferenceCodeBillingAddress",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+														billingAddress) + "\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderByExternalReferenceCodeBillingAddress"))));
 	}
 
 	protected String
@@ -271,12 +301,15 @@ public abstract class BaseBillingAddressResourceTestCase {
 		return billingAddress.getExternalReferenceCode();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCodeBillingAddressNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -292,6 +325,27 @@ public abstract class BaseBillingAddressResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderByExternalReferenceCodeBillingAddress",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -337,10 +391,13 @@ public abstract class BaseBillingAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderIdBillingAddress() throws Exception {
 		BillingAddress billingAddress =
 			testGraphQLGetOrderIdBillingAddress_addBillingAddress();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -360,6 +417,31 @@ public abstract class BaseBillingAddressResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderIdBillingAddress"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				billingAddress,
+				BillingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderIdBillingAddress",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetOrderIdBillingAddress_getId(
+													billingAddress));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderIdBillingAddress"))));
 	}
 
 	protected Long testGraphQLGetOrderIdBillingAddress_getId(
@@ -369,9 +451,12 @@ public abstract class BaseBillingAddressResourceTestCase {
 		return billingAddress.getId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderIdBillingAddressNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -385,6 +470,25 @@ public abstract class BaseBillingAddressResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderIdBillingAddress",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

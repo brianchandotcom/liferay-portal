@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -218,12 +219,15 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeTaxConfiguration()
 		throws Exception {
 
 		ProductTaxConfiguration productTaxConfiguration =
 			testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_addProductTaxConfiguration();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -245,6 +249,32 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productByExternalReferenceCodeTaxConfiguration"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productTaxConfiguration,
+				ProductTaxConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productByExternalReferenceCodeTaxConfiguration",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productByExternalReferenceCodeTaxConfiguration"))));
 	}
 
 	protected String
@@ -255,12 +285,15 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeTaxConfigurationNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -276,6 +309,27 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productByExternalReferenceCodeTaxConfiguration",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -323,10 +377,13 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdTaxConfiguration() throws Exception {
 		ProductTaxConfiguration productTaxConfiguration =
 			testGraphQLGetProductIdTaxConfiguration_addProductTaxConfiguration();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -347,6 +404,31 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productIdTaxConfiguration"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				productTaxConfiguration,
+				ProductTaxConfigurationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productIdTaxConfiguration",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetProductIdTaxConfiguration_getId(
+													productTaxConfiguration));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productIdTaxConfiguration"))));
 	}
 
 	protected Long testGraphQLGetProductIdTaxConfiguration_getId(
@@ -356,11 +438,14 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 		return productTaxConfiguration.getId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdTaxConfigurationNotFound()
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -374,6 +459,25 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productIdTaxConfiguration",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

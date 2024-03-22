@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -611,9 +612,13 @@ public abstract class BaseDataListViewResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDataListView() throws Exception {
-		DataListView dataListView =
+
+		// No namespace
+
+		DataListView dataListView1 =
 			testGraphQLDeleteDataListView_addDataListView();
 
 		Assert.assertTrue(
@@ -623,23 +628,62 @@ public abstract class BaseDataListViewResourceTestCase {
 						"deleteDataListView",
 						new HashMap<String, Object>() {
 							{
-								put("dataListViewId", dataListView.getId());
+								put("dataListViewId", dataListView1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataListView"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"dataListView",
 					new HashMap<String, Object>() {
 						{
-							put("dataListViewId", dataListView.getId());
+							put("dataListViewId", dataListView1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace dataEngine_v2_0
+
+		DataListView dataListView2 =
+			testGraphQLDeleteDataListView_addDataListView();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"deleteDataListView",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"dataListViewId",
+										dataListView2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/dataEngine_v2_0",
+				"Object/deleteDataListView"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataEngine_v2_0",
+					new GraphQLField(
+						"dataListView",
+						new HashMap<String, Object>() {
+							{
+								put("dataListViewId", dataListView2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected DataListView testGraphQLDeleteDataListView_addDataListView()
@@ -666,10 +710,13 @@ public abstract class BaseDataListViewResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataListView() throws Exception {
 		DataListView dataListView =
 			testGraphQLGetDataListView_addDataListView();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -688,11 +735,37 @@ public abstract class BaseDataListViewResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/dataListView"))));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertTrue(
+			equals(
+				dataListView,
+				DataListViewSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"dataEngine_v2_0",
+								new GraphQLField(
+									"dataListView",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"dataListViewId",
+												dataListView.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/dataEngine_v2_0",
+						"Object/dataListView"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataListViewNotFound() throws Exception {
 		Long irrelevantDataListViewId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -706,6 +779,27 @@ public abstract class BaseDataListViewResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"dataListView",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"dataListViewId",
+										irrelevantDataListViewId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

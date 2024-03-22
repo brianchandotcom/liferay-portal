@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -596,6 +597,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinitionsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -608,6 +610,8 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -622,6 +626,28 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/objectDefinitions");
+
+		Assert.assertEquals(
+			totalCount + 2, objectDefinitionsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			objectDefinition1,
+			Arrays.asList(
+				ObjectDefinitionSerDes.toDTOs(
+					objectDefinitionsJSONObject.getString("items"))));
+		assertContains(
+			objectDefinition2,
+			Arrays.asList(
+				ObjectDefinitionSerDes.toDTOs(
+					objectDefinitionsJSONObject.getString("items"))));
+
+		// Using the namespace objectAdmin_v1_0
+
+		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("objectAdmin_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/objectAdmin_v1_0",
 			"JSONObject/objectDefinitions");
 
 		Assert.assertEquals(
@@ -689,12 +715,15 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinitionByExternalReferenceCode()
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			testGraphQLGetObjectDefinitionByExternalReferenceCode_addObjectDefinition();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -717,14 +746,43 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/objectDefinitionByExternalReferenceCode"))));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertTrue(
+			equals(
+				objectDefinition,
+				ObjectDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectAdmin_v1_0",
+								new GraphQLField(
+									"objectDefinitionByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													objectDefinition.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+						"Object/objectDefinitionByExternalReferenceCode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinitionByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -740,6 +798,27 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"objectDefinitionByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -839,9 +918,13 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteObjectDefinition() throws Exception {
-		ObjectDefinition objectDefinition =
+
+		// No namespace
+
+		ObjectDefinition objectDefinition1 =
 			testGraphQLDeleteObjectDefinition_addObjectDefinition();
 
 		Assert.assertTrue(
@@ -853,23 +936,66 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 							{
 								put(
 									"objectDefinitionId",
-									objectDefinition.getId());
+									objectDefinition1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteObjectDefinition"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"objectDefinition",
 					new HashMap<String, Object>() {
 						{
-							put("objectDefinitionId", objectDefinition.getId());
+							put(
+								"objectDefinitionId",
+								objectDefinition1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace objectAdmin_v1_0
+
+		ObjectDefinition objectDefinition2 =
+			testGraphQLDeleteObjectDefinition_addObjectDefinition();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"deleteObjectDefinition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectDefinitionId",
+										objectDefinition2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+				"Object/deleteObjectDefinition"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectAdmin_v1_0",
+					new GraphQLField(
+						"objectDefinition",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectDefinitionId",
+									objectDefinition2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected ObjectDefinition
@@ -899,10 +1025,13 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			testGraphQLGetObjectDefinition_addObjectDefinition();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -921,11 +1050,37 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/objectDefinition"))));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertTrue(
+			equals(
+				objectDefinition,
+				ObjectDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectAdmin_v1_0",
+								new GraphQLField(
+									"objectDefinition",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"objectDefinitionId",
+												objectDefinition.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+						"Object/objectDefinition"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectDefinitionNotFound() throws Exception {
 		Long irrelevantObjectDefinitionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -941,6 +1096,27 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"objectDefinition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectDefinitionId",
+										irrelevantObjectDefinitionId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

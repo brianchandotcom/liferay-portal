@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -214,10 +215,13 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPlacedOrderItem() throws Exception {
 		PlacedOrderItem placedOrderItem =
 			testGraphQLGetPlacedOrderItem_addPlacedOrderItem();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -236,11 +240,38 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/placedOrderItem"))));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				placedOrderItem,
+				PlacedOrderItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryOrder_v1_0",
+								new GraphQLField(
+									"placedOrderItem",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"placedOrderItemId",
+												placedOrderItem.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryOrder_v1_0",
+						"Object/placedOrderItem"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPlacedOrderItemNotFound() throws Exception {
 		Long irrelevantPlacedOrderItemId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -256,6 +287,27 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryOrder_v1_0",
+						new GraphQLField(
+							"placedOrderItem",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"placedOrderItemId",
+										irrelevantPlacedOrderItemId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

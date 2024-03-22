@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -209,9 +210,13 @@ public abstract class BaseExperimentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteExperiment() throws Exception {
-		Experiment experiment = testGraphQLDeleteExperiment_addExperiment();
+
+		// No namespace
+
+		Experiment experiment1 = testGraphQLDeleteExperiment_addExperiment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -222,11 +227,12 @@ public abstract class BaseExperimentResourceTestCase {
 							{
 								put(
 									"experimentId",
-									"\"" + experiment.getId() + "\"");
+									"\"" + experiment1.getId() + "\"");
 							}
 						})),
 				"JSONObject/data", "Object/deleteExperiment"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"experiment",
@@ -234,13 +240,52 @@ public abstract class BaseExperimentResourceTestCase {
 						{
 							put(
 								"experimentId",
-								"\"" + experiment.getId() + "\"");
+								"\"" + experiment1.getId() + "\"");
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace segmentsAsah_v1_0
+
+		Experiment experiment2 = testGraphQLDeleteExperiment_addExperiment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"segmentsAsah_v1_0",
+						new GraphQLField(
+							"deleteExperiment",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"experimentId",
+										"\"" + experiment2.getId() + "\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/segmentsAsah_v1_0",
+				"Object/deleteExperiment"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"segmentsAsah_v1_0",
+					new GraphQLField(
+						"experiment",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"experimentId",
+									"\"" + experiment2.getId() + "\"");
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected Experiment testGraphQLDeleteExperiment_addExperiment()
@@ -265,9 +310,12 @@ public abstract class BaseExperimentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetExperiment() throws Exception {
 		Experiment experiment = testGraphQLGetExperiment_addExperiment();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -286,12 +334,39 @@ public abstract class BaseExperimentResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/experiment"))));
+
+		// Using the namespace segmentsAsah_v1_0
+
+		Assert.assertTrue(
+			equals(
+				experiment,
+				ExperimentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"segmentsAsah_v1_0",
+								new GraphQLField(
+									"experiment",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"experimentId",
+												"\"" + experiment.getId() +
+													"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/segmentsAsah_v1_0",
+						"Object/experiment"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetExperimentNotFound() throws Exception {
 		String irrelevantExperimentId =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -305,6 +380,25 @@ public abstract class BaseExperimentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace segmentsAsah_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"segmentsAsah_v1_0",
+						new GraphQLField(
+							"experiment",
+							new HashMap<String, Object>() {
+								{
+									put("experimentId", irrelevantExperimentId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

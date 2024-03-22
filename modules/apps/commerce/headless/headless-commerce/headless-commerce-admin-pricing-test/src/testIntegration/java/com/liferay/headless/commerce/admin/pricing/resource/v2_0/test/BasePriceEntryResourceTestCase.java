@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -204,6 +205,7 @@ public abstract class BasePriceEntryResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceEntryByExternalReferenceCode()
 		throws Exception {
@@ -211,6 +213,7 @@ public abstract class BasePriceEntryResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceEntryByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -228,6 +231,7 @@ public abstract class BasePriceEntryResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeletePriceEntry() throws Exception {
 		Assert.assertTrue(false);
@@ -238,11 +242,13 @@ public abstract class BasePriceEntryResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceEntry() throws Exception {
 		Assert.assertTrue(true);
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceEntryNotFound() throws Exception {
 		Assert.assertTrue(true);

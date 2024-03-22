@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -202,9 +203,12 @@ public abstract class BaseFormResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetForm() throws Exception {
 		Form form = testGraphQLGetForm_addForm();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -221,11 +225,35 @@ public abstract class BaseFormResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/form"))));
+
+		// Using the namespace headlessForm_v1_0
+
+		Assert.assertTrue(
+			equals(
+				form,
+				FormSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessForm_v1_0",
+								new GraphQLField(
+									"form",
+									new HashMap<String, Object>() {
+										{
+											put("formId", form.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessForm_v1_0",
+						"Object/form"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormNotFound() throws Exception {
 		Long irrelevantFormId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -239,6 +267,25 @@ public abstract class BaseFormResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessForm_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessForm_v1_0",
+						new GraphQLField(
+							"form",
+							new HashMap<String, Object>() {
+								{
+									put("formId", irrelevantFormId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -381,6 +428,7 @@ public abstract class BaseFormResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteFormsPage() throws Exception {
 		Long siteId = testGetSiteFormsPage_getSiteId();
@@ -398,6 +446,8 @@ public abstract class BaseFormResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject formsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/forms");
@@ -409,6 +459,26 @@ public abstract class BaseFormResourceTestCase {
 
 		formsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/forms");
+
+		Assert.assertEquals(
+			totalCount + 2, formsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			form1,
+			Arrays.asList(
+				FormSerDes.toDTOs(formsJSONObject.getString("items"))));
+		assertContains(
+			form2,
+			Arrays.asList(
+				FormSerDes.toDTOs(formsJSONObject.getString("items"))));
+
+		// Using the namespace headlessForm_v1_0
+
+		formsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessForm_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessForm_v1_0",
 			"JSONObject/forms");
 
 		Assert.assertEquals(

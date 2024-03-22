@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -207,12 +208,15 @@ public abstract class BaseTicketResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountEmailVerificationTicket()
 		throws Exception {
 
 		Ticket ticket =
 			testGraphQLGetUserAccountEmailVerificationTicket_addTicket();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -232,6 +236,29 @@ public abstract class BaseTicketResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/userAccountEmailVerificationTicket"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				ticket,
+				TicketSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"userAccountEmailVerificationTicket",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"userAccountId",
+												testGraphQLGetUserAccountEmailVerificationTicket_getUserAccountId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/userAccountEmailVerificationTicket"))));
 	}
 
 	protected Long
@@ -242,11 +269,14 @@ public abstract class BaseTicketResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountEmailVerificationTicketNotFound()
 		throws Exception {
 
 		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -260,6 +290,27 @@ public abstract class BaseTicketResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"userAccountEmailVerificationTicket",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"userAccountId",
+										irrelevantUserAccountId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -296,12 +347,15 @@ public abstract class BaseTicketResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountPasswordResetTicket()
 		throws Exception {
 
 		Ticket ticket =
 			testGraphQLGetUserAccountPasswordResetTicket_addTicket();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -321,6 +375,29 @@ public abstract class BaseTicketResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/userAccountPasswordResetTicket"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				ticket,
+				TicketSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"userAccountPasswordResetTicket",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"userAccountId",
+												testGraphQLGetUserAccountPasswordResetTicket_getUserAccountId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/userAccountPasswordResetTicket"))));
 	}
 
 	protected Long
@@ -331,11 +408,14 @@ public abstract class BaseTicketResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserAccountPasswordResetTicketNotFound()
 		throws Exception {
 
 		Long irrelevantUserAccountId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -349,6 +429,27 @@ public abstract class BaseTicketResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"userAccountPasswordResetTicket",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"userAccountId",
+										irrelevantUserAccountId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

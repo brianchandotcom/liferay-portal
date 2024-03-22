@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -220,9 +221,13 @@ public abstract class BaseWishListItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteWishListItem() throws Exception {
-		WishListItem wishListItem =
+
+		// No namespace
+
+		WishListItem wishListItem1 =
 			testGraphQLDeleteWishListItem_addWishListItem();
 
 		Assert.assertTrue(
@@ -232,23 +237,63 @@ public abstract class BaseWishListItemResourceTestCase {
 						"deleteWishListItem",
 						new HashMap<String, Object>() {
 							{
-								put("wishListItemId", wishListItem.getId());
+								put("wishListItemId", wishListItem1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteWishListItem"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"wishListItem",
 					new HashMap<String, Object>() {
 						{
-							put("wishListItemId", wishListItem.getId());
+							put("wishListItemId", wishListItem1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
+
+		WishListItem wishListItem2 =
+			testGraphQLDeleteWishListItem_addWishListItem();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceDeliveryCatalog_v1_0",
+						new GraphQLField(
+							"deleteWishListItem",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"wishListItemId",
+										wishListItem2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceDeliveryCatalog_v1_0",
+				"Object/deleteWishListItem"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceDeliveryCatalog_v1_0",
+					new GraphQLField(
+						"wishListItem",
+						new HashMap<String, Object>() {
+							{
+								put("wishListItemId", wishListItem2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected WishListItem testGraphQLDeleteWishListItem_addWishListItem()
@@ -275,10 +320,13 @@ public abstract class BaseWishListItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWishListItem() throws Exception {
 		WishListItem wishListItem =
 			testGraphQLGetWishListItem_addWishListItem();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -297,11 +345,38 @@ public abstract class BaseWishListItemResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/wishListItem"))));
+
+		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				wishListItem,
+				WishListItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCatalog_v1_0",
+								new GraphQLField(
+									"wishListItem",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"wishListItemId",
+												wishListItem.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCatalog_v1_0",
+						"Object/wishListItem"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWishListItemNotFound() throws Exception {
 		Long irrelevantWishListItemId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -315,6 +390,27 @@ public abstract class BaseWishListItemResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCatalog_v1_0",
+						new GraphQLField(
+							"wishListItem",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"wishListItemId",
+										irrelevantWishListItemId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

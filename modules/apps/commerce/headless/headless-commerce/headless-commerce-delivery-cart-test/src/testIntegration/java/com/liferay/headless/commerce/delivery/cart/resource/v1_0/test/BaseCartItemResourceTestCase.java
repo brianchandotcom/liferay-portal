@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -211,9 +212,13 @@ public abstract class BaseCartItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteCartItem() throws Exception {
-		CartItem cartItem = testGraphQLDeleteCartItem_addCartItem();
+
+		// No namespace
+
+		CartItem cartItem1 = testGraphQLDeleteCartItem_addCartItem();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -222,23 +227,60 @@ public abstract class BaseCartItemResourceTestCase {
 						"deleteCartItem",
 						new HashMap<String, Object>() {
 							{
-								put("cartItemId", cartItem.getId());
+								put("cartItemId", cartItem1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteCartItem"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"cartItem",
 					new HashMap<String, Object>() {
 						{
-							put("cartItemId", cartItem.getId());
+							put("cartItemId", cartItem1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		CartItem cartItem2 = testGraphQLDeleteCartItem_addCartItem();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"deleteCartItem",
+							new HashMap<String, Object>() {
+								{
+									put("cartItemId", cartItem2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceDeliveryCart_v1_0",
+				"Object/deleteCartItem"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceDeliveryCart_v1_0",
+					new GraphQLField(
+						"cartItem",
+						new HashMap<String, Object>() {
+							{
+								put("cartItemId", cartItem2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected CartItem testGraphQLDeleteCartItem_addCartItem()
@@ -263,9 +305,12 @@ public abstract class BaseCartItemResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCartItem() throws Exception {
 		CartItem cartItem = testGraphQLGetCartItem_addCartItem();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -282,11 +327,36 @@ public abstract class BaseCartItemResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/cartItem"))));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertTrue(
+			equals(
+				cartItem,
+				CartItemSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCart_v1_0",
+								new GraphQLField(
+									"cartItem",
+									new HashMap<String, Object>() {
+										{
+											put("cartItemId", cartItem.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCart_v1_0",
+						"Object/cartItem"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCartItemNotFound() throws Exception {
 		Long irrelevantCartItemId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -300,6 +370,25 @@ public abstract class BaseCartItemResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"cartItem",
+							new HashMap<String, Object>() {
+								{
+									put("cartItemId", irrelevantCartItemId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -505,6 +594,7 @@ public abstract class BaseCartItemResourceTestCase {
 		return null;
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCartItemsPage() throws Exception {
 		Long cartId = testGetCartItemsPage_getCartId();
@@ -522,6 +612,8 @@ public abstract class BaseCartItemResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject cartItemsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/cartItems");
@@ -533,6 +625,27 @@ public abstract class BaseCartItemResourceTestCase {
 
 		cartItemsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/cartItems");
+
+		Assert.assertEquals(
+			totalCount + 2, cartItemsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			cartItem1,
+			Arrays.asList(
+				CartItemSerDes.toDTOs(cartItemsJSONObject.getString("items"))));
+		assertContains(
+			cartItem2,
+			Arrays.asList(
+				CartItemSerDes.toDTOs(cartItemsJSONObject.getString("items"))));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		cartItemsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceDeliveryCart_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessCommerceDeliveryCart_v1_0",
 			"JSONObject/cartItems");
 
 		Assert.assertEquals(

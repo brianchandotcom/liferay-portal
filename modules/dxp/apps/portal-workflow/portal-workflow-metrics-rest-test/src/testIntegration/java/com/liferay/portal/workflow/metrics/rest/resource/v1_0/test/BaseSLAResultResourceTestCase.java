@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -202,9 +203,12 @@ public abstract class BaseSLAResultResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProcessLastSLAResult() throws Exception {
 		SLAResult slaResult = testGraphQLGetProcessLastSLAResult_addSLAResult();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -223,6 +227,30 @@ public abstract class BaseSLAResultResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/processLastSLAResult"))));
+
+		// Using the namespace portalWorkflowMetrics_v1_0
+
+		Assert.assertTrue(
+			equals(
+				slaResult,
+				SLAResultSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"portalWorkflowMetrics_v1_0",
+								new GraphQLField(
+									"processLastSLAResult",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"processId",
+												testGraphQLGetProcessLastSLAResult_getProcessId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/portalWorkflowMetrics_v1_0",
+						"Object/processLastSLAResult"))));
 	}
 
 	protected Long testGraphQLGetProcessLastSLAResult_getProcessId()
@@ -232,9 +260,12 @@ public abstract class BaseSLAResultResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProcessLastSLAResultNotFound() throws Exception {
 		Long irrelevantProcessId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -248,6 +279,25 @@ public abstract class BaseSLAResultResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace portalWorkflowMetrics_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"portalWorkflowMetrics_v1_0",
+						new GraphQLField(
+							"processLastSLAResult",
+							new HashMap<String, Object>() {
+								{
+									put("processId", irrelevantProcessId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

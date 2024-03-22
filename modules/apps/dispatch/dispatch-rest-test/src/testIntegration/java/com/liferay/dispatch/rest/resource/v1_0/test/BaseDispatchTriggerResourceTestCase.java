@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -232,6 +233,7 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDispatchTriggersPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -242,6 +244,8 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject dispatchTriggersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -256,6 +260,27 @@ public abstract class BaseDispatchTriggerResourceTestCase {
 
 		dispatchTriggersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/dispatchTriggers");
+
+		Assert.assertEquals(
+			totalCount + 2, dispatchTriggersJSONObject.getLong("totalCount"));
+
+		assertContains(
+			dispatchTrigger1,
+			Arrays.asList(
+				DispatchTriggerSerDes.toDTOs(
+					dispatchTriggersJSONObject.getString("items"))));
+		assertContains(
+			dispatchTrigger2,
+			Arrays.asList(
+				DispatchTriggerSerDes.toDTOs(
+					dispatchTriggersJSONObject.getString("items"))));
+
+		// Using the namespace dispatch_v1_0
+
+		dispatchTriggersJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(new GraphQLField("dispatch_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/dispatch_v1_0",
 			"JSONObject/dispatchTriggers");
 
 		Assert.assertEquals(

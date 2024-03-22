@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -792,12 +793,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCode()
 		throws Exception {
 
 		StructuredContent structuredContent =
 			testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -826,6 +830,38 @@ public abstract class BaseStructuredContentResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/assetLibraryStructuredContentByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"assetLibraryStructuredContentByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"assetLibraryId",
+												"\"" +
+													testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
+														"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													structuredContent.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/assetLibraryStructuredContentByExternalReferenceCode"))));
 	}
 
 	protected Long
@@ -836,12 +872,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -862,6 +901,32 @@ public abstract class BaseStructuredContentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"assetLibraryStructuredContentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLGetAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -1959,6 +2024,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentsPage() throws Exception {
 		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
@@ -1976,6 +2042,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/structuredContents");
@@ -1989,6 +2057,28 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/structuredContents");
+
+		Assert.assertEquals(
+			totalCount + 2, structuredContentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			structuredContent1,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					structuredContentsJSONObject.getString("items"))));
+		assertContains(
+			structuredContent2,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					structuredContentsJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 			"JSONObject/structuredContents");
 
 		Assert.assertEquals(
@@ -2128,12 +2218,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByExternalReferenceCode()
 		throws Exception {
 
 		StructuredContent structuredContent =
 			testGraphQLGetSiteStructuredContentByExternalReferenceCode_addStructuredContent();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -2162,6 +2255,39 @@ public abstract class BaseStructuredContentResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/structuredContentByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"structuredContentByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteStructuredContentByExternalReferenceCode_getSiteId(
+														structuredContent) +
+															"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													structuredContent.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/structuredContentByExternalReferenceCode"))));
 	}
 
 	protected Long
@@ -2172,12 +2298,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return structuredContent.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -2196,6 +2325,31 @@ public abstract class BaseStructuredContentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"structuredContentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -2318,10 +2472,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByKey() throws Exception {
 		StructuredContent structuredContent =
 			testGraphQLGetSiteStructuredContentByKey_addStructuredContent();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -2347,6 +2504,38 @@ public abstract class BaseStructuredContentResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/structuredContentByKey"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"structuredContentByKey",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteStructuredContentByKey_getSiteId(
+														structuredContent) +
+															"\"");
+
+											put(
+												"key",
+												"\"" +
+													structuredContent.getKey() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/structuredContentByKey"))));
 	}
 
 	protected Long testGraphQLGetSiteStructuredContentByKey_getSiteId(
@@ -2356,11 +2545,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return structuredContent.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByKeyNotFound()
 		throws Exception {
 
 		String irrelevantKey = "\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -2377,6 +2569,29 @@ public abstract class BaseStructuredContentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"structuredContentByKey",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put("key", irrelevantKey);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -2418,10 +2633,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByUuid() throws Exception {
 		StructuredContent structuredContent =
 			testGraphQLGetSiteStructuredContentByUuid_addStructuredContent();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -2447,6 +2665,38 @@ public abstract class BaseStructuredContentResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/structuredContentByUuid"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"structuredContentByUuid",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteStructuredContentByUuid_getSiteId(
+														structuredContent) +
+															"\"");
+
+											put(
+												"uuid",
+												"\"" +
+													structuredContent.
+														getUuid() + "\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/structuredContentByUuid"))));
 	}
 
 	protected Long testGraphQLGetSiteStructuredContentByUuid_getSiteId(
@@ -2456,11 +2706,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return structuredContent.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentByUuidNotFound()
 		throws Exception {
 
 		String irrelevantUuid = "\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -2477,6 +2730,29 @@ public abstract class BaseStructuredContentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"structuredContentByUuid",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put("uuid", irrelevantUuid);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -3107,9 +3383,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteStructuredContent() throws Exception {
-		StructuredContent structuredContent =
+
+		// No namespace
+
+		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContent_addStructuredContent();
 
 		Assert.assertTrue(
@@ -3121,11 +3401,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 							{
 								put(
 									"structuredContentId",
-									structuredContent.getId());
+									structuredContent1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteStructuredContent"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"structuredContent",
@@ -3133,13 +3414,53 @@ public abstract class BaseStructuredContentResourceTestCase {
 						{
 							put(
 								"structuredContentId",
-								structuredContent.getId());
+								structuredContent1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		StructuredContent structuredContent2 =
+			testGraphQLDeleteStructuredContent_addStructuredContent();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteStructuredContent",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"structuredContentId",
+										structuredContent2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteStructuredContent"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"structuredContent",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"structuredContentId",
+									structuredContent2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected StructuredContent
@@ -3169,10 +3490,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testGroup.getGroupId(), randomStructuredContent());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetStructuredContent() throws Exception {
 		StructuredContent structuredContent =
 			testGraphQLGetStructuredContent_addStructuredContent();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -3191,11 +3515,37 @@ public abstract class BaseStructuredContentResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/structuredContent"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"structuredContent",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"structuredContentId",
+												structuredContent.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/structuredContent"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetStructuredContentNotFound() throws Exception {
 		Long irrelevantStructuredContentId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -3211,6 +3561,27 @@ public abstract class BaseStructuredContentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"structuredContent",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"structuredContentId",
+										irrelevantStructuredContentId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

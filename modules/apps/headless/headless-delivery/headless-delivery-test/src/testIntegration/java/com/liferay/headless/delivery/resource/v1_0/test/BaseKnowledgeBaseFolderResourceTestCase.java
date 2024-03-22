@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -223,9 +224,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteKnowledgeBaseFolder() throws Exception {
-		KnowledgeBaseFolder knowledgeBaseFolder =
+
+		// No namespace
+
+		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGraphQLDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
 		Assert.assertTrue(
@@ -237,11 +242,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 							{
 								put(
 									"knowledgeBaseFolderId",
-									knowledgeBaseFolder.getId());
+									knowledgeBaseFolder1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteKnowledgeBaseFolder"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"knowledgeBaseFolder",
@@ -249,13 +255,53 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 						{
 							put(
 								"knowledgeBaseFolderId",
-								knowledgeBaseFolder.getId());
+								knowledgeBaseFolder1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		KnowledgeBaseFolder knowledgeBaseFolder2 =
+			testGraphQLDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteKnowledgeBaseFolder",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"knowledgeBaseFolderId",
+										knowledgeBaseFolder2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteKnowledgeBaseFolder"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"knowledgeBaseFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"knowledgeBaseFolderId",
+									knowledgeBaseFolder2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected KnowledgeBaseFolder
@@ -286,10 +332,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder knowledgeBaseFolder =
 			testGraphQLGetKnowledgeBaseFolder_addKnowledgeBaseFolder();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -308,11 +357,37 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/knowledgeBaseFolder"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				knowledgeBaseFolder,
+				KnowledgeBaseFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"knowledgeBaseFolder",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"knowledgeBaseFolderId",
+												knowledgeBaseFolder.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/knowledgeBaseFolder"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKnowledgeBaseFolderNotFound() throws Exception {
 		Long irrelevantKnowledgeBaseFolderId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -328,6 +403,27 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"knowledgeBaseFolder",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"knowledgeBaseFolderId",
+										irrelevantKnowledgeBaseFolderId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -926,6 +1022,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseFoldersPage() throws Exception {
 		Long siteId = testGetSiteKnowledgeBaseFoldersPage_getSiteId();
@@ -943,6 +1040,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject knowledgeBaseFoldersJSONObject =
 			JSONUtil.getValueAsJSONObject(
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -957,6 +1056,29 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		knowledgeBaseFoldersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/knowledgeBaseFolders");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			knowledgeBaseFoldersJSONObject.getLong("totalCount"));
+
+		assertContains(
+			knowledgeBaseFolder1,
+			Arrays.asList(
+				KnowledgeBaseFolderSerDes.toDTOs(
+					knowledgeBaseFoldersJSONObject.getString("items"))));
+		assertContains(
+			knowledgeBaseFolder2,
+			Arrays.asList(
+				KnowledgeBaseFolderSerDes.toDTOs(
+					knowledgeBaseFoldersJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		knowledgeBaseFoldersJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 			"JSONObject/knowledgeBaseFolders");
 
 		Assert.assertEquals(
@@ -1101,12 +1223,15 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode()
 		throws Exception {
 
 		KnowledgeBaseFolder knowledgeBaseFolder =
 			testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1136,6 +1261,39 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/knowledgeBaseFolderByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				knowledgeBaseFolder,
+				KnowledgeBaseFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"knowledgeBaseFolderByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
+														knowledgeBaseFolder) +
+															"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													knowledgeBaseFolder.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/knowledgeBaseFolderByExternalReferenceCode"))));
 	}
 
 	protected Long
@@ -1146,12 +1304,15 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		return knowledgeBaseFolder.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1170,6 +1331,31 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"knowledgeBaseFolderByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

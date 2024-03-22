@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -806,12 +807,15 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
 		throws Exception {
 
 		TaxonomyVocabulary taxonomyVocabulary =
 			testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -840,6 +844,39 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/assetLibraryTaxonomyVocabularyByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				taxonomyVocabulary,
+				TaxonomyVocabularySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"assetLibraryTaxonomyVocabularyByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"assetLibraryId",
+												"\"" +
+													testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId() +
+														"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													taxonomyVocabulary.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/assetLibraryTaxonomyVocabularyByExternalReferenceCode"))));
 	}
 
 	protected Long
@@ -850,12 +887,15 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -876,6 +916,32 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"assetLibraryTaxonomyVocabularyByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -1502,6 +1568,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteTaxonomyVocabulariesPage() throws Exception {
 		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
@@ -1519,6 +1586,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject taxonomyVocabulariesJSONObject =
 			JSONUtil.getValueAsJSONObject(
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1533,6 +1602,29 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		taxonomyVocabulariesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/taxonomyVocabularies");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			taxonomyVocabulariesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			taxonomyVocabulary1,
+			Arrays.asList(
+				TaxonomyVocabularySerDes.toDTOs(
+					taxonomyVocabulariesJSONObject.getString("items"))));
+		assertContains(
+			taxonomyVocabulary2,
+			Arrays.asList(
+				TaxonomyVocabularySerDes.toDTOs(
+					taxonomyVocabulariesJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		taxonomyVocabulariesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminTaxonomy_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
 			"JSONObject/taxonomyVocabularies");
 
 		Assert.assertEquals(
@@ -1676,12 +1768,15 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteTaxonomyVocabularyByExternalReferenceCode()
 		throws Exception {
 
 		TaxonomyVocabulary taxonomyVocabulary =
 			testGraphQLGetSiteTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1710,6 +1805,40 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/taxonomyVocabularyByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				taxonomyVocabulary,
+				TaxonomyVocabularySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"taxonomyVocabularyByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteTaxonomyVocabularyByExternalReferenceCode_getSiteId(
+														taxonomyVocabulary) +
+															"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													taxonomyVocabulary.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/taxonomyVocabularyByExternalReferenceCode"))));
 	}
 
 	protected Long
@@ -1720,12 +1849,15 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		return taxonomyVocabulary.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteTaxonomyVocabularyByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1744,6 +1876,31 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"taxonomyVocabularyByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -1934,9 +2091,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteTaxonomyVocabulary() throws Exception {
-		TaxonomyVocabulary taxonomyVocabulary =
+
+		// No namespace
+
+		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGraphQLDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
 
 		Assert.assertTrue(
@@ -1948,11 +2109,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 							{
 								put(
 									"taxonomyVocabularyId",
-									taxonomyVocabulary.getId());
+									taxonomyVocabulary1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteTaxonomyVocabulary"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"taxonomyVocabulary",
@@ -1960,13 +2122,53 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 						{
 							put(
 								"taxonomyVocabularyId",
-								taxonomyVocabulary.getId());
+								taxonomyVocabulary1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testGraphQLDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteTaxonomyVocabulary",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyVocabularyId",
+										taxonomyVocabulary2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteTaxonomyVocabulary"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminTaxonomy_v1_0",
+					new GraphQLField(
+						"taxonomyVocabulary",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyVocabularyId",
+									taxonomyVocabulary2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected TaxonomyVocabulary
@@ -1997,10 +2199,13 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxonomyVocabulary() throws Exception {
 		TaxonomyVocabulary taxonomyVocabulary =
 			testGraphQLGetTaxonomyVocabulary_addTaxonomyVocabulary();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -2019,11 +2224,38 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/taxonomyVocabulary"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				taxonomyVocabulary,
+				TaxonomyVocabularySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"taxonomyVocabulary",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"taxonomyVocabularyId",
+												taxonomyVocabulary.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/taxonomyVocabulary"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxonomyVocabularyNotFound() throws Exception {
 		Long irrelevantTaxonomyVocabularyId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -2039,6 +2271,27 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"taxonomyVocabulary",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyVocabularyId",
+										irrelevantTaxonomyVocabularyId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

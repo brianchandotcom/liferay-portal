@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -620,6 +621,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplatesPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -632,6 +634,8 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject notificationTemplatesJSONObject =
 			JSONUtil.getValueAsJSONObject(
@@ -647,6 +651,29 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 		notificationTemplatesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/notificationTemplates");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			notificationTemplatesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			notificationTemplate1,
+			Arrays.asList(
+				NotificationTemplateSerDes.toDTOs(
+					notificationTemplatesJSONObject.getString("items"))));
+		assertContains(
+			notificationTemplate2,
+			Arrays.asList(
+				NotificationTemplateSerDes.toDTOs(
+					notificationTemplatesJSONObject.getString("items"))));
+
+		// Using the namespace notification_v1_0
+
+		notificationTemplatesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("notification_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/notification_v1_0",
 			"JSONObject/notificationTemplates");
 
 		Assert.assertEquals(
@@ -718,12 +745,15 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplateByExternalReferenceCode()
 		throws Exception {
 
 		NotificationTemplate notificationTemplate =
 			testGraphQLGetNotificationTemplateByExternalReferenceCode_addNotificationTemplate();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -746,14 +776,43 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/notificationTemplateByExternalReferenceCode"))));
+
+		// Using the namespace notification_v1_0
+
+		Assert.assertTrue(
+			equals(
+				notificationTemplate,
+				NotificationTemplateSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"notification_v1_0",
+								new GraphQLField(
+									"notificationTemplateByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													notificationTemplate.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/notification_v1_0",
+						"Object/notificationTemplateByExternalReferenceCode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplateByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -769,6 +828,27 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace notification_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"notification_v1_0",
+						new GraphQLField(
+							"notificationTemplateByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -876,9 +956,13 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteNotificationTemplate() throws Exception {
-		NotificationTemplate notificationTemplate =
+
+		// No namespace
+
+		NotificationTemplate notificationTemplate1 =
 			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
 
 		Assert.assertTrue(
@@ -890,11 +974,12 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 							{
 								put(
 									"notificationTemplateId",
-									notificationTemplate.getId());
+									notificationTemplate1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteNotificationTemplate"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"notificationTemplate",
@@ -902,13 +987,53 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 						{
 							put(
 								"notificationTemplateId",
-								notificationTemplate.getId());
+								notificationTemplate1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace notification_v1_0
+
+		NotificationTemplate notificationTemplate2 =
+			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"notification_v1_0",
+						new GraphQLField(
+							"deleteNotificationTemplate",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"notificationTemplateId",
+										notificationTemplate2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/notification_v1_0",
+				"Object/deleteNotificationTemplate"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"notification_v1_0",
+					new GraphQLField(
+						"notificationTemplate",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"notificationTemplateId",
+									notificationTemplate2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected NotificationTemplate
@@ -939,10 +1064,13 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplate() throws Exception {
 		NotificationTemplate notificationTemplate =
 			testGraphQLGetNotificationTemplate_addNotificationTemplate();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -961,11 +1089,37 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/notificationTemplate"))));
+
+		// Using the namespace notification_v1_0
+
+		Assert.assertTrue(
+			equals(
+				notificationTemplate,
+				NotificationTemplateSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"notification_v1_0",
+								new GraphQLField(
+									"notificationTemplate",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"notificationTemplateId",
+												notificationTemplate.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/notification_v1_0",
+						"Object/notificationTemplate"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetNotificationTemplateNotFound() throws Exception {
 		Long irrelevantNotificationTemplateId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -981,6 +1135,27 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace notification_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"notification_v1_0",
+						new GraphQLField(
+							"notificationTemplate",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"notificationTemplateId",
+										irrelevantNotificationTemplateId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

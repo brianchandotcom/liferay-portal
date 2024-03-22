@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -749,12 +750,15 @@ public abstract class BaseDocumentResourceTestCase {
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryDocumentByExternalReferenceCode()
 		throws Exception {
 
 		Document document =
 			testGraphQLGetAssetLibraryDocumentByExternalReferenceCode_addDocument();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -783,6 +787,38 @@ public abstract class BaseDocumentResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/assetLibraryDocumentByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				document,
+				DocumentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"assetLibraryDocumentByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"assetLibraryId",
+												"\"" +
+													testGraphQLGetAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId() +
+														"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													document.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/assetLibraryDocumentByExternalReferenceCode"))));
 	}
 
 	protected Long
@@ -793,12 +829,15 @@ public abstract class BaseDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAssetLibraryDocumentByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -819,6 +858,32 @@ public abstract class BaseDocumentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"assetLibraryDocumentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											testGraphQLGetAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId() +
+												"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -1616,9 +1681,13 @@ public abstract class BaseDocumentResourceTestCase {
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDocument() throws Exception {
-		Document document = testGraphQLDeleteDocument_addDocument();
+
+		// No namespace
+
+		Document document1 = testGraphQLDeleteDocument_addDocument();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -1627,23 +1696,59 @@ public abstract class BaseDocumentResourceTestCase {
 						"deleteDocument",
 						new HashMap<String, Object>() {
 							{
-								put("documentId", document.getId());
+								put("documentId", document1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDocument"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"document",
 					new HashMap<String, Object>() {
 						{
-							put("documentId", document.getId());
+							put("documentId", document1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Document document2 = testGraphQLDeleteDocument_addDocument();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteDocument",
+							new HashMap<String, Object>() {
+								{
+									put("documentId", document2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteDocument"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"document",
+						new HashMap<String, Object>() {
+							{
+								put("documentId", document2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected Document testGraphQLDeleteDocument_addDocument()
@@ -1668,9 +1773,12 @@ public abstract class BaseDocumentResourceTestCase {
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDocument() throws Exception {
 		Document document = testGraphQLGetDocument_addDocument();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1687,11 +1795,35 @@ public abstract class BaseDocumentResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/document"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				document,
+				DocumentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"document",
+									new HashMap<String, Object>() {
+										{
+											put("documentId", document.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/document"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDocumentNotFound() throws Exception {
 		Long irrelevantDocumentId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1705,6 +1837,25 @@ public abstract class BaseDocumentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"document",
+							new HashMap<String, Object>() {
+								{
+									put("documentId", irrelevantDocumentId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -2245,6 +2396,7 @@ public abstract class BaseDocumentResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDocumentsPage() throws Exception {
 		Long siteId = testGetSiteDocumentsPage_getSiteId();
@@ -2262,6 +2414,8 @@ public abstract class BaseDocumentResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject documentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/documents");
@@ -2273,6 +2427,26 @@ public abstract class BaseDocumentResourceTestCase {
 
 		documentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/documents");
+
+		Assert.assertEquals(
+			totalCount + 2, documentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			document1,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(documentsJSONObject.getString("items"))));
+		assertContains(
+			document2,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(documentsJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		documentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 			"JSONObject/documents");
 
 		Assert.assertEquals(
@@ -2392,12 +2566,15 @@ public abstract class BaseDocumentResourceTestCase {
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDocumentByExternalReferenceCode()
 		throws Exception {
 
 		Document document =
 			testGraphQLGetSiteDocumentByExternalReferenceCode_addDocument();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -2426,6 +2603,38 @@ public abstract class BaseDocumentResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/documentByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				document,
+				DocumentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"documentByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteDocumentByExternalReferenceCode_getSiteId(
+														document) + "\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													document.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/documentByExternalReferenceCode"))));
 	}
 
 	protected Long testGraphQLGetSiteDocumentByExternalReferenceCode_getSiteId(
@@ -2435,12 +2644,15 @@ public abstract class BaseDocumentResourceTestCase {
 		return document.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDocumentByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -2459,6 +2671,31 @@ public abstract class BaseDocumentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"documentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

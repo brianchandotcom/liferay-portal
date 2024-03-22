@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -524,6 +525,7 @@ public abstract class BasePaymentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -537,6 +539,8 @@ public abstract class BasePaymentResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject paymentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/payments");
@@ -548,6 +552,27 @@ public abstract class BasePaymentResourceTestCase {
 
 		paymentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/payments");
+
+		Assert.assertEquals(
+			totalCount + 2, paymentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			payment1,
+			Arrays.asList(
+				PaymentSerDes.toDTOs(paymentsJSONObject.getString("items"))));
+		assertContains(
+			payment2,
+			Arrays.asList(
+				PaymentSerDes.toDTOs(paymentsJSONObject.getString("items"))));
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		paymentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPayment_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessCommerceAdminPayment_v1_0",
 			"JSONObject/payments");
 
 		Assert.assertEquals(
@@ -631,12 +656,15 @@ public abstract class BasePaymentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentByExternalReferenceCode()
 		throws Exception {
 
 		Payment payment =
 			testGraphQLGetPaymentByExternalReferenceCode_addPayment();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -659,14 +687,44 @@ public abstract class BasePaymentResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/paymentByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Assert.assertTrue(
+			equals(
+				payment,
+				PaymentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPayment_v1_0",
+								new GraphQLField(
+									"paymentByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													payment.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPayment_v1_0",
+						"Object/paymentByExternalReferenceCode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -682,6 +740,27 @@ public abstract class BasePaymentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPayment_v1_0",
+						new GraphQLField(
+							"paymentByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -764,9 +843,13 @@ public abstract class BasePaymentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeletePayment() throws Exception {
-		Payment payment = testGraphQLDeletePayment_addPayment();
+
+		// No namespace
+
+		Payment payment1 = testGraphQLDeletePayment_addPayment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -775,23 +858,60 @@ public abstract class BasePaymentResourceTestCase {
 						"deletePayment",
 						new HashMap<String, Object>() {
 							{
-								put("id", payment.getId());
+								put("id", payment1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deletePayment"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"payment",
 					new HashMap<String, Object>() {
 						{
-							put("id", payment.getId());
+							put("id", payment1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Payment payment2 = testGraphQLDeletePayment_addPayment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPayment_v1_0",
+						new GraphQLField(
+							"deletePayment",
+							new HashMap<String, Object>() {
+								{
+									put("id", payment2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPayment_v1_0",
+				"Object/deletePayment"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPayment_v1_0",
+					new GraphQLField(
+						"payment",
+						new HashMap<String, Object>() {
+							{
+								put("id", payment2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected Payment testGraphQLDeletePayment_addPayment() throws Exception {
@@ -813,9 +933,12 @@ public abstract class BasePaymentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPayment() throws Exception {
 		Payment payment = testGraphQLGetPayment_addPayment();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -832,11 +955,36 @@ public abstract class BasePaymentResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/payment"))));
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Assert.assertTrue(
+			equals(
+				payment,
+				PaymentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPayment_v1_0",
+								new GraphQLField(
+									"payment",
+									new HashMap<String, Object>() {
+										{
+											put("id", payment.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPayment_v1_0",
+						"Object/payment"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPaymentNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -850,6 +998,25 @@ public abstract class BasePaymentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPayment_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPayment_v1_0",
+						new GraphQLField(
+							"payment",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

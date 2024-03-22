@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -212,9 +213,13 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteAvailabilityEstimate() throws Exception {
-		AvailabilityEstimate availabilityEstimate =
+
+		// No namespace
+
+		AvailabilityEstimate availabilityEstimate1 =
 			testGraphQLDeleteAvailabilityEstimate_addAvailabilityEstimate();
 
 		Assert.assertTrue(
@@ -224,23 +229,61 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 						"deleteAvailabilityEstimate",
 						new HashMap<String, Object>() {
 							{
-								put("id", availabilityEstimate.getId());
+								put("id", availabilityEstimate1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteAvailabilityEstimate"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"availabilityEstimate",
 					new HashMap<String, Object>() {
 						{
-							put("id", availabilityEstimate.getId());
+							put("id", availabilityEstimate1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		AvailabilityEstimate availabilityEstimate2 =
+			testGraphQLDeleteAvailabilityEstimate_addAvailabilityEstimate();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"deleteAvailabilityEstimate",
+							new HashMap<String, Object>() {
+								{
+									put("id", availabilityEstimate2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+				"Object/deleteAvailabilityEstimate"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminSiteSetting_v1_0",
+					new GraphQLField(
+						"availabilityEstimate",
+						new HashMap<String, Object>() {
+							{
+								put("id", availabilityEstimate2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected AvailabilityEstimate
@@ -271,10 +314,13 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAvailabilityEstimate() throws Exception {
 		AvailabilityEstimate availabilityEstimate =
 			testGraphQLGetAvailabilityEstimate_addAvailabilityEstimate();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -291,11 +337,38 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/availabilityEstimate"))));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertTrue(
+			equals(
+				availabilityEstimate,
+				AvailabilityEstimateSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminSiteSetting_v1_0",
+								new GraphQLField(
+									"availabilityEstimate",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												availabilityEstimate.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminSiteSetting_v1_0",
+						"Object/availabilityEstimate"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetAvailabilityEstimateNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -309,6 +382,25 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminSiteSetting_v1_0",
+						new GraphQLField(
+							"availabilityEstimate",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

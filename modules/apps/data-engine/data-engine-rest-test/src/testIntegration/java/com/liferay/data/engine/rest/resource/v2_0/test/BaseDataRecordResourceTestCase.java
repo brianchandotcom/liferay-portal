@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -934,9 +935,13 @@ public abstract class BaseDataRecordResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDataRecord() throws Exception {
-		DataRecord dataRecord = testGraphQLDeleteDataRecord_addDataRecord();
+
+		// No namespace
+
+		DataRecord dataRecord1 = testGraphQLDeleteDataRecord_addDataRecord();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -945,23 +950,59 @@ public abstract class BaseDataRecordResourceTestCase {
 						"deleteDataRecord",
 						new HashMap<String, Object>() {
 							{
-								put("dataRecordId", dataRecord.getId());
+								put("dataRecordId", dataRecord1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataRecord"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"dataRecord",
 					new HashMap<String, Object>() {
 						{
-							put("dataRecordId", dataRecord.getId());
+							put("dataRecordId", dataRecord1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace dataEngine_v2_0
+
+		DataRecord dataRecord2 = testGraphQLDeleteDataRecord_addDataRecord();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"deleteDataRecord",
+							new HashMap<String, Object>() {
+								{
+									put("dataRecordId", dataRecord2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/dataEngine_v2_0",
+				"Object/deleteDataRecord"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataEngine_v2_0",
+					new GraphQLField(
+						"dataRecord",
+						new HashMap<String, Object>() {
+							{
+								put("dataRecordId", dataRecord2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected DataRecord testGraphQLDeleteDataRecord_addDataRecord()
@@ -986,9 +1027,12 @@ public abstract class BaseDataRecordResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataRecord() throws Exception {
 		DataRecord dataRecord = testGraphQLGetDataRecord_addDataRecord();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1005,11 +1049,37 @@ public abstract class BaseDataRecordResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/dataRecord"))));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertTrue(
+			equals(
+				dataRecord,
+				DataRecordSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"dataEngine_v2_0",
+								new GraphQLField(
+									"dataRecord",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"dataRecordId",
+												dataRecord.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/dataEngine_v2_0",
+						"Object/dataRecord"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataRecordNotFound() throws Exception {
 		Long irrelevantDataRecordId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1023,6 +1093,25 @@ public abstract class BaseDataRecordResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"dataRecord",
+							new HashMap<String, Object>() {
+								{
+									put("dataRecordId", irrelevantDataRecordId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

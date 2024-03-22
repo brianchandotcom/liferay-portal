@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -329,6 +330,7 @@ public abstract class BaseSegmentResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteSegmentsPage() throws Exception {
 		Long siteId = testGetSiteSegmentsPage_getSiteId();
@@ -346,6 +348,8 @@ public abstract class BaseSegmentResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject segmentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/segments");
@@ -357,6 +361,26 @@ public abstract class BaseSegmentResourceTestCase {
 
 		segmentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/segments");
+
+		Assert.assertEquals(
+			totalCount + 2, segmentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			segment1,
+			Arrays.asList(
+				SegmentSerDes.toDTOs(segmentsJSONObject.getString("items"))));
+		assertContains(
+			segment2,
+			Arrays.asList(
+				SegmentSerDes.toDTOs(segmentsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		segmentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminUser_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
 			"JSONObject/segments");
 
 		Assert.assertEquals(

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -652,9 +653,13 @@ public abstract class BaseRelatedProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteRelatedProduct() throws Exception {
-		RelatedProduct relatedProduct =
+
+		// No namespace
+
+		RelatedProduct relatedProduct1 =
 			testGraphQLDeleteRelatedProduct_addRelatedProduct();
 
 		Assert.assertTrue(
@@ -664,23 +669,61 @@ public abstract class BaseRelatedProductResourceTestCase {
 						"deleteRelatedProduct",
 						new HashMap<String, Object>() {
 							{
-								put("id", relatedProduct.getId());
+								put("id", relatedProduct1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteRelatedProduct"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"relatedProduct",
 					new HashMap<String, Object>() {
 						{
-							put("id", relatedProduct.getId());
+							put("id", relatedProduct1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		RelatedProduct relatedProduct2 =
+			testGraphQLDeleteRelatedProduct_addRelatedProduct();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteRelatedProduct",
+							new HashMap<String, Object>() {
+								{
+									put("id", relatedProduct2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteRelatedProduct"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0",
+					new GraphQLField(
+						"relatedProduct",
+						new HashMap<String, Object>() {
+							{
+								put("id", relatedProduct2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected RelatedProduct testGraphQLDeleteRelatedProduct_addRelatedProduct()
@@ -709,10 +752,13 @@ public abstract class BaseRelatedProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetRelatedProduct() throws Exception {
 		RelatedProduct relatedProduct =
 			testGraphQLGetRelatedProduct_addRelatedProduct();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -729,11 +775,36 @@ public abstract class BaseRelatedProductResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/relatedProduct"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				relatedProduct,
+				RelatedProductSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"relatedProduct",
+									new HashMap<String, Object>() {
+										{
+											put("id", relatedProduct.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/relatedProduct"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetRelatedProductNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -747,6 +818,25 @@ public abstract class BaseRelatedProductResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"relatedProduct",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

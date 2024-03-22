@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -366,10 +367,13 @@ public abstract class BaseSubscriptionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMyUserAccountSubscription() throws Exception {
 		Subscription subscription =
 			testGraphQLGetMyUserAccountSubscription_addSubscription();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -389,13 +393,39 @@ public abstract class BaseSubscriptionResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/myUserAccountSubscription"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				subscription,
+				SubscriptionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"myUserAccountSubscription",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"subscriptionId",
+												subscription.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/myUserAccountSubscription"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetMyUserAccountSubscriptionNotFound()
 		throws Exception {
 
 		Long irrelevantSubscriptionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -409,6 +439,27 @@ public abstract class BaseSubscriptionResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"myUserAccountSubscription",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"subscriptionId",
+										irrelevantSubscriptionId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

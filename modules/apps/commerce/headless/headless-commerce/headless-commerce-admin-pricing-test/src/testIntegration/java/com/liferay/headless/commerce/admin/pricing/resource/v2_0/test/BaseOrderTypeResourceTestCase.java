@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -201,10 +202,13 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountOrderTypeOrderType() throws Exception {
 		OrderType orderType =
 			testGraphQLGetDiscountOrderTypeOrderType_addOrderType();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -224,6 +228,30 @@ public abstract class BaseOrderTypeResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/discountOrderTypeOrderType"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v2_0",
+								new GraphQLField(
+									"discountOrderTypeOrderType",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"discountOrderTypeId",
+												testGraphQLGetDiscountOrderTypeOrderType_getDiscountOrderTypeId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v2_0",
+						"Object/discountOrderTypeOrderType"))));
 	}
 
 	protected Long
@@ -234,11 +262,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountOrderTypeOrderTypeNotFound()
 		throws Exception {
 
 		Long irrelevantDiscountOrderTypeId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -254,6 +285,27 @@ public abstract class BaseOrderTypeResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"discountOrderTypeOrderType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"discountOrderTypeId",
+										irrelevantDiscountOrderTypeId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -291,10 +343,13 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceListOrderTypeOrderType() throws Exception {
 		OrderType orderType =
 			testGraphQLGetPriceListOrderTypeOrderType_addOrderType();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -314,6 +369,30 @@ public abstract class BaseOrderTypeResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/priceListOrderTypeOrderType"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v2_0",
+								new GraphQLField(
+									"priceListOrderTypeOrderType",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"priceListOrderTypeId",
+												testGraphQLGetPriceListOrderTypeOrderType_getPriceListOrderTypeId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v2_0",
+						"Object/priceListOrderTypeOrderType"))));
 	}
 
 	protected Long
@@ -324,11 +403,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceListOrderTypeOrderTypeNotFound()
 		throws Exception {
 
 		Long irrelevantPriceListOrderTypeId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -344,6 +426,27 @@ public abstract class BaseOrderTypeResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"priceListOrderTypeOrderType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"priceListOrderTypeId",
+										irrelevantPriceListOrderTypeId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

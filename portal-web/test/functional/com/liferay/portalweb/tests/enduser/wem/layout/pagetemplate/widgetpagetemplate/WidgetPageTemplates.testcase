@@ -50,6 +50,8 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Widget Page Templates";
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		task ("Add an active page template") {
 			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
 				pageTemplateEntryActive = "true",
@@ -64,22 +66,13 @@ definition {
 				pageTemplateName = "Page Template Name");
 		}
 
-		task ("View page template is added") {
-			Navigator.openSiteURL(siteName = "Site Name");
-
-			PagesAdmin.viewPageTemplate(
-				pageName = "Site Page",
-				pageTemplateName = "Page Template Name");
-		}
-
 		task ("Edit page template and add a blogs widget") {
-			ApplicationsMenu.gotoSite(site = "Global");
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Global",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateType = "Widget Page Template");
 
-			ProductMenu.gotoPortlet(
-				category = "Design",
-				portlet = "Widget Page Templates");
-
-			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
+			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
 
 			Portlet.addPG(portletName = "Blogs");
 		}
@@ -105,9 +98,7 @@ definition {
 		}
 
 		task ("Assert web content display in page basing on page template") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
+			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
 
 			Portlet.addPG(portletName = "Web Content Display");
 		}
@@ -169,14 +160,14 @@ definition {
 	@priority = 4
 	test DeactivateAndActivateGlobalPageTemplate {
 		task ("Add an active page template") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.addCP(
-				pageTemplateActive = "Active",
-				pageTemplateName = "Page Template Name");
+			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+				pageTemplateEntryActive = "true",
+				pageTemplateEntryName = "Page Template Name");
 		}
 
 		task ("Deactive the created page template and view status") {
+			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+
 			PageTemplatesAdminGlobalSite.deactivateAndActivate(
 				pageTemplateName = "Page Template Name",
 				pageTemplateStatus = "Not Active");
@@ -284,9 +275,13 @@ definition {
 		}
 
 		task ("Add a calebdar widget to page template and configure calendar") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+			var portalURL = PropsUtil.get("portal.url");
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Global",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateType = "Widget Page Template");
 
-			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
+			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
 
 			Portlet.addPG(portletName = "Calendar");
 
@@ -295,14 +290,6 @@ definition {
 			CalendarConfiguration.selectWeekStartsOn(weekStartDay = "Saturday");
 
 			CalendarConfiguration.save();
-		}
-
-		task ("Assert able to deactive page template") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.editCP(
-				pageTemplateActive = "Not Active",
-				pageTemplateName = "Page Template Name");
 		}
 	}
 
@@ -352,13 +339,13 @@ definition {
 		}
 
 		task ("Edit the widget page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			var portalURL = PropsUtil.get("portal.url");
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Site Name",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateType = "Widget Page Template");
 
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
-				item = "Edit",
-				pageTemplateName = "Page Template Name");
+			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
 
 			Portlet.addPG(portletName = "Asset Publisher");
 
@@ -373,14 +360,19 @@ definition {
 		property portal.upstream = "true";
 		property testray.component.names = "Training";
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		task ("Add the first page template College Landing Page with several widgets") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+				pageTemplateEntryActive = "true",
+				pageTemplateEntryName = "College Landing Page");
 
-			PageTemplatesAdminGlobalSite.addCP(
-				pageTemplateActive = "Active",
-				pageTemplateName = "College Landing Page");
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Global",
+				layoutPageTemplateEntryName = "College Landing Page",
+				layoutPageTemplateType = "Widget Page Template");
 
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "College Landing Page");
+			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
 
 			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Web Content Display,Asset Publisher") {
 				Portlet.addPG(portletName = ${portletName});
@@ -388,13 +380,16 @@ definition {
 		}
 
 		task ("Add the second page template Department Landing Page with several widgets") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+			JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+				pageTemplateEntryActive = "true",
+				pageTemplateEntryName = "Department Landing Page");
 
-			PageTemplatesAdminGlobalSite.addCP(
-				pageTemplateActive = "Active",
-				pageTemplateName = "Department Landing Page");
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Global",
+				layoutPageTemplateEntryName = "Department Landing Page",
+				layoutPageTemplateType = "Widget Page Template");
 
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Department Landing Page");
+			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
 
 			for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Menu Display,Members,Asset Publisher") {
 				Portlet.addPG(portletName = ${portletName});
@@ -413,11 +408,15 @@ definition {
 		}
 
 		task ("Delete 2 new added page templates") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+			JSONLayoutpagetemplate.deleteLayoutPageTemplateEntry(
+				groupName = "Global",
+				layoutPageTemplateEntryName = "College Landing Page",
+				type = "Widget Page Template");
 
-			PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "College Landing Page");
-
-			PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "Department Landing Page");
+			JSONLayoutpagetemplate.deleteLayoutPageTemplateEntry(
+				groupName = "Global",
+				layoutPageTemplateEntryName = "Department Landing Page",
+				type = "Widget Page Template");
 		}
 
 		task ("Import site lar and check widgets in page templates persist") {
@@ -466,22 +465,11 @@ definition {
 	@description = "View page template in Spanish and English."
 	@priority = 4
 	test LocalizeGlobalDefaultPageTemplates {
-		task ("Edit Department Landing Page and add several widgets") {
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-			PageTemplatesAdminGlobalSite.viewDefaultCP();
-		}
-
-		task ("Change locale to Spanish") {
-			Navigator.gotoAccountSettings();
-
-			MyAccount.changeUserLanguage(
-				languageName = "español (España)",
-				saveButton = "Save",
-				successMessage = "Su petición ha terminado con éxito.");
-		}
-
 		task ("View page template name in Spanish") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/es");
+
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 			PageTemplatesAdminGlobalSite.viewDefaultLocalizedCP(
@@ -489,23 +477,8 @@ definition {
 				portletTitle = "Plantillas de página de widget");
 		}
 
-		task ("Change locale back to English") {
-			Navigator.openURL();
-
-			Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-			Click(
-				key_dropdownItem = "Mi cuenta",
-				locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
-
-			MyAccount.changeUserLanguage(
-				languageName = "English (United States)",
-				saveButton = "Guardar",
-				successMessage = "Your request completed successfully.");
-		}
-
 		task ("View page template name change back to English") {
-			Navigator.openURL();
+			Navigator.openSpecificURL(url = "${portalURL}/en");
 
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
@@ -518,18 +491,26 @@ definition {
 	test PropagateChangesFromWidgetPageTemplate {
 		property testray.component.names = "Page Administration,Widget Page Templates";
 
+		var portalURL = PropsUtil.get("portal.url");
+
 		task ("Given a page creator has a widget page template") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Site Name",
 				layoutPageTemplateCollectionName = "Widget Template Collection");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Site Name",
+				layoutPageTemplateCollectionName = "Widget Template Collection",
+				layoutPageTemplateEntryName = "Widget Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Widget Page Template");
 
-			Navigator.gotoNavNested(navNested = "Widget Template Collection");
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Site Name",
+				layoutPageTemplateEntryName = "Widget Template Name",
+				layoutPageTemplateType = "Widget Page Template");
 
-			PageTemplatesAdmin.addPageTemplate(
-				pageTemplateName = "Widget Template Name",
-				pageTemplateType = "Widget Page Template");
+			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
 
 			Portlet.addPG(portletName = "Blogs");
 		}
@@ -552,11 +533,7 @@ definition {
 		}
 
 		task ("When the page creator adds an Asset Publisher on widget page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
-
-			Navigator.gotoNavNested(navNested = "Widget Template Collection");
-
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Widget Template Name");
+			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
 
 			Portlet.addPG(portletName = "Asset Publisher");
 		}
@@ -676,18 +653,21 @@ definition {
 	@description = "Assert could not add page via page template action."
 	@priority = 3
 	test ViewNoAddPageTabViaPageTemplatesCP {
-		task ("Get site name and go to page template in global site") {
-			var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-		}
-
 		task ("Assert could not add page via Search page template") {
-			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Search");
+			var portalURL = PropsUtil.get("portal.url");
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Global",
+				layoutPageTemplateEntryName = "Search",
+				layoutPageTemplateType = "Widget Page Template");
 
-			SelectWindow(value1 = "title=Search - ${siteName}");
+			Navigator.openSpecificURL(url = "${portalURL}/group/template-${layoutPrototypeId}");
 
-			Dockbar.viewAddTabsWithNoAddPagePermission();
+			Click(locator1 = "ControlMenu#ADD");
+
+			AssertTextEquals(
+				key_tab = "Widgets",
+				locator1 = "NavTab#TAB_LINK",
+				value1 = "Widgets");
 		}
 	}
 

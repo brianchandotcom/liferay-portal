@@ -76,9 +76,9 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8782 | Test Summary: Maximum 5 search query strings"
 	@priority = 4
 	test CantSearchMoreThanFiveSearchQueryStrings {
-		var varList = "Test Query 1,Test Query 2,Test Query 3,Test Query 4,Test Query 5";
+		var queryStringList = "Test Query 1,Test Query 2,Test Query 3,Test Query 4,Test Query 5";
 
-		ACDefinitions.addMultipleSearchQuerySuccessfully(query_list = ${varList});
+		ACDefinitions.addMultipleSearchQuerySuccessfully(queryStringList = ${queryStringList});
 
 		ACDefinitions.goToDefinitionType(definitionType = "Search");
 

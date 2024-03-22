@@ -1640,6 +1640,11 @@
 					"title": "Custom Token Values",
 					"type": "array"
 				},
+				"displayFieldName": {
+					"default": false,
+					"title": "Display Field Name in Structures UI and allow users to edit it.",
+					"type": "boolean"
+				},
 				"enableContentTransformerListener": {
 					"default": false,
 					"title": "Enable Content Transformer Listener",

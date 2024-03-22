@@ -50,11 +50,10 @@ export default function ModalImport({
 	portletNamespace,
 	showModal,
 }: ModalImportProps) {
-	const [
-		alreadyImportedObjectDefinitions,
-		setAlreadyImportedObjectDefinitions,
-	] = useState<ObjectDefinition[]>([]);
 	const [error, setError] = useState<API.ErrorDetails>();
+	const [existingObjectDefinitions, setExistingObjectDefinitions] = useState<
+		ObjectDefinition[]
+	>([]);
 	const [externalReferenceCode, setExternalReferenceCode] = useState<string>(
 		''
 	);
@@ -233,10 +232,8 @@ export default function ModalImport({
 		>
 			{warningModalVisible ? (
 				<ModalImportWarning
-					alreadyImportedObjectDefinitions={
-						alreadyImportedObjectDefinitions
-					}
 					errorMessage={error?.message ?? ''}
+					existingObjectDefinitions={existingObjectDefinitions}
 					handleImport={() =>
 						handleImport(importFormData as FormData)
 					}

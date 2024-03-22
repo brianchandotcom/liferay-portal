@@ -30,6 +30,8 @@ import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -37,14 +39,17 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.script.management.configuration.ScriptManagementConfiguration;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.io.Closeable;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -100,6 +105,17 @@ public class ObjectValidationRuleLocalServiceTest {
 
 	@Test
 	public void testAddObjectValidationRule() throws Exception {
+		try (Closeable closeable =
+				_disableScriptContentBeExecutedOrIncluded()) {
+
+			AssertUtils.assertFailure(
+				ObjectValidationRuleEngineException.NotAllowedEngine.class,
+				"Engine \"groovy\" is not allowed",
+				() -> _addObjectValidationRule(
+					ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+					"invalidFields = false;"));
+		}
+
 		AssertUtils.assertFailure(
 			ObjectValidationRuleEngineException.MustNotBeNull.class,
 			"Engine is null",
@@ -747,6 +763,29 @@ public class ObjectValidationRuleLocalServiceTest {
 		}
 	}
 
+	private Closeable _disableScriptContentBeExecutedOrIncluded()
+		throws ConfigurationException {
+
+		_configurationProvider.saveSystemConfiguration(
+			ScriptManagementConfiguration.class,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"allowScriptContentBeExecutedOrIncluded", false
+			).build());
+
+		return () -> {
+			try {
+				_configurationProvider.saveSystemConfiguration(
+					ScriptManagementConfiguration.class,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"allowScriptContentBeExecutedOrIncluded", true
+					).build());
+			}
+			catch (ConfigurationException configurationException) {
+				throw new RuntimeException(configurationException);
+			}
+		};
+	}
+
 	private void _testDeleteObjectValidationRule(long objectValidationRuleId)
 		throws Exception {
 
@@ -764,6 +803,9 @@ public class ObjectValidationRuleLocalServiceTest {
 
 	private static final String _VALID_DDM_SCRIPT =
 		"isEmailAddress(textObjectField)";
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

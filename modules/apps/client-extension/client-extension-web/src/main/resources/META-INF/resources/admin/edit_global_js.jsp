@@ -27,7 +27,7 @@ GlobalJSCET globalJSCET = editClientExtensionEntryDisplayContext.getCET();
 			module="{ScriptElementAttributesFormField} from client-extension-web"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
-					"attributes", globalJSCET.getScriptElementAttributesJSON()
+					"scriptElementAttributesJSON", globalJSCET.getScriptElementAttributesJSON()
 				).build()
 			%>'
 		/>

@@ -70,7 +70,7 @@ public class EhcachePortalCacheManagerConfigurator {
 
 		_clearListenerConfigrations(configuration);
 
-		_manageConfiguration(configuration, portalCacheManagerConfiguration);
+		_manageConfiguration(portalCacheManagerConfiguration);
 
 		return new ObjectValuePair<>(
 			configuration, portalCacheManagerConfiguration);
@@ -171,7 +171,6 @@ public class EhcachePortalCacheManagerConfigurator {
 	}
 
 	private void _manageConfiguration(
-		Configuration configuration,
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
 
 		if (_replicatorProperties == null) {

@@ -344,14 +344,11 @@ public class BuildHistoryProcessor {
 				return Category.PORTAL_MASTER_UPSTREAM.toString();
 			}
 
-			if (jobName.equals("test-portal-release")) {
-				return Category.PORTAL_RELEASE.toString();
-			}
-
 			if (jobName.equals("test-portal-fixpack-release") ||
-				jobName.equals("test-portal-hotfix-release")) {
+				jobName.equals("test-portal-hotfix-release") ||
+				jobName.equals("test-portal-release")) {
 
-				return Category.PORTAL_OTHER_RELEASE.toString();
+				return Category.PORTAL_RELEASE.toString();
 			}
 
 			if (jobName.contains("test-portal-")) {

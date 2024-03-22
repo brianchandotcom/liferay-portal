@@ -11,6 +11,21 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		HeadlessSite.addSite(siteName = "Site Name");
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PageTemplatesAdminGlobalSite.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
 	}
 
 	@description = "Add a page template in global site."
@@ -42,8 +57,6 @@ definition {
 		}
 
 		task ("Add a site and page basing on the created page template") {
-			HeadlessSite.addSite(siteName = "Site Name");
-
 			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
 
 			PagesAdmin.addPage(
@@ -114,8 +127,6 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given a site designer has a page template set") {
-			HeadlessSite.addSite(siteName = "Site Name");
-
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Site Name",
 				layoutPageTemplateCollectionName = "Page Template Set");
@@ -157,10 +168,6 @@ definition {
 	@description = "Add a active page template in global site, deactive and active it."
 	@priority = 4
 	test DeactivateAndActivateGlobalPageTemplate {
-		task ("Add a new site") {
-			HeadlessSite.addSite(siteName = "Site Name");
-		}
-
 		task ("Add an active page template") {
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
@@ -238,10 +245,6 @@ definition {
 	@priority = 5
 	test DeletePageTemplate {
 		property portal.acceptance = "true";
-
-		task ("Add a new site") {
-			HeadlessSite.addSite(siteName = "Site Name");
-		}
 
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -332,10 +335,6 @@ definition {
 	@priority = 5
 	test EditPageTemplate {
 		property portal.acceptance = "true";
-
-		task ("Add a new site") {
-			HeadlessSite.addSite(siteName = "Site Name");
-		}
 
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
@@ -514,6 +513,65 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-145264. The changes on widget page template should be propagate to widget page when Inherit Changes is enabled."
+	@priority = 4
+	test PropagateChangesFromWidgetPageTemplate {
+		property testray.component.names = "Page Administration,Widget Page Templates";
+
+		task ("Given a page creator has a widget page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Site Name",
+				layoutPageTemplateCollectionName = "Widget Template Collection");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Widget Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Widget Template Name",
+				pageTemplateType = "Widget Page Template");
+
+			Portlet.addPG(portletName = "Blogs");
+		}
+
+		task ("When the page creator adds a widget page based on template") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "site-name");
+
+			PagesAdmin.addPage(
+				collectionName = "Widget Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Widget Template Name");
+		}
+
+		task ("Then page creator can see Inherit Changes is enabled by default") {
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Inherit Changes",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Alert.viewWarningSpecific(warningMessage = "Some page settings are unavailable because Inherit Changes is enabled. To change these settings, disable Inherit Changes under the General section.");
+		}
+
+		task ("When the page creator adds an Asset Publisher on widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Widget Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Widget Template Name");
+
+			Portlet.addPG(portletName = "Asset Publisher");
+		}
+
+		task ("Then the page creator should see the Asset Publisher is propagated to widget page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			for (var widgetName : list "Blogs,Asset Publisher") {
+				Portlet.viewSpecificPG(portletName = ${widgetName});
+			}
+		}
+	}
+
 	@description = "Rename page template in global site."
 	@priority = 4
 	test RenameGlobalPageTemplate {
@@ -543,6 +601,93 @@ definition {
 			PageTemplatesAdminGlobalSite.viewPG(
 				pageTemplateName = "Page Template Name Edit",
 				siteName = ${siteName});
+		}
+	}
+
+	@description = "This is a test for LPS-143456. The site designer could reset failure count and reenable propagation when merge fail count reaches the configured threshold."
+	@priority = 4
+	test ResetFailureCountAndReenablePropagation {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a site designer has a widget page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Site Name",
+				layoutPageTemplateCollectionName = "Page Template Set",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Approved",
+				layoutPageTemplateType = "Widget Page Template");
+		}
+
+		task ("When the site desiger increases the merge fail count to reach the configured threshold") {
+			var layoutPrototypeId = JSONLayoutpagetemplate.getLayoutPrototypeId(
+				groupName = "Site Name",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateType = "Widget Page Template");
+
+			var script = '''import com.liferay.portal.kernel.model.LayoutPrototype;
+    import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
+    import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+    import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
+
+    import org.osgi.framework.BundleContext;
+    import org.osgi.util.tracker.ServiceTracker;
+
+    ServiceTracker<LayoutSetPrototypeHelper, LayoutSetPrototypeHelper> serviceTracker = new ServiceTracker<>(SystemBundleUtil.getBundleContext(), LayoutSetPrototypeHelper.class, null);
+
+    serviceTracker.open();
+
+    Object layoutSetPrototypeHelper = serviceTracker.getService();
+
+    layoutSetPrototypeHelper.setMergeFailCount(LayoutPrototypeLocalServiceUtil.getLayoutPrototype(${layoutPrototypeId}), 4);
+
+    serviceTracker.close();''';
+
+			ServerAdministration.openServerAdmin();
+
+			ServerAdministration.executeScript(
+				language = "Groovy",
+				script = ${script});
+		}
+
+		task ("Then the site designer could reset the failure count and reenable propagation") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Set");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Configure",
+				pageTemplateName = "Page Template Name");
+
+			AssertTextPresent(value1 = "The propagation of changes from the Page Template has been disabled temporarily after 4 errors. Click Reset to reset the failure count and re-enable propagation.");
+
+			Button.click(button = "Reset");
+
+			Alert.viewSuccessMessage();
+
+			AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException: processAction method not implemented");
+		}
+	}
+
+	@description = "Assert could not add page via page template action."
+	@priority = 3
+	test ViewNoAddPageTabViaPageTemplatesCP {
+		task ("Get site name and go to page template in global site") {
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+		}
+
+		task ("Assert could not add page via Search page template") {
+			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Search");
+
+			SelectWindow(value1 = "title=Search - ${siteName}");
+
+			Dockbar.viewAddTabsWithNoAddPagePermission();
 		}
 	}
 

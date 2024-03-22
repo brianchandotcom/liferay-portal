@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -61,8 +62,6 @@ import com.liferay.portal.search.sort.Sorts;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.time.StopWatch;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -82,9 +81,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override
 	public Hits search(SearchContext searchContext, Query query) {
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
+		long startTime = System.currentTimeMillis();
 
 		try {
 			int end = searchContext.getEnd();
@@ -144,7 +141,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 					searchResponseBuilder, start);
 			}
 
-			hits.setStart(stopWatch.getStartTime());
+			hits.setStart(startTime);
 
 			return hits;
 		}
@@ -166,11 +163,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 		finally {
 			if (_log.isInfoEnabled()) {
-				stopWatch.stop();
-
 				_log.info(
 					StringBundler.concat(
-						"Searching took ", stopWatch.getTime(), " ms"));
+						"Searching took ",
+						System.currentTimeMillis() - startTime, " ms"));
 			}
 		}
 	}

@@ -95,6 +95,7 @@ public class EditContactInformationDisplayContext {
 					false);
 			}
 
+			portletDisplay.setURLBackTitle(portletTitle);
 			_renderResponse.setTitle(portletTitle);
 		}
 	}

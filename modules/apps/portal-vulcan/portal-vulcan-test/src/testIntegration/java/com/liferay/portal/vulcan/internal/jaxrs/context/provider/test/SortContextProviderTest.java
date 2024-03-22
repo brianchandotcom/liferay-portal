@@ -7,8 +7,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.sort.InvalidSortException;
 import com.liferay.portal.test.rule.Inject;
@@ -21,6 +21,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import java.util.Arrays;
 import java.util.Locale;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.HttpHeaders;
@@ -126,12 +127,8 @@ public class SortContextProviderTest {
 
 	@Test
 	public void testCreateContextWithDifferentLocale() throws Exception {
-		_testCreateContext(LocaleUtil.TAIWAN, Http.Method.GET);
+		Locale locale = LocaleUtil.TAIWAN;
 
-		_testCreateContext(LocaleUtil.TAIWAN, Http.Method.POST);
-	}
-
-	private void _testCreateContext(Locale locale, Http.Method method) {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest() {
 				{
@@ -142,31 +139,38 @@ public class SortContextProviderTest {
 				}
 			};
 
-		mockHttpServletRequest.setMethod(method.toString());
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
-		Sort[] sorts = null;
+		// GET Method
 
-		try {
-			sorts = _contextProvider.createContext(
+		mockHttpServletRequest.setMethod(HttpMethod.GET);
+
+		Sort[] sorts = _contextProvider.createContext(
+			new MockMessage(
+				mockHttpServletRequest,
+				clazz.getMethod(MockResource.METHOD_NAME, String.class),
+				_mockResource));
+
+		Assert.assertEquals(Arrays.toString(sorts), 1, sorts.length);
+
+		Sort sort = sorts[0];
+
+		Assert.assertEquals("internalTitle", sort.getFieldName());
+		Assert.assertTrue(sort.isReverse());
+
+		// HTTP Method different from GET
+
+		mockHttpServletRequest.setMethod(HttpMethod.POST);
+
+		AssertUtils.assertFailure(
+			NotAcceptableException.class,
+			"No locales match the accepted languages: " +
+				locale.toLanguageTag(),
+			() -> _contextProvider.createContext(
 				new MockMessage(
 					mockHttpServletRequest,
 					clazz.getMethod(MockResource.METHOD_NAME, String.class),
-					_mockResource));
-
-			Assert.assertEquals(Arrays.toString(sorts), 1, sorts.length);
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				NotAcceptableException.class, exception.getClass());
-			Assert.assertEquals(
-				"No locales match the accepted languages: " +
-					locale.toLanguageTag(),
-				exception.getMessage());
-
-			Assert.assertNull(sorts);
-		}
+					_mockResource)));
 	}
 
 	private ContextProvider<Sort[]> _contextProvider;

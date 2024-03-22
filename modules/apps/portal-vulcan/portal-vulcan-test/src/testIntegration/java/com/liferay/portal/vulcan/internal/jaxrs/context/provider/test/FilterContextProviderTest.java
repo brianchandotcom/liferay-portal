@@ -10,8 +10,8 @@ import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.filter.InvalidFilterException;
 import com.liferay.portal.test.rule.Inject;
@@ -23,6 +23,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.util.Locale;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.NotAcceptableException;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.HttpHeaders;
@@ -135,12 +136,8 @@ public class FilterContextProviderTest {
 
 	@Test
 	public void testCreateContextWithDifferentLocale() throws Exception {
-		_testCreateContext(LocaleUtil.TAIWAN, Http.Method.GET);
+		Locale locale = LocaleUtil.TAIWAN;
 
-		_testCreateContext(LocaleUtil.TAIWAN, Http.Method.POST);
-	}
-
-	private void _testCreateContext(Locale locale, Http.Method method) {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest() {
 				{
@@ -151,31 +148,42 @@ public class FilterContextProviderTest {
 				}
 			};
 
-		mockHttpServletRequest.setMethod(method.toString());
-
 		Class<? extends MockResource> clazz = _mockResource.getClass();
 
-		Filter filter = null;
+		// GET Method
 
-		try {
-			filter = _contextProvider.createContext(
+		mockHttpServletRequest.setMethod(HttpMethod.GET);
+
+		Filter filter = _contextProvider.createContext(
+			new MockMessage(
+				mockHttpServletRequest,
+				clazz.getMethod(MockResource.METHOD_NAME, String.class),
+				_mockResource));
+
+		Assert.assertTrue(filter instanceof QueryFilter);
+
+		QueryFilter queryFilter = (QueryFilter)filter;
+
+		TermQuery termQuery = (TermQuery)queryFilter.getQuery();
+
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		Assert.assertEquals("example", queryTerm.getValue());
+		Assert.assertEquals("internalTitle", queryTerm.getField());
+
+		// HTTP Method different from GET
+
+		mockHttpServletRequest.setMethod(HttpMethod.POST);
+
+		AssertUtils.assertFailure(
+			NotAcceptableException.class,
+			"No locales match the accepted languages: " +
+				locale.toLanguageTag(),
+			() -> _contextProvider.createContext(
 				new MockMessage(
 					mockHttpServletRequest,
 					clazz.getMethod(MockResource.METHOD_NAME, String.class),
-					_mockResource));
-
-			Assert.assertNotNull(filter);
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(
-				NotAcceptableException.class, exception.getClass());
-			Assert.assertEquals(
-				"No locales match the accepted languages: " +
-					locale.toLanguageTag(),
-				exception.getMessage());
-
-			Assert.assertNull(filter);
-		}
+					_mockResource)));
 	}
 
 	private ContextProvider<Filter> _contextProvider;

@@ -77,8 +77,7 @@ public class BuildHistoryReport {
 		long durationDays, File outputDir, String startDateString) {
 
 		return _newTestSuiteReport(
-			durationDays, new GroupByTopLevelTestSuiteAndUpstreamJob(),
-			_portalMasterUpstreamJobNamePattern, outputDir,
+			durationDays, _portalMasterUpstreamJobNamePattern, outputDir,
 			"liferay-portal/master Upstream History Report", startDateString);
 	}
 
@@ -189,9 +188,8 @@ public class BuildHistoryReport {
 	}
 
 	private static BuildHistoryReport _newTestSuiteReport(
-		long durationDays, Function<BuildJSONObject, String> groupingFunction,
-		Pattern jobNamePattern, File outputDir, String reportName,
-		String startDateString) {
+		long durationDays, Pattern jobNamePattern, File outputDir,
+		String reportName, String startDateString) {
 
 		BuildHistoryReport buildHistoryReport = new BuildHistoryReport(
 			outputDir);
@@ -203,8 +201,7 @@ public class BuildHistoryReport {
 
 		Collection<BuildHistory> buildHistories =
 			BuildHistoryProcessor.newTestSuiteJobHistories(
-				duration, groupingFunction, jobNamePattern,
-				_getStartTime(startDateString));
+				duration, jobNamePattern, _getStartTime(startDateString));
 
 		StringBuilder sb = new StringBuilder();
 
@@ -220,15 +217,6 @@ public class BuildHistoryReport {
 		buildHistoryReport.addFile("js/table-data.js", sb.toString());
 
 		return buildHistoryReport;
-	}
-
-	private static BuildHistoryReport _newTestSuiteReport(
-		long durationDays, Pattern jobNamePattern, File outputDir,
-		String reportName, String startDateString) {
-
-		return _newTestSuiteReport(
-			durationDays, null, jobNamePattern, outputDir, reportName,
-			startDateString);
 	}
 
 	private static final Pattern _portalMasterPullRequestJobNamePattern =

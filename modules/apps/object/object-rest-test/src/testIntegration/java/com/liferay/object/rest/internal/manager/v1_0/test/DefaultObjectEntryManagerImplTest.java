@@ -1894,6 +1894,14 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				buildEqualsExpressionFilterString(
+					_objectRelationshipFieldName,
+					String.valueOf(parentObjectEntry1.getId()))
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				buildEqualsExpressionFilterString(
 					"longIntegerObjectFieldName", 21394167160L)
 			).build(),
 			childObjectEntry1);

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -1040,10 +1041,13 @@ public abstract class BaseUserNotificationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserNotification() throws Exception {
 		UserNotification userNotification =
 			testGraphQLGetUserNotification_addUserNotification();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1062,11 +1066,38 @@ public abstract class BaseUserNotificationResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/userNotification"))));
+
+		// Using the namespace headlessUserNotification_v1_0
+
+		Assert.assertTrue(
+			equals(
+				userNotification,
+				UserNotificationSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessUserNotification_v1_0",
+								new GraphQLField(
+									"userNotification",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"userNotificationId",
+												userNotification.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessUserNotification_v1_0",
+						"Object/userNotification"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetUserNotificationNotFound() throws Exception {
 		Long irrelevantUserNotificationId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1082,6 +1113,27 @@ public abstract class BaseUserNotificationResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessUserNotification_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessUserNotification_v1_0",
+						new GraphQLField(
+							"userNotification",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"userNotificationId",
+										irrelevantUserNotificationId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

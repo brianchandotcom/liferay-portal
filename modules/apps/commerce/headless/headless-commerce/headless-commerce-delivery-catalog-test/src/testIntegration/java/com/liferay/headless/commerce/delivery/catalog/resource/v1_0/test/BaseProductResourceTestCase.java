@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -598,9 +599,12 @@ public abstract class BaseProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetChannelProduct() throws Exception {
 		Product product = testGraphQLGetChannelProduct_addProduct();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -621,6 +625,32 @@ public abstract class BaseProductResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/channelProduct"))));
+
+		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				product,
+				ProductSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCatalog_v1_0",
+								new GraphQLField(
+									"channelProduct",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"channelId",
+												testGraphQLGetChannelProduct_getChannelId());
+
+											put("productId", product.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCatalog_v1_0",
+						"Object/channelProduct"))));
 	}
 
 	protected Long testGraphQLGetChannelProduct_getChannelId()
@@ -630,10 +660,13 @@ public abstract class BaseProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetChannelProductNotFound() throws Exception {
 		Long irrelevantChannelId = RandomTestUtil.randomLong();
 		Long irrelevantProductId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -648,6 +681,26 @@ public abstract class BaseProductResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCatalog_v1_0",
+						new GraphQLField(
+							"channelProduct",
+							new HashMap<String, Object>() {
+								{
+									put("channelId", irrelevantChannelId);
+									put("productId", irrelevantProductId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

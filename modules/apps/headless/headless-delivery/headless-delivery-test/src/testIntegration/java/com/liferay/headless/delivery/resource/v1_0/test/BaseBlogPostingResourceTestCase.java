@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -228,9 +229,14 @@ public abstract class BaseBlogPostingResourceTestCase {
 			testGroup.getGroupId(), randomBlogPosting());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteBlogPosting() throws Exception {
-		BlogPosting blogPosting = testGraphQLDeleteBlogPosting_addBlogPosting();
+
+		// No namespace
+
+		BlogPosting blogPosting1 =
+			testGraphQLDeleteBlogPosting_addBlogPosting();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -239,23 +245,60 @@ public abstract class BaseBlogPostingResourceTestCase {
 						"deleteBlogPosting",
 						new HashMap<String, Object>() {
 							{
-								put("blogPostingId", blogPosting.getId());
+								put("blogPostingId", blogPosting1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteBlogPosting"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"blogPosting",
 					new HashMap<String, Object>() {
 						{
-							put("blogPostingId", blogPosting.getId());
+							put("blogPostingId", blogPosting1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		BlogPosting blogPosting2 =
+			testGraphQLDeleteBlogPosting_addBlogPosting();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteBlogPosting",
+							new HashMap<String, Object>() {
+								{
+									put("blogPostingId", blogPosting2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteBlogPosting"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"blogPosting",
+						new HashMap<String, Object>() {
+							{
+								put("blogPostingId", blogPosting2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected BlogPosting testGraphQLDeleteBlogPosting_addBlogPosting()
@@ -280,9 +323,12 @@ public abstract class BaseBlogPostingResourceTestCase {
 			testGroup.getGroupId(), randomBlogPosting());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetBlogPosting() throws Exception {
 		BlogPosting blogPosting = testGraphQLGetBlogPosting_addBlogPosting();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -301,11 +347,37 @@ public abstract class BaseBlogPostingResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/blogPosting"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				blogPosting,
+				BlogPostingSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"blogPosting",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"blogPostingId",
+												blogPosting.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/blogPosting"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetBlogPostingNotFound() throws Exception {
 		Long irrelevantBlogPostingId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -319,6 +391,27 @@ public abstract class BaseBlogPostingResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"blogPosting",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"blogPostingId",
+										irrelevantBlogPostingId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -888,6 +981,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteBlogPostingsPage() throws Exception {
 		Long siteId = testGetSiteBlogPostingsPage_getSiteId();
@@ -905,6 +999,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject blogPostingsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/blogPostings");
@@ -918,6 +1014,28 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		blogPostingsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/blogPostings");
+
+		Assert.assertEquals(
+			totalCount + 2, blogPostingsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			blogPosting1,
+			Arrays.asList(
+				BlogPostingSerDes.toDTOs(
+					blogPostingsJSONObject.getString("items"))));
+		assertContains(
+			blogPosting2,
+			Arrays.asList(
+				BlogPostingSerDes.toDTOs(
+					blogPostingsJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		blogPostingsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 			"JSONObject/blogPostings");
 
 		Assert.assertEquals(
@@ -1050,12 +1168,15 @@ public abstract class BaseBlogPostingResourceTestCase {
 			testGroup.getGroupId(), randomBlogPosting());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteBlogPostingByExternalReferenceCode()
 		throws Exception {
 
 		BlogPosting blogPosting =
 			testGraphQLGetSiteBlogPostingByExternalReferenceCode_addBlogPosting();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1084,6 +1205,38 @@ public abstract class BaseBlogPostingResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/blogPostingByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				blogPosting,
+				BlogPostingSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"blogPostingByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
+														blogPosting) + "\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													blogPosting.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/blogPostingByExternalReferenceCode"))));
 	}
 
 	protected Long
@@ -1094,12 +1247,15 @@ public abstract class BaseBlogPostingResourceTestCase {
 		return blogPosting.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteBlogPostingByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1118,6 +1274,31 @@ public abstract class BaseBlogPostingResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"blogPostingByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

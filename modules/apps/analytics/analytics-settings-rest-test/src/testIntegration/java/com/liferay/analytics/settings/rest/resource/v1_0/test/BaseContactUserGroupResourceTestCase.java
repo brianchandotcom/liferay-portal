@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -467,6 +468,7 @@ public abstract class BaseContactUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetContactUserGroupsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -479,6 +481,8 @@ public abstract class BaseContactUserGroupResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject contactUserGroupsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -493,6 +497,28 @@ public abstract class BaseContactUserGroupResourceTestCase {
 
 		contactUserGroupsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/contactUserGroups");
+
+		Assert.assertEquals(
+			totalCount + 2, contactUserGroupsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			contactUserGroup1,
+			Arrays.asList(
+				ContactUserGroupSerDes.toDTOs(
+					contactUserGroupsJSONObject.getString("items"))));
+		assertContains(
+			contactUserGroup2,
+			Arrays.asList(
+				ContactUserGroupSerDes.toDTOs(
+					contactUserGroupsJSONObject.getString("items"))));
+
+		// Using the namespace analyticsSettings_v1_0
+
+		contactUserGroupsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("analyticsSettings_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/analyticsSettings_v1_0",
 			"JSONObject/contactUserGroups");
 
 		Assert.assertEquals(

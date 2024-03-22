@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -238,12 +239,15 @@ public abstract class BaseOrderNoteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderNoteByExternalReferenceCode()
 		throws Exception {
 
 		OrderNote orderNote =
 			testGraphQLGetOrderNoteByExternalReferenceCode_addOrderNote();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -266,14 +270,44 @@ public abstract class BaseOrderNoteResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderNoteByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				orderNote,
+				OrderNoteSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderNoteByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													orderNote.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderNoteByExternalReferenceCode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderNoteByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -289,6 +323,27 @@ public abstract class BaseOrderNoteResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderNoteByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -326,9 +381,13 @@ public abstract class BaseOrderNoteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteOrderNote() throws Exception {
-		OrderNote orderNote = testGraphQLDeleteOrderNote_addOrderNote();
+
+		// No namespace
+
+		OrderNote orderNote1 = testGraphQLDeleteOrderNote_addOrderNote();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -337,23 +396,59 @@ public abstract class BaseOrderNoteResourceTestCase {
 						"deleteOrderNote",
 						new HashMap<String, Object>() {
 							{
-								put("id", orderNote.getId());
+								put("id", orderNote1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteOrderNote"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"orderNote",
 					new HashMap<String, Object>() {
 						{
-							put("id", orderNote.getId());
+							put("id", orderNote1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		OrderNote orderNote2 = testGraphQLDeleteOrderNote_addOrderNote();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderNote",
+							new HashMap<String, Object>() {
+								{
+									put("id", orderNote2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderNote"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminOrder_v1_0",
+					new GraphQLField(
+						"orderNote",
+						new HashMap<String, Object>() {
+							{
+								put("id", orderNote2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected OrderNote testGraphQLDeleteOrderNote_addOrderNote()
@@ -378,9 +473,12 @@ public abstract class BaseOrderNoteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderNote() throws Exception {
 		OrderNote orderNote = testGraphQLGetOrderNote_addOrderNote();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -397,11 +495,36 @@ public abstract class BaseOrderNoteResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderNote"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				orderNote,
+				OrderNoteSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderNote",
+									new HashMap<String, Object>() {
+										{
+											put("id", orderNote.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderNote"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderNoteNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -415,6 +538,25 @@ public abstract class BaseOrderNoteResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderNote",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

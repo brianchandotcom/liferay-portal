@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -236,9 +237,13 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteKnowledgeBaseArticle() throws Exception {
-		KnowledgeBaseArticle knowledgeBaseArticle =
+
+		// No namespace
+
+		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGraphQLDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle();
 
 		Assert.assertTrue(
@@ -250,11 +255,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 							{
 								put(
 									"knowledgeBaseArticleId",
-									knowledgeBaseArticle.getId());
+									knowledgeBaseArticle1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteKnowledgeBaseArticle"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"knowledgeBaseArticle",
@@ -262,13 +268,53 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 						{
 							put(
 								"knowledgeBaseArticleId",
-								knowledgeBaseArticle.getId());
+								knowledgeBaseArticle1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			testGraphQLDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteKnowledgeBaseArticle",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"knowledgeBaseArticleId",
+										knowledgeBaseArticle2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteKnowledgeBaseArticle"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"knowledgeBaseArticle",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"knowledgeBaseArticleId",
+									knowledgeBaseArticle2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected KnowledgeBaseArticle
@@ -299,10 +345,13 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKnowledgeBaseArticle() throws Exception {
 		KnowledgeBaseArticle knowledgeBaseArticle =
 			testGraphQLGetKnowledgeBaseArticle_addKnowledgeBaseArticle();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -321,11 +370,37 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/knowledgeBaseArticle"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				knowledgeBaseArticle,
+				KnowledgeBaseArticleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"knowledgeBaseArticle",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"knowledgeBaseArticleId",
+												knowledgeBaseArticle.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/knowledgeBaseArticle"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKnowledgeBaseArticleNotFound() throws Exception {
 		Long irrelevantKnowledgeBaseArticleId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -341,6 +416,27 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"knowledgeBaseArticle",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"knowledgeBaseArticleId",
+										irrelevantKnowledgeBaseArticleId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -2106,6 +2202,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseArticlesPage() throws Exception {
 		Long siteId = testGetSiteKnowledgeBaseArticlesPage_getSiteId();
@@ -2123,6 +2220,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject knowledgeBaseArticlesJSONObject =
 			JSONUtil.getValueAsJSONObject(
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -2137,6 +2236,29 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		knowledgeBaseArticlesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/knowledgeBaseArticles");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			knowledgeBaseArticlesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			knowledgeBaseArticle1,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseArticlesJSONObject.getString("items"))));
+		assertContains(
+			knowledgeBaseArticle2,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseArticlesJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		knowledgeBaseArticlesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 			"JSONObject/knowledgeBaseArticles");
 
 		Assert.assertEquals(
@@ -2281,12 +2403,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCode()
 		throws Exception {
 
 		KnowledgeBaseArticle knowledgeBaseArticle =
 			testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -2316,6 +2441,39 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/knowledgeBaseArticleByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				knowledgeBaseArticle,
+				KnowledgeBaseArticleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"knowledgeBaseArticleByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCode_getSiteId(
+														knowledgeBaseArticle) +
+															"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													knowledgeBaseArticle.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/knowledgeBaseArticleByExternalReferenceCode"))));
 	}
 
 	protected Long
@@ -2326,12 +2484,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		return knowledgeBaseArticle.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -2350,6 +2511,31 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"knowledgeBaseArticleByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

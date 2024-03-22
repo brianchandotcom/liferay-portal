@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -209,9 +210,12 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWarehouseChannelChannel() throws Exception {
 		Channel channel = testGraphQLGetWarehouseChannelChannel_addChannel();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -230,6 +234,30 @@ public abstract class BaseChannelResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/warehouseChannelChannel"))));
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		Assert.assertTrue(
+			equals(
+				channel,
+				ChannelSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminInventory_v1_0",
+								new GraphQLField(
+									"warehouseChannelChannel",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"warehouseChannelId",
+												testGraphQLGetWarehouseChannelChannel_getWarehouseChannelId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminInventory_v1_0",
+						"Object/warehouseChannelChannel"))));
 	}
 
 	protected Long testGraphQLGetWarehouseChannelChannel_getWarehouseChannelId()
@@ -239,11 +267,14 @@ public abstract class BaseChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWarehouseChannelChannelNotFound()
 		throws Exception {
 
 		Long irrelevantWarehouseChannelId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -259,6 +290,27 @@ public abstract class BaseChannelResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminInventory_v1_0",
+						new GraphQLField(
+							"warehouseChannelChannel",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"warehouseChannelId",
+										irrelevantWarehouseChannelId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

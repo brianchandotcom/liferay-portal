@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -642,6 +643,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteStructuredContentsPage() throws Exception {
 		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
@@ -659,6 +661,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/structuredContents");
@@ -672,6 +676,28 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/structuredContents");
+
+		Assert.assertEquals(
+			totalCount + 2, structuredContentsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			structuredContent1,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					structuredContentsJSONObject.getString("items"))));
+		assertContains(
+			structuredContent2,
+			Arrays.asList(
+				StructuredContentSerDes.toDTOs(
+					structuredContentsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminContent_v1_0
+
+		structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminContent_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminContent_v1_0",
 			"JSONObject/structuredContents");
 
 		Assert.assertEquals(
@@ -786,10 +812,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetStructuredContentByVersion() throws Exception {
 		StructuredContent structuredContent =
 			testGraphQLGetStructuredContentByVersion_addStructuredContent();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -813,6 +842,34 @@ public abstract class BaseStructuredContentResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/structuredContentByVersion"))));
+
+		// Using the namespace headlessAdminContent_v1_0
+
+		Assert.assertTrue(
+			equals(
+				structuredContent,
+				StructuredContentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminContent_v1_0",
+								new GraphQLField(
+									"structuredContentByVersion",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"structuredContentId",
+												structuredContent.getId());
+
+											put(
+												"version",
+												testGraphQLGetStructuredContentByVersion_getVersion());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminContent_v1_0",
+						"Object/structuredContentByVersion"))));
 	}
 
 	protected Double testGraphQLGetStructuredContentByVersion_getVersion()
@@ -822,12 +879,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetStructuredContentByVersionNotFound()
 		throws Exception {
 
 		Long irrelevantStructuredContentId = RandomTestUtil.randomLong();
 		Double irrelevantVersion = RandomTestUtil.randomDouble();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -844,6 +904,28 @@ public abstract class BaseStructuredContentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminContent_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminContent_v1_0",
+						new GraphQLField(
+							"structuredContentByVersion",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"structuredContentId",
+										irrelevantStructuredContentId);
+									put("version", irrelevantVersion);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

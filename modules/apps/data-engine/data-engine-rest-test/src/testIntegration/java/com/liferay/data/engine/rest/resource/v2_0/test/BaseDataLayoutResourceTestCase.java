@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -598,9 +599,13 @@ public abstract class BaseDataLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDataLayout() throws Exception {
-		DataLayout dataLayout = testGraphQLDeleteDataLayout_addDataLayout();
+
+		// No namespace
+
+		DataLayout dataLayout1 = testGraphQLDeleteDataLayout_addDataLayout();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -609,23 +614,59 @@ public abstract class BaseDataLayoutResourceTestCase {
 						"deleteDataLayout",
 						new HashMap<String, Object>() {
 							{
-								put("dataLayoutId", dataLayout.getId());
+								put("dataLayoutId", dataLayout1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataLayout"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"dataLayout",
 					new HashMap<String, Object>() {
 						{
-							put("dataLayoutId", dataLayout.getId());
+							put("dataLayoutId", dataLayout1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace dataEngine_v2_0
+
+		DataLayout dataLayout2 = testGraphQLDeleteDataLayout_addDataLayout();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"deleteDataLayout",
+							new HashMap<String, Object>() {
+								{
+									put("dataLayoutId", dataLayout2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/dataEngine_v2_0",
+				"Object/deleteDataLayout"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataEngine_v2_0",
+					new GraphQLField(
+						"dataLayout",
+						new HashMap<String, Object>() {
+							{
+								put("dataLayoutId", dataLayout2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected DataLayout testGraphQLDeleteDataLayout_addDataLayout()
@@ -650,9 +691,12 @@ public abstract class BaseDataLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataLayout() throws Exception {
 		DataLayout dataLayout = testGraphQLGetDataLayout_addDataLayout();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -669,11 +713,37 @@ public abstract class BaseDataLayoutResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/dataLayout"))));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertTrue(
+			equals(
+				dataLayout,
+				DataLayoutSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"dataEngine_v2_0",
+								new GraphQLField(
+									"dataLayout",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"dataLayoutId",
+												dataLayout.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/dataEngine_v2_0",
+						"Object/dataLayout"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataLayoutNotFound() throws Exception {
 		Long irrelevantDataLayoutId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -687,6 +757,25 @@ public abstract class BaseDataLayoutResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"dataLayout",
+							new HashMap<String, Object>() {
+								{
+									put("dataLayoutId", irrelevantDataLayoutId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -759,12 +848,15 @@ public abstract class BaseDataLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey()
 		throws Exception {
 
 		DataLayout dataLayout =
 			testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey_addDataLayout();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -797,6 +889,45 @@ public abstract class BaseDataLayoutResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/dataLayoutByContentTypeByDataLayoutKey"))));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertTrue(
+			equals(
+				dataLayout,
+				DataLayoutSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"dataEngine_v2_0",
+								new GraphQLField(
+									"dataLayoutByContentTypeByDataLayoutKey",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey_getSiteId(
+														dataLayout) + "\"");
+
+											put(
+												"contentType",
+												"\"" +
+													dataLayout.
+														getContentType() +
+															"\"");
+
+											put(
+												"dataLayoutKey",
+												"\"" +
+													dataLayout.
+														getDataLayoutKey() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/dataEngine_v2_0",
+						"Object/dataLayoutByContentTypeByDataLayoutKey"))));
 	}
 
 	protected Long
@@ -807,6 +938,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		return dataLayout.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKeyNotFound()
 		throws Exception {
@@ -815,6 +947,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 			"\"" + RandomTestUtil.randomString() + "\"";
 		String irrelevantDataLayoutKey =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -832,6 +966,32 @@ public abstract class BaseDataLayoutResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"dataLayoutByContentTypeByDataLayoutKey",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put("contentType", irrelevantContentType);
+									put(
+										"dataLayoutKey",
+										irrelevantDataLayoutKey);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

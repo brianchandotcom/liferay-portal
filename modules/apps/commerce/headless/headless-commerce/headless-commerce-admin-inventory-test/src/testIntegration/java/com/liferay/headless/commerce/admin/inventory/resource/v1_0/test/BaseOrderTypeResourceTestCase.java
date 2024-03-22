@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -201,10 +202,13 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWarehouseOrderTypeOrderType() throws Exception {
 		OrderType orderType =
 			testGraphQLGetWarehouseOrderTypeOrderType_addOrderType();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -224,6 +228,30 @@ public abstract class BaseOrderTypeResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/warehouseOrderTypeOrderType"))));
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		Assert.assertTrue(
+			equals(
+				orderType,
+				OrderTypeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminInventory_v1_0",
+								new GraphQLField(
+									"warehouseOrderTypeOrderType",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"warehouseOrderTypeId",
+												testGraphQLGetWarehouseOrderTypeOrderType_getWarehouseOrderTypeId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminInventory_v1_0",
+						"Object/warehouseOrderTypeOrderType"))));
 	}
 
 	protected Long
@@ -234,11 +262,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWarehouseOrderTypeOrderTypeNotFound()
 		throws Exception {
 
 		Long irrelevantWarehouseOrderTypeId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -254,6 +285,27 @@ public abstract class BaseOrderTypeResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminInventory_v1_0",
+						new GraphQLField(
+							"warehouseOrderTypeOrderType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"warehouseOrderTypeId",
+										irrelevantWarehouseOrderTypeId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

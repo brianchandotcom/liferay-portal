@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -975,9 +976,13 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteObjectLayout() throws Exception {
-		ObjectLayout objectLayout =
+
+		// No namespace
+
+		ObjectLayout objectLayout1 =
 			testGraphQLDeleteObjectLayout_addObjectLayout();
 
 		Assert.assertTrue(
@@ -987,23 +992,62 @@ public abstract class BaseObjectLayoutResourceTestCase {
 						"deleteObjectLayout",
 						new HashMap<String, Object>() {
 							{
-								put("objectLayoutId", objectLayout.getId());
+								put("objectLayoutId", objectLayout1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteObjectLayout"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"objectLayout",
 					new HashMap<String, Object>() {
 						{
-							put("objectLayoutId", objectLayout.getId());
+							put("objectLayoutId", objectLayout1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace objectAdmin_v1_0
+
+		ObjectLayout objectLayout2 =
+			testGraphQLDeleteObjectLayout_addObjectLayout();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"deleteObjectLayout",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectLayoutId",
+										objectLayout2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+				"Object/deleteObjectLayout"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectAdmin_v1_0",
+					new GraphQLField(
+						"objectLayout",
+						new HashMap<String, Object>() {
+							{
+								put("objectLayoutId", objectLayout2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected ObjectLayout testGraphQLDeleteObjectLayout_addObjectLayout()
@@ -1030,10 +1074,13 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectLayout() throws Exception {
 		ObjectLayout objectLayout =
 			testGraphQLGetObjectLayout_addObjectLayout();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1052,11 +1099,37 @@ public abstract class BaseObjectLayoutResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/objectLayout"))));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertTrue(
+			equals(
+				objectLayout,
+				ObjectLayoutSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectAdmin_v1_0",
+								new GraphQLField(
+									"objectLayout",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"objectLayoutId",
+												objectLayout.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+						"Object/objectLayout"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectLayoutNotFound() throws Exception {
 		Long irrelevantObjectLayoutId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1070,6 +1143,27 @@ public abstract class BaseObjectLayoutResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"objectLayout",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectLayoutId",
+										irrelevantObjectLayoutId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -610,9 +611,12 @@ public abstract class BaseCTEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCTEntry() throws Exception {
 		CTEntry ctEntry = testGraphQLGetCTEntry_addCTEntry();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -629,11 +633,35 @@ public abstract class BaseCTEntryResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/cTEntry"))));
+
+		// Using the namespace changeTracking_v1_0
+
+		Assert.assertTrue(
+			equals(
+				ctEntry,
+				CTEntrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"changeTracking_v1_0",
+								new GraphQLField(
+									"cTEntry",
+									new HashMap<String, Object>() {
+										{
+											put("ctEntryId", ctEntry.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/changeTracking_v1_0",
+						"Object/cTEntry"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCTEntryNotFound() throws Exception {
 		Long irrelevantCtEntryId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -647,6 +675,25 @@ public abstract class BaseCTEntryResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace changeTracking_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"changeTracking_v1_0",
+						new GraphQLField(
+							"cTEntry",
+							new HashMap<String, Object>() {
+								{
+									put("ctEntryId", irrelevantCtEntryId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

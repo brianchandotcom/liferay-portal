@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -871,9 +872,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteTaxonomyCategory() throws Exception {
-		TaxonomyCategory taxonomyCategory =
+
+		// No namespace
+
+		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
 
 		Assert.assertTrue(
@@ -885,11 +890,12 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 							{
 								put(
 									"taxonomyCategoryId",
-									"\"" + taxonomyCategory.getId() + "\"");
+									"\"" + taxonomyCategory1.getId() + "\"");
 							}
 						})),
 				"JSONObject/data", "Object/deleteTaxonomyCategory"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"taxonomyCategory",
@@ -897,13 +903,54 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 						{
 							put(
 								"taxonomyCategoryId",
-								"\"" + taxonomyCategory.getId() + "\"");
+								"\"" + taxonomyCategory1.getId() + "\"");
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		TaxonomyCategory taxonomyCategory2 =
+			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteTaxonomyCategory",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyCategoryId",
+										"\"" + taxonomyCategory2.getId() +
+											"\"");
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteTaxonomyCategory"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminTaxonomy_v1_0",
+					new GraphQLField(
+						"taxonomyCategory",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"taxonomyCategoryId",
+									"\"" + taxonomyCategory2.getId() + "\"");
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected TaxonomyCategory
@@ -933,10 +980,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxonomyCategory() throws Exception {
 		TaxonomyCategory taxonomyCategory =
 			testGraphQLGetTaxonomyCategory_addTaxonomyCategory();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -956,12 +1006,41 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/taxonomyCategory"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				taxonomyCategory,
+				TaxonomyCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"taxonomyCategory",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"taxonomyCategoryId",
+												"\"" +
+													taxonomyCategory.getId() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/taxonomyCategory"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxonomyCategoryNotFound() throws Exception {
 		String irrelevantTaxonomyCategoryId =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -977,6 +1056,27 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"taxonomyCategory",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyCategoryId",
+										irrelevantTaxonomyCategoryId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -1715,12 +1815,15 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode()
 		throws Exception {
 
 		TaxonomyCategory taxonomyCategory =
 			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1748,6 +1851,38 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				taxonomyCategory,
+				TaxonomyCategorySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"taxonomyVocabularyId",
+												testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+													taxonomyCategory));
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													taxonomyCategory.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode"))));
 	}
 
 	protected Long
@@ -1758,6 +1893,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		return taxonomyCategory.getTaxonomyVocabularyId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeNotFound()
 		throws Exception {
@@ -1765,6 +1901,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Long irrelevantTaxonomyVocabularyId = RandomTestUtil.randomLong();
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1783,6 +1921,30 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"taxonomyVocabularyTaxonomyCategoryByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"taxonomyVocabularyId",
+										irrelevantTaxonomyVocabularyId);
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -1206,9 +1207,13 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteListTypeEntry() throws Exception {
-		ListTypeEntry listTypeEntry =
+
+		// No namespace
+
+		ListTypeEntry listTypeEntry1 =
 			testGraphQLDeleteListTypeEntry_addListTypeEntry();
 
 		Assert.assertTrue(
@@ -1218,23 +1223,62 @@ public abstract class BaseListTypeEntryResourceTestCase {
 						"deleteListTypeEntry",
 						new HashMap<String, Object>() {
 							{
-								put("listTypeEntryId", listTypeEntry.getId());
+								put("listTypeEntryId", listTypeEntry1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteListTypeEntry"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"listTypeEntry",
 					new HashMap<String, Object>() {
 						{
-							put("listTypeEntryId", listTypeEntry.getId());
+							put("listTypeEntryId", listTypeEntry1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminListType_v1_0
+
+		ListTypeEntry listTypeEntry2 =
+			testGraphQLDeleteListTypeEntry_addListTypeEntry();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminListType_v1_0",
+						new GraphQLField(
+							"deleteListTypeEntry",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"listTypeEntryId",
+										listTypeEntry2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminListType_v1_0",
+				"Object/deleteListTypeEntry"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminListType_v1_0",
+					new GraphQLField(
+						"listTypeEntry",
+						new HashMap<String, Object>() {
+							{
+								put("listTypeEntryId", listTypeEntry2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected ListTypeEntry testGraphQLDeleteListTypeEntry_addListTypeEntry()
@@ -1262,10 +1306,13 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetListTypeEntry() throws Exception {
 		ListTypeEntry listTypeEntry =
 			testGraphQLGetListTypeEntry_addListTypeEntry();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1284,11 +1331,38 @@ public abstract class BaseListTypeEntryResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/listTypeEntry"))));
+
+		// Using the namespace headlessAdminListType_v1_0
+
+		Assert.assertTrue(
+			equals(
+				listTypeEntry,
+				ListTypeEntrySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminListType_v1_0",
+								new GraphQLField(
+									"listTypeEntry",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"listTypeEntryId",
+												listTypeEntry.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminListType_v1_0",
+						"Object/listTypeEntry"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetListTypeEntryNotFound() throws Exception {
 		Long irrelevantListTypeEntryId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1304,6 +1378,27 @@ public abstract class BaseListTypeEntryResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminListType_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminListType_v1_0",
+						new GraphQLField(
+							"listTypeEntry",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"listTypeEntryId",
+										irrelevantListTypeEntryId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

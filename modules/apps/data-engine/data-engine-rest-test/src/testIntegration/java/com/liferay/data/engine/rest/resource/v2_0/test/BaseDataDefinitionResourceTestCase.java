@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -619,9 +620,13 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDataDefinition() throws Exception {
-		DataDefinition dataDefinition =
+
+		// No namespace
+
+		DataDefinition dataDefinition1 =
 			testGraphQLDeleteDataDefinition_addDataDefinition();
 
 		Assert.assertTrue(
@@ -631,23 +636,66 @@ public abstract class BaseDataDefinitionResourceTestCase {
 						"deleteDataDefinition",
 						new HashMap<String, Object>() {
 							{
-								put("dataDefinitionId", dataDefinition.getId());
+								put(
+									"dataDefinitionId",
+									dataDefinition1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataDefinition"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"dataDefinition",
 					new HashMap<String, Object>() {
 						{
-							put("dataDefinitionId", dataDefinition.getId());
+							put("dataDefinitionId", dataDefinition1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace dataEngine_v2_0
+
+		DataDefinition dataDefinition2 =
+			testGraphQLDeleteDataDefinition_addDataDefinition();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"deleteDataDefinition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"dataDefinitionId",
+										dataDefinition2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/dataEngine_v2_0",
+				"Object/deleteDataDefinition"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"dataEngine_v2_0",
+					new GraphQLField(
+						"dataDefinition",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"dataDefinitionId",
+									dataDefinition2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected DataDefinition testGraphQLDeleteDataDefinition_addDataDefinition()
@@ -676,10 +724,13 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataDefinition() throws Exception {
 		DataDefinition dataDefinition =
 			testGraphQLGetDataDefinition_addDataDefinition();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -698,11 +749,37 @@ public abstract class BaseDataDefinitionResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/dataDefinition"))));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertTrue(
+			equals(
+				dataDefinition,
+				DataDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"dataEngine_v2_0",
+								new GraphQLField(
+									"dataDefinition",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"dataDefinitionId",
+												dataDefinition.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/dataEngine_v2_0",
+						"Object/dataDefinition"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDataDefinitionNotFound() throws Exception {
 		Long irrelevantDataDefinitionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -718,6 +795,27 @@ public abstract class BaseDataDefinitionResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"dataDefinition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"dataDefinitionId",
+										irrelevantDataDefinitionId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -1323,12 +1421,15 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey()
 		throws Exception {
 
 		DataDefinition dataDefinition =
 			testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_addDataDefinition();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1363,6 +1464,45 @@ public abstract class BaseDataDefinitionResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/dataDefinitionByContentTypeByDataDefinitionKey"))));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertTrue(
+			equals(
+				dataDefinition,
+				DataDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"dataEngine_v2_0",
+								new GraphQLField(
+									"dataDefinitionByContentTypeByDataDefinitionKey",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
+														dataDefinition) + "\"");
+
+											put(
+												"contentType",
+												"\"" +
+													dataDefinition.
+														getContentType() +
+															"\"");
+
+											put(
+												"dataDefinitionKey",
+												"\"" +
+													dataDefinition.
+														getDataDefinitionKey() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/dataEngine_v2_0",
+						"Object/dataDefinitionByContentTypeByDataDefinitionKey"))));
 	}
 
 	protected Long
@@ -1373,6 +1513,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		return dataDefinition.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKeyNotFound()
 		throws Exception {
@@ -1381,6 +1522,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			"\"" + RandomTestUtil.randomString() + "\"";
 		String irrelevantDataDefinitionKey =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1400,6 +1543,32 @@ public abstract class BaseDataDefinitionResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace dataEngine_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"dataEngine_v2_0",
+						new GraphQLField(
+							"dataDefinitionByContentTypeByDataDefinitionKey",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put("contentType", irrelevantContentType);
+									put(
+										"dataDefinitionKey",
+										irrelevantDataDefinitionKey);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

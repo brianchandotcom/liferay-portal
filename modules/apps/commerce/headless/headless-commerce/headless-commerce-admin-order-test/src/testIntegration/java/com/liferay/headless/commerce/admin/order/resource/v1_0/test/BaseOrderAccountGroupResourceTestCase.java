@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -209,12 +210,15 @@ public abstract class BaseOrderAccountGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderRuleAccountGroupAccountGroup()
 		throws Exception {
 
 		OrderAccountGroup orderAccountGroup =
 			testGraphQLGetOrderRuleAccountGroupAccountGroup_addOrderAccountGroup();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -234,6 +238,30 @@ public abstract class BaseOrderAccountGroupResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderRuleAccountGroupAccountGroup"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				orderAccountGroup,
+				OrderAccountGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderRuleAccountGroupAccountGroup",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"orderRuleAccountGroupId",
+												testGraphQLGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderRuleAccountGroupAccountGroup"))));
 	}
 
 	protected Long
@@ -244,11 +272,14 @@ public abstract class BaseOrderAccountGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderRuleAccountGroupAccountGroupNotFound()
 		throws Exception {
 
 		Long irrelevantOrderRuleAccountGroupId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -264,6 +295,27 @@ public abstract class BaseOrderAccountGroupResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderRuleAccountGroupAccountGroup",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"orderRuleAccountGroupId",
+										irrelevantOrderRuleAccountGroupId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

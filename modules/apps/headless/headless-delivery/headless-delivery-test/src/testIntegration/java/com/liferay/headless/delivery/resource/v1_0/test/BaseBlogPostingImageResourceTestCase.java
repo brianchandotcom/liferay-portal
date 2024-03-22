@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -225,9 +226,13 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			getMultipartFiles());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteBlogPostingImage() throws Exception {
-		BlogPostingImage blogPostingImage =
+
+		// No namespace
+
+		BlogPostingImage blogPostingImage1 =
 			testGraphQLDeleteBlogPostingImage_addBlogPostingImage();
 
 		Assert.assertTrue(
@@ -239,23 +244,66 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 							{
 								put(
 									"blogPostingImageId",
-									blogPostingImage.getId());
+									blogPostingImage1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteBlogPostingImage"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"blogPostingImage",
 					new HashMap<String, Object>() {
 						{
-							put("blogPostingImageId", blogPostingImage.getId());
+							put(
+								"blogPostingImageId",
+								blogPostingImage1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		BlogPostingImage blogPostingImage2 =
+			testGraphQLDeleteBlogPostingImage_addBlogPostingImage();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteBlogPostingImage",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"blogPostingImageId",
+										blogPostingImage2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteBlogPostingImage"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"blogPostingImage",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"blogPostingImageId",
+									blogPostingImage2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected BlogPostingImage
@@ -286,10 +334,13 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			getMultipartFiles());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetBlogPostingImage() throws Exception {
 		BlogPostingImage blogPostingImage =
 			testGraphQLGetBlogPostingImage_addBlogPostingImage();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -308,11 +359,37 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/blogPostingImage"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				blogPostingImage,
+				BlogPostingImageSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"blogPostingImage",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"blogPostingImageId",
+												blogPostingImage.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/blogPostingImage"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetBlogPostingImageNotFound() throws Exception {
 		Long irrelevantBlogPostingImageId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -328,6 +405,27 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"blogPostingImage",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"blogPostingImageId",
+										irrelevantBlogPostingImageId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -794,6 +892,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteBlogPostingImagesPage() throws Exception {
 		Long siteId = testGetSiteBlogPostingImagesPage_getSiteId();
@@ -811,6 +910,8 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject blogPostingImagesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/blogPostingImages");
@@ -824,6 +925,28 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		blogPostingImagesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/blogPostingImages");
+
+		Assert.assertEquals(
+			totalCount + 2, blogPostingImagesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			blogPostingImage1,
+			Arrays.asList(
+				BlogPostingImageSerDes.toDTOs(
+					blogPostingImagesJSONObject.getString("items"))));
+		assertContains(
+			blogPostingImage2,
+			Arrays.asList(
+				BlogPostingImageSerDes.toDTOs(
+					blogPostingImagesJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		blogPostingImagesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 			"JSONObject/blogPostingImages");
 
 		Assert.assertEquals(

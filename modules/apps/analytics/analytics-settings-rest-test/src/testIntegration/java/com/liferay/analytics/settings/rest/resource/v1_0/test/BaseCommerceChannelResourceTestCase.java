@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -469,6 +470,7 @@ public abstract class BaseCommerceChannelResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCommerceChannelsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -481,6 +483,8 @@ public abstract class BaseCommerceChannelResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject commerceChannelsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -495,6 +499,28 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 		commerceChannelsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/commerceChannels");
+
+		Assert.assertEquals(
+			totalCount + 2, commerceChannelsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			commerceChannel1,
+			Arrays.asList(
+				CommerceChannelSerDes.toDTOs(
+					commerceChannelsJSONObject.getString("items"))));
+		assertContains(
+			commerceChannel2,
+			Arrays.asList(
+				CommerceChannelSerDes.toDTOs(
+					commerceChannelsJSONObject.getString("items"))));
+
+		// Using the namespace analyticsSettings_v1_0
+
+		commerceChannelsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("analyticsSettings_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/analyticsSettings_v1_0",
 			"JSONObject/commerceChannels");
 
 		Assert.assertEquals(

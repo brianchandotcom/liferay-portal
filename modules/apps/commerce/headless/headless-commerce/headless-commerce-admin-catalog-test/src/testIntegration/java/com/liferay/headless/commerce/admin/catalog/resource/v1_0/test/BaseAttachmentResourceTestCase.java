@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -226,9 +227,13 @@ public abstract class BaseAttachmentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteAttachment() throws Exception {
-		Attachment attachment = testGraphQLDeleteAttachment_addAttachment();
+
+		// No namespace
+
+		Attachment attachment1 = testGraphQLDeleteAttachment_addAttachment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -237,10 +242,30 @@ public abstract class BaseAttachmentResourceTestCase {
 						"deleteAttachment",
 						new HashMap<String, Object>() {
 							{
-								put("id", attachment.getId());
+								put("id", attachment1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteAttachment"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Attachment attachment2 = testGraphQLDeleteAttachment_addAttachment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteAttachment",
+							new HashMap<String, Object>() {
+								{
+									put("id", attachment2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteAttachment"));
 	}
 
 	protected Attachment testGraphQLDeleteAttachment_addAttachment()

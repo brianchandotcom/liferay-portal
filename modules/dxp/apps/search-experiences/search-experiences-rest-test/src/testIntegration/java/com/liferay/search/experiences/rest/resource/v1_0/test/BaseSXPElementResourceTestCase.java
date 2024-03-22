@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -569,12 +570,15 @@ public abstract class BaseSXPElementResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPElementByExternalReferenceCode()
 		throws Exception {
 
 		SXPElement sxpElement =
 			testGraphQLGetSXPElementByExternalReferenceCode_addSXPElement();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -597,14 +601,43 @@ public abstract class BaseSXPElementResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/sXPElementByExternalReferenceCode"))));
+
+		// Using the namespace searchExperiences_v1_0
+
+		Assert.assertTrue(
+			equals(
+				sxpElement,
+				SXPElementSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"searchExperiences_v1_0",
+								new GraphQLField(
+									"sXPElementByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													sxpElement.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+						"Object/sXPElementByExternalReferenceCode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPElementByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -620,6 +653,27 @@ public abstract class BaseSXPElementResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace searchExperiences_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"searchExperiences_v1_0",
+						new GraphQLField(
+							"sXPElementByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -747,9 +801,13 @@ public abstract class BaseSXPElementResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteSXPElement() throws Exception {
-		SXPElement sxpElement = testGraphQLDeleteSXPElement_addSXPElement();
+
+		// No namespace
+
+		SXPElement sxpElement1 = testGraphQLDeleteSXPElement_addSXPElement();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -758,23 +816,59 @@ public abstract class BaseSXPElementResourceTestCase {
 						"deleteSXPElement",
 						new HashMap<String, Object>() {
 							{
-								put("sxpElementId", sxpElement.getId());
+								put("sxpElementId", sxpElement1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteSXPElement"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"sXPElement",
 					new HashMap<String, Object>() {
 						{
-							put("sxpElementId", sxpElement.getId());
+							put("sxpElementId", sxpElement1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace searchExperiences_v1_0
+
+		SXPElement sxpElement2 = testGraphQLDeleteSXPElement_addSXPElement();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"searchExperiences_v1_0",
+						new GraphQLField(
+							"deleteSXPElement",
+							new HashMap<String, Object>() {
+								{
+									put("sxpElementId", sxpElement2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+				"Object/deleteSXPElement"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"searchExperiences_v1_0",
+					new GraphQLField(
+						"sXPElement",
+						new HashMap<String, Object>() {
+							{
+								put("sxpElementId", sxpElement2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected SXPElement testGraphQLDeleteSXPElement_addSXPElement()
@@ -799,9 +893,12 @@ public abstract class BaseSXPElementResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPElement() throws Exception {
 		SXPElement sxpElement = testGraphQLGetSXPElement_addSXPElement();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -818,11 +915,37 @@ public abstract class BaseSXPElementResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/sXPElement"))));
+
+		// Using the namespace searchExperiences_v1_0
+
+		Assert.assertTrue(
+			equals(
+				sxpElement,
+				SXPElementSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"searchExperiences_v1_0",
+								new GraphQLField(
+									"sXPElement",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"sxpElementId",
+												sxpElement.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+						"Object/sXPElement"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPElementNotFound() throws Exception {
 		Long irrelevantSxpElementId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -836,6 +959,25 @@ public abstract class BaseSXPElementResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace searchExperiences_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"searchExperiences_v1_0",
+						new GraphQLField(
+							"sXPElement",
+							new HashMap<String, Object>() {
+								{
+									put("sxpElementId", irrelevantSxpElementId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

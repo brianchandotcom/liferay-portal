@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -204,9 +205,13 @@ public abstract class BaseGroupedProductResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteGroupedProduct() throws Exception {
-		GroupedProduct groupedProduct =
+
+		// No namespace
+
+		GroupedProduct groupedProduct1 =
 			testGraphQLDeleteGroupedProduct_addGroupedProduct();
 
 		Assert.assertTrue(
@@ -216,10 +221,35 @@ public abstract class BaseGroupedProductResourceTestCase {
 						"deleteGroupedProduct",
 						new HashMap<String, Object>() {
 							{
-								put("groupedProductId", groupedProduct.getId());
+								put(
+									"groupedProductId",
+									groupedProduct1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteGroupedProduct"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		GroupedProduct groupedProduct2 =
+			testGraphQLDeleteGroupedProduct_addGroupedProduct();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteGroupedProduct",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"groupedProductId",
+										groupedProduct2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteGroupedProduct"));
 	}
 
 	protected GroupedProduct testGraphQLDeleteGroupedProduct_addGroupedProduct()

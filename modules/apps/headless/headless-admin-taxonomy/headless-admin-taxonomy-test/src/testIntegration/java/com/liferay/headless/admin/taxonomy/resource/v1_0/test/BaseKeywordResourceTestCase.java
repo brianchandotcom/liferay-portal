@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -830,9 +831,13 @@ public abstract class BaseKeywordResourceTestCase {
 			testGroup.getGroupId(), randomKeyword());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteKeyword() throws Exception {
-		Keyword keyword = testGraphQLDeleteKeyword_addKeyword();
+
+		// No namespace
+
+		Keyword keyword1 = testGraphQLDeleteKeyword_addKeyword();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -841,23 +846,59 @@ public abstract class BaseKeywordResourceTestCase {
 						"deleteKeyword",
 						new HashMap<String, Object>() {
 							{
-								put("keywordId", keyword.getId());
+								put("keywordId", keyword1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteKeyword"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"keyword",
 					new HashMap<String, Object>() {
 						{
-							put("keywordId", keyword.getId());
+							put("keywordId", keyword1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Keyword keyword2 = testGraphQLDeleteKeyword_addKeyword();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"deleteKeyword",
+							new HashMap<String, Object>() {
+								{
+									put("keywordId", keyword2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+				"Object/deleteKeyword"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminTaxonomy_v1_0",
+					new GraphQLField(
+						"keyword",
+						new HashMap<String, Object>() {
+							{
+								put("keywordId", keyword2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected Keyword testGraphQLDeleteKeyword_addKeyword() throws Exception {
@@ -879,9 +920,12 @@ public abstract class BaseKeywordResourceTestCase {
 			testGroup.getGroupId(), randomKeyword());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKeyword() throws Exception {
 		Keyword keyword = testGraphQLGetKeyword_addKeyword();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -898,11 +942,36 @@ public abstract class BaseKeywordResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/keyword"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertTrue(
+			equals(
+				keyword,
+				KeywordSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminTaxonomy_v1_0",
+								new GraphQLField(
+									"keyword",
+									new HashMap<String, Object>() {
+										{
+											put("keywordId", keyword.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminTaxonomy_v1_0",
+						"Object/keyword"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetKeywordNotFound() throws Exception {
 		Long irrelevantKeywordId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -916,6 +985,25 @@ public abstract class BaseKeywordResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminTaxonomy_v1_0",
+						new GraphQLField(
+							"keyword",
+							new HashMap<String, Object>() {
+								{
+									put("keywordId", irrelevantKeywordId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -1364,6 +1452,7 @@ public abstract class BaseKeywordResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteKeywordsPage() throws Exception {
 		Long siteId = testGetSiteKeywordsPage_getSiteId();
@@ -1381,6 +1470,8 @@ public abstract class BaseKeywordResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject keywordsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/keywords");
@@ -1392,6 +1483,26 @@ public abstract class BaseKeywordResourceTestCase {
 
 		keywordsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/keywords");
+
+		Assert.assertEquals(
+			totalCount + 2, keywordsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			keyword1,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
+		assertContains(
+			keyword2,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		keywordsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminTaxonomy_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
 			"JSONObject/keywords");
 
 		Assert.assertEquals(

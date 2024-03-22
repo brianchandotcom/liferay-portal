@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -1672,10 +1673,13 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWorkflowTask() throws Exception {
 		WorkflowTask workflowTask =
 			testGraphQLGetWorkflowTask_addWorkflowTask();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1694,11 +1698,38 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/workflowTask"))));
+
+		// Using the namespace headlessAdminWorkflow_v1_0
+
+		Assert.assertTrue(
+			equals(
+				workflowTask,
+				WorkflowTaskSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminWorkflow_v1_0",
+								new GraphQLField(
+									"workflowTask",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"workflowTaskId",
+												workflowTask.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminWorkflow_v1_0",
+						"Object/workflowTask"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWorkflowTaskNotFound() throws Exception {
 		Long irrelevantWorkflowTaskId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1712,6 +1743,27 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminWorkflow_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminWorkflow_v1_0",
+						new GraphQLField(
+							"workflowTask",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"workflowTaskId",
+										irrelevantWorkflowTaskId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

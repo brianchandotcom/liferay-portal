@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -418,6 +419,7 @@ public abstract class BaseSiteResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSitesPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -431,6 +433,8 @@ public abstract class BaseSiteResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject sitesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/sites");
@@ -442,6 +446,26 @@ public abstract class BaseSiteResourceTestCase {
 
 		sitesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/sites");
+
+		Assert.assertEquals(
+			totalCount + 2, sitesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			site1,
+			Arrays.asList(
+				SiteSerDes.toDTOs(sitesJSONObject.getString("items"))));
+		assertContains(
+			site2,
+			Arrays.asList(
+				SiteSerDes.toDTOs(sitesJSONObject.getString("items"))));
+
+		// Using the namespace analyticsSettings_v1_0
+
+		sitesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("analyticsSettings_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/analyticsSettings_v1_0",
 			"JSONObject/sites");
 
 		Assert.assertEquals(

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -213,9 +214,13 @@ public abstract class BaseFormDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteFormDocument() throws Exception {
-		FormDocument formDocument =
+
+		// No namespace
+
+		FormDocument formDocument1 =
 			testGraphQLDeleteFormDocument_addFormDocument();
 
 		Assert.assertTrue(
@@ -225,23 +230,62 @@ public abstract class BaseFormDocumentResourceTestCase {
 						"deleteFormDocument",
 						new HashMap<String, Object>() {
 							{
-								put("formDocumentId", formDocument.getId());
+								put("formDocumentId", formDocument1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteFormDocument"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"formDocument",
 					new HashMap<String, Object>() {
 						{
-							put("formDocumentId", formDocument.getId());
+							put("formDocumentId", formDocument1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessForm_v1_0
+
+		FormDocument formDocument2 =
+			testGraphQLDeleteFormDocument_addFormDocument();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessForm_v1_0",
+						new GraphQLField(
+							"deleteFormDocument",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"formDocumentId",
+										formDocument2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessForm_v1_0",
+				"Object/deleteFormDocument"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessForm_v1_0",
+					new GraphQLField(
+						"formDocument",
+						new HashMap<String, Object>() {
+							{
+								put("formDocumentId", formDocument2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected FormDocument testGraphQLDeleteFormDocument_addFormDocument()
@@ -268,10 +312,13 @@ public abstract class BaseFormDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormDocument() throws Exception {
 		FormDocument formDocument =
 			testGraphQLGetFormDocument_addFormDocument();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -290,11 +337,37 @@ public abstract class BaseFormDocumentResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/formDocument"))));
+
+		// Using the namespace headlessForm_v1_0
+
+		Assert.assertTrue(
+			equals(
+				formDocument,
+				FormDocumentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessForm_v1_0",
+								new GraphQLField(
+									"formDocument",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"formDocumentId",
+												formDocument.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessForm_v1_0",
+						"Object/formDocument"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormDocumentNotFound() throws Exception {
 		Long irrelevantFormDocumentId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -308,6 +381,27 @@ public abstract class BaseFormDocumentResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessForm_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessForm_v1_0",
+						new GraphQLField(
+							"formDocument",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"formDocumentId",
+										irrelevantFormDocumentId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

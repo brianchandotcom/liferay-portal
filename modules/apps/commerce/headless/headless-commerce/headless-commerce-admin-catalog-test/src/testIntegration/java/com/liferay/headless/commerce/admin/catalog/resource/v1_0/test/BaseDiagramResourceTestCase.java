@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -219,12 +220,15 @@ public abstract class BaseDiagramResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeDiagram()
 		throws Exception {
 
 		Diagram diagram =
 			testGraphQLGetProductByExternalReferenceCodeDiagram_addDiagram();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -246,6 +250,32 @@ public abstract class BaseDiagramResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productByExternalReferenceCodeDiagram"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				diagram,
+				DiagramSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productByExternalReferenceCodeDiagram",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetProductByExternalReferenceCodeDiagram_getExternalReferenceCode() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productByExternalReferenceCodeDiagram"))));
 	}
 
 	protected String
@@ -256,12 +286,15 @@ public abstract class BaseDiagramResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductByExternalReferenceCodeDiagramNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -277,6 +310,27 @@ public abstract class BaseDiagramResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productByExternalReferenceCodeDiagram",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -332,9 +386,12 @@ public abstract class BaseDiagramResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdDiagram() throws Exception {
 		Diagram diagram = testGraphQLGetProductIdDiagram_addDiagram();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -354,6 +411,31 @@ public abstract class BaseDiagramResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/productIdDiagram"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			equals(
+				diagram,
+				DiagramSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminCatalog_v1_0",
+								new GraphQLField(
+									"productIdDiagram",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetProductIdDiagram_getId(
+													diagram));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminCatalog_v1_0",
+						"Object/productIdDiagram"))));
 	}
 
 	protected Long testGraphQLGetProductIdDiagram_getId(Diagram diagram)
@@ -362,9 +444,12 @@ public abstract class BaseDiagramResourceTestCase {
 		return diagram.getId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetProductIdDiagramNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -378,6 +463,25 @@ public abstract class BaseDiagramResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"productIdDiagram",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

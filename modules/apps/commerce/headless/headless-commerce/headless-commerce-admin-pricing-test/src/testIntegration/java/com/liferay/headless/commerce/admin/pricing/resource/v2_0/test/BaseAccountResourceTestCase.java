@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -203,9 +204,12 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountAccountAccount() throws Exception {
 		Account account = testGraphQLGetDiscountAccountAccount_addAccount();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -224,6 +228,30 @@ public abstract class BaseAccountResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/discountAccountAccount"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v2_0",
+								new GraphQLField(
+									"discountAccountAccount",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"discountAccountId",
+												testGraphQLGetDiscountAccountAccount_getDiscountAccountId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v2_0",
+						"Object/discountAccountAccount"))));
 	}
 
 	protected Long testGraphQLGetDiscountAccountAccount_getDiscountAccountId()
@@ -233,11 +261,14 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountAccountAccountNotFound()
 		throws Exception {
 
 		Long irrelevantDiscountAccountId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -253,6 +284,27 @@ public abstract class BaseAccountResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"discountAccountAccount",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"discountAccountId",
+										irrelevantDiscountAccountId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -288,9 +340,12 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceListAccountAccount() throws Exception {
 		Account account = testGraphQLGetPriceListAccountAccount_addAccount();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -309,6 +364,30 @@ public abstract class BaseAccountResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/priceListAccountAccount"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertTrue(
+			equals(
+				account,
+				AccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v2_0",
+								new GraphQLField(
+									"priceListAccountAccount",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"priceListAccountId",
+												testGraphQLGetPriceListAccountAccount_getPriceListAccountId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v2_0",
+						"Object/priceListAccountAccount"))));
 	}
 
 	protected Long testGraphQLGetPriceListAccountAccount_getPriceListAccountId()
@@ -318,11 +397,14 @@ public abstract class BaseAccountResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceListAccountAccountNotFound()
 		throws Exception {
 
 		Long irrelevantPriceListAccountId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -338,6 +420,27 @@ public abstract class BaseAccountResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"priceListAccountAccount",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"priceListAccountId",
+										irrelevantPriceListAccountId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

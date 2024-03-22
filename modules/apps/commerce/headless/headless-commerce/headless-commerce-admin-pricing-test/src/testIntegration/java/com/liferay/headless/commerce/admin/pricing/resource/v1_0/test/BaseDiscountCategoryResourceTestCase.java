@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -204,9 +205,13 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteDiscountCategory() throws Exception {
-		DiscountCategory discountCategory =
+
+		// No namespace
+
+		DiscountCategory discountCategory1 =
 			testGraphQLDeleteDiscountCategory_addDiscountCategory();
 
 		Assert.assertTrue(
@@ -216,10 +221,31 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 						"deleteDiscountCategory",
 						new HashMap<String, Object>() {
 							{
-								put("id", discountCategory.getId());
+								put("id", discountCategory1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscountCategory"));
+
+		// Using the namespace headlessCommerceAdminPricing_v1_0
+
+		DiscountCategory discountCategory2 =
+			testGraphQLDeleteDiscountCategory_addDiscountCategory();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v1_0",
+						new GraphQLField(
+							"deleteDiscountCategory",
+							new HashMap<String, Object>() {
+								{
+									put("id", discountCategory2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v1_0",
+				"Object/deleteDiscountCategory"));
 	}
 
 	protected DiscountCategory

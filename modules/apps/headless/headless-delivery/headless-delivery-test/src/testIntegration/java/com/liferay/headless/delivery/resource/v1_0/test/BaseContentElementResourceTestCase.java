@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -1079,6 +1080,7 @@ public abstract class BaseContentElementResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteContentElementsPage() throws Exception {
 		Long siteId = testGetSiteContentElementsPage_getSiteId();
@@ -1096,6 +1098,8 @@ public abstract class BaseContentElementResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject contentElementsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/contentElements");
@@ -1109,6 +1113,28 @@ public abstract class BaseContentElementResourceTestCase {
 
 		contentElementsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/contentElements");
+
+		Assert.assertEquals(
+			totalCount + 2, contentElementsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			contentElement1,
+			Arrays.asList(
+				ContentElementSerDes.toDTOs(
+					contentElementsJSONObject.getString("items"))));
+		assertContains(
+			contentElement2,
+			Arrays.asList(
+				ContentElementSerDes.toDTOs(
+					contentElementsJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		contentElementsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 			"JSONObject/contentElements");
 
 		Assert.assertEquals(

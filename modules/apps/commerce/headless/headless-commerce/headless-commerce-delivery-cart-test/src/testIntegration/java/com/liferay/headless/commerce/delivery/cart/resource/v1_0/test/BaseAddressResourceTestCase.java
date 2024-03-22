@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -225,9 +226,12 @@ public abstract class BaseAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCartBillingAddres() throws Exception {
 		Address address = testGraphQLGetCartBillingAddres_addAddress();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -246,6 +250,30 @@ public abstract class BaseAddressResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/cartBillingAddres"))));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertTrue(
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCart_v1_0",
+								new GraphQLField(
+									"cartBillingAddres",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"cartId",
+												testGraphQLGetCartBillingAddres_getCartId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCart_v1_0",
+						"Object/cartBillingAddres"))));
 	}
 
 	protected Long testGraphQLGetCartBillingAddres_getCartId()
@@ -255,9 +283,12 @@ public abstract class BaseAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCartBillingAddresNotFound() throws Exception {
 		Long irrelevantCartId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -271,6 +302,25 @@ public abstract class BaseAddressResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"cartBillingAddres",
+							new HashMap<String, Object>() {
+								{
+									put("cartId", irrelevantCartId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -302,9 +352,12 @@ public abstract class BaseAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCartShippingAddres() throws Exception {
 		Address address = testGraphQLGetCartShippingAddres_addAddress();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -323,6 +376,30 @@ public abstract class BaseAddressResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/cartShippingAddres"))));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertTrue(
+			equals(
+				address,
+				AddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceDeliveryCart_v1_0",
+								new GraphQLField(
+									"cartShippingAddres",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"cartId",
+												testGraphQLGetCartShippingAddres_getCartId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceDeliveryCart_v1_0",
+						"Object/cartShippingAddres"))));
 	}
 
 	protected Long testGraphQLGetCartShippingAddres_getCartId()
@@ -332,9 +409,12 @@ public abstract class BaseAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCartShippingAddresNotFound() throws Exception {
 		Long irrelevantCartId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -348,6 +428,25 @@ public abstract class BaseAddressResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceDeliveryCart_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceDeliveryCart_v1_0",
+						new GraphQLField(
+							"cartShippingAddres",
+							new HashMap<String, Object>() {
+								{
+									put("cartId", irrelevantCartId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

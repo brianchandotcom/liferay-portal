@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -506,6 +507,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWorkflowDefinitionsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -518,6 +520,8 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			},
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
 
 		JSONObject workflowDefinitionsJSONObject =
 			JSONUtil.getValueAsJSONObject(
@@ -533,6 +537,29 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		workflowDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/workflowDefinitions");
+
+		Assert.assertEquals(
+			totalCount + 2,
+			workflowDefinitionsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			workflowDefinition1,
+			Arrays.asList(
+				WorkflowDefinitionSerDes.toDTOs(
+					workflowDefinitionsJSONObject.getString("items"))));
+		assertContains(
+			workflowDefinition2,
+			Arrays.asList(
+				WorkflowDefinitionSerDes.toDTOs(
+					workflowDefinitionsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminWorkflow_v1_0
+
+		workflowDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminWorkflow_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminWorkflow_v1_0",
 			"JSONObject/workflowDefinitions");
 
 		Assert.assertEquals(
@@ -601,10 +628,13 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWorkflowDefinitionByName() throws Exception {
 		WorkflowDefinition workflowDefinition =
 			testGraphQLGetWorkflowDefinitionByName_addWorkflowDefinition();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -626,13 +656,42 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/workflowDefinitionByName"))));
+
+		// Using the namespace headlessAdminWorkflow_v1_0
+
+		Assert.assertTrue(
+			equals(
+				workflowDefinition,
+				WorkflowDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminWorkflow_v1_0",
+								new GraphQLField(
+									"workflowDefinitionByName",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"name",
+												"\"" +
+													workflowDefinition.
+														getName() + "\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminWorkflow_v1_0",
+						"Object/workflowDefinitionByName"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWorkflowDefinitionByNameNotFound()
 		throws Exception {
 
 		String irrelevantName = "\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -646,6 +705,25 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminWorkflow_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminWorkflow_v1_0",
+						new GraphQLField(
+							"workflowDefinitionByName",
+							new HashMap<String, Object>() {
+								{
+									put("name", irrelevantName);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -772,9 +850,13 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteWorkflowDefinition() throws Exception {
-		WorkflowDefinition workflowDefinition =
+
+		// No namespace
+
+		WorkflowDefinition workflowDefinition1 =
 			testGraphQLDeleteWorkflowDefinition_addWorkflowDefinition();
 
 		Assert.assertTrue(
@@ -786,11 +868,12 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 							{
 								put(
 									"workflowDefinitionId",
-									workflowDefinition.getId());
+									workflowDefinition1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteWorkflowDefinition"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"workflowDefinition",
@@ -798,13 +881,53 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 						{
 							put(
 								"workflowDefinitionId",
-								workflowDefinition.getId());
+								workflowDefinition1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminWorkflow_v1_0
+
+		WorkflowDefinition workflowDefinition2 =
+			testGraphQLDeleteWorkflowDefinition_addWorkflowDefinition();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminWorkflow_v1_0",
+						new GraphQLField(
+							"deleteWorkflowDefinition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"workflowDefinitionId",
+										workflowDefinition2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminWorkflow_v1_0",
+				"Object/deleteWorkflowDefinition"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminWorkflow_v1_0",
+					new GraphQLField(
+						"workflowDefinition",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"workflowDefinitionId",
+									workflowDefinition2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected WorkflowDefinition
@@ -835,10 +958,13 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWorkflowDefinition() throws Exception {
 		WorkflowDefinition workflowDefinition =
 			testGraphQLGetWorkflowDefinition_addWorkflowDefinition();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -857,11 +983,38 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/workflowDefinition"))));
+
+		// Using the namespace headlessAdminWorkflow_v1_0
+
+		Assert.assertTrue(
+			equals(
+				workflowDefinition,
+				WorkflowDefinitionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminWorkflow_v1_0",
+								new GraphQLField(
+									"workflowDefinition",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"workflowDefinitionId",
+												workflowDefinition.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminWorkflow_v1_0",
+						"Object/workflowDefinition"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWorkflowDefinitionNotFound() throws Exception {
 		Long irrelevantWorkflowDefinitionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -877,6 +1030,27 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminWorkflow_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminWorkflow_v1_0",
+						new GraphQLField(
+							"workflowDefinition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"workflowDefinitionId",
+										irrelevantWorkflowDefinitionId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -586,12 +587,15 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPBlueprintByExternalReferenceCode()
 		throws Exception {
 
 		SXPBlueprint sxpBlueprint =
 			testGraphQLGetSXPBlueprintByExternalReferenceCode_addSXPBlueprint();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -614,14 +618,43 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/sXPBlueprintByExternalReferenceCode"))));
+
+		// Using the namespace searchExperiences_v1_0
+
+		Assert.assertTrue(
+			equals(
+				sxpBlueprint,
+				SXPBlueprintSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"searchExperiences_v1_0",
+								new GraphQLField(
+									"sXPBlueprintByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													sxpBlueprint.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+						"Object/sXPBlueprintByExternalReferenceCode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPBlueprintByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -637,6 +670,27 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace searchExperiences_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"searchExperiences_v1_0",
+						new GraphQLField(
+							"sXPBlueprintByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -751,9 +805,13 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteSXPBlueprint() throws Exception {
-		SXPBlueprint sxpBlueprint =
+
+		// No namespace
+
+		SXPBlueprint sxpBlueprint1 =
 			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
 
 		Assert.assertTrue(
@@ -763,23 +821,62 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 						"deleteSXPBlueprint",
 						new HashMap<String, Object>() {
 							{
-								put("sxpBlueprintId", sxpBlueprint.getId());
+								put("sxpBlueprintId", sxpBlueprint1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteSXPBlueprint"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"sXPBlueprint",
 					new HashMap<String, Object>() {
 						{
-							put("sxpBlueprintId", sxpBlueprint.getId());
+							put("sxpBlueprintId", sxpBlueprint1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace searchExperiences_v1_0
+
+		SXPBlueprint sxpBlueprint2 =
+			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"searchExperiences_v1_0",
+						new GraphQLField(
+							"deleteSXPBlueprint",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"sxpBlueprintId",
+										sxpBlueprint2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+				"Object/deleteSXPBlueprint"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"searchExperiences_v1_0",
+					new GraphQLField(
+						"sXPBlueprint",
+						new HashMap<String, Object>() {
+							{
+								put("sxpBlueprintId", sxpBlueprint2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected SXPBlueprint testGraphQLDeleteSXPBlueprint_addSXPBlueprint()
@@ -806,10 +903,13 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPBlueprint() throws Exception {
 		SXPBlueprint sxpBlueprint =
 			testGraphQLGetSXPBlueprint_addSXPBlueprint();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -828,11 +928,37 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/sXPBlueprint"))));
+
+		// Using the namespace searchExperiences_v1_0
+
+		Assert.assertTrue(
+			equals(
+				sxpBlueprint,
+				SXPBlueprintSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"searchExperiences_v1_0",
+								new GraphQLField(
+									"sXPBlueprint",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"sxpBlueprintId",
+												sxpBlueprint.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/searchExperiences_v1_0",
+						"Object/sXPBlueprint"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSXPBlueprintNotFound() throws Exception {
 		Long irrelevantSxpBlueprintId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -846,6 +972,27 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace searchExperiences_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"searchExperiences_v1_0",
+						new GraphQLField(
+							"sXPBlueprint",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"sxpBlueprintId",
+										irrelevantSxpBlueprintId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

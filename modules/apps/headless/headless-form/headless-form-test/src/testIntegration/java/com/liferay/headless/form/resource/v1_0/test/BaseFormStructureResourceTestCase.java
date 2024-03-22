@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -202,10 +203,13 @@ public abstract class BaseFormStructureResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormStructure() throws Exception {
 		FormStructure formStructure =
 			testGraphQLGetFormStructure_addFormStructure();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -224,11 +228,37 @@ public abstract class BaseFormStructureResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/formStructure"))));
+
+		// Using the namespace headlessForm_v1_0
+
+		Assert.assertTrue(
+			equals(
+				formStructure,
+				FormStructureSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessForm_v1_0",
+								new GraphQLField(
+									"formStructure",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"formStructureId",
+												formStructure.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessForm_v1_0",
+						"Object/formStructure"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetFormStructureNotFound() throws Exception {
 		Long irrelevantFormStructureId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -244,6 +274,27 @@ public abstract class BaseFormStructureResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessForm_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessForm_v1_0",
+						new GraphQLField(
+							"formStructure",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"formStructureId",
+										irrelevantFormStructureId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -426,6 +477,7 @@ public abstract class BaseFormStructureResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteFormStructuresPage() throws Exception {
 		Long siteId = testGetSiteFormStructuresPage_getSiteId();
@@ -443,6 +495,8 @@ public abstract class BaseFormStructureResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject formStructuresJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/formStructures");
@@ -456,6 +510,28 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		formStructuresJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/formStructures");
+
+		Assert.assertEquals(
+			totalCount + 2, formStructuresJSONObject.getLong("totalCount"));
+
+		assertContains(
+			formStructure1,
+			Arrays.asList(
+				FormStructureSerDes.toDTOs(
+					formStructuresJSONObject.getString("items"))));
+		assertContains(
+			formStructure2,
+			Arrays.asList(
+				FormStructureSerDes.toDTOs(
+					formStructuresJSONObject.getString("items"))));
+
+		// Using the namespace headlessForm_v1_0
+
+		formStructuresJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessForm_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessForm_v1_0",
 			"JSONObject/formStructures");
 
 		Assert.assertEquals(

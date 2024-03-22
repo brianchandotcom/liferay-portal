@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -203,12 +204,15 @@ public abstract class BaseProductGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountProductGroupProductGroup()
 		throws Exception {
 
 		ProductGroup productGroup =
 			testGraphQLGetDiscountProductGroupProductGroup_addProductGroup();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -228,6 +232,30 @@ public abstract class BaseProductGroupResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/discountProductGroupProductGroup"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertTrue(
+			equals(
+				productGroup,
+				ProductGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v2_0",
+								new GraphQLField(
+									"discountProductGroupProductGroup",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"discountProductGroupId",
+												testGraphQLGetDiscountProductGroupProductGroup_getDiscountProductGroupId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v2_0",
+						"Object/discountProductGroupProductGroup"))));
 	}
 
 	protected Long
@@ -238,11 +266,14 @@ public abstract class BaseProductGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetDiscountProductGroupProductGroupNotFound()
 		throws Exception {
 
 		Long irrelevantDiscountProductGroupId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -258,6 +289,27 @@ public abstract class BaseProductGroupResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"discountProductGroupProductGroup",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"discountProductGroupId",
+										irrelevantDiscountProductGroupId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -300,12 +352,15 @@ public abstract class BaseProductGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceModifierProductGroupProductGroup()
 		throws Exception {
 
 		ProductGroup productGroup =
 			testGraphQLGetPriceModifierProductGroupProductGroup_addProductGroup();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -325,6 +380,30 @@ public abstract class BaseProductGroupResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/priceModifierProductGroupProductGroup"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertTrue(
+			equals(
+				productGroup,
+				ProductGroupSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v2_0",
+								new GraphQLField(
+									"priceModifierProductGroupProductGroup",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"priceModifierProductGroupId",
+												testGraphQLGetPriceModifierProductGroupProductGroup_getPriceModifierProductGroupId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v2_0",
+						"Object/priceModifierProductGroupProductGroup"))));
 	}
 
 	protected Long
@@ -335,12 +414,15 @@ public abstract class BaseProductGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetPriceModifierProductGroupProductGroupNotFound()
 		throws Exception {
 
 		Long irrelevantPriceModifierProductGroupId =
 			RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -356,6 +438,27 @@ public abstract class BaseProductGroupResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"priceModifierProductGroupProductGroup",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"priceModifierProductGroupId",
+										irrelevantPriceModifierProductGroupId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

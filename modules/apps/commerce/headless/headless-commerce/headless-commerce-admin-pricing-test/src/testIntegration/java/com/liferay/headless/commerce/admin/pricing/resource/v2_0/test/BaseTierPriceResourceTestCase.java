@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -655,12 +656,15 @@ public abstract class BaseTierPriceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTierPriceByExternalReferenceCode()
 		throws Exception {
 
 		TierPrice tierPrice =
 			testGraphQLGetTierPriceByExternalReferenceCode_addTierPrice();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -683,14 +687,44 @@ public abstract class BaseTierPriceResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/tierPriceByExternalReferenceCode"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertTrue(
+			equals(
+				tierPrice,
+				TierPriceSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v2_0",
+								new GraphQLField(
+									"tierPriceByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													tierPrice.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v2_0",
+						"Object/tierPriceByExternalReferenceCode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTierPriceByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -706,6 +740,27 @@ public abstract class BaseTierPriceResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"tierPriceByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -743,9 +798,13 @@ public abstract class BaseTierPriceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteTierPrice() throws Exception {
-		TierPrice tierPrice = testGraphQLDeleteTierPrice_addTierPrice();
+
+		// No namespace
+
+		TierPrice tierPrice1 = testGraphQLDeleteTierPrice_addTierPrice();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -754,23 +813,60 @@ public abstract class BaseTierPriceResourceTestCase {
 						"deleteTierPrice",
 						new HashMap<String, Object>() {
 							{
-								put("id", tierPrice.getId());
+								put("id", tierPrice1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteTierPrice"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"tierPrice",
 					new HashMap<String, Object>() {
 						{
-							put("id", tierPrice.getId());
+							put("id", tierPrice1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		TierPrice tierPrice2 = testGraphQLDeleteTierPrice_addTierPrice();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"deleteTierPrice",
+							new HashMap<String, Object>() {
+								{
+									put("id", tierPrice2.getId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v2_0",
+				"Object/deleteTierPrice"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminPricing_v2_0",
+					new GraphQLField(
+						"tierPrice",
+						new HashMap<String, Object>() {
+							{
+								put("id", tierPrice2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected TierPrice testGraphQLDeleteTierPrice_addTierPrice()
@@ -795,9 +891,12 @@ public abstract class BaseTierPriceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTierPrice() throws Exception {
 		TierPrice tierPrice = testGraphQLGetTierPrice_addTierPrice();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -814,11 +913,36 @@ public abstract class BaseTierPriceResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/tierPrice"))));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertTrue(
+			equals(
+				tierPrice,
+				TierPriceSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminPricing_v2_0",
+								new GraphQLField(
+									"tierPrice",
+									new HashMap<String, Object>() {
+										{
+											put("id", tierPrice.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminPricing_v2_0",
+						"Object/tierPrice"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetTierPriceNotFound() throws Exception {
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -832,6 +956,25 @@ public abstract class BaseTierPriceResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"tierPrice",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

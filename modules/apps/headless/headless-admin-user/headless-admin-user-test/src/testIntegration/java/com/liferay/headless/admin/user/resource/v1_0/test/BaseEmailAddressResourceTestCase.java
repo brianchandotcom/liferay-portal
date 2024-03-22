@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -198,10 +199,13 @@ public abstract class BaseEmailAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetEmailAddress() throws Exception {
 		EmailAddress emailAddress =
 			testGraphQLGetEmailAddress_addEmailAddress();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -220,11 +224,37 @@ public abstract class BaseEmailAddressResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/emailAddress"))));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertTrue(
+			equals(
+				emailAddress,
+				EmailAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminUser_v1_0",
+								new GraphQLField(
+									"emailAddress",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"emailAddressId",
+												emailAddress.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminUser_v1_0",
+						"Object/emailAddress"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetEmailAddressNotFound() throws Exception {
 		Long irrelevantEmailAddressId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -238,6 +268,27 @@ public abstract class BaseEmailAddressResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminUser_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminUser_v1_0",
+						new GraphQLField(
+							"emailAddress",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"emailAddressId",
+										irrelevantEmailAddressId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

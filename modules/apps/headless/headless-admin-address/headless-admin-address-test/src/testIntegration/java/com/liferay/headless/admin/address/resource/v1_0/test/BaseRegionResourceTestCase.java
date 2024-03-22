@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -521,9 +522,12 @@ public abstract class BaseRegionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryRegionByRegionCode() throws Exception {
 		Region region = testGraphQLGetCountryRegionByRegionCode_addRegion();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -549,6 +553,36 @@ public abstract class BaseRegionResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/countryRegionByRegionCode"))));
+
+		// Using the namespace headlessAdminAddress_v1_0
+
+		Assert.assertTrue(
+			equals(
+				region,
+				RegionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminAddress_v1_0",
+								new GraphQLField(
+									"countryRegionByRegionCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"countryId",
+												testGraphQLGetCountryRegionByRegionCode_getCountryId(
+													region));
+
+											put(
+												"regionCode",
+												"\"" + region.getRegionCode() +
+													"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminAddress_v1_0",
+						"Object/countryRegionByRegionCode"))));
 	}
 
 	protected Long testGraphQLGetCountryRegionByRegionCode_getCountryId(
@@ -558,6 +592,7 @@ public abstract class BaseRegionResourceTestCase {
 		return region.getCountryId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetCountryRegionByRegionCodeNotFound()
 		throws Exception {
@@ -565,6 +600,8 @@ public abstract class BaseRegionResourceTestCase {
 		Long irrelevantCountryId = RandomTestUtil.randomLong();
 		String irrelevantRegionCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -579,6 +616,26 @@ public abstract class BaseRegionResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminAddress_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminAddress_v1_0",
+						new GraphQLField(
+							"countryRegionByRegionCode",
+							new HashMap<String, Object>() {
+								{
+									put("countryId", irrelevantCountryId);
+									put("regionCode", irrelevantRegionCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -829,6 +886,7 @@ public abstract class BaseRegionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetRegionsPage() throws Exception {
 		GraphQLField graphQLField = new GraphQLField(
@@ -842,6 +900,8 @@ public abstract class BaseRegionResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject regionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/regions");
@@ -853,6 +913,26 @@ public abstract class BaseRegionResourceTestCase {
 
 		regionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/regions");
+
+		Assert.assertEquals(
+			totalCount + 2, regionsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			region1,
+			Arrays.asList(
+				RegionSerDes.toDTOs(regionsJSONObject.getString("items"))));
+		assertContains(
+			region2,
+			Arrays.asList(
+				RegionSerDes.toDTOs(regionsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminAddress_v1_0
+
+		regionsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminAddress_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminAddress_v1_0",
 			"JSONObject/regions");
 
 		Assert.assertEquals(
@@ -892,9 +972,13 @@ public abstract class BaseRegionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteRegion() throws Exception {
-		Region region = testGraphQLDeleteRegion_addRegion();
+
+		// No namespace
+
+		Region region1 = testGraphQLDeleteRegion_addRegion();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -903,23 +987,59 @@ public abstract class BaseRegionResourceTestCase {
 						"deleteRegion",
 						new HashMap<String, Object>() {
 							{
-								put("regionId", region.getId());
+								put("regionId", region1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteRegion"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"region",
 					new HashMap<String, Object>() {
 						{
-							put("regionId", region.getId());
+							put("regionId", region1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessAdminAddress_v1_0
+
+		Region region2 = testGraphQLDeleteRegion_addRegion();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessAdminAddress_v1_0",
+						new GraphQLField(
+							"deleteRegion",
+							new HashMap<String, Object>() {
+								{
+									put("regionId", region2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessAdminAddress_v1_0",
+				"Object/deleteRegion"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessAdminAddress_v1_0",
+					new GraphQLField(
+						"region",
+						new HashMap<String, Object>() {
+							{
+								put("regionId", region2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected Region testGraphQLDeleteRegion_addRegion() throws Exception {
@@ -941,9 +1061,12 @@ public abstract class BaseRegionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetRegion() throws Exception {
 		Region region = testGraphQLGetRegion_addRegion();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -960,11 +1083,36 @@ public abstract class BaseRegionResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/region"))));
+
+		// Using the namespace headlessAdminAddress_v1_0
+
+		Assert.assertTrue(
+			equals(
+				region,
+				RegionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminAddress_v1_0",
+								new GraphQLField(
+									"region",
+									new HashMap<String, Object>() {
+										{
+											put("regionId", region.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessAdminAddress_v1_0",
+						"Object/region"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetRegionNotFound() throws Exception {
 		Long irrelevantRegionId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -978,6 +1126,25 @@ public abstract class BaseRegionResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminAddress_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminAddress_v1_0",
+						new GraphQLField(
+							"region",
+							new HashMap<String, Object>() {
+								{
+									put("regionId", irrelevantRegionId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -1349,9 +1350,13 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteObjectRelationship() throws Exception {
-		ObjectRelationship objectRelationship =
+
+		// No namespace
+
+		ObjectRelationship objectRelationship1 =
 			testGraphQLDeleteObjectRelationship_addObjectRelationship();
 
 		Assert.assertTrue(
@@ -1363,11 +1368,12 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 							{
 								put(
 									"objectRelationshipId",
-									objectRelationship.getId());
+									objectRelationship1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteObjectRelationship"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"objectRelationship",
@@ -1375,13 +1381,53 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 						{
 							put(
 								"objectRelationshipId",
-								objectRelationship.getId());
+								objectRelationship1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace objectAdmin_v1_0
+
+		ObjectRelationship objectRelationship2 =
+			testGraphQLDeleteObjectRelationship_addObjectRelationship();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"deleteObjectRelationship",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectRelationshipId",
+										objectRelationship2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+				"Object/deleteObjectRelationship"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectAdmin_v1_0",
+					new GraphQLField(
+						"objectRelationship",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectRelationshipId",
+									objectRelationship2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected ObjectRelationship
@@ -1412,10 +1458,13 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectRelationship() throws Exception {
 		ObjectRelationship objectRelationship =
 			testGraphQLGetObjectRelationship_addObjectRelationship();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1434,11 +1483,37 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/objectRelationship"))));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertTrue(
+			equals(
+				objectRelationship,
+				ObjectRelationshipSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectAdmin_v1_0",
+								new GraphQLField(
+									"objectRelationship",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"objectRelationshipId",
+												objectRelationship.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/objectAdmin_v1_0",
+						"Object/objectRelationship"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetObjectRelationshipNotFound() throws Exception {
 		Long irrelevantObjectRelationshipId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1454,6 +1529,27 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace objectAdmin_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectAdmin_v1_0",
+						new GraphQLField(
+							"objectRelationship",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectRelationshipId",
+										irrelevantObjectRelationshipId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

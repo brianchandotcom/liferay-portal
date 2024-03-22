@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -227,10 +228,13 @@ public abstract class BaseShippingAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderItemShippingAddress() throws Exception {
 		ShippingAddress shippingAddress =
 			testGraphQLGetOrderItemShippingAddress_addShippingAddress();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -251,6 +255,31 @@ public abstract class BaseShippingAddressResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderItemShippingAddress"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				shippingAddress,
+				ShippingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderItemShippingAddress",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetOrderItemShippingAddress_getId(
+													shippingAddress));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderItemShippingAddress"))));
 	}
 
 	protected Long testGraphQLGetOrderItemShippingAddress_getId(
@@ -260,11 +289,14 @@ public abstract class BaseShippingAddressResourceTestCase {
 		return shippingAddress.getId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderItemShippingAddressNotFound()
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -278,6 +310,25 @@ public abstract class BaseShippingAddressResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderItemShippingAddress",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -322,12 +373,15 @@ public abstract class BaseShippingAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCodeShippingAddress()
 		throws Exception {
 
 		ShippingAddress shippingAddress =
 			testGraphQLGetOrderByExternalReferenceCodeShippingAddress_addShippingAddress();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -349,6 +403,33 @@ public abstract class BaseShippingAddressResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderByExternalReferenceCodeShippingAddress"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				shippingAddress,
+				ShippingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderByExternalReferenceCodeShippingAddress",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetOrderByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+														shippingAddress) +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderByExternalReferenceCodeShippingAddress"))));
 	}
 
 	protected String
@@ -359,12 +440,15 @@ public abstract class BaseShippingAddressResourceTestCase {
 		return shippingAddress.getExternalReferenceCode();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCodeShippingAddressNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -380,6 +464,27 @@ public abstract class BaseShippingAddressResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderByExternalReferenceCodeShippingAddress",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -425,10 +530,13 @@ public abstract class BaseShippingAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderIdShippingAddress() throws Exception {
 		ShippingAddress shippingAddress =
 			testGraphQLGetOrderIdShippingAddress_addShippingAddress();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -448,6 +556,31 @@ public abstract class BaseShippingAddressResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderIdShippingAddress"))));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				shippingAddress,
+				ShippingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminOrder_v1_0",
+								new GraphQLField(
+									"orderIdShippingAddress",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetOrderIdShippingAddress_getId(
+													shippingAddress));
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminOrder_v1_0",
+						"Object/orderIdShippingAddress"))));
 	}
 
 	protected Long testGraphQLGetOrderIdShippingAddress_getId(
@@ -457,11 +590,14 @@ public abstract class BaseShippingAddressResourceTestCase {
 		return shippingAddress.getId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetOrderIdShippingAddressNotFound()
 		throws Exception {
 
 		Long irrelevantId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -475,6 +611,25 @@ public abstract class BaseShippingAddressResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"orderIdShippingAddress",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.util.SearchTestRule;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -574,6 +575,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteWikiNodesPage() throws Exception {
 		Long siteId = testGetSiteWikiNodesPage_getSiteId();
@@ -591,6 +593,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("page"), new GraphQLField("totalCount"));
 
+		// No namespace
+
 		JSONObject wikiNodesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/wikiNodes");
@@ -602,6 +606,26 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		wikiNodesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/wikiNodes");
+
+		Assert.assertEquals(
+			totalCount + 2, wikiNodesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			wikiNode1,
+			Arrays.asList(
+				WikiNodeSerDes.toDTOs(wikiNodesJSONObject.getString("items"))));
+		assertContains(
+			wikiNode2,
+			Arrays.asList(
+				WikiNodeSerDes.toDTOs(wikiNodesJSONObject.getString("items"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		wikiNodesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessDelivery_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 			"JSONObject/wikiNodes");
 
 		Assert.assertEquals(
@@ -725,12 +749,15 @@ public abstract class BaseWikiNodeResourceTestCase {
 			testGroup.getGroupId(), randomWikiNode());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteWikiNodeByExternalReferenceCode()
 		throws Exception {
 
 		WikiNode wikiNode =
 			testGraphQLGetSiteWikiNodeByExternalReferenceCode_addWikiNode();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -759,6 +786,38 @@ public abstract class BaseWikiNodeResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/wikiNodeByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				wikiNode,
+				WikiNodeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"wikiNodeByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteWikiNodeByExternalReferenceCode_getSiteId(
+														wikiNode) + "\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													wikiNode.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/wikiNodeByExternalReferenceCode"))));
 	}
 
 	protected Long testGraphQLGetSiteWikiNodeByExternalReferenceCode_getSiteId(
@@ -768,12 +827,15 @@ public abstract class BaseWikiNodeResourceTestCase {
 		return wikiNode.getSiteId();
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetSiteWikiNodeByExternalReferenceCodeNotFound()
 		throws Exception {
 
 		String irrelevantExternalReferenceCode =
 			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -792,6 +854,31 @@ public abstract class BaseWikiNodeResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"wikiNodeByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}
@@ -947,9 +1034,13 @@ public abstract class BaseWikiNodeResourceTestCase {
 			testGroup.getGroupId(), randomWikiNode());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLDeleteWikiNode() throws Exception {
-		WikiNode wikiNode = testGraphQLDeleteWikiNode_addWikiNode();
+
+		// No namespace
+
+		WikiNode wikiNode1 = testGraphQLDeleteWikiNode_addWikiNode();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -958,23 +1049,59 @@ public abstract class BaseWikiNodeResourceTestCase {
 						"deleteWikiNode",
 						new HashMap<String, Object>() {
 							{
-								put("wikiNodeId", wikiNode.getId());
+								put("wikiNodeId", wikiNode1.getId());
 							}
 						})),
 				"JSONObject/data", "Object/deleteWikiNode"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
 					"wikiNode",
 					new HashMap<String, Object>() {
 						{
-							put("wikiNodeId", wikiNode.getId());
+							put("wikiNodeId", wikiNode1.getId());
 						}
 					},
 					new GraphQLField("id"))),
 			"JSONArray/errors");
 
-		Assert.assertTrue(errorsJSONArray.length() > 0);
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		WikiNode wikiNode2 = testGraphQLDeleteWikiNode_addWikiNode();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteWikiNode",
+							new HashMap<String, Object>() {
+								{
+									put("wikiNodeId", wikiNode2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteWikiNode"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"wikiNode",
+						new HashMap<String, Object>() {
+							{
+								put("wikiNodeId", wikiNode2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
 	}
 
 	protected WikiNode testGraphQLDeleteWikiNode_addWikiNode()
@@ -999,9 +1126,12 @@ public abstract class BaseWikiNodeResourceTestCase {
 			testGroup.getGroupId(), randomWikiNode());
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWikiNode() throws Exception {
 		WikiNode wikiNode = testGraphQLGetWikiNode_addWikiNode();
+
+		// No namespace
 
 		Assert.assertTrue(
 			equals(
@@ -1018,11 +1148,35 @@ public abstract class BaseWikiNodeResourceTestCase {
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/wikiNode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				wikiNode,
+				WikiNodeSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"wikiNode",
+									new HashMap<String, Object>() {
+										{
+											put("wikiNodeId", wikiNode.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/wikiNode"))));
 	}
 
+	@FeatureFlags("LPD-10789")
 	@Test
 	public void testGraphQLGetWikiNodeNotFound() throws Exception {
 		Long irrelevantWikiNodeId = RandomTestUtil.randomLong();
+
+		// No namespace
 
 		Assert.assertEquals(
 			"Not Found",
@@ -1036,6 +1190,25 @@ public abstract class BaseWikiNodeResourceTestCase {
 							}
 						},
 						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"wikiNode",
+							new HashMap<String, Object>() {
+								{
+									put("wikiNodeId", irrelevantWikiNodeId);
+								}
+							},
+							getGraphQLFields()))),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
 	}

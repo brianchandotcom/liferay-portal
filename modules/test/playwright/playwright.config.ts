@@ -31,6 +31,7 @@ import {config as productNavigationControlMenuWebConfig} from './tests/product-n
 import {config as productNavigationProductMenuWebConfig} from './tests/product-navigation-product-menu-web/config';
 import {config as productNavigationUserPersonalBarWebConfig} from './tests/product-navigation-user-personal-bar-web/config';
 import {config as stableConfig} from './tests/stable/config';
+import {config as stylebookConfig} from './tests/style-book-web/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/config';
 
 export default defineConfig({
@@ -65,6 +66,7 @@ export default defineConfig({
 		productNavigationProductMenuWebConfig,
 		productNavigationUserPersonalBarWebConfig,
 		stableConfig,
+		stylebookConfig,
 		usersAdminWebConfig,
 	],
 	reporter: [

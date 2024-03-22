@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.solr8.internal;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -42,8 +43,6 @@ import com.liferay.portal.search.solr8.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr8.internal.search.response.HitsImpl;
 
 import java.util.Map;
-
-import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

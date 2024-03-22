@@ -5,6 +5,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,8 +21,6 @@ import com.liferay.portal.model.impl.ResourceImpl;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
 
 import java.util.List;
-
-import org.apache.commons.lang.time.StopWatch;
 
 /**
  * Provides the local service for accessing, adding, and updating resources.

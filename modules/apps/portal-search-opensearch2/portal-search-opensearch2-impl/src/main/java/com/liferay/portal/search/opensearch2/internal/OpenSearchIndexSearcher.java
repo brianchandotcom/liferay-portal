@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
@@ -60,8 +61,6 @@ import com.liferay.portal.search.sort.Sorts;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.time.StopWatch;
 
 import org.opensearch.client.opensearch._types.OpenSearchException;
 

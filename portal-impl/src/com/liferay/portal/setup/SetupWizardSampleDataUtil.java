@@ -5,6 +5,7 @@
 
 package com.liferay.portal.setup;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,8 +45,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Calendar;
 import java.util.Locale;
-
-import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Shinn Lok

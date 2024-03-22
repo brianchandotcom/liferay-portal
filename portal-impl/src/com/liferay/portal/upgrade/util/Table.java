@@ -5,6 +5,7 @@
 
 package com.liferay.portal.upgrade.util;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
@@ -47,8 +48,6 @@ import java.sql.Types;
 import java.text.DateFormat;
 
 import java.util.Date;
-
-import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Alexander Chow

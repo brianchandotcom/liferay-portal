@@ -10,6 +10,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.minifier.MinifierThreadLocal;
@@ -21,8 +22,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.ServletContext;
-
-import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

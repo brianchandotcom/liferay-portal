@@ -5,6 +5,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
@@ -55,8 +56,6 @@ import java.util.List;
 import java.util.zip.ZipFile;
 
 import javax.sql.DataSource;
-
-import org.apache.commons.lang.time.StopWatch;
 
 import org.hibernate.SessionFactory;
 

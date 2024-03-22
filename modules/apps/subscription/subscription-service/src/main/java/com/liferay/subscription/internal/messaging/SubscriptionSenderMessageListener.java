@@ -5,6 +5,7 @@
 
 package com.liferay.subscription.internal.messaging;
 
+import com.liferay.petra.lang.StopWatch;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -18,8 +19,6 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
-
-import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;

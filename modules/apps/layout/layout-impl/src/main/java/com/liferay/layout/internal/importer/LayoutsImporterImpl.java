@@ -377,7 +377,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			if (cetExternalReferenceCode.equals(
 					clientExtensionEntryRel.getCETExternalReferenceCode())) {
 
-				return;
+				_clientExtensionEntryRelLocalService.
+					deleteClientExtensionEntryRel(clientExtensionEntryRel);
 			}
 		}
 

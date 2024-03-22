@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parse
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.ResourceTestCaseOpenAPIParser;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.ConfigUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.Application;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
@@ -429,6 +431,27 @@ public class FreeMarkerTool {
 
 	public String getGraphQLMutationName(String methodName) {
 		return GraphQLNamingUtil.getGraphQLMutationName(methodName);
+	}
+
+	public String getGraphQLNamespace(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML) {
+
+		Application application = configYAML.getApplication();
+
+		String baseURI = application.getBaseURI();
+
+		if (baseURI.startsWith("/")) {
+			baseURI = baseURI.substring(1);
+		}
+
+		int index = baseURI.indexOf("-rest");
+
+		if (index != -1) {
+			baseURI = baseURI.substring(0, index);
+		}
+
+		return CamelCaseUtil.toCamelCase(
+			baseURI + "_" + OpenAPIUtil.escapeVersion(openAPIYAML));
 	}
 
 	public String getGraphQLParameters(

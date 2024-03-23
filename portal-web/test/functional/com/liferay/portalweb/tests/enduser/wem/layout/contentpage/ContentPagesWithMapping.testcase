@@ -2713,73 +2713,29 @@ definition {
 				layoutName = "Test Widget Page Name");
 		}
 
-		task ("Clear content cached across the cluster") {
-			ServerAdministration.openServerAdmin();
-
-			ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear content cached across the cluster.");
-		}
-
 		task ("Navigate to content page in view mode") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
 				siteName = ${randomSiteName});
 		}
 
-		task ("View selected page is changed to #") {
+		task ("View selected page is still linked to Button fragment") {
 			AssertVisible(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_url = "#",
+				key_url = "/web/${siteURLKey}/test-widget-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 		}
 
-		task ("Assert no redirection") {
+		task ("Assert Not Found is shown") {
 			Click(
 				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_url = "#",
+				key_url = "/web/${siteURLKey}/test-widget-page-name",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Content Page Name");
-		}
-
-		task ("Navigate to the content page in edit mode") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = ${randomSiteName});
-		}
-
-		task ("View # is linked to Button fragment") {
-			AssertVisible(
-				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_url = "#",
-				locator1 = "Fragment#FRAGMENT_LINK");
-		}
-
-		task ("View the selected page is still shown in Page field") {
-			PageEditorEditableLink.gotoEditableFieldLink(
-				fragmentName = "Button",
-				id = "link");
-
-			AssertTextEquals(
-				key_fieldLabel = "Page",
-				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "Test Widget Page Name");
-		}
-
-		task ("Publish to content page") {
-			PageEditor.publish();
-		}
-
-		task ("Assert no redirection") {
-			Click(
-				key_append = "[normalize-space(text())='Go Somewhere']",
-				key_url = "#",
-				locator1 = "Fragment#FRAGMENT_LINK");
-
-			AssertTextEquals(
-				locator1 = "ControlMenu#HEADING",
-				value1 = "Content Page Name");
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Page Not Found");
 		}
 	}
 

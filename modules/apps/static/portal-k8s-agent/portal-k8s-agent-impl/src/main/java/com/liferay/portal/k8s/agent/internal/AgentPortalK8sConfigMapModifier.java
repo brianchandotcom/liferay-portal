@@ -108,15 +108,13 @@ public class AgentPortalK8sConfigMapModifier
 			portalK8sConfigurationPropertiesMutators;
 
 		_bundle = bundleContext.getBundle();
-
 		_portalK8sAgentConfiguration = ConfigurableUtil.createConfigurable(
 			PortalK8sAgentConfiguration.class, properties);
+		_scheduledExecutorService =
+			Executors.newSingleThreadScheduledExecutor();
 
 		_kubernetesClient = new DefaultKubernetesClient(
 			_toConfig(_portalK8sAgentConfiguration));
-
-		_scheduledExecutorService =
-			Executors.newSingleThreadScheduledExecutor();
 
 		_sharedIndexInformer = _toSharedIndexInformer(
 			_kubernetesClient, _portalK8sAgentConfiguration);
@@ -642,7 +640,7 @@ public class AgentPortalK8sConfigMapModifier
 				() -> {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Deferred execution on secondary node " +
+							"Defer execution on cluster node " +
 								localClusterNode.getClusterNodeId());
 					}
 
@@ -654,7 +652,7 @@ public class AgentPortalK8sConfigMapModifier
 		else {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Execution on master node " +
+					"Execute on master node " +
 						localClusterNode.getClusterNodeId());
 			}
 

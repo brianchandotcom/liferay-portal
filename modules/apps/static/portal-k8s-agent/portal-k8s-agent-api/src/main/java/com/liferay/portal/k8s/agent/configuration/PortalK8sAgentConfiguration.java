@@ -31,6 +31,9 @@ public interface PortalK8sAgentConfiguration {
 	@Meta.AD(type = Meta.Type.String)
 	public String caCertData();
 
+	@Meta.AD(deflt = "1000", required = false, type = Meta.Type.Long)
+	public long deferSecondaryNodeMillis();
+
 	@Meta.AD(
 		deflt = "lxc.liferay.com/metadataType=ext-provision", required = false,
 		type = Meta.Type.String
@@ -42,8 +45,5 @@ public interface PortalK8sAgentConfiguration {
 
 	@Meta.AD(type = Meta.Type.String)
 	public String saToken();
-
-	@Meta.AD(deflt = "1000", required = false, type = Meta.Type.Long)
-	public long deferSecondaryNodeMillis();
 
 }

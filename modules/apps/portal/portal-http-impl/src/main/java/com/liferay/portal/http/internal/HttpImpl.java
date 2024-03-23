@@ -673,8 +673,15 @@ public class HttpImpl implements Http {
 			CloseableHttpClient httpClient = null;
 
 			if (requestConfig.getProxy() != null) {
-				httpClient = _proxyCloseableHttpClientDCLSingleton.getSingleton(
-					this::_createProxyCloseableHttpClient);
+				if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
+					httpClient = _closeableHttpClientDCLSingleton.getSingleton(
+						this::_createCloseableHttpClient);
+				}
+				else {
+					httpClient =
+						_proxyCloseableHttpClientDCLSingleton.getSingleton(
+							this::_createProxyCloseableHttpClient);
+				}
 			}
 			else {
 				httpClient = _closeableHttpClientDCLSingleton.getSingleton(
@@ -1037,11 +1044,6 @@ public class HttpImpl implements Http {
 	}
 
 	private CloseableHttpClient _createProxyCloseableHttpClient() {
-		if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
-			return _closeableHttpClientDCLSingleton.getSingleton(
-				this::_createCloseableHttpClient);
-		}
-
 		HttpClientBuilder proxyHttpClientBuilder = HttpClientBuilder.create();
 
 		proxyHttpClientBuilder.setConnectionManager(

@@ -366,64 +366,6 @@ public class HttpImpl implements Http {
 			HttpImpl::_destroyPoolingHttpClientConnectionManager);
 	}
 
-	protected RequestConfig.Builder getRequestConfigBuilder(
-		URI uri, int timeout) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Location is " + uri.toString());
-		}
-
-		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-
-		if (isProxyHost(uri.getHost())) {
-			HttpHost proxy = new HttpHost(_PROXY_HOST, _PROXY_PORT);
-
-			requestConfigBuilder.setProxy(proxy);
-
-			if (_proxyCredentials != null) {
-				requestConfigBuilder.setProxyPreferredAuthSchemes(
-					_proxyAuthPrefs);
-			}
-		}
-
-		int maxConnectionsPerHost = GetterUtil.getInteger(
-			PropsUtil.get(
-				Http.class.getName() + ".max.connections.per.host",
-				new Filter(uri.getHost())));
-
-		if ((maxConnectionsPerHost > 0) &&
-			(maxConnectionsPerHost != _MAX_CONNECTIONS_PER_HOST)) {
-
-			PoolingHttpClientConnectionManager
-				poolingHttpClientConnectionManager =
-					_poolingHttpClientConnectionManagerDCLSingleton.
-						getSingleton(
-							HttpImpl::
-								_createPoolingHttpClientConnectionManager);
-
-			poolingHttpClientConnectionManager.setMaxPerRoute(
-				new HttpRoute(new HttpHost(uri.getHost(), uri.getPort())),
-				maxConnectionsPerHost);
-		}
-
-		if (timeout == 0) {
-			timeout = GetterUtil.getInteger(
-				PropsUtil.get(
-					Http.class.getName() + ".timeout",
-					new Filter(uri.getHost())));
-		}
-
-		if (timeout > 0) {
-			requestConfigBuilder = requestConfigBuilder.setConnectTimeout(
-				timeout);
-
-			requestConfigBuilder =
-				requestConfigBuilder.setConnectionRequestTimeout(timeout);
-		}
-
-		return requestConfigBuilder;
-	}
-
 	protected boolean hasRequestHeader(
 		RequestBuilder requestBuilder, String name) {
 
@@ -684,7 +626,7 @@ public class HttpImpl implements Http {
 				uri.getHost(), uri.getPort(), uri.getScheme());
 
 			RequestConfig.Builder requestConfigBuilder =
-				getRequestConfigBuilder(uri, timeout);
+				_getRequestConfigBuilder(uri, timeout);
 
 			RequestConfig requestConfig = requestConfigBuilder.build();
 
@@ -1083,6 +1025,64 @@ public class HttpImpl implements Http {
 		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
 
 		return httpClientBuilder.build();
+	}
+
+	private RequestConfig.Builder _getRequestConfigBuilder(
+		URI uri, int timeout) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Location is " + uri.toString());
+		}
+
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+
+		if (isProxyHost(uri.getHost())) {
+			HttpHost proxy = new HttpHost(_PROXY_HOST, _PROXY_PORT);
+
+			requestConfigBuilder.setProxy(proxy);
+
+			if (_proxyCredentials != null) {
+				requestConfigBuilder.setProxyPreferredAuthSchemes(
+					_proxyAuthPrefs);
+			}
+		}
+
+		int maxConnectionsPerHost = GetterUtil.getInteger(
+			PropsUtil.get(
+				Http.class.getName() + ".max.connections.per.host",
+				new Filter(uri.getHost())));
+
+		if ((maxConnectionsPerHost > 0) &&
+			(maxConnectionsPerHost != _MAX_CONNECTIONS_PER_HOST)) {
+
+			PoolingHttpClientConnectionManager
+				poolingHttpClientConnectionManager =
+					_poolingHttpClientConnectionManagerDCLSingleton.
+						getSingleton(
+							HttpImpl::
+								_createPoolingHttpClientConnectionManager);
+
+			poolingHttpClientConnectionManager.setMaxPerRoute(
+				new HttpRoute(new HttpHost(uri.getHost(), uri.getPort())),
+				maxConnectionsPerHost);
+		}
+
+		if (timeout == 0) {
+			timeout = GetterUtil.getInteger(
+				PropsUtil.get(
+					Http.class.getName() + ".timeout",
+					new Filter(uri.getHost())));
+		}
+
+		if (timeout > 0) {
+			requestConfigBuilder = requestConfigBuilder.setConnectTimeout(
+				timeout);
+
+			requestConfigBuilder =
+				requestConfigBuilder.setConnectionRequestTimeout(timeout);
+		}
+
+		return requestConfigBuilder;
 	}
 
 	private static final String _DEFAULT_USER_AGENT =

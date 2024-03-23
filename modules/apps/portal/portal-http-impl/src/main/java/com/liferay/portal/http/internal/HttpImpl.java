@@ -354,16 +354,6 @@ public class HttpImpl implements Http {
 			HttpImpl::_destroyPoolingHttpClientConnectionManager);
 	}
 
-	protected CloseableHttpClient getCloseableHttpClient(HttpHost proxyHost) {
-		if (proxyHost != null) {
-			return _proxyCloseableHttpClientDCLSingleton.getSingleton(
-				this::_createProxyCloseableHttpClient);
-		}
-
-		return _closeableHttpClientDCLSingleton.getSingleton(
-			this::_createCloseableHttpClient);
-	}
-
 	protected RequestConfig.Builder getRequestConfigBuilder(
 		URI uri, int timeout) {
 
@@ -680,8 +670,16 @@ public class HttpImpl implements Http {
 
 			RequestConfig requestConfig = requestConfigBuilder.build();
 
-			CloseableHttpClient httpClient = getCloseableHttpClient(
-				requestConfig.getProxy());
+			CloseableHttpClient httpClient = null;
+
+			if (requestConfig.getProxy() != null) {
+				httpClient = _proxyCloseableHttpClientDCLSingleton.getSingleton(
+					this::_createProxyCloseableHttpClient);
+			}
+			else {
+				httpClient = _closeableHttpClientDCLSingleton.getSingleton(
+					this::_createCloseableHttpClient);
+			}
 
 			HttpClientContext httpClientContext = HttpClientContext.create();
 

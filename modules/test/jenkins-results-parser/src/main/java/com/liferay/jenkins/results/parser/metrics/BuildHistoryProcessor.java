@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.metrics;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.ParallelExecutor;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeoutException;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -209,41 +213,71 @@ public class BuildHistoryProcessor {
 		return _getSortedBuildHistories(buildHistoriesMap.values());
 	}
 
-	private static List<BuildJSONObject> _getBuildJSONObjects(
+	private static Set<BuildJSONObject> _getBuildJSONObjects(
 		String dateString) {
 
 		File dateDir = new File(_BASE_DIR, dateString);
 
 		if (dateDir.listFiles() == null) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 
-		List<BuildJSONObject> buildJSONObjects = new ArrayList<>();
+		Set<BuildJSONObject> buildJSONObjects = Collections.synchronizedSet(
+			new HashSet<BuildJSONObject>());
 
 		System.out.println("Reading files from: " + dateDir.toPath());
 
-		for (File jsonFile : dateDir.listFiles()) {
-			try {
-				String jsonFileName = jsonFile.getCanonicalPath();
+		List<Callable<Void>> callables = new ArrayList<>();
 
-				if (jsonFileName.contains("test-1-0") ||
-					jsonFileName.contains("test-1-41")) {
+		for (final File jsonFile : dateDir.listFiles()) {
+			callables.add(
+				new Callable<Void>() {
 
-					continue;
-				}
+					@Override
+					public Void call() throws Exception {
+						try {
+							String jsonFileName = jsonFile.getCanonicalPath();
 
-				String content = JenkinsResultsParserUtil.read(jsonFile);
+							if (jsonFileName.contains("test-1-0") ||
+								jsonFileName.contains("test-1-41")) {
 
-				JSONArray jsonArray = new JSONArray(content.trim());
+								return null;
+							}
 
-				for (int i = 0; i < jsonArray.length(); i++) {
-					buildJSONObjects.add(
-						new BuildJSONObject(jsonArray.getJSONObject(i)));
-				}
-			}
-			catch (IOException ioException) {
-				System.out.println("Unable to read " + jsonFile);
-			}
+							String content = JenkinsResultsParserUtil.read(
+								jsonFile);
+
+							JSONArray jsonArray = new JSONArray(content.trim());
+
+							Set<BuildJSONObject> newBuildJSONObjects =
+								new HashSet<>();
+
+							for (int i = 0; i < jsonArray.length(); i++) {
+								newBuildJSONObjects.add(
+									new BuildJSONObject(
+										jsonArray.getJSONObject(i)));
+							}
+
+							buildJSONObjects.addAll(newBuildJSONObjects);
+						}
+						catch (IOException ioException) {
+							System.out.println("Unable to read " + jsonFile);
+						}
+
+						return null;
+					}
+
+				});
+		}
+
+		ParallelExecutor<Void> parallelExecutor = new ParallelExecutor<>(
+			callables, _executorService, "_getBuildJSONObjects");
+
+		try {
+			parallelExecutor.execute();
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
 		}
 
 		return buildJSONObjects;
@@ -315,6 +349,11 @@ public class BuildHistoryProcessor {
 
 	private static final File _BASE_DIR = new File(
 		"/opt/dev/projects/github/liferay-jenkins-ee/tmp/jenkins");
+
+	private static final Integer _THREAD_COUNT = 8;
+
+	private static final ExecutorService _executorService =
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
 
 	private static class GroupByCategory
 		implements Function<BuildJSONObject, String> {

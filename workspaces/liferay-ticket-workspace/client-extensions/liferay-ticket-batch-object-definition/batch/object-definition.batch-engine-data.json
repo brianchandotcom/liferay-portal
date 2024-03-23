@@ -245,27 +245,6 @@
 										"objectStateTransitions": [
 											{
 												"key": "closed"
-											},
-											{
-												"key": "escalated"
-											},
-											{
-												"key": "inProgress"
-											},
-											{
-												"key": "inReview"
-											},
-											{
-												"key": "open"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "waiting"
 											}
 										]
 									},
@@ -273,28 +252,7 @@
 										"key": "closed",
 										"objectStateTransitions": [
 											{
-												"key": "answered"
-											},
-											{
-												"key": "escalated"
-											},
-											{
-												"key": "inProgress"
-											},
-											{
-												"key": "inReview"
-											},
-											{
 												"key": "open"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "waiting"
 											}
 										]
 									},
@@ -335,24 +293,6 @@
 											},
 											{
 												"key": "closed"
-											},
-											{
-												"key": "escalated"
-											},
-											{
-												"key": "inReview"
-											},
-											{
-												"key": "open"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "waiting"
 											}
 										]
 									},
@@ -389,28 +329,10 @@
 										"key": "open",
 										"objectStateTransitions": [
 											{
-												"key": "answered"
-											},
-											{
 												"key": "closed"
 											},
 											{
-												"key": "escalated"
-											},
-											{
 												"key": "inProgress"
-											},
-											{
-												"key": "inReview"
-											},
-											{
-												"key": "queued"
-											},
-											{
-												"key": "verifying"
-											},
-											{
-												"key": "waiting"
 											}
 										]
 									},

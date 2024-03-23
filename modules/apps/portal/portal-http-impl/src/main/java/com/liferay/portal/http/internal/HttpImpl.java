@@ -672,16 +672,11 @@ public class HttpImpl implements Http {
 
 			CloseableHttpClient httpClient = null;
 
-			if (requestConfig.getProxy() != null) {
-				if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
-					httpClient = _closeableHttpClientDCLSingleton.getSingleton(
-						this::_createCloseableHttpClient);
-				}
-				else {
-					httpClient =
-						_proxyCloseableHttpClientDCLSingleton.getSingleton(
-							this::_createProxyCloseableHttpClient);
-				}
+			if ((requestConfig.getProxy() != null) && hasProxyConfig() &&
+				Validator.isNotNull(_PROXY_USERNAME)) {
+
+				httpClient = _proxyCloseableHttpClientDCLSingleton.getSingleton(
+					this::_createProxyCloseableHttpClient);
 			}
 			else {
 				httpClient = _closeableHttpClientDCLSingleton.getSingleton(

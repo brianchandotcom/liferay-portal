@@ -628,6 +628,26 @@ public class HttpImpl implements Http {
 			RequestConfig.Builder requestConfigBuilder =
 				_getRequestConfigBuilder(uri, timeout);
 
+			int maxConnectionsPerHost = GetterUtil.getInteger(
+				PropsUtil.get(
+					Http.class.getName() + ".max.connections.per.host",
+					new Filter(uri.getHost())));
+
+			if ((maxConnectionsPerHost > 0) &&
+				(maxConnectionsPerHost != _MAX_CONNECTIONS_PER_HOST)) {
+
+				PoolingHttpClientConnectionManager
+					poolingHttpClientConnectionManager =
+						_poolingHttpClientConnectionManagerDCLSingleton.
+							getSingleton(
+								HttpImpl::
+									_createPoolingHttpClientConnectionManager);
+
+				poolingHttpClientConnectionManager.setMaxPerRoute(
+					new HttpRoute(new HttpHost(uri.getHost(), uri.getPort())),
+					maxConnectionsPerHost);
+			}
+
 			RequestConfig requestConfig = requestConfigBuilder.build();
 
 			CloseableHttpClient httpClient = null;
@@ -1045,26 +1065,6 @@ public class HttpImpl implements Http {
 				requestConfigBuilder.setProxyPreferredAuthSchemes(
 					_proxyAuthPrefs);
 			}
-		}
-
-		int maxConnectionsPerHost = GetterUtil.getInteger(
-			PropsUtil.get(
-				Http.class.getName() + ".max.connections.per.host",
-				new Filter(uri.getHost())));
-
-		if ((maxConnectionsPerHost > 0) &&
-			(maxConnectionsPerHost != _MAX_CONNECTIONS_PER_HOST)) {
-
-			PoolingHttpClientConnectionManager
-				poolingHttpClientConnectionManager =
-					_poolingHttpClientConnectionManagerDCLSingleton.
-						getSingleton(
-							HttpImpl::
-								_createPoolingHttpClientConnectionManager);
-
-			poolingHttpClientConnectionManager.setMaxPerRoute(
-				new HttpRoute(new HttpHost(uri.getHost(), uri.getPort())),
-				maxConnectionsPerHost);
 		}
 
 		if (timeout == 0) {

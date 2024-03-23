@@ -676,11 +676,13 @@ public class HttpImpl implements Http {
 				Validator.isNotNull(_PROXY_USERNAME)) {
 
 				httpClient = _proxyCloseableHttpClientDCLSingleton.getSingleton(
-					this::_createProxyCloseableHttpClient);
+					() -> _createCloseableHttpClient(
+						new HttpHost(_PROXY_HOST, _PROXY_PORT),
+						_proxyAuthPrefs));
 			}
 			else {
 				httpClient = _closeableHttpClientDCLSingleton.getSingleton(
-					this::_createCloseableHttpClient);
+					() -> _createCloseableHttpClient(null, null));
 			}
 
 			HttpClientContext httpClientContext = HttpClientContext.create();
@@ -1013,7 +1015,8 @@ public class HttpImpl implements Http {
 		poolingHttpClientConnectionManager.shutdown();
 	}
 
-	private CloseableHttpClient _createCloseableHttpClient() {
+	private CloseableHttpClient _createCloseableHttpClient(
+		HttpHost httpHost, List<String> proxyAuthPrefs) {
 
 		// Mimic behavior found in
 		// http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html
@@ -1023,43 +1026,26 @@ public class HttpImpl implements Http {
 		httpClientBuilder.setConnectionManager(
 			_poolingHttpClientConnectionManagerDCLSingleton.getSingleton(
 				HttpImpl::_createPoolingHttpClientConnectionManager));
-
-		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-
-		requestConfigBuilder = requestConfigBuilder.setConnectTimeout(_TIMEOUT);
-		requestConfigBuilder = requestConfigBuilder.setConnectionRequestTimeout(
-			_TIMEOUT);
-
-		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
-
 		httpClientBuilder.setRoutePlanner(
 			new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
 
-		return httpClientBuilder.build();
-	}
-
-	private CloseableHttpClient _createProxyCloseableHttpClient() {
-		HttpClientBuilder proxyHttpClientBuilder = HttpClientBuilder.create();
-
-		proxyHttpClientBuilder.setConnectionManager(
-			_poolingHttpClientConnectionManagerDCLSingleton.getSingleton(
-				HttpImpl::_createPoolingHttpClientConnectionManager));
-		proxyHttpClientBuilder.setRoutePlanner(
-			new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
-
 		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
 		requestConfigBuilder = requestConfigBuilder.setConnectTimeout(_TIMEOUT);
 		requestConfigBuilder = requestConfigBuilder.setConnectionRequestTimeout(
 			_TIMEOUT);
 
-		requestConfigBuilder.setProxy(new HttpHost(_PROXY_HOST, _PROXY_PORT));
-		requestConfigBuilder.setProxyPreferredAuthSchemes(_proxyAuthPrefs);
+		if (httpHost != null) {
+			requestConfigBuilder.setProxy(httpHost);
+		}
 
-		proxyHttpClientBuilder.setDefaultRequestConfig(
-			requestConfigBuilder.build());
+		if (proxyAuthPrefs != null) {
+			requestConfigBuilder.setProxyPreferredAuthSchemes(proxyAuthPrefs);
+		}
 
-		return proxyHttpClientBuilder.build();
+		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
+
+		return httpClientBuilder.build();
 	}
 
 	private static final String _DEFAULT_USER_AGENT =

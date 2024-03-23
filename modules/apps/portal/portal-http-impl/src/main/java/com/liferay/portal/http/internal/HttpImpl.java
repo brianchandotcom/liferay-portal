@@ -633,15 +633,15 @@ public class HttpImpl implements Http {
 					Http.class.getName() + ".max.connections.per.host",
 					new Filter(uri.getHost())));
 
+			PoolingHttpClientConnectionManager
+				poolingHttpClientConnectionManager =
+					_poolingHttpClientConnectionManagerDCLSingleton.
+						getSingleton(
+							HttpImpl::
+								_createPoolingHttpClientConnectionManager);
+
 			if ((maxConnectionsPerHost > 0) &&
 				(maxConnectionsPerHost != _MAX_CONNECTIONS_PER_HOST)) {
-
-				PoolingHttpClientConnectionManager
-					poolingHttpClientConnectionManager =
-						_poolingHttpClientConnectionManagerDCLSingleton.
-							getSingleton(
-								HttpImpl::
-									_createPoolingHttpClientConnectionManager);
 
 				poolingHttpClientConnectionManager.setMaxPerRoute(
 					new HttpRoute(new HttpHost(uri.getHost(), uri.getPort())),
@@ -657,12 +657,14 @@ public class HttpImpl implements Http {
 
 				httpClient = _proxyCloseableHttpClientDCLSingleton.getSingleton(
 					() -> _createCloseableHttpClient(
+						poolingHttpClientConnectionManager,
 						new HttpHost(_PROXY_HOST, _PROXY_PORT),
 						_proxyAuthPrefs));
 			}
 			else {
 				httpClient = _closeableHttpClientDCLSingleton.getSingleton(
-					() -> _createCloseableHttpClient(null, null));
+					() -> _createCloseableHttpClient(
+						poolingHttpClientConnectionManager, null, null));
 			}
 
 			HttpClientContext httpClientContext = HttpClientContext.create();
@@ -694,13 +696,6 @@ public class HttpImpl implements Http {
 				else if (method.equals(Http.Method.POST)) {
 					if (!hasRequestHeader(
 							requestBuilder, HttpHeaders.CONTENT_TYPE)) {
-
-						PoolingHttpClientConnectionManager
-							poolingHttpClientConnectionManager =
-								_poolingHttpClientConnectionManagerDCLSingleton.
-									getSingleton(
-										HttpImpl::
-											_createPoolingHttpClientConnectionManager);
 
 						ConnectionConfig.Builder connectionConfigBuilder =
 							ConnectionConfig.custom();
@@ -996,6 +991,7 @@ public class HttpImpl implements Http {
 	}
 
 	private CloseableHttpClient _createCloseableHttpClient(
+		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager,
 		HttpHost httpHost, List<String> proxyAuthPrefs) {
 
 		// Mimic behavior found in
@@ -1004,8 +1000,7 @@ public class HttpImpl implements Http {
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		httpClientBuilder.setConnectionManager(
-			_poolingHttpClientConnectionManagerDCLSingleton.getSingleton(
-				HttpImpl::_createPoolingHttpClientConnectionManager));
+			poolingHttpClientConnectionManager);
 		httpClientBuilder.setRoutePlanner(
 			new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
 

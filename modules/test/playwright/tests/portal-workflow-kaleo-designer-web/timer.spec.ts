@@ -12,6 +12,19 @@ import {getRandomInt} from '../../utils/getRandomInt';
 
 export const test = mergeTests(apiHelpersTest, loginTest(), workflowPagesTest);
 
+const roleTypes = [
+	{
+		autocreate: false,
+		roleName: 'Account Manager',
+		roleType: 'Organization',
+	},
+	{
+		autocreate: true,
+		roleName: 'Administrator',
+		roleType: 'Regular',
+	},
+] as RoleType[];
+
 const timerNotifications = [
 	{
 		notificationDescription: 'notificationDescription0' + getRandomInt(),
@@ -119,6 +132,8 @@ test('LPD-16281 can create timer notifications', async ({
 
 test('LPD-21221 can create timer reassignments role type reassignment type', async ({
 	apiHelpers,
+	diagramViewPage,
+	nodePropertiesSidebarPage,
 	processBuilderPage,
 }) => {
 	const singleApproverWorkflowDefinition =
@@ -135,6 +150,14 @@ test('LPD-21221 can create timer reassignments role type reassignment type', asy
 		);
 
 	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickReviewNodeLink();
+
+	await nodePropertiesSidebarPage.createTimerReassignmentRoleType(roleTypes);
 
 	// clean up
 

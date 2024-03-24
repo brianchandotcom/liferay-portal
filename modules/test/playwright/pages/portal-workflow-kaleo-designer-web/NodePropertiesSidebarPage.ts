@@ -42,4 +42,16 @@ export class NodePropertiesSidebarPage {
 			await this.timerPage.addNewAction(i);
 		}
 	}
+
+	async createTimerReassignmentRoleType(roleTypes: RoleType[]) {
+		await this.addTimerButton.click();
+		await this.timerPage.fillTimerFields(
+			'timerDescription' + getRandomInt(),
+			'3',
+			'timerName' + getRandomInt(),
+			'week'
+		);
+
+		await this.timerPage.fillTimerActionReassignmentRoleType(roleTypes);
+	}
 }

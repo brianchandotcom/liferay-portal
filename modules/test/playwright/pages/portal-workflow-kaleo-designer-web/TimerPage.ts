@@ -6,9 +6,11 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ActionNotificationPage} from './ActionNotificationPage';
+import {ActionReassignmentPage} from './ActionReassignmentPage';
 
 export class TimerPage {
 	actionNotificationPage: ActionNotificationPage;
+	actionReassignmentPage: ActionReassignmentPage;
 	addActionButton: Locator;
 	readonly inputTimerDescription: Locator;
 	readonly inputTimerDuration: Locator;
@@ -76,5 +78,13 @@ export class TimerPage {
 		await this.inputTimerName.fill(name);
 		await this.inputTimerRecurrence.uncheck();
 		await this.inputTimerScale.selectOption(scale);
+	}
+
+	async fillTimerActionReassignmentRoleType(roleTypes: RoleType[]) {
+		this.actionReassignmentPage = new ActionReassignmentPage(this.page);
+
+		await this.actionReassignmentPage.fillRoleTypeReassignmentType(
+			roleTypes
+		);
 	}
 }

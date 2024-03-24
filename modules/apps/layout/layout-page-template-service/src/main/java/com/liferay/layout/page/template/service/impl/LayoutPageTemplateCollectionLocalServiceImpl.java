@@ -285,12 +285,9 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			layoutPageTemplateCollectionLocalService.
 				getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
 
-		long parentLayoutPageTemplateCollectionId =
-			layoutPageTemplateCollection.
-				getParentLayoutPageTemplateCollectionId();
-
-		if (parentLayoutPageTemplateCollectionId ==
-				targetLayoutPageTemplateCollectionId) {
+		if (layoutPageTemplateCollection.
+				getParentLayoutPageTemplateCollectionId() ==
+					targetLayoutPageTemplateCollectionId) {
 
 			return layoutPageTemplateCollection;
 		}

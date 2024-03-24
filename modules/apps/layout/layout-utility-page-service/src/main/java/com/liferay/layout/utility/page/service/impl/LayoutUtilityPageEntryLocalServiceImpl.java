@@ -96,7 +96,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		if (plid == 0) {
 			Layout layout = _addLayout(
-				userId, groupId, name, masterLayoutPlid, type, serviceContext);
+				userId, groupId, name, masterLayoutPlid, serviceContext);
 
 			if (layout != null) {
 				plid = layout.getPlid();
@@ -403,7 +403,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	private Layout _addLayout(
 			long userId, long groupId, String name, long masterLayoutPlid,
-			String type, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Map<Locale, String> titleMap = Collections.singletonMap(
@@ -431,10 +431,9 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = _layoutLocalService.addLayout(
-			userId, groupId, !_isPublicLayoutNeeded(type), 0, 0, 0, titleMap,
-			titleMap, null, null, null, LayoutConstants.TYPE_CONTENT,
-			typeSettings, true, true, new HashMap<>(), masterLayoutPlid,
-			serviceContext);
+			userId, groupId, false, 0, 0, 0, titleMap, titleMap, null, null,
+			null, LayoutConstants.TYPE_UTILITY, typeSettings, true, true,
+			new HashMap<>(), masterLayoutPlid, serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -539,16 +538,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		}
 
 		return name;
-	}
-
-	private boolean _isPublicLayoutNeeded(String type) {
-		if (type.equals("LOGIN") || type.equals("FORGOT_PASSWORD") ||
-			type.equals("CREATE_ACCOUNT")) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _validateName(

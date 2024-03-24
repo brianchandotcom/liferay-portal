@@ -44,7 +44,7 @@ public class
 
 		long[] layoutPageTemplateCollectionsIds = ParamUtil.getLongValues(
 			actionRequest, "layoutPageTemplateCollectionsIds");
-		long[] layoutPageTemplateEntryIds = ParamUtil.getLongValues(
+		long[] layoutPageTemplateEntriesIds = ParamUtil.getLongValues(
 			actionRequest, "layoutPageTemplateEntriesIds");
 		long targetLayoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "targetLayoutPageTemplateCollectionId");
@@ -60,7 +60,7 @@ public class
 			}
 
 			for (long selectedLayoutPageTemplateEntryId :
-					layoutPageTemplateEntryIds) {
+					layoutPageTemplateEntriesIds) {
 
 				_layoutPageTemplateEntryService.moveLayoutPageTemplateEntry(
 					selectedLayoutPageTemplateEntryId,

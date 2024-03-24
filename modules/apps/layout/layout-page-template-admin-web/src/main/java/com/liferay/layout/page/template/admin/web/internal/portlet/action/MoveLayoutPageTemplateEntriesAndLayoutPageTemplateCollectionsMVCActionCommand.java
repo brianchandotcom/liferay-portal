@@ -13,9 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -73,11 +71,6 @@ public class
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
 			}
-
-			SessionErrors.add(
-				actionRequest,
-				"moveLayoutPageTemplateEntriesAndCollectionsErrorMessage",
-				StringUtil.trim(portalException.getMessage()));
 		}
 	}
 

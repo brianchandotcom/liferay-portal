@@ -5,13 +5,11 @@
 
 import {getSpritemap} from '@liferay/frontend-icons-web';
 import {
-	fetch,
-	objectToFormData,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openSimpleInputModal,
-	openToast,
+	setFormValues,
 	sub,
 } from 'frontend-js-web';
 
@@ -113,38 +111,24 @@ const ACTIONS = {
 	moveDisplayPage(
 		{
 			itemSelectorURL,
+			layoutPageTemplateEntryId,
 			layoutPageTemplateEntryName,
-			moveLayoutPageTemplateEntryURL,
 		},
 		portletNamespace
 	) {
 		openSelectionModal({
-			onSelect: (selectedItems) => {
-				fetch(moveLayoutPageTemplateEntryURL, {
-					body: objectToFormData({
-						[`${portletNamespace}targetLayoutPageTemplateCollectionId`]: selectedItems.resourceid,
-					}),
-					method: 'POST',
-				})
-					.then((response) => {
-						if (!response.ok) {
-							throw new Error();
-						}
+			onSelect: (selectedItem) => {
+				const form = document.getElementById(
+					`${portletNamespace}moveEntriesFm`
+				);
 
-						window.location.reload();
-					})
-					.catch(
-						({
-							message = Liferay.Language.get(
-								'an-unexpected-error-occurred'
-							),
-						}) => {
-							openToast({
-								message,
-								type: 'danger',
-							});
-						}
-					);
+				setFormValues(form, {
+					layoutPageTemplateEntriesIds: layoutPageTemplateEntryId,
+					targetLayoutPageTemplateCollectionId:
+						selectedItem.resourceid,
+				});
+
+				submitForm(form);
 			},
 			selectEventName: 'selectFolder',
 			title: sub(

@@ -604,27 +604,16 @@ public class DisplayPageActionDropdownItemsProvider {
 				"itemSelectorURL",
 				_getLayoutPageTemplateCollectionItemSelectorURL());
 			dropdownItem.putData(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			dropdownItem.putData(
 				"layoutPageTemplateEntryName",
 				_layoutPageTemplateEntry.getName());
-			dropdownItem.putData(
-				"moveLayoutPageTemplateEntryURL", _getMoveDisplayPageURL());
 			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move"));
 		};
-	}
-
-	private String _getMoveDisplayPageURL() {
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/layout_page_template_admin/move_layout_page_template_entry"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"layoutPageTemplateEntryId",
-			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-		).buildString();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

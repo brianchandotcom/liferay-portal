@@ -5,11 +5,9 @@
 
 import {openCreationModal} from '@liferay/layout-js-components-web';
 import {
-	fetch,
-	objectToFormData,
 	openModal,
 	openSelectionModal,
-	openToast,
+	setFormValues,
 	sub,
 } from 'frontend-js-web';
 
@@ -34,39 +32,25 @@ const ACTIONS = {
 	moveLayoutPageTemplateCollection(
 		{
 			itemSelectorURL,
+			layoutPageTemplateCollectionId,
 			layoutPageTemplateCollectionName,
-			moveLayoutPageTemplateCollectionURL,
 		},
 		portletNamespace
 	) {
 		openSelectionModal({
 			height: '70vh',
-			onSelect: (selectedItems) => {
-				fetch(moveLayoutPageTemplateCollectionURL, {
-					body: objectToFormData({
-						[`${portletNamespace}targetLayoutPageTemplateCollectionId`]: selectedItems.resourceid,
-					}),
-					method: 'POST',
-				})
-					.then((response) => {
-						if (!response.ok) {
-							throw new Error();
-						}
+			onSelect: (selectedItem) => {
+				const form = document.getElementById(
+					`${portletNamespace}moveEntriesFm`
+				);
 
-						window.location.reload();
-					})
-					.catch(
-						({
-							message = Liferay.Language.get(
-								'an-unexpected-error-occurred'
-							),
-						}) => {
-							openToast({
-								message,
-								type: 'danger',
-							});
-						}
-					);
+				setFormValues(form, {
+					layoutPageTemplateCollectionsIds: layoutPageTemplateCollectionId,
+					targetLayoutPageTemplateCollectionId:
+						selectedItem.resourceid,
+				});
+
+				submitForm(form);
 			},
 			selectEventName: 'selectFolder',
 			size: 'md',

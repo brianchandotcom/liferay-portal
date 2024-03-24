@@ -143,12 +143,13 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 								_getItemSelectorURL(
 									layoutPageTemplateCollection));
 							dropdownItem.putData(
+								"layoutPageTemplateCollectionId",
+								String.valueOf(
+									layoutPageTemplateCollection.
+										getLayoutPageTemplateCollectionId()));
+							dropdownItem.putData(
 								"layoutPageTemplateCollectionName",
 								layoutPageTemplateCollection.getName());
-							dropdownItem.putData(
-								"moveLayoutPageTemplateCollectionURL",
-								_getMoveLayoutPageTemplateCollectionURL(
-									layoutPageTemplateCollection));
 							dropdownItem.setIcon("move-folder");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "move"));
@@ -297,23 +298,6 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 				"selectFolder",
 				layoutPageTemplateCollectionTreeNodeItemSelectorCriterion)
-		).buildString();
-	}
-
-	private String _getMoveLayoutPageTemplateCollectionURL(
-		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/layout_page_template_admin" +
-				"/move_layout_page_template_entries_and_layout_page_" +
-					"template_collections"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"layoutPageTemplateCollectionsIds",
-			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
 		).buildString();
 	}
 

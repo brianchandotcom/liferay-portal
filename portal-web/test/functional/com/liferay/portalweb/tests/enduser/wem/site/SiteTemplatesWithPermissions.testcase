@@ -1,10 +1,10 @@
-@component-name = "portal-wcm"
+@component-name = "portal-staging"
 definition {
 
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Sites Administration";
+	property testray.main.component.name = "Site Templates";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -15,7 +15,7 @@ definition {
 	@description = "This is for LPS-121422. The elements are still shown in edit mode after executing reset changes."
 	@priority = 3
 	test SitesTemplatePermissionPersistence {
-		property testray.component.names = "Permissions,Sites Administration";
+		property testray.component.names = "Permissions,Site Templates";
 
 		task ("Add a new site template") {
 			JSONSiteTemplate.addSiteTemplate(siteTemplateName = "Site Template Name");

@@ -5,12 +5,9 @@
 
 import {openCreationModal} from '@liferay/layout-js-components-web';
 import {
-	createPortletURL,
-	fetch,
 	getCheckedCheckboxes,
-	objectToFormData,
 	openSelectionModal,
-	openToast,
+	setFormValues,
 } from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
@@ -38,63 +35,34 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	};
 
 	const moveSelectedEntries = (itemData) => {
-		const form = document.getElementById(`${portletNamespace}fm`);
-
-		const searchContainer = Liferay.SearchContainer.get(
-			`${portletNamespace}displayPages`
-		);
-
-		const elementsSelected = searchContainer.select
-			.getAllSelectedElements()
-			.get('value').length;
-
 		openSelectionModal({
 			height: '70vh',
-			onSelect: (selectedItems) => {
-				fetch(itemData.moveSelectedEntriesURL, {
-					body: objectToFormData({
-						[`${portletNamespace}targetLayoutPageTemplateCollectionId`]: selectedItems.resourceid,
-						[`${portletNamespace}layoutPageTemplateEntriesIds`]: getCheckedCheckboxes(
-							form,
-							'',
-							`${portletNamespace}rowIds`
-						),
-						[`${portletNamespace}layoutPageTemplateCollectionsIds`]: getCheckedCheckboxes(
-							form,
-							'',
-							`${portletNamespace}rowIdsLayoutPageTemplateCollection`
-						),
-					}),
-					method: 'POST',
-				})
-					.then((response) => {
-						if (!response.ok) {
-							throw new Error();
-						}
+			onSelect: (selectedItem) => {
+				const form = document.getElementById(
+					`${portletNamespace}moveEntriesFm`
+				);
 
-						window.location.reload();
-					})
-					.catch(
-						({
-							message = Liferay.Language.get(
-								'an-unexpected-error-occurred'
-							),
-						}) => {
-							openToast({
-								message,
-								type: 'danger',
-							});
-						}
-					);
+				setFormValues(form, {
+					layoutPageTemplateCollectionsIds: getCheckedCheckboxes(
+						form,
+						'',
+						`${portletNamespace}rowIdsLayoutPageTemplateCollection`
+					),
+					layoutPageTemplateEntriesIds: getCheckedCheckboxes(
+						form,
+						'',
+						`${portletNamespace}rowIds`
+					),
+					targetLayoutPageTemplateCollectionId:
+						selectedItem.resourceid,
+				});
+
+				submitForm(form, itemData?.moveSelectedEntriesURL);
 			},
 			selectEventName: 'selectFolder',
 			size: 'md',
 			title: Liferay.Language.get('move-entries'),
-			url: createPortletURL(itemData.itemSelectorURL, {
-				selectedFolders: searchContainer.select
-					.getAllSelectedElements()
-					.get('value'),
-			}),
+			url: itemSelectorURL,
 		});
 	};
 

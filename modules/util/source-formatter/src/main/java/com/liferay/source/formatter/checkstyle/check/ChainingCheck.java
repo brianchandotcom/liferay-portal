@@ -174,6 +174,16 @@ public class ChainingCheck extends BaseCheck {
 			requiredChainingMethodNames = Arrays.asList(
 				"put", "putOnce", "putOpt");
 		}
+		else if (fullyQualifiedClassName.startsWith(
+					"com.liferay.frontend.data.set.view.table.") &&
+				 fullyQualifiedClassName.endsWith("FDSTableSchemaField")) {
+
+			requiredChainingMethodNames = Arrays.asList(
+				"setActionId", "setContentRenderer",
+				"setContentRendererClientExtension",
+				"setContentRendererModuleURL", "setFieldName", "setLabel",
+				"setLocalizeLabel", "setSortable", "setSortingOrder");
+		}
 		else {
 			requiredChainingMethodNames = _getRequiredChainingMethodNames(
 				fullyQualifiedClassName);
@@ -256,7 +266,8 @@ public class ChainingCheck extends BaseCheck {
 
 		if (classOrVariableName.equals(
 				getClassOrVariableName(nextMethodCallDetailAST)) &&
-			!Objects.equals(getMethodName(nextMethodCallDetailAST), "remove")) {
+			requiredChainingMethodNames.contains(
+				getMethodName(nextMethodCallDetailAST))) {
 
 			log(
 				methodCallDetailAST, _MSG_REQUIRED_CHAINING,

@@ -10,7 +10,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
@@ -316,9 +318,13 @@ public class DisplayPageManagementToolbarDisplayContext
 	}
 
 	private String _getItemSelectorURL() {
+		ItemSelector itemSelector =
+			(ItemSelector)httpServletRequest.getAttribute(
+				LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
+
 		LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion
 			layoutPageTemplateCollectionTreeNodeItemSelectorCriterion =
-			new LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion();
+				new LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion();
 
 		layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
 			setDesiredItemSelectorReturnTypes(new UUIDItemSelectorReturnType());

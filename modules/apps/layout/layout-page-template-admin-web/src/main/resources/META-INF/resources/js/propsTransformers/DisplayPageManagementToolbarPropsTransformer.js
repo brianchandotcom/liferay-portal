@@ -44,12 +44,12 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 
 				setFormValues(form, {
 					layoutPageTemplateCollectionsIds: getCheckedCheckboxes(
-						form,
+						document.getElementById(`${portletNamespace}fm`),
 						'',
 						`${portletNamespace}rowIdsLayoutPageTemplateCollection`
 					),
 					layoutPageTemplateEntriesIds: getCheckedCheckboxes(
-						form,
+						document.getElementById(`${portletNamespace}fm`),
 						'',
 						`${portletNamespace}rowIds`
 					),
@@ -57,12 +57,12 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 						selectedItem.resourceid,
 				});
 
-				submitForm(form, itemData?.moveSelectedEntriesURL);
+				submitForm(form);
 			},
 			selectEventName: 'selectFolder',
 			size: 'md',
 			title: Liferay.Language.get('move-entries'),
-			url: itemSelectorURL,
+			url: itemData.itemSelectorURL,
 		});
 	};
 

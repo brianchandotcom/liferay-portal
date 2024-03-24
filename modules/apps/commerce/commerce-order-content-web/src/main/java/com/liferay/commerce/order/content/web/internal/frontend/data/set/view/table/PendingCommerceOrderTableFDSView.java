@@ -58,8 +58,11 @@ public class PendingCommerceOrderTableFDSView extends BaseTableFDSView {
 		StringFDSTableSchemaField stringFDSTableSchemaField =
 			new StringFDSTableSchemaField();
 
-		stringFDSTableSchemaField.setFieldName("accountName");
-		stringFDSTableSchemaField.setLabel("account");
+		stringFDSTableSchemaField.setFieldName(
+			"accountName"
+		).setLabel(
+			"account"
+		);
 		stringFDSTableSchemaField.setTruncate(true);
 
 		return stringFDSTableSchemaField;

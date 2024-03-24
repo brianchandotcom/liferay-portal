@@ -206,9 +206,13 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 					"multiselectPicklistDataRenderer");
 			}
 
-			stringFDSTableSchemaField.setFieldName(fieldName);
-			stringFDSTableSchemaField.setLabel(label);
-			stringFDSTableSchemaField.setLocalizeLabel(localizeLabel);
+			stringFDSTableSchemaField.setFieldName(
+				fieldName
+			).setLabel(
+				label
+			).setLocalizeLabel(
+				localizeLabel
+			);
 			stringFDSTableSchemaField.setTruncate(true);
 
 			fdsTableSchemaBuilder.add(stringFDSTableSchemaField);
@@ -224,8 +228,11 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 			dateFDSTableSchemaField.setFieldName(fieldName);
 			dateFDSTableSchemaField.setFormat(
 				_getFormatJSONObject(businessType, null));
-			dateFDSTableSchemaField.setLabel(label);
-			dateFDSTableSchemaField.setLocalizeLabel(localizeLabel);
+			dateFDSTableSchemaField.setLabel(
+				label
+			).setLocalizeLabel(
+				localizeLabel
+			);
 
 			fdsTableSchemaBuilder.add(dateFDSTableSchemaField);
 
@@ -257,16 +264,22 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 					businessType,
 					ObjectFieldSettingUtil.getTimeZoneId(
 						objectFieldSettings, user)));
-			dateTimeFDSTableSchemaField.setLabel(label);
-			dateTimeFDSTableSchemaField.setLocalizeLabel(localizeLabel);
+			dateTimeFDSTableSchemaField.setLabel(
+				label
+			).setLocalizeLabel(
+				localizeLabel
+			);
 
 			fdsTableSchemaBuilder.add(dateTimeFDSTableSchemaField);
 
 			fdsTableSchemaField = dateTimeFDSTableSchemaField;
 		}
 		else {
-			fdsTableSchemaField.setFieldName(fieldName);
-			fdsTableSchemaField.setLabel(label);
+			fdsTableSchemaField.setFieldName(
+				fieldName
+			).setLabel(
+				label
+			);
 
 			fdsTableSchemaBuilder.add(fdsTableSchemaField);
 

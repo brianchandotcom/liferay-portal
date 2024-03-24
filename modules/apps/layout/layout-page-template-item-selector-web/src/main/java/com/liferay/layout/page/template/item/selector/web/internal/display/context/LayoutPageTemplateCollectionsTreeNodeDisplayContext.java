@@ -77,12 +77,9 @@ public class LayoutPageTemplateCollectionsTreeNodeDisplayContext {
 				).put(
 					"disabled",
 					() -> {
-						long[] selectedLayoutPageTemplateCollectionIds =
-							_layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
-								getLayoutPageTemplateCollectionIds();
-
 						if (ArrayUtil.contains(
-								selectedLayoutPageTemplateCollectionIds,
+								_layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
+									getLayoutPageTemplateCollectionIds(),
 								layoutPageTemplateCollection.
 									getLayoutPageTemplateCollectionId())) {
 

@@ -329,34 +329,16 @@ public class ReflectionTestUtil {
 		try {
 			int modifiers = field.getModifiers();
 
-			if (!Modifier.isFinal(modifiers)) {
+			if (!Modifier.isFinal(modifiers) || !Modifier.isStatic(modifiers)) {
 				field.set(instance, value);
 
 				return;
 			}
 
-			Object memberName = _memberNameConstructor.newInstance(field, true);
+			MethodHandle methodHandle = _implLookup.findStaticSetter(
+				field.getDeclaringClass(), field.getName(), field.getType());
 
-			_memberNameFlagsField.setInt(
-				memberName,
-				_memberNameFlagsField.getInt(memberName) - Modifier.FINAL);
-
-			byte getReferenceKind =
-				(byte)_memberNameGetReferenceKindMethod.invoke(memberName);
-
-			Class<?> declaringClass = field.getDeclaringClass();
-
-			MethodHandle methodHandle =
-				(MethodHandle)_lookupGetDirectFieldCommonMethod.invoke(
-					_lookupConstructor.newInstance(declaringClass),
-					getReferenceKind, declaringClass, memberName, false);
-
-			if (Modifier.isStatic(modifiers)) {
-				methodHandle.invoke(value);
-			}
-			else {
-				methodHandle.invoke(instance, value);
-			}
+			methodHandle.invoke(value);
 		}
 		catch (Throwable throwable) {
 			ReflectionUtil.throwException(throwable);
@@ -439,44 +421,16 @@ public class ReflectionTestUtil {
 		return null;
 	}
 
-	private static final Class<?> _MEMBER_NAME_CLASS;
-
-	private static final Constructor<?> _lookupConstructor;
-	private static final Method _lookupGetDirectFieldCommonMethod;
-	private static final Constructor<?> _memberNameConstructor;
-	private static final Field _memberNameFlagsField;
-	private static final Method _memberNameGetReferenceKindMethod;
+	private static final MethodHandles.Lookup _implLookup;
 
 	static {
 		try {
-			_MEMBER_NAME_CLASS = Class.forName("java.lang.invoke.MemberName");
+			Field field = MethodHandles.Lookup.class.getDeclaredField(
+				"IMPL_LOOKUP");
 
-			_memberNameConstructor = _MEMBER_NAME_CLASS.getDeclaredConstructor(
-				Field.class, boolean.class);
+			field.setAccessible(true);
 
-			_memberNameConstructor.setAccessible(true);
-
-			_memberNameFlagsField = _MEMBER_NAME_CLASS.getDeclaredField(
-				"flags");
-
-			_memberNameFlagsField.setAccessible(true);
-
-			_memberNameGetReferenceKindMethod =
-				_MEMBER_NAME_CLASS.getDeclaredMethod("getReferenceKind");
-
-			_memberNameGetReferenceKindMethod.setAccessible(true);
-
-			_lookupConstructor =
-				MethodHandles.Lookup.class.getDeclaredConstructor(Class.class);
-
-			_lookupConstructor.setAccessible(true);
-
-			_lookupGetDirectFieldCommonMethod =
-				MethodHandles.Lookup.class.getDeclaredMethod(
-					"getDirectFieldCommon", byte.class, Class.class,
-					_MEMBER_NAME_CLASS, boolean.class);
-
-			_lookupGetDirectFieldCommonMethod.setAccessible(true);
+			_implLookup = (MethodHandles.Lookup)field.get(null);
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			throw new ExceptionInInitializerError(reflectiveOperationException);

@@ -18,6 +18,12 @@ interface RoleRecipientType {
 	roleName: string;
 }
 
+interface RoleType {
+	autocreate: boolean;
+	roleName: string;
+	roleType: string;
+}
+
 interface ScriptRecipientType {
 	script: string;
 	scriptLanguage: string;

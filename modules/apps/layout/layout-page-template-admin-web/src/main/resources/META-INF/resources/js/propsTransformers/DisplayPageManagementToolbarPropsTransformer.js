@@ -11,7 +11,6 @@ import {
 	objectToFormData,
 	openSelectionModal,
 	openToast,
-	sub,
 } from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
@@ -90,10 +89,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			},
 			selectEventName: 'selectFolder',
 			size: 'md',
-			title: sub(
-				Liferay.Language.get('move-x-elements-to'),
-				elementsSelected
-			),
+			title: Liferay.Language.get('move-entries'),
 			url: createPortletURL(itemData.itemSelectorURL, {
 				selectedFolders: searchContainer.select
 					.getAllSelectedElements()

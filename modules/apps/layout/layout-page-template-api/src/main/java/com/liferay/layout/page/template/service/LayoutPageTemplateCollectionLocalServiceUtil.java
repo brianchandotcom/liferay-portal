@@ -455,12 +455,12 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 
 	public static LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId,
-			long targetLayoutPageTemplateCollectionId)
+			long parentLayoutPageTemplateCollectionId)
 		throws PortalException {
 
 		return getService().moveLayoutPageTemplateCollection(
 			layoutPageTemplateCollectionId,
-			targetLayoutPageTemplateCollectionId);
+			parentLayoutPageTemplateCollectionId);
 	}
 
 	/**

@@ -373,7 +373,7 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	public LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId,
-			long targetLayoutPageTemplateCollectionId)
+			long parentLayoutPageTemplateCollectionId)
 		throws PortalException;
 
 	/**

@@ -517,13 +517,13 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 	@Override
 	public LayoutPageTemplateCollection moveLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId,
-			long targetLayoutPageTemplateCollectionId)
+			long parentLayoutPageTemplateCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateCollectionLocalService.
 			moveLayoutPageTemplateCollection(
 				layoutPageTemplateCollectionId,
-				targetLayoutPageTemplateCollectionId);
+				parentLayoutPageTemplateCollectionId);
 	}
 
 	/**

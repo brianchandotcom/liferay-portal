@@ -521,9 +521,6 @@ public class DisplayPageActionDropdownItemsProvider {
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 				"selectFolder",
 				layoutPageTemplateCollectionTreeNodeItemSelectorCriterion)
-		).setParameter(
-			"layoutPageTemplateEntryId",
-			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 		).buildString();
 	}
 

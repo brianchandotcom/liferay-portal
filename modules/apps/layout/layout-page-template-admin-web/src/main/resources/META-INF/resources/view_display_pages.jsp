@@ -141,11 +141,11 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	</div>
 </c:if>
 
-	<portlet:actionURL name="/layout_page_template_admin/update_layout_page_template_entry_preview" var="updateLayoutPageTemplateEntryPreviewURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:actionURL>
+<portlet:actionURL name="/layout_page_template_admin/update_layout_page_template_entry_preview" var="updateLayoutPageTemplateEntryPreviewURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
 
-	<aui:form action="<%= updateLayoutPageTemplateEntryPreviewURL %>" name="layoutPageTemplateEntryPreviewFm">
-		<aui:input name="layoutPageTemplateEntryId" type="hidden" />
-		<aui:input name="fileEntryId" type="hidden" />
-	</aui:form>
+<aui:form action="<%= updateLayoutPageTemplateEntryPreviewURL %>" name="layoutPageTemplateEntryPreviewFm">
+	<aui:input name="layoutPageTemplateEntryId" type="hidden" />
+	<aui:input name="fileEntryId" type="hidden" />
+</aui:form>

@@ -11,6 +11,8 @@ import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.http.internal.configuration.HttpConfiguration;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncFilterInputStream;
@@ -55,6 +57,7 @@ import javax.servlet.http.Cookie;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
@@ -83,23 +86,29 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.pool.PoolStats;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  * @author Shuyang Zhou
  */
-@Component(service = Http.class)
+@Component(
+	configurationPid = "com.liferay.portal.http.internal.configuration.HttpConfiguration",
+	service = Http.class
+)
 public class HttpImpl implements Http {
 
 	@Override
@@ -306,7 +315,10 @@ public class HttpImpl implements Http {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
+		_httpConfiguration = ConfigurableUtil.createConfigurable(
+			HttpConfiguration.class, properties);
+
 		_proxyAuthPrefs.add(AuthSchemes.BASIC);
 		_proxyAuthPrefs.add(AuthSchemes.DIGEST);
 
@@ -420,6 +432,12 @@ public class HttpImpl implements Http {
 		}
 
 		return true;
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_httpConfiguration = ConfigurableUtil.createConfigurable(
+			HttpConfiguration.class, properties);
 	}
 
 	protected void processPostMethod(
@@ -1043,6 +1061,25 @@ public class HttpImpl implements Http {
 			requestConfigBuilder.setProxyPreferredAuthSchemes(proxyAuthPrefs);
 		}
 
+		httpClientBuilder.setKeepAliveStrategy(
+			new DefaultConnectionKeepAliveStrategy() {
+
+				@Override
+				public long getKeepAliveDuration(
+					HttpResponse httpResponse, HttpContext httpContext) {
+
+					long keepAliveDuration = super.getKeepAliveDuration(
+						httpResponse, httpContext);
+
+					if (keepAliveDuration > 0) {
+						return keepAliveDuration;
+					}
+
+					return _httpConfiguration.keepAliveTimeout() * 1000L;
+				}
+
+			});
+
 		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
 
 		return httpClientBuilder.build();
@@ -1092,6 +1129,7 @@ public class HttpImpl implements Http {
 
 	private final DCLSingleton<CloseableHttpClient>
 		_closeableHttpClientDCLSingleton = new DCLSingleton<>();
+	private volatile HttpConfiguration _httpConfiguration;
 	private final DCLSingleton<PoolingHttpClientConnectionManager>
 		_poolingHttpClientConnectionManagerDCLSingleton = new DCLSingleton<>();
 	private final List<String> _proxyAuthPrefs = new ArrayList<>();

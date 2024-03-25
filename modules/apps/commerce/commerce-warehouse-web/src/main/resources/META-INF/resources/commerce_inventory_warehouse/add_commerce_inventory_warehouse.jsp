@@ -28,6 +28,6 @@ CommerceInventoryWarehousesDisplayContext commerceInventoryWarehousesDisplayCont
 				"editCommerceInventoryWarehousePortletURL", String.valueOf(commerceInventoryWarehousesDisplayContext.getEditCommerceWarehouseRenderURL())
 			).build()
 		%>'
-		module="js/addCommerceInventoryWarehouse"
+		module="{addCommerceInventoryWarehouse} from commerce-warehouse-web"
 	/>
 </commerce-ui:modal-content>

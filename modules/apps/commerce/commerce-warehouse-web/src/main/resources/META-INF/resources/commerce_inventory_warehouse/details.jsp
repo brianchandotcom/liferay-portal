@@ -120,5 +120,5 @@ String commerceRegionCode = BeanParamUtil.getString(commerceInventoryWarehouse, 
 			"countryTwoLettersISOCode", HtmlUtil.escape(countryTwoLettersISOCode)
 		).build()
 	%>'
-	module="js/warehouseAddress"
+	module="{warehouseAddress} from commerce-warehouse-web"
 />

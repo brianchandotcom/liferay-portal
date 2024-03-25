@@ -19,10 +19,10 @@
 			).put(
 				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 			).put(
-				"warehouseExternalReferenceCode", HtmlUtil.escapeJS(commerceInventoryWarehouse.getExternalReferenceCode())
+				"warehouseExternalReferenceCode", commerceInventoryWarehouse.getExternalReferenceCode()
 			).build()
 		%>'
-		module="js/channels"
+		module="{channels} from commerce-warehouse-web"
 	/>
 
 	<commerce-ui:panel

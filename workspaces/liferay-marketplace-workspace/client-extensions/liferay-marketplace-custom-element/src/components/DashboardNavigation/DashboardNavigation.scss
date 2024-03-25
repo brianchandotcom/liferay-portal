@@ -2,7 +2,7 @@
 	&-container {
 		display: flex;
 		flex-direction: column;
-		max-width: 17.5rem;
+		box-sizing: border-box;
 
 		&-dropdown {
 			border-radius: 0.625rem;
@@ -79,9 +79,11 @@
 	}
 
 	&-body {
+		display: flex;
+		flex-direction: column;
 		background-color: #f7f7f8;
 		border-radius: 0.625rem;
 		padding: 0.5rem;
-		width: 17.5rem;
+		gap: 6px;
 	}
 }

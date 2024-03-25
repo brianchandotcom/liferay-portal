@@ -5,6 +5,8 @@
 
 package com.liferay.client.extension.web.internal.type.deployer;
 
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.adapter.PortletPanelAppAdapter;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.CommerceCheckoutStepCET;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -124,6 +127,24 @@ public class CETDeployerImpl implements CETDeployer {
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
 		String portletId = _getPortletId(customElementCET);
+
+		if (customElementCET.getAdmin()){
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					PanelApp.class,
+					new PortletPanelAppAdapter(
+						portletId,
+						() -> _portletLocalService.getPortletById(
+							portletId)),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"panel.app.order:Integer",
+						customElementCET.getPanelAppOrder()
+					).put(
+						"panel.category.key", customElementCET.getPanelCategoryKey()
+					).build()));
+
+		}
 
 		serviceRegistrations.add(
 			_register(
@@ -248,6 +269,9 @@ public class CETDeployerImpl implements CETDeployer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.client.extension.web)(release.schema.version>=2.0.0))"

@@ -46,6 +46,6 @@ CommerceTermEntryDisplayContext commerceTermEntryDisplayContext = (CommerceTermE
 				"editCommerceTermEntryPortletURL", String.valueOf(commerceTermEntryDisplayContext.getEditCommerceTermEntryRenderURL())
 			).build()
 		%>'
-		module="js/addCommerceTermEntry"
+		module="{addCommerceTermEntry} from commerce-term-web"
 	/>
 </commerce-ui:modal-content>

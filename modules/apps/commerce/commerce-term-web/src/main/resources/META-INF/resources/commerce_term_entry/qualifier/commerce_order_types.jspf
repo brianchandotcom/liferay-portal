@@ -15,12 +15,12 @@
 			).put(
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).put(
-				"termExternalReferenceCode", HtmlUtil.escapeJS(commerceTermEntry.getExternalReferenceCode())
+				"termExternalReferenceCode", commerceTermEntry.getExternalReferenceCode()
 			).put(
 				"termId", commerceTermEntryId
 			).build()
 		%>'
-		module="js/commerce_order_types"
+		module="{commerceOrderTypes} from commerce-term-web"
 	/>
 
 	<commerce-ui:panel

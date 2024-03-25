@@ -65,5 +65,5 @@ boolean hasPermission = commerceTermEntryQualifiersDisplayContext.hasPermission(
 			"selector", "qualifiers--orderType--"
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-term-web"
 />

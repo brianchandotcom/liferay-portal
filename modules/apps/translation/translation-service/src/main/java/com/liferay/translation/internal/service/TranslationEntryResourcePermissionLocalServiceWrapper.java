@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.constants.TranslationConstants;
+import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
@@ -40,7 +41,9 @@ public class TranslationEntryResourcePermissionLocalServiceWrapper
 		}
 
 		if (scope != ResourceConstants.SCOPE_INDIVIDUAL) {
-			return false;
+			return super.hasResourcePermission(
+				companyId, TranslationPortletKeys.TRANSLATION, scope, primKey,
+				roleId, actionId);
 		}
 
 		TranslationEntry translationEntry =
@@ -81,7 +84,9 @@ public class TranslationEntryResourcePermissionLocalServiceWrapper
 		}
 
 		if (scope != ResourceConstants.SCOPE_INDIVIDUAL) {
-			return false;
+			return super.hasResourcePermission(
+				companyId, TranslationPortletKeys.TRANSLATION, scope, primKey,
+				roleIds, actionId);
 		}
 
 		TranslationEntry translationEntry =

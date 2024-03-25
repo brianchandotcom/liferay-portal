@@ -9,25 +9,25 @@ import {ReactElement, ReactNode} from 'react';
 
 type ModalProps = {
 	children: ReactNode;
+	first?: ReactElement;
+	last?: ReactElement;
 	observer: Observer;
 	size: Size;
 	status?: Status;
 	subtitle?: string;
 	title?: string;
-	first?: ReactElement;
-	last?: ReactElement;
 	visible: boolean;
 };
 
 const Modal = ({
 	children,
-	observer,
-	size,
-	title,
-	status,
 	first,
 	last,
+	observer,
+	size,
+	status,
 	subtitle,
+	title,
 	visible,
 }: ModalProps) => {
 	if (!visible) {

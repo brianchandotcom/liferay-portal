@@ -12,15 +12,15 @@ import {Liferay} from '../../../liferay/liferay';
 import {StepType} from './PublisherGateSteps';
 
 type PublisherGateSummaryProps = {
+	children: JSX.Element;
 	setStep: React.Dispatch<React.SetStateAction<StepType>>;
 	submit: () => void;
-	children: JSX.Element;
 };
 
 const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
+	children,
 	setStep,
 	submit,
-	children,
 }) => {
 	return (
 		<div className="publisher-gate-page-container">

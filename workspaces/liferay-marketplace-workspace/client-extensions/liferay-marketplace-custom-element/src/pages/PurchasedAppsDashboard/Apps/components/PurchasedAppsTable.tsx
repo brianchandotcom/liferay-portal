@@ -239,7 +239,6 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							</div>
 						);
 					},
-					title: i18n.translate('installation'),
 				},
 			]}
 			onClickRow={({id}) => navigate(`order/${id}`)}

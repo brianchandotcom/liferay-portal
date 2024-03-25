@@ -1,17 +1,22 @@
-import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-import Table from '../../../../components/Table/Table';
-import ClayLabel from '@clayui/label';
-import {Status} from '@clayui/modal/lib/types';
+import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayButton from '@clayui/button';
-import CommerceSelectAccountImpl from '../../../../services/rest/CommerceSelectAccount';
-import {Liferay} from '../../../../liferay/liferay';
-import SearchBuilder from '../../../../core/SearchBuilder';
-import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
+import ClayLabel from '@clayui/label';
+import {Status} from '@clayui/modal/lib/types';
 import {format} from 'date-fns';
+
+import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
+import Table from '../../../../components/Table/Table';
+import SearchBuilder from '../../../../core/SearchBuilder';
 import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
+import CommerceSelectAccountImpl from '../../../../services/rest/CommerceSelectAccount';
+import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 
 type AppsTableProps = {
 	items: Order[];
@@ -19,22 +24,16 @@ type AppsTableProps = {
 
 const ORDER_STATUS = {
 	completed: 'success',
-	processing: 'secondary',
 	pending: 'info',
+	processing: 'secondary',
 };
 
 const PAYMENT_STATUS = {
-	completed: 'success',
-	pending: 'info',
-	cancelled: 'warning',
-	failed: 'danger',
 	authorized: 'success',
-};
-
-type DropDownType = {
-	id: number;
-	name: string;
-	onClick: (item: any) => Promise<void>;
+	cancelled: 'warning',
+	completed: 'success',
+	failed: 'danger',
+	pending: 'info',
 };
 
 const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
@@ -75,33 +74,31 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 			id: 2,
 			name: i18n.translate('publisher-dashboard'),
 			onClick: async (order: Order) => {
-				const product =
-					await HeadlessCommerceAdminCatalogImpl.getProducts(
-						new URLSearchParams({
-							filter: new SearchBuilder()
-								.eq(
-									'name',
-									`${order.orderItems[0]?.name?.en_US}`
-								)
-								.build(),
-							nestedFields: 'catalog',
-						})
-					);
+				const product = await HeadlessCommerceAdminCatalogImpl.getProducts(
+					new URLSearchParams({
+						filter: new SearchBuilder()
+							.eq('name', `${order.orderItems[0]?.name?.en_US}`)
+							.build(),
+						nestedFields: 'catalog',
+					})
+				);
 
 				const accountId = product.items[0]?.catalog?.accountId;
 
-				CommerceSelectAccountImpl.selectAccount(accountId).then(() => {
-					Liferay.CommerceContext.account = {
-						accountId: accountId,
-					};
+				return CommerceSelectAccountImpl.selectAccount(accountId).then(
+					() => {
+						Liferay.CommerceContext.account = {
+							accountId,
+						};
 
-					Liferay.Util.navigate(
-						Liferay.ThemeDisplay.getCanonicalURL().replace(
-							'/administrator-dashboard',
-							`/publisher-dashboard`
-						)
-					);
-				});
+						Liferay.Util.navigate(
+							Liferay.ThemeDisplay.getCanonicalURL().replace(
+								'/administrator-dashboard',
+								`/publisher-dashboard`
+							)
+						);
+					}
+				);
 			},
 		},
 	];
@@ -172,13 +169,14 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 					{
 						key: 'createDate',
 						render: (createDate) => (
-							<span className=" ml-2 text-capitalize text-nowrap">
+							<span className="ml-2 text-capitalize text-nowrap">
 								{format(new Date(createDate), 'MMM dd, yyyy')}
 							</span>
 						),
 						title: i18n.translate('request-created'),
 					},
 					{
+						align: 'right',
 						key: 'accountId',
 						render: (_, order) => (
 							<DropDown
@@ -187,8 +185,8 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 								trigger={
 									<div>
 										<ClayButton
-											displayType="unstyled"
 											aria-label="Actio dropdown"
+											displayType="unstyled"
 										>
 											<ClayIcon symbol="ellipsis-v" />
 										</ClayButton>

@@ -5,10 +5,10 @@
 
 import {useNavigate} from 'react-router-dom';
 
-import appsIcon from '../../../../assets/icons/apps_fill_icon.svg';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus from '../../../../components/OrderStatus';
 import Table from '../../../../components/Table/Table';
+import i18n from '../../../../i18n';
 import {
 	getProductVersionFromSpecifications,
 	getThumbnailByProductAttachment,
@@ -18,7 +18,6 @@ import {
 	formatDate,
 	getProductTypeFromSpecifications,
 } from '../../PublishedDashboardPageUtil';
-import i18n from '../../../../i18n';
 
 type PublishedAppsTableProps = {
 	items: Order[];

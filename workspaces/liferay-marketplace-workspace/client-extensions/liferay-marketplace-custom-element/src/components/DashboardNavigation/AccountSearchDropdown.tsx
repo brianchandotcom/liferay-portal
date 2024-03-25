@@ -1,16 +1,76 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
+import useAccounts from '../../hooks/data/useAccounts';
+import {Liferay} from '../../liferay/liferay';
+import CommerceSelectAccountImpl from '../../services/rest/CommerceSelectAccount';
 import {getAccountImage} from '../../utils/util';
+import {DashboardNavigationProps} from './DashboardNavigation';
 import Search from './Search';
 
-const AccountSearchDropdown: React.FC<any> = ({
+type AccountSearchDropdownProps = {
+	accountAppsNumber?: number;
+	accountIcon?: string;
+	accountsSearch: ReturnType<typeof useAccounts>;
+	currentAccount?: Account;
+};
+
+const DropdownItems: React.FC<{
+	accounts: DashboardNavigationProps['accountsSearch']['items'];
+}> = ({accounts = []}) => {
+	return (
+		<ClayDropDown.ItemList>
+			{accounts.map((_account: UserAccount) => {
+				const account = _account;
+				const isActive =
+					account.id === Liferay.CommerceContext.account?.accountId;
+
+				return (
+					<ClayDropDown.Item
+						active={isActive}
+						autoFocus={isActive}
+						className="mb-1"
+						key={account.id}
+						onClick={() =>
+							CommerceSelectAccountImpl.selectAccount(
+								account.id
+							).then(() => {
+								Liferay.CommerceContext.account = {
+									accountId: account.id,
+								};
+
+								window.location.reload();
+							})
+						}
+					>
+						<img
+							alt="logo"
+							className="mr-4 rounded-circle"
+							height={32}
+							src={account.logoURL}
+							width={32}
+						/>
+
+						{account.name}
+					</ClayDropDown.Item>
+				);
+			})}
+		</ClayDropDown.ItemList>
+	);
+};
+
+const AccountSearchDropdown: React.FC<AccountSearchDropdownProps> = ({
 	accountAppsNumber,
 	accountIcon,
 	accountsSearch,
 	currentAccount,
-	DropdownItems,
 }) => {
 	const {infiniteSearch, items} = accountsSearch;
 	const {allowFetching, fetchMore, search, setSearch} = infiniteSearch;

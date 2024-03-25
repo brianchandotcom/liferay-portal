@@ -19,10 +19,10 @@
 	transition: background-color 0.3s;
 
 	&-icon {
+		filter: saturate(0%);
 		height: 1.5rem;
 		margin-right: 0.625rem;
 		width: 1.5rem;
-		filter: saturate(0%);
 
 		&-selected {
 			filter: invert(18%) sepia(87%) saturate(3738%) hue-rotate(218deg)

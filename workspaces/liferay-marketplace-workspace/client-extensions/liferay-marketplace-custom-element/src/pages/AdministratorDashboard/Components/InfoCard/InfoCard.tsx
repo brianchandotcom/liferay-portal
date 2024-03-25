@@ -1,25 +1,30 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ClayButtonWithIcon} from '@clayui/button';
 import DropDown from '@clayui/drop-down/lib/DropDown';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import Button from '@clayui/button';
 
 type InfoCard = {
+	className?: string;
+	dropDownItems?: any[];
+	growth?: number;
+	growthContext: string;
+	onSelectDropDown?: any;
+	symbol: string;
 	title: string;
 	value: string | number;
-	growth?: number;
-	className?: string;
-	growthContext: string;
-	symbol: string;
-	dropDownItems?: any[];
-	onSelectDropDown?: any;
 };
 
 const InfoCard: React.FC<InfoCard> = ({
 	className,
-	onSelectDropDown,
 	dropDownItems,
 	growth = 0,
 	growthContext,
+	onSelectDropDown,
 	symbol,
 	title,
 	value,
@@ -30,10 +35,10 @@ const InfoCard: React.FC<InfoCard> = ({
 				`p-4 d-flex flex-column justify-content-between info-card ${className}`
 			)}
 		>
-			<div className="d-flex justify-content-between align-content-center mb-2">
+			<div className="align-content-center d-flex justify-content-between mb-2">
 				<span className="d-flex flex-column">
 					<div className="d-flex">
-						<span className="font-weight-lighter text-black-50 mb-2 mr-2">
+						<span className="font-weight-lighter mb-2 mr-2 text-black-50">
 							{title}
 						</span>
 						{dropDownItems?.length && onSelectDropDown && (
@@ -41,15 +46,11 @@ const InfoCard: React.FC<InfoCard> = ({
 								closeOnClick
 								filterKey="name"
 								trigger={
-									<Button
-										aria-label="dropdown"
-										displayType={'unstyled'}
-									>
-										<ClayIcon
-											symbol={'caret-bottom'}
-											className="text-primary"
-										/>
-									</Button>
+									<ClayButtonWithIcon
+										aria-label="drop down"
+										symbol="caret-bottom"
+										title="Close"
+									/>
 								}
 							>
 								<DropDown.ItemList items={dropDownItems}>
@@ -71,9 +72,9 @@ const InfoCard: React.FC<InfoCard> = ({
 				</span>
 				<span className="d-flex flex-column justify-content-center">
 					<ClayIcon
-						symbol={symbol}
-						fontSize={32}
 						className="text-primary"
+						fontSize={32}
+						symbol={symbol}
 					/>
 				</span>
 			</div>
@@ -81,15 +82,15 @@ const InfoCard: React.FC<InfoCard> = ({
 			<div className="font-weight-bold text-black-50">
 				<span
 					className={classNames('mr-2', {
-						'text-success': growth > 0,
 						'text-danger': growth < 0,
+						'text-success': growth > 0,
 					})}
 				>
 					<ClayIcon
+						className="mr-21"
 						symbol={
 							growth > 0 ? 'order-arrow-up' : 'order-arrow-down'
 						}
-						className="mr-21"
 					/>
 					{growth}%
 				</span>

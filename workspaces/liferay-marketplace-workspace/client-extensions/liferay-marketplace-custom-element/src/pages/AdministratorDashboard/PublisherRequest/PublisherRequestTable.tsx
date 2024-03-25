@@ -1,18 +1,22 @@
-import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
-import Table from '../../../components/Table/Table';
-import {format} from 'date-fns';
-import ClayLabel from '@clayui/label';
-import Modal from '../../../components/Modal';
-import {useModal} from '@clayui/modal';
-import PublisherSummaryContent from '../../PublisherGate/components/PublisherSummaryContent';
-import {useState} from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayButton from '@clayui/button';
+import ClayLabel from '@clayui/label';
+import {useModal} from '@clayui/modal';
 import {Status} from '@clayui/modal/lib/types';
-import {updateUserAdditionalInfos} from '../../../utils/api';
-import fetcher from '../../../services/fetcher';
-import {Liferay} from '../../../liferay/liferay';
+import {format} from 'date-fns';
+import {useState} from 'react';
+
+import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
+import Modal from '../../../components/Modal';
+import Table from '../../../components/Table/Table';
 import i18n from '../../../i18n';
-import {KeyedMutator} from 'swr';
+import {Liferay} from '../../../liferay/liferay';
+import fetcher from '../../../services/fetcher';
+import PublisherSummaryContent from '../../PublisherGate/components/PublisherSummaryContent';
 
 type AppsTableProps = {
 	items: PublisherRequestInfo[];
@@ -28,8 +32,9 @@ const STATUS = {
 
 const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 	const {observer, onOpenChange, open} = useModal();
-	const [selectedRequest, setSelectedRequest] =
-		useState<PublisherRequestInfo>();
+	const [selectedRequest, setSelectedRequest] = useState<
+		PublisherRequestInfo
+	>();
 
 	const showModalButtons = selectedRequest?.requestStatus?.key === 'open';
 
@@ -75,8 +80,8 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 								{requestDescription}
 							</span>
 						),
-						truncate: true,
 						title: i18n.translate('description'),
+						truncate: true,
 					},
 					{
 						key: 'creator',
@@ -88,7 +93,7 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 					{
 						key: 'dateCreated',
 						render: (dateCreated) => (
-							<span className=" ml-2 text-capitalize text-nowrap">
+							<span className="ml-2 text-capitalize text-nowrap">
 								{format(new Date(dateCreated), 'MMM dd, yyyy')}
 							</span>
 						),
@@ -119,17 +124,12 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 			/>
 
 			<Modal
-				observer={observer}
-				size={'lg'}
-				title={`Review Request ${selectedRequest?.requestStatus?.name}`}
-				visible={open}
-				status={selectedRequestStatus}
 				last={
 					showModalButtons ? (
 						<div>
 							<ClayButton
-								displayType="danger"
 								className="mr-3"
+								displayType="danger"
 								onClick={async () => {
 									await fetcher.patch(
 										`o/c/requestpublisheraccounts/${Number(
@@ -179,6 +179,11 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 						</div>
 					) : undefined
 				}
+				observer={observer}
+				size="lg"
+				status={selectedRequestStatus}
+				title={`Review Request ${selectedRequest?.requestStatus?.name}`}
+				visible={open}
 			>
 				<PublisherSummaryContent userInfo={selectedRequest} />
 			</Modal>

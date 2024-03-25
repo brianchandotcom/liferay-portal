@@ -4,16 +4,16 @@
  */
 
 import {useState} from 'react';
-import {useForm, useWatch} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
+import i18n from '../../../i18n';
 import zodSchema, {zodResolver} from '../../../schema/zod';
 import fetcher from '../../../services/fetcher';
 import PublisherGateForm from './PublisherGateForm';
 import PublisherGateSummary from './PublisherGateSummary';
 import PubliserhRequestedCard from './PublisherRequestedCard';
 import PublisherSummaryContent from './PublisherSummaryContent';
-import i18n from '../../../i18n';
 
 export type PublisherForm = z.infer<typeof zodSchema.becomePublisherForm>;
 
@@ -53,7 +53,8 @@ const PublisherGateSteps = () => {
 			await fetcher.post('o/c/requestpublisheraccounts/', formData);
 
 			setStep(StepType.REQUESTED);
-		} catch (error) {
+		}
+		catch (error) {
 			console.error(error);
 		}
 	};

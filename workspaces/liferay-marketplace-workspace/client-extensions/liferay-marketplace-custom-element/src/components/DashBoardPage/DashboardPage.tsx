@@ -10,11 +10,10 @@ import {AppProps} from '../DashboardTable/DashboardTable';
 import {Header} from '../Header/Header';
 
 export type DashboardListItems = {
-	itemIcon: string;
 	itemName: string;
-	itemSelected: boolean;
 	itemTitle: string;
 	items?: AppProps[];
+	symbol: string;
 };
 
 type DashBoardPageProps = {

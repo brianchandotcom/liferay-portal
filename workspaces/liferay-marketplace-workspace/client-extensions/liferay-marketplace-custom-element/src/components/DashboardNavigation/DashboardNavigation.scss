@@ -1,8 +1,8 @@
 .dashboard-navigation {
 	&-container {
+		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
-		box-sizing: border-box;
 
 		&-dropdown {
 			border-radius: 0.625rem;
@@ -79,11 +79,11 @@
 	}
 
 	&-body {
-		display: flex;
-		flex-direction: column;
 		background-color: #f7f7f8;
 		border-radius: 0.625rem;
-		padding: 0.5rem;
+		display: flex;
+		flex-direction: column;
 		gap: 6px;
+		padding: 0.5rem;
 	}
 }

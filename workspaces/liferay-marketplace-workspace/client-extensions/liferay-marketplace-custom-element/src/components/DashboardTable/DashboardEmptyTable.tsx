@@ -32,8 +32,8 @@ export function DashboardEmptyTable({
 			<div className="dashboard-empty-state-background">
 				<ClayIcon
 					aria-label={title}
-					symbol={icon}
 					className="dashboard-empty-state-image"
+					symbol={icon}
 				/>
 			</div>
 

@@ -13,12 +13,12 @@ type PublisherRequestInfo = {
 	emailAddress?: string;
 	extension?: string;
 	firstName?: string;
+	id?: number;
 	lastName?: string;
 	phone?: {
 		code: string;
 		flag: string;
 	};
-	id?: number;
 	phoneNumber?: string;
 	requestDescription?: string;
 	requestStatus?: {
@@ -257,12 +257,12 @@ type Order = {
 	orderItems: [
 		{
 			id?: number;
-			quantity?: number;
-			skuId: number;
-			unitPriceWithTaxAmount?: number;
 			name?: {
 				en_US: string;
 			};
+			quantity?: number;
+			skuId: number;
+			unitPriceWithTaxAmount?: number;
 		}
 	];
 	orderStatus: number;

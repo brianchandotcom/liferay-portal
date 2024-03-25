@@ -1,19 +1,27 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import useSWR from 'swr';
+
 import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
-import fetcher from '../../../services/fetcher';
-import AppAdministratorTable from './AppAdministratorTable';
+import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
+import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
+import AppAdministratorTable from './AppAdministratorTable';
 
 const AppAdministrator = () => {
 	const {data: apps} = useSWR<APIResponse<PublisherRequestInfo>>(
-		'appsAdministrator',
-		async () => {
-			const getAppsResponse = await fetcher(
-				'o/headless-commerce-admin-catalog/v1.0/products?nestedFields=productSpecifications&sort=createDate:desc'
-			);
-
-			return getAppsResponse;
-		}
+		'administrator-dashboard/apps',
+		() =>
+			HeadlessCommerceAdminCatalogImpl.getProducts(
+				new URLSearchParams({
+					filter: SearchBuilder.lambda('categoryNames', 'Project'),
+					nestedFields: 'productSpecifications',
+					sort: 'createDate:desc',
+				})
+			)
 	);
 
 	return (

@@ -1,21 +1,22 @@
-import {useNavigate} from 'react-router-dom';
-import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
-import Table from '../../../components/Table/Table';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
+import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus from '../../../components/OrderStatus';
+import Table from '../../../components/Table/Table';
+import i18n from '../../../i18n';
 import {
 	formatDate,
 	getProductTypeFromSpecifications,
 } from '../../PublishedAppsDashboard/PublishedDashboardPageUtil';
-import i18n from '../../../i18n';
 
 type AppsTableProps = {
 	items: PublisherRequestInfo[];
 };
 
 const AppAdministratorTable: React.FC<AppsTableProps> = ({items}) => {
-	const navigate = useNavigate();
-
 	if (!items?.length) {
 		return (
 			<DashboardEmptyTable

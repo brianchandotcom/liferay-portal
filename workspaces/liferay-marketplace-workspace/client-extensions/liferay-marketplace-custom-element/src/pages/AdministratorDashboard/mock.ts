@@ -1,3 +1,7 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 export const colors = {
 	color1: '#2057e2',
 	color2: '#46e27d',
@@ -9,20 +13,26 @@ export const infoCard = [
 	{
 		growth: 25,
 		growthContext: '+10k this week',
-		value: '$58,980.00',
 		symbol: 'dollar-symbol',
 		title: 'Income',
+		value: '$58,980.00',
 	},
 	{
 		growth: 68,
 		growthContext: '+36k this week',
-		value: '249.194.46',
 		symbol: 'thumbs-up-arrow',
 		title: 'Conversion Rate',
+		value: '249.194.46',
 	},
 ];
 
 export const barChart = {
+	colors: {
+		data1: colors.color1,
+		data2: colors.color2,
+		data3: colors.color3,
+		data4: colors.color4,
+	},
 	columns: [
 		['data1', 100, 20, 30],
 		['data2', 20, 70, 100],
@@ -30,15 +40,15 @@ export const barChart = {
 		['data4', 23, 74, 90],
 	],
 	type: 'bar',
+};
+
+export const pieChart = {
 	colors: {
 		data1: colors.color1,
 		data2: colors.color2,
 		data3: colors.color3,
 		data4: colors.color4,
 	},
-};
-
-export const pieChart = {
 	columns: [
 		['data1', 100, 20, 30, 80],
 		['data2', 20, 70, 100, 89],
@@ -46,12 +56,6 @@ export const pieChart = {
 		['data4', 8, 70, 14, 33],
 	],
 	type: 'donut',
-	colors: {
-		data1: colors.color1,
-		data2: colors.color2,
-		data3: colors.color3,
-		data4: colors.color4,
-	},
 };
 
 export const lineChart = {

@@ -1,71 +1,70 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {addDays} from 'date-fns';
 import useSWR from 'swr';
 
-import HeadlessAdminUserImpl from '../../../services/rest/HeadlessAdminUser';
-import {addDays} from 'date-fns';
 import SearchBuilder from '../../../core/SearchBuilder';
+import HeadlessAdminUserImpl from '../../../services/rest/HeadlessAdminUser';
+
+type UseOrderMetricsProps = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
 
 export const METRIC_PARAMETER = {
-	week: 7,
 	month: 30,
 	q1: 1,
 	q2: 2,
 	q3: 3,
 	q4: 4,
+	week: 7,
 };
 
-type useOrderMetricsProps = 'week' | 'month' | 'q1' | 'q2' | 'q3' | 'q4';
-
-const useAccountsMetrics = (param: useOrderMetricsProps) => {
+const useAccountsMetrics = (param: UseOrderMetricsProps) => {
 	const getAccountsMetrics = async () => {
 		const currentTime = new Date();
-
-		const lastPeriod = addDays(
-			currentTime,
-			-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER]
-		).toISOString();
 
 		const beforeLastPeriod = addDays(
 			currentTime,
 			-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER] * 2
 		).toISOString();
 
+		const lastPeriod = addDays(
+			currentTime,
+			-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER]
+		).toISOString();
+
 		const requestsParams = [
-			{
-				searchParams: new URLSearchParams({
-					fields: 'id,',
-					pageSize: '-1',
-				}),
-			},
-			{
-				searchParams: new URLSearchParams({
-					fields: 'id,',
-					filter: SearchBuilder.gt('dateCreated', lastPeriod),
-				}),
-			},
-			{
-				searchParams: new URLSearchParams({
-					fields: 'id,',
-					filter: new SearchBuilder()
-						.gt('dateCreated', lastPeriod)
-						.and()
-						.lt('dateCreated', beforeLastPeriod)
-						.build(),
-				}),
-			},
+			new URLSearchParams({
+				fields: 'id,',
+				pageSize: '-1',
+			}),
+			new URLSearchParams({
+				fields: 'id,',
+				filter: SearchBuilder.gt('dateCreated', lastPeriod),
+			}),
+			new URLSearchParams({
+				fields: 'id,',
+				filter: new SearchBuilder()
+					.gt('dateCreated', lastPeriod)
+					.and()
+					.lt('dateCreated', beforeLastPeriod)
+					.build(),
+			}),
 		];
 
 		const response = await Promise.all(
-			requestsParams.map((request) =>
-				HeadlessAdminUserImpl.getAccounts(request.searchParams)
+			requestsParams.map((searchParam) =>
+				HeadlessAdminUserImpl.getAccounts(searchParam)
 			)
 		);
 
 		return {
-			param,
-			totalCount: response[0].totalCount,
-			lastPeriod: response[1].totalCount,
 			beforeLastPeriod: response[2].totalCount,
 			growth: (response[1].totalCount - response[2].totalCount) * 100,
+			lastPeriod: response[1].totalCount,
+			param,
+			totalCount: response[0].totalCount,
 		};
 	};
 

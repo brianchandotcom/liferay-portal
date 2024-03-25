@@ -16,11 +16,11 @@ import i18n from '../../../../../i18n';
 
 import './Licenses.scss';
 
+import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import ClayButton from '@clayui/button';
 
 import DeactivateKeysModal from '../../../../../components/DeactivateKeysModal/DeactivateKeysModal';
 import Modal from '../../../../../components/Modal';
@@ -68,11 +68,7 @@ const Licenses = () => {
 			? 'On-Premise'
 			: 'Cloud';
 
-	const {
-		data: licenseKeysResponse,
-		isLoading,
-		mutate,
-	} = useSWR(
+	const {data: licenseKeysResponse, isLoading, mutate} = useSWR(
 		`/order-license-keys/${orderId}/${page}/${pageSize}`,
 		async () => {
 			try {
@@ -83,7 +79,8 @@ const Licenses = () => {
 						pageSize: pageSize.toString(),
 					})
 				);
-			} catch (error) {
+			}
+			catch (error) {
 				return {
 					items: [],
 					totalCount: 0,
@@ -97,15 +94,18 @@ const Licenses = () => {
 	const orderStatusIsNotCompleted =
 		placedOrder?.orderStatusInfo?.label !== OrderStatuses.COMPLETED;
 
-	const {onDeativateLicenseKey, onDownload, onViewLicenseKey} =
-		useLicenseActions({
-			deactivateLicenseModal,
-			keyType,
-			licenseKeyModal,
-			marketplaceSpringBootOAuth2,
-			mutate,
-			setModal: setModalData,
-		});
+	const {
+		onDeativateLicenseKey,
+		onDownload,
+		onViewLicenseKey,
+	} = useLicenseActions({
+		deactivateLicenseModal,
+		keyType,
+		licenseKeyModal,
+		marketplaceSpringBootOAuth2,
+		mutate,
+		setModal: setModalData,
+	});
 
 	const buttonsInfo = useMemo(
 		() => ({
@@ -121,7 +121,7 @@ const Licenses = () => {
 			last: (
 				<>
 					<ClayButton
-						className="text-danger border-danger"
+						className="border-danger text-danger"
 						displayType="secondary"
 						onClick={() => {
 							licenseKeyModal.onClose();
@@ -134,10 +134,10 @@ const Licenses = () => {
 
 					<ClayButton
 						className="ml-4 mr-1"
-						displayType="primary"
 						disabled={isLicenseExpired(
 							modalData?.expirationDate as string
 						)}
+						displayType="primary"
 						onClick={() => {
 							licenseKeyModal.onClose();
 
@@ -159,7 +159,7 @@ const Licenses = () => {
 				</>
 			),
 		}),
-		[licenseKeyModal, deactivateLicenseModal, onDownload, modalData]
+		[licenseKeyModal, deactivateLicenseModal, modalData]
 	);
 
 	if (isLoading) {
@@ -291,7 +291,7 @@ const Licenses = () => {
 					]}
 					hasKebabButton
 					hasPagination
-					kebabClassname="border-0"
+					kebabClassName="border-0"
 					onClickRow={onViewLicenseKey}
 					paginationProps={{
 						active: page,
@@ -339,7 +339,7 @@ const Licenses = () => {
 					last={buttonsInfo.last}
 					observer={licenseKeyModal.observer}
 					size="lg"
-					title={''}
+					title=""
 					visible={false}
 				>
 					<LicenceKeyModalContent

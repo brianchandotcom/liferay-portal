@@ -1,24 +1,30 @@
-import useSWR from 'swr';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {
-	startOfQuarter,
-	endOfQuarter,
-	setQuarter,
-	format,
 	addDays,
+	endOfQuarter,
+	format,
+	setQuarter,
+	startOfQuarter,
 } from 'date-fns';
+import useSWR from 'swr';
+
 import SearchBuilder from '../../../core/SearchBuilder';
 import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
 
 export const METRIC_PARAMETER = {
-	week: 7,
 	month: 30,
 	q1: 1,
 	q2: 2,
 	q3: 3,
 	q4: 4,
+	week: 7,
 };
 
-type FilterType = 'week' | 'month' | 'q1' | 'q2' | 'q3' | 'q4';
+type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
 
 const useOrderAmountMetrics = (param: FilterType) => {
 	function getQuarterDates(year: number, quarter: number) {
@@ -29,60 +35,57 @@ const useOrderAmountMetrics = (param: FilterType) => {
 		const startDate = startOfQuarter(baseDate);
 		const endDate = endOfQuarter(baseDate);
 
-		return {startDate, endDate};
+		return {
+			endDate,
+			startDate,
+		};
 	}
 
 	const getOrderDonoutMetrics = async () => {
 		const currentTime = new Date();
 		const currentYear = format(currentTime, 'yyyy');
-		const {startDate, endDate} = getQuarterDates(
+		const {endDate, startDate} = getQuarterDates(
 			Number(currentYear),
 			METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER]
 		);
 
-		let lastPeriod = startDate.toISOString();
 		let beforeLastPeriod = endDate.toISOString();
+		let lastPeriod = startDate.toISOString();
 
 		if (['week', 'month'].some((parameter) => parameter === param)) {
-			lastPeriod = addDays(
-				currentTime,
-				-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER]
-			).toISOString();
-
 			beforeLastPeriod = addDays(
 				currentTime,
 				-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER] * 2
 			).toISOString();
+
+			lastPeriod = addDays(
+				currentTime,
+				-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER]
+			).toISOString();
 		}
 
 		const requestsParams = [
-			{
-				searchParams: new URLSearchParams({
-					fields: 'id,totalAmount',
-					pageSize: '-1',
-				}),
-			},
-			{
-				searchParams: new URLSearchParams({
-					fields: 'id,totalAmount',
-					filter: SearchBuilder.gt('createDate', lastPeriod),
-				}),
-			},
-			{
-				searchParams: new URLSearchParams({
-					fields: 'id,totalAmount',
-					filter: new SearchBuilder()
-						.gt('createDate', lastPeriod)
-						.and()
-						.lt('createDate', beforeLastPeriod)
-						.build(),
-				}),
-			},
+			new URLSearchParams({
+				fields: 'id,totalAmount',
+				pageSize: '-1',
+			}),
+			new URLSearchParams({
+				fields: 'id,totalAmount',
+				filter: SearchBuilder.gt('createDate', lastPeriod),
+			}),
+			new URLSearchParams({
+				fields: 'id,totalAmount',
+				filter: new SearchBuilder()
+					.gt('createDate', lastPeriod)
+					.and()
+					.lt('createDate', beforeLastPeriod)
+					.build(),
+			}),
 		];
 
 		const response = await Promise.all(
-			requestsParams.map((request) =>
-				HeadlessCommerceAdminOrderImpl.getOrders(request.searchParams)
+			requestsParams.map((searchParam) =>
+				HeadlessCommerceAdminOrderImpl.getOrders(searchParam)
 			)
 		);
 
@@ -94,7 +97,7 @@ const useOrderAmountMetrics = (param: FilterType) => {
 		};
 	};
 
-	return useSWR(`metrics/donutOrder/${param}`, getOrderDonoutMetrics);
+	return useSWR(`metrics/order-ammount/${param}`, getOrderDonoutMetrics);
 };
 
 export default useOrderAmountMetrics;

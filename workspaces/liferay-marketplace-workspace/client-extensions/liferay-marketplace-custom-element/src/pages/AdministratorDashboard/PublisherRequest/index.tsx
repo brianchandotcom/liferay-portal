@@ -1,22 +1,24 @@
-import useSWR from 'swr';
-import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
-import PublisherRequestTable from './PublisherRequestTable';
-import fetcher from '../../../services/fetcher';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import useSWR from 'swr';
+
+import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
 import i18n from '../../../i18n';
+import fetcher from '../../../services/fetcher';
+import PublisherRequestTable from './PublisherRequestTable';
 
 const PublisherRequest = () => {
-	const {data: publisherRequests, mutate} = useSWR<
+	const {data: publisherRequests, isLoading, mutate} = useSWR<
 		APIResponse<PublisherRequestInfo>
-	>('requestpublisheraccounts', async () => {
-		const requestPublisherResponse = await fetcher(
-			'o/c/requestpublisheraccounts'
-		);
+	>('requestpublisheraccounts', () =>
+		fetcher('o/c/requestpublisheraccounts')
+	);
 
-		return requestPublisherResponse;
-	});
-
-	if (!publisherRequests) {
+	if (isLoading) {
 		return (
 			<ClayLoadingIndicator
 				displayType="primary"
@@ -25,6 +27,8 @@ const PublisherRequest = () => {
 			/>
 		);
 	}
+
+	const items = publisherRequests?.items || [];
 
 	return (
 		<DashboardPage
@@ -35,10 +39,7 @@ const PublisherRequest = () => {
 				title: i18n.translate('publisher-requests'),
 			}}
 		>
-			<PublisherRequestTable
-				items={publisherRequests?.items}
-				mutate={mutate}
-			/>
+			<PublisherRequestTable items={items} mutate={mutate} />
 		</DashboardPage>
 	);
 };

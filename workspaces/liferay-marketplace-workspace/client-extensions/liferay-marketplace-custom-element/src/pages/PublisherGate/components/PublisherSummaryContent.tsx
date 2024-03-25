@@ -1,8 +1,14 @@
-import classNames from 'classnames';
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import i18n from '../../../i18n';
 import {Status} from '@clayui/modal/lib/types';
+import classNames from 'classnames';
+
+import i18n from '../../../i18n';
 
 type DisplayCardInfoProps = {
 	className?: string;
@@ -44,7 +50,7 @@ const DisplayCardInfo: React.FC<DisplayCardInfoProps> = ({
 		</span>
 		<div className="d-flex flex-column text-wrap">
 			<span className="font-weight-bold">{title}</span>
-			<span className="display-card-description ">{info}</span>
+			<span className="display-card-description">{info}</span>
 		</div>
 	</div>
 );
@@ -72,7 +78,7 @@ const PublisherSummaryContent: React.FC<PublisherSummaryContentProps> = ({
 				</span>
 				{userInfo?.requestStatus && (
 					<DisplayCardInfo
-						className="mb-5 col-6"
+						className="col-6 mb-5"
 						icon="warning-full"
 						info={
 							<ClayLabel
@@ -101,7 +107,7 @@ const PublisherSummaryContent: React.FC<PublisherSummaryContentProps> = ({
 					/>
 
 					<DisplayCardInfo
-						className="mb-5 col-6"
+						className="col-6 mb-5"
 						icon="envelope-closed"
 						info={userInfo?.emailAddress}
 						title={i18n.translate('email')}

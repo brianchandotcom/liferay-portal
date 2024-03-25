@@ -4,22 +4,28 @@
  */
 
 import {Outlet} from 'react-router-dom';
-import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
+
+import {DashboardNavigationList} from '../../components/DashboardNavigation/DashboardNavigationList';
 import {initialAdministratorDashboardNavigationItems} from './AdministratorDashboardPageUtil';
 
-const AdministratorDashboardOutlet = () => {
-	return (
-		<div className="d-flex">
-			<DashboardNavigation
-				dashboardNavigationItems={
-					initialAdministratorDashboardNavigationItems
-				}
-			/>
-			<span className="ml-6 w-100 h-vh-100">
-				<Outlet />
-			</span>
+const AdministratorDashboardOutlet = () => (
+	<div className="d-flex">
+		<div className="d-flex dashboard-navigation-container">
+			<div className="dashboard-navigation-body">
+				{initialAdministratorDashboardNavigationItems.map(
+					(dashboardNavigation, index) => (
+						<DashboardNavigationList
+							dashboardNavigation={dashboardNavigation}
+							key={index}
+						/>
+					)
+				)}
+			</div>
 		</div>
-	);
-};
+		<span className="h-vh-100 ml-6 w-100">
+			<Outlet />
+		</span>
+	</div>
+);
 
 export default AdministratorDashboardOutlet;

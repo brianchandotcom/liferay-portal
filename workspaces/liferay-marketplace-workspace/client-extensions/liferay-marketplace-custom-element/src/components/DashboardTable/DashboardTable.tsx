@@ -49,7 +49,7 @@ interface DashboardTableProps<T> {
 export function DashboardTable<T>({
 	children = () => null,
 	emptyStateMessage,
-	icon,
+	icon = 'grid',
 	items = [],
 	tableHeaders = [],
 }: DashboardTableProps<T>) {
@@ -87,7 +87,7 @@ export function DashboardTable<T>({
 		<DashboardEmptyTable
 			description1={description1 ?? ''}
 			description2={description2 ?? ''}
-			icon="grid"
+			icon={icon}
 			title={title}
 		/>
 	);

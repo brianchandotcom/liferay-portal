@@ -14,7 +14,7 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 <c:if test="<%= commerceCurrenciesDisplayContext.hasManageCommerceCurrencyPermission() %>">
 	<clay:management-toolbar
 		managementToolbarDisplayContext="<%= new CommerceCurrenciesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, commerceCurrenciesDisplayContext.getSearchContainer()) %>"
-		propsTransformer="js/CommerceCurrenciesManagementToolbarPropsTransformer"
+		propsTransformer="{CommerceCurrenciesManagementToolbarPropsTransformer} from commerce-currency-web"
 	/>
 
 	<portlet:actionURL name="/commerce_currency/edit_commerce_currency" var="editCommerceCurrencyActionURL" />

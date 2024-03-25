@@ -6,6 +6,7 @@
 package com.liferay.notification.internal.type;
 
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -462,8 +464,10 @@ public class EmailNotificationType extends BaseNotificationType {
 		_emailProviders.put(
 			NotificationRecipientConstants.TYPE_ROLE,
 			new RoleEmailProvider(
-				_accountEntryLocalService, _objectDefinitionLocalService,
-				_objectFieldLocalService, _roleLocalService,
+				_accountEntryLocalService,
+				_accountEntryOrganizationRelLocalService,
+				_objectDefinitionLocalService, _objectFieldLocalService,
+				_organizationLocalService, _roleLocalService,
 				_userGroupRoleLocalService));
 	}
 
@@ -700,6 +704,10 @@ public class EmailNotificationType extends BaseNotificationType {
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
+	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
 	private final Map<String, EmailProvider> _emailProviders = new HashMap<>();
 
 	@Reference
@@ -720,6 +728,9 @@ public class EmailNotificationType extends BaseNotificationType {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

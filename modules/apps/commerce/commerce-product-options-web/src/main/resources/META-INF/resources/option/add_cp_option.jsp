@@ -48,6 +48,6 @@ CPOptionDisplayContext cpOptionDisplayContext = (CPOptionDisplayContext)request.
 				"windowState", LiferayWindowState.MAXIMIZED.toString()
 			).build()
 		%>'
-		module="js/add_cp_option"
+		module="{addCpOption} from commerce-product-options-web"
 	/>
 </commerce-ui:modal-content>

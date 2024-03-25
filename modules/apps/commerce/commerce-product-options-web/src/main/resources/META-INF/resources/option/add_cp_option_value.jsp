@@ -123,6 +123,6 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 				"windowState", LiferayWindowState.MAXIMIZED.toString()
 			).build()
 		%>'
-		module="js/add_cp_option_value"
+		module="{addCpOptionValue} from commerce-product-options-web"
 	/>
 </commerce-ui:modal-content>

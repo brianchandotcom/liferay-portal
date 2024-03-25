@@ -118,5 +118,5 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 </aui:form>
 
 <liferay-frontend:component
-	module="js/edit_cp_option_and_value"
+	module="{editCpOptionAndValue} from commerce-product-options-web"
 />

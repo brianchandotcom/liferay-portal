@@ -27,7 +27,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new CPOptionCategoryManagementToolbarDisplayContext(cpOptionCategoryDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
-	propsTransformer="js/CPOptionCategoryManagementToolbarPropsTransformer"
+	propsTransformer="{CPOptionCategoryManagementToolbarPropsTransformer} from commerce-product-options-web"
 />
 
 <div id="<portlet:namespace />productOptionCategoriesContainer">

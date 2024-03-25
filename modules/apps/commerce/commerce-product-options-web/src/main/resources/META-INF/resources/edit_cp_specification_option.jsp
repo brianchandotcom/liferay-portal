@@ -32,5 +32,5 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 </aui:form>
 
 <liferay-frontend:component
-	module="js/EditCPSpecificationOption"
+	module="{EditCPSpecificationOption} from commerce-product-options-web"
 />

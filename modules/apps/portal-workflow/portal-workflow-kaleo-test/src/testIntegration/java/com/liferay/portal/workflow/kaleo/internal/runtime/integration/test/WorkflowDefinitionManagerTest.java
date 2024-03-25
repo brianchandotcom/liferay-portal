@@ -7,18 +7,25 @@ package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.security.script.management.configuration.ScriptManagementConfiguration;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
+import java.io.Closeable;
 import java.io.InputStream;
 
 import org.junit.Assert;
@@ -50,6 +57,26 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 		_workflowDefinitionManager.getWorkflowDefinition(
 			TestPropsValues.getCompanyId(), workflowDefinition.getName(),
 			workflowDefinition.getVersion());
+	}
+
+	@Test
+	public void testDeployGroovyScriptBasedWorkflowDefinition()
+		throws Exception {
+
+		String content = StringUtil.read(
+			getResourceInputStream("single-approver-workflow-definition.xml"));
+
+		try (Closeable closeable =
+				_disableScriptContentBeExecutedOrIncluded()) {
+
+			AssertUtils.assertFailure(
+				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
+					class,
+				"Script language \"groovy\" is not allowed",
+				() -> _workflowDefinitionManager.deployWorkflowDefinition(
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					StringPool.BLANK, "Single Approver", content.getBytes()));
+		}
 	}
 
 	@Test
@@ -503,6 +530,29 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			FileUtil.getBytes(inputStream));
 	}
 
+	private Closeable _disableScriptContentBeExecutedOrIncluded()
+		throws ConfigurationException {
+
+		_configurationProvider.saveSystemConfiguration(
+			ScriptManagementConfiguration.class,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"allowScriptContentBeExecutedOrIncluded", false
+			).build());
+
+		return () -> {
+			try {
+				_configurationProvider.saveSystemConfiguration(
+					ScriptManagementConfiguration.class,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"allowScriptContentBeExecutedOrIncluded", true
+					).build());
+			}
+			catch (ConfigurationException configurationException) {
+				throw new RuntimeException(configurationException);
+			}
+		};
+	}
+
 	private WorkflowDefinition _saveWorkflowDefinition() throws Exception {
 		InputStream inputStream = getResourceInputStream(
 			"single-approver-workflow-definition.xml");
@@ -520,6 +570,9 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), title,
 			StringUtil.randomId(), bytes);
 	}
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;

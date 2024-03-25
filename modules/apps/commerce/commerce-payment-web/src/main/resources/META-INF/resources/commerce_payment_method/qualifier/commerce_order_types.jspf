@@ -18,7 +18,7 @@
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).build()
 		%>'
-		module="js/commerce_order_types"
+		module="{commerceOrderTypes} from commerce-payment-web"
 	/>
 
 	<commerce-ui:panel

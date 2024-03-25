@@ -20,7 +20,7 @@
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).build()
 		%>'
-		module="js/commerce_term_entries"
+		module="{commerceTermEntries} from commerce-payment-web"
 	/>
 
 	<commerce-ui:panel

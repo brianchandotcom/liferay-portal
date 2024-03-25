@@ -215,5 +215,5 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 			"PUBLISH", Constants.PUBLISH
 		).build()
 	%>'
-	module="js/edit_commerce_payment_entry"
+	module="{editCommercePaymentEntry} from commerce-payment-web"
 />

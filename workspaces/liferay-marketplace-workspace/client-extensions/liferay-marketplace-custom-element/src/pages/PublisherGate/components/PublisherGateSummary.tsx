@@ -4,77 +4,24 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
-import {UseFormReturn} from 'react-hook-form';
 
 import {Header} from '../../../components/Header/Header';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
-import {PublisherForm, StepType} from './PublisherGateSteps';
+import {StepType} from './PublisherGateSteps';
 
 type PublisherGateSummaryProps = {
-	form: UseFormReturn<
-		{
-			emailAddress: string;
-			extension?: string | undefined;
-			firstName: string;
-			lastName: string;
-			phone?: {
-				code: string;
-				flag: string;
-			};
-			phoneNumber: string;
-			requestDescription: string;
-		},
-		any
-	>;
 	setStep: React.Dispatch<React.SetStateAction<StepType>>;
-	submit: (form: PublisherForm) => Promise<void>;
+	submit: () => void;
+	children: JSX.Element;
 };
-
-type DisplayCardInfoProps = {
-	className?: string;
-	icon: string;
-	iconAlign?: any;
-	info: any;
-	title: string;
-};
-const DisplayCardInfo: React.FC<DisplayCardInfoProps> = ({
-	className,
-	icon,
-	info,
-	title,
-}) => (
-	<div
-		className={classNames('d-flex ', className, {
-			'align-items-center': info?.length < 60,
-			'align-items-start': info?.length >= 60,
-		})}
-	>
-		<span className="align-items-center d-flex icon-container justify-content-center mr-4">
-			<ClayIcon
-				className="detailed-card-header-clay-icon"
-				symbol={icon}
-			/>
-		</span>
-		<div className="d-flex flex-column text-wrap">
-			<span className="font-weight-bold">{title}</span>
-			<span className="display-card-description text-secondary">
-				{info}
-			</span>
-		</div>
-	</div>
-);
 
 const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
-	form,
 	setStep,
 	submit,
+	children,
 }) => {
-	const userInfo = form.watch();
-
 	return (
 		<div className="publisher-gate-page-container">
 			<div className="publisher-gate-page-body">
@@ -84,46 +31,7 @@ const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 					)}
 					title={i18n.translate('complete-publisher-account-request')}
 				/>
-
-				<div className="border mt-8 p-5 rounded">
-					<h3>{i18n.translate('request-details')}</h3>
-
-					<hr className="mb-5" />
-
-					<span className="mb-3">
-						<DisplayCardInfo
-							className="mb-5"
-							icon="user"
-							info={`${userInfo.firstName} ${userInfo.lastName}`}
-							title={i18n.translate('name')}
-						/>
-					</span>
-
-					<div>
-						<div className="d-flex justify-content-between">
-							<DisplayCardInfo
-								className="mb-5"
-								icon="phone"
-								info={`${userInfo?.phone?.code} ${userInfo.phoneNumber}`}
-								title={i18n.translate('phone')}
-							/>
-
-							<DisplayCardInfo
-								className="mb-5"
-								icon="envelope-closed"
-								info={userInfo.emailAddress}
-								title={i18n.translate('email')}
-							/>
-						</div>
-						<span>
-							<DisplayCardInfo
-								icon="document"
-								info={userInfo.requestDescription}
-								title={i18n.translate('description')}
-							/>
-						</span>
-					</div>
-				</div>
+				{children}
 				<div className="mt-5">
 					<span>
 						<p className="privacy-text text-justify">
@@ -170,7 +78,7 @@ const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 								{i18n.translate('back')}
 							</ClayButton>
 
-							<ClayButton onClick={form.handleSubmit(submit)}>
+							<ClayButton onClick={() => submit()}>
 								{i18n.translate('request-account')}
 							</ClayButton>
 						</div>

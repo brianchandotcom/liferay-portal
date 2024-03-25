@@ -4,7 +4,7 @@
  */
 
 import {useState} from 'react';
-import {useForm} from 'react-hook-form';
+import {useForm, useWatch} from 'react-hook-form';
 import {z} from 'zod';
 
 import zodSchema, {zodResolver} from '../../../schema/zod';
@@ -12,6 +12,8 @@ import fetcher from '../../../services/fetcher';
 import PublisherGateForm from './PublisherGateForm';
 import PublisherGateSummary from './PublisherGateSummary';
 import PubliserhRequestedCard from './PublisherRequestedCard';
+import PublisherSummaryContent from './PublisherSummaryContent';
+import i18n from '../../../i18n';
 
 export type PublisherForm = z.infer<typeof zodSchema.becomePublisherForm>;
 
@@ -40,6 +42,8 @@ const PublisherGateSteps = () => {
 		resolver: zodResolver(zodSchema.becomePublisherForm),
 	});
 
+	const userInfo = form.watch();
+
 	const submit = async (form: PublisherForm) => {
 		const formData = {...form, intlCode: form?.phone?.code};
 
@@ -49,8 +53,7 @@ const PublisherGateSteps = () => {
 			await fetcher.post('o/c/requestpublisheraccounts/', formData);
 
 			setStep(StepType.REQUESTED);
-		}
-		catch (error) {
+		} catch (error) {
 			console.error(error);
 		}
 	};
@@ -62,10 +65,27 @@ const PublisherGateSteps = () => {
 		[StepType.SUMMARY]: {
 			component: (
 				<PublisherGateSummary
-					form={form}
 					setStep={setStep}
-					submit={submit}
-				/>
+					submit={form.handleSubmit(submit)}
+				>
+					<div className="mt-8">
+						<PublisherSummaryContent
+							title={i18n.translate('request-details')}
+							userInfo={{
+								emailAddress: userInfo.emailAddress,
+								extension: userInfo?.extension,
+								firstName: userInfo?.firstName,
+								lastName: userInfo?.lastName,
+								phone: {
+									code: userInfo?.phone?.code as string,
+									flag: userInfo?.phone?.flag as string,
+								},
+								phoneNumber: userInfo.phoneNumber,
+								requestDescription: userInfo.requestDescription,
+							}}
+						/>
+					</div>
+				</PublisherGateSummary>
 			),
 		},
 		[StepType.REQUESTED]: {

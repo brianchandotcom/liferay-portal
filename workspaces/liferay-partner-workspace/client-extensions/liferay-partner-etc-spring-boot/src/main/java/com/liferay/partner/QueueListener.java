@@ -186,6 +186,35 @@ public class QueueListener {
 			_assignUserToRegularRole(
 				contactEmailAddress, _ROLE_PARTNER_SALES_USER_NAME);
 		}
+		else if (contactRoleName.equals(_KORONEIKI_ROLE_MARKETING_USER_NAME)) {
+			_assignUserToAccount(
+				accountExternalReferenceCode, accountName, contactEmailAddress);
+			_assignUserToAccountRole(
+				accountExternalReferenceCode, contactEmailAddress,
+				_ACCOUNT_ROLE_PARTNER_MARKETING_USER_NAME);
+			_assignUserToRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_MARKETING_USER_NAME);
+		}
+		else if (contactRoleName.equals(
+					_KORONEIKI_ROLE_PARTNER_SALES_USER_NAME)) {
+
+			_assignUserToAccount(
+				accountExternalReferenceCode, accountName, contactEmailAddress);
+			_assignUserToAccountRole(
+				accountExternalReferenceCode, contactEmailAddress,
+				_ACCOUNT_ROLE_PARTNER_SALES_USER_NAME);
+			_assignUserToRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_SALES_USER_NAME);
+		}
+		else if (contactRoleName.equals(_KORONEIKI_ROLE_TECHNICAL_USER_NAME)) {
+			_assignUserToAccount(
+				accountExternalReferenceCode, accountName, contactEmailAddress);
+			_assignUserToAccountRole(
+				accountExternalReferenceCode, contactEmailAddress,
+				_ACCOUNT_ROLE_TECHNICAL_SALES_USER_NAME);
+			_assignUserToRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_TECHNICAL_USER_NAME);
+		}
 	}
 
 	private void _assignUserToAccount(
@@ -597,6 +626,35 @@ public class QueueListener {
 			_unassignUserFromAccount(
 				accountExternalReferenceCode, accountName, contactEmailAddress);
 		}
+		else if (contactRoleName.equals(_KORONEIKI_ROLE_MARKETING_USER_NAME)) {
+			_unassignUserFromRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_MARKETING_USER_NAME);
+			_unassignUserFromAccountRole(
+				accountExternalReferenceCode, contactEmailAddress,
+				_ACCOUNT_ROLE_PARTNER_MARKETING_USER_NAME);
+			_unassignUserFromAccount(
+				accountExternalReferenceCode, accountName, contactEmailAddress);
+		}
+		else if (contactRoleName.equals(
+					_KORONEIKI_ROLE_PARTNER_SALES_USER_NAME)) {
+
+			_unassignUserFromRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_SALES_USER_NAME);
+			_unassignUserFromAccountRole(
+				accountExternalReferenceCode, contactEmailAddress,
+				_ACCOUNT_ROLE_PARTNER_SALES_USER_NAME);
+			_unassignUserFromAccount(
+				accountExternalReferenceCode, accountName, contactEmailAddress);
+		}
+		else if (contactRoleName.equals(_KORONEIKI_ROLE_TECHNICAL_USER_NAME)) {
+			_unassignUserFromRegularRole(
+				contactEmailAddress, _ROLE_PARTNER_TECHNICAL_USER_NAME);
+			_unassignUserFromAccountRole(
+				accountExternalReferenceCode, contactEmailAddress,
+				_ACCOUNT_ROLE_TECHNICAL_SALES_USER_NAME);
+			_unassignUserFromAccount(
+				accountExternalReferenceCode, accountName, contactEmailAddress);
+		}
 	}
 
 	private void _unassignUserFromAccount(
@@ -787,11 +845,23 @@ public class QueueListener {
 	private static final String _ACCOUNT_ROLE_PARTNER_SALES_USER_NAME =
 		"[Account] Partner Sales User (PSU)";
 
+	private static final String _ACCOUNT_ROLE_TECHNICAL_SALES_USER_NAME =
+		"[Account] Partner Technical User (PTU)";
+
+	private static final String _KORONEIKI_ROLE_MARKETING_USER_NAME =
+		"Partner Marketing User";
+
 	private static final String _KORONEIKI_ROLE_PARTNER_MANAGER_NAME =
 		"Partner Manager";
 
 	private static final String _KORONEIKI_ROLE_PARTNER_MEMBER_NAME =
 		"Partner Member";
+
+	private static final String _KORONEIKI_ROLE_PARTNER_SALES_USER_NAME =
+		"Partner Sales User";
+
+	private static final String _KORONEIKI_ROLE_TECHNICAL_USER_NAME =
+		"Partner Technical User";
 
 	private static final String _ROLE_PARTNER_MANAGER_NAME =
 		"Partner Manager (PM)";
@@ -801,6 +871,9 @@ public class QueueListener {
 
 	private static final String _ROLE_PARTNER_SALES_USER_NAME =
 		"Partner Sales User (PSU)";
+
+	private static final String _ROLE_PARTNER_TECHNICAL_USER_NAME =
+		"Partner Technical User (PTU)";
 
 	private static final Log _log = LogFactory.getLog(QueueListener.class);
 

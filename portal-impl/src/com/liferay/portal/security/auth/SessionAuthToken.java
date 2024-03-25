@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -82,7 +83,11 @@ public class SessionAuthToken implements AuthToken {
 		long plid = liferayPortletURL.getPlid();
 
 		try {
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+			if (layout == null) {
+				throw new NoSuchLayoutException("{plid=" + plid + "}");
+			}
 
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();

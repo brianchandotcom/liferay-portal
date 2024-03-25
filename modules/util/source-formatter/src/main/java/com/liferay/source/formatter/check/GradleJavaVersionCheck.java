@@ -52,7 +52,7 @@ public class GradleJavaVersionCheck extends BaseFileCheck {
 						String strippedValue = StringUtil.removeChars(
 							value, CharPool.APOSTROPHE, CharPool.QUOTE);
 
-						if (strippedValue.equals("1.8")) {
+						if (strippedValue.equals("21")) {
 							continue;
 						}
 					}

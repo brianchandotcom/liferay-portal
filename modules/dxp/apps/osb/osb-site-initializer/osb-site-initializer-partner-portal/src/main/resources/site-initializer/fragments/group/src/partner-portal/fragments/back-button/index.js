@@ -19,7 +19,11 @@ if (backButton) {
 
 			urlParams.delete('p_l_back_url');
 
-			location.assign(`${siteURL}${decodeURIComponent(`${backURL}?${urlParams.toString()}`)}`);
+			location.assign(
+				`${siteURL}${decodeURIComponent(
+					`${backURL}?${urlParams.toString()}`
+				)}`
+			);
 		}
 		else {
 			location.assign(decodeURIComponent(configuration.backURL));

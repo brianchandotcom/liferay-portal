@@ -26,6 +26,7 @@ export default function getMDFListColumns(
 		index: number
 	) => boolean | undefined,
 	siteURL: string,
+	urlParams: URLSearchParams,
 	actions?: PermissionActionType[],
 	mutated?: KeyedMutator<LiferayItems<MDFRequestDTO[]>>,
 	isChannel?: boolean
@@ -60,7 +61,7 @@ export default function getMDFListColumns(
 									row[MDFColumnKey.ID]
 								}?p_l_back_url=${encodeURIComponent(
 									Liferay.ThemeDisplay.getLayoutRelativeURL()
-								)}`
+								)}&${urlParams.toString()}`
 							),
 					});
 				}
@@ -223,7 +224,7 @@ export default function getMDFListColumns(
 						row[MDFColumnKey.ID]
 					}?p_l_back_url=${encodeURIComponent(
 						Liferay.ThemeDisplay.getLayoutRelativeURL()
-					)}`}
+					)}&${urlParams.toString()}`}
 				>
 					{data}
 				</a>

@@ -115,6 +115,7 @@ const MDFRequestList = () => {
 					mdfRequestItems?.[index].r_accToMDFReqs_accountEntryId
 			),
 		siteURL,
+		urlParams,
 		actions,
 		mutate,
 		isChannel

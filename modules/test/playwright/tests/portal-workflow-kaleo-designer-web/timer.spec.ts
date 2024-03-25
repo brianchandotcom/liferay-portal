@@ -82,9 +82,7 @@ test.afterEach(async ({apiHelpers}) => {
 test('LPD-16281 can create timer notifications', async ({
 	diagramViewPage,
 	nodePropertiesSidebarPage,
-	page,
 	processBuilderPage,
-	sourceViewPage,
 	timerPage,
 }) => {
 	await processBuilderPage.goto();
@@ -97,15 +95,7 @@ test('LPD-16281 can create timer notifications', async ({
 
 	await nodePropertiesSidebarPage.createTimerNotification(timerNotifications);
 
-	await diagramViewPage.clickSourceViewButton();
-
-	await page.waitForTimeout(2500);
-
-	await page
-		.getByText('SourceWrite your definition or import a file.')
-		.click();
-
-	await sourceViewPage.clickDiagramViewButton();
+	await processBuilderPage.switchToSourceViewAndBackToDiagram();
 
 	await diagramViewPage.clickReviewNodeLink();
 
@@ -140,9 +130,7 @@ test('LPD-21221 can create timer reassignments role type reassignment type', asy
 	actionReassignmentPage,
 	diagramViewPage,
 	nodePropertiesSidebarPage,
-	page,
 	processBuilderPage,
-	sourceViewPage,
 }) => {
 	await processBuilderPage.goto();
 
@@ -154,15 +142,7 @@ test('LPD-21221 can create timer reassignments role type reassignment type', asy
 
 	await nodePropertiesSidebarPage.createTimerReassignmentRoleType(roleTypes);
 
-	await diagramViewPage.clickSourceViewButton();
-
-	await page.waitForTimeout(2500);
-
-	await page
-		.getByText('SourceWrite your definition or import a file.')
-		.click();
-
-	await sourceViewPage.clickDiagramViewButton();
+	await processBuilderPage.switchToSourceViewAndBackToDiagram();
 
 	await diagramViewPage.clickReviewNodeLink();
 

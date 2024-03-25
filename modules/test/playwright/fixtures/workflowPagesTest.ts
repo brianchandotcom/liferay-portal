@@ -36,9 +36,6 @@ const workflowPagesTest = test.extend<{
 	processBuilderPage: async ({page}, use) => {
 		await use(new ProcessBuilderPage(page));
 	},
-	sourceViewPage: async ({page}, use) => {
-		await use(new SourceViewPage(page));
-	},
 	timerPage: async ({page}, use) => {
 		await use(new TimerPage(page));
 	},

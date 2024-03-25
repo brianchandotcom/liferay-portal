@@ -62,5 +62,5 @@ String channelQualifiers = ParamUtil.getString(request, "channelQualifiers", cIW
 			"selector", "qualifiers--channel--"
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-warehouse-web"
 />

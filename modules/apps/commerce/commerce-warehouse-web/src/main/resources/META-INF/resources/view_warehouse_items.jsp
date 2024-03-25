@@ -121,6 +121,6 @@ if (Validator.isNotNull(backURL)) {
 				"UPDATE", Constants.UPDATE
 			).build()
 		%>'
-		module="js/viewWarehouseItems"
+		module="{viewWarehouseItems} from commerce-warehouse-web"
 	/>
 </c:if>

@@ -23,6 +23,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.util.ObjectCodeEditorUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -276,6 +277,13 @@ public class ObjectDefinitionsActionsDisplayContext
 		).setResourceID(
 			"/object_definitions/get_object_definitions_relationships"
 		).buildString();
+	}
+
+	public String getScriptManagementConfigurationPortletURL()
+		throws PortalException {
+
+		return _scriptManagementConfigurationHelper.
+			getScriptManagementConfigurationPortletURL();
 	}
 
 	public String getValidateExpressionURL() {

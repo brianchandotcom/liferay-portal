@@ -36,6 +36,8 @@ ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = 
 		).put(
 			"objectDefinitionsRelationshipsURL", objectDefinitionsActionsDisplayContext.getObjectDefinitionsRelationshipsURL()
 		).put(
+			"scriptManagementConfigurationPortletURL", objectDefinitionsActionsDisplayContext.getScriptManagementConfigurationPortletURL()
+		).put(
 			"systemObject", objectDefinition.isSystem()
 		).put(
 			"validateExpressionURL", objectDefinitionsActionsDisplayContext.getValidateExpressionURL()

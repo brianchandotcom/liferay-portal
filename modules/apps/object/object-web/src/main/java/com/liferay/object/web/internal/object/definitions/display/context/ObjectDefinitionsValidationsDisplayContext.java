@@ -139,6 +139,13 @@ public class ObjectDefinitionsValidationsDisplayContext
 		).build();
 	}
 
+	public String getScriptManagementConfigurationPortletURL()
+		throws PortalException {
+
+		return _scriptManagementConfigurationHelper.
+			getScriptManagementConfigurationPortletURL();
+	}
+
 	public boolean isAllowScriptContentBeExecutedOrIncluded() {
 		return _scriptManagementConfigurationHelper.
 			isAllowScriptContentBeExecutedOrIncluded();

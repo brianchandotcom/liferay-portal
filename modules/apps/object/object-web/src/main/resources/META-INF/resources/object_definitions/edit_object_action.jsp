@@ -37,6 +37,8 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 		).put(
 			"readOnly", !objectDefinitionsActionsDisplayContext.hasUpdateObjectDefinitionPermission()
 		).put(
+			"scriptManagementConfigurationPortletURL", objectDefinitionsActionsDisplayContext.getScriptManagementConfigurationPortletURL()
+		).put(
 			"systemObject", objectDefinition.isSystem()
 		).put(
 			"validateExpressionURL", objectDefinitionsActionsDisplayContext.getValidateExpressionURL()

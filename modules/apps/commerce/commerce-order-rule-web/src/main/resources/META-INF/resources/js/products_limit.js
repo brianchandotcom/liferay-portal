@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import itemFinder from 'commerce-frontend-js/components/item_finder/entry';
+import {ItemFinder} from 'commerce-frontend-js';
 
 export default function ({
 	dataSetId,
@@ -37,7 +37,7 @@ export default function ({
 		return submitForm(document.getElementById(`${namespace}fm`));
 	}
 
-	itemFinder('itemFinder', 'item-finder-root', {
+	ItemFinder('itemFinder', 'item-finder-root', {
 		apiUrl:
 			'/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
 		getSelectedItems: () => Promise.resolve([]),

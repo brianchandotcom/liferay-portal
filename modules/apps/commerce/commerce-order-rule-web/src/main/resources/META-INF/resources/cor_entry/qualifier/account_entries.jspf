@@ -13,7 +13,7 @@
 			HashMapBuilder.<String, Object>put(
 				"dataSetId", COREntryFDSNames.COR_ENTRY_QUALIFIER_ACCOUNT_ENTRIES
 			).put(
-				"orderRuleExternalReferenceCode", HtmlUtil.escapeJS(corEntry.getExternalReferenceCode())
+				"orderRuleExternalReferenceCode", corEntry.getExternalReferenceCode()
 			).put(
 				"orderRuleId", corEntryId
 			).put(

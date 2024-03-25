@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
-import itemFinder from 'commerce-frontend-js/components/item_finder/entry';
-import {FDS_UPDATE_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefinitions';
+import {
+	CommerceServiceProvider,
+	ItemFinder,
+	commerceEvents,
+} from 'commerce-frontend-js';
 
 export default function ({
 	dataSetId,
@@ -13,7 +15,9 @@ export default function ({
 	orderRuleId,
 	rootPortletId,
 }) {
-	const orderRuleChannelsResource = ServiceProvider.AdminOrderAPI('v1');
+	const orderRuleChannelsResource = CommerceServiceProvider.AdminOrderAPI(
+		'v1'
+	);
 
 	function selectItem(channel) {
 		const channelData = {
@@ -26,13 +30,13 @@ export default function ({
 		return orderRuleChannelsResource
 			.addOrderRuleChannel(orderRuleId, channelData)
 			.then(() => {
-				Liferay.fire(FDS_UPDATE_DISPLAY, {
+				Liferay.fire(commerceEvents.FDS_UPDATE_DISPLAY, {
 					id: dataSetId,
 				});
 			});
 	}
 
-	itemFinder('itemFinder', 'item-finder-root-channel', {
+	ItemFinder('itemFinder', 'item-finder-root-channel', {
 		apiUrl: '/o/headless-commerce-admin-channel/v1.0/channels',
 		getSelectedItems: () => Promise.resolve([]),
 		inputPlaceholder: Liferay.Language.get('find-a-channel'),

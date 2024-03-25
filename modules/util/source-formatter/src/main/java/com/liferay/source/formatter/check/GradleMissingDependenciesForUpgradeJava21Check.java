@@ -34,13 +34,17 @@ public class GradleMissingDependenciesForUpgradeJava21Check
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!absolutePath.endsWith("/build.gradle") ||
-			absolutePath.endsWith("modules/build.gradle")) {
-
+		if (!absolutePath.endsWith("/build.gradle")) {
 			return content;
 		}
 
 		int x = absolutePath.lastIndexOf(CharPool.SLASH);
+
+		File bndFile = new File(absolutePath.substring(0, x + 1) + "bnd.bnd");
+
+		if (!bndFile.exists()) {
+			return content;
+		}
 
 		List<String> javaFileNames = SourceFormatterUtil.scanForFileNames(
 			absolutePath.substring(0, x + 1), new String[0],

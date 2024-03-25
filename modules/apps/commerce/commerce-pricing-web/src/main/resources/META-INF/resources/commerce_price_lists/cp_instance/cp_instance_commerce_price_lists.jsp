@@ -51,5 +51,5 @@ long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId()
 
 <liferay-frontend:component
 	context="<%= cpInstanceCommercePriceEntryDisplayContext.getJSContext() %>"
-	module="commerce_price_lists/cp_instance/js/cp_instance_commerce_price_lists"
+	module="{cpInstanceCommercePriceLists} from commerce-pricing-web"
 />

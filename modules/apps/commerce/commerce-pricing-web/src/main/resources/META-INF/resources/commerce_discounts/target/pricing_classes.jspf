@@ -8,68 +8,24 @@
 <c:if test="<%= hasPermission %>">
 	<div id="item-finder-root"></div>
 
-	<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var CommerceDiscountProductGroupsResource = ServiceProvider.default.AdminPricingAPI(
-			'v2'
-		);
-
-		var id = <%= commerceDiscountId %>;
-		var discountExternalReferenceCode =
-			'<%= HtmlUtil.escapeJS(commerceDiscount.getExternalReferenceCode()) %>';
-
-		function selectItem(productGroup) {
-			var productGroupData = {
-				discountExternalReferenceCode: discountExternalReferenceCode,
-				discountId: id,
-				productGroupExternalReferenceCode: productGroup.externalReferenceCode,
-				productGroupId: productGroup.id,
-			};
-
-			return CommerceDiscountProductGroupsResource.addDiscountProductGroup(
-				id,
-				productGroupData
-			)
-				.then(() => {
-					Liferay.fire(events.FDS_UPDATE_DISPLAY, {
-						id: '<%= CommercePricingFDSNames.DISCOUNT_PRICING_CLASSES %>',
-					});
-				})
-				.catch((error) => {
-					return Promise.reject(error);
-				});
-		}
-
-		function getSelectedItems() {
-			return Promise.resolve([]);
-		}
-
-		itemFinder.default('itemFinder', 'item-finder-root', {
-			apiUrl: '/o/headless-commerce-admin-catalog/v1.0/product-groups',
-			getSelectedItems: getSelectedItems,
-			inputPlaceholder:
-				'<%= LanguageUtil.get(request, "find-a-product-group") %>',
-			itemCreation: false,
-			itemSelectedMessage:
-				'<%= LanguageUtil.get(request, "product-group-selected") %>',
-			itemsKey: 'id',
-			linkedDataSetsId: [
-				'<%= CommercePricingFDSNames.DISCOUNT_PRICING_CLASSES %>',
-			],
-			onItemSelected: selectItem,
-			pageSize: 10,
-			panelHeaderLabel:
-				'<%= LanguageUtil.get(request, "select-product-group") %>',
-			portletId: '<%= portletDisplay.getRootPortletId() %>',
-			schema: [
-				{
-					fieldName: ['title', 'LANG'],
-				},
-			],
-			spritemap: '<%= themeDisplay.getPathThemeSpritemap() %>',
-			titleLabel:
-				'<%= LanguageUtil.get(request, "add-existing-product-group") %>',
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"commerceDiscountId", commerceDiscountId
+			).put(
+				"discountExternalReferenceCode", commerceDiscount.getExternalReferenceCode()
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"portletId", portletDisplay.getRootPortletId()
+			).put(
+				"pricingFDSName", CommercePricingFDSNames.DISCOUNT_PRICING_CLASSES
+			).put(
+				"spritemap", themeDisplay.getPathThemeSpritemap()
+			).build()
+		%>'
+		module="{pricingClasses} from commerce-pricing-web"
+	/>
 
 	<commerce-ui:panel
 		bodyClasses="p-0"

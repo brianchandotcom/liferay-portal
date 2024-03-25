@@ -12,6 +12,6 @@ CPInstanceCommercePriceEntryDisplayContext cpInstanceCommercePriceEntryDisplayCo
 %>
 
 <react:component
-	module="commerce_price_lists/cp_instance/js/AddPriceEntryForm"
+	module="{AddPriceEntryForm} from commerce-pricing-web"
 	props="<%= cpInstanceCommercePriceEntryDisplayContext.getModalJSContext() %>"
 />

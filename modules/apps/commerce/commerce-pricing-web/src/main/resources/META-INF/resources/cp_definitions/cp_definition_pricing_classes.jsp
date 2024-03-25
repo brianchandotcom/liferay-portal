@@ -24,103 +24,22 @@ CProduct cProduct = cpDefinition.getCProduct();
 			<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 			<div id="item-finder-root"></div>
 
-			<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/index as utilities">
-				var headers = utilities.fetchParams.headers;
-				var productId = <%= cpDefinition.getCProductId() %>;
-				var productExternalReferenceCode = '<%= cProduct.getExternalReferenceCode() %>';
-
-				function selectItem(productPricingClass) {
-					return Liferay.Util.fetch(
-						'/o/headless-commerce-admin-catalog/v1.0/product-groups/' +
-							productPricingClass.id +
-							'/product-group-products/',
-						{
-							body: JSON.stringify({
-								productExternalReferenceCode: productExternalReferenceCode,
-								productId: productId,
-								productGroupExternalReferenceCode:
-									productPricingClass.externalReferenceCode,
-								productGroupId: productPricingClass.id,
-							}),
-							headers: headers,
-							method: 'POST',
-						}
-					).then((response) => {
-						if (!response.ok) {
-							return response.json().then((data) => {
-								return Promise.reject(data.errorDescription);
-							});
-						}
-						Liferay.fire(events.FDS_UPDATE_DISPLAY, {
-							id: '<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>',
-						});
-						return null;
-					});
-				}
-
-				function addNewItem(name) {
-					var nameDefinition = {};
-
-					nameDefinition[themeDisplay.getLanguageId()] = name;
-
-					if (themeDisplay.getLanguageId() !== themeDisplay.getDefaultLanguageId()) {
-						nameDefinition[themeDisplay.getDefaultLanguageId()] = name;
-					}
-
-					return Liferay.Util.fetch(
-						'/o/headless-commerce-admin-catalog/v1.0/product-groups',
-						{
-							body: JSON.stringify({
-								title: nameDefinition,
-							}),
-							headers: headers,
-							method: 'POST',
-						}
-					)
-						.then((response) => {
-							if (response.ok) {
-								return response.json();
-							}
-
-							return response.json().then((data) => {
-								return Promise.reject(data.message);
-							});
-						})
-						.then(selectItem);
-				}
-
-				function getSelectedItems() {
-					return Promise.resolve([]);
-				}
-
-				itemFinder.default('itemFinder', 'item-finder-root', {
-					apiUrl: '/o/headless-commerce-admin-catalog/v1.0/product-groups',
-					createNewItemLabel: '<%= LanguageUtil.get(request, "create-new") %>',
-					getSelectedItems: getSelectedItems,
-					inputPlaceholder:
-						'<%= LanguageUtil.get(request, "find-or-create-a-product-group") %>',
-					itemSelectedMessage:
-						'<%= LanguageUtil.get(request, "product-group-selected") %>',
-					itemsKey: 'id',
-					linkedDataSetsId: [
-						'<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>',
-					],
-					onItemCreated: addNewItem,
-					onItemSelected: selectItem,
-					pageSize: 10,
-					panelHeaderLabel:
-						'<%= LanguageUtil.get(request, "select-product-group") %>',
-					portletId: '<%= portletDisplay.getRootPortletId() %>',
-					schema: [
-						{
-							fieldName: ['title', 'LANG'],
-						},
-					],
-					spritemap: '<%= themeDisplay.getPathThemeSpritemap() %>',
-					titleLabel:
-						'<%= LanguageUtil.get(request, "add-existing-product-group") %>',
-				});
-			</aui:script>
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"portletId", portletDisplay.getRootPortletId()
+					).put(
+						"pricingFDSName", CommercePricingFDSNames.PRODUCT_PRICING_CLASSES
+					).put(
+						"productExternalReferenceCode", cProduct.getExternalReferenceCode()
+					).put(
+						"productId", cpDefinition.getCProductId()
+					).put(
+						"spritemap", themeDisplay.getPathThemeSpritemap()
+					).build()
+				%>'
+				module="{cpDefinitionPricingClasses} from commerce-pricing-web"
+			/>
 
 			<commerce-ui:panel
 				bodyClasses="p-0"

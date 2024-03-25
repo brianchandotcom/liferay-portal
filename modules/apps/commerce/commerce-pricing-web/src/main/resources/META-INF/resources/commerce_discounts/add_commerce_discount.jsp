@@ -9,6 +9,8 @@
 
 <%
 CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscountDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+PortletURL editCommerceDiscountPortletURL = commerceDiscountDisplayContext.getEditCommerceDiscountRenderURL();
 %>
 
 <portlet:actionURL name="/commerce_discount/edit_commerce_discount" var="editCommerceDiscountActionURL" />
@@ -48,43 +50,18 @@ CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscoun
 		</aui:select>
 	</aui:form>
 
-	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider, frontend-js-web/index as frontendJsWeb">
-		const {createPortletURL} = frontendJsWeb;
-		const CommerceDiscountResource = ServiceProvider.default.AdminPricingAPI('v2');
-
-		Liferay.provide(window, '<portlet:namespace />apiSubmit', (form) => {
-			const discountData = {
-				level: '<%= CommerceDiscountConstants.LEVEL_L1 %>',
-				limitationType:
-					'<%= CommerceDiscountConstants.LIMITATION_TYPE_UNLIMITED %>',
-				target: document.getElementById('commerceDiscountTarget').value,
-				title: document.getElementById('title').value,
-				usePercentage: document.getElementById('commerceDiscountType').value,
-			};
-
-			return CommerceDiscountResource.addDiscount(discountData)
-				.then((payload) => {
-					const redirectURL = createPortletURL(
-						'<%= commerceDiscountDisplayContext.getEditCommerceDiscountRenderURL() %>',
-						{
-							commerceDiscountId: payload.id,
-							p_auth: Liferay.authToken,
-							usePercentage: payload.usePercentage,
-						}
-					);
-
-					window.parent.Liferay.fire(events.CLOSE_MODAL, {
-						redirectURL: redirectURL,
-						successNotification: {
-							showSuccessNotification: true,
-							message:
-								'<liferay-ui:message key="your-request-completed-successfully" />',
-						},
-					});
-				})
-				.catch((error) => {
-					return Promise.reject(error);
-				});
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"editCommerceDiscountRenderURL", String.valueOf(editCommerceDiscountPortletURL)
+			).put(
+				"level", CommerceDiscountConstants.LEVEL_L1
+			).put(
+				"limitationType", CommerceDiscountConstants.LIMITATION_TYPE_UNLIMITED
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).build()
+		%>'
+		module="{addCommerceDiscount} from commerce-pricing-web"
+	/>
 </commerce-ui:modal-content>

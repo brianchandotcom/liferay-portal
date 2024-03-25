@@ -10,69 +10,22 @@
 		<div class="col-12">
 			<div id="item-finder-root"></div>
 
-			<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-				var CommerceDiscountSkusResource = ServiceProvider.default.AdminPricingAPI(
-					'v2'
-				);
-
-				var id = <%= commerceDiscountId %>;
-				var discountExternalReferenceCode =
-					'<%= HtmlUtil.escapeJS(commerceDiscount.getExternalReferenceCode()) %>';
-
-				function selectItem(sku) {
-					var skuData = {
-						discountExternalReferenceCode: discountExternalReferenceCode,
-						discountId: id,
-						skuExternalReferenceCode: sku.externalReferenceCode,
-						skuId: sku.id,
-						unitOfMeasureKey: sku.unitOfMeasureKey,
-					};
-
-					return CommerceDiscountSkusResource.addDiscountSku(id, skuData)
-						.then(() => {
-							Liferay.fire(events.FDS_UPDATE_DISPLAY, {
-								id: '<%= CommercePricingFDSNames.DISCOUNT_SKUS %>',
-							});
-						})
-						.catch((error) => {
-							return Promise.reject(error);
-						});
-				}
-
-				function getSelectedItems() {
-					return Promise.resolve([]);
-				}
-
-				itemFinder.default('itemFinder', 'item-finder-root', {
-					apiUrl: '/o/headless-commerce-admin-catalog/v1.0/unit-of-measure-skus',
-					getSelectedItems: getSelectedItems,
-					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-sku") %>',
-					itemCreation: false,
-					itemSelectedMessage: '<%= LanguageUtil.get(request, "sku-selected") %>',
-					itemsKey: 'unitOfMeasureSkuId',
-					linkedDataSetsId: ['<%= CommercePricingFDSNames.DISCOUNT_SKUS %>'],
-					onItemSelected: selectItem,
-					pageSize: 10,
-					panelHeaderLabel: '<%= LanguageUtil.get(request, "add-skus") %>',
-					portletId: '<%= portletDisplay.getRootPortletId() %>',
-					schema: [
-						{
-							fieldName: 'id',
-						},
-						{
-							fieldName: ['productName', 'LANG'],
-						},
-						{
-							fieldName: 'sku',
-						},
-						{
-							fieldName: 'unitOfMeasureKey',
-						},
-					],
-					spritemap: '<%= themeDisplay.getPathThemeSpritemap() %>',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-sku") %>',
-				});
-			</aui:script>
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"commerceDiscountId", commerceDiscountId
+					).put(
+						"discountExternalReferenceCode", commerceDiscount.getExternalReferenceCode()
+					).put(
+						"portletId", portletDisplay.getRootPortletId()
+					).put(
+						"pricingFDSName", CommercePricingFDSNames.DISCOUNT_SKUS
+					).put(
+						"spritemap", themeDisplay.getPathThemeSpritemap()
+					).build()
+				%>'
+				module="{skus} from commerce-pricing-web"
+			/>
 		</div>
 
 		<div class="col-12">

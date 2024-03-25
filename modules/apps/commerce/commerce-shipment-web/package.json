@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 	},
+	"main": "js/index.js",
 	"name": "@liferay/commerce-shipment-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

@@ -51,7 +51,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 		</aui:form>
 
 		<liferay-frontend:component
-			module="js/edit_commerce_shipment_courier_detail"
+			module="{editCommerceShipmentCourierDetail} from commerce-shipment-web"
 		/>
 	</c:if>
 </commerce-ui:modal-content>

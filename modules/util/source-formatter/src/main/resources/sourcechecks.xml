@@ -288,6 +288,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks values of properties `sourceCompatibility` and `targetCompatibility` in gradle build files." />
 		</check>
+		<check name="GradleMissingDependenciesForUpgradeJava21Check">
+			<category name="Bug Prevention" />
+			<description name="Checks missing dependencies for upgrade Java 21 in gradle build files." />
+		</check>
 		<check name="GradleMissingJarManifestTaskCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds missing `jarManifest` task when using `jarPatched` task in gradle build files." />

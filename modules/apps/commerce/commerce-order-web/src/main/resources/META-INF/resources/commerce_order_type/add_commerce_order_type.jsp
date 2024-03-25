@@ -30,6 +30,6 @@ CommerceOrderTypeDisplayContext commerceOrderTypeDisplayContext = (CommerceOrder
 				"editCommerceOrderTypePortletURL", String.valueOf(commerceOrderTypeDisplayContext.getEditCommerceOrderTypeRenderURL())
 			).build()
 		%>'
-		module="js/addCommerceOrderType"
+		module="{addCommerceOrderType} from commerce-order-web"
 	/>
 </commerce-ui:modal-content>

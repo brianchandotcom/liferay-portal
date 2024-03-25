@@ -31,7 +31,7 @@ request.setAttribute("view.jsp-portletURL", commerceOrderListDisplayContext.getP
 			fdsSortItemList="<%= commerceOrderListDisplayContext.getFDSSortItemList() %>"
 			formName="fm"
 			id="<%= CommerceOrderFDSNames.ALL_ORDERS %>"
-			propsTransformer="js/deleteCommerceOrdersPropsTransformer"
+			propsTransformer="{deleteCommerceOrdersPropsTransformer} from commerce-order-web"
 			selectedItemsKey="id"
 			selectionType="multiple"
 			style="fluid"

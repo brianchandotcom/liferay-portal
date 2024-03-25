@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
-import {CLOSE_MODAL} from 'commerce-frontend-js/utilities/eventsDefinitions';
+import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
 import {createPortletURL, openToast} from 'frontend-js-web';
 
 export default function ({
@@ -12,7 +11,9 @@ export default function ({
 	editCommerceOrderTypePortletURL,
 	namespace,
 }) {
-	const CommerceOrderTypeResource = ServiceProvider.AdminOrderAPI('v1');
+	const CommerceOrderTypeResource = CommerceServiceProvider.AdminOrderAPI(
+		'v1'
+	);
 
 	const form = document.getElementById(`${namespace}fm`);
 
@@ -50,7 +51,7 @@ export default function ({
 				);
 				redirectURL.searchParams.append('p_auth', Liferay.authToken);
 
-				window.parent.Liferay.fire(CLOSE_MODAL, {
+				window.parent.Liferay.fire(commerceEvents.CLOSE_MODAL, {
 					redirectURL: redirectURL.toString(),
 					successNotification: {
 						message: Liferay.Language.get(

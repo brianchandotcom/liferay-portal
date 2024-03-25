@@ -15,14 +15,14 @@
 			).put(
 				"dataSetId", CommerceOrderFDSNames.ORDER_TYPE_QUALIFIER_CHANNELS
 			).put(
-				"orderTypeExternalReferenceCode", HtmlUtil.escapeJS(commerceOrderType.getExternalReferenceCode())
+				"orderTypeExternalReferenceCode", commerceOrderType.getExternalReferenceCode()
 			).put(
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).put(
 				"spritemap", themeDisplay.getPathThemeSpritemap()
 			).build()
 		%>'
-		module="js/channels"
+		module="{channels} from commerce-order-web"
 	/>
 
 	<commerce-ui:panel

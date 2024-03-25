@@ -53,5 +53,5 @@ boolean hasPermission = commerceOrderTypeQualifiersDisplayContext.hasPermission(
 			"currentURL", currentURL
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-order-web"
 />

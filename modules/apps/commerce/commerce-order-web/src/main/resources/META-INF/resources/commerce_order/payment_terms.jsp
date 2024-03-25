@@ -84,7 +84,7 @@ long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
 						"terms", terms
 					).build()
 				%>'
-				module="js/termsDescriptionHandler"
+				module="{termsDescriptionHandler} from commerce-order-web"
 			/>
 		</c:otherwise>
 	</c:choose>

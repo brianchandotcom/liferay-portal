@@ -41,5 +41,5 @@ CommerceOrderType commerceOrderType = commerceOrderTypeDisplayContext.getCommerc
 			"workflowAction", WorkflowConstants.ACTION_PUBLISH
 		).build()
 	%>'
-	module="js/editCommerceOrderType"
+	module="{editCommerceOrderType} from commerce-order-web"
 />

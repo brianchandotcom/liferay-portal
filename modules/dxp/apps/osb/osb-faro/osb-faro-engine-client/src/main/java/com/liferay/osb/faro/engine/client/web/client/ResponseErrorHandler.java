@@ -10,10 +10,11 @@ import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
 import com.liferay.osb.faro.engine.client.exception.NoSuchEntryException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 
 import org.springframework.http.client.ClientHttpResponse;
@@ -37,7 +38,16 @@ public class ResponseErrorHandler extends DefaultResponseErrorHandler {
 		}
 
 		try (InputStream inputStream = clientHttpResponse.getBody()) {
-			String response = IOUtils.toString(inputStream);
+			String input;
+			BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(inputStream));
+			StringBuilder responseCreate = new StringBuilder();
+
+			while ((input = bufferedReader.readLine()) != null) {
+				responseCreate.append(input);
+			}
+
+			String response = responseCreate.toString();
 
 			if (statusCode == HttpStatus.SC_CONFLICT) {
 				throw new DuplicateEntryException(response);

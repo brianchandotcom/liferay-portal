@@ -6,6 +6,6 @@ application:
     name: "Liferay.Headless.Commerce.Admin.Shipment"
 author: "Andrea Sbarra"
 clientDir: "../headless-commerce-admin-shipment-client/src/main/java"
-compatibilityVersion: 4
+compatibilityVersion: 5
 forcePredictableSchemaPropertyName: false
 testDir: "../headless-commerce-admin-shipment-test/src/testIntegration/java"

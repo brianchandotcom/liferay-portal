@@ -6,6 +6,6 @@ application:
     name: "Liferay.Headless.Delivery"
 author: "Javier Gamarra"
 clientDir: "../headless-delivery-client/src/main/java"
-compatibilityVersion: 4
+compatibilityVersion: 5
 forcePredictableOperationId: true
 testDir: "../headless-delivery-test/src/testIntegration/java"

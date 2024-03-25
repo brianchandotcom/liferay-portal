@@ -10,6 +10,10 @@ buildPluginDescriptor {
 	goalPrefix = "wsdd-builder"
 }
 
+copyCSS {
+	mustRunAfter buildPluginDescriptor
+}
+
 dependencies {
 	api group: "axis", name: "axis-wsdl4j", version: "1.5.1"
 	api group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-8"

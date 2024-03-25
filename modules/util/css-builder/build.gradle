@@ -25,6 +25,10 @@ configurations {
 	mavenDistribution
 }
 
+copyCSS {
+	mustRunAfter buildPluginDescriptor
+}
+
 copyPortalCommonCSSJar {
 	from configurations.portalCommonCSS
 	into new File(buildDir, "portal-common-css-jar")

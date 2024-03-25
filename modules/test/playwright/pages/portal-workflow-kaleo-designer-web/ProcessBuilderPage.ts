@@ -17,7 +17,7 @@ export class ProcessBuilderPage {
 	}
 
 	async clickWorkflowDefinitionName(name: string) {
-        await this.page
+		await this.page
 			.getByRole('link', {
 				exact: true,
 				name,

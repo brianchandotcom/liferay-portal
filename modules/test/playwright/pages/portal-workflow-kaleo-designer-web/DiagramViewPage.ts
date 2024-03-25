@@ -14,7 +14,7 @@ export class DiagramViewPage {
 	constructor(page: Page) {
 		this.backButton = page.getByRole('link', {name: 'Back'});
 		this.reviewNodeLink = page.getByText('review', {exact: true});
-        this.saveWorkflowDefinitionButton = page.getByRole('button', {
+		this.saveWorkflowDefinitionButton = page.getByRole('button', {
 			name: 'Save',
 		});
 		this.sourceViewButton = page.locator('button[title="Source View"]');
@@ -24,7 +24,7 @@ export class DiagramViewPage {
 		await this.reviewNodeLink.click();
 	}
 
-    async clickSourceViewButton() {
+	async clickSourceViewButton() {
 		await this.sourceViewButton.click();
 	}
 

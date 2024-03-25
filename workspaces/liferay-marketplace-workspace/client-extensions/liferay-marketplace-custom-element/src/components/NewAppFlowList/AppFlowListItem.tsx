@@ -48,6 +48,8 @@ export function AppFlowListItem({
 			<li
 				className={classNames('app-flow-list-item-text', {
 					'app-flow-list-item-text-checked': checked || selected,
+					[`list-item-selected-${text.toLowerCase()}`]:
+						checked || selected,
 				})}
 			>
 				{text}

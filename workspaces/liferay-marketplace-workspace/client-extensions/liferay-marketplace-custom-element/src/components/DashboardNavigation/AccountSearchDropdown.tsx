@@ -76,6 +76,7 @@ const AccountSearchDropdown: React.FC<AccountSearchDropdownProps> = ({
 
 	return (
 		<ClayDropDown
+			id="account-search"
 			menuElementAttrs={{
 				className: 'dashboard-navigation-container-dropdown p-0',
 			}}

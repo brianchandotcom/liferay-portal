@@ -315,23 +315,27 @@ public class SiteInitializerSerializerImpl
 			long groupId, ZipWriter zipWriter)
 		throws Exception {
 
-		File layoutPageTemplatesZipFile =
-			_layoutsExporter.exportLayoutPageTemplateEntries(groupId);
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(groupId);
 
-		ZipReader layoutPageTemplatesZipFileReader =
-			_zipReaderFactory.getZipReader(layoutPageTemplatesZipFile);
+		try {
+			ZipReader layoutPageTemplatesZipFileReader =
+				_zipReaderFactory.getZipReader(file);
 
-		List<String> fileEntries =
-			layoutPageTemplatesZipFileReader.getEntries();
+			List<String> fileEntries =
+				layoutPageTemplatesZipFileReader.getEntries();
 
-		for (String fileEntry : fileEntries) {
-			InputStream entryInputStream =
-				layoutPageTemplatesZipFileReader.getEntryAsInputStream(
-					fileEntry);
+			for (String fileEntry : fileEntries) {
+				InputStream entryInputStream =
+					layoutPageTemplatesZipFileReader.getEntryAsInputStream(
+						fileEntry);
 
-			_addZipEntry(
-				"layout-page-templates/" + fileEntry, entryInputStream,
-				zipWriter);
+				_addZipEntry(
+					"layout-page-templates/" + fileEntry, entryInputStream,
+					zipWriter);
+			}
+		}
+		finally {
+			file.delete();
 		}
 	}
 

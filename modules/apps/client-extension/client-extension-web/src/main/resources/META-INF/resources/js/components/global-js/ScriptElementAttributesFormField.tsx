@@ -11,8 +11,8 @@ import AttributeFields, {TYPE_BOOLEAN, TYPE_STRING} from './AttributeFields';
 const emptyRow = () => ({id: uuidv4(), name: '', type: TYPE_STRING, value: ''});
 
 const toJSONObjectString = (attributes) => {
-	const validAttributes = attributes.filter((attribute) =>
-		attribute.name.trim()
+	const validAttributes = attributes.filter(
+		(attribute) => attribute.name.trim().length
 	);
 
 	if (!validAttributes.length) {

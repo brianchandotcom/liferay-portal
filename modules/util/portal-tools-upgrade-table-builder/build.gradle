@@ -10,6 +10,10 @@ buildPluginDescriptor {
 	goalPrefix = "upgrade-table-builder"
 }
 
+copyCSS {
+	mustRunAfter buildPluginDescriptor
+}
+
 dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "5.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.0"

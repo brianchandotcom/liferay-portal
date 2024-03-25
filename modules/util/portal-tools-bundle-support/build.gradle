@@ -15,6 +15,10 @@ configurations {
 	mavenDistribution
 }
 
+copyCSS {
+	mustRunAfter buildPluginDescriptor
+}
+
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
 	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"

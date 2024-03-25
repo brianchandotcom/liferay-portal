@@ -10,6 +10,10 @@ buildPluginDescriptor {
 	goalPrefix = "rest-builder"
 }
 
+copyCSS {
+	mustRunAfter buildPluginDescriptor
+}
+
 dependencies {
 	api group: "com.liferay", name: "org.freemarker", transitive: false, version: "2.3.32.LIFERAY-PATCHED-1"
 	api group: "com.puppycrawl.tools", name: "checkstyle", version: "8.29"

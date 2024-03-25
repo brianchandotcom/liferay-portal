@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -79,6 +80,10 @@ public class CommerceOrderItemQuantityFormatterImpl
 
 	@Override
 	public BigDecimal parse(String quantity, Locale locale) throws Exception {
+		if (Validator.isNull(quantity)) {
+			quantity = BigDecimal.ZERO.toString();
+		}
+
 		DecimalFormat decimalFormat = _getDecimalFormat(true, true, locale);
 
 		return (BigDecimal)decimalFormat.parse(quantity);

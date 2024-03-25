@@ -10,7 +10,7 @@ definition {
 
 		Type(
 			key_fieldLabel = "Quantity",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			locator1 = "CommerceOrders#ORDER_ITEM_QUANTITY_INPUT",
 			value1 = ${quantity});
 
 		if (isSet(destination)) {

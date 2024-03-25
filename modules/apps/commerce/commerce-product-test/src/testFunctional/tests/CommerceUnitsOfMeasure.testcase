@@ -916,7 +916,7 @@ definition {
 		}
 
 		task ("Then the UOMs keys and quantities are all correct") {
-			for (var rowList : list "MIN93016A:2.0,MIN93016A:3.0,MIN93016B:1.2,MIN93016C:1") {
+			for (var rowList : list "MIN93016A:2,MIN93016A:3,MIN93016B:1.2,MIN93016C:1") {
 				var sku = StringUtil.extractFirst(${rowList}, ":");
 				var quantity = StringUtil.extractLast(${rowList}, ":");
 
@@ -950,7 +950,7 @@ definition {
 		}
 
 		task ("Then on the order summary page the quantities and UOMs are correct for each order item") {
-			for (var quantity : list "2.0,3.0,1,1.2") {
+			for (var quantity : list "2,3,1,1.2") {
 				AssertTextEquals(
 					key_productQuantity = ${quantity},
 					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_QUANTITY",
@@ -978,7 +978,7 @@ definition {
 		}
 
 		task ("Then the UOMs keys and quantities are shown correctly") {
-			for (var rowList : list "MIN93016A:2.0,MIN93016A:3.0,MIN93016B:1.2,MIN93016C:1") {
+			for (var rowList : list "MIN93016A:2,MIN93016A:3,MIN93016B:1.2,MIN93016C:1") {
 				var sku = StringUtil.extractFirst(${rowList}, ":");
 				var quantity = StringUtil.extractLast(${rowList}, ":");
 
@@ -1325,7 +1325,7 @@ definition {
 		}
 
 		task ("Then the UOMs keys and quantities are all correct") {
-			for (var rowList : list "MIN93016A:2.0,MIN93016A:3.0,MIN93016B:1.2,MIN93016C:1") {
+			for (var rowList : list "MIN93016A:2,MIN93016A:3,MIN93016B:1.2,MIN93016C:1") {
 				var sku = StringUtil.extractFirst(${rowList}, ":");
 				var quantity = StringUtil.extractLast(${rowList}, ":");
 
@@ -1366,7 +1366,7 @@ definition {
 			AssertElementPresent(
 				key_entryTitle = "MIN93016B",
 				key_index = 9,
-				key_value = "1.200",
+				key_value = "1.2",
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 
 			AssertElementPresent(
@@ -1388,7 +1388,7 @@ definition {
 			AssertElementPresent(
 				key_entryTitle = "MIN93016B",
 				key_index = 7,
-				key_value = "1.200",
+				key_value = "1.2",
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 
 			AssertElementPresent(
@@ -1416,7 +1416,7 @@ definition {
 			AssertElementPresent(
 				key_entryTitle = "MIN93016B",
 				key_index = 7,
-				key_value = "1.200",
+				key_value = "1.2",
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 
 			AssertElementPresent(

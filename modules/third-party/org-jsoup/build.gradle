@@ -11,6 +11,10 @@ dependencies {
 	api group: "org.jsoup", name: "jsoup", version: "1.10.2"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	copyOriginalLibClasses = false
 

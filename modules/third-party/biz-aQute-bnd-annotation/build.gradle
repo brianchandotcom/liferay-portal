@@ -8,6 +8,10 @@ dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", transitive: false, version: "4.2.0"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

@@ -20,6 +20,10 @@ dependencies {
 	compileOnly group: "org.drools", name: "drools-core", version: "5.4.0.Final"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

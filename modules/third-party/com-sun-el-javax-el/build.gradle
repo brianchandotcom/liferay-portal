@@ -8,6 +8,10 @@ dependencies {
 	compileOnly group: "org.glassfish", name: "javax.el", transitive: false, version: "3.0.1-b12"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

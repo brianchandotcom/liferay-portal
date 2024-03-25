@@ -33,6 +33,10 @@ liferayOSGi {
 	expandCompileInclude = true
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

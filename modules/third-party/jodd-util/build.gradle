@@ -8,6 +8,10 @@ dependencies {
 	compileOnly group: "org.jodd", name: "jodd-util", transitive: false, version: "6.0.1"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

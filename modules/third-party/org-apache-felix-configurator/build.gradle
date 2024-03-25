@@ -8,6 +8,10 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.configurator", transitive: false, version: "1.0.14"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

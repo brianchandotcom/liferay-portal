@@ -8,6 +8,10 @@ dependencies {
 	compileOnly group: "org.elasticsearch", name: "elasticsearch", transitive: false, version: "2.4.0"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

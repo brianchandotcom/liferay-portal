@@ -15,6 +15,10 @@ dependencies {
 	api group: "org.slf4j", name: "slf4j-api", transitive: false, version: "1.7.26"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

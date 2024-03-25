@@ -14,6 +14,10 @@ dependencies {
 	api group: "org.glassfish.web", name: "javax.servlet.jsp", transitive: false, version: "2.3.3-b02"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

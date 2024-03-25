@@ -8,6 +8,10 @@ dependencies {
 	compileOnly group: "org.eclipse.platform", name: "org.eclipse.osgi", transitive: false, version: "3.13.0"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

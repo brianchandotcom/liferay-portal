@@ -45,6 +45,9 @@ jarManifest {
 }
 
 jarPatched {
+	mustRunAfter compileJava
+	mustRunAfter processResources
+
 	archiveFileName = jar.archiveFileName
 	destinationDirectory = jar.destinationDirectory
 	duplicatesStrategy = "exclude"
@@ -54,6 +57,10 @@ jarPatched {
 
 javadoc {
 	enabled = false
+}
+
+jarSources {
+	mustRunAfter patch
 }
 
 patch {

@@ -22,6 +22,10 @@ jarSources {
 	mustRunAfter patch
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

@@ -11,6 +11,10 @@ dependencies {
 	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.1.3"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

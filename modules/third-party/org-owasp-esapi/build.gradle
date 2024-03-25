@@ -9,6 +9,10 @@ dependencies {
 	compileOnly group: "org.owasp.esapi", name: "esapi", transitive: false, version: "2.1.0.1"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

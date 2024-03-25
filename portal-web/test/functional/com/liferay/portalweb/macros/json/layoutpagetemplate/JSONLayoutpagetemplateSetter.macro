@@ -77,8 +77,25 @@ definition {
 			var site = "true";
 		}
 
+		var groupId = JSONGroupAPI._getGroupIdByGroupKey(
+			grandParentGroupName = ${grandParentGroupName},
+			groupKey = ${groupKey},
+			parentGroupName = ${parentGroupName},
+			site = ${site});
+
+		return ${groupId};
+	}
+
+	@summary = "Default summary"
+	macro setGroupIdByName(groupName = null) {
+		Variables.assertDefined(parameterList = ${groupName});
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
 		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = ${groupKey},
+			groupName = ${groupName},
 			site = ${site});
 
 		return ${groupId};

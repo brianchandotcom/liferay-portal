@@ -25,9 +25,11 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
+import org.apache.http.config.SocketConfig;
 import org.apache.http.conn.ConnectionKeepAliveStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.conn.DefaultManagedHttpClientConnection;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.execchain.ClientExecChain;
 import org.apache.http.impl.execchain.MainClientExec;
 import org.apache.http.impl.pool.BasicPoolEntry;
@@ -145,6 +147,15 @@ public class HttpImplTest {
 		}
 	}
 
+	@Test
+	public void testTCPKeepAlive() {
+		_setTCPKeepAliveEnabled(false);
+		_testTCPKeepAlive(false);
+
+		_setTCPKeepAliveEnabled(true);
+		_testTCPKeepAlive(true);
+	}
+
 	private Tuple _getHttpConnectionStrategies() {
 		ClientExecChain clientExecChain = ReflectionTestUtil.getFieldValue(
 			(CloseableHttpClient)ReflectionTestUtil.invoke(
@@ -169,6 +180,11 @@ public class HttpImplTest {
 
 	private void _setHttpKeepAliveTimeout(int keepAliveTimeout) {
 		_httpConfigurationProperties.put("keepAliveTimeout", keepAliveTimeout);
+	}
+
+	private void _setTCPKeepAliveEnabled(boolean tcpKeepAliveEnabled) {
+		_httpConfigurationProperties.put(
+			"tcpKeepAliveEnabled", tcpKeepAliveEnabled);
 	}
 
 	private void _testHttpKeepAlive(
@@ -233,9 +249,28 @@ public class HttpImplTest {
 			expectedKeepAlive, expectedKeepAliveTimeoutInMilliseconds);
 	}
 
+	private void _testTCPKeepAlive(boolean expectedEnabledTCPKeepAlive) {
+		_httpImpl.activate(_httpConfigurationProperties);
+
+		SocketConfig socketConfig = ReflectionTestUtil.invoke(
+			(PoolingHttpClientConnectionManager)
+				ReflectionTestUtil.getFieldValue(
+					(CloseableHttpClient)ReflectionTestUtil.invoke(
+						_httpImpl, "_createCloseableHttpClient",
+						new Class<?>[] {HttpHost.class, List.class},
+						new Object[] {null, null}),
+					"connManager"),
+			"resolveSocketConfig", new Class<?>[] {HttpHost.class},
+			new Object[] {_httpHost});
+
+		Assert.assertEquals(
+			expectedEnabledTCPKeepAlive, socketConfig.isSoKeepAlive());
+	}
+
 	private final Map<String, Object> _httpConfigurationProperties =
 		new HashMap<>();
 	private final HttpContext _httpContext = new BasicHttpContext(null);
+	private final HttpHost _httpHost = new HttpHost("localhost", 8080);
 	private final HttpImpl _httpImpl = new HttpImpl();
 	private final HttpResponse _httpResponse = new BasicHttpResponse(
 		new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"));

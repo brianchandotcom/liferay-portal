@@ -74,20 +74,14 @@ boolean primary = BeanParamUtil.getBoolean(cpMeasurementUnit, request, "primary"
 </aui:form>
 
 <c:if test="<%= cpMeasurementUnit == null %>">
-	<aui:script require="frontend-js-web/index as frontendJsWeb, commerce-frontend-js/utilities/slugify as slugify">
-		var {debounce} = frontendJsWeb;
-
-		var form = document.getElementById('<portlet:namespace />fm');
-
-		var keyInput = form.querySelector('#<portlet:namespace />key');
-		var nameInput = form.querySelector('#<portlet:namespace />name');
-
-		var handleOnNameInput = function () {
-			keyInput.value = slugify.default(nameInput.value);
-		};
-
-		nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).build()
+		%>'
+		module="{debounceInput} from commerce-product-measurement-unit-web"
+	/>
 </c:if>
 
 <aui:script>

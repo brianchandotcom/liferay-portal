@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import AdministratorDashboardRouter from './pages/AdministratorDashboard/AdministratorDashboardRouter';
 import {CustomerGatePage} from './pages/CustomerGatePage/CustomerGatePage';
 import GetAppRouter from './pages/GetApp/GetAppRouter';
 import GetSolutionRouter from './pages/GetSolution/GetSolutionRouter';
@@ -12,7 +13,7 @@ import PublisherGateRouter from './pages/PublisherGate/PublisheGateRouter';
 import PurchasedAppsDashboardRouter from './pages/PurchasedAppsDashboard/PurchasedAppsDashboardRouter';
 
 const Routes = {
-	'administrator-dashboard': PublishedAppsDashboardRouter,
+	'administrator-dashboard': AdministratorDashboardRouter,
 	'customer-gate': CustomerGatePage,
 	'get-app': GetAppRouter,
 	'next-steps': NextSteps,

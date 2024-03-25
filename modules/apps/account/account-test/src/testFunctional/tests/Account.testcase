@@ -4328,28 +4328,28 @@ definition {
 	test OnlyGlobalTagCanBeAddedToAccount {
 		JSONAssettag.addTag(
 			groupName = "Guest",
-			tagName = "Guest Tag");
+			tagName = "guest tag");
 
 		JSONAssettag.addTag(
 			groupName = "Global",
-			tagName = "Global Tag Name 1");
+			tagName = "global tag name 1");
 
 		JSONAssettag.addTag(
 			groupName = "Global",
-			tagName = "Global Tag Name 2");
+			tagName = "global tag name 2");
 
 		Account.openAccountsAdmin();
 
 		Account.addBusinessAccountWithTag(
 			accountName = "Account with Tags",
 			addTagMethod = "Select",
-			tagNameList = "Global Tag Name 1,Global Tag Name 2");
+			tagNameList = "global tag name 1,global tag name 2");
 
 		Account.openAccountsAdmin();
 
 		LexiconEntry.gotoEntry(rowEntry = "Account with Tags");
 
-		for (var tagName : list "Global Tag Name 1,Global Tag Name 2") {
+		for (var tagName : list "global tag name 1,global tag name 2") {
 			var tagName = StringUtil.lowerCase(${tagName});
 
 			AssetCategorization.viewTag(tagName = ${tagName});
@@ -4364,7 +4364,7 @@ definition {
 
 		var rowEntry = StringUtil.lowerCase(${rowEntry});
 
-		LexiconEntry.viewNoEntry(rowEntry = StringUtil.lowerCase("Guest Tag"));
+		LexiconEntry.viewNoEntry(rowEntry = StringUtil.lowerCase("guest tag"));
 	}
 
 	@description = "This test adds an Owned or account specific role and ensures this role is not shared across accounts"

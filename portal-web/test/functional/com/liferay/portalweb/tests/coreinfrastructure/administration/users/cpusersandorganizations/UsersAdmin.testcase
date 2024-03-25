@@ -2185,15 +2185,15 @@ definition {
 	test OnlyGlobalTagCanbeAssociatedToUser {
 		JSONAssettag.addTag(
 			groupName = "Guest",
-			tagName = "Default Site Tag Name");
+			tagName = "default site tag name");
 
 		JSONAssettag.addTag(
 			groupName = "Global",
-			tagName = "Global Tag Name 1");
+			tagName = "global tag name 1");
 
 		JSONAssettag.addTag(
 			groupName = "Global",
-			tagName = "Global Tag Name 2");
+			tagName = "global tag name 2");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -2205,14 +2205,14 @@ definition {
 
 		User.editUserTagCP(
 			addTagMethod = "Select",
-			tagNameList = "Global Tag Name 1,Global Tag Name 2",
+			tagNameList = "global tag name 1,global tag name 2",
 			userName = "userfn userln");
 
 		User.openUsersAdmin();
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
-		for (var tagName : list "Global Tag Name 1,Global Tag Name 2") {
+		for (var tagName : list "global tag name 1,global tag name 2") {
 			var tagName = StringUtil.lowerCase(${tagName});
 
 			AssetCategorization.viewTag(tagName = ${tagName});
@@ -2227,7 +2227,7 @@ definition {
 
 		var rowEntry = StringUtil.lowerCase(${rowEntry});
 
-		LexiconEntry.viewNoEntry(rowEntry = StringUtil.lowerCase("Default Site Tag Name"));
+		LexiconEntry.viewNoEntry(rowEntry = StringUtil.lowerCase("default site tag name"));
 
 		// Additional steps to cover LPS-111656
 
@@ -2243,7 +2243,7 @@ definition {
 
 		UserNavigator.gotoUser(userScreenName = "usersn");
 
-		for (var tagName : list "Global Tag Name 1,Global Tag Name 2") {
+		for (var tagName : list "global tag name 1,global tag name 2") {
 			var tagName = StringUtil.lowerCase(${tagName});
 
 			AssetCategorization.viewTag(tagName = ${tagName});

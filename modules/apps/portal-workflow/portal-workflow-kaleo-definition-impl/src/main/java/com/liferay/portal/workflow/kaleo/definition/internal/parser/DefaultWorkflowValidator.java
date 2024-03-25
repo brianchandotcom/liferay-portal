@@ -9,6 +9,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
@@ -24,6 +25,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -46,6 +48,17 @@ public class DefaultWorkflowValidator implements WorkflowValidator {
 		if (terminalStates.isEmpty()) {
 			throw new KaleoDefinitionValidationException.
 				MustSetTerminalStateNode();
+		}
+
+		String content = definition.getContent();
+
+		if (!_scriptManagementConfigurationHelper.
+				isAllowScriptContentBeExecutedOrIncluded() &&
+			content.contains("<script-language>groovy</script-language>")) {
+
+			throw new KaleoDefinitionValidationException.
+				NotAllowedScriptLanguage(
+					"Script language \"groovy\" is not allowed");
 		}
 
 		if (definition.getForksCount() != definition.getJoinsCount()) {
@@ -78,6 +91,10 @@ public class DefaultWorkflowValidator implements WorkflowValidator {
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
+
+	@Reference
+	private ScriptManagementConfigurationHelper
+		_scriptManagementConfigurationHelper;
 
 	private ServiceTrackerMap<NodeType, NodeValidator<Node>> _serviceTrackerMap;
 

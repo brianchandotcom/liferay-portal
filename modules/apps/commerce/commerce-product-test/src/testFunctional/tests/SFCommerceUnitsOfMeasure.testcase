@@ -1511,7 +1511,7 @@ definition {
 				orderAuthor = "Buyer User",
 				priceOnApplication = "true",
 				productName = "ABS Sensor",
-				productQuantity = "1.0",
+				productQuantity = 1,
 				productSku = "MIN93015",
 				uomKey = "UOM1KEY");
 		}

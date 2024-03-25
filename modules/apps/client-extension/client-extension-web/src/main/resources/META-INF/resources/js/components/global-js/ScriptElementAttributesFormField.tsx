@@ -21,7 +21,7 @@ const toJSONObjectString = (attributes) => {
 
 	const attributesObject = {};
 
-	validAttributes.map((attribute) => {
+	validAttributes.forEach((attribute) => {
 		let value = attribute.value;
 
 		if (attribute.type === 'Boolean') {

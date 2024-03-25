@@ -139,7 +139,8 @@ public abstract class BaseNotificationType implements NotificationType {
 						user.getCompanyId(), roleName);
 
 					if ((role == null) ||
-						(role.getType() != RoleConstants.TYPE_ACCOUNT)) {
+						((role.getType() != RoleConstants.TYPE_ACCOUNT) &&
+						 (role.getType() != RoleConstants.TYPE_ORGANIZATION))) {
 
 						continue;
 					}

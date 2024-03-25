@@ -15,6 +15,10 @@ dependencies {
 	compileOnly group: "axis", name: "axis", version: "1.4"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

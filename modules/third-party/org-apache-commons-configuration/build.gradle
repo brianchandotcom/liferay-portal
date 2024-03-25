@@ -26,6 +26,10 @@ deployJar {
 	}
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

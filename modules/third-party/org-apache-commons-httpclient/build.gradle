@@ -11,6 +11,10 @@ dependencies {
 	api group: "commons-httpclient", name: "commons-httpclient", version: "3.1"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

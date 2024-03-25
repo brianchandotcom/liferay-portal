@@ -10,6 +10,10 @@ dependencies {
 	api group: "org.springframework", name: "spring-core", version: "5.2.24.RELEASE"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

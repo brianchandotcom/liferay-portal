@@ -13,6 +13,10 @@ dependencies {
 	api group: "org.apache.velocity", name: "velocity", version: "1.6.4"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

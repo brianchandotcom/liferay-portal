@@ -8,6 +8,10 @@ dependencies {
 	compileOnly group: "org.codelibs.elasticsearch.module", name: "lang-painless", version: "7.9.0"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

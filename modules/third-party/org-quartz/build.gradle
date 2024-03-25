@@ -8,6 +8,10 @@ dependencies {
 	api group: "org.quartz-scheduler", name: "quartz", version: "2.1.7"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

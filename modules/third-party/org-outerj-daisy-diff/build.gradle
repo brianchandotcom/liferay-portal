@@ -30,6 +30,10 @@ downloadSrc {
 	into new File("$buildDir")
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	dependsOn downloadSrc
 	dependsOn unzip

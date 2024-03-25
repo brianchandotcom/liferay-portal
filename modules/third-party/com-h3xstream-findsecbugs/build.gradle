@@ -10,6 +10,10 @@ dependencies {
 	compileOnly group: "org.apache.bcel", name: "bcel", version: "6.3.1"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

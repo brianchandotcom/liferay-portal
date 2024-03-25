@@ -8,6 +8,10 @@ dependencies {
 	compileOnly group: "org.jdom", name: "jdom2", transitive: false, version: "2.0.6"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

@@ -11,6 +11,10 @@ dependencies {
 	api group: "org.mvel", name: "mvel2", version: "2.1.0.drools16"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

@@ -8,6 +8,10 @@ dependencies {
 	compileOnly group: "org.jgroups", name: "jgroups", transitive: false, version: "3.6.16.Final"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

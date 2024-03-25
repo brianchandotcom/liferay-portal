@@ -11,6 +11,10 @@ dependencies {
 	compileOnly group: "net.sf.jpathwatch", name: "jpathwatch", version: "0.95"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	ext {
 		autoClean = false

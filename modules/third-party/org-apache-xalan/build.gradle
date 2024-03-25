@@ -9,6 +9,10 @@ dependencies {
 	api group: "xalan", name: "xalan", version: "2.7.2"
 }
 
+jarSources {
+	mustRunAfter patch
+}
+
 patch {
 	doFirst {
 		copy {

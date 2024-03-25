@@ -37,7 +37,9 @@ export class CommerceLayoutsPage {
 	readonly widgetPageTemplateButton: Locator;
 
 	constructor(page: Page) {
-		this.addPageButton = page.getByTestId('creationMenuNewButton');
+		this.addPageButton = page
+			.getByTestId('creationMenuNewButton')
+			.locator('visible=true');
 		this.addPageModalSubmitButton = page
 			.frameLocator('#addLayoutDialog_iframe_')
 			.getByTestId('addLayoutFooter')

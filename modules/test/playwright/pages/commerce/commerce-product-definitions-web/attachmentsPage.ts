@@ -23,7 +23,9 @@ export class AttachmentsPage {
 	readonly uploadedFileName: Locator;
 
 	constructor(page: Page) {
-		this.addFileEntryButton = page.getByTestId('creationMenuNewButton');
+		this.addFileEntryButton = page
+			.getByTestId('creationMenuNewButton')
+			.locator('visible=true');
 		this.addFileEntrySubmitButton = page
 			.getByTestId('addFileEntryFooter')
 			.getByRole('button', {exact: true, name: 'Publish'});

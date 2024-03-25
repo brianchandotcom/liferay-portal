@@ -25,7 +25,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 
 <clay:management-toolbar
 	managementToolbarDisplayContext="<%= new CPDefinitionGroupedManagementToolbarDisplayContext(cpDefinitionGroupedEntriesDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
-	propsTransformer="js/CPDefinitionGroupedManagementToolbarPropsTransformer"
+	propsTransformer="{CPDefinitionGroupedManagementToolbarPropsTransformer} from commerce-product-type-grouped-web"
 />
 
 <div id="<portlet:namespace />cpDefinitionGroupedEntriesContainer">

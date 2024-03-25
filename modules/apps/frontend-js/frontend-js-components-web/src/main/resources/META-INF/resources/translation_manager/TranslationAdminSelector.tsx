@@ -83,6 +83,7 @@ const TriggerButton = React.forwardRef(
 			<ClayButton
 				{...props}
 				aria-label={ariaLabelButton}
+				className="btn-block"
 				displayType="secondary"
 				monospaced
 				ref={ref}

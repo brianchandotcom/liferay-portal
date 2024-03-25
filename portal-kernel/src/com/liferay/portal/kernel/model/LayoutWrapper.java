@@ -1893,6 +1893,11 @@ public class LayoutWrapper
 	}
 
 	@Override
+	public boolean isTypeUtility() {
+		return model.isTypeUtility();
+	}
+
+	@Override
 	public boolean isUnlocked(String mode, long userId) {
 		return model.isUnlocked(mode, userId);
 	}

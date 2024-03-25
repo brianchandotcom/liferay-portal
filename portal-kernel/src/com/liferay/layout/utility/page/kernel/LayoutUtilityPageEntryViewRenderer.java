@@ -22,6 +22,10 @@ public interface LayoutUtilityPageEntryViewRenderer {
 
 	public String getType();
 
+	public default boolean isEnabled() {
+		return true;
+	}
+
 	public void renderHTML(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

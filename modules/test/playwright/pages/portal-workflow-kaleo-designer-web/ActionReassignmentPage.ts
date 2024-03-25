@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {RoleTypePage} from './RoleTypePage';
 
@@ -17,6 +17,22 @@ export class ActionReassignmentPage {
 		this.inputActionType = page.locator('#action-type');
 		this.inputReassignmentType = page.locator('#reassignment-type');
 		this.page = page;
+	}
+
+	async assertRoleTypeReassignmentType(roleTypes: RoleType[]) {
+		await expect(this.inputReassignmentType).toHaveValue('roleType');
+
+		for (let i = 0; i < roleTypes.length; i++) {
+			this.roleTypePage = new RoleTypePage(i, this.page);
+
+			const {autocreate, roleName, roleType} = roleTypes[i];
+
+			await this.roleTypePage.assertSectionFields(
+				autocreate,
+				roleName,
+				roleType
+			);
+		}
 	}
 
 	async fillRoleTypeReassignmentType(roleTypes: RoleType[]) {

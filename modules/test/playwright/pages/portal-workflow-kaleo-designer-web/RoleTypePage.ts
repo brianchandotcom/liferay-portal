@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 export class RoleTypePage {
 	readonly InputAutoCreate: Locator;
@@ -20,6 +20,20 @@ export class RoleTypePage {
 			.getByRole('button', {name: 'New Section'})
 			.nth(index);
 		this.page = page;
+	}
+
+	async assertSectionFields(
+		autocreate: boolean,
+		roleName: string,
+		roleType: string
+	) {
+		if (autocreate) {
+			await expect(this.InputAutoCreate).toBeChecked();
+		}
+
+		await expect(this.inputRoleName).toHaveValue(roleName);
+
+		await expect(this.inputRoleType).toHaveValue(roleType);
 	}
 
 	async fillSectionFields(

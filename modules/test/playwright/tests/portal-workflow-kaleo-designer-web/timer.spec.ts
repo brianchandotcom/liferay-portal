@@ -131,10 +131,13 @@ test('LPD-16281 can create timer notifications', async ({
 });
 
 test('LPD-21221 can create timer reassignments role type reassignment type', async ({
+	actionReassignmentPage,
 	apiHelpers,
 	diagramViewPage,
 	nodePropertiesSidebarPage,
+	page,
 	processBuilderPage,
+	sourceViewPage
 }) => {
 	const singleApproverWorkflowDefinition =
 		await apiHelpers.headlessAdminWorkflow.getWorkflowDefinitionByName(
@@ -159,6 +162,44 @@ test('LPD-21221 can create timer reassignments role type reassignment type', asy
 
 	await nodePropertiesSidebarPage.createTimerReassignmentRoleType(roleTypes);
 
+	await diagramViewPage.clickSourceViewButton();
+
+	await page.waitForTimeout(2500);
+
+	await page
+		.getByText('SourceWrite your definition or import a file.')
+		.click();
+
+	await sourceViewPage.clickDiagramViewButton();
+
+	await diagramViewPage.clickReviewNodeLink();
+
+	const timerOption = processBuilderPage.page.getByRole('link', {
+		name: 'Duration: 3 week',
+	});
+
+	await expect(timerOption).toBeVisible();
+
+	await timerOption.click();
+
+	await actionReassignmentPage.assertRoleTypeReassignmentType(roleTypes);
+
+	await diagramViewPage.saveWorkflowDefinition();
+
+	await diagramViewPage.goBack();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickReviewNodeLink();
+
+	await expect(timerOption).toBeVisible();
+
+	await timerOption.click();
+
+	await actionReassignmentPage.assertRoleTypeReassignmentType(roleTypes);
+	
 	// clean up
 
 	await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(

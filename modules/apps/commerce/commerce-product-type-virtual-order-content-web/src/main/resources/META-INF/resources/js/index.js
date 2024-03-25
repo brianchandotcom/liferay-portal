@@ -5,7 +5,7 @@
 
 import {openModal} from 'frontend-js-web';
 
-export default function propsTransformer({
+export function OpenTermsOfUseModalPropsTransformer({
 	additionalProps: {
 		commerceVirtualOrderItemFileEntryId,
 		commerceVirtualOrderItemId,

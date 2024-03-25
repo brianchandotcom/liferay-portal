@@ -108,7 +108,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 													displayType="secondary"
 													icon="download"
 													label='<%= LanguageUtil.format(request, "download-x", commerceVirtualOrderItemFileEntry.getVersion(), false) %>'
-													propsTransformer="js/OpenTermsOfUseModalPropsTransformer"
+													propsTransformer="{OpenTermsOfUseModalPropsTransformer} from commerce-product-type-virtual-order-content-web"
 												/>
 											</c:when>
 											<c:otherwise>

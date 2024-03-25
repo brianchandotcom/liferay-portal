@@ -72,6 +72,7 @@ import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.RegistryBuilder;
+import org.apache.http.config.SocketConfig;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
@@ -380,6 +381,18 @@ public class HttpImpl implements Http {
 	protected void modified(Map<String, Object> properties) {
 		_httpConfiguration = ConfigurableUtil.createConfigurable(
 			HttpConfiguration.class, properties);
+
+		PoolingHttpClientConnectionManager
+			poolingHttpClientConnectionManager =
+			_poolingHttpClientConnectionManagerDCLSingleton.
+				getSingleton(
+					this:: _createPoolingHttpClientConnectionManager);
+
+		poolingHttpClientConnectionManager.setDefaultSocketConfig(
+			SocketConfig.custom(
+			).setSoKeepAlive(
+				_httpConfiguration.tcpKeepAliveEnabled()
+			).build());
 	}
 
 	protected void processPostMethod(
@@ -637,8 +650,7 @@ public class HttpImpl implements Http {
 				poolingHttpClientConnectionManager =
 					_poolingHttpClientConnectionManagerDCLSingleton.
 						getSingleton(
-							HttpImpl::
-								_createPoolingHttpClientConnectionManager);
+							this:: _createPoolingHttpClientConnectionManager);
 
 			if ((maxConnectionsPerHost > 0) &&
 				(maxConnectionsPerHost != _MAX_CONNECTIONS_PER_HOST)) {
@@ -937,7 +949,7 @@ public class HttpImpl implements Http {
 		}
 	}
 
-	private static PoolingHttpClientConnectionManager
+	private PoolingHttpClientConnectionManager
 		_createPoolingHttpClientConnectionManager() {
 
 		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager =
@@ -953,6 +965,11 @@ public class HttpImpl implements Http {
 		poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
 			_MAX_CONNECTIONS_PER_HOST);
 		poolingHttpClientConnectionManager.setMaxTotal(_MAX_TOTAL_CONNECTIONS);
+		poolingHttpClientConnectionManager.setDefaultSocketConfig(
+			SocketConfig.custom(
+			).setSoKeepAlive(
+				_httpConfiguration.tcpKeepAliveEnabled()
+			).build());
 
 		return poolingHttpClientConnectionManager;
 	}

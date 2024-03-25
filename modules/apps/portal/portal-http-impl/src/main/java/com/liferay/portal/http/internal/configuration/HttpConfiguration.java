@@ -25,4 +25,10 @@ public interface HttpConfiguration {
 	)
 	public int keepAliveTimeout();
 
+	@Meta.AD(
+		deflt = "false", description = "tcp-keep-alive-enabled-help",
+		name = "tcp-keep-alive-enabled", required = false
+	)
+	public boolean tcpKeepAliveEnabled();
+
 }

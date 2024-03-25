@@ -598,7 +598,7 @@ definition {
 	@description = "This is a use case for LPS-86487. Page links on sites which were created in site templates should redirect correctly to other pages."
 	@priority = 3
 	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

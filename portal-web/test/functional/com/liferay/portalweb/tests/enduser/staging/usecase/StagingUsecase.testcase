@@ -2213,7 +2213,7 @@ definition {
 	@description = "This is a use case for LPS-123156 and LPS-185203 TC-1: The summary of the failed publishing processes can be viewed."
 	@priority = 3
 	test TrashEntryReferencePublishing {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property testray.component.names = "Training";

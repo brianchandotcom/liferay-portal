@@ -30,6 +30,7 @@
 			"<rootDir>/test/utilities.js"
 		]
 	},
+	"main": "js/index.js",
 	"name": "@liferay/commerce-shop-by-diagram-web",
 	"private": true,
 	"scripts": {

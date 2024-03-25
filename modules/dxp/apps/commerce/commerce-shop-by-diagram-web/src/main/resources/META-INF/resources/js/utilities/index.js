@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isProductPurchasable} from 'commerce-frontend-js/utilities/index';
-import {getProductMinQuantity} from 'commerce-frontend-js/utilities/quantities';
+import {
+	getProductMinQuantity,
+	isProductPurchasable,
+} from 'commerce-frontend-js';
 
 import {DIAGRAM_LABELS_MAX_LENGTH, DRAG_AND_DROP_THRESHOLD} from './constants';
 

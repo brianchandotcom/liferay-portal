@@ -67,7 +67,8 @@ class D3Handler extends DiagramZoomHandler {
 	}
 
 	_printImage() {
-		const wrappperBoundingClientRect = this._diagramWrapper.getBoundingClientRect();
+		const wrappperBoundingClientRect =
+			this._diagramWrapper.getBoundingClientRect();
 
 		this._image = this._d3zoomWrapper
 			.append('image')
@@ -337,8 +338,7 @@ class D3Handler extends DiagramZoomHandler {
 				'transform',
 				`translate(${d3event.x},${d3event.y})`
 			);
-		}
-		else {
+		} else {
 			selectedPin.classList.remove('dragging');
 			this._dragDetails.moved = false;
 

@@ -4,7 +4,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import Autocomplete from 'commerce-frontend-js/components/autocomplete/Autocomplete';
+import {AutocompleteComponent} from 'commerce-frontend-js';
 import React from 'react';
 
 export function LinkedToCatalogProductFormGroup({updateValue, value}) {
@@ -20,7 +20,7 @@ export function LinkedToCatalogProductFormGroup({updateValue, value}) {
 				{Liferay.Language.get('sku')}
 			</label>
 
-			<Autocomplete
+			<AutocompleteComponent
 				apiUrl="/o/headless-commerce-admin-catalog/v1.0/skus"
 				infiniteScrollMode={true}
 				initialLabel={initialValue?.sku || ''}
@@ -56,7 +56,7 @@ export function LinkedToDiagramFormGroup({updateValue, value}) {
 				{Liferay.Language.get('diagram')}
 			</label>
 
-			<Autocomplete
+			<AutocompleteComponent
 				apiUrl="/o/headless-commerce-admin-catalog/v1.0/products?filter=(productType eq 'diagram')"
 				infiniteScrollMode={true}
 				initialLabel={

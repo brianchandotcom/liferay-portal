@@ -119,5 +119,5 @@ CSDiagramType csDiagramType = csDiagramSettingDisplayContext.getCSDiagramType(ty
 			"diagramId", (csDiagramSetting != null) ? csDiagramSetting.getCSDiagramSettingId() : 0
 		).build()
 	%>'
-	module="js/edit_cs_diagram_setting"
+	module="{editCsDiagramSetting} from commerce-shop-by-diagram-web"
 />

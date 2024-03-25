@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import QuantitySelector from 'commerce-frontend-js/components/quantity_selector/QuantitySelector';
+import {QuantitySelectorComponent} from 'commerce-frontend-js';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -95,7 +95,7 @@ export default function MappedProductRow({
 				{!isAdmin &&
 					product.productConfiguration &&
 					product.type === 'sku' && (
-						<QuantitySelector
+						<QuantitySelectorComponent
 							allowedQuantities={
 								product.productConfiguration
 									.allowedOrderQuantities

@@ -18,7 +18,7 @@
 				<span aria-hidden="true" class="loading-animation"></span>
 
 				<react:component
-					module="js/Diagram/Diagram"
+					module="{Diagram} from commerce-shop-by-diagram-web"
 					props="<%= (Map<String, Object>)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_PROPS) %>"
 				/>
 			</div>
@@ -32,7 +32,7 @@
 			title='<%= LanguageUtil.get(resourceBundle, "mapped-products") %>'
 		>
 			<react:component
-				module="js/DiagramTable/DiagramTable"
+				module="{DiagramTable} from commerce-shop-by-diagram-web"
 				props="<%= (Map<String, Object>)request.getAttribute(CSDiagramWebKeys.CS_DIAGRAM_CP_TYPE_PROPS) %>"
 			/>
 		</commerce-ui:panel>

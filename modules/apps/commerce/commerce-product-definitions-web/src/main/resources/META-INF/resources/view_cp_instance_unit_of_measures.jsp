@@ -43,5 +43,5 @@ long cpInstanceId = cpInstanceUnitOfMeasureDisplayContext.getCPInstanceId();
 			"datasetId", CommerceProductFDSNames.PRODUCT_UNITS_OF_MEASURE
 		).build()
 	%>'
-	module="js/view_cp_instance_unit_of_measure"
+	module="{viewCpInstanceUnitOfMeasure} from commerce-product-definitions-web"
 />

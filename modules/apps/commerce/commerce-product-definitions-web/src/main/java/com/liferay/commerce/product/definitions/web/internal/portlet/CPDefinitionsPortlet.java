@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -76,8 +75,6 @@ public class CPDefinitionsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
 
-		renderRequest.setAttribute("NPMResolver", _npmResolver);
-
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -104,9 +101,6 @@ public class CPDefinitionsPortlet extends MVCPortlet {
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

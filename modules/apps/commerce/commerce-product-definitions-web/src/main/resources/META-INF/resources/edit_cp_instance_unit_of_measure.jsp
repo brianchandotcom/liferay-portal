@@ -158,6 +158,6 @@ CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplay
 				"primary", cpInstanceUnitOfMeasure.isPrimary()
 			).build()
 		%>'
-		module="js/edit_cp_instance_unit_of_measure"
+		module="{editCpInstanceUnitOfMeasure} from commerce-product-definitions-web"
 	/>
 </liferay-frontend:side-panel-content>

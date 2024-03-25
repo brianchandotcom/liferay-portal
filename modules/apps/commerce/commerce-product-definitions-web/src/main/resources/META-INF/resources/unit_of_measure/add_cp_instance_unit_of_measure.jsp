@@ -140,6 +140,6 @@ CPInstance cpInstance = cpInstanceUnitOfMeasureDisplayContext.getCPInstance();
 				"message", LanguageUtil.get(request, "exit-with-primary-unit-of-measure-changed-saving-help")
 			).build()
 		%>'
-		module="js/add_cp_instance_unit_of_measure"
+		module="{addCpInstanceUnitOfMeasure} from commerce-product-definitions-web"
 	/>
 </commerce-ui:modal-content>

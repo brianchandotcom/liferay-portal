@@ -79,7 +79,7 @@ if (selLayout != null) {
 			"removeIcon", removeCPDefinitionIcon
 		).build()
 	%>'
-	module="js/EditDisplayLayout"
+	module="{EditDisplayLayout} from commerce-product-definitions-web"
 />
 
 <commerce-ui:panel

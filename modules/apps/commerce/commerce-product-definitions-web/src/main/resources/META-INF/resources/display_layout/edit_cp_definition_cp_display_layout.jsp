@@ -117,5 +117,5 @@ String searchContainerId = "CPDefinitionsSearchContainer";
 			"searchContainerId", searchContainerId
 		).build()
 	%>'
-	module="js/EditDisplayLayout"
+	module="{EditDisplayLayout} from commerce-product-definitions-web"
 />

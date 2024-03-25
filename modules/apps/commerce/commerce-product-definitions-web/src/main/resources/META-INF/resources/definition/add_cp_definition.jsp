@@ -22,58 +22,22 @@
 		<portlet:param name="mvcRenderCommandName" value="/cp_definitions/edit_cp_definition" />
 	</portlet:renderURL>
 
-	<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/modals/index as ModalUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider, frontend-js-web/index as frontendJsWeb">
-		const {createPortletURL} = frontendJsWeb;
-
-		let defaultLanguageId = null;
-		const productData = {
-			active: true,
-			productStatus: <%= WorkflowConstants.STATUS_DRAFT %>,
-			productType: '<%= ParamUtil.getString(request, "productTypeName") %>',
-		};
-
-		const AdminCatalogResource = ServiceProvider.default.AdminCatalogAPI('v1');
-
-		Liferay.provide(window, '<portlet:namespace />apiSubmit', () => {
-			ModalUtils.isSubmitting();
-
-			const formattedData = Object.assign({}, productData, {
-				defaultSku: '<%= CPInstanceConstants.DEFAULT_SKU %>',
-				name: {},
-			});
-
-			formattedData.name[defaultLanguageId] = document.getElementById(
-				'<portlet:namespace />name'
-			).value;
-
-			AdminCatalogResource.createProduct(formattedData)
-				.then((cpDefinition) => {
-					const redirectURL = createPortletURL(
-						'<%= editProductDefinitionURL %>',
-						{
-							cpDefinitionId: cpDefinition.id,
-							p_p_state: '<%= LiferayWindowState.MAXIMIZED.toString() %>',
-						}
-					);
-
-					ModalUtils.closeAndRedirect(redirectURL);
-				})
-				.catch(ModalUtils.onSubmitFail);
-		});
-
-		autocomplete.default('autocomplete', 'autocomplete-root', {
-			apiUrl: '/o/headless-commerce-admin-catalog/v1.0/catalogs',
-			inputId: '<portlet:namespace />catalogId',
-			inputName: '<%= liferayPortletResponse.getNamespace() %>catalogId',
-			itemsKey: 'id',
-			itemsLabel: 'name',
-			onValueUpdated: function (value, catalogData) {
-				if (value) {
-					productData.catalogId = catalogData.id;
-					defaultLanguageId = catalogData.defaultLanguageId;
-				}
-			},
-			required: true,
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"defaultSku", CPInstanceConstants.DEFAULT_SKU
+			).put(
+				"draft", WorkflowConstants.STATUS_DRAFT
+			).put(
+				"editProductDefinitionURL", editProductDefinitionURL
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"ppState", LiferayWindowState.MAXIMIZED.toString()
+			).put(
+				"productTypeName", ParamUtil.getString(request, "productTypeName")
+			).build()
+		%>'
+		module="{addCpDefinition} from commerce-product-definitions-web"
+	/>
 </commerce-ui:modal-content>

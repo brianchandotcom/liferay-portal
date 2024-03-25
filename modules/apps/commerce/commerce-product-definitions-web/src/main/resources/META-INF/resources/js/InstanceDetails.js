@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import renderAutocomplete from 'commerce-frontend-js/components/autocomplete/entry';
+import {Autocomplete} from 'commerce-frontend-js';
 
 function handleCPInstanceOptions({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
@@ -117,7 +117,7 @@ function handleReplacements({initialLabel, initialValue, namespace}) {
 		}
 	});
 
-	renderAutocomplete('autocomplete', 'autocomplete-root', {
+	Autocomplete('autocomplete', 'autocomplete-root', {
 		apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
 		initialLabel,
 		initialValue,

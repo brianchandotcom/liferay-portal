@@ -265,5 +265,5 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 			"WORKFLOW_ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
 		).build()
 	%>'
-	module="js/InstanceDetails"
+	module="{InstanceDetails} from commerce-product-definitions-web"
 />

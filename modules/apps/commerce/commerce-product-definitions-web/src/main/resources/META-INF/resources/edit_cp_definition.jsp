@@ -68,5 +68,5 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 			"WORKFLOW_ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
 		).build()
 	%>'
-	module="js/edit_cp_definition"
+	module="{editCpDefinition} from commerce-product-definitions-web"
 />

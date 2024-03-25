@@ -13,6 +13,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CProductTable;
 import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.friendly.url.model.FriendlyURLEntryTable;
+import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,7 +33,27 @@ public class CProductTableReferenceDefinition
 
 		childTableReferenceInfoBuilder.classNameReference(
 			CProductTable.INSTANCE.CProductId,
-			FriendlyURLEntryTable.INSTANCE.classPK, CProduct.class);
+			FriendlyURLEntryTable.INSTANCE.classPK, CProduct.class
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				FriendlyURLEntryTable.INSTANCE
+			).innerJoinON(
+				CProductTable.INSTANCE,
+				CProductTable.INSTANCE.groupId.eq(
+					FriendlyURLEntryTable.INSTANCE.groupId)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.value.eq(
+					CProduct.class.getName()
+				).and(
+					FriendlyURLEntryTable.INSTANCE.classNameId.eq(
+						ClassNameTable.INSTANCE.classNameId)
+				)
+			)
+		).singleColumnReference(
+			CProductTable.INSTANCE.CProductId,
+			CPDefinitionTable.INSTANCE.CProductId
+		);
 	}
 
 	@Override
@@ -40,12 +61,7 @@ public class CProductTableReferenceDefinition
 		ParentTableReferenceInfoBuilder<CProductTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.groupedModel(
-			CProductTable.INSTANCE
-		).singleColumnReference(
-			CProductTable.INSTANCE.CProductId,
-			CPDefinitionTable.INSTANCE.CProductId
-		);
+		parentTableReferenceInfoBuilder.groupedModel(CProductTable.INSTANCE);
 	}
 
 	@Override

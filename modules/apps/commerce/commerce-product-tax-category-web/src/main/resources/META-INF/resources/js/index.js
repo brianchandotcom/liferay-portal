@@ -5,7 +5,10 @@
 
 import {openConfirmModal} from 'frontend-js-web';
 
-export default function propsTransformer({portletNamespace, ...props}) {
+export function CPTaxCategoryManagementToolbarPropsTransformer({
+	portletNamespace,
+	...props
+}) {
 	return {
 		...props,
 		onActionButtonClick(event, {item}) {

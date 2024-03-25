@@ -15,7 +15,7 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 	<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
 
 	<react:component
-		module="js/OrganizationChart"
+		module="{OrganizationChart} from commerce-organization-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"namespace", randomNamespace

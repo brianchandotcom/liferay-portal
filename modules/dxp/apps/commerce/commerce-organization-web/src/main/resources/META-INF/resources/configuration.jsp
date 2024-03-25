@@ -38,7 +38,7 @@ Organization rootOrganization = commerceOrganizationDisplayContext.getRootOrgani
 				<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
 
 				<react:component
-					module="js/configuration"
+					module="{configuration} from commerce-organization-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
 							"apiUrl", "/o/headless-admin-user/v1.0/organizations?flatten=true"

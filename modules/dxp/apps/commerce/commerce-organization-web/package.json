@@ -26,6 +26,7 @@
 			"<rootDir>/test/dev/"
 		]
 	},
+	"main": "js/index.ts",
 	"name": "commerce-organization-web",
 	"private": true,
 	"scripts": {

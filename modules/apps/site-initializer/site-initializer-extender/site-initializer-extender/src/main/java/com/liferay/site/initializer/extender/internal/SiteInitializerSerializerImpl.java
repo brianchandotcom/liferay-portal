@@ -77,9 +77,9 @@ public class SiteInitializerSerializerImpl
 				"documents/group", zipWriter);
 			_serializeDDMStructures(groupId, zipWriter);
 			_serializeDDMTemplates(groupId, zipWriter);
+			_serializeLayoutPageTemplates(groupId, zipWriter);
 			_serializeLayouts(groupId, "layouts", zipWriter);
 			_serializeStyleBookEntries(groupId, zipWriter);
-			_serializeLayoutPageTempaltes(groupId, zipWriter);
 
 			return zipWriter.getFile();
 		}
@@ -311,7 +311,7 @@ public class SiteInitializerSerializerImpl
 			zipWriter);
 	}
 
-	private void _serializeLayoutPageTempaltes(
+	private void _serializeLayoutPageTemplates(
 			long groupId, ZipWriter zipWriter)
 		throws Exception {
 

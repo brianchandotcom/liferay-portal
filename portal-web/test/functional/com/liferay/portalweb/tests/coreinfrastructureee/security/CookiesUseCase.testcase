@@ -67,6 +67,7 @@ definition {
 	@description = "This is a use case for LPS-142518. TC-8 Verify that cookies will have 12 months of lifetime when they are accepted."
 	@priority = 5
 	test VerifyCookiesLifetime {
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

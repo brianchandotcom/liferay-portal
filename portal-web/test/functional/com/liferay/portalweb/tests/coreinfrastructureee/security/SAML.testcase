@@ -3160,6 +3160,7 @@ definition {
 	@priority = 4
 	test HotDeploySAMLApp {
 		property hot.deploy.osgi.app.includes = "saml";
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

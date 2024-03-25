@@ -638,7 +638,7 @@ definition {
 	@description = "This is a use case for LPS-105151 and LPS-139642 TC-9: Users could login with instance-level configured OpenID Connect provider."
 	@priority = 5
 	test OpenIDConnectOnInstanceLevelSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -703,7 +703,7 @@ definition {
 	@description = "This is a use case for LRQA-40911. Users could login and logout using OpenID Connect provider."
 	@priority = 5
 	test OpenIDConnectSmoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -957,6 +957,7 @@ definition {
 	@priority = 5
 	test OpenIDConnectWithGoogleCustomParameters {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

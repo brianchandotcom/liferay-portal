@@ -170,6 +170,16 @@ public class PublishScheduler {
 		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
 			ctCollectionId);
 
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				_getSchedulerJobName(ctCollection),
+				CTDestinationNames.CT_COLLECTION_SCHEDULED_PUBLISH,
+				StorageType.PERSISTED);
+
+		if (schedulerResponse != null) {
+			return null;
+		}
+
 		_ctCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), ctCollection,
 			CTActionKeys.PUBLISH);

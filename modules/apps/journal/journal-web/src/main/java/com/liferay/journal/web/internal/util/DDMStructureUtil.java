@@ -29,7 +29,7 @@ public class DDMStructureUtil {
 	public static List<DDMStructure> getHighlightedDDMStructures(
 		ThemeDisplay themeDisplay) {
 
-		List<DDMStructure> highlightedDDMStructuresList = new ArrayList<>();
+		List<DDMStructure> highlightedDDMStructures = new ArrayList<>();
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesLocalServiceUtil.getPreferences(
@@ -37,15 +37,15 @@ public class DDMStructureUtil {
 				PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
 				JournalConstants.SERVICE_NAME, null);
 
-		String highlightedDDMStructures = portletPreferences.getValue(
+		String highlightedDDMStructuresString = portletPreferences.getValue(
 			"highlightedDDMStructures", null);
 
-		if (Validator.isNull(highlightedDDMStructures)) {
-			return highlightedDDMStructuresList;
+		if (Validator.isNull(highlightedDDMStructuresString)) {
+			return highlightedDDMStructures;
 		}
 
 		List<String> highlightedDDMStructureIds = StringUtil.split(
-			highlightedDDMStructures, CharPool.COMMA);
+			highlightedDDMStructuresString, CharPool.COMMA);
 
 		for (String highlightedDDMStructureId : highlightedDDMStructureIds) {
 			DDMStructure ddmStructure =
@@ -53,11 +53,11 @@ public class DDMStructureUtil {
 					GetterUtil.getLong(highlightedDDMStructureId));
 
 			if (ddmStructure != null) {
-				highlightedDDMStructuresList.add(ddmStructure);
+				highlightedDDMStructures.add(ddmStructure);
 			}
 		}
 
-		return highlightedDDMStructuresList;
+		return highlightedDDMStructures;
 	}
 
 }

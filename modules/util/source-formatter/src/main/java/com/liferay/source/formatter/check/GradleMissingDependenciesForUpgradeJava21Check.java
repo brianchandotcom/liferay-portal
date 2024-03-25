@@ -46,6 +46,12 @@ public class GradleMissingDependenciesForUpgradeJava21Check
 			return content;
 		}
 
+		String dirName = absolutePath.substring(0, x);
+
+		int y = dirName.lastIndexOf(CharPool.SLASH);
+
+		String shortDirName = dirName.substring(y + 1);
+
 		List<String> javaFileNames = SourceFormatterUtil.scanForFileNames(
 			absolutePath.substring(0, x + 1), new String[0],
 			new String[] {"**/*.java"}, new SourceFormatterExcludes(), false);
@@ -54,15 +60,29 @@ public class GradleMissingDependenciesForUpgradeJava21Check
 			String javaFileContent = FileUtil.read(new File(javaFileName));
 
 			if (javaFileContent.contains("import javax.annotation.")) {
-				content = _fixMissingDependencies(
-					content, "compileOnly", "javax.annotation",
-					"javax.annotation-api", "1.3.2");
+				if (shortDirName.endsWith("-test")) {
+					content = _fixMissingDependencies(
+						content, "testIntegrationImplementation",
+						"javax.annotation", "javax.annotation-api", "1.3.2");
+				}
+				else {
+					content = _fixMissingDependencies(
+						content, "compileOnly", "javax.annotation",
+						"javax.annotation-api", "1.3.2");
+				}
 			}
 
 			if (javaFileContent.contains("import javax.xml.bind.annotation.")) {
-				content = _fixMissingDependencies(
-					content, "compileOnly", "javax.xml.bind", "jaxb-api",
-					"2.3.0");
+				if (shortDirName.endsWith("-test")) {
+					content = _fixMissingDependencies(
+						content, "testIntegrationImplementation",
+						"javax.xml.bind", "jaxb-api", "2.3.0");
+				}
+				else {
+					content = _fixMissingDependencies(
+						content, "compileOnly", "javax.xml.bind", "jaxb-api",
+						"2.3.0");
+				}
 			}
 		}
 

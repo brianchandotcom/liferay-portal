@@ -724,7 +724,9 @@ public class ObjectEntryDTOConverter
 					_dLFileEntryLocalService.fetchDLFileEntry(fileEntryId);
 
 				if (dlFileEntry != null) {
-					if (FeatureFlagManagerUtil.isEnabled("LPS-174455")) {
+					if (FeatureFlagManagerUtil.isEnabled(
+							objectDefinition.getCompanyId(), "LPS-174455")) {
+
 						fileEntry.setFileBase64(
 							(String)NestedFieldsSupplier.supply(
 								objectFieldName + ".fileBase64",

@@ -234,6 +234,8 @@ definition {
 	@description = "Verify that the user is able to search by Workflow Assigned"
 	@priority = 4
 	test CanSearchByWorkflowAssigned {
+		property portal.upstream = "quarantine";
+
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -270,6 +272,7 @@ definition {
 	@description = "Verify that search can be done using non-ASCII character"
 	@priority = 4
 	test CanSearchNonAsciiChar {
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.environment = "EE";
 		property test.run.type = "single";
@@ -319,6 +322,8 @@ definition {
 	@description = "Verify that the Clear option cleans the search results"
 	@priority = 3
 	test ClearSearchResults {
+		property portal.upstream = "quarantine";
+
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");

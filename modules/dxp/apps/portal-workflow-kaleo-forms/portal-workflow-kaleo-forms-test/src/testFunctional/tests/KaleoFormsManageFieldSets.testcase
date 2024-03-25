@@ -117,6 +117,8 @@ definition {
 	@description = "Verify that user can Reverse sort Direction and if the elements reverse position."
 	@priority = 3
 	test CanReverseSortDirectionTheElement {
+		property portal.upstream = "quarantine";
+
 		KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "ID");
 
 		KaleoFormsManageFieldSets.viewUpDirectionOfSortButton();

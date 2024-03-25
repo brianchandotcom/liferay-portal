@@ -43,6 +43,7 @@ GradleDependencyConfigurationCheck | .gradle | Validates the scope of dependenci
 GradleDependencyVersionCheck | .gradle | Checks the version for dependencies in gradle build files. |
 GradleExportedPackageDependenciesCheck | .gradle | Validates dependencies in gradle build files. |
 GradleJavaVersionCheck | .gradle | Checks values of properties `sourceCompatibility` and `targetCompatibility` in gradle build files. |
+GradleMissingDependenciesForUpgradeJava21Check | .gradle | Checks missing dependencies for upgrade Java 21 in gradle build files. |
 GradleMissingJarManifestTaskCheck | .gradle | Finds missing `jarManifest` task when using `jarPatched` task in gradle build files. |
 GradlePetraModuleDependenciesCheck | .gradle | Checks that dependencies in `petra` moudule can only contains `petra` dependencies. |
 GradlePropertiesCheck | .gradle | Validates property values in gradle build files. |

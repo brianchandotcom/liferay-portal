@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
@@ -167,8 +168,11 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
-		String rate = ParamUtil.getString(
-			actionRequest, "rate", BigDecimal.ONE.toString());
+		String rate = ParamUtil.getString(actionRequest, "rate");
+
+		if (Validator.isNull(rate)) {
+			rate = BigDecimal.ONE.toString();
+		}
 
 		rate = _commercePriceFormatter.parse(rate, themeDisplay.getLocale());
 

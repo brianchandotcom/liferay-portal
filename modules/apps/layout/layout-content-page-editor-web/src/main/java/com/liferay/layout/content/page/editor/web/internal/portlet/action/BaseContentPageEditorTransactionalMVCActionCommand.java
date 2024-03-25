@@ -72,10 +72,10 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 			jsonObject = processException(actionRequest, exception);
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	protected abstract JSONObject doTransactionalCommand(

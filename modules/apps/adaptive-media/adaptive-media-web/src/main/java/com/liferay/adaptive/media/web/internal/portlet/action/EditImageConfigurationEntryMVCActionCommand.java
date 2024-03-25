@@ -200,10 +200,10 @@ public class EditImageConfigurationEntryMVCActionCommand
 			);
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private AMImageConfigurationEntry _addHighResolutionConfigurationEntry(

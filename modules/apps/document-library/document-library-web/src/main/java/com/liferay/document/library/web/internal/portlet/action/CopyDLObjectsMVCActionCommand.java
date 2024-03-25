@@ -117,10 +117,10 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		jsonObject.put(
 			"successItems", _getItemsCopied(actionRequest, errorMessages));
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private void _checkDestinationCopyToSizeLimit(

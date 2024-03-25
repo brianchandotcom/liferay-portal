@@ -85,10 +85,10 @@ public class PropagateContributedFragmentEntriesChangesMVCActionCommand
 			jsonObject.put("success", false);
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+
+		hideDefaultSuccessMessage(actionRequest);
 	}
 
 	private void _propagateContributedFragmentEntriesChanges()

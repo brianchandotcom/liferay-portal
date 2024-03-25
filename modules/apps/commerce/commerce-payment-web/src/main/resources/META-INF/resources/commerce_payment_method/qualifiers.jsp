@@ -94,7 +94,7 @@ boolean hasPermission = commercePaymentMethodGroupRelQualifiersDisplayContext.ha
 			"selector", "qualifiers--orderType--"
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-payment-web"
 />
 
 <liferay-frontend:component
@@ -107,5 +107,5 @@ boolean hasPermission = commercePaymentMethodGroupRelQualifiersDisplayContext.ha
 			"selector", "qualifiers--termEntry--"
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-payment-web"
 />

@@ -3,6 +3,7 @@
 		"commerce-frontend-js": "*",
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "@liferay/commerce-payment-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

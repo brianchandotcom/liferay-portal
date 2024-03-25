@@ -6,7 +6,7 @@
 	height: 2.5rem;
 	justify-content: flex-start;
 	padding: 1rem 0.75rem;
-	width: 16.5rem;
+	width: initial !important;
 
 	&-selected {
 		background-color: #e6edfb;
@@ -22,13 +22,7 @@
 		height: 1.5rem;
 		margin-right: 0.625rem;
 		width: 1.5rem;
-		filter: invert(33%) sepia(8%) saturate(551%) hue-rotate(197deg)
-			brightness(95%) contrast(91%);
-
-		&:hover {
-			filter: invert(18%) sepia(87%) saturate(3738%) hue-rotate(218deg)
-				brightness(85%) contrast(103%);
-		}
+		filter: saturate(0%);
 
 		&-selected {
 			filter: invert(18%) sepia(87%) saturate(3738%) hue-rotate(218deg)
@@ -42,6 +36,7 @@
 		font-size: 0.813rem;
 		font-weight: 600;
 		line-height: 1.5rem;
+		text-wrap: nowrap;
 
 		&-selected {
 			color: #004ad7;

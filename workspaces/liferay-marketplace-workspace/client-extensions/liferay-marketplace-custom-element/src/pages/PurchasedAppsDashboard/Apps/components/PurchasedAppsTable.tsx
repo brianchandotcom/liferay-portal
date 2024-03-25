@@ -8,7 +8,6 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useNavigate} from 'react-router-dom';
 
-import appsIcon from '../../../../assets/icons/apps_fill_icon.svg';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus, {
 	Statuses as OrderStatuses,
@@ -26,13 +25,15 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 	const navigate = useNavigate();
 	const {properties} = useMarketplaceContext();
 
-	if (!items.length) {
+	if (!items?.length) {
 		return (
 			<DashboardEmptyTable
-				description1="Purchase and install new apps and they will show up here."
-				description2="Click on “Add Apps” to start."
-				icon={appsIcon}
-				title="No Apps Yet"
+				description1={i18n.translate(
+					'purchase-and-install-new-apps-and-they-will-show-up-here'
+				)}
+				description2={i18n.translate('click-on-add-apps-to-start')}
+				icon="grid"
+				title={i18n.translate('no-apps-yet')}
 			/>
 		);
 	}
@@ -55,7 +56,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							</span>
 						</div>
 					),
-					title: 'Name',
+					title: i18n.translate('name'),
 				},
 				{
 					key: 'author',
@@ -79,7 +80,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							</div>
 						);
 					},
-					title: 'Purchased By',
+					title: i18n.translate('purchased-by'),
 				},
 
 				{
@@ -87,7 +88,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 					render: (type) => (
 						<span className="dashboard-table-row-type">{type}</span>
 					),
-					title: 'License Type',
+					title: i18n.translate('license-type'),
 				},
 				{
 					key: 'orderTypeExternalReferenceCode',
@@ -101,11 +102,11 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							</>
 						);
 					},
-					title: 'App Type',
+					title: i18n.translate('app-type'),
 				},
 				{
 					key: 'id',
-					title: 'Order ID',
+					title: i18n.translate('order-id'),
 				},
 				{
 					key: 'orderStatusInfo',
@@ -114,7 +115,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							{orderStatusInfo?.label}
 						</OrderStatus>
 					),
-					title: 'Order Status',
+					title: i18n.translate('order-status'),
 				},
 				{
 					align: 'center',
@@ -238,6 +239,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							</div>
 						);
 					},
+					title: i18n.translate('installation'),
 				},
 			]}
 			onClickRow={({id}) => navigate(`order/${id}`)}

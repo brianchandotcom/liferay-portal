@@ -8,6 +8,7 @@ import appsIcon from '../../assets/icons/apps_fill_icon.svg';
 import businessIcon from '../../assets/icons/business_center_icon.svg';
 import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
 import {AppProps} from '../../components/DashboardTable/DashboardTable';
+import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
 
 export type AccountBriefProps = {
@@ -67,25 +68,25 @@ export const customerRoles = ['Account Administrator', 'Account Buyer'];
 
 export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{
-		itemIcon: appsIcon,
+		itemIcon: 'grid',
 		itemName: 'apps',
 		itemSelected: true,
-		itemTitle: 'Apps',
+		itemTitle: i18n.translate('apps'),
 		items: [] as AppProps[],
 		path: '/',
 	},
 	{
-		itemIcon: solutionsIcon,
+		itemIcon: 'polls',
 		itemName: 'solutions',
 		itemSelected: false,
-		itemTitle: 'Solutions',
+		itemTitle: i18n.translate('solutions'),
 		path: '/solutions',
 	},
 	{
-		itemIcon: businessIcon,
+		itemIcon: 'briefcase',
 		itemName: 'account',
 		itemSelected: false,
-		itemTitle: 'Account',
+		itemTitle: i18n.translate('account'),
 		path: '/accounts',
 	},
 ];
@@ -131,42 +132,43 @@ export const publisherAppPermissionDescriptions: PermissionDescription[] = [
 	},
 ];
 
-export const publisherDashboardPermissionDescriptions: PermissionDescription[] = [
-	{
-		permissionName: 'Manage my own member profile',
-		permissionTooltip: 'Manage my own profile information (via Okta)',
-		permittedRoles: ['Account Administrator', 'App Editor'],
-	},
-	{
-		permissionName: 'View account members',
-		permissionTooltip: 'View all members and roles in my account.',
-		permittedRoles: ['Account Administrator', 'App Editor'],
-	},
-	{
-		permissionName: 'Change my account from free to paid',
-		permissionTooltip:
-			'Allows a greater set of functionality related to offering paid apps in the Marketplace',
-		permittedRoles: ['Account Administrator'],
-	},
-	{
-		permissionName: 'View orders',
-		permissionTooltip:
-			'View all orders of apps sold in the marketplace and the associated customer information.',
-		permittedRoles: ['Account Administrator'],
-	},
-	{
-		permissionName: 'Manage publisher account profile',
-		permissionTooltip:
-			'Manage the name, description, address, contact (phone and email) of the account.',
-		permittedRoles: ['Account Administrator'],
-	},
-	{
-		permissionName: 'Manage members and roles',
-		permissionTooltip:
-			'Manage roles of your team members - invite & remove',
-		permittedRoles: ['Account Administrator'],
-	},
-];
+export const publisherDashboardPermissionDescriptions: PermissionDescription[] =
+	[
+		{
+			permissionName: 'Manage my own member profile',
+			permissionTooltip: 'Manage my own profile information (via Okta)',
+			permittedRoles: ['Account Administrator', 'App Editor'],
+		},
+		{
+			permissionName: 'View account members',
+			permissionTooltip: 'View all members and roles in my account.',
+			permittedRoles: ['Account Administrator', 'App Editor'],
+		},
+		{
+			permissionName: 'Change my account from free to paid',
+			permissionTooltip:
+				'Allows a greater set of functionality related to offering paid apps in the Marketplace',
+			permittedRoles: ['Account Administrator'],
+		},
+		{
+			permissionName: 'View orders',
+			permissionTooltip:
+				'View all orders of apps sold in the marketplace and the associated customer information.',
+			permittedRoles: ['Account Administrator'],
+		},
+		{
+			permissionName: 'Manage publisher account profile',
+			permissionTooltip:
+				'Manage the name, description, address, contact (phone and email) of the account.',
+			permittedRoles: ['Account Administrator'],
+		},
+		{
+			permissionName: 'Manage members and roles',
+			permissionTooltip:
+				'Manage roles of your team members - invite & remove',
+			permittedRoles: ['Account Administrator'],
+		},
+	];
 
 export const adminRoles = ['Account Administrator'];
 
@@ -197,8 +199,7 @@ export function getProductTypeFromSpecifications(
 
 			if (productType === 'cloud') {
 				productType = 'Cloud';
-			}
-			else if (productType === 'dxp') {
+			} else if (productType === 'dxp') {
 				productType = 'DXP';
 			}
 		}

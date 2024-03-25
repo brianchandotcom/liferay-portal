@@ -11,6 +11,7 @@ import {NavLink, useLocation} from 'react-router-dom';
 
 import {DashboardListItems} from './DashboardNavigation';
 import {DashboardNavigationListItem} from './DashboardNavigationListItem';
+import ClayIcon from '@clayui/icon';
 
 type DashboardNavigationListProps = {
 	dashboardNavigation: DashboardListItems;
@@ -39,22 +40,24 @@ export function DashboardNavigationList({
 			>
 				{({isActive}) => (
 					<>
-						<img
-							alt="Apps icon"
+						<span
 							className={classNames(
 								'dashboard-navigation-body-list-icon',
 								{
-									'dashboard-navigation-body-list-icon-selected': isActive,
+									'dashboard-navigation-body-list-icon-selected':
+										isActive,
 								}
 							)}
-							src={itemIcon}
-						/>
+						>
+							<ClayIcon symbol={itemIcon as string} />
+						</span>
 
 						<span
 							className={classNames(
 								'dashboard-navigation-body-list-text',
 								{
-									'dashboard-navigation-body-list-text-selected': isActive,
+									'dashboard-navigation-body-list-text-selected':
+										isActive,
 								}
 							)}
 						>

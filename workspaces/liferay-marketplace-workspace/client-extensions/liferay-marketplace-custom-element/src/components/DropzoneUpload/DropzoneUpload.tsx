@@ -50,6 +50,7 @@ export function DropzoneUpload({
 			multiple={multiple}
 			onDropAccepted={(file) => onHandleUpload(file, versionName)}
 			onDropRejected={onDropRejected}
+			useFsAccessApi={false}
 		>
 			{({getInputProps, getRootProps, isDragActive, isDragReject}) => (
 				<div

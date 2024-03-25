@@ -37,13 +37,17 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 		);
 	}
 
+	const kebabItems = (row: any) => [
+		{
+			label: 'View Details',
+			onClick: () => navigate(`/solution/${row.id}`),
+		},
+		{disabled: true, label: 'Edit'},
+	];
+
 	return (
 		<Table
-			Actions={({row}) => (
-				<TableKebabButton
-					onViewDetails={() => navigate(`/solution/${row.id}`)}
-				/>
-			)}
+			Actions={({row}) => <TableKebabButton items={kebabItems(row)} />}
 			columns={[
 				{
 					key: 'name',

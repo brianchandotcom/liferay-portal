@@ -6,17 +6,15 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 
-type TableKebabButtonProps<T = any> = {
-	disabled?: boolean;
-	onEdit?: () => void;
-	onViewDetails: (row: T) => void;
+type TableKebabButtonProps = {
+	items: {
+		disabled?: boolean;
+		label?: string;
+		onClick?: () => void;
+	}[];
 };
 
-const TableKebabButton: React.FC<TableKebabButtonProps> = ({
-	disabled = true,
-	onEdit,
-	onViewDetails,
-}) => (
+const TableKebabButton: React.FC<TableKebabButtonProps> = ({items}) => (
 	<ClayDropDown
 		trigger={
 			<ClayButtonWithIcon
@@ -28,13 +26,17 @@ const TableKebabButton: React.FC<TableKebabButtonProps> = ({
 		}
 	>
 		<ClayDropDown.ItemList>
-			<ClayDropDown.Item onClick={onViewDetails}>
-				View Details
-			</ClayDropDown.Item>
-
-			<ClayDropDown.Item disabled={disabled} onClick={onEdit}>
-				Edit
-			</ClayDropDown.Item>
+			{items.map((item, index: number) => {
+				return (
+					<ClayDropDown.Item
+						disabled={item?.disabled}
+						key={index}
+						onClick={item?.onClick}
+					>
+						{item?.label}
+					</ClayDropDown.Item>
+				);
+			})}
 		</ClayDropDown.ItemList>
 	</ClayDropDown>
 );

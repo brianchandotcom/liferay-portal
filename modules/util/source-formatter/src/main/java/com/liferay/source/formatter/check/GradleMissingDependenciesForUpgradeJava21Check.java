@@ -34,7 +34,9 @@ public class GradleMissingDependenciesForUpgradeJava21Check
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (!absolutePath.endsWith("/build.gradle")) {
+		if (!absolutePath.endsWith("/build.gradle") ||
+			absolutePath.endsWith("modules/build.gradle")) {
+
 			return content;
 		}
 

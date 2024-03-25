@@ -484,6 +484,15 @@ public class KaleoDefinitionValidationException extends WorkflowException {
 
 	}
 
+	public static class NotAllowedScriptLanguage
+		extends KaleoDefinitionValidationException {
+
+		public NotAllowedScriptLanguage(String msg) {
+			super(msg);
+		}
+
+	}
+
 	public static class UnbalancedForkAndJoinNode
 		extends KaleoDefinitionValidationException {
 

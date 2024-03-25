@@ -8,6 +8,7 @@ package com.liferay.notification.web.internal.portlet.action;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -30,18 +31,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + NotificationPortletKeys.NOTIFICATION_TEMPLATES,
-		"mvc.command.name=/notification_templates/get_account_roles"
+		"mvc.command.name=/notification_templates/get_email_notification_roles"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetAccountRolesMVCResourceCommand extends BaseMVCResourceCommand {
+public class GetEmailNotificationRolesMVCResourceCommand
+	extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONArray accountRolesJSONArray = _jsonFactory.createJSONArray();
+		JSONArray organizationRolesJSONArray = _jsonFactory.createJSONArray();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -49,18 +52,32 @@ public class GetAccountRolesMVCResourceCommand extends BaseMVCResourceCommand {
 		for (Role role :
 				_roleLocalService.getRoles(
 					themeDisplay.getCompanyId(),
-					new int[] {RoleConstants.TYPE_ACCOUNT})) {
+					new int[] {
+						RoleConstants.TYPE_ACCOUNT,
+						RoleConstants.TYPE_ORGANIZATION
+					})) {
 
-			jsonArray.put(
-				JSONUtil.put(
-					"label", role.getTitle(themeDisplay.getLocale())
-				).put(
-					"name", role.getName()
-				));
+			JSONObject roleJSONObject = JSONUtil.put(
+				"label", role.getTitle(themeDisplay.getLocale())
+			).put(
+				"name", role.getName()
+			);
+
+			if (role.getType() == RoleConstants.TYPE_ACCOUNT) {
+				accountRolesJSONArray.put(roleJSONObject);
+			}
+			else {
+				organizationRolesJSONArray.put(roleJSONObject);
+			}
 		}
 
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonArray);
+			resourceRequest, resourceResponse,
+			JSONUtil.put(
+				"accountRoles", accountRolesJSONArray
+			).put(
+				"organizationRoles", organizationRolesJSONArray
+			));
 	}
 
 	@Reference

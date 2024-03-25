@@ -574,7 +574,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 									"modalTitle", deliveryTermEntryName
 								).build()
 							%>'
-							module="js/attachModalToHTMLElement"
+							module="{attachModalToHTMLElement} from commerce-checkout-web"
 						/>
 					</div>
 				</div>
@@ -603,7 +603,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 									"modalTitle", paymentTermEntryName
 								).build()
 							%>'
-							module="js/attachModalToHTMLElement"
+							module="{attachModalToHTMLElement} from commerce-checkout-web"
 						/>
 					</div>
 				</div>

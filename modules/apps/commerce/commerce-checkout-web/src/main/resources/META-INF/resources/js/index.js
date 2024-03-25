@@ -5,7 +5,11 @@
 
 import {openModal} from 'frontend-js-web';
 
-export default function ({HTMLElementId, modalContent, modalTitle}) {
+export function attachModalToHTMLElement({
+	HTMLElementId,
+	modalContent,
+	modalTitle,
+}) {
 	document
 		.getElementById(HTMLElementId)
 		.addEventListener('click', (event) => {

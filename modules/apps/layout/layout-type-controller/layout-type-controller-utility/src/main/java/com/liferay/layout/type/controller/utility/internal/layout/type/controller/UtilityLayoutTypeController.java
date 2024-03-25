@@ -7,12 +7,9 @@ package com.liferay.layout.type.controller.utility.internal.layout.type.controll
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.manager.LayoutLockManager;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -51,14 +48,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "layout.type=" + LayoutConstants.TYPE_CONTENT,
+	property = "layout.type=" + LayoutConstants.TYPE_UTILITY,
 	service = LayoutTypeController.class
 )
 public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public String getType() {
-		return LayoutConstants.TYPE_PORTLET;
+		return LayoutConstants.TYPE_UTILITY;
 	}
 
 	@Override
@@ -101,7 +98,9 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				(layoutMode.equals(Constants.PREVIEW) ||
 				 layoutMode.equals(Constants.VIEW))) {
 
-				if (!_hasPreviewPermission(curLayout, themeDisplay)) {
+				if (!_hasUpdatePermissions(
+						themeDisplay.getPermissionChecker(), curLayout)) {
+
 					throw new PrincipalException.MustHavePermission(
 						themeDisplay.getPermissionChecker(),
 						Layout.class.getName(), layout.getLayoutId(),
@@ -178,8 +177,11 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				httpServletResponse.sendRedirect(redirect);
 			}
 			else {
-				_addContentPageEditorAttributes(
-					httpServletRequest, layout, layoutMode);
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_NAME,
+					LayoutUtilityPageEntry.class.getName());
+				httpServletRequest.setAttribute(
+					ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
 
 				addAttributes(httpServletRequest);
 
@@ -204,33 +206,18 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Override
-	public boolean isBrowsable() {
-		return true;
-	}
-
-	@Override
 	public boolean isFirstPageable() {
-		return true;
-	}
-
-	@Override
-	public boolean isFullPageDisplayable() {
 		return false;
 	}
 
 	@Override
 	public boolean isParentable() {
-		return true;
-	}
-
-	@Override
-	public boolean isPrimaryType() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean isSitemapable() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -262,82 +249,6 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		return _VIEW_PAGE;
 	}
 
-	private void _addContentPageEditorAttributes(
-		HttpServletRequest httpServletRequest, Layout layout,
-		String layoutMode) {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry = null;
-
-		if (layoutMode.equals(Constants.EDIT)) {
-			layoutPageTemplateEntry = _fetchLayoutPageTemplateEntry(layout);
-		}
-
-		if (layoutPageTemplateEntry != null) {
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.CLASS_NAME,
-				LayoutPageTemplateEntry.class.getName());
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.CLASS_PK,
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-
-			return;
-		}
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_fetchLayoutUtilityPageEntry(layout);
-
-		if (layoutUtilityPageEntry != null) {
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.CLASS_NAME,
-				LayoutUtilityPageEntry.class.getName());
-			httpServletRequest.setAttribute(
-				ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
-
-			return;
-		}
-
-		httpServletRequest.setAttribute(
-			ContentPageEditorWebKeys.CLASS_NAME, Layout.class.getName());
-		httpServletRequest.setAttribute(
-			ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
-	}
-
-	private LayoutPageTemplateEntry _fetchLayoutPageTemplateEntry(
-		Layout layout) {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-
-		if (layoutPageTemplateEntry != null) {
-			return layoutPageTemplateEntry;
-		}
-
-		if (layout.isDraftLayout()) {
-			return _layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
-		}
-
-		return null;
-	}
-
-	private LayoutUtilityPageEntry _fetchLayoutUtilityPageEntry(Layout layout) {
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.
-				fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		if (layout.isDraftLayout()) {
-			return _layoutUtilityPageEntryLocalService.
-				fetchLayoutUtilityPageEntryByPlid(layout.getClassPK());
-		}
-
-		return null;
-	}
-
 	private String _getDraftLayoutFullURL(
 			HttpServletRequest httpServletRequest, Layout layout,
 			ThemeDisplay themeDisplay)
@@ -364,33 +275,8 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				draftLayout.getName(themeDisplay.getLocale()));
 		}
 
-		layoutFullURL = HttpComponentsUtil.addParameter(
+		return HttpComponentsUtil.addParameter(
 			layoutFullURL, "p_l_mode", Constants.EDIT);
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			httpServletRequest, "segmentsExperienceId", -1);
-
-		if (segmentsExperienceId != -1) {
-			layoutFullURL = HttpComponentsUtil.setParameter(
-				layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
-		}
-
-		return layoutFullURL;
-	}
-
-	private boolean _hasPreviewPermission(
-			Layout layout, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if ((_fetchLayoutPageTemplateEntry(layout) != null) ||
-			(_fetchLayoutUtilityPageEntry(layout) != null)) {
-
-			return _hasUpdatePermissions(
-				themeDisplay.getPermissionChecker(), layout);
-		}
-
-		return _layoutPermission.containsLayoutPreviewDraftPermission(
-			themeDisplay.getPermissionChecker(), layout);
 	}
 
 	private boolean _hasUpdatePermissions(
@@ -415,13 +301,13 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	private static final String _EDIT_LAYOUT_PAGE =
-		"/layout/edit_layout/content.jsp";
+		"/layout/edit_layout/utility.jsp";
 
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +
 			"&p_v_l_s_g_id=${liferay:pvlsgid}";
 
-	private static final String _VIEW_PAGE = "/layout/view/content.jsp";
+	private static final String _VIEW_PAGE = "/layout/view/utility.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UtilityLayoutTypeController.class);
@@ -433,15 +319,7 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	private LayoutLockManager _layoutLockManager;
 
 	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Reference
 	private LayoutPermission _layoutPermission;
-
-	@Reference
-	private LayoutUtilityPageEntryLocalService
-		_layoutUtilityPageEntryLocalService;
 
 	@Reference
 	private LayoutContentModelResourcePermission _modelResourcePermission;
@@ -450,7 +328,7 @@ public class UtilityLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)"
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.utility)"
 	)
 	private ServletContext _servletContext;
 

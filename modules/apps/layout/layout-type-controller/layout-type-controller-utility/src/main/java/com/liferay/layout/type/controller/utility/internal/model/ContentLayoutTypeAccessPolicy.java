@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "layout.type=" + LayoutConstants.TYPE_CONTENT,
+	property = "layout.type=" + LayoutConstants.TYPE_UTILITY,
 	service = LayoutTypeAccessPolicy.class
 )
 public class ContentLayoutTypeAccessPolicy extends BaseLayoutTypeAccessPolicy {

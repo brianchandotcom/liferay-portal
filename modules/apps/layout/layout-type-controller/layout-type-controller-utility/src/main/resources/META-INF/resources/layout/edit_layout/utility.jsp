@@ -9,8 +9,6 @@
 
 <liferay-ui:success key="layoutAdded" message="the-page-was-created-successfully" />
 
-<liferay-ui:success key="layoutPageTemplateAdded" message="the-page-template-was-created-successfully" />
-
 <liferay-ui:success key="layoutPublished" message="the-page-was-published-successfully" />
 
 <liferay-ui:success key="layoutUtilityPageEntryAdded" message="the-utility-page-was-created-successfully" />

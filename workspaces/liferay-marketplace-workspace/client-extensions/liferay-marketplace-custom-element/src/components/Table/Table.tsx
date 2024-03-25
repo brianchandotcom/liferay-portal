@@ -34,7 +34,7 @@ type TableColumn<T = any> = {
 	onClick?: (item: T) => void;
 	render?: (value: any, item: T) => ReactNode | string;
 	styles?: string;
-	title: ReactNode;
+	title?: ReactNode;
 	truncate?: boolean;
 	width?: string;
 };
@@ -75,7 +75,7 @@ const Table: React.FC<TableProps> = ({
 								noWrap={column.noWrap}
 								style={{width: column.width}}
 							>
-								{column.title}
+								{column?.title}
 							</ClayTable.Cell>
 						))}
 

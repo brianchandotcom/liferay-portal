@@ -4,8 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown, {Align} from '@clayui/drop-down';
-import {ClayTooltipProvider} from '@clayui/tooltip';
+import ClayDropDown from '@clayui/drop-down';
 
 type TableKebabButtonProps<T = any> = {
 	disabled?: boolean;
@@ -14,33 +13,30 @@ type TableKebabButtonProps<T = any> = {
 };
 
 const TableKebabButton: React.FC<TableKebabButtonProps> = ({
-	disabled = false,
+	disabled = true,
 	onEdit,
 	onViewDetails,
 }) => (
-	<ClayTooltipProvider>
-		<ClayDropDown
-			alignmentPosition={Align.BottomRight}
-			trigger={
-				<ClayButtonWithIcon
-					aria-label="Menu"
-					displayType={null}
-					symbol="ellipsis-v"
-					title="Menu"
-				/>
-			}
-		>
-			<ClayDropDown.ItemList>
-				<ClayDropDown.Item onClick={onViewDetails}>
-					View Details
-				</ClayDropDown.Item>
+	<ClayDropDown
+		trigger={
+			<ClayButtonWithIcon
+				aria-label="Kebab Button"
+				displayType={null}
+				symbol="ellipsis-v"
+				title="Kebab Button"
+			/>
+		}
+	>
+		<ClayDropDown.ItemList>
+			<ClayDropDown.Item onClick={onViewDetails}>
+				View Details
+			</ClayDropDown.Item>
 
-				<ClayDropDown.Item disabled={disabled} onClick={onEdit}>
-					Edit
-				</ClayDropDown.Item>
-			</ClayDropDown.ItemList>
-		</ClayDropDown>
-	</ClayTooltipProvider>
+			<ClayDropDown.Item disabled={disabled} onClick={onEdit}>
+				Edit
+			</ClayDropDown.Item>
+		</ClayDropDown.ItemList>
+	</ClayDropDown>
 );
 
 export default TableKebabButton;

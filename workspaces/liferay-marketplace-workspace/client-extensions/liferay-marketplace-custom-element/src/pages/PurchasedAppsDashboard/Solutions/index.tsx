@@ -8,7 +8,7 @@ import {useOutletContext} from 'react-router-dom';
 import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {usePurchasedOrders} from '../usePurchasedOrders';
-import SolutionsTable from './components/SolutionsTable';
+import PurchasedSolutionsTable from './components/PurchasedSolutionsTable';
 
 const Solutions = () => {
 	const {selectedAccount} = useOutletContext<any>();
@@ -30,7 +30,9 @@ const Solutions = () => {
 				title: 'My Solutions',
 			}}
 		>
-			<SolutionsTable items={placedOrders.items as PlacedOrder[]} />
+			<PurchasedSolutionsTable
+				items={placedOrders.items as PlacedOrder[]}
+			/>
 		</DashboardPage>
 	);
 };

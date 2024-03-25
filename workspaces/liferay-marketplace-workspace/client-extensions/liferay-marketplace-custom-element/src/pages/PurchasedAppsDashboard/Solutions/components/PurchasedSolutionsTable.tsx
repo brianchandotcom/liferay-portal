@@ -3,22 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import DropDown from '@clayui/drop-down/lib/DropDown';
-import ClayIcon from '@clayui/icon';
+import {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import {addDays, format} from 'date-fns';
 
 import appsIcon from '../../../../assets/icons/apps_fill_icon.svg';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus from '../../../../components/OrderStatus';
 import Table from '../../../../components/Table/Table';
-import i18n from '../../../../i18n';
 
-type SolutionsTableProps = {
+type PurchasedSolutionsTableProps = {
 	items: PlacedOrder[];
 };
 
-const SolutionsTable: React.FC<SolutionsTableProps> = ({items}) => {
+const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
+	items,
+}) => {
 	if (!items.length) {
 		return (
 			<DashboardEmptyTable
@@ -118,24 +118,24 @@ const SolutionsTable: React.FC<SolutionsTableProps> = ({items}) => {
 					key: 'status',
 					render: () => (
 						<div onClick={(event) => event.stopPropagation()}>
-							<DropDown
+							<ClayDropDown
 								trigger={
-									<ClayButton
-										displayType="secondary"
-										size="sm"
-									>
-										{i18n.translate('manage')}
-										<ClayIcon symbol="caret-bottom" />
-									</ClayButton>
+									<ClayButtonWithIcon
+										aria-label="Kebab Button"
+										displayType={null}
+										symbol="ellipsis-v"
+										title="Kebab Button"
+									/>
 								}
 							>
-								<DropDown.ItemList>
-									<DropDown.Item>Action</DropDown.Item>
-								</DropDown.ItemList>
-							</DropDown>
+								<ClayDropDown.ItemList>
+									<ClayDropDown.Item>
+										Action
+									</ClayDropDown.Item>
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
 						</div>
 					),
-					title: 'View Details',
 				},
 			]}
 			rows={items}
@@ -143,4 +143,4 @@ const SolutionsTable: React.FC<SolutionsTableProps> = ({items}) => {
 	);
 };
 
-export default SolutionsTable;
+export default PurchasedSolutionsTable;

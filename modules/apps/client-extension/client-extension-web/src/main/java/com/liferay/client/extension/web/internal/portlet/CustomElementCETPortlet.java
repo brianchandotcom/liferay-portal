@@ -57,9 +57,12 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 			).put(
 				"com.liferay.portlet.deploy.parallel", false
 			).put(
-				"com.liferay.portlet.display-category", cet.getAdmin() ? "category.hidden" : cet.getPortletCategoryName()
+				"com.liferay.portlet.display-category",
+				cet.getAdmin() ? "category.hidden" :
+					cet.getPortletCategoryName()
 			).put(
-				"com.liferay.portlet.instanceable", cet.getAdmin() ? false : cet.isInstanceable()
+				"com.liferay.portlet.instanceable",
+				cet.getAdmin() ? false : cet.isInstanceable()
 			).put(
 				"javax.portlet.display-name", cet.getName(LocaleUtil.US)
 			).put(

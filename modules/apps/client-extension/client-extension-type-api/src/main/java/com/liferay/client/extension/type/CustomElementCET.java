@@ -18,6 +18,11 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CustomElementCET extends CET {
 
 	@CETProperty(
+		defaultValue = "", name = "admin", type = CETProperty.Type.Boolean
+	)
+	public boolean getAdmin();
+
+	@CETProperty(
 		defaultValue = "", label = "css-urls", name = "cssURLs",
 		type = CETProperty.Type.URLList
 	)
@@ -57,12 +62,6 @@ public interface CustomElementCET extends CET {
 		defaultValue = "", name = "urls", type = CETProperty.Type.URLList
 	)
 	public String getURLs();
-
-	@CETProperty(
-		defaultValue = "", name = "admin",
-		type = CETProperty.Type.Boolean
-	)
-	public boolean getAdmin();
 
 	@CETProperty(
 		defaultValue = "false", name = "instanceable",

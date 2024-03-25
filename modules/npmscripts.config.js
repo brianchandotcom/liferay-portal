@@ -461,6 +461,7 @@ module.exports = {
 			'@liferay/portal-workflow-instance-tracker-web': [],
 			'@liferay/template-web': [],
 			'asset-taglib': [],
+			'commerce-frontend-js': [],
 			'data-engine-js-components-web': [],
 			'data-engine-taglib': [],
 			'dynamic-data-mapping-form-field-type': [

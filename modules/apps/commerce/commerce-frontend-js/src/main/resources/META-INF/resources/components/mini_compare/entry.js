@@ -7,5 +7,11 @@ import launcher from '../../utilities/launcher';
 import MiniCompare from './MiniCompare';
 
 export default function entry(...data) {
-	return launcher(MiniCompare, ...data);
+	const [componentId, containerId, props] = data;
+
+	if (props?.items && typeof props.items === 'string') {
+		props.items = JSON.parse(props.items);
+	}
+
+	return launcher(MiniCompare, componentId, containerId, props);
 }

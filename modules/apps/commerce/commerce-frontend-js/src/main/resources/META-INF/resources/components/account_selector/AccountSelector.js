@@ -115,11 +115,7 @@ function AccountSelector({
 		>
 			{currentView === VIEWS.ACCOUNTS_LIST && (
 				<AccountsListView
-					accountEntryAllowedTypes={
-						accountEntryAllowedTypes
-							? JSON.parse(accountEntryAllowedTypes)
-							: ''
-					}
+					accountEntryAllowedTypes={accountEntryAllowedTypes}
 					changeAccount={changeAccount}
 					commerceChannelId={commerceChannelId}
 					currentAccount={currentAccount}
@@ -146,7 +142,7 @@ function AccountSelector({
 }
 
 AccountSelector.propTypes = {
-	accountEntryAllowedTypes: PropTypes.string.isRequired,
+	accountEntryAllowedTypes: PropTypes.array.isRequired,
 	alignmentPosition: PropTypes.number,
 	commerceChannelId: PropTypes.oneOfType([
 		PropTypes.number,

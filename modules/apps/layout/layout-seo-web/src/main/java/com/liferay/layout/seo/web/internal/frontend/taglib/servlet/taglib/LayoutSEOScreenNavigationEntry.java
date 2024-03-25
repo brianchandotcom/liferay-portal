@@ -7,7 +7,6 @@ package com.liferay.layout.seo.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.layout.seo.web.internal.constants.LayoutSEOScreenNavigationEntryConstants;
-import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 
@@ -30,15 +29,7 @@ public class LayoutSEOScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		if (layout.isTypeAssetDisplay()) {
-			return true;
-		}
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			layoutUtilityPageEntryLocalService.
-				fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
-
-		if (layoutUtilityPageEntry != null) {
+		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
 			return true;
 		}
 

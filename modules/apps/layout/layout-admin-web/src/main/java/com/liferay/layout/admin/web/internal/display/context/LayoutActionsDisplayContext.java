@@ -13,8 +13,6 @@ import com.liferay.layout.admin.web.internal.security.permission.resource.Layout
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -326,11 +324,7 @@ public class LayoutActionsDisplayContext {
 		}
 
 		if (layoutPageTemplateEntry == null) {
-			LayoutUtilityPageEntry layoutUtilityPageEntry =
-				LayoutUtilityPageEntryLocalServiceUtil.
-					fetchLayoutUtilityPageEntryByPlid(layout.getPlid());
-
-			if (layoutUtilityPageEntry != null) {
+			if (layout.isTypeUtility()) {
 				_contentLayout = false;
 			}
 			else {

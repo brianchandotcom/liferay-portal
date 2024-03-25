@@ -64,9 +64,8 @@ public class AvailabilityLabelTag extends IncludeTag {
 
 	@Override
 	public void setAttributes(HttpServletRequest httpServletRequest) {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
-
-		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:availability-label:namespace", _namespace);
 	}
 
 	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
@@ -95,9 +94,6 @@ public class AvailabilityLabelTag extends IncludeTag {
 		_infoItemRendererRegistry = null;
 		_namespace = StringPool.BLANK;
 	}
-
-	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-commerce:availability-label:";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AvailabilityLabelTag.class);

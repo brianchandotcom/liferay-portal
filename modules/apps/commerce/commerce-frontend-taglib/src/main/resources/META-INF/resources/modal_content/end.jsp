@@ -24,7 +24,7 @@
 	</c:if>
 </div>
 
-<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, frontend-js-web/index as frontendJsWeb">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
 	var {debounce} = frontendJsWeb;
 
 	function closeModal(isSuccessful) {
@@ -42,7 +42,7 @@
 			eventDetail.redirectURL = '<%= redirect %>';
 		</c:if>
 
-		window.top.Liferay.fire(events.CLOSE_MODAL, eventDetail);
+		window.top.Liferay.fire('close-modal', eventDetail);
 	}
 
 	window.addEventListener('keyup', (event) => {
@@ -58,14 +58,14 @@
 			closeModal(true);
 		</c:when>
 		<c:otherwise>
-			window.top.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: false});
+			window.top.Liferay.fire('is-loading-modal', {isLoading: false});
 		</c:otherwise>
 	</c:choose>
 
 	document.querySelectorAll('.modal-closer').forEach((trigger) => {
 		trigger.addEventListener('click', (e) => {
 			e.preventDefault();
-			window.top.Liferay.fire(events.CLOSE_MODAL);
+			window.top.Liferay.fire('close-modal');
 		});
 	});
 
@@ -77,13 +77,13 @@
 		iframeForm.appendChild(iframeFooter);
 
 		iframeForm.addEventListener('submit', (e) => {
-			window.top.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: true});
+			window.top.Liferay.fire('is-loading-modal', {isLoading: true});
 
 			var form = Liferay.Form.get(iframeForm.id);
 
 			if (!form || !form.formValidator || !form.formValidator.validate) {
 				e.preventDefault();
-				return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
+				return window.top.Liferay.fire('is-loading-modal', {
 					isLoading: false,
 				});
 			}
@@ -92,7 +92,7 @@
 
 			if (form.formValidator.hasErrors()) {
 				e.preventDefault();
-				return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
+				return window.top.Liferay.fire('is-loading-modal', {
 					isLoading: false,
 				});
 			}

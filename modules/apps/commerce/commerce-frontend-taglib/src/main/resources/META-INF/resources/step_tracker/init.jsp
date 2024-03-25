@@ -5,22 +5,21 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.commerce.frontend.model.StepModel" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%@ page import="java.util.List" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <%
-JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 String spritemap = (String)request.getAttribute("liferay-commerce:step-tracker:spritemap");
 List<StepModel> steps = (List<StepModel>)request.getAttribute("liferay-commerce:step-tracker:steps");
 

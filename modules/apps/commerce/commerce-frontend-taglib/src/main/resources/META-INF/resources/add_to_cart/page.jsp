@@ -44,73 +44,115 @@ if (alignment.equals("full-width")) {
 	</div>
 </div>
 
-<aui:script require="commerce-frontend-js/components/add_to_cart/entry as AddToCart">
-	<c:if test="<%= productSettingsModel != null %>">
-
-		<%
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-		%>
-
-		const productConfiguration = <%= jsonSerializer.serializeDeep(productSettingsModel) %>;
-
-	</c:if>
-
-	const props = {
-		accountId: <%= commerceAccountId %>,
-		cartId: <%= commerceOrderId %>,
-		channel: {
-			currencyCode: '<%= commerceCurrencyCode %>',
-			groupId: <%= commerceChannelGroupId %>,
-			id: <%= commerceChannelId %>,
-		},
-		cpInstance: {
-			availability: {
-				stockQuantity: <%= stockQuantity %>,
-			},
-			backOrderAllowed: productConfiguration
-				? productConfiguration.backOrders
-				: null,
-			inCart: <%= inCart %>,
-			published: <%= published %>,
-			purchasable: <%= purchasable %>,
-			skuId: <%= cpInstanceId %>,
-			skuOptions: <%= skuOptions %> || [],
-			stockQuantity: <%= stockQuantity %>,
-			<c:if test="<%= cpInstanceUnitOfMeasure != null %>">
-				skuUnitOfMeasure: {
-					incrementalOrderQuantity: <%= cpInstanceUnitOfMeasure.getIncrementalOrderQuantity() %>,
-					key: '<%= HtmlUtil.escapeJS(cpInstanceUnitOfMeasure.getKey()) %>',
-					name: '<%= HtmlUtil.escapeJS(cpInstanceUnitOfMeasure.getName()) %>',
-					precision: <%= cpInstanceUnitOfMeasure.getPrecision() %>,
-					primary: <%= cpInstanceUnitOfMeasure.isPrimary() %>,
-					priority: <%= cpInstanceUnitOfMeasure.getPriority() %>,
-					rate: <%= cpInstanceUnitOfMeasure.getRate() %>,
-				},
-			</c:if>
-		},
-		disabled: <%= disabled %>,
-		productId: <%= productId %>,
-		settings: {
-			alignment: '<%= alignment %>',
-			iconOnly: <%= iconOnly %>,
-			inline: <%= inline %>,
-			namespace: '<%= namespace %>',
-			showUnitOfMeasureSelector: <%= showUnitOfMeasureSelector %>,
-			size: '<%= size %>',
-		},
-		showOrderTypeModal: <%= showOrderTypeModal %>,
-		showOrderTypeModalURL: '<%= showOrderTypeModalURL %>',
-	};
-
-	<c:if test="<%= productSettingsModel != null %>">
-		props.settings.productConfiguration = {
-			allowBackOrder: productConfiguration.backOrders,
-			allowedOrderQuantities: productConfiguration.allowedQuantities,
-			maxOrderQuantity: productConfiguration.maxQuantity,
-			minOrderQuantity: productConfiguration.minQuantity,
-			multipleOrderQuantity: productConfiguration.multipleQuantity,
-		};
-	</c:if>
-
-	AddToCart.default('<%= addToCartId %>', '<%= addToCartId %>', props);
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"accountId", commerceAccountId
+		).put(
+			"addToCartId", addToCartId
+		).put(
+			"cartId", commerceOrderId
+		).put(
+			"channel",
+			HashMapBuilder.<String, Object>put(
+				"currencyCode", commerceCurrencyCode
+			).put(
+				"groupId", commerceChannelGroupId
+			).put(
+				"id", commerceChannelId
+			).build()
+		).put(
+			"cpInstance",
+			HashMapBuilder.<String, Object>put(
+				"availability",
+				HashMapBuilder.<String, Object>put(
+					"stockQuantity", stockQuantity
+				).build()
+			).put(
+				"backOrderAllowed", (productSettingsModel != null) ? productSettingsModel.isBackOrders() : null
+			).put(
+				"inCart", inCart
+			).put(
+				"published", published
+			).put(
+				"purchasable", purchasable
+			).put(
+				"skuId", cpInstanceId
+			).put(
+				"skuOptions", skuOptions
+			).put(
+				"skuUnitOfMeasure",
+				() -> {
+					if (cpInstanceUnitOfMeasure == null) {
+						return null;
+					}
+					else {
+						return HashMapBuilder.<String, Object>put(
+							"incrementalOrderQuantity", cpInstanceUnitOfMeasure.getIncrementalOrderQuantity()
+						).put(
+							"key", cpInstanceUnitOfMeasure.getKey()
+						).put(
+							"name", cpInstanceUnitOfMeasure.getName()
+						).put(
+							"precision", cpInstanceUnitOfMeasure.getPrecision()
+						).put(
+							"primary", cpInstanceUnitOfMeasure.isPrimary()
+						).put(
+							"priority", cpInstanceUnitOfMeasure.getPriority()
+						).put(
+							"rate", cpInstanceUnitOfMeasure.getRate()
+						).build();
+					}
+				}
+			).put(
+				"stockQuantity", stockQuantity
+			).build()
+		).put(
+			"disabled", disabled
+		).put(
+			"productId", productId
+		).put(
+			"settings",
+			HashMapBuilder.<String, Object>put(
+				"alignment", alignment
+			).put(
+				"iconOnly", iconOnly
+			).put(
+				"inline", inline
+			).put(
+				"namespace", namespace
+			).put(
+				"productConfiguration",
+				() -> {
+					if (productSettingsModel == null) {
+						return null;
+					}
+					else {
+						return HashMapBuilder.<String, Object>put(
+							"alignment", alignment
+						).put(
+							"allowBackOrder", productSettingsModel.isBackOrders()
+						).put(
+							"allowedOrderQuantities", productSettingsModel.getAllowedQuantities()
+						).put(
+							"maxOrderQuantity", productSettingsModel.getMaxQuantity()
+						).put(
+							"minOrderQuantity", productSettingsModel.getMinQuantity()
+						).put(
+							"multipleOrderQuantity", productSettingsModel.getMultipleQuantity()
+						).build();
+					}
+				}
+			).put(
+				"showUnitOfMeasureSelector", showUnitOfMeasureSelector
+			).put(
+				"size", size
+			).build()
+		).put(
+			"showOrderTypeModal", showOrderTypeModal
+		).put(
+			"showOrderTypeModalURL", showOrderTypeModalURL
+		).build()
+	%>'
+	module="{addToCart} from commerce-frontend-taglib"
+/>

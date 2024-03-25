@@ -19,13 +19,13 @@ String linkId = PortalUtil.generateRandomKey(request, "info-box") + "_action-lin
 
 		<c:if test="<%= Validator.isNotNull(actionLabel) %>">
 			<c:if test="<%= Validator.isNotNull(actionTargetId) %>">
-				<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as eventsDefinitions">
+				<aui:script>
 					var link = document.getElementById('<%= HtmlUtil.escapeJS(linkId) %>');
 
 					if (link) {
 						link.addEventListener('click', (e) => {
 							e.preventDefault();
-							Liferay.fire(eventsDefinitions.OPEN_MODAL, {
+							Liferay.fire('open-modal', {
 								id: '<%= HtmlUtil.escapeJS(actionTargetId) %>',
 							});
 						});

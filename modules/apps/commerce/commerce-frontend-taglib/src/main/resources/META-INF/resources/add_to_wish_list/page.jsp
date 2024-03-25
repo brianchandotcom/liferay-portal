@@ -11,18 +11,21 @@
 	<liferay-util:include page="/add_to_wish_list/skeleton.jsp" servletContext="<%= application %>" />
 </div>
 
-<aui:script require="commerce-frontend-js/components/add_to_wish_list/entry as AddToWishList">
-	const initialProps = {
-		accountId: <%= commerceAccountId %>,
-		cpDefinitionId: <%= cpCatalogEntry.getCPDefinitionId() %>,
-		large: <%= large %>,
-		isInWishList: <%= inWishList %>,
-		skuId: <%= skuId %>,
-	};
-
-	AddToWishList.default(
-		'<%= addToWishListId %>',
-		'<%= addToWishListId %>',
-		initialProps
-	);
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"accountId", commerceAccountId
+		).put(
+			"addToWishListId", addToWishListId
+		).put(
+			"cpDefinitionId", cpCatalogEntry.getCPDefinitionId()
+		).put(
+			"isInWishList", inWishList
+		).put(
+			"large", large
+		).put(
+			"skuId", skuId
+		).build()
+	%>'
+	module="{addToListWish} from commerce-frontend-taglib"
+/>

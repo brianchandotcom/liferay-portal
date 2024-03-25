@@ -10,7 +10,7 @@
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"addressExternalReferenceCode", HtmlUtil.escapeJS(address.getExternalReferenceCode())
+			"addressExternalReferenceCode", address.getExternalReferenceCode()
 		).put(
 			"addressId", addressId
 		).put(

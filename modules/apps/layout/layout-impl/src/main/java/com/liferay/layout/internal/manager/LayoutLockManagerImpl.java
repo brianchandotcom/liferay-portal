@@ -13,8 +13,6 @@ import com.liferay.layout.model.LockedLayoutType;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -487,6 +485,10 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			return LockedLayoutType.COLLECTION_PAGE;
 		}
 
+		if (Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
+			return LockedLayoutType.UTILITY_PAGE;
+		}
+
 		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
 			return null;
 		}
@@ -498,14 +500,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		if (layoutPageTemplateEntry != null) {
 			return _getLayoutPageTemplateEntryTypeLabel(
 				layoutPageTemplateEntry);
-		}
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.
-				fetchLayoutUtilityPageEntryByPlid(classPK);
-
-		if (layoutUtilityPageEntry != null) {
-			return LockedLayoutType.UTILITY_PAGE;
 		}
 
 		return LockedLayoutType.CONTENT_PAGE;
@@ -526,10 +520,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private LayoutUtilityPageEntryLocalService
-		_layoutUtilityPageEntryLocalService;
 
 	private volatile long _lockExpirationTime;
 

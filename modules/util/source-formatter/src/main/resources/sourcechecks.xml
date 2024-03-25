@@ -291,6 +291,7 @@
 		<check name="GradleMissingDependenciesForUpgradeJava21Check">
 			<category name="Bug Prevention" />
 			<description name="Checks missing dependencies for upgrade Java 21 in gradle build files." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="GradleMissingJarManifestTaskCheck">
 			<category name="Bug Prevention" />

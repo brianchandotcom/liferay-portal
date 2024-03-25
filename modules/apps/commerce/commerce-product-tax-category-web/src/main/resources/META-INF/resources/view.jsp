@@ -14,7 +14,7 @@ CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayC
 <c:if test="<%= cpTaxCategoryDisplayContext.hasManageCPTaxCategoriesPermission() %>">
 	<clay:management-toolbar
 		managementToolbarDisplayContext="<%= new CPTaxCategoryManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, cpTaxCategoryDisplayContext.getSearchContainer()) %>"
-		propsTransformer="js/CPTaxCategoryManagementToolbarPropsTransformer"
+		propsTransformer="{CPTaxCategoryManagementToolbarPropsTransformer} from commerce-product-tax-category-web"
 	/>
 
 	<div class="container-fluid container-fluid-max-xl">

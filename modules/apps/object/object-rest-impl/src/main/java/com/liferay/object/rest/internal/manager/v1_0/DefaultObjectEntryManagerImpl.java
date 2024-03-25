@@ -1352,7 +1352,9 @@ public class DefaultObjectEntryManagerImpl
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-174455")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPS-174455")) {
+
 			return;
 		}
 

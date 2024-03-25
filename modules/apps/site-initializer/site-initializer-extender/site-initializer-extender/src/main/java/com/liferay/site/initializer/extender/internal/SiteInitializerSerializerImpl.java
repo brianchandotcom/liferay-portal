@@ -316,25 +316,23 @@ public class SiteInitializerSerializerImpl
 		throws Exception {
 
 		File file = _layoutsExporter.exportLayoutPageTemplateEntries(groupId);
+		ZipReader zipReader = null;
 
 		try {
-			ZipReader layoutPageTemplatesZipFileReader =
-				_zipReaderFactory.getZipReader(file);
+			zipReader = _zipReaderFactory.getZipReader(file);
 
-			List<String> fileEntries =
-				layoutPageTemplatesZipFileReader.getEntries();
-
-			for (String fileEntry : fileEntries) {
-				InputStream entryInputStream =
-					layoutPageTemplatesZipFileReader.getEntryAsInputStream(
-						fileEntry);
+			for (String name : zipReader.getEntries()) {
+				InputStream inputStream = zipReader.getEntryAsInputStream(name);
 
 				_addZipEntry(
-					"layout-page-templates/" + fileEntry, entryInputStream,
-					zipWriter);
+					"layout-page-templates/" + name, inputStream, zipWriter);
 			}
 		}
 		finally {
+			if (zipReader != null) {
+				zipReader.close();
+			}
+
 			file.delete();
 		}
 	}

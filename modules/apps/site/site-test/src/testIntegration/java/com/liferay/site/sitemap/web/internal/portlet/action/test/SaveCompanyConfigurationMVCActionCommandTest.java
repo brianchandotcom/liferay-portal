@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -110,6 +112,50 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	public void testSaveCompanyConfiguration() throws Exception {
 		_assertSaveCompanyConfiguration(
 			new long[0], new long[0], true, true, true, _adminUser);
+	}
+
+	@Test
+	public void testSaveCompanyConfigurationCompanySitemapGroupIds()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _adminUser.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		_assertSaveCompanyConfiguration(
+			new long[] {group.getGroupId()}, new long[] {group.getGroupId()},
+			true, true, false, _adminUser);
+	}
+
+	@Test
+	public void testSaveCompanyConfigurationCompanySitemapGroupIdsGuestGroupSelected()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _adminUser.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		Group guestGroup = _groupLocalService.fetchGroup(
+			_company.getCompanyId(), GroupConstants.GUEST);
+
+		_assertSaveCompanyConfiguration(
+			new long[] {group.getGroupId()},
+			new long[] {guestGroup.getGroupId(), group.getGroupId()}, true,
+			true, false, _adminUser);
+	}
+
+	@Test
+	public void testSaveCompanyConfigurationCompanySitemapGroupIdsNotExistingGroup()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _adminUser.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		_assertSaveCompanyConfiguration(
+			new long[] {group.getGroupId()},
+			new long[] {RandomTestUtil.randomLong(), group.getGroupId()}, true,
+			true, false, _adminUser);
 	}
 
 	@Test

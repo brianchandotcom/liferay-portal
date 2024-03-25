@@ -53,6 +53,7 @@ interface ILiferay {
 		LocalStorage: LiferayStorage;
 		SessionStorage: LiferayStorage;
 		navigate: (path: string) => void;
+		openModal: (options?: {}) => void;
 		openToast: (options?: {
 			message: string;
 			onClick?: ({event}: {event: any}) => void;

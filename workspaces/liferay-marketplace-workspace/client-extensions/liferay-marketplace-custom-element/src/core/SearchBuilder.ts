@@ -125,6 +125,14 @@ export default class SearchBuilder {
 		return this.setContext(SearchBuilder.lambda(key, value));
 	}
 
+	public gt(key: Key, values: Value) {
+		return this.setContext(SearchBuilder.gt(key, values));
+	}
+
+	public lt(key: Key, values: Value) {
+		return this.setContext(SearchBuilder.lt(key, values));
+	}
+
 	public in(key: Key, values: Value[]) {
 		return this.setContext(SearchBuilder.in(key, values));
 	}

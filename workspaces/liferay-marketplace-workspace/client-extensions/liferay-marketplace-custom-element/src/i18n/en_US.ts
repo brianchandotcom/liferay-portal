@@ -4,6 +4,10 @@
  */
 
 export default {
+	'app': 'app',
+	'account': 'Account',
+	'amount': 'Amount',
+	'aprove': 'Aprove',
 	'a-cloud-app-is-a-client-extension-delivered-as-a-deployed-service-to-liferay-saas-and-liferay-paas-customers-dxp-apps-include-jar-based-collection-meant-to-run-within-liferay-dxp-fragments-client-extensions-that-do-not-require-dedicated-resources':
 		'A Cloud App is a client extension  delivered as a deployed service to Liferay SaaS and Liferay PaaS customers. DXP apps include JAR based collection meant to run within Liferay DXP, Fragments & Client Extensions that do not require dedicated resources.',
 	'a-liferay-cloud-app-is-a-collection-of-1-to-n-client-extension-artifacts-made-available-via-the-liferay-marketplace-it-is-installed-and-managed-as-a-single-atomic-unit-in-liferay-experience-cloud-a-dxp-app-is-a-jar-based-collection-meant-to-run-within-liferay-dxp-it-is-only-supported-on-self-hosted-or-self-managed-liferay-cloud-instances': `A Liferay Cloud App is a collection of 1 to N client extension artifacts made available via the Liferay Marketplace. It is installed and managed as a single atomic unit in Liferay SaaS. A DXP App is a JAR based collection meant to run within Liferay DXP.  It is only supported on Self Hosted or Self Managed Liferay Cloud instances.`,
@@ -15,15 +19,18 @@ export default {
 	'add-packages': 'Add Package(s)',
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
+	'all-published-apps': 'All Published Apps',
 	'an-administrator-of-the-marketplace-will-review-your-request-shortly-if-you-have-questions-regarding-your-submission-please-email':
 		'An administrator of the Marketplace will review your request shortly. If you have questions regarding your submission, please email',
 	'an-app-build-is-your-compiled-or-non-compiled-code-submitted-on-behalf-of-your-account-to-the-marketplace-once-submitted-it-will-be-reviewed-and-tested-by-our-marketplace-administrators-for-approval-in-the-marketplace':
 		'An App Build is your compiled or non-compiled code submitted on behalf of your account to the Marketplace. Once submitted, it will be reviewed and tested by our Marketplace administrators for approval in the Marketplace.',
 	'an-unexpected-error-occurred': 'An unexpected error ocurred',
 	'and': 'and',
+	'apps': 'Apps',
 	'app-build': 'App Build',
 	'apply-to-your-use-of-this-service-the-name-on-your-liferay-account-will-be-used-in-this-liferay-marketplace-publisher-profile-it-may-appear-where-you-contribute-and-be-changed-at-any-time':
 		'apply to your use of this service. The name on your Liferay account will be used in this Liferay Marketplace Publisher Profile. It may appear where you contribute and be changed at any time',
+	'app-type': 'App Type',
 	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
 	'back-to-my-apps': 'Back to My Apps',
@@ -37,6 +44,7 @@ export default {
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
 	'cash': 'Cash',
+	'click-on-add-apps-to-start': "Click on 'Add Apps' to start.",
 	'client-extensions': 'Client Extensions',
 	'cloud-apps-must-state-resource-requirements-if-your-app-has-no-additional-cpu-or-ram-requirements-please-enter-0':
 		'Cloud apps must state resource requirements. If your app has no additional CPU or Ram requirements please enter 0',
@@ -62,7 +70,10 @@ export default {
 	'create-new-licenses-and-they-will-show-up-here':
 		'Create new licenses and they will show up here.',
 	'customer-account': 'Customer Account',
+	'customer-dashboard': 'Customer Dashboard',
 	'customer-roject': 'Customer Project',
+	'dashboard': 'Dashboard',
+	'decline': 'Decline',
 	'deactivate': 'Deactivate',
 	'description': 'Description',
 	'details': 'Details',
@@ -116,6 +127,7 @@ export default {
 		'In the future, you will be able to submit your app source code for additional support and partnership opportunities with Liferay.',
 	'instance-size': 'Instance Size',
 	'insufficient-resource-requirements': 'Insufficient Resource Requirements',
+	'installation': 'Installation',
 	'intl-code': 'Intl. code',
 	'ip-addresses': 'IP Addresses',
 	'key-activations-available-x-of-x': 'Key activations available: {0} of {1}',
@@ -123,6 +135,7 @@ export default {
 		'Key deactivation requested successfully',
 	'key-type': 'Key Type',
 	'last-name': 'Last Name',
+	'last-update': 'Last Update',
 	'learn-more': 'Learn More',
 	'learn-more-about-app-resource-requirements':
 		'Learn more about App Resource Requirements',
@@ -130,11 +143,11 @@ export default {
 		'Learn more about becoming a Liferay Customer',
 	'license-price': 'License Price',
 	'licenses': 'Licenses',
+	'license-type': 'License Type',
 	'liferay-learn': 'Liferay Learn',
 	'liferay-s': 'Liferay’s',
 	'lorem-ipsum-dolor-sit-amet-consectetur':
 		'Lorem ipsum dolor sit amet consectetur.',
-
 	'mac-addresses': 'Mac Addresses',
 	'manage': 'Manage',
 	'manage-all-your-app-purchases-and-subscriptions-in-one-place-read-other-users-reviews-get-notifications-when-updates-are-available-and-get-the-most-out-of-our-apps-catalog':
@@ -145,6 +158,9 @@ export default {
 	'more-info': 'More Info',
 	'name': 'Name',
 	'no': 'No',
+	'no-apps-yet': 'No Apps Yet',
+	'no-orders-yet': 'No Orders Yet',
+	'no-become-a-publisher-request': 'No become a publisher request',
 	'no-cloud-projects-available': 'No Cloud Projects Available',
 	'no-licenses-yet': 'No Licenses yet',
 	'no-results-found': 'No results found',
@@ -154,8 +170,11 @@ export default {
 		'Only JAR, WAR files are allowed. Max file size is 500MB.',
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':
 		'Only ZIP files are allowed. Max file size is 500MB',
+	'orders': 'orders',
 	'order-date': 'Order Date',
 	'order-id': 'Order ID',
+	'order-status': 'Order Status',
+	'payment-status': 'Payment Status',
 	'phone': 'Phone',
 	'phone-number': 'Phone Number',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
@@ -165,7 +184,14 @@ export default {
 	'provide-app-build': 'Provide app build',
 	'publish-apps-to-the-liferay-marketplace':
 		'Publish apps to the Liferay Marketplace',
+	'publish-apps-and-they-will-show-up-here':
+		'Publish apps and they will show up here',
+	'published-apps': 'Published Apps',
 	'publisher-account-request': 'Publisher Account Request.',
+	'publisher-dashboard': 'Publisher Dashboard',
+	'publisher-requests': 'Publisher Requests',
+	'purchase-and-install-new-apps-and-they-will-show-up-here':
+		'Purchase and install new apps and they will show up here.',
 	'purchase-order-number': 'Purchase Order Number',
 	'purchased-by': 'Purchased by',
 	'qty': 'Qty',
@@ -178,6 +204,8 @@ export default {
 	'request-description': 'Request Description',
 	'request-details': 'Request details',
 	'request-sent-successfully': 'Request sent successfully',
+	'requester': 'Requester',
+	'request-created': 'Request Created',
 	'resource-requirements': 'Resource Requirements',
 	'return-to-marketplace': 'Return to Marketplace',
 	'review-the-new-publisher-info-and-the-liferay-marketplace-terms-before-proceeding':
@@ -194,9 +222,11 @@ export default {
 	'self-managed': 'Self-Managed',
 	'send-request': 'Send Request',
 	'sign-in-with-a-different-account': 'Sign in with a different Account',
+	'solutions': 'Solutions',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'start-date': 'Start Date',
 	'status': 'Status',
+	'success': 'success',
 	'subtotal': 'Subtotal',
 	'subtotal-discount': 'Subtotal Discount',
 	'summary': 'Summary',
@@ -246,6 +276,10 @@ export default {
 		'Use any local ZIP files to upload. Max file size is 500MB',
 	'use-one-of-the-following-methods-to-provide-your-app-builds':
 		'Use one of the following methods to provide your app builds.',
+	'user-account': 'User Account',
+	'users-requests-to-become-a-publisher':
+		'Users requests to become a publisher',
+	'version': 'Version',
 	'via-github-repo': 'Via GitHub Repo',
 	'via-liferay-experience-cloud-integration': 'Via Liferay SaaS Integration',
 	'via-liferay-plugin-packages': 'Via Liferay Plugin Packages',

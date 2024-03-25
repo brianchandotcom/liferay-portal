@@ -9,6 +9,24 @@ declare module '*.svg' {
 
 declare module 'warning';
 
+type PublisherRequestInfo = {
+	emailAddress?: string;
+	extension?: string;
+	firstName?: string;
+	lastName?: string;
+	phone?: {
+		code: string;
+		flag: string;
+	};
+	id?: number;
+	phoneNumber?: string;
+	requestDescription?: string;
+	requestStatus?: {
+		key: string;
+		name: string;
+	};
+};
+
 type Account = {
 	customFields?: CustomField[];
 	description: string;
@@ -242,6 +260,9 @@ type Order = {
 			quantity?: number;
 			skuId: number;
 			unitPriceWithTaxAmount?: number;
+			name?: {
+				en_US: string;
+			};
 		}
 	];
 	orderStatus: number;
@@ -252,6 +273,7 @@ type Order = {
 	orderTypeId?: number;
 	shippingAmount?: number;
 	shippingWithTaxAmount?: number;
+	totalAmount?: number;
 };
 
 type OrderType = {

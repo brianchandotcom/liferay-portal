@@ -25,8 +25,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -37,6 +36,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 
 import java.util.Dictionary;
 
@@ -67,7 +67,10 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		_adminUser = TestPropsValues.getUser();
+
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
 		Group group = _groupLocalService.fetchGroup(
 			_company.getCompanyId(), GroupConstants.CONTROL_PANEL);
@@ -75,16 +78,30 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 		_layout = _layoutLocalService.fetchDefaultLayout(
 			group.getGroupId(), true);
 
-		_originalName = PrincipalThreadLocal.getName();
+		_originalCompanySitemapGroupIds =
+			_sitemapConfigurationManager.getCompanySitemapGroupIds(
+				_company.getCompanyId());
+		_originalIncludeCategories =
+			_sitemapConfigurationManager.includeCategoriesCompanyEnabled(
+				_company.getCompanyId());
+		_originalIncludePages =
+			_sitemapConfigurationManager.includePagesCompanyEnabled(
+				_company.getCompanyId());
+		_originalIncludeWebContent =
+			_sitemapConfigurationManager.includeWebContentCompanyEnabled(
+				_company.getCompanyId());
 
-		_adminUser = UserTestUtil.getAdminUser(_company.getCompanyId());
+		_originalName = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(_adminUser.getUserId());
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_companyLocalService.deleteCompany(_company);
+		_sitemapConfigurationManager.saveSitemapCompanyConfiguration(
+			_company.getCompanyId(), _originalIncludeCategories,
+			_originalIncludePages, _originalIncludeWebContent,
+			ArrayUtil.toArray(_originalCompanySitemapGroupIds));
 
 		PrincipalThreadLocal.setName(_originalName);
 	}
@@ -240,7 +257,14 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	@Inject
 	private static LayoutLocalService _layoutLocalService;
 
+	private static Long[] _originalCompanySitemapGroupIds;
+	private static boolean _originalIncludeCategories;
+	private static boolean _originalIncludePages;
+	private static boolean _originalIncludeWebContent;
 	private static String _originalName;
+
+	@Inject
+	private static SitemapConfigurationManager _sitemapConfigurationManager;
 
 	@Inject(
 		filter = "mvc.command.name=/site_sitemap/save_company_configuration"

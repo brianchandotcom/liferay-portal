@@ -16,7 +16,7 @@ int commerceSiteType = commerceChannelAccountEntryQualifiersDisplayContext.getCo
 		HashMapBuilder.<String, Object>put(
 			"accountEntryTypes", (commerceSiteType == 0) ? new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON} : ((commerceSiteType == 1) ? new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER} : new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER})
 		).put(
-			"channelExternalReferenceCode", HtmlUtil.escapeJS(commerceChannel.getExternalReferenceCode())
+			"channelExternalReferenceCode", commerceChannel.getExternalReferenceCode()
 		).put(
 			"channelId", commerceChannelId
 		).put(
@@ -27,7 +27,7 @@ int commerceSiteType = commerceChannelAccountEntryQualifiersDisplayContext.getCo
 			"spritemap", themeDisplay.getPathThemeSpritemap()
 		).build()
 	%>'
-	module="js/account_entries"
+	module="{accountEntries} from commerce-channel-web"
 />
 
 <commerce-ui:panel

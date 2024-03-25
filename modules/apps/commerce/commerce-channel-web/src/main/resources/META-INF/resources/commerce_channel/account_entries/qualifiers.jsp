@@ -47,6 +47,6 @@ String accountQualifiers = ParamUtil.getString(request, "accountQualifiers", com
 				"currentURL", currentURL
 			).build()
 		%>'
-		module="js/qualifiers"
+		module="{qualifiers} from commerce-channel-web"
 	/>
 </aui:form>

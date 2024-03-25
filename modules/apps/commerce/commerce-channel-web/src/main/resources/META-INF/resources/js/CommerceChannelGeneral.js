@@ -3,9 +3,36 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Autocomplete} from 'commerce-frontend-js';
 import {openSelectionModal} from 'frontend-js-web';
 
-export default function ({itemSelectorURL, namespace}) {
+export default function ({
+	autocompleteInitialLabel,
+	autocompleteInitialValue,
+	itemSelectorURL,
+	namespace,
+}) {
+	Autocomplete('autocomplete', 'autocomplete-root', {
+		apiUrl: '/o/headless-commerce-admin-channel/v1.0/tax-categories',
+		initialLabel: autocompleteInitialLabel,
+		initialValue: autocompleteInitialValue,
+		inputId: 'shippingTaxCategoryId',
+		inputName: `${namespace}shippingTaxSettings--taxCategoryId--`,
+		itemsKey: 'id',
+		itemsLabel: ['name', 'LANG'],
+		onValueUpdated(value, shippingTaxData) {
+			if (value) {
+				window.document.querySelector('#shippingTaxCategoryId').value =
+					shippingTaxData.id;
+			}
+			else {
+				window.document.querySelector(
+					'#shippingTaxCategoryId'
+				).value = 0;
+			}
+		},
+	});
+
 	const fileEntryIdInput = document.getElementById(`${namespace}fileEntryId`);
 	const fileEntryNameInput = document.getElementById(
 		`${namespace}fileEntryNameInput`

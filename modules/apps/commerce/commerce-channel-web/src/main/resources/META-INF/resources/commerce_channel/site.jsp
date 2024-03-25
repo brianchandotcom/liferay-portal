@@ -111,5 +111,5 @@ if (commerceChannel != null) {
 			"searchContainerId", searchContainerId
 		).build()
 	%>'
-	module="js/CommerceChannelSite"
+	module="{CommerceChannelSite} from commerce-channel-web"
 />

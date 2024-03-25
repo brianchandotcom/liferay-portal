@@ -35,5 +35,5 @@ CommerceChannelCountryDisplayContext commerceChannelCountriesDisplayContext = (C
 
 <liferay-frontend:component
 	context="<%= commerceChannelCountriesDisplayContext.getJSContext() %>"
-	module="commerce_channel/js/commerce_channel_country"
+	module="{commerceChannelCountry} from commerce-channel-web"
 />

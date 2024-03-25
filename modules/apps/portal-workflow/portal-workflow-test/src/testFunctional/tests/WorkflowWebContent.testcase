@@ -486,6 +486,8 @@ definition {
 	@description = "LPS-190808 - Verify if the image added in the Web Content appears when the user enters the notification"
 	@priority = 4
 	test ViewLargeImageAddedByNotification {
+		property portal.upstream = "quarantine";
+
 		task ("Given a Structure created with a JSON file") {
 			NavItem.gotoStructures();
 

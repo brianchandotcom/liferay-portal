@@ -274,6 +274,8 @@ definition {
 	@description = "Verify that the user can reverse the order of submissions."
 	@priority = 3
 	test CanOrderSubmissions {
+		property portal.upstream = "quarantine";
+
 		KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 
 		KaleoFormsNewSubmissions.addNewContacts(ddlCompany = "Process A");

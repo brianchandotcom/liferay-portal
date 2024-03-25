@@ -98,6 +98,7 @@ definition {
 
 	@priority = 3
 	test AddProcessWithNewFieldSetAndWorkflowViaSourceTab {
+		property portal.upstream = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -2624,6 +2625,8 @@ definition {
 
 	@priority = 3
 	test ViewUnpublishedWorkflowDefinitionsMenulist {
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

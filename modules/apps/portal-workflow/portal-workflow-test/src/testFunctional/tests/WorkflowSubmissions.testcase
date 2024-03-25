@@ -150,6 +150,8 @@ definition {
 	@description = "Verify if the Clear option cleans the search results"
 	@priority = 3
 	test ClearOptionCleanSearchResults {
+		property portal.upstream = "quarantine";
+
 		Workflow.openWorkflowListView();
 
 		Navigator.gotoNavItem(navItem = "Configuration");

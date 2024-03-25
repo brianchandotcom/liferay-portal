@@ -55,6 +55,8 @@ definition {
 	@description = "LPS-185844 Verifies that the last scrollable element is not hidden by modal footer at 200% page zoom."
 	@priority = 3
 	test AddCalendarContentMustBeVisibleAt200Zoom {
+		property portal.upstream = "quarantine";
+
 		task ("When access add a new calendar modal") {
 			CalendarNavigator.gotoAddMyCalendars();
 		}

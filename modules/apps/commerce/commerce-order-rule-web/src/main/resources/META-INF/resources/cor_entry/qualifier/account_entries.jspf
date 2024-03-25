@@ -20,7 +20,7 @@
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).build()
 		%>'
-		module="js/account_entries"
+		module="{accountEntries} from commerce-order-rule-web"
 	/>
 
 	<commerce-ui:panel

@@ -44,5 +44,5 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 			"workflowAction", WorkflowConstants.ACTION_PUBLISH
 		).build()
 	%>'
-	module="js/editCOREntry"
+	module="{editCOREntry} from commerce-order-rule-web"
 />

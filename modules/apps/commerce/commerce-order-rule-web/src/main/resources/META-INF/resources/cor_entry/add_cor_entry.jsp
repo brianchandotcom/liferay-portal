@@ -44,6 +44,6 @@ COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.
 				"editCOREntryPortletURL", String.valueOf(corEntryDisplayContext.getEditCOREntryRenderURL())
 			).build()
 		%>'
-		module="js/addCOREntry"
+		module="{addCOREntry} from commerce-order-rule-web"
 	/>
 </commerce-ui:modal-content>

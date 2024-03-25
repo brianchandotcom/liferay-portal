@@ -39,7 +39,7 @@ COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.
 								"workflowAction", WorkflowConstants.ACTION_PUBLISH
 							).build()
 						%>'
-						module="js/products_limit"
+						module="{productsLimit} from commerce-order-rule-web"
 					/>
 				</div>
 

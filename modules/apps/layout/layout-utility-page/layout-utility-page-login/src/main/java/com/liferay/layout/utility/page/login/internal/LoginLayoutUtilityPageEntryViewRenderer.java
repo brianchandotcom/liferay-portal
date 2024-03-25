@@ -7,6 +7,7 @@ package com.liferay.layout.utility.page.login.internal;
 
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 
 import java.io.IOException;
@@ -19,18 +20,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Olivér Kecskeméty
  */
+@Component(
+	property = "utility.page.type=" + LayoutUtilityPageEntryConstants.TYPE_LOGIN,
+	service = LayoutUtilityPageEntryViewRenderer.class
+)
 public class LoginLayoutUtilityPageEntryViewRenderer
 	implements LayoutUtilityPageEntryViewRenderer {
-
-	public LoginLayoutUtilityPageEntryViewRenderer(
-		Language language, ServletContext servletContext) {
-
-		_language = language;
-		_servletContext = servletContext;
-	}
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -40,6 +41,11 @@ public class LoginLayoutUtilityPageEntryViewRenderer
 	@Override
 	public String getType() {
 		return LayoutUtilityPageEntryConstants.TYPE_LOGIN;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return FeatureFlagManagerUtil.isEnabled("LPD-6378");
 	}
 
 	@Override
@@ -54,7 +60,12 @@ public class LoginLayoutUtilityPageEntryViewRenderer
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
 
-	private final Language _language;
-	private final ServletContext _servletContext;
+	@Reference
+	private Language _language;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.utility.page.login)"
+	)
+	private ServletContext _servletContext;
 
 }

@@ -117,8 +117,9 @@ export function NextSteps({
 							<p>
 								To download your app, you can click &quot;Go to
 								Dashboard&quot; button below. To find your app
-								download, find your Order ID and click Manage →
-								Download App.
+								download, find your Order ID and click on
+								<ClayIcon className="m-1" symbol="ellipsis-v" />
+								→ Download App.
 							</p>
 						</p>
 					)

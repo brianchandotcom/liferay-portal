@@ -117,6 +117,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 					title: 'Order Status',
 				},
 				{
+					align: 'center',
 					key: 'status',
 					render: (
 						_,

@@ -56,10 +56,10 @@ AccountEntry accountEntry = commerceOrderContentDisplayContext.getAccountEntry()
 					<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_commerce_order_order_type_modal" />
 				</portlet:renderURL>
 
-				<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events">
+				<aui:script>
 					document.querySelector('#add-order').addEventListener('click', (e) => {
 						e.preventDefault();
-						Liferay.fire(events.OPEN_MODAL, {
+						Liferay.fire('open-modal', {
 							id: 'add-order-modal',
 						});
 					});

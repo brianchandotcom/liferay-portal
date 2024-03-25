@@ -275,14 +275,18 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 		>
 			<div id="summary-root"></div>
 
-			<aui:script require="commerce-frontend-js/components/summary/entry as summary">
-				summary.default('summary', 'summary-root', {
-					apiUrl:
-						'/o/headless-commerce-admin-order/v1.0/orders/<%= commerceOrderContentDisplayContext.getCommerceOrderId() %>',
-					dataSetDisplayId: '<%= CommerceOrderFDSNames.PLACED_ORDER_ITEMS %>',
-					portletId: '<%= portletDisplay.getRootPortletId() %>',
-				});
-			</aui:script>
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"commerceOrderId", commerceOrderContentDisplayContext.getCommerceOrderId()
+					).put(
+						"placedOrderItems", CommerceOrderFDSNames.PLACED_ORDER_ITEMS
+					).put(
+						"portletId", portletDisplay.getRootPortletId()
+					).build()
+				%>'
+				module="{newViews} from commerce-order-content-web"
+			/>
 		</commerce-ui:panel>
 	</div>
 </div>

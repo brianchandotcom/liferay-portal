@@ -56,5 +56,5 @@ boolean manageRestrictedNotesPermission = commerceOrderContentDisplayContext.has
 </aui:form>
 
 <liferay-frontend:component
-	module="js/requestQuote"
+	module="{requestQuote} from commerce-order-content-web"
 />

@@ -57,6 +57,6 @@ CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDispla
 	</aui:form>
 
 	<liferay-frontend:component
-		module="js/preview"
+		module="{preview} from commerce-order-content-web"
 	/>
 </c:if>

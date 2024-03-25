@@ -236,7 +236,7 @@ if (commerceOrder != null) {
 									"modalTitle", commerceOrder.getDeliveryCommerceTermEntryName()
 								).build()
 							%>'
-							module="js/attachModalToHTMLElement"
+							module="{attachModalToHTMLElement} from commerce-order-content-web"
 						/>
 					</c:if>
 				</p>
@@ -262,7 +262,7 @@ if (commerceOrder != null) {
 									"modalTitle", commerceOrder.getPaymentCommerceTermEntryName()
 								).build()
 							%>'
-							module="js/attachModalToHTMLElement"
+							module="{attachModalToHTMLElement} from commerce-order-content-web"
 						/>
 					</c:if>
 				</p>

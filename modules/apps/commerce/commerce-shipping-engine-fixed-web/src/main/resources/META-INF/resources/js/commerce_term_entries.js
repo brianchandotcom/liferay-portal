@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
-import itemFinder from 'commerce-frontend-js/components/item_finder/entry';
-import {FDS_UPDATE_DISPLAY} from 'commerce-frontend-js/utilities/eventsDefinitions';
+import {
+	CommerceServiceProvider,
+	ItemFinder,
+	commerceEvents,
+} from 'commerce-frontend-js';
 import {openToast} from 'frontend-js-web';
 
 export default function ({
@@ -14,7 +16,7 @@ export default function ({
 	rootPortletId,
 	shippingFixedOptionId,
 }) {
-	const shippingFixedOptionTermsResource = ServiceProvider.AdminChannelAPI(
+	const shippingFixedOptionTermsResource = CommerceServiceProvider.AdminChannelAPI(
 		'v1'
 	);
 
@@ -28,7 +30,7 @@ export default function ({
 		return shippingFixedOptionTermsResource
 			.addShippingFixedOptionTerm(shippingFixedOptionId, termData)
 			.then(() => {
-				Liferay.fire(FDS_UPDATE_DISPLAY, {
+				Liferay.fire(commerceEvents.FDS_UPDATE_DISPLAY, {
 					id: dataSetId,
 				});
 			})
@@ -49,7 +51,7 @@ export default function ({
 			});
 	}
 
-	itemFinder('itemFinder', 'item-finder-root-delivery-terms', {
+	ItemFinder('itemFinder', 'item-finder-root-delivery-terms', {
 		apiUrl,
 		getSelectedItems: () => Promise.resolve([]),
 		inputPlaceholder: Liferay.Language.get('find-a-delivery-term'),

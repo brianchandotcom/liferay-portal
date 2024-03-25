@@ -76,6 +76,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "edit-address"));
 				"currentURL", currentURL
 			).build()
 		%>'
-		module="js/qualifiers"
+		module="{qualifiers} from commerce-account-web"
 	/>
 </liferay-frontend:edit-form>

@@ -21,7 +21,7 @@
 			"spritemap", themeDisplay.getPathThemeSpritemap()
 		).build()
 	%>'
-	module="js/channels"
+	module="{channels} from commerce-account-web"
 />
 
 <commerce-ui:panel

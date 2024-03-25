@@ -370,6 +370,13 @@ public class KaleoDesignerDisplayContext {
 		return "publish";
 	}
 
+	public String getScriptManagementConfigurationPortletURL()
+		throws PortalException {
+
+		return _scriptManagementConfigurationHelper.
+			getScriptManagementConfigurationPortletURL();
+	}
+
 	public JSONArray getStatusesJSONArray() {
 		return JSONUtil.putAll(
 			JSONUtil.put(

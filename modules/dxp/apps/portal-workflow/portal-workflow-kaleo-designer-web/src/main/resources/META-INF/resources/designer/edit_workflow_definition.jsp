@@ -53,6 +53,8 @@ renderResponse.setTitle(LanguageUtil.get(request, titleKey));
 		).put(
 			"portletNamespace", PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.KALEO_DESIGNER)
 		).put(
+			"scriptManagementConfigurationPortletURL", kaleoDesignerDisplayContext.getScriptManagementConfigurationPortletURL()
+		).put(
 			"statuses", kaleoDesignerDisplayContext.getStatusesJSONArray()
 		).put(
 			"title", (kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale)

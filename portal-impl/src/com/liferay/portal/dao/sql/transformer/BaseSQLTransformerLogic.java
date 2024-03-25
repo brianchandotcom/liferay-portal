@@ -262,8 +262,9 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 						Matcher matcher = castPattern.matcher(
 							sql.substring(0, i + 1));
 
-						return castFunction.apply(matcher) +
-							apply(_safeSubstring(sql, i + 1));
+						return apply(
+							castFunction.apply(matcher) +
+								_safeSubstring(sql, i + 1));
 					}
 				}
 

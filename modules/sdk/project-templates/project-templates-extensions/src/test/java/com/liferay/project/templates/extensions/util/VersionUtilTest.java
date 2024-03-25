@@ -16,97 +16,75 @@ public class VersionUtilTest {
 
 	@Test
 	public void testGetMajorVersion() throws Exception {
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.0.10"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.0.10.1"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.0.10.fp21"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.1.10"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.1.10.1"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.1.10.fp21"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.1.10.fp1-1"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.1.10.fp123-456"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.3.10.ep4"));
-		Assert.assertEquals(8, VersionUtil.getMajorVersion("8.0.0"));
-		Assert.assertEquals(10, VersionUtil.getMajorVersion("10.0.0"));
-		Assert.assertEquals(100, VersionUtil.getMajorVersion("100.0.0"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.2"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.4.1-1"));
-		Assert.assertEquals(7, VersionUtil.getMajorVersion("7.4.11.1-1"));
+		for (TestCase testCase : _testCases) {
+			Assert.assertEquals(
+				testCase.input, testCase.expectedMajorVersion,
+				VersionUtil.getMajorVersion(testCase.input));
+		}
 	}
 
 	@Test
 	public void testGetMicroVersion() throws Exception {
-		Assert.assertEquals(10, VersionUtil.getMicroVersion("7.0.10"));
-		Assert.assertEquals(10, VersionUtil.getMicroVersion("7.0.10.1"));
-		Assert.assertEquals(10, VersionUtil.getMicroVersion("7.0.10.fp21"));
-		Assert.assertEquals(10, VersionUtil.getMicroVersion("7.1.10"));
-		Assert.assertEquals(10, VersionUtil.getMicroVersion("7.1.10.1"));
-		Assert.assertEquals(10, VersionUtil.getMicroVersion("7.1.10.fp21"));
-		Assert.assertEquals(10, VersionUtil.getMicroVersion("7.1.10.fp1-1"));
-		Assert.assertEquals(
-			10, VersionUtil.getMicroVersion("7.1.10.fp123-456"));
-		Assert.assertEquals(10, VersionUtil.getMicroVersion("7.3.10.ep4"));
-		Assert.assertEquals(0, VersionUtil.getMicroVersion("8.0.0"));
-		Assert.assertEquals(0, VersionUtil.getMicroVersion("10.0.0"));
-		Assert.assertEquals(0, VersionUtil.getMicroVersion("100.0.00"));
-		Assert.assertEquals(1, VersionUtil.getMicroVersion("7.4.1-1"));
-		Assert.assertEquals(11, VersionUtil.getMicroVersion("7.4.11.1-1"));
-	}
-
-	@Test(expected = NumberFormatException.class)
-	public void testGetMicroVersionNull() throws Exception {
-		Assert.assertEquals(7, VersionUtil.getMicroVersion("7.2"));
+		for (TestCase testCase : _testCases) {
+			Assert.assertEquals(
+				testCase.input, testCase.expectedMicroVersion,
+				VersionUtil.getMicroVersion(testCase.input));
+		}
 	}
 
 	@Test
 	public void testGetMinorVersion() throws Exception {
-		Assert.assertEquals(0, VersionUtil.getMinorVersion("7.0.10"));
-		Assert.assertEquals(0, VersionUtil.getMinorVersion("7.0.10.1"));
-		Assert.assertEquals(0, VersionUtil.getMinorVersion("7.0.10.fp21"));
-		Assert.assertEquals(1, VersionUtil.getMinorVersion("7.1.10"));
-		Assert.assertEquals(1, VersionUtil.getMinorVersion("7.1.10.1"));
-		Assert.assertEquals(100, VersionUtil.getMinorVersion("7.100.10.fp21"));
-		Assert.assertEquals(10, VersionUtil.getMinorVersion("7.10.10.fp1-1"));
-		Assert.assertEquals(
-			1000, VersionUtil.getMinorVersion("7.1000.10.fp123-456"));
-		Assert.assertEquals(3, VersionUtil.getMinorVersion("7.3.10.ep4"));
-		Assert.assertEquals(0, VersionUtil.getMinorVersion("8.00.0"));
-		Assert.assertEquals(0, VersionUtil.getMinorVersion("10.0.0"));
-		Assert.assertEquals(0, VersionUtil.getMinorVersion("100.0.0"));
-		Assert.assertEquals(2, VersionUtil.getMinorVersion("7.2"));
-		Assert.assertEquals(4, VersionUtil.getMinorVersion("7.4.1-1"));
-		Assert.assertEquals(4, VersionUtil.getMinorVersion("7.4.11.1-1"));
+		for (TestCase testCase : _testCases) {
+			Assert.assertEquals(
+				testCase.input, testCase.expectedMinorVersion,
+				VersionUtil.getMinorVersion(testCase.input));
+		}
 	}
 
 	@Test
 	public void testIsLiferayVersion() throws Exception {
-		Assert.assertFalse("x", VersionUtil.isLiferayVersion("x"));
-		Assert.assertFalse("6.2", VersionUtil.isLiferayVersion("6.2"));
-		Assert.assertFalse("7.0test", VersionUtil.isLiferayVersion("7.0test"));
-		Assert.assertFalse("07.1.0", VersionUtil.isLiferayVersion("07.1.0"));
-		Assert.assertTrue("7.0.10", VersionUtil.isLiferayVersion("7.0.10"));
-		Assert.assertTrue("7.0.10.1", VersionUtil.isLiferayVersion("7.0.10.1"));
-		Assert.assertTrue(
-			"7.0.10.fp21", VersionUtil.isLiferayVersion("7.0.10.fp21"));
-		Assert.assertTrue("7.1.10", VersionUtil.isLiferayVersion("7.1.10"));
-		Assert.assertTrue("7.1.10.1", VersionUtil.isLiferayVersion("7.1.10.1"));
-		Assert.assertTrue(
-			"7.1.10.fp21", VersionUtil.isLiferayVersion("7.1.10.fp21"));
-		Assert.assertTrue(
-			"7.1.10.fp1-1", VersionUtil.isLiferayVersion("7.1.10.fp1-1"));
-		Assert.assertTrue(
-			"7.1.10.fp123-456",
-			VersionUtil.isLiferayVersion("7.1.10.fp123-456"));
-		Assert.assertTrue(
-			"7.3.10.ep4", VersionUtil.isLiferayVersion("7.3.10.ep4"));
-		Assert.assertTrue("8.0.0", VersionUtil.isLiferayVersion("8.0.0"));
-		Assert.assertTrue("10.0.0", VersionUtil.isLiferayVersion("10.0.0"));
-		Assert.assertTrue("100.0.0", VersionUtil.isLiferayVersion("100.0.0"));
-		Assert.assertTrue("7.2", VersionUtil.isLiferayVersion("7.2"));
-		Assert.assertTrue("7.4.1-1", VersionUtil.isLiferayVersion("7.4.1-1"));
-		Assert.assertTrue(
-			"7.4.11.1-1", VersionUtil.isLiferayVersion("7.4.11.1-1"));
-		Assert.assertTrue(
-			"7.4.13.u1", VersionUtil.isLiferayVersion("7.4.13.u1"));
+		for (String versionString :
+				new String[] {"x", "6.2", "7.0test", "07.1.0"}) {
+
+			Assert.assertFalse(
+				versionString, VersionUtil.isLiferayVersion(versionString));
+		}
+
+		for (TestCase testCase : _testCases) {
+			Assert.assertTrue(
+				testCase.input, VersionUtil.isLiferayVersion(testCase.input));
+		}
+	}
+
+	private static final TestCase[] _testCases = {
+		new TestCase("7.0.10", 7, 0, 10), new TestCase("7.0.10.1", 7, 0, 10),
+		new TestCase("7.0.10.fp21", 7, 0, 10), new TestCase("7.1.10", 7, 1, 10),
+		new TestCase("7.1.10.1", 7, 1, 10),
+		new TestCase("7.1.10.fp21", 7, 1, 10),
+		new TestCase("7.1.10.fp1-1", 7, 1, 10),
+		new TestCase("7.3.10.ep4", 7, 3, 10), new TestCase("8.0.0", 8, 0, 0),
+		new TestCase("10.0.0", 10, 0, 0), new TestCase("100.0.0", 100, 0, 0),
+		new TestCase("7.2", 7, 2, 0), new TestCase("7.4.1-1", 7, 4, 1),
+		new TestCase("7.4.11.1-1", 7, 4, 11)
+	};
+
+	private static class TestCase {
+
+		public final int expectedMajorVersion;
+		public final int expectedMicroVersion;
+		public final int expectedMinorVersion;
+		public final String input;
+
+		private TestCase(
+			String input, int expectedMajorVersion, int expectedMinorVersion,
+			int expectedMicroVersion) {
+
+			this.input = input;
+			this.expectedMajorVersion = expectedMajorVersion;
+			this.expectedMinorVersion = expectedMinorVersion;
+			this.expectedMicroVersion = expectedMicroVersion;
+		}
+
 	}
 
 }

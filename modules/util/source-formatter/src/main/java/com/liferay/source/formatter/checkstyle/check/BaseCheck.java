@@ -1027,8 +1027,18 @@ public abstract class BaseCheck extends AbstractCheck {
 		DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
 			TokenTypes.DOT);
 
-		if (dotDetailAST == null) {
-			return null;
+		while (true) {
+			if (dotDetailAST == null) {
+				return null;
+			}
+
+			DetailAST firstChildDetailAST = dotDetailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				break;
+			}
+
+			dotDetailAST = firstChildDetailAST.findFirstToken(TokenTypes.DOT);
 		}
 
 		return getName(dotDetailAST);

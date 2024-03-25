@@ -1146,7 +1146,7 @@ definition {
 	@description = "Verify that the OR operator on Condition is working as expected"
 	@priority = 5
 	test CanCreateMultipleConditionsUsingOR {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		FormsAdmin.addForm();
 

@@ -94,5 +94,5 @@ String layoutBreadcrumb = categoryCPDisplayLayoutDisplayContext.getLayoutBreadcr
 			"title", (assetCategory == null) ? null : assetCategory.getTitle(locale)
 		).build()
 	%>'
-	module="js/EditAssetCategoryCPDisplayLayout"
+	module="{EditAssetCategoryCPDisplayLayout} from commerce-product-asset-categories-web"
 />

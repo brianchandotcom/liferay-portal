@@ -69,7 +69,7 @@ if (selLayout != null) {
 			"portletNamespace", liferayPortletResponse.getNamespace()
 		).build()
 	%>'
-	module="js/EditAssetCategoryCPDisplayLayout"
+	module="{EditAssetCategoryCPDisplayLayout} from commerce-product-asset-categories-web"
 />
 
 <commerce-ui:panel

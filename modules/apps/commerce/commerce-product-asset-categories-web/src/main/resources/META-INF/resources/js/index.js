@@ -6,7 +6,7 @@
 import {getSpritemap} from '@liferay/frontend-icons-web';
 import {openSelectionModal} from 'frontend-js-web';
 
-export default function ({
+export function EditAssetCategoryCPDisplayLayout({
 	assetCategory,
 	categorySelectorUrl,
 	itemSelectorUrl,

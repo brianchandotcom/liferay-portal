@@ -512,6 +512,93 @@ definition {
 		DBPartition.validateSchemas(schemaNamePrefix = "ltest_");
 	}
 
+	@priority = 5
+	test ExtractAndAddDBPartitionCompanyWithInitialEmptyDB {
+		property custom.properties = "database.partition.schema.name.prefix=ltest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.assert.warning.exceptions = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Add www.able.com with an asset") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				panel = "Site Administration",
+				portlet = "Documents and Media");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_1.doc",
+				dmDocumentTitle = "DM Document Title");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+			var partitionCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
+			SignOut.signOutOfSpecificURL(url = "http://www.able.com:8080");
+		}
+
+		task ("Extract www.able.com partition and shutdown the server") {
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration.config",
+				osgiConfigs = "partitionCompanyId=L\"${partitionCompanyId}\"");
+
+			OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration.config");
+
+			Portlet.shutdownServer();
+		}
+
+		task ("Create an empty database") {
+			var databaseType = PropsUtil.get("database.type");
+
+			if (${databaseType} == "mysql") {
+				AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+			}
+			else if (${databaseType} == "postgresql") {
+				SQL.executeSQLStatement(sqlStatement = "drop schema public cascade;");
+
+				SQL.executeSQLStatement(sqlStatement = "create schema public;");
+			}
+
+			Portlet.startServer(deleteLiferayHome = "false");
+		}
+
+		task ("Add previously extracted www.able.com partition into new database") {
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration.config",
+				osgiConfigs = "partitionCompanyId=L\"${partitionCompanyId}\"");
+
+			OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration.config");
+		}
+
+		task ("Ensure that www.able.com is accessible and its assets visible") {
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				panel = "Site Administration",
+				portlet = "Documents and Media");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+		}
+	}
+
 	@priority = 3
 	test NewCompanyStillAccessibleAfterRestart {
 		property custom.properties = "database.partition.schema.name.prefix=ltest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";

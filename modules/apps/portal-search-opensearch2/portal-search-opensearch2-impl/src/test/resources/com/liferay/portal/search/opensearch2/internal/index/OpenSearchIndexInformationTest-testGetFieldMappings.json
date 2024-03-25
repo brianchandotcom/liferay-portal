@@ -1614,6 +1614,11 @@
 					"type": "date"
 				},
 				"emailAddress": {
+					"fields": {
+						"text": {
+							"type": "text"
+						}
+					},
 					"store": true,
 					"type": "keyword"
 				},

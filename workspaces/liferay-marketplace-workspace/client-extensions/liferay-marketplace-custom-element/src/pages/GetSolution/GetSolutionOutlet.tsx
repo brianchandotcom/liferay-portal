@@ -43,7 +43,11 @@ const steps = [
 		path: '/',
 		title: 'Account Selection',
 	},
-	{id: 2, path: '/form', title: 'Create Trial'},
+	{
+		id: 2,
+		path: '/form',
+		title: 'Create Trial',
+	},
 ];
 
 const getIcon = (image = '') => {

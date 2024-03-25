@@ -8,6 +8,7 @@ import {ReactNode} from 'react';
 import './DashboardEmptyTable.scss';
 
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 
 export function DashboardEmptyTable({
 	button,
@@ -29,10 +30,10 @@ export function DashboardEmptyTable({
 	return (
 		<div className="dashboard-empty-state py-6">
 			<div className="dashboard-empty-state-background">
-				<img
-					alt={title}
+				<ClayIcon
+					aria-label={title}
+					symbol={icon}
 					className="dashboard-empty-state-image"
-					src={icon}
 				/>
 			</div>
 

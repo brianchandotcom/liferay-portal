@@ -18,6 +18,7 @@ import {
 	formatDate,
 	getProductTypeFromSpecifications,
 } from '../../PublishedDashboardPageUtil';
+import i18n from '../../../../i18n';
 
 type PublishedAppsTableProps = {
 	items: Order[];
@@ -26,13 +27,15 @@ type PublishedAppsTableProps = {
 const PublishedAppsTable: React.FC<PublishedAppsTableProps> = ({items}) => {
 	const navigate = useNavigate();
 
-	if (!items.length) {
+	if (!items?.length) {
 		return (
 			<DashboardEmptyTable
-				description1="Publish apps and they will show up here."
-				description2="Click on “New App” to start."
-				icon={appsIcon}
-				title="No Apps Yet"
+				description1={i18n.translate(
+					'publish-apps-and-they-will-show-up-here'
+				)}
+				description2={i18n.translate('click-on-add-apps-to-start')}
+				icon="grid"
+				title={i18n.translate('no-apps-yet')}
 			/>
 		);
 	}
@@ -57,7 +60,7 @@ const PublishedAppsTable: React.FC<PublishedAppsTableProps> = ({items}) => {
 							</span>
 						</div>
 					),
-					title: 'Name',
+					title: i18n.translate('name'),
 				},
 				{
 					key: 'version',
@@ -65,18 +68,18 @@ const PublishedAppsTable: React.FC<PublishedAppsTableProps> = ({items}) => {
 						getProductVersionFromSpecifications(
 							productSpecifications
 						),
-					title: 'Version',
+					title: i18n.translate('version'),
 				},
 				{
 					key: 'appType',
 					render: (_, {productSpecifications}) =>
 						getProductTypeFromSpecifications(productSpecifications),
-					title: 'App Type',
+					title: i18n.translate('app-type'),
 				},
 				{
 					key: 'modifiedDate',
 					render: (modifiedDate) => <b>{formatDate(modifiedDate)}</b>,
-					title: 'Last Update',
+					title: i18n.translate('last-update'),
 				},
 				{
 					key: 'workflowStatusInfo',
@@ -85,7 +88,7 @@ const PublishedAppsTable: React.FC<PublishedAppsTableProps> = ({items}) => {
 							{workflowStatusInfo.label}
 						</OrderStatus>
 					),
-					title: 'Status',
+					title: i18n.translate('status'),
 				},
 			]}
 			onClickRow={({id}) => navigate(`/app/${id}`)}

@@ -75,7 +75,7 @@ public class ImageGalleryInfoItemRenderer
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
-					"commerce-frontend-js/components/gallery/Gallery",
+					"{GalleryComponent} from commerce-frontend-js",
 					componentId),
 				HashMapBuilder.<String, Object>put(
 					"images",

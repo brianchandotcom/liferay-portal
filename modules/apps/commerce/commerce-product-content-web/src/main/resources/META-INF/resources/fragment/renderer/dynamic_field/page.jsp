@@ -24,5 +24,5 @@
 			"namespace", namespace
 		).build()
 	%>'
-	module="fragment/renderer/dynamic_field/js/CPInstanceChangeHandler"
+	module="{CPInstanceChangeHandler} from commerce-product-content-web"
 />

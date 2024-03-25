@@ -19,5 +19,5 @@
 			"namespace", namespace
 		).build()
 	%>'
-	module="info/item/renderer/availability_label/js/AvailabilityCPInstanceChangeHandler"
+	module="{AvailabilityCPInstanceChangeHandler} from commerce-product-content-web"
 />

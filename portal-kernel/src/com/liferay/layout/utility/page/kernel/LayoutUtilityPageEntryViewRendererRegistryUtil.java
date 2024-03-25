@@ -9,7 +9,9 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.osgi.framework.BundleContext;
@@ -22,14 +24,24 @@ public class LayoutUtilityPageEntryViewRendererRegistryUtil {
 	public static LayoutUtilityPageEntryViewRenderer
 		getLayoutUtilityPageEntryViewRenderer(String type) {
 
-		return _layoutUtilityPageEntryViewRenderersServiceTrackerMap.getService(
-			type);
+		LayoutUtilityPageEntryViewRenderer layoutUtilityPageEntryViewRenderer =
+			_layoutUtilityPageEntryViewRenderersServiceTrackerMap.getService(
+				type);
+
+		if (layoutUtilityPageEntryViewRenderer.isEnabled()) {
+			return layoutUtilityPageEntryViewRenderer;
+		}
+
+		return null;
 	}
 
 	public static Collection<LayoutUtilityPageEntryViewRenderer>
 		getLayoutUtilityPageEntryViewRenderers() {
 
-		return _layoutUtilityPageEntryViewRenderersServiceTrackerMap.values();
+		return ListUtil.filter(
+			new ArrayList<>(
+				_layoutUtilityPageEntryViewRenderersServiceTrackerMap.values()),
+			LayoutUtilityPageEntryViewRenderer::isEnabled);
 	}
 
 	private static final BundleContext _bundleContext =

@@ -8,8 +8,9 @@ liferay-clarity-batch:
 liferay-clarity-batch-oauth-application-headless-server:
     .serviceAddress: localhost:8080
     .serviceScheme: http
-    name: Liferay Clarity OAuth Application Headless Server
+    name: Liferay Clarity Batch OAuth Application Headless Server
     scopes:
+        - Liferay.Headless.Admin.List.Type.everything
         - Liferay.Headless.Admin.Workflow.everything
         - Liferay.Headless.Batch.Engine.everything
     type: oAuthApplicationHeadlessServer

@@ -65,7 +65,8 @@ public class VersionUtilTest {
 		new TestCase("7.3.10.ep4", 7, 3, 10), new TestCase("8.0.0", 8, 0, 0),
 		new TestCase("10.0.0", 10, 0, 0), new TestCase("100.0.0", 100, 0, 0),
 		new TestCase("7.2", 7, 2, 0), new TestCase("7.4.1-1", 7, 4, 1),
-		new TestCase("7.4.11.1-1", 7, 4, 11)
+		new TestCase("7.4.11.1-1", 7, 4, 11),
+		new TestCase("2023.q1.2", 2023, 1, 2)
 	};
 
 	private static class TestCase {

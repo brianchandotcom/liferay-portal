@@ -86,7 +86,7 @@
 								"image": "/documents/d${groupFriendlyURL}/dxp_p-svg"
 							},
 							"liferay-cloud": {
-								"title": "DXP Cloud",
+								"title": "Liferay Cloud",
 								"url": "liferay-cloud",
 								"image": "/documents/d${groupFriendlyURL}/dxp_c-svg"
 							},

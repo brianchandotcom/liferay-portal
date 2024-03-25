@@ -147,6 +147,6 @@ SearchContainer<CommerceOrderItem> commerceOrderItemSearchContainer = commerceCa
 	<%@ include file="/cart_total/request_quote.jspf" %>
 
 	<liferay-frontend:component
-		module="js/cart_total/view"
+		module="{cartTotalView} from commerce-cart-content-web"
 	/>
 </liferay-ddm:template-renderer>

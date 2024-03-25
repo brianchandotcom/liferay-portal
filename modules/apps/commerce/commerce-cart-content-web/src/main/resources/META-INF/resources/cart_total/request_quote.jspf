@@ -57,5 +57,5 @@ boolean manageRestrictedNotesPermission = commerceCartContentTotalDisplayContext
 </aui:form>
 
 <liferay-frontend:component
-	module="js/cart_total/requestQuote"
+	module="{cartTotalRequestQuote} from commerce-cart-content-web"
 />

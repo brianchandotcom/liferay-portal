@@ -222,6 +222,6 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 	</div>
 
 	<liferay-frontend:component
-		module="js/cart_total/view"
+		module="{cartView} from commerce-cart-content-web"
 	/>
 </liferay-ddm:template-renderer>

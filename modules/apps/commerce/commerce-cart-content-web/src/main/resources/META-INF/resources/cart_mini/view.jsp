@@ -296,5 +296,5 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </liferay-ddm:template-renderer>
 
 <liferay-frontend:component
-	module="js/cart_mini/view"
+	module="{cartMiniView} from commerce-cart-content-web"
 />

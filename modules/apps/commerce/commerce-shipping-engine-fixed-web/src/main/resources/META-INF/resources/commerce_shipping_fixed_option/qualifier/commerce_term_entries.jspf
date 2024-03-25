@@ -20,7 +20,7 @@
 				"shippingFixedOptionId", commerceShippingFixedOptionId
 			).build()
 		%>'
-		module="js/commerce_term_entries"
+		module="{commerceTermEntries} from commerce-shipping-engine-fixed-web"
 	/>
 
 	<commerce-ui:panel

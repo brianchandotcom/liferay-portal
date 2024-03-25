@@ -81,7 +81,7 @@ boolean hasPermission = commerceShippingFixedOptionQualifiersDisplayContext.hasP
 			"selector", "qualifiers--orderType--"
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-shipping-engine-fixed-web"
 />
 
 <liferay-frontend:component
@@ -94,5 +94,5 @@ boolean hasPermission = commerceShippingFixedOptionQualifiersDisplayContext.hasP
 			"selector", "qualifiers--termEntry--"
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-shipping-engine-fixed-web"
 />

@@ -382,11 +382,9 @@ public class HttpImpl implements Http {
 		_httpConfiguration = ConfigurableUtil.createConfigurable(
 			HttpConfiguration.class, properties);
 
-		PoolingHttpClientConnectionManager
-			poolingHttpClientConnectionManager =
-			_poolingHttpClientConnectionManagerDCLSingleton.
-				getSingleton(
-					this:: _createPoolingHttpClientConnectionManager);
+		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager =
+			_poolingHttpClientConnectionManagerDCLSingleton.getSingleton(
+				this::_createPoolingHttpClientConnectionManager);
 
 		poolingHttpClientConnectionManager.setDefaultSocketConfig(
 			SocketConfig.custom(
@@ -650,7 +648,7 @@ public class HttpImpl implements Http {
 				poolingHttpClientConnectionManager =
 					_poolingHttpClientConnectionManagerDCLSingleton.
 						getSingleton(
-							this:: _createPoolingHttpClientConnectionManager);
+							this::_createPoolingHttpClientConnectionManager);
 
 			if ((maxConnectionsPerHost > 0) &&
 				(maxConnectionsPerHost != _MAX_CONNECTIONS_PER_HOST)) {
@@ -949,31 +947,6 @@ public class HttpImpl implements Http {
 		}
 	}
 
-	private PoolingHttpClientConnectionManager
-		_createPoolingHttpClientConnectionManager() {
-
-		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager =
-			new PoolingHttpClientConnectionManager(
-				RegistryBuilder.<ConnectionSocketFactory>create(
-				).register(
-					Http.HTTP, PlainConnectionSocketFactory.getSocketFactory()
-				).register(
-					Http.HTTPS,
-					SSLConnectionSocketFactory.getSystemSocketFactory()
-				).build());
-
-		poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
-			_MAX_CONNECTIONS_PER_HOST);
-		poolingHttpClientConnectionManager.setMaxTotal(_MAX_TOTAL_CONNECTIONS);
-		poolingHttpClientConnectionManager.setDefaultSocketConfig(
-			SocketConfig.custom(
-			).setSoKeepAlive(
-				_httpConfiguration.tcpKeepAliveEnabled()
-			).build());
-
-		return poolingHttpClientConnectionManager;
-	}
-
 	private static void _destroyPoolingHttpClientConnectionManager(
 		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager) {
 
@@ -1057,6 +1030,31 @@ public class HttpImpl implements Http {
 		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
 
 		return httpClientBuilder.build();
+	}
+
+	private PoolingHttpClientConnectionManager
+		_createPoolingHttpClientConnectionManager() {
+
+		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager =
+			new PoolingHttpClientConnectionManager(
+				RegistryBuilder.<ConnectionSocketFactory>create(
+				).register(
+					Http.HTTP, PlainConnectionSocketFactory.getSocketFactory()
+				).register(
+					Http.HTTPS,
+					SSLConnectionSocketFactory.getSystemSocketFactory()
+				).build());
+
+		poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
+			_MAX_CONNECTIONS_PER_HOST);
+		poolingHttpClientConnectionManager.setMaxTotal(_MAX_TOTAL_CONNECTIONS);
+		poolingHttpClientConnectionManager.setDefaultSocketConfig(
+			SocketConfig.custom(
+			).setSoKeepAlive(
+				_httpConfiguration.tcpKeepAliveEnabled()
+			).build());
+
+		return poolingHttpClientConnectionManager;
 	}
 
 	private RequestConfig.Builder _getRequestConfigBuilder(

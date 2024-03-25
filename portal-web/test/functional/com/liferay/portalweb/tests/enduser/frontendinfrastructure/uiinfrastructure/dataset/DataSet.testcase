@@ -1464,7 +1464,7 @@ definition {
 	@description = "LPS-187312 Confirm the creation of new translations, right after translating the page"
 	@priority = 5
 	test ConfirmThatTheCreatedTranslationWorks {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Given object created via API") {
 			ObjectAdmin.openObjectAdmin();

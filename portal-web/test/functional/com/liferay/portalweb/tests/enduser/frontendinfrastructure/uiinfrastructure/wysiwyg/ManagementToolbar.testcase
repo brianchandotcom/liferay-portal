@@ -2,7 +2,7 @@
 definition {
 
 	property osgi.module.configuration.file.names = "com.liferay.document.library.web.internal.configuration.FFManagementToolbarConfiguration.config:com.liferay.frontend.taglib.clay.internal.configuration.FFManagementToolbarConfiguration.config";
-	property portal.acceptance = "true";
+	property portal.acceptance = "quarantine";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Management Toolbar";

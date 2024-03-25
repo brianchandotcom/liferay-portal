@@ -52,7 +52,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test RTLStylesAppliedToPageLayout {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

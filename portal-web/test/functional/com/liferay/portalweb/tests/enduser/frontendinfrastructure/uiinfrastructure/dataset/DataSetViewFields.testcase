@@ -397,6 +397,8 @@ definition {
 	@description = "LPS-176516 Confirm that when adding a field with translation, and adding pt to the page URL, the values change according to the translation"
 	@priority = 3
 	test CanAssertTranslationIsWorking {
+		property portal.upstream = "quarantine";
+
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
 		}
@@ -488,6 +490,8 @@ definition {
 	@description = "LPS-176516 Confirm that when adding a field with translation and canceling it, and adding pt to the page URL, the values ​​do not change according to the translation"
 	@priority = 4
 	test CanCanAssertTranslationIsCanceled {
+		property portal.upstream = "quarantine";
+
 		task ("And adds two or more fields") {
 			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
 		}

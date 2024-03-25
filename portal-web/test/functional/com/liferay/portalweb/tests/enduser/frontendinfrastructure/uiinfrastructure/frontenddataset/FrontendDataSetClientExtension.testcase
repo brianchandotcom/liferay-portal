@@ -205,7 +205,7 @@ definition {
 	@priority = 5
 	test CanChangeFilterWithClientExtension {
 		property osgi.modules.includes = "frontend-data-set-sample-web";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

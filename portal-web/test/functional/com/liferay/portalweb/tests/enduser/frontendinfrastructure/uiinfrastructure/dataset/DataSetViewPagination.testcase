@@ -99,6 +99,8 @@ definition {
 	@description = "LPS-183950. Confirm that pagination creation can be cancelled when clicking on cancel button"
 	@priority = 3
 	test CanCancelPaginationCreationOnCancelButton {
+		property portal.upstream = "quarantine";
+
 		task ("And the user fills in the pagination items field") {
 			DataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40");
 		}

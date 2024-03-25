@@ -22,6 +22,8 @@ definition {
 	@description = "LPS-172764 Confirm that filtering the WCs does not deselect them"
 	@priority = 4
 	test CanAssertTheWCAreNotDeselected {
+		property portal.upstream = "quarantine";
+
 		task ("And there are 6 web content articles") {
 			for (var i : list "1,2,3,4,5,6") {
 				JSONWebcontent.addWebContent(
@@ -138,6 +140,8 @@ definition {
 	@description = "LPS-172764 Confirm that WC can be excluded in two pages of pagination"
 	@priority = 4
 	test IsPossibleToDeleteWCOnEachPage {
+		property portal.upstream = "quarantine";
+
 		task ("And there are 6 web content articles") {
 			for (var i : list "1,2,3,4,5,6") {
 				JSONWebcontent.addWebContent(

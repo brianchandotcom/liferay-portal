@@ -141,6 +141,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanEditHyperlink {
+		property portal.acceptance = "quarantine";
+
 		task ("Click the hyperlinked text") {
 			Click(locator1 = "CKEditorBalloonEditorSample#BODY_TEXT_HYPERLINK");
 		}

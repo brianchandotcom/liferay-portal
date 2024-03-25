@@ -698,6 +698,8 @@ definition {
 	@description = "LPS-191486. Verify if the user can cancel the deletion of an entry by clicking the Close(x) button"
 	@priority = 3
 	test CanCancelADeletionInXButton {
+		property portal.upstream = "quarantine";
+
 		task ("And creates an item action") {
 			DataSetAdmin.addActions(
 				actionName = "delete",

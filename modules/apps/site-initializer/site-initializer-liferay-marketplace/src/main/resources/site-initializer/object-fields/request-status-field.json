@@ -3,6 +3,14 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
+			"defaultValue": "open",
+			"objectFieldSettings": [
+				{
+					"name": "stateFlow"
+				},
+				{"name": "defaultValueType", "value": "inputAsValue"},
+				{"name": "defaultValue", "value": "open"}
+			],
 			"externalReferenceCode": "REQUEST-STATUS",
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "en_US",

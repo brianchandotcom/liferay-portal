@@ -36,6 +36,18 @@ public interface CustomElementCET extends CET {
 	public String getHTMLElementName();
 
 	@CETProperty(
+		defaultValue = "", name = "panelAppOrder",
+		type = CETProperty.Type.String
+	)
+	public String getPanelAppOrder();
+
+	@CETProperty(
+		defaultValue = "", name = "panelCategoryKey",
+		type = CETProperty.Type.String
+	)
+	public String getPanelCategoryKey();
+
+	@CETProperty(
 		defaultValue = "", name = "portletCategoryName",
 		type = CETProperty.Type.String
 	)
@@ -45,6 +57,12 @@ public interface CustomElementCET extends CET {
 		defaultValue = "", name = "urls", type = CETProperty.Type.URLList
 	)
 	public String getURLs();
+
+	@CETProperty(
+		defaultValue = "", name = "admin",
+		type = CETProperty.Type.Boolean
+	)
+	public boolean getAdmin();
 
 	@CETProperty(
 		defaultValue = "false", name = "instanceable",

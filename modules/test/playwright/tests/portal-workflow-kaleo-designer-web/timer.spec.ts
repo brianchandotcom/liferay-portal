@@ -53,21 +53,16 @@ const timerNotifications = [
 	},
 ] as Notification[];
 
-test('LPD-16281 can create timer notifications', async ({
-	apiHelpers,
-	diagramViewPage,
-	nodePropertiesSidebarPage,
-	page,
-	processBuilderPage,
-	sourceViewPage,
-	timerPage,
-}) => {
+let workflowDefinitionId: number;
+let workflowDefinitionName: string;
+
+test.beforeEach(async ({apiHelpers}) => {
 	const singleApproverWorkflowDefinition =
 		await apiHelpers.headlessAdminWorkflow.getWorkflowDefinitionByName(
 			'Single Approver'
 		);
 
-	const workflowDefinitionName = 'Copy of Single Approver' + getRandomInt();
+	workflowDefinitionName = 'Copy of Single Approver' + getRandomInt();
 
 	const workflowDefinition =
 		await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
@@ -75,6 +70,23 @@ test('LPD-16281 can create timer notifications', async ({
 			singleApproverWorkflowDefinition
 		);
 
+	workflowDefinitionId = workflowDefinition.id;
+});
+
+test.afterEach(async ({apiHelpers}) => {
+	await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(
+		workflowDefinitionId
+	);
+});
+
+test('LPD-16281 can create timer notifications', async ({
+	diagramViewPage,
+	nodePropertiesSidebarPage,
+	page,
+	processBuilderPage,
+	sourceViewPage,
+	timerPage,
+}) => {
 	await processBuilderPage.goto();
 
 	await processBuilderPage.clickWorkflowDefinitionName(
@@ -122,36 +134,16 @@ test('LPD-16281 can create timer notifications', async ({
 	await timerOption.click();
 
 	await timerPage.assertActionTimerNotifications(timerNotifications);
-
-	// clean up
-
-	await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(
-		workflowDefinition.id
-	);
 });
 
 test('LPD-21221 can create timer reassignments role type reassignment type', async ({
 	actionReassignmentPage,
-	apiHelpers,
 	diagramViewPage,
 	nodePropertiesSidebarPage,
 	page,
 	processBuilderPage,
-	sourceViewPage
+	sourceViewPage,
 }) => {
-	const singleApproverWorkflowDefinition =
-		await apiHelpers.headlessAdminWorkflow.getWorkflowDefinitionByName(
-			'Single Approver'
-		);
-
-	const workflowDefinitionName = 'Copy of Single Approver' + getRandomInt();
-
-	const workflowDefinition =
-		await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
-			workflowDefinitionName,
-			singleApproverWorkflowDefinition
-		);
-
 	await processBuilderPage.goto();
 
 	await processBuilderPage.clickWorkflowDefinitionName(
@@ -199,10 +191,4 @@ test('LPD-21221 can create timer reassignments role type reassignment type', asy
 	await timerOption.click();
 
 	await actionReassignmentPage.assertRoleTypeReassignmentType(roleTypes);
-	
-	// clean up
-
-	await apiHelpers.headlessAdminWorkflow.deleteWorkflowDefinition(
-		workflowDefinition.id
-	);
 });

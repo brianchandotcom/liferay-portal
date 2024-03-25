@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -38,6 +39,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Dictionary;
+
+import javax.portlet.PortletException;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -115,6 +118,31 @@ public class SaveGroupConfigurationMVCActionCommandTest {
 		throws Exception {
 
 		_assertSaveGroupConfiguration(true, true, false, _groupAdminUser);
+	}
+
+	@Test
+	public void testSaveGroupConfigurationNotGroupAdminUser() throws Exception {
+		Group group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _groupAdminUser.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		boolean portletExceptionThrown = false;
+
+		try {
+			_assertSaveGroupConfiguration(
+				true, true, true, UserTestUtil.addGroupAdminUser(group));
+		}
+		catch (PortletException portletException) {
+			portletExceptionThrown = true;
+
+			Throwable throwable = portletException.getCause();
+
+			Assert.assertNotNull(throwable);
+			Assert.assertTrue(
+				throwable instanceof PrincipalException.MustBeGroupAdmin);
+		}
+
+		Assert.assertTrue(portletExceptionThrown);
 	}
 
 	private void _assertGroupConfiguration(

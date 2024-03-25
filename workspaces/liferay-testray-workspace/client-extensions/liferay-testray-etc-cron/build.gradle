@@ -24,7 +24,6 @@ dependencies {
 	implementation group: "com.liferay", name: "com.liferay.petra.lang", version: "latest.release"
 	implementation group: "com.liferay", name: "com.liferay.petra.string", version: "latest.release"
 	implementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
-	implementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	implementation group: "org.json", name: "json", version: "20231013"
 	implementation group: "org.springframework.boot", name: "spring-boot", version: "2.7.18"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-client", version: "2.7.18"

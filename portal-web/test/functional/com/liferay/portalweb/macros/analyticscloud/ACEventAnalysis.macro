@@ -48,8 +48,12 @@ definition {
 			key_filterName = ${filterName},
 			locator1 = "ACEventAnalysis#CHOOSE_FILTER");
 
+		ACUtils.selectGenericOption(optionValue = ${optionValue});
+
 		if (isSet(dropdownOptionName)) {
 			ACEventAnalysis.selectAutocompleteOption(dropdownOptionName = ${dropdownOptionName});
+
+			ACUtils.selectGenericOption(optionValue = ${optionValue});
 		}
 		else if ((IsElementNotPresent(key_text = "calendar", locator1 = "Icon#ANY")) && (${optionValue} != "True") && (${optionValue} != "False")) {
 			Type(
@@ -92,8 +96,6 @@ definition {
 				key_text = "calendar",
 				locator1 = "Icon#ANY");
 		}
-
-		ACUtils.selectGenericOption(optionValue = ${optionValue});
 
 		Click(locator1 = "ACEventAnalysis#FILTER_DONE_BUTTON");
 	}

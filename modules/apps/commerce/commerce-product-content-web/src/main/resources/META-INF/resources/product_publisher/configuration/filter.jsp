@@ -43,7 +43,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 	</div>
 
 	<react:component
-		module="js/AutoField"
+		module="{AutoField} from commerce-product-content-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"categorySelectorURL", cpPublisherConfigurationDisplayContext.getCategorySelectorURL()

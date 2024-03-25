@@ -22,5 +22,5 @@
 		).build()
 	%>'
 	destroyOnNavigate="<%= true %>"
-	module="info/item/renderer/option_selector/js/OptionSelector"
+	module="{OptionSelector} from commerce-product-content-web"
 />

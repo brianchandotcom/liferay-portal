@@ -245,7 +245,7 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 
 <div>
 	<react:component
-		module="product_detail/render/js/Tabs"
+		module="{Tabs} from commerce-product-content-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"directReplacement", directReplacement

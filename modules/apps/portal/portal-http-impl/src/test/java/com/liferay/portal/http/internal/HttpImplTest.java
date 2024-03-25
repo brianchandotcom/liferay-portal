@@ -5,6 +5,7 @@
 
 package com.liferay.portal.http.internal;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -13,9 +14,8 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.ConnectionReuseStrategy;
@@ -42,6 +42,7 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpCoreContext;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -72,19 +73,54 @@ public class HttpImplTest {
 			});
 	}
 
+	@Before
+	public void setUp() {
+		_httpImpl = new HttpImpl();
+
+		_httpImpl.activate(Collections.emptyMap());
+
+		DCLSingleton<PoolingHttpClientConnectionManager>
+			poolingHttpClientConnectionManagerDCLSingleton =
+				ReflectionTestUtil.getFieldValue(
+					_httpImpl,
+					"_poolingHttpClientConnectionManagerDCLSingleton");
+
+		_poolingHttpClientConnectionManager =
+			poolingHttpClientConnectionManagerDCLSingleton.getSingleton(
+				() -> ReflectionTestUtil.invoke(
+					_httpImpl, "_createPoolingHttpClientConnectionManager",
+					new Class<?>[0]));
+
+		DCLSingleton<CloseableHttpClient> closeableHttpClientDCLSingleton =
+			ReflectionTestUtil.getFieldValue(
+				_httpImpl, "_closeableHttpClientDCLSingleton");
+
+		_closeableHttpClient = closeableHttpClientDCLSingleton.getSingleton(
+			() -> ReflectionTestUtil.invoke(
+				_httpImpl, "_createCloseableHttpClient",
+				new Class<?>[] {
+					PoolingHttpClientConnectionManager.class, HttpHost.class,
+					List.class
+				},
+				_poolingHttpClientConnectionManager, null, null));
+	}
+
 	@Test
 	public void testHttpKeepAlive() {
-		_setHttpKeepAliveTimeout(-1);
+		_httpImpl.modified(Collections.singletonMap("keepAliveTimeout", -1));
+
 		_testHttpKeepAlive(true, Long.MAX_VALUE, -1);
 		_testHttpKeepAlive(true, Long.MAX_VALUE, 0);
 		_testHttpKeepAlive(true, 300000, 300);
 
-		_setHttpKeepAliveTimeout(0);
+		_httpImpl.modified(Collections.singletonMap("keepAliveTimeout", 0));
+
 		_testHttpKeepAlive(true, Long.MAX_VALUE, -1);
 		_testHttpKeepAlive(true, Long.MAX_VALUE, 0);
 		_testHttpKeepAlive(true, 300000, 300);
 
-		_setHttpKeepAliveTimeout(600);
+		_httpImpl.modified(Collections.singletonMap("keepAliveTimeout", 600));
+
 		_testHttpKeepAlive(true, 600000, -1);
 		_testHttpKeepAlive(true, 600000, 0);
 		_testHttpKeepAlive(true, 300000, 300);
@@ -149,20 +185,17 @@ public class HttpImplTest {
 
 	@Test
 	public void testTCPKeepAlive() {
-		_setTCPKeepAliveEnabled(false);
 		_testTCPKeepAlive(false);
 
-		_setTCPKeepAliveEnabled(true);
+		_httpImpl.modified(
+			Collections.singletonMap("tcpKeepAliveEnabled", true));
+
 		_testTCPKeepAlive(true);
 	}
 
 	private Tuple _getHttpConnectionStrategies() {
 		ClientExecChain clientExecChain = ReflectionTestUtil.getFieldValue(
-			(CloseableHttpClient)ReflectionTestUtil.invoke(
-				_httpImpl, "_createCloseableHttpClient",
-				new Class<?>[] {HttpHost.class, List.class},
-				new Object[] {null, null}),
-			"execChain");
+			_closeableHttpClient, "execChain");
 
 		while (true) {
 			clientExecChain = ReflectionTestUtil.getFieldValue(
@@ -178,20 +211,9 @@ public class HttpImplTest {
 		}
 	}
 
-	private void _setHttpKeepAliveTimeout(int keepAliveTimeout) {
-		_httpConfigurationProperties.put("keepAliveTimeout", keepAliveTimeout);
-	}
-
-	private void _setTCPKeepAliveEnabled(boolean tcpKeepAliveEnabled) {
-		_httpConfigurationProperties.put(
-			"tcpKeepAliveEnabled", tcpKeepAliveEnabled);
-	}
-
 	private void _testHttpKeepAlive(
 		boolean expectedKeepAlive,
 		long expectedKeepAliveTimeoutInMilliseconds) {
-
-		_httpImpl.activate(_httpConfigurationProperties);
 
 		Tuple connectionStrategiesTuple = _getHttpConnectionStrategies();
 
@@ -250,29 +272,21 @@ public class HttpImplTest {
 	}
 
 	private void _testTCPKeepAlive(boolean expectedEnabledTCPKeepAlive) {
-		_httpImpl.activate(_httpConfigurationProperties);
-
 		SocketConfig socketConfig = ReflectionTestUtil.invoke(
-			(PoolingHttpClientConnectionManager)
-				ReflectionTestUtil.getFieldValue(
-					(CloseableHttpClient)ReflectionTestUtil.invoke(
-						_httpImpl, "_createCloseableHttpClient",
-						new Class<?>[] {HttpHost.class, List.class},
-						new Object[] {null, null}),
-					"connManager"),
-			"resolveSocketConfig", new Class<?>[] {HttpHost.class},
-			new Object[] {_httpHost});
+			_poolingHttpClientConnectionManager, "resolveSocketConfig",
+			new Class<?>[] {HttpHost.class}, new Object[] {_httpHost});
 
 		Assert.assertEquals(
 			expectedEnabledTCPKeepAlive, socketConfig.isSoKeepAlive());
 	}
 
-	private final Map<String, Object> _httpConfigurationProperties =
-		new HashMap<>();
+	private CloseableHttpClient _closeableHttpClient;
 	private final HttpContext _httpContext = new BasicHttpContext(null);
 	private final HttpHost _httpHost = new HttpHost("localhost", 8080);
-	private final HttpImpl _httpImpl = new HttpImpl();
+	private HttpImpl _httpImpl;
 	private final HttpResponse _httpResponse = new BasicHttpResponse(
 		new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK"));
+	private PoolingHttpClientConnectionManager
+		_poolingHttpClientConnectionManager;
 
 }

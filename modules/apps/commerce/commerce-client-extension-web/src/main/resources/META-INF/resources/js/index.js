@@ -5,7 +5,7 @@
 
 import {loadClientExtensions} from 'frontend-js-web';
 
-export default function ({renderURL}) {
+export function main({renderURL}) {
 	loadClientExtensions([
 		{
 			clientExtensionDefinitions: [

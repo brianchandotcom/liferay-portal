@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "js/index.js",
 	"name": "@liferay/commerce-client-extension-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

@@ -19,5 +19,5 @@ String renderURL = (String)request.getAttribute(CommerceClientExtensionWebKeys.R
 			"renderURL", renderURL
 		).build()
 	%>'
-	module="js/commerce_checkout_step_client_extension"
+	module="{main} from commerce-client-extension-web"
 />

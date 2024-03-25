@@ -16,7 +16,7 @@
 
 <aui:model-context bean="<%= commerceInventoryReplenishmentItem %>" model="<%= CommerceInventoryReplenishmentItem.class %>" />
 
-<aui:input name="quantity" required="<%= true %>" type="quantity" value="<%= commerceInventoryDisplayContext.getParsedQuantity(commerceInventoryReplenishmentItem.getQuantity()) %>">
+<aui:input name="quantity" required="<%= true %>" type="quantity" value="<%= (commerceInventoryReplenishmentItem == null) ? 0 : commerceInventoryDisplayContext.getParsedQuantity(commerceInventoryReplenishmentItem.getQuantity()) %>">
 	<aui:validator name="min">1</aui:validator>
 	<aui:validator name="number" />
 </aui:input>

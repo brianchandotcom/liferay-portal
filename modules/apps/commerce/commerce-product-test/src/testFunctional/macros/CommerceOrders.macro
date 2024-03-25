@@ -697,28 +697,28 @@ definition {
 		if (isSet(orderItemDiscount)) {
 			Type(
 				key_fieldLabel = "Discount",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT",
 				value1 = ${orderItemDiscount});
 		}
 
 		if (isSet(orderItemQuantity)) {
 			Type(
 				key_fieldLabel = "Quantity",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_QUANTITY_INPUT",
 				value1 = ${orderItemQuantity});
 		}
 
 		if (isSet(orderItemPrice)) {
 			Type(
 				key_fieldLabel = "Price",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT",
 				value1 = ${orderItemPrice});
 		}
 
 		if (isSet(orderItemTotal)) {
 			Type(
 				key_fieldLabel = "Total",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT",
 				value1 = ${orderItemTotal});
 		}
 
@@ -868,42 +868,42 @@ definition {
 		if (isSet(deliveryDiscountNewValue)) {
 			Type(
 				key_fieldLabel = "Delivery Discount",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT",
 				value1 = ${deliveryDiscountNewValue});
 		}
 
 		if (isSet(deliveryNewValue)) {
 			Type(
 				key_fieldLabel = "Delivery",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT",
 				value1 = ${deliveryNewValue});
 		}
 
 		if (isSet(subtotalDiscountNewValue)) {
 			Type(
 				key_fieldLabel = "Subtotal Discount",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT",
 				value1 = ${subtotalDiscountNewValue});
 		}
 
 		if (isSet(subtotalNewValue)) {
 			Type(
 				key_fieldLabel = "Subtotal",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT",
 				value1 = ${subtotalNewValue});
 		}
 
 		if (isSet(taxNewValue)) {
 			Type(
 				key_fieldLabel = "Tax",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT",
 				value1 = ${taxNewValue});
 		}
 
 		if (isSet(totalDiscountNewValue)) {
 			Type(
 				key_fieldLabel = "Total Discount",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT",
 				value1 = ${totalDiscountNewValue});
 		}
 
@@ -911,7 +911,7 @@ definition {
 			Type(
 				key_fieldLabel = "Total",
 				key_indexNumber = 2,
-				locator1 = "TextInput#GENERIC_TEXT_INPUT_N",
+				locator1 = "CommerceOrders#ORDER_ITEM_CURRENCY_INPUT_N",
 				value1 = ${totalNewValue});
 		}
 

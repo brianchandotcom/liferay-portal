@@ -83,6 +83,10 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Override
 	public String parse(String price, Locale locale) throws Exception {
+		if (Validator.isNull(price)) {
+			price = BigDecimal.ZERO.toString();
+		}
+
 		DecimalFormat decimalFormat = _getDecimalFormat(null, locale);
 
 		return decimalFormat.parse(

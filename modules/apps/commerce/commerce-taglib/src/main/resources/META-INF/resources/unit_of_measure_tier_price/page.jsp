@@ -9,18 +9,21 @@
 
 <div class="mb-2 tier-price-table" id="<%= unitOfMeasureTierPriceId %>"></div>
 
-<aui:script require="commerce-frontend-js/components/tier_price/entry as TierPrice">
-	const props = {
-		accountId: <%= commerceAccountId %>,
-		channelId: <%= commerceChannelId %>,
-		cpInstanceId: <%= cpInstanceId %>,
-		namespace: '<%= namespace %>',
-		productId: <%= productId %>,
-	};
-
-	TierPrice.default(
-		'<%= unitOfMeasureTierPriceId %>',
-		'<%= unitOfMeasureTierPriceId %>',
-		props
-	);
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"accountId", commerceAccountId
+		).put(
+			"channelId", commerceChannelId
+		).put(
+			"cpInstanceId", cpInstanceId
+		).put(
+			"namespace", namespace
+		).put(
+			"productId", productId
+		).put(
+			"unitOfMeasureTierPriceId", unitOfMeasureTierPriceId
+		).build()
+	%>'
+	module="{TierPrice} from commerce-taglib"
+/>

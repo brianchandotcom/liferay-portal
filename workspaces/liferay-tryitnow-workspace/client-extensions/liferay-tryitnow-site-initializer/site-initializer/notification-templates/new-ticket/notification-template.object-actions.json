@@ -11,7 +11,7 @@
 		"objectActionTriggerKey": "onAfterAdd",
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
 		"parameters": {
-			"notificationTemplateExternalReferenceCode": "NEW_TICKET_USER_TEMPLATE",
+			"notificationTemplateExternalReferenceCode": "M2H8_NEW_TICKET_USER_TEMPLATE",
 			"objectDefinitionExternalReferenceCode": "J3Y7_TICKET",
 			"type": "user-notification"
 		},

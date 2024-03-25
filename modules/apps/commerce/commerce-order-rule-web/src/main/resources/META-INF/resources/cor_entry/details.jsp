@@ -116,5 +116,5 @@ String type = BeanParamUtil.getString(corEntry, renderRequest, "type", COREntryC
 			"currentURL", currentURL
 		).build()
 	%>'
-	module="js/details"
+	module="{details} from commerce-order-rule-web"
 />

@@ -114,7 +114,7 @@ boolean hasPermission = corEntryQualifiersDisplayContext.hasPermission(ActionKey
 			"selector", "qualifiers--account--"
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-order-rule-web"
 />
 
 <liferay-frontend:component
@@ -127,7 +127,7 @@ boolean hasPermission = corEntryQualifiersDisplayContext.hasPermission(ActionKey
 			"selector", "qualifiers--channel--"
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-order-rule-web"
 />
 
 <liferay-frontend:component
@@ -140,5 +140,5 @@ boolean hasPermission = corEntryQualifiersDisplayContext.hasPermission(ActionKey
 			"selector", "qualifiers--orderType--"
 		).build()
 	%>'
-	module="js/qualifiers"
+	module="{qualifiers} from commerce-order-rule-web"
 />

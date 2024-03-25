@@ -20,7 +20,7 @@
 				"rootPortletId", portletDisplay.getRootPortletId()
 			).build()
 		%>'
-		module="js/commerce_order_types"
+		module="{commerceOrderTypes} from commerce-order-rule-web"
 	/>
 
 	<commerce-ui:panel

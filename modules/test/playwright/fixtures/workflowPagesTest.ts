@@ -5,6 +5,7 @@
 
 import {test} from '@playwright/test';
 
+import {ActionReassignmentPage} from '../pages/portal-workflow-kaleo-designer-web/ActionReassignmentPage';
 import {DiagramViewPage} from '../pages/portal-workflow-kaleo-designer-web/DiagramViewPage';
 import {NodePropertiesSidebarPage} from '../pages/portal-workflow-kaleo-designer-web/NodePropertiesSidebarPage';
 import {ProcessBuilderPage} from '../pages/portal-workflow-kaleo-designer-web/ProcessBuilderPage';
@@ -14,6 +15,7 @@ import {WorkflowTasksPage} from '../tests/portal-workflow-task-web/pages/Workflo
 import {WorkflowPage} from '../tests/portal-workflow-web/pages/WorkflowPage';
 
 const workflowPagesTest = test.extend<{
+	actionReassignmentPage: ActionReassignmentPage;
 	diagramViewPage: DiagramViewPage;
 	nodePropertiesSidebarPage: NodePropertiesSidebarPage;
 	processBuilderPage: ProcessBuilderPage;
@@ -22,6 +24,9 @@ const workflowPagesTest = test.extend<{
 	workflowPage: WorkflowPage;
 	workflowTasksPage: WorkflowTasksPage;
 }>({
+	actionReassignmentPage: async ({page}, use) => {
+		await use(new ActionReassignmentPage(page));
+	},
 	diagramViewPage: async ({page}, use) => {
 		await use(new DiagramViewPage(page));
 	},

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,6 +43,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 
 import java.util.Dictionary;
+
+import javax.portlet.PortletException;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -180,6 +184,34 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 
 		_assertSaveCompanyConfiguration(
 			new long[0], new long[0], true, true, false, _adminUser);
+	}
+
+	@Test
+	public void testSaveCompanyConfigurationNotCompanyAdminUser()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup(
+			_company.getCompanyId(), _adminUser.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		boolean portletExceptionThrown = false;
+
+		try {
+			_assertSaveCompanyConfiguration(
+				new long[0], new long[0], true, true, true,
+				UserTestUtil.addGroupAdminUser(group));
+		}
+		catch (PortletException portletException) {
+			portletExceptionThrown = true;
+
+			Throwable throwable = portletException.getCause();
+
+			Assert.assertNotNull(throwable);
+			Assert.assertTrue(
+				throwable instanceof PrincipalException.MustBeCompanyAdmin);
+		}
+
+		Assert.assertTrue(portletExceptionThrown);
 	}
 
 	private void _assertCompanyConfiguration(

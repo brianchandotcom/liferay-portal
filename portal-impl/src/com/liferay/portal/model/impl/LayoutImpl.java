@@ -1516,6 +1516,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public boolean isTypeUtility() {
+		if (Objects.equals(getType(), LayoutConstants.TYPE_UTILITY)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isUnlocked(String mode, long userId) {
 		if (!Objects.equals(mode, Constants.EDIT) || !isDraftLayout()) {
 			return true;

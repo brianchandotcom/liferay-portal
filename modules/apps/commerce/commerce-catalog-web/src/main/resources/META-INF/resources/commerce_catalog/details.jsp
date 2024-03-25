@@ -101,67 +101,55 @@ boolean viewOnly = !commerceCatalogDisplayContext.hasModelResourcePermission(com
 
 						<div class="mb-4" id="base-price-list-autocomplete-root"></div>
 
-						<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
-							autocomplete.default('autocomplete', 'base-price-list-autocomplete-root', {
-								apiUrl:
-									'<%= commerceCatalogDisplayContext.getPriceListsAPIURL(CommercePriceListConstants.TYPE_PRICE_LIST) %>',
-								initialLabel:
-									'<%= (baseCommercePriceList == null) ? StringPool.BLANK : HtmlUtil.escapeJS(baseCommercePriceList.getName()) %>',
-								initialValue:
-									'<%= (baseCommercePriceList == null) ? 0 : baseCommercePriceList.getCommercePriceListId() %>',
-								inputId: 'baseCommercePriceListId',
-								inputName:
-									'<%= liferayPortletResponse.getNamespace() %>baseCommercePriceListId',
-								itemsKey: 'id',
-								itemsLabel: 'name',
-								onValueUpdated: function (value, priceListData) {
-									if (value) {
-										window.document.querySelector(
-											'#<portlet:namespace />baseCommercePriceListId'
-										).value = priceListData.id;
-									}
-									else {
-										window.document.querySelector(
-											'#<portlet:namespace />baseCommercePriceListId'
-										).value = 0;
-									}
-								},
-								required: true,
-							});
-						</aui:script>
+						<liferay-frontend:component
+							context='<%=
+								HashMapBuilder.<String, Object>put(
+									"apiUrl", commerceCatalogDisplayContext.getPriceListsAPIURL(CommercePriceListConstants.TYPE_PRICE_LIST)
+								).put(
+									"initialLabel", (baseCommercePriceList == null) ? StringPool.BLANK : baseCommercePriceList.getName()
+								).put(
+									"initialValue", (baseCommercePriceList == null) ? 0 : baseCommercePriceList.getCommercePriceListId()
+								).put(
+									"inputId", "baseCommercePriceListId"
+								).put(
+									"inputName", liferayPortletResponse.getNamespace() + "baseCommercePriceListId"
+								).put(
+									"itemsKey", "id"
+								).put(
+									"itemsLabel", "name"
+								).put(
+									"namespace", liferayPortletResponse.getNamespace()
+								).build()
+							%>'
+							module="{detailsAutocompleteBasePrice} from commerce-catalog-web"
+						/>
 
 						<label class="control-label" for="basePromotionCommercePriceListId"><liferay-ui:message key="base-promotion" /></label>
 
 						<div class="mb-4" id="base-promotion-autocomplete-root"></div>
 
-						<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
-							autocomplete.default('autocomplete', 'base-promotion-autocomplete-root', {
-								apiUrl:
-									'<%= commerceCatalogDisplayContext.getPriceListsAPIURL(CommercePriceListConstants.TYPE_PROMOTION) %>',
-								initialLabel:
-									'<%= (basePromotionCommercePriceList == null) ? StringPool.BLANK : HtmlUtil.escapeJS(basePromotionCommercePriceList.getName()) %>',
-								initialValue:
-									'<%= (basePromotionCommercePriceList == null) ? 0 : basePromotionCommercePriceList.getCommercePriceListId() %>',
-								inputId: 'basePromotionCommercePriceListId',
-								inputName:
-									'<%= liferayPortletResponse.getNamespace() %>basePromotionCommercePriceListId',
-								itemsKey: 'id',
-								itemsLabel: 'name',
-								onValueUpdated: function (value, priceListData) {
-									if (value) {
-										window.document.querySelector(
-											'#<portlet:namespace />basePromotionCommercePriceListId'
-										).value = priceListData.id;
-									}
-									else {
-										window.document.querySelector(
-											'#<portlet:namespace />basePromotionCommercePriceListId'
-										).value = 0;
-									}
-								},
-								required: true,
-							});
-						</aui:script>
+						<liferay-frontend:component
+							context='<%=
+								HashMapBuilder.<String, Object>put(
+									"apiUrl", commerceCatalogDisplayContext.getPriceListsAPIURL(CommercePriceListConstants.TYPE_PROMOTION)
+								).put(
+									"initialLabel", (basePromotionCommercePriceList == null) ? StringPool.BLANK : basePromotionCommercePriceList.getName()
+								).put(
+									"initialValue", (basePromotionCommercePriceList == null) ? 0 : basePromotionCommercePriceList.getCommercePriceListId()
+								).put(
+									"inputId", "basePromotionCommercePriceListId"
+								).put(
+									"inputName", liferayPortletResponse.getNamespace() + "basePromotionCommercePriceListId"
+								).put(
+									"itemsKey", "id"
+								).put(
+									"itemsLabel", "name"
+								).put(
+									"namespace", liferayPortletResponse.getNamespace()
+								).build()
+							%>'
+							module="{detailsAutocompleteBasePromotion} from commerce-catalog-web"
+						/>
 					</c:if>
 
 					<%
@@ -174,20 +162,26 @@ boolean viewOnly = !commerceCatalogDisplayContext.hasModelResourcePermission(com
 
 							<div class="mb-4" id="link-account-entry-autocomplete-root"></div>
 
-							<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete">
-								autocomplete.default('autocomplete', 'link-account-entry-autocomplete-root', {
-									apiUrl: '<%= commerceCatalogDisplayContext.getAccountEntriesAPIURL() %>',
-									initialLabel:
-										'<%= (accountEntry == null) ? StringPool.BLANK : HtmlUtil.escapeJS(accountEntry.getName()) %>',
-									initialValue:
-										'<%= (accountEntry == null) ? 0 : accountEntry.getAccountEntryId() %>',
-									inputId: '<%= liferayPortletResponse.getNamespace() %>accountEntryId',
-									inputName: '<%= liferayPortletResponse.getNamespace() %>accountEntryId',
-									itemsKey: 'id',
-									itemsLabel: 'name',
-									required: false,
-								});
-							</aui:script>
+							<liferay-frontend:component
+								context='<%=
+									HashMapBuilder.<String, Object>put(
+										"apiUrl", commerceCatalogDisplayContext.getAccountEntriesAPIURL()
+									).put(
+										"initialLabel", (accountEntry == null) ? StringPool.BLANK : accountEntry.getName()
+									).put(
+										"initialValue", (accountEntry == null) ? 0 : accountEntry.getAccountEntryId()
+									).put(
+										"inputId", liferayPortletResponse.getNamespace() + "accountEntryId"
+									).put(
+										"inputName", liferayPortletResponse.getNamespace() + "accountEntryId"
+									).put(
+										"itemsKey", "id"
+									).put(
+										"itemsLabel", "name"
+									).build()
+								%>'
+								module="{detailsAutocompleteAccountLink} from commerce-catalog-web"
+							/>
 						</c:when>
 						<c:otherwise>
 							<aui:input disabled="<%= true %>" label="link-catalog-to-a-supplier" name="" value="<%= (accountEntry != null) ? accountEntry.getName() : StringPool.BLANK %>" />

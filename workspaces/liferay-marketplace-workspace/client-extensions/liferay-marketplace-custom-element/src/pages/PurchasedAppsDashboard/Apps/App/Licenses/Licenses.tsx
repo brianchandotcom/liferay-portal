@@ -78,8 +78,7 @@ const Licenses = () => {
 						pageSize: pageSize.toString(),
 					})
 				);
-			}
-			catch (error) {
+			} catch (error) {
 				return {
 					items: [],
 					totalCount: 0,
@@ -272,6 +271,7 @@ const Licenses = () => {
 					]}
 					hasKebabButton
 					hasPagination
+					kebabClassname="border-0"
 					onClickRow={onViewLicenseKey}
 					paginationProps={{
 						active: page,

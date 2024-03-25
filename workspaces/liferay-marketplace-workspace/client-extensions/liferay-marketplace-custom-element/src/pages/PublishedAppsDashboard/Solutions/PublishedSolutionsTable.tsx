@@ -9,6 +9,7 @@ import solutionsIcon from '../../../assets/icons/analytics_icon.svg';
 import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
 import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
+import TableKebabButton from '../../../components/Table/TableButtons/TableKebabButton';
 import {
 	getProductVersionFromSpecifications,
 	getThumbnailByProductAttachment,
@@ -38,6 +39,11 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 
 	return (
 		<Table
+			Actions={({row}) => (
+				<TableKebabButton
+					onViewDetails={() => navigate(`/solution/${row.id}`)}
+				/>
+			)}
 			columns={[
 				{
 					key: 'name',
@@ -86,6 +92,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 					title: 'Status',
 				},
 			]}
+			hasKebabButton
 			onClickRow={({id}) => navigate(`/solution/${id}`)}
 			rows={items}
 		/>

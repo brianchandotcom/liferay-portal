@@ -91,33 +91,20 @@ if ((commercePriceList != null) && (commercePriceList.getExpirationDate() != nul
 
 				<div class="mb-4" id="autocomplete-root"></div>
 
-				<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
-					autocomplete.default('autocomplete', 'autocomplete-root', {
-						apiUrl:
-							'<%= commercePriceListDisplayContext.getPriceListsAPIURL(portletName) %>',
-						initialLabel:
-							'<%= (parentCommercePriceList == null) ? StringPool.BLANK : HtmlUtil.escapeJS(parentCommercePriceList.getName()) %>',
-						initialValue:
-							'<%= (parentCommercePriceList == null) ? 0 : parentCommercePriceList.getCommercePriceListId() %>',
-						inputId: 'parentCommercePriceListId',
-						inputName:
-							'<%= liferayPortletResponse.getNamespace() %>parentCommercePriceListId',
-						itemsKey: 'id',
-						itemsLabel: 'name',
-						onValueUpdated: function (value, priceListData) {
-							if (value) {
-								window.document.querySelector(
-									'#<portlet:namespace />parentCommercePriceListId'
-								).value = priceListData.id;
-							}
-							else {
-								window.document.querySelector(
-									'#<portlet:namespace />parentCommercePriceListId'
-								).value = 0;
-							}
-						},
-					});
-				</aui:script>
+				<liferay-frontend:component
+					context='<%=
+						HashMapBuilder.<String, Object>put(
+							"apiUrl", String.valueOf(commercePriceListDisplayContext.getPriceListsAPIURL(portletName))
+						).put(
+							"initialLabel", (parentCommercePriceList == null) ? StringPool.BLANK : parentCommercePriceList.getName()
+						).put(
+							"initialValue", (parentCommercePriceList == null) ? 0 : parentCommercePriceList.getCommercePriceListId()
+						).put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).build()
+					%>'
+					module="{detailsAutocomplete} from commerce-pricing-web"
+				/>
 
 				<aui:select label="price-type" name="netPrice">
 

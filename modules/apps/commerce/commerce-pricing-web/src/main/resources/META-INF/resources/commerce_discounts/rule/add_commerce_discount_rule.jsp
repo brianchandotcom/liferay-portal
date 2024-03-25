@@ -34,33 +34,14 @@ List<CommerceDiscountRuleType> commerceDiscountRuleTypes = commerceDiscountDispl
 		</aui:select>
 	</aui:form>
 
-	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		const CommerceDiscountRuleResource = ServiceProvider.default.AdminPricingAPI(
-			'v2'
-		);
-
-		Liferay.provide(window, '<portlet:namespace />apiSubmit', (form) => {
-			const discountRuleData = {
-				name: document.getElementById('name').value,
-				type: document.getElementById('type').value,
-			};
-
-			return CommerceDiscountRuleResource.addDiscountRule(
-				'<%= commerceDiscountDisplayContext.getCommerceDiscountId() %>',
-				discountRuleData
-			)
-				.then((payload) => {
-					window.parent.Liferay.fire(events.CLOSE_MODAL, {
-						successNotification: {
-							message:
-								'<liferay-ui:message key="your-request-completed-successfully" />',
-							showSuccessNotification: true,
-						},
-					});
-				})
-				.catch((error) => {
-					return Promise.reject(error);
-				});
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"commerceDiscountId", commerceDiscountDisplayContext.getCommerceDiscountId()
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).build()
+		%>'
+		module="{addCommerceDiscountRule} from commerce-pricing-web"
+	/>
 </commerce-ui:modal-content>

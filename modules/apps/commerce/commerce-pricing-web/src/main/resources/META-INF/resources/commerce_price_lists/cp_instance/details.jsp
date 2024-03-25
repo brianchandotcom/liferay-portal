@@ -203,5 +203,5 @@ boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, reques
 </aui:form>
 
 <liferay-frontend:component
-	module="commerce_price_lists/commerce_price_entry/js/PriceEntry"
+	module="{PriceEntry} from commerce-pricing-web"
 />

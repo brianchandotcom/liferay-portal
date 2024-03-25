@@ -8,68 +8,22 @@
 <c:if test="<%= hasPermission %>">
 	<div id="item-finder-root"></div>
 
-	<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		var CommerceDiscountAccountGroupsResource = ServiceProvider.default.AdminPricingAPI(
-			'v2'
-		);
-
-		var discountExternalReferenceCode =
-			'<%= HtmlUtil.escapeJS(commerceDiscount.getExternalReferenceCode()) %>';
-		var id = <%= commerceDiscountId %>;
-
-		function selectItem(accountGroup) {
-			var accountGroupData = {
-				accountGroupExternalReferenceCode: accountGroup.externalReferenceCode,
-				accountGroupId: accountGroup.id,
-				discountExternalReferenceCode: discountExternalReferenceCode,
-				discountId: id,
-			};
-
-			return CommerceDiscountAccountGroupsResource.addDiscountAccountGroup(
-				id,
-				accountGroupData
-			)
-				.then(() => {
-					Liferay.fire(events.FDS_UPDATE_DISPLAY, {
-						id:
-							'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>',
-					});
-				})
-				.catch((error) => {
-					return Promise.reject(error.title);
-				});
-		}
-
-		function getSelectedItems() {
-			return Promise.resolve([]);
-		}
-
-		itemFinder.default('itemFinder', 'item-finder-root', {
-			apiUrl: '/o/headless-commerce-admin-account/v1.0/accountGroups/',
-			getSelectedItems: getSelectedItems,
-			inputPlaceholder:
-				'<%= LanguageUtil.get(request, "find-an-account-group") %>',
-			itemCreation: false,
-			itemSelectedMessage:
-				'<%= LanguageUtil.get(request, "account-group-selected") %>',
-			itemsKey: 'id',
-			linkedDataSetsId: [
-				'<%= CommercePricingFDSNames.DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>',
-			],
-			onItemSelected: selectItem,
-			pageSize: 10,
-			panelHeaderLabel: '<%= LanguageUtil.get(request, "add-account-groups") %>',
-			portletId: '<%= portletDisplay.getRootPortletId() %>',
-			schema: [
-				{
-					fieldName: 'name',
-				},
-			],
-			spritemap: '<%= themeDisplay.getPathThemeSpritemap() %>',
-			titleLabel:
-				'<%= LanguageUtil.get(request, "add-existing-account-group") %>',
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"commerceDiscountId", commerceDiscountId
+			).put(
+				"discountExternalReferenceCode", commerceDiscount.getExternalReferenceCode()
+			).put(
+				"portletId", portletDisplay.getRootPortletId()
+			).put(
+				"pricingName", CommercePricingFDSNames.DISCOUNT_QUALIFIER_ACCOUNT_GROUPS
+			).put(
+				"spritemap", themeDisplay.getPathThemeSpritemap()
+			).build()
+		%>'
+		module="{accountGroups} from commerce-pricing-web"
+	/>
 
 	<commerce-ui:panel
 		bodyClasses="p-0"

@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ServiceProvider from 'commerce-frontend-js/ServiceProvider/index';
-import * as modalUtils from 'commerce-frontend-js/utilities/modals/index';
-import slugify from 'commerce-frontend-js/utilities/slugify';
+import {
+	CommerceServiceProvider,
+	modalUtils,
+	slugify,
+} from 'commerce-frontend-js';
 import {createPortletURL, debounce} from 'frontend-js-web';
 
 export default function ({
@@ -22,7 +24,7 @@ export default function ({
 	};
 	nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
 
-	const AdminCatalogResource = ServiceProvider.AdminCatalogAPI('v1');
+	const AdminCatalogResource = CommerceServiceProvider.AdminCatalogAPI('v1');
 
 	Liferay.provide(window, namespace + 'apiSubmit', () => {
 		modalUtils.isSubmitting();

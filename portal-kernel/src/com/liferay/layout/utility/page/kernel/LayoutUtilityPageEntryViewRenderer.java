@@ -26,9 +26,10 @@ public interface LayoutUtilityPageEntryViewRenderer {
 		return true;
 	}
 
-	public void renderHTML(
+	public default void renderHTML(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException;
+		throws IOException, ServletException {
+	}
 
 }

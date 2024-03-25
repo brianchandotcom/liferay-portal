@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.security.script.management.configuration.helper.ScriptManagementConfigurationHelper;
 import com.liferay.portal.security.script.management.web.internal.display.context.ScriptManagementConfigurationDisplayContext;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -53,7 +54,13 @@ public class ScriptManagementConfigurationScreen
 
 	@Override
 	public boolean isVisible() {
-		return FeatureFlagManagerUtil.isEnabled("LPD-11179");
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11179") &&
+			PropsValues.SCRIPT_MANAGEMENT_CONFIGURATION_ENABLED) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

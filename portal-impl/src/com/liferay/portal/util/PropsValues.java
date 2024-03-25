@@ -1986,6 +1986,10 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SCHEMA_MODULE_BUILD_AUTO_UPGRADE));
 
+	public static boolean SCRIPT_MANAGEMENT_CONFIGURATION_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.SCRIPT_MANAGEMENT_CONFIGURATION_ENABLED));
+
 	public static final int SEARCH_CONTAINER_PAGE_DEFAULT_DELTA =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA), 20);

@@ -2259,6 +2259,9 @@ public interface PropsKeys {
 
 	public static final String SCHEMA_RUN_ENABLED = "schema.run.enabled";
 
+	public static final String SCRIPT_MANAGEMENT_CONFIGURATION_ENABLED =
+		"script.management.configuration.enabled";
+
 	public static final String SEARCH_CONTAINER_PAGE_DEFAULT_DELTA =
 		"search.container.page.default.delta";
 

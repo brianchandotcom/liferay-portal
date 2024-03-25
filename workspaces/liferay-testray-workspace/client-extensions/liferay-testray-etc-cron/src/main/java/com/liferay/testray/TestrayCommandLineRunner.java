@@ -5,21 +5,16 @@
 
 package com.liferay.testray;
 
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 
+import java.util.function.Function;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.client.utils.URIUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,8 +22,14 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriBuilder;
 
 /**
  * @author Nilton Vieira
@@ -37,23 +38,20 @@ import org.springframework.stereotype.Component;
 public class TestrayCommandLineRunner implements CommandLineRunner {
 
 	public void autoArchiveTestrayBuilds() throws Exception {
-		HttpResponse<String> httpResponse = _sendRequest(
-			null, "GET",
-			new URIBuilder(
+		JSONObject responseJSONObject = _sendRequest(
+			"", HttpMethod.GET,
+			uriBuilder -> uriBuilder.path(
 				"/o/c/builds"
-			).addParameter(
+			).queryParam(
 				"filter",
 				"archived eq false and promoted eq false and dateCreated lt " +
 					_currentDateTime.minusDays(_maxDaysOpened)
-			).addParameter(
+			).queryParam(
 				"pageSize", "-1"
 			).build());
 
-		JSONArray testrayBuildsJSONArray = new JSONObject(
-			httpResponse.body()
-		).getJSONArray(
-			"items"
-		);
+		JSONArray testrayBuildsJSONArray = responseJSONObject.getJSONArray(
+			"items");
 
 		if ((testrayBuildsJSONArray == null) ||
 			testrayBuildsJSONArray.isEmpty()) {
@@ -83,29 +81,28 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 		}
 
 		_sendRequest(
-			jsonArray.toString(), "PUT", URI.create("/o/c/builds/batch"));
+			jsonArray.toString(), HttpMethod.PUT,
+			uriBuilder -> uriBuilder.path(
+				"/o/c/builds/batch"
+			).build());
 	}
 
 	public void deleteTestrayArchivedBuilds() throws Exception {
-		HttpResponse<String> httpResponse = _sendRequest(
-			null, "GET",
-			new URIBuilder(
+		JSONObject responseJSONObject = _sendRequest(
+			"", HttpMethod.GET,
+			uriBuilder -> uriBuilder.path(
 				"/o/c/builds"
-			).addParameter(
+			).queryParam(
 				"fields", "id"
-			).addParameter(
+			).queryParam(
 				"filter",
 				"archived eq true and dateArchived lt " +
 					_currentDateTime.minusDays(_maxDaysArchived)
-			).addParameter(
+			).queryParam(
 				"pageSize", "-1"
 			).build());
 
-		JSONArray jsonArray = new JSONObject(
-			httpResponse.body()
-		).getJSONArray(
-			"items"
-		);
+		JSONArray jsonArray = responseJSONObject.getJSONArray("items");
 
 		if ((jsonArray == null) || jsonArray.isEmpty()) {
 			if (_log.isInfoEnabled()) {
@@ -120,7 +117,10 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 		}
 
 		_sendRequest(
-			jsonArray.toString(), "DELETE", URI.create("/o/c/builds/batch"));
+			jsonArray.toString(), HttpMethod.DELETE,
+			uriBuilder -> uriBuilder.path(
+				"/o/c/builds/batch"
+			).build());
 	}
 
 	@Override
@@ -129,36 +129,44 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 		autoArchiveTestrayBuilds();
 	}
 
-	private HttpResponse<String> _sendRequest(
-			String body, String method, URI uri)
-		throws Exception {
+	private WebClient _getWebClient() {
+		return WebClient.builder(
+		).baseUrl(
+			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+		).exchangeStrategies(
+			ExchangeStrategies.builder(
+			).codecs(
+				clientCodecConfigurer -> clientCodecConfigurer.defaultCodecs(
+				).maxInMemorySize(
+					5 * 1024 * 1024
+				)
+			).build()
+		).build();
+	}
 
-		HttpRequest.Builder httpRequest = HttpRequest.newBuilder(
-		).uri(
-			URIUtils.resolve(
-				URI.create(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain),
-				uri)
-		).headers(
-			"accept", "application/json", "Authorization",
-			"Bearer " + _oAuth2AccessToken.getTokenValue(), "Content-Type",
-			"application/json"
-		);
+	private JSONObject _sendRequest(
+		String bodyValue, HttpMethod httpMethod,
+		Function<UriBuilder, URI> uriFunction) {
 
-		if (!StringUtil.equals(method, "GET")) {
-			httpRequest.method(
-				method, HttpRequest.BodyPublishers.ofString(body));
-		}
-
-		HttpClient httpClient = HttpClient.newHttpClient();
-
-		HttpResponse<String> httpResponse = httpClient.send(
-			httpRequest.build(), HttpResponse.BodyHandlers.ofString());
-
-		if (_log.isInfoEnabled()) {
-			_log.info(httpResponse);
-		}
-
-		return httpResponse;
+		return new JSONObject(
+			_getWebClient(
+			).method(
+				httpMethod
+			).uri(
+				uriBuilder -> uriFunction.apply(uriBuilder)
+			).contentType(
+					MediaType.APPLICATION_JSON
+			).accept(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION,
+				"Bearer " + _oAuth2AccessToken.getTokenValue()
+			).bodyValue(
+				bodyValue
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
 	}
 
 	private static final Log _log = LogFactory.getLog(

@@ -28,9 +28,7 @@ const toJSONObjectString = (attributes) => {
 			value = JSON.parse(value);
 		}
 
-		if (attribute.name) {
-			attributesObject[attribute.name] = value;
-		}
+		attributesObject[attribute.name] = value;
 	});
 
 	return JSON.stringify(attributesObject);

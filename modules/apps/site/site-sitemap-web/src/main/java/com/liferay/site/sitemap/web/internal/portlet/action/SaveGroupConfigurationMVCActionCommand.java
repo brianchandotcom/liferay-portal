@@ -50,7 +50,7 @@ public class SaveGroupConfigurationMVCActionCommand
 
 		if (!permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId())) {
 			PrincipalException principalException =
-				new PrincipalException.MustBeCompanyAdmin(
+				new PrincipalException.MustBeGroupAdmin(
 					permissionChecker.getUserId());
 
 			throw new PortletException(principalException);

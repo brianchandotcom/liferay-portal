@@ -16,7 +16,7 @@ String searchURL = (String)request.getAttribute("liferay-commerce-ui:search-resu
 
 <div>
 	<react:component
-		module="search_results/js/SearchResults"
+		module="{searchResults} from commerce-frontend-taglib"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"commerceAccountId", commerceAccountId

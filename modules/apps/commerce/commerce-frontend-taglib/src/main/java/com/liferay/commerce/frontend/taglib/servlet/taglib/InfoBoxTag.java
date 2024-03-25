@@ -18,25 +18,19 @@ import javax.servlet.jsp.PageContext;
 public class InfoBoxTag extends IncludeTag {
 
 	@Override
-	public int doEndTag() throws JspException {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
-
-		return super.doEndTag();
-	}
-
-	@Override
 	public int doStartTag() throws JspException {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
-
 		HttpServletRequest httpServletRequest = getRequest();
 
-		setNamespacedAttribute(httpServletRequest, "actionLabel", _actionLabel);
-		setNamespacedAttribute(
-			httpServletRequest, "actionTargetId", _actionTargetId);
-		setNamespacedAttribute(httpServletRequest, "actionUrl", _actionUrl);
-		setNamespacedAttribute(
-			httpServletRequest, "elementClasses", _elementClasses);
-		setNamespacedAttribute(httpServletRequest, "title", _title);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:info-box:actionLabel", _actionLabel);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:info-box:actionTargetId", _actionTargetId);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:info-box:actionUrl", _actionUrl);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:info-box:elementClasses", _elementClasses);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:info-box:title", _title);
 
 		super.doStartTag();
 
@@ -110,9 +104,6 @@ public class InfoBoxTag extends IncludeTag {
 	protected String getStartPage() {
 		return _START_PAGE;
 	}
-
-	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-commerce:info-box:";
 
 	private static final String _END_PAGE = "/info_box/end.jsp";
 

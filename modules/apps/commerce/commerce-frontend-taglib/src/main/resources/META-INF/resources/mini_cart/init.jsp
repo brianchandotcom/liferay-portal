@@ -7,24 +7,26 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%@ page import="java.util.Map" %>
 
+<liferay-frontend:defineObjects />
+
 <liferay-theme:defineObjects />
 
 <%
-long accountEntryId = (Long)request.getAttribute("liferay-commerce:cart:accountEntryId");
+long accountEntryId = (long)request.getAttribute("liferay-commerce:cart:accountEntryId");
 Map<String, String> cartViews = (Map<String, String>)request.getAttribute("liferay-commerce:cart:cartViews");
 String checkoutURL = (String)request.getAttribute("liferay-commerce:cart:checkoutURL");
-long commerceChannelGroupId = (Long)request.getAttribute("liferay-commerce:cart:commerceChannelGroupId");
-long commerceChannelId = (Long)request.getAttribute("liferay-commerce:cart:commerceChannelId");
+long commerceChannelGroupId = (long)request.getAttribute("liferay-commerce:cart:commerceChannelGroupId");
+long commerceChannelId = (long)request.getAttribute("liferay-commerce:cart:commerceChannelId");
 String commerceCurrencyCode = (String)request.getAttribute("liferay-commerce:cart:commerceCurrencyCode");
 boolean displayDiscountLevels = (boolean)request.getAttribute("liferay-commerce:cart:displayDiscountLevels");
 boolean displayTotalItemsQuantity = (boolean)request.getAttribute("liferay-commerce:cart:displayTotalItemsQuantity");

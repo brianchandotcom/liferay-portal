@@ -101,12 +101,12 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									small="<%= true %>"
 								/>
 
-								<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events">
+								<aui:script>
 									document
 										.querySelector('#erc-edit-modal-opener')
 										.addEventListener('click', (e) => {
 											e.preventDefault();
-											Liferay.fire(events.OPEN_MODAL, {id: 'erc-edit-modal'});
+											Liferay.fire('open-modal', {id: 'erc-edit-modal'});
 										});
 								</aui:script>
 
@@ -313,12 +313,16 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 							/>
 						</div>
 
-						<aui:script require="commerce-frontend-js/components/dropdown/entry as dropdown">
-							dropdown.default('dropdown-header', 'dropdown-header-container', {
-								items: <%= jsonSerializer.serializeDeep(dropdownItems) %>,
-								spritemap: '<%= themeDisplay.getPathThemeSpritemap() %>',
-							});
-						</aui:script>
+						<liferay-frontend:component
+							context='<%=
+								HashMapBuilder.<String, Object>put(
+									"items", dropdownItems
+								).put(
+									"spritemap", themeDisplay.getPathThemeSpritemap()
+								).build()
+							%>'
+							module="{dropdownMain} from commerce-frontend-taglib"
+						/>
 					</c:if>
 
 					<c:if test="<%= Validator.isNotNull(previewUrl) %>">

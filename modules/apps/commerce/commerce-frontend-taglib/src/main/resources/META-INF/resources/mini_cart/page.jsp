@@ -16,63 +16,45 @@
 	<c:otherwise>
 		<div class="cart-root" id="<%= miniCartId %>"></div>
 
-		<aui:script require="commerce-frontend-js/components/mini_cart/entry as Cart">
-			var initialProps = {
-				accountId: <%= accountEntryId %>,
-				cartActionURLs: {
-					checkoutURL: '<%= HtmlUtil.escapeJS(checkoutURL) %>',
-					orderDetailURL: '<%= HtmlUtil.escapeJS(orderDetailURL) %>',
-					productURLSeparator: '<%= HtmlUtil.escapeJS(productURLSeparator) %>',
-					siteDefaultURL: '<%= HtmlUtil.escapeJS(siteDefaultURL) %>',
-				},
-				channel: {
-					currencyCode: '<%= commerceCurrencyCode %>',
-					groupId: <%= commerceChannelGroupId %>,
-					id: <%= commerceChannelId %>,
-				},
-				displayDiscountLevels: <%= displayDiscountLevels %>,
-				displayTotalItemsQuantity: <%= displayTotalItemsQuantity %>,
-				itemsQuantity: <%= itemsQuantity %>,
-				orderId: <%= orderId %>,
-				requestQuoteEnabled: <%= requestCodeEnabled %>,
-				toggleable: <%= toggleable %>,
-			};
-
-			<%
-			if (!cartViews.isEmpty()) {
-			%>
-
-				initialProps.cartViews = {};
-
-				<%
-				for (Map.Entry<String, String> cartView : cartViews.entrySet()) {
-				%>
-
-					initialProps.cartViews['<%= cartView.getKey() %>'] = {
-						contentRendererModuleUrl: '<%= cartView.getValue() %>',
-					};
-
-				<%
-					}
-				}
-
-				if (!labels.isEmpty()) {
-				%>
-
-				initialProps.labels = {};
-
-				<%
-				for (Map.Entry<String, String> label : labels.entrySet()) {
-				%>
-
-					initialProps.labels['<%= label.getKey() %>'] = '<%= label.getValue() %>';
-
-			<%
-				}
-			}
-			%>
-
-			Cart.default('<%= miniCartId %>', '<%= miniCartId %>', initialProps);
-		</aui:script>
+		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"accountId", accountEntryId
+				).put(
+					"cartViews", cartViews
+				).put(
+					"checkoutURL", checkoutURL
+				).put(
+					"currencyCode", commerceCurrencyCode
+				).put(
+					"displayDiscountLevels", displayDiscountLevels
+				).put(
+					"displayTotalItemsQuantity", displayTotalItemsQuantity
+				).put(
+					"groupId", commerceChannelGroupId
+				).put(
+					"id", commerceChannelId
+				).put(
+					"itemsQuantity", itemsQuantity
+				).put(
+					"labels", labels
+				).put(
+					"miniCartId", miniCartId
+				).put(
+					"orderDetailURL", orderDetailURL
+				).put(
+					"orderId", orderId
+				).put(
+					"productURLSeparator", productURLSeparator
+				).put(
+					"requestQuoteEnabled", requestCodeEnabled
+				).put(
+					"siteDefaultURL", siteDefaultURL
+				).put(
+					"toggleable", toggleable
+				).build()
+			%>'
+			module="{cart} from commerce-frontend-taglib"
+		/>
 	</c:otherwise>
 </c:choose>

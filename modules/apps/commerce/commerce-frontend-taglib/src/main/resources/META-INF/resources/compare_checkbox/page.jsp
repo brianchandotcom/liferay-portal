@@ -9,14 +9,25 @@
 
 <div class="compare-checkbox-root" id="<%= rootId %>"></div>
 
-<aui:script require="commerce-frontend-js/components/compare_checkbox/entry as compareCheckbox">
-	compareCheckbox.default('<%= rootId %>', '<%= rootId %>', {
-		commerceChannelGroupId: <%= commerceChannelGroupId %>,
-		disabled: <%= disabled %>,
-		inCompare: <%= inCompare %>,
-		itemId: '<%= cpCatalogEntry.getCPDefinitionId() %>',
-		label: '<%= label %>',
-		pictureUrl: '<%= pictureUrl %>',
-		refreshOnRemove: <%= refreshOnRemove %>,
-	});
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"commerceChannelGroupId", commerceChannelGroupId
+		).put(
+			"disabled", disabled
+		).put(
+			"inCompare", inCompare
+		).put(
+			"itemId", cpCatalogEntry.getCPDefinitionId()
+		).put(
+			"label", label
+		).put(
+			"pictureUrl", pictureUrl
+		).put(
+			"refreshOnRemove", refreshOnRemove
+		).put(
+			"rootId", rootId
+		).build()
+	%>'
+	module="{compareCheckboxTag} from commerce-frontend-taglib"
+/>

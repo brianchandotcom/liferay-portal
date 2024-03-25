@@ -20,7 +20,6 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -108,10 +107,6 @@ public class ServletContextUtil {
 		return _infoItemRendererRegistrySnapshot.get();
 	}
 
-	public static NPMResolver getNPMResolver() {
-		return _npmResolverSnapshot.get();
-	}
-
 	public static ProductHelper getProductHelper() {
 		return _productHelperSnapshot.get();
 	}
@@ -166,8 +161,6 @@ public class ServletContextUtil {
 	private static final Snapshot<InfoItemRendererRegistry>
 		_infoItemRendererRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class, InfoItemRendererRegistry.class);
-	private static final Snapshot<NPMResolver> _npmResolverSnapshot =
-		new Snapshot<>(ServletContextUtil.class, NPMResolver.class);
 	private static final Snapshot<ProductHelper> _productHelperSnapshot =
 		new Snapshot<>(ServletContextUtil.class, ProductHelper.class);
 	private static final Snapshot<ServletContext> _servletContextSnapshot =

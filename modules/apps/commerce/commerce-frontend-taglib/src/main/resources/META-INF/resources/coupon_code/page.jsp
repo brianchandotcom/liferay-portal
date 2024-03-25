@@ -59,7 +59,7 @@ if (commerceOrder != null) {
 								window.location.reload();
 							}
 							else {
-								new Liferay.Notification({
+								Liferay.Util.openToast({
 									closeable: true,
 									delay: {
 										hide: 5000,
@@ -113,7 +113,7 @@ if (commerceOrder != null) {
 								window.location.reload();
 							}
 							else {
-								new Liferay.Notification({
+								Liferay.Util.openToast({
 									closeable: true,
 									delay: {
 										hide: 5000,

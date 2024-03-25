@@ -72,15 +72,18 @@ public class AddToWishListTag extends IncludeTag {
 
 	@Override
 	public void setAttributes(HttpServletRequest httpServletRequest) {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
-
-		setNamespacedAttribute(
-			httpServletRequest, "commerceAccountId", _commerceAccountId);
-		setNamespacedAttribute(
-			httpServletRequest, "cpCatalogEntry", _cpCatalogEntry);
-		setNamespacedAttribute(httpServletRequest, "inWishList", _inWishList);
-		setNamespacedAttribute(httpServletRequest, "large", _large);
-		setNamespacedAttribute(httpServletRequest, "skuId", _skuId);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:add-to-wish-list:commerceAccountId",
+			_commerceAccountId);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:add-to-wish-list:cpCatalogEntry",
+			_cpCatalogEntry);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:add-to-wish-list:inWishList", _inWishList);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:add-to-wish-list:large", _large);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:add-to-wish-list:skuId", _skuId);
 	}
 
 	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
@@ -120,9 +123,6 @@ public class AddToWishListTag extends IncludeTag {
 	protected String getPage() {
 		return _PAGE;
 	}
-
-	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-commerce:add-to-wish-list:";
 
 	private static final String _PAGE = "/add_to_wish_list/page.jsp";
 

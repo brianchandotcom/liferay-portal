@@ -48,17 +48,22 @@ if (Validator.isNotNull(namespace) || (Validator.isNull(namespace) && !compact))
 </span>
 
 <c:if test="<%= Validator.isNotNull(containerId) %>">
-	<aui:script require="commerce-frontend-js/components/price/entry as Price">
-		const componentId = '<%= containerId %>';
-
-		const initialProps = {
-			displayDiscountLevels: <%= displayDiscountLevels %>,
-			namespace: '<%= namespace %>',
-			netPrice: <%= netPrice %>,
-			price: <%= jsonSerializer.serializeDeep(priceModel) %>,
-			standalone: true,
-		};
-
-		Price.default(componentId, componentId, initialProps);
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"containerId", containerId
+			).put(
+				"displayDiscountLevels", displayDiscountLevels
+			).put(
+				"namespace", namespace
+			).put(
+				"netPrice", netPrice
+			).put(
+				"price", priceModel
+			).put(
+				"standalone", true
+			).build()
+		%>'
+		module="{price} from commerce-frontend-taglib"
+	/>
 </c:if>

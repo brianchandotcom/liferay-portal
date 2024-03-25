@@ -14,29 +14,40 @@
 		</button>
 	</div>
 
-	<aui:script require="commerce-frontend-js/components/request_quote/entry as RequestQuote">
-		const props = {
-			accountId: <%= commerceAccountId %>,
-			channel: {
-				currencyCode: '<%= HtmlUtil.escapeJS(commerceCurrencyCode) %>',
-				id: <%= commerceChannelId %>,
-				requestQuoteEnabled: <%= requestQuoteEnabled %>,
-			},
-			cpDefinitionId: <%= cpDefinitionId %>,
-			cpInstance: {
-				skuId: <%= cpInstanceId %>,
-				skuOptions: <%= skuOptions %> || [],
-				priceOnApplication: <%= priceOnApplication %>,
-			},
-			disabled: <%= disabled %>,
-			namespace: '<%= namespace %>',
-			orderDetailURL: '<%= orderDetailURL %>',
-		};
-
-		RequestQuote.default(
-			'<%= requestQuoteElementId %>',
-			'<%= requestQuoteElementId %>',
-			props
-		);
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"accountId", commerceAccountId
+			).put(
+				"channel",
+				HashMapBuilder.<String, Object>put(
+					"currencyCode", commerceCurrencyCode
+				).put(
+					"id", commerceChannelId
+				).put(
+					"requestQuoteEnabled", requestQuoteEnabled
+				).build()
+			).put(
+				"cpDefinitionId", cpDefinitionId
+			).put(
+				"cpInstance",
+				HashMapBuilder.<String, Object>put(
+					"priceOnApplication", priceOnApplication
+				).put(
+					"skuId", cpInstanceId
+				).put(
+					"skuOptions", skuOptions
+				).build()
+			).put(
+				"disabled", disabled
+			).put(
+				"namespace", namespace
+			).put(
+				"orderDetailURL", orderDetailURL
+			).put(
+				"requestQuoteElementId", requestQuoteElementId
+			).build()
+		%>'
+		module="{requestQuote} from commerce-frontend-taglib"
+	/>
 </c:if>

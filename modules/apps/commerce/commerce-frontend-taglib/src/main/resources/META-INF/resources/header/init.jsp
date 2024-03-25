@@ -12,6 +12,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/commerce-ui" prefix="commerce-ui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -21,13 +22,12 @@ page import="com.liferay.commerce.frontend.model.HeaderActionModel" %><%@
 page import="com.liferay.commerce.frontend.util.HeaderHelperUtil" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.BaseModel" %><%@
 page import="com.liferay.portal.kernel.model.GroupedModel" %><%@
 page import="com.liferay.portal.kernel.model.WorkflowedModel" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
@@ -37,6 +37,8 @@ page import="com.liferay.portal.kernel.workflow.WorkflowTask" %>
 <%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
+
+<liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
@@ -72,6 +74,4 @@ if (displayBeanId == 0) {
 }
 
 WorkflowTask reviewWorkflowTask = HeaderHelperUtil.getReviewWorkflowTask(themeDisplay.getCompanyId(), themeDisplay.getUserId(), beanId, model.getName());
-
-JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>

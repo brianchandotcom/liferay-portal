@@ -115,6 +115,7 @@ const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 					title: 'Provisioning',
 				},
 				{
+					align: 'center',
 					key: 'status',
 					render: () => (
 						<div onClick={(event) => event.stopPropagation()}>

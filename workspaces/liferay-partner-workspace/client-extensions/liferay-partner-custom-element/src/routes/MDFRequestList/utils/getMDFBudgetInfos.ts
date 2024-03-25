@@ -7,25 +7,15 @@ import {MDFColumnKey} from '../../../common/enums/mdfColumnKey';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 
-const APPROVED_STATUS = 'approved';
 export default function getMDFBudgetInfos(
-	totalCostOfExpense?: number,
 	totalRequested?: number,
-	currency?: LiferayPicklist,
-	requestStatus?: string
+	currency?: LiferayPicklist
 ) {
-	if (totalCostOfExpense && totalRequested) {
+	if (totalRequested) {
 		return {
-			[MDFColumnKey.TOTAL_COST]: getIntlNumberFormat(currency).format(
-				totalCostOfExpense
-			),
 			[MDFColumnKey.REQUESTED]: getIntlNumberFormat(currency).format(
 				totalRequested
 			),
-			[MDFColumnKey.APPROVED]:
-				requestStatus === APPROVED_STATUS
-					? getIntlNumberFormat(currency).format(totalRequested)
-					: '-',
 		};
 	}
 }

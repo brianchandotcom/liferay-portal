@@ -25,7 +25,7 @@ export default function useGetListItemsFromMDFRequests(
 					  )
 					: '-',
 				[MDFColumnKey.ID]: String(item.id),
-				[MDFColumnKey.NAME]: item.overallCampaignName,
+				[MDFColumnKey.CAMPAIGN_NAME]: item.overallCampaignName,
 				...getMDFActivityPeriod(
 					item.minDateActivity,
 					item.maxDateActivity
@@ -43,12 +43,7 @@ export default function useGetListItemsFromMDFRequests(
 							Number(item.totalClaimedRequest)
 					  ),
 				...getMDFDates(item.submitDate, item.dateModified),
-				...getMDFBudgetInfos(
-					item.totalCostOfExpense,
-					item.totalMDFRequestAmount,
-					item.currency,
-					item.mdfRequestStatus.key
-				),
+				...getMDFBudgetInfos(item.totalMDFRequestAmount, item.currency),
 			})),
 		[items]
 	);

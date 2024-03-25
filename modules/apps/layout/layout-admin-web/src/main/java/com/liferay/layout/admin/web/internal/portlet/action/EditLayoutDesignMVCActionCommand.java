@@ -112,7 +112,7 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext.setAssetTagNames(assetEntry.getTagNames());
 			}
 
-			if (layout.isTypeAssetDisplay()) {
+			if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
 				serviceContext.setAttribute(
 					"layout.instanceable.allowed", Boolean.TRUE);
 			}

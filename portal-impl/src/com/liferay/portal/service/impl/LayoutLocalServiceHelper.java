@@ -735,7 +735,8 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 		if (!Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY) &&
 			!Objects.equals(type, LayoutConstants.TYPE_COLLECTION) &&
-			!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+			!Objects.equals(type, LayoutConstants.TYPE_CONTENT) &&
+			!Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
 
 			return false;
 		}

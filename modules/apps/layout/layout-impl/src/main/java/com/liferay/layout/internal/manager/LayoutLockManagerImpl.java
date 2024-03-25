@@ -162,7 +162,8 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 							new String[] {
 								LayoutConstants.TYPE_ASSET_DISPLAY,
 								LayoutConstants.TYPE_COLLECTION,
-								LayoutConstants.TYPE_CONTENT
+								LayoutConstants.TYPE_CONTENT,
+								LayoutConstants.TYPE_UTILITY
 							})
 					)
 				).as(

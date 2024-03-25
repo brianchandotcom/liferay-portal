@@ -16,7 +16,7 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 
 String friendlyURLBase = StringPool.BLANK;
 
-if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && (!selLayout.isSystem() || selLayout.isTypeAssetDisplay())) {
+if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && (!selLayout.isSystem() || selLayout.isTypeAssetDisplay() || selLayout.isTypeUtility())) {
 	friendlyURLBase = layoutsAdminDisplayContext.getFriendlyURLBase();
 }
 %>

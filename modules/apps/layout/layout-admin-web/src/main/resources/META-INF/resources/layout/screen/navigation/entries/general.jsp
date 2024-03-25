@@ -52,7 +52,7 @@ portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
 	<aui:input name="type" type="hidden" value="<%= selLayout.getType() %>" />
 
-	<c:if test="<%= group.isLayoutPrototype() || !(selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && (!selLayout.isSystem() || selLayout.isTypeAssetDisplay())) %>">
+	<c:if test="<%= group.isLayoutPrototype() || !(selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && (!selLayout.isSystem() || selLayout.isTypeAssetDisplay() || selLayout.isTypeUtility())) %>">
 		<aui:input name="friendlyURL" type="hidden" value="<%= HttpComponentsUtil.decodeURL(selLayout.getFriendlyURL()) %>" />
 	</c:if>
 
@@ -66,7 +66,7 @@ portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 		<aui:input name='<%= "nameMapAsXML_" + defaultLanguageId %>' type="hidden" value="<%= selLayout.getName(defaultLocale) %>" />
 	</c:if>
 
-	<c:if test="<%= layoutsAdminDisplayContext.isLayoutPageTemplateEntry() || ((selLayout.isTypeAssetDisplay() || selLayout.isTypeContent()) && layoutsAdminDisplayContext.isDraft()) %>">
+	<c:if test="<%= layoutsAdminDisplayContext.isLayoutPageTemplateEntry() || selLayout.isTypeUtility() || ((selLayout.isTypeAssetDisplay() || selLayout.isTypeContent()) && layoutsAdminDisplayContext.isDraft()) %>">
 
 		<%
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales(group.getGroupId())) {

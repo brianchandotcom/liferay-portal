@@ -242,7 +242,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		if (system &&
 			(Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
-			 Objects.equals(type, LayoutConstants.TYPE_CONTENT))) {
+			 Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
+			 Objects.equals(type, LayoutConstants.TYPE_UTILITY))) {
 
 			friendlyURLMap = _getDraftFriendlyURLMap(groupId, friendlyURLMap);
 		}
@@ -354,7 +355,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layout.getCompanyId(), layout.getGroupId(),
 				Layout.class.getName()) &&
 			(Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
-			 Objects.equals(type, LayoutConstants.TYPE_CONTENT)) &&
+			 Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
+			 Objects.equals(type, LayoutConstants.TYPE_UTILITY)) &&
 			!system) {
 
 			layout.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -3587,7 +3589,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setType(type);
 
 		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
-			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+			Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
+			Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
 
 			layout.setLayoutPrototypeUuid(StringPool.BLANK);
 			layout.setLayoutPrototypeLinkEnabled(false);

@@ -2592,7 +2592,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
-			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+			Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
+			Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
 
 			JSONObject pageElementJSONObject =
 				pageDefinitionJSONObject.getJSONObject("pageElement");
@@ -2682,7 +2683,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
-			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+			Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
+			Objects.equals(type, LayoutConstants.TYPE_UTILITY)) {
 
 			JSONObject settingsJSONObject =
 				pageDefinitionJSONObject.getJSONObject("settings");

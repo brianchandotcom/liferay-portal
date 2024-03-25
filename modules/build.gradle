@@ -407,12 +407,6 @@ gradle.beforeProject {
 			bundle {
 				instruction "-includeresource.thirdparty", "-classes"
 			}
-
-			if (tasks.findByName("jarSources")) {
-				jarSources {
-					mustRunAfter "patch"
-				}
-			}
 		}
 
 		if (project.path.startsWith(":util:") && tasks.findByName("copyCSS")) {

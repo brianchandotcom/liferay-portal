@@ -53,5 +53,5 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 </aui:form>
 
 <liferay-frontend:component
-	module="js/addressTaxFixedRates"
+	module="{addressTaxFixedRates} from commerce-tax-engine-fixed-web"
 />

@@ -52,5 +52,5 @@ CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel = commerceTaxFixed
 			"regionId", commerceTaxFixedRateAddressRelsDisplayContext.getRegionId()
 		).build()
 	%>'
-	module="js/editCommerceTaxFixedRateAddressRel"
+	module="{editCommerceTaxFixedRateAddressRel} from commerce-tax-engine-fixed-web"
 />

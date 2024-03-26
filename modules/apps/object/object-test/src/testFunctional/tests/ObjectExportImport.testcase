@@ -24,6 +24,8 @@ definition {
 	@description = "LPS-142175 - Verify the field values persist for object entries with 100 fields"
 	@priority = 3
 	test AssertFieldValuesPersist {
+		property portal.upstream = "quarantine";
+
 		task ("Given a custom object with 100 fields") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 187390",

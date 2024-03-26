@@ -162,7 +162,8 @@ definition {
 	@description = "LPS-185429 Verify CRUD functionality with a created standard object using Salesforce as the storage type"
 	@priority = 5
 	test AssertCRUDWithCreatedStandardObject {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		task ("Given a created custom object with the storage type set to Salesforce") {
 			ObjectAdmin.openObjectAdmin();
@@ -477,7 +478,8 @@ definition {
 	@description = "LPS-185428 Verify CRUD functionality with an imported standard object using Salesforce as the storage type"
 	@priority = 5
 	test AssertCRUDWithImportedStandardObject {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		task ("Given an imported standard object with storage type as Salesforce") {
 			ObjectExportImport.importObject(

@@ -22,7 +22,7 @@ export function DashboardEmptyTable({
 	button?: boolean;
 	buttonName?: string;
 	children?: ReactNode;
-	description1: string;
+	description1?: string;
 	description2?: string;
 	icon: string;
 	title: string;

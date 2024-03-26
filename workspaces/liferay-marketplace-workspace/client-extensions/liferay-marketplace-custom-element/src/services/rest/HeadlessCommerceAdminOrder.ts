@@ -7,7 +7,7 @@ import fetcher from '../fetcher';
 
 class HeadlessCommerceAdminOrder {
 	getOrders(searchParams = new URLSearchParams()) {
-		return fetcher(
+		return fetcher<APIResponse>(
 			`o/headless-commerce-admin-order/v1.0/orders?${searchParams.toString()}`
 		);
 	}

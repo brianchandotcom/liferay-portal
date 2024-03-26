@@ -54,7 +54,7 @@ public abstract class BaseRangeTermQueryTestCase extends BaseIndexingTestCase {
 						new SearchSearchRequest() {
 							{
 								addSorts(sorts.field(Field.PRIORITY));
-								setIndexNames("_all");
+								setIndexNames(String.valueOf(getCompanyId()));
 								setQuery(rangeTermQuery);
 								setSize(15);
 							}

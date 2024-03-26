@@ -46,7 +46,8 @@ public abstract class BaseExistsQueryTestCase extends BaseIndexingTestCase {
 				SearchSearchRequest searchSearchRequest =
 					new SearchSearchRequest();
 
-				searchSearchRequest.setIndexNames("_all");
+				searchSearchRequest.setIndexNames(
+					String.valueOf(getCompanyId()));
 				searchSearchRequest.setQuery(existsQuery);
 				searchSearchRequest.setSize(30);
 

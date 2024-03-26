@@ -229,22 +229,26 @@
 		</or>
 	</condition>
 
-	<fail message="Please use Java 1.8.">
+	<fail message="Please use Java ${build.java.version.source.compatibility}.">
 		<condition>
 			<not>
 				<or>
-					<equals arg1="${java.specification.version}" arg2="1.8" />
+					<equals arg1="${build.java.version.source.compatibility}" arg2="${java.specification.version}" />
 					<isset property="env.JENKINS_HOME" />
 				</or>
 			</not>
 		</condition>
 	</fail>
 
-	<condition property="correct.ant.version">
-		<antversion atleast="1.9.3" />
+	<condition else="1.10.14" property="java.ant.version" value="1.9.3">
+		<equals arg1="${build.java.version.source.compatibility}" arg2="1.8" />
 	</condition>
 
-	<fail message="Please use Ant 1.9.3 or above.">
+	<condition property="correct.ant.version">
+		<antversion atleast="${java.ant.version}" />
+	</condition>
+
+	<fail message="Please use Ant ${java.ant.version} or above.">
 		<condition>
 			<not>
 				<istrue value="${correct.ant.version}" />
@@ -2063,7 +2067,8 @@ rerun your task.
 				<entry key="database.jdbc.drivers.url" value="${test.jdbc.drivers.url}" />
 				<entry key="database.jdbc.oracle.driver" value="${jdbc.oracle.driver}" />
 				<entry key="database.oracle.version" value="${database.oracle.version}" />
-				<entry if:set="build.java.version" key="java.version" unless:blank="${build.java.version}" value="${build.java.version}" />
+				<entry if:set="build.java.version.source.compatibility" key="java.version.source.compatibility" unless:blank="${build.java.version.source.compatibility}" value="${build.java.version.source.compatibility}" />
+				<entry if:set="build.java.version.target.compatibility" key="java.version.target.compatibility" unless:blank="${build.java.version.target.compatibility}" value="${build.java.version.target.compatibility}" />
 				<entry if:set="junit.jvm.override" key="org.gradle.java.installations.paths" unless:blank="${junit.jvm.override}" value="${junit.jvm.override}" />
 				<entry key="systemProp.build.bnd.print.builder.classpath" value="${build.bnd.print.builder.classpath}" />
 				<entry key="systemProp.build.bnd.print.enabled" value="${build.bnd.print.enabled}" />

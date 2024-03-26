@@ -1108,6 +1108,14 @@
 	<td>//button[contains(@class,'collapse-icon-middle')][span[normalize-space()='Text']]//..//button[@aria-pressed='true'][*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
 	<td></td>
 </tr>
+
+<!-- PANEL -->
+
+<tr>
+	<td>PANEL</td>
+	<td>//button[@data-panel-id='${key_panel_id}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

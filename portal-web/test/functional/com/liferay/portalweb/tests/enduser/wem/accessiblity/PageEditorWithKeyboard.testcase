@@ -1385,8 +1385,8 @@ definition {
 
 		task ("Then the page designer could open the Page Rules panel via keyboard") {
 			KeyPress(
-				key_text = "format",
-				locator1 = "Icon#ANY",
+				key_panel_id = "page_design_options",
+				locator1 = "PageEditor#PANEL",
 				value1 = "\DOWN");
 
 			AssertVisible(

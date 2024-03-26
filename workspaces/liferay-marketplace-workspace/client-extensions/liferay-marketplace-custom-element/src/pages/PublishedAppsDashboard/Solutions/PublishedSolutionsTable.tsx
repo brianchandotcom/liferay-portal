@@ -11,7 +11,6 @@ import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
 import TableKebabButton from '../../../components/Table/TableButtons/TableKebabButton';
 import {
-	getProductVersionFromSpecifications,
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../utils/util';
@@ -69,14 +68,6 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 						</div>
 					),
 					title: 'Name',
-				},
-				{
-					key: 'version',
-					render: (_, {productSpecifications}) =>
-						getProductVersionFromSpecifications(
-							productSpecifications
-						),
-					title: 'Version',
 				},
 				{
 					key: 'solutionType',

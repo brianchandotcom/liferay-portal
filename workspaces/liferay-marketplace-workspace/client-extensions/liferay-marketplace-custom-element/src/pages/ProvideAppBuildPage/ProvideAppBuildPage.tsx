@@ -22,7 +22,6 @@ import {PackageVersionModal} from '../../components/PackageVersionModal/PackageV
 import {RadioCard} from '../../components/RadioCard/RadioCard';
 import {Section} from '../../components/Section/Section';
 import {ProductEditionOption} from '../../enums/ProductEditionOption';
-import {ProductSpecification} from '../../enums/ProductSpecification';
 import {ProductType} from '../../enums/ProductType';
 import {ProductUploadType} from '../../enums/ProductUploadType';
 import {ProductVersionOption} from '../../enums/ProductVersionOption';
@@ -33,14 +32,10 @@ import {TYPES} from '../../manage-app-state/actionTypes';
 import {
 	addExpandoValue,
 	createAttachmentAxios,
-	createProductSpecification,
 	getCategories,
 	getProductIdCategories,
-	getProductSpecifications,
-	getSpecification,
 	getVocabularies,
 	patchProductIdCategory,
-	updateProductSpecification,
 } from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
 import OfferingTypeCheckbox from './components/OfferingTypeCheckbox';
@@ -49,13 +44,14 @@ import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 import './ProvideAppBuildPage.scss';
 import {Liferay} from '../../liferay/liferay';
 import ResourceRequirements from './ResourceRequirements';
+import upsertProductSpecification from './components/UpsertProductSpecification';
 
 type ProvideAppBuildPageProps = {
 	onClickBack: () => void;
 	onClickContinue: () => void;
 };
 
-type BodyProductSpecificationProps = {
+export type BodyProductSpecificationProps = {
 	productId: number;
 	specificationKey: string;
 	value: number | string;
@@ -195,7 +191,7 @@ export function ProvideAppBuildPage({
 		false
 	);
 
-	const bodySpecification = useMemo(
+	const bodySpecifications = useMemo(
 		() => [
 			{
 				productId: appProductId,
@@ -426,56 +422,11 @@ export function ProvideAppBuildPage({
 		}
 	};
 
-	const submitAppBuildClouldResourceRequirements = async (
-		appId: number,
-		productSpecifications: BodyProductSpecificationProps[]
-	) => {
-		const dataSpecificationList = await getProductSpecifications({
-			appProductId,
-		});
-
-		for (const productSpecification of productSpecifications) {
-			const dataSpecification = dataSpecificationList?.find(
-				(specification) =>
-					specification?.specificationKey ===
-					productSpecification.specificationKey
-			);
-
-			const fn = dataSpecification?.id
-				? updateProductSpecification
-				: createProductSpecification;
-
-			await fn({
-				body: {
-					specificationKey: productSpecification.specificationKey,
-					value: {en_US: productSpecification.value},
-				},
-				id: dataSpecification?.id || appId,
-			});
-		}
-	};
-
 	const submitAppBuildTypeSpecification = async () => {
-		if (appType.id) {
-			return updateProductSpecification({
-				body: {
-					specificationKey: ProductSpecification.TYPE.toLowerCase(),
-					value: {en_US: appType.value},
-				},
-				id: appType.id,
-			});
-		}
-
-		const dataSpecification = await getSpecification('type');
-
-		const {id} = await createProductSpecification({
-			body: {
-				productId: appProductId,
-				specificationId: dataSpecification.id,
-				specificationKey: dataSpecification.key,
-				value: {en_US: appType.value},
-			},
-			id: appProductId,
+		const {id} = await upsertProductSpecification(appProductId, {
+			productId: appProductId,
+			specificationKey: 'type',
+			value: appType.value,
 		});
 
 		dispatch({
@@ -502,7 +453,7 @@ export function ProvideAppBuildPage({
 	const isCloud = appType.value === 'cloud';
 
 	const isResourceRequirementsValid = isCloud
-		? bodySpecification.every(({value}) => value)
+		? bodySpecifications.every(({value}) => value)
 		: true;
 
 	const disableContinueButton =
@@ -801,10 +752,12 @@ export function ProvideAppBuildPage({
 						await submitAppBuildPackages();
 
 						if (isCloud) {
-							await submitAppBuildClouldResourceRequirements(
-								appProductId,
-								bodySpecification
-							);
+							for (const bodySpecification of bodySpecifications) {
+								await upsertProductSpecification(
+									appProductId,
+									bodySpecification
+								);
+							}
 						}
 					}
 					catch (error) {

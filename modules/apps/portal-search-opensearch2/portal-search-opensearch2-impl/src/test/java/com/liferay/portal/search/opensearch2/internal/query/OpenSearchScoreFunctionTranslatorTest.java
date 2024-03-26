@@ -17,6 +17,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
 
+import org.opensearch.client.opensearch._types.query_dsl.FunctionScore;
+
 /**
  * @author André de Oliveira
  */
@@ -50,17 +52,14 @@ public class OpenSearchScoreFunctionTranslatorTest
 
 			};
 
-		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
-			new OpenSearchQueryTranslatorFixture();
-
 		OpenSearchScoreFunctionTranslator openSearchScoreFunctionTranslator =
-			new OpenSearchScoreFunctionTranslator(
-				filterQueryScoreFunctionHolder,
-				openSearchQueryTranslatorFixture.
-					getOpenSearchQueryTranslator());
+			new OpenSearchScoreFunctionTranslator();
 
-		return JsonpUtil.toString(
-			openSearchScoreFunctionTranslator.translate());
+		FunctionScore.Builder.ContainerBuilder containerBuilder =
+			openSearchScoreFunctionTranslator.translate(
+				filterQueryScoreFunctionHolder.getScoreFunction());
+
+		return JsonpUtil.toString(containerBuilder.build());
 	}
 
 }

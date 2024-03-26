@@ -103,7 +103,7 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		Admin admin = portalInstance.getAdmin();
 
 		if (admin != null) {
-			_validateAdmin(admin, -1);
+			_validateAdmin(admin);
 		}
 
 		Long companyId = portalInstance.getCompanyId();
@@ -177,7 +177,7 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		};
 	}
 
-	private void _validateAdmin(Admin admin, long companyId) throws Exception {
+	private void _validateAdmin(Admin admin) throws Exception {
 		if (Validator.isNull(admin.getEmailAddress()) ||
 			Validator.isNull(admin.getFamilyName()) ||
 			Validator.isNull(admin.getGivenName())) {
@@ -188,9 +188,7 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 		EmailAddressValidator emailAddressValidator =
 			EmailAddressValidatorFactory.getInstance();
 
-		if (!emailAddressValidator.validate(
-				companyId, admin.getEmailAddress())) {
-
+		if (!emailAddressValidator.validate(0, admin.getEmailAddress())) {
 			throw new UserEmailAddressException.MustValidate(
 				admin.getEmailAddress(), emailAddressValidator);
 		}

@@ -69,6 +69,12 @@ public class PostgreSQLTransformerLogicTest
 	}
 
 	@Override
+	protected String getCastTextTransformedSQL() {
+		return "select CAST(foo || (CAST(foo AS TEXT) || (bar || foo)) AS " +
+			"TEXT), CAST(foo || (bar || foo) AS TEXT) from Foo";
+	}
+
+	@Override
 	protected String getIntegerDivisionTransformedSQL() {
 		return "select foo / bar from Foo";
 	}

@@ -47,13 +47,6 @@ public class DB2SQLTransformerLogicTest
 	}
 
 	@Test
-	public void testReplaceCastText() {
-		Assert.assertEquals(
-			"select CAST(foo AS VARCHAR(2000)) from Foo",
-			sqlTransformer.transform(getCastTextOriginalSQL()));
-	}
-
-	@Test
 	public void testReplaceConcat() {
 		Assert.assertEquals(
 			"select * from Foo where foo LIKE CAST(bar AS VARCHAR(2000)) " +
@@ -100,6 +93,14 @@ public class DB2SQLTransformerLogicTest
 	@Override
 	protected String getCastClobTextTransformedSQL() {
 		return "select CAST(foo AS VARCHAR(2000)) from Foo";
+	}
+
+	@Override
+	protected String getCastTextTransformedSQL() {
+		return StringBundler.concat(
+			"select CAST(foo || (CAST(foo AS VARCHAR(2000)) || (bar || foo)) ",
+			"AS VARCHAR(2000)), CAST(foo || (bar || foo) AS VARCHAR(2000)) ",
+			"from Foo");
 	}
 
 	@Override

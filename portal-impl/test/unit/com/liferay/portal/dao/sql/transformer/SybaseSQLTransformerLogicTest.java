@@ -9,10 +9,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
@@ -36,13 +34,6 @@ public class SybaseSQLTransformerLogicTest
 			"'U')\n", "BEGIN\n", "DROP TABLE Foo\n", "END");
 	}
 
-	@Test
-	public void testReplaceCastText() {
-		Assert.assertEquals(
-			"select CAST(foo AS NVARCHAR(5461)) from Foo",
-			sqlTransformer.transform(getCastTextOriginalSQL()));
-	}
-
 	@Override
 	protected String getBitwiseCheckTransformedSQL() {
 		return "select (foo & bar) from Foo";
@@ -62,6 +53,14 @@ public class SybaseSQLTransformerLogicTest
 	protected String getCastLongTransformedSQL() {
 		return "select CONVERT(BIGINT, 1 + (CONVERT(BIGINT, foo) - (bar x " +
 			"2))), CONVERT(BIGINT, foo + (bar x 3)) from Foo";
+	}
+
+	@Override
+	protected String getCastTextTransformedSQL() {
+		return StringBundler.concat(
+			"select CAST(foo || (CAST(foo AS NVARCHAR(5461)) || (bar || foo)) ",
+			"AS NVARCHAR(5461)), CAST(foo || (bar || foo) AS NVARCHAR(5461)) ",
+			"from Foo");
 	}
 
 	@Override

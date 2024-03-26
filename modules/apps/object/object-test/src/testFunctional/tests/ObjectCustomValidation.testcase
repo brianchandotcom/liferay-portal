@@ -1889,9 +1889,9 @@ definition {
 	@description = "LPS-186955 - Verify a composite key can be used to validate object entries"
 	@priority = 5
 	test CanUseCompositeKey {
-		property portal.upstream = "quarantine";
 		property custom.properties = "feature.flag.LPS-187854=true";
 		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		var iterator = 0;
 		var types = "Boolean,Date,Double,Integer,Long,BigDecimal,Clob,String";

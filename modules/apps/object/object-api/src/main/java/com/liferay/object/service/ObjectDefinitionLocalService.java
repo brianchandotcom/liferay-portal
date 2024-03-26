@@ -436,6 +436,7 @@ public interface ObjectDefinitionLocalService
 			Map<Locale, String> pluralLabelMap, String scope, int status)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition updateExternalReferenceCode(
 			long objectDefinitionId, String externalReferenceCode)
 		throws PortalException;
@@ -464,6 +465,7 @@ public interface ObjectDefinitionLocalService
 			long objectDefinitionId, long objectFolderId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectDefinition updateRootObjectDefinitionId(
 			long objectDefinitionId, long rootObjectDefinitionId)
 		throws PortalException;

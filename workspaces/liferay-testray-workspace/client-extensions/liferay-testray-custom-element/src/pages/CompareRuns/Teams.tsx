@@ -9,7 +9,7 @@ import ListView from '~/components/ListView';
 import i18n from '../../i18n';
 
 const CompareRunsTeams = () => {
-	const {runA, runB} = useParams();
+	const {runA: runAId, runB: runBId} = useParams();
 
 	document.title = i18n.sub('compare-x', 'cases');
 
@@ -20,7 +20,7 @@ const CompareRunsTeams = () => {
 				display: {columns: false},
 				filterSchema: 'compareRunsTeams',
 			}}
-			resource={`/testray-run-comparisons/${runA}/${runB}`}
+			resource={`/testray-run-comparisons/${runAId}/${runBId}`}
 			tableProps={{visible: false}}
 		/>
 	);

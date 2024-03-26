@@ -1,4 +1,4 @@
-.table-cell-item {
+.table-cell-items {
 	display: block;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -14,6 +14,14 @@
 
 .text-ellipsis-sm {
 	max-width: 110px;
+}
+
+.table-layout-auto {
+	table-layout: auto !important;
+}
+
+.table-layout-fixed {
+	table-layout: fixed !important;
 }
 
 @media (min-width: 140px) {

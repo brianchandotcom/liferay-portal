@@ -49,8 +49,8 @@ public class DLViewEntriesDisplayContextTest {
 	public static void setUpClass() {
 		_fileVersion = Mockito.mock(FileVersion.class);
 
-		_setUpFrameworkUtil();
 		_setUpDLURLHelperUtil();
+		_setUpFrameworkUtil();
 		_setUpPortalUtil();
 	}
 
@@ -62,8 +62,9 @@ public class DLViewEntriesDisplayContextTest {
 
 	@Test
 	public void testGetThumbnailSrcWithDoAsUserIdParameter() throws Exception {
-		String doAsUserId = RandomTestUtil.randomString();
 		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		String doAsUserId = RandomTestUtil.randomString();
 
 		themeDisplay.setDoAsUserId(doAsUserId);
 

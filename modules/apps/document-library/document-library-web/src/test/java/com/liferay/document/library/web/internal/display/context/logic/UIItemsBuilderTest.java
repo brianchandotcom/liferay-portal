@@ -44,8 +44,6 @@ public class UIItemsBuilderTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_dlurlHelper = Mockito.mock(DLURLHelper.class);
-		_fileEntry = Mockito.mock(FileEntry.class);
-		_fileVersion = Mockito.mock(FileVersion.class);
 
 		Mockito.when(
 			_dlurlHelper.getDownloadURL(
@@ -57,10 +55,15 @@ public class UIItemsBuilderTest {
 			"http://localhost/"
 		);
 
+		_fileEntry = Mockito.mock(FileEntry.class);
+		_fileVersion = Mockito.mock(FileVersion.class);
+
 		LanguageUtil languageUtil = new LanguageUtil();
-		PortalUtil portalUtil = new PortalUtil();
 
 		languageUtil.setLanguage(Mockito.mock(Language.class));
+
+		PortalUtil portalUtil = new PortalUtil();
+
 		portalUtil.setPortal(new PortalImpl());
 	}
 
@@ -68,8 +71,9 @@ public class UIItemsBuilderTest {
 	public void testCreateDownloadDropdownItemWithDoAsUserIdParameter()
 		throws URISyntaxException {
 
-		String doAsUserId = RandomTestUtil.randomString();
 		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		String doAsUserId = RandomTestUtil.randomString();
 
 		themeDisplay.setDoAsUserId(doAsUserId);
 

@@ -193,8 +193,7 @@ public class DDMValueUtil {
 	}
 
 	private static String _getOptionValues(
-		DDMFormField ddmFormField, Locale locale, String optionValues,
-		boolean transformValuesToKeys) {
+		DDMFormField ddmFormField, Locale locale, String optionValues) {
 
 		try {
 			List<String> values = new ArrayList<>();
@@ -212,9 +211,7 @@ public class DDMValueUtil {
 						JSONFactoryUtil.createJSONArray(optionValues)));
 			}
 
-			if (transformValuesToKeys) {
-				values = _transformValuesToKeys(ddmFormField, locale, values);
-			}
+			values = _transformValuesToKeys(ddmFormField, locale, values);
 
 			if ((values.size() == 1) &&
 				DDMFormFieldType.RADIO.equals(ddmFormField.getType())) {
@@ -561,26 +558,20 @@ public class DDMValueUtil {
 				contentFieldValue, localizedContentFieldValues,
 				(localizedContentFieldValue, locale) -> {
 					String optionValues = localizedContentFieldValue.getData();
-					boolean transformValuesToKeys = true;
-
 					String value = localizedContentFieldValue.getValue();
 
 					if (Validator.isNotNull(value)) {
 						optionValues = value;
-						transformValuesToKeys = false;
 					}
 
-					return _getOptionValues(
-						ddmFormField, locale, optionValues,
-						transformValuesToKeys);
+					return _getOptionValues(ddmFormField, locale, optionValues);
 				},
 				preferredLocale);
 		}
 
 		return new UnlocalizedValue(
 			_getOptionValues(
-				ddmFormField, preferredLocale, contentFieldValue.getValue(),
-				false));
+				ddmFormField, preferredLocale, contentFieldValue.getValue()));
 	}
 
 	private static List<String> _transformValuesToKeys(

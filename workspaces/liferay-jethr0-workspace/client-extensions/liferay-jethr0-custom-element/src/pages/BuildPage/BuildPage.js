@@ -13,6 +13,7 @@ import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcru
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
+import {getBuildById} from '../../objects/builds/BuildUtil';
 import {toLocaleString} from '../../services/DateUtil';
 import {toDurationString} from '../../services/DurationUtil';
 import useSpringBootData from '../../services/useSpringBootData';
@@ -94,10 +95,9 @@ function BuildPage() {
 	const {id} = useParams();
 	const [build, setBuild] = useState(null);
 
-	useSpringBootData({
-		setData: setBuild,
-		urlPath: '/builds/' + id,
-	});
+	if (!build) {
+		getBuildById({id, setBuild});
+	}
 
 	let buildName = 'Build #' + id;
 	let jobId = 0;

@@ -24,6 +24,7 @@ export interface TabProps {
 	disabled: boolean;
 	errors: ObjectValidationErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
+	scriptManagementConfigurationPortletURL: string;
 	selectedPartialValidationField: string;
 	setValues: (values: Partial<ObjectValidation>) => void;
 	values: Partial<ObjectValidation>;

@@ -5,4 +5,10 @@
 
 /// <reference types="react" />
 
-export declare function DisabledGroovyScriptAlert(): JSX.Element;
+interface DisabledGroovyScriptAlertProps {
+	scriptManagementConfigurationPortletURL: string;
+}
+export declare function DisabledGroovyScriptAlert({
+	scriptManagementConfigurationPortletURL,
+}: DisabledGroovyScriptAlertProps): JSX.Element;
+export {};

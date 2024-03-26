@@ -17,6 +17,7 @@ interface EditObjectValidationProps {
 	objectValidationRuleElements: SidebarCategory[];
 	objectValidationRuleId: number;
 	readOnly: boolean;
+	scriptManagementConfigurationPortletURL: string;
 }
 export interface PartialValidationFields {
 	id: number;
@@ -34,5 +35,6 @@ export default function EditObjectValidation({
 	objectValidationRuleElements,
 	objectValidationRuleId,
 	readOnly,
+	scriptManagementConfigurationPortletURL,
 }: EditObjectValidationProps): JSX.Element;
 export {};

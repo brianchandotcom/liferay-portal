@@ -41,8 +41,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"objectValidationRuleEngines", objectDefinitionsValidationsDisplayContext.getObjectValidationRuleEngines()
 			).put(
-				"scriptManagementConfigurationPortletURL", objectDefinitionsValidationsDisplayContext.getScriptManagementConfigurationPortletURL()
-			).put(
 				"style", "fluid"
 			).put(
 				"url", objectDefinitionsValidationsDisplayContext.getEditObjectValidationURL()

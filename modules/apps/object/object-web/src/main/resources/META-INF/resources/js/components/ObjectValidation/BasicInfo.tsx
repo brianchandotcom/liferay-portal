@@ -50,6 +50,7 @@ export function BasicInfo({
 	disabled,
 	disabledGroovyValidation,
 	errors,
+	scriptManagementConfigurationPortletURL,
 	selectedPartialValidationField,
 	setValues,
 	values,
@@ -69,7 +70,13 @@ export function BasicInfo({
 
 	return (
 		<>
-			{disabledGroovyValidation && <DisabledGroovyScriptAlert />}
+			{disabledGroovyValidation && (
+				<DisabledGroovyScriptAlert
+					scriptManagementConfigurationPortletURL={
+						scriptManagementConfigurationPortletURL
+					}
+				/>
+			)}
 
 			<Card title={componentLabel}>
 				<InputLocalized

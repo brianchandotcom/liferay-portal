@@ -17,6 +17,7 @@ interface AddObjectActionProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
+	scriptManagementConfigurationPortletURL: string;
 	systemObject: boolean;
 	validateExpressionURL: string;
 }
@@ -30,6 +31,7 @@ export default function AddObjectAction({
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
+	scriptManagementConfigurationPortletURL,
 	systemObject,
 	validateExpressionURL,
 }: AddObjectActionProps) {
@@ -53,6 +55,9 @@ export default function AddObjectAction({
 				method: 'POST',
 				url: apiURL,
 			}}
+			scriptManagementConfigurationPortletURL={
+				scriptManagementConfigurationPortletURL
+			}
 			successMessage={Liferay.Language.get(
 				'the-object-action-was-created-successfully'
 			)}

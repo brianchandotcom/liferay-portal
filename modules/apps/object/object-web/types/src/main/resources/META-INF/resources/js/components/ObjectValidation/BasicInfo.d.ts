@@ -19,6 +19,7 @@ export declare function BasicInfo({
 	disabled,
 	disabledGroovyValidation,
 	errors,
+	scriptManagementConfigurationPortletURL,
 	selectedPartialValidationField,
 	setValues,
 	values,

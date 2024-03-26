@@ -39,6 +39,7 @@ interface ObjectActionContainerProps {
 		method: 'POST' | 'PUT';
 		url: string;
 	};
+	scriptManagementConfigurationPortletURL: string;
 	successMessage: string;
 	systemObject: boolean;
 	title: string;
@@ -72,6 +73,7 @@ export function ObjectActionContainer({
 	objectDefinitionsRelationshipsURL,
 	readOnly,
 	requestParams: {method, url},
+	scriptManagementConfigurationPortletURL,
 	successMessage,
 	systemObject,
 	validateExpressionURL,
@@ -202,6 +204,9 @@ export function ObjectActionContainer({
 						handleChange={handleChange}
 						isApproved={isApproved!}
 						readOnly={readOnly}
+						scriptManagementConfigurationPortletURL={
+							scriptManagementConfigurationPortletURL
+						}
 						setValues={setValues}
 						values={values}
 					/>
@@ -228,6 +233,9 @@ export function ObjectActionContainer({
 						}
 						objectDefinitionsRelationshipsURL={
 							objectDefinitionsRelationshipsURL
+						}
+						scriptManagementConfigurationPortletURL={
+							scriptManagementConfigurationPortletURL
 						}
 						setValues={setValues}
 						systemObject={systemObject}

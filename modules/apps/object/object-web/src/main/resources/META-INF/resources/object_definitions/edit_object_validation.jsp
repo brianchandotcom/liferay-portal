@@ -19,6 +19,8 @@ ObjectValidationRule objectValidationRule = (ObjectValidationRule)request.getAtt
 	props='<%=
 		HashMapBuilder.<String, Object>put(
 			"baseResourceURL", String.valueOf(baseResourceURL)
+		).put(
+			"scriptManagementConfigurationPortletURL", objectDefinitionsValidationsDisplayContext.getScriptManagementConfigurationPortletURL()
 		).putAll(
 			objectDefinitionsValidationsDisplayContext.getProps(objectValidationRule)
 		).build()

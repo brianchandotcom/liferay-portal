@@ -202,16 +202,17 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 						RandomTestUtil.nextDouble());
 		}
 
-		CommerceShippingFixedOptionQualifier
-			commerceShippingFixedOptionQualifier =
+		if (_commerceShippingFixedOptionQualifier == null) {
+			_commerceShippingFixedOptionQualifier =
 				_commerceShippingFixedOptionQualifierLocalService.
 					addCommerceShippingFixedOptionQualifier(
 						_user.getUserId(), CommerceOrderType.class.getName(),
 						orderType.getId(),
 						_commerceShippingFixedOption.
 							getCommerceShippingFixedOptionId());
+		}
 
-		return commerceShippingFixedOptionQualifier.
+		return _commerceShippingFixedOptionQualifier.
 			getCommerceShippingFixedOptionQualifierId();
 	}
 
@@ -255,6 +256,9 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 	@Inject
 	private CommerceShippingFixedOptionLocalService
 		_commerceShippingFixedOptionLocalService;
+
+	private CommerceShippingFixedOptionQualifier
+		_commerceShippingFixedOptionQualifier;
 
 	@Inject
 	private CommerceShippingFixedOptionQualifierLocalService

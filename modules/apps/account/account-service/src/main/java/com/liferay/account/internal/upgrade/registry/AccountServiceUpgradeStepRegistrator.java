@@ -178,6 +178,11 @@ public class AccountServiceUpgradeStepRegistrator
 			"2.10.2", "2.10.3",
 			UpgradeProcessFactory.alterColumnType(
 				"AccountEntry", "name", "VARCHAR(250) null"));
+
+		registry.register(
+			"2.10.3", "2.10.4",
+			new com.liferay.account.internal.upgrade.v2_10_4.
+				AccountListTypeUpgradeProcess());
 	}
 
 	@Reference

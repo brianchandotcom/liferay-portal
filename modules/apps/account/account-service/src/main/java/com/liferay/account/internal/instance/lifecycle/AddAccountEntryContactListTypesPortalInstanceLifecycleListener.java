@@ -79,7 +79,7 @@ public class AddAccountEntryContactListTypesPortalInstanceLifecycleListener
 			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_FAX,
 			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_LOCAL,
 			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_OTHER,
-			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_TOOL_FREE,
+			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_TOLL_FREE,
 			AccountListTypeConstants.ACCOUNT_ENTRY_PHONE_TYPE_TTY
 		}
 	).put(

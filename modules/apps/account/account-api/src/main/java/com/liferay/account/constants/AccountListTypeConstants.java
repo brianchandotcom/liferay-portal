@@ -59,7 +59,7 @@ public class AccountListTypeConstants {
 
 	public static final String ACCOUNT_ENTRY_PHONE_TYPE_OTHER = "other";
 
-	public static final String ACCOUNT_ENTRY_PHONE_TYPE_TOOL_FREE = "tool-free";
+	public static final String ACCOUNT_ENTRY_PHONE_TYPE_TOLL_FREE = "toll-free";
 
 	public static final String ACCOUNT_ENTRY_PHONE_TYPE_TTY = "tty";
 

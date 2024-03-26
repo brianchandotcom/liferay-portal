@@ -15,7 +15,17 @@ AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(account
 String className = AccountEntry.class.getName();
 long classPK = accountEntry.getAccountEntryId();
 
-List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
+List<String> addressTypes = ListUtil.fromArray(AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_BILLING, AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_OTHER, AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_P_O_BOX, AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS_TYPE_SHIPPING);
+
+long[] listTypeAddresses = TransformUtil.transformToLongArray(
+	addressTypes,
+	addressType -> {
+		ListType listType = ListTypeLocalServiceUtil.getListType(accountEntry.getCompanyId(), addressType, AccountListTypeConstants.ACCOUNT_ENTRY_CONTACT_ADDRESS);
+
+		return listType.getListTypeId();
+	});
+
+List<Address> addresses = accountEntry.getListTypeAddresses(listTypeAddresses);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
@@ -41,26 +51,28 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 
 				<clay:content-col>
 					<span class="heading-end">
-						<clay:link
-							aria-label='<%= LanguageUtil.format(request, "add-x", "addresses") %>'
-							cssClass="add-address-link btn btn-secondary btn-sm"
-							displayType="null"
-							href='<%=
-								PortletURLBuilder.createRenderURL(
-									liferayPortletResponse
-								).setMVCPath(
-									"/account_entries_admin/account_entry/account_contact/edit_address.jsp"
-								).setRedirect(
-									currentURL
-								).setParameter(
-									"className", className
-								).setParameter(
-									"classPK", classPK
-								).buildString()
-							%>'
-							label="add"
-							role="button"
-						/>
+						<c:if test="<%= AccountEntryPermission.contains(permissionChecker, classPK, AccountActionKeys.MANAGE_ADDRESSES) %>">
+							<clay:link
+								aria-label='<%= LanguageUtil.format(request, "add-x", "addresses") %>'
+								cssClass="add-address-link btn btn-secondary btn-sm"
+								displayType="null"
+								href='<%=
+									PortletURLBuilder.createRenderURL(
+										liferayPortletResponse
+									).setMVCPath(
+										"/account_entries_admin/account_entry/account_contact/edit_address.jsp"
+									).setRedirect(
+										currentURL
+									).setParameter(
+										"className", className
+									).setParameter(
+										"classPK", classPK
+									).buildString()
+								%>'
+								label="add"
+								role="button"
+							/>
+						</c:if>
 					</span>
 				</clay:content-col>
 			</clay:content-row>
@@ -119,13 +131,15 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 							</c:if>
 						</clay:content-col>
 
-						<clay:content-col
-							cssClass="lfr-search-container-wrapper"
-						>
-							<liferay-util:include page="/account_entries_admin/account_entry/account_contact/address_action.jsp" servletContext="<%= application %>">
-								<liferay-util:param name="addressId" value="<%= String.valueOf(address.getAddressId()) %>" />
-							</liferay-util:include>
-						</clay:content-col>
+						<c:if test="<%= AccountEntryPermission.contains(permissionChecker, classPK, AccountActionKeys.MANAGE_ADDRESSES) %>">
+							<clay:content-col
+								cssClass="lfr-search-container-wrapper"
+							>
+								<liferay-util:include page="/account_entries_admin/account_entry/account_contact/address_action.jsp" servletContext="<%= application %>">
+									<liferay-util:param name="addressId" value="<%= String.valueOf(address.getAddressId()) %>" />
+								</liferay-util:include>
+							</clay:content-col>
+						</c:if>
 					</li>
 
 				<%

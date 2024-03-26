@@ -342,13 +342,13 @@ public class LayoutCopyHelperTest {
 
 		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 
-		List<FragmentEntryLink> secoundCopyFragmentEntryLinks =
+		List<FragmentEntryLink> secondCopyFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				_group.getGroupId(), targetLayout.getPlid());
 
 		long[] secondCopyFragmentEntryLinkIds =
 			_assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkIds(
-				secoundCopyFragmentEntryLinks,
+				secondCopyFragmentEntryLinks,
 				ListUtil.fromArray(
 					fragmentEntryLink2, fragmentEntryLink3, fragmentEntryLink5,
 					fragmentEntryLink6));
@@ -372,7 +372,7 @@ public class LayoutCopyHelperTest {
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
 				TransformUtil.transformToLongArray(
-					secoundCopyFragmentEntryLinks,
+					secondCopyFragmentEntryLinks,
 					FragmentEntryLinkModel::getOriginalFragmentEntryLinkId),
 				new long[] {
 					fragmentEntryLink2.getFragmentEntryLinkId(),

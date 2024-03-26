@@ -57,7 +57,7 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 			testrayBuildsJSONArray.isEmpty()) {
 
 			if (_log.isInfoEnabled()) {
-				_log.info("No Testray builds found to archive");
+				_log.info("No builds found to archive");
 			}
 
 			return;
@@ -78,7 +78,7 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Archiving " + jsonArray.length() + " Testray builds");
+			_log.info("Archiving " + jsonArray.length() + " builds");
 		}
 
 		_sendRequest(
@@ -108,14 +108,14 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 
 		if ((jsonArray == null) || jsonArray.isEmpty()) {
 			if (_log.isInfoEnabled()) {
-				_log.info("No Testray builds found to delete");
+				_log.info("No builds found to delete");
 			}
 
 			return;
 		}
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Deleting " + jsonArray.length() + " Testray builds");
+			_log.info("Deleting " + jsonArray.length() + " builds");
 		}
 
 		_sendRequest(

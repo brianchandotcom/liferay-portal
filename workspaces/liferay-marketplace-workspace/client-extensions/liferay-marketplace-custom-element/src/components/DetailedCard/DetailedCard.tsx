@@ -27,7 +27,7 @@ export function DetailedCard({
 	return (
 		<div className="detailed-card-container">
 			<div className="detailed-card-header">
-				<h2 className="">{cardTitle}</h2>
+				<h2>{cardTitle}</h2>
 
 				<div className="detailed-card-header-icon-container">
 					{clayIcon ? (

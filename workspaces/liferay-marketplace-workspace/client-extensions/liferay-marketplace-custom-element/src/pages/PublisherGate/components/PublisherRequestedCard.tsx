@@ -35,7 +35,7 @@ const PubliserhRequestedCard = () => (
 
 				<div className="d-flex justify-content-center text-center">
 					<div className="col-10">
-						<span className="">
+						<span>
 							{i18n.translate(
 								'an-administrator-of-the-marketplace-will-review-your-request-shortly-if-you-have-questions-regarding-your-submission-please-email'
 							)}

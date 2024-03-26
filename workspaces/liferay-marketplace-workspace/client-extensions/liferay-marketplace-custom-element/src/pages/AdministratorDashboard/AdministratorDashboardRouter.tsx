@@ -8,9 +8,9 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 import AdministratorDashboardOutlet from './AdministratorDashboardOutlet';
 
 import './index.scss';
-import AppAdministrator from './AppsAdministrator';
-import Metrics from './Metrics/Metrics';
-import PublisherRequest from './PublisherRequest';
+import AppAdministrator from './pages/AppsAdministrator';
+import Metrics from './pages/Metrics';
+import PublisherRequest from './pages/PublisherRequest';
 
 const AdministratorDashboardRouter = () => (
 	<HashRouter>

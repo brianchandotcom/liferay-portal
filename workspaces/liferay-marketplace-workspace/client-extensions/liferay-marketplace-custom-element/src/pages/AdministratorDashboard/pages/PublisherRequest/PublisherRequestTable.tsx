@@ -10,13 +10,13 @@ import {Status} from '@clayui/modal/lib/types';
 import {format} from 'date-fns';
 import {useState} from 'react';
 
-import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
-import Modal from '../../../components/Modal';
-import Table from '../../../components/Table/Table';
-import i18n from '../../../i18n';
-import {Liferay} from '../../../liferay/liferay';
-import fetcher from '../../../services/fetcher';
-import PublisherSummaryContent from '../../PublisherGate/components/PublisherSummaryContent';
+import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
+import Modal from '../../../../components/Modal';
+import Table from '../../../../components/Table/Table';
+import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
+import fetcher from '../../../../services/fetcher';
+import PublisherSummaryContent from '../../../PublisherGate/components/PublisherSummaryContent';
 
 type AppsTableProps = {
 	items: PublisherRequestInfo[];
@@ -45,10 +45,6 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 	if (!items?.length) {
 		return (
 			<DashboardEmptyTable
-				description1={i18n.translate(
-					'purchase-and-install-new-apps-and-they-will-show-up-here'
-				)}
-				description2={i18n.translate('click-on-add-apps-to-start')}
 				icon="grid"
 				title={i18n.translate('no-become-a-publisher-request')}
 			/>

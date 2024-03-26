@@ -10,13 +10,13 @@ import ClayLabel from '@clayui/label';
 import {Status} from '@clayui/modal/lib/types';
 import {format} from 'date-fns';
 
-import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
-import Table from '../../../../components/Table/Table';
-import SearchBuilder from '../../../../core/SearchBuilder';
-import i18n from '../../../../i18n';
-import {Liferay} from '../../../../liferay/liferay';
-import CommerceSelectAccountImpl from '../../../../services/rest/CommerceSelectAccount';
-import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
+import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
+import Table from '../../../../../components/Table/Table';
+import SearchBuilder from '../../../../../core/SearchBuilder';
+import i18n from '../../../../../i18n';
+import {Liferay} from '../../../../../liferay/liferay';
+import CommerceSelectAccountImpl from '../../../../../services/rest/CommerceSelectAccount';
+import HeadlessCommerceAdminCatalogImpl from '../../../../../services/rest/HeadlessCommerceAdminCatalog';
 
 type AppsTableProps = {
 	items: Order[];
@@ -114,12 +114,12 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 						render: (id) => (
 							<span className="font-weight-bold">{id}</span>
 						),
-						title: i18n.translate('order-id'),
+						title: i18n.translate('id'),
 					},
 					{
 						key: 'orderItems',
-						render: (orderItems) => orderItems[0].name.en_US,
-						title: i18n.translate('app'),
+						render: (orderItems) => orderItems[0]?.name?.en_US,
+						title: i18n.translate('app-name'),
 					},
 					{
 						key: 'account',
@@ -148,7 +148,7 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 								{orderStatusInfo?.label_i18n}
 							</ClayLabel>
 						),
-						title: i18n.translate('status'),
+						title: i18n.translate('order-status'),
 					},
 					{
 						key: 'paymentStatusInfo',

@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
-import OrderStatus from '../../../components/OrderStatus';
-import Table from '../../../components/Table/Table';
-import i18n from '../../../i18n';
+import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
+import OrderStatus from '../../../../components/OrderStatus';
+import Table from '../../../../components/Table/Table';
+import i18n from '../../../../i18n';
 import {
 	formatDate,
 	getProductTypeFromSpecifications,
-} from '../../PublishedAppsDashboard/PublishedDashboardPageUtil';
+} from '../../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
 type AppsTableProps = {
 	items: PublisherRequestInfo[];
@@ -20,10 +20,6 @@ const AppAdministratorTable: React.FC<AppsTableProps> = ({items}) => {
 	if (!items?.length) {
 		return (
 			<DashboardEmptyTable
-				description1={i18n.translate(
-					'purchase-and-install-new-apps-and-they-will-show-up-here'
-				)}
-				description2={i18n.translate('click-on-add-apps-to-start')}
 				icon="grid"
 				title={i18n.translate('no-apps-yet')}
 			/>

@@ -6,9 +6,9 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import useSWR from 'swr';
 
-import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
-import i18n from '../../../i18n';
-import fetcher from '../../../services/fetcher';
+import {DashboardPage} from '../../../../components/DashBoardPage/DashboardPage';
+import i18n from '../../../../i18n';
+import fetcher from '../../../../services/fetcher';
 import PublisherRequestTable from './PublisherRequestTable';
 
 const PublisherRequest = () => {

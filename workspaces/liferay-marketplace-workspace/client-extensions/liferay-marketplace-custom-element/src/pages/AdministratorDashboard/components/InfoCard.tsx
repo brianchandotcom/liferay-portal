@@ -12,7 +12,7 @@ type InfoCard = {
 	className?: string;
 	dropDownItems?: any[];
 	growth?: number;
-	growthContext: string;
+	growthContext?: string;
 	onSelectDropDown?: any;
 	symbol: string;
 	title: string;
@@ -79,23 +79,27 @@ const InfoCard: React.FC<InfoCard> = ({
 				</span>
 			</div>
 
-			<div className="font-weight-bold text-black-50">
-				<span
-					className={classNames('mr-2', {
-						'text-danger': growth < 0,
-						'text-success': growth > 0,
-					})}
-				>
-					<ClayIcon
-						className="mr-21"
-						symbol={
-							growth > 0 ? 'order-arrow-up' : 'order-arrow-down'
-						}
-					/>
-					{growth}%
-				</span>
-				<span>{growthContext}</span>
-			</div>
+			{growthContext && (
+				<div className="font-weight-bold text-black-50">
+					<span
+						className={classNames('mr-2', {
+							'text-danger': growth < 0,
+							'text-success': growth > 0,
+						})}
+					>
+						<ClayIcon
+							className="mr-21"
+							symbol={
+								growth > 0
+									? 'order-arrow-up'
+									: 'order-arrow-down'
+							}
+						/>
+						{growth}%
+					</span>
+					<span>{growthContext}</span>
+				</div>
+			)}
 		</div>
 	);
 };

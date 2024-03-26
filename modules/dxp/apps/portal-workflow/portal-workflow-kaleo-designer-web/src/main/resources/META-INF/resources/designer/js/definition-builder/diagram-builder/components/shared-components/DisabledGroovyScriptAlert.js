@@ -6,14 +6,16 @@
 import ClayAlert from '@clayui/alert';
 import React from 'react';
 
-export function DisabledGroovyScriptAlert() {
+export function DisabledGroovyScriptAlert({
+	scriptManagementConfigurationPortletURL,
+}) {
 	return (
 		<ClayAlert displayType="warning" title="Warning">
 			{Liferay.Language.get(
 				'groovy-script-validations-are-deactivated-for-your-instance'
 			)}
 			&nbsp;
-			<a>
+			<a href={scriptManagementConfigurationPortletURL} target="_blank">
 				{Liferay.Language.get(
 					'go-to-system-settings-security-tools-script-management-to-allow-administrators-to-execute-groovy-code'
 				)}

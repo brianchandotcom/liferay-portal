@@ -47,6 +47,7 @@ export default function UpperToolbar({
 		definitionTitle,
 		definitionTitleTranslations,
 		elements,
+		scriptManagementConfigurationPortletURL,
 		selectedLanguageId,
 		setAlertMessage,
 		setAlertType,
@@ -540,6 +541,9 @@ export default function UpperToolbar({
 
 			{showGroovyScriptWarningModal && (
 				<GroovyScriptWarningModal
+					scriptManagementConfigurationPortletURL={
+						scriptManagementConfigurationPortletURL
+					}
 					setShowGroovyScriptWarningModal={() => {
 						setShowGroovyScriptWarningModal(false);
 					}}

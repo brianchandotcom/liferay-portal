@@ -21,6 +21,7 @@ const TimerInfo = ({
 	const {
 		allowScriptContentBeExecutedOrIncluded,
 		hasGroovyScript,
+		scriptManagementConfigurationPortletURL,
 	} = useContext(DefinitionBuilderContext);
 	const [timerDescription, setTimerDescription] = useState([description]);
 	const [timerName, setTimerName] = useState([name]);
@@ -47,7 +48,13 @@ const TimerInfo = ({
 		<>
 			{Liferay.FeatureFlags['LPD-11179'] &&
 				!allowScriptContentBeExecutedOrIncluded &&
-				hasGroovyScript && <DisabledGroovyScriptAlert />}
+				hasGroovyScript && (
+					<DisabledGroovyScriptAlert
+						scriptManagementConfigurationPortletURL={
+							scriptManagementConfigurationPortletURL
+						}
+					/>
+				)}
 
 			<SidebarPanel panelTitle={Liferay.Language.get('information')}>
 				<ClayForm.Group>

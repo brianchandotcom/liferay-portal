@@ -265,22 +265,23 @@ public class PortletDisplayTemplatePortletDataHandler
 	}
 
 	private StagedModelType[] _getStagedModelTypes() {
-		if (_stagedModelTypes != null) {
-			return _stagedModelTypes;
-		}
+		return getStagedModelTypes(
+			() -> {
+				List<StagedModelType> stagedModelTypes = new ArrayList<>();
 
-		List<StagedModelType> stagedModelTypes = new ArrayList<>();
+				long ddmTemplateClassNameId = _portal.getClassNameId(
+					DDMTemplate.class);
 
-		long ddmTemplateClassNameId = _portal.getClassNameId(DDMTemplate.class);
+				for (long classNameId :
+						_templateHandlerRegistry.getClassNameIds()) {
 
-		for (long classNameId : _templateHandlerRegistry.getClassNameIds()) {
-			stagedModelTypes.add(
-				new StagedModelType(ddmTemplateClassNameId, classNameId));
-		}
+					stagedModelTypes.add(
+						new StagedModelType(
+							ddmTemplateClassNameId, classNameId));
+				}
 
-		_stagedModelTypes = stagedModelTypes.toArray(new StagedModelType[0]);
-
-		return _stagedModelTypes;
+				return stagedModelTypes;
+			});
 	}
 
 	@Reference
@@ -294,8 +295,6 @@ public class PortletDisplayTemplatePortletDataHandler
 
 	@Reference
 	private Portal _portal;
-
-	private StagedModelType[] _stagedModelTypes;
 
 	@Reference
 	private Staging _staging;

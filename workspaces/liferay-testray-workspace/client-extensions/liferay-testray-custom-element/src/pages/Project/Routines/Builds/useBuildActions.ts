@@ -74,7 +74,7 @@ const useBuildActions = ({isHeaderActions}: ActionsHookParameter = {}) => {
 						.catch(modal.onError);
 				}
 			},
-			disabled: ({promoted}) => promoted,
+			disabled: ({promoted, tasks}) => promoted || tasks.length,
 			icon: 'archive',
 			name: (build) =>
 				i18n.translate(build.archived ? 'unarchive' : 'archive'),

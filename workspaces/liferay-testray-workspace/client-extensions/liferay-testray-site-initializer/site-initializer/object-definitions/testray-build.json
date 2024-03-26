@@ -16,6 +16,17 @@
 			"type": "Long"
 		},
 		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Date Arquived"
+			},
+			"name": "startDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": true,
@@ -58,6 +69,17 @@
 			"name": "dueDate",
 			"required": false,
 			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Date Archived"
+			},
+			"name": "dateArchived",
+			"required": false,
+			"type": "DateTime"
 		},
 		{
 			"DBType": "String",

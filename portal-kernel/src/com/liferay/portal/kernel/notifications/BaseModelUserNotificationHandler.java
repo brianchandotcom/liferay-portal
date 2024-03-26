@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.net.URI;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -124,14 +126,18 @@ public abstract class BaseModelUserNotificationHandler
 			return StringPool.BLANK;
 		}
 
-		String entryURLDomain = HttpComponentsUtil.getDomain(entryURL);
+		URI entryURLURI = HttpComponentsUtil.getURI(entryURL);
 
-		String portalURLDomain = HttpComponentsUtil.getDomain(
+		String entryURLURIAuthority = entryURLURI.getAuthority();
+
+		URI portalURLURI = HttpComponentsUtil.getURI(
 			serviceContext.getPortalURL());
 
-		if (!entryURLDomain.equals(portalURLDomain)) {
+		String portalURLURIAuthority = portalURLURI.getAuthority();
+
+		if (!entryURLURIAuthority.equals(portalURLURIAuthority)) {
 			entryURL = StringUtil.replaceFirst(
-				entryURL, entryURLDomain, portalURLDomain);
+				entryURL, entryURLURIAuthority, portalURLURIAuthority);
 		}
 
 		return entryURL;

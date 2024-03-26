@@ -4,22 +4,18 @@
  */
 
 import {Link} from 'react-router-dom';
+import ListView from '~/components/ListView';
 
 import Container from '../../components/Layout/Container';
 import QATable from '../../components/Table/QATable';
-import TableChart from '../../components/TableChart';
 import i18n from '../../i18n';
 import {TestrayRun} from '../../services/rest';
 
 type CompareRunsDetailsProps = {
-	matrixData: number[][];
 	runs: TestrayRun[];
 };
 
-const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({
-	matrixData,
-	runs = [],
-}) => {
+const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({runs = []}) => {
 	document.title = i18n.sub('compare-x', 'cases');
 
 	const [runA, runB] = runs;
@@ -84,10 +80,16 @@ const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({
 					/>
 				</div>
 
-				<div className="col-4 col-lg-4 col-md-12 pb-5">
-					<TableChart
-						matrixData={matrixData}
-						title={i18n.translate('number-of-case-results')}
+				<div className="col-4 col-lg-4 col-md-12">
+					<ListView
+						managementToolbarProps={{
+							applyFilters: true,
+							display: {columns: false},
+							filterSchema: 'compareRunsTeams',
+							visible: false,
+						}}
+						resource={`/testray-run-comparisons/${runA?.id}/${runB?.id}`}
+						tableProps={{visible: false}}
 					/>
 				</div>
 			</div>

@@ -34,42 +34,20 @@ const mockTeam = {
 	name: 'Solutions',
 };
 
-const values = [
-	[1, 3, 5, 4, 5],
-	[1, 2, 3, 4, 5],
-	[1, 2, 3, 4, 5],
-	[1, 2, 3, 4, 5],
-	[1, 2, 3, 4, 5],
-];
-
-const useCompareRuns = (
-	type: 'components' | 'details' | 'teams',
-	{componentId, teamId}: {componentId?: string; teamId?: string} = {}
-) => {
+const useCompareRuns = (type: 'components' | 'details' | 'teams') => {
 	const {runA, runB} = useParams();
 
-	const operator = type === 'details' ? '' : type;
+	const {data: runsData} = useFetch<any>(
+		`/testray-run-comparisons/${runA}/${runB}`
+	);
 
-	const {data} = useFetch<CompareRunsResponse>(
-		`/compare-runs/${runA}/${runB}/${operator}`,
+	return [
 		{
-			params: {customParams: {componentId, teamId}},
-		}
-	);
-
-	if (typeof data === 'object') {
-		return [data];
-	}
-
-	return (
-		data ?? [
-			{
-				values,
-				...(type === 'components' && {component: mockComponent}),
-				...(type === 'teams' && {team: mockTeam}),
-			},
-		]
-	);
+			runsData,
+			...(type === 'components' && {component: mockComponent}),
+			...(type === 'teams' && {team: mockTeam}),
+		},
+	];
 };
 
 export default useCompareRuns;

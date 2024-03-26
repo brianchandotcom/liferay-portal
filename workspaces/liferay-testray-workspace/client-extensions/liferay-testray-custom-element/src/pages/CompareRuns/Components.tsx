@@ -15,11 +15,11 @@ const CompareRunsComponents = () => {
 	const components = useCompareRuns('components');
 
 	return (
-		<div className="d-flex flex-wrap mt-5">
-			{components.map(({component, values}, index) => (
+		<div className="d-flex flex-wrap mt-4">
+			{components.map(({component, runsData}, index) => (
 				<ClayLayout.Col className="mb-3" key={index} lg={6} md={12}>
 					<TableChart
-						matrixData={values}
+						matrixData={runsData?.results[0].Runs}
 						title={component?.name as string}
 					/>
 				</ClayLayout.Col>

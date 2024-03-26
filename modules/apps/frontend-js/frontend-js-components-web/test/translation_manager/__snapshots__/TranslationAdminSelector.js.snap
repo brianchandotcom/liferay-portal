@@ -202,8 +202,8 @@ exports[`TranslationAdminSelector renders a dropdown trigger with the selected l
       aria-expanded="false"
       aria-haspopup="true"
       aria-label="select-a-language.-current-language-x"
-      class="dropdown-toggle btn btn-monospaced btn-secondary"
-      title="select-translation-language"
+      class="btn-block btn btn-monospaced btn-secondary"
+      title="select-a-language"
       type="button"
     >
       <span
@@ -794,9 +794,9 @@ exports[`TranslationAdminSelector selects the default locale if the current sele
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="select-a-language.-current-language-x"
-      class="dropdown-toggle btn btn-monospaced btn-secondary"
+      class="btn-block btn btn-monospaced btn-secondary"
       style=""
-      title="select-translation-language"
+      title="select-a-language"
       type="button"
     >
       <span

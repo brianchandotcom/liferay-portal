@@ -174,7 +174,7 @@ describe('TranslationAdminSelector', () => {
 	it('renders an open dropdown with the list of active languages', async () => {
 		const {getByTitle} = render(<TranslationAdminSelector {...props} />);
 
-		const trigger = getByTitle('select-translation-language');
+		const trigger = getByTitle('select-a-language');
 
 		fireEvent.click(trigger);
 
@@ -188,7 +188,7 @@ describe('TranslationAdminSelector', () => {
 			<TranslationAdminSelector adminMode={true} {...props} />
 		);
 
-		const trigger = getByTitle('select-translation-language');
+		const trigger = getByTitle('select-a-language');
 
 		fireEvent.click(trigger);
 
@@ -202,7 +202,7 @@ describe('TranslationAdminSelector', () => {
 			<TranslationAdminSelector adminMode={true} {...props} />
 		);
 
-		const trigger = getByTitle('select-translation-language');
+		const trigger = getByTitle('select-a-language');
 
 		fireEvent.click(trigger);
 
@@ -228,7 +228,7 @@ describe('TranslationAdminSelector', () => {
 			<TranslationAdminSelector adminMode={true} {...props} />
 		);
 
-		const trigger = getByTitle('select-translation-language');
+		const trigger = getByTitle('select-a-language');
 
 		fireEvent.click(trigger);
 
@@ -269,7 +269,7 @@ describe('TranslationAdminSelector', () => {
 	it('calls onSelectedLocaleChange callback on dropdown locale selection', () => {
 		const {getByTitle} = render(<TranslationAdminSelector {...props} />);
 
-		const trigger = getByTitle('select-translation-language');
+		const trigger = getByTitle('select-a-language');
 
 		fireEvent.click(trigger);
 
@@ -307,7 +307,7 @@ describe('TranslationAdminSelector', () => {
 			jest.runAllTimers();
 		});
 
-		const trigger = getByTitle('select-translation-language');
+		const trigger = getByTitle('select-a-language');
 
 		fireEvent.click(trigger);
 
@@ -329,7 +329,7 @@ describe('TranslationAdminSelector', () => {
 			/>
 		);
 
-		const trigger = getByTitle('select-translation-language');
+		const trigger = getByTitle('select-a-language');
 
 		fireEvent.click(trigger);
 
@@ -387,7 +387,7 @@ describe('TranslationAdminSelector', () => {
 			/>
 		);
 
-		const trigger = getByTitle('select-translation-language');
+		const trigger = getByTitle('select-a-language');
 
 		fireEvent.click(trigger);
 

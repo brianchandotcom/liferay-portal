@@ -8,7 +8,6 @@
 import {Locator, Page} from '@playwright/test';
 
 export class EditAccountWebsitePage {
-	readonly addWebsiteButton: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
 	readonly urlInput: Locator;

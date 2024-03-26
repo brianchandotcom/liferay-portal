@@ -7,19 +7,22 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class EditAccountPhonePage {
-	readonly numberInput: Locator;
+export class EditAccountContactAddressPage {
+	readonly street1Input: Locator;
+	readonly cityInput: Locator;
 	readonly page: Page;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
-		this.numberInput = page.getByRole('textbox', {name: 'Number'});
+		this.street1Input = page.getByLabel('Street 1');
+		this.cityInput = page.getByLabel('City');
 		this.page = page;
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 	}
 
-	async updatePhoneNumber(numberInput: string) {
-		await this.numberInput.fill(numberInput);
+	async updateAddress(street1Input: string, cityInput: string) {
+		await this.street1Input.fill(street1Input);
+		await this.cityInput.fill(cityInput);
 		await this.saveButton.click();
 	}
 }

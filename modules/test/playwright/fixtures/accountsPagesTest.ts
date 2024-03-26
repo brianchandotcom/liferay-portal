@@ -7,7 +7,9 @@
 
 import {test} from '@playwright/test';
 
+import {AccountContactAddressPage} from '../pages/account-admin-web/AccountContactAddressPage';
 import {AccountsPage} from '../pages/account-admin-web/AccountsPage';
+import {EditAccountContactAddressPage} from '../pages/account-admin-web/EditAccountContactAddressPage';
 import {EditAccountContactInformationPage} from '../pages/account-admin-web/EditAccountContactInformationPage';
 import {EditAccountContactPage} from '../pages/account-admin-web/EditAccountContactPage';
 import {EditAccountEmailAddressPage} from '../pages/account-admin-web/EditAccountEmailAddressPage';
@@ -16,7 +18,9 @@ import {EditAccountPhonePage} from '../pages/account-admin-web/EditAccountPhoneP
 import {EditAccountWebsitePage} from '../pages/account-admin-web/EditAccountWebsitePage';
 
 const accountsPagesTest = test.extend<{
+	accountContactAddressPage: AccountContactAddressPage;
 	accountsPage: AccountsPage;
+	editAccountContactAddressPage: EditAccountContactAddressPage;
 	editAccountContactInformationPage: EditAccountContactInformationPage;
 	editAccountContactPage: EditAccountContactPage;
 	editAccountEmailAddressPage: EditAccountEmailAddressPage;
@@ -24,8 +28,14 @@ const accountsPagesTest = test.extend<{
 	editAccountPhonePage: EditAccountPhonePage;
 	editAccountWebsitePage: EditAccountWebsitePage;
 }>({
+	accountContactAddressPage: async ({page}, use) => {
+		await use(new AccountContactAddressPage(page));
+	},
 	accountsPage: async ({page}, use) => {
 		await use(new AccountsPage(page));
+	},
+	editAccountContactAddressPage: async ({page}, use) => {
+		await use(new EditAccountContactAddressPage(page));
 	},
 	editAccountContactInformationPage: async ({page}, use) => {
 		await use(new EditAccountContactInformationPage(page));

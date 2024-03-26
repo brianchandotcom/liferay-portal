@@ -268,14 +268,6 @@ public class BuildHistory {
 
 			long buildDuration = buildJSONObject.getDuration();
 
-			_totalBuildTime[startIndex] += buildDuration;
-
-			long queueDuration = buildJSONObject.getQueueDuration();
-
-			_totalQueueTime[startIndex] += queueDuration;
-
-			_buildCountsForAverage[startIndex]++;
-
 			long relativeStartTime = buildStartTime - _startTime;
 
 			long relativeEndTime = relativeStartTime + buildDuration;
@@ -284,9 +276,11 @@ public class BuildHistory {
 				_TIMELINE_SAMPLE_PERIOD_MINUTES);
 
 			if ((relativeStartTime >
+					((_size - 1) * timelineSamplePeriodMillis)) ||
+				((relativeStartTime >
 					(startIndex * timelineSamplePeriodMillis)) &&
-				(relativeEndTime <
-					((startIndex + 1) * timelineSamplePeriodMillis))) {
+				 (relativeEndTime <
+					 ((startIndex + 1) * timelineSamplePeriodMillis)))) {
 
 				return;
 			}
@@ -305,6 +299,14 @@ public class BuildHistory {
 						_topLevelBuildCounts[i]++;
 					}
 				}
+
+				_totalBuildTime[startIndex] += buildDuration;
+
+				long queueDuration = buildJSONObject.getQueueDuration();
+
+				_totalQueueTime[startIndex] += queueDuration;
+
+				_buildCountsForAverage[startIndex]++;
 			}
 		}
 

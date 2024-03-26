@@ -36,6 +36,9 @@ public class RoleConstants {
 	public static final String ORGANIZATION_ADMINISTRATOR =
 		"Organization Administrator";
 
+	public static final String ORGANIZATION_CONTENT_REVIEWER =
+		"Organization Content Reviewer";
+
 	public static final String ORGANIZATION_OWNER = "Organization Owner";
 
 	public static final String ORGANIZATION_USER = "Organization User";

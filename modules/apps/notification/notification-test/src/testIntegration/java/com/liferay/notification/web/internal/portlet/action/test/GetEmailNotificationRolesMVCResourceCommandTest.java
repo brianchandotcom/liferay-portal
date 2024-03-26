@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
@@ -49,7 +50,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Carolina Barbosa
  */
 @RunWith(Arquillian.class)
-public class GetAccountRolesMVCResourceCommandTest {
+public class GetEmailNotificationRolesMVCResourceCommandTest {
 
 	@ClassRule
 	@Rule
@@ -59,20 +60,23 @@ public class GetAccountRolesMVCResourceCommandTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testGetAccountRoles() throws Exception {
+	public void testGetEmailNotificationRoles() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
 
 		User user = UserTestUtil.getAdminUser(company.getCompanyId());
 
-		Role role1 = _addRole(user);
-		Role role2 = _addRole(user);
-		Role role3 = _roleLocalService.addRole(
+		Role accountRole1 = _addAccountRole(user);
+		Role accountRole2 = _addAccountRole(user);
+		Role accountRole3 = _roleLocalService.addRole(
 			user.getUserId(), AccountRole.class.getName(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), RoleConstants.TYPE_ACCOUNT,
 			null, null);
+
+		Role organizationRole1 = _addOrganizationRole(user);
+		Role organizationRole2 = _addOrganizationRole(user);
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
@@ -96,36 +100,63 @@ public class GetAccountRolesMVCResourceCommandTest {
 				mockLiferayResourceResponse.getPortletOutputStream();
 
 		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"name",
-					AccountRoleConstants.
-						REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
-				JSONUtil.put(
-					"name",
-					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER),
-				JSONUtil.put(
-					"label", role1.getTitle(LocaleUtil.getDefault())
-				).put(
-					"name", role1.getName()
-				),
-				JSONUtil.put(
-					"label", role2.getTitle(LocaleUtil.getDefault())
-				).put(
-					"name", role2.getName()
-				),
-				JSONUtil.put(
-					"label", role3.getTitle(LocaleUtil.getDefault())
-				).put(
-					"name", role3.getName()
-				)
+			JSONUtil.put(
+				"accountRoles",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"name",
+						AccountRoleConstants.
+							REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR),
+					JSONUtil.put(
+						"name",
+						AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER),
+					JSONUtil.put(
+						"label", accountRole1.getTitle(LocaleUtil.getDefault())
+					).put(
+						"name", accountRole1.getName()
+					),
+					JSONUtil.put(
+						"label", accountRole2.getTitle(LocaleUtil.getDefault())
+					).put(
+						"name", accountRole2.getName()
+					),
+					JSONUtil.put(
+						"label", accountRole3.getTitle(LocaleUtil.getDefault())
+					).put(
+						"name", accountRole3.getName()
+					))
+			).put(
+				"organizationRoles",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"name", RoleConstants.ORGANIZATION_ADMINISTRATOR),
+					JSONUtil.put(
+						"name", RoleConstants.ORGANIZATION_CONTENT_REVIEWER),
+					JSONUtil.put("name", RoleConstants.ORGANIZATION_OWNER),
+					JSONUtil.put("name", RoleConstants.ORGANIZATION_USER),
+					JSONUtil.put(
+						"name",
+						AccountRoleConstants.
+							REQUIRED_ROLE_NAME_ACCOUNT_MANAGER),
+					JSONUtil.put(
+						"label",
+						organizationRole1.getTitle(LocaleUtil.getDefault())
+					).put(
+						"name", organizationRole1.getName()
+					),
+					JSONUtil.put(
+						"label",
+						organizationRole2.getTitle(LocaleUtil.getDefault())
+					).put(
+						"name", organizationRole2.getName()
+					))
 			).toString(),
 			byteArrayOutputStream.toString(), JSONCompareMode.LENIENT);
 
 		_companyLocalService.deleteCompany(company);
 	}
 
-	private Role _addRole(User user) throws Exception {
+	private Role _addAccountRole(User user) throws Exception {
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			user.getUserId(), 0L, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, null, null,
@@ -143,6 +174,12 @@ public class GetAccountRolesMVCResourceCommandTest {
 		return accountRole.getRole();
 	}
 
+	private Role _addOrganizationRole(User user) throws Exception {
+		return _roleLocalService.addRole(
+			user.getUserId(), null, 0, RandomTestUtil.randomString(), null,
+			null, RoleConstants.TYPE_ORGANIZATION, null, null);
+	}
+
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -153,9 +190,12 @@ public class GetAccountRolesMVCResourceCommandTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(
-		filter = "mvc.command.name=/notification_templates/get_account_roles"
+		filter = "mvc.command.name=/notification_templates/get_email_notification_roles"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

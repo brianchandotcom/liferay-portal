@@ -6,7 +6,10 @@
 /// <reference types="react" />
 
 import {Observer} from '@clayui/modal/lib/types';
-import {MultiSelectItem} from '@liferay/object-js-components-web';
+import {
+	MultiSelectItem,
+	MultiSelectItemChild,
+} from '@liferay/object-js-components-web';
 import './ModalAddFilter.scss';
 interface ModalAddFilterProps {
 	aggregationFilter?: boolean;
@@ -22,15 +25,7 @@ interface ModalAddFilterProps {
 	objectFields: ObjectField[];
 	observer: Observer;
 	onClose: () => void;
-	onSave: (
-		objectFieldName: string,
-		filterBy?: string,
-		fieldLabel?: LocalizedValue<string>,
-		objectFieldBusinessType?: string,
-		filterType?: string,
-		valueList?: MultiSelectItem[],
-		value?: string
-	) => void;
+	onSave: (props: OnSaveProps) => void;
 	validate: ({
 		checkedItems,
 		disableDateValues,
@@ -42,6 +37,15 @@ interface ModalAddFilterProps {
 	}: FilterValidation) => FilterErrors;
 	workflowStatuses: LabelValueObject[];
 }
+export interface OnSaveProps {
+	fieldLabel?: LocalizedValue<string>;
+	filterBy?: string;
+	filterType?: string;
+	objectFieldBusinessType?: string;
+	objectFieldName: string;
+	value?: string;
+	valueList?: MultiSelectItemChild[];
+}
 export declare type FilterErrors = {
 	endDate?: string;
 	items?: string;
@@ -51,9 +55,9 @@ export declare type FilterErrors = {
 	value?: string;
 };
 export declare type FilterValidation = {
-	checkedItems: MultiSelectItem[];
+	checkedItems: MultiSelectItemChild[];
 	disableDateValues?: boolean;
-	items: MultiSelectItem[];
+	items: MultiSelectItem[] | LabelValueObject[];
 	selectedFilterBy?: ObjectField;
 	selectedFilterTypeValue?: string;
 	setErrors: (value: FilterErrors) => void;

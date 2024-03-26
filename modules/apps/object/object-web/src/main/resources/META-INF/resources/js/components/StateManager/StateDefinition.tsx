@@ -21,11 +21,19 @@ export default function StateDefinition({
 	stateName,
 	values,
 }: IProps) {
-	const [items, setItems] = useState<MultiSelectItem[]>(
-		initialValues.map(({checked, key, name}) => {
-			return {checked, label: name, value: key};
-		})
-	);
+	const [items, setItems] = useState<MultiSelectItem[]>([
+		{
+			children: initialValues.map(({checked, key, name}) => {
+				return {
+					checked,
+					label: name,
+					value: key,
+				};
+			}),
+			label: '',
+			value: 'stateDefinitionItems',
+		},
+	]);
 
 	useEffect(() => {
 		const stateSettings = values.objectFieldSettings?.find(
@@ -49,7 +57,7 @@ export default function StateDefinition({
 
 		const currentStateIndex = objectStates.indexOf(currentState!);
 
-		const newObjectStateTransitions = items
+		const newObjectStateTransitions = items[0].children
 			.filter((item) => item.checked)
 			.map(({value}) => {
 				return {key: value!};

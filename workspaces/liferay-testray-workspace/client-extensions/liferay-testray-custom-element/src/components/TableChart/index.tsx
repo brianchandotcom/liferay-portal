@@ -119,15 +119,21 @@ const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 							className="tr-table-chart__column-title"
 							key={index}
 						>
-							B {horizontalColumn}
+							<div className="text-center">
+								B <br />
+								{horizontalColumn}
+							</div>
 						</td>
 					))}
 				</tr>
 
 				{columns.map((verticalColumnName, verticalColumnIndex) => (
 					<tr key={verticalColumnIndex}>
-						<td className="text-center tr-table-chart__column-title">
-							A {verticalColumnName}
+						<td className="tr-table-chart__column-title">
+							<div className="text-center">
+								A <br />
+								{verticalColumnName}
+							</div>
 						</td>
 
 						{columns.map(

@@ -237,8 +237,7 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 			await liferayDispatchTriggerImpl.run(
 				response.liferayDispatchTrigger.id
 			);
-		}
-		catch (error) {
+		} catch (error) {
 			body.dueStatus = DispatchTriggerStatuses.FAILED;
 			body.output = (error as TestrayError)?.message;
 		}
@@ -315,8 +314,11 @@ class TestrayBuildImpl extends Rest<Build, TestrayBuild> {
 	}
 
 	public async updateArchivedFlag(id: number, archived: boolean) {
+		const dateArchived = archived ? new Date().toISOString() : '';
+
 		await this.fetcher.patch(`/builds/${id}`, {
 			archived,
+			dateArchived,
 		});
 	}
 }

@@ -89,40 +89,6 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testAddCollidingClassNameId() throws Exception {
-		long commonClassNameId = 1000000000L;
-
-		try {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> {
-					ClassName className = new ClassNameImpl();
-
-					className.setClassNameId(commonClassNameId);
-					className.setValue("class.name." + companyId);
-
-					_classNameLocalService.addClassName(className);
-				});
-
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> {
-					ClassName className =
-						_classNameLocalService.fetchByClassNameId(
-							commonClassNameId);
-
-					Assert.assertEquals(
-						"class.name." + companyId, className.getValue());
-					Assert.assertEquals(
-						commonClassNameId, className.getClassNameId());
-				});
-		}
-		finally {
-			DBPartitionUtil.forEachCompanyId(
-				companyId -> _classNameLocalService.deleteClassName(
-					commonClassNameId));
-		}
-	}
-
-	@Test
 	public void testAddIndexControlTable() throws Exception {
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> createIndex(TEST_CONTROL_TABLE_NAME));
@@ -167,6 +133,39 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 								TEST_CONTROL_TABLE_NEW_COLUMN));
 					}
 				});
+		}
+	}
+
+	@Test
+	public void testCollideClassNameId() throws Exception {
+		long classNameId = 1000000000L;
+
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					ClassName className = new ClassNameImpl();
+
+					className.setClassNameId(classNameId);
+					className.setValue("class.name." + companyId);
+
+					_classNameLocalService.addClassName(className);
+				});
+
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> {
+					ClassName className =
+						_classNameLocalService.fetchByClassNameId(classNameId);
+
+					Assert.assertEquals(
+						"class.name." + companyId, className.getValue());
+					Assert.assertEquals(
+						classNameId, className.getClassNameId());
+				});
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _classNameLocalService.deleteClassName(
+					classNameId));
 		}
 	}
 

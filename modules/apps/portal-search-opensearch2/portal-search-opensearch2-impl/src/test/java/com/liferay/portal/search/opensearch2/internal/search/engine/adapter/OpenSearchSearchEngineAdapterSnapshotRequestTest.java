@@ -239,6 +239,7 @@ public class OpenSearchSearchEngineAdapterSnapshotRequestTest
 			_REPOSITORY_NAME);
 
 		getSnapshotsRequest.setSnapshotNames(snapshotName);
+		getSnapshotsRequest.setVerbose(true);
 
 		GetSnapshotsResponse getSnapshotsResponse =
 			_searchEngineAdapter.execute(getSnapshotsRequest);

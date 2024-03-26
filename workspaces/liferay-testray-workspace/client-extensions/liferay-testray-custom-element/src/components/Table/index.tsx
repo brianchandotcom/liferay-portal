@@ -38,7 +38,7 @@ export type TableProps<T = any> = {
 	actions?: Action[];
 	allRowsChecked?: boolean;
 	bodyVerticalAlignment?: 'bottom' | 'middle' | 'top';
-	columns: Column<T>[];
+	columns?: Column<T>[];
 	highlight?: (item: T) => boolean;
 	items: T[];
 	mutate: KeyedMutator<T>;
@@ -146,7 +146,7 @@ const Table: React.FC<TableProps> = ({
 							</ClayTable.Cell>
 						)}
 
-						{columns.map((column, index) => (
+						{columns?.map((column, index) => (
 							<ClayTable.Cell headingTitle key={index}>
 								<span className="d-flex justify-content-between">
 									<span
@@ -206,7 +206,7 @@ const Table: React.FC<TableProps> = ({
 								<ClayTable.Cell>
 									<ClayCheckbox
 										aria-label={columns
-											.map((column) => {
+											?.map((column) => {
 												const getValue = (
 													value: any
 												) => {
@@ -251,7 +251,7 @@ const Table: React.FC<TableProps> = ({
 								</ClayTable.Cell>
 							)}
 
-							{columns.map((column, columnIndex) => (
+							{columns?.map((column, columnIndex) => (
 								<ClayTable.Cell
 									className={classNames('text-dark', {
 										'cursor-pointer': column.clickable,

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLayout from '@clayui/layout';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {
 	ReactNode,
@@ -39,6 +40,7 @@ import EmptyState from '../EmptyState';
 import Loading from '../Loading';
 import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
+import TableChart from '../TableChart';
 
 type ChildrenOptions = {
 	dispatch: React.Dispatch<AppActions>;
@@ -68,7 +70,7 @@ export type ListViewProps<T = any> = {
 		displayTop?: boolean;
 	};
 	resource: string;
-	tableProps: Omit<
+	tableProps: {visible?: boolean} & Omit<
 		TableProps,
 		| 'items'
 		| 'mutate'
@@ -101,7 +103,7 @@ const ListView: React.FC<ListViewProps> = ({
 	onContextChange,
 	pagination = {displayTop: true},
 	resource,
-	tableProps,
+	tableProps: {visible: tableVisible = true, ...tableProps},
 	transformData,
 	variables,
 }) => {
@@ -169,6 +171,13 @@ const ListView: React.FC<ListViewProps> = ({
 			page: listViewContext.page,
 			pageSize: listViewContext.pageSize,
 			sort: buildSort(sort),
+			testrayCasePriorities: Array.isArray(
+				filterVariables.appliedFilter?.testrayCasePriorities
+			)
+				? filterVariables.appliedFilter?.testrayCasePriorities?.map(
+						({value}) => value
+				  )
+				: [],
 		}),
 		[
 			onApplyFilterMemo,
@@ -194,14 +203,18 @@ const ListView: React.FC<ListViewProps> = ({
 		lastPage = 1,
 		page = 1,
 		pageSize,
+		results,
 		totalCount = 0,
 	} = response || {};
 
-	const itemsMemoized = useMemo(() => items, [items]);
+	const itemsMemoized = useMemo(() => (results ? results : items), [
+		items,
+		results,
+	]);
 
 	const columns = useMemo(
 		() =>
-			tableProps.columns.filter(({key}) => {
+			tableProps.columns?.filter(({key}) => {
 				const columns = columnsContext || {};
 
 				if (columns[key] === undefined) {
@@ -247,14 +260,7 @@ const ListView: React.FC<ListViewProps> = ({
 		if (shouldCurrentPageBeChanged) {
 			dispatch({payload: page - 1, type: ListViewTypes.SET_PAGE});
 		}
-	}, [
-		customFilterFields,
-		dispatch,
-		itemsMemoized.length,
-		lastPage,
-		loading,
-		page,
-	]);
+	}, [dispatch, itemsMemoized.length, lastPage, loading, page]);
 
 	const listViewContextString = JSON.stringify(listViewContext);
 
@@ -354,25 +360,36 @@ const ListView: React.FC<ListViewProps> = ({
 						<div className="mt-4">{Pagination}</div>
 					)}
 
-					<Table
-						{...tableProps}
-						allRowsChecked={listViewContext.checkAll}
-						columns={columns}
-						items={itemsMemoized}
-						mutate={mutate}
-						normalizers={{
-							onSelectRow: onSelectRowNormalizer,
-						}}
-						onSelectAllRows={onSelectAllRows}
-						onSelectRow={onSelectRow}
-						onSort={onSort}
-						selectedRows={selectedRows}
-						sort={sort}
-					/>
+					{tableVisible && (
+						<Table
+							{...tableProps}
+							allRowsChecked={listViewContext.checkAll}
+							columns={columns}
+							items={itemsMemoized}
+							mutate={mutate}
+							normalizers={{
+								onSelectRow: onSelectRowNormalizer,
+							}}
+							onSelectAllRows={onSelectAllRows}
+							onSelectRow={onSelectRow}
+							onSort={onSort}
+							selectedRows={selectedRows}
+							sort={sort}
+						/>
+					)}
 
 					{Pagination}
 				</>
 			)}
+
+			{!!results?.length &&
+				results?.map((runsData: any, index: number) => {
+					return (
+						<ClayLayout.Col key={index} lg={12} md={12}>
+							<TableChart matrixData={runsData.Runs} />
+						</ClayLayout.Col>
+					);
+				})}
 		</>
 	);
 };

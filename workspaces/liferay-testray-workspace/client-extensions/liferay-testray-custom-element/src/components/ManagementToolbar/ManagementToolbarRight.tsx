@@ -45,11 +45,11 @@ export type IItem = {
 };
 
 type ManagementToolbarRightProps = {
-	actions: any;
+	actions?: any;
 	addButton?: () => void;
 	applyFilters?: boolean;
 	buttons?: ReactNode | ((actions: any) => ReactNode);
-	columns: Column[];
+	columns?: Column[];
 	customFilterFields?: {[key: string]: string};
 	disabled: boolean;
 	display?: {

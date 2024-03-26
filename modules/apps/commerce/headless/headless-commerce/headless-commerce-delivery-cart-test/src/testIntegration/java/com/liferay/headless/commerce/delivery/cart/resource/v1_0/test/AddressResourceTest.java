@@ -148,27 +148,27 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 	}
 
 	private long _getCartBillingAddres_getCartId() throws Exception {
-		CommerceOrder commerceOrder = _getCommerceOrder();
+		_commerceOrder = _getCommerceOrder();
 
-		commerceOrder.setBillingAddressId(
+		_commerceOrder.setBillingAddressId(
 			_getCommerceAddress().getCommerceAddressId());
 
-		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			commerceOrder);
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
 
-		return commerceOrder.getCommerceOrderId();
+		return _commerceOrder.getCommerceOrderId();
 	}
 
 	private long _getCartShippingAddres_getCartId() throws Exception {
-		CommerceOrder commerceOrder = _getCommerceOrder();
+		_commerceOrder = _getCommerceOrder();
 
-		commerceOrder.setShippingAddressId(
+		_commerceOrder.setShippingAddressId(
 			_getCommerceAddress().getCommerceAddressId());
 
-		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			commerceOrder);
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
 
-		return commerceOrder.getCommerceOrderId();
+		return _commerceOrder.getCommerceOrderId();
 	}
 
 	private CommerceAddress _getCommerceAddress() throws Exception {

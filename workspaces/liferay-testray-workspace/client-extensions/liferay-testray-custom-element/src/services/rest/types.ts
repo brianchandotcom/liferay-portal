@@ -37,6 +37,10 @@ export type ObjectActionsItems = {
 	update?: ActionPermissionProperties;
 };
 
+export type Results<Query = any> = {
+	results: Query[];
+};
+
 export type APIResponse<Query = any> = {
 	actions: ObjectActions;
 	facets: Facets[];
@@ -44,7 +48,7 @@ export type APIResponse<Query = any> = {
 	lastPage: number;
 	page: number;
 	pageSize: number;
-	results?: Query[];
+	results?: Results[];
 	totalCount: number;
 };
 

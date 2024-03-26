@@ -129,7 +129,11 @@ const MDFRequestList = () => {
 
 			return (
 				<div className="mt-3">
-					<Table<MDFRequestListItem> columns={columns} rows={items} />
+					<Table<MDFRequestListItem>
+						columns={columns}
+						rows={items}
+						tableLayout="auto"
+					/>
 
 					<ClayPaginationBarWithBasicItems
 						{...pagination}

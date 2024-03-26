@@ -67,16 +67,22 @@ const NotificationsInfo = ({
 
 	const notificationTypesOptions = [
 		{
-			checked: notificationTypeEmail,
-			label: Liferay.Language.get('email'),
-			type: 'checkbox',
-			value: 'email',
-		},
-		{
-			checked: notificationTypeUserNotification,
-			label: Liferay.Language.get('user-notification'),
-			type: 'checkbox',
-			value: 'userNotification',
+			children: [
+				{
+					checked: notificationTypeEmail,
+					label: Liferay.Language.get('email'),
+					type: 'checkbox',
+					value: 'email',
+				},
+				{
+					checked: notificationTypeUserNotification,
+					label: Liferay.Language.get('user-notification'),
+					type: 'checkbox',
+					value: 'userNotification',
+				},
+			],
+			label: '',
+			value: 'notificationTypes',
 		},
 	];
 

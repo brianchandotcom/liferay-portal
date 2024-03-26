@@ -187,11 +187,11 @@ const BaseNotificationsInfo = ({
 	}, [accountEntryId]);
 
 	useEffect(() => {
-		const checkedTrue = items
-			.filter((item) => {
-				return item.checked === true;
+		const checkedTrue = items[0].children
+			.filter((child) => {
+				return child.checked === true;
 			})
-			.map((item) => item.label);
+			.map((child) => child.label);
 
 		if (checkedTrue.includes(Liferay.Language.get('email'))) {
 			setNotificationTypeEmail(true);

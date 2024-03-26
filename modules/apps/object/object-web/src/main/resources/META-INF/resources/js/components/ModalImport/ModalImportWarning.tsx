@@ -5,7 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {Text} from '@clayui/core';
+import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
 import ClayModal from '@clayui/modal';
 import {stringUtils} from '@liferay/object-js-components-web';
 import React from 'react';
@@ -22,6 +22,13 @@ interface ModalImportWarningProps {
 	handleOnClose: () => void;
 	modalImportKey: string;
 }
+
+const tableHeaderItems = [
+	{
+		id: 'objectLabel',
+		name: Liferay.Language.get('object-label'),
+	},
+];
 
 export function ModalImportWarning({
 	errorMessage,
@@ -55,17 +62,36 @@ export function ModalImportWarning({
 					{Liferay.FeatureFlags['LPS-187142'] &&
 						!!existingObjectDefinitions?.length && (
 							<>
-								{existingObjectDefinitions.map(
-									(objectDefinition) => (
-										<li key={objectDefinition.name}>
-											{stringUtils.getLocalizableLabel(
-												objectDefinition.defaultLanguageId,
-												objectDefinition.label,
-												objectDefinition.name
-											)}
-										</li>
-									)
-								)}
+								<Table
+									columnsVisibility={false}
+									headingNoWrap
+									noWrap
+									striped={false}
+								>
+									<Head items={tableHeaderItems}>
+										{(column) => (
+											<Cell expanded key={column.id}>
+												{column.name}
+											</Cell>
+										)}
+									</Head>
+
+									<Body
+										defaultItems={existingObjectDefinitions}
+									>
+										{(objectDefinition) => (
+											<Row>
+												<Cell>
+													{stringUtils.getLocalizableLabel(
+														objectDefinition.defaultLanguageId,
+														objectDefinition.label,
+														objectDefinition.name
+													)}
+												</Cell>
+											</Row>
+										)}
+									</Body>
+								</Table>
 
 								<br />
 

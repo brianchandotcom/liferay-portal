@@ -12,6 +12,7 @@ import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -56,52 +57,52 @@ public class ImportObjectDefinitionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			_importObjectDefinition(actionRequest);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+		JSONObject errorsJSONObject = _importObjectDefinition(actionRequest);
 
+		if (errorsJSONObject != null) {
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(actionResponse);
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-			JSONObject jsonObject = null;
-
-			if (exception instanceof ObjectDefinitionNameException) {
-				Class<?> clazz = exception.getClass();
-
-				jsonObject = JSONUtil.put(
-					"type",
-					"ObjectDefinitionNameException." + clazz.getSimpleName());
-			}
-			else if (exception instanceof ObjectViewColumnFieldNameException) {
-				jsonObject = JSONUtil.put(
-					"title",
-					_language.get(
-						_portal.getHttpServletRequest(actionRequest),
-						"the-object-definition-was-imported-without-a-custom-" +
-							"view"));
-			}
-			else {
-				jsonObject = JSONUtil.put(
-					"title",
-					_language.get(
-						_portal.getHttpServletRequest(actionRequest),
-						"the-object-definition-failed-to-import"));
-			}
-
 			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
+				actionRequest, actionResponse, errorsJSONObject);
 		}
 
 		hideDefaultSuccessMessage(actionRequest);
 	}
 
-	private void _importObjectDefinition(ActionRequest actionRequest)
+	private JSONObject _handleImportException(
+		ActionRequest actionRequest, Exception exception) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(exception);
+		}
+
+		if (exception instanceof ObjectDefinitionNameException) {
+			Class<?> clazz = exception.getClass();
+
+			return JSONUtil.put(
+				"type",
+				"ObjectDefinitionNameException." + clazz.getSimpleName());
+		}
+		else if (exception instanceof ObjectViewColumnFieldNameException) {
+			return JSONUtil.put(
+				"title",
+				_language.get(
+					_portal.getHttpServletRequest(actionRequest),
+					"the-object-definition-was-imported-without-a-custom-" +
+						"view"));
+		}
+
+		return JSONUtil.put(
+			"title",
+			_language.get(
+				_portal.getHttpServletRequest(actionRequest),
+				"the-object-definition-failed-to-import"));
+	}
+
+	private JSONObject _importObjectDefinition(ActionRequest actionRequest)
 		throws Exception {
 
 		ObjectDefinitionResource.Builder builder =
@@ -117,44 +118,98 @@ public class ImportObjectDefinitionMVCActionCommand
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
 
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
 		String objectDefinitionJSON = FileUtil.read(
 			uploadPortletRequest.getFile("objectDefinitionJSON"));
 
-		JSONObject objectDefinitionJSONObject = _jsonFactory.createJSONObject(
+		boolean importMultipleObjectDefinitions = Validator.isNull(
 			objectDefinitionJSON);
 
-		objectDefinitionJSONObject.remove(
-			"accountEntryRestrictedObjectFieldId");
-
-		ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
-			objectDefinitionJSONObject.toString());
-
-		objectDefinition.setActive(false);
-
-		String externalReferenceCode = ParamUtil.getString(
-			actionRequest, "externalReferenceCode");
-
-		if (Validator.isNotNull(externalReferenceCode)) {
-			objectDefinition.setExternalReferenceCode(externalReferenceCode);
+		if (importMultipleObjectDefinitions) {
+			jsonArray = _jsonFactory.createJSONArray(
+				ParamUtil.getString(uploadPortletRequest, "objectDefinitions"));
+		}
+		else {
+			jsonArray.put(_jsonFactory.createJSONObject(objectDefinitionJSON));
 		}
 
-		objectDefinition.setName(ParamUtil.getString(actionRequest, "name"));
-		objectDefinition.setObjectFolderExternalReferenceCode(
-			ParamUtil.getString(
-				actionRequest, "objectFolderExternalReferenceCode"));
+		JSONArray errorsMessageJSONArray = _jsonFactory.createJSONArray();
 
-		ObjectDefinition putObjectDefinition =
-			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
-				objectDefinition.getExternalReferenceCode(), objectDefinition);
+		for (Object object : jsonArray) {
+			JSONObject jsonObject = (JSONObject)object;
 
-		putObjectDefinition.setPortlet(objectDefinition.getPortlet());
+			jsonObject.remove("accountEntryRestrictedObjectFieldId");
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
-			putObjectDefinition.setStorageType(StringPool.BLANK);
+			ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
+				jsonObject.toString());
+
+			objectDefinition.setActive(false);
+
+			String externalReferenceCode = ParamUtil.getString(
+				actionRequest, "externalReferenceCode");
+
+			if (Validator.isNotNull(externalReferenceCode)) {
+				objectDefinition.setExternalReferenceCode(
+					externalReferenceCode);
+			}
+
+			String name = ParamUtil.getString(actionRequest, "name");
+
+			if (Validator.isNotNull(name)) {
+				objectDefinition.setName(name);
+			}
+
+			objectDefinition.setObjectFolderExternalReferenceCode(
+				ParamUtil.getString(
+					actionRequest, "objectFolderExternalReferenceCode"));
+
+			try {
+				ObjectDefinition putObjectDefinition =
+					objectDefinitionResource.
+						putObjectDefinitionByExternalReferenceCode(
+							objectDefinition.getExternalReferenceCode(),
+							objectDefinition);
+
+				putObjectDefinition.setPortlet(objectDefinition.getPortlet());
+
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-135430")) {
+					putObjectDefinition.setStorageType(StringPool.BLANK);
+				}
+
+				objectDefinitionResource.putObjectDefinition(
+					putObjectDefinition.getId(), putObjectDefinition);
+			}
+			catch (Exception exception) {
+				if (importMultipleObjectDefinitions) {
+					errorsMessageJSONArray.put(
+						JSONUtil.put(
+							"error",
+							_handleImportException(actionRequest, exception)
+						).put(
+							"objectDefinitionName", objectDefinition.getName()
+						));
+				}
+				else {
+					errorsMessageJSONArray.put(
+						_handleImportException(actionRequest, exception));
+				}
+			}
 		}
 
-		objectDefinitionResource.putObjectDefinition(
-			putObjectDefinition.getId(), putObjectDefinition);
+		if (errorsMessageJSONArray.length() == 0) {
+			return null;
+		}
+
+		if (!importMultipleObjectDefinitions) {
+			return errorsMessageJSONArray.getJSONObject(0);
+		}
+
+		return JSONUtil.put(
+			"message", errorsMessageJSONArray
+		).put(
+			"type", "importMultipleObjectDefinitions"
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

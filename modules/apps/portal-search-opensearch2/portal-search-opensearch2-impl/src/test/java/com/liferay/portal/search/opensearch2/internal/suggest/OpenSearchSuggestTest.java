@@ -15,10 +15,14 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.opensearch.client.opensearch._types.OpenSearchException;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -73,10 +77,17 @@ public class OpenSearchSuggestTest extends BaseSuggestTestCase {
 	@Override
 	@Test
 	public void testNull() throws Exception {
+		expectedException.expect(OpenSearchException.class);
+		expectedException.expectMessage(
+			"[search_phase_execution_exception] all shards failed");
+
 		indexSuccessfulQuery("creating the keywordSearch mapping");
 
 		assertSuggest("[]", null);
 	}
+
+	@Rule
+	public ExpectedException expectedException = ExpectedException.none();
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

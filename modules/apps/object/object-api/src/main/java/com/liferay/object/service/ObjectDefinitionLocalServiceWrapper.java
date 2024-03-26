@@ -541,6 +541,14 @@ public class ObjectDefinitionLocalServiceWrapper
 			companyId, status);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectDefinition>
+		getObjectDefinitions(long companyId, long userId) {
+
+		return _objectDefinitionLocalService.getObjectDefinitions(
+			companyId, userId);
+	}
+
 	/**
 	 * Returns the number of object definitions.
 	 *

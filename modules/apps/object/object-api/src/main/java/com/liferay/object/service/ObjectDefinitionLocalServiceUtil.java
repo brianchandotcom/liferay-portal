@@ -465,6 +465,12 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getObjectDefinitions(companyId, status);
 	}
 
+	public static List<ObjectDefinition> getObjectDefinitions(
+		long companyId, long userId) {
+
+		return getService().getObjectDefinitions(companyId, userId);
+	}
+
 	/**
 	 * Returns the number of object definitions.
 	 *

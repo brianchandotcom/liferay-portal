@@ -594,6 +594,12 @@ public class DDMValueUtil {
 		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
 
 		for (String value : values) {
+			if (options.containsKey(value)) {
+				keys.add(value);
+
+				continue;
+			}
+
 			String key = StringPool.BLANK;
 
 			for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {

@@ -7,7 +7,7 @@ import liferayRequest from '../../services/liferayRequest';
 import Job from './Job';
 
 export function getJobById({id, setJob}) {
-	liferayRequest('/o/c/jobs/' + id)
+	liferayRequest({urlPath: '/o/c/jobs/' + id})
 		.then((request) => request.text())
 		.then((result) => {
 			const resultJSON = JSON.parse(result);
@@ -25,7 +25,7 @@ export function getJobById({id, setJob}) {
 }
 
 export function getJobs({setJobs}) {
-	liferayRequest('/o/c/jobs')
+	liferayRequest({urlPath: '/o/c/jobs'})
 		.then((request) => request.text())
 		.then((result) => {
 			const resultJSON = JSON.parse(result);

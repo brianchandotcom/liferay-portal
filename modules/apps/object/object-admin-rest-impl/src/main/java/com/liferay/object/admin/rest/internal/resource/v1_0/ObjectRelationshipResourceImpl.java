@@ -297,24 +297,41 @@ public class ObjectRelationshipResourceImpl
 			ObjectRelationship objectRelationship)
 		throws Exception {
 
-		com.liferay.object.model.ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				fetchObjectDefinitionByExternalReferenceCode(
-					objectRelationship.
-						getObjectDefinitionExternalReferenceCode2(),
-					contextCompany.getCompanyId());
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition2 =
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						objectRelationship.
+							getObjectDefinitionExternalReferenceCode2(),
+						contextCompany.getCompanyId());
 
-		if (objectDefinition != null) {
-			return objectDefinition;
+		if (serviceBuilderObjectDefinition2 != null) {
+			return serviceBuilderObjectDefinition2;
 		}
 
 		ObjectFolder defaultObjectFolder =
 			_objectFolderLocalService.getOrAddDefaultObjectFolder(
 				contextCompany.getCompanyId());
 
+		long rootObjectDefinitionId = 0;
+
+		if (objectRelationship.getEdge()) {
+			com.liferay.object.model.ObjectDefinition
+				serviceBuilderObjectDefinition1 =
+					_objectDefinitionLocalService.
+						getObjectDefinitionByExternalReferenceCode(
+							objectRelationship.
+								getObjectDefinitionExternalReferenceCode1(),
+							contextCompany.getCompanyId());
+
+			rootObjectDefinitionId =
+				serviceBuilderObjectDefinition1.getRootObjectDefinitionId();
+		}
+
 		return _objectDefinitionLocalService.addObjectDefinition(
 			objectRelationship.getObjectDefinitionExternalReferenceCode2(),
-			contextUser.getUserId(), defaultObjectFolder.getObjectFolderId(), 0,
+			contextUser.getUserId(), defaultObjectFolder.getObjectFolderId(),
+			rootObjectDefinitionId,
 			GetterUtil.get(
 				objectRelationship.getObjectDefinitionModifiable2(), true),
 			GetterUtil.get(

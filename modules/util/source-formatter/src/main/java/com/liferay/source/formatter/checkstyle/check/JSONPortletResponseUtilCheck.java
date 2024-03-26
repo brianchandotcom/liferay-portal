@@ -39,7 +39,6 @@ public class JSONPortletResponseUtilCheck extends BaseCheck {
 		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, "JSONPortletResponseUtil", "writeJSON");
 
-		outerLoop:
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 				TokenTypes.ELIST);
@@ -72,7 +71,7 @@ public class JSONPortletResponseUtilCheck extends BaseCheck {
 
 			while (true) {
 				if (previousSiblingDetailAST == null) {
-					continue outerLoop;
+					break;
 				}
 
 				if (previousSiblingDetailAST.getType() == TokenTypes.SEMI) {
@@ -83,7 +82,7 @@ public class JSONPortletResponseUtilCheck extends BaseCheck {
 				}
 
 				if (previousSiblingDetailAST.getType() != TokenTypes.EXPR) {
-					continue outerLoop;
+					break;
 				}
 
 				String variableName = firstChildDetailAST.getText();
@@ -94,19 +93,21 @@ public class JSONPortletResponseUtilCheck extends BaseCheck {
 					String methodName = getMethodName(firstChildDetailAST);
 
 					if (methodName.equals("hideDefaultSuccessMessage")) {
+						log(
+							methodCallDetailAST,
+							_MSG_MOVE_METHOD_CALL_BEFORE_METHOD_CALL);
+
 						break;
 					}
 				}
 
 				if (_containsVariableName(firstChildDetailAST, variableName)) {
-					continue outerLoop;
+					break;
 				}
 
 				previousSiblingDetailAST =
 					previousSiblingDetailAST.getPreviousSibling();
 			}
-
-			log(methodCallDetailAST, _MSG_MOVE_METHOD_CALL_BEFORE_METHOD_CALL);
 		}
 	}
 

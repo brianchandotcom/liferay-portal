@@ -17,7 +17,6 @@ import MDFClaim from '../../../../../../common/interfaces/mdfClaim';
 import MDFClaimActivity from '../../../../../../common/interfaces/mdfClaimActivity';
 import {Liferay} from '../../../../../../common/services/liferay';
 import deleteDocument from '../../../../../../common/services/liferay/headless-delivery/deleteDocument';
-import {Status} from '../../../../../../common/utils/constants/status';
 import getIntlNumberFormat from '../../../../../../common/utils/getIntlNumberFormat';
 import checkRequiredListOfQualifiedLeads from '../../../../utils/checkRequiredListOfQualifiedLeads';
 import BudgetClaimPanel from './components/BudgetClaimPanel';
@@ -86,17 +85,6 @@ const ActivityClaimPanel = ({
 		)
 	);
 
-	const claimableActivityByStatus =
-		(activity.activityStatus?.key === Status.APPROVED.key ||
-			activity.activityStatus?.key === Status.ACTIVE.key) &&
-		!activity.claimed;
-
-	const editableClaimActivityByStatus = activity.id && !activity.selected;
-
-	const displayActivityClaimCheckbox = activity.id
-		? hasPermissionEditClaimActivity
-		: claimableActivityByStatus || editableClaimActivityByStatus;
-
 	const typeActivityComponents: TypeActivityComponent = {
 		[TypeActivityKey.DIGITAL_MARKETING]: (
 			<DigitalMarketingPopFields
@@ -147,23 +135,21 @@ const ActivityClaimPanel = ({
 						}
 					}}
 				>
-					{displayActivityClaimCheckbox && (
-						<div
-							onClick={() =>
-								activity.budgets?.map((_, index) =>
-									setFieldValue(
-										`activities[${activityIndex}].budgets[${index}].selected`,
-										false
-									)
+					<div
+						onClick={() =>
+							activity.budgets?.map((_, index) =>
+								setFieldValue(
+									`activities[${activityIndex}].budgets[${index}].selected`,
+									false
 								)
-							}
-						>
-							<PRMFormik.Field
-								component={PRMForm.Checkbox}
-								name={`activities[${activityIndex}].selected`}
-							/>
-						</div>
-					)}
+							)
+						}
+					>
+						<PRMFormik.Field
+							component={PRMForm.Checkbox}
+							name={`activities[${activityIndex}].selected`}
+						/>
+					</div>
 
 					<div className="flex-grow-1 mx-3">
 						<p className="mb-1 text-neutral-7 text-paragraph-sm">

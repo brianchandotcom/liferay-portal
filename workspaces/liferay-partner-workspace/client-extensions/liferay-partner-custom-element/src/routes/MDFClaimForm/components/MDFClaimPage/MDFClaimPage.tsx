@@ -17,6 +17,7 @@ import ResumeCard from '../../../../common/components/ResumeCard';
 import MDFRequestDTO from '../../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayFile from '../../../../common/interfaces/liferayFile';
 import MDFClaim from '../../../../common/interfaces/mdfClaim';
+import MDFClaimActivity from '../../../../common/interfaces/mdfClaimActivity';
 import MDFClaimProps from '../../../../common/interfaces/mdfClaimProps';
 import {ResourceName} from '../../../../common/services/liferay/object/enum/resourceName';
 import {Status} from '../../../../common/utils/constants/status';
@@ -72,6 +73,22 @@ const MDFClaimPage = ({
 			);
 		}
 	).length;
+
+	const displayActivityClaim = (activity: MDFClaimActivity) => {
+		const claimableActivityByStatus =
+			activity.activityStatus?.key !== Status.EXPIRED.key &&
+			activity.activityStatus?.key !== Status.CANCELED.key &&
+			!activity.claimed;
+
+		const editableClaimActivityByStatus =
+			!!activity.id && !activity.selected;
+
+		const displayActivityClaim = activity.id
+			? hasPermissionShowForm
+			: claimableActivityByStatus || editableClaimActivityByStatus;
+
+		return displayActivityClaim;
+	};
 
 	const getClaimPage = () => {
 		if (!fieldEntries || !companiesEntries) {
@@ -147,8 +164,7 @@ const MDFClaimPage = ({
 
 					{values.activities?.map(
 						(activity, index) =>
-							activity.activityStatus?.key !==
-								Status.EXPIRED.key && (
+							displayActivityClaim(activity) && (
 								<ActivityClaimPanel
 									activity={activity}
 									activityIndex={index}

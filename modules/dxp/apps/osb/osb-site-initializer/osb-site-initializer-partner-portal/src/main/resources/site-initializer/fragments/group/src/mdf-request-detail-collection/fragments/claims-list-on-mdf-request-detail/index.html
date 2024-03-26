@@ -109,8 +109,8 @@
 	[#assign has_create_action = permission_action.items?filter(permission_action -> permission_action.action == "CREATE")?has_content /]
 	[#assign site_url = (themeDisplay.getURLCurrent()?keep_before("/l/${mdf_request_id}"))! /]
 
-	[#assign mdf_request = restClient.get("/c/mdfrequests/${mdf_request_id}?nestedFields=mdfReqToActs,mdfReqToMDFClms,mdfClmToMDFClmActs,mdfClmActToMDFClmBgts&nestedFieldsDepth=3") /]
-	[#assign has_active_or_approved_activities = (mdf_request.mdfReqToActs?filter(activity -> (activity.activityStatus.key == "active" || activity.activityStatus.key == "approved"))?has_content)! /]
+	[#assign mdf_request = restClient.get("/c/mdfrequests/${mdf_request_id}?nestedFields=actToMDFClmActs,mdfReqToActs,mdfReqToMDFClms,mdfClmToMDFClmActs,mdfClmActToMDFClmBgts&nestedFieldsDepth=3") /]
+	[#assign has_active_or_approved_activities = (mdf_request.mdfReqToActs?filter(activity -> (activity.activityStatus.key == "active" || activity.activityStatus.key == "approved") && !activity.actToMDFClmActs?has_content)?has_content)! /]
 	[#assign valid_claims_size = (mdf_request.mdfReqToMDFClms?filter(mdf_claim -> check_claim(mdf_claim.mdfClaimStatus.key))?size)! /]
 
 	[#if (mdf_request.mdfRequestStatus.key)! == "approved" || (mdf_request.mdfRequestStatus.key)! == "canceled" ]

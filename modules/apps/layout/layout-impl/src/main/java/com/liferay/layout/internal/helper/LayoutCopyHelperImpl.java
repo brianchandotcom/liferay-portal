@@ -849,7 +849,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				targetLayoutFragmentEntryLink.setEditableValues(
 					sourceLayoutfragmentEntryLink.getEditableValues());
 				targetLayoutFragmentEntryLink.setLastPropagationDate(
-					serviceContext.getCreateDate(new Date()));
+					sourceLayoutfragmentEntryLink.getLastPropagationDate());
 
 				newFragmentEntryLink =
 					_fragmentEntryLinkLocalService.updateFragmentEntryLink(
@@ -891,7 +891,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				newFragmentEntryLink.setClassPK(targetLayout.getPlid());
 				newFragmentEntryLink.setPlid(targetLayout.getPlid());
 				newFragmentEntryLink.setLastPropagationDate(
-					serviceContext.getCreateDate(new Date()));
+					sourceLayoutfragmentEntryLink.getLastPropagationDate());
 
 				newFragmentEntryLink =
 					_fragmentEntryLinkLocalService.addFragmentEntryLink(

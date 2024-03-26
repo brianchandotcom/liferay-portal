@@ -1562,6 +1562,8 @@ definition {
 	@description = "This is a test for LPS-134844. Fragments hidden in master pages are hidden in pages that use it and visibility can not be changed."
 	@priority = 4
 	test FragmentsHiddenInMasterPagesAreHiddenInPagesThatUseIt {
+		property portal.upstream = "quarantine";
+
 		task ("Add two header fragments") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 

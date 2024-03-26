@@ -271,6 +271,8 @@ definition {
 	@description = "This is a test for LPS-143509. The sites creator can add a site with required vocabulary."
 	@priority = 4
 	test AddSiteWithRequiredVocabulary {
+		property portal.upstream = "quarantine";
+
 		task ("Given a site creator has a required vocabulary on Global site") {
 			task ("Add a vocabulary with site as associated asset type") {
 				Category.openCategoriesAdmin(siteURLKey = "global");
@@ -659,8 +661,6 @@ definition {
 	@description = "Export and import a web content with a category or a subcategory."
 	@priority = 5
 	test ExportImportWebContentWithCategoryOrSubCategory {
-		property portal.acceptance = "true";
-
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

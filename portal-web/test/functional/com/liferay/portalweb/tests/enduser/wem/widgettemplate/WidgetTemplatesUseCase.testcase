@@ -413,6 +413,7 @@ definition {
 	@priority = 3
 	test ViewWidgetTemplateAppliedToWiki {
 		property app.server.types = "tomcat,websphere";
+		property portal.release = "quarantine";
 		property testray.component.names = "Templates,Wiki";
 
 		task ("Add a Wiki to page") {

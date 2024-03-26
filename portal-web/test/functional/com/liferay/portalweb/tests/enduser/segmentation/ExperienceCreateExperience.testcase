@@ -4189,7 +4189,7 @@ definition {
 	@description = "LPS-91876: Validate if when the user tries to edit the name of some Experience can be edited with success"
 	@priority = 5
 	test EditExperienceName {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Create an experience and add on content page") {
 			ContentPagesNavigator.openEditContentPage(

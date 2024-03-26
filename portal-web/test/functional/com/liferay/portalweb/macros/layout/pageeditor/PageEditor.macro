@@ -5130,21 +5130,6 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 	}
 
 	@summary = "Default summary"
-	macro searchFragmentViaSidebar(fragmentName = null) {
-		WaitForPageLoad();
-
-		if (IsElementPresent(locator1 = "Icon#TIMES_2")) {
-			Click(locator1 = "Icon#TIMES_2");
-		}
-
-		Navigator.gotoNavTab(navTab = "Fragments");
-
-		Type(
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_SEARCH_FIELD",
-			value1 = ${fragmentName});
-	}
-
-	@summary = "Default summary"
 	macro searchInPageContentPanel(searchTerm = null) {
 		PageEditor.gotoTab(tabName = "Page Content");
 

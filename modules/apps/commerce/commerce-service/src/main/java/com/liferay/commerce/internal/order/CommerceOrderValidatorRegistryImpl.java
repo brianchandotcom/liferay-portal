@@ -148,20 +148,6 @@ public class CommerceOrderValidatorRegistryImpl
 
 		commerceOrderValidatorResults.addAll(validate(locale, commerceOrder));
 
-		List<CommerceOrderItem> commerceOrderItems =
-			commerceOrder.getCommerceOrderItems();
-
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			List<CommerceOrderValidatorResult>
-				itemCommerceOrderValidatorResults = validate(
-					locale, commerceOrderItem);
-
-			if (ListUtil.isNotEmpty(itemCommerceOrderValidatorResults)) {
-				commerceOrderValidatorResults.addAll(
-					itemCommerceOrderValidatorResults);
-			}
-		}
-
 		return commerceOrderValidatorResults.isEmpty();
 	}
 
@@ -185,6 +171,13 @@ public class CommerceOrderValidatorRegistryImpl
 			if (!commerceOrderValidatorResult.isValid()) {
 				commerceOrderValidatorResults.add(commerceOrderValidatorResult);
 			}
+		}
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			commerceOrderValidatorResults.addAll(
+				validate(locale, commerceOrderItem));
 		}
 
 		return commerceOrderValidatorResults;

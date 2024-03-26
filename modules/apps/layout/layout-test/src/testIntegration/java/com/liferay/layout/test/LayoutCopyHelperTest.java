@@ -68,7 +68,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -643,10 +645,21 @@ public class LayoutCopyHelperTest {
 		List<FragmentEntryLink> copiedFragmentEntryLinks,
 		List<FragmentEntryLink> sourceFragmentEntryLinks) {
 
-		long[] originalFragmentEntryLinkIds =
-			TransformUtil.transformToLongArray(
-				copiedFragmentEntryLinks,
-				FragmentEntryLinkModel::getOriginalFragmentEntryLinkId);
+		Map<Long, FragmentEntryLink> originalFragmentEntryLinkIdMap =
+			new HashMap<Long, FragmentEntryLink>() {
+				{
+					for (FragmentEntryLink fragmentEntryLink :
+							copiedFragmentEntryLinks) {
+
+						put(
+							fragmentEntryLink.getOriginalFragmentEntryLinkId(),
+							fragmentEntryLink);
+					}
+				}
+			};
+
+		long[] originalFragmentEntryLinkIds = ArrayUtil.toLongArray(
+			originalFragmentEntryLinkIdMap.keySet());
 
 		Assert.assertEquals(
 			Arrays.toString(originalFragmentEntryLinkIds),
@@ -660,6 +673,35 @@ public class LayoutCopyHelperTest {
 					sourceFragmentEntryLinks,
 					fragmentEntryLink ->
 						fragmentEntryLink.getFragmentEntryLinkId())));
+
+		for (FragmentEntryLink sourceFragmentEntryLink :
+				sourceFragmentEntryLinks) {
+
+			FragmentEntryLink copiedFragmentEntryLink =
+				originalFragmentEntryLinkIdMap.get(
+					sourceFragmentEntryLink.getFragmentEntryLinkId());
+
+			Assert.assertNotNull(copiedFragmentEntryLink);
+
+			Assert.assertEquals(
+				sourceFragmentEntryLink.getConfiguration(),
+				copiedFragmentEntryLink.getConfiguration());
+			Assert.assertEquals(
+				sourceFragmentEntryLink.getCss(),
+				copiedFragmentEntryLink.getCss());
+			Assert.assertEquals(
+				sourceFragmentEntryLink.getEditableValues(),
+				copiedFragmentEntryLink.getEditableValues());
+			Assert.assertEquals(
+				sourceFragmentEntryLink.getHtml(),
+				copiedFragmentEntryLink.getHtml());
+			Assert.assertEquals(
+				sourceFragmentEntryLink.getJs(),
+				copiedFragmentEntryLink.getJs());
+			Assert.assertEquals(
+				sourceFragmentEntryLink.getLastPropagationDate(),
+				copiedFragmentEntryLink.getLastPropagationDate());
+		}
 
 		return originalFragmentEntryLinkIds;
 	}

@@ -145,20 +145,24 @@ const MDFClaimPage = ({
 						<span className="text-danger">*</span>
 					</p>
 
-					{values.activities?.map((activity, index) => (
-						<ActivityClaimPanel
-							activity={activity}
-							activityIndex={index}
-							hasPermissionEditClaimActivity={
-								hasPermissionShowForm
-							}
-							key={`${activity.id}-${index}`}
-							overallCampaignDescription={
-								mdfRequest.overallCampaignDescription
-							}
-							setFieldValue={setFieldValue}
-						/>
-					))}
+					{values.activities?.map(
+						(activity, index) =>
+							activity.activityStatus?.key !==
+								Status.EXPIRED.key && (
+								<ActivityClaimPanel
+									activity={activity}
+									activityIndex={index}
+									hasPermissionEditClaimActivity={
+										hasPermissionShowForm
+									}
+									key={`${activity.id}-${index}`}
+									overallCampaignDescription={
+										mdfRequest.overallCampaignDescription
+									}
+									setFieldValue={setFieldValue}
+								/>
+							)
+					)}
 				</PRMForm.Section>
 
 				<PRMForm.Section

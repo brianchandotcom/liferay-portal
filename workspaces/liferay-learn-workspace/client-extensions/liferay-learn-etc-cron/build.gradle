@@ -18,6 +18,8 @@ apply plugin: "application"
 apply plugin: "com.liferay.source.formatter"
 apply plugin: "java-library"
 
+task fatJar(type: Jar)
+
 dependencies {
 	implementation group: "com.liferay", name: "com.liferay.data.engine.rest.client", version: "latest.release"
 	implementation group: "com.liferay", name: "com.liferay.headless.admin.taxonomy.client", version: "latest.release"
@@ -35,6 +37,24 @@ dependencies {
 	implementation group: "org.yaml", name: "snakeyaml", version: "2.0"
 }
 
+fatJar {
+	baseName = project.name + "-all"
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	excludes = ["META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF"]
+
+	from {
+		configurations.runtimeClasspath.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
+
+	manifest {
+		attributes "Main-Class": "com.liferay.learn.Main"
+	}
+
+	with jar
+}
+
 mainClassName = "com.liferay.learn.Main"
 
 repositories {
@@ -45,33 +65,4 @@ repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
-}
-
-task fatJar(type: Jar)
-
-fatJar {
-	baseName = project.name + '-all'
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-	doFirst {
-		from {
-			configurations.runtimeClasspath.collect {
-				it.isDirectory() ? it : zipTree(it)
-			}
-		}
-	}
-
-	exclude "META-INF/*.DSA", "META-INF/*.RSA", "META-INF/*.SF"
-
-	from {
-		configurations.runtimeClasspath.collect {
-			it.isDirectory() ? it : zipTree(it)
-		}
-	}
-
-	manifest {
-		attributes 'Main-Class': 'com.liferay.learn.Main'
-	}
-
-	with jar
 }

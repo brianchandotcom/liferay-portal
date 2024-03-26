@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -460,6 +462,27 @@ public class CTDisplayRendererRegistryImpl
 		return ctDisplayRenderer.isMovable(model);
 	}
 
+	@Override
+	public <T extends BaseModel<T>> boolean isWorkflowEnabled(
+		CTEntry ctEntry, T model) {
+
+		if (!(model instanceof WorkflowedModel)) {
+			return false;
+		}
+
+		long groupId = 0;
+
+		if (model instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)model;
+
+			groupId = groupedModel.getGroupId();
+		}
+
+		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+			ctEntry.getCompanyId(), groupId,
+			_portal.getClassName(ctEntry.getModelClassNameId()));
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_ctDisplayServiceTrackerMap =
@@ -539,5 +562,9 @@ public class CTDisplayRendererRegistryImpl
 
 	@Reference
 	private ResourceActions _resourceActions;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

@@ -85,4 +85,7 @@ public interface CTDisplayRendererRegistry {
 	public <T extends BaseModel<T>> boolean isMovable(
 		T model, long modelClassNameId);
 
+	public <T extends BaseModel<T>> boolean isWorkflowEnabled(
+		CTEntry ctEntry, T model);
+
 }

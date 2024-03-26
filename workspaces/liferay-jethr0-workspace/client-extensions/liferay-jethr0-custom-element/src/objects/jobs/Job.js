@@ -4,7 +4,17 @@
  */
 
 export default class Job {
-	constructor({dateCreated, dateModified, id, name, parameters, priority, startDate, state, type}) {
+	constructor({
+		dateCreated,
+		dateModified,
+		id,
+		name,
+		parameters,
+		priority,
+		startDate,
+		state,
+		type,
+	}) {
 		this.dateCreated = dateCreated;
 		this.dateModified = dateModified;
 		this.id = id;

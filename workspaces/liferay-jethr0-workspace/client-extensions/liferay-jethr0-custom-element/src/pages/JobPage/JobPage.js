@@ -15,18 +15,18 @@ import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
+import {getBuildsByJob} from '../../objects/builds/BuildUtil';
+import {getJobById} from '../../objects/jobs/JobUtil';
 import {toLocaleString} from '../../services/DateUtil';
 import {toDurationString} from '../../services/DurationUtil';
 import postSpringBootData from '../../services/postSpringBootData';
-import useSpringBootData from '../../services/useSpringBootData';
 
 function JobBuilds({jobId}) {
 	const [jobBuilds, setJobBuilds] = useState(null);
 
-	useSpringBootData({
-		setData: setJobBuilds,
-		urlPath: '/jobs/' + jobId + '/builds',
-	});
+	if (!jobBuilds) {
+		getBuildsByJob({jobId, setBuilds: setJobBuilds});
+	}
 
 	if (!jobBuilds) {
 		return <div>Loading...</div>;
@@ -118,7 +118,12 @@ function JobInformation({job}) {
 		);
 	}
 
-	const jobParameterDefinitions = job.definition.parameterDefinitions;
+	let jobParameterDefinitions = [];
+
+	if (job.definition) {
+		jobParameterDefinitions = job.definition.parameterDefinitions;
+	}
+
 	const jobParameters = JSON.parse(job.parameters);
 
 	return (
@@ -221,10 +226,9 @@ function JobPage() {
 	const {id} = useParams();
 	const [job, setJob] = useState(null);
 
-	useSpringBootData({
-		setData: setJob,
-		urlPath: '/jobs/' + id,
-	});
+	if (!job) {
+		getJobById({id, setJob});
+	}
 
 	function redirectToJobsPage() {
 		window.location.replace('/#/jobs');

@@ -36,11 +36,13 @@ public class SnapshotInfoConverter {
 
 		ShardStatistics shardStatistics = snapshotInfo.shards();
 
-		snapshotDetails.setSuccessfulShards(
-			ConversionUtil.toInt(shardStatistics.successful()));
+		if (shardStatistics != null) {
+			snapshotDetails.setSuccessfulShards(
+				ConversionUtil.toInt(shardStatistics.successful()));
 
-		snapshotDetails.setTotalShards(
-			ConversionUtil.toInt(shardStatistics.total()));
+			snapshotDetails.setTotalShards(
+				ConversionUtil.toInt(shardStatistics.total()));
+		}
 
 		return snapshotDetails;
 	}

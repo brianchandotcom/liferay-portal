@@ -23,6 +23,7 @@ export declare function Conditions({
 	errors,
 	learnResources,
 	objectValidationRuleElements,
+	scriptManagementConfigurationPortletURL,
 	selectedPartialValidationField,
 	setValues,
 	values,

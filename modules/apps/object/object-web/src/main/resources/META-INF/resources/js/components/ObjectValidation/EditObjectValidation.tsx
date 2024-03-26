@@ -36,6 +36,7 @@ interface EditObjectValidationProps {
 	objectValidationRuleElements: SidebarCategory[];
 	objectValidationRuleId: number;
 	readOnly: boolean;
+	scriptManagementConfigurationPortletURL: string;
 }
 
 export interface PartialValidationFields {
@@ -83,6 +84,7 @@ export default function EditObjectValidation({
 	objectValidationRuleElements,
 	objectValidationRuleId,
 	readOnly,
+	scriptManagementConfigurationPortletURL,
 }: EditObjectValidationProps) {
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [errorMessage, setErrorMessage] = useState<ObjectValidationErrors>(
@@ -275,6 +277,9 @@ export default function EditObjectValidation({
 								}
 								objectValidationRuleElements={
 									objectValidationRuleElements
+								}
+								scriptManagementConfigurationPortletURL={
+									scriptManagementConfigurationPortletURL
 								}
 								selectedPartialValidationField={
 									selectedPartialValidationField

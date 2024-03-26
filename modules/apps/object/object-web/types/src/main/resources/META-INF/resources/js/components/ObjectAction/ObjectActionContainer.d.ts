@@ -22,6 +22,7 @@ interface ObjectActionContainerProps {
 		method: 'POST' | 'PUT';
 		url: string;
 	};
+	scriptManagementConfigurationPortletURL: string;
 	successMessage: string;
 	systemObject: boolean;
 	title: string;
@@ -47,6 +48,7 @@ export declare function ObjectActionContainer({
 	objectDefinitionsRelationshipsURL,
 	readOnly,
 	requestParams: {method, url},
+	scriptManagementConfigurationPortletURL,
 	successMessage,
 	systemObject,
 	validateExpressionURL,

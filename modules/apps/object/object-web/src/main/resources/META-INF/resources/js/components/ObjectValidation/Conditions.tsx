@@ -39,6 +39,7 @@ export function Conditions({
 	errors,
 	learnResources,
 	objectValidationRuleElements,
+	scriptManagementConfigurationPortletURL,
 	selectedPartialValidationField,
 	setValues,
 	values,
@@ -81,7 +82,13 @@ export function Conditions({
 
 	return (
 		<>
-			{disabledGroovyValidation && <DisabledGroovyScriptAlert />}
+			{disabledGroovyValidation && (
+				<DisabledGroovyScriptAlert
+					scriptManagementConfigurationPortletURL={
+						scriptManagementConfigurationPortletURL
+					}
+				/>
+			)}
 
 			<ClayAlert
 				className="lfr-objects__side-panel-content-container"

@@ -25,6 +25,7 @@ interface BasicInfoProps {
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
 	readOnly?: boolean;
+	scriptManagementConfigurationPortletURL: string;
 	setValues: (values: Partial<ObjectAction>) => void;
 	values: Partial<ObjectAction>;
 }
@@ -35,12 +36,19 @@ export default function BasicInfo({
 	handleChange,
 	isApproved,
 	readOnly,
+	scriptManagementConfigurationPortletURL,
 	setValues,
 	values,
 }: BasicInfoProps) {
 	return (
 		<>
-			{disableGroovyAction && <DisabledGroovyScriptAlert />}
+			{disableGroovyAction && (
+				<DisabledGroovyScriptAlert
+					scriptManagementConfigurationPortletURL={
+						scriptManagementConfigurationPortletURL
+					}
+				/>
+			)}
 
 			<Card title={Liferay.Language.get('basic-info')}>
 				<InputLocalized

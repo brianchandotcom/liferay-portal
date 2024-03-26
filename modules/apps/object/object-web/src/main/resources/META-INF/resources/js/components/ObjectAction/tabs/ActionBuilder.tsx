@@ -32,6 +32,7 @@ interface ActionBuilderProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
+	scriptManagementConfigurationPortletURL: string;
 	setValues: (values: Partial<ObjectAction>) => void;
 	systemObject: boolean;
 	validateExpressionURL: string;
@@ -63,6 +64,7 @@ export default function ActionBuilder({
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
+	scriptManagementConfigurationPortletURL,
 	setValues,
 	systemObject,
 	validateExpressionURL,
@@ -200,7 +202,13 @@ export default function ActionBuilder({
 
 	return (
 		<>
-			{disableGroovyAction && <DisabledGroovyScriptAlert />}
+			{disableGroovyAction && (
+				<DisabledGroovyScriptAlert
+					scriptManagementConfigurationPortletURL={
+						scriptManagementConfigurationPortletURL
+					}
+				/>
+			)}
 
 			{infoAlert && (
 				<ClayAlert

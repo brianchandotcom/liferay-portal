@@ -12,7 +12,7 @@ import Form from '../Form';
 import {Column} from '../Table';
 
 type ManagementToolbarColumnsProps = {
-	columns: Column[];
+	columns?: Column[];
 	onClose: () => void;
 };
 
@@ -28,14 +28,14 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 		ListViewContext
 	);
 
-	const columnsNotFixed = columns.filter(
+	const columnsNotFixed = columns?.filter(
 		({key}) => !columnsFixed.includes(key)
 	);
 
 	const [selectedColumns, setSelectedColumns] = useState<ColumnsState>(() => {
 		const newColumns: ColumnsState = {};
 
-		columnsNotFixed.forEach(({key}) => {
+		columnsNotFixed?.forEach(({key}) => {
 			newColumns[key] = contextColumns[key] ?? true;
 		});
 
@@ -56,7 +56,7 @@ const ManagementToolbarColumns: React.FC<ManagementToolbarColumnsProps> = ({
 
 			<div className="management-toolbar-body">
 				<div className="popover-columns-content">
-					{columnsNotFixed.map((column, index) => (
+					{columnsNotFixed?.map((column, index) => (
 						<Form.Checkbox
 							checked={selectedColumns[column.key]}
 							key={index}

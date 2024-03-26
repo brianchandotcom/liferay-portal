@@ -30,7 +30,7 @@ export type ManagementToolbarProps = {
 	 * Check out the file {src/schema/filter.ts}
 	 */
 	filterSchema?: FilterSchemaOption;
-	tableProps: Pick<TableProps, 'columns'>;
+	tableProps?: Pick<TableProps, 'columns'>;
 	title?: string;
 	totalItems: number;
 };
@@ -65,7 +65,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 							? buttons(actions)
 							: buttons
 					}
-					columns={tableProps.columns}
+					columns={tableProps?.columns}
 					customFilterFields={customFilterFields}
 					disabled={disabled}
 					display={display}

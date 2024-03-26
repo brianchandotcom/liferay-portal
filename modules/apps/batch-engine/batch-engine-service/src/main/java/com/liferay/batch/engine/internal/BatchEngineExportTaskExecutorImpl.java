@@ -11,6 +11,7 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.ItemClassRegistry;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
+import com.liferay.batch.engine.csv.ObjectFieldColumnDescriptors;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
 import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriter;
@@ -18,7 +19,6 @@ import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriterB
 import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
@@ -202,8 +202,7 @@ public class BatchEngineExportTaskExecutorImpl
 
 		BatchEngineExportTaskItemWriterBuilder
 			batchEngineExportTaskItemWriterBuilder =
-				new BatchEngineExportTaskItemWriterBuilder(
-					_objectDefinitionLocalService);
+				new BatchEngineExportTaskItemWriterBuilder();
 
 		BatchEngineTaskContentType batchEngineTaskContentType =
 			BatchEngineTaskContentType.valueOf(
@@ -224,6 +223,8 @@ public class BatchEngineExportTaskExecutorImpl
 			).itemClass(
 				_itemClassRegistry.getItemClass(
 					batchEngineExportTask.getClassName())
+			).objectFieldColumnDescriptors(
+				_objectFieldColumnDescriptors
 			).outputStream(
 				_getZipOutputStream(
 					batchEngineTaskContentType, unsyncByteArrayOutputStream)
@@ -336,7 +337,7 @@ public class BatchEngineExportTaskExecutorImpl
 	private ItemClassRegistry _itemClassRegistry;
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectFieldColumnDescriptors _objectFieldColumnDescriptors;
 
 	@Reference
 	private SortParserProvider _sortParserProvider;

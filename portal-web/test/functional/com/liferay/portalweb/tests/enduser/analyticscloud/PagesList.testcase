@@ -311,61 +311,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8341 | Test Summary: Filter Page Table by Last Year"
-	@ignore = "true"
-	@priority = 3
-	test PeriodFilterLastYearPageTable {
-
-		// AC Refactor: Test needs data from past dates to assert
-		// AC Refactor ticket: LRAC-8934
-
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Visit the site page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${propertyName});
-		}
-
-		task ("Select Pages tab and set a 24h time filter") {
-			ACNavigation.switchTab(tabName = "Pages");
-
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		// Can't assert that the filter is working properly, data not present on time
-
-		task ("Assert that the visited page is present on 24h time filter") {
-			ACUtils.assertItemsName(itemList = "AC Page");
-		}
-
-		task ("Set time period filter to Last Year") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLastYear();
-		}
-
-		task ("Assert that the 24h filter page is not present on Last Year filter") {
-			ACUtils.assertItemsNameNotPresent(itemList = "AC Page");
-		}
-
-		// Can't assert that the filter is working properly without past data
-
-		task ("Assert that the right page is present on Last Year filter") {
-			ACUtils.assertItemsName(itemList = "Last Year Page");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8111 | Test Summary: Assert the pages list shows a list of pages"
 	@priority = 5
 	test ShowsListOfPages {

@@ -486,60 +486,6 @@ definition {
 			metricValue = "66.7");
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8426 | Test Summary: Forms submissions by location card shows expected views by location"
-	@ignore = "true"
-	@priority = 5
-	test FormsLocationCardShowsViewsByExpectedLocation {
-
-		// AC Refactor: Location data issues happen in this ticket
-		// AC Refactor ticket: LRAC-8750
-
-		task ("Connect to AC") {
-			Navigator.openURL();
-
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Submit forms with diferent locations data") {
-
-			// Use a macro to submit forms using diferent locations data
-			// Create a locations list that you can use later
-
-			ACUtils.navigateToSitePage(
-				actionType = "Submit Form",
-				pageName = "AC Page",
-				siteName = "Site Name",
-				submitText = "Test Assets");
-		}
-
-		task ("Close all sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Enter in form assets page in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${propertyName});
-
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Forms");
-
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-
-			ACNavigation.openItem(itemName = "Created Form Name");
-		}
-
-		task ("Assert locations appear propperly in the card") {
-
-			// Assert the entries using the locations list declared before
-
-			ACSites.viewGeomapAnalyticsLocationNames(locationList = ${locationList});
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8429 | Test Summary: Form submissions by technology card shows views by expected browser"
 	@priority = 5
 	test FormsTechnologyCardShowsViewsByExpectedBrowser {

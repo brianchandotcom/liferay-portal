@@ -124,27 +124,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8158 | Test Summary: Switch the property which was selected by default"
-	@priority = 5
-	test CanSwitchPropertyWhichWasSelectedByDefault {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Test fix sites created twice
-		// AC Quarantine Ticket: LRAC-13677
-
-		ACUtils.launchAC();
-
-		AssertTextNotEquals(
-			locator1 = "ACSidebar#CURRENT_PROPERTY",
-			value1 = ${assignedPropertyName});
-
-		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-		AssertTextEquals(
-			locator1 = "ACSidebar#CURRENT_PROPERTY",
-			value1 = ${assignedPropertyName});
-	}
-
 	@description = "Bug: LRAC-10856 | Automation ID: LRAC-10892 | Test Summary: Change the AC page default language"
 	@ignore = "true"
 	@priority = 2

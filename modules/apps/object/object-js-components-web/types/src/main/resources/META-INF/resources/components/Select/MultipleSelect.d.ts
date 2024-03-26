@@ -15,11 +15,16 @@ interface MultipleSelectProps {
 	options: MultiSelectItem[];
 	placeholder?: string;
 	required?: boolean;
+	search?: boolean;
+	searchPlaceholder?: string;
 	selectAllOption?: boolean;
 	setOptions: (options: MultiSelectItem[]) => void;
 }
-export interface MultiSelectItem extends LabelValueObject {
+export interface MultiSelectItemChild extends LabelValueObject {
 	checked?: boolean;
+}
+export interface MultiSelectItem extends LabelValueObject {
+	children: MultiSelectItemChild[];
 }
 export declare function MultipleSelect({
 	className,
@@ -32,6 +37,8 @@ export declare function MultipleSelect({
 	options,
 	placeholder,
 	required,
+	search,
+	searchPlaceholder,
 	selectAllOption,
 	setOptions,
 }: MultipleSelectProps): JSX.Element;

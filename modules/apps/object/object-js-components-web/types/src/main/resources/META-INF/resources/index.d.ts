@@ -32,6 +32,7 @@ export {RichTextLocalized} from './components/RichTextLocalized';
 export {
 	MultipleSelect,
 	MultiSelectItem,
+	MultiSelectItemChild,
 } from './components/Select/MultipleSelect';
 export {SingleSelect} from './components/Select/SingleSelect';
 export {

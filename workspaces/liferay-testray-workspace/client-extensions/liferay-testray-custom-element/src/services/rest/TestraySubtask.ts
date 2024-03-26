@@ -62,23 +62,22 @@ class TestraySubtaskImpl extends Rest<SubtaskForm, TestraySubTask> {
 			transformData: (subTask) => ({
 				...subTask,
 				issues: subTask.subtaskToSubtasksCasesResults?.reduce(
-					(previousIssues: TestrayIssue[], subtasksIssues) => {
-						const newIssues =
-							subtasksIssues?.caseResultToSubtasksCasesResults?.caseResultToCaseResultsIssues.map(
-								(caseResultToCaseResultsIssues) =>
-									caseResultToCaseResultsIssues.issueToCaseResultsIssues
-							) || [];
+					(previousIssues: TestrayIssue[], subTaskCaseResult) => {
+						subTaskCaseResult?.caseResultToSubtasksCasesResults?.caseResultToCaseResultsIssues.forEach(
+							(caseResultToCaseResultsIssues) => {
+								const issue =
+									caseResultToCaseResultsIssues.issueToCaseResultsIssues;
 
-						newIssues?.forEach((issue?: TestrayIssue) => {
-							const issueExists = previousIssues.some(
-								(oldIssue: TestrayIssue) =>
-									oldIssue.id === issue?.id
-							);
+								const issueExists = previousIssues.some(
+									(oldIssue: TestrayIssue) =>
+										oldIssue.id === issue?.id
+								);
 
-							if (!issueExists) {
-								previousIssues.push(issue as TestrayIssue);
+								if (!issueExists) {
+									previousIssues.push(issue as TestrayIssue);
+								}
 							}
-						});
+						);
 
 						return previousIssues;
 					},

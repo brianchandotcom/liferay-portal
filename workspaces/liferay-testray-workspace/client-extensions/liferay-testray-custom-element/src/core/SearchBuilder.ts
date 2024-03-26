@@ -229,6 +229,10 @@ export default class SearchBuilder {
 		return this.setContext(SearchBuilder.eq(key, value));
 	}
 
+	public gt(key: Key, value: Value) {
+		return this.setContext(SearchBuilder.gt(key, value));
+	}
+
 	public in(key: Key, values: Value[]) {
 		return this.setContext(SearchBuilder.in(key, values));
 	}
@@ -251,6 +255,10 @@ export default class SearchBuilder {
 		});
 
 		return this.group('CLOSE');
+	}
+
+	public lt(key: Key, value: Value) {
+		return this.setContext(SearchBuilder.lt(key, value));
 	}
 
 	public ne(key: Key, value: Value) {

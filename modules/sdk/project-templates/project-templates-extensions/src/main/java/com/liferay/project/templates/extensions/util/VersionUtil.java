@@ -70,11 +70,15 @@ public class VersionUtil {
 		return 0;
 	}
 
-	public static boolean isLiferayVersion(String liferayVersion) {
+	public static boolean isLiferayQuarterlyVersion(String liferayVersion) {
 		Matcher quarterlyVersionMatcher =
 			_liferayQuarterlyVersionPattern.matcher(liferayVersion);
 
-		if (quarterlyVersionMatcher.matches()) {
+		return quarterlyVersionMatcher.matches();
+	}
+
+	public static boolean isLiferayVersion(String liferayVersion) {
+		if (isLiferayQuarterlyVersion(liferayVersion)) {
 			return true;
 		}
 

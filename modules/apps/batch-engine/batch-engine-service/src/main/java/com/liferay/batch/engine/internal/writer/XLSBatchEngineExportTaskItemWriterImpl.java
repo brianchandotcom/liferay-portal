@@ -5,6 +5,7 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.liferay.batch.engine.csv.ObjectFieldColumnDescriptors;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
@@ -35,10 +36,12 @@ public class XLSBatchEngineExportTaskItemWriterImpl
 	implements BatchEngineExportTaskItemWriter {
 
 	public XLSBatchEngineExportTaskItemWriterImpl(
+			long companyId,
 			Map<String, ObjectValuePair<Field, Method>>
 				fieldNameObjectValuePairs,
-			List<String> fieldNames, long objectDefinitionId,
-			OutputStream outputStream)
+			List<String> fieldNames,
+			ObjectFieldColumnDescriptors objectFieldColumnDescriptors,
+			OutputStream outputStream, String taskItemDelegateName)
 		throws PortalException {
 
 		if (fieldNames.isEmpty()) {
@@ -48,7 +51,8 @@ public class XLSBatchEngineExportTaskItemWriterImpl
 		_outputStream = outputStream;
 
 		_columnValuesExtractor = new ColumnValuesExtractor(
-			fieldNameObjectValuePairs, fieldNames, objectDefinitionId);
+			companyId, fieldNameObjectValuePairs, fieldNames,
+			objectFieldColumnDescriptors, taskItemDelegateName);
 
 		_sheet = _workbook.createSheet();
 

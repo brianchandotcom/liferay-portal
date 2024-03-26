@@ -9,7 +9,7 @@ const liferayRequest = async (urlPath, headers = {}, options = {}) => {
 	headers['x-csrf-token'] = Liferay.authToken;
 
 	return fetch(REACT_APP_LIFERAY_HOST + '/' + urlPath, {
-		headers: headers,
+		headers,
 		...options,
 	});
 };

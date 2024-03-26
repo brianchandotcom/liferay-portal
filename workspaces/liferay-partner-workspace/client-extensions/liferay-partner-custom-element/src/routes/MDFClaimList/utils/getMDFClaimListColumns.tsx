@@ -22,6 +22,7 @@ import {ResourceName} from '../../../common/services/liferay/object/enum/resourc
 import {Status} from '../../../common/utils/constants/status';
 
 export default function getMDFClaimListColumns(
+	urlParams: URLSearchParams,
 	siteURL?: string,
 	actions?: PermissionActionType[],
 	mutated?: KeyedMutator<LiferayItems<MDFClaimDTO[]>>
@@ -48,7 +49,7 @@ export default function getMDFClaimListColumns(
 									row[MDFClaimColumnKey.CLAIM_ID]
 								}?p_l_back_url=${encodeURIComponent(
 									Liferay.ThemeDisplay.getLayoutRelativeURL()
-								)}`
+								)}&${urlParams.toString()}`
 							),
 					});
 				}
@@ -145,7 +146,7 @@ export default function getMDFClaimListColumns(
 						row[MDFClaimColumnKey.CLAIM_ID]
 					}?p_l_back_url=${encodeURIComponent(
 						Liferay.ThemeDisplay.getLayoutRelativeURL()
-					)}`}
+					)}&${urlParams.toString()}`}
 				>
 					{data}
 				</a>
@@ -161,7 +162,7 @@ export default function getMDFClaimListColumns(
 						row[MDFClaimColumnKey.REQUEST_ID]
 					}?p_l_back_url=${encodeURIComponent(
 						Liferay.ThemeDisplay.getLayoutRelativeURL()
-					)}`}
+					)}&${urlParams.toString()}`}
 				>
 					{data}
 				</a>

@@ -148,23 +148,27 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 	}
 
 	private long _getPaymentMethodGroupRelTermId() throws Exception {
-		_commercePaymentMethodGroupRel =
-			_commercePaymentMethodGroupRelLocalService.
-				addCommercePaymentMethodGroupRel(
-					_user.getUserId(), _commerceChannel.getGroupId(),
-					RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.randomLocaleStringMap(), true, null,
-					TestCommercePaymentMethod.KEY, 99, null);
+		if (_commercePaymentMethodGroupRel == null) {
+			_commercePaymentMethodGroupRel =
+				_commercePaymentMethodGroupRelLocalService.
+					addCommercePaymentMethodGroupRel(
+						_user.getUserId(), _commerceChannel.getGroupId(),
+						RandomTestUtil.randomLocaleStringMap(),
+						RandomTestUtil.randomLocaleStringMap(), true, null,
+						TestCommercePaymentMethod.KEY, 99, null);
+		}
 
 		Term term = _toTerm(_addCommerceTermEntry());
 
-		_commercePaymentMethodGroupRelQualifier =
-			_commercePaymentMethodGroupRelQualifierLocalService.
-				addCommercePaymentMethodGroupRelQualifier(
-					_user.getUserId(), CommerceOrderType.class.getName(),
-					term.getId(),
-					_commercePaymentMethodGroupRel.
-						getCommercePaymentMethodGroupRelId());
+		if (_commercePaymentMethodGroupRelQualifier == null) {
+			_commercePaymentMethodGroupRelQualifier =
+				_commercePaymentMethodGroupRelQualifierLocalService.
+					addCommercePaymentMethodGroupRelQualifier(
+						_user.getUserId(), CommerceOrderType.class.getName(),
+						term.getId(),
+						_commercePaymentMethodGroupRel.
+							getCommercePaymentMethodGroupRelId());
+		}
 
 		return _commercePaymentMethodGroupRelQualifier.
 			getCommercePaymentMethodGroupRelQualifierId();
@@ -186,16 +190,17 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 
 		Term term = _toTerm(_addCommerceTermEntry());
 
-		CommerceShippingFixedOptionQualifier
-			commerceShippingFixedOptionQualifier =
+		if (_commerceShippingFixedOptionQualifier == null) {
+			_commerceShippingFixedOptionQualifier =
 				_commerceShippingFixedOptionQualifierLocalService.
 					addCommerceShippingFixedOptionQualifier(
 						_user.getUserId(), CommerceOrderType.class.getName(),
 						term.getId(),
 						_commerceShippingFixedOption.
 							getCommerceShippingFixedOptionId());
+		}
 
-		return commerceShippingFixedOptionQualifier.
+		return _commerceShippingFixedOptionQualifier.
 			getCommerceShippingFixedOptionQualifierId();
 	}
 
@@ -235,6 +240,9 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 	@Inject
 	private CommerceShippingFixedOptionLocalService
 		_commerceShippingFixedOptionLocalService;
+
+	private CommerceShippingFixedOptionQualifier
+		_commerceShippingFixedOptionQualifier;
 
 	@Inject
 	private CommerceShippingFixedOptionQualifierLocalService

@@ -42,13 +42,20 @@ const SelectAssignment = ({section, setSection, setSections}) => {
 	const {
 		allowScriptContentBeExecutedOrIncluded,
 		hasGroovyScript,
+		scriptManagementConfigurationPortletURL,
 	} = useContext(DefinitionBuilderContext);
 
 	return (
 		<>
 			{Liferay.FeatureFlags['LPD-11179'] &&
 				!allowScriptContentBeExecutedOrIncluded &&
-				hasGroovyScript && <DisabledGroovyScriptAlert />}
+				hasGroovyScript && (
+					<DisabledGroovyScriptAlert
+						scriptManagementConfigurationPortletURL={
+							scriptManagementConfigurationPortletURL
+						}
+					/>
+				)}
 
 			<SidebarPanel
 				panelTitle={Liferay.Language.get('select-assignment')}

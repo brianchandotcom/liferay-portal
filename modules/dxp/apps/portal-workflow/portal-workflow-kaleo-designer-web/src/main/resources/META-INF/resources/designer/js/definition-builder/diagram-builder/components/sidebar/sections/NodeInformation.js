@@ -21,6 +21,7 @@ export default function NodeInformation({errors, setErrors}) {
 		allowScriptContentBeExecutedOrIncluded,
 		elements,
 		hasGroovyScript,
+		scriptManagementConfigurationPortletURL,
 		selectedLanguageId,
 	} = useContext(DefinitionBuilderContext);
 	const {
@@ -37,7 +38,11 @@ export default function NodeInformation({errors, setErrors}) {
 				hasGroovyScript &&
 				selectedItem &&
 				selectedItem.type === 'condition' && (
-					<DisabledGroovyScriptAlert />
+					<DisabledGroovyScriptAlert
+						scriptManagementConfigurationPortletURL={
+							scriptManagementConfigurationPortletURL
+						}
+					/>
 				)}
 
 			<SidebarPanel panelTitle={Liferay.Language.get('information')}>

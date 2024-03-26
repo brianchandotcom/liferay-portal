@@ -7,7 +7,10 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 
-export function GroovyScriptWarningModal({setShowGroovyScriptWarningModal}) {
+export function GroovyScriptWarningModal({
+	scriptManagementConfigurationPortletURL,
+	setShowGroovyScriptWarningModal,
+}) {
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			setShowGroovyScriptWarningModal();
@@ -25,7 +28,10 @@ export function GroovyScriptWarningModal({setShowGroovyScriptWarningModal}) {
 					'workflow-definitions-that-include-groovy-scripts-are-deactivated-for-your-instance'
 				)}
 				&nbsp;
-				<a>
+				<a
+					href={scriptManagementConfigurationPortletURL}
+					target="_blank"
+				>
 					{Liferay.Language.get(
 						'go-to-system-settings-security-tools-script-management-to-allow-administrators-to-execute-groovy-code'
 					)}

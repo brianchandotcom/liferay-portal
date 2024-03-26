@@ -15,6 +15,7 @@ const Actions = (props) => {
 	const {
 		allowScriptContentBeExecutedOrIncluded,
 		hasGroovyScript,
+		scriptManagementConfigurationPortletURL,
 	} = useContext(DefinitionBuilderContext);
 
 	const {actions} = selectedItem?.data;
@@ -47,7 +48,13 @@ const Actions = (props) => {
 		<>
 			{Liferay.FeatureFlags['LPD-11179'] &&
 				!allowScriptContentBeExecutedOrIncluded &&
-				hasGroovyScript && <DisabledGroovyScriptAlert />}
+				hasGroovyScript && (
+					<DisabledGroovyScriptAlert
+						scriptManagementConfigurationPortletURL={
+							scriptManagementConfigurationPortletURL
+						}
+					/>
+				)}
 
 			{sections.map(({identifier}, index) => {
 				return (

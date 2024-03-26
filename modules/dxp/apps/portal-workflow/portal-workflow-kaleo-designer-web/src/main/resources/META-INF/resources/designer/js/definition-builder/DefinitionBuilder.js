@@ -60,6 +60,8 @@ export default function DefinitionBuilder(props) {
 		functionActionExecutors: props.functionActionExecutors,
 		hadGroovyScriptBefore,
 		hasGroovyScript,
+		scriptManagementConfigurationPortletURL:
+			props.scriptManagementConfigurationPortletURL,
 		selectedLanguageId,
 		setAccountEntryId,
 		setActive,

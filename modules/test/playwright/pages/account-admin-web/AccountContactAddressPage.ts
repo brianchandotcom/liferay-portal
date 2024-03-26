@@ -7,16 +7,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class EditAccountContactPage {
-	readonly addressesLink: Locator;
-	readonly contactInformationLink: Locator;
+export class AccountContactAddressPage {
+	readonly addAddressesButton: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.contactInformationLink = page.getByRole('link', {
-			exact: true,
-			name: 'Contact Information',
-		});
+		this.addAddressesButton = page.getByLabel('Add Addresses');
 		this.page = page;
 	}
 }

@@ -63,6 +63,38 @@ test('LPD-18485 Update account contact information fields', async ({
 	}
 });
 
+test('LPD-18484 Add account contact address', async ({
+	accountContactAddressPage,
+	accountsPage,
+	apiHelpers,
+	editAccountContactAddressPage,
+	editAccountPage,
+	page,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: 'test',
+		type: 'business',
+	});
+
+	await accountsPage.goto();
+
+	try {
+		await (await accountsPage.accountsTableRowLink(account.name)).click();
+		await editAccountPage.contactLink.click();
+		await accountContactAddressPage.addAddressesButton.click();
+		await editAccountContactAddressPage.updateAddress('address1', 'city');
+
+		await expect(
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+
+		await expect(page.getByText('address1city,')).toBeVisible();
+	}
+	finally {
+		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
+	}
+});
+
 test('LPD-18482 Add account phone', async ({
 	accountsPage,
 	apiHelpers,

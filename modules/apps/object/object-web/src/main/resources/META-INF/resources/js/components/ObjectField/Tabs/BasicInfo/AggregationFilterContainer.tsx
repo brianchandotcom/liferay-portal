@@ -18,13 +18,10 @@ import {
 	FilterErrors,
 	FilterValidation,
 	ModalAddFilter,
+	OnSaveProps,
 } from '../../../ModalAddFilter';
 
 import '../../EditObjectFieldContent.scss';
-
-interface IItem extends LabelValueObject {
-	checked?: boolean;
-}
 
 interface AggregationFilters {
 	defaultSort?: boolean;
@@ -323,15 +320,15 @@ export function AggregationFilterContainer({
 	);
 
 	const handleSaveFilterColumn = useCallback(
-		(
-			objectFieldName: string,
-			filterBy?: string,
-			fieldLabel?: LocalizedValue<string>,
-			objectFieldBusinessType?: string,
-			filterType?: string,
-			valueList?: IItem[],
-			value?: string
-		) => {
+		({
+			fieldLabel,
+			filterBy,
+			filterType,
+			objectFieldBusinessType,
+			objectFieldName,
+			value,
+			valueList,
+		}: OnSaveProps) => {
 			const newAggregationFilters = [
 				...aggregationFilters,
 				{

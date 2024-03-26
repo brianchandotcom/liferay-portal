@@ -21,6 +21,8 @@ import {ObjectValidationErrors} from './useObjectValidationForm';
 
 import './UniqueCompositeKey.scss';
 
+import {MultiSelectItemChild} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/components/Select/MultipleSelect';
+
 interface isMatchingObjectFieldObjectValidationRuleSettingProps {
 	objectField: ObjectField;
 	objectValidationRuleSetting: ObjectValidationRuleSetting;
@@ -284,7 +286,7 @@ export function UniqueCompositeKey({
 
 		const newBuilderScreenItems: TBuilderScreenItem[] = [];
 		const newModalSelectObjectFieldsItems: ModalSelectObjectFieldItem[] = [];
-		const newMultipleSelectOptions: MultiSelectItem[] = [];
+		const newMultipleSelectOptionsChildren: MultiSelectItemChild[] = [];
 
 		values.objectValidationRuleSettings.forEach(
 			(objectValidationRuleSetting) => {
@@ -317,7 +319,7 @@ export function UniqueCompositeKey({
 							filteredObjectFieldObjectValidationRuleSetting.name,
 					});
 
-					newMultipleSelectOptions.push({
+					newMultipleSelectOptionsChildren.push({
 						checked: !!values.objectValidationRuleSettings?.find(
 							(objectValidationRuleSetting) =>
 								isMatchingObjectFieldObjectValidationRuleSetting(
@@ -365,7 +367,14 @@ export function UniqueCompositeKey({
 
 		setBuilderScreenItems(newBuilderScreenItems);
 		setModalSelectObjectFieldsItems(newModalSelectObjectFieldsItems);
-		setMultipleSelectOptions(newMultipleSelectOptions);
+
+		setMultipleSelectOptions([
+			{
+				children: newMultipleSelectOptionsChildren,
+				label: '',
+				value: 'objectFields',
+			},
+		]);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinition?.status, values.objectValidationRuleSettings]);
@@ -472,27 +481,28 @@ export function UniqueCompositeKey({
 					disabled={!builderScreenItems.length}
 					label={Liferay.Language.get('field')}
 					options={multipleSelectOptions}
-					setOptions={(newOutputObjectFieldOptions) => {
+					setOptions={([newOutputObjectFieldOption]) => {
 						const objectValidationRuleSettings = values.objectValidationRuleSettings?.filter(
 							(objectValidationRuleSetting) =>
 								objectValidationRuleSetting.name !==
 								'outputObjectFieldExternalReferenceCode'
 						);
 
-						newOutputObjectFieldOptions.forEach(
-							(newOutputObjectFieldOption) => {
-								if (newOutputObjectFieldOption.checked) {
+						newOutputObjectFieldOption.children.forEach(
+							(newOutputObjectFieldOptionChild) => {
+								if (newOutputObjectFieldOptionChild.checked) {
 									objectValidationRuleSettings?.push({
 										name:
 											'outputObjectFieldExternalReferenceCode',
-										value: newOutputObjectFieldOption.value,
+										value:
+											newOutputObjectFieldOptionChild.value,
 									});
 								}
 							}
 						);
 
 						setValues({objectValidationRuleSettings});
-						setMultipleSelectOptions(newOutputObjectFieldOptions);
+						setMultipleSelectOptions([newOutputObjectFieldOption]);
 					}}
 				/>
 			</ErrorMessage>

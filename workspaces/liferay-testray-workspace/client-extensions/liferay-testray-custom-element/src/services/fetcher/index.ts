@@ -32,6 +32,10 @@ function changeResource(resource: RequestInfo) {
 		return `${liferayHost}/o/dispatch-rest/v1.0${resource}`;
 	}
 
+	if (resource.toString().startsWith('/testray-run-comparisons')) {
+		return `${liferayHost}/o/testray-rest/v1.0${resource}`;
+	}
+
 	if (getIsResourceFromAPI(headlessDeliveryAPIs)) {
 		return `${liferayHost}/o/headless-delivery/v1.0${resource}`;
 	}

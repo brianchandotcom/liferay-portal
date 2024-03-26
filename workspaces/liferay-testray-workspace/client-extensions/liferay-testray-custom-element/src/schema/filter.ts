@@ -651,6 +651,20 @@ const filterSchema = {
 
 		name: 'compareRunsCases',
 	},
+	compareRunsTeams: {
+		fields: [
+			overrides(baseFilters.priority, {
+				name: 'testrayCasePriorities',
+				removeQuoteMark: true,
+				type: 'multiselect',
+			}),
+			overrides(baseFilters.team, {
+				name: 'testrayTeamId',
+				type: 'select',
+			}),
+		] as RendererFields[],
+		name: 'compareRunsTeams',
+	},
 	components: {
 		fields: [
 			{

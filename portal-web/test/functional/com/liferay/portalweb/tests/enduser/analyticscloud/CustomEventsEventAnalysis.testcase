@@ -696,6 +696,14 @@ definition {
 		var defaultEventName = "pageViewed";
 		var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
+		task ("View the page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 

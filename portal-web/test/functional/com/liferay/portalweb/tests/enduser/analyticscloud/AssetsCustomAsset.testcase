@@ -359,11 +359,11 @@ definition {
 		}
 
 		task ("View the site page") {
-			for (var n : list "1,2,3,4") {
-				ACUtils.navigateToSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {

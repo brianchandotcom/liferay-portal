@@ -18,6 +18,7 @@ interface ModalImportProps {
 	importURL: string;
 	modalImportKey: ModalImportKeys;
 	nameMaxLength: string;
+	objectFolderExternalReferenceCode?: string;
 	onAfterImport?: () => void;
 	portletNamespace: string;
 	showModal?: boolean;
@@ -34,6 +35,7 @@ export default function ModalImport({
 	importURL,
 	modalImportKey,
 	nameMaxLength,
+	objectFolderExternalReferenceCode,
 	onAfterImport,
 	portletNamespace,
 	showModal,

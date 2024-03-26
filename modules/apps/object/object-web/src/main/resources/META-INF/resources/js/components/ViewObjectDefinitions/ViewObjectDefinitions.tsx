@@ -485,6 +485,7 @@ export default function ViewObjectDefinitions({
 					}}
 				/>
 			)}
+
 			{showModal.importModal && (
 				<ModalImport
 					{...(modalImportProperties.modalImportKey ===
@@ -507,6 +508,9 @@ export default function ViewObjectDefinitions({
 					importURL={modalImportProperties.importURL}
 					modalImportKey={modalImportProperties.modalImportKey}
 					nameMaxLength={nameMaxLength}
+					objectFolderExternalReferenceCode={
+						selectedObjectFolder.externalReferenceCode
+					}
 					portletNamespace={portletNamespace}
 					showModal={showModal.importModal}
 				/>

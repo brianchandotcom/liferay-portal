@@ -8,7 +8,7 @@ import {FormEvent} from 'react';
 import {ModalImportKeys} from './ModalImport';
 interface HandleImportProps {
 	importURL: string;
-	item: FormData | ObjectDefinition[];
+	item: FormData;
 	onAfterImport?: () => void;
 	onClose: () => void;
 	setError: (
@@ -28,7 +28,9 @@ interface HandleDefaultImportProps extends Omit<HandleImportProps, 'item'> {
 interface HandleImportMultiplesObjectDefinitionsProps
 	extends Omit<HandleImportProps, 'item'> {
 	importedObjectDefinitions: ObjectDefinition[];
+	objectFolderExternalReferenceCode: string;
 	setExistingObjectDefinitions: (value: ObjectDefinition[]) => void;
+	setImportFormData: (value: FormData) => void;
 	setModalImportKeyState: (value: ModalImportKeys) => void;
 	setWarningModalVisible: (value: boolean) => void;
 }
@@ -56,10 +58,12 @@ export declare function handleImport({
 export declare function handleImportMultiplesObjectDefinitions({
 	importURL,
 	importedObjectDefinitions,
+	objectFolderExternalReferenceCode,
 	onAfterImport,
 	onClose,
 	setError,
 	setExistingObjectDefinitions,
+	setImportFormData,
 	setModalImportKeyState,
 	setWarningModalVisible,
 }: HandleImportMultiplesObjectDefinitionsProps): Promise<void>;

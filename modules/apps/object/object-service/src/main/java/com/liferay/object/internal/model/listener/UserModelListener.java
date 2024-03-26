@@ -11,9 +11,12 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
@@ -28,6 +31,25 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ModelListener.class)
 public class UserModelListener extends BaseModelListener<User> {
+
+	@Override
+	public void onAfterRemove(User user) throws ModelListenerException {
+		User defaultServiceAccountUser =
+			_userLocalService.fetchUserByScreenName(
+				user.getCompanyId(), "default-service-account");
+
+		if (defaultServiceAccountUser == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Missing default service account user");
+			}
+
+			return;
+		}
+
+		_objectDefinitionLocalService.updateUserIds(
+			user.getCompanyId(), user.getUserId(),
+			defaultServiceAccountUser.getUserId());
+	}
 
 	@Override
 	public void onAfterUpdate(User originalUser, User user)
@@ -76,6 +98,9 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserModelListener.class);
+
 	@Reference
 	private Language _language;
 
@@ -85,5 +110,8 @@ public class UserModelListener extends BaseModelListener<User> {
 	@Reference
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

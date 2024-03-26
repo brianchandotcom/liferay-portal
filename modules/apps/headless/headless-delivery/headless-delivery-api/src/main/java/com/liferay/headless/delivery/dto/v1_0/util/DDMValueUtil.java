@@ -584,6 +584,9 @@ public class DDMValueUtil {
 
 		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
 
+		Map<String, String> optionsReferences =
+			ddmFormFieldOptions.getOptionsReferences();
+
 		for (String value : values) {
 			if (options.containsKey(value)) {
 				keys.add(value);
@@ -600,6 +603,18 @@ public class DDMValueUtil {
 					key = entry.getKey();
 
 					break;
+				}
+			}
+
+			if (Validator.isNull(key)) {
+				for (Map.Entry<String, String> entry :
+						optionsReferences.entrySet()) {
+
+					if (Objects.equals(entry.getValue(), value)) {
+						key = entry.getKey();
+
+						break;
+					}
 				}
 			}
 

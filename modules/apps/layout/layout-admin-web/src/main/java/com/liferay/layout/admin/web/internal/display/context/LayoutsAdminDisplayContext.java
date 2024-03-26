@@ -1581,6 +1581,10 @@ public class LayoutsAdminDisplayContext {
 			layoutFullURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 		}
 
+		if (layout.isTypeURL()) {
+			return layoutFullURL;
+		}
+
 		try {
 			layoutFullURL = HttpComponentsUtil.addParameters(
 				layoutFullURL, "p_l_back_url", _getBackURL(),

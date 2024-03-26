@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -133,6 +134,10 @@ public class LayoutLocalServiceStagingAdvice {
 
 		Layout layout = _layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
+
+		if (nameMap.isEmpty()) {
+			nameMap = _localization.getLocalizationMap(layout.getName(), true);
+		}
 
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
@@ -669,6 +674,9 @@ public class LayoutLocalServiceStagingAdvice {
 
 	@Reference
 	private LayoutRevisionPersistence _layoutRevisionPersistence;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

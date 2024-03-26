@@ -7,6 +7,7 @@ package com.liferay.batch.engine.internal.writer;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.batch.engine.csv.ColumnDescriptor;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
@@ -65,13 +66,13 @@ public class ColumnValuesExtractor {
 		List<ColumnDescriptor> childFieldColumnDescriptors = new ArrayList<>();
 
 		for (ColumnDescriptor columnDescriptor : _columnDescriptors) {
-			if (columnDescriptor._isChild()) {
+			if (columnDescriptor.isChild()) {
 				childFieldColumnDescriptors.add(columnDescriptor);
 
 				continue;
 			}
 
-			values[columnDescriptor._index] = columnDescriptor._getValue(item);
+			values[columnDescriptor.getIndex()] = columnDescriptor.getValue(item);
 		}
 
 		valuesList.add(values);
@@ -81,16 +82,16 @@ public class ColumnValuesExtractor {
 		for (ColumnDescriptor childFieldColumnDescriptor :
 				childFieldColumnDescriptors) {
 
-			if (hash != childFieldColumnDescriptor._getParentHashCode()) {
-				hash = childFieldColumnDescriptor._getParentHashCode();
+			if (hash != childFieldColumnDescriptor.getParentHashCode()) {
+				hash = childFieldColumnDescriptor.getParentHashCode();
 
 				values = _getBlankValues(_columnDescriptors.length);
 
 				valuesList.add(values);
 			}
 
-			values[childFieldColumnDescriptor._index] =
-				childFieldColumnDescriptor._getValue(item);
+			values[childFieldColumnDescriptor.getIndex()] =
+				childFieldColumnDescriptor.getValue(item);
 		}
 
 		return valuesList;
@@ -100,7 +101,7 @@ public class ColumnValuesExtractor {
 		String[] headers = new String[_columnDescriptors.length];
 
 		for (ColumnDescriptor columnDescriptor : _columnDescriptors) {
-			headers[columnDescriptor._index] = columnDescriptor._getHeader();
+			headers[columnDescriptor.getIndex()] = columnDescriptor.getHeader();
 		}
 
 		return headers;
@@ -191,7 +192,7 @@ public class ColumnValuesExtractor {
 					continue;
 				}
 
-				columnDescriptors[localIndex] = ColumnDescriptor._from(
+				columnDescriptors[localIndex] = ColumnDescriptor.from(
 					null, fieldName, masterIndex++, null,
 					parentColumnDescriptor,
 					_getObjectEntryCustomFieldUnsafeFunction(
@@ -206,7 +207,7 @@ public class ColumnValuesExtractor {
 
 			Field field = objectValuePair.getKey();
 
-			columnDescriptors[localIndex] = ColumnDescriptor._from(
+			columnDescriptors[localIndex] = ColumnDescriptor.from(
 				field, field.getName(), masterIndex++,
 				objectValuePair.getValue(), parentColumnDescriptor,
 				_getPOJOFieldUnsafeFunction(
@@ -261,7 +262,7 @@ public class ColumnValuesExtractor {
 		ColumnDescriptor columnDescriptor =
 			columnDescriptors[columnDescriptors.length - 1];
 
-		return columnDescriptor._index;
+		return columnDescriptor.getIndex();
 	}
 
 	private String _getListEntryValue(Object object, String fieldName) {
@@ -311,7 +312,7 @@ public class ColumnValuesExtractor {
 		for (int i = 0; i < multiselectPickListColumnDescriptors.length;
 			 i = i + 2) {
 
-			multiselectPickListColumnDescriptors[i] = ColumnDescriptor._from(
+			multiselectPickListColumnDescriptors[i] = ColumnDescriptor.from(
 				null,
 				StringBundler.concat(
 					fieldName, ".key_", listTypeEntriesHeaderIndex),
@@ -321,7 +322,7 @@ public class ColumnValuesExtractor {
 					fieldName, "key_" + listTypeEntriesHeaderIndex));
 
 			multiselectPickListColumnDescriptors[i + 1] =
-				ColumnDescriptor._from(
+				ColumnDescriptor.from(
 					null,
 					StringBundler.concat(
 						fieldName, ".name_", listTypeEntriesHeaderIndex),
@@ -424,14 +425,14 @@ public class ColumnValuesExtractor {
 
 		ColumnDescriptor[] pickListColumnDescriptors = new ColumnDescriptor[2];
 
-		pickListColumnDescriptors[0] = ColumnDescriptor._from(
+		pickListColumnDescriptors[0] = ColumnDescriptor.from(
 			null, fieldName + ".key", masterIndex++, null,
 			parentColumnDescriptor,
 			_getObjectEntryCustomFieldUnsafeFunction(
 				objectFieldBusinessType, propertiesObjectValuePair, fieldName,
 				"key"));
 
-		pickListColumnDescriptors[1] = ColumnDescriptor._from(
+		pickListColumnDescriptors[1] = ColumnDescriptor.from(
 			null, fieldName + ".name", masterIndex++, null,
 			parentColumnDescriptor,
 			_getObjectEntryCustomFieldUnsafeFunction(
@@ -601,150 +602,5 @@ public class ColumnValuesExtractor {
 		ColumnValuesExtractor.class);
 
 	private final ColumnDescriptor[] _columnDescriptors;
-
-	private static class ColumnDescriptor {
-
-		@Override
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			}
-
-			if (!(object instanceof ColumnDescriptor)) {
-				return false;
-			}
-
-			ColumnDescriptor columnDescriptor = (ColumnDescriptor)object;
-
-			if (Objects.equals(_field, columnDescriptor._field) &&
-				_parentColumnDescriptors.equals(
-					columnDescriptor._parentColumnDescriptors)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			return _field.hashCode();
-		}
-
-		private static ColumnDescriptor _from(
-			Field field, String fieldName, int index, Method method,
-			ColumnDescriptor parentColumnDescriptor,
-			UnsafeFunction<Object, Object, ReflectiveOperationException>
-				unsafeFunction) {
-
-			ColumnDescriptor columnDescriptor = new ColumnDescriptor(
-				field, fieldName, index, method, unsafeFunction);
-
-			if (parentColumnDescriptor == null) {
-				return columnDescriptor;
-			}
-
-			columnDescriptor._add(parentColumnDescriptor);
-
-			return columnDescriptor;
-		}
-
-		private ColumnDescriptor(
-			Field field, String fieldName, int index, Method method,
-			UnsafeFunction<Object, Object, ReflectiveOperationException>
-				unsafeFunction) {
-
-			_field = field;
-			_fieldName = fieldName;
-			_index = index;
-			_method = method;
-			_unsafeFunction = unsafeFunction;
-		}
-
-		private void _add(ColumnDescriptor columnDescriptor) {
-			if (!columnDescriptor._parentColumnDescriptors.isEmpty()) {
-				_parentColumnDescriptors.addAll(
-					columnDescriptor._parentColumnDescriptors);
-			}
-
-			_parentColumnDescriptors.add(columnDescriptor);
-		}
-
-		private String _getHeader() {
-			StringBundler sb = new StringBundler(
-				(_parentColumnDescriptors.size() * 2) + 2);
-
-			for (ColumnDescriptor columnDescriptor : _parentColumnDescriptors) {
-				sb.append(columnDescriptor._getSanitizedFieldName());
-				sb.append(StringPool.PERIOD);
-			}
-
-			sb.append(_getSanitizedFieldName());
-
-			return sb.toString();
-		}
-
-		private int _getParentHashCode() {
-			if (_parentColumnDescriptors.isEmpty()) {
-				throw new UnsupportedOperationException();
-			}
-
-			ColumnDescriptor columnDescriptor = _parentColumnDescriptors.get(
-				_parentColumnDescriptors.size() - 1);
-
-			return columnDescriptor.hashCode();
-		}
-
-		private String _getSanitizedFieldName() {
-			if (_fieldName.startsWith(StringPool.UNDERLINE)) {
-				return _fieldName.substring(1);
-			}
-
-			return _fieldName;
-		}
-
-		private Object _getValue(Object object)
-			throws ReflectiveOperationException {
-
-			if (!_isChild()) {
-				return _unsafeFunction.apply(object);
-			}
-
-			Object result = object;
-
-			for (ColumnDescriptor columnDescriptor : _parentColumnDescriptors) {
-				if (columnDescriptor._method == null) {
-					result = columnDescriptor._field.get(result);
-				}
-				else {
-					result = columnDescriptor._method.invoke(result);
-				}
-
-				if (result == null) {
-					return StringPool.BLANK;
-				}
-			}
-
-			return _unsafeFunction.apply(result);
-		}
-
-		private boolean _isChild() {
-			if (_parentColumnDescriptors.isEmpty()) {
-				return false;
-			}
-
-			return true;
-		}
-
-		private final Field _field;
-		private final String _fieldName;
-		private final int _index;
-		private final Method _method;
-		private final List<ColumnDescriptor> _parentColumnDescriptors =
-			new ArrayList<>();
-		private final UnsafeFunction
-			<Object, Object, ReflectiveOperationException> _unsafeFunction;
-
-	}
 
 }

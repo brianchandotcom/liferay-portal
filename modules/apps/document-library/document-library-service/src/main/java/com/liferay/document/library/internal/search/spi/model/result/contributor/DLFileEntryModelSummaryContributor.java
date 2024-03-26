@@ -39,8 +39,13 @@ public class DLFileEntryModelSummaryContributor
 
 			if (Validator.isNull(content) && !locale.equals(defaultLocale)) {
 				content = document.get(
-					defaultLocale, prefix + Field.DESCRIPTION,
-					Field.DESCRIPTION);
+					defaultLocale, prefix + Field.CONTENT, Field.CONTENT);
+
+				if (Validator.isNull(content)) {
+					content = document.get(
+						defaultLocale, prefix + Field.DESCRIPTION,
+						Field.DESCRIPTION);
+				}
 			}
 		}
 

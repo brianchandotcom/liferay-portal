@@ -15,7 +15,6 @@ import {fdsFragmentPageTest} from './fixtures/fdsFragmentPageTest';
 import {fieldsPageTest} from './fixtures/fieldsPageTest';
 import {settingsPageTest} from './fixtures/settingsPageTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
-import {DEFAULT_LABEL} from './utils/constants';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
@@ -30,15 +29,20 @@ export const test = mergeTests(
 );
 
 let settingsDataSetERC: string;
+let settingsDataSetLabel: string;
 let settingsDataSetViewERC: string;
+let settingsDataSetViewLabel: string;
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	settingsDataSetERC = getRandomString();
+	settingsDataSetLabel = getRandomString();
 	settingsDataSetViewERC = getRandomString();
+	settingsDataSetViewLabel = getRandomString();
 
-	await dataSetManagerApiHelpers.createDataSet({erc: settingsDataSetERC});
+	await dataSetManagerApiHelpers.createDataSet({erc: settingsDataSetERC, label: settingsDataSetLabel });
 	await dataSetManagerApiHelpers.createDataSetView({
 		erc: settingsDataSetViewERC,
+		label: settingsDataSetViewLabel,
 		r_fdsEntryFDSViewRelationship_c_fdsEntryERC: settingsDataSetERC,
 	});
 });
@@ -55,8 +59,8 @@ test.describe('Data Set Settings', () => {
 		}) => {
 			await test.step('Navigate to Settings section', async () => {
 				await settingsPage.goto({
-					dataSetLabel: DEFAULT_LABEL.DATA_SET,
-					viewLabel: DEFAULT_LABEL.VIEW,
+					dataSetLabel: settingsDataSetLabel,
+					viewLabel: settingsDataSetViewLabel,
 				});
 
 				await expect(
@@ -103,8 +107,8 @@ test.describe('Data Set Settings', () => {
 
 			await test.step('Navigate to Settings section', async () => {
 				await settingsPage.goto({
-					dataSetLabel: DEFAULT_LABEL.DATA_SET,
-					viewLabel: DEFAULT_LABEL.VIEW,
+					dataSetLabel: settingsDataSetLabel,
+					viewLabel: settingsDataSetViewLabel,
 				});
 
 				await expect(
@@ -139,8 +143,8 @@ test.describe('Data Set Settings', () => {
 
 			await test.step('Navigate to Settings section', async () => {
 				await settingsPage.goto({
-					dataSetLabel: DEFAULT_LABEL.DATA_SET,
-					viewLabel: DEFAULT_LABEL.VIEW,
+					dataSetLabel: settingsDataSetLabel,
+					viewLabel: settingsDataSetViewLabel,
 				});
 
 				await expect(
@@ -236,6 +240,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
 						site,
+						viewLabel: settingsDataSetViewLabel
 					});
 				}
 			);
@@ -294,6 +299,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
 						site,
+						viewLabel: settingsDataSetViewLabel,
 					});
 				}
 			);
@@ -354,6 +360,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
 						site,
+						viewLabel: settingsDataSetViewLabel,
 					});
 				}
 			);
@@ -457,6 +464,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
 						site,
+						viewLabel: settingsDataSetViewLabel,
 					});
 				}
 			);
@@ -552,6 +560,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
 						site,
+						viewLabel: settingsDataSetViewLabel,
 					});
 				}
 			);

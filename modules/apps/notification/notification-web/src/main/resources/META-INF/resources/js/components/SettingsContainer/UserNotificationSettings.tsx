@@ -67,23 +67,25 @@ export function UserNotificationSettings({
 
 		const {items} = (await response.json()) as {items: Role[]};
 
-		const roles: MultiSelectItem[] = [];
+		const roles = {
+			children: items
+				.filter(({name}) => name !== 'Guest')
+				.map(({name}) => {
+					const selectedRole = !!(values.recipients as Partial<
+						UserNotificationRecipients
+					>[]).find((recipient) => recipient.roleName === name);
 
-		items.forEach(({name}) => {
-			if (name !== 'Guest') {
-				const selectedRole = !!(values.recipients as Partial<
-					UserNotificationRecipients
-				>[]).find((recipient) => recipient.roleName === name);
+					return {
+						checked: selectedRole,
+						label: name,
+						value: name,
+					};
+				}),
+			label: '',
+			value: 'rolesList',
+		} as MultiSelectItem;
 
-				roles.push({
-					checked: selectedRole,
-					label: name,
-					value: name,
-				});
-			}
-		});
-
-		setRolesList(roles);
+		setRolesList([roles]);
 		setUserList([]);
 	};
 
@@ -104,21 +106,25 @@ export function UserNotificationSettings({
 
 		const {items} = (await response.json()) as {items: User[]};
 
-		const users = items.map(({alternateName, givenName}) => {
-			const selectedUser = !!(values.recipients as Partial<
-				UserNotificationRecipients
-			>[]).find(
-				(recipient) => recipient['userScreenName'] === alternateName
-			);
+		const users = {
+			children: items.map(({alternateName, givenName}) => {
+				const selectedUser = !!(values.recipients as Partial<
+					UserNotificationRecipients
+				>[]).find(
+					(recipient) => recipient['userScreenName'] === alternateName
+				);
 
-			return {
-				checked: selectedUser,
-				label: givenName,
-				value: alternateName,
-			};
-		}) as MultiSelectItem[];
+				return {
+					checked: selectedUser,
+					label: givenName,
+					value: alternateName,
+				};
+			}),
+			label: '',
+			value: 'usersList',
+		} as MultiSelectItem;
 
-		setUserList(users);
+		setUserList([users]);
 		setRolesList([]);
 	};
 
@@ -128,11 +134,15 @@ export function UserNotificationSettings({
 
 		const newRecipients: UserNotificationRecipients[] = [];
 
-		items.forEach((item) => {
-			if (item.checked) {
-				newRecipients.push({[key]: item.value});
-			}
-		});
+		if (items.length) {
+			const [itemsGroup] = items as MultiSelectItem[];
+
+			itemsGroup.children.forEach((child) => {
+				if (child.checked) {
+					newRecipients.push({[key]: child.value});
+				}
+			});
+		}
 
 		setValues({
 			...values,

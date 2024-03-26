@@ -118,12 +118,12 @@ public class DDMValueUtil {
 				localizedContentFieldValues, preferredLocale);
 		}
 		else if (Objects.equals(
-					DDMFormFieldTypeConstants.RADIO, ddmFormField.getType()) ||
+					DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
+					ddmFormField.getType()) ||
+				 Objects.equals(
+					 DDMFormFieldTypeConstants.RADIO, ddmFormField.getType()) ||
 				 Objects.equals(
 					 DDMFormFieldTypeConstants.SELECT,
-					 ddmFormField.getType()) ||
-				 Objects.equals(
-					 DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
 					 ddmFormField.getType())) {
 
 			return _toSelectValue(

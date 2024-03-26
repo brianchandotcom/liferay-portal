@@ -38,7 +38,7 @@ import org.springframework.web.util.UriBuilder;
 public class TestrayCommandLineRunner implements CommandLineRunner {
 
 	public void autoArchiveTestrayBuilds() throws Exception {
-		JSONObject responseJSONObject = _sendRequest(
+		JSONArray testrayBuildsJSONArray = _sendRequest(
 			"", HttpMethod.GET,
 			uriBuilder -> uriBuilder.path(
 				"/o/c/builds"
@@ -48,10 +48,10 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 					_currentDateTime.minusDays(_maxDaysOpened)
 			).queryParam(
 				"pageSize", "-1"
-			).build());
-
-		JSONArray testrayBuildsJSONArray = responseJSONObject.getJSONArray(
-			"items");
+			).build()
+		).getJSONArray(
+			"items"
+		);
 
 		if ((testrayBuildsJSONArray == null) ||
 			testrayBuildsJSONArray.isEmpty()) {
@@ -66,10 +66,11 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 		JSONArray jsonArray = new JSONArray();
 
 		for (int i = 0; i < testrayBuildsJSONArray.length(); i++) {
-			JSONObject jsonObject = (JSONObject)testrayBuildsJSONArray.get(i);
+			JSONObject testrayBuildsJSONObject =
+				(JSONObject)testrayBuildsJSONArray.get(i);
 
 			jsonArray.put(
-				jsonObject.put(
+				testrayBuildsJSONObject.put(
 					"archived", true
 				).put(
 					"dateArchived", _currentDateTime
@@ -88,7 +89,7 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 	}
 
 	public void deleteTestrayArchivedBuilds() throws Exception {
-		JSONObject responseJSONObject = _sendRequest(
+		JSONArray jsonArray = _sendRequest(
 			"", HttpMethod.GET,
 			uriBuilder -> uriBuilder.path(
 				"/o/c/builds"
@@ -100,9 +101,10 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 					_currentDateTime.minusDays(_maxDaysArchived)
 			).queryParam(
 				"pageSize", "-1"
-			).build());
-
-		JSONArray jsonArray = responseJSONObject.getJSONArray("items");
+			).build()
+		).getJSONArray(
+			"items"
+		);
 
 		if ((jsonArray == null) || jsonArray.isEmpty()) {
 			if (_log.isInfoEnabled()) {

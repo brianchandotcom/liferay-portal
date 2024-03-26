@@ -106,7 +106,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 
 							<liferay-ui:search-container-column-date
 								name="last-propagation"
-								value="<%= fragmentEntryLink.getModifiedDate() %>"
+								value="<%= fragmentEntryLink.getLastPropagationDate() %>"
 							/>
 						</liferay-ui:search-container-row>
 

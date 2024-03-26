@@ -256,8 +256,8 @@ definition {
 	macro deleteLayoutPageTemplateEntry(groupName = null, site = null, layoutPageTemplateEntryName = null, type = null) {
 		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${type}");
 
-		var groupId = JSONLayoutpagetemplateSetter.setGroupId(
-			groupKey = ${groupName},
+		var groupId = JSONLayoutpagetemplateSetter.setGroupIdByName(
+			groupName = ${groupName},
 			site = ${site});
 
 		var layoutPageTemplateEntryId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateEntryId(

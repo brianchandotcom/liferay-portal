@@ -155,7 +155,7 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 			).uri(
 				uriBuilder -> uriFunction.apply(uriBuilder)
 			).contentType(
-					MediaType.APPLICATION_JSON
+				MediaType.APPLICATION_JSON
 			).accept(
 				MediaType.APPLICATION_JSON
 			).header(

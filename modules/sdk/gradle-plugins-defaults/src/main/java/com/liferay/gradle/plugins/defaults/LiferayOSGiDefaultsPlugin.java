@@ -2730,12 +2730,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		JavaPluginConvention javaPluginConvention = GradleUtil.getConvention(
 			project, JavaPluginConvention.class);
 
-		if (project.hasProperty("java.version")) {
-			String javaVersion = GradleUtil.getProperty(
-				project, "java.version", (String)null);
+		if (project.hasProperty("java.version.source.compatibility") ||
+			project.hasProperty("java.version.target.compatibility")) {
 
-			javaPluginConvention.setSourceCompatibility(javaVersion);
-			javaPluginConvention.setTargetCompatibility(javaVersion);
+			javaPluginConvention.setSourceCompatibility(
+				GradleUtil.getProperty(
+					project, "java.version.source.compatibility",
+					(String)null));
+			javaPluginConvention.setTargetCompatibility(
+				GradleUtil.getProperty(
+					project, "java.version.target.compatibility",
+					(String)null));
 		}
 		else {
 			javaPluginConvention.setSourceCompatibility(_JAVA_VERSION);

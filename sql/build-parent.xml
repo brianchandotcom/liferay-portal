@@ -35,16 +35,34 @@
 			</then>
 		</if>
 
+		<if>
+			<isset property="db.build.java.add.opens[${build.java.version.target.compatibility}]" />
+			<then>
+				<propertycopy from="db.build.java.add.opens[${build.java.version.target.compatibility}]" name="db.build.java.add.opens" override="true" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${build.java.version.target.compatibility}" arg2="1.8" />
+			<then>
+				<property name="db.build.java.maxpermsize.option" value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
+			</then>
+			<else>
+				<property name="db.build.java.maxpermsize.option" value="-XX:MaxMetaspaceSize=${db.build.java.maxpermsize}" />
+			</else>
+		</if>
+
 		<java
 			classname="com.liferay.portal.tools.DBBuilder"
 			classpathref="db.builder.classpath"
 			failonerror="true"
-			fork="${fork.mode}"
+			fork="true"
 			outputproperty="db.builder.output"
 		>
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
+			<jvmarg if:set="db.build.java.add.opens" line="${db.build.java.add.opens}" />
 			<jvmarg value="-Xmx${db.build.java.mx}" />
-			<jvmarg value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
+			<jvmarg value="${db.build.java.maxpermsize.option}" />
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="db.database.name=${database.name}" />
 			<arg value="db.database.types=${database.types}" />

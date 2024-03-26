@@ -1,8 +1,17 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.testray.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.testray.rest.dto.v1_0.TestrayRunComparison;
 import com.liferay.testray.rest.resource.v1_0.TestrayRunComparisonResource;
+import com.liferay.testray.service.TestrayService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -14,4 +23,25 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class TestrayRunComparisonResourceImpl
 	extends BaseTestrayRunComparisonResourceImpl {
+
+	@Override
+	public TestrayRunComparison getTestrayRunComparison(
+			Long testrayRun1Id, Long testrayRun2Id,
+			String testrayCasePriorities, Long testrayTeamId)
+		throws Exception {
+
+		TestrayRunComparison testrayRunComparison = new TestrayRunComparison();
+
+		testrayRunComparison.setResults(
+			_testrayService.compareTestrayRuns(
+				contextCompany.getCompanyId(), testrayCasePriorities,
+				testrayRun1Id, testrayRun2Id, GetterUtil.getLong(testrayTeamId)
+			).toArray());
+
+		return testrayRunComparison;
+	}
+
+	@Reference
+	private TestrayService _testrayService;
+
 }

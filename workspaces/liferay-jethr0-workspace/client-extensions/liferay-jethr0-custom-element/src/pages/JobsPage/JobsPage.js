@@ -14,16 +14,15 @@ import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
+import {getJobs} from '../../objects/jobs/JobUtil';
 import {toLocaleString} from '../../services/DateUtil';
-import useSpringBootData from '../../services/useSpringBootData';
 
 function Jobs() {
 	const [jobs, setJobs] = useState(null);
 
-	useSpringBootData({
-		setData: setJobs,
-		urlPath: '/jobs',
-	});
+	if (!jobs) {
+		getJobs({setJobs});
+	}
 
 	if (!jobs) {
 		return <div>Loading...</div>;

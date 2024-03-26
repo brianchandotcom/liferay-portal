@@ -260,11 +260,11 @@ public abstract class BaseSQLTransformerLogic implements SQLTransformerLogic {
 
 					if (parenthesisCount == 0) {
 						Matcher matcher = castPattern.matcher(
-							sql.substring(0, i + 1));
+							sql.substring(start, i + 1));
 
-						return apply(
-							castFunction.apply(matcher) +
-								_safeSubstring(sql, i + 1));
+						return sql.substring(0, start) +
+							apply(castFunction.apply(matcher)) +
+								apply(_safeSubstring(sql, i + 1));
 					}
 				}
 

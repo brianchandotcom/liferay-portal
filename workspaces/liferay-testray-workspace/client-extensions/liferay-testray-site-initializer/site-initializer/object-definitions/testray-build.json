@@ -16,17 +16,6 @@
 			"type": "Long"
 		},
 		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Date Arquived"
-			},
-			"name": "startDate",
-			"required": false,
-			"type": "Date"
-		},
-		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": true,

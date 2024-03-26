@@ -8,6 +8,7 @@ package com.liferay.portal.search.opensearch2.internal.search.engine;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchSearchEngine;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
@@ -29,7 +30,7 @@ import org.opensearch.client.opensearch.snapshot.DeleteSnapshotRequest;
 import org.opensearch.client.opensearch.snapshot.GetSnapshotRequest;
 import org.opensearch.client.opensearch.snapshot.GetSnapshotResponse;
 import org.opensearch.client.opensearch.snapshot.OpenSearchSnapshotClient;
-import org.opensearch.client.opensearch.snapshot.get.SnapshotResponseItem;
+import org.opensearch.client.opensearch.snapshot.SnapshotInfo;
 
 /**
  * @author André de Oliveira
@@ -64,7 +65,8 @@ public class OpenSearchSearchEngineBackupTest extends BaseOpenSearchTestCase {
 		OpenSearchSearchEngine openSearchSearchEngine =
 			_openSearchSearchEngineFixture.getOpenSearchSearchEngine();
 
-		String snapshotName = RandomTestUtil.randomString();
+		String snapshotName = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
 
 		long companyId = RandomTestUtil.randomLong();
 
@@ -75,10 +77,9 @@ public class OpenSearchSearchEngineBackupTest extends BaseOpenSearchTestCase {
 		GetSnapshotResponse getSnapshotResponse = _getGetSnapshotResponse(
 			true, "liferay_backup", new String[] {snapshotName});
 
-		List<SnapshotResponseItem> snapshotResponseItems =
-			getSnapshotResponse.responses();
+		List<SnapshotInfo> snapshotInfos = getSnapshotResponse.snapshots();
 
-		Assert.assertTrue(snapshotResponseItems.size() == 1);
+		Assert.assertTrue(snapshotInfos.size() == 1);
 
 		_deleteSnapshot("liferay_backup", snapshotName);
 	}

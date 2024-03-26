@@ -32,6 +32,10 @@ public class JSONPortletResponseUtilCheck extends BaseCheck {
 			return;
 		}
 
+		_checkWriteJSONMethodCall(detailAST);
+	}
+
+	private void _checkWriteJSONMethodCall(DetailAST detailAST) {
 		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, "JSONPortletResponseUtil", "writeJSON");
 

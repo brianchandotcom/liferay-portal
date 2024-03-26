@@ -8,10 +8,14 @@
 
 	&__column-title {
 		color: #acbcc7;
+		font-size: 13px;
+		height: 38px;
 	}
 
 	&__data-area {
 		border: solid 1px rgba(100, 100, 100, 0.1) !important;
+		font-size: 12px;
+		height: 35px;
 
 		&.blocked {
 			background-color: rgba(255, 253, 243, 1);

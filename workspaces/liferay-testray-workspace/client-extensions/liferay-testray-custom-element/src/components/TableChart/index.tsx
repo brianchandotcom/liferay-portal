@@ -10,8 +10,12 @@ import i18n from '~/i18n';
 import {CaseResultStatuses} from '~/util/statuses';
 
 type TableChartProps = {
-	matrixData: number[][];
-	title: string;
+	matrixData: {
+		[key: string]: {
+			[key: string]: number;
+		};
+	};
+	title?: string;
 };
 
 const columns = [
@@ -21,6 +25,14 @@ const columns = [
 	i18n.translate('test-fix'),
 	i18n.translate('dnr'),
 ];
+
+const columnsStatus = {
+	BLOCKED: 'Blocked',
+	DNR: 'DNR',
+	FAILED: 'Failed',
+	PASSED: 'Passed',
+	TEST_FIX: 'Test Fix',
+};
 
 const columnsDueStatus = [
 	CaseResultStatuses.PASSED,
@@ -76,6 +88,15 @@ const colors = [
 	],
 ];
 
+const formattedColumnName = (columnName: string) => {
+	const formattedName = {
+		[columnsStatus.DNR]: CaseResultStatuses.DID_NOT_RUN,
+		[columnsStatus.TEST_FIX]: CaseResultStatuses.TEST_FIX,
+	};
+
+	return formattedName[columnName] || columnName.toUpperCase();
+};
+
 const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 	const {runA, runB} = useParams();
 
@@ -83,7 +104,7 @@ const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 		<table className="table table-borderless table-sm tr-table-chart">
 			<thead>
 				<tr>
-					<td className="border-0 pb-2" colSpan={6}>
+					<td className="border-0" colSpan={2}>
 						{title}
 					</td>
 				</tr>
@@ -95,7 +116,7 @@ const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 
 					{columns.map((horizontalColumn, index) => (
 						<td
-							className="text-paragraph-xs tr-table-chart__column-title"
+							className="tr-table-chart__column-title"
 							key={index}
 						>
 							B {horizontalColumn}
@@ -103,39 +124,48 @@ const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 					))}
 				</tr>
 
-				{columns.map((verticalColumn, verticalColumnIndex) => (
+				{columns.map((verticalColumnName, verticalColumnIndex) => (
 					<tr key={verticalColumnIndex}>
-						<td className="text-paragraph-xs tr-table-chart__column-title">
-							A {verticalColumn}
+						<td className="text-center tr-table-chart__column-title">
+							A {verticalColumnName}
 						</td>
 
-						{columns.map((_, horizontalColumnIndex) => {
-							const value =
-								matrixData[verticalColumnIndex][
-									horizontalColumnIndex
-								];
+						{columns.map(
+							(horizontalColumnName, horizontalColumnIndex) => {
+								const verticalName = formattedColumnName(
+									verticalColumnName
+								);
+								const horizontalName = formattedColumnName(
+									horizontalColumnName
+								);
 
-							return (
-								<td
-									className={classNames(
-										'border py-2 tr-table-chart__data-area text-center',
-										colors[verticalColumnIndex][
-											horizontalColumnIndex
-										]
-									)}
-									key={`${verticalColumnIndex}-${horizontalColumnIndex}`}
-								>
-									{value > 0 && (
+								const value =
+									matrixData && matrixData[verticalName]
+										? matrixData[verticalName][
+												horizontalName
+										  ]
+										: '';
+
+								return (
+									<td
+										className={classNames(
+											'border py-1 tr-table-chart__data-area text-center',
+											colors[verticalColumnIndex][
+												horizontalColumnIndex
+											]
+										)}
+										key={`${verticalColumnIndex}-${horizontalColumnIndex}`}
+									>
 										<Link
 											className="font-weight-bold"
 											to={`/compare-runs/${runA}/${runB}/cases?dueStatusA=${columnsDueStatus[verticalColumnIndex]}&dueStatusB=${columnsDueStatus[horizontalColumnIndex]}`}
 										>
 											{value}
 										</Link>
-									)}
-								</td>
-							);
-						})}
+									</td>
+								);
+							}
+						)}
 					</tr>
 				))}
 			</tbody>

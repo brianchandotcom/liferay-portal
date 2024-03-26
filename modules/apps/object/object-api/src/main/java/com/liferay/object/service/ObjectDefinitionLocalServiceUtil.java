@@ -601,6 +601,13 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().updateObjectDefinition(objectDefinition);
 	}
 
+	public static ObjectDefinition updateObjectDefinitionPortlet(
+			ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		return getService().updateObjectDefinitionPortlet(objectDefinition);
+	}
+
 	public static ObjectDefinition updateObjectFolderId(
 			long objectDefinitionId, long objectFolderId)
 		throws PortalException {

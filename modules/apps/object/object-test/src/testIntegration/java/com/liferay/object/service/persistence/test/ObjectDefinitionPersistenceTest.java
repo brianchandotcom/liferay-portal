@@ -419,6 +419,14 @@ public class ObjectDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_U() throws Exception {
+		_persistence.countByC_U(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_U(0L, 0L);
+	}
+
+	@Test
 	public void testCountByS_S() throws Exception {
 		_persistence.countByS_S(
 			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());

@@ -220,6 +220,11 @@
 	<td>Page</td>
 </tr>
 <tr>
+	<td>PAGE_HREF_BLANK</td>
+	<td>//div[contains(@id,'navbar')]/ul/li/a[contains(.,'${key_pageName}')][@href='${key_href}'][@target='_blank']</td>
+	<td>Page</td>
+</tr>
+<tr>
 	<td>PAGE_ACTIVE</td>
 	<td>//div[contains(@id,'navbar')]/ul//*[contains(@class,'active')][.//*[normalize-space(text())='${key_pageName}']]</td>
 	<td>Page</td>

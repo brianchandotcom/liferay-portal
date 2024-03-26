@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_HREF_BLANK</td>
+	<td>//div[contains(@class,'pages-tree')]//div[contains(@role,'treeitem')]//a[normalize-space()='${key_pageName}'][@href='${key_href}'][@target='_blank']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_ICON</td>
 	<td>//div[contains(@class,'pages-tree')]//div[contains(@role,'treeitem')][normalize-space()='${key_pageName}']//div[contains(@class,'component-icon')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]</td>
 	<td></td>

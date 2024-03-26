@@ -2504,43 +2504,25 @@ definition {
 		task ("Then viewing the linked URL page opens in new tab") {
 			Navigator.openSiteURL(siteName = ${randomSiteName});
 
-			AssertClick.assertPartialTextClickAt(
+			AssertVisible(
+				key_href = "https://www.google.com",
 				key_pageName = "Test Link to URL Page Name",
-				locator1 = "Home#PAGE",
-				value1 = "Test Link to URL Page Name");
-
-			SelectWindow.selectPopUp(value1 = "null");
-
-			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
-
-			Navigator.closeWindow();
-
-			Navigator.openSiteURL(siteName = ${randomSiteName});
+				locator1 = "Home#PAGE_HREF_BLANK");
 
 			PagesFinder.goToPagesFinder();
 
-			Click(
+			AssertVisible(
+				key_href = "https://www.google.com",
 				key_pageName = "Test Link to URL Page Name",
-				locator1 = "PagesFinder#PAGE_NAME",
-				value1 = ${pageName});
-
-			SelectWindow.selectPopUp(value1 = "null");
-
-			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
-
-			Navigator.closeWindow();
+				locator1 = "PagesFinder#PAGE_HREF_BLANK");
 
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "Test Link to URL Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Link to URL Page Name");
 
-			SelectWindow.selectPopUp(value1 = "null");
-
-			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
-
-			Navigator.closeWindow();
+			AssertVisible(
+				key_href = "https://www.google.com",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_HREF_BLANK");
 		}
 	}
 
@@ -2566,43 +2548,25 @@ definition {
 		task ("Then viewing the linked URL page opens in new tab") {
 			Navigator.openSiteURL(siteName = ${randomSiteName});
 
-			AssertClick.assertPartialTextClickAt(
+			AssertVisible(
+				key_href = "https://www.google.com",
 				key_pageName = "Test Link to URL Page Name",
-				locator1 = "Home#PAGE",
-				value1 = "Test Link to URL Page Name");
-
-			SelectWindow.selectPopUp(value1 = "null");
-
-			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
-
-			Navigator.closeWindow();
-
-			Navigator.openSiteURL(siteName = ${randomSiteName});
+				locator1 = "Home#PAGE_HREF_BLANK");
 
 			PagesFinder.goToPagesFinder();
 
-			Click(
+			AssertVisible(
+				key_href = "https://www.google.com",
 				key_pageName = "Test Link to URL Page Name",
-				locator1 = "PagesFinder#PAGE_NAME",
-				value1 = ${pageName});
-
-			SelectWindow.selectPopUp(value1 = "null");
-
-			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
-
-			Navigator.closeWindow();
+				locator1 = "PagesFinder#PAGE_HREF_BLANK");
 
 			PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "Test Link to URL Page Name");
+			PagesAdmin.openPageEllipsisMenu(pageName = "Test Link to URL Page Name");
 
-			SelectWindow.selectPopUp(value1 = "null");
-
-			AssertLocation.assertPartialLocation(value1 = "https://www.google.com");
-
-			Navigator.closeWindow();
+			AssertVisible(
+				key_href = "https://www.google.com",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_HREF_BLANK");
 		}
 	}
 

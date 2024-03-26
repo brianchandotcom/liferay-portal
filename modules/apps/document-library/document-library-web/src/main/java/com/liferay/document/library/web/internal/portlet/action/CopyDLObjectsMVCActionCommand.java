@@ -114,11 +114,10 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put("failedItems", failedItems);
 		}
 
-		jsonObject.put(
-			"successItems", _getItemsCopied(actionRequest, errorMessages));
-
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+			actionRequest, actionResponse,
+			jsonObject.put(
+				"successItems", _getItemsCopied(actionRequest, errorMessages)));
 
 		hideDefaultSuccessMessage(actionRequest);
 	}

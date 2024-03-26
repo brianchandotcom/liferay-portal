@@ -15,9 +15,10 @@ if (backButton) {
 		);
 
 		if (urlParams.has('p_l_back_url')) {
-			const backURL = urlParams.get('p_l_back_url');
+			const backURLs = urlParams.getAll('p_l_back_url');
+			const backURL = backURLs.pop();
 
-			urlParams.delete('p_l_back_url');
+			urlParams.delete('p_l_back_url', backURL);
 
 			location.assign(
 				`${siteURL}${decodeURIComponent(

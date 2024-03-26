@@ -29,12 +29,12 @@ deployJar {
 	}
 }
 
-liferayOSGi {
-	expandCompileInclude = true
-}
-
 jarSources {
 	mustRunAfter patch
+}
+
+liferayOSGi {
+	expandCompileInclude = true
 }
 
 patch {

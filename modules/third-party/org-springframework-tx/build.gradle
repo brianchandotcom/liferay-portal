@@ -51,12 +51,12 @@ jarPatched {
 	from copyPatchOriginalLibClasses
 }
 
-javadoc {
-	enabled = false
-}
-
 jarSources {
 	mustRunAfter patch
+}
+
+javadoc {
+	enabled = false
 }
 
 patch {

@@ -13,18 +13,13 @@ import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
 import {toLocaleString} from '../../services/DateUtil';
-import useSpringBootData from '../../services/useSpringBootData';
+import {getJobs} from '../../objects/jobs/JobUtil';
 
 function JobQueue() {
-	const [jobQueue, setJobQueue] = useState(null);
+	const [jobs, setJobs] = useState(null);
 
-	useSpringBootData({
-		setData: setJobQueue,
-		urlPath: '/jobs/queue',
-	});
-
-	if (!jobQueue) {
-		return <div>Loading...</div>;
+	if (!jobs) {
+		getJobs({setJobs});
 	}
 
 	return (
@@ -50,11 +45,11 @@ function JobQueue() {
 				</tr>
 			</thead>
 			<tbody>
-				{jobQueue &&
-					jobQueue.map((job) => {
+				{jobs &&
+					jobs.map((job, index) => {
 						return (
 							<tr key={job.id}>
-								<td>{job.position}</td>
+								<td>{index + 1}</td>
 								<th className="font-weight-semi-bold">
 									<Link title={job.id} to={'/jobs/' + job.id}>
 										{job.id}
@@ -67,18 +62,18 @@ function JobQueue() {
 								<td>{job.state.name}</td>
 								<td>
 									<span className="text-muted">
-										{job.queuedBuilds}
+										{job.queuedBuilds || 0}
 									</span>
 									<span> / </span>
 									<span className="text-warning">
-										{job.runningBuilds}
+										{job.runningBuilds || 0}
 									</span>
 									<span> / </span>
 									<span className="text-success">
-										{job.completedBuilds}
+										{job.completedBuilds || 0}
 									</span>
 									<span> / </span>
-									<span>{job.totalBuilds}</span>
+									<span>{job.totalBuilds || 0}</span>
 								</td>
 							</tr>
 						);

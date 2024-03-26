@@ -3,26 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export default class Build {
+export default class BuildRun {
 	constructor({
 		dateCreated,
 		dateModified,
+		duration,
 		id,
-		initialBuild,
-		jenkinsJobName,
-		name,
-		parameters,
-		r_jobToBuilds_c_jobId: jobId,
+		jenkinsBuildURL,
+		result,
 		state,
 	}) {
 		this.dateCreated = dateCreated;
 		this.dateModified = dateModified;
+		this.duration = duration;
 		this.id = id;
-		this.initialBuild = initialBuild;
-		this.jenkinsJobName = jenkinsJobName;
-		this.jobId = jobId;
-		this.name = name;
-		this.parameters = parameters;
+		this.jenkinsBuildURL = jenkinsBuildURL;
+		this.result = result;
 		this.state = state;
 	}
 }

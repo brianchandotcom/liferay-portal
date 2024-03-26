@@ -13,10 +13,11 @@ import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcru
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jethr0Table from '../../components/Jethr0Table/Jethr0Table';
+import {getBuildRunsByBuildId} from '../../objects/buildruns/BuildRunUtil';
 import {getBuildById} from '../../objects/builds/BuildUtil';
+import {getJobById} from '../../objects/jobs/JobUtil';
 import {toLocaleString} from '../../services/DateUtil';
 import {toDurationString} from '../../services/DurationUtil';
-import useSpringBootData from '../../services/useSpringBootData';
 
 function BuildInformation({build}) {
 	if (!build) {
@@ -94,6 +95,7 @@ function BuildInformation({build}) {
 function BuildPage() {
 	const {id} = useParams();
 	const [build, setBuild] = useState(null);
+	const [job, setJob] = useState(null);
 
 	if (!build) {
 		getBuildById({id, setBuild});
@@ -106,9 +108,13 @@ function BuildPage() {
 	if (build) {
 		buildName = build.name;
 
-		if (build.job) {
-			jobId = build.job.id;
-			jobName = build.job.name;
+		if (!job && build.jobId) {
+			getJobById({id: build.jobId, setJob});
+		}
+
+		if (job) {
+			jobId = job.id;
+			jobName = job.name;
 		}
 	}
 
@@ -137,10 +143,9 @@ function BuildPage() {
 function BuildRuns({buildId}) {
 	const [buildRuns, setBuildRuns] = useState(null);
 
-	useSpringBootData({
-		setData: setBuildRuns,
-		urlPath: '/builds/' + buildId + '/runs',
-	});
+	if (!buildRuns) {
+		getBuildRunsByBuildId({buildId, setBuildRuns});
+	}
 
 	if (!buildRuns) {
 		return <div>Loading...</div>;

@@ -79,7 +79,7 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.addObjectDefinition(
-			externalReferenceCode, getUserId(), objectFolderId, modifiable,
+			externalReferenceCode, getUserId(), objectFolderId, 0, modifiable,
 			system);
 	}
 

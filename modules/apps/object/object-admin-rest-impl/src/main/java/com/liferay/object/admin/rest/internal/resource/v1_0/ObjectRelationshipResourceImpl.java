@@ -314,7 +314,7 @@ public class ObjectRelationshipResourceImpl
 
 		return _objectDefinitionLocalService.addObjectDefinition(
 			objectRelationship.getObjectDefinitionExternalReferenceCode2(),
-			contextUser.getUserId(), defaultObjectFolder.getObjectFolderId(),
+			contextUser.getUserId(), defaultObjectFolder.getObjectFolderId(), 0,
 			GetterUtil.get(
 				objectRelationship.getObjectDefinitionModifiable2(), true),
 			GetterUtil.get(

@@ -90,7 +90,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testAddCollidingClassNameId() throws Exception {
-		long commonClassNameId = 10000L;
+		long commonClassNameId = 1000000000L;
 
 		try {
 			DBPartitionUtil.forEachCompanyId(

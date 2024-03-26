@@ -13,8 +13,8 @@ import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcru
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0ContainerFluid from '../../components/Jethr0ContainerFluid/Jethr0ContainerFluid';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
+import {getUpstreamGitBranch} from '../../objects/gitbranches/GitBranchUtil';
 import {toLocaleString} from '../../services/DateUtil';
-import useSpringBootData from '../../services/useSpringBootData';
 
 const gitHubURLRegExp = new RegExp(
 	'https://github.com/([^/]+)/([^/]+)/tree/([^/]+)'
@@ -97,17 +97,18 @@ function UpstreamBranchInformation({upstreamBranch}) {
 
 function UpstreamBranchPage() {
 	const {id} = useParams();
-	const [upstreamBranch, setUpstreamBranch] = useState(null);
+	const [upstreamGitBranch, setUpstreamGitBranch] = useState(null);
 
-	useSpringBootData({
-		setData: setUpstreamBranch,
-		urlPath: '/git-branches/' + id,
-	});
+	if (!upstreamGitBranch) {
+		getUpstreamGitBranch({id, setUpstreamGitBranch});
+	}
 
 	let upstreamBranchTitle = 'Git Branch #' + id;
 
-	if (upstreamBranch) {
-		const gitHubURLMatch = upstreamBranch.branchURL.match(gitHubURLRegExp);
+	if (upstreamGitBranch) {
+		const gitHubURLMatch = upstreamGitBranch.branchURL.match(
+			gitHubURLRegExp
+		);
 
 		const upstreamBranchName = gitHubURLMatch[3];
 		const upstreamBranchRepositoryName = gitHubURLMatch[2];
@@ -138,7 +139,7 @@ function UpstreamBranchPage() {
 						</Heading>
 					</ClayLayout.Row>
 				</Jethr0ContainerFluid>
-				<UpstreamBranchInformation upstreamBranch={upstreamBranch} />
+				<UpstreamBranchInformation upstreamBranch={upstreamGitBranch} />
 			</Jethr0Card>
 		</ClayLayout.Container>
 	);

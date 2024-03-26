@@ -22,6 +22,10 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.model.BlogsEntryModel;
 import com.liferay.blogs.model.impl.BlogsEntryModelImpl;
 import com.liferay.blogs.social.BlogsActivityKeys;
+import com.liferay.change.tracking.model.CTCollectionModel;
+import com.liferay.change.tracking.model.CTSchemaVersionModel;
+import com.liferay.change.tracking.model.impl.CTCollectionModelImpl;
+import com.liferay.change.tracking.model.impl.CTSchemaVersionModelImpl;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrencyModel;
@@ -349,6 +353,7 @@ import com.liferay.wiki.social.WikiActivityKeys;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -675,6 +680,14 @@ public class DataFactory {
 
 	public int getMaxJournalArticleVersionCount() {
 		return BenchmarksPropsValues.MAX_JOURNAL_ARTICLE_VERSION_COUNT;
+	}
+
+	public int getMaxPublicationContentLayoutCount() {
+		return BenchmarksPropsValues.MAX_PUBLICATION_CONTENT_LAYOUT_COUNT;
+	}
+
+	public int getMaxPublicationCount() {
+		return BenchmarksPropsValues.MAX_PUBLICATION_COUNT;
 	}
 
 	public int getMaxSegmentsEntrySegmentsExperienceCount() {
@@ -3115,6 +3128,84 @@ public class DataFactory {
 		cpTaxCategoryModel.setExternalReferenceCode(uuid);
 
 		return cpTaxCategoryModel;
+	}
+
+	public List<LayoutModel> newCTCollectionContentPageLayoutModels(
+		long ctCollectionId, long groupId) {
+
+		List<LayoutModel> layoutModels = new ArrayList<>();
+
+		for (int i = 1;
+			 i <= BenchmarksPropsValues.MAX_PUBLICATION_CONTENT_LAYOUT_COUNT;
+			 i++) {
+
+			LayoutModel publicLayoutModel = _newContentPageLayoutModel(
+				groupId, "Public Layout " + i, 0, 0);
+
+			publicLayoutModel.setCtCollectionId(ctCollectionId);
+
+			layoutModels.add(publicLayoutModel);
+
+			LayoutModel draftLayout = _newContentPageLayoutModel(
+				groupId, "Draft Layout " + i, getClassNameId(Layout.class),
+				publicLayoutModel.getPlid());
+
+			draftLayout.setCtCollectionId(ctCollectionId);
+
+			layoutModels.add(draftLayout);
+		}
+
+		return layoutModels;
+	}
+
+	public CTCollectionModel newCTCollectionModel(
+		int index, CTSchemaVersionModel ctSchemaVersionModel) {
+
+		CTCollectionModel ctCollectionModel = new CTCollectionModelImpl();
+
+		ctCollectionModel.setCtCollectionId(_counter.get());
+		ctCollectionModel.setExternalReferenceCode(SequentialUUID.generate());
+		ctCollectionModel.setCompanyId(_companyId);
+		ctCollectionModel.setUserId(_sampleUserId);
+		ctCollectionModel.setCtRemoteId(0);
+		ctCollectionModel.setSchemaVersionId(
+			ctSchemaVersionModel.getSchemaVersionId());
+		ctCollectionModel.setName("Publication " + index);
+		ctCollectionModel.setDescription(null);
+		ctCollectionModel.setShareable(false);
+		ctCollectionModel.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		return ctCollectionModel;
+	}
+
+	public CTSchemaVersionModel newCTSchemaVersionModel(long companyId)
+		throws Exception {
+
+		CTSchemaVersionModel ctSchemaVersionModel =
+			new CTSchemaVersionModelImpl();
+
+		ctSchemaVersionModel.setCompanyId(companyId);
+
+		Map<String, Serializable> schemaContext = new HashMap<>();
+
+		for (String release :
+				_readLines(
+					DataFactory.class.getResourceAsStream(
+						"dependencies/releases.txt"))) {
+
+			String[] parts = StringUtil.split(release, CharPool.COLON);
+
+			if (parts.length > 0) {
+				String servletContextName = parts[0];
+				String schemaVersion = parts[1];
+
+				schemaContext.put(servletContextName, schemaVersion);
+			}
+		}
+
+		ctSchemaVersionModel.setSchemaContext(schemaContext);
+
+		return ctSchemaVersionModel;
 	}
 
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(

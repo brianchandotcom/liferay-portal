@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.NotFoundException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -347,6 +349,18 @@ public class GraphQLServletTest {
 				"JSONObject/data", "JSONObject/testPath_v1_0",
 				"JSONObject/testDTO"));
 
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"testPath_v1_0",
+						new GraphQLField(
+							"testNotFoundDTO", new GraphQLField("id"))),
+					"query"),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
 		// Without namespace (backwards compatibility)
 
 		_assertEquals(
@@ -359,6 +373,15 @@ public class GraphQLServletTest {
 						new GraphQLField("string")),
 					"query"),
 				"JSONObject/data", "JSONObject/testDTO"));
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField("testNotFoundDTO", new GraphQLField("id")),
+					"query"),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
 	}
 
 	@Test
@@ -605,6 +628,11 @@ public class GraphQLServletTest {
 			@GraphQLName("pageSize") int pageSize) {
 
 			return new TestDTOPage(page, pageSize);
+		}
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		public TestDTO testNotFoundDTO() {
+			throw new NotFoundException();
 		}
 
 		@GraphQLTypeExtension(TestDTO.class)

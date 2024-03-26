@@ -6,8 +6,10 @@
 package com.liferay.exportimport.kernel.lar;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -735,7 +737,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		Supplier<List<StagedModelType>> stagedModelTypesSupplier) {
 
 		return _companyStagedModelTypes.computeIfAbsent(
-			CompanyThreadLocal.getCompanyId(),
+			DBPartition.isPartitionEnabled() ?
+				CompanyThreadLocal.getCompanyId() : CompanyConstants.SYSTEM,
 			companyId -> {
 				List<StagedModelType> stagedModelTypes =
 					stagedModelTypesSupplier.get();

@@ -36,6 +36,7 @@ patch {
 	fileNames "org/eclipse/osgi/internal/loader/sources/PackageSource.java"
 	fileNames "org/eclipse/osgi/internal/log/LoggerContextTargetMap.java"
 	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceFactoryUse.java"
+	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceProperties.java"
 	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistrationImpl.java"
 	fileNames "org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java"
 	fileNames "org/eclipse/osgi/internal/weaving/WeavingHookConfigurator.java"

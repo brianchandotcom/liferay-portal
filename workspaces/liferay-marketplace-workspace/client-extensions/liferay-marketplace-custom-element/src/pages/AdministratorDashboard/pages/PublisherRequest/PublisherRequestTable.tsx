@@ -36,11 +36,30 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 		PublisherRequestInfo
 	>();
 
-	const showModalButtons = selectedRequest?.requestStatus?.key === 'open';
+	const showModalButtons =
+		(selectedRequest?.requestStatus?.key ?? 'open') === 'open';
 
 	const selectedRequestStatus = STATUS[
 		selectedRequest?.requestStatus?.key as keyof typeof STATUS
 	] as Status;
+
+	const onUpdateRequestStatus = async (status: 'completed' | 'rejected') => {
+		await fetcher.patch(
+			`o/c/requestpublisheraccounts/${Number(selectedRequest?.id)}`,
+			{
+				requestStatus: status,
+			}
+		);
+
+		mutate(items);
+
+		Liferay.Util.openToast({
+			message: i18n.translate('success'),
+			type: 'success',
+		});
+
+		onOpenChange(false);
+	};
 
 	if (!items?.length) {
 		return (
@@ -97,7 +116,9 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 					},
 					{
 						key: 'requestStatus',
-						render: (requestStatus) => (
+						render: (
+							requestStatus = {key: 'open', name: 'Open'}
+						) => (
 							<ClayLabel
 								className="text-nowrap"
 								displayType={
@@ -126,49 +147,18 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 							<ClayButton
 								className="mr-3"
 								displayType="danger"
-								onClick={async () => {
-									await fetcher.patch(
-										`o/c/requestpublisheraccounts/${Number(
-											selectedRequest?.id
-										)}`,
-										{
-											requestStatus: 'rejected',
-										}
-									);
-
-									mutate(items);
-
-									Liferay.Util.openToast({
-										message: i18n.translate('success'),
-										type: 'success',
-									});
-
-									onOpenChange(false);
-								}}
+								onClick={() =>
+									onUpdateRequestStatus('rejected')
+								}
 							>
 								{i18n.translate('decline')}
 							</ClayButton>
+
 							<ClayButton
 								displayType="primary"
-								onClick={async () => {
-									await fetcher.patch(
-										`o/c/requestpublisheraccounts/${Number(
-											selectedRequest?.id
-										)}`,
-										{
-											requestStatus: 'completed',
-										}
-									);
-
-									mutate(items);
-
-									Liferay.Util.openToast({
-										message: i18n.translate('success'),
-										type: 'success',
-									});
-
-									onOpenChange(false);
-								}}
+								onClick={() =>
+									onUpdateRequestStatus('completed')
+								}
 							>
 								{i18n.translate('aprove')}
 							</ClayButton>
@@ -178,7 +168,9 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 				observer={observer}
 				size="lg"
 				status={selectedRequestStatus}
-				title={`Review Request ${selectedRequest?.requestStatus?.name}`}
+				title={`Review Request - ${
+					selectedRequest?.requestStatus?.name ?? 'Open'
+				}`}
 				visible={open}
 			>
 				<PublisherSummaryContent userInfo={selectedRequest} />

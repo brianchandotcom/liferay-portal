@@ -23,9 +23,8 @@ const getTotalAmountCurrency = (amount = 0) =>
 		style: 'currency',
 	}).format(amount);
 
-const MetricsWWW = () => {
+const Metrics = () => {
 	const {data: accounts} = useAccountsMetrics('week');
-
 	const {data: orderChartLine} = useOrderChartLineMetrics();
 	const {data: orderMetrics} = useOrderMetrics('week');
 
@@ -37,7 +36,8 @@ const MetricsWWW = () => {
 			HeadlessCommerceAdminOrderImpl.getOrders(
 				new URLSearchParams({
 					nestedFields: 'account,orderItems',
-					pageSize: '10',
+					pageSize: '15',
+					sort: 'createDate:desc',
 				})
 			)
 	);
@@ -46,7 +46,7 @@ const MetricsWWW = () => {
 		() => [
 			{
 				growth: accounts?.growth,
-				growthContext: `+${accounts?.lastPeriod} last week `,
+				growthContext: `+${accounts?.lastPeriod} this week `,
 				symbol: 'users',
 				title: i18n.translate('accounts'),
 				value: accounts?.totalCount,
@@ -63,7 +63,7 @@ const MetricsWWW = () => {
 			},
 			{
 				growth: orderMetrics?.growth,
-				growthContext: `+${orderMetrics?.lastPeriod} last week `,
+				growthContext: `+${orderMetrics?.lastPeriod} this week `,
 				symbol: 'shopping-cart',
 				title: i18n.translate('orders'),
 				value: orderMetrics?.totalCount,
@@ -172,4 +172,4 @@ const MetricsWWW = () => {
 	);
 };
 
-export default MetricsWWW;
+export default Metrics;

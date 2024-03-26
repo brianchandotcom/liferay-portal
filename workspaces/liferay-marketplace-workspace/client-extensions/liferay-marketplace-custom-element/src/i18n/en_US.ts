@@ -10,6 +10,7 @@ export default {
 	'a-request-will-be-sent-to-deactivate-the-selected-activation-key-from-now-on-it-will-be-hidden-and-no-longer-be-visible':
 		'A request will be sent to deactivate the selected activation key. From now on It will be hidden and no longer be visible.',
 	'access-console': 'Access Console',
+	'account': 'Account',
 	'account-name': 'Account Name',
 	'accounts': 'Accounts',
 	'activation-status': 'Activation Status',

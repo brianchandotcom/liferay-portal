@@ -102,7 +102,9 @@ const PublisherSummaryContent: React.FC<PublisherSummaryContentProps> = ({
 					<DisplayCardInfo
 						className="mb-5"
 						icon="phone"
-						info={`${userInfo?.phone?.code} ${userInfo?.phoneNumber}`}
+						info={`${userInfo?.phone?.code ?? ''} ${
+							userInfo?.phoneNumber ?? ''
+						}`}
 						title={i18n.translate('phone')}
 					/>
 

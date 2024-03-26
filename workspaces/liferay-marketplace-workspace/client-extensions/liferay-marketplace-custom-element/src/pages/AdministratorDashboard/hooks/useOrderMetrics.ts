@@ -21,7 +21,7 @@ export const METRIC_PARAMETER = {
 type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
 
 const useOrderMetrics = (param: FilterType) => {
-	const getOrderMetrics = async () => {
+	return useSWR('metrics/order', async () => {
 		const currentTime = new Date();
 
 		const beforeLastPeriod = addDays(
@@ -47,9 +47,9 @@ const useOrderMetrics = (param: FilterType) => {
 			new URLSearchParams({
 				fields: 'id,totalAmount',
 				filter: new SearchBuilder()
-					.gt('createDate', lastPeriod)
+					.lt('createDate', lastPeriod)
 					.and()
-					.lt('createDate', beforeLastPeriod)
+					.gt('createDate', beforeLastPeriod)
 					.build(),
 			}),
 		];
@@ -65,21 +65,23 @@ const useOrderMetrics = (param: FilterType) => {
 			.map(({totalAmount}) => totalAmount ?? 0)
 			.reduce((prevTotal, currentTotal) => prevTotal + currentTotal, 0);
 
+		const newOrders = response[1].totalCount - response[2].totalCount;
+
 		return {
 			beforeLastPeriod: response[2].totalCount,
-			growth: (response[1].totalCount - response[2].totalCount) * 100,
+			growth: Number(
+				((newOrders / response[1].totalCount) * 100).toFixed(2)
+			),
 			lastPeriod: response[1].totalCount,
 			paidAmount: paidAppsAmount,
 			param,
 			totalCount: response[0].totalCount,
 		};
-	};
-
-	return useSWR('metrics/order', getOrderMetrics);
+	});
 };
 
 const useOrderChartLineMetrics = () => {
-	const getOrderMetrics = async () => {
+	return useSWR('metrics/order/chartline', async () => {
 		const currentTime = new Date();
 
 		const beforeLastPeriod = addDays(
@@ -89,6 +91,9 @@ const useOrderChartLineMetrics = () => {
 
 		const lastPeriod = addDays(currentTime, -METRIC_PARAMETER['week']);
 
+		beforeLastPeriod.setHours(0, 0, 0);
+		lastPeriod.setHours(23, 59, 59);
+
 		const requestsParams = [
 			new URLSearchParams({
 				fields: 'id,createDate',
@@ -96,14 +101,16 @@ const useOrderChartLineMetrics = () => {
 					'createDate',
 					lastPeriod.toISOString()
 				),
+				pageSize: '-1',
 			}),
 			new URLSearchParams({
 				fields: 'id,createDate',
 				filter: new SearchBuilder()
-					.gt('createDate', lastPeriod.toISOString())
+					.gt('createDate', beforeLastPeriod.toISOString())
 					.and()
-					.lt('createDate', beforeLastPeriod.toISOString())
+					.lt('createDate', lastPeriod.toISOString())
 					.build(),
+				pageSize: '-1',
 			}),
 		];
 
@@ -142,9 +149,7 @@ const useOrderChartLineMetrics = () => {
 		});
 
 		return {metrics, response};
-	};
-
-	return useSWR('metrics/order/chartline', getOrderMetrics);
+	});
 };
 
 export {useOrderChartLineMetrics};

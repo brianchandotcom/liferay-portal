@@ -215,7 +215,9 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 												<ClayDropDown.Item
 													data-tooltip-align="left"
 													disabled={
-														orderStatusIsNotCompleted
+														isFreeApp
+															? false
+															: orderStatusIsNotCompleted
 													}
 													onClick={() => {
 														window.location.href = virtualURL;

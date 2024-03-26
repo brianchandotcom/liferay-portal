@@ -37,7 +37,7 @@ const useAccountsMetrics = (param: UseOrderMetricsProps) => {
 		const requestsParams = [
 			new URLSearchParams({
 				fields: 'id,',
-				pageSize: '-1',
+				pageSize: '1',
 			}),
 			new URLSearchParams({
 				fields: 'id,',
@@ -46,9 +46,9 @@ const useAccountsMetrics = (param: UseOrderMetricsProps) => {
 			new URLSearchParams({
 				fields: 'id,',
 				filter: new SearchBuilder()
-					.gt('dateCreated', lastPeriod)
+					.lt('dateCreated', lastPeriod)
 					.and()
-					.lt('dateCreated', beforeLastPeriod)
+					.gt('dateCreated', beforeLastPeriod)
 					.build(),
 			}),
 		];
@@ -59,9 +59,13 @@ const useAccountsMetrics = (param: UseOrderMetricsProps) => {
 			)
 		);
 
+		const newAccounts = response[1].totalCount - response[2].totalCount;
+
 		return {
 			beforeLastPeriod: response[2].totalCount,
-			growth: (response[1].totalCount - response[2].totalCount) * 100,
+			growth: Number(
+				((newAccounts / response[1].totalCount) * 100).toFixed(2)
+			),
 			lastPeriod: response[1].totalCount,
 			param,
 			totalCount: response[0].totalCount,

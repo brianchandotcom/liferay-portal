@@ -74,7 +74,10 @@ public class OracleSQLTransformerLogicTest
 
 	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select DBMS_LOB.SUBSTR(foo, 4000, 1) from Foo";
+		return StringBundler.concat(
+			"select DBMS_LOB.SUBSTR(foo || (DBMS_LOB.SUBSTR(foo, 4000, 1) || ",
+			"(bar || foo)), 4000, 1), DBMS_LOB.SUBSTR(foo || (bar || foo), ",
+			"4000, 1) from Foo");
 	}
 
 	@Override

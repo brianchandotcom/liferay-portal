@@ -92,7 +92,10 @@ public class DB2SQLTransformerLogicTest
 
 	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select CAST(foo AS VARCHAR(2000)) from Foo";
+		return StringBundler.concat(
+			"select CAST(foo || (CAST(foo AS VARCHAR(2000)) || (bar || foo)) ",
+			"AS VARCHAR(2000)), CAST(foo || (bar || foo) AS VARCHAR(2000)) ",
+			"from Foo");
 	}
 
 	@Override

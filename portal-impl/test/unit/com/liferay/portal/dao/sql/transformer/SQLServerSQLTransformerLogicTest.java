@@ -44,7 +44,10 @@ public class SQLServerSQLTransformerLogicTest
 
 	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select CAST(foo AS NVARCHAR(MAX)) from Foo";
+		return StringBundler.concat(
+			"select CAST(foo || (CAST(foo AS NVARCHAR(MAX)) || (bar || foo)) ",
+			"AS NVARCHAR(MAX)), CAST(foo || (bar || foo) AS NVARCHAR(MAX)) ",
+			"from Foo");
 	}
 
 	@Override

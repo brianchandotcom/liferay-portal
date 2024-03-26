@@ -181,11 +181,13 @@ public abstract class BaseSQLTransformerLogicTestCase {
 	}
 
 	protected String getCastClobTextOriginalSQL() {
-		return "select CAST_CLOB_TEXT(foo) from Foo";
+		return "select CAST_CLOB_TEXT(foo || (CAST_CLOB_TEXT(foo) || (bar || " +
+			"foo))), CAST_CLOB_TEXT(foo || (bar || foo)) from Foo";
 	}
 
 	protected String getCastClobTextTransformedSQL() {
-		return "select foo from Foo";
+		return "select foo || (foo || (bar || foo)), foo || (bar || foo) " +
+			"from Foo";
 	}
 
 	protected String getCastLongOriginalSQL() {

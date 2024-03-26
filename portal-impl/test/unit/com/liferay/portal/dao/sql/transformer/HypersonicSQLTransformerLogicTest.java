@@ -53,7 +53,10 @@ public class HypersonicSQLTransformerLogicTest
 
 	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select CONVERT(foo, SQL_VARCHAR) from Foo";
+		return StringBundler.concat(
+			"select CONVERT(foo || (CONVERT(foo, SQL_VARCHAR) || (bar || ",
+			"foo)), SQL_VARCHAR), CONVERT(foo || (bar || foo), SQL_VARCHAR) ",
+			"from Foo");
 	}
 
 	@Override

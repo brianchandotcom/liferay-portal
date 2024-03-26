@@ -46,7 +46,10 @@ public class SybaseSQLTransformerLogicTest
 
 	@Override
 	protected String getCastClobTextTransformedSQL() {
-		return "select CAST(foo AS NVARCHAR(5461)) from Foo";
+		return StringBundler.concat(
+			"select CAST(foo || (CAST(foo AS NVARCHAR(5461)) || (bar || foo)) ",
+			"AS NVARCHAR(5461)), CAST(foo || (bar || foo) AS NVARCHAR(5461)) ",
+			"from Foo");
 	}
 
 	@Override

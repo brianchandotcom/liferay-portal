@@ -195,7 +195,8 @@ export default class SearchBuilder {
 				};
 
 				searchCondition = getOptionalSearchCondition();
-			} else {
+			}
+			else {
 				if (Array.isArray(value)) {
 					if (schema.name.includes('testrayCasePriorities')) {
 						searchCondition = SearchBuilder.equal(
@@ -206,7 +207,8 @@ export default class SearchBuilder {
 									: _value
 							)
 						);
-					} else {
+					}
+					else {
 						searchCondition = SearchBuilder.in(
 							key,
 							value.map((_value) =>
@@ -216,7 +218,8 @@ export default class SearchBuilder {
 							)
 						);
 					}
-				} else {
+				}
+				else {
 					searchCondition = SearchBuilder.eq(key, value);
 				}
 			}

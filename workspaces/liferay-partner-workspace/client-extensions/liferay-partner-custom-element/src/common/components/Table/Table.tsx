@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import './index.css';
 import TableColumn from '../../interfaces/tableColumn';
 
-type TableLayout = 'auto' | 'fixed';
+type TableLayout = 'auto';
 
 interface BasicRow {
 	[key: string]: string | number | boolean | string[] | undefined;
@@ -101,7 +101,6 @@ const Table = <T extends BasicRow>({
 				borderless
 				className={classNames(className, {
 					'table-layout-auto': tableLayout === 'auto',
-					'table-layout-fixed': tableLayout === 'fixed',
 				})}
 				columnsVisibility={false}
 				noWrap

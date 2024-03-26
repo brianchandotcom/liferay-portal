@@ -20,10 +20,6 @@
 	table-layout: auto !important;
 }
 
-.table-layout-fixed {
-	table-layout: fixed !important;
-}
-
 @media (min-width: 140px) {
 	.table-cell-item {
 		width: 100%;

@@ -991,8 +991,6 @@ public class HttpImpl implements Http {
 
 		httpClientBuilder.setConnectionManager(
 			poolingHttpClientConnectionManager);
-		httpClientBuilder.setRoutePlanner(
-			new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
 
 		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
@@ -1007,6 +1005,8 @@ public class HttpImpl implements Http {
 		if (proxyAuthPrefs != null) {
 			requestConfigBuilder.setProxyPreferredAuthSchemes(proxyAuthPrefs);
 		}
+
+		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
 
 		httpClientBuilder.setKeepAliveStrategy(
 			new DefaultConnectionKeepAliveStrategy() {
@@ -1026,8 +1026,8 @@ public class HttpImpl implements Http {
 				}
 
 			});
-
-		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
+		httpClientBuilder.setRoutePlanner(
+			new SystemDefaultRoutePlanner(ProxySelector.getDefault()));
 
 		return httpClientBuilder.build();
 	}

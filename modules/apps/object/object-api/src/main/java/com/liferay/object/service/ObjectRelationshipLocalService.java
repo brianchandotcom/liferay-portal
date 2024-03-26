@@ -237,6 +237,10 @@ public interface ObjectRelationshipLocalService
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection);
 
+	public ObjectRelationship enableEdge(
+			long objectRelationshipId, boolean edge)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectRelationship fetchObjectRelationship(
 		long objectRelationshipId);

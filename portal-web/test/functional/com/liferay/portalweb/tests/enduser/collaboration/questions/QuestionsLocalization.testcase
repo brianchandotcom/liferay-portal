@@ -44,6 +44,7 @@ definition {
 	@priority = 3
 	@refactordone
 	test CanAddMultipleSubTopics {
+		property portal.release = "quarantine";
 		property solutions.acceptance = "true";
 
 		task ("Given a Questions category with non-Latin characters") {
@@ -76,6 +77,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAddQuestionViaSubTopic {
+		property portal.release = "quarantine";
+
 		task ("Given a Questions category and subtopic with non-Latin characters") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "トピック記述",

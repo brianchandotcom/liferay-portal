@@ -46,7 +46,13 @@ const Row = <T extends BasicRow>({
 	const id = Math.random().toString(16).slice(2);
 
 	return (
-		<ClayRow className="border-0 font-weight-normal" items={columns}>
+		<ClayRow
+			className="border-0 font-weight-normal"
+			items={columns}
+			onClick={() => {
+				customClickOnRow && customClickOnRow(row);
+			}}
+		>
 			{
 				((column) => {
 					const data = row[column.columnKey];
@@ -55,11 +61,6 @@ const Row = <T extends BasicRow>({
 						<Cell
 							className="py-4"
 							key={id + ':' + column.columnKey}
-							onClick={() => {
-								if (customClickOnRow) {
-									return customClickOnRow(row);
-								}
-							}}
 						>
 							{column.render ? (
 								column.render(data as T[keyof T], row, 0)

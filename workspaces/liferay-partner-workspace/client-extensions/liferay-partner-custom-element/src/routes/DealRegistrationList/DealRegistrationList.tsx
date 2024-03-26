@@ -32,6 +32,12 @@ import useGetListItemsFromDealRegistration from './hooks/useGetListItemsFromDeal
 export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
 };
+
+type TableColumn = {
+	columnKey: DealRegistrationColumnKey;
+	label: string | JSX.Element;
+	size?: 'sm' | 'md';
+};
 interface IProps {
 	sort: string;
 }
@@ -82,10 +88,11 @@ const DealRegistrationList = ({sort}: IProps) => {
 	const filteredData = data.items;
 	const filteredCSVData = dataCSV.items;
 
-	const columns = [
+	const columns: TableColumn[] = [
 		{
 			columnKey: DealRegistrationColumnKey.PARTNER_ACCOUNT_NAME,
 			label: 'Partner Account Name',
+			size: 'md',
 		},
 		{
 			columnKey: DealRegistrationColumnKey.PARTNER_NAME,
@@ -94,6 +101,7 @@ const DealRegistrationList = ({sort}: IProps) => {
 		{
 			columnKey: DealRegistrationColumnKey.ACCOUNT_NAME,
 			label: 'Account Name',
+			size: 'sm',
 		},
 		{
 			columnKey: DealRegistrationColumnKey.DATE_SUBMITTED,
@@ -102,10 +110,12 @@ const DealRegistrationList = ({sort}: IProps) => {
 		{
 			columnKey: DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME,
 			label: getDoubleParagraph('Primary Prospect', 'Name'),
+			size: 'sm',
 		},
 		{
 			columnKey: DealRegistrationColumnKey.PRIMARY_PROSPECT_EMAIL,
 			label: getDoubleParagraph('Primary Prospect', 'Email'),
+			size: 'sm',
 		},
 		{
 			columnKey: DealRegistrationColumnKey.PRIMARY_PROSPECT_PHONE,
@@ -153,6 +163,7 @@ const DealRegistrationList = ({sort}: IProps) => {
 						columns={columns}
 						customClickOnRow={handleCustomClickOnRow}
 						rows={items}
+						tableLayout="auto"
 					/>
 
 					<ClayPaginationBarWithBasicItems

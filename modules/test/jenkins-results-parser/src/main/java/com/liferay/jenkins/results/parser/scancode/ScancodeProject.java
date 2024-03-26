@@ -1,0 +1,403 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.jenkins.results.parser.scancode;
+
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.NotificationUtil;
+
+import java.io.File;
+import java.io.IOException;
+
+import java.net.URL;
+
+import java.text.SimpleDateFormat;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeoutException;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ * @author Brittney Nguyen
+ */
+public class ScancodeProject {
+
+    public ScancodeProject(String pipelineName, String buildURL) {
+        _pipelineName = pipelineName;
+        _buildURL = buildURL;
+    }
+
+    public void addPipeline(String pipelineName)
+            throws IOException, TimeoutException {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("curl ");
+        sb.append("-X POST ");
+        sb.append(_API_URL + _projectID + "/add_pipeline/");
+        sb.append(" -H ");
+        sb.append(_CONTENT_TYPE);
+        sb.append(" -d ");
+
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(
+                "execute_now", true
+        ).put(
+                "pipeline", pipelineName
+        );
+
+        sb.append("'" + jsonObject + "'");
+
+        Process process = JenkinsResultsParserUtil.executeBashCommands(
+                sb.toString());
+
+        try {
+            JenkinsResultsParserUtil.readInputStream(process.getInputStream());
+        }
+        catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public void downloadResultFiles() throws IOException {
+        String scancodeResultsDir = JenkinsResultsParserUtil.getBuildProperty(
+                "scancode.results.dir");
+
+        for (String extension : _RESULT_FILES_EXTENSIONS) {
+            String link = _projectURL + "results/" + extension;
+
+            URL url = new URL(link);
+
+            File file = new File(
+                    scancodeResultsDir + _projectNameFromURL + "." + extension);
+
+            JenkinsResultsParserUtil.toFile(url, file);
+        }
+
+        String tarGzName = _projectNameFromURL + ".tar.gz";
+
+        File resultsTarGzFile = new File(scancodeResultsDir, tarGzName);
+
+        JenkinsResultsParserUtil.tarGzip(
+                new File(scancodeResultsDir), resultsTarGzFile);
+
+        uploadResultsToBucket(resultsTarGzFile.toString());
+    }
+
+    public JSONObject getAnalyzeDockerImageJSONObject(String dockerTag) {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(
+                "execute_now", true
+        ).put(
+                "input_urls", "docker://liferay/" + dockerTag
+        ).put(
+                "labels", _LABELS
+        ).put(
+                "name",
+                dockerTag + " Docker Scan-" +
+                        startTimeSimpleDateFormat.format(new Date())
+        ).put(
+                "pipeline", _pipelineName
+        );
+
+        return jsonObject;
+    }
+
+    public JSONObject getMapDevelopToDeployJSONObject() throws IOException {
+        JSONObject jsonObject = new JSONObject();
+
+        ArrayList<String> inputURLS = new ArrayList<>();
+
+        String tomcatURL = JenkinsResultsParserUtil.getBuildParameter(
+                _buildURL, "TEST_PORTAL_RELEASE_TOMCAT_URL");
+
+        inputURLS.add(tomcatURL + "#to");
+
+        inputURLS.add(getReleaseTarballLink());
+        inputURLS.add(
+                JenkinsResultsParserUtil.getBuildProperty("scancode.tar.gz.url"));
+        inputURLS.add(
+                JenkinsResultsParserUtil.getBuildProperty(
+                        "scancode.config.file.url"));
+
+        String portalReleaseVersion =
+                JenkinsResultsParserUtil.getBuildParameter(
+                        _buildURL, "TEST_PORTAL_RELEASE_VERSION");
+
+        jsonObject.put(
+                "execute_now", true
+        ).put(
+                "input_urls", inputURLS
+        ).put(
+                "labels", _LABELS
+        ).put(
+                "name",
+                portalReleaseVersion + " Scan-" +
+                        startTimeSimpleDateFormat.format(new Date())
+        ).put(
+                "pipeline", _pipelineName
+        );
+
+        return jsonObject;
+    }
+
+    public String getPipelineName() {
+        return _pipelineName;
+    }
+
+    public String getProjectID() {
+        return _projectID;
+    }
+
+    public String getReleaseTarballLink() {
+        String portalBranchUsername =
+                JenkinsResultsParserUtil.getBuildParameter(
+                        _buildURL, "TEST_PORTAL_USER_NAME");
+
+        String portalSHA = JenkinsResultsParserUtil.getBuildParameter(
+                _buildURL, "TEST_PORTAL_RELEASE_GIT_ID");
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("https://github.com/");
+        sb.append(portalBranchUsername);
+        sb.append("/liferay-portal-ee/archive/");
+        sb.append(portalSHA);
+        sb.append(".tar.gz");
+        sb.append("#from");
+
+        return sb.toString();
+    }
+
+    public JSONObject getInspectPackagesJSONObject() {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put(
+                "execute_now", true
+        ).put(
+                "input_urls",
+                "https://github.com/liferay/liferay-portal/archive/refs/heads" +
+                        "/master.tar.gz"
+        ).put(
+                "labels", _LABELS
+        ).put(
+                "name",
+                "Master Daily Scan-" + startTimeSimpleDateFormat.format(new Date())
+        ).put(
+                "pipeline", _pipelineName
+        );
+
+        return jsonObject;
+    }
+
+    public void invokeScan() throws IOException, TimeoutException {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("curl ");
+        sb.append("-X POST ");
+        sb.append(_API_URL);
+        sb.append(" -H ");
+        sb.append(_CONTENT_TYPE);
+
+        JSONObject jsonObject = null;
+
+        if (_pipelineName.equals("inspect_packages")) {
+            jsonObject = getInspectPackagesJSONObject();
+        }
+        else if (_pipelineName.equals("analyze_docker_image")) {
+            String dockerTag = JenkinsResultsParserUtil.getBuildParameter(
+                    _buildURL, "DOCKER_TAG");
+
+            jsonObject = getAnalyzeDockerImageJSONObject(dockerTag);
+        }
+        else if (_pipelineName.equals("map_deploy_to_develop")) {
+            jsonObject = getMapDevelopToDeployJSONObject();
+        }
+
+        sb.append(" -d ");
+        sb.append("'" + jsonObject + "'");
+
+        Process process = JenkinsResultsParserUtil.executeBashCommands(
+                sb.toString());
+
+        String output = null;
+
+        try {
+            output = JenkinsResultsParserUtil.readInputStream(
+                    process.getInputStream());
+
+            output = output.trim();
+
+            JSONObject outputJSONObject = new JSONObject(output);
+
+            Object projectID = outputJSONObject.get("uuid");
+
+            _projectID = projectID.toString();
+
+            Object projectName = outputJSONObject.get("name");
+
+            _projectName = projectName.toString();
+        }
+        catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public void sendSlackNotification(String s3URL) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("*Project link:* ");
+        sb.append("<");
+        sb.append(_projectURL);
+        sb.append("|");
+        sb.append(_projectName);
+        sb.append(">\n");
+        sb.append("*Pipeline:* ");
+
+        if (_pipelineName.equals("inspect_packages")) {
+            sb.append(_pipelineName + ", populate_purldb");
+        }
+        else {
+            sb.append(_pipelineName);
+        }
+
+        sb.append("\n");
+        sb.append("*Status:* ");
+        sb.append(
+                _projectStatuses.toString(
+                ).replaceAll(
+                        "(^\\[|\\]$)", ""
+                ));
+        sb.append("\n*S3 Tar.gz:* ");
+        sb.append("<");
+        sb.append(s3URL);
+        sb.append("|");
+        sb.append(_projectNameFromURL + ".tar.gz");
+        sb.append(">");
+
+        NotificationUtil.sendSlackNotification(
+                sb.toString(), "#ci-notifications", ":liferay-ci:",
+                "Scancode pipeline is complete", "Liferay CI");
+    }
+
+    public void setProjectURL(String uid, String name) {
+        name = name.replaceAll(
+                "[.:]", ""
+        ).toLowerCase();
+
+        name = name.replace(" ", "-");
+
+        uid = uid.substring(0, uid.indexOf("-"));
+
+        _projectNameFromURL = name + "-" + uid;
+
+        _projectURL =
+                "https://scancode.liferay.com/project/" + name + "-" + uid + "/";
+    }
+
+    public void uploadResultsToBucket(String tarGzFilePath) {
+
+        File tarGzFile = new File(tarGzFilePath);
+
+        try {
+            ScancodeS3Bucket scancodeS3Bucket = ScancodeS3Bucket.getInstance();
+
+            scancodeS3Bucket.createScancodeS3Object(
+                    "inbox/" + tarGzFile.getName(), tarGzFile);
+
+            sendSlackNotification(scancodeS3Bucket.getS3URL());
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void waitForScan(String pipelineName) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("curl ");
+        sb.append("-X GET ");
+        sb.append(_API_URL);
+        sb.append(_projectID);
+        sb.append("/ -H ");
+        sb.append(_CONTENT_TYPE);
+
+        while (true) {
+            try {
+                Process process = JenkinsResultsParserUtil.executeBashCommands(
+                        new String[] {sb.toString()});
+
+                String output = JenkinsResultsParserUtil.readInputStream(
+                        process.getInputStream());
+
+                output = output.trim();
+
+                JSONObject outputJSONObject = new JSONObject(output);
+
+                JSONArray jsonArray = outputJSONObject.getJSONArray("runs");
+
+                Object run = jsonArray.get(0);
+
+                if (pipelineName.equals("populate_purldb")) {
+                    run = jsonArray.get(1);
+                }
+
+                JSONObject runJSONObject = new JSONObject(run.toString());
+
+                String projectStatus = runJSONObject.get(
+                        "status"
+                ).toString();
+
+                System.out.println(
+                        "Project status for " + pipelineName + ": " +
+                                projectStatus);
+
+                if (!projectStatus.equals("running") &&
+                        !projectStatus.equals("queued")) {
+
+                    _projectStatuses.add(projectStatus);
+
+                    break;
+                }
+
+                Thread.sleep(10 * 60 * 1000);
+            }
+            catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        setProjectURL(_projectID, _projectName);
+    }
+
+    protected static final SimpleDateFormat startTimeSimpleDateFormat =
+            new SimpleDateFormat("MMM d yy HH:mm:ss");
+
+    private static final String _API_URL =
+            "https://scancode.liferay.com/api/projects/";
+
+    private static final String _CONTENT_TYPE =
+            "'Content-Type: application/json;'";
+
+    private static final String[] _LABELS = {"automated"};
+
+    private static final String[] _RESULT_FILES_EXTENSIONS = {
+            "json", "xls", "spdx", "cyclonedx", "attribution"
+    };
+
+    private final String _buildURL;
+    private final String _pipelineName;
+    private String _projectID;
+    private String _projectName;
+    private String _projectNameFromURL;
+    private final ArrayList<String> _projectStatuses = new ArrayList<>();
+    private String _projectURL;
+
+}

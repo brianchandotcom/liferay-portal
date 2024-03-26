@@ -815,6 +815,8 @@ public class ObjectDefinitionResourceImpl
 								objectRelationship.getName());
 				}
 
+				boolean edge = objectRelationship.getEdge();
+
 				if (serviceBuilderObjectRelationship != null) {
 					if (updateReverseObjectRelationshipNames.contains(
 							serviceBuilderObjectRelationship.getName())) {
@@ -846,6 +848,9 @@ public class ObjectDefinitionResourceImpl
 					objectRelationshipResource.
 						postObjectDefinitionObjectRelationship(
 							objectDefinitionId, objectRelationship);
+
+				_objectRelationshipLocalService.enableEdge(
+					objectRelationship.getId(), edge);
 
 				if (Objects.equals(
 						objectRelationship.getTypeAsString(),

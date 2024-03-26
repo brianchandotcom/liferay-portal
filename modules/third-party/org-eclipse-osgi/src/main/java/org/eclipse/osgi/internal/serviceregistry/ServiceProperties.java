@@ -121,6 +121,10 @@ class ServiceProperties extends CaseInsensitiveDictionaryMap<String, Object> {
 			return clonedArray;
 		}
 
+		if (value instanceof ArrayList) {
+			return ((ArrayList)value).clone();
+		}
+
 		if (value instanceof Cloneable) {
 			// must use reflection because Object clone method is protected!!
 			try {
@@ -170,3 +174,4 @@ class ServiceProperties extends CaseInsensitiveDictionaryMap<String, Object> {
 		return sb.toString();
 	}
 }
+/* @generated */

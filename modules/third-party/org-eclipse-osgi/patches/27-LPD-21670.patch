@@ -1,0 +1,24 @@
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceProperties.java b/org/eclipse/osgi/internal/serviceregistry/ServiceProperties.java
+index b6646d43140e9..d8e47fc1572f9 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceProperties.java
++++ b/org/eclipse/osgi/internal/serviceregistry/ServiceProperties.java
+@@ -121,6 +121,10 @@ class ServiceProperties extends CaseInsensitiveDictionaryMap<String, Object> {
+ 			return clonedArray;
+ 		}
+ 
++		if (value instanceof ArrayList) {
++			return ((ArrayList)value).clone();
++		}
++
+ 		if (value instanceof Cloneable) {
+ 			// must use reflection because Object clone method is protected!!
+ 			try {
+@@ -169,4 +173,5 @@ class ServiceProperties extends CaseInsensitiveDictionaryMap<String, Object> {
+ 
+ 		return sb.toString();
+ 	}
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file

@@ -39,7 +39,10 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	settingsDataSetViewERC = getRandomString();
 	settingsDataSetViewLabel = getRandomString();
 
-	await dataSetManagerApiHelpers.createDataSet({erc: settingsDataSetERC, label: settingsDataSetLabel });
+	await dataSetManagerApiHelpers.createDataSet({
+		erc: settingsDataSetERC,
+		label: settingsDataSetLabel,
+	});
 	await dataSetManagerApiHelpers.createDataSetView({
 		erc: settingsDataSetViewERC,
 		label: settingsDataSetViewLabel,
@@ -240,7 +243,7 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 					await fdsFragmentPage.configureDataSetFragment({
 						layout,
 						site,
-						viewLabel: settingsDataSetViewLabel
+						viewLabel: settingsDataSetViewLabel,
 					});
 				}
 			);

@@ -6,9 +6,6 @@
 		"LIFERAY_ROUTES_DXP": "/etc/liferay/lxc/dxp-metadata"
 	},
 	"environments": {
-		"extdev": {
-			"schedule": "30 20 * * *"
-		},
 		"infra": {
 			"deploy": false
 		}
@@ -17,5 +14,5 @@
 	"kind": "CronJob",
 	"memory": 1024,
 	"scale": 1,
-	"schedule": "30 20 * * *"
+	"schedule": "0 20 * * *"
 }

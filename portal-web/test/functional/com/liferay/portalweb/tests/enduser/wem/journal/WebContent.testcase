@@ -2804,6 +2804,8 @@ definition {
 	@description = "This is a test for LPS-172561. View warning of duplicated friendly URL in web content from sites and asset libraries."
 	@priority = 3
 	test ViewWarningOfDuplicatedFriendlyURLInWebContentFromSitesAndAssetLibraries {
+		property portal.upstream = "quarantine";
+
 		task ("Given some web contents with one duplicated friendly URL") {
 			task ("Add a web content with 3 friendly URLs") {
 				JSONWebcontent.addWebContent(

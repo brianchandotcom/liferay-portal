@@ -604,6 +604,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@priority = 4
 	test DisplayWebContentVideo {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Web Content Administration";
 
 		task ("Add an external video shortcut") {

@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
+import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormDisplayContextUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormGuestUploadFieldUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceStagingUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.util.DDMFormInstanceSubmissionLimitStatusUtil;
@@ -25,9 +26,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -224,9 +222,7 @@ public class DDMFormDisplayContext {
 				ddmFormInstance, _getHttpServletRequest(),
 				_ddmFormWebConfiguration.guestUploadMaximumSubmissions());
 
-		boolean requireCaptcha = _isCaptchaRequired(ddmFormInstance);
-
-		DDMForm ddmForm = getDDMForm(ddmFormInstance, requireCaptcha);
+		DDMForm ddmForm = getDDMForm(ddmFormInstance);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
@@ -302,7 +298,7 @@ public class DDMFormDisplayContext {
 
 		if (ddmFormInstanceRecord != null) {
 			return _ddmFormRenderer.getDDMFormTemplateContext(
-				ddmForm, getDDMFormLayout(ddmFormInstance, requireCaptcha),
+				ddmForm, getDDMFormLayout(ddmFormInstance),
 				createDDMFormRenderingContext(
 					ddmForm, ddmFormInstance,
 					ddmFormInstanceRecord.
@@ -310,7 +306,7 @@ public class DDMFormDisplayContext {
 		}
 
 		return _ddmFormRenderer.getDDMFormTemplateContext(
-			ddmForm, getDDMFormLayout(ddmFormInstance, requireCaptcha),
+			ddmForm, getDDMFormLayout(ddmFormInstance),
 			createDDMFormRenderingContext(
 				ddmForm, ddmFormInstance,
 				_ddmFormInstanceRecordVersionLocalService.
@@ -939,8 +935,7 @@ public class DDMFormDisplayContext {
 		return ddmStructure.getDDMForm();
 	}
 
-	protected DDMForm getDDMForm(
-			DDMFormInstance ddmFormInstance, boolean requireCaptcha)
+	protected DDMForm getDDMForm(DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
 		DDMForm ddmForm = null;
@@ -963,21 +958,13 @@ public class DDMFormDisplayContext {
 			ddmForm = ddmStructureVersion.getDDMForm();
 		}
 
-		if (requireCaptcha) {
-			DDMFormField captchaDDMFormField = new DDMFormField(
-				_DDM_FORM_FIELD_NAME_CAPTCHA, "captcha");
-
-			captchaDDMFormField.setDataType("string");
-			captchaDDMFormField.setProperty("url", _createCaptchaResourceURL());
-
-			ddmForm.addDDMFormField(captchaDDMFormField);
-		}
+		DDMFormDisplayContextUtil.addCaptchaDDMFormField(
+			ddmForm, ddmFormInstance.getSettingsModel(), _renderRequest);
 
 		return ddmForm;
 	}
 
-	protected DDMFormLayout getDDMFormLayout(
-			DDMFormInstance ddmFormInstance, boolean requireCaptcha)
+	protected DDMFormLayout getDDMFormLayout(DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
 		DDMFormLayout ddmFormLayout = null;
@@ -1000,15 +987,8 @@ public class DDMFormDisplayContext {
 			ddmFormLayout = ddmStructureVersion.getDDMFormLayout();
 		}
 
-		if (requireCaptcha) {
-			DDMFormLayoutPage lastDDMFormLayoutPage = _getLastDDMFormLayoutPage(
-				ddmFormLayout);
-
-			DDMFormLayoutRow ddmFormLayoutRow =
-				_createFullColumnDDMFormLayoutRow(_DDM_FORM_FIELD_NAME_CAPTCHA);
-
-			lastDDMFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
-		}
+		DDMFormDisplayContextUtil.addCaptchaDDMFormLayoutRow(
+			ddmFormInstance.getSettingsModel(), ddmFormLayout);
 
 		return ddmFormLayout;
 	}
@@ -1090,36 +1070,6 @@ public class DDMFormDisplayContext {
 		return user.isGuestUser();
 	}
 
-	private String _createCaptchaResourceURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String captchaResourceURL =
-			themeDisplay.getPathMain() + "/portal/captcha/get_image";
-
-		String portletId = PortalUtil.getPortletId(_renderRequest);
-
-		if (Validator.isNotNull(portletId)) {
-			captchaResourceURL = captchaResourceURL.concat(
-				"?portletId=" + portletId);
-		}
-
-		return captchaResourceURL;
-	}
-
-	private DDMFormLayoutRow _createFullColumnDDMFormLayoutRow(
-		String ddmFormFieldName) {
-
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
-			DDMFormLayoutColumn.FULL, ddmFormFieldName);
-
-		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
-
-		return ddmFormLayoutRow;
-	}
-
 	private long _getFormInstanceIdFromSession() {
 		PortletSession portletSession = _renderRequest.getPortletSession();
 
@@ -1129,15 +1079,6 @@ public class DDMFormDisplayContext {
 
 	private HttpServletRequest _getHttpServletRequest() {
 		return PortalUtil.getHttpServletRequest(_renderRequest);
-	}
-
-	private DDMFormLayoutPage _getLastDDMFormLayoutPage(
-		DDMFormLayout ddmFormLayout) {
-
-		List<DDMFormLayoutPage> ddmFormLayoutPages =
-			ddmFormLayout.getDDMFormLayoutPages();
-
-		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
 	}
 
 	private DDMFormInstanceVersion _getLatestApprovedDDMFormInstanceVersion()
@@ -1224,17 +1165,6 @@ public class DDMFormDisplayContext {
 			DDMFormInstance.class.getName(),
 			ddmFormInstance.getFormInstanceId());
 	}
-
-	private boolean _isCaptchaRequired(DDMFormInstance ddmFormInstance)
-		throws Exception {
-
-		DDMFormInstanceSettings ddmFormInstanceSettings =
-			ddmFormInstance.getSettingsModel();
-
-		return ddmFormInstanceSettings.requireCaptcha();
-	}
-
-	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormDisplayContext.class);

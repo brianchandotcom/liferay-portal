@@ -314,7 +314,7 @@ public class DDMFormDisplayContextTest {
 		).when(
 			ddmFormDisplayContext
 		).getDDMForm(
-			Mockito.any(DDMFormInstance.class), Mockito.anyBoolean()
+			Mockito.any(DDMFormInstance.class)
 		);
 
 		DDMFormLayout ddmFormLayout = Mockito.mock(DDMFormLayout.class);
@@ -324,7 +324,7 @@ public class DDMFormDisplayContextTest {
 		).when(
 			ddmFormDisplayContext
 		).getDDMFormLayout(
-			Mockito.any(DDMFormInstance.class), Mockito.anyBoolean()
+			Mockito.any(DDMFormInstance.class)
 		);
 
 		DDMFormInstance ddmFormInstance = _mockDDMFormInstance(

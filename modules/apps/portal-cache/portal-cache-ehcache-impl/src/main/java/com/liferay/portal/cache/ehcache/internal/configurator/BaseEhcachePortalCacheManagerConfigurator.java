@@ -175,12 +175,12 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 
 		Set<Properties> portalCacheListenerPropertiesSet = new HashSet<>();
 
-		for (Object element :
+		for (Object object :
 				cacheConfiguration.getCacheEventListenerConfigurations()) {
 
 			CacheEventListenerFactoryConfiguration
 				cacheEventListenerFactoryConfiguration =
-					(CacheEventListenerFactoryConfiguration)element;
+					(CacheEventListenerFactoryConfiguration)object;
 
 			Properties properties = parseProperties(
 				cacheEventListenerFactoryConfiguration.getProperties(),

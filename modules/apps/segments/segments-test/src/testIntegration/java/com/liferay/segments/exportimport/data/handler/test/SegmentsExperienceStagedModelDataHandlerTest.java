@@ -95,10 +95,6 @@ public class SegmentsExperienceStagedModelDataHandlerTest
 			importedSegmentsExperience.getPriority());
 	}
 
-	@Override
-	protected void testFileUploadSelfreference(
-		
-	}
 	private long _classPK;
 
 	@Inject

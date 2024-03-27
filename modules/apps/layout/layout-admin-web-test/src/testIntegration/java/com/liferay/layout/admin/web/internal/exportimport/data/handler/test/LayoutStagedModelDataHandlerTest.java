@@ -762,6 +762,8 @@ public class LayoutStagedModelDataHandlerTest
 
 	private static final String _TEST_PORTLET_NAME =
 		"com_liferay_test_portlet_TestPortlet";
+	private final String _testType = "test";
+	private final String _testName = "Test Layout Utility Page";
 
 	@Inject
 	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;

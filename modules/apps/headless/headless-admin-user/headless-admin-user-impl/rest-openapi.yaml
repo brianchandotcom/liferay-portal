@@ -1319,7 +1319,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.admin.user.client', and version '4.0.58'."
+        'com.liferay.headless.admin.user.client', and version '4.0.59'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -2137,6 +2137,31 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["AccountRole"]
+    "/accounts/by-external-reference-code/{externalReferenceCode}/email-addresses" :
+        get:
+            description:
+                Retrieves the account's email addresses.
+            operationId: getAccountByExternalReferenceCodeEmailAddressesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+            tags: ["EmailAddress"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/organizations":
         get:
             description:
@@ -2240,6 +2265,32 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["Organization"]
+    "/accounts/by-external-reference-code/{externalReferenceCode}/phones":
+        get:
+            description:
+                Retrieves the account's phone numbers.
+            operationId: getAccountByExternalReferenceCodePhonesPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+                    # @review
+            tags: ["Phone"]
     "/accounts/by-external-reference-code/{externalReferenceCode}/user-accounts":
         get:
             # @review
@@ -2462,6 +2513,31 @@ paths:
                                     $ref: "#/components/schemas/AccountRole"
                                 type: array
             tags: ["AccountRole"]
+    "/accounts/by-external-reference-code/{externalReferenceCode}/web-urls":
+        get:
+            description:
+                Retrieves the account's web URLs.
+            operationId: getAccountByExternalReferenceCodeWebUrlsPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+            tags: ["WebUrl"]
     "/accounts/{accountId}":
         delete:
             # @review
@@ -2740,6 +2816,32 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["AccountRole"]
+    "/accounts/{accountId}/email-addresses":
+        get:
+            description:
+                Retrieves the account's email addresses.
+            operationId: getAccountEmailAddressesPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/EmailAddress"
+                                type: array
+            tags: ["EmailAddress"]
     "/accounts/{accountId}/organizations":
         get:
             description:
@@ -2847,6 +2949,32 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["Organization"]
+    "/accounts/{accountId}/phones":
+        get:
+            description:
+                Retrieves the account's phone numbers.
+            operationId: getAccountPhonesPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Phone"
+                                type: array
+            tags: ["Phone"]
     "/accounts/{accountId}/postal-addresses":
         get:
             description:
@@ -3167,6 +3295,32 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
             tags: ["UserAccount"]
+    "/accounts/{accountId}/web-urls":
+        get:
+            description:
+                Retrieves the account's web URLs.
+            operationId: getAccountWebUrlsPage
+            parameters:
+                - in: path
+                  name: accountId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/WebUrl"
+                                type: array
+            tags: ["WebUrl"]
     "/email-addresses/{emailAddressId}":
         get:
             description:

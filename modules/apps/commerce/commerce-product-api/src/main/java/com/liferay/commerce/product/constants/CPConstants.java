@@ -13,11 +13,24 @@ public class CPConstants {
 
 	public static final String DAILY_SUBSCRIPTION_TYPE = "daily";
 
+	public static final String DAYS_DURATION_TYPE = "days";
+
+	public static final String HOURS_DURATION_TYPE = "hours";
+
 	public static final String MONTHLY_SUBSCRIPTION_TYPE = "monthly";
+
+	public static final String PRODUCT_OPTION_CHECKBOX_KEY = "checkbox";
+
+	public static final String PRODUCT_OPTION_CHECKBOX_MULTIPLE_KEY =
+		"checkbox_multiple";
+
+	public static final String PRODUCT_OPTION_DATE_KEY = "date";
 
 	public static final String[] PRODUCT_OPTION_MULTIPLE_VALUES_FIELD_TYPES = {
 		"checkbox", "checkbox_multiple", "radio", "select", "select_date"
 	};
+
+	public static final String PRODUCT_OPTION_NUMERIC_KEY = "numeric";
 
 	public static final String[] PRODUCT_OPTION_PRICE_CONTRIBUTOR_FIELD_TYPES =
 		{"select", "radio"};
@@ -26,9 +39,17 @@ public class CPConstants {
 
 	public static final String PRODUCT_OPTION_PRICE_TYPE_STATIC = "static";
 
+	public static final String PRODUCT_OPTION_RADIO_KEY = "radio";
+
+	public static final String PRODUCT_OPTION_SELECT_DATE_KEY = "select_date";
+
+	public static final String PRODUCT_OPTION_SELECT_KEY = "select";
+
 	public static final String[] PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES = {
-		"select", "radio"
+		"select", "select_date", "radio"
 	};
+
+	public static final String PRODUCT_OPTION_TEXT_KEY = "text";
 
 	public static final String RESOURCE_NAME_CATALOG =
 		"com.liferay.commerce.catalog";

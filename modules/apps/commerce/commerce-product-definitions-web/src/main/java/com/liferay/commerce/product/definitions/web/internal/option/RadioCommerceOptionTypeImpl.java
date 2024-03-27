@@ -10,6 +10,7 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.model.ProductSettingsModel;
 import com.liferay.commerce.frontend.util.ProductHelper;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -53,17 +54,15 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"commerce.option.type.display.order:Integer=300",
-		"commerce.option.type.key=" + RadioCommerceOptionTypeImpl.KEY
+		"commerce.option.type.key=" + CPConstants.PRODUCT_OPTION_RADIO_KEY
 	},
 	service = CommerceOptionType.class
 )
 public class RadioCommerceOptionTypeImpl implements CommerceOptionType {
 
-	public static final String KEY = "radio";
-
 	@Override
 	public String getKey() {
-		return KEY;
+		return CPConstants.PRODUCT_OPTION_RADIO_KEY;
 	}
 
 	@Override

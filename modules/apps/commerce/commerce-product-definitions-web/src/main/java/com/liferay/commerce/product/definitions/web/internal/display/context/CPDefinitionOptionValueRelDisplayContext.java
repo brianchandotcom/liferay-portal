@@ -7,6 +7,7 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -157,6 +158,39 @@ public class CPDefinitionOptionValueRelDisplayContext
 			themeDisplay.getCompanyId(),
 			CPDefinitionOptionValueRel.class.getName(),
 			getCPDefinitionOptionValueRelId(), null);
+	}
+
+	public boolean isCPDefinitionOptionRelSelectDate() throws PortalException {
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			getCPDefinitionOptionRel();
+
+		if (Objects.equals(
+				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+				cpDefinitionOptionRel.getCommerceOptionTypeKey())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _getTimeZone(String[] splits) {
+		if (splits.length <= 8) {
+			return splits[7].toUpperCase();
+		}
+
+		String timeZone = StringBundler.concat(
+			StringUtil.upperCaseFirstLetter(splits[7]),
+			StringPool.FORWARD_SLASH,
+			StringUtil.upperCaseFirstLetter(splits[8]));
+
+		if ((splits.length > 9) && Validator.isNotNull(splits[9])) {
+			return StringBundler.concat(
+				timeZone, StringPool.UNDERLINE,
+				StringUtil.upperCaseFirstLetter(splits[9]));
+		}
+
+		return timeZone;
 	}
 
 	private final CommerceCatalogLocalService _commerceCatalogLocalService;

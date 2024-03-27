@@ -370,7 +370,7 @@ public class FileUtil {
 	private static FileSystem _getJarFileSystem() throws Exception {
 		Path jarPath = Paths.get(_getJarURI());
 
-		return FileSystems.newFileSystem(jarPath, null);
+		return FileSystems.newFileSystem(jarPath, (ClassLoader)null);
 	}
 
 	private static URI _getJarURI() throws URISyntaxException {

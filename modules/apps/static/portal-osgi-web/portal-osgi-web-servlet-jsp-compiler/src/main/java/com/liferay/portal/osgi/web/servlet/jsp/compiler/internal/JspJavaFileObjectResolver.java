@@ -202,7 +202,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				}
 
 				try (FileSystem fileSystem = FileSystems.newFileSystem(
-						file.toPath(), null)) {
+						file.toPath(), (ClassLoader)null)) {
 
 					FileSystemProvider fileSystemProvider =
 						fileSystem.provider();

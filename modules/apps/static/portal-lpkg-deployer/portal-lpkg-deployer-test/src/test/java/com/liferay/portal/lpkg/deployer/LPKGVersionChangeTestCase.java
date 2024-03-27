@@ -52,7 +52,7 @@ public abstract class LPKGVersionChangeTestCase {
 				}
 
 				try (FileSystem fileSystem = FileSystems.newFileSystem(
-						lpkgPath, null)) {
+						lpkgPath, (ClassLoader)null)) {
 
 					Path path = fileSystem.getPath(
 						"liferay-marketplace.properties");

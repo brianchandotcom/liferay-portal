@@ -613,7 +613,9 @@ public class LPKGBundleTrackerCustomizer
 	private void _processOutdatedBundle(Bundle bundle) throws Exception {
 		Path path = Paths.get(bundle.getLocation());
 
-		try (FileSystem fileSystem = FileSystems.newFileSystem(path, null)) {
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				path, (ClassLoader)null)) {
+
 			Files.createFile(fileSystem.getPath(_FILE_NAME_LFR_OUTDATED));
 		}
 

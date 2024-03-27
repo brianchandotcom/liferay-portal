@@ -76,6 +76,7 @@ export default {
 	'dashboard': 'Dashboard',
 	'deactivate': 'Deactivate',
 	'decline': 'Decline',
+	'delete': 'Delete',
 	'description': 'Description',
 	'details': 'Details',
 	'discover-and-customize': 'Discover and customize',
@@ -84,6 +85,7 @@ export default {
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
 	'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc':
 		'DXP module-based apps are not supported on Liferay SaaS.',
+	'edit': 'Edit',
 	'email': 'Email',
 	'end-user-license-agreement': 'End User License Agreement',
 	'enter-email-address': 'Enter email address',

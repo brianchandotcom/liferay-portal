@@ -4,11 +4,13 @@
  */
 
 import {useNavigate} from 'react-router-dom';
+import {KeyedMutator} from 'swr';
 
 import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
 import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
 import TableKebabButton from '../../../components/Table/TableButtons/TableKebabButton';
+import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
@@ -20,7 +22,7 @@ import {formatDate} from '../PublishedDashboardPageUtil';
 
 type PublishedSolutionsTableProps = {
 	items: Order[];
-	mutate: any;
+	mutate: KeyedMutator<any>;
 };
 
 const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
@@ -43,15 +45,17 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 	const handleDeleteSolution = async (row: any) => {
 		try {
 			await HeadlessCommerceAdminCatalogImpl.deleteProduct(row.productId);
+
 			mutate(items);
+
 			Liferay.Util.openToast({
-				message: `${row.name.en_US} successfully deleted`,
+				message: i18n.translate('request-sent-successfully'),
 				type: 'success',
 			});
 		}
 		catch (error) {
 			Liferay.Util.openToast({
-				message: `Something went wrong`,
+				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',
 			});
 		}
@@ -62,9 +66,9 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 			Actions={({row}) => (
 				<TableKebabButton
 					items={[
-						{disabled: true, label: 'Edit'},
+						{disabled: true, label: i18n.translate('edit')},
 						{
-							label: 'Delete',
+							label: i18n.translate('delete'),
 							onClick: () => handleDeleteSolution(row),
 						},
 					]}

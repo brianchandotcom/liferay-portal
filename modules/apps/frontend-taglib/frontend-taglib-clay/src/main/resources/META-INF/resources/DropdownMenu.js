@@ -15,6 +15,8 @@ import normalizeDropdownItems from './normalize_dropdown_items';
 export default function DropdownMenu({
 	actionsDropdown = false,
 	additionalProps: _additionalProps,
+	alignmentByViewport,
+	alignmentPosition,
 	componentId: _componentId,
 	cssClass,
 	icon,
@@ -56,6 +58,8 @@ export default function DropdownMenu({
 		<>
 			<ClayDropDownWithItems
 				{...searchableProps}
+				alignmentByViewport={alignmentByViewport}
+				alignmentPosition={alignmentPosition}
 				className={classNames({
 					'dropdown-action': actionsDropdown,
 				})}

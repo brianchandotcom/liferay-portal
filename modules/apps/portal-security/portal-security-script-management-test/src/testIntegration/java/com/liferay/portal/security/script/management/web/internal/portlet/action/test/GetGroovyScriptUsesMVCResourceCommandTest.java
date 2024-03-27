@@ -231,8 +231,6 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 							RandomTestUtil.randomString())
 					).name(
 						"textObjectField"
-					).objectFieldSettings(
-						Collections.emptyList()
 					).build()));
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(

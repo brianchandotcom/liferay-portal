@@ -1,0 +1,15 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-jethr0-batch-3:
+    name: Liferay Jethr0 Batch 3
+    oAuthApplicationHeadlessServer: liferay-jethr0-batch-3-oauth-application-headless-server
+    type: batch
+liferay-jethr0-batch-3-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Jethr0 Batch 3 OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

@@ -12,7 +12,7 @@
 		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:J3Y7Ticket$]",
 		"parameters": {
 			"notificationTemplateExternalReferenceCode": "M2H8-NEW-TICKET-USER-TEMPLATE",
-			"objectDefinitionExternalReferenceCode": "J3Y7_TICKET",
+			"objectDefinitionExternalReferenceCode": "J3Y7-TICKET",
 			"type": "user-notification"
 		},
 		"status": {

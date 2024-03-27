@@ -6,7 +6,7 @@
 	"name_i18n": {
 		"en_US": "M2H8 New Ticket User Template"
 	},
-	"objectDefinitionExternalReferenceCode": "J3Y7_TICKET",
+	"objectDefinitionExternalReferenceCode": "J3Y7-TICKET",
 	"recipientType": "role",
 	"recipients": [
 		{

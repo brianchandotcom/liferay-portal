@@ -5,11 +5,12 @@
 
 import {useNavigate} from 'react-router-dom';
 
-import solutionsIcon from '../../../assets/icons/analytics_icon.svg';
 import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
 import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
 import TableKebabButton from '../../../components/Table/TableButtons/TableKebabButton';
+import {Liferay} from '../../../liferay/liferay';
+import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	getThumbnailByProductAttachment,
 	showAppImage,
@@ -18,10 +19,12 @@ import {formatDate} from '../PublishedDashboardPageUtil';
 
 type PublishedSolutionsTableProps = {
 	items: Order[];
+	mutate: any;
 };
 
 const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 	items,
+	mutate,
 }) => {
 	const navigate = useNavigate();
 
@@ -31,21 +34,38 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 				emptyStateMessage={{
 					title: 'No Solutions Yet',
 				}}
-				icon={solutionsIcon}
+				icon="grid"
 			/>
 		);
 	}
+
+	const handleDeleteSolution = async (row: any) => {
+		try {
+			await HeadlessCommerceAdminCatalogImpl.deleteProduct(row.productId);
+			mutate(items);
+			Liferay.Util.openToast({
+				message: `${row.name.en_US} successfully deleted`,
+				type: 'success',
+			});
+		}
+		catch (error) {
+			Liferay.Util.openToast({
+				message: `Something went wrong`,
+				type: 'danger',
+			});
+		}
+	};
 
 	return (
 		<Table
 			Actions={({row}) => (
 				<TableKebabButton
 					items={[
-						{
-							label: 'View Details',
-							onClick: () => navigate(`/solution/${row.id}`),
-						},
 						{disabled: true, label: 'Edit'},
+						{
+							label: 'Delete',
+							onClick: () => handleDeleteSolution(row),
+						},
 					]}
 				/>
 			)}

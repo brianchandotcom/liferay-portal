@@ -158,6 +158,9 @@ public class FaroSubscriptionDisplay {
 			return;
 		}
 
+		_syncedIndividualsCount =
+			contactsEngineClient.getSyncedIndividualsCount(faroProject);
+
 		if (_isBasicSubscription(faroProject.getSubscription())) {
 			if (_startDate == null) {
 				_startDate = new Date(faroProject.getCreateTime());
@@ -183,9 +186,6 @@ public class FaroSubscriptionDisplay {
 			_individualsCountSinceLastAnniversary, _individualsLimit);
 		_pageViewsStatus = getStatus(
 			_pageViewsCountSinceLastAnniversary, _pageViewsLimit);
-
-		_syncedIndividualsCount =
-			contactsEngineClient.getSyncedIndividualsCount(faroProject);
 	}
 
 	public static class AddOn {

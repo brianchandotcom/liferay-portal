@@ -335,6 +335,88 @@
 			}
 		},
 		{
+			"externalReferenceCode": "JobDefinitionParameter",
+			"label": {
+				"en_US": "Job Definition Parameter"
+			},
+			"name": "JobDefinitionParameter",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Key"
+					},
+					"name": "key",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Label"
+					},
+					"name": "label",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "jobDefinitionParameterType",
+					"name": "type",
+					"required": false,
+					"state": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Value Default"
+					},
+					"name": "valueDefault",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Value Description"
+					},
+					"name": "valueDescription",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Value Regex"
+					},
+					"name": "valueRegex",
+					"required": false,
+					"type": "String"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Job Definition Parameters"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
 			"externalReferenceCode": "TaskRun",
 			"label": {
 				"en_US": "Task Run"
@@ -465,6 +547,58 @@
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
 				"en_US": "Jenkins Servers"
+			},
+			"portlet": true,
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			}
+		},
+		{
+			"externalReferenceCode": "JobDefinition",
+			"label": {
+				"en_US": "Job Definition"
+			},
+			"name": "JobDefinition",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Key"
+					},
+					"name": "key",
+					"required": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"label": {
+						"en_US": "Label"
+					},
+					"name": "label",
+					"required": false,
+					"type": "String"
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"label": {
+						"en_US": "Job Definitions to Job Definition Parameters"
+					},
+					"name": "jobDefinitionsToJobDefinitionParameters",
+					"objectDefinitionExternalReferenceCode1": "JobDefinition",
+					"objectDefinitionExternalReferenceCode2": "JobDefinitionParameter",
+					"type": "manyToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Job Definitions"
 			},
 			"portlet": true,
 			"scope": "company",

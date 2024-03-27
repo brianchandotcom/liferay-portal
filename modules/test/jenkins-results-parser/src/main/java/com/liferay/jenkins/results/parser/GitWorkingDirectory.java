@@ -1670,6 +1670,36 @@ public class GitWorkingDirectory {
 			false, excludesPathMatchers, includesPathMatchers);
 	}
 
+	public int getNumberOfCommits(
+		String currentBranchName, String upstreamBranchName) {
+
+		try {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("git log");
+			sb.append(" --oneline ");
+			sb.append(currentBranchName);
+			sb.append(" ^");
+			sb.append(upstreamBranchName);
+			sb.append(" | wc -l");
+
+			GitUtil.ExecutionResult result = executeBashCommands(
+				5, 1000, 30 * 1000, sb.toString());
+
+			if (result.getExitValue() != 0) {
+				throw new RuntimeException("Unable to run: git log");
+			}
+
+			return Integer.parseInt(result.getStandardOut());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to find log between " + currentBranchName + " and " +
+					upstreamBranchName + ".",
+				exception);
+		}
+	}
+
 	public LocalGitBranch getRebasedLocalGitBranch(PullRequest pullRequest) {
 		return getRebasedLocalGitBranch(
 			pullRequest.getLocalSenderBranchName(),
@@ -2200,31 +2230,6 @@ public class GitWorkingDirectory {
 		}
 
 		return getCurrentLocalGitBranch();
-	}
-
-	public int numberOfCommits(String currentBranchName, String upstreamBranchName) {
-		try {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("git log");
-			sb.append(" --oneline ");
-			sb.append(currentBranchName);
-			sb.append(" ^");
-			sb.append(upstreamBranchName);
-			sb.append(" | wc -l");
-
-			GitUtil.ExecutionResult result = executeBashCommands(
-					5, 1000, 30 * 1000, sb.toString());
-
-			if (result.getExitValue() != 0) {
-				throw new RuntimeException("Unable to run: git log");
-			}
-
-			return Integer.parseInt(result.getStandardOut());
-		} catch (Exception exception){
-			throw new RuntimeException(
-					"Unable to find log between " + currentBranchName + " and " + upstreamBranchName + ".", exception);
-		}
 	}
 
 	public void rebaseAbort() {

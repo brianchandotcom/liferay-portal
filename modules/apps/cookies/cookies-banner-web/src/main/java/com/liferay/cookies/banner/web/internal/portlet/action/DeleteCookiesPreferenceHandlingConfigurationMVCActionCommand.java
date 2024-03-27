@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -44,8 +44,9 @@ public class DeleteCookiesPreferenceHandlingConfigurationMVCActionCommand
 		ExtendedObjectClassDefinition.Scope scope = _getScope(actionRequest);
 
 		try {
-			_cookiesConfigurationProvider.resetCookiesPreferenceHandlingConfiguration(
-				scope, _getScopePK(actionRequest, scope));
+			_cookiesConfigurationProvider.
+				resetCookiesPreferenceHandlingConfiguration(
+					scope, _getScopePK(actionRequest, scope));
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);

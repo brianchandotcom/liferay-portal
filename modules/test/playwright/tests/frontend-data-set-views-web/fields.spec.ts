@@ -73,6 +73,28 @@ test.describe('Add fields to a view and show them in a fragment', () => {
 			await expect(page.getByText('creator.id').first()).toBeVisible();
 			await expect(page.getByText('creator.name').first()).toBeVisible();
 		});
+
+		await test.step('Open modal to edit a field', async () => {
+			const dropdownMenuButton = page
+				.locator('.actions-cell button')
+				.first();
+
+			await expect(dropdownMenuButton).toBeInViewport();
+
+			await dropdownMenuButton.click();
+
+			const editButton = page.getByRole('menuitem', {name: 'Edit'});
+
+			await expect(editButton).toBeInViewport();
+
+			await editButton.click();
+
+			const sortableLabel = page.getByLabel('Sortable');
+
+			await expect(sortableLabel).toBeInViewport();
+
+			await expect(sortableLabel).toBeDisabled();
+		});
 	});
 
 	test('Show mapped hierarchical Fields in fragment', async ({

@@ -36,14 +36,14 @@
 		</if>
 
 		<if>
-			<isset property="db.build.java.add.opens[${build.java.version.target.compatibility}]" />
+			<isset property="db.build.java.add.opens[${java.specification.version}]" />
 			<then>
-				<propertycopy from="db.build.java.add.opens[${build.java.version.target.compatibility}]" name="db.build.java.add.opens" override="true" />
+				<propertycopy from="db.build.java.add.opens[${java.specification.version}]" name="db.build.java.add.opens" override="true" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${build.java.version.target.compatibility}" arg2="1.8" />
+			<equals arg1="${java.specification.version}" arg2="1.8" />
 			<then>
 				<property name="db.build.java.maxpermsize.option" value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
 			</then>

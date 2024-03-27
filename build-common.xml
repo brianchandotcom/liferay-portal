@@ -229,11 +229,12 @@
 		</or>
 	</condition>
 
-	<fail message="Please use Java ${build.java.version.source.compatibility}.">
+	<fail message="Please use Java 1.8 or 21.">
 		<condition>
 			<not>
 				<or>
-					<equals arg1="${build.java.version.source.compatibility}" arg2="${java.specification.version}" />
+					<equals arg1="${java.specification.version}" arg2="1.8" />
+					<equals arg1="${java.specification.version}" arg2="21" />
 					<isset property="env.JENKINS_HOME" />
 				</or>
 			</not>
@@ -241,7 +242,7 @@
 	</fail>
 
 	<condition else="1.10.14" property="java.ant.version" value="1.9.3">
-		<equals arg1="${build.java.version.source.compatibility}" arg2="1.8" />
+		<equals arg1="${java.specification.version}" arg2="1.8" />
 	</condition>
 
 	<condition property="correct.ant.version">

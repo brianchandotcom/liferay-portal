@@ -112,17 +112,17 @@ public class BuildHistory {
 	public void merge(BuildHistory buildHistory) {
 		_mergeMap(_dailyInvokedBuilds, buildHistory.getDailyInvokedBuilds());
 		_mergeMap(
-			_dailyTotalTopLevelQueueTime,
-			buildHistory.getDailyTotalQueueTime());
-		_mergeMap(
 			_dailyInvokedTopLevelBuilds,
 			buildHistory.getDailyInvokedTopLevelBuilds());
+		_mergeMap(
+			_dailyTotalBuildDurations,
+			buildHistory.getDailyTotalBuildDurations());
 		_mergeMap(
 			_dailyTotalTopLevelBuildDurations,
 			buildHistory.getDailyTotalTopLevelBuildDurations());
 		_mergeMap(
-			_dailyTotalBuildDurations,
-			buildHistory.getDailyTotalBuildDurations());
+			_dailyTotalTopLevelQueueTime,
+			buildHistory.getDailyTotalQueueTime());
 
 		if (buildHistory.getDuration() > _duration) {
 			setDuration(buildHistory.getDuration());
@@ -333,13 +333,13 @@ public class BuildHistory {
 		protected Timeline() {
 			_size = _getTimelineSize(_duration);
 
-			_buildCounts = new long[_size];
-			_topLevelBuildCounts = new long[_size];
-			_buildCountsForAverage = new long[_size];
-			_totalBuildTime = new long[_size];
-			_totalQueueTime = new long[_size];
 			_averageBuildTime = new long[_size];
 			_averageQueueTime = new long[_size];
+			_buildCounts = new long[_size];
+			_buildCountsForAverage = new long[_size];
+			_topLevelBuildCounts = new long[_size];
+			_totalBuildTime = new long[_size];
+			_totalQueueTime = new long[_size];
 		}
 
 		private void _calculateAverages() {
@@ -400,13 +400,13 @@ public class BuildHistory {
 		if (buildJSONObject.isTopLevelBuild()) {
 			_topLevelBuildURLs.add(buildJSONObject.getURL());
 
-			_addData(
-				_dailyTotalTopLevelQueueTime, dateString,
-				buildJSONObject.getQueueDuration());
 			_addData(_dailyInvokedTopLevelBuilds, dateString, 1L);
 			_addData(
 				_dailyTotalTopLevelBuildDurations, dateString,
 				buildJSONObject.getDuration());
+			_addData(
+				_dailyTotalTopLevelQueueTime, dateString,
+				buildJSONObject.getQueueDuration());
 		}
 	}
 

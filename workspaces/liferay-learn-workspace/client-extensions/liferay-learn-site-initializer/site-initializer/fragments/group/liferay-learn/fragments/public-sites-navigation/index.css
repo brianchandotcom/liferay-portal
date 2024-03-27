@@ -626,21 +626,18 @@ nav.public-sites-navigation .account-dropdown {
 nav.public-sites-navigation .account-dropdown.show {
 	display: block;
 }
-nav.public-sites-navigation .account-dropdown .account-configurables {
-	border-bottom: 1px solid var(--color-neutral-3);
-}
-nav.public-sites-navigation .account-dropdown .settings {
+nav.public-sites-navigation .account-dropdown a {
 	border-radius: var(--border-radius);
 	color: var(--color-neutral-10);
 }
-nav.public-sites-navigation .account-dropdown .settings:hover,
-nav.public-sites-navigation .account-dropdown .settings:active,
-nav.public-sites-navigation .account-dropdown .settings:focus {
+nav.public-sites-navigation .account-dropdown a:hover,
+nav.public-sites-navigation .account-dropdown a:active,
+nav.public-sites-navigation .account-dropdown a:focus {
 	background: var(--color-action-primary-hover-lighten);
 }
-nav.public-sites-navigation .account-dropdown .settings:hover .settings-icon,
-nav.public-sites-navigation .account-dropdown .settings:active .settings-icon,
-nav.public-sites-navigation .account-dropdown .settings:focus .settings-icon {
+nav.public-sites-navigation .account-dropdown a:hover .settings-icon,
+nav.public-sites-navigation .account-dropdown a:active .settings-icon,
+nav.public-sites-navigation .account-dropdown a:focus .settings-icon {
 	opacity: 1;
 }
 nav.public-sites-navigation .account-dropdown .sign-out:hover,
@@ -862,23 +859,6 @@ nav.public-sites-navigation .menu-button-group {
 	nav.public-sites-navigation .search-wrapper .suggestions {
 		max-width: none;
 		width: 100%;
-	}
-	nav.public-sites-navigation
-		.search-wrapper
-		.suggestions
-		.suggestions-popular
-		.suggestions-popular-items {
-		flex-wrap: wrap;
-		min-width: auto;
-	}
-	nav.public-sites-navigation
-		.search-wrapper
-		.suggestions
-		.suggestions-popular
-		.suggestions-popular-items
-		.suggestions-popular-item {
-		margin: 0.5rem 0;
-		width: 45%;
 	}
 }
 .utility-nav-container {
@@ -1581,7 +1561,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	display: none;
 }
 .search-wrapper .suggestions.search-error .no-results-message,
-.search-wrapper .suggestions.search-error .suggestions-popular,
+.search-wrapper .suggestions.search-error .suggestions-default,
 .search-wrapper .suggestions.search-error .search-loading-animation {
 	display: none;
 }
@@ -1589,7 +1569,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	display: block;
 }
 .search-wrapper .suggestions.search-results-found .no-results-message,
-.search-wrapper .suggestions.search-results-found .suggestions-popular,
+.search-wrapper .suggestions.search-results-found .suggestions-default,
 .search-wrapper .suggestions.search-results-found .search-loading-animation {
 	display: none;
 }
@@ -1602,7 +1582,7 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 	display: table;
 }
 .search-wrapper .suggestions.loading-search .no-results-message,
-.search-wrapper .suggestions.loading-search .suggestions-popular,
+.search-wrapper .suggestions.loading-search .suggestions-default,
 .search-wrapper .suggestions.loading-search .suggested-text,
 .search-wrapper .suggestions.loading-search .search-suggestions,
 .search-wrapper .suggestions.loading-search .no-results-message,
@@ -1617,53 +1597,6 @@ html body:not(.has-edit-mode-menu) .content #main-content.layout-content {
 }
 .search-wrapper .suggestions .search-loading-animation {
 	display: none;
-}
-.search-wrapper .suggestions .suggestions-popular .suggestions-popular-text {
-	color: var(--white);
-	font-size: var(--text-small-caps-font-size);
-	font-weight: var(--font-weight-semi-bold);
-	letter-spacing: 0.05em;
-	opacity: 0.7;
-	text-transform: uppercase;
-}
-.search-wrapper .suggestions .suggestions-popular .suggestions-popular-items {
-	min-width: 480px;
-}
-.search-wrapper
-	.suggestions
-	.suggestions-popular
-	.suggestions-popular-items
-	.suggestions-popular-item {
-	background-color: var(--color-brand-primary-lighten-2, #6399ff);
-	border: 1px solid transparent;
-	border-radius: var(--border-radius-sm);
-	cursor: pointer;
-}
-.search-wrapper
-	.suggestions
-	.suggestions-popular
-	.suggestions-popular-items
-	.suggestions-popular-item:hover {
-	background-color: var(--color-brand-primary-lighten-3, #8fb5ff);
-	border-color: var(--white);
-}
-.search-wrapper
-	.suggestions
-	.suggestions-popular
-	.suggestions-popular-items
-	.suggestions-popular-item:hover
-	.suggestions-popular-item-text {
-	opacity: 0.8;
-}
-.search-wrapper
-	.suggestions
-	.suggestions-popular
-	.suggestions-popular-items
-	.suggestions-popular-item
-	.suggestions-popular-item-text {
-	color: var(--white);
-	opacity: 1;
-	padding: 10px;
 }
 .search-wrapper .suggestions .suggested-text {
 	color: #fff;

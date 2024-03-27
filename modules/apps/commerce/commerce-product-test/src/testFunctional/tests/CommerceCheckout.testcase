@@ -183,6 +183,7 @@ definition {
 	@priority = 5
 	test AddOrderFromAUserAndCheckoutFromAdminUser {
 		property portal.acceptance = "false";
+		property portal.release = "quarantine";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
 

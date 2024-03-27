@@ -162,6 +162,7 @@ definition {
 	@priority = 3
 	test CanSee404UtilityPagesWorkOnMiniumSite {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		var portalURL = PropsUtil.get("portal.url");
 

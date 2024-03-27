@@ -54,7 +54,7 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 		mutate(items);
 
 		Liferay.Util.openToast({
-			message: i18n.translate('success'),
+			message: i18n.translate('your-request-completed-successfully'),
 			type: 'success',
 		});
 

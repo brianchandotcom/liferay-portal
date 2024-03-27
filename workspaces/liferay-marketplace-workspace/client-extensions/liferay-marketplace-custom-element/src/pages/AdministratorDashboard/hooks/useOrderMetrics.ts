@@ -27,12 +27,15 @@ const useOrderMetrics = (param: FilterType) => {
 		const beforeLastPeriod = addDays(
 			currentTime,
 			-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER] * 2
-		).toISOString();
+		);
 
 		const lastPeriod = addDays(
 			currentTime,
 			-METRIC_PARAMETER[param as keyof typeof METRIC_PARAMETER]
-		).toISOString();
+		);
+
+		beforeLastPeriod.setHours(0, 0, 0);
+		lastPeriod.setHours(23, 59, 59);
 
 		const requestsParams = [
 			new URLSearchParams({
@@ -41,16 +44,21 @@ const useOrderMetrics = (param: FilterType) => {
 				sort: 'createDate:desc',
 			}),
 			new URLSearchParams({
-				fields: 'id,totalAmount',
-				filter: SearchBuilder.gt('createDate', lastPeriod),
+				fields: 'id',
+				filter: SearchBuilder.gt(
+					'createDate',
+					lastPeriod.toISOString()
+				),
+				pageSize: '1',
 			}),
 			new URLSearchParams({
-				fields: 'id,totalAmount',
+				fields: 'id',
 				filter: new SearchBuilder()
-					.lt('createDate', lastPeriod)
+					.lt('createDate', lastPeriod.toISOString())
 					.and()
-					.gt('createDate', beforeLastPeriod)
+					.gt('createDate', beforeLastPeriod.toISOString())
 					.build(),
+				pageSize: '1',
 			}),
 		];
 

@@ -120,23 +120,25 @@ const Metrics = () => {
 									}}
 									data={{
 										colors: {
-											['Current Week']: colors.color1,
-											['Last Week']: colors.color2,
+											['Last 7 days']: colors.color1,
+											['Previous Week']: colors.color2,
 										},
 										columns: [
 											[
-												'Current Week',
+												'Last 7 days',
 												...(metrics[0]?.dates ?? []),
 											],
 											[
-												'Last Week',
+												'Previous Week',
 												...(metrics[1]?.dates ?? []),
 											],
 										],
-										groups: [['Current Week', 'Last Week']],
+										groups: [
+											['Last 7 days', 'Previous Week'],
+										],
 										types: {
-											['Current Week']: 'area-spline',
-											['Last Week']: 'area-line',
+											['Last 7 days']: 'area-spline',
+											['Previous Week']: 'area-spline',
 										},
 									}}
 								/>

@@ -20,6 +20,7 @@ const CompareRunsTeams = () => {
 				display: {columns: false},
 				filterSchema: 'compareRunsTeams',
 			}}
+			matrixProps={{title: 'Teams'}}
 			resource={`/testray-run-comparisons/${runAId}/${runBId}`}
 			tableProps={{visible: false}}
 		/>

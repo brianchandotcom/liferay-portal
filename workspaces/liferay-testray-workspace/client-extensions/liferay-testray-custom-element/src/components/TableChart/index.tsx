@@ -10,11 +10,7 @@ import i18n from '~/i18n';
 import {CaseResultStatuses} from '~/util/statuses';
 
 type TableChartProps = {
-	matrixData: {
-		[key: string]: {
-			[key: string]: number;
-		};
-	};
+	matrixData: any;
 	title?: string;
 };
 
@@ -98,13 +94,13 @@ const formattedColumnName = (columnName: string) => {
 };
 
 const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
-	const {runA, runB} = useParams();
+	const {runA: runAId, runB: runBId} = useParams();
 
 	return (
 		<table className="table table-borderless table-sm tr-table-chart">
 			<thead>
 				<tr>
-					<td className="border-0" colSpan={2}>
+					<td className="border-0 h6" colSpan={2}>
 						{title}
 					</td>
 				</tr>
@@ -164,7 +160,7 @@ const TableChart: React.FC<TableChartProps> = ({matrixData, title}) => {
 									>
 										<Link
 											className="font-weight-bold"
-											to={`/compare-runs/${runA}/${runB}/cases?dueStatusA=${columnsDueStatus[verticalColumnIndex]}&dueStatusB=${columnsDueStatus[horizontalColumnIndex]}`}
+											to={`/compare-runs/${runAId}/${runBId}/cases?dueStatusA=${columnsDueStatus[verticalColumnIndex]}&dueStatusB=${columnsDueStatus[horizontalColumnIndex]}`}
 										>
 											{value}
 										</Link>

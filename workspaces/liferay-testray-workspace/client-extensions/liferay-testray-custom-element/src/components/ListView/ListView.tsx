@@ -33,7 +33,7 @@ import {
 	FilterSchema as FilterSchemaType,
 	filterSchema as filterSchemas,
 } from '../../schema/filter';
-import {APIResponse} from '../../services/rest';
+import {APIResponse, Results} from '../../services/rest';
 import {SortDirection} from '../../types';
 import {PAGINATION} from '../../util/constants';
 import EmptyState from '../EmptyState';
@@ -62,6 +62,7 @@ export type ListViewProps<T = any> = {
 		| 'onSelectAllRows'
 		| 'rowSelectable'
 	>;
+	matrixProps?: {title?: string};
 	normalizers?: {
 		onSelectRow?: (item: T) => number | number[];
 	};
@@ -99,6 +100,7 @@ const ListView: React.FC<ListViewProps> = ({
 		visible: managementToolbarVisible = true,
 		...managementToolbarProps
 	} = {},
+	matrixProps: {title} = {},
 	normalizers = {onSelectRow: noop},
 	onContextChange,
 	pagination = {displayTop: true},
@@ -207,10 +209,18 @@ const ListView: React.FC<ListViewProps> = ({
 		totalCount = 0,
 	} = response || {};
 
-	const itemsMemoized = useMemo(() => (results ? results : items), [
+	const matrixData = useMemo(
+		() => (results && results[0][title as keyof Results]) || [],
+		[results, title]
+	);
+
+	const itemsMemoized = useMemo(() => (results ? matrixData : items), [
 		items,
+		matrixData,
 		results,
 	]);
+
+	const isCompareRunsMatrix = title === 'Runs';
 
 	const columns = useMemo(
 		() =>
@@ -336,16 +346,22 @@ const ListView: React.FC<ListViewProps> = ({
 					actions={actions}
 					customFilterFields={customFilterFields}
 					tableProps={tableProps}
-					totalItems={itemsMemoized.length}
+					totalItems={
+						matrixData && !isCompareRunsMatrix
+							? Object.keys(itemsMemoized).length
+							: itemsMemoized.length
+					}
 				/>
 			)}
 
-			{!itemsMemoized.length && (
-				<EmptyState
-					description={error?.message}
-					type={error ? 'EMPTY_SEARCH' : 'EMPTY_STATE'}
-				/>
-			)}
+			{!isCompareRunsMatrix &&
+				!Object.keys(itemsMemoized).length &&
+				!itemsMemoized.length && (
+					<EmptyState
+						description={error?.message}
+						type={error ? 'EMPTY_SEARCH' : 'EMPTY_STATE'}
+					/>
+				)}
 
 			{children &&
 				children(response as APIResponse, {
@@ -382,14 +398,25 @@ const ListView: React.FC<ListViewProps> = ({
 				</>
 			)}
 
-			{!!results?.length &&
-				results?.map((runsData: any, index: number) => {
-					return (
-						<ClayLayout.Col key={index} lg={12} md={12}>
-							<TableChart matrixData={runsData.Runs} />
-						</ClayLayout.Col>
-					);
-				})}
+			{results &&
+				(isCompareRunsMatrix ? (
+					<ClayLayout.Col lg={12} md={12}>
+						<TableChart matrixData={itemsMemoized} title={title} />
+					</ClayLayout.Col>
+				) : (
+					<div className="d-flex flex-wrap">
+						{Object.entries(itemsMemoized).map(
+							([name, data], index) => (
+								<div className="m-4" key={index}>
+									<TableChart
+										matrixData={data}
+										title={name}
+									/>
+								</div>
+							)
+						)}
+					</div>
+				))}
 		</>
 	);
 };

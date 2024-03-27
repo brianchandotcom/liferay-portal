@@ -88,6 +88,7 @@ const CompareRunDetails: React.FC<CompareRunsDetailsProps> = ({runs = []}) => {
 							filterSchema: 'compareRunsTeams',
 							visible: false,
 						}}
+						matrixProps={{title: 'Runs'}}
 						resource={`/testray-run-comparisons/${runA?.id}/${runB?.id}`}
 						tableProps={{visible: false}}
 					/>

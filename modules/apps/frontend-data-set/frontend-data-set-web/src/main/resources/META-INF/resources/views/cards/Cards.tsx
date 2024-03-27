@@ -73,7 +73,7 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 					: undefined
 			}
 			selected={cardSelected}
-			stickerProps={schema.sticker && item[schema.sticker]}
+			stickerProps={null}
 			symbol={schema.symbol && item[schema.symbol]}
 			title={localizedTitle}
 		/>

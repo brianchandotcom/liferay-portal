@@ -93,7 +93,6 @@ export interface ICardSchema {
 	description: string;
 	image: string;
 	link: string;
-    sticker: string;
 	symbol: string;
 	title: string;
 }

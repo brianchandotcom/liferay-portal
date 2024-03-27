@@ -48,7 +48,8 @@ definition {
 	@description = "LPS-133993. Verify if its possible collect Digital Signature By button"
 	@priority = 5
 	test CanCollectDigitalSignatureByButton {
-		property solutions.acceptance = "true";
+		property portal.release = "quarantine";
+		property solutions.acceptance = "quarantine";
 
 		task ("Given that user Test creates a document") {
 			DMDocument.addCP(
@@ -92,7 +93,8 @@ definition {
 	@description = "LPS-133105. Verify if its possible get multiple signatures from diferent documents in DM"
 	@priority = 5
 	test CanGetMultipleSignaturesByButton {
-		property solutions.acceptance = "true";
+		property portal.release = "quarantine";
+		property solutions.acceptance = "quarantine";
 
 		task ("Given that user Test creates multiple documents") {
 			DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg");

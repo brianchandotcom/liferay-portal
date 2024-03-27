@@ -36,6 +36,8 @@ definition {
 	@description = "This is a test for LPS-131427. Verify if Digital Signature can be enable in Site Settings, using the Always Override Strategy"
 	@priority = 5
 	test CanEnableDigitalSignatureBySiteSettings {
+		property portal.release = "quarantine";
+
 		task ("Given that the digital signature site strategy is set as 'Always Override'") {
 			DigitalSignature.selectSiteStrategy(siteStrategy = "Always Override");
 

@@ -5,6 +5,10 @@
 
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.constants.AccountListTypeConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.portal.kernel.model.Contact;
@@ -19,7 +23,10 @@ import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.List;
@@ -46,7 +53,16 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 		super.setUp();
 
 		_organization = OrganizationTestUtil.addOrganization();
+
 		_user = UserTestUtil.addGroupAdminUser(testGroup);
+
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
+			_user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Override
@@ -61,6 +77,40 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 				url = "http://" + RandomTestUtil.randomString() + ".com";
 			}
 		};
+	}
+
+	@Override
+	protected WebUrl testGetAccountByExternalReferenceCodeWebUrlsPage_addWebUrl(
+			String externalReferenceCode, WebUrl webUrl)
+		throws Exception {
+
+		return _addWebUrl(
+			webUrl, AccountEntry.class.getName(),
+			_accountEntry.getAccountEntryId(),
+			AccountListTypeConstants.ACCOUNT_ENTRY_WEBSITE);
+	}
+
+	@Override
+	protected String
+			testGetAccountByExternalReferenceCodeWebUrlsPage_getExternalReferenceCode()
+		throws Exception {
+
+		return _accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	protected WebUrl testGetAccountWebUrlsPage_addWebUrl(
+			Long accountId, WebUrl webUrl)
+		throws Exception {
+
+		return _addWebUrl(
+			webUrl, AccountEntry.class.getName(), accountId,
+			AccountListTypeConstants.ACCOUNT_ENTRY_WEBSITE);
+	}
+
+	@Override
+	protected Long testGetAccountWebUrlsPage_getAccountId() throws Exception {
+		return _accountEntry.getAccountEntryId();
 	}
 
 	@Override
@@ -133,6 +183,12 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 			}
 		};
 	}
+
+	@DeleteAfterTestRun
+	private AccountEntry _accountEntry;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Organization _organization;

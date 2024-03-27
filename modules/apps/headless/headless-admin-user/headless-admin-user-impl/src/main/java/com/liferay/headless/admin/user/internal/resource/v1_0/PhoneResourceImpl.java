@@ -5,6 +5,9 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
+import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
@@ -15,6 +18,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,6 +33,29 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = PhoneResource.class
 )
 public class PhoneResourceImpl extends BasePhoneResourceImpl {
+
+	@Override
+	public Page<Phone> getAccountByExternalReferenceCodePhonesPage(
+			String externalReferenceCode)
+		throws Exception {
+
+		return getAccountPhonesPage(
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode));
+	}
+
+	@Override
+	public Page<Phone> getAccountPhonesPage(Long accountId) throws Exception {
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
+			accountId);
+
+		return Page.of(
+			transform(
+				_phoneService.getPhones(
+					accountEntry.getModelClassName(),
+					accountEntry.getAccountEntryId()),
+				PhoneUtil::toPhone));
+	}
 
 	@Override
 	public Page<Phone> getOrganizationPhonesPage(String organizationId)
@@ -62,6 +89,12 @@ public class PhoneResourceImpl extends BasePhoneResourceImpl {
 					Contact.class.getName(), user.getContactId()),
 				PhoneUtil::toPhone));
 	}
+
+	@Reference
+	private AccountEntryService _accountEntryService;
+
+	@Reference(target = DTOConverterConstants.ACCOUNT_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
 
 	@Reference(
 		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER

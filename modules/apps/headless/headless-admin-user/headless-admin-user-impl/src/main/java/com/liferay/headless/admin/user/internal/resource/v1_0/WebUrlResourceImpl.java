@@ -5,16 +5,21 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryService;
+import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,6 +34,30 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = WebUrlResource.class
 )
 public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
+
+	public Page<WebUrl> getAccountByExternalReferenceCodeWebUrlsPage(
+			String externalReferenceCode)
+		throws Exception {
+
+		return getAccountWebUrlsPage(
+			DTOConverterUtil.getModelPrimaryKey(
+				_accountResourceDTOConverter, externalReferenceCode));
+	}
+
+	@Override
+	public Page<WebUrl> getAccountWebUrlsPage(Long accountId)
+		throws PortalException {
+
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
+			accountId);
+
+		return Page.of(
+			transform(
+				_websiteService.getWebsites(
+					accountEntry.getModelClassName(),
+					accountEntry.getAccountEntryId()),
+				WebUrlUtil::toWebUrl));
+	}
 
 	@Override
 	public Page<WebUrl> getOrganizationWebUrlsPage(String organizationId)
@@ -62,6 +91,12 @@ public class WebUrlResourceImpl extends BaseWebUrlResourceImpl {
 	public WebUrl getWebUrl(Long webUrlId) throws Exception {
 		return WebUrlUtil.toWebUrl(_websiteService.getWebsite(webUrlId));
 	}
+
+	@Reference
+	private AccountEntryService _accountEntryService;
+
+	@Reference(target = DTOConverterConstants.ACCOUNT_RESOURCE_DTO_CONVERTER)
+	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
 
 	@Reference(
 		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER

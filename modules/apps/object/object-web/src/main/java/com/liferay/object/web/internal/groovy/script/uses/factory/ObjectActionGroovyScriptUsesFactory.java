@@ -6,6 +6,7 @@
 package com.liferay.object.web.internal.groovy.script.uses.factory;
 
 import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.definition.groovy.script.use.ObjectDefinitionGroovyScriptUseSourceURLFactory;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -41,7 +42,7 @@ public class ObjectActionGroovyScriptUsesFactory
 				return new GroovyScriptUse(
 					company.getWebId(),
 					objectAction.getLabel(resourceRequest.getLocale()),
-					new GroovyScriptUseSourceURLFactory(
+					new ObjectDefinitionGroovyScriptUseSourceURLFactory(
 					).create(
 						company, objectAction.getObjectDefinitionId(), _portal,
 						ObjectDefinitionsScreenNavigationEntryConstants.

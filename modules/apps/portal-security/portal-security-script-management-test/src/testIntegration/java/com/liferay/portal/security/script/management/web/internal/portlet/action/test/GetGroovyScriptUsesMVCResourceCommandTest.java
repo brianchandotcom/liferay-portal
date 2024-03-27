@@ -10,20 +10,18 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
+import com.liferay.object.definition.groovy.script.use.ObjectDefinitionGroovyScriptUseSourceURLFactory;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -36,7 +34,6 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -44,7 +41,6 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -52,9 +48,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
-
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -119,9 +112,9 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 					"sourceName", "company1ActiveGroovyObjectAction"
 				).put(
 					"sourceURL",
-					_getSourceURL(
+					_objectDefinitionGroovyScriptUseSourceURLFactory.create(
 						company1, objectDefinition1.getObjectDefinitionId(),
-						"actions")
+						_portal, "actions")
 				)
 			).put(
 				JSONUtil.put(
@@ -130,9 +123,9 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 					"sourceName", "company1ActiveGroovyObjectValidation"
 				).put(
 					"sourceURL",
-					_getSourceURL(
+					_objectDefinitionGroovyScriptUseSourceURLFactory.create(
 						company1, objectDefinition1.getObjectDefinitionId(),
-						"validations")
+						_portal, "validations")
 				)
 			).put(
 				JSONUtil.put(
@@ -141,9 +134,9 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 					"sourceName", "liferayActiveGroovyObjectAction"
 				).put(
 					"sourceURL",
-					_getSourceURL(
+					_objectDefinitionGroovyScriptUseSourceURLFactory.create(
 						company2, objectDefinition2.getObjectDefinitionId(),
-						"actions")
+						_portal, "actions")
 				)
 			).put(
 				JSONUtil.put(
@@ -152,9 +145,9 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 					"sourceName", "liferayActiveGroovyObjectValidation"
 				).put(
 					"sourceURL",
-					_getSourceURL(
+					_objectDefinitionGroovyScriptUseSourceURLFactory.create(
 						company2, objectDefinition2.getObjectDefinitionId(),
-						"validations")
+						_portal, "validations")
 				)
 			).toString(),
 			_getGroovyScriptUsesJSONArrayString());
@@ -281,39 +274,6 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 		return byteArrayOutputStream.toString();
 	}
 
-	private String _getSourceURL(
-			Company company, long objectDefinitionId,
-			String screenNavigationCategoryKey)
-		throws Exception {
-
-		String url = StringBundler.concat(
-			company.getPortalURL(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
-			GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
-			PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
-
-		url = HttpComponentsUtil.addParameter(
-			url, "p_p_id", ObjectPortletKeys.OBJECT_DEFINITIONS);
-		url = HttpComponentsUtil.addParameter(url, "p_p_lifecycle", "0");
-		url = HttpComponentsUtil.addParameter(
-			url, "p_p_mode", PortletMode.VIEW.toString());
-		url = HttpComponentsUtil.addParameter(
-			url, "p_p_state", WindowState.MAXIMIZED.toString());
-
-		String namespace = _portal.getPortletNamespace(
-			ObjectPortletKeys.OBJECT_DEFINITIONS);
-
-		url = HttpComponentsUtil.addParameter(
-			url, namespace + "mvcRenderCommandName",
-			"/object_definitions/edit_object_definition");
-		url = HttpComponentsUtil.addParameter(
-			url, namespace + "objectDefinitionId", objectDefinitionId);
-
-		return HttpComponentsUtil.addParameter(
-			url, namespace + "screenNavigationCategoryKey",
-			screenNavigationCategoryKey);
-	}
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -324,6 +284,10 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;
+
+	private final ObjectDefinitionGroovyScriptUseSourceURLFactory
+		_objectDefinitionGroovyScriptUseSourceURLFactory =
+			new ObjectDefinitionGroovyScriptUseSourceURLFactory();
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

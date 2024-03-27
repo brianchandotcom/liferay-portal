@@ -17,7 +17,7 @@
 			"enableCategorization": true,
 			"enableComments": true,
 			"enableObjectEntryHistory": true,
-			"externalReferenceCode": "J3Y7_TICKET",
+			"externalReferenceCode": "J3Y7-TICKET",
 			"label": {
 				"en_US": "J3Y7 Ticket"
 			},
@@ -35,7 +35,7 @@
 					"objectActionExecutorKey": "update-object-entry",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {
-						"objectDefinitionExternalReferenceCode": "J3Y7_TICKET",
+						"objectDefinitionExternalReferenceCode": "J3Y7-TICKET",
 						"predefinedValues": [
 							{
 								"inputAsValue": false,
@@ -138,7 +138,7 @@
 					"label": {
 						"en_US": "Priority"
 					},
-					"listTypeDefinitionExternalReferenceCode": "J3Y7_PRIORITIES",
+					"listTypeDefinitionExternalReferenceCode": "J3Y7-PRIORITIES",
 					"name": "priority",
 					"objectFieldSettings": [
 					],
@@ -158,7 +158,7 @@
 					"label": {
 						"en_US": "Region"
 					},
-					"listTypeDefinitionExternalReferenceCode": "J3Y7_REGIONS",
+					"listTypeDefinitionExternalReferenceCode": "J3Y7-REGIONS",
 					"name": "region",
 					"objectFieldSettings": [
 					],
@@ -177,7 +177,7 @@
 					"label": {
 						"en_US": "Resolution"
 					},
-					"listTypeDefinitionExternalReferenceCode": "J3Y7_RESOLUTIONS",
+					"listTypeDefinitionExternalReferenceCode": "J3Y7-RESOLUTIONS",
 					"name": "resolution",
 					"objectFieldSettings": [
 					],
@@ -226,14 +226,14 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "open",
-					"externalReferenceCode": "TICKET_STATUS",
+					"externalReferenceCode": "TICKET-STATUS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
 						"en_US": "Ticket Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "J3Y7_STATUSES",
+					"listTypeDefinitionExternalReferenceCode": "J3Y7-STATUSES",
 					"name": "ticketStatus",
 					"objectFieldSettings": [
 						{
@@ -443,7 +443,7 @@
 					"label": {
 						"en_US": "Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "J3Y7_TYPES",
+					"listTypeDefinitionExternalReferenceCode": "J3Y7-TYPES",
 					"name": "type",
 					"objectFieldSettings": [
 					],
@@ -462,8 +462,8 @@
 						"en_US": "J3Y7 Ticket to J3Y7 Tickets"
 					},
 					"name": "j3y7TicketToJ3Y7Tickets",
-					"objectDefinitionExternalReferenceCode1": "J3Y7_TICKET",
-					"objectDefinitionExternalReferenceCode2": "J3Y7_TICKET",
+					"objectDefinitionExternalReferenceCode1": "J3Y7-TICKET",
+					"objectDefinitionExternalReferenceCode2": "J3Y7-TICKET",
 					"type": "oneToMany"
 				}
 			],

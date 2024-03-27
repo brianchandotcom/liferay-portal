@@ -107,10 +107,29 @@ public class GroupIdQueryPreFilterContributor
 
 		TermsFilter groupIdTermsFilter = new TermsFilter(Field.GROUP_ID);
 
-		groupIdTermsFilter.addValues(
-			ArrayUtil.toStringArray(inactiveGroupIds.toArray(new Long[0])));
+		int maxTermsCount = 65536; //Could be set by a config
 
-		booleanFilter.add(groupIdTermsFilter, BooleanClauseOccur.MUST_NOT);
+		if (inactiveGroupIds.size() <= maxTermsCount) {
+			groupIdTermsFilter.addValues(
+				ArrayUtil.toStringArray(inactiveGroupIds.toArray(new Long[0])));
+		}
+		else {
+			for (int i = 0; i < inactiveGroupIds.size(); i++) {
+				groupIdTermsFilter.addValue(
+					String.valueOf(inactiveGroupIds.get(i)));
+
+				if (((i + 1) % maxTermsCount) == 0) {
+					booleanFilter.add(
+						groupIdTermsFilter, BooleanClauseOccur.MUST_NOT);
+
+					groupIdTermsFilter = new TermsFilter(Field.GROUP_ID);
+				}
+			}
+		}
+
+		if (!groupIdTermsFilter.isEmpty()) {
+			booleanFilter.add(groupIdTermsFilter, BooleanClauseOccur.MUST_NOT);
+		}
 	}
 
 	private void _addOwnerBooleanFilter(

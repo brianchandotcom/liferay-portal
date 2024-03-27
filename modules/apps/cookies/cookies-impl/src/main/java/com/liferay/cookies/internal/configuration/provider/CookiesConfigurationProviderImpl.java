@@ -45,6 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -409,6 +410,12 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	private boolean _isCompanyCookiesPreferenceHandlingEnabled(long companyId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getCompanyEnabled(companyId);
 	}
@@ -416,11 +423,23 @@ public class CookiesConfigurationProviderImpl
 	private boolean _isCompanyCookiesPreferenceHandlingExplicitConsentMode(
 		long companyId) {
 
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getCompanyExplicitConsentMode(companyId);
 	}
 
 	private boolean _isGroupCookiesPreferenceHandlingEnabled(long groupId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
 		return _cookiesPreferenceHandlingManagedServiceFactory.getGroupEnabled(
 			groupId);
 	}
@@ -428,16 +447,34 @@ public class CookiesConfigurationProviderImpl
 	private boolean _isGroupCookiesPreferenceHandlingExplicitConsentMode(
 		long groupId) {
 
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getGroupExplicitConsentMode(groupId);
 	}
 
 	private boolean _isSystemCookiesPreferenceHandlingEnabled() {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getSystemEnabled();
 	}
 
 	private boolean _isSystemCookiesPreferenceHandlingExplicitConsentMode() {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getSystemExplicitConsentMode();
 	}
@@ -451,12 +488,16 @@ public class CookiesConfigurationProviderImpl
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	@Reference
 	private CookiesPreferenceHandlingManagedServiceFactory
 		_cookiesPreferenceHandlingManagedServiceFactory;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.cookies.internal.configuration.admin.service.CookiesPreferenceHandlingManagedServiceFactory)"
+	)
+	private ManagedServiceFactory _managedServiceFactory;
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;

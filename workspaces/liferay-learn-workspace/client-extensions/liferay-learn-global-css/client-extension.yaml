@@ -1,0 +1,7 @@
+assemble:
+    - from: assets
+      into: static
+liferay-learn-global-css:
+    name: Liferay Learn Global CSS
+    type: globalCSS
+    url: global.css

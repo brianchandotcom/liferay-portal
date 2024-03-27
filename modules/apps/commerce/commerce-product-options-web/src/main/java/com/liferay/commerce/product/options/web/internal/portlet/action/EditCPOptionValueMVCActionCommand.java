@@ -9,6 +9,9 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPOptionValueKeyException;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -16,8 +19,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
@@ -48,10 +55,39 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 		long cpOptionValueId = ParamUtil.getLong(
 			actionRequest, "cpOptionValueId");
 
-		Map<Locale, String> nameMap = _localization.getLocalizationMap(
-			actionRequest, "name");
+		String label = ParamUtil.getString(actionRequest, "label");
+
+		Map<Locale, String> nameMap = null;
+
+		if (Validator.isNotNull(label)) {
+			nameMap = HashMapBuilder.put(
+				LocaleUtil.getDefault(), label
+			).build();
+		}
+		else {
+			nameMap = _localization.getLocalizationMap(actionRequest, "name");
+		}
+
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
+
 		String key = ParamUtil.getString(actionRequest, "key");
+
+		if (Validator.isNull(key)) {
+			String date = ParamUtil.getString(actionRequest, "date");
+			String duration = ParamUtil.getString(actionRequest, "duration");
+			String durationType = ParamUtil.getString(
+				actionRequest, "durationType");
+			String time = ParamUtil.getString(actionRequest, "time");
+			String timeZone = ParamUtil.getString(actionRequest, "timezone");
+
+			key = StringUtil.replace(
+				_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+					StringBundler.concat(
+						date, StringPool.DASH, time, StringPool.DASH, duration,
+						StringPool.DASH, durationType, StringPool.DASH,
+						timeZone)),
+				'_', '-');
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPOptionValue.class.getName(), actionRequest);
@@ -80,6 +116,9 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CPOptionValueService _cpOptionValueService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private Localization _localization;

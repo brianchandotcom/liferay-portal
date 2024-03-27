@@ -25,11 +25,90 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 <liferay-ui:error exception="<%= CPDefinitionOptionValueRelPriceException.class %>" message="please-enter-a-valid-price" />
 <liferay-ui:error exception="<%= CPDefinitionOptionValueRelQuantityException.class %>" message="please-enter-a-valid-quantity" />
 
-<aui:input defaultLanguageId="<%= cpDefinitionOptionValueRelDisplayContext.getCatalogDefaultLanguageId() %>" id="optionValueName" name="name" />
+<c:choose>
+	<c:when test="<%= cpDefinitionOptionValueRelDisplayContext.isCPDefinitionOptionRelSelectDate() %>">
 
-<aui:input label="position" name="priority" />
+		<%
+		Calendar calendar = cpDefinitionOptionValueRelDisplayContext.getCalendar();
+		TimeZone cpDefinitionOptionValueRelTimeZone = cpDefinitionOptionValueRelDisplayContext.getTimeZone();
+		String durationType = cpDefinitionOptionValueRelDisplayContext.getDurationType();
+		%>
 
-<aui:input helpMessage="key-help" name="key" />
+		<div class="row">
+			<div class="col-4">
+				<div class="form-group input-date-wrapper">
+					<label for="date"><liferay-ui:message key="date" /></label>
+
+					<liferay-ui:input-date
+						dayParam="day"
+						dayValue="<%= calendar.get(Calendar.DAY_OF_MONTH) %>"
+						disabled="<%= false %>"
+						monthParam="month"
+						monthValue="<%= calendar.get(Calendar.MONTH) %>"
+						name="date"
+						required="<%= true %>"
+						yearParam="year"
+						yearValue="<%= calendar.get(Calendar.YEAR) %>"
+					/>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<div class="form-group input-date-wrapper">
+					<label for="time"><liferay-ui:message key="time" /></label>
+
+					<liferay-ui:input-time
+						amPmParam="amPm"
+						amPmValue="<%= calendar.get(Calendar.AM_PM) %>"
+						disabled="<%= false %>"
+						hourParam="hour"
+						hourValue="<%= calendar.get(Calendar.HOUR) %>"
+						minuteParam="minute"
+						minuteValue="<%= calendar.get(Calendar.MINUTE) %>"
+						name="time"
+					/>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<div class="form-group input-date-wrapper">
+					<label for="timezone"><liferay-ui:message key="time-zone" /></label>
+
+					<liferay-ui:input-time-zone
+						name="timezone"
+						value="<%= cpDefinitionOptionValueRelTimeZone.getID() %>"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-6">
+				<aui:input name="duration" required="<%= true %>" type="text" value="<%= cpDefinitionOptionValueRelDisplayContext.getDuration() %>">
+					<aui:validator name="number" />
+				</aui:input>
+			</div>
+
+			<div class="col-6">
+				<aui:select label="duration-type" name="durationType">
+					<aui:option label="hours" selected="<%= (cpDefinitionOptionValueRel != null) && durationType.equals(CPConstants.HOURS_DURATION_TYPE) %>" value="<%= CPConstants.HOURS_DURATION_TYPE %>" />
+					<aui:option label="days" selected="<%= (cpDefinitionOptionValueRel != null) && durationType.equals(CPConstants.DAYS_DURATION_TYPE) %>" value="<%= CPConstants.DAYS_DURATION_TYPE %>" />
+				</aui:select>
+			</div>
+		</div>
+
+		<aui:input id="optionValueSelectDateLabel" name="label" readonly="<%= true %>" type="text" value="<%= (cpDefinitionOptionValueRel == null) ? StringPool.BLANK : cpDefinitionOptionValueRel.getName(locale) %>" />
+
+		<aui:input label="position" name="priority" />
+	</c:when>
+	<c:otherwise>
+		<aui:input defaultLanguageId="<%= cpDefinitionOptionValueRelDisplayContext.getCatalogDefaultLanguageId() %>" id="optionValueName" name="name" />
+
+		<aui:input label="position" name="priority" />
+
+		<aui:input helpMessage="key-help" name="key" />
+	</c:otherwise>
+</c:choose>
 
 <c:if test="<%= cpDefinitionOptionValueRel != null %>">
 	<aui:input checked="<%= cpDefinitionOptionValueRel.isPreselected() %>" inlineField="<%= true %>" label="default" name="preselected" type="toggle-switch" />
@@ -146,7 +225,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 	</c:if>
 </c:if>
 
-<c:if test="<%= cpDefinitionOptionValueRel == null %>">
+<c:if test="<%= (cpDefinitionOptionValueRel == null) && !cpDefinitionOptionValueRelDisplayContext.isCPDefinitionOptionRelSelectDate() %>">
 	<aui:script require="frontend-js-web/index as frontendJsWeb, commerce-frontend-js/utilities/slugify as slugify">
 		var {debounce} = frontendJsWeb;
 
@@ -157,10 +236,108 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 		var keyInput = form.querySelector('#<portlet:namespace />key');
 		var nameInput = form.querySelector('#<portlet:namespace />optionValueName');
 
-		var handleOnNameInput = function () {
-			keyInput.value = slugify.default(nameInput.value);
+		if (nameInput) {
+			var handleOnNameInput = function () {
+				keyInput.value = slugify.default(nameInput.value);
+			};
+
+			nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
+		}
+	</aui:script>
+</c:if>
+
+<c:if test="<%= cpDefinitionOptionValueRelDisplayContext.isCPDefinitionOptionRelSelectDate() %>">
+	<aui:script require="frontend-js-web/index as frontendJsWeb, commerce-frontend-js/utilities/slugify as slugify">
+		var {debounce} = frontendJsWeb;
+
+		var form = document.getElementById(
+			'<portlet:namespace />cpDefinitionOptionValueRelfm'
+		);
+
+		var labelInput = form.querySelector(
+			'#<portlet:namespace />optionValueSelectDateLabel'
+		);
+		var dateInput = form.querySelector('#<portlet:namespace />date');
+		var durationInput = form.querySelector('#<portlet:namespace />duration');
+		var durationTypeInput = form.querySelector(
+			'#<portlet:namespace />durationType'
+		);
+		var timeInput = form.querySelector('#<portlet:namespace />time');
+		var timeZoneInput = form.querySelector('#<portlet:namespace />timezone');
+
+		const optionValueSelectDateObj = new optionValueSelectDate();
+
+		var handleOnLabelInput = function () {
+			optionValueSelectDateObj.setDate(slugify.default(dateInput.value));
+			optionValueSelectDateObj.setTime(slugify.default(timeInput.value));
+			optionValueSelectDateObj.setTimezone(timeZoneInput.value);
+			optionValueSelectDateObj.setDuration(durationInput.value);
+			optionValueSelectDateObj.setDurationType(durationTypeInput.value);
+
+			labelInput.value = optionValueSelectDateObj.getLabel(
+				'<%= LocaleUtil.toBCP47LanguageId(locale) %>'
+			);
 		};
 
-		nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
+		dateInput.addEventListener('focus', debounce(handleOnLabelInput, 200));
+		durationInput.addEventListener('input', debounce(handleOnLabelInput, 200));
+		durationTypeInput.addEventListener('input', debounce(handleOnLabelInput, 200));
+		timeInput.addEventListener('change', debounce(handleOnLabelInput, 200));
+		timeZoneInput.addEventListener('change', debounce(handleOnLabelInput, 200));
+
+		function optionValueSelectDate() {
+			this.date = null;
+			this.duration = null;
+			this.durationType = null;
+			this.time = null;
+			this.timezone = null;
+
+			this.setDate = function (date) {
+				this.date = date;
+			};
+
+			this.setDuration = function (duration) {
+				this.duration = duration;
+			};
+
+			this.setDurationType = function (durationType) {
+				this.durationType = durationType;
+			};
+
+			this.setTime = function (time) {
+				this.time = time;
+			};
+
+			this.setTimezone = function (timezone) {
+				this.timezone = timezone;
+			};
+
+			this.getLabel = function (locale) {
+				const [month, day, year] = this.date.split('-');
+				const [hour, minute] = this.time.split('-');
+				const date = new Date(year, month - 1, day, hour, minute);
+				const options = {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+					hour: 'numeric',
+					minute: 'numeric',
+				};
+				const formattedDate = date.toLocaleDateString(locale, options);
+
+				if (this.duration && this.durationType) {
+					return (
+						formattedDate +
+						' (' +
+						this.timezone +
+						'), ' +
+						this.duration +
+						' ' +
+						this.durationType
+					);
+				}
+				return formattedDate + ' (' + this.timezone + ')';
+			};
+		}
 	</aui:script>
 </c:if>

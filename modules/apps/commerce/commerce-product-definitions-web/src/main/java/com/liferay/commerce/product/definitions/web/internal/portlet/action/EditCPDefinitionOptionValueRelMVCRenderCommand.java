@@ -44,7 +44,7 @@ public class EditCPDefinitionOptionValueRelMVCRenderCommand
 				new CPDefinitionOptionValueRelDisplayContext(
 					_actionHelper, _commerceCatalogLocalService,
 					_commerceCurrencyLocalService,
-					_portal.getHttpServletRequest(renderRequest));
+					_portal.getHttpServletRequest(renderRequest), _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

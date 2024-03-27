@@ -5,12 +5,15 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
 import com.liferay.commerce.product.exception.CPOptionValueKeyException;
 import com.liferay.commerce.product.exception.CPOptionValueNameException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -39,6 +42,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -47,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -369,6 +376,29 @@ public class CPOptionValueLocalServiceImpl
 		return cpOptionValues;
 	}
 
+	private String _getTimeZone(String[] splits) {
+		if ((splits == null) || (splits.length < 7) || splits[7].isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		if (splits.length > 8) {
+			String timeZone = StringBundler.concat(
+				StringUtil.upperCaseFirstLetter(splits[7]),
+				StringPool.FORWARD_SLASH,
+				StringUtil.upperCaseFirstLetter(splits[8]));
+
+			if ((splits.length > 9) && Validator.isNotNull(splits[9])) {
+				return StringBundler.concat(
+					timeZone, StringPool.UNDERLINE,
+					StringUtil.upperCaseFirstLetter(splits[9]));
+			}
+
+			return timeZone;
+		}
+
+		return splits[7].toUpperCase();
+	}
+
 	private void _reindexCPOption(long cpOptionId) throws PortalException {
 		Indexer<CPOption> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPOption.class);
@@ -422,6 +452,55 @@ public class CPOptionValueLocalServiceImpl
 
 			throw new CPOptionValueKeyException("Duplicate key " + key);
 		}
+
+		CPOption cpOption = cpOptionValue.getCPOption();
+
+		if (Objects.equals(
+				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+				cpOption.getCommerceOptionTypeKey())) {
+
+			if (key == null) {
+				throw new CPDefinitionOptionValueRelKeyException(
+					"Key is mandatory");
+			}
+
+			if (!key.matches("^[a-z0-9-]*$")) {
+				throw new CPDefinitionOptionValueRelKeyException("Invalid key");
+			}
+
+			String[] splits = key.split(StringPool.DASH);
+
+			Integer month = 0;
+			Integer day = 0;
+			Integer year = 0;
+			Integer hour = 0;
+			Integer minute = 0;
+
+			try {
+				month = Integer.valueOf(splits[0]);
+				day = Integer.valueOf(splits[1]);
+				year = Integer.valueOf(splits[2]);
+				hour = Integer.valueOf(splits[3]);
+				minute = Integer.valueOf(splits[4]);
+				Integer.valueOf(splits[5]);
+			}
+			catch (NumberFormatException numberFormatException) {
+				throw new CPDefinitionOptionValueRelKeyException(
+					"Invalid date", numberFormatException);
+			}
+
+			_portal.getDate(
+				month - 1, day, year, hour, minute,
+				TimeZoneUtil.getTimeZone(_getTimeZone(splits)),
+				CPDefinitionOptionValueRelKeyException.class);
+
+			if (!Objects.equals(CPConstants.DAYS_DURATION_TYPE, splits[6]) &&
+				!Objects.equals(CPConstants.HOURS_DURATION_TYPE, splits[6])) {
+
+				throw new CPDefinitionOptionValueRelKeyException(
+					"Invalid duration type");
+			}
+		}
 	}
 
 	private void _validateName(Map<Locale, String> nameMap)
@@ -446,6 +525,9 @@ public class CPOptionValueLocalServiceImpl
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

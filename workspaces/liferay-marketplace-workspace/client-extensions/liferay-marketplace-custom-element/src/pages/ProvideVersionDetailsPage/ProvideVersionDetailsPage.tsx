@@ -37,8 +37,6 @@ import './ProvideVersionDetailsPage.scss';
 import {useState} from 'react';
 import useSWR from 'swr';
 
-import upsertProductSpecification from '../ProvideAppBuildPage/components/UpsertProductSpecification';
-
 type ProvideVersionDetailsPageProps = {
 	onClickBack: () => void;
 	onClickContinue: () => void;
@@ -301,12 +299,6 @@ export function ProvideVersionDetailsPage({
 
 						setProcessing(false);
 					}
-
-					await upsertProductSpecification(appProductId, {
-						productId: appProductId,
-						specificationKey: 'latest-version',
-						value: appVersion,
-					});
 
 					onClickContinue();
 				}}

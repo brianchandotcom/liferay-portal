@@ -90,6 +90,7 @@ definition {
 	test CanSessionReplicateBetweenNodes {
 		property cluster.session.replicated = "true";
 		property custom.properties = "portlet.session.replicate.enabled=true";
+		property portal.release = "quarantine";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

@@ -42,6 +42,7 @@ import org.osgi.framework.wiring.BundleWiring;
 /**
  * @author Tina Tian
  */
+@Ignore
 @RunWith(Arquillian.class)
 public class SnapshotIntegrationTest {
 

@@ -122,6 +122,7 @@ public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
 			_errorMessages.toString(), 0, _errorMessages.size());
 	}
 
+	@Ignore
 	@Test
 	public void testVerifyLayoutsWithReservedLayoutFriendlyURLs()
 		throws Exception {

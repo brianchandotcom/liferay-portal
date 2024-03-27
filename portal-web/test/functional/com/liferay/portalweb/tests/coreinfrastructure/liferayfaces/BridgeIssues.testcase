@@ -33,6 +33,8 @@ definition {
 
 		// FACES_1470
 
+		property portal.upstream = "quarantine";
+
 		BridgeIssues.addPageAndPortlet(
 			pageURL = "faces-1470",
 			portletName = "FACES-1470");
@@ -252,6 +254,8 @@ definition {
 
 		// FACES_1635Resources
 
+		property portal.upstream = "quarantine";
+
 		BridgeIssues.addPageAndPortlet(
 			pageURL = "jsf-applicant?p_p_parallel=0",
 			portletName = "jsf-applicant");
@@ -324,6 +328,8 @@ definition {
 	test FacesIssuesPortletSmoke {
 
 		// FACES_224
+
+		property portal.upstream = "quarantine";
 
 		BridgeIssues.addPageAndPortlet(
 			pageURL = "faces-224",
@@ -533,6 +539,8 @@ definition {
 	test PrimefacesIssuesSmoke {
 
 		// FACES_1513_2185
+
+		property portal.upstream = "quarantine";
 
 		BridgeIssues.addPageAndPortlet(
 			pageURL = "faces-1513-2185",

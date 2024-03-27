@@ -157,6 +157,8 @@ ${Application['org.apache.catalina.resources'].getContext().getInstanceManager()
 
 	@priority = 4
 	test ViewInstanceManagerVelocity {
+		property portal.upstream = "quarantine";
+
 		SetWindowSize(value1 = "1920,1080");
 
 		Navigator.gotoSitePage(

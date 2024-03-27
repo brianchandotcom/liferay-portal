@@ -83,7 +83,7 @@ public class QueueListener {
 			JSONObject koroneikiAccountJSONObject = jsonObject.getJSONObject(
 				"account");
 
-			if (_isPartner(koroneikiAccountJSONObject)) {
+			if (!_isPartner(koroneikiAccountJSONObject)) {
 				channel.basicReject(deliveryTag, false);
 
 				return;

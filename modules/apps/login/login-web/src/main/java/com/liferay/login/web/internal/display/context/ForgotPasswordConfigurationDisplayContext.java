@@ -26,12 +26,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ForgotPasswordConfigurationDisplayContext {
 
 	public ForgotPasswordConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		PortletPreferences portletPreferences) {
+		HttpServletRequest httpServletRequest, PortletPreferences portletPreferences,
+		RenderRequest renderRequest) {
 
 		_httpServletRequest = httpServletRequest;
-		_renderRequest = renderRequest;
 		_portletPreferences = portletPreferences;
+		_renderRequest = renderRequest;
 	}
 
 	public List<TabsItem> getTabsItems() {

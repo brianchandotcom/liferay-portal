@@ -42,7 +42,10 @@ import {
 	patchProductIdCategory,
 	updateProductSpecification,
 } from '../../utils/api';
-import {submitBase64EncodedFile} from '../../utils/util';
+import {
+	getTemporaryProductIdForSpefication,
+	submitBase64EncodedFile,
+} from '../../utils/util';
 import OfferingTypeCheckbox from './components/OfferingTypeCheckbox';
 import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
 
@@ -181,6 +184,7 @@ export function ProvideAppBuildPage({
 		{
 			appBuild,
 			appERC,
+			appId,
 			appProductId,
 			appType,
 			buildAppPackages,
@@ -188,6 +192,12 @@ export function ProvideAppBuildPage({
 		},
 		dispatch,
 	] = useAppContext();
+
+	const _tempProductId = getTemporaryProductIdForSpefication({
+		appId,
+		appProductId,
+	});
+
 	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
 		string[]
 	>([]);
@@ -426,8 +436,7 @@ export function ProvideAppBuildPage({
 		}
 	};
 
-	const submitAppBuildClouldResourceRequirements = async (
-		appId: number,
+	const submitAppBuildCloudResourceRequirements = async (
 		productSpecifications: BodyProductSpecificationProps[]
 	) => {
 		const dataSpecificationList = await getProductSpecifications({
@@ -450,7 +459,7 @@ export function ProvideAppBuildPage({
 					specificationKey: productSpecification.specificationKey,
 					value: {en_US: productSpecification.value},
 				},
-				id: dataSpecification?.id || appId,
+				id: dataSpecification?.id || _tempProductId,
 			});
 		}
 	};
@@ -470,12 +479,11 @@ export function ProvideAppBuildPage({
 
 		const {id} = await createProductSpecification({
 			body: {
-				productId: appProductId,
 				specificationId: dataSpecification.id,
 				specificationKey: dataSpecification.key,
 				value: {en_US: appType.value},
 			},
-			id: appProductId,
+			id: _tempProductId,
 		});
 
 		dispatch({
@@ -801,8 +809,7 @@ export function ProvideAppBuildPage({
 						await submitAppBuildPackages();
 
 						if (isCloud) {
-							await submitAppBuildClouldResourceRequirements(
-								appProductId,
+							await submitAppBuildCloudResourceRequirements(
 								bodySpecification
 							);
 						}

@@ -64,7 +64,9 @@ export function ReviewAndSubmitAppPage({
 			const isCloud =
 				productSpecifications?.some(
 					({specificationKey, value}) =>
-						specificationKey === 'type' && value.en_US === 'cloud'
+						specificationKey === 'type' &&
+						(value.en_US === 'cloud' ||
+							((value as unknown) as string) === 'cloud')
 				) ?? false;
 
 			let sku = skus[0];

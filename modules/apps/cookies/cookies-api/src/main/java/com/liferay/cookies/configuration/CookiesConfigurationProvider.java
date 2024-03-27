@@ -7,12 +7,24 @@ package com.liferay.cookies.configuration;
 
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Daniel Sanz
  */
+@ProviderType
 public interface CookiesConfigurationProvider {
+
+	public String getCompanyConfigurationURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
 
 	public CookiesBannerConfiguration getCookiesBannerConfiguration(
 			ThemeDisplay themeDisplay)
@@ -24,6 +36,33 @@ public interface CookiesConfigurationProvider {
 
 	public CookiesPreferenceHandlingConfiguration
 			getCookiesPreferenceHandlingConfiguration(ThemeDisplay themeDisplay)
+		throws Exception;
+
+	public String getGroupConfigurationURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
+	public String getSystemConfigurationURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
+	public boolean isCookiesPreferenceHandlingConfigurationDefined(
+			ExtendedObjectClassDefinition.Scope scope, long scopePK)
+		throws Exception;
+
+	public boolean isCookiesPreferenceHandlingEnabled(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK);
+
+	public boolean isCookiesPreferenceHandlingExplicitConsentMode(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK);
+
+	public void resetCookiesPreferenceHandlingConfiguration(
+			ExtendedObjectClassDefinition.Scope scope, long scopePK)
+		throws ConfigurationException;
+
+	public void updateCookiesPreferenceHandlingConfiguration(
+			boolean enabled, boolean explicitConsentMode,
+			ExtendedObjectClassDefinition.Scope scope, long scopePK)
 		throws Exception;
 
 }

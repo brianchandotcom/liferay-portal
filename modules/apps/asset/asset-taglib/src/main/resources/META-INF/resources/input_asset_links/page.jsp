@@ -7,6 +7,10 @@
 
 <%@ include file="/input_asset_links/init.jsp" %>
 
+<%
+List<DropdownItem> dropdownItems = inputAssetLinksDisplayContext.getActionDropdownItems();
+%>
+
 <liferay-util:buffer
 	var="removeLinkIcon"
 >
@@ -21,11 +25,14 @@
 			"removeIcon", removeLinkIcon
 		).build()
 	%>'
+	alignmentByViewport='<%= true %>'
+	alignmentPosition='<%= 6 %>'
 	aria-label='<%= LanguageUtil.get(request, "select-items") %>'
 	cssClass="btn btn-secondary"
-	dropdownItems="<%= inputAssetLinksDisplayContext.getActionDropdownItems() %>"
+	dropdownItems="<%= dropdownItems %>"
 	label='<%= LanguageUtil.get(request, "select") %>'
 	propsTransformer="{InputAssetLinkDropdownDefaultPropsTransformer} from asset-taglib"
+	searchable="<%= dropdownItems.size() > 7 %>"
 />
 
 <liferay-ui:search-container

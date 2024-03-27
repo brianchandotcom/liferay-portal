@@ -47,7 +47,6 @@ public class ForgotPasswordConfigurationDisplayContext {
 			LocalizationUtil.getLocalizationXmlFromPreferences(
 				_portletPreferences, _renderRequest, "emailPasswordSentSubject",
 				"preferences", StringPool.BLANK);
-
 		String emailPasswordSentBody =
 			LocalizationUtil.getLocalizationXmlFromPreferences(
 				_portletPreferences, _renderRequest, "emailPasswordSentBody",

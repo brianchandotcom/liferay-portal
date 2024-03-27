@@ -60,8 +60,7 @@ public class MailServiceTest {
 
 		Session session = _mailService.getSession(companyId);
 
-		Assert.assertEquals(
-			smtpHost, session.getProperty("mail.smtp.host"));
+		Assert.assertEquals(smtpHost, session.getProperty("mail.smtp.host"));
 
 		session = _mailService.getSession(_portal.getDefaultCompanyId());
 

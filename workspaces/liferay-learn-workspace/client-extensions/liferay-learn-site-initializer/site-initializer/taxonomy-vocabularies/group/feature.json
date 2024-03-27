@@ -1,0 +1,12 @@
+{
+	"description": "Feature",
+	"description_i18n": {
+		"en_US": "Feature"
+	},
+	"externalReferenceCode": "FEATURE",
+	"name": "Feature",
+	"name_i18n": {
+		"en_US": "Feature"
+	},
+	"viewableBy": "Anyone"
+}

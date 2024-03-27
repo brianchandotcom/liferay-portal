@@ -70,6 +70,31 @@
 			}
 		},
 		{
+			"externalReferenceCode": "jobDefinitionParameterType",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "string",
+					"key": "string",
+					"name": "String",
+					"name_i18n": {
+						"en-US": "String"
+					}
+				},
+				{
+					"externalReferenceCode": "url",
+					"key": "url",
+					"name": "URL",
+					"name_i18n": {
+						"en-US": "URL"
+					}
+				}
+			],
+			"name": "jobDefinitionParameterType",
+			"name_i18n": {
+				"en-US": "Job Definition Parameter Type"
+			}
+		},
+		{
 			"externalReferenceCode": "liferayBundle",
 			"listTypeEntries": [
 				{

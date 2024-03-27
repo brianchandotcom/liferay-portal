@@ -60,9 +60,10 @@ public class DBUpgraderTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		DataAccess.cleanUp(_connection);
+
 		ReflectionTestUtil.setFieldValue(
 			StartupHelperUtil.class, "_upgrading", _upgrading);
-		DataAccess.cleanUp(_connection);
 	}
 
 	@After

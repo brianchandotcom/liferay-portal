@@ -153,14 +153,14 @@
 	</div>
 [/#macro]
 
-[#macro request_status activity_status end_date]
+[#macro request_status activity_status end_date is_claimed]
 	<div class="align-items-center d-sm-flex mb-1 text-neutral-7 text-weight-semi-bold">
 		<p class="mb-0">
 			Request Status:
 			<span class="${request_status_style[activity_status.key]}">
 				${(activity_status.name)!}
 			</span>
-			[#if end_date?has_content && activity_status.key == 'active']
+			[#if end_date?has_content && activity_status.key == 'active' && !is_claimed]
 				[#assign request_date = days_difference_from_now(end_date) /]
 
 				<span class="font-weight-light ml-sm-2">
@@ -171,6 +171,11 @@
 					[#else]
 						Last day to claim
 					[/#if]
+				</span>
+			[/#if]
+			[#if activity_status.key == 'expired']
+				<span class="font-weight-light ml-sm-2">
+					This activity can no longer be claimed
 				</span>
 			[/#if]
 		</p>
@@ -193,7 +198,7 @@
 						[#if mdf_status != "draft"]
 							[@claim_status activity_claims=(activity.actToMDFClmActs)! /]
 
-							[@request_status activity_status=(activity.activityStatus)! end_date=(activity.endDate?date)! /]
+							[@request_status activity_status=(activity.activityStatus)! end_date=(activity.endDate?date)! is_claimed=(activity.actToMDFClmActs?has_content)! /]
 						[#else]
 							[@clay.alert displayType="info" message="Pending MDF Request submission." title="Info" /]
 						[/#if]

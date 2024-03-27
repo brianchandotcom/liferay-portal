@@ -184,6 +184,159 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
+	public void testGetAccountByExternalReferenceCodePhonesPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountByExternalReferenceCodePhonesPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetAccountByExternalReferenceCodePhonesPage_getIrrelevantExternalReferenceCode();
+
+		Page<Phone> page =
+			phoneResource.getAccountByExternalReferenceCodePhonesPage(
+				externalReferenceCode);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			Phone irrelevantPhone =
+				testGetAccountByExternalReferenceCodePhonesPage_addPhone(
+					irrelevantExternalReferenceCode, randomIrrelevantPhone());
+
+			page = phoneResource.getAccountByExternalReferenceCodePhonesPage(
+				irrelevantExternalReferenceCode);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(irrelevantPhone, (List<Phone>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodePhonesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		Phone phone1 = testGetAccountByExternalReferenceCodePhonesPage_addPhone(
+			externalReferenceCode, randomPhone());
+
+		Phone phone2 = testGetAccountByExternalReferenceCodePhonesPage_addPhone(
+			externalReferenceCode, randomPhone());
+
+		page = phoneResource.getAccountByExternalReferenceCodePhonesPage(
+			externalReferenceCode);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(phone1, (List<Phone>)page.getItems());
+		assertContains(phone2, (List<Phone>)page.getItems());
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodePhonesPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountByExternalReferenceCodePhonesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected Phone testGetAccountByExternalReferenceCodePhonesPage_addPhone(
+			String externalReferenceCode, Phone phone)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodePhonesPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodePhonesPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetAccountPhonesPage() throws Exception {
+		Long accountId = testGetAccountPhonesPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountPhonesPage_getIrrelevantAccountId();
+
+		Page<Phone> page = phoneResource.getAccountPhonesPage(accountId);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantAccountId != null) {
+			Phone irrelevantPhone = testGetAccountPhonesPage_addPhone(
+				irrelevantAccountId, randomIrrelevantPhone());
+
+			page = phoneResource.getAccountPhonesPage(irrelevantAccountId);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(irrelevantPhone, (List<Phone>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountPhonesPage_getExpectedActions(
+					irrelevantAccountId));
+		}
+
+		Phone phone1 = testGetAccountPhonesPage_addPhone(
+			accountId, randomPhone());
+
+		Phone phone2 = testGetAccountPhonesPage_addPhone(
+			accountId, randomPhone());
+
+		page = phoneResource.getAccountPhonesPage(accountId);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(phone1, (List<Phone>)page.getItems());
+		assertContains(phone2, (List<Phone>)page.getItems());
+		assertValid(
+			page, testGetAccountPhonesPage_getExpectedActions(accountId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountPhonesPage_getExpectedActions(Long accountId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected Phone testGetAccountPhonesPage_addPhone(
+			Long accountId, Phone phone)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountPhonesPage_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountPhonesPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetOrganizationPhonesPage() throws Exception {
 		String organizationId =
 			testGetOrganizationPhonesPage_getOrganizationId();

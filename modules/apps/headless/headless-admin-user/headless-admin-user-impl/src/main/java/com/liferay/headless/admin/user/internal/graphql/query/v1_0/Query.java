@@ -513,6 +513,42 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeEmailAddresses(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the account's email addresses.")
+	public EmailAddressPage accountByExternalReferenceCodeEmailAddresses(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource -> new EmailAddressPage(
+				emailAddressResource.
+					getAccountByExternalReferenceCodeEmailAddressesPage(
+						externalReferenceCode)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountEmailAddresses(accountId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the account's email addresses.")
+	public EmailAddressPage accountEmailAddresses(
+			@GraphQLName("accountId") Long accountId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_emailAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			emailAddressResource -> new EmailAddressPage(
+				emailAddressResource.getAccountEmailAddressesPage(accountId)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {emailAddress(emailAddressId: ___){emailAddress, id, primary, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the email address.")
@@ -783,6 +819,40 @@ public class Query {
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						organizationResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodePhones(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the account's phone numbers.")
+	public PhonePage accountByExternalReferenceCodePhones(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_phoneResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			phoneResource -> new PhonePage(
+				phoneResource.getAccountByExternalReferenceCodePhonesPage(
+					externalReferenceCode)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountPhones(accountId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the account's phone numbers.")
+	public PhonePage accountPhones(@GraphQLName("accountId") Long accountId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_phoneResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			phoneResource -> new PhonePage(
+				phoneResource.getAccountPhonesPage(accountId)));
 	}
 
 	/**
@@ -1500,6 +1570,40 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeWebUrls(externalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the account's web URLs.")
+	public WebUrlPage accountByExternalReferenceCodeWebUrls(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_webUrlResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			webUrlResource -> new WebUrlPage(
+				webUrlResource.getAccountByExternalReferenceCodeWebUrlsPage(
+					externalReferenceCode)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountWebUrls(accountId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the account's web URLs.")
+	public WebUrlPage accountWebUrls(@GraphQLName("accountId") Long accountId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_webUrlResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			webUrlResource -> new WebUrlPage(
+				webUrlResource.getAccountWebUrlsPage(accountId)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organizationWebUrls(organizationId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the organization's URLs.")
@@ -1725,6 +1829,29 @@ public class Query {
 		}
 
 		private Organization _organization;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountByExternalReferenceCodePhonesPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodePhonesPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField(description = "Retrieves the account's phone numbers.")
+		public PhonePage byExternalReferenceCodePhones() throws Exception {
+			return _applyComponentServiceObjects(
+				_phoneResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				phoneResource -> new PhonePage(
+					phoneResource.getAccountByExternalReferenceCodePhonesPage(
+						_account.getExternalReferenceCode())));
+		}
+
+		private Account _account;
 
 	}
 
@@ -2022,6 +2149,33 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Account.class)
+	public class
+		GetAccountByExternalReferenceCodeEmailAddressesPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeEmailAddressesPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField(description = "Retrieves the account's email addresses.")
+		public EmailAddressPage byExternalReferenceCodeEmailAddresses()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_emailAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				emailAddressResource -> new EmailAddressPage(
+					emailAddressResource.
+						getAccountByExternalReferenceCodeEmailAddressesPage(
+							_account.getExternalReferenceCode())));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
 	public class GetUserGroupByExternalReferenceCodeTypeExtension {
 
 		public GetUserGroupByExternalReferenceCodeTypeExtension(
@@ -2224,6 +2378,26 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Account.class)
+	public class GetAccountWebUrlsPageTypeExtension {
+
+		public GetAccountWebUrlsPageTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(description = "Retrieves the account's web URLs.")
+		public WebUrlPage webUrls() throws Exception {
+			return _applyComponentServiceObjects(
+				_webUrlResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				webUrlResource -> new WebUrlPage(
+					webUrlResource.getAccountWebUrlsPage(_account.getId())));
+		}
+
+		private Account _account;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
 	public class
 		GetAccountByExternalReferenceCodeUserAccountByEmailAddressAccountRolesPageTypeExtension {
 
@@ -2303,6 +2477,26 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountPhonesPageTypeExtension {
+
+		public GetAccountPhonesPageTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(description = "Retrieves the account's phone numbers.")
+		public PhonePage phones() throws Exception {
+			return _applyComponentServiceObjects(
+				_phoneResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				phoneResource -> new PhonePage(
+					phoneResource.getAccountPhonesPage(_account.getId())));
+		}
+
+		private Account _account;
+
+	}
+
 	@GraphQLTypeExtension(Organization.class)
 	public class GetOrganizationWebUrlsPageTypeExtension {
 
@@ -2323,6 +2517,29 @@ public class Query {
 		}
 
 		private Organization _organization;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountByExternalReferenceCodeWebUrlsPageTypeExtension {
+
+		public GetAccountByExternalReferenceCodeWebUrlsPageTypeExtension(
+			Account account) {
+
+			_account = account;
+		}
+
+		@GraphQLField(description = "Retrieves the account's web URLs.")
+		public WebUrlPage byExternalReferenceCodeWebUrls() throws Exception {
+			return _applyComponentServiceObjects(
+				_webUrlResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				webUrlResource -> new WebUrlPage(
+					webUrlResource.getAccountByExternalReferenceCodeWebUrlsPage(
+						_account.getExternalReferenceCode())));
+		}
+
+		private Account _account;
 
 	}
 
@@ -2414,6 +2631,27 @@ public class Query {
 		}
 
 		private UserAccount _userAccount;
+
+	}
+
+	@GraphQLTypeExtension(Account.class)
+	public class GetAccountEmailAddressesPageTypeExtension {
+
+		public GetAccountEmailAddressesPageTypeExtension(Account account) {
+			_account = account;
+		}
+
+		@GraphQLField(description = "Retrieves the account's email addresses.")
+		public EmailAddressPage emailAddresses() throws Exception {
+			return _applyComponentServiceObjects(
+				_emailAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				emailAddressResource -> new EmailAddressPage(
+					emailAddressResource.getAccountEmailAddressesPage(
+						_account.getId())));
+		}
+
+		private Account _account;
 
 	}
 

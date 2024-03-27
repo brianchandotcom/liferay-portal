@@ -182,6 +182,178 @@ public abstract class BaseEmailAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGetAccountByExternalReferenceCodeEmailAddressesPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getIrrelevantExternalReferenceCode();
+
+		Page<EmailAddress> page =
+			emailAddressResource.
+				getAccountByExternalReferenceCodeEmailAddressesPage(
+					externalReferenceCode);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			EmailAddress irrelevantEmailAddress =
+				testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantEmailAddress());
+
+			page =
+				emailAddressResource.
+					getAccountByExternalReferenceCodeEmailAddressesPage(
+						irrelevantExternalReferenceCode);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantEmailAddress, (List<EmailAddress>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeEmailAddressesPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		EmailAddress emailAddress1 =
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+				externalReferenceCode, randomEmailAddress());
+
+		EmailAddress emailAddress2 =
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+				externalReferenceCode, randomEmailAddress());
+
+		page =
+			emailAddressResource.
+				getAccountByExternalReferenceCodeEmailAddressesPage(
+					externalReferenceCode);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(emailAddress1, (List<EmailAddress>)page.getItems());
+		assertContains(emailAddress2, (List<EmailAddress>)page.getItems());
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected EmailAddress
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_addEmailAddress(
+				String externalReferenceCode, EmailAddress emailAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeEmailAddressesPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetAccountEmailAddressesPage() throws Exception {
+		Long accountId = testGetAccountEmailAddressesPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountEmailAddressesPage_getIrrelevantAccountId();
+
+		Page<EmailAddress> page =
+			emailAddressResource.getAccountEmailAddressesPage(accountId);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantAccountId != null) {
+			EmailAddress irrelevantEmailAddress =
+				testGetAccountEmailAddressesPage_addEmailAddress(
+					irrelevantAccountId, randomIrrelevantEmailAddress());
+
+			page = emailAddressResource.getAccountEmailAddressesPage(
+				irrelevantAccountId);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(
+				irrelevantEmailAddress, (List<EmailAddress>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountEmailAddressesPage_getExpectedActions(
+					irrelevantAccountId));
+		}
+
+		EmailAddress emailAddress1 =
+			testGetAccountEmailAddressesPage_addEmailAddress(
+				accountId, randomEmailAddress());
+
+		EmailAddress emailAddress2 =
+			testGetAccountEmailAddressesPage_addEmailAddress(
+				accountId, randomEmailAddress());
+
+		page = emailAddressResource.getAccountEmailAddressesPage(accountId);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(emailAddress1, (List<EmailAddress>)page.getItems());
+		assertContains(emailAddress2, (List<EmailAddress>)page.getItems());
+		assertValid(
+			page,
+			testGetAccountEmailAddressesPage_getExpectedActions(accountId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountEmailAddressesPage_getExpectedActions(Long accountId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected EmailAddress testGetAccountEmailAddressesPage_addEmailAddress(
+			Long accountId, EmailAddress emailAddress)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountEmailAddressesPage_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountEmailAddressesPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetEmailAddress() throws Exception {
 		EmailAddress postEmailAddress = testGetEmailAddress_addEmailAddress();
 

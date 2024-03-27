@@ -1047,12 +1047,12 @@ public class HttpImpl implements Http {
 
 		poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
 			_MAX_CONNECTIONS_PER_HOST);
-		poolingHttpClientConnectionManager.setMaxTotal(_MAX_TOTAL_CONNECTIONS);
 		poolingHttpClientConnectionManager.setDefaultSocketConfig(
 			SocketConfig.custom(
 			).setSoKeepAlive(
 				_httpConfiguration.tcpKeepAliveEnabled()
 			).build());
+		poolingHttpClientConnectionManager.setMaxTotal(_MAX_TOTAL_CONNECTIONS);
 
 		return poolingHttpClientConnectionManager;
 	}

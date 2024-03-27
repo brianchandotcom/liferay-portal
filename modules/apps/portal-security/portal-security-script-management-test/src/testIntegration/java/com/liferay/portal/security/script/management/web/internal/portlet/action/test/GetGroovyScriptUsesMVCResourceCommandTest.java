@@ -89,26 +89,26 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 
 	@Test
 	public void testGetGroovyScriptUses() throws Exception {
-		Company company1Company = CompanyTestUtil.addCompany("company1.com");
+		Company company1 = CompanyTestUtil.addCompany("company1.com");
 
-		User company1User = UserTestUtil.addCompanyAdminUser(company1Company);
+		User user1 = UserTestUtil.addCompanyAdminUser(company1);
 
 		ObjectDefinition objectDefinition1 = _createObjectDefinition(
-			company1User.getUserId());
+			user1.getUserId());
 
 		_createObjectDefinitionGroovyScriptUses(
-			"company1", objectDefinition1, company1User.getUserId());
+			"company1", objectDefinition1, user1.getUserId());
 
-		Company liferayCompany = _companyLocalService.getCompany(
+		Company company2 = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		User liferayUser = TestPropsValues.getUser();
+		User user2 = TestPropsValues.getUser();
 
 		ObjectDefinition objectDefinition2 = _createObjectDefinition(
-			liferayUser.getUserId());
+			user2.getUserId());
 
 		_createObjectDefinitionGroovyScriptUses(
-			"liferay", objectDefinition2, liferayUser.getUserId());
+			"liferay", objectDefinition2, user2.getUserId());
 
 		Assert.assertEquals(
 			JSONFactoryUtil.createJSONArray(
@@ -120,8 +120,8 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 				).put(
 					"sourceURL",
 					_getSourceURL(
-						company1Company,
-						objectDefinition1.getObjectDefinitionId(), "actions")
+						company1, objectDefinition1.getObjectDefinitionId(),
+						"actions")
 				)
 			).put(
 				JSONUtil.put(
@@ -131,8 +131,7 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 				).put(
 					"sourceURL",
 					_getSourceURL(
-						company1Company,
-						objectDefinition1.getObjectDefinitionId(),
+						company1, objectDefinition1.getObjectDefinitionId(),
 						"validations")
 				)
 			).put(
@@ -143,8 +142,8 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 				).put(
 					"sourceURL",
 					_getSourceURL(
-						liferayCompany,
-						objectDefinition2.getObjectDefinitionId(), "actions")
+						company2, objectDefinition2.getObjectDefinitionId(),
+						"actions")
 				)
 			).put(
 				JSONUtil.put(
@@ -154,8 +153,7 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 				).put(
 					"sourceURL",
 					_getSourceURL(
-						liferayCompany,
-						objectDefinition2.getObjectDefinitionId(),
+						company2, objectDefinition2.getObjectDefinitionId(),
 						"validations")
 				)
 			).toString(),

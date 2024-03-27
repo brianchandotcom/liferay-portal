@@ -60,8 +60,8 @@ public class ForgotPasswordConfigurationActionImpl
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ForgotPasswordConfigurationDisplayContext(
-				httpServletRequest, renderRequest.getPreferences()),
-				renderRequest);
+				httpServletRequest, renderRequest.getPreferences(),
+				renderRequest));
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}

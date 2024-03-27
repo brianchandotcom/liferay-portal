@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.option;
 
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.option.CommerceOptionType;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
@@ -38,22 +39,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"commerce.option.type.display.order:Integer=200",
-		"commerce.option.type.key=" + TextCommerceOptionTypeImpl.KEY
+		"commerce.option.type.key=" + CPConstants.PRODUCT_OPTION_TEXT_KEY
 	},
 	service = CommerceOptionType.class
 )
 public class TextCommerceOptionTypeImpl implements CommerceOptionType {
 
-	public static final String KEY = "text";
-
 	@Override
 	public String getKey() {
-		return KEY;
+		return CPConstants.PRODUCT_OPTION_TEXT_KEY;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, KEY);
+		return _language.get(locale, CPConstants.PRODUCT_OPTION_TEXT_KEY);
 	}
 
 	@Override

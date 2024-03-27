@@ -57,7 +57,7 @@ const TabsCard: React.FC<ITabsCardProps> = ({groupId}) => {
 					>
 						<ClayLink
 							href={toRoute(route, {groupId})}
-							onClick={() => setActiveLabel(activeLabel)}
+							onClick={() => setActiveLabel(label)}
 						>
 							{label}
 						</ClayLink>

@@ -410,6 +410,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					_resourceActionLocalService.checkResourceActions();
 
+					_portletLocalService.checkPortlets(company.getCompanyId());
+
 					TransactionCommitCallbackUtil.registerCallback(
 						() -> {
 							Company dbPartitionCompany =

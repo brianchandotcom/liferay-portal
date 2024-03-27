@@ -201,19 +201,22 @@
 		},
 		{
 			"externalReferenceCode": "liferayBinariesCacheUpdater",
-			"jobDefinitionsToJobDefinitionParameters": [],
+			"jobDefinitionsToJobDefinitionParameters": [
+			],
 			"key": "liferayBinariesCacheUpdater",
 			"label": "Liferay Binaries Cache Updater"
 		},
 		{
 			"externalReferenceCode": "maintenanceDaily",
-			"jobDefinitionsToJobDefinitionParameters": [],
+			"jobDefinitionsToJobDefinitionParameters": [
+			],
 			"key": "maintenanceDaily",
 			"label": "Maintenance Daily"
 		},
 		{
 			"externalReferenceCode": "maintenanceMatrixJobs",
-			"jobDefinitionsToJobDefinitionParameters": [],
+			"jobDefinitionsToJobDefinitionParameters": [
+			],
 			"key": "maintenanceMatrixJobs",
 			"label": "Maintenance Matrix Jobs"
 		},
@@ -229,7 +232,8 @@
 		},
 		{
 			"externalReferenceCode": "maintenanceWeekly",
-			"jobDefinitionsToJobDefinitionParameters": [],
+			"jobDefinitionsToJobDefinitionParameters": [
+			],
 			"key": "maintenanceWeekly",
 			"label": "Maintenance Weekly"
 		},
@@ -526,8 +530,8 @@
 					"externalReferenceCode": "testSuiteName"
 				}
 			],
-			"label": "Portal Hotfix Release",
-			"key": "portalHotfixRelease"
+			"key": "portalHotfixRelease",
+			"label": "Portal Hotfix Release"
 		},
 		{
 			"externalReferenceCode": "portalPullRequest",
@@ -870,7 +874,8 @@
 		},
 		{
 			"externalReferenceCode": "verification",
-			"jobDefinitionsToJobDefinitionParameters": [],
+			"jobDefinitionsToJobDefinitionParameters": [
+			],
 			"key": "verification",
 			"label": "Verification"
 		},

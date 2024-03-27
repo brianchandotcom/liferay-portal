@@ -3,9 +3,9 @@
 		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
 		"parameters": {
 			"containsHeaders": "true",
-			"updateStrategy": "UPDATE",
 			"createStrategy": "UPSERT",
-			"onErrorFail": "false"
+			"onErrorFail": "false",
+			"updateStrategy": "UPDATE"
 		},
 		"taskItemDelegateName": "C_JobDefinitionParameter"
 	},
@@ -153,9 +153,9 @@
 			"externalReferenceCode": "pluginsMarketplaceAppURL",
 			"key": "pluginsMarketplaceAppURL",
 			"label": "Plugins Marketplace App URL",
-			"valueRegex": "https?://.+",
 			"type": "URL",
-			"valueDescription": "Insert your plugins Marketplace app URL here"
+			"valueDescription": "Insert your plugins Marketplace app URL here",
+			"valueRegex": "https?://.+"
 		},
 		{
 			"externalReferenceCode": "pluginsUpstreamBranchName",

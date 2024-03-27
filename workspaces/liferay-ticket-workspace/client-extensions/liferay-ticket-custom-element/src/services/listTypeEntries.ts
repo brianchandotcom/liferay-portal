@@ -23,11 +23,11 @@ async function fetchListTypeEntries(externalReferenceCode: string) {
 	}));
 }
 
-export const J3Y7_PRIORITIES = 'J3Y7_PRIORITIES';
-export const J3Y7_REGIONS = 'J3Y7_REGIONS';
-export const J3Y7_RESOLUTIONS = 'J3Y7_RESOLUTIONS';
-export const J3Y7_STATUSES = 'J3Y7_STATUSES';
-export const J3Y7_TYPES = 'J3Y7_TYPES';
+export const J3Y7_PRIORITIES = 'J3Y7-PRIORITIES';
+export const J3Y7_REGIONS = 'J3Y7-REGIONS';
+export const J3Y7_RESOLUTIONS = 'J3Y7-RESOLUTIONS';
+export const J3Y7_STATUSES = 'J3Y7-STATUSES';
+export const J3Y7_TYPES = 'J3Y7-TYPES';
 
 const listTypeDefinitionERCs = [
 	J3Y7_PRIORITIES,

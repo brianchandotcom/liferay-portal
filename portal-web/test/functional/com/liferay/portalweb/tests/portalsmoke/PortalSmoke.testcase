@@ -97,10 +97,10 @@ definition {
 	test SmokeWithEmbeddedHypersonic {
 		property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "passwords.default.policy.change.required=true";
-		property portal.upstream = "quarantine";
 		property database.hypersonic.embedded = "true";
 		property database.types = "hypersonic";
 		property portal.smoke = "false";
+		property portal.upstream = "quarantine";
 
 		User.firstLoginUI(
 			newPassword = "test2",

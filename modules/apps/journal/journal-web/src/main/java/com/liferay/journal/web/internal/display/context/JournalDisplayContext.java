@@ -93,7 +93,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
@@ -1447,6 +1446,53 @@ public class JournalDisplayContext {
 			_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
 	}
 
+	private void _addBooleanClauses(SearchContext searchContext) {
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (ArrayUtil.isNotEmpty(_getAssetCategoryIds())) {
+			booleanFilter.add(
+				_getAssetCategoryIdsFilter(), BooleanClauseOccur.MUST);
+		}
+
+		if (ArrayUtil.isNotEmpty(_getAssetTagNames())) {
+			booleanFilter.add(
+				_getAssetTagNamesFilter(), BooleanClauseOccur.MUST);
+		}
+
+		if (_isSearchLocationCurrentFolder()) {
+			booleanFilter.add(
+				_getCurrentFolderFilter(), BooleanClauseOccur.MUST_NOT);
+		}
+
+		if (!isHighlightedDDMStructure() && !isSearch()) {
+			booleanFilter.addTerm(
+				Field.FOLDER_ID, String.valueOf(getFolderId()),
+				BooleanClauseOccur.MUST);
+		}
+
+		if ((isNavigationMine() || isNavigationRecent()) &&
+			(_themeDisplay.getUserId() > 0)) {
+
+			booleanFilter.addTerm(
+				Field.USER_ID, String.valueOf(_themeDisplay.getUserId()),
+				BooleanClauseOccur.MUST);
+		}
+
+		if (!booleanFilter.hasClauses()) {
+			return;
+		}
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.setPreBooleanFilter(booleanFilter);
+
+		searchContext.setBooleanClauses(
+			new BooleanClause[] {
+				BooleanClauseFactoryUtil.create(
+					booleanQuery, BooleanClauseOccur.MUST.getName())
+			});
+	}
+
 	private SearchContainer<Object> _getArticleAndFolderSearchContainer()
 		throws PortalException {
 
@@ -1706,48 +1752,6 @@ public class JournalDisplayContext {
 		portletURL.setParameter("type", getType());
 
 		return portletURL;
-	}
-
-	private BooleanClause<Query>[] _getBooleanClauses() {
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-		BooleanFilter booleanFilter = new BooleanFilter();
-
-		if (ArrayUtil.isNotEmpty(_getAssetCategoryIds())) {
-			booleanFilter.add(
-				_getAssetCategoryIdsFilter(), BooleanClauseOccur.MUST);
-		}
-
-		if (ArrayUtil.isNotEmpty(_getAssetTagNames())) {
-			booleanFilter.add(
-				_getAssetTagNamesFilter(), BooleanClauseOccur.MUST);
-		}
-
-		if (_isSearchLocationCurrentFolder()) {
-			booleanFilter.add(
-				_getCurrentFolderFilter(), BooleanClauseOccur.MUST_NOT);
-		}
-
-		if (!isHighlightedDDMStructure() && !isSearch()) {
-			booleanFilter.addTerm(
-				Field.FOLDER_ID, String.valueOf(getFolderId()),
-				BooleanClauseOccur.MUST);
-		}
-
-		if ((isNavigationMine() || isNavigationRecent()) &&
-			(_themeDisplay.getUserId() > 0)) {
-
-			booleanFilter.addTerm(
-				Field.USER_ID, String.valueOf(_themeDisplay.getUserId()),
-				BooleanClauseOccur.MUST);
-		}
-
-		booleanQuery.setPreBooleanFilter(booleanFilter);
-
-		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQuery, BooleanClauseOccur.MUST.getName())
-		};
 	}
 
 	private SearchContainer<MBMessage> _getCommentsSearchContainer()
@@ -2061,7 +2065,7 @@ public class JournalDisplayContext {
 
 		searchContext.setAttributes(attributes);
 
-		searchContext.setBooleanClauses(_getBooleanClauses());
+		_addBooleanClauses(searchContext);
 
 		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");

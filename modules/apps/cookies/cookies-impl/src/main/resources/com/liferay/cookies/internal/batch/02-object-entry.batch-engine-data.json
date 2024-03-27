@@ -1,0 +1,467 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "CookieEntry",
+		"userId": 0,
+		"version": "v1.0"
+	},
+	"items": [
+		{
+			"cookieType": "necessary",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_1",
+			"host": "Liferay",
+			"name": "ID",
+			"purpose": "Encrypted UserId",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_2",
+			"host": "Liferay",
+			"name": "LOGIN",
+			"purpose": "Used when rememberMe is enabled.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_3",
+			"host": "Liferay",
+			"name": "PASSWORD",
+			"purpose": "Encrypted userPassword. Used when rememberMe is enabled.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_4",
+			"host": "Liferay",
+			"name": "REMEMBER_ME",
+			"purpose": "User can skip user authentication from the same device where the user previously authenticated.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Session time",
+			"externalReferenceCode": "COOKIE_ENTRY_5",
+			"host": "Liferay",
+			"name": "SAML_SP_SESSION_KEY",
+			"purpose": "Enables the DXP SAML SP to participate in SAML SLO (Single Log Out).",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Session time",
+			"externalReferenceCode": "COOKIE_ENTRY_6",
+			"host": "Liferay",
+			"name": "SAML_SSO_SESSION_ID",
+			"purpose": "Enabled the SAML IDP SSO session to have a longer lifetime than the user's HttpSession with that IDP. The cookie causes new authenticated HttpSessions to be automatically created on demand.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "Session time",
+			"externalReferenceCode": "COOKIE_ENTRY_7",
+			"host": "Liferay",
+			"name": "JSESSIONID",
+			"purpose": "",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_8",
+			"host": "Liferay",
+			"name": "COOKIE_SUPPORT",
+			"purpose": "Used to determine if cookies can actually be saved to the browser.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_9",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_FUNCTIONAL",
+			"purpose": "Stores the end users consent for the functional cookies, its value is true or false. Only stored when the Cookie Preference Handling function is enabled.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_10",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_NECESSARY",
+			"purpose": "Stores the end users consent for the functional cookies, its value is always true. Only stored when the Cookie Preference Handling function is enabled.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_11",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_PERFORMANCE",
+			"purpose": "Stores the end users consent for the performance cookies, its value is true or false. Only stored when the Cookie Preference Handling function is enabled.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_12",
+			"host": "Liferay",
+			"name": "CONSENT_TYPE_PERSONALIZATION",
+			"purpose": "Stores the end users consent for the personalization cookies, its value is true or false. Only stored when the Cookie Preference Handling function is enabled.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_13",
+			"host": "Liferay",
+			"name": "COMMERCE_CONTINUE_AS_GUEST",
+			"purpose": "Allows user to checkout an order as guest with no need to login.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_14",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
+			"purpose": "Allows user to checkout an order as guest with no need to login.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_15",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.wish.list.model.CommerceWishList#groupId",
+			"purpose": "Allows guest user to make guest wishlist that eventually become the user wishlist.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "Session time",
+			"externalReferenceCode": "COOKIE_ENTRY_16",
+			"host": "Liferay",
+			"name": "com.liferay.commerce.model.CommerceOrder#groupId",
+			"purpose": "The cookie is needed to store PunchOut contextual order.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Session time",
+			"externalReferenceCode": "COOKIE_ENTRY_17",
+			"host": "Liferay",
+			"name": "COMMERCE_COMPARE_cpDefinitionIds_commerceChannelGroupId",
+			"purpose": "Allows user to compare products.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "Session time",
+			"externalReferenceCode": "COOKIE_ENTRY_18",
+			"host": "Liferay",
+			"name": "LFR_SESSION_STATE_userID",
+			"purpose": "Manages session extension/invalidation when user does not use “Remember Me” feature.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "COOKIE_ENTRY_19",
+			"host": "Liferay",
+			"name": "activeWorkspaceId",
+			"purpose": "Was used to identify the current workspace they're on so that we can show the user the correct tier of the zendesk help widget. However this is not required anymore because we do not use the zendesk widget anymore so we can remove the code for this.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "COOKIE_ENTRY_20",
+			"host": "Liferay",
+			"name": "subscriptions",
+			"purpose": "Was used to identify the current workspace they're on so that we can show the user the correct tier of the zendesk help widget. However this is not required anymore because we do not use the zendesk widget anymore so we can remove the code for this.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "COOKIE_ENTRY_21",
+			"host": "Liferay",
+			"name": "sidebar",
+			"purpose": "Used to determine if the sidebar should be open/closed based on the user's last session.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "COOKIE_ENTRY_22",
+			"host": "Liferay",
+			"name": "maintenanceSeen",
+			"purpose": "Used to determine if the server maintenance message should be displayed to the user based on whether the user has dismissed it or not.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "",
+			"externalReferenceCode": "COOKIE_ENTRY_23",
+			"host": "Liferay",
+			"name": "_com_liferay_portal_search_admin_web_portlet_SearchAdminPortlet_userID_hideReindexConfirmationModal",
+			"purpose": "Used to hide the confirmation modal when a reindex action is executed if a user checks “Do not show me again”.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "",
+			"externalReferenceCode": "COOKIE_ENTRY_24",
+			"host": "Liferay",
+			"name": "com.liferay.search.experiences.web_addSXPElementSidebar",
+			"purpose": "Used to determine if the Add Query Elements sidebar should be opened/closed while changing tabs in the  Edit Blueprint page.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "",
+			"externalReferenceCode": "COOKIE_ENTRY_25",
+			"host": "Liferay",
+			"name": "com.liferay.search.experiences.web_successMessage",
+			"purpose": "Used to display a success message toast when saving a blueprint.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "personalization",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_26",
+			"host": "Liferay",
+			"name": "ab_test_variant_id",
+			"purpose": "Used to store the current experience served by A/B Testing to the user.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "personalization",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_27",
+			"host": "Liferay",
+			"name": "ac_client_user_id",
+			"purpose": "Used to store the current userId from AC.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "",
+			"externalReferenceCode": "COOKIE_ENTRY_28",
+			"host": "Liferay",
+			"name": "liferay.cookie.consent",
+			"purpose": "If the user has consented to the use of cookies through the fragment.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_29",
+			"host": "Liferay",
+			"name": "GUEST_LANGUAGE_ID",
+			"purpose": "Sets the language ID to use when the user's language ID is not available.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "Session time",
+			"externalReferenceCode": "COOKIE_ENTRY_30",
+			"host": "Liferay",
+			"name": "acess_token",
+			"purpose": "Identifies the logged in user in the cloud console and cloud admin.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "Session time",
+			"externalReferenceCode": "COOKIE_ENTRY_31",
+			"host": "Liferay",
+			"name": "connect.sid",
+			"purpose": "Identifies a single session in Express Server (backend).",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_32",
+			"host": "Liferay",
+			"name": "_hjSessionUser",
+			"purpose": "Generated by hotjar - online behavior analysis tool - Set when a user first lands on a page.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "30 min",
+			"externalReferenceCode": "COOKIE_ENTRY_33",
+			"host": "Liferay",
+			"name": "_hjIncludedInPageviewSample",
+			"purpose": "Generated by hotjar - online behavior analysis tool.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "30 min",
+			"externalReferenceCode": "COOKIE_ENTRY_34",
+			"host": "Liferay",
+			"name": "_hjSession",
+			"purpose": "Generated by hotjar - online behavior analysis tool - Holds current session data.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "Session time",
+			"externalReferenceCode": "COOKIE_ENTRY_35",
+			"host": "Liferay",
+			"name": "_hjFirstSeen",
+			"purpose": "Generated by hotjar - online behavior analysis tool - Identifies a new user's first session.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "30 min",
+			"externalReferenceCode": "COOKIE_ENTRY_36",
+			"host": "Liferay",
+			"name": "_hjIncludedInSessionSample",
+			"purpose": "Generated by hotjar - online behavior analysis tool.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "30 min",
+			"externalReferenceCode": "COOKIE_ENTRY_37",
+			"host": "Liferay",
+			"name": "_hjAbsoluteSessionInProgress",
+			"purpose": "Generated by hotjar - online behavior analysis tool.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "1 Day",
+			"externalReferenceCode": "COOKIE_ENTRY_38",
+			"host": "Liferay",
+			"name": "_gid",
+			"purpose": "Generated by Google Analytics.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "2 years",
+			"externalReferenceCode": "COOKIE_ENTRY_39",
+			"host": "Liferay",
+			"name": "_ga",
+			"purpose": "Generated by Google Analytics.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "1 min",
+			"externalReferenceCode": "COOKIE_ENTRY_40",
+			"host": "Liferay",
+			"name": "_gat_gtag_UA_*",
+			"purpose": "Generated by Google Analytics.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "performance",
+			"expiration": "",
+			"externalReferenceCode": "COOKIE_ENTRY_41",
+			"host": "Liferay",
+			"name": "__zlcmid",
+			"purpose": "Generated by Zendesk to identify a users session.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "",
+			"externalReferenceCode": "COOKIE_ENTRY_42",
+			"host": "Liferay",
+			"name": "SERVER_ID",
+			"purpose": "Generated by the Webserver Service.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "20 seconds",
+			"externalReferenceCode": "COOKIE_ENTRY_43",
+			"host": "Liferay",
+			"name": "SELECTED_CATEGORIES_COOKIE_",
+			"purpose": "Lasts 20 seconds when opening the categories selector popup, helping to add more than 400 categories.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "COOKIE_ENTRY_44",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_EXPANDED_TEXT",
+			"purpose": "Browser Local Storage is used to store accessibility settings for unauthenticated users.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "COOKIE_ENTRY_45",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_INCREASED_TEXT_SPACING",
+			"purpose": "Browser Local Storage is used to store accessibility settings for unauthenticated users.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "COOKIE_ENTRY_46",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_REDUCED_MOTION",
+			"purpose": "Browser Local Storage is used to store accessibility settings for unauthenticated users.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "Forever(local storage)",
+			"externalReferenceCode": "COOKIE_ENTRY_47",
+			"host": "Liferay",
+			"name": "ACCESSIBILITY_SETTING_UNDERLINED_LINKS1",
+			"purpose": "Browser Local Storage is used to store accessibility settings for unauthenticated users.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "",
+			"externalReferenceCode": "COOKIE_ENTRY_48",
+			"host": "Liferay",
+			"name": "OAUTH2_REMEMBER_DEVICE_",
+			"purpose": "User can skip OAuth 2 authorization flow from the same device where the user previously authorized.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "functional",
+			"expiration": "",
+			"externalReferenceCode": "COOKIE_ENTRY_49",
+			"host": "Liferay",
+			"name": "userTokenName",
+			"purpose": "In tokenSSO, a token could be stored in cookie so user agent can stay logged in.",
+			"type": "First Party"
+		},
+		{
+			"cookieType": "necessary",
+			"expiration": "365 days",
+			"externalReferenceCode": "COOKIE_ENTRY_50",
+			"host": "Liferay",
+			"name": "COMPANY_ID",
+			"purpose": "Company Id",
+			"type": "First Party"
+		}
+	]
+}

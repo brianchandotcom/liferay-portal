@@ -152,7 +152,7 @@ public class LayoutUtilityPageEntryStagedModelDataHandler
 								getExternalReferenceCode(),
 							portletDataContext.getScopeGroupId());
 			}
-System.out.println("sajt");
+
 			if (existingLayoutUtilityPageEntry == null) {
 				importedLayoutUtilityPageEntry = _addStagedModel(
 					portletDataContext, importedLayoutUtilityPageEntry);

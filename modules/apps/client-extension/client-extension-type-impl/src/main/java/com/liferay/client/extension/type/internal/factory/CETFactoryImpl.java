@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -201,12 +200,11 @@ public class CETFactoryImpl implements CETFactory {
 
 	@Override
 	public void validate(
-			UnicodeProperties newTypeSettingsUnicodeProperties,
+			long companyId, UnicodeProperties newTypeSettingsUnicodeProperties,
 			UnicodeProperties oldTypeSettingsUnicodeProperties, String type)
 		throws PortalException {
 
-		CETImplFactory cetImplFactory = _getCETImplFactory(
-			CompanyThreadLocal.getCompanyId(), type);
+		CETImplFactory cetImplFactory = _getCETImplFactory(companyId, type);
 
 		CET oldCET = null;
 

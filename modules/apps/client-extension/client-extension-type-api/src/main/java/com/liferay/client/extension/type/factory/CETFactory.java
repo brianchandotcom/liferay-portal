@@ -40,7 +40,7 @@ public interface CETFactory {
 	public Collection<String> getTypes();
 
 	public void validate(
-			UnicodeProperties newTypeSettingsUnicodeProperties,
+			long companyId, UnicodeProperties newTypeSettingsUnicodeProperties,
 			UnicodeProperties oldTypeSettingsUnicodeProperties, String type)
 		throws PortalException;
 

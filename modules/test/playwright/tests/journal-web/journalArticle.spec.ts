@@ -62,6 +62,8 @@ const expect = baseExpect.extend({
 	}),
 });
 
+const keepTitlesUntranslated = mergeTests(baseTest);
+
 const prefixUrlTest = mergeTests(
 	baseTest,
 	featureFlagsTest({
@@ -96,6 +98,44 @@ const privateContentIconTest = mergeTests(
 	featureFlagsTest({
 		'LPD-10626': true,
 	})
+);
+
+keepTitlesUntranslated(
+	'LPD-20723: Clay link is translating asset titles/names by default in vertical card',
+	async ({apiHelpers, journalPage, page, site}) => {
+		const contentStructureId = await getBasicWebContentStructureId(
+			apiHelpers
+		);
+
+		const title = 'add-web-content';
+
+		await addApprovedStructuredContent(
+			apiHelpers,
+			site.id,
+			contentStructureId,
+			title
+		);
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await journalPage.changeView('cards');
+
+		await expect(page.getByRole('link', {name: title})).toBeVisible({
+			timeout: 1000,
+		});
+
+		await journalPage.changeView('list');
+
+		await expect(page.getByRole('link', {name: title})).toBeVisible({
+			timeout: 1000,
+		});
+
+		await journalPage.changeView('table');
+
+		await expect(page.getByRole('link', {name: title})).toBeVisible({
+			timeout: 1000,
+		});
+	}
 );
 
 privateContentIconTest(

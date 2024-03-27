@@ -132,6 +132,7 @@ JSONPackageJSONBNDVersionCheck | [Bug Prevention](bug_prevention_checks.markdown
 JSONPackageJSONCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .ipynb, .json or .npmbridgerc | Checks content of `package.json` files. |
 JSONPackageJSONDependencyVersionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .ipynb, .json or .npmbridgerc | Checks the version for dependencies in `package.json` files. |
 JSONPageFileCheck | [Styling](styling_checks.markdown#styling-checks) | .ipynb, .json or .npmbridgerc | Sorts by `roleName` in `page.json` files. |
+JSONPortletResponseUtilCheck | [Styling](styling_checks.markdown#styling-checks) | .java | Checks if `JSONPortletResponseUtil.writeJSON ` should come before method calling `hideDefaultSuccessMessage`. |
 JSONResourcePermissionsFileCheck | [Styling](styling_checks.markdown#styling-checks) | .ipynb, .json or .npmbridgerc | Sorts by `resourceName` and `roleName` in `resource-permissions.json` files. |
 JSONStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .ipynb, .json or .npmbridgerc | Applies rules to enforce consistency in code style. |
 JSONUpgradeLiferayThemePackageJSONCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | .ipynb, .json or .npmbridgerc | Upgrade the `package.json` of a Liferay Theme to make it compatible with Liferay 7.4 |

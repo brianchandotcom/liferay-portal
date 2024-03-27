@@ -55,6 +55,7 @@ HTMLWhitespaceCheck | .html or .path | Finds missing and unnecessary whitespace 
 InstanceofOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Check the order of `instanceof` calls. |
 JSONBatchEngineDataFileCheck | .ipynb, .json or .npmbridgerc | Remove elements in `*.batch-engine-data.json` files. |
 JSONPageFileCheck | .ipynb, .json or .npmbridgerc | Sorts by `roleName` in `page.json` files. |
+JSONPortletResponseUtilCheck | .java | Checks if `JSONPortletResponseUtil.writeJSON ` should come before method calling `hideDefaultSuccessMessage`. |
 JSONResourcePermissionsFileCheck | .ipynb, .json or .npmbridgerc | Sorts by `resourceName` and `roleName` in `resource-permissions.json` files. |
 JSONStylingCheck | .ipynb, .json or .npmbridgerc | Applies rules to enforce consistency in code style. |
 [JSONUtilCheck](check/json_util_check.markdown#jsonutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `JSONUtil`. |

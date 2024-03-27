@@ -198,7 +198,7 @@ export default class SearchBuilder {
 			}
 			else {
 				if (Array.isArray(value)) {
-					if (schema.name.includes('testrayCasePriorities')) {
+					if (schema?.name?.includes('testrayCasePriorities')) {
 						searchCondition = SearchBuilder.equal(
 							key,
 							value.map((_value) =>

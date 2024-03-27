@@ -73,19 +73,20 @@ public class CreateAccountPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay.isSignedIn()) {
-			String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
+		if (!themeDisplay.isSignedIn()) {
+			return true;
+		}
 
-			String mvcRenderCommandName = ParamUtil.getString(
-				renderRequest, "mvcRenderCommandName");
+		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
+		String mvcRenderCommandName = ParamUtil.getString(
+			renderRequest, "mvcRenderCommandName");
 
-			if ((Validator.isNull(mvcRenderCommandName) &&
-				 Validator.isNull(mvcPath)) ||
-				mvcRenderCommandName.equals("/login/create_account") ||
-				mvcPath.equals("/create_account.jsp")) {
+		if ((Validator.isNull(mvcPath) &&
+			 Validator.isNull(mvcRenderCommandName)) ||
+			mvcPath.equals("/create_account.jsp") ||
+			mvcRenderCommandName.equals("/login/create_account")) {
 
-				return false;
-			}
+			return false;
 		}
 
 		return true;

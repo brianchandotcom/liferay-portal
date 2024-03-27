@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export {default as AccountContactAddressZipValidator} from './account_entries_admin/AccountContactAddressZipValidator';
 export {default as AccountEntriesAdminPortlet} from './account_entries_admin/AccountEntriesAdminPortlet.es';
 export {default as AccountEntriesManagementToolbarPropsTransformer} from './account_entries_admin/AccountEntriesManagementToolbarPropsTransformer';
 export {default as AccountEntryAddressesManagementToolbarPropsTransformer} from './account_entries_admin/AccountEntryAddressesManagementToolbarPropsTransformer';

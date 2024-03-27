@@ -88,7 +88,9 @@ test('LPD-18484 Add account contact address', async ({
 			page.getByText('Success:Your request completed successfully.')
 		).toBeVisible();
 
-		await expect(page.getByText('address1city,')).toBeVisible();
+		await expect(
+			await editAccountContactAddressPage.addressDisplay('address1city')
+		).toBeVisible();
 	}
 	finally {
 		await apiHelpers.headlessAdminUser.deleteAccount(account.id);

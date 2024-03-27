@@ -18,7 +18,7 @@ public class AccountListTypeUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			StringBundler.concat(
-				"delete from ListType where type_ ='",
+				"delete from ListType where type_ = '",
 				AccountListTypeConstants.ACCOUNT_ENTRY_PHONE,
 				"' and name = 'tool-free'"));
 	}

@@ -25,7 +25,6 @@ if (editContactInformationDisplayContext.getPrimaryKey() > 0) {
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "addresses"), editContactInformationDisplayContext.getRedirect());
-
 PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayContext.getSheetTitle(), null);
 %>
 
@@ -55,39 +54,39 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 			<clay:sheet-section>
 				<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
 
-				<aui:input checked="<%= (address != null)? address.isPrimary() : false %>" id="addressPrimary" label="make-primary" name="addressPrimary" type="checkbox" />
+				<aui:input checked="<%= (address != null)? address.isPrimary() : false %>" id="primary" label="make-primary" name="primary" type="checkbox" />
 
 				<liferay-ui:error key='<%= NoSuchListTypeException.class.getName() + editContactInformationDisplayContext.getClassName() + ".contact" + ListTypeConstants.ADDRESS %>' message="please-select-a-type" />
 
-				<aui:select label="type" listType='<%= editContactInformationDisplayContext.getClassName() + ".contact" + ListTypeConstants.ADDRESS %>' listTypeFieldName="listTypeId" name="addressListTypeId" />
+				<aui:select label="type" listType='<%= editContactInformationDisplayContext.getClassName() + ".contact" + ListTypeConstants.ADDRESS %>' listTypeFieldName="listTypeId" name="listTypeId" />
 
 				<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
 
-				<aui:input fieldParam="addressStreet1" id="addressStreet1" name="street1" required="<%= true %>" />
+				<aui:input name="street1" required="<%= true %>" />
 
-				<aui:input fieldParam="addressStreet2" id="addressStreet2" name="street2" />
+				<aui:input name="street2" />
 
-				<aui:input fieldParam="addressStreet3" id="addressStreet3" name="street3" />
+				<aui:input name="street3" />
 
 				<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
 
-				<aui:input fieldParam="addressCity" id="addressCity" name="city" required="<%= true %>" />
+				<aui:input name="city" required="<%= true %>" />
 
 				<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-				<aui:select label="country" name="addressCountryId" />
+				<aui:select label="country" name="countryId" />
 
 				<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
-				<aui:select label="region" name="addressRegionId" />
+				<aui:select label="region" name="regionId" />
 
 				<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
 
 				<div class="form-group">
-					<label class="control-label" for="<portlet:namespace />addressZip">
+					<label class="control-label" for="<portlet:namespace />zip">
 						<liferay-ui:message key="postal-code" />
 
-						<span hidden id="<portlet:namespace />addressZipRequiredWrapper">
+						<span hidden id="<portlet:namespace />zipRequiredWrapper">
 							<clay:icon
 								cssClass="reference-mark text-warning"
 								symbol="asterisk"
@@ -97,10 +96,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 						</span>
 					</label>
 
-					<aui:input fieldParam="addressZip" id="addressZip" label="" name="zip" />
+					<aui:input label="" name="zip" />
 				</div>
 
-				<aui:input cssClass="mailing-ctrl" fieldParam="addressMailing" id="addressMailing" name="mailing" />
+				<aui:input cssClass="mailing-ctrl" name="mailing" />
 			</clay:sheet-section>
 
 			<clay:sheet-footer
@@ -133,11 +132,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 		componentId="CountryRegionDynamicSelect"
 		context='<%=
 			HashMapBuilder.<String, Object>put(
-				"countrySelect", portletDisplay.getNamespace() + "addressCountryId"
+				"countrySelect", portletDisplay.getNamespace() + "countryId"
 			).put(
 				"countrySelectVal", countryId
 			).put(
-				"regionSelect", portletDisplay.getNamespace() + "addressRegionId"
+				"regionSelect", portletDisplay.getNamespace() + "regionId"
 			).put(
 				"regionSelectVal", regionId
 			).build()
@@ -146,63 +145,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 	/>
 </aui:form>
 
-<aui:script use="liferay-form">
-	var addressCountry = document.getElementById(
-		'<portlet:namespace />addressCountryId'
-	);
-
-	function checkCountry(countryId) {
-		Liferay.Service(
-			'/country/get-country',
-			{
-				countryId: countryId,
-			},
-			(response, err) => {
-				if (err) {
-					console.error(err);
-				}
-				else {
-					updateAddressZipRequired(response.zipRequired);
-				}
-			}
-		);
-	}
-
-	function handleSelectChange(event) {
-		var value = Number(event.currentTarget.value);
-
-		if (value > 0) {
-			checkCountry(value);
-		}
-		else {
-			updateAddressZipRequired(false);
-		}
-	}
-
-	function updateAddressZipRequired(required) {
-		var addressZipRequiredWrapper = document.getElementById(
-			'<portlet:namespace />addressZipRequiredWrapper'
-		);
-		var formValidator = Liferay.Form.get('<portlet:namespace />fm')
-			.formValidator;
-
-		var rules = formValidator._getAttr('rules');
-
-		if (required) {
-			addressZipRequiredWrapper.removeAttribute('hidden');
-		}
-		else {
-			addressZipRequiredWrapper.setAttribute('hidden', true);
-		}
-
-		rules.<portlet:namespace />addressZip = {required: required};
-	}
-
-	if (addressCountry) {
-		addressCountry.addEventListener('change', handleSelectChange);
-
-		<c:if test="<%= countryId > 0 %>">
-			checkCountry(<%= countryId %>);
-		</c:if>
-	}
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"countryId", countryId
+		).build()
+	%>'
+	module="{AccountContactAddressZipValidator} from account-admin-web"
+/>

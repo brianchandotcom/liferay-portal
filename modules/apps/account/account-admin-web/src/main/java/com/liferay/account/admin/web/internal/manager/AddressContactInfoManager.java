@@ -33,16 +33,16 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 
 	@Override
 	protected Address construct(ActionRequest actionRequest) throws Exception {
-		String street1 = ParamUtil.getString(actionRequest, "addressStreet1");
-		String street2 = ParamUtil.getString(actionRequest, "addressStreet2");
-		String street3 = ParamUtil.getString(actionRequest, "addressStreet3");
-		String city = ParamUtil.getString(actionRequest, "addressCity");
-		String zip = ParamUtil.getString(actionRequest, "addressZip");
-		long countryId = ParamUtil.getLong(actionRequest, "addressCountryId");
+		String city = ParamUtil.getString(actionRequest, "city");
+		long countryId = ParamUtil.getLong(actionRequest, "countryId");
+		String street1 = ParamUtil.getString(actionRequest, "street1");
+		String street2 = ParamUtil.getString(actionRequest, "street2");
+		String street3 = ParamUtil.getString(actionRequest, "street3");
+		String zip = ParamUtil.getString(actionRequest, "zip");
 
-		if (Validator.isNull(street1) && Validator.isNull(street2) &&
-			Validator.isNull(street3) && Validator.isNull(city) &&
-			Validator.isNull(zip) && (countryId == 0)) {
+		if (Validator.isNull(city) && (countryId == 0) &&
+			Validator.isNull(street1) && Validator.isNull(street2) &&
+			Validator.isNull(street3) && Validator.isNull(zip)) {
 
 			return null;
 		}
@@ -52,15 +52,11 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 		Address address = _addressLocalService.createAddress(addressId);
 
 		address.setCountryId(countryId);
-		address.setListTypeId(
-			ParamUtil.getLong(actionRequest, "addressListTypeId"));
-		address.setRegionId(
-			ParamUtil.getLong(actionRequest, "addressRegionId"));
+		address.setListTypeId(ParamUtil.getLong(actionRequest, "listTypeId"));
+		address.setRegionId(ParamUtil.getLong(actionRequest, "regionId"));
 		address.setCity(city);
-		address.setMailing(
-			ParamUtil.getBoolean(actionRequest, "addressMailing"));
-		address.setPrimary(
-			ParamUtil.getBoolean(actionRequest, "addressPrimary"));
+		address.setMailing(ParamUtil.getBoolean(actionRequest, "mailing"));
+		address.setPrimary(ParamUtil.getBoolean(actionRequest, "primary"));
 		address.setStreet1(street1);
 		address.setStreet2(street2);
 		address.setStreet3(street3);

@@ -6,6 +6,9 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
+<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
+<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 
 <%
 String[] installedPatches = PatcherValues.INSTALLED_PATCH_NAMES;
@@ -102,6 +105,8 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 			</table>
 		</aui:fieldset>
+
+		<liferay-captcha:captcha />
 
 		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="system-actions">
 			<ul class="list-group system-action-group">

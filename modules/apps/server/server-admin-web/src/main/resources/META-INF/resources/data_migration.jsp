@@ -7,6 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
+<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
+<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
+
 <%
 Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConvertProcesses();
 %>
@@ -102,6 +106,8 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 									%>
 
 								</aui:field-wrapper>
+
+								<liferay-captcha:captcha />
 
 								<aui:button-row>
 									<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + clazz.getName() %>' value="execute" />

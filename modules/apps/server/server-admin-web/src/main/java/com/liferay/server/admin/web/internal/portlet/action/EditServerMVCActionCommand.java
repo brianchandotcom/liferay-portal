@@ -5,6 +5,7 @@
 
 package com.liferay.server.admin.web.internal.portlet.action;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
@@ -181,6 +182,22 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getLong(actionRequest, "preferencesCompanyId"));
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (cmd.equals("cacheDb") || cmd.equals("cacheMulti") ||
+			cmd.equals("cacheServlet") || cmd.equals("cacheSingle") ||
+			cmd.equals("cleanUpAddToPagePermissions") ||
+			cmd.equals("cleanUpOrphanedPortletPreferences") ||
+			cmd.equals("cleanUpLayoutRevisionPortletPreferences") ||
+			cmd.startsWith("convertProcess.") ||
+			cmd.equals("dlDeletePreviews") ||
+			cmd.equals("dlGeneratePDFPreviews") || cmd.equals("gc") ||
+			cmd.equals("runScript") || cmd.equals("shutdown") ||
+			cmd.equals("threadDump") || cmd.equals("updateExternalServices") ||
+			cmd.equals("updateMail") ||
+			cmd.equals("verifyMembershipPolicies")) {
+
+			CaptchaUtil.check(actionRequest);
+		}
 
 		if (cmd.equals("addLogLevel")) {
 			_updateLogLevels(

@@ -10,7 +10,7 @@ import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
-import com.liferay.cookies.internal.configuration.helper.CookiesPreferenceHandlingConfigurationHelper;
+import com.liferay.cookies.internal.configuration.admin.service.CookiesPreferenceHandlingManagedServiceFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -409,35 +409,36 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	private boolean _isCompanyCookiesPreferenceHandlingEnabled(long companyId) {
-		return _cookiesPreferenceHandlingConfigurationHelper.getCompanyEnabled(
-			companyId);
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getCompanyEnabled(companyId);
 	}
 
 	private boolean _isCompanyCookiesPreferenceHandlingExplicitConsentMode(
 		long companyId) {
 
-		return _cookiesPreferenceHandlingConfigurationHelper.
+		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getCompanyExplicitConsentMode(companyId);
 	}
 
 	private boolean _isGroupCookiesPreferenceHandlingEnabled(long groupId) {
-		return _cookiesPreferenceHandlingConfigurationHelper.getGroupEnabled(
+		return _cookiesPreferenceHandlingManagedServiceFactory.getGroupEnabled(
 			groupId);
 	}
 
 	private boolean _isGroupCookiesPreferenceHandlingExplicitConsentMode(
 		long groupId) {
 
-		return _cookiesPreferenceHandlingConfigurationHelper.
+		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getGroupExplicitConsentMode(groupId);
 	}
 
 	private boolean _isSystemCookiesPreferenceHandlingEnabled() {
-		return _cookiesPreferenceHandlingConfigurationHelper.getSystemEnabled();
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getSystemEnabled();
 	}
 
 	private boolean _isSystemCookiesPreferenceHandlingExplicitConsentMode() {
-		return _cookiesPreferenceHandlingConfigurationHelper.
+		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getSystemExplicitConsentMode();
 	}
 
@@ -451,8 +452,8 @@ public class CookiesConfigurationProviderImpl
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private CookiesPreferenceHandlingConfigurationHelper
-		_cookiesPreferenceHandlingConfigurationHelper;
+	private CookiesPreferenceHandlingManagedServiceFactory
+		_cookiesPreferenceHandlingManagedServiceFactory;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

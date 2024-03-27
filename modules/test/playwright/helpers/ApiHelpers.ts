@@ -30,6 +30,7 @@ import {JSONWebServicesDDMApiHelper} from './json-web-services/JSONWebServicesDD
 import {JSONWebServicesGroupApiHelper} from './json-web-services/JSONWebServicesGroupApiHelper';
 import {JSONWebServicesJournalApiHelper} from './json-web-services/JSONWebServicesJournalApiHelper';
 import {JSONWebServicesLayoutApiHelper} from './json-web-services/JSONWebServicesLayoutApiHelper';
+import {JSONWebServicesLayoutSetPrototypeApiHelper} from './json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
 
 type TDataApiHelpersData = {
 	id: any;
@@ -57,6 +58,7 @@ export class ApiHelpers {
 	readonly jsonWebServicesGroup: JSONWebServicesGroupApiHelper;
 	readonly jsonWebServicesJournal: JSONWebServicesJournalApiHelper;
 	readonly jsonWebServicesLayout: JSONWebServicesLayoutApiHelper;
+	readonly jsonWebServicesLayoutSetPrototype: JSONWebServicesLayoutSetPrototypeApiHelper;
 	readonly listTypeAdmin: ListTypeAdminApiHelper;
 	readonly object: ObjectApiHelper;
 	readonly objectAdmin: ObjectAdminApiHelper;
@@ -94,6 +96,8 @@ export class ApiHelpers {
 		this.jsonWebServicesGroup = new JSONWebServicesGroupApiHelper(this);
 		this.jsonWebServicesJournal = new JSONWebServicesJournalApiHelper(this);
 		this.jsonWebServicesLayout = new JSONWebServicesLayoutApiHelper(this);
+		this.jsonWebServicesLayoutSetPrototype =
+			new JSONWebServicesLayoutSetPrototypeApiHelper(this);
 		this.listTypeAdmin = new ListTypeAdminApiHelper(this);
 		this.object = new ObjectApiHelper(this);
 		this.objectAdmin = new ObjectAdminApiHelper(this);

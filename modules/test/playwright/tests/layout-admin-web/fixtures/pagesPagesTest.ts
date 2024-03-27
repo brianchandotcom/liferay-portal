@@ -7,13 +7,18 @@
 
 import {test} from '@playwright/test';
 
+import {StaticPagesPage} from '../pages/StaticPagesPage';
 import {UtilityPageConfigurationPage} from '../pages/UtilityPageConfigurationPage';
 import {UtilityPagesPage} from '../pages/UtilityPagesPage';
 
 const pagesPagesTest = test.extend<{
+	staticPagesPage: StaticPagesPage;
 	utilityPageConfigurationPage: UtilityPageConfigurationPage;
 	utilityPagesPage: UtilityPagesPage;
 }>({
+	staticPagesPage: async ({page}, use) => {
+		await use(new StaticPagesPage(page));
+	},
 	utilityPageConfigurationPage: async ({page}, use) => {
 		await use(new UtilityPageConfigurationPage(page));
 	},

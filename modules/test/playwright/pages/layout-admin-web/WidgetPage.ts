@@ -6,23 +6,31 @@
 import {Locator, Page} from '@playwright/test';
 
 export class WidgetPage {
-	readonly page: Page;
+	readonly addApplicationButton: Locator;
 	readonly controlMenuAddButton: Locator;
 	readonly controlMenuAddPanelContentTab: Locator;
+	readonly page: Page;
 
 	constructor(page: Page) {
 		this.page = page;
 
+		this.addApplicationButton = page
+			.locator('ul')
+			.filter({hasText: 'Open Applications MenuCtrl+Alt+A'})
+			.getByLabel('Add');
 		this.controlMenuAddButton = page
 			.locator('.control-menu-nav-item')
 			.getByRole('button', {
 				exact: true,
 				name: 'Add',
 			});
-
 		this.controlMenuAddPanelContentTab = page.getByText('Content', {
 			exact: true,
 		});
+	}
+
+	async clickToAddApplication() {
+		await this.addApplicationButton.click();
 	}
 
 	async clickControlMenuAddButton() {

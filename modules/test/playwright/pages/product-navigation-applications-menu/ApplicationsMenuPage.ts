@@ -26,17 +26,25 @@ export class ApplicationsMenuPage {
 	private readonly jobSchedulerMenuItem: Locator;
 	private readonly oAuth2Administration: Locator;
 	private readonly objectsMenuItem: Locator;
-	readonly page: Page;
+	private readonly page: Page;
 	private readonly paymentsMenuItem: Locator;
 	private readonly processBuilderItem: Locator;
 	private readonly productsMenuItem: Locator;
 	private readonly serviceAccountsItem: Locator;
+	private readonly sitesItem: Locator;
+	private readonly systemSettingsItem: Locator;
+	private readonly serverAdministrationItem: Locator;
+	private readonly siteTemplatesButton: Locator;
 	private readonly usersAndOrganizationsItem: Locator;
 
 	constructor(page: Page) {
 		this.accountsItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Accounts',
+		});
+		this.aiCreatorLink = page.getByRole('link', {
+			exact: true,
+			name: 'AI Creator',
 		});
 		this.announcementsItem = page.getByRole('menuitem', {
 			exact: true,
@@ -65,6 +73,10 @@ export class ApplicationsMenuPage {
 		});
 		this.controlPanelButton = page.getByRole('tab', {
 			name: 'Control Panel',
+		});
+		this.gogoShellItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Gogo Shell',
 		});
 		this.homePage = new HomePage(page);
 		this.dataMigrationCenterMenuItem = page.getByRole('menuitem', {
@@ -104,21 +116,29 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'Products',
 		});
-		this.usersAndOrganizationsItem = page.getByRole('menuitem', {
-			exact: true,
-			name: 'Users and Organizations',
-		});
 		this.serviceAccountsItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Service Accounts',
 		});
-		this.aiCreatorLink = page.getByRole('link', {
+		this.serverAdministrationItem = page.getByRole('menuitem', {
 			exact: true,
-			name: 'AI Creator',
+			name: 'Server Administration',
 		});
-		this.gogoShellItem = page.getByRole('menuitem', {
+		this.sitesItem = page.getByRole('menuitem', {
 			exact: true,
-			name: 'Gogo Shell',
+			name: 'Sites',
+		});
+		this.siteTemplatesButton = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Site Templates',
+		});
+		this.systemSettingsItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'System Settings',
+		});
+		this.usersAndOrganizationsItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Users and Organizations',
 		});
 	}
 
@@ -178,6 +198,26 @@ export class ApplicationsMenuPage {
 	async goToObjects() {
 		await this.goToControlPanel();
 		await this.objectsMenuItem.click();
+	}
+
+	async goToServerAdministration() {
+		await this.goToControlPanel();
+		await this.serverAdministrationItem.click();
+	}
+
+	async goToSiteTemplates() {
+		await this.goToControlPanel();
+		await this.siteTemplatesButton.click();
+	}
+
+	async goToSites() {
+		await this.goToControlPanel();
+		await this.sitesItem.click();
+	}
+
+	async goToSystemSettings() {
+		await this.goToControlPanel();
+		await this.systemSettingsItem.click();
 	}
 
 	async goToInstanceSettings() {

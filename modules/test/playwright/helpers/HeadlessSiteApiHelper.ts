@@ -21,6 +21,16 @@ export class HeadlessSiteApiHelper {
 		);
 	}
 
+	async createSiteFromSiteTemplate(
+		name: string,
+		templateKey: number
+	): Promise<Site> {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/sites`,
+			{name, templateKey, templateType: 'site-template'}
+		);
+	}
+
 	async deleteSite(siteId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}`

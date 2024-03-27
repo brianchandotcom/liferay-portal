@@ -14,6 +14,11 @@ export class JournalPage {
 	readonly createBasicWebContentLink: Locator;
 	readonly newButton: Locator;
 	readonly permissionsFrameLocator: FrameLocator;
+	readonly publishButton: Locator;
+	readonly templatesLink: Locator;
+	readonly webContentTitleBox: Locator;
+	readonly webContentBodyIFrame: FrameLocator;
+	readonly webContentBodyTextBox: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -25,12 +30,40 @@ export class JournalPage {
 		this.permissionsFrameLocator = page.frameLocator(
 			'iframe[title="Permissions"]'
 		);
+		this.templatesLink = page.getByRole('link', {name: 'Templates'});
+		this.publishButton = page.getByRole('button', {name: 'Publish'});
+		this.webContentTitleBox = page
+			.locator('xpath=//input[contains(@id,"title")]')
+			.first();
+		this.webContentBodyIFrame = page
+			.getByRole('application', {
+				name: /Rich Text Editor, _com_liferay_journal_web_portlet_JournalPortlet_ddm\$\$content\$.*\$en_US/,
+			})
+			.frameLocator('iframe');
+		this.webContentBodyTextBox =
+			this.webContentBodyIFrame.getByRole('textbox');
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.journal}`
 		);
+	}
+
+	async createBasicArticle(webContentName: string, text: string) {
+		await this.webContentTitleBox.fill(webContentName);
+		await this.page.waitForSelector('iframe');
+		await this.webContentBodyTextBox.fill(text);
+		await this.webContentBodyTextBox.click({button: 'left'});
+		await this.webContentBodyTextBox.press('Backspace');
+		await this.webContentTitleBox.click({button: 'left'});
+		await this.webContentTitleBox.press('Backspace');
+		await this.publishButton.click();
+		await this.page
+			.locator(
+				'[id="_com_liferay_journal_web_portlet_JournalPortlet_successMessageWithLink"]'
+			)
+			.waitFor({state: 'visible'});
 	}
 
 	async goToCreateArticle(structureName?: string) {

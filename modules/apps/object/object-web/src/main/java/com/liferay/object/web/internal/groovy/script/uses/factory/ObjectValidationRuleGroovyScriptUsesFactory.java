@@ -6,6 +6,7 @@
 package com.liferay.object.web.internal.groovy.script.uses.factory;
 
 import com.liferay.object.constants.ObjectValidationRuleConstants;
+import com.liferay.object.definition.groovy.script.use.ObjectDefinitionGroovyScriptUseSourceURLFactory;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -41,7 +42,7 @@ public class ObjectValidationRuleGroovyScriptUsesFactory
 				return new GroovyScriptUse(
 					company.getWebId(),
 					objectValidationRule.getName(resourceRequest.getLocale()),
-					new GroovyScriptUseSourceURLFactory(
+					new ObjectDefinitionGroovyScriptUseSourceURLFactory(
 					).create(
 						company, objectValidationRule.getObjectDefinitionId(),
 						_portal,

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.web.internal.groovy.script.uses.factory;
+package com.liferay.object.definition.groovy.script.use;
 
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringBundler;
@@ -20,7 +20,7 @@ import javax.portlet.WindowState;
 /**
  * @author Feliphe Marinho
  */
-public class GroovyScriptUseSourceURLFactory {
+public class ObjectDefinitionGroovyScriptUseSourceURLFactory {
 
 	public String create(
 			Company company, long objectDefinitionId, Portal portal,

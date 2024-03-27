@@ -26,7 +26,11 @@ import {
 	patchSKUById,
 	updateProductSpecification,
 } from '../../utils/api';
-import {createSkuName, getSkuPrice} from '../../utils/util';
+import {
+	createSkuName,
+	getSkuPrice,
+	getTemporaryProductIdForSpefication,
+} from '../../utils/util';
 
 import './InformLicensingTermsPage.scss';
 import {Liferay} from '../../liferay/liferay';
@@ -42,6 +46,7 @@ export function InformLicensingTermsPage({
 }: InformLicensingTermsPageProps) {
 	const [
 		{
+			appId,
 			appLicense,
 			appLicensePrice,
 			appNotes,
@@ -56,6 +61,11 @@ export function InformLicensingTermsPage({
 		},
 		dispatch,
 	] = useAppContext();
+
+	const _tempProductId = getTemporaryProductIdForSpefication({
+		appId,
+		appProductId,
+	});
 
 	const [isProcessing, setProcessing] = useState(false);
 
@@ -81,12 +91,11 @@ export function InformLicensingTermsPage({
 
 		const {id} = await createProductSpecification({
 			body: {
-				productId: appProductId,
 				specificationId: dataSpecification.id,
 				specificationKey: dataSpecification.key,
 				value,
 			},
-			id: appProductId,
+			id: _tempProductId,
 		});
 
 		dispatch({

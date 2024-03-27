@@ -18,6 +18,7 @@ import './ChoosePricingModelPage.scss';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
+import {getTemporaryProductIdForSpefication} from '../../utils/util';
 
 interface ChoosePricingModelPageProps {
 	onClickBack: () => void;
@@ -28,7 +29,15 @@ export function ChoosePricingModelPage({
 	onClickBack,
 	onClickContinue,
 }: ChoosePricingModelPageProps) {
-	const [{appLicense, appProductId, priceModel}, dispatch] = useAppContext();
+	const [
+		{appId, appLicense, appProductId, priceModel},
+		dispatch,
+	] = useAppContext();
+
+	const _tempProductId = getTemporaryProductIdForSpefication({
+		appId,
+		appProductId,
+	});
 
 	return (
 		<div className="choose-pricing-model-page-container">
@@ -117,7 +126,6 @@ export function ChoosePricingModelPage({
 
 							const {id} = await createProductSpecification({
 								body: {
-									productId: appProductId,
 									specificationId: dataSpecification.id,
 									specificationKey: dataSpecification.key,
 									value:
@@ -125,7 +133,7 @@ export function ChoosePricingModelPage({
 											? {en_US: 'Free'}
 											: {en_US: 'Paid'},
 								},
-								id: appProductId,
+								id: _tempProductId,
 							});
 
 							dispatch({

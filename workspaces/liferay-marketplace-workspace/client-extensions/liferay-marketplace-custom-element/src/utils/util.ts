@@ -225,9 +225,10 @@ export function removeProtocolURL(url: string) {
 }
 
 export async function submitSpecification(
-	productId: number,
+	productId: number | string,
 	productSpecificationId: number,
 	key: string,
+	title: string,
 	value: string
 ): Promise<number> {
 	const specifications = await getSpecifications();
@@ -251,7 +252,6 @@ export async function submitSpecification(
 	else {
 		const {id} = await createProductSpecification({
 			body: {
-				productId,
 				specificationId: specification.id,
 				specificationKey: key,
 				value: {en_US: value},
@@ -360,4 +360,28 @@ export function safeJSONParse(
 	catch (error) {
 		return defaultValue;
 	}
+}
+
+export function isCloudEnvironment() {
+	return window.location.protocol === 'https:';
+}
+
+/**
+ *
+ * @description due a breaking change on commerce product specification API
+ * starting on > U112 the API expects to receive productId instead of appId
+ * remove this helper after Marketplace UAT/PRD get upgraded to > U112
+ */
+export function getTemporaryProductIdForSpefication({
+	appId,
+	appProductId,
+}: {
+	appId: number | string;
+	appProductId: number | string;
+}) {
+	if (isCloudEnvironment()) {
+		return appId;
+	}
+
+	return appProductId;
 }

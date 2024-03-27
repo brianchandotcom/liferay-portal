@@ -11,7 +11,10 @@ import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/
 import {Section} from '../../components/Section/Section';
 import {useAppContext} from '../../manage-app-state/AppManageState';
 import {TYPES} from '../../manage-app-state/actionTypes';
-import {submitSpecification} from '../../utils/util';
+import {
+	getTemporaryProductIdForSpefication,
+	submitSpecification,
+} from '../../utils/util';
 
 import './ProvideAppSupportAndHelpPage.scss';
 
@@ -28,6 +31,7 @@ export function ProvideAppSupportAndHelpPage({
 	const [
 		{
 			appDocumentationURL,
+			appId,
 			appInstallationGuideURL,
 			appProductId,
 			appUsageTermsURL,
@@ -36,6 +40,11 @@ export function ProvideAppSupportAndHelpPage({
 		},
 		dispatch,
 	] = useAppContext();
+
+	const _tempProductId = getTemporaryProductIdForSpefication({
+		appId,
+		appProductId,
+	});
 
 	return (
 		<div className="provide-app-support-and-help-page-container">
@@ -135,9 +144,10 @@ export function ProvideAppSupportAndHelpPage({
 				onClickContinue={async () => {
 					setProcessing(true);
 					const supportURLSpecificationId = await submitSpecification(
-						appProductId,
+						_tempProductId,
 						supportURL?.id,
 						'supportURL',
+						'Support URL',
 						supportURL?.value
 					);
 
@@ -162,9 +172,10 @@ export function ProvideAppSupportAndHelpPage({
 
 					if (publisherWebsiteURL?.value) {
 						const publisherWebsiteURLSpecificationId = await submitSpecification(
-							appProductId,
+							_tempProductId,
 							publisherWebsiteURL?.id,
 							'publisherWebsiteURL',
+							'Publisher Web site URL',
 							publisherWebsiteURL?.value
 						);
 
@@ -189,9 +200,10 @@ export function ProvideAppSupportAndHelpPage({
 					}
 					if (appUsageTermsURL?.value) {
 						const appUsageTermsURLSpecificationId = await submitSpecification(
-							appProductId,
+							_tempProductId,
 							appUsageTermsURL?.id,
 							'appUsageTermsURL',
+							'App Usage Terms URL',
 							appUsageTermsURL?.value
 						);
 
@@ -216,9 +228,10 @@ export function ProvideAppSupportAndHelpPage({
 					}
 					if (appDocumentationURL?.value) {
 						const appDocumentationURLSpecificationId = await submitSpecification(
-							appProductId,
+							_tempProductId,
 							appDocumentationURL?.id,
 							'appDocumentationURL',
+							'App Documentation URL',
 							appDocumentationURL?.value
 						);
 
@@ -243,9 +256,10 @@ export function ProvideAppSupportAndHelpPage({
 					}
 					if (appInstallationGuideURL?.value) {
 						const appInstallationGuideURLSpecificationId = await submitSpecification(
-							appProductId,
+							_tempProductId,
 							appInstallationGuideURL?.id,
 							'appInstallationGuideURL',
+							'App Installation Guide URL',
 							appInstallationGuideURL?.value
 						);
 

@@ -107,8 +107,8 @@
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayStyle": "default",
-													"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"published-date\"}]",
-													"displayStyleGroupId": "33405"
+													"displayStyleGroupId": "33405",
+													"fields": "[{\"field\":\"\",\"label\":\"relevance\"},{\"field\":\"title+\",\"label\":\"Alphabetical (A-Z)\"},{\"field\":\"title-\",\"label\":\"Alphabetical (Z-A)\"},{\"field\":\"publishedDate-\",\"label\":\"published-date\"}]"
 												},
 												"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 											}
@@ -141,14 +141,14 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"vocabularyIds": "33574",
 													"displayStyle": "default",
-													"maxTerms": "100",
-													"frequencyThreshold": "1",
+													"displayStyleGroupId": "33405",
 													"frequenciesVisible": "false",
+													"frequencyThreshold": "1",
+													"maxTerms": "100",
+													"order": "key:asc",
 													"parameterName": "capability",
-													"displayStyleGroupId": "33405",
-													"order": "key:asc"
+													"vocabularyIds": "33574"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
@@ -181,14 +181,14 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"vocabularyIds": "33633",
 													"displayStyle": "default",
-													"maxTerms": "100",
-													"frequencyThreshold": "1",
+													"displayStyleGroupId": "33405",
 													"frequenciesVisible": "false",
+													"frequencyThreshold": "1",
+													"maxTerms": "100",
+													"order": "key:asc",
 													"parameterName": "feature",
-													"displayStyleGroupId": "33405",
-													"order": "key:asc"
+													"vocabularyIds": "33633"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
@@ -221,14 +221,14 @@
 										"definition": {
 											"widgetInstance": {
 												"widgetConfig": {
-													"vocabularyIds": "33623",
 													"displayStyle": "default",
-													"maxTerms": "100",
-													"frequencyThreshold": "1",
-													"frequenciesVisible": "false",
-													"parameterName": "deployment-approach",
 													"displayStyleGroupId": "33405",
-													"order": "key:asc"
+													"frequenciesVisible": "false",
+													"frequencyThreshold": "1",
+													"maxTerms": "100",
+													"order": "key:asc",
+													"parameterName": "deployment-approach",
+													"vocabularyIds": "33623"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}

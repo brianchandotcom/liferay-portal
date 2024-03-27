@@ -14,7 +14,6 @@ import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
-	getProductVersionFromSpecifications,
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../utils/util';
@@ -93,14 +92,6 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 						</div>
 					),
 					title: 'Name',
-				},
-				{
-					key: 'version',
-					render: (_, {productSpecifications}) =>
-						getProductVersionFromSpecifications(
-							productSpecifications
-						),
-					title: 'Version',
 				},
 				{
 					key: 'solutionType',

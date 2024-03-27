@@ -74,20 +74,20 @@ const MDFClaimPage = ({
 		}
 	).length;
 
-	const displayActivityClaim = (activity: MDFClaimActivity) => {
+	const isDisplayableMDFActivityClaim = (activity: MDFClaimActivity) => {
 		const claimableActivityByStatus =
 			activity.activityStatus?.key !== Status.EXPIRED.key &&
 			activity.activityStatus?.key !== Status.CANCELED.key &&
 			!activity.claimed;
 
 		const editableClaimActivityByStatus =
-			!!activity.id && !activity.selected;
+			Boolean(activity.id) && !activity.selected;
 
-		const displayActivityClaim = activity.id
+		const isDisplayable = activity.id
 			? hasPermissionShowForm
 			: claimableActivityByStatus || editableClaimActivityByStatus;
 
-		return displayActivityClaim;
+		return isDisplayable;
 	};
 
 	const getClaimPage = () => {
@@ -164,7 +164,7 @@ const MDFClaimPage = ({
 
 					{values.activities?.map(
 						(activity, index) =>
-							displayActivityClaim(activity) && (
+							isDisplayableMDFActivityClaim(activity) && (
 								<ActivityClaimPanel
 									activity={activity}
 									activityIndex={index}

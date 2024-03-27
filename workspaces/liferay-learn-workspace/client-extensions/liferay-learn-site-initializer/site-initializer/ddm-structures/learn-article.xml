@@ -12,10 +12,9 @@
 					"fields": [
 						{
 							"dataType": "string",
-							"displayStyle": "singleline",
 							"indexType": "text",
 							"label": {
-								"en_US": "content"
+								"en_US": "Content"
 							},
 							"localizable": true,
 							"name": "content",
@@ -29,17 +28,17 @@
 							"tip": {
 								"en_US": ""
 							},
-							"type": "text"
+							"type": "rich_text"
 						},
 						{
 							"dataType": "string",
-							"displayStyle": "singleline",
+							"displayStyle": "multiline",
 							"indexType": "none",
 							"label": {
-								"en_US": "breadcrumbLinks"
+								"en_US": "TOC"
 							},
-							"localizable": true,
-							"name": "breadcrumbLinks",
+							"localizable": false,
+							"name": "toc",
 							"predefinedValue": {
 								"en_US": ""
 							},
@@ -53,76 +52,34 @@
 							"type": "text"
 						},
 						{
-							"dataType": "string",
-							"displayStyle": "singleline",
+							"dataType": "boolean",
 							"indexType": "none",
 							"label": {
-								"en_US": "navigationLinks"
+								"en_US": "Show Children Cards"
 							},
-							"localizable": true,
-							"name": "navigationLinks",
+							"localizable": false,
+							"name": "showChildrenCards",
 							"predefinedValue": {
 								"en_US": ""
 							},
 							"readOnly": false,
 							"repeatable": false,
 							"required": false,
+							"showAsSwitcher": true,
 							"showLabel": true,
 							"tip": {
 								"en_US": ""
 							},
-							"type": "text"
-						},
-						{
-							"dataType": "string",
-							"displayStyle": "singleline",
-							"indexType": "text",
-							"label": {
-								"en_US": "product"
-							},
-							"localizable": true,
-							"name": "product",
-							"predefinedValue": {
-								"en_US": ""
-							},
-							"readOnly": false,
-							"repeatable": false,
-							"required": false,
-							"showLabel": true,
-							"tip": {
-								"en_US": ""
-							},
-							"type": "text"
+							"type": "checkbox"
 						},
 						{
 							"dataType": "string",
 							"displayStyle": "singleline",
 							"indexType": "none",
 							"label": {
-								"en_US": "landingPage"
+								"en_US": "MD5 Hex"
 							},
-							"localizable": true,
-							"name": "landingPage",
-							"predefinedValue": {
-								"en_US": ""
-							},
-							"readOnly": false,
-							"repeatable": false,
-							"required": false,
-							"showLabel": true,
-							"tip": {
-								"en_US": ""
-							},
-							"type": "text"
-						},
-						{
-							"dataType": "string",
-							"displayStyle": "singleline",
-							"indexType": "none",
-							"label": {
-								"en_US": "md5Hex"
-							},
-							"localizable": true,
+							"localizable": false,
 							"name": "md5Hex",
 							"predefinedValue": {
 								"en_US": ""
@@ -147,6 +104,6 @@
 				}
 			]]>
 		</definition>
-		<name>Learn-Article</name>
+		<name>LEARN-ARTICLE</name>
 	</structure>
 </root>

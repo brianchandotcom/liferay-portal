@@ -1511,10 +1511,10 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					httpResponse.getContent());
 
-				String jsonObjectType = jsonObject.getString("type");
+				String type = jsonObject.getString("type");
 
 				Assert.assertTrue(
-					jsonObjectType.contains(exceptionClass.getSimpleName()));
+					type.contains(exceptionClass.getSimpleName()));
 			}
 		}
 	}

@@ -88,7 +88,7 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 			).build());
 	}
 
-	public void deleteTestrayArchivedBuilds() throws Exception {
+	public void deleteArchivedTestrayBuilds() throws Exception {
 		JSONArray jsonArray = _sendRequest(
 			"", HttpMethod.GET,
 			uriBuilder -> uriBuilder.path(
@@ -127,7 +127,7 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		deleteTestrayArchivedBuilds();
+		deleteArchivedTestrayBuilds();
 		autoArchiveTestrayBuilds();
 	}
 

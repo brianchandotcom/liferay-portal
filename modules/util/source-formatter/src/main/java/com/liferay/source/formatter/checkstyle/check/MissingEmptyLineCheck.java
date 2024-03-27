@@ -123,7 +123,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			}
 		}
 
-		if (_containsVariableName(nextSiblingDetailAST, variableName, null)) {
+		if (containsVariableName(nextSiblingDetailAST, variableName, null)) {
 			log(
 				endLineNumber, _MSG_MISSING_EMPTY_LINE_LINE_NUMBER, "after",
 				endLineNumber);
@@ -157,7 +157,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				return;
 			}
 
-			if (!_containsVariableName(
+			if (!containsVariableName(
 					nextSiblingDetailAST, variableName, assignDetailAST)) {
 
 				if (!referenced) {
@@ -171,10 +171,10 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					return;
 				}
 
-				if (!_containsVariableName(
+				if (!containsVariableName(
 						previousDetailAST, lastAssignedVariableName,
 						assignDetailAST) ||
-					!_containsVariableName(
+					!containsVariableName(
 						nextSiblingDetailAST, lastAssignedVariableName,
 						assignDetailAST)) {
 
@@ -369,7 +369,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			}
 		}
 
-		if (_containsVariableName(
+		if (containsVariableName(
 				previousSiblingDetailAST, variableName, null)) {
 
 			log(
@@ -572,16 +572,6 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	}
 
 	private boolean _containsVariableName(
-		DetailAST detailAST, String variableName, DetailAST assignDetailAST) {
-
-		List<DetailAST> identDetailASTList = getAllChildTokens(
-			detailAST, true, TokenTypes.IDENT);
-
-		return _containsVariableName(
-			identDetailASTList, variableName, assignDetailAST);
-	}
-
-	private boolean _containsVariableName(
 		List<DetailAST> identDetailASTList, DetailAST assignDetailAST) {
 
 		String variableName = _getVariableName(assignDetailAST);
@@ -590,47 +580,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return false;
 		}
 
-		return _containsVariableName(
+		return containsVariableName(
 			identDetailASTList, variableName, assignDetailAST);
-	}
-
-	private boolean _containsVariableName(
-		List<DetailAST> identDetailASTList, String variableName,
-		DetailAST assignDetailAST) {
-
-		if (variableName == null) {
-			return false;
-		}
-
-		for (DetailAST identDetailAST : identDetailASTList) {
-			if (!variableName.equals(identDetailAST.getText())) {
-				continue;
-			}
-
-			DetailAST parentDetailAST = identDetailAST.getParent();
-
-			if (parentDetailAST.getType() == TokenTypes.VARIABLE_DEF) {
-				return false;
-			}
-
-			if (assignDetailAST != null) {
-				DetailAST instanceInitDetailAST = getParentWithTokenType(
-					identDetailAST, TokenTypes.INSTANCE_INIT);
-
-				if ((instanceInitDetailAST != null) &&
-					(getEndLineNumber(assignDetailAST) < getStartLineNumber(
-						instanceInitDetailAST))) {
-
-					return false;
-				}
-			}
-
-			if (!isMethodNameDetailAST(identDetailAST)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private List<DetailAST> _getAdjacentAssignDetailASTList(

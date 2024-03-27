@@ -17,29 +17,29 @@ import java.util.Map;
  */
 public class ScancodeS3ObjectFactory {
 
-    public static ScancodeS3Object newScancodeS3Object(
-            ScancodeS3Bucket scancodeS3Bucket, Blob blob) {
+	public static ScancodeS3Object newScancodeS3Object(
+		ScancodeS3Bucket scancodeS3Bucket, Blob blob) {
 
-        if (blob == null) {
-            return null;
-        }
+		if (blob == null) {
+			return null;
+		}
 
-        String mapKey = JenkinsResultsParserUtil.combine(
-                scancodeS3Bucket.getName(), "/", blob.getName());
+		String mapKey = JenkinsResultsParserUtil.combine(
+			scancodeS3Bucket.getName(), "/", blob.getName());
 
-        if (_scancodeS3Objects.containsKey(mapKey)) {
-            return _scancodeS3Objects.get(mapKey);
-        }
+		if (_scancodeS3Objects.containsKey(mapKey)) {
+			return _scancodeS3Objects.get(mapKey);
+		}
 
-        ScancodeS3Object scancodeS3Object = new ScancodeS3Object(
-                scancodeS3Bucket, blob);
+		ScancodeS3Object scancodeS3Object = new ScancodeS3Object(
+			scancodeS3Bucket, blob);
 
-        _scancodeS3Objects.put(mapKey, scancodeS3Object);
+		_scancodeS3Objects.put(mapKey, scancodeS3Object);
 
-        return scancodeS3Object;
-    }
+		return scancodeS3Object;
+	}
 
-    private static final Map<String, ScancodeS3Object> _scancodeS3Objects =
-            new HashMap<>();
+	private static final Map<String, ScancodeS3Object> _scancodeS3Objects =
+		new HashMap<>();
 
 }

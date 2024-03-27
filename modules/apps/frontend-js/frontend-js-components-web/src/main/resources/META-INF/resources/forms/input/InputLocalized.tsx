@@ -16,6 +16,7 @@ interface InputLocalizedProps {
 	disableFlag?: boolean;
 	disabled?: boolean;
 	error?: string;
+	helpMessage?: string;
 	id?: string;
 	label: string;
 	name?: string;
@@ -71,6 +72,7 @@ export default function InputLocalized({
 	disableFlag,
 	disabled,
 	error,
+	helpMessage,
 	id,
 	label,
 	name,
@@ -108,6 +110,7 @@ export default function InputLocalized({
 			className="input-localized"
 			disabled={disabled}
 			errorMessage={error}
+			helpMessage={helpMessage}
 			id={id}
 			label={label}
 			required={required}

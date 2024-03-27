@@ -84,10 +84,11 @@ definition {
 		}
 
 		task ("View the Custom Assets page") {
-			ACAssets.interactWithCustomAssets(
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				pageName = "AC Page",
-				siteName = "Site Name",
-				viewPageNumber = "1,2,3");
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {
@@ -139,10 +140,11 @@ definition {
 		}
 
 		task ("View the Custom Assets page") {
-			ACAssets.interactWithCustomAssets(
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				pageName = "AC Page",
-				siteName = "Site Name",
-				viewPageNumber = "1,2,3");
+				siteName = "Site Name");
 		}
 
 		task ("Interact with Custom Assets by downloading, clicking and submitting the form") {
@@ -212,6 +214,8 @@ definition {
 
 		task ("Navigate to Custom Asset page") {
 			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				pageName = "AC Page 2",
 				siteName = "Site Name");
 		}
@@ -298,11 +302,11 @@ definition {
 		}
 
 		task ("View the site page") {
-			for (var n : list "1,2,3,4") {
-				ACUtils.navigateToSitePage(
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
+			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
+				pageName = "AC Page",
+				siteName = "Site Name");
 		}
 
 		task ("Close sessions") {

@@ -156,7 +156,7 @@ definition {
 		task ("Visit the page, then close the sessions") {
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
-				documentTitleList = "Snúið Vinsælar þú",
+				documentTitleList = "Snúið Vinsælar þú,Snúið Vinsælar þú,Snúið Vinsælar þú,Snúið Vinsælar þú",
 				pageName = "AC Page",
 				siteName = "Site Name");
 

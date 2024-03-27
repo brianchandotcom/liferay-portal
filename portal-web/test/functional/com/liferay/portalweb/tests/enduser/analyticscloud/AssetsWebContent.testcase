@@ -710,6 +710,7 @@ definition {
 		for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
 			ACUtils.navigateToSitePage(
 				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				pageName = ${pageName},
 				siteName = "Site Name");
 		}

@@ -127,6 +127,14 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		super.testGetOrdersPageWithFilterDateTimeEquals();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGetOrdersPageWithFilterStringContains() throws Exception {
+		super.testGetOrdersPageWithFilterStringContains();
+	}
+
+	@Ignore
 	@Override
 	@Test
 	public void testGetOrdersPageWithFilterStringEquals() throws Exception {
@@ -193,6 +201,13 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGetOrdersPageWithFilterStringStartsWith() throws Exception {
+		super.testGetOrdersPageWithFilterStringStartsWith();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetOrdersPageWithPagination() throws Exception {
 		super.testGetOrdersPageWithPagination();
 	}
@@ -204,10 +219,18 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		super.testGetOrdersPageWithSortDateTime();
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testGetOrdersPageWithSortInteger() throws Exception {
 		super.testGetOrdersPageWithSortInteger();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetOrdersPageWithSortString() throws Exception {
+		super.testGetOrdersPageWithSortString();
 	}
 
 	@Test

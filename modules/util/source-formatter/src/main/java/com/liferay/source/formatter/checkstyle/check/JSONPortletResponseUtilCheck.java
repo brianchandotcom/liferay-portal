@@ -101,7 +101,9 @@ public class JSONPortletResponseUtilCheck extends BaseCheck {
 					}
 				}
 
-				if (_containsVariableName(firstChildDetailAST, variableName)) {
+				if (containsVariableName(
+						firstChildDetailAST, variableName, null)) {
+
 					break;
 				}
 
@@ -109,31 +111,6 @@ public class JSONPortletResponseUtilCheck extends BaseCheck {
 					previousSiblingDetailAST.getPreviousSibling();
 			}
 		}
-	}
-
-	private boolean _containsVariableName(
-		DetailAST detailAST, String variableName) {
-
-		List<DetailAST> identDetailASTList = getAllChildTokens(
-			detailAST, true, TokenTypes.IDENT);
-
-		for (DetailAST identDetailAST : identDetailASTList) {
-			if (!variableName.equals(identDetailAST.getText())) {
-				continue;
-			}
-
-			DetailAST parentDetailAST = identDetailAST.getParent();
-
-			if (parentDetailAST.getType() == TokenTypes.VARIABLE_DEF) {
-				return false;
-			}
-
-			if (!isMethodNameDetailAST(identDetailAST)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static final String _MSG_MOVE_METHOD_CALL_BEFORE_METHOD_CALL =

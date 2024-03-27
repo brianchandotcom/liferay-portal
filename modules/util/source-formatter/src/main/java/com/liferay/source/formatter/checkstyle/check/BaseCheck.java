@@ -100,6 +100,55 @@ public abstract class BaseCheck extends AbstractCheck {
 			clazz.getSimpleName(), endTime - startTime);
 	}
 
+	protected boolean containsVariableName(
+		DetailAST detailAST, String variableName, DetailAST assignDetailAST) {
+
+		List<DetailAST> identDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.IDENT);
+
+		return containsVariableName(
+			identDetailASTList, variableName, assignDetailAST);
+	}
+
+	protected boolean containsVariableName(
+		List<DetailAST> identDetailASTList, String variableName,
+		DetailAST assignDetailAST) {
+
+		if (variableName == null) {
+			return false;
+		}
+
+		for (DetailAST identDetailAST : identDetailASTList) {
+			if (!variableName.equals(identDetailAST.getText())) {
+				continue;
+			}
+
+			DetailAST parentDetailAST = identDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.VARIABLE_DEF) {
+				return false;
+			}
+
+			if (assignDetailAST != null) {
+				DetailAST instanceInitDetailAST = getParentWithTokenType(
+					identDetailAST, TokenTypes.INSTANCE_INIT);
+
+				if ((instanceInitDetailAST != null) &&
+					(getEndLineNumber(assignDetailAST) < getStartLineNumber(
+						instanceInitDetailAST))) {
+
+					return false;
+				}
+			}
+
+			if (!isMethodNameDetailAST(identDetailAST)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected abstract void doVisitToken(DetailAST detailAST);
 
 	protected boolean equals(DetailAST detailAST1, DetailAST detailAST2) {

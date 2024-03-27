@@ -32,7 +32,8 @@
 						{
 							"id": "siteName",
 							"value": {
-								"fragmentLink": {},
+								"fragmentLink": {
+								},
 								"text": {
 									"value_i18n": {
 										"en_US": "Learn"
@@ -45,7 +46,8 @@
 				},
 				"pageElements": [
 					{
-						"definition": {},
+						"definition": {
+						},
 						"pageElements": [
 							{
 								"definition": {
@@ -187,11 +189,13 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {},
+						"definition": {
+						},
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {},
+						"definition": {
+						},
 						"pageElements": [
 							{
 								"definition": {
@@ -199,14 +203,15 @@
 										"key": "BASIC_COMPONENT-tabs"
 									},
 									"fragmentConfig": {
-										"persistSelectedTab": true,
-										"numberOfTabs": 3
+										"numberOfTabs": 3,
+										"persistSelectedTab": true
 									},
 									"fragmentFields": [
 										{
 											"id": "title1",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Capabilities"
@@ -217,7 +222,8 @@
 										{
 											"id": "title2",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Products"
@@ -228,7 +234,8 @@
 										{
 											"id": "title3",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Courses"
@@ -287,7 +294,8 @@
 																	"fragmentFields": [
 																		{
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Cloud"
@@ -313,7 +321,8 @@
 																	"fragmentFields": [
 																		{
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Cloud"
@@ -359,7 +368,8 @@
 																	"fragmentFields": [
 																		{
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Cloud"
@@ -385,7 +395,8 @@
 																	"fragmentFields": [
 																		{
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Cloud"
@@ -426,7 +437,8 @@
 						"type": "FragmentDropZone"
 					},
 					{
-						"definition": {},
+						"definition": {
+						},
 						"type": "FragmentDropZone"
 					}
 				],
@@ -1574,9 +1586,9 @@
 		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		},
 		"themeSpritemapClientExtension": {

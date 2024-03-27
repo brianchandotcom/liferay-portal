@@ -59,12 +59,14 @@ public class ClusterLinkMessageUtil {
 		message.put(
 			_KEY_CACHE_MANAGER_NAME,
 			portalCacheClusterEvent.getPortalCacheManagerName());
-		message.put(_KEY_CACHE_NAME, portalCacheClusterEvent.getPortalCacheName());
+		message.put(
+			_KEY_CACHE_NAME, portalCacheClusterEvent.getPortalCacheName());
 		message.put(_KEY_COMPANY_ID, portalCacheClusterEvent.getCompanyId());
 		message.put(
 			_KEY_EVENT_TYPE,
 			String.valueOf(portalCacheClusterEvent.getEventType()));
-		message.put(_KEY_KEY, _serialize(portalCacheClusterEvent.getElementKey()));
+		message.put(
+			_KEY_KEY, _serialize(portalCacheClusterEvent.getElementKey()));
 		message.put(_KEY_TIME_TO_LIVE, portalCacheClusterEvent.getTimeToLive());
 		message.put(
 			_KEY_VALUE, _serialize(portalCacheClusterEvent.getElementValue()));

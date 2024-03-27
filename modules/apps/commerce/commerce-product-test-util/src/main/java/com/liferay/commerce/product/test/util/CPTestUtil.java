@@ -302,6 +302,36 @@ public class CPTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
+	public static CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
+			long cpDefinitionId, long cpOptionId, String key, String name,
+			String priceType, boolean required, boolean skuContributor,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			CPDefinitionOptionRelLocalServiceUtil.fetchCPDefinitionOptionRel(
+				cpDefinitionId, cpOptionId);
+
+		if (cpDefinitionOptionRel == null) {
+			cpDefinitionOptionRel =
+				CPDefinitionOptionRelLocalServiceUtil.addCPDefinitionOptionRel(
+					cpDefinitionId, cpOptionId,
+					RandomTestUtil.randomLocaleStringMap(),
+					RandomTestUtil.randomLocaleStringMap(),
+					CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+					RandomTestUtil.randomDouble(), false, required,
+					skuContributor, false, priceType, serviceContext);
+		}
+
+		return CPDefinitionOptionValueRelLocalServiceUtil.
+			addCPDefinitionOptionValueRel(
+				cpDefinitionOptionRel.getCPDefinitionOptionRelId(), key,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), name
+				).build(),
+				RandomTestUtil.randomDouble(), serviceContext);
+	}
+
 	public static CPDefinitionOptionValueRel
 			addCPDefinitionOptionValueRelWithPrice(
 				long groupId, long cpDefinitionId, long cpInstanceId,
@@ -663,6 +693,15 @@ public class CPTestUtil {
 		return CPOptionValueLocalServiceUtil.addCPOptionValue(
 			cpOption.getCPOptionId(), RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	public static CPOptionValue addCPOptionValue(CPOption cpOption, String key)
+		throws PortalException {
+
+		return CPOptionValueLocalServiceUtil.addCPOptionValue(
+			cpOption.getCPOptionId(), RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomDouble(), key,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

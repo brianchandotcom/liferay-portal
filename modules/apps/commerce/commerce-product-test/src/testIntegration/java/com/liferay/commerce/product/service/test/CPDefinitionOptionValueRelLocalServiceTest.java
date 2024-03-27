@@ -8,6 +8,7 @@ package com.liferay.commerce.product.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemUnitOfMeasureKeyException;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelQuantityException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException;
@@ -15,6 +16,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
@@ -779,6 +781,26 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		Assert.assertNull(cpDefinitionOptionValueRel);
 	}
 
+	@Test
+	public void testValidateCPDefinitionOptionValueRelKey() throws Exception {
+		frutillaRule.scenario(
+			"Verify the validity of the Option Value Key"
+		).given(
+			"A product with a Product Option of type select date"
+		).when(
+			"Configuring the Option Value"
+		).then(
+			"Only valid key is accepted"
+		);
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			_addCPDefinitionWitOptionValue(
+				"03-18-2024-16-45-1-hours-europe-paris");
+
+		Assert.assertNotNull(
+			"Option value was not created", cpDefinitionOptionValueRel);
+	}
+
 	@Test(
 		expected = CommerceInventoryWarehouseItemUnitOfMeasureKeyException.class
 	)
@@ -892,6 +914,101 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 		Assert.assertEquals(
 			cpInstanceUnitOfMeasureKey,
 			cpDefinitionOptionValueRel.getUnitOfMeasureKey());
+	}
+
+	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
+	public void testValidateCPDefinitionOptionValueRelWithInvalidDate()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Verify the validity of the Option Value Key"
+		).given(
+			"A product with a Product Option of type select date"
+		).when(
+			"Configuring the Option Value"
+		).and(
+			"the key is not the right format"
+		).then(
+			"An exception is thrown"
+		);
+
+		_addCPDefinitionWitOptionValue("2024-03-32-16-45-1-hours-europe-paris");
+	}
+
+	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
+	public void testValidateCPDefinitionOptionValueRelWithInvalidDateValue()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Verify the validity of the Option Value Key"
+		).given(
+			"A product with a Product Option of type select date"
+		).when(
+			"Configuring the Option Value"
+		).and(
+			"the key is not the right format"
+		).then(
+			"An exception is thrown"
+		);
+
+		_addCPDefinitionWitOptionValue("2024-03-aa-16-45-1-hours-europe-paris");
+	}
+
+	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
+	public void testValidateCPDefinitionOptionValueRelWithInvalidDuration()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Verify the validity of the Option Value Key"
+		).given(
+			"A product with a Product Option of type select date"
+		).when(
+			"Configuring the Option Value"
+		).and(
+			"the key is not the right format"
+		).then(
+			"An exception is thrown"
+		);
+
+		_addCPDefinitionWitOptionValue("2024-03-18-16-45-1-xyz-europe-paris");
+	}
+
+	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
+	public void testValidateCPDefinitionOptionValueRelWithInvalidKey()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Verify the validity of the Option Value Key"
+		).given(
+			"A product with a Product Option of type select date"
+		).when(
+			"Configuring the Option Value"
+		).and(
+			"the key is not the right format"
+		).then(
+			"An exception is thrown"
+		);
+
+		_addCPDefinitionWitOptionValue("2024-03-18-16:45-1-hours-europe-paris");
+	}
+
+	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
+	public void testValidateCPDefinitionOptionValueRelWithNullKey()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Verify the validity of the Option Value Key"
+		).given(
+			"A product with a Product Option of type select date"
+		).when(
+			"Configuring the Option Value"
+		).and(
+			"the key is null"
+		).then(
+			"An exception is thrown"
+		);
+
+		_addCPDefinitionWitOptionValue(null);
 	}
 
 	@Test
@@ -1049,6 +1166,24 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			addCPDefinitionOptionValueRel(
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 				"cpInstance-option-value", null, 0, _serviceContext);
+	}
+
+	private CPDefinitionOptionValueRel _addCPDefinitionWitOptionValue(
+			String key)
+		throws Exception {
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId());
+
+		CPOption cpOption = CPTestUtil.addCPOption(
+			_commerceCatalog.getGroupId(),
+			CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY, false);
+
+		return CPTestUtil.addCPDefinitionOptionValueRel(
+			cpDefinition.getCPDefinitionId(), cpOption.getCPOptionId(), key,
+			RandomTestUtil.randomString(),
+			CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC, true, true,
+			_serviceContext);
 	}
 
 	private void _assertValidateCPDefinitionOptionValueRelCPInstanceLinkFail(

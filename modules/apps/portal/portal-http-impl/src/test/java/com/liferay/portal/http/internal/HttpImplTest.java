@@ -175,8 +175,8 @@ public class HttpImplTest {
 
 			Assert.assertTrue(_httpImpl.isNonProxyHost(domain));
 			Assert.assertTrue(_httpImpl.isNonProxyHost(ipAddress));
-			Assert.assertTrue(_httpImpl.isNonProxyHost("182.123.0.250"));
 			Assert.assertFalse(_httpImpl.isNonProxyHost("182.100.1.250"));
+			Assert.assertTrue(_httpImpl.isNonProxyHost("182.123.0.250"));
 			Assert.assertFalse(_httpImpl.isNonProxyHost("google.com"));
 		}
 	}

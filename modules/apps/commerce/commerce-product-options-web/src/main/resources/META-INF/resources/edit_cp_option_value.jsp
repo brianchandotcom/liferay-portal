@@ -8,6 +8,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CPOptionValueDisplayContext cpOptionValueDisplayContext = (CPOptionValueDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 CPOptionValue cpOptionValue = (CPOptionValue)request.getAttribute(CPWebKeys.CP_OPTION_VALUE);
 
 long cpOptionValueId = BeanParamUtil.getLong(cpOptionValue, request, "CPOptionValueId");
@@ -53,11 +55,90 @@ if (cpOptionValue != null) {
 			<liferay-ui:error exception="<%= CPOptionValueKeyException.class %>" focusField="key" message="that-key-is-already-being-used" />
 
 			<aui:fieldset>
-				<aui:input helpMessage="key-help" id="key" name="key" />
+				<c:choose>
+					<c:when test="<%= cpOptionValueDisplayContext.isCPOptionSelectDateType() %>">
 
-				<aui:input id="name" name="name" wrapperCssClass="commerce-product-option-value-title" />
+						<%
+						Calendar calendar = cpOptionValueDisplayContext.getCalendar();
+						TimeZone cpOptionValueTimeZone = cpOptionValueDisplayContext.getTimeZone();
+						String durationType = cpOptionValueDisplayContext.getDurationType();
+						%>
 
-				<aui:input label="position" name="priority" />
+						<div class="row">
+							<div class="col-4">
+								<div class="form-group input-date-wrapper">
+									<label for="date"><liferay-ui:message key="date" /></label>
+
+									<liferay-ui:input-date
+										dayParam="day"
+										dayValue="<%= calendar.get(Calendar.DAY_OF_MONTH) %>"
+										disabled="<%= false %>"
+										monthParam="month"
+										monthValue="<%= calendar.get(Calendar.MONTH) %>"
+										name="date"
+										required="<%= true %>"
+										yearParam="year"
+										yearValue="<%= calendar.get(Calendar.YEAR) %>"
+									/>
+								</div>
+							</div>
+
+							<div class="col-4">
+								<div class="form-group input-date-wrapper">
+									<label for="time"><liferay-ui:message key="time" /></label>
+
+									<liferay-ui:input-time
+										amPmParam="amPm"
+										amPmValue="<%= calendar.get(Calendar.AM_PM) %>"
+										disabled="<%= false %>"
+										hourParam="hour"
+										hourValue="<%= calendar.get(Calendar.HOUR) %>"
+										minuteParam="minute"
+										minuteValue="<%= calendar.get(Calendar.MINUTE) %>"
+										name="time"
+									/>
+								</div>
+							</div>
+
+							<div class="col-4">
+								<div class="form-group input-date-wrapper">
+									<label for="timezone"><liferay-ui:message key="time-zone" /></label>
+
+									<liferay-ui:input-time-zone
+										name="timezone"
+										value="<%= cpOptionValueTimeZone.getID() %>"
+									/>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-6">
+								<aui:input name="duration" required="<%= true %>" type="text" value="<%= cpOptionValueDisplayContext.getDuration() %>">
+									<aui:validator name="number" />
+								</aui:input>
+							</div>
+
+							<div class="col-6">
+								<aui:select label="duration-type" name="durationType">
+									<aui:option label="hours" selected="<%= durationType.equals(CPConstants.HOURS_DURATION_TYPE) %>" value="<%= CPConstants.HOURS_DURATION_TYPE %>" />
+									<aui:option label="days" selected="<%= durationType.equals(CPConstants.DAYS_DURATION_TYPE) %>" value="<%= CPConstants.DAYS_DURATION_TYPE %>" />
+								</aui:select>
+							</div>
+						</div>
+
+						<aui:input id="optionValueSelectDateLabel" name="label" readonly="<%= true %>" type="text" value="<%= cpOptionValue.getName(locale) %>" />
+
+						<aui:input label="position" name="priority" />
+					</c:when>
+					<c:otherwise>
+						<aui:input helpMessage="key-help" id="key" name="key" />
+
+						<aui:input id="name" name="name" wrapperCssClass="commerce-product-option-value-title" />
+
+						<aui:input label="position" name="priority" />
+					</c:otherwise>
+				</c:choose>
 			</aui:fieldset>
 
 			<c:if test="<%= CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), CPOptionValue.class.getName(), cpOptionValueId, null) %>">
@@ -72,6 +153,13 @@ if (cpOptionValue != null) {
 			</c:if>
 
 			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"bcp47LanguageId", LocaleUtil.toBCP47LanguageId(locale)
+					).put(
+						"isCPOptionSelectDate", cpOptionValueDisplayContext.isCPOptionSelectDateType()
+					).build()
+				%>'
 				module="js/edit_cp_option_and_value"
 			/>
 		</commerce-ui:panel>

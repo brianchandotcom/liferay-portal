@@ -19,6 +19,7 @@ import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.commerce.price.CommerceProductOptionValueRelativePriceRequest;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPDefinitionLinkTypeConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
@@ -40,6 +41,8 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -49,7 +52,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -59,9 +64,13 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.math.BigDecimal;
 
+import java.text.DateFormat;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -189,9 +198,50 @@ public class ProductOptionValueDTOConverter
 					});
 				setKey(cpDefinitionOptionValueRel::getKey);
 				setName(
-					() -> cpDefinitionOptionValueRel.getName(
-						_language.getLanguageId(
-							dtoConverterContext.getLocale())));
+					() -> {
+						if (Objects.equals(
+								CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+								cpDefinitionOptionRel.
+									getCommerceOptionTypeKey())) {
+
+							String cpDefinitionOptionValueRelKey =
+								cpDefinitionOptionValueRel.getKey();
+
+							String[] splits =
+								cpDefinitionOptionValueRelKey.split(
+									StringPool.DASH);
+
+							TimeZone timeZone = TimeZoneUtil.getTimeZone(
+								_getTimeZone(splits));
+
+							Calendar calendar = CalendarFactoryUtil.getCalendar(
+								Integer.valueOf(splits[2]),
+								Integer.valueOf(splits[0]) - 1,
+								Integer.valueOf(splits[1]),
+								Integer.valueOf(splits[3]),
+								Integer.valueOf(splits[4]));
+
+							DateFormat dateFormat =
+								DateFormat.getDateTimeInstance(
+									DateFormat.LONG, DateFormat.SHORT,
+									dtoConverterContext.getLocale());
+
+							return StringBundler.concat(
+								dateFormat.format(calendar.getTime()),
+								StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+								timeZone.getDisplayName(
+									dtoConverterContext.getLocale()),
+								StringPool.CLOSE_PARENTHESIS, StringPool.SPACE,
+								splits[5], StringPool.SPACE,
+								_language.get(
+									dtoConverterContext.getLocale(),
+									splits[6]));
+						}
+
+						return cpDefinitionOptionValueRel.getName(
+							_language.getLanguageId(
+								dtoConverterContext.getLocale()));
+					});
 				setPreselected(cpDefinitionOptionValueRel::isPreselected);
 				setPrice(
 					() ->
@@ -706,6 +756,28 @@ public class ProductOptionValueDTOConverter
 		}
 
 		return jsonArray;
+	}
+
+	private String _getTimeZone(String[] splits) {
+		if (splits.length > 8) {
+			String timeZone = StringBundler.concat(
+				com.liferay.portal.kernel.util.StringUtil.upperCaseFirstLetter(
+					splits[7]),
+				StringPool.FORWARD_SLASH,
+				com.liferay.portal.kernel.util.StringUtil.upperCaseFirstLetter(
+					splits[8]));
+
+			if ((splits.length > 9) && Validator.isNotNull(splits[9])) {
+				return StringBundler.concat(
+					timeZone, StringPool.UNDERLINE,
+					com.liferay.portal.kernel.util.StringUtil.
+						upperCaseFirstLetter(splits[9]));
+			}
+
+			return timeZone;
+		}
+
+		return splits[7].toUpperCase();
 	}
 
 	private boolean _updateJSONArray(

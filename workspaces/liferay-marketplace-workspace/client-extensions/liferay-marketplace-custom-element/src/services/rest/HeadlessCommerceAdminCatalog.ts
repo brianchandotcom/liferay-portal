@@ -39,6 +39,12 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+	async deleteProduct(productId: string | number) {
+		return fetcher.delete(
+			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}`
+		);
+	}
+
 	async getCatalog(
 		catalogId: string | number,
 		searchParams = new URLSearchParams()

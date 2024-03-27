@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import {useEffect, useState} from 'react';
@@ -37,7 +36,6 @@ type ProductVocabulary = {
 };
 
 const NAVIGATION_BAR_OPTIONS = {
-	ADVERTISEMENT: 'Advertisement',
 	DETAILS: 'Details',
 };
 
@@ -147,17 +145,6 @@ const SolutionsDetails = () => {
 						>
 							Details
 						</ClayLink>
-					</ClayNavigationBar.Item>
-					<ClayNavigationBar.Item
-						active={active === NAVIGATION_BAR_OPTIONS.ADVERTISEMENT}
-					>
-						<ClayButton
-							onClick={() =>
-								setActive(NAVIGATION_BAR_OPTIONS.ADVERTISEMENT)
-							}
-						>
-							Advertisement
-						</ClayButton>
 					</ClayNavigationBar.Item>
 				</ClayNavigationBar>
 			</div>

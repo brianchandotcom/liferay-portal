@@ -7,6 +7,16 @@ import {UploadedImage} from '../../components/FileList/FileList';
 import fetcher from '../fetcher';
 
 class HeadlessCommerceAdminCatalog {
+	async addOrUpdateProductImageByExternalReferenceCode(
+		externalReferenceCode: string,
+		image: UploadedImage
+	) {
+		return fetcher.post(
+			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/images`,
+			image
+		);
+	}
+
 	async createProduct({
 		appCategories,
 		appDescription,
@@ -39,6 +49,16 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+	async createProductSpecification(
+		productId: number | string,
+		productSpecification: ProductSpecification
+	) {
+		return fetcher.post(
+			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productSpecifications`,
+			productSpecification
+		);
+	}
+
 	async deleteProduct(productId: string | number) {
 		return fetcher.delete(
 			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}`
@@ -60,12 +80,10 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-	async getProductSpecifications(productId: string | number) {
-		const response = await fetcher(
-			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productSpecifications`
+	async getSpecifications(searchParams = new URLSearchParams()) {
+		return fetcher<APIResponse>(
+			`/o/headless-commerce-admin-catalog/v1.0/specifications?${searchParams}`
 		);
-
-		return (response?.items ?? []) as ProductSpecification[];
 	}
 
 	async getProduct(
@@ -89,6 +107,14 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+	async getProductSpecifications(productId: string | number) {
+		const response = await fetcher(
+			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productSpecifications`
+		);
+
+		return (response?.items ?? []) as ProductSpecification[];
+	}
+
 	async updateProductByExternalReferenceCode(
 		externalReferenceCode: string,
 		{
@@ -108,13 +134,13 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-	async addOrUpdateProductImageByExternalReferenceCode(
-		externalReferenceCode: string,
-		image: UploadedImage
+	async updateProductSpecification(
+		id: number | string,
+		productSpecification: ProductSpecification
 	) {
-		return fetcher.post(
-			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/images`,
-			image
+		return fetcher.patch(
+			`/o/headless-commerce-admin-catalog/v1.0/productSpecifications/${id}`,
+			productSpecification
 		);
 	}
 }

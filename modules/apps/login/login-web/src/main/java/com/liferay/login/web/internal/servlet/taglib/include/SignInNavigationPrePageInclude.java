@@ -82,7 +82,7 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String signInURL;
+		String signInURL = null;
 
 		try {
 			if (_featureFlagManager.isEnabled("LPD-6378")) {

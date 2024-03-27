@@ -92,7 +92,7 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		iconTag.setMessage("create-account");
 
 		try {
-			String createAccountURL;
+			String createAccountURL = null;
 
 			if (_featureFlagManager.isEnabled("LPD-6378")) {
 				createAccountURL = _getCreateAccountURL(

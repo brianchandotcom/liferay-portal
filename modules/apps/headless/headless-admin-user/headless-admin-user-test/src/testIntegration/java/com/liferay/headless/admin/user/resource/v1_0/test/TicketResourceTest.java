@@ -9,14 +9,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.user.client.dto.v1_0.Ticket;
 import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.headless.admin.user.client.resource.v1_0.TicketResource;
+import com.liferay.headless.admin.user.client.serdes.v1_0.TicketSerDes;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -24,8 +24,11 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,45 +52,124 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 	@Override
 	@Test
 	public void testGetUserAccountEmailVerificationTicket() throws Exception {
-		super.testGetUserAccountEmailVerificationTicket();
+		Ticket getTicket = ticketResource.getUserAccountEmailVerificationTicket(
+			testGetUserAccountEmailVerificationTicket_getUserAccountId());
+
+		Assert.assertNotNull(getTicket);
+		assertValid(getTicket);
 
 		User requestingUser = _addUser(RandomTestUtil.randomString());
 
-		ticketResource = _getTicketResource(
-			requestingUser.getEmailAddress(),
-			requestingUser.getPasswordUnencrypted());
-
 		_assertGetUserAccountTicketWithPermission(
-			requestingUser, TicketConstants.TYPE_EMAIL_ADDRESS,
+			requestingUser,
 			ticketResource::getUserAccountEmailVerificationTicket);
 	}
 
 	@Override
 	@Test
 	public void testGetUserAccountPasswordResetTicket() throws Exception {
-		super.testGetUserAccountPasswordResetTicket();
+		Ticket getTicket = ticketResource.getUserAccountPasswordResetTicket(
+			testGetUserAccountPasswordResetTicket_getUserAccountId());
+
+		Assert.assertNotNull(getTicket);
+		assertValid(getTicket);
 
 		User requestingUser = _addUser(RandomTestUtil.randomString());
 
-		ticketResource = _getTicketResource(
-			requestingUser.getEmailAddress(),
-			requestingUser.getPasswordUnencrypted());
-
 		_assertGetUserAccountTicketWithPermission(
-			requestingUser, TicketConstants.TYPE_PASSWORD,
-			ticketResource::getUserAccountPasswordResetTicket);
+			requestingUser, ticketResource::getUserAccountPasswordResetTicket);
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetUserAccountEmailVerificationTicket()
+		throws Exception {
+
+		Assert.assertNotNull(
+			TicketSerDes.toDTO(
+				JSONUtil.getValueAsString(
+					invokeGraphQLQuery(
+						new GraphQLField(
+							"userAccountEmailVerificationTicket",
+							new HashMapBuilder<>().<String, Object>put(
+								"userAccountId",
+								testGraphQLGetUserAccountEmailVerificationTicket_getUserAccountId()
+							).build(),
+							getGraphQLFields())),
+					"JSONObject/data",
+					"Object/userAccountEmailVerificationTicket")));
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetUserAccountPasswordResetTicket()
+		throws Exception {
+
+		Assert.assertNotNull(
+			TicketSerDes.toDTO(
+				JSONUtil.getValueAsString(
+					invokeGraphQLQuery(
+						new GraphQLField(
+							"userAccountPasswordResetTicket",
+							new HashMapBuilder<>().<String, Object>put(
+								"userAccountId",
+								testGraphQLGetUserAccountPasswordResetTicket_getUserAccountId()
+							).build(),
+							getGraphQLFields())),
+					"JSONObject/data",
+					"Object/userAccountPasswordResetTicket")));
+	}
+
+	@Override
+	protected void assertValid(Ticket ticket) throws Exception {
+		boolean valid = true;
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(additionalAssertFieldName, "expirationDate")) {
+				if (ticket.getExpirationDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "extraInfo")) {
+				if (ticket.getExtraInfo() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "id")) {
+				if (ticket.getId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "key")) {
+				if (ticket.getKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
 	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"extraInfo", "key"};
-	}
-
-	@Override
-	protected Ticket testGetUserAccountEmailVerificationTicket_addTicket()
-		throws Exception {
-
-		return _addTicket(TicketConstants.TYPE_EMAIL_ADDRESS);
+		return new String[] {"extraInfo", "id", "key"};
 	}
 
 	@Override
@@ -98,25 +180,10 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 	}
 
 	@Override
-	protected Ticket testGetUserAccountPasswordResetTicket_addTicket()
-		throws Exception {
-
-		return _addTicket(TicketConstants.TYPE_PASSWORD);
-	}
-
-	@Override
 	protected Long testGetUserAccountPasswordResetTicket_getUserAccountId()
 		throws Exception {
 
 		return _user.getUserId();
-	}
-
-	@Override
-	protected Ticket
-			testGraphQLGetUserAccountEmailVerificationTicket_addTicket()
-		throws Exception {
-
-		return _addTicket(TicketConstants.TYPE_EMAIL_ADDRESS);
 	}
 
 	@Override
@@ -128,13 +195,6 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 	}
 
 	@Override
-	protected Ticket testGraphQLGetUserAccountPasswordResetTicket_addTicket()
-		throws Exception {
-
-		return _addTicket(TicketConstants.TYPE_PASSWORD);
-	}
-
-	@Override
 	protected Long
 			testGraphQLGetUserAccountPasswordResetTicket_getUserAccountId()
 		throws Exception {
@@ -142,29 +202,27 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 		return _user.getUserId();
 	}
 
-	private Ticket _addTicket(int type) throws Exception {
-		return _toTicket(
-			_ticketLocalService.addDistinctTicket(
-				_user.getCompanyId(), User.class.getName(), _user.getUserId(),
-				type, RandomTestUtil.randomString(), null, null));
-	}
-
 	private User _addUser(String password) throws Exception {
-		return UserTestUtil.addUser(
+		User user = UserTestUtil.addUser(
 			testCompany.getCompanyId(), TestPropsValues.getUserId(), password,
 			RandomTestUtil.randomString() + "@liferay.com",
 			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new long[] {TestPropsValues.getGroupId()},
 			ServiceContextTestUtil.getServiceContext());
+
+		ticketResource = _getTicketResource(
+			user.getEmailAddress(), user.getPasswordUnencrypted());
+
+		user.setEmailAddressVerified(true);
+
+		return _userLocalService.updateUser(user);
 	}
 
 	private void _assertGetUserAccountTicketWithPermission(
-			User requestingUser, int type,
+			User requestingUser,
 			UnsafeFunction<Long, Ticket, Exception> unsafeFunction)
 		throws Exception {
-
-		Ticket postTicket = _addTicket(type);
 
 		try {
 			unsafeFunction.apply(_user.getUserId());
@@ -187,7 +245,7 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 
 		Ticket getTicket = unsafeFunction.apply(_user.getUserId());
 
-		assertEquals(postTicket, getTicket);
+		Assert.assertNotNull(getTicket);
 		assertValid(getTicket);
 	}
 
@@ -200,23 +258,6 @@ public class TicketResourceTest extends BaseTicketResourceTestCase {
 			LocaleUtil.getDefault()
 		).build();
 	}
-
-	private Ticket _toTicket(
-			com.liferay.portal.kernel.model.Ticket serviceBuilderTicket)
-		throws Exception {
-
-		return new Ticket() {
-			{
-				expirationDate = serviceBuilderTicket.getExpirationDate();
-				extraInfo = serviceBuilderTicket.getExtraInfo();
-				id = serviceBuilderTicket.getTicketId();
-				key = serviceBuilderTicket.getKey();
-			}
-		};
-	}
-
-	@Inject
-	private TicketLocalService _ticketLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

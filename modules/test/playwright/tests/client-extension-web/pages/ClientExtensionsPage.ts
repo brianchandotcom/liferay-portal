@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ClientExtensionsPage {
+	readonly addJSMenuItem: Locator;
 	readonly addThemeCSSMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly deleteMenuItem: Locator;
@@ -17,6 +18,9 @@ export class ClientExtensionsPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.addJSMenuItem = page.getByRole('menuitem', {
+			exact: true, name: 'Add JS',
+		});
 		this.addThemeCSSMenuItem = page.getByRole('menuitem', {
 			name: 'Add Theme CSS',
 		});

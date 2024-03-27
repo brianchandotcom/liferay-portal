@@ -32,6 +32,35 @@ export class PagesAdminPage {
 		});
 	}
 
+	async selectJavaScriptClientExtension(clientExtensionName: string) {
+		await this.gotoPagesConfiguration();
+
+		await this.page.getByRole('tab', {name: 'JavaScript'}).click();
+
+		await this.page.getByRole('button', {name: 'Add JavaScript Client Extensions' }).click();
+
+		await this.page.getByText('In Page Head').click();
+
+		const iframe = this.page.locator(
+			'#selectGlobalJSCETs_iframe_'
+		);
+
+		await iframe.waitFor({
+			state: 'visible',
+		});
+
+		await this.page
+			.frameLocator('#selectGlobalJSCETs_iframe_').getByLabel(clientExtensionName).check();
+
+		const addButton = this.page.getByRole('button', {exact: true, name: 'Add' })
+
+		const clientExtensionEntry = this.page.getByRole('cell', {name: clientExtensionName})
+
+		await clickAndExpectToBeVisible({target: clientExtensionEntry, trigger: addButton })
+
+		await this.page.getByRole('button', {exact: true, name: 'Save',}).click();
+	}
+
 	async selectThemeCSSClientExtension(clientExtensionName: string) {
 		await this.gotoPagesConfiguration();
 

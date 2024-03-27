@@ -5,8 +5,10 @@
 
 package com.liferay.gogo.shell.web.internal.portlet;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.gogo.shell.web.internal.constants.GogoShellPortletKeys;
 import com.liferay.gogo.shell.web.internal.constants.GogoShellWebKeys;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.language.Language;
@@ -151,6 +153,13 @@ public class GogoShellPortlet extends MVCPortlet {
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
+
+		try {
+			CaptchaUtil.check(actionRequest);
+		}
+		catch (CaptchaException captchaException) {
+			throw new PortletException(captchaException);
+		}
 
 		_checkOmniadmin();
 

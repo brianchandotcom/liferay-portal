@@ -10,18 +10,37 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/captcha" prefix="liferay-captcha" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/learn" prefix="liferay-learn" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
+<%@ page import="com.liferay.captcha.util.CaptchaUtil" %><%@
+page import="com.liferay.portal.kernel.captcha.CaptchaConfigurationException" %><%@
+page import="com.liferay.portal.kernel.captcha.CaptchaException" %><%@
+page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
+page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
+
+<%@ page import="javax.portlet.PortletRequest" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+
+if (portletRequest != null) {
+	CaptchaUtil.setMaxChallenges(portletRequest, 0);
+}
+else {
+	CaptchaUtil.setMaxChallenges(request, 0);
+}
+%>

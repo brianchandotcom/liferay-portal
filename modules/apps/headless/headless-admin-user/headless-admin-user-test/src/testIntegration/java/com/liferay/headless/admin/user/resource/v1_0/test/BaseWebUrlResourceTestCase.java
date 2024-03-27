@@ -181,6 +181,161 @@ public abstract class BaseWebUrlResourceTestCase {
 	}
 
 	@Test
+	public void testGetAccountByExternalReferenceCodeWebUrlsPage()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetAccountByExternalReferenceCodeWebUrlsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetAccountByExternalReferenceCodeWebUrlsPage_getIrrelevantExternalReferenceCode();
+
+		Page<WebUrl> page =
+			webUrlResource.getAccountByExternalReferenceCodeWebUrlsPage(
+				externalReferenceCode);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantExternalReferenceCode != null) {
+			WebUrl irrelevantWebUrl =
+				testGetAccountByExternalReferenceCodeWebUrlsPage_addWebUrl(
+					irrelevantExternalReferenceCode, randomIrrelevantWebUrl());
+
+			page = webUrlResource.getAccountByExternalReferenceCodeWebUrlsPage(
+				irrelevantExternalReferenceCode);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(irrelevantWebUrl, (List<WebUrl>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountByExternalReferenceCodeWebUrlsPage_getExpectedActions(
+					irrelevantExternalReferenceCode));
+		}
+
+		WebUrl webUrl1 =
+			testGetAccountByExternalReferenceCodeWebUrlsPage_addWebUrl(
+				externalReferenceCode, randomWebUrl());
+
+		WebUrl webUrl2 =
+			testGetAccountByExternalReferenceCodeWebUrlsPage_addWebUrl(
+				externalReferenceCode, randomWebUrl());
+
+		page = webUrlResource.getAccountByExternalReferenceCodeWebUrlsPage(
+			externalReferenceCode);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(webUrl1, (List<WebUrl>)page.getItems());
+		assertContains(webUrl2, (List<WebUrl>)page.getItems());
+		assertValid(
+			page,
+			testGetAccountByExternalReferenceCodeWebUrlsPage_getExpectedActions(
+				externalReferenceCode));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountByExternalReferenceCodeWebUrlsPage_getExpectedActions(
+				String externalReferenceCode)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected WebUrl testGetAccountByExternalReferenceCodeWebUrlsPage_addWebUrl(
+			String externalReferenceCode, WebUrl webUrl)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeWebUrlsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetAccountByExternalReferenceCodeWebUrlsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testGetAccountWebUrlsPage() throws Exception {
+		Long accountId = testGetAccountWebUrlsPage_getAccountId();
+		Long irrelevantAccountId =
+			testGetAccountWebUrlsPage_getIrrelevantAccountId();
+
+		Page<WebUrl> page = webUrlResource.getAccountWebUrlsPage(accountId);
+
+		long totalCount = page.getTotalCount();
+
+		if (irrelevantAccountId != null) {
+			WebUrl irrelevantWebUrl = testGetAccountWebUrlsPage_addWebUrl(
+				irrelevantAccountId, randomIrrelevantWebUrl());
+
+			page = webUrlResource.getAccountWebUrlsPage(irrelevantAccountId);
+
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+			assertContains(irrelevantWebUrl, (List<WebUrl>)page.getItems());
+			assertValid(
+				page,
+				testGetAccountWebUrlsPage_getExpectedActions(
+					irrelevantAccountId));
+		}
+
+		WebUrl webUrl1 = testGetAccountWebUrlsPage_addWebUrl(
+			accountId, randomWebUrl());
+
+		WebUrl webUrl2 = testGetAccountWebUrlsPage_addWebUrl(
+			accountId, randomWebUrl());
+
+		page = webUrlResource.getAccountWebUrlsPage(accountId);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(webUrl1, (List<WebUrl>)page.getItems());
+		assertContains(webUrl2, (List<WebUrl>)page.getItems());
+		assertValid(
+			page, testGetAccountWebUrlsPage_getExpectedActions(accountId));
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAccountWebUrlsPage_getExpectedActions(Long accountId)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	protected WebUrl testGetAccountWebUrlsPage_addWebUrl(
+			Long accountId, WebUrl webUrl)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountWebUrlsPage_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetAccountWebUrlsPage_getIrrelevantAccountId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
 	public void testGetOrganizationWebUrlsPage() throws Exception {
 		String organizationId =
 			testGetOrganizationWebUrlsPage_getOrganizationId();

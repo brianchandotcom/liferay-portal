@@ -7,6 +7,7 @@ const {REACT_APP_LIFERAY_HOST = window.location.origin} = process.env;
 
 const liferayRequest = async ({
 	headers = {},
+	method = 'GET',
 	options = {},
 	urlPath,
 	urlSearchParams = new URLSearchParams(),
@@ -17,6 +18,7 @@ const liferayRequest = async ({
 		REACT_APP_LIFERAY_HOST + '/' + urlPath + '?' + urlSearchParams,
 		{
 			headers,
+			method,
 			...options,
 		}
 	);

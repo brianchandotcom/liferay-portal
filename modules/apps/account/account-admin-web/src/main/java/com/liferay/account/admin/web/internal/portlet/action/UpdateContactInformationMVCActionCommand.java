@@ -101,7 +101,7 @@ public class UpdateContactInformationMVCActionCommand
 		}
 	}
 
-	private ContactInfoManager _getContactInformationHelper(
+	private ContactInfoManager _getContactInfoManager(
 		String className, long classPK, String listType) {
 
 		if (listType.equals(ListTypeConstants.EMAIL_ADDRESS)) {
@@ -127,10 +127,10 @@ public class UpdateContactInformationMVCActionCommand
 
 		String listType = ParamUtil.getString(actionRequest, "listType");
 
-		ContactInfoManager contactInformationHelper =
-			_getContactInformationHelper(className, classPK, listType);
+		ContactInfoManager contactInfoManager = _getContactInfoManager(
+			className, classPK, listType);
 
-		if (contactInformationHelper == null) {
+		if (contactInfoManager == null) {
 			throw new NoSuchListTypeException();
 		}
 
@@ -139,13 +139,13 @@ public class UpdateContactInformationMVCActionCommand
 		long primaryKey = ParamUtil.getLong(actionRequest, "primaryKey");
 
 		if (cmd.equals(Constants.DELETE)) {
-			contactInformationHelper.delete(primaryKey);
+			contactInfoManager.delete(primaryKey);
 		}
 		else if (cmd.equals(Constants.EDIT)) {
-			contactInformationHelper.edit(actionRequest);
+			contactInfoManager.edit(actionRequest);
 		}
 		else if (cmd.equals("makePrimary")) {
-			contactInformationHelper.makePrimary(primaryKey);
+			contactInfoManager.makePrimary(primaryKey);
 		}
 	}
 

@@ -30,7 +30,8 @@ public interface CookiesPreferenceHandlingConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "true", description = "cookie-explicit-consent-mode-help",
+		deflt = "true",
+		description = "cookie-explicit-consent-mode-help-deprecated",
 		name = "cookie-explicit-consent-mode", required = false
 	)
 	public boolean explicitConsentMode();

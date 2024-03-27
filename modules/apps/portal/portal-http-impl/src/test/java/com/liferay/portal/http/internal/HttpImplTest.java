@@ -226,8 +226,7 @@ public class HttpImplTest {
 
 		if (expectedKeepAlive) {
 			ConnectionKeepAliveStrategy connectionKeepAliveStrategy =
-				(ConnectionKeepAliveStrategy)
-					tuple.getObject(0);
+				(ConnectionKeepAliveStrategy)tuple.getObject(0);
 
 			BasicPoolEntry basicPoolEntry = new BasicPoolEntry(
 				"id", new HttpHost("localhost", 8080),

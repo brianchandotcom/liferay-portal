@@ -4,6 +4,10 @@ classes {
 	dependsOn copyPackageJson
 }
 
+compileJava {
+	mustRunAfter copyPackageJson
+}
+
 copyPackageJson {
 	from new File(projectDir, "package.json")
 	into new File(sourceSets.main.java.destinationDirectory.get().getAsFile(), "com/liferay/frontend/taglib/clay/internal/js/importmaps/extender/dependencies")

@@ -315,7 +315,7 @@ public class ObjectRelationshipResourceImpl
 
 		long rootObjectDefinitionId = 0;
 
-		if (objectRelationship.getEdge()) {
+		if (GetterUtil.getBoolean(objectRelationship.getEdge())) {
 			com.liferay.object.model.ObjectDefinition
 				serviceBuilderObjectDefinition1 =
 					_objectDefinitionLocalService.

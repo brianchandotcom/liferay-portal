@@ -18,3 +18,5 @@ export {
 	runThirdPartyCookiesInterval,
 	flipThirdPartyCookiesOff,
 } from './toggleThirdPartyCookies';
+
+export {default as ConfigurationFormEventHandler} from './ConfigurationFormEventHandler';

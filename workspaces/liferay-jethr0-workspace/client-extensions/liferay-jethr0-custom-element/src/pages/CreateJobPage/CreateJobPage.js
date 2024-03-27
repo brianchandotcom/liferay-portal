@@ -12,15 +12,17 @@ import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcru
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
+import {getJobDefinitionByKey, getJobDefinitions} from '../../objects/jobdefinitions/JobDefintionUtil';
+import {getJobDefinitionParametersByJobDefinition} from '../../objects/jobdefinitionparameters/JobDefinitionParameterUtil';
 import postSpringBootData from '../../services/postSpringBootData';
-import useSpringBootData from '../../services/useSpringBootData';
 
 function CreateJobPage() {
+	const [jobDefinition, setJobDefinition] = useState(null);
+	const [jobDefinitions, setJobDefinitions] = useState(null);
+	const [jobDefinitionParameters, setJobDefinitionParameters] = useState(null);
 	const [jobName, setJobName] = useState(null);
 	const [jobParameters, setJobParameters] = useState(null);
 	const [jobPriority, setJobPriority] = useState(4);
-	const [jobTypeKey, setJobTypeKey] = useState('portalPullRequestSF');
-	const [jobDefinitions, setJobDefinitions] = useState(null);
 
 	function redirectToJobPage(data) {
 		const json = JSON.parse(data);
@@ -30,33 +32,28 @@ function CreateJobPage() {
 		}
 	}
 
-	function setJobNameFromJobTypeKey(jobTypeKey) {
-		for (const jobDefinition of jobDefinitions) {
-			if (jobDefinition.key === jobTypeKey) {
-				setJobName(jobDefinition.label);
+	if (!jobDefinition) {
+		getJobDefinitionByKey({
+			key: 'default',
+			setJobDefinition
+		});
 
-				break;
-			}
-		}
+		return;
 	}
 
-	function setJobParametersFromJobTypeKey(jobTypeKey) {
-		for (const jobDefinition of jobDefinitions) {
-			if (jobDefinition.key === jobTypeKey) {
-				const jobParameters = {};
+	if (!jobDefinitions) {
+		getJobDefinitions({setJobDefinitions});
 
-				jobDefinition.parameterDefinitions.forEach(
-					(parameterDefinition) => {
-						jobParameters[parameterDefinition.key] =
-							parameterDefinition.valueDefault;
-					}
-				);
+		return;
+	}
 
-				setJobParameters(jobParameters);
+	if (jobDefinition && !jobDefinitionParameters) {
+		getJobDefinitionParametersByJobDefinition({
+			jobDefintionId: jobDefinition.id,
+			setJobDefinitionParameters
+		});
 
-				break;
-			}
-		}
+		return;
 	}
 
 	const breadcrumbs = [
@@ -65,35 +62,27 @@ function CreateJobPage() {
 		{active: true, link: '/jobs/create', name: 'Create Job'},
 	];
 
-	useSpringBootData({
-		setData: setJobDefinitions,
-		urlPath: '/jobs/definitions',
-	});
-
-	let jobParameterDefinitions = null;
 	let jobTypeOptions = [];
 
-	if (jobDefinitions !== null) {
+	if (jobDefinitions) {
 		jobTypeOptions = jobDefinitions.map((jobDefinition) => {
 			return {
 				label: jobDefinition.label,
 				value: jobDefinition.key,
 			};
 		});
+	}
 
-		if (jobName === null && jobTypeKey !== null) {
-			setJobNameFromJobTypeKey(jobTypeKey);
-		}
+	if (!jobParameters && jobDefinitionParameters) {
+		const defaultJobParameters = [];
 
-		if (jobParameters === null && jobTypeKey !== null) {
-			setJobParametersFromJobTypeKey(jobTypeKey);
-		}
+		jobDefinitionParameters.forEach((jobDefinitionParameter) => {
+			defaultJobParameters[jobDefinitionParameter.key] = jobDefinitionParameter.valueDefault;
+		})
 
-		const jobDefinition = jobDefinitions.find((jobDefinition) => {
-			return jobDefinition.key === jobTypeKey;
-		});
+		setJobParameters(defaultJobParameters);
 
-		jobParameterDefinitions = jobDefinition.parameterDefinitions;
+		return;
 	}
 
 	const jobData = {
@@ -101,7 +90,7 @@ function CreateJobPage() {
 		parameters: jobParameters,
 		priority: jobPriority,
 		state: 'queued',
-		type: jobTypeKey,
+		type: jobDefinition.key,
 	};
 
 	return (
@@ -119,7 +108,6 @@ function CreateJobPage() {
 					<label htmlFor="buildPriority">Build Priority</label>
 
 					<ClayInput
-						disabled="true"
 						id="buildPriority"
 						onChange={(event) => {
 							setJobPriority(event.target.value);
@@ -136,12 +124,16 @@ function CreateJobPage() {
 						aria-label="Job Types"
 						id="jobType"
 						onChange={(event) => {
-							setJobNameFromJobTypeKey(event.target.value);
-							setJobParametersFromJobTypeKey(event.target.value);
-							setJobTypeKey(event.target.value);
+							setJobDefinitionParameters(null);
+							setJobParameters(null);
+
+							getJobDefinitionByKey({
+								key: event.target.value,
+								setJobDefinition
+							})
 						}}
 						options={jobTypeOptions}
-						value={jobTypeKey}
+						value={jobDefinition.key}
 					/>
 				</ClayForm.Group>
 
@@ -160,8 +152,8 @@ function CreateJobPage() {
 				</ClayForm.Group>
 
 				{jobParameters &&
-					jobParameterDefinitions &&
-					jobParameterDefinitions.map((jobParameterDefinition) => {
+					jobDefinitionParameters &&
+					jobDefinitionParameters.map((jobParameterDefinition) => {
 						return (
 							<ClayForm.Group key={jobParameterDefinition.key}>
 								<label htmlFor={jobParameterDefinition.key}>

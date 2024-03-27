@@ -7600,6 +7600,8 @@ ${docker.start.error}</fail>
 				<try>
 					<retry retrycount="2">
 						<sequential>
+							<stop-docker-database />
+
 							<start-docker-database-cmd />
 						</sequential>
 					</retry>

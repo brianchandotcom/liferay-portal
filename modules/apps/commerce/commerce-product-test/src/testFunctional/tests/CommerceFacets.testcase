@@ -18,6 +18,7 @@ definition {
 	@priority = 3
 	test AssertProductsAreFilteredAfterUpdatingRangesByPriceRangeFacet {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		task ("Given the first two ranges are changed on Price Range Facet widget on a Minium site") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
@@ -249,6 +250,7 @@ definition {
 	@priority = 3
 	test CanClearSelectionsInCommerceSearchFacets {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		task ("Given an account with a buyer user is created") {
 			CommerceEntry.addAccountEntryUser(
@@ -1035,6 +1037,7 @@ definition {
 	@priority = 4
 	test CanViewTermCountOfPriceRangeFacetPersists {
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		task ("Given the admin navigates to Minium site") {
 			var portalURL = PropsUtil.get("portal.url");

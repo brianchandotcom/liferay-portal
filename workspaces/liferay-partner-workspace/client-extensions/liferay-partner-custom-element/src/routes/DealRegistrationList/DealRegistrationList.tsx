@@ -24,6 +24,7 @@ import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
 import {DealRegistrationListItem} from '../../common/interfaces/dealRegistrationListItem';
+import TableColumn from '../../common/interfaces/tableColumn';
 import {Liferay} from '../../common/services/liferay';
 import getDoubleParagraph from '../../common/utils/getDoubleParagraph';
 import ModalContent from './components/ModalContent';
@@ -33,11 +34,6 @@ export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
 };
 
-type TableColumn = {
-	columnKey: DealRegistrationColumnKey;
-	label: string | JSX.Element;
-	size?: 'sm' | 'md';
-};
 interface IProps {
 	sort: string;
 }
@@ -88,7 +84,7 @@ const DealRegistrationList = ({sort}: IProps) => {
 	const filteredData = data.items;
 	const filteredCSVData = dataCSV.items;
 
-	const columns: TableColumn[] = [
+	const columns: TableColumn<DealRegistrationItem>[] = [
 		{
 			columnKey: DealRegistrationColumnKey.PARTNER_ACCOUNT_NAME,
 			label: 'Partner Account Name',
@@ -163,7 +159,7 @@ const DealRegistrationList = ({sort}: IProps) => {
 						columns={columns}
 						customClickOnRow={handleCustomClickOnRow}
 						rows={items}
-						tableLayout="auto"
+						tableLayoutAuto={true}
 					/>
 
 					<ClayPaginationBarWithBasicItems

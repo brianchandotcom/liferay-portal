@@ -152,6 +152,7 @@ const PartnerOpportunitiesList = ({isRenewalListing, name, sort}: IProps) => {
 						columns={columns}
 						customClickOnRow={handleCustomClickOnRow}
 						rows={items}
+						tableLayoutAuto={true}
 					/>
 
 					<ClayPaginationBarWithBasicItems

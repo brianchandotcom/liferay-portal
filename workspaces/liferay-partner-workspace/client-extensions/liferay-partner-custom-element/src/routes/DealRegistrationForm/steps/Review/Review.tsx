@@ -51,6 +51,7 @@ const Review = ({
 							value: values.mdfActivityAssociated.name,
 						},
 					]}
+					tableLayoutAuto={true}
 				/>
 
 				<Table
@@ -95,6 +96,7 @@ const Review = ({
 							value: values.prospect?.country?.name,
 						},
 					]}
+					tableLayoutAuto={true}
 				/>
 
 				<Table
@@ -135,6 +137,7 @@ const Review = ({
 							value: values.primaryProspect?.jobRole?.name,
 						},
 					]}
+					tableLayoutAuto={true}
 				/>
 
 				<Table
@@ -163,6 +166,7 @@ const Review = ({
 							value: values.additionalContact?.emailAddress,
 						},
 					]}
+					tableLayoutAuto={true}
 				/>
 
 				<Table
@@ -184,6 +188,7 @@ const Review = ({
 								values.additionalInformationAboutTheOpportunity,
 						},
 					]}
+					tableLayoutAuto={true}
 				/>
 
 				<Table
@@ -208,6 +213,7 @@ const Review = ({
 							value: values.projectCategories.join(', '),
 						},
 					]}
+					tableLayoutAuto={true}
 				/>
 
 				<Table
@@ -228,6 +234,7 @@ const Review = ({
 							value: values.projectTimeline,
 						},
 					]}
+					tableLayoutAuto={true}
 				/>
 
 				<PRMForm.Footer>

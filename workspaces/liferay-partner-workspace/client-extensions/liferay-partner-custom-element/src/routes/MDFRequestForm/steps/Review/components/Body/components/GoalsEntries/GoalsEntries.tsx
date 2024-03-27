@@ -37,6 +37,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					value: mdfRequest.partnerCountry?.name,
 				},
 			]}
+			tableLayoutAuto={true}
 		/>
 
 		<Table<Item>
@@ -79,6 +80,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 						: mdfRequest.liferayBusinessSalesGoals?.join('; '),
 				},
 			]}
+			tableLayoutAuto={true}
 		/>
 
 		<Table<Item>
@@ -107,6 +109,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 					value: mdfRequest.targetAudienceRoles?.join('; '),
 				},
 			]}
+			tableLayoutAuto={true}
 		/>
 	</div>
 );

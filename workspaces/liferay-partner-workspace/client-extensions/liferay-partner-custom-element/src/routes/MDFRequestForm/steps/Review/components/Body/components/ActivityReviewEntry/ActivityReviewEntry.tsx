@@ -93,6 +93,7 @@ const ActivityReviewEntry = ({mdfRequestActivity}: IProps) => {
 							),
 					},
 				]}
+				tableLayoutAuto={true}
 			/>
 
 			<ActivityContent mdfRequestActivity={mdfRequestActivity} />

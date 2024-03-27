@@ -70,6 +70,7 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => {
 							mdfRequestActivity.currency
 						).format(budget.cost),
 					}))}
+				tableLayoutAuto={true}
 			/>
 
 			<Table
@@ -85,6 +86,7 @@ const ActivityContent = ({mdfRequestActivity}: IProps) => {
 					},
 				]}
 				rows={leadList}
+				tableLayoutAuto={true}
 			/>
 		</>
 	);

@@ -102,7 +102,7 @@ const MDFClaimList = () => {
 					<Table<MDFClaimListItem>
 						columns={columns}
 						rows={items}
-						tableLayout="auto"
+						tableLayoutAuto={true}
 					/>
 
 					<ClayPaginationBarWithBasicItems

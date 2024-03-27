@@ -132,7 +132,7 @@ const MDFRequestList = () => {
 					<Table<MDFRequestListItem>
 						columns={columns}
 						rows={items}
-						tableLayout="auto"
+						tableLayoutAuto={true}
 					/>
 
 					<ClayPaginationBarWithBasicItems

@@ -16,8 +16,6 @@ import classNames from 'classnames';
 import './index.css';
 import TableColumn from '../../interfaces/tableColumn';
 
-type TableLayout = 'auto';
-
 interface BasicRow {
 	[key: string]: string | number | boolean | string[] | undefined;
 }
@@ -27,7 +25,7 @@ interface TableProps<T> {
 	columns: TableColumn<T>[];
 	customClickOnRow?: (item: T) => void;
 	rows: T[];
-	tableLayout?: TableLayout;
+	tableLayoutAuto: boolean;
 }
 
 interface RowProps<T> {
@@ -50,7 +48,9 @@ const Row = <T extends BasicRow>({
 			className="border-0 font-weight-normal"
 			items={columns}
 			onClick={() => {
-				customClickOnRow && customClickOnRow(row);
+				if (customClickOnRow) {
+					return customClickOnRow(row);
+				}
 			}}
 		>
 			{
@@ -94,14 +94,14 @@ const Table = <T extends BasicRow>({
 	columns,
 	customClickOnRow,
 	rows,
-	tableLayout,
+	tableLayoutAuto,
 }: TableProps<T>) => {
 	return (
 		<ClayTooltipProvider>
 			<ClayTable
 				borderless
 				className={classNames(className, {
-					'table-layout-auto': tableLayout === 'auto',
+					'table-layout-auto': tableLayoutAuto,
 				})}
 				columnsVisibility={false}
 				noWrap
@@ -121,13 +121,15 @@ const Table = <T extends BasicRow>({
 
 				<Body align="left" defaultItems={rows}>
 					{
-						((row) => (
-							<Row
-								columns={columns}
-								customClickOnRow={customClickOnRow}
-								row={row}
-							/>
-						)) as ChildrenRender<T>
+						((row) => {
+							return (
+								<Row
+									columns={columns}
+									customClickOnRow={customClickOnRow}
+									row={row}
+								/>
+							);
+						}) as ChildrenRender<T>
 					}
 				</Body>
 			</ClayTable>

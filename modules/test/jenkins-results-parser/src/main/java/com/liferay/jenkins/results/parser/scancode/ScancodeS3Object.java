@@ -19,59 +19,59 @@ import java.nio.charset.StandardCharsets;
  */
 public class ScancodeS3Object {
 
-    public void delete() {
-        _blob.delete();
-    }
+	public void delete() {
+		_blob.delete();
+	}
 
-    public boolean exists() {
-        return _blob.exists();
-    }
+	public boolean exists() {
+		return _blob.exists();
+	}
 
-    public String getKey() {
-        return _blob.getName();
-    }
+	public String getKey() {
+		return _blob.getName();
+	}
 
-    public ScancodeS3Bucket getScancodeS3Bucket() {
-        return _scancodeS3Bucket;
-    }
+	public ScancodeS3Bucket getScancodeS3Bucket() {
+		return _scancodeS3Bucket;
+	}
 
-    public URL getURL() {
-        return _url;
-    }
+	public URL getURL() {
+		return _url;
+	}
 
-    public String getURLString() {
-        return JenkinsResultsParserUtil.fixURL(String.valueOf(_url));
-    }
+	public String getURLString() {
+		return JenkinsResultsParserUtil.fixURL(String.valueOf(_url));
+	}
 
-    public String getValue() {
-        if (!exists()) {
-            return null;
-        }
+	public String getValue() {
+		if (!exists()) {
+			return null;
+		}
 
-        return new String(_blob.getContent(), StandardCharsets.UTF_8);
-    }
+		return new String(_blob.getContent(), StandardCharsets.UTF_8);
+	}
 
-    @Override
-    public String toString() {
-        return getURLString();
-    }
+	@Override
+	public String toString() {
+		return getURLString();
+	}
 
-    protected ScancodeS3Object(ScancodeS3Bucket scancodeS3Bucket, Blob blob) {
-        _scancodeS3Bucket = scancodeS3Bucket;
-        _blob = blob;
+	protected ScancodeS3Object(ScancodeS3Bucket scancodeS3Bucket, Blob blob) {
+		_scancodeS3Bucket = scancodeS3Bucket;
+		_blob = blob;
 
-        try {
-            _url = new URL(
-                    JenkinsResultsParserUtil.combine(
-                            scancodeS3Bucket.getScancodeS3BaseURL(), "/", getKey()));
-        }
-        catch (MalformedURLException malformedURLException) {
-            throw new RuntimeException(malformedURLException);
-        }
-    }
+		try {
+			_url = new URL(
+				JenkinsResultsParserUtil.combine(
+					scancodeS3Bucket.getScancodeS3BaseURL(), "/", getKey()));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
 
-    private final Blob _blob;
-    private final ScancodeS3Bucket _scancodeS3Bucket;
-    private final URL _url;
+	private final Blob _blob;
+	private final ScancodeS3Bucket _scancodeS3Bucket;
+	private final URL _url;
 
 }

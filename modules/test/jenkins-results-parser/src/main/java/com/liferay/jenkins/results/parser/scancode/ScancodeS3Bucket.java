@@ -39,320 +39,319 @@ import org.apache.commons.io.FileUtils;
  */
 public class ScancodeS3Bucket {
 
-    public static ScancodeS3Bucket getInstance() {
-        String name = null;
+	public static ScancodeS3Bucket getInstance() {
+		String name = null;
 
-        try {
-            name = JenkinsResultsParserUtil.getBuildProperty(
-                    "scancode.s3.bucket");
-        }
-        catch (IOException ioException) {
-            System.out.println(
-                    "WARNING: Unable to get bucket name from mirrors.");
-        }
+		try {
+			name = JenkinsResultsParserUtil.getBuildProperty(
+				"scancode.s3.bucket");
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				"WARNING: Unable to get bucket name from mirrors.");
+		}
 
-        return getInstance(name);
-    }
+		return getInstance(name);
+	}
 
-    public static ScancodeS3Bucket getInstance(String name) {
-        if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
-            name = DEFAULT_BUCKET_NAME;
-        }
+	public static ScancodeS3Bucket getInstance(String name) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+			name = DEFAULT_BUCKET_NAME;
+		}
 
-        ScancodeS3Bucket scancodeS3Bucket = _scancodeS3Buckets.get(name);
+		ScancodeS3Bucket scancodeS3Bucket = _scancodeS3Buckets.get(name);
 
-        if (scancodeS3Bucket == null) {
-            scancodeS3Bucket = new ScancodeS3Bucket(name);
+		if (scancodeS3Bucket == null) {
+			scancodeS3Bucket = new ScancodeS3Bucket(name);
 
-            _scancodeS3Buckets.put(name, scancodeS3Bucket);
-        }
+			_scancodeS3Buckets.put(name, scancodeS3Bucket);
+		}
 
-        return scancodeS3Bucket;
-    }
+		return scancodeS3Bucket;
+	}
 
-    public static boolean hasGoogleApplicationCredentials() {
-        return hasGoogleApplicationCredentials(null);
-    }
+	public static boolean hasGoogleApplicationCredentials() {
+		return hasGoogleApplicationCredentials(null);
+	}
 
-    public static boolean hasGoogleApplicationCredentials(String name) {
-        if (_hasGoogleApplicationCredentials != null) {
-            return _hasGoogleApplicationCredentials;
-        }
+	public static boolean hasGoogleApplicationCredentials(String name) {
+		if (_hasGoogleApplicationCredentials != null) {
+			return _hasGoogleApplicationCredentials;
+		}
 
-        String googleApplicationCredentials = System.getenv(
-                "GOOGLE_APPLICATION_CREDENTIALS");
+		String googleApplicationCredentials = System.getenv(
+			"GOOGLE_APPLICATION_CREDENTIALS");
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				googleApplicationCredentials)) {
 
-        if (JenkinsResultsParserUtil.isNullOrEmpty(
-                googleApplicationCredentials)) {
+			System.out.println(
+				"WARNING: SCANCODE_GOOGLE_APPLICATION_CREDENTIALS is not set");
 
-            System.out.println(
-                    "WARNING: SCANCODE_GOOGLE_APPLICATION_CREDENTIALS is not set");
+			_hasGoogleApplicationCredentials = false;
 
-            _hasGoogleApplicationCredentials = false;
+			return _hasGoogleApplicationCredentials;
+		}
 
-            return _hasGoogleApplicationCredentials;
-        }
+		File googleApplicationCredentialsFile = new File(
+			googleApplicationCredentials);
 
-        File googleApplicationCredentialsFile = new File(
-                googleApplicationCredentials);
+		if (!googleApplicationCredentialsFile.exists()) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"WARNING: SCANCODE_GOOGLE_APPLICATION_CREDENTIALS=",
+					googleApplicationCredentials, " does not exist"));
 
-        if (!googleApplicationCredentialsFile.exists()) {
-            System.out.println(
-                    JenkinsResultsParserUtil.combine(
-                            "WARNING: SCANCODE_GOOGLE_APPLICATION_CREDENTIALS=",
-                            googleApplicationCredentials, " does not exist"));
+			_hasGoogleApplicationCredentials = false;
 
-            _hasGoogleApplicationCredentials = false;
+			return _hasGoogleApplicationCredentials;
+		}
 
-            return _hasGoogleApplicationCredentials;
-        }
+		try {
+			ScancodeS3Bucket scancodeS3Bucket = getInstance(name);
 
-        try {
-            ScancodeS3Bucket scancodeS3Bucket = getInstance(name);
+			scancodeS3Bucket._getBucket();
 
-            scancodeS3Bucket._getBucket();
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"INFO: Using GOOGLE_APPLICATION_CREDENTIALS=",
+					googleApplicationCredentials));
 
-            System.out.println(
-                    JenkinsResultsParserUtil.combine(
-                            "INFO: Using GOOGLE_APPLICATION_CREDENTIALS=",
-                            googleApplicationCredentials));
+			_hasGoogleApplicationCredentials = true;
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
 
-            _hasGoogleApplicationCredentials = true;
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"WARNING: GOOGLE_APPLICATION_CREDENTIALS=",
+					googleApplicationCredentials,
+					" is configured incorrectly"));
 
-            System.out.println(
-                    JenkinsResultsParserUtil.combine(
-                            "WARNING: GOOGLE_APPLICATION_CREDENTIALS=",
-                            googleApplicationCredentials,
-                            " is configured incorrectly"));
+			_hasGoogleApplicationCredentials = false;
+		}
 
-            _hasGoogleApplicationCredentials = false;
-        }
+		return _hasGoogleApplicationCredentials;
+	}
 
-        return _hasGoogleApplicationCredentials;
-    }
+	public ScancodeS3Object createScancodeS3Object(String key, File file) {
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-    public ScancodeS3Object createScancodeS3Object(String key, File file) {
-        long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+		BlobId blobId = BlobId.of(getName(), key);
 
-        BlobId blobId = BlobId.of(getName(), key);
+		String fileName = file.getName();
 
-        String fileName = file.getName();
+		Matcher matcher = _fileNamePattern.matcher(fileName);
 
-        Matcher matcher = _fileNamePattern.matcher(fileName);
+		BlobInfo.Builder blobInfoBuilder = BlobInfo.newBuilder(blobId);
 
-        BlobInfo.Builder blobInfoBuilder = BlobInfo.newBuilder(blobId);
+		if (matcher.find()) {
+			String fileExtension = matcher.group("fileExtension");
 
-        if (matcher.find()) {
-            String fileExtension = matcher.group("fileExtension");
+			if (fileExtension.equals("html")) {
+				blobInfoBuilder.setContentType("text/html");
+			}
+			else if (fileExtension.equals("jpg")) {
+				blobInfoBuilder.setContentType("image/jpeg");
+			}
+			else if (fileExtension.equals("json") ||
+					 fileExtension.equals("txt")) {
 
-            if (fileExtension.equals("html")) {
-                blobInfoBuilder.setContentType("text/html");
-            }
-            else if (fileExtension.equals("jpg")) {
-                blobInfoBuilder.setContentType("image/jpeg");
-            }
-            else if (fileExtension.equals("json") ||
-                    fileExtension.equals("txt")) {
+				blobInfoBuilder.setContentType("text/plain");
+			}
+			else if (fileExtension.equals("xml")) {
+				blobInfoBuilder.setContentType("text/xml");
+			}
 
-                blobInfoBuilder.setContentType("text/plain");
-            }
-            else if (fileExtension.equals("xml")) {
-                blobInfoBuilder.setContentType("text/xml");
-            }
+			String gzipFileExtension = matcher.group("gzipFileExtension");
 
-            String gzipFileExtension = matcher.group("gzipFileExtension");
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(gzipFileExtension)) {
+				blobInfoBuilder.setContentEncoding("gzip");
+			}
+		}
 
-            if (!JenkinsResultsParserUtil.isNullOrEmpty(gzipFileExtension)) {
-                blobInfoBuilder.setContentEncoding("gzip");
-            }
-        }
+		BlobInfo blobInfo = blobInfoBuilder.build();
 
-        BlobInfo blobInfo = blobInfoBuilder.build();
+		try {
+			Storage storage = _getStorage();
 
-        try {
-            Storage storage = _getStorage();
+			Blob blob = storage.create(
+				blobInfo, FileUtils.readFileToByteArray(file));
 
-            Blob blob = storage.create(
-                    blobInfo, FileUtils.readFileToByteArray(file));
+			ScancodeS3Object scancodeS3Object =
+				ScancodeS3ObjectFactory.newScancodeS3Object(this, blob);
 
-            ScancodeS3Object scancodeS3Object =
-                    ScancodeS3ObjectFactory.newScancodeS3Object(this, blob);
+			_s3URL = scancodeS3Object.getURLString();
 
-            _s3URL = scancodeS3Object.getURLString();
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Created S3 Object ", scancodeS3Object.getURLString(),
+					" in ",
+					JenkinsResultsParserUtil.toDurationString(
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							start)));
 
-            System.out.println(
-                    JenkinsResultsParserUtil.combine(
-                            "Created S3 Object ", scancodeS3Object.getURLString(),
-                            " in ",
-                            JenkinsResultsParserUtil.toDurationString(
-                                    JenkinsResultsParserUtil.getCurrentTimeMillis() -
-                                            start)));
+			return scancodeS3Object;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
 
-            return scancodeS3Object;
-        }
-        catch (IOException ioException) {
-            throw new RuntimeException(ioException);
-        }
-    }
+	public ScancodeS3Object createScancodeS3Object(String key, String value) {
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
-    public ScancodeS3Object createScancodeS3Object(String key, String value) {
-        long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+		BlobId blobId = BlobId.of(getName(), key);
 
-        BlobId blobId = BlobId.of(getName(), key);
+		BlobInfo.Builder blobInfoBuilder = BlobInfo.newBuilder(blobId);
 
-        BlobInfo.Builder blobInfoBuilder = BlobInfo.newBuilder(blobId);
+		BlobInfo blobInfo = blobInfoBuilder.build();
 
-        BlobInfo blobInfo = blobInfoBuilder.build();
+		Storage storage = _getStorage();
 
-        Storage storage = _getStorage();
+		Blob blob = storage.create(
+			blobInfo, value.getBytes(StandardCharsets.UTF_8));
 
-        Blob blob = storage.create(
-                blobInfo, value.getBytes(StandardCharsets.UTF_8));
+		ScancodeS3Object scancodeS3Object =
+			ScancodeS3ObjectFactory.newScancodeS3Object(this, blob);
 
-        ScancodeS3Object scancodeS3Object =
-                ScancodeS3ObjectFactory.newScancodeS3Object(this, blob);
+		_s3URL = scancodeS3Object.getURLString();
 
-        _s3URL = scancodeS3Object.getURLString();
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Created Scancode S3 Object ", scancodeS3Object.getURLString(),
+				" in ",
+				JenkinsResultsParserUtil.toDurationString(
+					JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
 
-        System.out.println(
-                JenkinsResultsParserUtil.combine(
-                        "Created Scancode S3 Object ", scancodeS3Object.getURLString(),
-                        " in ",
-                        JenkinsResultsParserUtil.toDurationString(
-                                JenkinsResultsParserUtil.getCurrentTimeMillis() - start)));
+		return scancodeS3Object;
+	}
 
-        return scancodeS3Object;
-    }
+	public List<ScancodeS3Object> createScancodeS3Objects(File dir) {
+		List<ScancodeS3Object> scancodeS3Objects = new ArrayList<>();
 
-    public List<ScancodeS3Object> createScancodeS3Objects(File dir) {
-        List<ScancodeS3Object> scancodeS3Objects = new ArrayList<>();
+		if ((dir == null) || !dir.isDirectory()) {
+			return scancodeS3Objects;
+		}
 
-        if ((dir == null) || !dir.isDirectory()) {
-            return scancodeS3Objects;
-        }
+		for (File file : JenkinsResultsParserUtil.findFiles(dir, ".*")) {
+			ScancodeS3Object scancodeS3Object = createScancodeS3Object(
+				JenkinsResultsParserUtil.getPathRelativeTo(file, dir), file);
 
-        for (File file : JenkinsResultsParserUtil.findFiles(dir, ".*")) {
-            ScancodeS3Object scancodeS3Object = createScancodeS3Object(
-                    JenkinsResultsParserUtil.getPathRelativeTo(file, dir), file);
+			scancodeS3Objects.add(scancodeS3Object);
+		}
 
-            scancodeS3Objects.add(scancodeS3Object);
-        }
+		return scancodeS3Objects;
+	}
 
-        return scancodeS3Objects;
-    }
+	public void deleteScancodeS3Object(ScancodeS3Object scancodeS3Object) {
+		scancodeS3Object.delete();
+	}
 
-    public void deleteScancodeS3Object(ScancodeS3Object scancodeS3Object) {
-        scancodeS3Object.delete();
-    }
+	public void deleteScancodeS3Object(String key) {
+		deleteScancodeS3Object(getScancodeS3Object(key));
+	}
 
-    public void deleteScancodeS3Object(String key) {
-        deleteScancodeS3Object(getScancodeS3Object(key));
-    }
+	public void deleteScancodeS3Objects(
+		List<ScancodeS3Object> scancodeS3Objects) {
 
-    public void deleteScancodeS3Objects(
-            List<ScancodeS3Object> scancodeS3Objects) {
+		for (ScancodeS3Object scancodeS3Object : scancodeS3Objects) {
+			deleteScancodeS3Object(scancodeS3Object);
+		}
+	}
 
-        for (ScancodeS3Object scancodeS3Object : scancodeS3Objects) {
-            deleteScancodeS3Object(scancodeS3Object);
-        }
-    }
+	public String getName() {
+		return _name;
+	}
 
-    public String getName() {
-        return _name;
-    }
+	public String getS3URL() {
+		return _s3URL;
+	}
 
-    public String getS3URL() {
-        return _s3URL;
-    }
+	public String getScancodeS3BaseURL() {
+		return JenkinsResultsParserUtil.combine(
+			"https://storage.cloud.google.com/", getName());
+	}
 
-    public String getScancodeS3BaseURL() {
-        return JenkinsResultsParserUtil.combine(
-                "https://storage.cloud.google.com/", getName());
-    }
+	public ScancodeS3Object getScancodeS3Object(String key) {
+		Bucket bucket = _getBucket();
 
-    public ScancodeS3Object getScancodeS3Object(String key) {
-        Bucket bucket = _getBucket();
+		Blob blob = bucket.get(key);
 
-        Blob blob = bucket.get(key);
+		if (blob == null) {
+			return null;
+		}
 
-        if (blob == null) {
-            return null;
-        }
+		return ScancodeS3ObjectFactory.newScancodeS3Object(this, blob);
+	}
 
-        return ScancodeS3ObjectFactory.newScancodeS3Object(this, blob);
-    }
+	public List<ScancodeS3Object> getScancodeS3Objects() {
+		List<ScancodeS3Object> scancodeS3Objects = new ArrayList<>();
 
-    public List<ScancodeS3Object> getScancodeS3Objects() {
-        List<ScancodeS3Object> scancodeS3Objects = new ArrayList<>();
+		Storage storage = _getStorage();
 
-        Storage storage = _getStorage();
+		Page<Blob> blobPage = storage.list(getName());
 
-        Page<Blob> blobPage = storage.list(getName());
+		for (Blob blob : blobPage.iterateAll()) {
+			scancodeS3Objects.add(
+				ScancodeS3ObjectFactory.newScancodeS3Object(this, blob));
+		}
 
-        for (Blob blob : blobPage.iterateAll()) {
-            scancodeS3Objects.add(
-                    ScancodeS3ObjectFactory.newScancodeS3Object(this, blob));
-        }
+		return scancodeS3Objects;
+	}
 
-        return scancodeS3Objects;
-    }
+	public URL getURL() {
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					"https://console.cloud.google.com/storage/browser/",
+					getName(), "?authuser=0"));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
 
-    public URL getURL() {
-        try {
-            return new URL(
-                    JenkinsResultsParserUtil.combine(
-                            "https://console.cloud.google.com/storage/browser/",
-                            getName(), "?authuser=0"));
-        }
-        catch (MalformedURLException malformedURLException) {
-            throw new RuntimeException(malformedURLException);
-        }
-    }
+	protected static final String DEFAULT_BUCKET_NAME = "scancode-results";
 
-    protected static final String DEFAULT_BUCKET_NAME = "scancode-results";
+	private ScancodeS3Bucket(String name) {
+		_name = name;
+	}
 
-    private ScancodeS3Bucket(String name) {
-        _name = name;
-    }
+	private Bucket _getBucket() {
+		Storage storage = _getStorage();
 
-    private Bucket _getBucket() {
-        Storage storage = _getStorage();
+		return storage.get(getName());
+	}
 
-        return storage.get(getName());
-    }
+	private Storage _getStorage() {
+		Storage storage = null;
 
-    private Storage _getStorage() {
-        Storage storage = null;
+		try {
+			String credentials = JenkinsResultsParserUtil.getBuildProperty(
+				"scancode.credentials.file");
 
-        try {
-            String credentials = JenkinsResultsParserUtil.getBuildProperty(
-                    "scancode.credentials.file");
+			storage = StorageOptions.newBuilder(
+			).setCredentials(
+				ServiceAccountCredentials.fromStream(
+					new FileInputStream(credentials))
+			).build(
+			).getService();
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
 
-            storage = StorageOptions.newBuilder(
-            ).setCredentials(
-                    ServiceAccountCredentials.fromStream(
-                            new FileInputStream(credentials))
-            ).build(
-            ).getService();
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
-        }
+		return storage;
+	}
 
-        return storage;
-    }
+	private static final Pattern _fileNamePattern = Pattern.compile(
+		".*\\.(?!gz)(?<fileExtension>([^\\.]+))(?<gzipFileExtension>\\.gz)?");
+	private static Boolean _hasGoogleApplicationCredentials;
+	private static final Map<String, ScancodeS3Bucket> _scancodeS3Buckets =
+		new HashMap<>();
 
-    private static final Pattern _fileNamePattern = Pattern.compile(
-            ".*\\.(?!gz)(?<fileExtension>([^\\.]+))(?<gzipFileExtension>\\.gz)?");
-    private static Boolean _hasGoogleApplicationCredentials;
-    private static final Map<String, ScancodeS3Bucket> _scancodeS3Buckets =
-            new HashMap<>();
-
-    private final String _name;
-    private String _s3URL;
+	private final String _name;
+	private String _s3URL;
 
 }

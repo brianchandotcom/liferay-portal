@@ -457,10 +457,12 @@ export async function save<T>({
 	else if (!response.ok) {
 		const {
 			detail,
+			message,
 			title,
 			type,
 		}: {
 			detail?: string;
+			message?: string | T[];
 			title?: string;
 			type?: string;
 		} = await response.json();
@@ -468,12 +470,15 @@ export async function save<T>({
 		const errorMessage =
 			(type && ERRORS[type]) ??
 			title ??
+			message ??
 			Liferay.Language.get('an-error-occurred');
 
 		const ErrorDetails = () => {
 			return {
 				detail,
-				message: errorMessage,
+				message: Array.isArray(errorMessage)
+					? JSON.stringify(errorMessage)
+					: errorMessage,
 				type,
 			} as ErrorDetails;
 		};

@@ -19,7 +19,6 @@ import {getBuildsByJob} from '../../objects/builds/BuildUtil';
 import {deleteJobById, getJobById} from '../../objects/jobs/JobUtil';
 import {toLocaleString} from '../../services/DateUtil';
 import {toDurationString} from '../../services/DurationUtil';
-import postSpringBootData from '../../services/postSpringBootData';
 
 function JobBuilds({jobId}) {
 	const [jobBuilds, setJobBuilds] = useState(null);

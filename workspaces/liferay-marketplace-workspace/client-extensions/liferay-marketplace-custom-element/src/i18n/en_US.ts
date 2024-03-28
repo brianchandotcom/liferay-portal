@@ -285,6 +285,7 @@ export default {
 	'users-requests-to-become-a-publisher':
 		'Users requests to become a publisher',
 	'version': 'Version',
+	'view-details': 'View details',
 	'via-github-repo': 'Via GitHub Repo',
 	'via-liferay-experience-cloud-integration': 'Via Liferay SaaS Integration',
 	'via-liferay-plugin-packages': 'Via Liferay Plugin Packages',

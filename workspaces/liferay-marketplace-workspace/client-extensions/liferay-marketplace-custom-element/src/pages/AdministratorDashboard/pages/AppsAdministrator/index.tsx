@@ -17,7 +17,6 @@ const AppAdministrator = () => {
 		() =>
 			HeadlessCommerceAdminCatalogImpl.getProducts(
 				new URLSearchParams({
-					filter: SearchBuilder.lambda('categoryNames', 'Project'),
 					nestedFields: 'productSpecifications',
 					sort: 'createDate:desc',
 				})

@@ -11,10 +11,11 @@ import i18n from '../../../../i18n';
 import HeadlessCommerceAdminOrderImpl from '../../../../services/rest/HeadlessCommerceAdminOrder';
 import InfoCard from '../../components/InfoCard';
 import useAccountsMetrics from '../../hooks/useAccountsMetrics';
+import useAnalyticsViewsMetrics from '../../hooks/useAnalyticsViewsMetrics';
 import useOrderMetrics, {
 	useOrderChartLineMetrics,
 } from '../../hooks/useOrderMetrics';
-import {barChart, colors} from '../../mock';
+import {colors} from '../../mock';
 import OrdersTable from './OrdersTab';
 
 const getTotalAmountCurrency = (amount = 0) =>
@@ -27,6 +28,7 @@ const Metrics = () => {
 	const {data: accounts} = useAccountsMetrics('week');
 	const {data: orderChartLine} = useOrderChartLineMetrics();
 	const {data: orderMetrics} = useOrderMetrics('week');
+	const {data: analytics} = useAnalyticsViewsMetrics();
 
 	const {metrics = []} = orderChartLine || {};
 
@@ -71,7 +73,7 @@ const Metrics = () => {
 			{
 				growth: 68,
 				growthContext: '+36k this week',
-				symbol: 'thumbs-up-arrow',
+				symbol: 'analytics',
 				title: 'Unique Visitors',
 				value: '249.194.46',
 			},
@@ -153,14 +155,38 @@ const Metrics = () => {
 
 						<div className="mt-4">
 							<ClayChart
-								data={{
-									colors: {
-										data1: colors.color1,
-										data2: colors.color2,
+								axis={{
+									x: {
+										type: 'category',
 									},
-									columns: barChart.columns,
-									type: 'donut',
 								}}
+								bar={{
+									width: {
+										max: 25,
+									},
+									radius: {
+										ratio: 0.2,
+									},
+									padding: 1,
+								}}
+								data={{
+									x: 'x',
+									colors: analytics.colors,
+									columns: analytics.columns,
+									type: 'bar',
+								}}
+								grid={{
+									x: {
+										show: false,
+									},
+									y: {
+										show: false,
+									},
+									lines: {
+										front: false,
+									},
+								}}
+								legend={{show: false}}
 							/>
 						</div>
 					</div>

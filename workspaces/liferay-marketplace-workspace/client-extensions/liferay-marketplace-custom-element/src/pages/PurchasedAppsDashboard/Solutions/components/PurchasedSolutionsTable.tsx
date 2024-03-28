@@ -10,6 +10,7 @@ import {addDays, format} from 'date-fns';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus from '../../../../components/OrderStatus';
 import Table from '../../../../components/Table/Table';
+import i18n from '../../../../i18n';
 
 type PurchasedSolutionsTableProps = {
 	items: PlacedOrder[];
@@ -130,7 +131,7 @@ const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 							>
 								<ClayDropDown.ItemList>
 									<ClayDropDown.Item>
-										Action
+										{i18n.translate('view-details')}
 									</ClayDropDown.Item>
 								</ClayDropDown.ItemList>
 							</ClayDropDown>

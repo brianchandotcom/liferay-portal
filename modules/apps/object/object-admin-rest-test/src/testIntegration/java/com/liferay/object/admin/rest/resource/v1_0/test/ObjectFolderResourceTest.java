@@ -7,10 +7,16 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectFolder;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectFolderItem;
+import com.liferay.object.admin.rest.resource.v1_0.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,6 +55,62 @@ public class ObjectFolderResourceTest extends BaseObjectFolderResourceTestCase {
 	@Override
 	@Test
 	public void testGraphQLGetObjectFoldersPage() {
+	}
+
+	@Override
+	@Test
+	public void testPatchObjectFolder() throws Exception {
+		super.testPatchObjectFolder();
+
+		ObjectDefinition finalObjectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(true);
+
+		ObjectFolder postObjectFolder = testPostObjectFolder_addObjectFolder(
+			new ObjectFolder() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setLabel(
+						Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString()));
+					setName(
+						StringUtil.toLowerCase(RandomTestUtil.randomString()));
+					setObjectFolderItems(
+						new ObjectFolderItem[] {
+							new ObjectFolderItem() {
+								{
+									setLinkedObjectDefinition(false);
+									setObjectDefinitionExternalReferenceCode(
+										finalObjectDefinition.
+											getExternalReferenceCode());
+									setPositionX(0);
+									setPositionY(0);
+								}
+							}
+						});
+				}
+			});
+
+		postObjectFolder.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
+		ObjectFolder patchObjectFolder = objectFolderResource.patchObjectFolder(
+			postObjectFolder.getId(), postObjectFolder);
+
+		Assert.assertEquals(
+			postObjectFolder.getExternalReferenceCode(),
+			patchObjectFolder.getExternalReferenceCode());
+
+		ObjectFolderItem[] objectFolderItems =
+			patchObjectFolder.getObjectFolderItems();
+
+		Assert.assertEquals(
+			Arrays.toString(objectFolderItems), 1, objectFolderItems.length);
+
+		ObjectFolderItem objectFolderItem = objectFolderItems[0];
+
+		Assert.assertEquals(
+			finalObjectDefinition.getExternalReferenceCode(),
+			objectFolderItem.getObjectDefinitionExternalReferenceCode());
 	}
 
 	@Override

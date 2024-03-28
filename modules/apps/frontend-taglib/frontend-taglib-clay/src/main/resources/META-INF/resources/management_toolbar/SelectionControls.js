@@ -166,6 +166,10 @@ const SelectionControls = ({
 		});
 
 		return () => {
+			Liferay.destroyComponent(searchContainerId);
+
+			searchContainerRef.current = null;
+
 			eventHandler?.detach();
 		};
 

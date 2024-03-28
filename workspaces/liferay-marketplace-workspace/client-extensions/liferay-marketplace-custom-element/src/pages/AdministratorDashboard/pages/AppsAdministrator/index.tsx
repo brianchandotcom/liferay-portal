@@ -6,7 +6,6 @@
 import useSWR from 'swr';
 
 import {DashboardPage} from '../../../../components/DashBoardPage/DashboardPage';
-import SearchBuilder from '../../../../core/SearchBuilder';
 import i18n from '../../../../i18n';
 import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import AppAdministratorTable from './AppAdministratorTable';

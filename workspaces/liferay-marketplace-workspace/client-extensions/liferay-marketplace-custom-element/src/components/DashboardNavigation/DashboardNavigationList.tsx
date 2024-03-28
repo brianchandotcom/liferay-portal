@@ -8,10 +8,9 @@ import classNames from 'classnames';
 import './DashboardNavigationList.scss';
 
 import ClayIcon from '@clayui/icon';
-import {NavLink, useLocation} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import {DashboardListItems} from './DashboardNavigation';
-import {DashboardNavigationListItem} from './DashboardNavigationListItem';
 
 type DashboardNavigationListProps = {
 	dashboardNavigation: DashboardListItems;
@@ -20,20 +19,14 @@ type DashboardNavigationListProps = {
 export function DashboardNavigationList({
 	dashboardNavigation,
 }: DashboardNavigationListProps) {
-	const {itemTitle, items, path, symbol} = dashboardNavigation;
-
-	const location = useLocation();
-
-	const isAppRoute =
-		location.pathname === '/' || location.pathname.includes('/app');
+	const {itemTitle, path, symbol} = dashboardNavigation;
 
 	return (
 		<>
 			<NavLink
 				className={({isActive}) =>
 					classNames('dashboard-navigation-body-list', {
-						'dashboard-navigation-body-list-selected':
-							isActive || (path === '/' && isAppRoute),
+						'dashboard-navigation-body-list-selected': isActive,
 					})
 				}
 				to={path}
@@ -64,11 +57,6 @@ export function DashboardNavigationList({
 					</>
 				)}
 			</NavLink>
-
-			{isAppRoute &&
-				items?.map((item, index) => (
-					<DashboardNavigationListItem item={item} key={index} />
-				))}
 		</>
 	);
 }

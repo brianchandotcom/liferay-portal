@@ -8,7 +8,7 @@ import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {Status} from '@clayui/modal/lib/types';
-import {format, formatRelative, subDays} from 'date-fns';
+import {formatDistance} from 'date-fns';
 
 import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
 import Table from '../../../../../components/Table/Table';
@@ -74,18 +74,14 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 			id: 2,
 			name: i18n.translate('publisher-dashboard'),
 			onClick: async (order: Order) => {
-				const product =
-					await HeadlessCommerceAdminCatalogImpl.getProducts(
-						new URLSearchParams({
-							filter: new SearchBuilder()
-								.eq(
-									'name',
-									`${order.orderItems[0]?.name?.en_US}`
-								)
-								.build(),
-							nestedFields: 'catalog',
-						})
-					);
+				const product = await HeadlessCommerceAdminCatalogImpl.getProducts(
+					new URLSearchParams({
+						filter: new SearchBuilder()
+							.eq('name', `${order.orderItems[0]?.name?.en_US}`)
+							.build(),
+						nestedFields: 'catalog',
+					})
+				);
 
 				const accountId = product.items[0]?.catalog?.accountId;
 
@@ -174,9 +170,10 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 						key: 'createDate',
 						render: (createDate) => (
 							<span className="ml-2 text-capitalize text-nowrap">
-								{formatRelative(
+								{formatDistance(
+									new Date(createDate),
 									Date.now(),
-									new Date(createDate)
+									{addSuffix: true}
 								)}
 							</span>
 						),

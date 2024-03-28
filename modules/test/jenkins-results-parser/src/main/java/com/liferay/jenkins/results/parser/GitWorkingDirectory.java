@@ -2087,7 +2087,9 @@ public class GitWorkingDirectory {
 		return _log(start, num, null, sha);
 	}
 
-	public List<LocalGitCommit> log(String currentBranchName, String upstreamBranchName) {
+	public List<LocalGitCommit> log(
+		String currentBranchName, String upstreamBranchName) {
+
 		try {
 			StringBuilder sb = new StringBuilder();
 

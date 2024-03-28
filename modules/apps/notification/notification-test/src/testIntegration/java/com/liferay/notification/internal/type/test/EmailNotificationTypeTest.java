@@ -438,7 +438,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			accountEntry2.getAccountEntryId(), accountRole4.getAccountRoleId(),
 			user3.getUserId());
 
-		// Send email with an object definition not restricted by account
+		// Send email with an object definition not restricted by account entry
 
 		_testSendNotificationWithAccountRoles(
 			null, user2.getEmailAddress(), 1,
@@ -447,7 +447,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					user1.getEmailAddress(), user3.getEmailAddress())),
 			notificationTemplate);
 
-		// Send email with an object definition restricted by account
+		// Send email with an object definition restricted by account entry
 
 		_testSendNotificationWithAccountRoles(
 			accountEntry1, StringPool.BLANK, 1, user1.getEmailAddress(),
@@ -465,7 +465,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			accountEntry3.getAccountEntryId(), accountRole4.getAccountRoleId(),
 			user2.getUserId());
 
-		// Send email with an object definition not restricted by account
+		// Send email with an object definition not restricted by account entry
 
 		_testSendNotificationWithAccountRoles(
 			null, user2.getEmailAddress(), 1,
@@ -475,7 +475,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 					user3.getEmailAddress())),
 			notificationTemplate);
 
-		// Send email with an object definition restricted by account
+		// Send email with an object definition restricted by account entry
 
 		_testSendNotificationWithAccountRoles(
 			accountEntry3, StringPool.BLANK, 1, user2.getEmailAddress(),

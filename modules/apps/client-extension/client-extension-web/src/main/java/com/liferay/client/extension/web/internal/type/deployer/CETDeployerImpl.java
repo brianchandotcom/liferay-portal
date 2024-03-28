@@ -128,22 +128,6 @@ public class CETDeployerImpl implements CETDeployer {
 
 		String portletId = _getPortletId(customElementCET);
 
-		if (customElementCET.getAdmin()) {
-			serviceRegistrations.add(
-				_bundleContext.registerService(
-					PanelApp.class,
-					new PortletPanelAppAdapter(
-						portletId,
-						() -> _portletLocalService.getPortletById(portletId)),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"panel.app.order:Integer",
-						customElementCET.getPanelAppOrder()
-					).put(
-						"panel.category.key",
-						customElementCET.getPanelCategoryKey()
-					).build()));
-		}
-
 		serviceRegistrations.add(
 			_register(
 				ConfigurationAction.class,
@@ -160,6 +144,24 @@ public class CETDeployerImpl implements CETDeployer {
 					FriendlyURLMapper.class,
 					new CETPortletFriendlyURLMapper(
 						friendlyURLMapping, portletId)));
+		}
+
+		if (Validator.isNotNull(customElementCET.getPanelAppOrder()) &&
+			Validator.isNotNull(customElementCET.getPanelCategoryKey())) {
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					PanelApp.class,
+					new PortletPanelAppAdapter(
+						portletId,
+						() -> _portletLocalService.getPortletById(portletId)),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"panel.app.order:Integer",
+						customElementCET.getPanelAppOrder()
+					).put(
+						"panel.category.key",
+						customElementCET.getPanelCategoryKey()
+					).build()));
 		}
 
 		serviceRegistrations.add(

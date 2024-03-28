@@ -31,11 +31,6 @@ public class CustomElementCETImpl
 	}
 
 	@Override
-	public boolean getAdmin() {
-		return getBoolean("admin");
-	}
-
-	@Override
 	public String getCSSURLs() {
 		return getString("cssURLs");
 	}

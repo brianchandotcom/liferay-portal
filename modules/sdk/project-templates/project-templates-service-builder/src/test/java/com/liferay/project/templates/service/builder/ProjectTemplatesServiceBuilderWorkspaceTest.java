@@ -57,6 +57,10 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 					"7.2.10.7"
 				},
 				{
+					"ds", "guestbook", "com.liferay.docs.guestbook", "dxp",
+					"2024.q1.1"
+				},
+				{
 					"ds", "guestbook", "com.liferay.docs.guestbook", "portal",
 					"7.3.7"
 				},
@@ -78,6 +82,10 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{
 					"ds", "backend-integration", "com.liferay.docs.guestbook",
+					"dxp", "2024.q1.1"
+				},
+				{
+					"ds", "backend-integration", "com.liferay.docs.guestbook",
 					"portal", "7.3.7"
 				},
 				{
@@ -90,6 +98,10 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{
 					"spring", "backend-integration",
+					"com.liferay.docs.guestbook", "dxp", "2024.q1.1"
+				},
+				{
+					"spring", "backend-integration",
 					"com.liferay.docs.guestbook", "portal", "7.3.7"
 				},
 				{
@@ -98,7 +110,9 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{"spring", "sample", "com.test.sample", "dxp", "7.0.10.17"},
 				{"spring", "sample", "com.test.sample", "dxp", "7.1.10.7"},
+				{"spring", "sample", "com.test.sample", "dxp", "2024.q1.1"},
 				{"ds", "sample", "com.test.sample", "dxp", "7.2.10.7"},
+				{"ds", "sample", "com.test.sample", "dxp", "2024.q1.1"},
 				{"ds", "sample", "com.test.sample", "portal", "7.3.7"},
 				{"ds", "sample", "com.test.sample", "portal", "7.4.3.56"}
 			});
@@ -188,7 +202,9 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				"dependency-injector=\"ds\"");
 		}
 
-		if (VersionUtil.getMinorVersion(_liferayVersion) < 3) {
+		if (VersionUtil.isLiferayQuarterlyVersion(_liferayVersion) ||
+			(VersionUtil.getMinorVersion(_liferayVersion) < 3)) {
+
 			testContains(
 				gradleProjectDir, _name + "-api/build.gradle",
 				DEPENDENCY_RELEASE_DXP_API);

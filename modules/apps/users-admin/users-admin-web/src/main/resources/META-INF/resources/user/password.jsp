@@ -258,7 +258,7 @@ else {
 		};
 
 		baseUrl =
-			'<portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/users_admin/generate_webdav_password" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/users_admin/generate_webdav_password" /></portlet:actionURL>';
+			'<portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/users_admin/generate_webdav_password" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/users_admin/generate_webdav_password" /><portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" /></portlet:actionURL>';
 
 		Liferay.Util.fetch(new URL(baseUrl), {
 			body: Liferay.Util.objectToURLSearchParams(data),

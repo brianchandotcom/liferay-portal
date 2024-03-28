@@ -29,6 +29,9 @@ public class WorkflowDefinitionGroovyScriptUseSourceURLFactory {
 			WorkflowPortletTabRegistry workflowPortletTabRegistry)
 		throws Exception {
 
+		String controlPanelWorkflowPortletBaseURL = _getBaseURL(
+			company, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW);
+
 		if (workflowPortletTabRegistry.contains(
 				WorkflowWebKeys.WORKFLOW_TAB_DEFINITION)) {
 
@@ -51,26 +54,21 @@ public class WorkflowDefinitionGroovyScriptUseSourceURLFactory {
 
 			return HttpComponentsUtil.addParameter(
 				url, namespace + "redirect",
-				_getBaseURL(
-					company, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW));
+				controlPanelWorkflowPortletBaseURL);
 		}
-
-		String url = _getBaseURL(
-			company, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW);
 
 		String namespace = portal.getPortletNamespace(
 			WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW);
 
-		url = HttpComponentsUtil.addParameter(
-			url, namespace + "mvcPath",
+		String url = HttpComponentsUtil.addParameter(
+			controlPanelWorkflowPortletBaseURL, namespace + "mvcPath",
 			"/definition/edit_workflow_definition.jsp");
 
 		return HttpComponentsUtil.addParameter(
 			url, namespace + "redirect",
 			HttpComponentsUtil.addParameter(
-				_getBaseURL(
-					company, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW),
-				namespace + "mvcPath", "/view.jsp"));
+				controlPanelWorkflowPortletBaseURL, namespace + "mvcPath",
+				"/view.jsp"));
 	}
 
 	private static String _getBaseURL(Company company, String portletId)

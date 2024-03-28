@@ -35,5 +35,5 @@
 		}
 	},
 	"scale": 1,
-	"dependencies": ["liferayticketbatchobjectdefinition"]
+	"dependencies": ["liferayticketbatch"]
 }

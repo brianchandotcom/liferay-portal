@@ -15,13 +15,8 @@
 	"memory": 300,
 	"scale": 1,
 	"dependencies": [
-		"liferayticketbatchlisttypedefinition",
-		"liferayticketbatchobjectdefinition",
-		"liferayticketbatchobjectentry",
-		"liferayticketbatchobjectrelationship",
+		"liferayticketbatch",
 		"liferayticketcustomelement",
-		"liferaytryitnowbatchobjectdefinition",
-		"liferaytryitnowbatchobjectentry",
-		"liferaytryitnowbatchuser"
+		"liferaytryitnowbatch"
 	]
 }

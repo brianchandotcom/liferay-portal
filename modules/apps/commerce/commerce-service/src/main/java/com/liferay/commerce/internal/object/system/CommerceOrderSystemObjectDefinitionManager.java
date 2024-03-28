@@ -11,6 +11,7 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -155,6 +157,14 @@ public class CommerceOrderSystemObjectDefinitionManager
 			).system(
 				true
 			).build(),
+			new DateObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("order-date")
+			).name(
+				"orderDate"
+			).system(
+				true
+			).build(),
 			new IntegerObjectFieldBuilder(
 			).labelMap(
 				createLabelMap("order-status")
@@ -253,6 +263,11 @@ public class CommerceOrderSystemObjectDefinitionManager
 				setExternalReferenceCode(
 					() -> GetterUtil.getString(
 						values.get("externalReferenceCode")));
+				setOrderDate(
+					() -> GetterUtil.getDate(
+						values.get("orderDate"),
+						DateFormatFactoryUtil.getSimpleDateFormat(
+							"yyyy-MM-dd'T'HH:mm:ss'Z'")));
 				setOrderStatus(
 					() -> GetterUtil.getInteger(values.get("orderStatus")));
 				setOrderTypeExternalReferenceCode(

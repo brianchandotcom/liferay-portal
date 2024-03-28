@@ -68,13 +68,10 @@ public class GetGroovyScriptUsesMVCResourceCommand
 		if (DBPartition.isPartitionEnabled()) {
 			_companyLocalService.forEachCompany(
 				company -> _addGroovyScriptUses(
-					groovyScriptUses, _serviceTrackerList.iterator(),
-					resourceRequest));
+					groovyScriptUses, resourceRequest));
 		}
 		else {
-			_addGroovyScriptUses(
-				groovyScriptUses, _serviceTrackerList.iterator(),
-				resourceRequest);
+			_addGroovyScriptUses(groovyScriptUses, resourceRequest);
 		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -104,8 +101,10 @@ public class GetGroovyScriptUsesMVCResourceCommand
 
 	private void _addGroovyScriptUses(
 		List<GroovyScriptUse> groovyScriptUses,
-		Iterator<GroovyScriptUsesFactory> iterator,
 		ResourceRequest resourceRequest) {
+
+		Iterator<GroovyScriptUsesFactory> iterator =
+			_serviceTrackerList.iterator();
 
 		while (iterator.hasNext()) {
 			GroovyScriptUsesFactory groovyScriptUsesFactory = iterator.next();

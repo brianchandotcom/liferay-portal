@@ -5,11 +5,13 @@
 
 /// <reference types="react" />
 
+import './ModalImportWarning.scss';
 interface ModalImportWarningProps {
 	errorMessage: string;
 	existingObjectDefinitions?: ObjectDefinition[];
 	handleImport: () => void;
 	handleOnClose: () => void;
+	importLoading: boolean;
 	modalImportKey: string;
 }
 export declare const tableHeaderItems: {
@@ -21,6 +23,7 @@ export declare function ModalImportWarning({
 	existingObjectDefinitions,
 	handleImport,
 	handleOnClose,
+	importLoading,
 	modalImportKey,
 }: ModalImportWarningProps): JSX.Element;
 export {};

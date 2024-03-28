@@ -106,12 +106,10 @@ public class LayoutPermissionTest {
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutPreviewDraftPermission(
 				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_BASIC), layout));
-
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutPreviewDraftPermission(
 				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_CONTENT),
 				layout));
-
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutPreviewDraftPermission(
 				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_LIMITED),
@@ -157,12 +155,10 @@ public class LayoutPermissionTest {
 		Assert.assertFalse(
 			_layoutPermission.containsLayoutPreviewDraftPermission(
 				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_BASIC), layout));
-
 		Assert.assertFalse(
 			_layoutPermission.containsLayoutPreviewDraftPermission(
 				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_CONTENT),
 				layout));
-
 		Assert.assertFalse(
 			_layoutPermission.containsLayoutPreviewDraftPermission(
 				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_LIMITED),
@@ -198,12 +194,10 @@ public class LayoutPermissionTest {
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutPreviewDraftPermission(
 				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_BASIC), layout));
-
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutPreviewDraftPermission(
 				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_CONTENT),
 				layout));
-
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutPreviewDraftPermission(
 				_getPermissionChecker(ActionKeys.UPDATE_LAYOUT_LIMITED),
@@ -258,7 +252,6 @@ public class LayoutPermissionTest {
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_PENDING, layout.getStatus());
-
 			Assert.assertFalse(
 				_layoutPermission.contains(
 					_getGuestPermissionChecker(), layout, ActionKeys.VIEW));

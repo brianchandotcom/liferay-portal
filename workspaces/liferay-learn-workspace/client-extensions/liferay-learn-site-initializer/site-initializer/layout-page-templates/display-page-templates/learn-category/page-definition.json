@@ -1,0 +1,11 @@
+{
+	"pageElement": {
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "liferay-learn"
+		}
+	},
+	"version": 1.0
+}

@@ -47,7 +47,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.definition.groovy.script.use.WorkflowDefinitionGroovyScriptUseSourceURLFactory;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
-import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabServiceTracker;
+import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabRegistry;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -150,7 +150,7 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
 						company1, _portal,
 						"company1PublishedGroovyWorkflowDefinition", 1,
-						_workflowPortletTabServiceTracker)
+						_workflowPortletTabRegistry)
 				)
 			).put(
 				JSONUtil.put(
@@ -184,7 +184,7 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
 						company2, _portal,
 						"liferayPublishedGroovyWorkflowDefinition", 1,
-						_workflowPortletTabServiceTracker)
+						_workflowPortletTabRegistry)
 				)
 			).toString(),
 			_getGroovyScriptUsesJSONArrayString());
@@ -376,6 +376,6 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 	@Inject
-	private WorkflowPortletTabServiceTracker _workflowPortletTabServiceTracker;
+	private WorkflowPortletTabRegistry _workflowPortletTabRegistry;
 
 }

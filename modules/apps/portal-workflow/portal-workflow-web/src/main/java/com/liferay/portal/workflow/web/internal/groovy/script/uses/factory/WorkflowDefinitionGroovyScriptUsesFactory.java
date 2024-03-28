@@ -14,7 +14,7 @@ import com.liferay.portal.security.script.management.groovy.script.use.GroovyScr
 import com.liferay.portal.security.script.management.groovy.script.uses.factory.GroovyScriptUsesFactory;
 import com.liferay.portal.workflow.definition.groovy.script.use.WorkflowDefinitionGroovyScriptUseSourceURLFactory;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
-import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabServiceTracker;
+import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabRegistry;
 
 import java.util.List;
 import java.util.Locale;
@@ -58,7 +58,7 @@ public class WorkflowDefinitionGroovyScriptUsesFactory
 					WorkflowDefinitionGroovyScriptUseSourceURLFactory.create(
 						company, _portal, workflowDefinition.getName(),
 						workflowDefinition.getVersion(),
-						_workflowPortletTabServiceTracker));
+						_workflowPortletTabRegistry));
 			});
 	}
 
@@ -72,6 +72,6 @@ public class WorkflowDefinitionGroovyScriptUsesFactory
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 	@Reference
-	private WorkflowPortletTabServiceTracker _workflowPortletTabServiceTracker;
+	private WorkflowPortletTabRegistry _workflowPortletTabRegistry;
 
 }

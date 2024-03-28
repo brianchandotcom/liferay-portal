@@ -8,7 +8,7 @@ package com.liferay.portal.workflow.web.internal.portlet.tab;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab;
-import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabServiceTracker;
+import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabRegistry;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -18,9 +18,9 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Feliphe Marinho
  */
-@Component(service = WorkflowPortletTabServiceTracker.class)
-public class WorkflowPortletTabServiceTrackerImpl
-	implements WorkflowPortletTabServiceTracker {
+@Component(service = WorkflowPortletTabRegistry.class)
+public class WorkflowPortletTabRegistryImpl
+	implements WorkflowPortletTabRegistry {
 
 	@Override
 	public boolean contains(String portalWorkflowTabsName) {

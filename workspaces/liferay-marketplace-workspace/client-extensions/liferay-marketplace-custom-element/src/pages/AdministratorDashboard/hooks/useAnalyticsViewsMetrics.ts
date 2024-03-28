@@ -18,6 +18,7 @@ const useAnalyticsViewsMetrics = () => {
 			marketplaceSpringBootOAuth2.getAnalyticsPages(
 				new URLSearchParams({
 					sortMetric: 'viewsMetric',
+					sortOrder: 'desc',
 				})
 			),
 			marketplaceSpringBootOAuth2.getAnalyticsPages(

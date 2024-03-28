@@ -42,12 +42,10 @@ public class ObjectActionGroovyScriptUsesFactory
 				return new GroovyScriptUse(
 					company.getWebId(),
 					objectAction.getLabel(resourceRequest.getLocale()),
-					new ObjectDefinitionGroovyScriptUseSourceURLFactory(
-					).create(
+					ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
 						company, objectAction.getObjectDefinitionId(), _portal,
 						ObjectDefinitionsScreenNavigationEntryConstants.
-							CATEGORY_KEY_ACTIONS
-					));
+							CATEGORY_KEY_ACTIONS));
 			});
 	}
 

@@ -42,13 +42,11 @@ public class ObjectValidationRuleGroovyScriptUsesFactory
 				return new GroovyScriptUse(
 					company.getWebId(),
 					objectValidationRule.getName(resourceRequest.getLocale()),
-					new ObjectDefinitionGroovyScriptUseSourceURLFactory(
-					).create(
+					ObjectDefinitionGroovyScriptUseSourceURLFactory.create(
 						company, objectValidationRule.getObjectDefinitionId(),
 						_portal,
 						ObjectDefinitionsScreenNavigationEntryConstants.
-							CATEGORY_KEY_VALIDATIONS
-					));
+							CATEGORY_KEY_VALIDATIONS));
 			});
 	}
 

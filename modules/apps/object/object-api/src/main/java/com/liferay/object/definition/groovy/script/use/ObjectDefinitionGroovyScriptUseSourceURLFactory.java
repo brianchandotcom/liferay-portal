@@ -22,7 +22,7 @@ import javax.portlet.WindowState;
  */
 public class ObjectDefinitionGroovyScriptUseSourceURLFactory {
 
-	public String create(
+	public static String create(
 			Company company, long objectDefinitionId, Portal portal,
 			String screenNavigationCategoryKey)
 		throws PortalException {

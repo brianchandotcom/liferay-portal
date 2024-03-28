@@ -1,0 +1,189 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton from '@clayui/button';
+import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
+import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayModal from '@clayui/modal';
+import {API, errorsUtils, stringUtils} from '@liferay/object-js-components-web';
+import React, {useEffect, useState} from 'react';
+
+import {tableHeaderItems} from './ModalImportWarning';
+
+import './ModalImportFailed.scss';
+
+interface ModalImportFailedProps {
+	error: API.ErrorDetails;
+	handleOnclose: () => void;
+	importedObjectDefinitions: ObjectDefinition[];
+}
+
+type ImportedObjectDefinitionsStatus = {
+	errorType?: string;
+	label: string;
+	success: boolean;
+};
+
+type FailedObjectDefinitions = {
+	error: {
+		type: string;
+	};
+	objectDefinitionName: string;
+};
+
+export function ModalImportFailed({
+	error,
+	handleOnclose,
+	importedObjectDefinitions,
+}: ModalImportFailedProps) {
+	const [
+		importedObjectDefinitionsStatus,
+		setImportedObjectDefinitionsStatus,
+	] = useState<ImportedObjectDefinitionsStatus[]>();
+
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		setLoading(true);
+
+		const failedObjectDefinitions = JSON.parse(
+			error.message
+		) as FailedObjectDefinitions[];
+
+		if (failedObjectDefinitions.length) {
+			const failedObjectDefinitionsMap = new Map<string, string>();
+
+			failedObjectDefinitions.forEach((failedObjectDefinition) => {
+				failedObjectDefinitionsMap.set(
+					failedObjectDefinition.objectDefinitionName,
+					failedObjectDefinition.error.type
+				);
+			});
+
+			const newImportedObjectDefinitionsStatus = importedObjectDefinitions.map(
+				(importedObjectDefinition) => {
+					const failedObjectDefinition = failedObjectDefinitionsMap.has(
+						importedObjectDefinition.name
+					);
+
+					return {
+						errorType: failedObjectDefinition
+							? failedObjectDefinitionsMap.get(
+									importedObjectDefinition.name
+							  )
+							: undefined,
+						label: stringUtils.getLocalizableLabel(
+							importedObjectDefinition.defaultLanguageId,
+							importedObjectDefinition.label,
+							importedObjectDefinition.name
+						),
+						success: !failedObjectDefinition,
+					} as ImportedObjectDefinitionsStatus;
+				}
+			);
+
+			setImportedObjectDefinitionsStatus(
+				newImportedObjectDefinitionsStatus
+			);
+		}
+
+		setLoading(false);
+	}, [error.message, importedObjectDefinitions]);
+
+	return (
+		<>
+			<ClayModal.Header>
+				{Liferay.Language.get('object-definition-failed-to-import')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<Text as="p" color="secondary">
+					{Liferay.Language.get(
+						'some-object-definitions-failed-to-import'
+					)}
+				</Text>
+
+				{loading ? (
+					<ClayLoadingIndicator displayType="secondary" size="sm" />
+				) : (
+					<Table
+						columnsVisibility={false}
+						headingNoWrap
+						noWrap
+						responsive
+						striped={false}
+					>
+						<Head items={tableHeaderItems}>
+							{(column) => (
+								<Cell expanded key={column.id}>
+									{column.name}
+								</Cell>
+							)}
+						</Head>
+
+						<Body items={importedObjectDefinitionsStatus}>
+							{({errorType, label, success}) => (
+								<Row>
+									<Cell>
+										<div className="lfr-object__modal-import-failed-table-body">
+											<Text>{label}</Text>
+
+											<div className="lfr-object__modal-import-failed-table-body-status">
+												<ClayIcon
+													color={
+														success
+															? '#287D3C'
+															: '#DA1414'
+													}
+													symbol={
+														success
+															? 'check'
+															: 'exclamation-full'
+													}
+												/>
+
+												<Text
+													color={
+														success
+															? 'success'
+															: 'danger'
+													}
+												>
+													{success
+														? Liferay.Language.get(
+																'successfully-imported'
+														  )
+														: errorType
+														? errorsUtils.ERRORS[
+																errorType
+														  ]
+														: Liferay.Language.get(
+																'failed-to-import'
+														  )}
+												</Text>
+											</div>
+										</div>
+									</Cell>
+								</Row>
+							)}
+						</Body>
+					</Table>
+				)}
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton
+						displayType="warning"
+						onClick={() => handleOnclose()}
+					>
+						{Liferay.Language.get('done')}
+					</ClayButton>
+				}
+			/>
+		</>
+	);
+}

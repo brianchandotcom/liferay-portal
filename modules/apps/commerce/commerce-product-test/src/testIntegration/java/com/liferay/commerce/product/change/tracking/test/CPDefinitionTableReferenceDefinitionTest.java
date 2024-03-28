@@ -64,7 +64,7 @@ public class CPDefinitionTableReferenceDefinitionTest
 			group.getGroupId(), cpDefinition.getCPDefinitionId(),
 			_cpOption.getCPOptionId());
 
-		return cpDefinition;
+		return cpDefinition.getCProduct();
 	}
 
 	private CommerceCatalog _commerceCatalog;

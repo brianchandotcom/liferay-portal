@@ -336,7 +336,7 @@ public class SalesforceObjectEntryManagerImplTest
 					" or ", buildEqualsExpressionFilterString("dueDate", date),
 					" or ", buildEqualsExpressionFilterString("title", title1))
 			).build(),
-			objectEntry1, objectEntry4);
+			objectEntry1, objectEntry4, objectEntry5);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
@@ -405,9 +405,7 @@ public class SalesforceObjectEntryManagerImplTest
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"filter",
-				filterString.concat(
-					buildEqualsExpressionFilterString("title", null))
+				"filter", "title eq null"
 			).build(),
 			objectEntry5);
 
@@ -422,7 +420,7 @@ public class SalesforceObjectEntryManagerImplTest
 							objectEntry1.getProperties(), "dueDate")),
 					new Date(), "dueDate", "yyyy-MM-dd")
 			).build(),
-			objectEntry1, objectEntry4);
+			objectEntry1, objectEntry4, objectEntry5);
 	}
 
 	@Test

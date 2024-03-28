@@ -4,7 +4,7 @@
 		"multiCompany": false,
 		"parameters": {
 			"containsHeaders": "false",
-			"createStrategy": "INSERT",
+			"createStrategy": "UPSERT",
 			"importStrategy": "ON_ERROR_FAIL",
 			"updateStrategy": "UPDATE"
 		},

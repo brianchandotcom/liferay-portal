@@ -12,6 +12,10 @@ interface ModalImportWarningProps {
 	handleOnClose: () => void;
 	modalImportKey: string;
 }
+export declare const tableHeaderItems: {
+	id: string;
+	name: string;
+}[];
 export declare function ModalImportWarning({
 	errorMessage,
 	existingObjectDefinitions,

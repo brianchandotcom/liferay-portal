@@ -23,10 +23,10 @@ interface ModalImportWarningProps {
 	modalImportKey: string;
 }
 
-const tableHeaderItems = [
+export const tableHeaderItems = [
 	{
-		id: 'objectLabel',
-		name: Liferay.Language.get('object-label'),
+		id: 'objectDefinitionLabel',
+		name: Liferay.Language.get('object-definition-label'),
 	},
 ];
 

@@ -18,6 +18,8 @@ interface HandleImportProps {
 	setError: (
 		value: React.SetStateAction<API.ErrorDetails | undefined>
 	) => void;
+	setFailedModalVisible?: (value: boolean) => void;
+	setWarningModalVisible: (value: boolean) => void;
 }
 
 interface HandleDefaultImportProps extends Omit<HandleImportProps, 'item'> {
@@ -28,7 +30,6 @@ interface HandleDefaultImportProps extends Omit<HandleImportProps, 'item'> {
 	importExtendedInfo: KeyValueObject;
 	inputFile?: File | null;
 	setImportFormData: (value: FormData) => void;
-	setWarningModalVisible: (value: boolean) => void;
 }
 
 interface HandleImportMultiplesObjectDefinitionsProps
@@ -85,6 +86,8 @@ export async function handleDefaultImport({
 			onAfterImport,
 			onClose,
 			setError,
+			setFailedModalVisible,
+			setWarningModalVisible,
 		});
 	}
 	else {
@@ -99,6 +102,8 @@ export async function handleImport({
 	onAfterImport,
 	onClose,
 	setError,
+	setFailedModalVisible,
+	setWarningModalVisible,
 }: HandleImportProps) {
 	try {
 		await API.save({
@@ -117,6 +122,16 @@ export async function handleImport({
 		}
 	}
 	catch (error) {
+		if (
+			Liferay.FeatureFlags['LPS-187142'] &&
+			setFailedModalVisible &&
+			(error as API.ErrorDetails).type ===
+				'importMultipleObjectDefinitions'
+		) {
+			setFailedModalVisible(true);
+			setWarningModalVisible(false);
+		}
+
 		setError(error as API.ErrorDetails);
 	}
 }
@@ -129,6 +144,7 @@ export async function handleImportMultiplesObjectDefinitions({
 	onClose,
 	setError,
 	setExistingObjectDefinitions,
+	setFailedModalVisible,
 	setImportFormData,
 	setModalImportKeyState,
 	setWarningModalVisible,
@@ -137,7 +153,7 @@ export async function handleImportMultiplesObjectDefinitions({
 
 	const objectDefinitionsMap = new Map<string, ObjectDefinition>(
 		items.map((objectDefinition) => [
-			objectDefinition.externalReferenceCode,
+			objectDefinition.name,
 			objectDefinition,
 		])
 	);
@@ -145,10 +161,10 @@ export async function handleImportMultiplesObjectDefinitions({
 	const existingObjectDefinitions: ObjectDefinition[] = [];
 
 	importedObjectDefinitions.forEach((objectDefinition) => {
-		if (objectDefinitionsMap.has(objectDefinition.externalReferenceCode)) {
+		if (objectDefinitionsMap.has(objectDefinition.name)) {
 			existingObjectDefinitions.push(
 				objectDefinitionsMap.get(
-					objectDefinition.externalReferenceCode
+					objectDefinition.name
 				) as ObjectDefinition
 			);
 		}
@@ -177,5 +193,7 @@ export async function handleImportMultiplesObjectDefinitions({
 		onAfterImport,
 		onClose,
 		setError,
+		setFailedModalVisible,
+		setWarningModalVisible,
 	});
 }

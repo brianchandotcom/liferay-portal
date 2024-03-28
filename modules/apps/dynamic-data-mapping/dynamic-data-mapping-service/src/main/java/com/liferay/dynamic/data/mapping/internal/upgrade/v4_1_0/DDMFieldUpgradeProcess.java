@@ -475,13 +475,33 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 						structureId, structureVersionId);
 
 					if (parentStructureId > 0) {
-						DDMForm parentDDMForm = _getFullHierarchyDDMForm(
-							parentStructureId, structureVersionId);
+						PreparedStatement preparedStatement1 =
+							connection.prepareStatement(
+								StringBundler.concat(
+									"select ",
+									"DDMStructureVersion.structureVersionId ",
+									"from DDMStructureVersion WHERE ",
+									"structureId = ?"));
 
-						List<DDMFormField> ddmFormFields =
-							fullHierarchyDDMForm.getDDMFormFields();
+						preparedStatement1.setLong(1, parentStructureId);
 
-						ddmFormFields.addAll(parentDDMForm.getDDMFormFields());
+						try (ResultSet resultSet1 =
+								preparedStatement1.executeQuery()) {
+
+							if (resultSet.next()) {
+								DDMForm parentDDMForm =
+									_getFullHierarchyDDMForm(
+										parentStructureId,
+										resultSet1.getLong(
+											"structureVersionId"));
+
+								List<DDMFormField> ddmFormFields =
+									fullHierarchyDDMForm.getDDMFormFields();
+
+								ddmFormFields.addAll(
+									parentDDMForm.getDDMFormFields());
+							}
+						}
 					}
 
 					_fullHierarchyDDMForms.put(

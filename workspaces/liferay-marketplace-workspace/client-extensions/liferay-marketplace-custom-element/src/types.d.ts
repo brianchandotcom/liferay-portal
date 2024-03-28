@@ -12,37 +12,16 @@ declare module 'warning';
 type AnalyticsViews = {
 	results: {
 		metrics: {
-			readsMetric: {
-				value: number;
-			};
-			timeOnPageMetric: {
-				value: number;
-			};
-			exitRateMetric: {
-				value: number;
-			};
-			sessionsMetric: {
-				value: number;
-			};
 			avgTimeOnPageMetric: {
-				value: number;
-			};
-			ctaClicksMetric: {
 				value: number;
 			};
 			bounceMetric: {
 				value: number;
 			};
-			visitorsMetric: {
-				value: number;
-			};
-			viewsMetric: {
-				value: number;
-			};
 			bounceRateMetric: {
 				value: number;
 			};
-			indirectAccessMetric: {
+			ctaClicksMetric: {
 				value: number;
 			};
 			directAccessMetric: {
@@ -51,21 +30,32 @@ type AnalyticsViews = {
 			entrancesMetric: {
 				value: number;
 			};
+			exitRateMetric: {
+				value: number;
+			};
+			indirectAccessMetric: {
+				value: number;
+			};
+			readsMetric: {
+				value: number;
+			};
+			sessionsMetric: {
+				value: number;
+			};
+			timeOnPageMetric: {
+				value: number;
+			};
+			viewsMetric: {
+				value: number;
+			};
+			visitorsMetric: {
+				value: number;
+			};
 		};
 		title: string;
 		url: string;
-		_links: {
-			self: {
-				href: string;
-			};
-		};
 	}[];
 	total: number;
-	link: {
-		next: {
-			href: string;
-		};
-	};
 };
 
 type PublisherRequestInfo = {

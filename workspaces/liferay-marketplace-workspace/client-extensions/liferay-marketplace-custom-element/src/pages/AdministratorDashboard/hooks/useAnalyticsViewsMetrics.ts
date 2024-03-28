@@ -11,29 +11,35 @@ import {colors} from '../mock';
 const useAnalyticsViewsMetrics = () => {
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
-	const {data: analyticsViewsResposne} = useSWR<AnalyticsViews>(
-		'administrator-dashboard/metrics/analytics/views',
-		async () => {
-			const response = await marketplaceSpringBootOAuth2.getAnalitcsPages(
-				new URLSearchParams({
-					keywords: '/p/',
-					sortMetric: 'visitorsMetric',
-					sortOrder: 'desc',
-				})
-			);
-
-			return response;
-		}
+	const {data: analyticsViewsResponse = []} = useSWR<AnalyticsViews[]>(
+		'administrator-dashboard/metrics/analytics',
+		() =>
+			Promise.all([
+				marketplaceSpringBootOAuth2.getAnalyticsPages(
+					new URLSearchParams({
+						sortMetric: 'viewsMetric',
+					})
+				),
+				marketplaceSpringBootOAuth2.getAnalyticsPages(
+					new URLSearchParams({
+						keywords: '/p/',
+						sortMetric: 'visitorsMetric',
+						sortOrder: 'desc',
+					})
+				),
+			])
 	);
 
+	const [viewsMetricResult, visitorsMetricResult] = analyticsViewsResponse;
+
 	const viewsMetrics =
-		analyticsViewsResposne?.results.map((item) => ({
+		visitorsMetricResult?.results.map((item) => ({
 			title: item.title.split('-')[0].trim(),
 			views: item.metrics.viewsMetric.value,
 			visitor: item.metrics.visitorsMetric.value,
 		})) || [];
 
-	viewsMetrics?.splice(5);
+	viewsMetrics.length = 5;
 
 	return {
 		data: {
@@ -51,6 +57,17 @@ const useAnalyticsViewsMetrics = () => {
 			],
 			viewsMetrics,
 		},
+		visitorsMetric: viewsMetricResult.results
+			.map(
+				({
+					metrics: {
+						viewsMetric: {value},
+					},
+				}) => value
+			)
+			.reduce(
+				(previousValue, currentValue) => previousValue + currentValue
+			),
 	};
 };
 

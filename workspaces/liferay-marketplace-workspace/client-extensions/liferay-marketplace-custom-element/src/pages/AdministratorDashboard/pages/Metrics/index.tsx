@@ -28,7 +28,7 @@ const Metrics = () => {
 	const {data: accounts} = useAccountsMetrics('week');
 	const {data: orderChartLine} = useOrderChartLineMetrics();
 	const {data: orderMetrics} = useOrderMetrics('week');
-	const {data: analytics} = useAnalyticsViewsMetrics();
+	const {data: analytics, visitorsMetric} = useAnalyticsViewsMetrics();
 
 	const {metrics = []} = orderChartLine || {};
 
@@ -71,11 +71,9 @@ const Metrics = () => {
 				value: orderMetrics?.totalCount,
 			},
 			{
-				growth: 68,
-				growthContext: '+36k this week',
 				symbol: 'analytics',
-				title: 'Unique Visitors',
-				value: '249.194.46',
+				title: 'Site Visitors',
+				value: visitorsMetric,
 			},
 		],
 		[
@@ -86,6 +84,7 @@ const Metrics = () => {
 			orderMetrics?.lastPeriod,
 			orderMetrics?.paidAmount,
 			orderMetrics?.totalCount,
+			visitorsMetric,
 		]
 	);
 
@@ -161,29 +160,29 @@ const Metrics = () => {
 									},
 								}}
 								bar={{
-									width: {
-										max: 25,
-									},
+									padding: 1,
 									radius: {
 										ratio: 0.2,
 									},
-									padding: 1,
+									width: {
+										max: 25,
+									},
 								}}
 								data={{
-									x: 'x',
 									colors: analytics.colors,
 									columns: analytics.columns,
 									type: 'bar',
+									x: 'x',
 								}}
 								grid={{
+									lines: {
+										front: false,
+									},
 									x: {
 										show: false,
 									},
 									y: {
 										show: false,
-									},
-									lines: {
-										front: false,
 									},
 								}}
 								legend={{show: false}}

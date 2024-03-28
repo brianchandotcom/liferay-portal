@@ -43,17 +43,15 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 
 	const productId = Number(appId) + 1;
 
-	const {
-		data: selectedApp,
-		isLoading,
-		mutate,
-	} = useSWR(`/published-app/${productId}`, () =>
-		HeadlessCommerceAdminCatalogImpl.getProduct(
-			productId,
-			new URLSearchParams({
-				nestedFields: 'attachments,images,productSpecifications',
-			})
-		)
+	const {data: selectedApp, isLoading, mutate} = useSWR(
+		`/published-app/${productId}`,
+		() =>
+			HeadlessCommerceAdminCatalogImpl.getProduct(
+				productId,
+				new URLSearchParams({
+					nestedFields: 'attachments,images,productSpecifications',
+				})
+			)
 	);
 
 	const appVersion = useMemo(
@@ -113,7 +111,8 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 				message: i18n.translate('your-request-completed-successfully'),
 				type: 'success',
 			});
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',

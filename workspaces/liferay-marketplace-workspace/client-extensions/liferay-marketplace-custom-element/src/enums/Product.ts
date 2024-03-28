@@ -7,3 +7,8 @@ export enum PRODUCT_CATEGORIES {
 	MARKETPLACE_SOLUTION_CATEGORY = 'marketplace solution category',
 	MARKETPLACE_SOLUTION_TAGS = 'marketplace solution tags',
 }
+
+export enum PRODUCT_WORKFLOW_STATUS_CODE {
+	APPROVED = 0,
+	DRAFT = 2,
+}

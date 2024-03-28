@@ -9,6 +9,65 @@ declare module '*.svg' {
 
 declare module 'warning';
 
+type AnalyticsViews = {
+	results: {
+		metrics: {
+			readsMetric: {
+				value: number;
+			};
+			timeOnPageMetric: {
+				value: number;
+			};
+			exitRateMetric: {
+				value: number;
+			};
+			sessionsMetric: {
+				value: number;
+			};
+			avgTimeOnPageMetric: {
+				value: number;
+			};
+			ctaClicksMetric: {
+				value: number;
+			};
+			bounceMetric: {
+				value: number;
+			};
+			visitorsMetric: {
+				value: number;
+			};
+			viewsMetric: {
+				value: number;
+			};
+			bounceRateMetric: {
+				value: number;
+			};
+			indirectAccessMetric: {
+				value: number;
+			};
+			directAccessMetric: {
+				value: number;
+			};
+			entrancesMetric: {
+				value: number;
+			};
+		};
+		title: string;
+		url: string;
+		_links: {
+			self: {
+				href: string;
+			};
+		};
+	}[];
+	total: number;
+	link: {
+		next: {
+			href: string;
+		};
+	};
+};
+
 type PublisherRequestInfo = {
 	emailAddress?: string;
 	extension?: string;

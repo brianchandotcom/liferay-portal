@@ -39,11 +39,15 @@ const fetcher = async <T = any>(
 		throw error;
 	}
 
-	if (options?.method !== 'DELETE' && response.status !== 204) {
-		return response.json();
+	if (
+		options?.method === 'DELETE' ||
+		response.status === 204 ||
+		response.headers.get('Content-Length') === '0'
+	) {
+		return {} as T;
 	}
 
-	return {} as T;
+	return response.json();
 };
 
 fetcher.delete = (resource: RequestInfo) =>

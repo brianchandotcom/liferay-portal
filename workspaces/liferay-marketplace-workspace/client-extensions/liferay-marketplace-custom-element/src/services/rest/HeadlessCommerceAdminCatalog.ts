@@ -117,20 +117,11 @@ class HeadlessCommerceAdminCatalog {
 
 	async updateProductByExternalReferenceCode(
 		externalReferenceCode: string,
-		{
-			description,
-			name,
-		}: {
-			description: string;
-			name: string;
-		}
+		body: unknown
 	) {
 		return fetcher.patch(
 			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}`,
-			{
-				description: {en_US: description},
-				name: {en_US: name},
-			}
+			body
 		);
 	}
 

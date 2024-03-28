@@ -65,9 +65,9 @@ const PublishedAppsDashboardRouter = () => {
 						/>
 					}
 				>
-					<Route element={<Apps />} index />
-					<Route path="app/:appId">
-						<Route element={<App />} index />
+					<Route path="/">
+						<Route element={<Apps />} index />
+						<Route element={<App />} path="app/:appId" />
 					</Route>
 					<Route element={<Accounts />} path="accounts" />
 					<Route element={<Members />} path="members" />

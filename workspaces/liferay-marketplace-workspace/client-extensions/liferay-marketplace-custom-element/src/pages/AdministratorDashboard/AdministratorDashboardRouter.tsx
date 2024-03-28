@@ -24,12 +24,14 @@ const AdministratorDashboardRouter = () => (
 					path="publisher-request"
 				/>
 
-				<Route element={<AppAdministrator />} path="apps" />
-				<Route path="app/:appId">
-					<Route
-						element={<App isAdministratorDashboard={true} />}
-						index
-					/>
+				<Route path="apps">
+					<Route element={<AppAdministrator />} index />
+					<Route path=":appId">
+						<Route
+							element={<App isAdministratorDashboard />}
+							index
+						/>
+					</Route>
 				</Route>
 			</Route>
 		</Routes>

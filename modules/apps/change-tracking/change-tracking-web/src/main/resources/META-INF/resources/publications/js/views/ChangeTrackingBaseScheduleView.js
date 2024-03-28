@@ -89,13 +89,19 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 				}
 				else if (json.validationError) {
 					this.setState({validationError: json.validationError});
+
+					this.setState({scheduleButtonDisabled: false});
 				}
 				else if (json.error) {
 					this.setState({formError: json.error});
+
+					this.setState({scheduleButtonDisabled: false});
 				}
 			})
 			.catch((response) => {
 				this.setState({formError: response.error});
+
+				this.setState({scheduleButtonDisabled: false});
 			});
 	}
 

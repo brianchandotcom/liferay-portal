@@ -23,7 +23,6 @@ import {Liferay} from '~/services/liferay';
 import {
 	MessageBoardMessage,
 	TestrayCaseResult,
-	TestrayCaseResultIssue,
 	testrayCaseResultImpl,
 } from '~/services/rest';
 import {CaseResultStatuses} from '~/util/statuses';
@@ -51,13 +50,6 @@ const CaseResultEditTest = () => {
 		mutateCaseResult,
 	}: OutletContext = useOutletContext();
 
-	const issues = caseResult.issues
-		.map(
-			(caseResultIssue: TestrayCaseResultIssue) =>
-				caseResultIssue.r_issueToCaseResultsIssues_c_issue?.name
-		)
-		.join(', ');
-
 	const {
 		formState: {errors},
 		handleSubmit,
@@ -72,7 +64,7 @@ const CaseResultEditTest = () => {
 					].includes(caseResult?.dueStatus.key as CaseResultStatuses)
 						? CaseResultStatuses.PASSED
 						: caseResult?.dueStatus.key,
-					issues,
+					issues: caseResult.issues,
 			  } as any)
 			: {},
 		resolver: yupResolver(yupSchema.caseResult),
@@ -108,15 +100,7 @@ const CaseResultEditTest = () => {
 
 			mutateCaseResult({
 				...response,
-				issues: _issues.map(
-					(issue) =>
-						(({
-							issue: {
-								id: issue,
-								name: `${issue}_${response.id}`,
-							},
-						} as unknown) as TestrayCaseResultIssue)
-				),
+				issues: _issues.join(', '),
 			});
 
 			onSave();

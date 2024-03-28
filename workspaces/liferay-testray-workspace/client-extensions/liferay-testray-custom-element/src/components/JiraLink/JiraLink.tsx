@@ -17,7 +17,12 @@ import {
 
 type JiraLinkProps = {
 	displayViewInJira?: boolean;
-	issue: TestrayIssue | TestrayCaseResultIssue | TestrayCaseResultIssue[];
+	issue:
+		| string
+		| string[]
+		| TestrayCaseResultIssue
+		| TestrayCaseResultIssue[]
+		| TestrayIssue;
 };
 
 const splitIssueName = (name: string) => name.split(testrayIssueImpl.DELIMITER);
@@ -41,8 +46,10 @@ const JiraLink: React.FC<JiraLinkProps> = ({
 	);
 
 	if (isArray) {
-		const issues = issue.map(
-			({name}) => splitIssueName(name).at(0) as string
+		const issues = issue.map((issue) =>
+			typeof issue === 'string'
+				? issue
+				: (splitIssueName(issue.name).at(0) as string)
 		);
 
 		return (
@@ -74,7 +81,8 @@ const JiraLink: React.FC<JiraLinkProps> = ({
 		);
 	}
 
-	const [name] = splitIssueName(issue.name);
+	const [name] =
+		typeof issue === 'string' ? [issue] : splitIssueName(issue.name);
 
 	return <Link name={name} />;
 };

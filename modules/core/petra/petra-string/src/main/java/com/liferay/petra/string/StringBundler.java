@@ -5,14 +5,13 @@
 
 package com.liferay.petra.string;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
 
-import java.lang.ref.Reference;
-import java.lang.ref.SoftReference;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Field;
 
 /**
  * <p>
@@ -46,15 +45,16 @@ public class StringBundler implements Serializable {
 	}
 
 	public StringBundler() {
-		_array = new String[_DEFAULT_ARRAY_CAPACITY];
+		_array = StringPool.EMPTY_ARRAY;
 	}
 
 	public StringBundler(int initialCapacity) {
 		if (initialCapacity <= 0) {
-			initialCapacity = _DEFAULT_ARRAY_CAPACITY;
+			_array = StringPool.EMPTY_ARRAY;
 		}
-
-		_array = new String[initialCapacity];
+		else {
+			_array = new String[initialCapacity];
+		}
 	}
 
 	public StringBundler(String s) {
@@ -73,7 +73,7 @@ public class StringBundler implements Serializable {
 		_array = new String[stringArray.length + extraSpace];
 
 		for (String s : stringArray) {
-			if ((s != null) && (s.length() > 0)) {
+			if ((s != null) && !s.isEmpty()) {
 				_array[_arrayIndex++] = s;
 			}
 		}
@@ -124,7 +124,7 @@ public class StringBundler implements Serializable {
 			s = StringPool.NULL;
 		}
 
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			return this;
 		}
 
@@ -249,6 +249,10 @@ public class StringBundler implements Serializable {
 	}
 
 	protected void expandCapacity(int newCapacity) {
+		if (newCapacity == 0) {
+			newCapacity = _DEFAULT_ARRAY_CAPACITY;
+		}
+
 		String[] newArray = new String[newCapacity];
 
 		System.arraycopy(_array, 0, newArray, 0, _arrayIndex);
@@ -269,48 +273,23 @@ public class StringBundler implements Serializable {
 			return array[0].concat(array[1]);
 		}
 
-		if (arrayIndex == 3) {
-			if (array[0].length() < array[2].length()) {
-				return array[0].concat(
-					array[1]
-				).concat(
-					array[2]
-				);
-			}
+		String result = _toStringStringConcatenator(array, arrayIndex);
 
-			return array[0].concat(array[1].concat(array[2]));
+		if (result == null) {
+			return _toStringSB(array, arrayIndex);
 		}
 
+		return result;
+	}
+
+	private static String _toStringSB(String[] array, int arrayIndex) {
 		int length = 0;
 
 		for (int i = 0; i < arrayIndex; i++) {
 			length += array[i].length();
 		}
 
-		StringBuilder sb = null;
-
-		if (length > _THREAD_LOCAL_BUFFER_LIMIT) {
-			Reference<StringBuilder> reference =
-				_stringBuilderThreadLocal.get();
-
-			if (reference != null) {
-				sb = reference.get();
-			}
-
-			if (sb == null) {
-				sb = new StringBuilder(length);
-
-				_stringBuilderThreadLocal.set(new SoftReference<>(sb));
-			}
-			else if (sb.capacity() < length) {
-				sb.setLength(length);
-			}
-
-			sb.setLength(0);
-		}
-		else {
-			sb = new StringBuilder(length);
-		}
+		StringBuilder sb = new StringBuilder(length);
 
 		for (int i = 0; i < arrayIndex; i++) {
 			sb.append(array[i]);
@@ -319,34 +298,186 @@ public class StringBundler implements Serializable {
 		return sb.toString();
 	}
 
-	private static final int _DEFAULT_ARRAY_CAPACITY = 16;
+	private static String _toStringStringConcatenator(
+		String[] array, int arrayIndex) {
 
-	private static final int _THREAD_LOCAL_BUFFER_LIMIT;
-
-	private static final ThreadLocal<Reference<StringBuilder>>
-		_stringBuilderThreadLocal;
-	private static final long serialVersionUID = 1L;
-
-	static {
-		int threadLocalBufferLimit = Integer.getInteger(
-			StringBundler.class.getName() + ".threadlocal.buffer.limit",
-			Integer.MAX_VALUE);
-
-		if ((threadLocalBufferLimit > 0) &&
-			(threadLocalBufferLimit < Integer.MAX_VALUE)) {
-
-			_THREAD_LOCAL_BUFFER_LIMIT = threadLocalBufferLimit;
-
-			_stringBuilderThreadLocal = new CentralizedThreadLocal<>(false);
+		if (StringConcatenator._stringConcatenator == null) {
+			return null;
 		}
-		else {
-			_THREAD_LOCAL_BUFFER_LIMIT = Integer.MAX_VALUE;
 
-			_stringBuilderThreadLocal = null;
-		}
+		return StringConcatenator._stringConcatenator.concat(array, arrayIndex);
 	}
+
+	private static final int _DEFAULT_ARRAY_CAPACITY = 10;
+
+	private static final long serialVersionUID = 1L;
 
 	private String[] _array;
 	private int _arrayIndex;
+
+	private static class ByteArrayStringConcatenator
+		extends StringConcatenator {
+
+		@Override
+		public String concat(String[] array, int arrayIndex) {
+			try {
+				byte coder = (byte)_coderMethodHandle.invokeExact(array[0]);
+
+				int length = 0;
+
+				for (int i = 0; i < arrayIndex; i++) {
+					if (coder != (byte)_coderMethodHandle.invokeExact(
+							array[i])) {
+
+						return null;
+					}
+
+					length += array[i].length();
+				}
+
+				length <<= coder;
+
+				byte[] bytes = new byte[length];
+
+				int index = 0;
+
+				for (int i = 0; i < arrayIndex; i++) {
+					byte[] value = (byte[])_valueMethodHandle.invokeExact(
+						array[i]);
+
+					System.arraycopy(value, 0, bytes, index, value.length);
+
+					index += value.length;
+				}
+
+				return (String)_constructorMethodHandle.invokeExact(
+					bytes, coder);
+			}
+			catch (Throwable throwable) {
+				return null;
+			}
+		}
+
+		private static final MethodHandle _coderMethodHandle;
+		private static final MethodHandle _constructorMethodHandle;
+		private static final MethodHandle _valueMethodHandle;
+
+		static {
+			try {
+				Field field = MethodHandles.Lookup.class.getDeclaredField(
+					"IMPL_LOOKUP");
+
+				field.setAccessible(true);
+
+				MethodHandles.Lookup lookup = (MethodHandles.Lookup)field.get(
+					null);
+
+				_coderMethodHandle = lookup.findGetter(
+					String.class, "coder", byte.class);
+
+				_constructorMethodHandle = lookup.unreflectConstructor(
+					String.class.getDeclaredConstructor(
+						byte[].class, byte.class));
+
+				_valueMethodHandle = lookup.findGetter(
+					String.class, "value", byte[].class);
+			}
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
+			}
+		}
+
+	}
+
+	private static class CharArrayStringConcatenator
+		extends StringConcatenator {
+
+		@Override
+		public String concat(String[] array, int arrayIndex) {
+			try {
+				int length = 0;
+
+				for (int i = 0; i < arrayIndex; i++) {
+					length += array[i].length();
+				}
+
+				char[] chars = new char[length];
+
+				int index = 0;
+
+				for (int i = 0; i < arrayIndex; i++) {
+					char[] value = (char[])_valueMethodHandle.invokeExact(
+						array[i]);
+
+					System.arraycopy(value, 0, chars, index, value.length);
+
+					index += value.length;
+				}
+
+				return (String)_constructorMethodHandle.invokeExact(
+					chars, true);
+			}
+			catch (Throwable throwable) {
+				return null;
+			}
+		}
+
+		private static final MethodHandle _constructorMethodHandle;
+		private static final MethodHandle _valueMethodHandle;
+
+		static {
+			try {
+				Field field = MethodHandles.Lookup.class.getDeclaredField(
+					"IMPL_LOOKUP");
+
+				field.setAccessible(true);
+
+				MethodHandles.Lookup lookup = (MethodHandles.Lookup)field.get(
+					null);
+
+				_constructorMethodHandle = lookup.unreflectConstructor(
+					String.class.getDeclaredConstructor(
+						char[].class, boolean.class));
+
+				_valueMethodHandle = lookup.findGetter(
+					String.class, "value", char[].class);
+			}
+			catch (ReflectiveOperationException reflectiveOperationException) {
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
+			}
+		}
+
+	}
+
+	private abstract static class StringConcatenator {
+
+		public abstract String concat(String[] array, int arrayIndex);
+
+		private static final StringConcatenator _stringConcatenator;
+
+		static {
+			StringConcatenator stringConcatenator = null;
+
+			try {
+				Field field = String.class.getDeclaredField("value");
+
+				Class<?> valueType = field.getType();
+
+				if (valueType == char[].class) {
+					stringConcatenator = new CharArrayStringConcatenator();
+				}
+				else if (valueType == byte[].class) {
+					stringConcatenator = new ByteArrayStringConcatenator();
+				}
+			}
+			catch (ReflectiveOperationException reflectiveOperationException) {
+			}
+
+			_stringConcatenator = stringConcatenator;
+		}
+
+	}
 
 }

@@ -2,11 +2,11 @@ definition {
 
 	@summary = "Default summary"
 	macro addColumnsViaUI(addColumns = null) {
-		if (IsElementNotPresent(key_text = "Add Column", locator1 = "ObjectCustomViews#ADD_COLUMN")) {
-			Click(locator1 = "Button#PLUS");
+		if (IsElementPresent(key_text = "No columns added yet", locator1 = "ObjectCustomViews#ADD_COLUMN")) {
+			Click(locator1 = "ObjectCustomViews#ADD_COLUMN");
 		}
 		else {
-			Click(locator1 = "ObjectCustomViews#ADD_COLUMN");
+			Click(locator1 = "Button#PLUS");
 		}
 
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");

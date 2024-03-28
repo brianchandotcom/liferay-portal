@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
@@ -43,13 +44,20 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -355,7 +363,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@FeatureFlags("LPD-11165")
 	@Test
-	public void testSendNotificationWithAccountRoles() throws Exception {
+	public void testSendNotificationWithRoles() throws Exception {
 		AccountEntry accountEntry1 = _addAccountEntry();
 
 		AccountRole accountRole1 = _addAccountRole(
@@ -371,6 +379,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		AccountRole accountRole4 = _addAccountRole(
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
 
+		Role organizationRole1 = _addOrganizationRole();
+		Role organizationRole2 = _addOrganizationRole();
+
 		NotificationTemplate notificationTemplate =
 			notificationTemplateLocalService.addNotificationTemplate(
 				NotificationTemplateUtil.createNotificationContext(
@@ -381,6 +392,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 						createNotificationRecipientSetting(
 							NotificationRecipientSettingConstants.NAME_BCC,
 							accountRole3.getRoleName()),
+						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.NAME_BCC,
+							organizationRole2.getName()),
 						createNotificationRecipientSetting(
 							NotificationRecipientSettingConstants.NAME_BCC_TYPE,
 							NotificationRecipientConstants.TYPE_ROLE),
@@ -409,12 +423,15 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 							NotificationRecipientSettingConstants.NAME_TO,
 							accountRole4.getRoleName()),
 						createNotificationRecipientSetting(
+							NotificationRecipientSettingConstants.NAME_TO,
+							organizationRole1.getName()),
+						createNotificationRecipientSetting(
 							NotificationRecipientSettingConstants.NAME_TO_TYPE,
 							NotificationRecipientConstants.TYPE_ROLE)),
 					RandomTestUtil.randomString(),
 					NotificationConstants.TYPE_EMAIL, Collections.emptyList()));
 
-		_testSendNotificationWithAccountRoles(
+		_testSendNotificationWithRoles(
 			null, null, 0, null, notificationTemplate);
 
 		User user1 = UserTestUtil.addUser();
@@ -438,21 +455,57 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			accountEntry2.getAccountEntryId(), accountRole4.getAccountRoleId(),
 			user3.getUserId());
 
+		Organization organization1 = _organizationLocalService.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user3.getUserId(), organization1.getGroupId(),
+			organizationRole1.getRoleId());
+
+		User user4 = UserTestUtil.addUser();
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user4.getUserId(), organization1.getGroupId(),
+			organizationRole1.getRoleId());
+
+		User user5 = UserTestUtil.addUser();
+
+		Organization organization2 = _organizationLocalService.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
+
+		Organization childOrganization =
+			_organizationLocalService.addOrganization(
+				TestPropsValues.getUserId(), organization2.getOrganizationId(),
+				RandomTestUtil.randomString(), false);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user5.getUserId(), childOrganization.getGroupId(),
+			organizationRole2.getRoleId());
+
 		// Send email with an object definition not restricted by account entry
 
-		_testSendNotificationWithAccountRoles(
-			null, user2.getEmailAddress(), 1,
+		_testSendNotificationWithRoles(
+			null,
 			StringUtil.merge(
 				ListUtil.fromArray(
-					user1.getEmailAddress(), user3.getEmailAddress())),
+					user2.getEmailAddress(), user5.getEmailAddress())),
+			1,
+			StringUtil.merge(
+				ListUtil.fromArray(
+					user1.getEmailAddress(), user3.getEmailAddress(),
+					user4.getEmailAddress())),
 			notificationTemplate);
 
 		// Send email with an object definition restricted by account entry
 
-		_testSendNotificationWithAccountRoles(
+		_testSendNotificationWithRoles(
 			accountEntry1, StringPool.BLANK, 1, user1.getEmailAddress(),
 			notificationTemplate);
-		_testSendNotificationWithAccountRoles(
+		_testSendNotificationWithRoles(
 			accountEntry2, user2.getEmailAddress(), 1,
 			StringUtil.merge(
 				ListUtil.fromArray(
@@ -467,18 +520,52 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		// Send email with an object definition not restricted by account entry
 
-		_testSendNotificationWithAccountRoles(
-			null, user2.getEmailAddress(), 1,
+		_testSendNotificationWithRoles(
+			null,
+			StringUtil.merge(
+				ListUtil.fromArray(
+					user2.getEmailAddress(), user5.getEmailAddress())),
+			1,
 			StringUtil.merge(
 				ListUtil.fromArray(
 					user1.getEmailAddress(), user2.getEmailAddress(),
-					user3.getEmailAddress())),
+					user3.getEmailAddress(), user4.getEmailAddress())),
 			notificationTemplate);
 
 		// Send email with an object definition restricted by account entry
 
-		_testSendNotificationWithAccountRoles(
-			accountEntry3, StringPool.BLANK, 1, user2.getEmailAddress(),
+		_userGroupRoleLocalService.addUserGroupRole(
+			user4.getUserId(), organization1.getGroupId(),
+			organizationRole2.getRoleId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry3.getAccountEntryId(),
+			childOrganization.getOrganizationId());
+
+		User user6 = UserTestUtil.addUser();
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user6.getUserId(), organization2.getGroupId(),
+			organizationRole2.getRoleId());
+
+		_testSendNotificationWithRoles(
+			accountEntry3,
+			StringUtil.merge(
+				ListUtil.fromArray(
+					user5.getEmailAddress(), user6.getEmailAddress())),
+			1, user2.getEmailAddress(), notificationTemplate);
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(
+				accountEntry3.getAccountEntryId(),
+				childOrganization.getOrganizationId());
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountEntry3.getAccountEntryId(),
+			organization2.getOrganizationId());
+
+		_testSendNotificationWithRoles(
+			accountEntry3, user6.getEmailAddress(), 1, user2.getEmailAddress(),
 			notificationTemplate);
 	}
 
@@ -535,6 +622,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				Collections.singletonList(objectField.getObjectFieldId())));
 	}
 
+	private Role _addOrganizationRole() throws Exception {
+		return _roleLocalService.addRole(
+			TestPropsValues.getUserId(), null, 0, RandomTestUtil.randomString(),
+			null, null, RoleConstants.TYPE_ORGANIZATION, null, null);
+	}
+
 	private void _assertNotificationQueueEntry(
 		String expectedBcc, boolean expectedSingleRecipient,
 		String expectedToEmailAddress,
@@ -548,8 +641,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				getNotificationRecipientSettingsMap(notificationQueueEntry);
 
 		Assert.assertEquals(
-			expectedBcc, notificationRecipientSettingsMap.get("bcc"));
-		Assert.assertEquals(
 			user2.getEmailAddress() + ",cc@liferay.com",
 			notificationRecipientSettingsMap.get("cc"));
 		Assert.assertEquals(
@@ -561,6 +652,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		Assert.assertEquals(
 			expectedSingleRecipient,
 			notificationRecipientSettingsMap.get("singleRecipient"));
+		AssertUtils.assertEqualsSorted(
+			StringUtil.split(expectedBcc),
+			StringUtil.split(
+				String.valueOf(notificationRecipientSettingsMap.get("bcc"))));
 		AssertUtils.assertEqualsSorted(
 			StringUtil.split(expectedToEmailAddress),
 			StringUtil.split(
@@ -752,7 +847,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		}
 	}
 
-	private void _testSendNotificationWithAccountRoles(
+	private void _testSendNotificationWithRoles(
 			AccountEntry accountEntry, String expectedBcc,
 			int expectedNotificationQueueEntriesCount,
 			String expectedToEmailAddress,
@@ -877,6 +972,10 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
+	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Inject
@@ -890,6 +989,15 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
+	private OrganizationLocalService _organizationLocalService;
+
+	@Inject
 	private PortletFileRepository _portletFileRepository;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

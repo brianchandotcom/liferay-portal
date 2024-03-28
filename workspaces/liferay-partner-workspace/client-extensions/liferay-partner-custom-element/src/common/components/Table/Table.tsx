@@ -3,13 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	Body,
-	Cell,
-	Head,
-	Row as ClayRow,
-	Table as ClayTable,
-} from '@clayui/core';
+import {Body, Cell, Head, Row, Table as ClayTable} from '@clayui/core';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 
@@ -28,66 +22,7 @@ interface TableProps<T> {
 	tableLayoutAuto: boolean;
 }
 
-interface RowProps<T> {
-	columns: TableColumn<T>[];
-	customClickOnRow?: (item: T) => void;
-	row: T;
-}
-
 type ChildrenRender<T> = ((item: T) => React.ReactElement) & string;
-
-const Row = <T extends BasicRow>({
-	columns,
-	customClickOnRow,
-	row,
-}: RowProps<T>) => {
-	const id = Math.random().toString(16).slice(2);
-
-	return (
-		<ClayRow
-			className="border-0 font-weight-normal"
-			items={columns}
-			onClick={() => {
-				if (customClickOnRow) {
-					return customClickOnRow(row);
-				}
-			}}
-		>
-			{
-				((column) => {
-					const data = row[column.columnKey];
-
-					return (
-						<Cell
-							className="py-4"
-							key={id + ':' + column.columnKey}
-						>
-							{column.render ? (
-								column.render(data as T[keyof T], row, 0)
-							) : (
-								<span
-									className={classNames('table-cell-items', {
-										'text-ellipsis-lg':
-											column.size === 'lg',
-										'text-ellipsis-md':
-											column.size === 'md',
-										'text-ellipsis-sm':
-											column.size === 'sm',
-										'text-wrap': column.wrap,
-									})}
-									data-tooltip-align="top"
-									title={data as string}
-								>
-									{data}
-								</span>
-							)}
-						</Cell>
-					);
-				}) as ChildrenRender<TableColumn<T>>
-			}
-		</ClayRow>
-	);
-};
 
 const Table = <T extends BasicRow>({
 	className,
@@ -95,46 +30,78 @@ const Table = <T extends BasicRow>({
 	customClickOnRow,
 	rows,
 	tableLayoutAuto,
-}: TableProps<T>) => {
-	return (
-		<ClayTooltipProvider>
-			<ClayTable
-				borderless
-				className={classNames(className, {
-					'table-layout-auto': tableLayoutAuto,
-				})}
-				columnsVisibility={false}
-				noWrap
-			>
-				<Head align="left" items={columns}>
-					{
-						((column) => (
-							<Cell
-								className="align-baseline border-neutral-2 rounded-0"
-								key={column.columnKey}
-							>
-								{column.label}
-							</Cell>
-						)) as ChildrenRender<TableColumn<T>>
-					}
-				</Head>
+}: TableProps<T>) => (
+	<ClayTooltipProvider>
+		<ClayTable
+			borderless
+			className={classNames(className, {
+				'table-layout-auto': tableLayoutAuto,
+			})}
+			columnsVisibility={false}
+			noWrap
+		>
+			<Head align="left" items={columns}>
+				{
+					((column) => (
+						<Cell
+							className="align-baseline border-neutral-2 rounded-0"
+							key={column.columnKey}
+						>
+							{column.label}
+						</Cell>
+					)) as ChildrenRender<TableColumn<T>>
+				}
+			</Head>
 
-				<Body align="left" defaultItems={rows}>
-					{
-						((row) => {
+			<Body align="left">
+				{rows.map((row, rowIndex) => (
+					<Row
+						key={rowIndex}
+						onClick={() => {
+							if (customClickOnRow) {
+								return customClickOnRow(row);
+							}
+						}}
+					>
+						{columns.map((column, colIndex) => {
+							const data: any = row[column.columnKey as keyof T];
+
 							return (
-								<Row
-									columns={columns}
-									customClickOnRow={customClickOnRow}
-									row={row}
-								/>
+								<Cell
+									align="left"
+									className="border-0 font-weight-normal py-4 table-cell"
+									key={colIndex}
+								>
+									{column.render ? (
+										column.render(data, row, rowIndex)
+									) : (
+										<span
+											className={classNames(
+												'table-cell-item',
+												{
+													'text-ellipsis-lg':
+														column.size === 'lg',
+													'text-ellipsis-md':
+														column.size === 'md',
+													'text-ellipsis-sm':
+														column.size === 'sm',
+													'text-wrap': column.wrap,
+												}
+											)}
+											data-tooltip-align="top"
+											title={data}
+										>
+											{data}
+										</span>
+									)}
+								</Cell>
 							);
-						}) as ChildrenRender<T>
-					}
-				</Body>
-			</ClayTable>
-		</ClayTooltipProvider>
-	);
-};
+						})}
+					</Row>
+				))}
+			</Body>
+		</ClayTable>
+	</ClayTooltipProvider>
+);
 
 export default Table;

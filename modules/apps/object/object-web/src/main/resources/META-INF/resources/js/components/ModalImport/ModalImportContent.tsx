@@ -6,8 +6,10 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {API, Input} from '@liferay/object-js-components-web';
+import classNames from 'classnames';
 import React, {FormEvent, useRef} from 'react';
 
 import {ModalImportProperties} from '../ViewObjectDefinitions/ViewObjectDefinitions';
@@ -17,12 +19,15 @@ import {
 	modalImportContentTitle,
 } from './modalImportLanguageUtil';
 
+import './ModalImportContent.scss';
+
 interface ModalImportContentProps extends ModalImportProperties {
 	error?: API.ErrorDetails;
 	externalReferenceCode: string;
 	fileName: string;
 	handleOnClose: () => void;
 	handleSubmit: (value: FormEvent<HTMLFormElement>) => void;
+	importLoading: boolean;
 	importedObjectDefinitions?: ObjectDefinition[];
 	inputFile: File;
 	modalImportKey: ModalImportKeys;
@@ -43,6 +48,7 @@ export function ModalImportContent({
 	fileName,
 	handleOnClose,
 	handleSubmit,
+	importLoading,
 	importedObjectDefinitions,
 	inputFile,
 	modalImportKey,
@@ -278,11 +284,23 @@ export function ModalImportContent({
 						</ClayButton>
 
 						<ClayButton
-							disabled={getImportButtonDisableState()}
+							className={classNames({
+								'lfr-object__modal-import-content-loading-button': importLoading,
+							})}
+							disabled={
+								getImportButtonDisableState() || importLoading
+							}
 							form={importFormId}
 							type="submit"
 						>
-							{Liferay.Language.get('import')}
+							{importLoading ? (
+								<ClayLoadingIndicator
+									displayType="light"
+									size="sm"
+								/>
+							) : (
+								Liferay.Language.get('import')
+							)}
 						</ClayButton>
 					</ClayButton.Group>
 				}

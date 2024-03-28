@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -19,6 +19,7 @@ interface HandleImportProps {
 		value: React.SetStateAction<API.ErrorDetails | undefined>
 	) => void;
 	setFailedModalVisible?: (value: boolean) => void;
+	setImportLoading: (value: boolean) => void;
 	setWarningModalVisible: (value: boolean) => void;
 }
 
@@ -54,6 +55,7 @@ export async function handleDefaultImport({
 	onClose,
 	setError,
 	setImportFormData,
+	setImportLoading,
 	setWarningModalVisible,
 }: HandleDefaultImportProps) {
 	const formData = new FormData(event.currentTarget);
@@ -86,7 +88,7 @@ export async function handleDefaultImport({
 			onAfterImport,
 			onClose,
 			setError,
-			setFailedModalVisible,
+			setImportLoading,
 			setWarningModalVisible,
 		});
 	}
@@ -103,9 +105,12 @@ export async function handleImport({
 	onClose,
 	setError,
 	setFailedModalVisible,
+	setImportLoading,
 	setWarningModalVisible,
 }: HandleImportProps) {
 	try {
+		setImportLoading(true);
+
 		await API.save({
 			item,
 			method: 'POST',
@@ -120,6 +125,8 @@ export async function handleImport({
 		else {
 			window.location.reload();
 		}
+
+		setImportLoading(false);
 	}
 	catch (error) {
 		if (
@@ -133,6 +140,8 @@ export async function handleImport({
 		}
 
 		setError(error as API.ErrorDetails);
+
+		setImportLoading(false);
 	}
 }
 
@@ -146,6 +155,7 @@ export async function handleImportMultiplesObjectDefinitions({
 	setExistingObjectDefinitions,
 	setFailedModalVisible,
 	setImportFormData,
+	setImportLoading,
 	setModalImportKeyState,
 	setWarningModalVisible,
 }: HandleImportMultiplesObjectDefinitionsProps) {
@@ -194,6 +204,7 @@ export async function handleImportMultiplesObjectDefinitions({
 		onClose,
 		setError,
 		setFailedModalVisible,
+		setImportLoading,
 		setWarningModalVisible,
 	});
 }

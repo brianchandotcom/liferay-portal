@@ -371,7 +371,8 @@ a.bdg {
 			border-left: 3px solid transparent;
 			color: var(--color-neutral-6);
 			display: block;
-			padding: var(--spacing-xs) var(--spacing-default) var(--spacing-xs) var(--spacing-md);
+			padding: var(--spacing-xs) var(--spacing-default) var(--spacing-xs)
+				var(--spacing-md);
 
 			&:hover {
 				text-decoration: none;
@@ -413,7 +414,10 @@ a.bdg {
 			}
 
 			> a {
-				background-image: clay-icon(angle-right, var(--color-neutral-5));
+				background-image: clay-icon(
+					angle-right,
+					var(--color-neutral-5)
+				);
 				background-position: right 0.8rem top var(--spacing-md);
 				background-repeat: no-repeat;
 				background-size: 0.65rem;
@@ -435,8 +439,8 @@ a.bdg {
 					border-left-color: var(--primary);
 					color: inherit;
 					font-size: initial;
-					padding: var(--spacing-xs) var(--spacing-default) var(--spacing-xs)
-						var(--spacing-md);
+					padding: var(--spacing-xs) var(--spacing-default)
+						var(--spacing-xs) var(--spacing-md);
 				}
 
 				> a {
@@ -635,7 +639,10 @@ a.bdg {
 	}
 
 	.toctree:hover a {
-		background-image: clay-icon(angle-right, var(--color-action-primary-hover));
+		background-image: clay-icon(
+			angle-right,
+			var(--color-action-primary-hover)
+		);
 		background-position: right 0.8rem top var(--spacing-md);
 		background-repeat: no-repeat;
 		background-size: 0.65rem;
@@ -756,11 +763,11 @@ pre[class*='language-'] {
 	align-items: center;
 	height: 32px;
 	margin-bottom: 24px;
-	padding: 8px 0px 8px 8px;
+	padding: 8px 0 8px 8px;
 }
 
 .portlet-sort:hover {
-	background-color: #EDF3FE;
+	background-color: #edf3fe;
 	border-radius: 10px;
 }
 
@@ -771,42 +778,44 @@ pre[class*='language-'] {
 
 .portlet-sort .form-group-item {
 	height: 32px;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 	min-height: 32px;
 }
 
 .portlet-sort > .form-group-item:not(:last-child) {
-	margin-right: 0px;
+	margin-right: 0;
 }
 
 .portlet-sort .form-group-item .input-select-wrapper {
 	height: 32px;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 .portlet-sort .form-group-item select {
 	align-items: center;
-	background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7 10l5 5 5-5z"/><path fill="rgba(11, 95, 255, 1)" d="M7 10l5 5 5-5z"/></svg>') calc(100% - 2px) 50% no-repeat;
+	/* stylelint-disable-next-line function-url-quotes */
+	background: url("data:image/svg+xml;utf-8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><path d='M7 10l5 5 5-5z'/><path fill='rgba(11, 95, 255, 1)' d='M7 10l5 5 5-5z'/></svg>")
+		calc(100% - 2px) 50% no-repeat;
 	background-color: transparent;
 	border: none;
-	color: #0B5FFF;
+	color: #0b5fff;
 	font-size: 14px;
 	font-weight: 600;
 	height: 32px;
-	padding-bottom: 0px;
-	padding-top: 0px;
+	padding-bottom: 0;
+	padding-top: 0;
 }
 
 .portlet-sort .form-group-item select:focus {
 	background-color: transparent;
 	box-shadow: none;
-	color: #0B5FFF;
+	color: #0b5fff;
 	height: 32px;
 }
 
 .portlet-sort .text-truncate-inline {
 	align-items: center;
-	color:#282934;
+	color: #282934;
 	height: 32px;
 }
 
@@ -814,7 +823,7 @@ pre[class*='language-'] {
 	font-size: 13px;
 	font-weight: 600;
 	line-height: 16px;
-	margin-top:1px;
+	margin-top: 1px;
 }
 
 .pagination-bar {
@@ -830,8 +839,8 @@ pre[class*='language-'] {
 
 .pagination-bar .dropdown.pagination-items-per-page .dropdown-toggle.page-link {
 	align-items: center;
-	border-width: 0px;
-	color: var(--color-action-neutral-default, #2B3A4B);
+	border-width: 0;
+	color: var(--color-action-neutral-default, #2b3a4b);
 	display: flex;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 0.875rem;
@@ -843,14 +852,21 @@ pre[class*='language-'] {
 	text-align: center;
 }
 
-.pagination-bar .dropdown.pagination-items-per-page .dropdown-toggle.page-link .c-inner {
+.pagination-bar
+	.dropdown.pagination-items-per-page
+	.dropdown-toggle.page-link
+	.c-inner {
 	align-items: center;
 	display: flex;
 	height: 1rem;
 	justify-content: center;
 }
 
-.pagination-bar .dropdown.pagination-items-per-page .dropdown-toggle.page-link .c-inner .lexicon-icon.lexicon-icon-caret-double-l {
+.pagination-bar
+	.dropdown.pagination-items-per-page
+	.dropdown-toggle.page-link
+	.c-inner
+	.lexicon-icon.lexicon-icon-caret-double-l {
 	align-items: center;
 	display: flex;
 	flex-shrink: 0;
@@ -869,8 +885,8 @@ pre[class*='language-'] {
 .pagination-bar .pagination .page-item .page-link {
 	align-items: center;
 	border-radius: 0.375rem;
-	border-width: 0px;
-	color: var(--color-action-neutral-default, #2B3A4B);
+	border-width: 0;
+	color: var(--color-action-neutral-default, #2b3a4b);
 	display: flex;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 0.875rem;
@@ -885,7 +901,7 @@ pre[class*='language-'] {
 }
 
 .pagination-bar .pagination .page-item.active .page-link {
-	background: var(--color-action-neutral-active-20, #D5D8DB);
+	background: var(--color-action-neutral-active-20, #d5d8db);
 }
 
 .pagination-bar .pagination-results {
@@ -909,7 +925,7 @@ pre[class*='language-'] {
 
 .search-results .search-results-entry .search-results-entry-title {
 	border-radius: 0.625rem;
-	color: #0B5FFF;
+	color: #0b5fff;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 1rem;
 	font-style: normal;
@@ -918,8 +934,11 @@ pre[class*='language-'] {
 	padding: 1rem;
 }
 
-.search-results .search-results-entry .search-results-entry-title .published-date {
-	color: var(--color-state-neutral-darken-1, #6C6C75);
+.search-results
+	.search-results-entry
+	.search-results-entry-title
+	.published-date {
+	color: var(--color-state-neutral-darken-1, #6c6c75);
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 0.8125rem;
 	font-style: normal;
@@ -927,7 +946,10 @@ pre[class*='language-'] {
 	line-height: 1rem;
 }
 
-.search-results .search-results-entry .search-results-entry-title .search-results-entry-content {
+.search-results
+	.search-results-entry
+	.search-results-entry-title
+	.search-results-entry-content {
 	color: var(--color-neutral-10, #282934);
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 1rem;
@@ -937,11 +959,11 @@ pre[class*='language-'] {
 }
 
 .search-results .search-results-entry .search-results-entry-title:hover {
-	background: var(--color-action-primary-hover-10, #EDF3FE);
+	background: var(--color-action-primary-hover-10, #edf3fe);
 }
 
 .search-results .solid {
-	border-top: 1px solid var(--color-neutral-2, #E2E2E4);
+	border-top: 1px solid var(--color-neutral-2, #e2e2e4);
 }
 
 .token.comment,

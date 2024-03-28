@@ -8,7 +8,7 @@
 const searchSubmitURL = fragmentElement.querySelector('.search-submit').href;
 
 window.addEventListener('load', () => {
-	if (navigation.default == null) {
+	if (navigation.default === null) {
 		return;
 	}
 

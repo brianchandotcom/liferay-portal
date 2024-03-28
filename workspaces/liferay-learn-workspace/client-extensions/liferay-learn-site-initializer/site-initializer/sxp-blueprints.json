@@ -229,10 +229,10 @@
 		},
 		"elementInstances": [
 		],
-		"externalReferenceCode": "blueprint",
+		"externalReferenceCode": "LIFERAY_LEARN",
 		"schemaVersion": "1.0",
 		"title_i18n": {
-			"en_US": "Learn Articles"
+			"en_US": "Liferay Learn"
 		}
 	}
 ]

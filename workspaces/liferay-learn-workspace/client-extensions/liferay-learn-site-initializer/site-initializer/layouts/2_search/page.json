@@ -11,15 +11,6 @@
 			],
 			"roleName": "Guest",
 			"scope": 4
-		},
-		{
-			"actionIds": [
-				"VIEW",
-				"CUSTOMIZE",
-				"ADD_DISCUSSION"
-			],
-			"roleName": "Site Member",
-			"scope": 4
 		}
 	],
 	"private": false,

@@ -8,6 +8,10 @@
 const searchSubmitURL = fragmentElement.querySelector('.search-submit').href;
 
 window.addEventListener('load', () => {
+	if (navigation.default === null) {
+		return;
+	}
+
 	const searchInput = fragmentElement.querySelector('.search-input');
 
 	searchInput.value = '';

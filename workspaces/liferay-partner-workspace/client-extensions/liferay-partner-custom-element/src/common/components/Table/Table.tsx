@@ -44,7 +44,7 @@ const Table = <T extends BasicRow>({
 				{
 					((column) => (
 						<Cell
-							className="align-baseline border-neutral-2 rounded-0"
+							className="align-baseline border-neutral-2 rounded-0 text-neutral-10"
 							key={column.columnKey}
 						>
 							{column.label}

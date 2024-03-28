@@ -43,7 +43,7 @@ public class AddCPOptionValueMVCRenderCommand implements MVCRenderCommand {
 		long cpOptionId = ParamUtil.getLong(renderRequest, "cpOptionId");
 
 		try {
-			CPOption cpOption = _cpOptionService.fetchCPOption(cpOptionId);
+			CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
 
 			CPOptionDisplayContext cpOptionDisplayContext =
 				new CPOptionDisplayContext(

@@ -62,10 +62,10 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 
 					<div class="col-4">
 						<div class="form-group input-date-wrapper">
-							<label for="timezone"><liferay-ui:message key="time-zone" /></label>
+							<label for="timeZone"><liferay-ui:message key="time-zone" /></label>
 
 							<liferay-ui:input-time-zone
-								name="timezone"
+								name="timeZone"
 								value="<%= timeZone.getID() %>"
 							/>
 						</div>
@@ -75,7 +75,8 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 				<div class="row">
 					<div class="col-6">
 						<aui:input name="duration" required="<%= true %>" type="text">
-							<aui:validator name="number" />
+							<aui:validator name="min">1</aui:validator>
+							<aui:validator name="digits" />
 						</aui:input>
 					</div>
 

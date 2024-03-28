@@ -72,10 +72,10 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 
 			<div class="col-4">
 				<div class="form-group input-date-wrapper">
-					<label for="timezone"><liferay-ui:message key="time-zone" /></label>
+					<label for="timeZone"><liferay-ui:message key="time-zone" /></label>
 
 					<liferay-ui:input-time-zone
-						name="timezone"
+						name="timeZone"
 						value="<%= cpDefinitionOptionValueRelTimeZone.getID() %>"
 					/>
 				</div>
@@ -85,7 +85,8 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 		<div class="row">
 			<div class="col-6">
 				<aui:input name="duration" required="<%= true %>" type="text" value="<%= cpDefinitionOptionValueRelDisplayContext.getDuration() %>">
-					<aui:validator name="number" />
+					<aui:validator name="min">1</aui:validator>
+					<aui:validator name="digits" />
 				</aui:input>
 			</div>
 
@@ -254,16 +255,16 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 			'<portlet:namespace />cpDefinitionOptionValueRelfm'
 		);
 
-		var labelInput = form.querySelector(
-			'#<portlet:namespace />optionValueSelectDateLabel'
-		);
 		var dateInput = form.querySelector('#<portlet:namespace />date');
 		var durationInput = form.querySelector('#<portlet:namespace />duration');
 		var durationTypeInput = form.querySelector(
 			'#<portlet:namespace />durationType'
 		);
+		var labelInput = form.querySelector(
+			'#<portlet:namespace />optionValueSelectDateLabel'
+		);
 		var timeInput = form.querySelector('#<portlet:namespace />time');
-		var timeZoneInput = form.querySelector('#<portlet:namespace />timezone');
+		var timeZoneInput = form.querySelector('#<portlet:namespace />timeZone');
 
 		const optionValueSelectDateObj = new optionValueSelectDate();
 
@@ -290,7 +291,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 			this.duration = null;
 			this.durationType = null;
 			this.time = null;
-			this.timezone = null;
+			this.timeZone = null;
 
 			this.setDate = function (date) {
 				this.date = date;
@@ -308,20 +309,26 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				this.time = time;
 			};
 
-			this.setTimezone = function (timezone) {
-				this.timezone = timezone;
+			this.setTimezone = function (timeZone) {
+				this.timeZone = timeZone;
 			};
 
 			this.getLabel = function (locale) {
-				const [month, day, year] = this.date.split('-');
+				const dateSplit = this.date.split('-');
 				const [hour, minute] = this.time.split('-');
-				const date = new Date(year, month - 1, day, hour, minute);
+				const date = new Date(
+					dateSplit[2],
+					dateSplit[0] - 1,
+					dateSplit[1],
+					hour,
+					minute
+				);
 				const options = {
-					year: 'numeric',
-					month: 'long',
 					day: 'numeric',
 					hour: 'numeric',
 					minute: 'numeric',
+					month: 'numeric',
+					year: 'numeric',
 				};
 				const formattedDate = date.toLocaleDateString(locale, options);
 
@@ -329,14 +336,14 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 					return (
 						formattedDate +
 						' (' +
-						this.timezone +
+						this.timeZone +
 						'), ' +
 						this.duration +
 						' ' +
 						this.durationType
 					);
 				}
-				return formattedDate + ' (' + this.timezone + ')';
+				return formattedDate + ' (' + this.timeZone + ')';
 			};
 		}
 	</aui:script>

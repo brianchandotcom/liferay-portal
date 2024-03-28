@@ -957,22 +957,22 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			return StringPool.BLANK;
 		}
 
-		if (splits.length > 8) {
-			String timeZone = StringBundler.concat(
-				StringUtil.upperCaseFirstLetter(splits[7]),
-				StringPool.FORWARD_SLASH,
-				StringUtil.upperCaseFirstLetter(splits[8]));
-
-			if ((splits.length > 9) && Validator.isNotNull(splits[9])) {
-				return StringBundler.concat(
-					timeZone, StringPool.UNDERLINE,
-					StringUtil.upperCaseFirstLetter(splits[9]));
-			}
-
-			return timeZone;
+		if (splits.length == 8) {
+			return splits[7].toUpperCase();
 		}
 
-		return splits[7].toUpperCase();
+		String timeZone = StringBundler.concat(
+			StringUtil.upperCaseFirstLetter(splits[7]),
+			StringPool.FORWARD_SLASH,
+			StringUtil.upperCaseFirstLetter(splits[8]));
+
+		if ((splits.length > 9) && Validator.isNotNull(splits[9])) {
+			return StringBundler.concat(
+				timeZone, StringPool.UNDERLINE,
+				StringUtil.upperCaseFirstLetter(splits[9]));
+		}
+
+		return timeZone;
 	}
 
 	private boolean _hasCustomAttributes(CPOptionValue cpOptionValue)

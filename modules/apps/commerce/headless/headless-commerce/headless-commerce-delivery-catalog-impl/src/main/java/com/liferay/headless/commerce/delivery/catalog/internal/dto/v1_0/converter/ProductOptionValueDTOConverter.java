@@ -231,8 +231,9 @@ public class ProductOptionValueDTOConverter
 								StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
 								timeZone.getDisplayName(
 									dtoConverterContext.getLocale()),
-								StringPool.CLOSE_PARENTHESIS, StringPool.SPACE,
-								splits[5], StringPool.SPACE,
+								StringPool.CLOSE_PARENTHESIS,
+								StringPool.COMMA_AND_SPACE, splits[5],
+								StringPool.SPACE,
 								_language.get(
 									dtoConverterContext.getLocale(),
 									splits[6]));
@@ -759,25 +760,25 @@ public class ProductOptionValueDTOConverter
 	}
 
 	private String _getTimeZone(String[] splits) {
-		if (splits.length > 8) {
-			String timeZone = StringBundler.concat(
-				com.liferay.portal.kernel.util.StringUtil.upperCaseFirstLetter(
-					splits[7]),
-				StringPool.FORWARD_SLASH,
-				com.liferay.portal.kernel.util.StringUtil.upperCaseFirstLetter(
-					splits[8]));
-
-			if ((splits.length > 9) && Validator.isNotNull(splits[9])) {
-				return StringBundler.concat(
-					timeZone, StringPool.UNDERLINE,
-					com.liferay.portal.kernel.util.StringUtil.
-						upperCaseFirstLetter(splits[9]));
-			}
-
-			return timeZone;
+		if (splits.length <= 8) {
+			return splits[7].toUpperCase();
 		}
 
-		return splits[7].toUpperCase();
+		String timeZone = StringBundler.concat(
+			com.liferay.portal.kernel.util.StringUtil.upperCaseFirstLetter(
+				splits[7]),
+			StringPool.FORWARD_SLASH,
+			com.liferay.portal.kernel.util.StringUtil.upperCaseFirstLetter(
+				splits[8]));
+
+		if ((splits.length > 9) && Validator.isNotNull(splits[9])) {
+			return StringBundler.concat(
+				timeZone, StringPool.UNDERLINE,
+				com.liferay.portal.kernel.util.StringUtil.upperCaseFirstLetter(
+					splits[9]));
+		}
+
+		return timeZone;
 	}
 
 	private boolean _updateJSONArray(

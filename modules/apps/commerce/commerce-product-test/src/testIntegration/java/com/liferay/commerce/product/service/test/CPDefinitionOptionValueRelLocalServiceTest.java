@@ -951,7 +951,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			"An exception is thrown"
 		);
 
-		_addCPDefinitionWitOptionValue("2024-03-aa-16-45-1-hours-europe-paris");
+		_addCPDefinitionWitOptionValue("03-18-aa-16-45-1-hours-europe-paris");
 	}
 
 	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
@@ -970,7 +970,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			"An exception is thrown"
 		);
 
-		_addCPDefinitionWitOptionValue("2024-03-18-16-45-1-xyz-europe-paris");
+		_addCPDefinitionWitOptionValue("03-18-2024-16-45-1-xyz-europe-paris");
 	}
 
 	@Test(expected = CPDefinitionOptionValueRelKeyException.class)
@@ -989,7 +989,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			"An exception is thrown"
 		);
 
-		_addCPDefinitionWitOptionValue("2024-03-18-16:45-1-hours-europe-paris");
+		_addCPDefinitionWitOptionValue("03-18-2024_16-45-1-hours-europe-paris");
 	}
 
 	@Test(expected = CPDefinitionOptionValueRelKeyException.class)

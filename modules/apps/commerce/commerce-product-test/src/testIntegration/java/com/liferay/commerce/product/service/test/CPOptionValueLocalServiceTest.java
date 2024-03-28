@@ -113,7 +113,7 @@ public class CPOptionValueLocalServiceTest {
 			"An exception is thrown"
 		);
 
-		_addCPOptionWitCPOptionValue("2024-03-aa-16-45-1-hours-europe-paris");
+		_addCPOptionWitCPOptionValue("03-18-aa-16-45-1-hours-europe-paris");
 	}
 
 	@Test(expected = CPOptionValueKeyException.class)
@@ -132,7 +132,7 @@ public class CPOptionValueLocalServiceTest {
 			"An exception is thrown"
 		);
 
-		_addCPOptionWitCPOptionValue("2024-03-18-16-45-1-xyz-europe-paris");
+		_addCPOptionWitCPOptionValue("03-18-2024-16-45-1-xyz-europe-paris");
 	}
 
 	@Test(expected = CPOptionValueKeyException.class)
@@ -149,7 +149,7 @@ public class CPOptionValueLocalServiceTest {
 			"An exception is thrown"
 		);
 
-		_addCPOptionWitCPOptionValue("2024-03-18-16:45-1-hours-europe-paris");
+		_addCPOptionWitCPOptionValue("03-18-2024_16-45-1-hours-europe-paris");
 	}
 
 	@Test(expected = CPOptionValueKeyException.class)

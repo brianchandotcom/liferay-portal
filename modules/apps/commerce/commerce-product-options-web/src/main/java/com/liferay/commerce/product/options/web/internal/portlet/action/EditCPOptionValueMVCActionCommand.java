@@ -78,7 +78,7 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 			String durationType = ParamUtil.getString(
 				actionRequest, "durationType");
 			String time = ParamUtil.getString(actionRequest, "time");
-			String timeZone = ParamUtil.getString(actionRequest, "timezone");
+			String timeZone = ParamUtil.getString(actionRequest, "timeZone");
 
 			key = StringUtil.replace(
 				_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(

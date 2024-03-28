@@ -6,20 +6,19 @@
 import slugify from 'commerce-frontend-js/utilities/slugify';
 import {debounce} from 'frontend-js-web';
 
-export default function ({
-							 bcp47LanguageId,
-							 isCPOptionSelectDate,
-							 namespace,
-						 }) {
-
+export default function ({bcp47LanguageId, isCPOptionSelectDate, namespace}) {
 	const form = document.getElementById(namespace + 'fm');
 
-	const labelInput = form.querySelector( '#'+namespace+'optionValueSelectDateLabel' );
-	const dateInput = form.querySelector('#'+namespace+'date');
-	const durationInput = form.querySelector('#'+namespace+'duration');
-	const durationTypeInput = form.querySelector('#'+namespace+'durationType');
-	const timeInput = form.querySelector('#'+namespace+'time');
-	const timeZoneInput = form.querySelector('#'+namespace+'timezone');
+	const dateInput = form.querySelector('#' + namespace + 'date');
+	const durationInput = form.querySelector('#' + namespace + 'duration');
+	const durationTypeInput = form.querySelector(
+		'#' + namespace + 'durationType'
+	);
+	const labelInput = form.querySelector(
+		'#' + namespace + 'optionValueSelectDateLabel'
+	);
+	const timeInput = form.querySelector('#' + namespace + 'time');
+	const timeZoneInput = form.querySelector('#' + namespace + 'timezone');
 
 	const optionValueSelectDateObj = new optionValueSelectDate();
 
@@ -50,20 +49,36 @@ export default function ({
 			this.timezone = timezone;
 		};
 
-		this.getKey = function (){
-			return this.date + '-' + this.time + '-' + this.duration + '-' + this.durationType + '-' + this.timezone;
-		}
+		this.getKey = function () {
+			return (
+				this.date +
+				'-' +
+				this.time +
+				'-' +
+				this.duration +
+				'-' +
+				this.durationType +
+				'-' +
+				this.timezone
+			);
+		};
 
 		this.getLabel = function (locale) {
-			const [month, day, year] = this.date.split('-');
+			const dateSplit = this.date.split('-');
 			const [hour, minute] = this.time.split('-');
-			const date = new Date(year, month - 1, day, hour, minute);
+			const date = new Date(
+				dateSplit[2],
+				dateSplit[0] - 1,
+				dateSplit[1],
+				hour,
+				minute
+			);
 			const options = {
-				year: 'numeric',
-				month: 'long',
 				day: 'numeric',
 				hour: 'numeric',
 				minute: 'numeric',
+				month: 'numeric',
+				year: 'numeric',
 			};
 			const formattedDate = date.toLocaleDateString(locale, options);
 
@@ -78,6 +93,7 @@ export default function ({
 					this.durationType
 				);
 			}
+
 			return formattedDate + ' (' + this.timezone + ')';
 		};
 	}
@@ -85,26 +101,38 @@ export default function ({
 	if (isCPOptionSelectDate) {
 		const handleOnLabelInput = function () {
 			optionValueSelectDateObj.setDate(slugify(dateInput.value));
-			optionValueSelectDateObj.setTime(slugify(timeInput.value));
-			optionValueSelectDateObj.setTimezone(timeZoneInput.value);
 			optionValueSelectDateObj.setDuration(durationInput.value);
 			optionValueSelectDateObj.setDurationType(durationTypeInput.value);
-			labelInput.value = optionValueSelectDateObj.getLabel(bcp47LanguageId);
+			optionValueSelectDateObj.setTime(slugify(timeInput.value));
+			optionValueSelectDateObj.setTimezone(timeZoneInput.value);
+
+			labelInput.value = optionValueSelectDateObj.getLabel(
+				bcp47LanguageId
+			);
 		};
 
 		dateInput.addEventListener('focus', debounce(handleOnLabelInput, 200));
-		durationInput.addEventListener('input', debounce(handleOnLabelInput, 200));
-		durationTypeInput.addEventListener('input', debounce(handleOnLabelInput, 200));
+		durationInput.addEventListener(
+			'input',
+			debounce(handleOnLabelInput, 200)
+		);
+		durationTypeInput.addEventListener(
+			'input',
+			debounce(handleOnLabelInput, 200)
+		);
 		timeInput.addEventListener('change', debounce(handleOnLabelInput, 200));
-		timeZoneInput.addEventListener('change', debounce(handleOnLabelInput, 200));
+		timeZoneInput.addEventListener(
+			'change',
+			debounce(handleOnLabelInput, 200)
+		);
+	}
+	else {
+		const keyInput = form.querySelector('#' + namespace + 'key');
 
-	} else {
-	const keyInput = form.querySelector('#' + namespace + 'key');
+		const handleOnKeyInput = function () {
+			keyInput.value = slugify(keyInput.value);
+		};
 
-	const handleOnKeyInput = function () {
-		keyInput.value = slugify(keyInput.value);
-	};
-
-	keyInput.addEventListener('input', debounce(handleOnKeyInput, 200));
+		keyInput.addEventListener('input', debounce(handleOnKeyInput, 200));
 	}
 }

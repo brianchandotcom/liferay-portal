@@ -9,8 +9,8 @@ import slugify from 'commerce-frontend-js/utilities/slugify';
 import {createPortletURL, debounce} from 'frontend-js-web';
 
 export default function ({
-	cpOptionId,
 	bcp47LanguageId,
+	cpOptionId,
 	defaultLanguageId,
 	editOptionURL,
 	isCPOptionSelectDate,
@@ -18,16 +18,20 @@ export default function ({
 	windowState,
 }) {
 	const form = document.getElementById(namespace + 'fm');
+
+	const dateInput = form.querySelector('#' + namespace + 'date');
+	const durationInput = form.querySelector('#' + namespace + 'duration');
+	const durationTypeInput = form.querySelector(
+		'#' + namespace + 'durationType'
+	);
 	const keyInput = form.querySelector('#' + namespace + 'key');
+	const labelInput = form.querySelector(
+		'#' + namespace + 'optionValueSelectDateLabel'
+	);
 	const nameInput = form.querySelector('#' + namespace + 'name');
 	const priorityInput = form.querySelector('#' + namespace + 'priority');
-
-	const labelInput = form.querySelector( '#'+namespace+'optionValueSelectDateLabel' );
-	const dateInput = form.querySelector('#'+namespace+'date');
-	const durationInput = form.querySelector('#'+namespace+'duration');
-	const durationTypeInput = form.querySelector('#'+namespace+'durationType');
-	const timeInput = form.querySelector('#'+namespace+'time');
-	const timeZoneInput = form.querySelector('#'+namespace+'timezone');
+	const timeInput = form.querySelector('#' + namespace + 'time');
+	const timeZoneInput = form.querySelector('#' + namespace + 'timeZone');
 
 	const optionValueSelectDateObj = new optionValueSelectDate();
 
@@ -36,7 +40,7 @@ export default function ({
 		this.duration = null;
 		this.durationType = null;
 		this.time = null;
-		this.timezone = null;
+		this.timeZone = null;
 
 		this.setDate = function (date) {
 			this.date = date;
@@ -54,24 +58,40 @@ export default function ({
 			this.time = time;
 		};
 
-		this.setTimezone = function (timezone) {
-			this.timezone = timezone;
+		this.setTimezone = function (timeZone) {
+			this.timeZone = timeZone;
 		};
 
-		this.getKey = function (){
-			return this.date + '-' + this.time + '-' + this.duration + '-' + this.durationType + '-' + this.timezone;
-		}
+		this.getKey = function () {
+			return (
+				this.date +
+				'-' +
+				this.time +
+				'-' +
+				this.duration +
+				'-' +
+				this.durationType +
+				'-' +
+				this.timeZone
+			);
+		};
 
 		this.getLabel = function (locale) {
-			const [month, day, year] = this.date.split('-');
+			const dateSplit = this.date.split('-');
 			const [hour, minute] = this.time.split('-');
-			const date = new Date(year, month - 1, day, hour, minute);
+			const date = new Date(
+				dateSplit[2],
+				dateSplit[0] - 1,
+				dateSplit[1],
+				hour,
+				minute
+			);
 			const options = {
-				year: 'numeric',
-				month: 'long',
 				day: 'numeric',
 				hour: 'numeric',
 				minute: 'numeric',
+				month: 'numeric',
+				year: 'numeric',
 			};
 			const formattedDate = date.toLocaleDateString(locale, options);
 
@@ -79,14 +99,15 @@ export default function ({
 				return (
 					formattedDate +
 					' (' +
-					this.timezone +
+					this.timeZone +
 					'), ' +
 					this.duration +
 					' ' +
 					this.durationType
 				);
 			}
-			return formattedDate + ' (' + this.timezone + ')';
+
+			return formattedDate + ' (' + this.timeZone + ')';
 		};
 	}
 
@@ -97,16 +118,27 @@ export default function ({
 			optionValueSelectDateObj.setTimezone(timeZoneInput.value);
 			optionValueSelectDateObj.setDuration(durationInput.value);
 			optionValueSelectDateObj.setDurationType(durationTypeInput.value);
-			labelInput.value = optionValueSelectDateObj.getLabel(bcp47LanguageId);
+			labelInput.value = optionValueSelectDateObj.getLabel(
+				bcp47LanguageId
+			);
 		};
 
 		dateInput.addEventListener('focus', debounce(handleOnLabelInput, 200));
-		durationInput.addEventListener('input', debounce(handleOnLabelInput, 200));
-		durationTypeInput.addEventListener('input', debounce(handleOnLabelInput, 200));
+		durationInput.addEventListener(
+			'input',
+			debounce(handleOnLabelInput, 200)
+		);
+		durationTypeInput.addEventListener(
+			'input',
+			debounce(handleOnLabelInput, 200)
+		);
 		timeInput.addEventListener('change', debounce(handleOnLabelInput, 200));
-		timeZoneInput.addEventListener('change', debounce(handleOnLabelInput, 200));
-
-	} else {
+		timeZoneInput.addEventListener(
+			'change',
+			debounce(handleOnLabelInput, 200)
+		);
+	}
+	else {
 		const handleOnNameInput = () => {
 			keyInput.value = slugify(nameInput.value);
 		};
@@ -124,10 +156,11 @@ export default function ({
 			priority: 0,
 		};
 
-		if (isCPOptionSelectDate){
+		if (isCPOptionSelectDate) {
 			formattedData.key = slugify(optionValueSelectDateObj.getKey());
 			formattedData.name[defaultLanguageId] = labelInput.value;
-		} else {
+		}
+		else {
 			formattedData.key = keyInput.value;
 			formattedData.name[defaultLanguageId] = nameInput.value;
 		}

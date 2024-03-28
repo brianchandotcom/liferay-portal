@@ -197,11 +197,10 @@ public class CPOptionDisplayContext {
 	}
 
 	public boolean isCPOptionSelectDate() {
-		boolean cpOptionSelectDate = Objects.equals(
-			CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
-			_cpOption.getCommerceOptionTypeKey());
+		if (Objects.equals(
+				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+				_cpOption.getCommerceOptionTypeKey())) {
 
-		if (cpOptionSelectDate) {
 			return true;
 		}
 

@@ -6,12 +6,12 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPConstants;
-import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
 import com.liferay.commerce.product.exception.CPOptionValueKeyException;
 import com.liferay.commerce.product.exception.CPOptionValueNameException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueLocalServiceBaseImpl;
+import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -98,7 +98,7 @@ public class CPOptionValueLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		_validateKey(0, cpOptionId, key);
+		_validateKey(_cpOptionPersistence.findByPrimaryKey(cpOptionId), 0, key);
 
 		_validateName(nameMap);
 
@@ -283,7 +283,7 @@ public class CPOptionValueLocalServiceImpl
 		key = _friendlyURLNormalizer.normalize(key);
 
 		_validateKey(
-			cpOptionValue.getCPOptionValueId(), cpOptionValue.getCPOptionId(),
+			cpOptionValue.getCPOption(), cpOptionValue.getCPOptionValueId(),
 			key);
 
 		_validateName(nameMap);
@@ -381,22 +381,22 @@ public class CPOptionValueLocalServiceImpl
 			return StringPool.BLANK;
 		}
 
-		if (splits.length > 8) {
-			String timeZone = StringBundler.concat(
-				StringUtil.upperCaseFirstLetter(splits[7]),
-				StringPool.FORWARD_SLASH,
-				StringUtil.upperCaseFirstLetter(splits[8]));
-
-			if ((splits.length > 9) && Validator.isNotNull(splits[9])) {
-				return StringBundler.concat(
-					timeZone, StringPool.UNDERLINE,
-					StringUtil.upperCaseFirstLetter(splits[9]));
-			}
-
-			return timeZone;
+		if (splits.length == 8) {
+			return splits[7].toUpperCase();
 		}
 
-		return splits[7].toUpperCase();
+		String timeZone = StringBundler.concat(
+			StringUtil.upperCaseFirstLetter(splits[7]),
+			StringPool.FORWARD_SLASH,
+			StringUtil.upperCaseFirstLetter(splits[8]));
+
+		if ((splits.length > 9) && Validator.isNotNull(splits[9])) {
+			return StringBundler.concat(
+				timeZone, StringPool.UNDERLINE,
+				StringUtil.upperCaseFirstLetter(splits[9]));
+		}
+
+		return timeZone;
 	}
 
 	private void _reindexCPOption(long cpOptionId) throws PortalException {
@@ -437,7 +437,7 @@ public class CPOptionValueLocalServiceImpl
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
-	private void _validateKey(long cpOptionValueId, long cpOptionId, String key)
+	private void _validateKey(CPOption cpOption, long cpOptionValueId, String key)
 		throws PortalException {
 
 		if (Validator.isBlank(key)) {
@@ -445,7 +445,7 @@ public class CPOptionValueLocalServiceImpl
 		}
 
 		CPOptionValue cpOptionValue = cpOptionValuePersistence.fetchByC_K(
-			cpOptionId, key);
+			cpOption.getCPOptionId(), key);
 
 		if ((cpOptionValue != null) &&
 			(cpOptionValue.getCPOptionValueId() != cpOptionValueId)) {
@@ -453,19 +453,16 @@ public class CPOptionValueLocalServiceImpl
 			throw new CPOptionValueKeyException("Duplicate key " + key);
 		}
 
-		CPOption cpOption = cpOptionValue.getCPOption();
-
 		if (Objects.equals(
 				CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
 				cpOption.getCommerceOptionTypeKey())) {
 
 			if (key == null) {
-				throw new CPDefinitionOptionValueRelKeyException(
-					"Key is mandatory");
+				throw new CPOptionValueKeyException("Key is mandatory");
 			}
 
 			if (!key.matches("^[a-z0-9-]*$")) {
-				throw new CPDefinitionOptionValueRelKeyException("Invalid key");
+				throw new CPOptionValueKeyException("Invalid key");
 			}
 
 			String[] splits = key.split(StringPool.DASH);
@@ -485,20 +482,19 @@ public class CPOptionValueLocalServiceImpl
 				Integer.valueOf(splits[5]);
 			}
 			catch (NumberFormatException numberFormatException) {
-				throw new CPDefinitionOptionValueRelKeyException(
+				throw new CPOptionValueKeyException(
 					"Invalid date", numberFormatException);
 			}
 
 			_portal.getDate(
 				month - 1, day, year, hour, minute,
 				TimeZoneUtil.getTimeZone(_getTimeZone(splits)),
-				CPDefinitionOptionValueRelKeyException.class);
+				CPOptionValueKeyException.class);
 
 			if (!Objects.equals(CPConstants.DAYS_DURATION_TYPE, splits[6]) &&
 				!Objects.equals(CPConstants.HOURS_DURATION_TYPE, splits[6])) {
 
-				throw new CPDefinitionOptionValueRelKeyException(
-					"Invalid duration type");
+				throw new CPOptionValueKeyException("Invalid duration type");
 			}
 		}
 	}
@@ -519,6 +515,9 @@ public class CPOptionValueLocalServiceImpl
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID
 	};
+
+	@Reference
+	private CPOptionPersistence _cpOptionPersistence;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;

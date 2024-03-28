@@ -38,7 +38,7 @@ public class GenerateWebDAVPasswordMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		User user = _portal.getUser(actionRequest);
+		User user = _portal.getSelectedUser(actionRequest);
 
 		String plainToken = PortalUUIDUtil.generate();
 

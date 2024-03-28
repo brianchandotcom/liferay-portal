@@ -302,7 +302,7 @@ const ListView: React.FC<ListViewProps> = ({
 		itemsMemoized,
 		onSelectRowNormalizer,
 		selectedRows,
-		tableProps,
+		tableProps.rowSelectable,
 	]);
 
 	if (loading || (isValidating && searchParams.get('filter'))) {

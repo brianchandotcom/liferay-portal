@@ -156,7 +156,7 @@ definition {
 				TestUtils.pass(message = "Test passed: Current url is the same as the link present on Disappears After 10 Seconds toast alert");
 			}
 			else {
-				fail("Test failed: Current url isn't the same as the link present on Disappears After 10 Seconds toast alert");
+				fail("Test failed: Current url (${myURL}) isn't the same as the link (${baseURL}) present on Disappears After 10 Seconds toast alert");
 			}
 		}
 	}

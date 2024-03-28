@@ -18,11 +18,11 @@ import {
 type JiraLinkProps = {
 	displayViewInJira?: boolean;
 	issue:
-		| TestrayIssue
+		| string
+		| string[]
 		| TestrayCaseResultIssue
 		| TestrayCaseResultIssue[]
-		| string[]
-		| string;
+		| TestrayIssue;
 };
 
 const splitIssueName = (name: string) => name.split(testrayIssueImpl.DELIMITER);

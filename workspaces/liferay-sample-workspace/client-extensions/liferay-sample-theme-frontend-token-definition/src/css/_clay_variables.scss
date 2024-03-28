@@ -1,0 +1,149 @@
+$enable-lexicon-flat-colors: true !default;
+
+$enable-shadows: true !default;
+
+$white: #fff !default;
+$gray-100: #f7f8f9 !default;
+$gray-200: #f1f2f5 !default;
+$gray-900: #272833 !default;
+
+$primary: #0b5fff !default;
+$primary-d1: #0053f0 !default;
+$primary-d2: #004ad7 !default;
+$primary-l0: #528eff !default;
+
+$secondary: #6b6c7e !default;
+$secondary-l0: #88889a !default;
+
+$btn: () !default;
+$btn: map-deep-merge(
+	(
+		border-radius: var(--btn-border-radius, 4px),
+		border-width: var(--btn-border-width, 1px),
+		box-shadow: var(--btn-box-shadow, none),
+		font-size: var(--btn-font-size, 1rem),
+		font-weight: var(--btn-font-weight, 600),
+		line-height: var(--btn-line-height, 1.5),
+		padding-bottom: var(--btn-padding-y, 0.4375rem),
+		padding-left: var(--btn-padding-x, 0.9375rem),
+		padding-right: var(--btn-padding-x, 0.9375rem),
+		padding-top: var(--btn-padding-y, 0.4375rem),
+		transition:
+			var(
+				--btn-transition,
+				color 0.15s ease-in-out,
+				background-color 0.15s ease-in-out,
+				border-color 0.15s ease-in-out,
+				box-shadow 0.15s ease-in-out
+			),
+		focus: (
+			box-shadow:
+				var(
+					--btn-focus-box-shadow,
+					(0 0 0 0.125rem $white, 0 0 0 0.25rem $primary-l0)
+				),
+			outline: var(--btn-focus-outline, 0),
+			outline-offset: var(--btn-focus-outline-offset),
+		),
+		disabled: (
+			opacity: var(--btn-disabled-opacity, 0.4),
+		),
+	),
+	$btn
+);
+
+$btn-primary: () !default;
+$btn-primary: map-deep-merge(
+	(
+		background-color: var(--btn-primary-background-color, $primary),
+		background-image: var(--btn-primary-background-image),
+		border-color: var(--btn-primary-border-color, transparent),
+		box-shadow: var(--btn-primary-box-shadow),
+		color: var(--btn-primary-color, $white),
+		hover: (
+			background-color:
+				var(--btn-primary-hover-background-color, $primary-d1),
+			background-image: var(--btn-primary-hover-background-image),
+			border-color: var(--btn-primary-border-color, transparent),
+			box-shadow: var(--btn-primary-hover-box-shadow),
+			color: var(--btn-primary-hover-color, $white),
+		),
+		focus: (
+			background-color:
+				var(--btn-primary-focus-background-color, $primary-d1),
+			background-image: var(--btn-primary-focus-background-image),
+			border-color: var(--btn-primary-focus-border-color, transparent),
+			box-shadow: var(--btn-primary-focus-box-shadow),
+			color: var(--btn-primary-focus-color, $white),
+		),
+		active: (
+			background-color:
+				var(--btn-primary-active-background-color, $primary-d2),
+			background-image: var(--btn-primary-active-background-image),
+			border-color: var(--btn-primary-active-border-color, transparent),
+			box-shadow: var(--btn-primary-active-box-shadow),
+			color: var(--btn-primary-active-color, $white),
+			focus: (
+				box-shadow: var(--btn-primary-active-focus-box-shadow),
+			),
+		),
+		disabled: (
+			background-color:
+				var(--btn-primary-disabled-background-color, $primary),
+			background-image: var(--btn-primary-disabled-background-image),
+			border-color: var(--btn-primary-disabled-border-color, $primary),
+			box-shadow: var(--btn-primary-disabled-box-shadow),
+			color: var(--btn-primary-disabled-color, $white),
+		),
+	),
+	$btn-primary
+);
+
+$btn-secondary: () !default;
+$btn-secondary: map-deep-merge(
+	(
+		background-color: var(--btn-secondary-background-color, $white),
+		background-image: c-unset,
+		border-color: var(--btn-secondary-border-color, $secondary-l0),
+		box-shadow: var(--btn-secondary-box-shadow),
+		color: var(--btn-secondary-color, $secondary),
+		hover: (
+			background-color:
+				var(--btn-secondary-hover-background-color, $gray-100),
+			background-image: c-unset,
+			border-color: var(--btn-secondary-hover-border-color, $secondary-l0),
+			box-shadow: var(--btn-secondary-hover-box-shadow),
+			color: var(--btn-secondary-hover-color, $gray-900),
+		),
+		focus: (
+			background-color:
+				var(--btn-secondary-focus-background-color, $gray-100),
+			background-image: c-unset,
+			border-color: var(--btn-secondary-focus-border-color, $secondary-l0),
+			box-shadow: var(--btn-secondary-focus-box-shadow),
+			color: var(--btn-secondary-focus-color, $gray-900),
+		),
+		active: (
+			background-color:
+				var(--btn-secondary-active-background-color, $gray-200),
+			background-image: c-unset,
+			border-color:
+				var(--btn-secondary-active-border-color, $secondary-l0),
+			box-shadow: var(--btn-secondary-active-box-shadow),
+			color: var(--btn-secondary-active-color, $gray-900),
+			focus: (
+				box-shadow: var(--btn-secondary-active-focus-box-shadow),
+			),
+		),
+		disabled: (
+			background-color:
+				var(--btn-secondary-disabled-background-color, $white),
+			background-image: c-unset,
+			border-color:
+				var(--btn-secondary-disabled-border-color, $secondary-l0),
+			box-shadow: var(--btn-secondary-disabled-box-shadow),
+			color: var(--btn-secondary-disabled-color, $secondary),
+		),
+	),
+	$btn-secondary
+);

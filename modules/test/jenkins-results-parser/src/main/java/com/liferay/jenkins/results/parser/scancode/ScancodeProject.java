@@ -74,12 +74,14 @@ public class ScancodeProject {
 			"scancode.results.dir");
 
 		for (String extension : _RESULT_FILES_EXTENSIONS) {
-			String link = JenkinsResultsParserUtil.combine(_projectURL, "results/", extension);
+			String link = JenkinsResultsParserUtil.combine(
+				_projectURL, "results/", extension);
 
 			URL url = new URL(link);
 
 			File file = new File(
-				JenkinsResultsParserUtil.combine(scancodeResultsDir, _projectNameFromURL, ".", extension));
+				JenkinsResultsParserUtil.combine(
+					scancodeResultsDir, _projectNameFromURL, ".", extension));
 
 			JenkinsResultsParserUtil.toFile(url, file);
 		}
@@ -105,7 +107,8 @@ public class ScancodeProject {
 			"labels", _LABELS
 		).put(
 			"name",
-			JenkinsResultsParserUtil.combine(dockerTag, " Docker Scan-",
+			JenkinsResultsParserUtil.combine(
+				dockerTag, " Docker Scan-",
 				startTimeSimpleDateFormat.format(new Date()))
 		).put(
 			"pipeline", _pipelineName
@@ -164,7 +167,8 @@ public class ScancodeProject {
 			"labels", _LABELS
 		).put(
 			"name",
-			JenkinsResultsParserUtil.combine(portalReleaseVersion, " Scan-",
+			JenkinsResultsParserUtil.combine(
+				portalReleaseVersion, " Scan-",
 				startTimeSimpleDateFormat.format(new Date()))
 		).put(
 			"pipeline", _pipelineName
@@ -363,7 +367,7 @@ public class ScancodeProject {
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
-					"Project status for ", pipelineName, ": ",
+						"Project status for ", pipelineName, ": ",
 						projectStatus));
 
 				if (!projectStatus.equals("running") &&

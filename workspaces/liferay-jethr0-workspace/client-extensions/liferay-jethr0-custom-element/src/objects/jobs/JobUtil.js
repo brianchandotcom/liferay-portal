@@ -6,6 +6,30 @@
 import liferayRequest from '../../services/liferayRequest';
 import Job from './Job';
 
+export function createJob({data, redirect}) {
+	const headers = {
+		'Content-Type': 'application/json',
+		'accept': 'application/json',
+	};
+
+	liferayRequest({
+		body: JSON.stringify(data),
+		headers,
+		method: 'POST',
+		urlPath: '/o/c/jobs',
+	})
+		.then((request) => request.text())
+		.then((result) => {
+			if (redirect !== null) {
+				redirect(result);
+			}
+		})
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+}
+
 export function deleteJobById({id, redirect}) {
 	liferayRequest({method: 'DELETE', urlPath: '/o/c/jobs/' + id})
 		.then((request) => request.text())

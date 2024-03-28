@@ -64,10 +64,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 				.and()
 				.in('dueStatus', ['BLOCKED', 'FAILED', 'PASSED', 'TESTFIX'])
 				.and()
-				.ne(
-					'caseResultToCaseResultsIssues/r_issueToCaseResultsIssues_c_issueId',
-					'0'
-				)
+				.ne('issues', '')
 				.build(),
 		[subtask.id]
 	);
@@ -81,7 +78,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 				filter: caseResultsStatusFilter,
 				nestedFields:
 					'caseResultToSubtasksCasesResults,caseResultToCaseResultsIssues',
-				pageSize: -1,
+				pageSize: 4,
 			},
 		}
 	);
@@ -91,10 +88,7 @@ const SubtaskCompleteModal: React.FC<SubTaskCompleteModalProps> = ({
 			(subtaskIssue: TestraySubTaskIssue) => subtaskIssue?.issue?.name
 		) || [];
 
-	const subtaskCaseResultsIssues =
-		subtask.issues?.map((issue) => {
-			return issue.name;
-		}) || [];
+	const subtaskCaseResultsIssues = subtask.issues || [];
 
 	const issues = getUniqueList([
 		...subtaskIssues,

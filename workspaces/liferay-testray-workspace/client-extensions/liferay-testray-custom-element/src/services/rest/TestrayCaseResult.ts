@@ -94,8 +94,13 @@ class TestrayCaseResultRest extends Rest<CaseResultForm, TestrayCaseResult> {
 									.r_teamToComponents_c_team,
 					  }
 					: undefined,
-				issues: caseResult.caseResultToCaseResultsIssues ?? [],
-
+				issues:
+					caseResult.caseResultToCaseResultsIssues
+						?.map(
+							(caseResultsIssues) =>
+								caseResultsIssues.issueToCaseResultsIssues?.name
+						)
+						.join(', ') || '',
 				run: caseResult?.r_runToCaseResult_c_run
 					? {
 							...caseResult?.r_runToCaseResult_c_run,

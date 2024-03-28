@@ -996,7 +996,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 		Role role = _roleLocalService.getRole(assigneeClassPK);
 
-		if ((role.getType() == RoleConstants.TYPE_DEPOT) ||
+		if ((role.getType() == RoleConstants.TYPE_ACCOUNT) ||
+			(role.getType() == RoleConstants.TYPE_DEPOT) ||
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 			(role.getType() == RoleConstants.TYPE_SITE)) {
 
@@ -1103,7 +1104,8 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		Role role = _roleLocalService.getRole(
 			kaleoTaskAssignment.getAssigneeClassPK());
 
-		if ((role.getType() == RoleConstants.TYPE_DEPOT) ||
+		if ((role.getType() == RoleConstants.TYPE_ACCOUNT) ||
+			(role.getType() == RoleConstants.TYPE_DEPOT) ||
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 			(role.getType() == RoleConstants.TYPE_SITE)) {
 

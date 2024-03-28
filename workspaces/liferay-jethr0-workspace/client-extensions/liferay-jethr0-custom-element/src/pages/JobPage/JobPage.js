@@ -123,7 +123,11 @@ function JobInformation({job}) {
 		jobParameterDefinitions = job.definition.parameterDefinitions;
 	}
 
-	const jobParameters = JSON.parse(job.parameters);
+	let jobParameters = "";
+
+	if (job.parameters) {
+		jobParameters = JSON.parse(job.parameters);
+	}
 
 	return (
 		<ClayPanel

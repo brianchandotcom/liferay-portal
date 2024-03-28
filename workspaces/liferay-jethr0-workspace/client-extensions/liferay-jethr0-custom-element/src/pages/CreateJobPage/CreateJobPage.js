@@ -12,14 +12,19 @@ import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcru
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
-import {getJobDefinitionByKey, getJobDefinitions} from '../../objects/jobdefinitions/JobDefintionUtil';
 import {getJobDefinitionParametersByJobDefinition} from '../../objects/jobdefinitionparameters/JobDefinitionParameterUtil';
-import postSpringBootData from '../../services/postSpringBootData';
+import {
+	getJobDefinitionByKey,
+	getJobDefinitions,
+} from '../../objects/jobdefinitions/JobDefintionUtil';
+import {createJob} from '../../objects/jobs/JobUtil';
 
 function CreateJobPage() {
 	const [jobDefinition, setJobDefinition] = useState(null);
 	const [jobDefinitions, setJobDefinitions] = useState(null);
-	const [jobDefinitionParameters, setJobDefinitionParameters] = useState(null);
+	const [jobDefinitionParameters, setJobDefinitionParameters] = useState(
+		null
+	);
 	const [jobName, setJobName] = useState(null);
 	const [jobParameters, setJobParameters] = useState(null);
 	const [jobPriority, setJobPriority] = useState(4);
@@ -35,7 +40,7 @@ function CreateJobPage() {
 	if (!jobDefinition) {
 		getJobDefinitionByKey({
 			key: 'default',
-			setJobDefinition
+			setJobDefinition,
 		});
 
 		return;
@@ -50,7 +55,7 @@ function CreateJobPage() {
 	if (jobDefinition && !jobDefinitionParameters) {
 		getJobDefinitionParametersByJobDefinition({
 			jobDefintionId: jobDefinition.id,
-			setJobDefinitionParameters
+			setJobDefinitionParameters,
 		});
 
 		return;
@@ -77,8 +82,9 @@ function CreateJobPage() {
 		const defaultJobParameters = [];
 
 		jobDefinitionParameters.forEach((jobDefinitionParameter) => {
-			defaultJobParameters[jobDefinitionParameter.key] = jobDefinitionParameter.valueDefault;
-		})
+			defaultJobParameters[jobDefinitionParameter.key] =
+				jobDefinitionParameter.valueDefault;
+		});
 
 		setJobParameters(defaultJobParameters);
 
@@ -87,7 +93,7 @@ function CreateJobPage() {
 
 	const jobData = {
 		name: jobName,
-		parameters: jobParameters,
+		parameters: JSON.stringify(jobParameters),
 		priority: jobPriority,
 		state: 'queued',
 		type: jobDefinition.key,
@@ -129,8 +135,8 @@ function CreateJobPage() {
 
 							getJobDefinitionByKey({
 								key: event.target.value,
-								setJobDefinition
-							})
+								setJobDefinition,
+							});
 						}}
 						options={jobTypeOptions}
 						value={jobDefinition.key}
@@ -192,10 +198,9 @@ function CreateJobPage() {
 						},
 						{
 							onClick: () => {
-								postSpringBootData({
+								createJob({
 									data: jobData,
 									redirect: redirectToJobPage,
-									urlPath: '/jobs/create',
 								});
 							},
 							title: 'Save',

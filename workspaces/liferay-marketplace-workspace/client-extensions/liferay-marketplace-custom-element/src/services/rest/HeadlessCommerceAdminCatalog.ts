@@ -95,6 +95,15 @@ class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+	async getProductByExternalReferenceCode(
+		externalReferenceCode: string,
+		searchParams = new URLSearchParams()
+	): Promise<Product> {
+		return fetcher(
+			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}?${searchParams.toString()}`
+		);
+	}
+
 	async getProducts(searchParams = new URLSearchParams()) {
 		return fetcher(
 			`/o/headless-commerce-admin-catalog/v1.0/products?${searchParams.toString()}`

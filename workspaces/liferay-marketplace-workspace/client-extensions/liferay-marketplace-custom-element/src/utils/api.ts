@@ -423,27 +423,6 @@ export async function getOrderTypes() {
 	return items;
 }
 
-export async function getProduct({
-	appERC,
-	nestedFields,
-}: {
-	appERC?: string;
-	nestedFields?: string;
-}) {
-	let url = `/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${appERC}`;
-
-	if (nestedFields) {
-		url = url + `?nestedFields=${nestedFields}`;
-	}
-
-	const response = await fetch(url, {
-		headers,
-		method: 'GET',
-	});
-
-	return (await response.json()) as Product;
-}
-
 export async function getProductById({
 	nestedFields,
 	productId,

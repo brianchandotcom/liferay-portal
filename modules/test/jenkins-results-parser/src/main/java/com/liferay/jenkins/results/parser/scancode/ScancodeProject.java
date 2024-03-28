@@ -39,7 +39,9 @@ public class ScancodeProject {
 
 		sb.append("curl ");
 		sb.append("-X POST ");
-		sb.append(_API_URL + _projectID + "/add_pipeline/");
+		sb.append(_API_URL);
+		sb.append(_projectID);
+		sb.append("/add_pipeline/");
 		sb.append(" -H ");
 		sb.append(_CONTENT_TYPE);
 		sb.append(" -d ");
@@ -52,7 +54,9 @@ public class ScancodeProject {
 			"pipeline", pipelineName
 		);
 
-		sb.append("'" + jsonObject + "'");
+		sb.append("'");
+		sb.append(jsonObject);
+		sb.append("'");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
 			sb.toString());
@@ -70,12 +74,12 @@ public class ScancodeProject {
 			"scancode.results.dir");
 
 		for (String extension : _RESULT_FILES_EXTENSIONS) {
-			String link = _projectURL + "results/" + extension;
+			String link = JenkinsResultsParserUtil.combine(_projectURL, "results/", extension);
 
 			URL url = new URL(link);
 
 			File file = new File(
-				scancodeResultsDir + _projectNameFromURL + "." + extension);
+				JenkinsResultsParserUtil.combine(scancodeResultsDir, _projectNameFromURL, ".", extension));
 
 			JenkinsResultsParserUtil.toFile(url, file);
 		}
@@ -101,8 +105,8 @@ public class ScancodeProject {
 			"labels", _LABELS
 		).put(
 			"name",
-			dockerTag + " Docker Scan-" +
-				startTimeSimpleDateFormat.format(new Date())
+			JenkinsResultsParserUtil.combine(dockerTag, " Docker Scan-",
+				startTimeSimpleDateFormat.format(new Date()))
 		).put(
 			"pipeline", _pipelineName
 		);
@@ -160,8 +164,8 @@ public class ScancodeProject {
 			"labels", _LABELS
 		).put(
 			"name",
-			portalReleaseVersion + " Scan-" +
-				startTimeSimpleDateFormat.format(new Date())
+			JenkinsResultsParserUtil.combine(portalReleaseVersion, " Scan-",
+				startTimeSimpleDateFormat.format(new Date()))
 		).put(
 			"pipeline", _pipelineName
 		);
@@ -222,7 +226,9 @@ public class ScancodeProject {
 		}
 
 		sb.append(" -d ");
-		sb.append("'" + jsonObject + "'");
+		sb.append("'");
+		sb.append(jsonObject);
+		sb.append("'");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
 			sb.toString());
@@ -262,7 +268,8 @@ public class ScancodeProject {
 		sb.append("*Pipeline:* ");
 
 		if (_pipelineName.equals("inspect_packages")) {
-			sb.append(_pipelineName + ", populate_purldb");
+			sb.append(_pipelineName);
+			sb.append(", populate_purldb");
 		}
 		else {
 			sb.append(_pipelineName);
@@ -355,8 +362,9 @@ public class ScancodeProject {
 				).toString();
 
 				System.out.println(
-					"Project status for " + pipelineName + ": " +
-						projectStatus);
+					JenkinsResultsParserUtil.combine(
+					"Project status for ", pipelineName, ": ",
+						projectStatus));
 
 				if (!projectStatus.equals("running") &&
 					!projectStatus.equals("queued")) {

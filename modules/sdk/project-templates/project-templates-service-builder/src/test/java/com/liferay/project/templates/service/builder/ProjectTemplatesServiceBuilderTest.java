@@ -122,6 +122,18 @@ public class ProjectTemplatesServiceBuilderTest
 	}
 
 	@Test
+	public void testBuildTemplateContentDTDVersionServiceBuilderQuarterly()
+		throws Exception {
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", "foo-bar", "--liferay-version", "2024.q1.1");
+
+		testContains(
+			gradleProjectDir, "foo-bar-service/service.xml",
+			"liferay-service-builder_7_4_0.dtd");
+	}
+
+	@Test
 	public void testBuildTemplateServiceBuilderCheckExports() throws Exception {
 		String liferayVersion = getDefaultLiferayVersion();
 		String name = "guestbook";

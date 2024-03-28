@@ -48,9 +48,7 @@ public class DLFileVersionConstraintResolverTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testResolveConflictWithUpdateDLFileEntryInDLFolder()
-		throws Exception {
-
+	public void testResolveConflict() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		DLFolder dlFolder = DLTestUtil.addDLFolder(group.getGroupId());

@@ -42,7 +42,7 @@ public class ProjectTemplatesSimulationPanelEntryTest
 			new Object[][] {
 				{"dxp", "7.0.10.17"}, {"dxp", "7.1.10.7"}, {"dxp", "7.2.10.7"},
 				{"portal", "7.3.7"}, {"portal", "7.4.3.56"},
-				{"dxp", "7.4.13.u72"}
+				{"dxp", "7.4.13.u72"}, {"dxp", "2024.q1.1"}
 			});
 	}
 
@@ -142,27 +142,11 @@ public class ProjectTemplatesSimulationPanelEntryTest
 
 		File mavenModulesDir = new File(mavenWorkspaceDir, "modules");
 
-		String newTemplate = "false";
-
-		if (_liferayVersion.startsWith("7.4")) {
-			String qualifiedVersion = _liferayVersion.substring(
-				_liferayVersion.lastIndexOf(".") + 1);
-
-			if (_liferayProduct.equals("dxp")) {
-				qualifiedVersion = qualifiedVersion.substring(1);
-			}
-
-			if (Integer.valueOf(qualifiedVersion) > 71) {
-				newTemplate = "true";
-			}
-		}
-
 		File mavenProjectDir = buildTemplateWithMaven(
 			mavenModulesDir, mavenModulesDir, template, name, "com.test",
 			mavenExecutor, "-DclassName=Simulator",
 			"-DliferayProduct=" + _liferayProduct,
-			"-DliferayVersion=" + _liferayVersion,
-			"-DnewTemplate=" + newTemplate, "-Dpackage=" + packageName);
+			"-DliferayVersion=" + _liferayVersion, "-Dpackage=" + packageName);
 
 		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(
@@ -203,6 +187,9 @@ public class ProjectTemplatesSimulationPanelEntryTest
 			}
 
 			return "portal-7.4-ga56";
+		}
+		else if (_liferayVersion.startsWith("20")) {
+			return "dxp-2024.q1.1";
 		}
 
 		return null;

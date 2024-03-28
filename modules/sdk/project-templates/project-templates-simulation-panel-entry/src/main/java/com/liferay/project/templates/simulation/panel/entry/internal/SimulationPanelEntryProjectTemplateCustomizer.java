@@ -7,6 +7,7 @@ package com.liferay.project.templates.simulation.panel.entry.internal;
 
 import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
 import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
+import com.liferay.project.templates.extensions.util.VersionUtil;
 
 import java.io.File;
 
@@ -44,6 +45,10 @@ public class SimulationPanelEntryProjectTemplateCustomizer
 
 	private boolean _isNewTemplate(ProjectTemplatesArgs projectTemplatesArgs) {
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
+
+		if (VersionUtil.isLiferayQuarterlyVersion(liferayVersion)) {
+			return true;
+		}
 
 		if (liferayVersion.startsWith("7.4")) {
 			String qualifiedVersion = liferayVersion.substring(

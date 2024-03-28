@@ -68,5 +68,15 @@
 			"label": "approved",
 			"label_i18n": "Approved"
 		}
+	},
+	{
+		"active": true,
+		"externalReferenceCode": "L_COMMERCE_ORDER_ITEM",
+		"name": "CommerceOrderItem",
+		"status": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
 	}
 ]

@@ -142,6 +142,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"CommerceOrder", "L_COMMERCE_ORDER"
 		).put(
+			"CommerceOrderItem", "L_COMMERCE_ORDER_ITEM"
+		).put(
 			"CommercePricingClass", "L_COMMERCE_PRODUCT_GROUP"
 		).put(
 			"CPDefinition", "L_COMMERCE_PRODUCT_DEFINITION"

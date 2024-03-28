@@ -171,8 +171,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0, 0,
-				true, _testName, _testType, 0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				0, true, _TEST_NAME, _TEST_TYPE, 0,
 				ServiceContextTestUtil.getServiceContext(
 					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -182,8 +182,8 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 		initImport();
 
 		_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-			null, TestPropsValues.getUserId(),liveGroup.getGroupId(), 0,
-			0, true, _testName, _testType, 0,
+			null, TestPropsValues.getUserId(), liveGroup.getGroupId(), 0, 0,
+			true, _TEST_NAME, _TEST_TYPE, 0,
 			ServiceContextTestUtil.getServiceContext(
 				liveGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -214,8 +214,9 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 				portletDataContext));
 
 		LayoutUtilityPageEntry importedLayoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.getDefaultLayoutUtilityPageEntry(
-				liveGroup.getGroupId(), _testType);
+			_layoutUtilityPageEntryLocalService.
+				getDefaultLayoutUtilityPageEntry(
+					liveGroup.getGroupId(), _TEST_TYPE);
 
 		Assert.assertNotEquals(
 			layoutUtilityPageEntry.getUuid(),
@@ -297,13 +298,12 @@ public class LayoutUtilityPageEntryStagedModelDataHandlerTest
 			layoutUtilityPageEntry.getUuid(), group);
 	}
 
-	private final String _testType = "test";
-	private final String _testName = "Test Layout Utility Page";
+	private static final String _TEST_NAME = "Test Layout Utility Page";
+
+	private static final String _TEST_TYPE = "test";
 
 	@Inject
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
-	
-	
 
 }

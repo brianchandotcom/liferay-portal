@@ -53,6 +53,7 @@ export default function ModalImport({
 	portletNamespace,
 	showModal,
 }: ModalImportProps) {
+	const [importLoading, setImportLoading] = useState(false);
 	const [error, setError] = useState<API.ErrorDetails>();
 	const [existingObjectDefinitions, setExistingObjectDefinitions] = useState<
 		ObjectDefinition[]
@@ -115,6 +116,7 @@ export default function ModalImport({
 				setExistingObjectDefinitions,
 				setFailedModalVisible,
 				setImportFormData,
+				setImportLoading,
 				setModalImportKeyState,
 				setWarningModalVisible,
 			});
@@ -134,6 +136,7 @@ export default function ModalImport({
 			onClose,
 			setError,
 			setImportFormData,
+			setImportLoading,
 			setWarningModalVisible,
 		});
 	};
@@ -177,10 +180,12 @@ export default function ModalImport({
 							onClose,
 							setError,
 							setFailedModalVisible,
+							setImportLoading,
 							setWarningModalVisible,
 						})
 					}
 					handleOnClose={onClose}
+					importLoading={importLoading}
 					modalImportKey={modalImportKeyState}
 				/>
 			)}
@@ -205,6 +210,7 @@ export default function ModalImport({
 					fileName={fileName as string}
 					handleOnClose={onClose}
 					handleSubmit={handleSubmit}
+					importLoading={importLoading}
 					importURL={importURL}
 					importedObjectDefinitions={importedObjectDefinitions}
 					inputFile={inputFile as File}

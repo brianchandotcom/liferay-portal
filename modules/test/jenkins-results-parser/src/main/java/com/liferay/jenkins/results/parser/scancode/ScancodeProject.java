@@ -27,9 +27,9 @@ import org.json.JSONObject;
  */
 public class ScancodeProject {
 
-	public ScancodeProject(String pipelineName, String buildURL) {
-		_pipelineName = pipelineName;
+	public ScancodeProject(String buildURL, String pipelineName) {
 		_buildURL = buildURL;
+		_pipelineName = pipelineName;
 	}
 
 	public void addPipeline(String pipelineName)

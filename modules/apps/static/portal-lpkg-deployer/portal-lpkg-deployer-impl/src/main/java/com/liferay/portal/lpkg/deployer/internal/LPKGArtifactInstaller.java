@@ -44,8 +44,6 @@ import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.url.URLConstants;
-import org.osgi.service.url.URLStreamHandlerService;
 
 /**
  * @author Shuyang Zhou
@@ -347,8 +345,5 @@ public class LPKGArtifactInstaller implements FileInstaller {
 
 	@Reference
 	private LPKGDeployer _lpkgDeployer;
-
-	@Reference(target = "(" + URLConstants.URL_HANDLER_PROTOCOL + "=webbundle)")
-	private URLStreamHandlerService _urlStreamHandlerService;
 
 }

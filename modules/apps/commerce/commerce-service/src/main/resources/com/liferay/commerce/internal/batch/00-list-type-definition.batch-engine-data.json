@@ -38,7 +38,51 @@
 			"name_i18n": {
 				"en-US": "Commerce Return Statuses"
 			},
-			"system": false
+			"system": true
+		},
+		{
+			"externalReferenceCode": "L_COMMERCE_RETURN_REASONS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "CHANGE_OF_MIND",
+					"key": "changeOfMind",
+					"name": "Change Of Mind",
+					"name_i18n": {
+						"en-US": "Change Of Mind"
+					}
+				},
+				{
+					"externalReferenceCode": "PRODUCT_DEFECT",
+					"key": "productDefect",
+					"name": "Product Defect",
+					"name_i18n": {
+						"en-US": "Product Defect"
+					}
+				}
+			],
+			"name": "Commerce Return Reasons",
+			"name_i18n": {
+				"en-US": "Commerce Return Reasons"
+			},
+			"system": true
+		},
+		{
+			"externalReferenceCode": "L_COMMERCE_RETURN_RESOLUTION_METHODS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "REFUND",
+					"key": "refund",
+					"name": "Refund",
+					"name_i18n": {
+						"en-US": "Refund"
+					}
+				}
+			],
+			"name": "Commerce Return Resolution Methods",
+			"name_i18n": {
+				"en-US": "Commerce Return Resolution Methods"
+			},
+			"system": true
 		}
 	]
 }

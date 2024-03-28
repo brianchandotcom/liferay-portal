@@ -9,6 +9,7 @@ import React from 'react';
 export const WORKFLOW_STATUS_APPROVED = 0;
 export const WORKFLOW_STATUS_DENIED = 4;
 export const WORKFLOW_STATUS_DRAFT = 2;
+export const WORKFLOW_STATUS_IN_TRASH = 8;
 export const WORKFLOW_STATUS_PENDING = 1;
 
 export function WorkflowStatusLabel({workflowStatus}) {
@@ -26,6 +27,10 @@ export function WorkflowStatusLabel({workflowStatus}) {
 	else if (workflowStatus === WORKFLOW_STATUS_DRAFT) {
 		displayType = 'secondary';
 		label = Liferay.Language.get('draft');
+	}
+	else if (workflowStatus === WORKFLOW_STATUS_IN_TRASH) {
+		displayType = 'secondary';
+		label = Liferay.Language.get('in-trash');
 	}
 	else if (workflowStatus === WORKFLOW_STATUS_PENDING) {
 		displayType = 'info';

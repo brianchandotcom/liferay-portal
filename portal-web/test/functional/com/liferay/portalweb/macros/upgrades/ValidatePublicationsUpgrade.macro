@@ -64,7 +64,7 @@ definition {
 			publicationName = "Publication 2 Name");
 
 		AssertVisible(
-			key_warningMessage = "This publication was created on a previous Liferay version. You cannot publish, revert, or make additional changes. You can only view or delete it.",
+			key_warningMessage = "This publication was created on a previous Liferay version. You cannot publish, revert, or make additional changes. You can only view, delete, or move changes to another publication.",
 			locator1 = "Message#WARNING_SPECIFIC");
 
 		PublicationsNavigator.openPublicationsAdmin();

@@ -62,14 +62,10 @@ const Solutions = () => {
 
 			{!!publishedSolutionsTable?.items?.length && (
 				<ClayPaginationBarWithBasicItems
-					active={page}
 					activeDelta={publishedSolutionsTable.pageSize}
+					activePage={page}
 					ellipsisBuffer={3}
-					ellipsisProps={{
-						'aria-label': 'More',
-						'title': 'More',
-					}}
-					onActiveChange={setPage}
+					onPageChange={setPage}
 					totalItems={publishedSolutionsTable.totalCount}
 				/>
 			)}

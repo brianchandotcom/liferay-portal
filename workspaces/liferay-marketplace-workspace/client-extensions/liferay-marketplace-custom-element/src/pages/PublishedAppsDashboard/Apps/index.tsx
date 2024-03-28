@@ -62,14 +62,10 @@ const Apps = () => {
 
 			{!!publishedProductTable?.items?.length && (
 				<ClayPaginationBarWithBasicItems
-					active={page}
 					activeDelta={publishedProductTable.pageSize}
+					activePage={page}
 					ellipsisBuffer={3}
-					ellipsisProps={{
-						'aria-label': 'More',
-						'title': 'More',
-					}}
-					onActiveChange={setPage}
+					onPageChange={setPage}
 					totalItems={publishedProductTable.totalCount}
 				/>
 			)}

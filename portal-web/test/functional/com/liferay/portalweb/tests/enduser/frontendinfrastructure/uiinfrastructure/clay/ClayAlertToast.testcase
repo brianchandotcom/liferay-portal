@@ -145,6 +145,8 @@ definition {
 		}
 
 		task ("Then navigates to the href") {
+			WaitForSPARefresh();
+
 			var portalURL = PropsUtil.get("portal.url");
 
 			var baseURL = "${portalURL}/web/guest";

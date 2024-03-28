@@ -1,4 +1,5 @@
 # Liferay Connector Demo
+
 This is an Anypoint studio demo project for Liferay Connector. It contains demo
 flows which demonstrate the basic usage of Liferay Connector.
 

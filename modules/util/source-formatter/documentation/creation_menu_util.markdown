@@ -70,6 +70,7 @@ public CreationMenu getCreationMenu() {
     };
 }
 ```
+
 or
 
 ```java

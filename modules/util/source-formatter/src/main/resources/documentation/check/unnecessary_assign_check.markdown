@@ -74,6 +74,7 @@ public List<String> method() {
 	return new ListUtil.fromArray("a", "b");
 }
 ```
+
 ---
 
 No need to assign a method call's output to a variable if it will not be used after.

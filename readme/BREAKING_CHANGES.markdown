@@ -1621,6 +1621,7 @@ These methods are no longer called by Liferay internally.
 - **JIRA Ticket:** [LPS-182671](https://liferay.atlassian.net/browse/LPS-182671)
 
 ### What changed?
+
 The interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` and related support logic was removed.
 
 ### Who is affected?

@@ -4,6 +4,7 @@ Deprecated apps that are not published on Marketplace should be moved to the
 `archived` folder.
 
 This applies to modules, where the `app.bnd` contains the following:
+
 ```
 Liferay-Releng-Deprecated: true
 Liferay-Releng-Marketplace: false

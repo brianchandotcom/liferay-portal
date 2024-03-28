@@ -3,6 +3,7 @@
 ### Naming
 
 #### Follow File Location
+
 The package name should match the directory structure of the location of
 the `.java` file.
 
@@ -16,6 +17,7 @@ package com.liferay.portal.service.impl;
 ```
 
 #### Follow Modules Settings
+
 For modules, the package name should match the `Bundle-SymbolicName` specified
 in the BND settings.
 
@@ -24,6 +26,7 @@ in the BND settings.
 ```
 `Bundle-SymbolicName`: com.liferay.freemarker.osgi.bridge
 ```
+
 The package name for all files inside the module should start with
 `com.liferay.freemarker.osgi.bridge`
 
@@ -34,7 +37,9 @@ The package name for all files inside the module should start with
 ```
 Bundle-SymbolicName: com.liferay.blogs.api
 ```
+
 or
+
 ```
 Bundle-SymbolicName: com.liferay.blogs.test
 ```

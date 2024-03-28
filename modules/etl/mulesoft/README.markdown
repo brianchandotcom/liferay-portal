@@ -22,6 +22,7 @@ If you want to build connector from source code see the following section.
 ## Liferay Connector Development
 
 ### Build
+
 To build new connector from the source code follow the next steps:
 * Import source code as a new Maven project to IDE of your choice
 * For the SDK to work, you must pass the command line parameter -parameters to the Java compiler
@@ -31,6 +32,7 @@ To build new connector from the source code follow the next steps:
     * Build Instructions: https://docs.mulesoft.com/mule-sdk/1.1/getting-started
 
 ### Deploy to Anypoint Studio
+
 Once you have built the connector, add this dependency to the pom.xml file in
 the root of your Anypoint Studio project:
 

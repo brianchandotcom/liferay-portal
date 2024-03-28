@@ -8,6 +8,7 @@ Complete documentation for Liferay Workspace can be found
 [here](https://learn.liferay.com/dxp/7.x/en/developing-applications/tooling/liferay-workspace.html).
 
 $h2 Folder Structure
+
 ```
 my-project
 ├── configs
@@ -29,12 +30,15 @@ my-project
 ```
 
 $h2 Running Liferay DXP locally
+
 ```
 my-project $ blade gw initBundle
 my-project $ blade gw deploy
 my-project $ blade server run
 ```
+
 $h2 Running Liferay DXP in Docker
+
 ```
 my-project $ blade gw createDockerContainer
 my-project $ blade gw startDockerContainer
@@ -43,22 +47,26 @@ my-project $ blade gw startDockerContainer
 $h2 Creating a Liferay DXP distribution
 
 $h3 Creating a tar
+
 ```
 my-project $ blade gw distBundleTar
 ```
 
 $h3 Creating a zip
+
 ```
 my-project $ blade gw distBundleZip
 ```
 
 $h3 Creating multiple bundles
+
 ```
 my-project $ blade gw distBundleTarAll
 my-project $ blade gw distBundleZipAll
 ```
 
 $h3 Creating a docker image
+
 ```
 my-project $ blade gw buildDockerImage
 ```
@@ -66,21 +74,25 @@ my-project $ blade gw buildDockerImage
 $h2 Create a Liferay DXP module
 
 $h3 Creating a new service
+
 ```
 my-project $ blade create -t service-builder my-service
 ```
 
 $h3 Creating a javascript theme
+
 ```
 my-project $ blade create -t js-theme my-theme
 ```
 
 $h3 Creating a Java Widget
+
 ```
 my-project $ blade create -t mvc-portlet "my-java-widget"
 ```
 
 $h3 Create a JS Widget
+
 ```
 my-project $ blade create -t js-widget "my-js-widget"
 ```
@@ -159,6 +171,7 @@ Set a list of glob patterns to exclude from the build lifecycle. All glob
 patterns start relative to the workspace root directory.
 
 Examples:
+
 ```
 liferay.workspace.dir.excludes.globs=\
 	**/some-wip-project,\
@@ -243,6 +256,7 @@ Set `force = true` to overwrite the version of a specific dependency. See
 
 $h3 Overwrite dependency in multiple projects
 Set the following to overwrite the version of a dependency for the project.
+
 ```
 subprojects {
 	configurations.all {

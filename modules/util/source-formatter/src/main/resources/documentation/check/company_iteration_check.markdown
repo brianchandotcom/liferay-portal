@@ -12,6 +12,7 @@ This applies to SQL queries as well.
 #### Example 1
 
 Instead of:
+
 ```java
 List<Company> companies = _companyLocalService.getCompanies();
 
@@ -22,15 +23,18 @@ for (Company company : companies) {
 ```
 
 We should do:
+
 ```java
 _companyLocalService.forEachCompanyId(
 	companyId ->
 		_commerceAccountGroupLocalService.
 			checkGuestCommerceAccountGroup(companyId));
 ```
+
 #### Example 2
 
 Instead of:
+
 ```java
 public void cleanUp(String... companyIds) {
 	for (long companyId : companyIds) {
@@ -40,6 +44,7 @@ public void cleanUp(String... companyIds) {
 ```
 
 We should do:
+
 ```java
 public void cleanUp(String... companyIds) {
 	_companyLocalService.forEachCompanyId(
@@ -50,6 +55,7 @@ public void cleanUp(String... companyIds) {
 #### Example 3
 
 Instead of:
+
 ```java
 PreparedStatement preparedStatement = connection.prepareStatement(
 	"select companyId, userId from Company");
@@ -62,6 +68,7 @@ while (resultSet.next()) {
 ```
 
 We should do:
+
 ```java
 _companyLocalService.forEachCompany(
 	company -> processCompany(company.getCompanyId(), company.getUserId()));

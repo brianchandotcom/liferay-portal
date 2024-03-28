@@ -38,6 +38,7 @@ arguments may also be configured here. Here is a configuration sample:
 -Dos.version=10.14
 -Declipse.log.level=ALL
 ```
+
 Mac OSX users must make sure they set `-Dos.version` to current OSX version.
 
 ### config.ini Settings

@@ -161,6 +161,7 @@ The ThreadLocalDistributorRegistry class is removed.
 
 ThreadLocalDistributor has no current usage.
 ```
+
 ----
 
 # 0bfc1206ac4a93ec401be491f9553ac94ecea0ed
@@ -184,6 +185,7 @@ PortletToolbar is being removed from util-spring, and it needs a static INSTANCE
 
 Directly use PortletToolbar.INSTANCE to get the instance of PortletToolbar.
 ```
+
 ----
 
 # f971716348b82b1ea6747ae3c011b40616bb5884
@@ -218,6 +220,7 @@ The self-bootstrapping style *SearchRegistrar has changed so this class is no lo
 
 Rewrite *SearchRegistrar as an OSGi service of type ModelSearchConfigurator. Return all the previous ModelSearchConfigurator setter method parameters as your corresponding ModelSearchConfigurator getter return values.
 ```
+
 ----
 
 # ce0cf3a6fab17cb1ac42b17f8bce790cbf176317
@@ -248,6 +251,7 @@ The logic from AuditMessageFactoryUtil and AuditMessageFactoryImpl is now in the
 
 The logic being split between multiple classes did not provide any value. They are merged into a single class to simplify the code.
 ```
+
 ----
 
 # 258a63398ddedbdba27e1b193c83c30031509725
@@ -267,6 +271,7 @@ The AssetEntriesFacet class is removed.
 
 This class has been deprecated since 7.1.x, and its only usage in rules_user_custom_attribute_content.drl is replaced by FacetImpl.
 ```
+
 ----
 
 # 76c2d3b68c19a1b33f18e9221d83f34310daed45
@@ -286,6 +291,7 @@ WebDAV clients can no longer use the user's screen name, email address, or regul
 
 WebDAV (or Digest Auth more generally) now requires each user to generate a separate password for this access, and it requires the user to take specific Account Settings UI actions to do so. Previously a simple web login would suffice. To avoid unexpected WebDav access rejections and simplify the user experience, now a userId is required.
 ```
+
 ----
 
 # 51895916ce756437c2ae1c11a734c9e640abbb05
@@ -305,6 +311,7 @@ The default cacheControl configuration values are changed.
 
 The new configuration to avoid caching documents is now the default configuration to improve security.
 ```
+
 ----
 
 # a35946f28515783df6d3de0a45ff8c9631dc416a
@@ -313,7 +320,7 @@ The commit message is missing a breaking change message. The correct message is:
 
 ```
 LPS-188270 Add new method getPortletInstanceConfiguration in class ConfigurationProviderImpl to replace method getPortletInstanceConfiguration in class PortletDisplay
-    
+
 # breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/theme/PortletDisplay.java
@@ -328,6 +335,7 @@ The getPortletInstanceConfiguration method should be implemented in Configuratio
 
 Directly use ConfigurationProviderUtil.getPortletInstanceConfiguration(Class<T> clazz, ThemeDisplay themeDisplay) or reference the ConfigurationProvider service and use the same method.
 ```
+
 ----
 
 # 29f42c44bfcc71b02e16edb99081a7a89fc3ceed
@@ -336,7 +344,7 @@ The commit message is missing a breaking change. The correct message is:
 
 ```
 LPS-188270 Move class ConfigurationProviderUtil to module, prepare for next
-    
+
 # breaking
 
 ## What portal-kernel/src/com/liferay/portal/kernel/module/configuration/ConfigurationProviderUtil.java
@@ -351,6 +359,7 @@ This change ensures ConfigurationProvider is always available to the module. Thi
 
 Add portal-configuration-module-configuration-api as a build dependency to continue using the same class.
 ```
+
 ----
 
 # fe131c06d9596e3eb7954a1d73876db8ad16ae7f
@@ -374,6 +383,7 @@ This class is only used in modules.
 
 Add portal-configuration-module-configuration-api as a build dependency to continue using the same class.
 ```
+
 ----
 
 # 5eeb81045e4c30d7f0b253fc3e282ec67a12c306
@@ -397,6 +407,7 @@ Snapshot is replacing all usages of ServiceProxyFactory.
 
 Use com.liferay.portal.kernel.module.service.Snapshot instead.
 ```
+
 ----
 
 # 169322529677c73dbd060ea11b64a9eee56415c9
@@ -416,6 +427,7 @@ The aggregation and formula object field types have new validation to avoid inde
 
 Elasticsearch does not fully support indexing these object field types because they're created at runtime.
 ```
+
 ----
 
 # 64fbb2481d5a6af40fb4882fc53bacb78384069e

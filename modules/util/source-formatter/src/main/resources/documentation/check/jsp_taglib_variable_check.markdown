@@ -33,6 +33,7 @@ String taglibOnClickSaveAndContinue = "Liferay.fire('" + liferayPortletResponse.
     value="save-and-continue"
 />
 ```
+
 ---
 
 Variables that does **not** have a value that contains both quotes **and**

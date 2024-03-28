@@ -19,7 +19,7 @@ DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 try (ResultSet indexResultSet = databaseMetaData.getIndexInfo(
         catalog, schema, tableName, onlyUnique, false)) {
-	
+
     doSomething(indexResultSet);
 }
 ```

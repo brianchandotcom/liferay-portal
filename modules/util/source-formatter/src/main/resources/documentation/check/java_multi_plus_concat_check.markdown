@@ -9,9 +9,11 @@ available, we should call the method `StringBundler.concat(String...)`.
 #### Example
 
 Instead of
+
 ```java
 _log("User " + user.getFirstName() + " " + user.getFirstName() + ".");
 ```
+
 we should write
 
 ```java

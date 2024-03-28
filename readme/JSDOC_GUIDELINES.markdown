@@ -255,6 +255,7 @@ Use the inline `{@link}` tag to include a link within a free-form description.
 @see {@link http://github.com|GitHub}
 @see {@link class#method|method}
 ```
+
 ### @link Tags
 
 Use [`@link`](http://usejsdoc.org/tags-inline-link.html) tags to create an

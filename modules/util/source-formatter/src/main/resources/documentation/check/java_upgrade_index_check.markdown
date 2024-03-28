@@ -37,6 +37,7 @@ process, you can just register a `DummyUpgradeStep` and that will force the
 indexes update.
 
 #### Example
+
 ```java
 registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 ```

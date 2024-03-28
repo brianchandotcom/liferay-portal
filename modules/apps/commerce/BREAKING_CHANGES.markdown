@@ -267,6 +267,7 @@ integration.
 - **JIRA Ticket:** [COMMERCE-5888](https://issues.liferay.com/browse/COMMERCE-6315)
 
 #### What changed?
+
 The `AccountSelectorTag` has been refactored to render via JSP and now
 extends from the `IncludeTag`. The JSP
 in turn hydrates and renders the `AccountSelector` React component,

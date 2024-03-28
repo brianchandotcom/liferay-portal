@@ -68,6 +68,7 @@ public List<String> method() {
 	return new ListUtil.fromArray("a", "b");
 }
 ```
+
 ---
 
 Use `String.valueOf()` to combine lines.

@@ -198,16 +198,19 @@ using the `${}` notation.
 *Examples:*
 
 Simple variable reference:
+
 ```javascript
 var newVariable = ${oldVariable};
 ```
 
 Macro execution that passes in a variable reference:
+
 ```
 Navigator.openSpecificURL(url = ${rssURL}); // macro execution
 ```
 
 Java method execution that passes in a variable reference:
+
 ```
 var breadcrumbNameUppercase = StringUtil.upperCase(${breadcrumbName}); 
 ```
@@ -314,6 +317,7 @@ definition {
 ```
 
 #### Default functions
+
 For every function file, a default function command can be denoted as an 
 [annotation](#annotations) in the function file using `@default`. To reference 
 the default function, see 
@@ -764,6 +768,7 @@ Currently, the only valid collections are lists and tables.
 *Examples:*
 
 List example #1
+
 ```javascript
 var tagNameList = "tag1,tag2";
 
@@ -1018,6 +1023,7 @@ These are valid annotations for [`test` blocks](#test-blocks).
 This is used to describe the use case of the test.
 
 *Example:*
+
 ```javascript
 @description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
 test Smoke {

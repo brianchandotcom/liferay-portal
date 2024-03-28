@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useMemo, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import useSWR from 'swr';
+import useSWR, {KeyedMutator} from 'swr';
 
 import circleFullIcon from '../../../assets/icons/circle_fill_icon.svg';
 import {useAppContext} from '../../../manage-app-state/AppManageState';
@@ -33,12 +33,99 @@ type AppProps = {
 	isAdministratorDashboard?: boolean;
 };
 
+type AdministratorButtons = {
+	mutate: KeyedMutator<any>;
+	productId: number;
+	selectedApp: any;
+};
+
+const AdministratorButtons: React.FC<AdministratorButtons> = ({
+	mutate,
+	productId,
+	selectedApp,
+}) => {
+	const [loading, setLoading] = useState(false);
+	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
+
+	const isDraft =
+		selectedApp.workflowStatusInfo.code ===
+		PRODUCT_WORKFLOW_STATUS_CODE.DRAFT;
+
+	const onUpdateRequestStatus = async (
+		workflowStatus: PRODUCT_WORKFLOW_STATUS_CODE
+	) => {
+		try {
+			await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
+				selectedApp.externalReferenceCode,
+				{workflowStatusInfo: workflowStatus}
+			);
+
+			mutate((data: any) => data, {revalidate: true});
+
+			Liferay.Util.openToast({
+				message: i18n.translate('your-request-completed-successfully'),
+				type: 'success',
+			});
+		} catch (error) {
+			Liferay.Util.openToast({
+				message: i18n.translate('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+		}
+	};
+
+	return (
+		<>
+			<ClayButton
+				className="font-weight-bold mr-5"
+				disabled={loading}
+				displayType="unstyled"
+				onClick={() => {
+					setLoading(true);
+
+					marketplaceSpringBootOAuth2
+						.syncKoroneikiProduct(productId)
+						.then(() =>
+							Liferay.Util.openToast({
+								message: 'Koroneiki Sync Successfully',
+								title: 'Success',
+							})
+						)
+						.catch((error) => {
+							console.error(error);
+
+							Liferay.Util.openToast({
+								message: 'Koroneiki Sync Failed',
+								title: 'Error',
+								type: 'danger',
+							});
+						})
+						.finally(() => setLoading(false));
+				}}
+			>
+				{loading ? 'Synchronizing...' : 'Sync to KR'}
+			</ClayButton>
+
+			{isDraft && (
+				<ClayButton
+					displayType="primary"
+					onClick={() =>
+						onUpdateRequestStatus(
+							PRODUCT_WORKFLOW_STATUS_CODE.APPROVED
+						)
+					}
+				>
+					{i18n.translate('aprove')}
+				</ClayButton>
+			)}
+		</>
+	);
+};
+
 const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 	const [, dispatch] = useAppContext();
-	const [loading, setLoading] = useState(false);
 	const {appId} = useParams();
 	const {myUserAccount} = useMarketplaceContext();
-	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 	const navigate = useNavigate();
 
 	const productId = Number(appId) + 1;
@@ -87,93 +174,12 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 		return null;
 	}
 
-	const isdraft =
-		selectedApp.workflowStatusInfo.code ===
-		PRODUCT_WORKFLOW_STATUS_CODE.DRAFT;
-
-	const status = selectedApp.workflowStatusInfo.label.replace(
+	const status = selectedApp?.workflowStatusInfo?.label?.replace(
 		/(^\w|\s\w)/g,
 		(m: string) => m.toUpperCase()
 	);
 
-	const onUpdateRequestStatus = async (
-		workflowStatus: PRODUCT_WORKFLOW_STATUS_CODE
-	) => {
-		try {
-			await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
-				selectedApp.externalReferenceCode,
-				{workflowStatusInfo: workflowStatus}
-			);
-
-			mutate((data: any) => data, {revalidate: true});
-
-			Liferay.Util.openToast({
-				message: i18n.translate('your-request-completed-successfully'),
-				type: 'success',
-			});
-		}
-		catch (error) {
-			Liferay.Util.openToast({
-				message: i18n.translate('an-unexpected-error-occurred'),
-				type: 'danger',
-			});
-		}
-	};
-
 	const thumbnail = getThumbnailByProductAttachment(selectedApp?.images);
-
-	const AdministratorButtons = () => {
-		return (
-			myUserAccount.roleBriefs.some(
-				({name}) => name === 'Administrator'
-			) && (
-				<>
-					<ClayButton
-						className="font-weight-bold mr-5"
-						disabled={loading}
-						displayType="unstyled"
-						onClick={() => {
-							setLoading(true);
-
-							marketplaceSpringBootOAuth2
-								.syncKoroneikiProduct(productId)
-								.then(() =>
-									Liferay.Util.openToast({
-										message: 'Koroneiki Sync Successfully',
-										title: 'Success',
-									})
-								)
-								.catch((error) => {
-									console.error(error);
-
-									Liferay.Util.openToast({
-										message: 'Koroneiki Sync Failed',
-										title: 'Error',
-										type: 'danger',
-									});
-								})
-								.finally(() => setLoading(false));
-						}}
-					>
-						{loading ? 'Synchronizing...' : 'Sync to KR'}
-					</ClayButton>
-
-					{isAdministratorDashboard && isdraft && (
-						<ClayButton
-							displayType="primary"
-							onClick={async () => {
-								await onUpdateRequestStatus(
-									PRODUCT_WORKFLOW_STATUS_CODE.APPROVED
-								);
-							}}
-						>
-							{i18n.translate('aprove')}
-						</ClayButton>
-					)}
-				</>
-			)
-		);
-	};
 
 	return (
 		<div className="app-details-page-container">
@@ -251,9 +257,18 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 					</div>
 				</div>
 
-				<div className="app-details-page-app-info-buttons-container">
-					<AdministratorButtons />
-				</div>
+				{isAdministratorDashboard &&
+					myUserAccount.roleBriefs.some(
+						({name}) => name === 'Administrator'
+					) && (
+						<div className="app-details-page-app-info-buttons-container">
+							<AdministratorButtons
+								mutate={mutate}
+								productId={productId}
+								selectedApp={selectedApp}
+							/>
+						</div>
+					)}
 			</div>
 			<div>
 				<ReviewAndSubmitAppPage

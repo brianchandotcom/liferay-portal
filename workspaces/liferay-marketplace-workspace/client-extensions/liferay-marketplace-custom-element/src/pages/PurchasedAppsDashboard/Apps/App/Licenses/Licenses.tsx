@@ -79,8 +79,7 @@ const Licenses = () => {
 						pageSize: pageSize.toString(),
 					})
 				);
-			}
-			catch (error) {
+			} catch (error) {
 				return {
 					items: [],
 					totalCount: 0,
@@ -294,12 +293,12 @@ const Licenses = () => {
 					kebabClassName="border-0"
 					onClickRow={onViewLicenseKey}
 					paginationProps={{
-						active: page,
 						activeDelta: pageSize,
+						activePage: page,
 						deltas: PAGE_SIZES,
-						onActiveChange: (page: number) => setPage(page),
 						onDeltaChange: (pageSize: number) =>
 							setPageSize(pageSize),
+						onPageChange: (page: number) => setPage(page),
 						totalItems: licenseKeysResponse?.totalCount || 0,
 					}}
 					rows={rows}

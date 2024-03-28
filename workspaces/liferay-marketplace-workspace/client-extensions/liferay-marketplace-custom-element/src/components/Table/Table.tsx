@@ -40,13 +40,13 @@ type TableColumn<T = any> = {
 };
 
 type PaginationProps = {
-	active: number;
 	activeDelta: number;
+	activePage: number;
 	deltas?: {
 		label: number;
 	}[];
-	onActiveChange: (page: number) => void;
 	onDeltaChange: (pageSize: number) => void;
+	onPageChange: (page: number) => void;
 	totalItems: number;
 };
 
@@ -139,7 +139,6 @@ const Table: React.FC<TableProps> = ({
 
 			{hasPagination && paginationProps && (
 				<ClayPaginationBarWithBasicItems
-					defaultActive={1}
 					ellipsisBuffer={3}
 					{...paginationProps}
 				/>

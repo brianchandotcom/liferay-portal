@@ -14,6 +14,9 @@ interface HandleImportProps {
 	setError: (
 		value: React.SetStateAction<API.ErrorDetails | undefined>
 	) => void;
+	setFailedModalVisible?: (value: boolean) => void;
+	setImportLoading: (value: boolean) => void;
+	setWarningModalVisible: (value: boolean) => void;
 }
 interface HandleDefaultImportProps extends Omit<HandleImportProps, 'item'> {
 	JSONInputId: string;
@@ -23,7 +26,6 @@ interface HandleDefaultImportProps extends Omit<HandleImportProps, 'item'> {
 	importExtendedInfo: KeyValueObject;
 	inputFile?: File | null;
 	setImportFormData: (value: FormData) => void;
-	setWarningModalVisible: (value: boolean) => void;
 }
 interface HandleImportMultiplesObjectDefinitionsProps
 	extends Omit<HandleImportProps, 'item'> {
@@ -54,6 +56,8 @@ export declare function handleImport({
 	onAfterImport,
 	onClose,
 	setError,
+	setFailedModalVisible,
+	setWarningModalVisible,
 }: HandleImportProps): Promise<void>;
 export declare function handleImportMultiplesObjectDefinitions({
 	importURL,
@@ -63,6 +67,7 @@ export declare function handleImportMultiplesObjectDefinitions({
 	onClose,
 	setError,
 	setExistingObjectDefinitions,
+	setFailedModalVisible,
 	setImportFormData,
 	setModalImportKeyState,
 	setWarningModalVisible,

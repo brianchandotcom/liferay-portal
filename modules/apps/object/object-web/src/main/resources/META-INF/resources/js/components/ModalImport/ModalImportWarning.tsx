@@ -25,8 +25,8 @@ interface ModalImportWarningProps {
 
 const tableHeaderItems = [
 	{
-		id: 'objectLabel',
-		name: Liferay.Language.get('object-label'),
+		id: 'objectDefinition',
+		name: Liferay.Language.get('object-definition'),
 	},
 ];
 

@@ -6,22 +6,21 @@
 const {REACT_APP_LIFERAY_HOST = window.location.origin} = process.env;
 
 const liferayRequest = async ({
+	body,
 	headers = {},
 	method = 'GET',
 	options = {},
-	urlPath,
+	urlPath = '/',
 	urlSearchParams = new URLSearchParams(),
 }) => {
 	headers['x-csrf-token'] = Liferay.authToken;
 
-	return fetch(
-		REACT_APP_LIFERAY_HOST + '/' + urlPath + '?' + urlSearchParams,
-		{
-			headers,
-			method,
-			...options,
-		}
-	);
+	return fetch(REACT_APP_LIFERAY_HOST + urlPath + '?' + urlSearchParams, {
+		body,
+		headers,
+		method,
+		...options,
+	});
 };
 
 export default liferayRequest;

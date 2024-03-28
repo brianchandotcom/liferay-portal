@@ -736,7 +736,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	protected StagedModelType[] getStagedModelTypes(
 		Supplier<List<StagedModelType>> stagedModelTypesSupplier) {
 
-		return _companyStagedModelTypes.computeIfAbsent(
+		return _stagedModelTypesMap.computeIfAbsent(
 			DBPartition.isPartitionEnabled() ?
 				CompanyThreadLocal.getCompanyId() : CompanyConstants.SYSTEM,
 			companyId -> {
@@ -835,8 +835,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePortletDataHandler.class);
 
-	private final Map<Long, StagedModelType[]> _companyStagedModelTypes =
-		new ConcurrentHashMap<>();
 	private boolean _dataAlwaysStaged;
 	private DataLevel _dataLevel = DataLevel.SITE;
 	private boolean _dataLocalized;
@@ -854,6 +852,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private String _portletId;
 	private boolean _publishToLiveByDefault;
 	private int _rank = 100;
+	private final Map<Long, StagedModelType[]> _stagedModelTypesMap =
+		new ConcurrentHashMap<>();
 	private PortletDataHandlerControl[] _stagingControls =
 		new PortletDataHandlerControl[0];
 

@@ -224,9 +224,9 @@ public class CTDisplayRendererRegistryImpl
 
 	@Override
 	public CTService<?> getCTService(CTModel<?> ctModel) {
-		return _ctServiceServiceTrackerMap.getService(
-			ctModel.getModelClass(
-			).getName());
+		Class<?> modelClass = ctModel.getModelClass();
+
+		return _ctServiceServiceTrackerMap.getService(modelClass.getName());
 	}
 
 	@Override
@@ -478,9 +478,9 @@ public class CTDisplayRendererRegistryImpl
 					CTDisplayRenderer<?> ctDisplayRenderer =
 						bundleContext.getService(serviceReference);
 
-					emitter.emit(
-						ctDisplayRenderer.getModelClass(
-						).getName());
+					Class<?> modelClass = ctDisplayRenderer.getModelClass();
+
+					emitter.emit(modelClass.getName());
 
 					bundleContext.ungetService(serviceReference);
 				});
@@ -493,9 +493,9 @@ public class CTDisplayRendererRegistryImpl
 					CTService<?> ctService = bundleContext.getService(
 						serviceReference);
 
-					emitter.emit(
-						ctService.getModelClass(
-						).getName());
+					Class<?> modelClass = ctService.getModelClass();
+
+					emitter.emit(modelClass.getName());
 
 					bundleContext.ungetService(serviceReference);
 				});

@@ -79,9 +79,9 @@ public class BasePersistenceRegistry {
 					BasePersistence<?> basePersistence =
 						tableReferenceDefinition.getBasePersistence();
 
-					emitter.emit(
-						basePersistence.getModelClass(
-						).getName());
+					Class<?> modelClass = basePersistence.getModelClass();
+
+					emitter.emit(modelClass.getName());
 
 					bundleContext.ungetService(serviceReference);
 				});

@@ -174,70 +174,60 @@ public class ClassNameLocalServiceImpl
 				return;
 			}
 
-			Map<String, Long> valueToClassNameIdMap = _getCompanyMap(
-				_valueToClassNameIdCompanyMap);
+			Map<String, Long> classNameIds = _getMap(_classNameIdsMap);
 
-			valueToClassNameIdMap.put(
-				className.getValue(), className.getClassNameId());
+			classNameIds.put(className.getValue(), className.getClassNameId());
 
-			Map<Long, ClassName> classNameIdToValueMap = _getCompanyMap(
-				_classNameIdToValueCompanyMap);
+			Map<Long, ClassName> classNames = _getMap(_classNamesMap);
 
-			classNameIdToValueMap.put(className.getClassNameId(), className);
+			classNames.put(className.getClassNameId(), className);
 		}
 
 		public static ClassName fetchByClassNameId(long classNameId) {
-			Map<Long, ClassName> classNameIdToValueMap = _getCompanyMap(
-				_classNameIdToValueCompanyMap);
+			Map<Long, ClassName> classNames = _getMap(_classNamesMap);
 
-			return classNameIdToValueMap.get(classNameId);
+			return classNames.get(classNameId);
 		}
 
 		public static ClassName fetchByValue(String value) {
-			Map<String, Long> valueToClassNameIdMap = _getCompanyMap(
-				_valueToClassNameIdCompanyMap);
+			Map<String, Long> classNameIds = _getMap(_classNameIdsMap);
 
-			Long classNameId = valueToClassNameIdMap.get(value);
+			Long classNameId = classNameIds.get(value);
 
 			if (classNameId == null) {
 				return null;
 			}
 
-			Map<Long, ClassName> classNameIdToValueMap = _getCompanyMap(
-				_classNameIdToValueCompanyMap);
+			Map<Long, ClassName> classNames = _getMap(_classNamesMap);
 
-			return classNameIdToValueMap.get(classNameId);
+			return classNames.get(classNameId);
 		}
 
 		public static void invalidate() {
-			for (Map<String, Long> map :
-					_valueToClassNameIdCompanyMap.values()) {
-
+			for (Map<String, Long> map : _classNameIdsMap.values()) {
 				map.clear();
 			}
 
-			for (Map<Long, ClassName> map :
-					_classNameIdToValueCompanyMap.values()) {
-
+			for (Map<Long, ClassName> map : _classNamesMap.values()) {
 				map.clear();
 			}
 		}
 
 		public static void remove(ClassName className) {
-			_valueToClassNameIdCompanyMap.computeIfPresent(
+			_classNameIdsMap.computeIfPresent(
 				_getCompanyId(),
-				(key, map) -> {
-					map.remove(className.getValue());
+				(key, classNameIds) -> {
+					classNameIds.remove(className.getValue());
 
-					return map;
+					return classNameIds;
 				});
 
-			_classNameIdToValueCompanyMap.computeIfPresent(
+			_classNamesMap.computeIfPresent(
 				_getCompanyId(),
-				(key, map) -> {
-					map.remove(className.getClassNameId());
+				(key, classNames) -> {
+					classNames.remove(className.getClassNameId());
 
-					return map;
+					return classNames;
 				});
 		}
 
@@ -249,17 +239,15 @@ public class ClassNameLocalServiceImpl
 			return CompanyConstants.SYSTEM;
 		}
 
-		private static <S, T> Map<S, T> _getCompanyMap(
-			Map<Long, Map<S, T>> companiesMap) {
-
-			return companiesMap.computeIfAbsent(
+		private static <S, T> Map<S, T> _getMap(Map<Long, Map<S, T>> map) {
+			return map.computeIfAbsent(
 				_getCompanyId(), companyId -> new ConcurrentHashMap<>());
 		}
 
-		private static Map<Long, Map<Long, ClassName>>
-			_classNameIdToValueCompanyMap = new ConcurrentHashMap<>();
-		private static Map<Long, Map<String, Long>>
-			_valueToClassNameIdCompanyMap = new ConcurrentHashMap<>();
+		private static Map<Long, Map<String, Long>> _classNameIdsMap =
+			new ConcurrentHashMap<>();
+		private static Map<Long, Map<Long, ClassName>> _classNamesMap =
+			new ConcurrentHashMap<>();
 
 	}
 

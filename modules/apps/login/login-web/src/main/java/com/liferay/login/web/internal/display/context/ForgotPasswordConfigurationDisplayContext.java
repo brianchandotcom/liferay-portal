@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ForgotPasswordConfigurationDisplayContext {
 
 	public ForgotPasswordConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest, PortletPreferences portletPreferences,
-		RenderRequest renderRequest) {
+		HttpServletRequest httpServletRequest,
+		PortletPreferences portletPreferences, RenderRequest renderRequest) {
 
 		_httpServletRequest = httpServletRequest;
 		_portletPreferences = portletPreferences;

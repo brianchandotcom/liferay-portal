@@ -51,7 +51,7 @@ public class ClientExtension {
 	}
 
 	public Map<String, Object> toJSONMap() {
-		HashMap<String, Object> typeSettings = new HashMap<>(this.typeSettings);
+		Map<String, Object> typeSettings = new HashMap<>(this.typeSettings);
 
 		String pid = _clientExtensionProperties.getProperty(type + ".pid");
 

@@ -18,6 +18,7 @@ import {ReviewAndSubmitSolutions} from './ReviewAndSubmitSolutions';
 
 import './index.scss';
 import {PRODUCT_CATEGORIES} from '../../../../enums/Product';
+import {getProductCategoriesByVocabularyName} from '../../../../utils/productUtils';
 import SolutionsDetailsHeader from './SolutionDetailsHeader/SolutionDetailsHeader';
 
 export type Solution = {
@@ -28,11 +29,6 @@ export type Solution = {
 	storefront: ProductImages[];
 	tags: string[];
 	thumbnail: string;
-};
-
-type ProductVocabulary = {
-	productCategory: string[];
-	vocabulary: string;
 };
 
 const NAVIGATION_BAR_OPTIONS = {
@@ -66,34 +62,15 @@ const SolutionsDetails = () => {
 		const {attachments, categories, description, images} = selectedSolution;
 
 		const getData = async () => {
-			const productCategories: string[] = [];
-			const productTags: string[] = [];
+			const solutionCategories = getProductCategoriesByVocabularyName(
+				categories,
+				PRODUCT_CATEGORIES.MARKETPLACE_SOLUTION_CATEGORY
+			);
 
-			const productVocabularies = [
-				{
-					productCategory: productCategories,
-					vocabulary:
-						PRODUCT_CATEGORIES.MARKETPLACE_SOLUTION_CATEGORY,
-				},
-				{
-					productCategory: productTags,
-					vocabulary: PRODUCT_CATEGORIES.MARKETPLACE_SOLUTION_TAGS,
-				},
-			];
-
-			const handleCategories = (
-				productVocabularies: ProductVocabulary[]
-			) => {
-				productVocabularies?.map((vocabulary) =>
-					categories.forEach((category: ProductCategories) => {
-						if (category.vocabulary === vocabulary.vocabulary) {
-							vocabulary.productCategory.push(category.name);
-						}
-					})
-				);
-			};
-
-			handleCategories(productVocabularies);
+			const solutionTags = getProductCategoriesByVocabularyName(
+				categories,
+				PRODUCT_CATEGORIES.MARKETPLACE_SOLUTION_TAGS
+			);
 
 			const attachment = attachments?.find(
 				(attachment: ProductAttachment) => {
@@ -107,7 +84,7 @@ const SolutionsDetails = () => {
 
 			const newSolution = {
 				attachmentTitle: attachment?.title['en_US'] as string,
-				categories: productCategories,
+				categories: solutionCategories,
 				description: description['en_US'],
 				name: selectedSolution.name['en_US'],
 				storefront: (selectedSolution.images || []).filter(
@@ -115,7 +92,7 @@ const SolutionsDetails = () => {
 						return image.galleryEnabled;
 					}
 				),
-				tags: productTags,
+				tags: solutionTags,
 				thumbnail,
 			};
 

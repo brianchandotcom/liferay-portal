@@ -53,12 +53,7 @@ export function CardSectionsBody({
 				></p>
 			</CardSection>
 
-			<CardSection
-				required
-				sectionName={
-					isApp ? 'Categories' : 'Marketplace Solution Categories'
-				}
-			>
+			<CardSection required sectionName="Categories">
 				<div className="card-section-body-section-tags">
 					{app?.categories?.map((tag, index) => {
 						return <Tag key={index} label={tag}></Tag>;

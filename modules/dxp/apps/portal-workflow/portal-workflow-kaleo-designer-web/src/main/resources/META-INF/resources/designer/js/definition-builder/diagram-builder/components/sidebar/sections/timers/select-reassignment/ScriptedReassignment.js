@@ -11,8 +11,12 @@ import React, {useContext, useEffect, useState} from 'react';
 import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 import SidebarPanel from '../../../SidebarPanel';
 
-const ScriptedReassignment = ({actionData, setContentName}) => {
-	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+const ScriptedReassignment = ({actionData, setContentName, timersIndex}) => {
+	const {
+		selectedItem,
+		setScriptedReassignmentTimerIndex,
+		setSelectedItem,
+	} = useContext(DiagramBuilderContext);
 
 	const [showScriptData, setShowScriptData] = useState(
 		selectedItem?.data.taskTimers?.reassignments?.script
@@ -23,7 +27,10 @@ const ScriptedReassignment = ({actionData, setContentName}) => {
 		'source-code'
 	)} (${Liferay.Language.get('groovy')})`;
 
-	const goToEditor = () => setContentName('scripted-reassignment');
+	const goToEditor = (timersIndex) => {
+		setContentName('scripted-reassignment');
+		setScriptedReassignmentTimerIndex(timersIndex);
+	};
 
 	const deleteScript = () => {
 		setSelectedItem((previous) => {
@@ -54,7 +61,7 @@ const ScriptedReassignment = ({actionData, setContentName}) => {
 							className="truncate-container"
 							displayType="secondary"
 							href="#"
-							onClick={goToEditor}
+							onClick={() => goToEditor(timersIndex)}
 						>
 							<span>{Liferay.Language.get('script')}</span>
 						</ClayLink>
@@ -68,7 +75,10 @@ const ScriptedReassignment = ({actionData, setContentName}) => {
 					</ClayLayout.Row>
 				</ClayLayout.ContentCol>
 			) : (
-				<ClayButton displayType="secondary" onClick={goToEditor}>
+				<ClayButton
+					displayType="secondary"
+					onClick={() => goToEditor(timersIndex)}
+				>
 					{addSourceButtonName.toUpperCase()}
 				</ClayButton>
 			)}

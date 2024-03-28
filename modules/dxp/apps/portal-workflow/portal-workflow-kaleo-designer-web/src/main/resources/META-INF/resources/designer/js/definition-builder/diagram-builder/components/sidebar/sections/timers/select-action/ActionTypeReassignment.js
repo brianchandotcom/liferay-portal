@@ -31,6 +31,7 @@ const ActionTypeReassignment = ({
 	setActionSections,
 	setContentName,
 	setErrors,
+	timersIndex,
 }) => {
 	const reassignmentType = actionData.assignmentType;
 	const [subSections, setSubSections] = useState(
@@ -126,6 +127,7 @@ const ActionTypeReassignment = ({
 								setSections={setSubSections}
 								subSectionIdentifier={subSectionIdentifier}
 								subSectionsLength={subSections.length}
+								timersIndex={timersIndex}
 							/>
 						)
 					);

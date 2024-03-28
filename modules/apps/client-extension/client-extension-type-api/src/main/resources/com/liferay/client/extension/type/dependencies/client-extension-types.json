@@ -101,6 +101,16 @@
 			},
 			{
 				"default": "",
+				"name": "panelAppOrder",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
+				"name": "panelCategoryKey",
+				"type": "CETProperty.Type.String"
+			},
+			{
+				"default": "",
 				"name": "portletCategoryName",
 				"type": "CETProperty.Type.String"
 			},

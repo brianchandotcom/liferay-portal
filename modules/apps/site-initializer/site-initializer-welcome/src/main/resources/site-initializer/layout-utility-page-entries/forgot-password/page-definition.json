@@ -27,7 +27,7 @@
 							"widgetInstance": {
 								"widgetConfig": {
 								},
-								"widgetName": "com_liferay_login_web_portlet_LoginPortlet"
+								"widgetName": "com_liferay_login_web_portlet_ForgotPasswordPortlet"
 							}
 						},
 						"id": "5621cd99-6acf-14ea-0920-7bb8d783c9de",

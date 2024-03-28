@@ -1,0 +1,12 @@
+.lfr-object__modal-import-failed-table-body {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	&-status {
+		align-items: center;
+		display: flex !important;
+		gap: 1rem;
+	}
+}

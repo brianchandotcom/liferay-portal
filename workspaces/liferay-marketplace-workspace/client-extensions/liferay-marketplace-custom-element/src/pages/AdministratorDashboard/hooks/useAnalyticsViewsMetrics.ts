@@ -11,29 +11,29 @@ import {colors} from '../mock';
 const useAnalyticsViewsMetrics = () => {
 	const marketplaceSpringBootOAuth2 = useMarketplaceSpringBootOAuth2();
 
-	const {data: analyticsViewsResponse = []} = useSWR<AnalyticsViews[]>(
-		'administrator-dashboard/metrics/analytics',
-		() =>
-			Promise.all([
-				marketplaceSpringBootOAuth2.getAnalyticsPages(
-					new URLSearchParams({
-						sortMetric: 'viewsMetric',
-					})
-				),
-				marketplaceSpringBootOAuth2.getAnalyticsPages(
-					new URLSearchParams({
-						keywords: '/p/',
-						sortMetric: 'visitorsMetric',
-						sortOrder: 'desc',
-					})
-				),
-			])
+	const {data: analyticsViewsResponse = [], ...swr} = useSWR<
+		AnalyticsViews[]
+	>('administrator-dashboard/metrics/analytics', () =>
+		Promise.all([
+			marketplaceSpringBootOAuth2.getAnalyticsPages(
+				new URLSearchParams({
+					sortMetric: 'viewsMetric',
+				})
+			),
+			marketplaceSpringBootOAuth2.getAnalyticsPages(
+				new URLSearchParams({
+					keywords: '/p/',
+					sortMetric: 'visitorsMetric',
+					sortOrder: 'desc',
+				})
+			),
+		])
 	);
 
 	const [viewsMetricResult, visitorsMetricResult] = analyticsViewsResponse;
 
 	const viewsMetrics =
-		visitorsMetricResult?.results.map((item) => ({
+		visitorsMetricResult?.results?.map((item) => ({
 			title: item.title.split('-')[0].trim(),
 			views: item.metrics.viewsMetric.value,
 			visitor: item.metrics.visitorsMetric.value,
@@ -42,6 +42,7 @@ const useAnalyticsViewsMetrics = () => {
 	viewsMetrics.length = 5;
 
 	return {
+		...swr,
 		data: {
 			colors: {
 				'Total Views': colors.color1,
@@ -57,17 +58,20 @@ const useAnalyticsViewsMetrics = () => {
 			],
 			viewsMetrics,
 		},
-		visitorsMetric: viewsMetricResult.results
-			.map(
-				({
-					metrics: {
-						viewsMetric: {value},
-					},
-				}) => value
-			)
-			.reduce(
-				(previousValue, currentValue) => previousValue + currentValue
-			),
+		visitorsMetric:
+			viewsMetricResult?.results
+				.map(
+					({
+						metrics: {
+							viewsMetric: {value},
+						},
+					}) => value
+				)
+				.reduce(
+					(previousValue, currentValue) =>
+						previousValue + currentValue,
+					0
+				) || 0,
 	};
 };
 

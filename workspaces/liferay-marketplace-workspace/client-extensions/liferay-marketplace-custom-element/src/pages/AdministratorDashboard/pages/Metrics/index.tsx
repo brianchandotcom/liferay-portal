@@ -26,9 +26,13 @@ const getTotalAmountCurrency = (amount = 0) =>
 
 const Metrics = () => {
 	const {data: accounts} = useAccountsMetrics('week');
+	const {
+		data: analytics,
+		isLoading: analyticsLoading,
+		visitorsMetric,
+	} = useAnalyticsViewsMetrics();
 	const {data: orderChartLine} = useOrderChartLineMetrics();
 	const {data: orderMetrics} = useOrderMetrics('week');
-	const {data: analytics, visitorsMetric} = useAnalyticsViewsMetrics();
 
 	const {metrics = []} = orderChartLine || {};
 
@@ -149,44 +153,47 @@ const Metrics = () => {
 
 					<div className="col-md-4 p-0">
 						<span className="font-weight-bold ml-5">
-							Most visited pages
+							Most visited product pages
 						</span>
 
 						<div className="mt-4">
-							<ClayChart
-								axis={{
-									x: {
-										type: 'category',
-									},
-								}}
-								bar={{
-									padding: 1,
-									radius: {
-										ratio: 0.2,
-									},
-									width: {
-										max: 25,
-									},
-								}}
-								data={{
-									colors: analytics.colors,
-									columns: analytics.columns,
-									type: 'bar',
-									x: 'x',
-								}}
-								grid={{
-									lines: {
-										front: false,
-									},
-									x: {
-										show: false,
-									},
-									y: {
-										show: false,
-									},
-								}}
-								legend={{show: false}}
-							/>
+							{!analyticsLoading &&
+								analytics?.viewsMetrics.length > 1 && (
+									<ClayChart
+										axis={{
+											x: {
+												type: 'category',
+											},
+										}}
+										bar={{
+											padding: 1,
+											radius: {
+												ratio: 0.2,
+											},
+											width: {
+												max: 25,
+											},
+										}}
+										data={{
+											colors: analytics.colors,
+											columns: analytics.columns,
+											type: 'bar',
+											x: 'x',
+										}}
+										grid={{
+											lines: {
+												front: false,
+											},
+											x: {
+												show: false,
+											},
+											y: {
+												show: false,
+											},
+										}}
+										legend={{show: false}}
+									/>
+								)}
 						</div>
 					</div>
 				</div>

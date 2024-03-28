@@ -80,7 +80,7 @@ const AppAdministratorTable: React.FC<AppsTableProps> = ({items}) => {
 						title: i18n.translate('status'),
 					},
 				]}
-				onClickRow={({id}) => navigate(`/app/${id}`)}
+				onClickRow={({id}) => navigate(`${id}`)}
 				rows={items}
 			/>
 		</div>

@@ -8,7 +8,7 @@ package com.liferay.portal.workflow.portlet.tab;
 /**
  * @author Feliphe Marinho
  */
-public interface WorkflowPortletTabServiceTracker {
+public interface WorkflowPortletTabRegistry {
 
 	public boolean contains(String portalWorkflowTabsName);
 

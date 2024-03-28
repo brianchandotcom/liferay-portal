@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab;
-import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabServiceTracker;
+import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabRegistry;
 
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	public List<WorkflowPortletTab> getWorkflowPortletTabs() {
 		return TransformUtil.transform(
 			getWorkflowPortletTabNames(),
-			workflowPortletTabServiceTracker::getWorkflowPortletTab);
+			workflowPortletTabRegistry::getWorkflowPortletTab);
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected WorkflowPortletTabServiceTracker workflowPortletTabServiceTracker;
+	protected WorkflowPortletTabRegistry workflowPortletTabRegistry;
 
 	private WorkflowPortletTab _getSelectedWorkflowPortletTab(
 		RenderRequest renderRequest) {
@@ -99,7 +99,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 		String workflowPortletTabName = ParamUtil.get(
 			renderRequest, "tab", getDefaultWorkflowPortletTabName());
 
-		return workflowPortletTabServiceTracker.getWorkflowPortletTab(
+		return workflowPortletTabRegistry.getWorkflowPortletTab(
 			workflowPortletTabName);
 	}
 

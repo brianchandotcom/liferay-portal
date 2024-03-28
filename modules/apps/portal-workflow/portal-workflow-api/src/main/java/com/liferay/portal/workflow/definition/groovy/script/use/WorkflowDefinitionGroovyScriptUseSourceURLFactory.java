@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
-import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabServiceTracker;
+import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabRegistry;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -26,10 +26,10 @@ public class WorkflowDefinitionGroovyScriptUseSourceURLFactory {
 	public static String create(
 			Company company, Portal portal, String workflowDefinitionName,
 			int workflowDefinitionVersion,
-			WorkflowPortletTabServiceTracker workflowPortletTabServiceTracker)
+			WorkflowPortletTabRegistry workflowPortletTabRegistry)
 		throws Exception {
 
-		if (workflowPortletTabServiceTracker.contains(
+		if (workflowPortletTabRegistry.contains(
 				WorkflowWebKeys.WORKFLOW_TAB_DEFINITION)) {
 
 			String url = _getBaseURL(

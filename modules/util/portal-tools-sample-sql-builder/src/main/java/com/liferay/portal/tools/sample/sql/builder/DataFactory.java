@@ -596,6 +596,10 @@ public class DataFactory {
 		return getClassNameId(DLFileEntry.class);
 	}
 
+	public long getGlobalGroupId() {
+		return _globalGroupId;
+	}
+
 	public RoleModel getGuestRoleModel() {
 		return _guestRoleModel;
 	}
@@ -3178,13 +3182,27 @@ public class DataFactory {
 		return ctCollectionModel;
 	}
 
-	public CTSchemaVersionModel newCTSchemaVersionModel(long companyId)
-		throws Exception {
+	public List<CTCollectionModel> newCTCollectionModels(
+		CTSchemaVersionModel ctSchemaVersionModel) {
 
+		List<CTCollectionModel> ctCollectionModels = new ArrayList<>();
+
+		for (int i = 1;
+			 i <= BenchmarksPropsValues.MAX_PUBLICATION_CONTENT_LAYOUT_COUNT;
+			 i++) {
+
+			ctCollectionModels.add(
+				newCTCollectionModel(i, ctSchemaVersionModel));
+		}
+
+		return ctCollectionModels;
+	}
+
+	public CTSchemaVersionModel newCTSchemaVersionModel() throws Exception {
 		CTSchemaVersionModel ctSchemaVersionModel =
 			new CTSchemaVersionModelImpl();
 
-		ctSchemaVersionModel.setCompanyId(companyId);
+		ctSchemaVersionModel.setCompanyId(_companyId);
 
 		Map<String, Serializable> schemaContext = new HashMap<>();
 
@@ -3204,6 +3222,7 @@ public class DataFactory {
 		}
 
 		ctSchemaVersionModel.setSchemaContext(schemaContext);
+		ctSchemaVersionModel.setSchemaVersionId(_counter.get());
 
 		return ctSchemaVersionModel;
 	}

@@ -739,10 +739,7 @@ public class SingleLogoutProfileImpl
 
 			if (samlIdpSsoSession != null) {
 				samlSloContext = new SamlSloContext(
-					samlIdpSsoSession, messageContext,
-					samlIdpSpConnectionLocalService,
-					_samlIdpSpSessionLocalService, _samlPeerBindingLocalService,
-					_userLocalService);
+					samlIdpSsoSession, messageContext);
 
 				samlSloContext.setSamlSsoSessionId(samlSsoSessionId);
 
@@ -860,10 +857,7 @@ public class SingleLogoutProfileImpl
 			_sendIdpLogoutResponse(
 				httpServletRequest, httpServletResponse,
 				StatusCode.UNKNOWN_PRINCIPAL,
-				new SamlSloContext(
-					null, messageContext, samlIdpSpConnectionLocalService,
-					_samlIdpSpSessionLocalService, _samlPeerBindingLocalService,
-					_userLocalService));
+				new SamlSloContext(null, messageContext));
 
 			return;
 		}

@@ -148,10 +148,7 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(SLO_LOGOUT_URL + "?cmd=logout");
 
-		SamlSloContext samlSloContext = new SamlSloContext(
-			null, _samlIdpSpConnectionLocalService,
-			_samlIdpSpSessionLocalService, samlPeerBindingLocalService,
-			userLocalService);
+		SamlSloContext samlSloContext = new SamlSloContext(null);
 
 		_singleLogoutProfileImpl.performIdpSpLogout(
 			mockHttpServletRequest, new MockHttpServletResponse(),
@@ -204,9 +201,7 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		samlIdpSsoSessionImpl.setSamlIdpSsoSessionId(SESSION_ID);
 
 		SamlSloContext samlSloContext = new SamlSloContext(
-			samlIdpSsoSessionImpl, _samlIdpSpConnectionLocalService,
-			_samlIdpSpSessionLocalService, samlPeerBindingLocalService,
-			userLocalService);
+			samlIdpSsoSessionImpl);
 
 		SamlSloRequestInfo samlSloRequestInfo =
 			samlSloContext.getSamlSloRequestInfo(SP_ENTITY_ID);
@@ -250,9 +245,7 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 			new SamlIdpSsoSessionImpl();
 
 		SamlSloContext samlSloContext = new SamlSloContext(
-			samlIdpSsoSessionImpl, _samlIdpSpConnectionLocalService,
-			_samlIdpSpSessionLocalService, samlPeerBindingLocalService,
-			userLocalService);
+			samlIdpSsoSessionImpl);
 
 		SamlIdpSpSessionImpl samlIdpSpSessionImpl = new SamlIdpSpSessionImpl();
 

@@ -24,6 +24,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderItemModel;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.model.CommerceReturn;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.OpenCommerceOrderContentPortletInstanceConfiguration;
@@ -54,6 +55,7 @@ import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelperUtil;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -73,6 +75,8 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
@@ -89,6 +93,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -108,6 +113,7 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -439,6 +445,22 @@ public class CommerceOrderContentDisplayContext {
 		CommerceChannel commerceChannel = fetchCommerceChannel();
 
 		return commerceChannel.getPriceDisplayType();
+	}
+
+	public String getCommerceReturnableItemsAPIURL() {
+		return StringBundler.concat(
+			"/o/headless-commerce-delivery-order/v1.0/placed-orders/",
+			getCommerceOrderId(), "/placed-order-items");
+	}
+
+	public List<DropdownItem>
+		getCommerceReturnableItemsBulkActionDropdownItems() {
+
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				"/o/commerce-returns/", "pencil", "createCommerceReturn",
+				LanguageUtil.get(_httpServletRequest, "select"), "post", null,
+				"headless"));
 	}
 
 	public String getCommerceShipmentItemsAPIURL() throws PortalException {
@@ -968,6 +990,44 @@ public class CommerceOrderContentDisplayContext {
 				return commerceOrder.getUuid();
 			}
 		).buildString();
+	}
+
+	public HashMap<String, Object> getReturnableOrderItemsContextParams() {
+		try {
+			CommerceOrder commerceOrder = getCommerceOrder();
+
+			long commerceAccountId = commerceOrder.getCommerceAccountId();
+
+			CommerceChannel commerceChannel = fetchCommerceChannel();
+
+			return HashMapBuilder.<String, Object>put(
+				"accountEntryId", commerceAccountId
+			).put(
+				"channelGroupId", _commerceContext.getCommerceChannelGroupId()
+			).put(
+				"channelId", _commerceContext.getCommerceChannelId()
+			).put(
+				"channelName", commerceChannel.getName()
+			).put(
+				"commerceOrderId", commerceOrder.getCommerceOrderId()
+			).put(
+				"redirect",
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						_httpServletRequest, CommerceReturn.class.getName(),
+						PortletProvider.Action.EDIT)
+				).setMVCRenderCommandName(
+					"/commerce_return/view_commerce_return"
+				).setParameter(
+					"commerceReturnId", ""
+				).buildString()
+			).build();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return new HashMap<>();
+		}
 	}
 
 	public SearchContainer<CommerceOrder> getSearchContainer()

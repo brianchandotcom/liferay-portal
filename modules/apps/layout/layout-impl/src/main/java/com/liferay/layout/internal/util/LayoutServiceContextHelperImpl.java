@@ -95,6 +95,14 @@ public class LayoutServiceContextHelperImpl
 	}
 
 	@Override
+	public AutoCloseable getServiceContextAutoCloseable(
+			Company company, User user)
+		throws PortalException {
+
+		return new ServiceContextTemporarySwapper(company, user);
+	}
+
+	@Override
 	public AutoCloseable getServiceContextAutoCloseable(Layout layout)
 		throws PortalException {
 
@@ -588,10 +596,17 @@ public class LayoutServiceContextHelperImpl
 		public ServiceContextTemporarySwapper(Company company)
 			throws PortalException {
 
-			this(company, null);
+			this(company, null, null);
 		}
 
 		public ServiceContextTemporarySwapper(Company company, Layout layout)
+			throws PortalException {
+
+			this(company, layout, null);
+		}
+
+		public ServiceContextTemporarySwapper(
+				Company company, Layout layout, User user)
 			throws PortalException {
 
 			_company = company;
@@ -672,7 +687,13 @@ public class LayoutServiceContextHelperImpl
 
 			_layout = layout;
 
-			_user = _userLocalService.fetchGuestUser(company.getCompanyId());
+			if (user == null) {
+				_user = _userLocalService.fetchGuestUser(
+					company.getCompanyId());
+			}
+			else {
+				_user = user;
+			}
 
 			_permissionChecker = PermissionCheckerFactoryUtil.create(_user);
 
@@ -680,6 +701,12 @@ public class LayoutServiceContextHelperImpl
 				_setHttpServletRequestAttributes(_permissionChecker, _user);
 
 			_setCompanyServiceContext();
+		}
+
+		public ServiceContextTemporarySwapper(Company company, User user)
+			throws PortalException {
+
+			this(company, null, user);
 		}
 
 		@Override

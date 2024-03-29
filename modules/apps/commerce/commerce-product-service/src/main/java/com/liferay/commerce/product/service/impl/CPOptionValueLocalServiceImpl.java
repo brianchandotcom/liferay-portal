@@ -437,7 +437,8 @@ public class CPOptionValueLocalServiceImpl
 		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
-	private void _validateKey(CPOption cpOption, long cpOptionValueId, String key)
+	private void _validateKey(
+			CPOption cpOption, long cpOptionValueId, String key)
 		throws PortalException {
 
 		if (Validator.isBlank(key)) {

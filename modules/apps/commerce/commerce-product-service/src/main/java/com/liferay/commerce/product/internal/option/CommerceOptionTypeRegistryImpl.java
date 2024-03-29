@@ -52,7 +52,20 @@ public class CommerceOptionTypeRegistryImpl
 			return null;
 		}
 
-		return commerceOptionTypeServiceWrapper.getService();
+		CommerceOptionType commerceOptionType =
+			commerceOptionTypeServiceWrapper.getService();
+
+		if (commerceOptionType.isActive()) {
+			return commerceOptionType;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Commerce option type registered with key " + key +
+					" is not active.");
+		}
+
+		return null;
 	}
 
 	@Override
@@ -71,8 +84,12 @@ public class CommerceOptionTypeRegistryImpl
 				commerceOptionTypeServiceWrapper :
 					commerceOptionTypeServiceWrappers) {
 
-			commerceOptionTypes.add(
-				commerceOptionTypeServiceWrapper.getService());
+			CommerceOptionType commerceOptionType =
+				commerceOptionTypeServiceWrapper.getService();
+
+			if (commerceOptionType.isActive()) {
+				commerceOptionTypes.add(commerceOptionType);
+			}
 		}
 
 		return Collections.unmodifiableList(commerceOptionTypes);

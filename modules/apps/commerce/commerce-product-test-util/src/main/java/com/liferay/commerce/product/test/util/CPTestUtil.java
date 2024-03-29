@@ -43,6 +43,7 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -734,7 +736,13 @@ public class CPTestUtil {
 		CPOptionConfiguration cpOptionConfiguration =
 			_getCPOptionConfiguration();
 
-		return cpOptionConfiguration.allowedCommerceOptionTypes();
+		return ArrayUtil.filter(
+			cpOptionConfiguration.allowedCommerceOptionTypes(),
+			commerceOptionType ->
+				!Objects.equals(
+					CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+					commerceOptionType) ||
+				FeatureFlagManagerUtil.isEnabled("LPD-10887"));
 	}
 
 	public static String getDefaultCommerceOptionTypeKey(boolean skuContributor)
@@ -743,8 +751,13 @@ public class CPTestUtil {
 		CPOptionConfiguration cpOptionConfiguration =
 			_getCPOptionConfiguration();
 
-		String[] allowedCommerceOptionTypes =
-			cpOptionConfiguration.allowedCommerceOptionTypes();
+		String[] allowedCommerceOptionTypes = ArrayUtil.filter(
+			cpOptionConfiguration.allowedCommerceOptionTypes(),
+			commerceOptionType ->
+				!Objects.equals(
+					CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+					commerceOptionType) &&
+				FeatureFlagManagerUtil.isEnabled("LPD-10887"));
 
 		if (skuContributor) {
 			allowedCommerceOptionTypes =

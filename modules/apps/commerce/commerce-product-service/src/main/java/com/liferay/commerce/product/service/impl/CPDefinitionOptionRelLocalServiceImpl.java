@@ -31,6 +31,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1124,8 +1125,13 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		CPOptionConfiguration cpOptionConfiguration =
 			_getCPOptionConfiguration();
 
-		String[] allowedCommerceOptionTypes =
-			cpOptionConfiguration.allowedCommerceOptionTypes();
+		String[] allowedCommerceOptionTypes = ArrayUtil.filter(
+			cpOptionConfiguration.allowedCommerceOptionTypes(),
+			commerceOptionType ->
+				!Objects.equals(
+					CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+					commerceOptionType) ||
+				FeatureFlagManagerUtil.isEnabled("LPD-10887"));
 
 		if (skuContributor) {
 			allowedCommerceOptionTypes =

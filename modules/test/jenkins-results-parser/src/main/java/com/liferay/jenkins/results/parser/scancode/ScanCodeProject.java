@@ -25,9 +25,9 @@ import org.json.JSONObject;
 /**
  * @author Brittney Nguyen
  */
-public class ScancodeProject {
+public class ScanCodeProject {
 
-	public ScancodeProject(String buildURL, String pipelineName) {
+	public ScanCodeProject(String buildURL, String pipelineName) {
 		_buildURL = buildURL;
 		_pipelineName = pipelineName;
 	}
@@ -70,7 +70,7 @@ public class ScancodeProject {
 	}
 
 	public void downloadResultFiles() throws IOException {
-		String scancodeResultsDir = JenkinsResultsParserUtil.getBuildProperty(
+		String scanCodeResultsDir = JenkinsResultsParserUtil.getBuildProperty(
 			"scancode.results.dir");
 
 		for (String extension : _RESULT_FILES_EXTENSIONS) {
@@ -81,17 +81,17 @@ public class ScancodeProject {
 
 			File file = new File(
 				JenkinsResultsParserUtil.combine(
-					scancodeResultsDir, _projectNameFromURL, ".", extension));
+					scanCodeResultsDir, _projectNameFromURL, ".", extension));
 
 			JenkinsResultsParserUtil.toFile(url, file);
 		}
 
 		String tarGzName = _projectNameFromURL + ".tar.gz";
 
-		File resultsTarGzFile = new File(scancodeResultsDir, tarGzName);
+		File resultsTarGzFile = new File(scanCodeResultsDir, tarGzName);
 
 		JenkinsResultsParserUtil.tarGzip(
-			new File(scancodeResultsDir), resultsTarGzFile);
+			new File(scanCodeResultsDir), resultsTarGzFile);
 
 		uploadResultsToBucket(resultsTarGzFile.toString());
 	}
@@ -317,12 +317,12 @@ public class ScancodeProject {
 		File tarGzFile = new File(tarGzFilePath);
 
 		try {
-			ScancodeS3Bucket scancodeS3Bucket = ScancodeS3Bucket.getInstance();
+			ScanCodeS3Bucket scanCodeS3Bucket = ScanCodeS3Bucket.getInstance();
 
-			scancodeS3Bucket.createScancodeS3Object(
+			scanCodeS3Bucket.createScanCodeS3Object(
 				"inbox/" + tarGzFile.getName(), tarGzFile);
 
-			sendSlackNotification(scancodeS3Bucket.getS3URL());
+			sendSlackNotification(scanCodeS3Bucket.getS3URL());
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();

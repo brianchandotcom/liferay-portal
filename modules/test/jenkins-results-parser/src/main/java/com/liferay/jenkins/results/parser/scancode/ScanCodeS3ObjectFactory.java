@@ -15,31 +15,31 @@ import java.util.Map;
 /**
  * @author Brittney Nguyen
  */
-public class ScancodeS3ObjectFactory {
+public class ScanCodeS3ObjectFactory {
 
-	public static ScancodeS3Object newScancodeS3Object(
-		ScancodeS3Bucket scancodeS3Bucket, Blob blob) {
+	public static ScanCodeS3Object newScanCodeS3Object(
+		ScanCodeS3Bucket scanCodeS3Bucket, Blob blob) {
 
 		if (blob == null) {
 			return null;
 		}
 
 		String mapKey = JenkinsResultsParserUtil.combine(
-			scancodeS3Bucket.getName(), "/", blob.getName());
+			scanCodeS3Bucket.getName(), "/", blob.getName());
 
-		if (_scancodeS3Objects.containsKey(mapKey)) {
-			return _scancodeS3Objects.get(mapKey);
+		if (_scanCodeS3Objects.containsKey(mapKey)) {
+			return _scanCodeS3Objects.get(mapKey);
 		}
 
-		ScancodeS3Object scancodeS3Object = new ScancodeS3Object(
-			scancodeS3Bucket, blob);
+		ScanCodeS3Object scanCodeS3Object = new ScanCodeS3Object(
+			scanCodeS3Bucket, blob);
 
-		_scancodeS3Objects.put(mapKey, scancodeS3Object);
+		_scanCodeS3Objects.put(mapKey, scanCodeS3Object);
 
-		return scancodeS3Object;
+		return scanCodeS3Object;
 	}
 
-	private static final Map<String, ScancodeS3Object> _scancodeS3Objects =
+	private static final Map<String, ScanCodeS3Object> _scanCodeS3Objects =
 		new HashMap<>();
 
 }

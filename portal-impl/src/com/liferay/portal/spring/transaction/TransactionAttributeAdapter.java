@@ -8,6 +8,8 @@ package com.liferay.portal.spring.transaction;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 
+import java.util.Collection;
+
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
@@ -39,6 +41,11 @@ public class TransactionAttributeAdapter
 	@Override
 	public int getIsolationLevel() {
 		return _transactionAttribute.getIsolationLevel();
+	}
+
+	@Override
+	public Collection<String> getLabels() {
+		return _transactionAttribute.getLabels();
 	}
 
 	@Override

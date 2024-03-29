@@ -1440,15 +1440,21 @@ export default function ChangeTrackingRenderView({
 						<div className="entry-description">
 							<span>{description} </span>
 
-							<span>
-								{Liferay.Language.get('workflow-status')}
+							{Liferay.FeatureFlags['LPD-10703'] ? (
+								<>
+									<span>
+										{Liferay.Language.get(
+											'workflow-status'
+										)}
 
-								{': '}
-							</span>
+										{': '}
+									</span>
 
-							<WorkflowStatusLabel
-								workflowStatus={workflowStatus}
-							/>
+									<WorkflowStatusLabel
+										workflowStatus={workflowStatus}
+									/>
+								</>
+							) : null}
 						</div>
 					</div>
 

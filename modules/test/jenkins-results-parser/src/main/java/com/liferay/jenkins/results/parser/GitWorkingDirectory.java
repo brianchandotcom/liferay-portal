@@ -2088,35 +2088,29 @@ public class GitWorkingDirectory {
 	}
 
 	public List<LocalGitCommit> log(
-		String currentBranchName, String upstreamBranchName) {
+			String currentBranchName, String upstreamBranchName)
+		throws IOException {
 
-		try {
-			StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
-			sb.append("git log");
-			sb.append(" --oneline ");
-			sb.append(currentBranchName);
-			sb.append(" ^");
-			sb.append(upstreamBranchName);
-			sb.append(" | wc -l");
+		sb.append("git log");
+		sb.append(" --oneline ");
+		sb.append(currentBranchName);
+		sb.append(" ^");
+		sb.append(upstreamBranchName);
+		sb.append(" | wc -l");
 
-			GitUtil.ExecutionResult result = executeBashCommands(
-				5, 1000, 30 * 1000, sb.toString());
+		GitUtil.ExecutionResult result = executeBashCommands(
+			5, 1000, 30 * 1000, sb.toString());
 
-			if (result.getExitValue() != 0) {
-				throw new RuntimeException("Unable to run: git log");
-			}
-
-			int numberOfCommits = Integer.parseInt(result.getStandardOut());
-
-			return log(numberOfCommits);
+		if (result.getExitValue() != 0) {
+			throw new IOException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to find log between ", currentBranchName, " and ",
+					upstreamBranchName, ".\n\n", result.getStandardError()));
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(
-				"Unable to find log between " + currentBranchName + " and " +
-					upstreamBranchName + ".",
-				exception);
-		}
+
+		return log(Integer.parseInt(result.getStandardOut()));
 	}
 
 	public RemoteGitBranch pushToRemoteGitRepository(

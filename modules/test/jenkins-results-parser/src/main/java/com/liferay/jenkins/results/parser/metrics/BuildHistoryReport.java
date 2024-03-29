@@ -47,7 +47,8 @@ public class BuildHistoryReport {
 
 		buildHistoryReport.addFile(
 			"js/table-data.js",
-			_getTableDataJSFileContent(buildHistories, "Job Category"));
+			_getTableDataJSFileContent(
+				buildHistories, "Job Category", 1, "[Total]"));
 		buildHistoryReport.addFile(
 			"js/timeline-data.js",
 			_getTimelineDataJSFileContent(buildHistories, duration, startTime));
@@ -134,21 +135,16 @@ public class BuildHistoryReport {
 	}
 
 	private static String _getTableDataJSFileContent(
-		Collection<BuildHistory> buildHistories, String groupIdentifierName) {
+		Collection<BuildHistory> buildHistories, String groupIdentifierName,
+		int intervalDays, String mergedBuildHistoryName) {
 
 		JSONArray jsonArray = new JSONArray();
 
 		boolean removeHeader = false;
 
-		BuildHistory totalBuildHistory =
-			BuildHistoryProcessor.mergeBuildHistories(
-				buildHistories, "[Total]");
-
-		buildHistories.add(totalBuildHistory);
-
 		for (BuildHistory buildHistory : buildHistories) {
 			JSONArray tableJSONArray = buildHistory.getTableJSONArray(
-				groupIdentifierName);
+				groupIdentifierName, intervalDays);
 
 			if (removeHeader) {
 				tableJSONArray.remove(0);
@@ -160,7 +156,18 @@ public class BuildHistoryReport {
 			jsonArray.putAll(tableJSONArray);
 		}
 
-		buildHistories.remove(totalBuildHistory);
+		if (mergedBuildHistoryName != null) {
+			BuildHistory mergedBuildHistory =
+				BuildHistoryProcessor.mergeBuildHistories(
+					buildHistories, mergedBuildHistoryName);
+
+			JSONArray tableJSONArray = mergedBuildHistory.getTableJSONArray(
+				groupIdentifierName, intervalDays);
+
+			tableJSONArray.remove(0);
+
+			jsonArray.putAll(tableJSONArray);
+		}
 
 		return "var tableData = " + jsonArray.toString();
 	}
@@ -205,7 +212,8 @@ public class BuildHistoryReport {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(
-			_getTableDataJSFileContent(buildHistories, "Test Suite Name"));
+			_getTableDataJSFileContent(
+				buildHistories, "Test Suite Name", 1, "[Total]"));
 
 		sb.append("\nvar reportName = \"");
 

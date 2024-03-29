@@ -22,4 +22,6 @@
 	<#include "default_groups.ftl">
 
 	<#include "groups.ftl">
+
+	<#include "ct_collection.ftl">
 </#list>

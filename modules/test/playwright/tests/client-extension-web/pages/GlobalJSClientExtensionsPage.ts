@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import { ClientExtensionsPage } from './ClientExtensionsPage';
+import {ClientExtensionsPage} from './ClientExtensionsPage';
 
 export class GlobalJSClientExtensionsPage {
 	readonly clientExtensionsPage: ClientExtensionsPage;
@@ -29,5 +29,4 @@ export class GlobalJSClientExtensionsPage {
 
 		await this.clientExtensionsPage.addJSMenuItem.click();
 	}
-	
 }

@@ -37,31 +37,36 @@ test('Create a new JS with an attribute field', async ({
 	const clientExtensionValue = getRandomString();
 
 	await globalJSClientExtensionsPage.nameInput.fill(clientExtensionName);
-	
-	await page.getByRole('textbox', {name: 'JavaScript URL'}).fill('https://www.google.com/script.js');
 
-    await page.getByRole('textbox', {
-		name: 'Attribute'
-	}).fill('id');
-	
-	await page.getByLabel('Value', { exact: true }).fill(clientExtensionValue);
-	
+	await page
+		.getByRole('textbox', {name: 'JavaScript URL'})
+		.fill('https://www.google.com/script.js');
+
+	await page
+		.getByRole('textbox', {
+			name: 'Attribute',
+		})
+		.fill('id');
+
+	await page.getByLabel('Value', {exact: true}).fill(clientExtensionValue);
+
 	await globalJSClientExtensionsPage.editClientExtensionSubmitButton.click();
 
 	// Apply JS client extension to all pages
 
- 	await pagesAdminPage.selectJavaScriptClientExtension(clientExtensionName);
+	await pagesAdminPage.selectJavaScriptClientExtension(clientExtensionName);
 
-	await page.goto("/");
+	await page.goto('/');
 
-	await expect(page.locator(`script[id="${clientExtensionValue}"]`)).toBeAttached();
+	await expect(
+		page.locator(`script[id="${clientExtensionValue}"]`)
+	).toBeAttached();
 
 	// Clean up
 
 	await clientExtensionsPage.goto();
 
 	await clientExtensionsPage.deleteClientExtension(clientExtensionName);
-
 });
 
 test('The "src" attribute cannot be specified', async ({
@@ -70,9 +75,11 @@ test('The "src" attribute cannot be specified', async ({
 }) => {
 	await globalJSClientExtensionsPage.goto();
 
-    await page.getByRole('textbox', {
-        name: 'Attribute'
-      }).fill('src');
+	await page
+		.getByRole('textbox', {
+			name: 'Attribute',
+		})
+		.fill('src');
 
-    expect(page.getByText('Use the "JavaScript URL" field.')).toBeVisible();   	
+	expect(page.getByText('Use the "JavaScript URL" field.')).toBeVisible();
 });

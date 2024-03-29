@@ -24,15 +24,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -83,24 +77,11 @@ public class FragmentFileInstaller implements FileInstaller {
 
 	@Override
 	public URL transformURL(File file) throws Exception {
-		Long currentCompanyId = CompanyThreadLocal.getCompanyId();
-		PermissionChecker currentPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String currentName = PrincipalThreadLocal.getName();
-		ServiceContext currentServiceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		try {
 			_deploy(file);
 		}
 		finally {
 			file.delete();
-
-			CompanyThreadLocal.setCompanyId(currentCompanyId);
-			PermissionThreadLocal.setPermissionChecker(
-				currentPermissionChecker);
-			PrincipalThreadLocal.setName(currentName);
-			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
 		}
 
 		return null;
@@ -129,16 +110,12 @@ public class FragmentFileInstaller implements FileInstaller {
 		}
 
 		if ((company != null) && deployJSONObject.has("groupKey")) {
-			CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
 			group = _getDeploymentGroup(
 				company.getCompanyId(), deployJSONObject.getString("groupKey"));
 
 			_importFragmentEntriesAndLayouts(company, file, group);
 		}
 		else if (company != null) {
-			CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
 			group = _groupLocalService.getCompanyGroup(company.getCompanyId());
 
 			_importFragmentEntriesAndLayouts(company, file, group);
@@ -147,9 +124,6 @@ public class FragmentFileInstaller implements FileInstaller {
 			_companyLocalService.forEachCompany(
 				currentCompany -> {
 					try {
-						CompanyThreadLocal.setCompanyId(
-							currentCompany.getCompanyId());
-
 						_importFragmentEntriesAndLayouts(
 							currentCompany, file, null);
 					}

@@ -15,8 +15,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
@@ -44,15 +42,14 @@ import org.osgi.service.component.annotations.Reference;
 public class CTServiceRegistry {
 
 	public CTService<?> getCTService(long classNameId) {
-		try {
-			ClassName className = _classNameLocalService.getClassName(
-				classNameId);
+		ClassName className = _classNameLocalService.fetchByClassNameId(
+			classNameId);
 
-			return _serviceTrackerMap.getService(className.getClassName());
+		if (className == null) {
+			return null;
 		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
+
+		return _serviceTrackerMap.getService(className.getValue());
 	}
 
 	public Collection<CTTableMapperHelper> getCTTableMapperHelpers() {

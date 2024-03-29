@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,18 +61,15 @@ public class CTDisplayRendererRegistryImpl
 		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
 		long modelClassNameId, long modelClassPK) {
 
-		CTService<?> ctService = null;
+		ClassName className = _classNameLocalService.fetchByClassNameId(
+			modelClassNameId);
 
-		try {
-			ClassName className = _classNameLocalService.getClassName(
-				modelClassNameId);
+		if (className == null) {
+			return null;
+		}
 
-			ctService = _ctServiceServiceTrackerMap.getService(
-				className.getClassName());
-		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
+		CTService<?> ctService = _ctServiceServiceTrackerMap.getService(
+			className.getValue());
 
 		if (ctService == null) {
 			return null;
@@ -105,18 +101,15 @@ public class CTDisplayRendererRegistryImpl
 		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
 		long modelClassNameId, Set<Long> primaryKeys) {
 
-		CTService<?> ctService = null;
+		ClassName className = _classNameLocalService.fetchByClassNameId(
+			modelClassNameId);
 
-		try {
-			ClassName className = _classNameLocalService.getClassName(
-				modelClassNameId);
+		if (className == null) {
+			return null;
+		}
 
-			ctService = _ctServiceServiceTrackerMap.getService(
-				className.getClassName());
-		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
+		CTService<?> ctService = _ctServiceServiceTrackerMap.getService(
+			className.getValue());
 
 		if (ctService == null) {
 			return null;
@@ -512,16 +505,15 @@ public class CTDisplayRendererRegistryImpl
 	private <T extends BaseModel<T>> CTDisplayRenderer<T> _getCTDisplayRenderer(
 		long modelClassNameId) {
 
-		try {
-			ClassName className = _classNameLocalService.getClassName(
-				modelClassNameId);
+		ClassName className = _classNameLocalService.fetchByClassNameId(
+			modelClassNameId);
 
-			return (CTDisplayRenderer<T>)_ctDisplayServiceTrackerMap.getService(
-				className.getClassName());
+		if (className == null) {
+			return null;
 		}
-		catch (PortalException portalException) {
-			throw new SystemException(portalException);
-		}
+
+		return (CTDisplayRenderer<T>)_ctDisplayServiceTrackerMap.getService(
+			className.getValue());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

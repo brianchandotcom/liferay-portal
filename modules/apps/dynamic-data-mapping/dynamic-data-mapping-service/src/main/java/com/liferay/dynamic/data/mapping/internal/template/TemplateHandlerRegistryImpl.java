@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
@@ -70,7 +71,14 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 	@Override
 	public TemplateHandler getTemplateHandler(long classNameId) {
-		return _serviceTrackerMap.getService(_portal.getClassName(classNameId));
+		ClassName className = _classNameLocalService.fetchByClassNameId(
+			classNameId);
+
+		if (className == null) {
+			return null;
+		}
+
+		return _serviceTrackerMap.getService(className.getValue());
 	}
 
 	@Override

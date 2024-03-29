@@ -42,23 +42,26 @@ public interface PlacedOrderItemResource {
 		throws Exception;
 
 	public Page<PlacedOrderItem> getPlacedOrderPlacedOrderItemsPage(
-			Long placedOrderId, Long skuId, Pagination pagination)
+			Long placedOrderId, String search, Long skuId,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getPlacedOrderPlacedOrderItemsPageHttpResponse(
-				Long placedOrderId, Long skuId, Pagination pagination)
+				Long placedOrderId, String search, Long skuId,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public void postPlacedOrderPlacedOrderItemsPageExportBatch(
-			Long placedOrderId, Long skuId, String callbackURL,
-			String contentType, String fieldNames)
+			Long placedOrderId, String search, Long skuId, String sortString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postPlacedOrderPlacedOrderItemsPageExportBatchHttpResponse(
-				Long placedOrderId, Long skuId, String callbackURL,
-				String contentType, String fieldNames)
+				Long placedOrderId, String search, Long skuId,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 		throws Exception;
 
 	public static class Builder {
@@ -274,12 +277,13 @@ public interface PlacedOrderItemResource {
 		}
 
 		public Page<PlacedOrderItem> getPlacedOrderPlacedOrderItemsPage(
-				Long placedOrderId, Long skuId, Pagination pagination)
+				Long placedOrderId, String search, Long skuId,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getPlacedOrderPlacedOrderItemsPageHttpResponse(
-					placedOrderId, skuId, pagination);
+					placedOrderId, search, skuId, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -342,7 +346,8 @@ public interface PlacedOrderItemResource {
 
 		public HttpInvoker.HttpResponse
 				getPlacedOrderPlacedOrderItemsPageHttpResponse(
-					Long placedOrderId, Long skuId, Pagination pagination)
+					Long placedOrderId, String search, Long skuId,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -366,6 +371,10 @@ public interface PlacedOrderItemResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
 			if (skuId != null) {
 				httpInvoker.parameter("skuId", String.valueOf(skuId));
 			}
@@ -375,6 +384,10 @@ public interface PlacedOrderItemResource {
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(
@@ -391,13 +404,15 @@ public interface PlacedOrderItemResource {
 		}
 
 		public void postPlacedOrderPlacedOrderItemsPageExportBatch(
-				Long placedOrderId, Long skuId, String callbackURL,
-				String contentType, String fieldNames)
+				Long placedOrderId, String search, Long skuId,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postPlacedOrderPlacedOrderItemsPageExportBatchHttpResponse(
-					placedOrderId, skuId, callbackURL, contentType, fieldNames);
+					placedOrderId, search, skuId, sortString, callbackURL,
+					contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -449,8 +464,9 @@ public interface PlacedOrderItemResource {
 
 		public HttpInvoker.HttpResponse
 				postPlacedOrderPlacedOrderItemsPageExportBatchHttpResponse(
-					Long placedOrderId, Long skuId, String callbackURL,
-					String contentType, String fieldNames)
+					Long placedOrderId, String search, Long skuId,
+					String sortString, String callbackURL, String contentType,
+					String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -476,8 +492,16 @@ public interface PlacedOrderItemResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
 			if (skuId != null) {
 				httpInvoker.parameter("skuId", String.valueOf(skuId));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			if (callbackURL != null) {

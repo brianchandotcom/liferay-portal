@@ -52,12 +52,13 @@ public interface PlacedOrderItemResource {
 		throws Exception;
 
 	public Page<PlacedOrderItem> getPlacedOrderPlacedOrderItemsPage(
-			Long placedOrderId, Long skuId, Pagination pagination)
+			Long placedOrderId, String search, Long skuId,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Response postPlacedOrderPlacedOrderItemsPageExportBatch(
-			Long placedOrderId, Long skuId, String callbackURL,
-			String contentType, String fieldNames)
+			Long placedOrderId, String search, Long skuId, Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

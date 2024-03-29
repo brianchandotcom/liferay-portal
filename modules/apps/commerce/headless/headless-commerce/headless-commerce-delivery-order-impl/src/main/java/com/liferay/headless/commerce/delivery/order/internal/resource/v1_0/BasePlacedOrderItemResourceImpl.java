@@ -130,7 +130,15 @@ public abstract class BasePlacedOrderItemResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "skuId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
 			)
 		}
 	)
@@ -149,9 +157,13 @@ public abstract class BasePlacedOrderItemResourceImpl
 			@javax.ws.rs.PathParam("placedOrderId")
 			Long placedOrderId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("skuId")
 			Long skuId,
-			@javax.ws.rs.core.Context Pagination pagination)
+			@javax.ws.rs.core.Context Pagination pagination,
+			@javax.ws.rs.core.Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -170,7 +182,15 @@ public abstract class BasePlacedOrderItemResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "skuId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "sort"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -204,8 +224,12 @@ public abstract class BasePlacedOrderItemResourceImpl
 			@javax.ws.rs.PathParam("placedOrderId")
 			Long placedOrderId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("skuId")
 			Long skuId,
+			@javax.ws.rs.core.Context Sort[] sorts,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -293,8 +317,8 @@ public abstract class BasePlacedOrderItemResourceImpl
 
 		if (parameters.containsKey("placedOrderId")) {
 			return getPlacedOrderPlacedOrderItemsPage(
-				_parseLong((String)parameters.get("placedOrderId")),
-				_parseLong((String)parameters.get("skuId")), pagination);
+				_parseLong((String)parameters.get("placedOrderId")), search,
+				_parseLong((String)parameters.get("skuId")), pagination, sorts);
 		}
 		else {
 			throw new NotSupportedException(

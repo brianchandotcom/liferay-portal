@@ -19,6 +19,7 @@ import com.liferay.headless.commerce.delivery.order.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.delivery.order.client.resource.v1_0.PlacedOrderItemResource;
 import com.liferay.headless.commerce.delivery.order.client.serdes.v1_0.PlacedOrderItemSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -327,7 +329,7 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 		Page<PlacedOrderItem> page =
 			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(1, 10));
+				placedOrderId, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -337,8 +339,8 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 					irrelevantPlacedOrderId, randomIrrelevantPlacedOrderItem());
 
 			page = placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				irrelevantPlacedOrderId, null,
-				Pagination.of(1, (int)totalCount + 1));
+				irrelevantPlacedOrderId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -360,7 +362,7 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 				placedOrderId, randomPlacedOrderItem());
 
 		page = placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-			placedOrderId, null, Pagination.of(1, 10));
+			placedOrderId, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -393,7 +395,7 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 		Page<PlacedOrderItem> placedOrderItemPage =
 			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, null);
+				placedOrderId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			placedOrderItemPage.getTotalCount());
@@ -417,10 +419,11 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<PlacedOrderItem> page1 =
 				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-					placedOrderId, null,
+					placedOrderId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit));
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -429,20 +432,22 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 			Page<PlacedOrderItem> page2 =
 				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-					placedOrderId, null,
+					placedOrderId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit));
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				placedOrderItem2, (List<PlacedOrderItem>)page2.getItems());
 
 			Page<PlacedOrderItem> page3 =
 				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-					placedOrderId, null,
+					placedOrderId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit));
+						pageSizeLimit),
+					null);
 
 			assertContains(
 				placedOrderItem3, (List<PlacedOrderItem>)page3.getItems());
@@ -450,7 +455,8 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		else {
 			Page<PlacedOrderItem> page1 =
 				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-					placedOrderId, null, Pagination.of(1, totalCount + 2));
+					placedOrderId, null, null, Pagination.of(1, totalCount + 2),
+					null);
 
 			List<PlacedOrderItem> placedOrderItems1 =
 				(List<PlacedOrderItem>)page1.getItems();
@@ -461,7 +467,8 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 			Page<PlacedOrderItem> page2 =
 				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-					placedOrderId, null, Pagination.of(2, totalCount + 2));
+					placedOrderId, null, null, Pagination.of(2, totalCount + 2),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -473,7 +480,8 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 			Page<PlacedOrderItem> page3 =
 				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-					placedOrderId, null, Pagination.of(1, (int)totalCount + 3));
+					placedOrderId, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(
 				placedOrderItem1, (List<PlacedOrderItem>)page3.getItems());
@@ -481,6 +489,161 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 				placedOrderItem2, (List<PlacedOrderItem>)page3.getItems());
 			assertContains(
 				placedOrderItem3, (List<PlacedOrderItem>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetPlacedOrderPlacedOrderItemsPageWithSortDateTime()
+		throws Exception {
+
+		testGetPlacedOrderPlacedOrderItemsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, placedOrderItem1, placedOrderItem2) -> {
+				BeanTestUtil.setProperty(
+					placedOrderItem1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetPlacedOrderPlacedOrderItemsPageWithSortDouble()
+		throws Exception {
+
+		testGetPlacedOrderPlacedOrderItemsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, placedOrderItem1, placedOrderItem2) -> {
+				BeanTestUtil.setProperty(
+					placedOrderItem1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					placedOrderItem2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetPlacedOrderPlacedOrderItemsPageWithSortInteger()
+		throws Exception {
+
+		testGetPlacedOrderPlacedOrderItemsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, placedOrderItem1, placedOrderItem2) -> {
+				BeanTestUtil.setProperty(
+					placedOrderItem1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					placedOrderItem2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetPlacedOrderPlacedOrderItemsPageWithSortString()
+		throws Exception {
+
+		testGetPlacedOrderPlacedOrderItemsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, placedOrderItem1, placedOrderItem2) -> {
+				Class<?> clazz = placedOrderItem1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						placedOrderItem1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						placedOrderItem2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						placedOrderItem1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						placedOrderItem2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						placedOrderItem1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						placedOrderItem2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetPlacedOrderPlacedOrderItemsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, PlacedOrderItem, PlacedOrderItem, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long placedOrderId =
+			testGetPlacedOrderPlacedOrderItemsPage_getPlacedOrderId();
+
+		PlacedOrderItem placedOrderItem1 = randomPlacedOrderItem();
+		PlacedOrderItem placedOrderItem2 = randomPlacedOrderItem();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, placedOrderItem1, placedOrderItem2);
+		}
+
+		placedOrderItem1 =
+			testGetPlacedOrderPlacedOrderItemsPage_addPlacedOrderItem(
+				placedOrderId, placedOrderItem1);
+
+		placedOrderItem2 =
+			testGetPlacedOrderPlacedOrderItemsPage_addPlacedOrderItem(
+				placedOrderId, placedOrderItem2);
+
+		Page<PlacedOrderItem> page =
+			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+				placedOrderId, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<PlacedOrderItem> ascPage =
+				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+					placedOrderId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(
+				placedOrderItem1, (List<PlacedOrderItem>)ascPage.getItems());
+			assertContains(
+				placedOrderItem2, (List<PlacedOrderItem>)ascPage.getItems());
+
+			Page<PlacedOrderItem> descPage =
+				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+					placedOrderId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(
+				placedOrderItem2, (List<PlacedOrderItem>)descPage.getItems());
+			assertContains(
+				placedOrderItem1, (List<PlacedOrderItem>)descPage.getItems());
 		}
 	}
 

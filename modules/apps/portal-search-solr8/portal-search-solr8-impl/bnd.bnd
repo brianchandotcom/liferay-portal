@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Solr 8 Implementation
 Bundle-SymbolicName: com.liferay.portal.search.solr8.impl
-Bundle-Version: 5.0.25
+Bundle-Version: 5.0.26
 Import-Package:\
 	!com.codahale.metrics.*,\
 	\

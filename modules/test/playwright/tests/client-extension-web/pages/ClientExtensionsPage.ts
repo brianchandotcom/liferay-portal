@@ -19,7 +19,8 @@ export class ClientExtensionsPage {
 
 	constructor(page: Page) {
 		this.addJSMenuItem = page.getByRole('menuitem', {
-			exact: true, name: 'Add JS',
+			exact: true,
+			name: 'Add JS',
 		});
 		this.addThemeCSSMenuItem = page.getByRole('menuitem', {
 			name: 'Add Theme CSS',

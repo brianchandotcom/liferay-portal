@@ -176,31 +176,26 @@ public class SugarQueryExpressionVisitorImpl
 
 		JSONArray jsonArray = null;
 
-		try {
-			JSONObject leftjsonObject = (JSONObject)left;
-			JSONObject rightjsonObject = (JSONObject)right;
+		JSONObject leftjsonObject = (JSONObject)left;
+		JSONObject rightjsonObject = (JSONObject)right;
 
-			if (Validator.isNotNull(leftjsonObject.getJSONArray(operator))) {
-				jsonArray = leftjsonObject.getJSONArray(operator);
-			}
-			else {
-				jsonArray = JSONFactoryUtil.createJSONArray(
-				).put(
-					leftjsonObject
-				);
-			}
-
-			jsonArray.put(rightjsonObject);
-
-			sb.append(
-				JSONFactoryUtil.createJSONObject(
-				).put(
-					operator, jsonArray
-				).toString());
+		if (Validator.isNotNull(leftjsonObject.getJSONArray(operator))) {
+			jsonArray = leftjsonObject.getJSONArray(operator);
 		}
-		catch (Exception exception) {
-			throw new UnsupportedOperationException();
+		else {
+			jsonArray = JSONFactoryUtil.createJSONArray(
+			).put(
+				leftjsonObject
+			);
 		}
+
+		jsonArray.put(rightjsonObject);
+
+		sb.append(
+			JSONFactoryUtil.createJSONObject(
+			).put(
+				operator, jsonArray
+			).toString());
 	}
 
 	private final long _objectDefinitionId;

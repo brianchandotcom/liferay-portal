@@ -5,6 +5,8 @@
 
 package com.liferay.site.initializer.extender.internal;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -25,14 +27,20 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,6 +64,7 @@ import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -89,6 +98,7 @@ public class SiteInitializerSerializerImpl
 				groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"journal-articles", zipWriter);
 			_serializeStyleBookEntries(groupId, zipWriter);
+			_serializeUsers(groupId, zipWriter);
 
 			return zipWriter.getFile();
 		}
@@ -102,6 +112,13 @@ public class SiteInitializerSerializerImpl
 		throws Exception {
 
 		zipWriter.addEntry("site-initializer/" + fileName, inputStream);
+	}
+
+	private void _addZipEntry(
+			String fileName, JSONArray jsonArray, ZipWriter zipWriter)
+		throws Exception {
+
+		_addZipEntry(fileName, JSONUtil.toString(jsonArray), zipWriter);
 	}
 
 	private void _addZipEntry(
@@ -122,6 +139,27 @@ public class SiteInitializerSerializerImpl
 		string = StringUtil.toLowerCase(string);
 
 		return StringUtil.replace(string, CharPool.SPACE, CharPool.DASH);
+	}
+
+	private void _serializeAccounts(
+			HashSet<AccountEntry> accountEntries, ZipWriter zipWriter)
+		throws Exception {
+
+		JSONArray accountEntriesJSONArray = _jsonFactory.createJSONArray();
+
+		for (AccountEntry accountEntry : accountEntries) {
+			accountEntriesJSONArray.put(
+				JSONUtil.put(
+					"externalReferenceCode",
+					accountEntry.getExternalReferenceCode()
+				).put(
+					"name", accountEntry.getName()
+				).put(
+					"type", accountEntry.getType()
+				));
+		}
+
+		_addZipEntry("accounts.json", accountEntriesJSONArray, zipWriter);
 	}
 
 	private void _serializeDDMStructure(
@@ -433,6 +471,66 @@ public class SiteInitializerSerializerImpl
 			zipWriter);
 	}
 
+	private void _serializeOrganization(
+		Organization organization, JSONArray jsonArray) {
+
+		JSONObject organizationJSONObject = JSONUtil.put(
+			"childOrganizations", _jsonFactory.createJSONArray()
+		).put(
+			"externalReferenceCode", organization.getExternalReferenceCode()
+		).put(
+			"name", organization.getName()
+		);
+
+		for (Organization childOrganization :
+				_organizationLocalService.getOrganizations(
+					organization.getCompanyId(),
+					organization.getOrganizationId())) {
+
+			_serializeOrganization(
+				childOrganization,
+				(JSONArray)organizationJSONObject.get("childOrganizations"));
+		}
+
+		jsonArray.put(organizationJSONObject);
+	}
+
+	private void _serializeOrganizations(
+			HashSet<Organization> organizations, ZipWriter zipWriter)
+		throws Exception {
+
+		JSONArray organizationsJSONArray = _jsonFactory.createJSONArray();
+
+		for (Organization organization : organizations) {
+			_serializeOrganization(organization, organizationsJSONArray);
+		}
+
+		_addZipEntry("organizations.json", organizationsJSONArray, zipWriter);
+	}
+
+	private void _serializeRoles(HashSet<Role> roles, ZipWriter zipWriter)
+		throws Exception {
+
+		JSONArray roleJSONArray = _jsonFactory.createJSONArray();
+
+		for (Role role : roles) {
+			if (StringUtil.equals(role.getName(), "User")) {
+				continue;
+			}
+
+			roleJSONArray.put(
+				JSONUtil.put(
+					"name", role.getName()
+				).put(
+					"name_i18n", JSONUtil.put("en-US", role.getName())
+				).put(
+					"type", role.getType()
+				));
+		}
+
+		_addZipEntry("roles.json", roleJSONArray, zipWriter);
+	}
+
 	private void _serializeStyleBookEntries(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
@@ -446,6 +544,90 @@ public class SiteInitializerSerializerImpl
 				zipWriter, "site-initializer/style-books");
 		}
 	}
+
+	private void _serializeUsers(long groupId, ZipWriter zipWriter)
+		throws Exception {
+
+		HashSet<Organization> allOrganizations = new HashSet<>();
+		HashSet<AccountEntry> allAccountEntries = new HashSet<>();
+		HashSet<Role> allRoles = new HashSet<>();
+
+		JSONArray usersJSONArray = _jsonFactory.createJSONArray();
+
+		for (User user : _userLocalService.getGroupUsers(groupId)) {
+			boolean admin = false;
+
+			for (Role role : user.getRoles()) {
+				if (StringUtil.equals(role.getName(), "Administrator") ||
+					StringUtil.equals(role.getName(), "Power User")) {
+
+					admin = true;
+
+					break;
+				}
+			}
+
+			if (admin) {
+				continue;
+			}
+
+			allRoles.addAll(user.getRoles());
+
+			JSONArray userAccountBriefsJSONArray =
+				_jsonFactory.createJSONArray();
+
+			List<AccountEntry> accountEntries =
+				_accountEntryLocalService.getUserAccountEntries(
+					user.getUserId(), null, null, null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+
+			allAccountEntries.addAll(accountEntries);
+
+			for (AccountEntry accountEntry : accountEntries) {
+				userAccountBriefsJSONArray.put(
+					JSONUtil.put(
+						"externalReferenceCode",
+						accountEntry.getExternalReferenceCode()));
+			}
+
+			JSONArray userOrganizationBriefsJSONArray =
+				_jsonFactory.createJSONArray();
+
+			allOrganizations.addAll(user.getOrganizations());
+
+			for (Organization organization : user.getOrganizations()) {
+				userOrganizationBriefsJSONArray.put(
+					JSONUtil.put("name", organization.getName()));
+			}
+
+			usersJSONArray.put(
+				JSONUtil.put(
+					"accountBriefs", userAccountBriefsJSONArray
+				).put(
+					"alternateName", user.getScreenName()
+				).put(
+					"emailAddress", user.getEmailAddresses()
+				).put(
+					"externalReferenceCode", user.getExternalReferenceCode()
+				).put(
+					"familyName", user.getLastName()
+				).put(
+					"givenName", user.getFirstName()
+				).put(
+					"name", user.getFullName()
+				).put(
+					"organizationBriefs", userOrganizationBriefsJSONArray
+				));
+		}
+
+		_addZipEntry("user-accounts.json", usersJSONArray, zipWriter);
+		_serializeRoles(allRoles, zipWriter);
+		_serializeAccounts(allAccountEntries, zipWriter);
+		_serializeOrganizations(allOrganizations, zipWriter);
+	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
@@ -478,6 +660,9 @@ public class SiteInitializerSerializerImpl
 	@Reference
 	private LayoutsExporter _layoutsExporter;
 
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.delivery.internal.dto.v1_0.converter.PageDefinitionDTOConverter)"
 	)
@@ -489,6 +674,9 @@ public class SiteInitializerSerializerImpl
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private ZipReaderFactory _zipReaderFactory;

@@ -9,13 +9,11 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.filter.factory.BaseFilterFactory;
 import com.liferay.object.rest.filter.factory.FilterFactory;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.storage.salesforce.internal.odata.filter.expression.SOSQLExpressionVisitorImpl;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Paulo Albuquerque
@@ -32,10 +30,7 @@ public class SalesforceFilterFactoryImpl
 		EntityModel entityModel, ObjectDefinition objectDefinition) {
 
 		return new SOSQLExpressionVisitorImpl(
-			objectDefinition.getObjectDefinitionId(), _objectFieldLocalService);
+			objectDefinition.getObjectDefinitionId(), objectFieldLocalService);
 	}
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

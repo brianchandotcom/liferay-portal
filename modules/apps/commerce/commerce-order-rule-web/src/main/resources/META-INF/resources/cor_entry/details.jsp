@@ -47,7 +47,7 @@ String type = BeanParamUtil.getString(corEntry, renderRequest, "type", COREntryC
 					</div>
 
 					<div class="col-auto">
-						<aui:select label="type" name="type" required="<%= true %>">
+						<aui:select disabled="<%= true %>" label="type" name="type" required="<%= true %>">
 
 							<%
 							for (COREntryType corEntryType : corEntryDisplayContext.getCOREntryTypes()) {

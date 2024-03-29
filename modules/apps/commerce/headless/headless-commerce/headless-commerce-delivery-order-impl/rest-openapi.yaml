@@ -1133,11 +1133,21 @@ paths:
                   schema:
                       type: integer
                 - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
                   name: skuId
                   required: false
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

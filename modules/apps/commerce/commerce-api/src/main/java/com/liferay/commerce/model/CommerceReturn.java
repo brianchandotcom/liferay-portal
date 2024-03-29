@@ -6,6 +6,7 @@
 package com.liferay.commerce.model;
 
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
 
@@ -16,6 +17,7 @@ import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Stefano Motta
  */
 public class CommerceReturn {
 
@@ -35,7 +37,7 @@ public class CommerceReturn {
 		_note = (String)objectEntryValues.get("note");
 		_orderId = (long)objectEntryValues.get(
 			"r_commerceOrderToCommerceReturns_commerceOrderId");
-		_requestedItems = new BigDecimal(
+		_requestedItems = GetterUtil.getInteger(
 			String.valueOf(objectEntryValues.get("requestedItems")));
 		_returnStatus = (String)objectEntryValues.get("returnStatus");
 		_status = objectEntry.getStatus();
@@ -83,7 +85,7 @@ public class CommerceReturn {
 		return _orderId;
 	}
 
-	public BigDecimal getRequestedItems() {
+	public int getRequestedItems() {
 		return _requestedItems;
 	}
 
@@ -109,7 +111,7 @@ public class CommerceReturn {
 	private final String _note;
 	private final ObjectEntry _objectEntry;
 	private final long _orderId;
-	private final BigDecimal _requestedItems;
+	private final int _requestedItems;
 	private final String _returnStatus;
 	private final int _status;
 	private final BigDecimal _totalAmount;

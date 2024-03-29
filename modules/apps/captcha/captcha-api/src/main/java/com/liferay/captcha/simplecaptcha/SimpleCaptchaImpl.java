@@ -89,8 +89,17 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public boolean isEnabled(HttpServletRequest httpServletRequest) {
-		if (isExceededMaxChallenges(httpServletRequest)) {
-			return false;
+		if (_captchaConfiguration.maxChallenges() > 0) {
+			HttpSession httpSession = _getHttpSession(httpServletRequest);
+
+			Integer count = (Integer)httpSession.getAttribute(
+				_getHttpSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
+
+			if (isExceededMaxChallenges(count)) {
+				return false;
+			}
+
+			return true;
 		}
 
 		if (_captchaConfiguration.maxChallenges() >= 0) {
@@ -354,21 +363,6 @@ public class SimpleCaptchaImpl implements Captcha {
 			_wordRenderers[i] = (WordRenderer)_getInstance(
 				wordRendererClassName);
 		}
-	}
-
-	protected boolean isExceededMaxChallenges(
-		HttpServletRequest httpServletRequest) {
-
-		if (_captchaConfiguration.maxChallenges() > 0) {
-			HttpSession httpSession = _getHttpSession(httpServletRequest);
-
-			Integer count = (Integer)httpSession.getAttribute(
-				_getHttpSessionKey(WebKeys.CAPTCHA_COUNT, httpServletRequest));
-
-			return isExceededMaxChallenges(count);
-		}
-
-		return false;
 	}
 
 	protected boolean isExceededMaxChallenges(Integer count) {

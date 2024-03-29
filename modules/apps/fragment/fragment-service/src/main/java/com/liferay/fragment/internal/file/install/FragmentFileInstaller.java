@@ -263,13 +263,7 @@ public class FragmentFileInstaller implements FileInstaller {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		if (company != null) {
-			serviceContext.setCompanyId(company.getCompanyId());
-		}
-		else {
-			serviceContext.setCompanyId(CompanyConstants.SYSTEM);
-		}
-
+		serviceContext.setCompanyId(company.getCompanyId());
 		serviceContext.setUserId(user.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
@@ -284,9 +278,7 @@ public class FragmentFileInstaller implements FileInstaller {
 			user.getUserId(), groupId, 0, file,
 			FragmentsImportStrategy.OVERWRITE);
 
-		if ((company != null) && (group != null) &&
-			(company.getGroupId() != group.getGroupId())) {
-
+		if ((group != null) && (company.getGroupId() != group.getGroupId())) {
 			_layoutsImporter.importFile(
 				user.getUserId(), groupId, 0L, file,
 				LayoutsImportStrategy.OVERWRITE, true);

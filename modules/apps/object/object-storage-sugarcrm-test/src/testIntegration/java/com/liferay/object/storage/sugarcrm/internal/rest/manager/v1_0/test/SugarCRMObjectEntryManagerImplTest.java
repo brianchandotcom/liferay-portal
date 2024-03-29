@@ -15,6 +15,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
 import com.liferay.object.storage.sugarcrm.configuration.SugarCRMConfiguration;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -204,7 +206,26 @@ public class SugarCRMObjectEntryManagerImplTest
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"filter", "firstName eq '" + firstName1 + "'"
+				"filter", "firstName eq " + StringUtil.quote(firstName1)
+			).build(),
+			objectEntry1);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				StringBundler.concat(
+					"firstName eq ", StringUtil.quote(firstName1), " and ",
+					"lastName eq ", StringUtil.quote(lastName1))
+			).build(),
+			objectEntry1);
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				StringBundler.concat(
+					"firstName eq ", StringUtil.quote(firstName1), " or ",
+					"lastName eq ",
+					StringUtil.quote(RandomTestUtil.randomString()))
 			).build(),
 			objectEntry1);
 	}

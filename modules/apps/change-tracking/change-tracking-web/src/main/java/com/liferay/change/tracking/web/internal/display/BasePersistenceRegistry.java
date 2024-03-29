@@ -114,7 +114,7 @@ public class BasePersistenceRegistry {
 
 			tableReferenceDefinition =
 				_tableReferenceDefinitionServiceTrackerMap.getService(
-					className.getClassName());
+					className.getValue());
 		}
 		catch (PortalException portalException) {
 			throw new SystemException(portalException);

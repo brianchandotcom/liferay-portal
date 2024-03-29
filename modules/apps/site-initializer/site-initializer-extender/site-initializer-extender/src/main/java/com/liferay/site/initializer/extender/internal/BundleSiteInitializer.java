@@ -2464,6 +2464,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 			pageJSONObject.getBoolean("private"),
 			pageJSONObject.getString("friendlyURL"));
 
+		if ((layout != null) && !Objects.equals(layout.getType(), type)) {
+			_layoutLocalService.deleteLayout(layout);
+
+			layout = null;
+		}
+
 		if (layout != null) {
 			_layoutLocalService.updateLayout(
 				serviceContext.getScopeGroupId(), layout.isPrivateLayout(),

@@ -313,7 +313,9 @@ public abstract class SecretsUtil {
 		private static final Map<String, Vault> _vaultsMap = new HashMap<>();
 
 		static {
-			JSONArray vaultsJSONArray = _toJSONArray("/v1/vaults");
+			JSONArray vaultsJSONArray = new JSONArray();
+
+			//JSONArray vaultsJSONArray = _toJSONArray("/v1/vaults");
 
 			for (int i = 0; i < vaultsJSONArray.length(); i++) {
 				JSONObject vaultJSONObject = vaultsJSONArray.getJSONObject(i);

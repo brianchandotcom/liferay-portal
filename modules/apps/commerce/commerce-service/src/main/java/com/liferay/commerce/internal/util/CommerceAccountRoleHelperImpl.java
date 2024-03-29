@@ -357,39 +357,44 @@ public class CommerceAccountRoleHelperImpl
 				new String[] {ActionKeys.VIEW});
 		}
 		else if (name.equals(AccountRoleConstants.ROLE_NAME_RETURNS_MANAGER)) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					role.getCompanyId(), "CommerceReturn");
+			for (String portletId :
+					_RETURNS_MANAGER_CONTROL_PANEL_PORTLET_IDS) {
 
-			if (objectDefinition != null) {
-				for (String portletId :
-						_RETURNS_MANAGER_CONTROL_PANEL_PORTLET_IDS) {
+				companyResourceActionIds.put(
+					portletId,
+					new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
+			}
 
+			companyResourceActionIds.put(
+				PortletKeys.PORTAL,
+				new String[] {ActionKeys.VIEW_CONTROL_PANEL});
+
+			for (String objectDefinitionName :
+					_RETURNS_MANAGER_OBJECT_DEFINITION_NAMES) {
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						role.getCompanyId(), objectDefinitionName);
+
+				if (objectDefinition != null) {
 					companyResourceActionIds.put(
-						portletId,
-						new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
+						"com.liferay.object#" +
+							objectDefinition.getObjectDefinitionId(),
+						new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
+					companyResourceActionIds.put(
+						"com.liferay.object.model.ObjectDefinition#" +
+							objectDefinition.getObjectDefinitionId(),
+						new String[] {
+							ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+							ActionKeys.UPDATE, ActionKeys.VIEW
+						});
+					companyResourceActionIds.put(
+						StringBundler.concat(
+							"com_liferay_object_web_internal_object_",
+							"definitions_portlet_ObjectDefinitionsPortlet_",
+							objectDefinition.getObjectDefinitionId()),
+						new String[] {ActionKeys.VIEW});
 				}
-
-				companyResourceActionIds.put(
-					PortletKeys.PORTAL,
-					new String[] {ActionKeys.VIEW_CONTROL_PANEL});
-				companyResourceActionIds.put(
-					"com.liferay.object#" +
-						objectDefinition.getObjectDefinitionId(),
-					new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY});
-				companyResourceActionIds.put(
-					"com.liferay.object.model.ObjectDefinition#" +
-						objectDefinition.getObjectDefinitionId(),
-					new String[] {
-						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-						ActionKeys.UPDATE, ActionKeys.VIEW
-					});
-				companyResourceActionIds.put(
-					StringBundler.concat(
-						"com_liferay_object_web_internal_object_definitions_",
-						"portlet_ObjectDefinitionsPortlet_",
-						objectDefinition.getObjectDefinitionId()),
-					new String[] {ActionKeys.VIEW});
 			}
 		}
 
@@ -406,6 +411,10 @@ public class CommerceAccountRoleHelperImpl
 
 	private static final String[] _RETURNS_MANAGER_CONTROL_PANEL_PORTLET_IDS = {
 		CommercePortletKeys.COMMERCE_RETURN
+	};
+
+	private static final String[] _RETURNS_MANAGER_OBJECT_DEFINITION_NAMES = {
+		"CommerceReturn", "CommerceReturnItem"
 	};
 
 	private static final String[] _SUPPLIER_CONTROL_PANEL_PORTLET_IDS = {

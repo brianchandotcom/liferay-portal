@@ -15,6 +15,8 @@ import com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem;
 import com.liferay.headless.commerce.delivery.order.internal.dto.v1_0.converter.PlacedOrderItemDTOConverterContext;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemResource;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -63,8 +65,8 @@ public class PlacedOrderItemResourceImpl
 	@NestedField(parentClass = PlacedOrder.class, value = "placedOrderItems")
 	@Override
 	public Page<PlacedOrderItem> getPlacedOrderPlacedOrderItemsPage(
-			@NestedFieldId("id") Long placedOrderId, Long skuId,
-			Pagination pagination)
+			@NestedFieldId("id") Long placedOrderId, String search, Long skuId,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
@@ -74,11 +76,28 @@ public class PlacedOrderItemResourceImpl
 			throw new NoSuchOrderException();
 		}
 
+		Sort sort = new Sort();
+
+		if (sorts != null) {
+			sort = sorts[0];
+		}
+
+		int startPosition = QueryUtil.ALL_POS;
+		int endPosition = QueryUtil.ALL_POS;
+
+		if (pagination != null) {
+			startPosition = pagination.getStartPosition();
+			endPosition = pagination.getEndPosition();
+		}
+
+		BaseModelSearchResult<CommerceOrderItem> searchResult =
+			_commerceOrderItemService.searchCommerceOrderItems(
+				placedOrderId, search, startPosition, endPosition, sort);
+
 		return Page.of(
 			_filterPlacedOrderItems(
 				transform(
-					_commerceOrderItemService.getCommerceOrderItems(
-						placedOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					searchResult.getBaseModels(),
 					commerceOrderItem -> {
 						if ((skuId != null) &&
 							!Objects.equals(

@@ -33,6 +33,7 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -53,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -130,7 +132,13 @@ public class CPDefinitionOptionRelDisplayContext
 				new SystemSettingsLocator(CPConstants.SERVICE_NAME_CP_OPTION));
 
 		return StringUtil.merge(
-			cpOptionConfiguration.allowedCommerceOptionTypes(),
+			ArrayUtil.filter(
+				cpOptionConfiguration.allowedCommerceOptionTypes(),
+				commerceOptionType ->
+					!Objects.equals(
+						CPConstants.PRODUCT_OPTION_SELECT_DATE_KEY,
+						commerceOptionType) ||
+					FeatureFlagManagerUtil.isEnabled("LPD-10887")),
 			StringPool.COMMA);
 	}
 

@@ -23,6 +23,10 @@ public interface CommerceOptionType {
 
 	public boolean hasValues();
 
+	public default boolean isActive() {
+		return true;
+	}
+
 	public void render(
 			CPDefinitionOptionRel cpDefinitionOptionRel,
 			long defaultCPInstanceId, boolean forceRequired, String json,

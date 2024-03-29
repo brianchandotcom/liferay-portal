@@ -621,8 +621,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 				if ((fileBase64JsonNode == null) ||
 					!Objects.equals(
-						"@batch_object_entry_file_base64@",
-						fileBase64JsonNode.asText())) {
+						fileBase64JsonNode.asText(),
+						"@batch_object_entry_file_base64@")) {
 
 					continue;
 				}

@@ -6,8 +6,8 @@ task patch(type: PatchTask)
 
 dependencies {
 	api group: "commons-logging", name: "commons-logging", version: "1.2"
-	api group: "org.springframework", name: "spring-beans", version: "5.2.24.RELEASE"
-	api group: "org.springframework", name: "spring-core", version: "5.2.24.RELEASE"
+	api group: "org.springframework", name: "spring-beans", version: "5.3.33"
+	api group: "org.springframework", name: "spring-core", version: "5.3.33"
 }
 
 jarSources {

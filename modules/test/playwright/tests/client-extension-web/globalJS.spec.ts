@@ -52,6 +52,8 @@ test('Create a new JS with an attribute field', async ({
 
 	await globalJSClientExtensionsPage.editClientExtensionSubmitButton.click();
 
+	await page.waitForLoadState();
+
 	// Apply JS client extension to all pages
 
 	await pagesAdminPage.selectJavaScriptClientExtension(clientExtensionName);

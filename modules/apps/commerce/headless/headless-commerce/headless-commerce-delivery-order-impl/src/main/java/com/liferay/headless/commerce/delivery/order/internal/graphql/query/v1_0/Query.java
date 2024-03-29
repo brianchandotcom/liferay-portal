@@ -245,14 +245,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderPlacedOrderItems(page: ___, pageSize: ___, placedOrderId: ___, skuId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderPlacedOrderItems(page: ___, pageSize: ___, placedOrderId: ___, search: ___, skuId: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieve placed order items.")
 	public PlacedOrderItemPage placedOrderPlacedOrderItems(
 			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("search") String search,
 			@GraphQLName("skuId") Long skuId,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -260,7 +262,9 @@ public class Query {
 			this::_populateResourceContext,
 			placedOrderItemResource -> new PlacedOrderItemPage(
 				placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-					placedOrderId, skuId, Pagination.of(page, pageSize))));
+					placedOrderId, search, skuId, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						placedOrderItemResource, sortsString))));
 	}
 
 	/**

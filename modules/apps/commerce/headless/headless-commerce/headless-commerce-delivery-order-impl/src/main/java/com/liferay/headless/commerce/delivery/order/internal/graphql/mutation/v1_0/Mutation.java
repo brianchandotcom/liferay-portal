@@ -83,7 +83,9 @@ public class Mutation {
 	@GraphQLField
 	public Response createPlacedOrderPlacedOrderItemsPageExportBatch(
 			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("search") String search,
 			@GraphQLName("skuId") Long skuId,
+			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
 			@GraphQLName("fieldNames") String fieldNames)
@@ -95,8 +97,10 @@ public class Mutation {
 			placedOrderItemResource ->
 				placedOrderItemResource.
 					postPlacedOrderPlacedOrderItemsPageExportBatch(
-						placedOrderId, skuId, callbackURL, contentType,
-						fieldNames));
+						placedOrderId, search, skuId,
+						_sortsBiFunction.apply(
+							placedOrderItemResource, sortsString),
+						callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField

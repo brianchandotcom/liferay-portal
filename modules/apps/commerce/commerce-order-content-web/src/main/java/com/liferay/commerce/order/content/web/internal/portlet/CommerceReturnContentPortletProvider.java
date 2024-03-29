@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gianmarco Brunialti Masera
  */
 @Component(
-	property = "model.class.name=com.liferay.commerce.model.CommerceOrder",
+	property = "model.class.name=com.liferay.commerce.model.CommerceReturn",
 	service = PortletProvider.class
 )
 public class CommerceReturnContentPortletProvider extends BasePortletProvider {

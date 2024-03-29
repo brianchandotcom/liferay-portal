@@ -177,12 +177,10 @@ public class SugarQueryExpressionVisitorImpl
 		JSONArray jsonArray = null;
 
 		try {
-			JSONObject leftjsonObject = JSONFactoryUtil.createJSONObject(
-				left.toString());
-			JSONObject rightjsonObject = JSONFactoryUtil.createJSONObject(
-				right.toString());
+			JSONObject leftjsonObject = (JSONObject)left;
+			JSONObject rightjsonObject = (JSONObject)right;
 
-			if (null != leftjsonObject.getJSONArray(operator)) {
+			if (Validator.isNotNull(leftjsonObject.getJSONArray(operator))) {
 				jsonArray = leftjsonObject.getJSONArray(operator);
 			}
 			else {

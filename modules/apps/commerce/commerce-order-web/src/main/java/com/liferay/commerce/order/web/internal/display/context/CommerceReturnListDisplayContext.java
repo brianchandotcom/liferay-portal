@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.order.web.internal.display.context;
 
+import com.liferay.commerce.model.CommerceReturn;
 import com.liferay.commerce.order.web.internal.display.context.helper.CommerceReturnRequestHelper;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
@@ -16,6 +17,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -49,6 +52,21 @@ public class CommerceReturnListDisplayContext {
 		throws PortalException {
 
 		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortletProviderUtil.getPortletURL(
+						_commerceReturnRequestHelper.getRequest(),
+						CommerceReturn.class.getName(),
+						PortletProvider.Action.MANAGE)
+				).setMVCRenderCommandName(
+					"/commerce_return/edit_commerce_return"
+				).setParameter(
+					"commerceReturnId", "{id}"
+				).buildString(),
+				"view", "view",
+				LanguageUtil.get(
+					_commerceReturnRequestHelper.getRequest(), "view"),
+				"get", null, null),
 			new FDSActionDropdownItem(
 				_getPermissionsURL(), "password-policies", "permissions",
 				LanguageUtil.get(

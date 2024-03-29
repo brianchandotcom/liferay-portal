@@ -12,6 +12,9 @@ import com.liferay.commerce.constants.CommercePortletKeys;
  */
 public class CommerceReturnFDSNames {
 
+	public static final String RETURN_ITEMS =
+		CommercePortletKeys.COMMERCE_RETURN + "-returnItems";
+
 	public static final String RETURNS =
 		CommercePortletKeys.COMMERCE_RETURN + "-returns";
 

@@ -21,10 +21,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceReturnFDSNames.RETURNS,
+	property = "frontend.data.set.name=" + CommerceReturnFDSNames.RETURN_ITEMS,
 	service = FDSView.class
 )
-public class CommerceReturnTableFDSView extends BaseTableFDSView {
+public class CommerceReturnItemTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -32,36 +32,33 @@ public class CommerceReturnTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"id", "return-id",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("actionLink");
-				fdsTableSchemaField.setSortable(true);
-			}
+			"r_commerceOrderItemToCommerceReturnItems_commerceOrderItem.sku",
+			"sku"
 		).add(
-			"r_accountToCommerceReturns_accountEntry.name", "account"
+			"r_commerceOrderItemToCommerceReturnItems_commerceOrderItem.name",
+			"name"
 		).add(
-			"channelName", "channel"
+			"r_commerceOrderItemToCommerceReturnItems_commerceOrderItem." +
+				"unitOfMeasureKey",
+			"uom"
 		).add(
-			"totalAmount", "amount"
+			"quantity", "requested-quantity"
 		).add(
-			"requestedItems", "number-of-items"
+			"returnReason", "return-reason",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"commerceReturnItemPicklistDataRenderer")
 		).add(
-			"dateCreated", "return-date",
-			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("dateTime");
-				fdsTableSchemaField.setSortable(true);
-			}
+			"authorized", "authorized"
 		).add(
-			"r_commerceOrderToCommerceReturns_commerceOrderId", "order-id",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			"accepted", "accepted"
 		).add(
-			"status", "acceptance-workflow-status",
+			"returnResolutionMethod", "resolution",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"commerceReturnItemPicklistDataRenderer")
+		).add(
+			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"commerceStatusDataRenderer")
-		).add(
-			"returnStatus", "return-status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"commerceReturnStatusDataRenderer")
 		).build();
 	}
 

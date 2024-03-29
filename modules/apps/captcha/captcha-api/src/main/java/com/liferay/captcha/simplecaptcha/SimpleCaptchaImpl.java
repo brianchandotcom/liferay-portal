@@ -381,11 +381,6 @@ public class SimpleCaptchaImpl implements Captcha {
 		return false;
 	}
 
-	protected boolean isExceededMaxChallenges(PortletRequest portletRequest) {
-		return isExceededMaxChallenges(
-			portal.getHttpServletRequest(portletRequest));
-	}
-
 	protected void setCaptchaConfiguration(
 		CaptchaConfiguration captchaConfiguration) {
 

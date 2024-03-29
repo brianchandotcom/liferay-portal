@@ -120,7 +120,10 @@ public class UserIndexerTest {
 
 	@Test
 	public void testEmailAddress() throws Exception {
-		User user = addUser();
+		User user = addUserWithEmailAddress(
+			StringBundler.concat(
+				RandomTestUtil.randomString(), "@",
+				RandomTestUtil.randomString(), ".com"));
 
 		String emailAddress = user.getEmailAddress();
 
@@ -614,11 +617,11 @@ public class UserIndexerTest {
 			UserGroupSearchFixture.getTestUserGroupBlueprintBuilder());
 	}
 
-	protected void addUserWithEmailAddress(String emailAddress) {
+	protected User addUserWithEmailAddress(String emailAddress) {
 		UserBlueprint.UserBlueprintBuilder userBlueprintBuilder =
 			getUserBlueprintBuilder();
 
-		_userSearchFixture.addUser(
+		return _userSearchFixture.addUser(
 			userBlueprintBuilder.emailAddress(emailAddress));
 	}
 

@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -616,7 +617,9 @@ public class GetEntryRenderDataMVCResourceCommand
 					new UnsyncStringReader(rightPreview)));
 		}
 
-		if (workflowView != null) {
+		if ((workflowView != null) &&
+			FeatureFlagManagerUtil.isEnabled("LPD-10703")) {
+
 			jsonObject.put("workflowView", workflowView);
 		}
 

@@ -282,10 +282,14 @@ if (commerceOrder != null) {
 	</aui:form>
 
 	<c:if test="<%= commerceOrderContentDisplayContext.isShowProcessQuote() %>">
-		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "processQuote();" %>' value="process-quote" />
+		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA('processQuote');" %>' value="process-quote" />
 	</c:if>
 
-	<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "reorderCommerceOrder();" %>' value="reorder" />
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10562") %>'>
+		<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA('makeReturn');" %>' value="make-a-return" />
+	</c:if>
+
+	<aui:button cssClass="btn-lg" onClick='<%= liferayPortletResponse.getNamespace() + "handleCTA('reorder');" %>' value="reorder" />
 
 	<c:if test="<%= commerceOrderContentDisplayContext.isShowRetryPayment() %>">
 		<aui:button cssClass="btn-lg" href="<%= commerceOrderContentDisplayContext.getRetryPaymentURL() %>" primary="<%= true %>" value="retry-payment" />
@@ -419,18 +423,20 @@ if (commerceOrder != null) {
 			uri: uri,
 		});
 	}
-
-	function <portlet:namespace />reorderCommerceOrder() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
-			'reorder';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />processQuote() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
-			'processQuote';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
 </aui:script>
+
+<portlet:renderURL var="viewReturnableCommerceOrderItemsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_returnable_commerce_order_items" />
+	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+</portlet:renderURL>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).put(
+			"viewReturnableCommerceOrderItemsURL", viewReturnableCommerceOrderItemsURL
+		).build()
+	%>'
+	module="js/viewCommerceOrderDetailsCTAs"
+/>

@@ -6,6 +6,7 @@ const tabItems = [].slice.call(
 		'[data-fragment-namespace="' + fragmentNamespace + '"].nav-link'
 	)
 );
+let tabIndex = 0;
 const tabPanelItems = [].slice.call(
 	fragmentElement.querySelectorAll(
 		'[data-fragment-namespace="' + fragmentNamespace + '"].tab-panel-item'
@@ -76,12 +77,12 @@ function openTabPanel(event, i) {
 		activeTab(currentTarget, i);
 		activeTabPanel(tabPanelItems[i]);
 
-		this.tabIndex = i;
+		tabIndex = i;
 	}
 }
 
 function main() {
-	const initialState = !this.tabIndex || this.tabIndex >= tabItems.length;
+	const initialState = !tabIndex || tabIndex >= tabItems.length;
 	let tabItemSelected = tabItems[0];
 
 	if (initialState) {
@@ -100,15 +101,15 @@ function main() {
 		});
 	}
 	else {
-		tabItemSelected = tabItems[this.tabIndex];
+		tabItemSelected = tabItems[tabIndex];
 		tabItems.forEach(function (item, i) {
-			activeTab(tabItems[this.tabIndex]);
+			activeTab(tabItems[tabIndex]);
 			item.addEventListener('click', function (event) {
 				openTabPanel(event, i);
 			});
 		});
 		tabPanelItems.forEach(function () {
-			activeTabPanel(tabPanelItems[this.tabIndex]);
+			activeTabPanel(tabPanelItems[tabIndex]);
 		});
 	}
 

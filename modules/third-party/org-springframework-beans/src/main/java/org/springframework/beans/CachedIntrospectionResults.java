@@ -1,5 +1,5 @@
 /*
- * Copyright 2002-2022 the original author or authors.
+ * Copyright 2002-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 package org.springframework.beans;
 
-import java.beans.BeanDescriptor;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.beans.SimpleBeanInfo;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.security.ProtectionDomain;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,8 +96,6 @@ public final class CachedIntrospectionResults {
 	 * @see Introspector#getBeanInfo(Class, int)
 	 */
 	public static final String IGNORE_BEANINFO_PROPERTY_NAME = "spring.beaninfo.ignore";
-
-	private static final PropertyDescriptor[] EMPTY_PROPERTY_DESCRIPTOR_ARRAY = {};
 
 
 	private static final boolean shouldIntrospectorIgnoreBeaninfoClasses =
@@ -253,91 +249,21 @@ public final class CachedIntrospectionResults {
 			}
 		}
 
-		if (!shouldIntrospectorIgnoreBeaninfoClasses) {
-			return Introspector.getBeanInfo(beanClass);
+		BeanInfo beanInfo = (shouldIntrospectorIgnoreBeaninfoClasses ?
+				Introspector.getBeanInfo(beanClass, Introspector.IGNORE_ALL_BEANINFO) :
+				Introspector.getBeanInfo(beanClass));
+
+		// Immediately remove class from Introspector cache to allow for proper garbage
+		// collection on class loader shutdown; we cache it in CachedIntrospectionResults
+		// in a GC-friendly manner. This is necessary (again) for the JDK ClassInfo cache.
+		Class<?> classToFlush = beanClass;
+		do {
+			Introspector.flushFromCaches(classToFlush);
+			classToFlush = classToFlush.getSuperclass();
 		}
+		while (classToFlush != null && classToFlush != Object.class);
 
-		try {
-			Map<String, PropertyDescriptor> propertyDescriptors = new HashMap<>();
-
-			for (Method method : beanClass.getMethods()) {
-				if (Modifier.isStatic(method.getModifiers())) {
-					continue;
-				}
-
-				String name = method.getName();
-
-				if (name.length() <= 3 && !name.startsWith("is")) {
-					continue;
-				}
-
-				int count = method.getParameterCount();
-
-				Class<?> returnType = method.getReturnType();
-
-				if (count > 1) {
-					continue;
-				}
-
-				if (count == 0) {
-					String propertyName = null;
-
-					if (name.startsWith("get")) {
-						propertyName = Introspector.decapitalize(name.substring(3));
-					}
-					else if ((returnType == boolean.class) && name.startsWith("is")) {
-						propertyName = Introspector.decapitalize(name.substring(2));
-					}
-
-					if (propertyName != null) {
-						PropertyDescriptor propertyDescriptor = propertyDescriptors.get(propertyName);
-
-						if (propertyDescriptor == null) {
-							propertyDescriptor = new PropertyDescriptor(propertyName, method, null);
-
-							propertyDescriptors.put(propertyName, propertyDescriptor);
-						}
-						else {
-							propertyDescriptor.setReadMethod(method);
-						}
-					}
-				}
-				else if ((returnType == void.class) && name.startsWith("set")) {
-					String propertyName = Introspector.decapitalize(name.substring(3));
-
-					PropertyDescriptor propertyDescriptor = propertyDescriptors.get(propertyName);
-
-					if (propertyDescriptor == null) {
-						propertyDescriptor = new PropertyDescriptor(propertyName, null, method);
-
-						propertyDescriptors.put(propertyName, propertyDescriptor);
-					}
-					else {
-						propertyDescriptor.setWriteMethod(method);
-					}
-				}
-			}
-
-			PropertyDescriptor[] propertyDescriptorArray =
-				propertyDescriptors.values().toArray(new PropertyDescriptor[0]);
-
-			return new SimpleBeanInfo() {
-
-				@Override
-				public BeanDescriptor getBeanDescriptor() {
-					return new BeanDescriptor(beanClass, null);
-				}
-
-				@Override
-				public PropertyDescriptor[] getPropertyDescriptors() {
-					return propertyDescriptorArray;
-				}
-
-			};
-		}
-		catch (IntrospectionException introspectionException) {
-			return Introspector.getBeanInfo(beanClass, Introspector.IGNORE_ALL_BEANINFO);
-		}
+		return beanInfo;
 	}
 
 
@@ -368,6 +294,8 @@ public final class CachedIntrospectionResults {
 			}
 			this.propertyDescriptors = new LinkedHashMap<>();
 
+			Set<String> readMethodNames = new HashSet<>();
+
 			// This call is slow so we do it once.
 			PropertyDescriptor[] pds = this.beanInfo.getPropertyDescriptors();
 			for (PropertyDescriptor pd : pds) {
@@ -380,7 +308,7 @@ public final class CachedIntrospectionResults {
 					// Only allow URL attribute introspection, not content resolution
 					continue;
 				}
-				if (pd.getWriteMethod() == null && isInvalidReadOnlyPropertyType(pd.getPropertyType())) {
+				if (pd.getWriteMethod() == null && isInvalidReadOnlyPropertyType(pd.getPropertyType(), beanClass)) {
 					// Ignore read-only properties such as ClassLoader - no need to bind to those
 					continue;
 				}
@@ -392,15 +320,24 @@ public final class CachedIntrospectionResults {
 				}
 				pd = buildGenericTypeAwarePropertyDescriptor(beanClass, pd);
 				this.propertyDescriptors.put(pd.getName(), pd);
+				Method readMethod = pd.getReadMethod();
+				if (readMethod != null) {
+					readMethodNames.add(readMethod.getName());
+				}
 			}
 
 			// Explicitly check implemented interfaces for setter/getter methods as well,
 			// in particular for Java 8 default methods...
 			Class<?> currClass = beanClass;
 			while (currClass != null && currClass != Object.class) {
-				introspectInterfaces(beanClass, currClass);
+				introspectInterfaces(beanClass, currClass, readMethodNames);
 				currClass = currClass.getSuperclass();
 			}
+
+			// Check for record-style accessors without prefix: e.g. "lastName()"
+			// - accessor method directly referring to instance field of same name
+			// - same convention for component accessors of Java 15 record classes
+			introspectPlainAccessors(beanClass, readMethodNames);
 
 			this.typeDescriptorCache = new ConcurrentReferenceHashMap<>();
 		}
@@ -409,7 +346,9 @@ public final class CachedIntrospectionResults {
 		}
 	}
 
-	private void introspectInterfaces(Class<?> beanClass, Class<?> currClass) throws IntrospectionException {
+	private void introspectInterfaces(Class<?> beanClass, Class<?> currClass, Set<String> readMethodNames)
+			throws IntrospectionException {
+
 		for (Class<?> ifc : currClass.getInterfaces()) {
 			if (!ClassUtils.isJavaLanguageInterface(ifc)) {
 				for (PropertyDescriptor pd : getBeanInfo(ifc).getPropertyDescriptors()) {
@@ -419,22 +358,58 @@ public final class CachedIntrospectionResults {
 						// GenericTypeAwarePropertyDescriptor leniently resolves a set* write method
 						// against a declared read method, so we prefer read method descriptors here.
 						pd = buildGenericTypeAwarePropertyDescriptor(beanClass, pd);
-						if (pd.getWriteMethod() == null && isInvalidReadOnlyPropertyType(pd.getPropertyType())) {
+						if (pd.getWriteMethod() == null &&
+								isInvalidReadOnlyPropertyType(pd.getPropertyType(), beanClass)) {
 							// Ignore read-only properties such as ClassLoader - no need to bind to those
 							continue;
 						}
 						this.propertyDescriptors.put(pd.getName(), pd);
+						Method readMethod = pd.getReadMethod();
+						if (readMethod != null) {
+							readMethodNames.add(readMethod.getName());
+						}
 					}
 				}
-				introspectInterfaces(ifc, ifc);
+				introspectInterfaces(ifc, ifc, readMethodNames);
 			}
 		}
 	}
 
-	private boolean isInvalidReadOnlyPropertyType(@Nullable Class<?> returnType) {
-		return (returnType != null && (AutoCloseable.class.isAssignableFrom(returnType) ||
-				ClassLoader.class.isAssignableFrom(returnType) ||
-				ProtectionDomain.class.isAssignableFrom(returnType)));
+	private void introspectPlainAccessors(Class<?> beanClass, Set<String> readMethodNames)
+			throws IntrospectionException {
+
+		for (Method method : beanClass.getMethods()) {
+			if (!this.propertyDescriptors.containsKey(method.getName()) &&
+					!readMethodNames.contains(method.getName()) && isPlainAccessor(method)) {
+				this.propertyDescriptors.put(method.getName(),
+						new GenericTypeAwarePropertyDescriptor(beanClass, method.getName(), method, null, null));
+				readMethodNames.add(method.getName());
+			}
+		}
+	}
+
+	private boolean isPlainAccessor(Method method) {
+		if (Modifier.isStatic(method.getModifiers()) ||
+				method.getDeclaringClass() == Object.class || method.getDeclaringClass() == Class.class ||
+				method.getParameterCount() > 0 || method.getReturnType() == void.class ||
+				isInvalidReadOnlyPropertyType(method.getReturnType(), method.getDeclaringClass())) {
+			return false;
+		}
+		try {
+			// Accessor method referring to instance field of same name?
+			method.getDeclaringClass().getDeclaredField(method.getName());
+			return true;
+		}
+		catch (Exception ex) {
+			return false;
+		}
+	}
+
+	private boolean isInvalidReadOnlyPropertyType(@Nullable Class<?> returnType, Class<?> beanClass) {
+		return (returnType != null && (ClassLoader.class.isAssignableFrom(returnType) ||
+				ProtectionDomain.class.isAssignableFrom(returnType) ||
+				(AutoCloseable.class.isAssignableFrom(returnType) &&
+						!AutoCloseable.class.isAssignableFrom(beanClass))));
 	}
 
 
@@ -460,7 +435,7 @@ public final class CachedIntrospectionResults {
 	}
 
 	PropertyDescriptor[] getPropertyDescriptors() {
-		return this.propertyDescriptors.values().toArray(EMPTY_PROPERTY_DESCRIPTOR_ARRAY);
+		return this.propertyDescriptors.values().toArray(PropertyDescriptorUtils.EMPTY_PROPERTY_DESCRIPTOR_ARRAY);
 	}
 
 	private PropertyDescriptor buildGenericTypeAwarePropertyDescriptor(Class<?> beanClass, PropertyDescriptor pd) {
@@ -484,4 +459,3 @@ public final class CachedIntrospectionResults {
 	}
 
 }
-/* @generated */

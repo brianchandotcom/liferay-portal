@@ -9,6 +9,7 @@ import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -256,32 +256,27 @@ public class FragmentFileInstaller implements FileInstaller {
 			throw new Exception();
 		}
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					company, user)) {
 
-		PrincipalThreadLocal.setName(user.getUserId());
+			long groupId = 0;
 
-		ServiceContext serviceContext = new ServiceContext();
+			if (group != null) {
+				groupId = group.getGroupId();
+			}
 
-		serviceContext.setCompanyId(company.getCompanyId());
-		serviceContext.setUserId(user.getUserId());
+			_fragmentsImporter.importFragmentEntries(
+				user.getUserId(), groupId, 0, file,
+				FragmentsImportStrategy.OVERWRITE);
 
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+			if ((group != null) &&
+				(company.getGroupId() != group.getGroupId())) {
 
-		long groupId = 0;
-
-		if (group != null) {
-			groupId = group.getGroupId();
-		}
-
-		_fragmentsImporter.importFragmentEntries(
-			user.getUserId(), groupId, 0, file,
-			FragmentsImportStrategy.OVERWRITE);
-
-		if ((group != null) && (company.getGroupId() != group.getGroupId())) {
-			_layoutsImporter.importFile(
-				user.getUserId(), groupId, 0L, file,
-				LayoutsImportStrategy.OVERWRITE, true);
+				_layoutsImporter.importFile(
+					user.getUserId(), groupId, 0L, file,
+					LayoutsImportStrategy.OVERWRITE, true);
+			}
 		}
 	}
 
@@ -299,6 +294,9 @@ public class FragmentFileInstaller implements FileInstaller {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference
 	private LayoutsImporter _layoutsImporter;

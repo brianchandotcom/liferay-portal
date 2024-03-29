@@ -74,7 +74,6 @@ public class GetEmailNotificationRolesMVCResourceCommandTest {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), RoleConstants.TYPE_ACCOUNT,
 			null, null);
-
 		Role organizationRole1 = _addOrganizationRole(user);
 		Role organizationRole2 = _addOrganizationRole(user);
 

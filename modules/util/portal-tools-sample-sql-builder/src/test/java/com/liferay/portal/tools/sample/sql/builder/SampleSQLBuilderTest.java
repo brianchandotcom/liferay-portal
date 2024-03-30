@@ -135,7 +135,6 @@ public class SampleSQLBuilderTest {
 			"1");
 		properties.put(BenchmarksPropsKeys.MAX_COMPANY_COUNT, "2");
 		properties.put(BenchmarksPropsKeys.MAX_COMPANY_USER_COUNT, "1");
-		properties.put(BenchmarksPropsKeys.MAX_CONTENT_LAYOUT_COUNT, "1");
 		properties.put(
 			BenchmarksPropsKeys.MAX_CP_DEFINITION_ATTACHMENT_TYPE_IMAGE_COUNT,
 			"1");
@@ -166,6 +165,9 @@ public class SampleSQLBuilderTest {
 		properties.put(BenchmarksPropsKeys.MAX_MB_CATEGORY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_MB_MESSAGE_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_MB_THREAD_COUNT, "1");
+		properties.put(
+			BenchmarksPropsKeys.MAX_PUBLICATION_CONTENT_LAYOUT_COUNT, "10");
+		properties.put(BenchmarksPropsKeys.MAX_PUBLICATION_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_SEGMENTS_ENTRY_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_USER_TO_GROUP_COUNT, "1");
 		properties.put(BenchmarksPropsKeys.MAX_WIKI_NODE_COUNT, "1");

@@ -550,11 +550,7 @@ definition {
 		}
 
 		task ("Extract www.able.com partition and shutdown the server") {
-			OSGiConfig.deployOSGiConfigFile(
-				osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration.config",
-				osgiConfigs = "partitionCompanyId=L\"${partitionCompanyId}\"");
-
-			OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration.config");
+			DBPartition.extractDBPartition(partitionCompanyId = ${partitionCompanyId});
 
 			Portlet.shutdownServer();
 		}
@@ -575,11 +571,7 @@ definition {
 		}
 
 		task ("Add previously extracted www.able.com partition into new database") {
-			OSGiConfig.deployOSGiConfigFile(
-				osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration.config",
-				osgiConfigs = "partitionCompanyId=L\"${partitionCompanyId}\"");
-
-			OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration.config");
+			DBPartition.insertDBPartition(partitionCompanyId = ${partitionCompanyId});
 		}
 
 		task ("Ensure that www.able.com is accessible and its assets visible") {

@@ -1,5 +1,23 @@
 definition {
 
+	@summary = "Extracts an integrated DB Partition into a standalone partition"
+	macro extractDBPartition(partitionCompanyId = null) {
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration.config",
+			osgiConfigs = "partitionCompanyId=L\"${partitionCompanyId}\"");
+
+		OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration.config");
+	}
+
+	@summary = "Adds a standalone DB Partition as a new company"
+	macro insertDBPartition(partitionCompanyId = null) {
+		OSGiConfig.deployOSGiConfigFile(
+			osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration.config",
+			osgiConfigs = "partitionCompanyId=L\"${partitionCompanyId}\"");
+
+		OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration.config");
+	}
+
 	@summary = "Validates that the records are correctly tied to their partitions using the portal-tools-db-partition-schema-validator tool"
 	macro validateSchemas(schemaNamePrefix = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");

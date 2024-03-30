@@ -24,7 +24,8 @@ export class WorkflowPage {
 
 	async changeWorkflow(
 		asset: string,
-		value: 'Single Approver' | 'No Workflow'
+		value: 'Single Approver' | 'No Workflow',
+		{disable} = {disable: false}
 	) {
 		const row = await this.page.getByRole('row').filter({hasText: asset});
 
@@ -41,7 +42,9 @@ export class WorkflowPage {
 
 		await waitForSuccessAlert(
 			this.page,
-			'Success:Workflow assigned to Web Content Article.'
+			disable
+				? `Success:Workflow unassigned from Web Content Article.`
+				: `Success:Workflow assigned to Web Content Article.`
 		);
 	}
 }

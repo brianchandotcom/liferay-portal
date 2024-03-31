@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -52,9 +51,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.net.HttpURLConnection;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Collections;
 import java.util.List;
@@ -150,7 +146,7 @@ public class SalesforceObjectEntryManagerImpl
 		}
 
 		return toObjectEntry(
-			companyId, _getDateFormat(), _defaultObjectFieldNames,
+			companyId, getDateFormat(), _defaultObjectFieldNames,
 			dtoConverterContext,
 			_salesforceHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
@@ -227,10 +223,6 @@ public class SalesforceObjectEntryManagerImpl
 			"')");
 	}
 
-	private DateFormat _getDateFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-	}
-
 	private String _getLocation(
 		ObjectDefinition objectDefinition, Pagination pagination,
 		String predicateString, String search, Sort[] sorts) {
@@ -281,8 +273,9 @@ public class SalesforceObjectEntryManagerImpl
 				responseJSONObject.getJSONArray("records");
 
 		return Page.of(
-			_toObjectEntries(
-				companyId, dtoConverterContext, jsonArray, objectDefinition),
+			toObjectEntries(
+				companyId, _defaultObjectFieldNames, dtoConverterContext,
+				jsonArray, objectDefinition),
 			pagination,
 			_getTotalCount(
 				companyId, objectDefinition,
@@ -439,20 +432,6 @@ public class SalesforceObjectEntryManagerImpl
 				map.put("Name", value);
 			}
 		};
-	}
-
-	private List<ObjectEntry> _toObjectEntries(
-			long companyId, DTOConverterContext dtoConverterContext,
-			JSONArray jsonArray, ObjectDefinition objectDefinition)
-		throws Exception {
-
-		DateFormat dateFormat = _getDateFormat();
-
-		return JSONUtil.toList(
-			jsonArray,
-			jsonObject -> toObjectEntry(
-				companyId, dateFormat, _defaultObjectFieldNames,
-				dtoConverterContext, jsonObject, objectDefinition));
 	}
 
 	private static final String _CUSTOM_OBJECT_SUFFIX = "__c";

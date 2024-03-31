@@ -30,8 +30,10 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -93,6 +95,10 @@ public abstract class BaseObjectEntryManager {
 		portletResourcePermission.check(
 			permissionCheckerFactory.create(user),
 			getGroupId(objectDefinition, scopeKey), actionId);
+	}
+
+	protected DateFormat getDateFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	}
 
 	protected long getGroupId(
@@ -232,6 +238,22 @@ public abstract class BaseObjectEntryManager {
 		}
 
 		return jsonFactory.createJSONObject(jsonFactory.looseSerialize(map));
+	}
+
+	protected List<com.liferay.object.rest.dto.v1_0.ObjectEntry>
+			toObjectEntries(
+				long companyId, Map<String, String> defaultObjectFieldNames,
+				DTOConverterContext dtoConverterContext, JSONArray jsonArray,
+				ObjectDefinition objectDefinition)
+		throws Exception {
+
+		DateFormat dateFormat = getDateFormat();
+
+		return JSONUtil.toList(
+			jsonArray,
+			jsonObject -> toObjectEntry(
+				companyId, dateFormat, defaultObjectFieldNames,
+				dtoConverterContext, jsonObject, objectDefinition));
 	}
 
 	protected com.liferay.object.rest.dto.v1_0.ObjectEntry toObjectEntry(

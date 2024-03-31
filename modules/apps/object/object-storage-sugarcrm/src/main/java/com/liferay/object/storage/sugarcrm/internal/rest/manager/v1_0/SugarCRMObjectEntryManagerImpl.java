@@ -22,10 +22,8 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -43,9 +41,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.net.HttpURLConnection;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Collections;
 import java.util.List;
@@ -86,7 +81,7 @@ public class SugarCRMObjectEntryManagerImpl
 				_getTriConsumer(objectDefinition)));
 
 		return toObjectEntry(
-			objectDefinition.getCompanyId(), _getDateFormat(),
+			objectDefinition.getCompanyId(), getDateFormat(),
 			_defaultObjectFieldNames, dtoConverterContext, responseJSONObject,
 			objectDefinition);
 	}
@@ -141,7 +136,7 @@ public class SugarCRMObjectEntryManagerImpl
 		}
 
 		return toObjectEntry(
-			companyId, _getDateFormat(), _defaultObjectFieldNames,
+			companyId, getDateFormat(), _defaultObjectFieldNames,
 			dtoConverterContext,
 			_sugarCRMHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
@@ -189,7 +184,7 @@ public class SugarCRMObjectEntryManagerImpl
 				_getTriConsumer(objectDefinition)));
 
 		return toObjectEntry(
-			objectDefinition.getCompanyId(), _getDateFormat(),
+			objectDefinition.getCompanyId(), getDateFormat(),
 			_defaultObjectFieldNames, dtoConverterContext, responseJSONObject,
 			objectDefinition);
 	}
@@ -306,10 +301,6 @@ public class SugarCRMObjectEntryManagerImpl
 		return sb.toString();
 	}
 
-	private DateFormat _getDateFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
-	}
-
 	private Page<ObjectEntry> _getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			DTOConverterContext dtoConverterContext, String filterString,
@@ -329,8 +320,8 @@ public class SugarCRMObjectEntryManagerImpl
 		}
 
 		return Page.of(
-			_toObjectEntries(
-				companyId, dtoConverterContext,
+			toObjectEntries(
+				companyId, _defaultObjectFieldNames, dtoConverterContext,
 				responseJSONObject.getJSONArray("records"), objectDefinition),
 			pagination,
 			_getTotalCount(
@@ -368,20 +359,6 @@ public class SugarCRMObjectEntryManagerImpl
 				map.put("Name", value);
 			}
 		};
-	}
-
-	private List<ObjectEntry> _toObjectEntries(
-			long companyId, DTOConverterContext dtoConverterContext,
-			JSONArray jsonArray, ObjectDefinition objectDefinition)
-		throws Exception {
-
-		DateFormat dateFormat = _getDateFormat();
-
-		return JSONUtil.toList(
-			jsonArray,
-			jsonObject -> toObjectEntry(
-				companyId, dateFormat, _defaultObjectFieldNames,
-				dtoConverterContext, jsonObject, objectDefinition));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

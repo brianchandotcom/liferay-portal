@@ -112,6 +112,7 @@ public class DBPartitionUtil {
 								_getCopyDataSQL(
 									_defaultPartitionName,
 									_getPartitionName(companyId), tableName,
+									_getTableColumnNames(connection, tableName),
 									StringPool.BLANK));
 						}
 					}
@@ -270,7 +271,8 @@ public class DBPartitionUtil {
 				statement.executeUpdate(
 					_getCopyDataSQL(
 						_defaultPartitionName, _getPartitionName(companyId),
-						viewName, StringPool.BLANK));
+						viewName, _getTableColumnNames(connection, viewName),
+						StringPool.BLANK));
 			}
 		}
 	}
@@ -510,13 +512,16 @@ public class DBPartitionUtil {
 		else if (_isCopyableQuartzTable(tableName)) {
 			_moveData(
 				_defaultPartitionName, _getPartitionName(companyId), tableName,
+				_getTableColumnNames(statement.getConnection(), tableName),
 				statement, _getQuartzWhereClauseSQL(companyId, tableName));
 		}
 		else {
 			statement.executeUpdate(
 				_getCopyDataSQL(
 					_defaultPartitionName, _getPartitionName(companyId),
-					tableName, StringPool.BLANK));
+					tableName,
+					_getTableColumnNames(statement.getConnection(), tableName),
+					StringPool.BLANK));
 		}
 	}
 
@@ -722,12 +727,13 @@ public class DBPartitionUtil {
 
 	private static String _getCopyDataSQL(
 		String fromPartitionName, String toPartitionName, String tableName,
-		String whereClause) {
+		List<String> columnNames, String whereClause) {
 
 		return StringBundler.concat(
 			"insert into ", toPartitionName, StringPool.PERIOD, tableName,
-			" select * from ", fromPartitionName, StringPool.PERIOD, tableName,
-			whereClause);
+			StringPool.OPEN_PARENTHESIS, StringUtil.merge(columnNames),
+			") select ", StringUtil.merge(columnNames), " from ",
+			fromPartitionName, StringPool.PERIOD, tableName, whereClause);
 	}
 
 	private static String _getPartitionName(long companyId) {
@@ -748,6 +754,23 @@ public class DBPartitionUtil {
 		}
 
 		return " where trigger_name like '%@" + companyId + "'";
+	}
+
+	private static List<String> _getTableColumnNames(
+			Connection connection, String tableName)
+		throws SQLException {
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		List<String> tableColumnNames = new ArrayList<>();
+
+		try (ResultSet resultSet = dbInspector.getColumnsResultSet(tableName)) {
+			while (resultSet.next()) {
+				tableColumnNames.add(resultSet.getString("COLUMN_NAME"));
+			}
+		}
+
+		return tableColumnNames;
 	}
 
 	private static void _insertDBPartition(long companyId)
@@ -785,6 +808,7 @@ public class DBPartitionUtil {
 							_getCopyDataSQL(
 								_getPartitionName(companyId),
 								_defaultPartitionName, tableName,
+								_getTableColumnNames(connection, tableName),
 								" where companyId = " + companyId));
 
 						copiedTableNames.add(tableName);
@@ -794,6 +818,7 @@ public class DBPartitionUtil {
 							_getCopyDataSQL(
 								_getPartitionName(companyId),
 								_defaultPartitionName, tableName,
+								_getTableColumnNames(connection, tableName),
 								_getQuartzWhereClauseSQL(
 									companyId, tableName)));
 
@@ -898,18 +923,21 @@ public class DBPartitionUtil {
 		throws Exception {
 
 		_moveData(
-			fromPartitionName, toPartitionName, tableName, statement,
-			" where companyId = " + companyId);
+			fromPartitionName, toPartitionName, tableName,
+			_getTableColumnNames(statement.getConnection(), tableName),
+			statement, " where companyId = " + companyId);
 	}
 
 	private static void _moveData(
 			String fromPartitionName, String toPartitionName, String tableName,
-			Statement statement, String whereClause)
+			List<String> tableColumnNames, Statement statement,
+			String whereClause)
 		throws Exception {
 
 		statement.executeUpdate(
 			_getCopyDataSQL(
-				fromPartitionName, toPartitionName, tableName, whereClause));
+				fromPartitionName, toPartitionName, tableName, tableColumnNames,
+				whereClause));
 
 		_deleteData(tableName, fromPartitionName, statement, whereClause);
 	}
@@ -927,6 +955,7 @@ public class DBPartitionUtil {
 		else if (_isCopyableQuartzTable(tableName)) {
 			_moveData(
 				_getPartitionName(companyId), _defaultPartitionName, tableName,
+				_getTableColumnNames(statement.getConnection(), tableName),
 				statement, _getQuartzWhereClauseSQL(companyId, tableName));
 		}
 

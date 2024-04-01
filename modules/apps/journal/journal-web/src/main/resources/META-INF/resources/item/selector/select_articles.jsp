@@ -92,7 +92,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 
 								<p class="font-weight-bold h5">
 									<%= HtmlUtil.escape(curArticle.getTitle(locale, true)) %>
-									<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10626") && !journalArticleItemSelectorViewDisplayContext.hasGuestViewPermission(curArticle) %>'>
+									<c:if test="<%= !journalArticleItemSelectorViewDisplayContext.hasGuestViewPermission(curArticle) %>">
 										<clay:icon
 											aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
 											cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"
@@ -163,7 +163,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 								name="title"
 							>
 								<%= HtmlUtil.escape(curArticle.getTitle(locale, true)) %>
-								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10626") && !journalArticleItemSelectorViewDisplayContext.hasGuestViewPermission(curArticle) %>'>
+								<c:if test="<%= !journalArticleItemSelectorViewDisplayContext.hasGuestViewPermission(curArticle) %>">
 									<clay:icon
 										aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
 										cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"

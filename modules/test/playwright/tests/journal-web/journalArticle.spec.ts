@@ -95,12 +95,7 @@ const aiCreateImageTest = mergeTests(
 	})
 );
 
-const privateContentIconTest = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-10626': true,
-	})
-);
+const privateContentIconTest = mergeTests(baseTest);
 
 keepTitlesUntranslated(
 	'LPD-20723: Clay link is translating asset titles/names by default in vertical card',

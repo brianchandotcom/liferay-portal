@@ -9,7 +9,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -18,19 +17,11 @@ import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileVisitOption;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -196,7 +187,7 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 		}
 	}
 
-	private Object[] _getModelInformation(String packageName) {
+	private synchronized Object[] _getModelInformation(String packageName) {
 		if (_modelInformationsMap != null) {
 			return _modelInformationsMap.get(packageName);
 		}
@@ -204,9 +195,7 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 		_modelInformationsMap = new HashMap<>();
 
 		try {
-			_populateTablesSQLFileLocations("modules/apps", 6);
-			_populateTablesSQLFileLocations("modules/dxp/apps", 6);
-			_populateTablesSQLFileLocations("portal-impl/src/com/liferay", 4);
+			_populateTablesSQLFileLocations();
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
@@ -237,47 +226,15 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 		return tablesSQLContent.substring(matcher.start(), x + 1);
 	}
 
-	private void _populateTablesSQLFileLocations(String dirName, int maxDepth)
-		throws IOException {
+	private void _populateTablesSQLFileLocations() throws IOException {
+		File file = getPortalDir();
 
-		File directory = getFile(dirName, getMaxDirLevel());
+		List<String> serviceXMLFileNames = SourceFormatterUtil.scanForFileNames(
+			file.getCanonicalPath(), new String[] {"**/service.xml"});
 
-		if (directory == null) {
-			return;
-		}
-
-		final List<File> serviceXMLFiles = new ArrayList<>();
-
-		Files.walkFileTree(
-			directory.toPath(), EnumSet.noneOf(FileVisitOption.class), maxDepth,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult preVisitDirectory(
-					Path dirPath, BasicFileAttributes basicFileAttributes) {
-
-					String dirName = String.valueOf(dirPath.getFileName());
-
-					if (ArrayUtil.contains(_SKIP_DIR_NAMES, dirName)) {
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					Path path = dirPath.resolve("service.xml");
-
-					if (Files.exists(path)) {
-						serviceXMLFiles.add(path.toFile());
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
-		for (File serviceXMLFile : serviceXMLFiles) {
+		for (String serviceXMLFileName : serviceXMLFileNames) {
 			Document serviceXMLDocument = SourceUtil.readXML(
-				FileUtil.read(serviceXMLFile));
+				FileUtil.read(new File(serviceXMLFileName)));
 
 			if (serviceXMLDocument == null) {
 				continue;
@@ -296,23 +253,21 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 				continue;
 			}
 
-			String serviceXMLFilePath = serviceXMLFile.getAbsolutePath();
-
-			serviceXMLFilePath = StringUtil.replace(
-				serviceXMLFilePath, CharPool.BACK_SLASH, CharPool.SLASH);
+			serviceXMLFileName = StringUtil.replace(
+				serviceXMLFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			String tablesSQLFilePath = "";
 
-			if (dirName.startsWith("portal-impl/")) {
+			if (serviceXMLFileNames.contains("portal-impl/")) {
 				tablesSQLFilePath =
-					SourceUtil.getRootDirName(serviceXMLFilePath) +
+					SourceUtil.getRootDirName(serviceXMLFileName) +
 						"/sql/portal-tables.sql";
 			}
 			else {
-				int x = serviceXMLFilePath.lastIndexOf("/");
+				int x = serviceXMLFileName.lastIndexOf("/");
 
 				tablesSQLFilePath =
-					serviceXMLFilePath.substring(0, x) +
+					serviceXMLFileName.substring(0, x) +
 						"/src/main/resources/META-INF/sql/tables.sql";
 			}
 
@@ -321,12 +276,6 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 				new Object[] {serviceXMLElement, tablesSQLFilePath});
 		}
 	}
-
-	private static final String[] _SKIP_DIR_NAMES = {
-		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
-		"classes", "dependencies", "node_modules", "node_modules_cache", "sql",
-		"src", "test", "test-classes", "test-coverage", "test-results", "tmp"
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JavaUpgradeAlterTableAddColumnCallsOrderCheck.class);

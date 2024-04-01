@@ -29,16 +29,15 @@ const usePurchasedOrders = ({
 			? `/placed-orders/${accountId}/${channelId}/${page}/${pageSize}`
 			: null,
 		async () => {
-			const placedOrders =
-				await HeadlessCommerceDeliveryOrder.getPlacedOrders(
-					channelId,
-					accountId,
-					new URLSearchParams({
-						nestedFields: 'placedOrderItems',
-						page: page.toString(),
-						pageSize: pageSize.toString(),
-					})
-				);
+			const placedOrders = await HeadlessCommerceDeliveryOrder.getPlacedOrders(
+				channelId,
+				accountId,
+				new URLSearchParams({
+					nestedFields: 'placedOrderItems',
+					page: page.toString(),
+					pageSize: pageSize.toString(),
+				})
+			);
 
 			const placedOrdersFiltered = placedOrders.items.filter(
 				({orderTypeExternalReferenceCode}) =>

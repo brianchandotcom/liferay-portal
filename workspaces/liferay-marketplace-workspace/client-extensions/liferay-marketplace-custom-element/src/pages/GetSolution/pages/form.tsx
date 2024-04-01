@@ -3,20 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useLayoutEffect} from 'react';
-
 import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down/lib/DropDown';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 import {z} from 'zod';
 
 import {Header} from '../../../components/Header/Header';
 import FormInput from '../../../components/Input/formInput';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
+import Loading from '../../../components/Loading';
 import Select from '../../../components/Select/Select';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import useCommerceRegions from '../../../hooks/useCommerceRegions';
@@ -24,7 +23,6 @@ import {Liferay} from '../../../liferay/liferay';
 import zodSchema from '../../../schema/zod';
 import {phones} from '../../../utils/phones';
 import {usePurchasedOrders} from '../../PurchasedAppsDashboard/usePurchasedOrders';
-import Loading from '../../../components/Loading';
 
 export type UserForm = z.infer<typeof zodSchema.accountCreator>;
 
@@ -38,8 +36,9 @@ const AccountForm = () => {
 	const {data: commerceRegionsResponse} = useCommerceRegions(
 		new URLSearchParams({fields: 'name,title_i18n', pageSize: '-1'})
 	);
-	const [agreeToTermsAndConditions, setAgreeToTermsAndConditions] =
-		useState(false);
+	const [agreeToTermsAndConditions, setAgreeToTermsAndConditions] = useState(
+		false
+	);
 	const [currentPhonesFlags, setCurrentPhonesFlags] = useState({
 		code: '+1',
 		flag: 'en-us',
@@ -87,7 +86,7 @@ const AccountForm = () => {
 		return <Loading />;
 	}
 
-	if (placedOrderResponse.items.length > 0) {
+	if (placedOrderResponse.items.length) {
 		return (
 			<div>
 				<h1 className="text-center">Trial not available.</h1>
@@ -247,8 +246,10 @@ const AccountForm = () => {
 														accountForm.setValue(
 															'phone',
 															{
-																code: phone.code,
-																flag: phone.flag,
+																code:
+																	phone.code,
+																flag:
+																	phone.flag,
 															}
 														);
 													}}
@@ -291,7 +292,7 @@ const AccountForm = () => {
 						checked={agreeToTermsAndConditions}
 						id="agreeToTermsAndConditions"
 						label={
-							(
+							((
 								<span>
 									I agree to the
 									<ClayLink
@@ -303,7 +304,7 @@ const AccountForm = () => {
 										Terms & Conditions
 									</ClayLink>
 								</span>
-							) as unknown as string
+							) as unknown) as string
 						}
 						onChange={() =>
 							setAgreeToTermsAndConditions(

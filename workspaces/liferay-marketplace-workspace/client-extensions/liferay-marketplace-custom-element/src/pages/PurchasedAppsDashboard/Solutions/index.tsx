@@ -5,10 +5,10 @@
 
 import {useOutletContext} from 'react-router-dom';
 
+import Page from '../../../components/Page';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {usePurchasedOrders} from '../usePurchasedOrders';
 import PurchasedSolutionsTable from './components/PurchasedSolutionsTable';
-import Page from '../../../components/Page';
 
 const Solutions = () => {
 	const {selectedAccount} = useOutletContext<any>();
@@ -16,8 +16,8 @@ const Solutions = () => {
 
 	const {
 		data: placedOrders = {items: []},
-		isLoading,
 		error,
+		isLoading,
 	} = usePurchasedOrders({
 		accountId: selectedAccount?.id,
 		channelId: channel?.id,
@@ -28,8 +28,8 @@ const Solutions = () => {
 
 	return (
 		<Page
-			pageRendererProps={{isLoading, error}}
 			description="Manage solution trial and purchases from the Marketplace"
+			pageRendererProps={{error, isLoading}}
 			title="My Solutions"
 		>
 			<PurchasedSolutionsTable

@@ -3,21 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useState} from 'react';
 import ClayButton from '@clayui/button';
+import {useState} from 'react';
+import {useOutletContext} from 'react-router-dom';
+import useSWR from 'swr';
+
+import projectsIcon from '../../../assets/icons/projects_icon.svg';
 import {CreateProjectModal} from '../../../components/CreateProjectModal/CreateProjectModal';
 import {ProjectDetailsCard} from '../../../components/CreateProjectModal/ProjectDetailsCard';
 import {DashboardTable} from '../../../components/DashboardTable/DashboardTable';
-import {NextSteps} from '../../NextSteps';
-import {ProjectsTableRow} from './ProjectsTableRow';
-
-import projectsIcon from '../../../assets/icons/projects_icon.svg';
-
+import Page from '../../../components/Page';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import HeadlessCommerceDeliveryOrder from '../../../services/rest/HeadlessCommerceDeliveryOrder';
-import {useOutletContext} from 'react-router-dom';
-import Page from '../../../components/Page';
-import useSWR from 'swr';
+import {NextSteps} from '../../NextSteps';
+import {ProjectsTableRow} from './ProjectsTableRow';
 
 const projectsTableHeaders = [
 	{
@@ -54,8 +53,8 @@ export default function ProjectsPage() {
 
 	const {
 		data: placedOrderResponse,
-		isLoading,
 		error,
+		isLoading,
 	} = useSWR('/publisher-dashboard/projects', () =>
 		HeadlessCommerceDeliveryOrder.getPlacedOrders(
 			channel.id,
@@ -95,14 +94,14 @@ export default function ProjectsPage() {
 
 	return (
 		<Page
-			pageRendererProps={{isLoading, error}}
+			description="Manage projects to build and test your apps and solutions"
+			pageRendererProps={{error, isLoading}}
 			rightButton={
 				<ClayButton onClick={() => setVisible(true)}>
 					New Project
 				</ClayButton>
 			}
 			title="Projects"
-			description="Manage projects to build and test your apps and solutions"
 		>
 			<DashboardTable<PlacedOrder>
 				emptyStateMessage={{

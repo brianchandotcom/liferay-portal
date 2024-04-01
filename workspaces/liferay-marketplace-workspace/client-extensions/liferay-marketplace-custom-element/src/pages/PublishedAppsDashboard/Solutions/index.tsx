@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import useSWR from 'swr';
-import ClayButton from '@clayui/button';
 
+import Page from '../../../components/Page';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {useAccount} from '../../../hooks/data/useAccounts';
 import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import PublishedSolutionsTable from './PublishedSolutionsTable';
-import Page from '../../../components/Page';
 
 const Solutions = () => {
 	const [page, setPage] = useState(1);
@@ -22,9 +22,9 @@ const Solutions = () => {
 
 	const {
 		data: publishedSolutionsTable = {},
-		mutate,
-		isLoading,
 		error,
+		isLoading,
+		mutate,
 	} = useSWR(
 		`/user-published-solutions/${supplierAccount?.id}/${page}/${catalogId}`,
 		() => {
@@ -53,13 +53,13 @@ const Solutions = () => {
 
 	return (
 		<Page
-			pageRendererProps={{isLoading, error}}
+			description="Manage and publish solutions on the Marketplace"
+			pageRendererProps={{error, isLoading}}
 			rightButton={
 				<ClayButton disabled={!(catalogId && catalogId > 0)}>
 					New Solution Template
 				</ClayButton>
 			}
-			description="Manage and publish solutions on the Marketplace"
 			title="Solutions"
 		>
 			<PublishedSolutionsTable

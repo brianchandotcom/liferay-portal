@@ -11,9 +11,9 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import GetSolutionOutlet from './GetSolutionOutlet';
-import GetSolutionAccount from './pages/account';
-import SolutionCreated from './pages/done';
-import GetSolutionForm from './pages/form';
+import GetSolutionAccount from './pages/Account';
+import SolutionCreated from './pages/Done';
+import GetSolutionForm from './pages/Form';
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -22,7 +22,7 @@ const GetSolutionRouter = () => {
 	const productId = Number(urlParams.get('productId')) + 1;
 
 	const {data: product, isLoading} = useDeliveryProduct(
-		(productId as unknown) as string
+		productId as unknown as string
 	);
 
 	if (isLoading) {

@@ -32,19 +32,15 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 	clientExtensionsPage,
 	editEditorConfigContributorPage,
 }) => {
-	await clientExtensionsPage.goto();
-
-	await clientExtensionsPage.newClientExtensionButton.click();
-
-	await clientExtensionsPage.editorConfigContributorMenuItem.click();
+	await editEditorConfigContributorPage.goto();
 
 	const sampleName1 = 'Sample Name 1';
 
 	await editEditorConfigContributorPage.nameInput.fill(sampleName1);
 
-	await editEditorConfigContributorPage.descriptionEditable.isEditable();
+	await editEditorConfigContributorPage.descriptionContentEditable.isEditable();
 
-	await editEditorConfigContributorPage.descriptionEditable.fill(
+	await editEditorConfigContributorPage.descriptionContentEditable.fill(
 		'Sample Description'
 	);
 
@@ -64,28 +60,28 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 		'Sample Editor Config Keys'
 	);
 
-	await editEditorConfigContributorPage.publishButton.click();
+	await editEditorConfigContributorPage.publish();
 
 	await clientExtensionsPage.editClientExtension(sampleName1);
 
 	const sampleName2 = 'Sample Name 2';
 
-	await editEditorConfigContributorPage.nameInput.click();
-
 	await editEditorConfigContributorPage.nameInput.fill(sampleName2);
 
-	await editEditorConfigContributorPage.publishButton.click();
+	await editEditorConfigContributorPage.publish();
 
-	await clientExtensionsPage.deleteClientExtension(sampleName2);
+	await editEditorConfigContributorPage.clientExtensionsPage.deleteClientExtension(
+		sampleName2
+	);
 });
 
 test('Add a toolbar button to a CKEditor, by applying editor config contributor client extension @LPS-186870', async ({
-	newEditorConfigContributorPage,
+	editEditorConfigContributorPage: newEditorConfigContributorPage,
 }) => {
 	await newEditorConfigContributorPage.goto();
 
 	await expect(
-		newEditorConfigContributorPage.descriptionEditable
+		newEditorConfigContributorPage.descriptionContentEditable
 	).toBeEditable();
 
 	await expect(

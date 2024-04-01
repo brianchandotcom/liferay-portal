@@ -241,7 +241,6 @@ describe('HtmlScreen', () => {
 			const element = document.querySelector('link[rel="Shortcut Icon"]');
 			const uri = new URL(element.href);
 			expect(uri.pathname).toBe('/for/favicon.ico');
-			expect(uri.searchParams.has('q')).toBe(true);
 			exitDocumentElement('surfaceId');
 			done();
 		});

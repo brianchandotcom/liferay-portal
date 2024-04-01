@@ -23,6 +23,7 @@ import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -134,6 +135,15 @@ public class SiteInitializerSerializerImpl
 		throws Exception {
 
 		zipWriter.addEntry("site-initializer/" + fileName, string);
+	}
+
+	private void _addZipEntry(
+			String fileName, UnsafeSupplier<String, Exception> unsafeSupplier,
+			ZipWriter zipWriter)
+		throws Exception {
+
+		zipWriter.addEntry(
+			"site-initializer/" + fileName, unsafeSupplier.get());
 	}
 
 	private String _normalize(String string) {
@@ -569,15 +579,18 @@ public class SiteInitializerSerializerImpl
 					"type", accountEntry.getType()
 				)),
 			zipWriter);
+		_addZipEntry(
+			"organizations.json",
+			() -> {
+				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+				for (Organization organization : organizations) {
+					_serializeOrganization(jsonArray, organization);
+				}
 
-		for (Organization organization : organizations) {
-			_serializeOrganization(jsonArray, organization);
-		}
-
-		_addZipEntry("organizations.json", jsonArray, zipWriter);
-
+				return JSONUtil.toString(jsonArray);
+			},
+			zipWriter);
 		_addZipEntry(
 			"roles.json",
 			JSONUtil.toJSONArray(

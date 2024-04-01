@@ -1,3 +1,7 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 const dropdown = fragmentElement.querySelector('.navbar-collapse');
 const dropdownButton = fragmentElement.querySelector('.navbar-toggler-link');
 const editMode = layoutMode === 'edit';
@@ -14,7 +18,7 @@ const tabPanelItems = [].slice.call(
 );
 
 function activeTab(item) {
-	tabItems.forEach(function (tabItem) {
+	tabItems.forEach((tabItem) => {
 		tabItem.setAttribute('aria-selected', false);
 		tabItem.classList.remove('active');
 	});
@@ -23,7 +27,7 @@ function activeTab(item) {
 }
 
 function activeTabPanel(item) {
-	tabPanelItems.forEach(function (tabPanelItem) {
+	tabPanelItems.forEach((tabPanelItem) => {
 		if (!tabPanelItem.classList.contains('d-none')) {
 			tabPanelItem.classList.add('d-none');
 		}
@@ -86,15 +90,15 @@ function main() {
 	let tabItemSelected = tabItems[0];
 
 	if (initialState) {
-		tabItems.forEach(function (item, i) {
+		tabItems.forEach((item, i) => {
 			if (!i) {
 				activeTab(item);
 			}
-			item.addEventListener('click', function (event) {
+			item.addEventListener('click', (event) => {
 				openTabPanel(event, i);
 			});
 		});
-		tabPanelItems.forEach(function (item, i) {
+		tabPanelItems.forEach((item, i) => {
 			if (!i) {
 				activeTabPanel(item);
 			}
@@ -102,18 +106,18 @@ function main() {
 	}
 	else {
 		tabItemSelected = tabItems[tabIndex];
-		tabItems.forEach(function (item, i) {
+		tabItems.forEach((item, i) => {
 			activeTab(tabItems[tabIndex]);
-			item.addEventListener('click', function (event) {
+			item.addEventListener('click', (event) => {
 				openTabPanel(event, i);
 			});
 		});
-		tabPanelItems.forEach(function () {
+		tabPanelItems.forEach(() => {
 			activeTabPanel(tabPanelItems[tabIndex]);
 		});
 	}
 
-	dropdownButton.addEventListener('click', function (event) {
+	dropdownButton.addEventListener('click', (event) => {
 		handleDropdown(event);
 	});
 	handleDropdownButtonName(tabItemSelected);

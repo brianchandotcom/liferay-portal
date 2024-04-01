@@ -8,23 +8,12 @@ import {Locator, Page} from '@playwright/test';
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ClientExtensionsPage {
-	readonly addJSMenuItem: Locator;
-	readonly addThemeCSSMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly deleteMenuItem: Locator;
 	readonly editMenuItem: Locator;
-	readonly editorConfigContributorMenuItem: Locator;
-	readonly newClientExtensionButton: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.addJSMenuItem = page.getByRole('menuitem', {
-			exact: true,
-			name: 'Add JS',
-		});
-		this.addThemeCSSMenuItem = page.getByRole('menuitem', {
-			name: 'Add Theme CSS',
-		});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.deleteMenuItem = page.getByRole('menuitem', {
 			name: 'Delete',
@@ -32,12 +21,6 @@ export class ClientExtensionsPage {
 		this.editMenuItem = page.getByRole('menuitem', {
 			name: 'Edit',
 		});
-		this.editorConfigContributorMenuItem = page.getByRole('menuitem', {
-			name: 'Add Editor Config Contributor',
-		});
-		this.newClientExtensionButton = page
-			.getByRole('button')
-			.and(page.getByTitle('New'));
 		this.page = page;
 	}
 

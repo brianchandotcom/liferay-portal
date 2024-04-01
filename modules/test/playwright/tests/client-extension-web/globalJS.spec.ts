@@ -50,9 +50,7 @@ test('Create a new JS with an attribute field', async ({
 
 	await page.getByLabel('Value', {exact: true}).fill(clientExtensionValue);
 
-	await editJSClientExtensionsPage.editClientExtensionSubmitButton.click();
-
-	await page.waitForLoadState();
+	await editJSClientExtensionsPage.publish();
 
 	// Apply JS client extension to all pages
 

@@ -360,6 +360,8 @@ definition {
 
 		task ("Interact with the user who belongs to the user group and the user who does not belong") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				emailList = "dxp@liferay.com,lxc@liferay.com",
 				pageName = "Home",
 				siteName = "guest");

@@ -70,7 +70,7 @@ definition {
 		task ("View the blog as a new user") {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 				emailList = "anonymousconvertedtoknown@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
@@ -117,7 +117,7 @@ definition {
 
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 				emailList = "anonymousconvertedtoknown@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");

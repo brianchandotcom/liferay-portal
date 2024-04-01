@@ -11,7 +11,7 @@ import com.liferay.expando.util.ExpandoConverterUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.field.reader.LocalizedInfoItemFieldReader;
-import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.localized.SingleValueInfoLocalizedValue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
@@ -53,14 +53,6 @@ public class ExpandoInfoItemFieldReader
 
 	@Override
 	public InfoField getInfoField() {
-		InfoLocalizedValue<String> labelInfoLocalizedValue =
-			InfoLocalizedValue.<String>builder(
-			).value(
-				LocaleUtil.getDefault(), _getLabel(LocaleUtil.getDefault())
-			).defaultLocale(
-				LocaleUtil.getDefault()
-			).build();
-
 		return InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
@@ -69,7 +61,8 @@ public class ExpandoInfoItemFieldReader
 		).name(
 			getName()
 		).labelInfoLocalizedValue(
-			labelInfoLocalizedValue
+			new SingleValueInfoLocalizedValue<>(
+				_getLabel(LocaleUtil.getDefault()))
 		).build();
 	}
 

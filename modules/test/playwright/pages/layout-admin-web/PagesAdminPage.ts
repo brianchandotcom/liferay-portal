@@ -41,7 +41,7 @@ export class PagesAdminPage {
 			.getByRole('button', {name: 'Add JavaScript Client Extensions'})
 			.click();
 
-		await this.page.getByText('In Page Head').click();
+		await this.page.getByRole('menuitem', {name: 'In Page Head'}).click();
 
 		const iframe = this.page.locator('#selectGlobalJSCETs_iframe_');
 

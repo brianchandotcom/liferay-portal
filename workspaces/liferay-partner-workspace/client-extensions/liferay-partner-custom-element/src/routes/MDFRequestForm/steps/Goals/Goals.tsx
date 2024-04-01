@@ -5,8 +5,8 @@
 
 import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useFormikContext} from 'formik';
-import {useCallback, useEffect, useMemo} from 'react';
+import {setNestedObjectValues, useFormikContext} from 'formik';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import PRMFormik from '../../../../common/components/PRMFormik';
@@ -38,6 +38,8 @@ const Goals = ({
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries(
 		disableCompany
 	);
+
+	const [isButtonClicked, setIsButtonClicked] = useState(false);
 
 	const {companyOptions, onCompanySelected} = useCompanyOptions(
 		useCallback(
@@ -83,6 +85,13 @@ const Goals = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.liferayBusinessSalesGoals]);
+
+	useEffect(() => {
+		if (values.id) {
+			formikHelpers.setTouched(setNestedObjectValues(errors, true));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.id, errors]);
 
 	const getRequestPage = () => {
 		if (!fieldEntries) {
@@ -206,13 +215,27 @@ const Goals = ({
 						<Button
 							className="inline-item inline-item-after"
 							disabled={
-								(!isValid && !isObjectEmpty(goalsErrors)) ||
+								(!isValid &&
+									!isObjectEmpty(goalsErrors) &&
+									(isButtonClicked || !!values.id)) ||
 								isSubmitting ||
 								submitted
 							}
-							onClick={() =>
-								onContinue?.(formikHelpers, StepType.ACTIVITIES)
-							}
+							onClick={() => {
+								setIsButtonClicked(true);
+
+								window.scrollTo({
+									behavior: (!isValid
+										? 'instant'
+										: 'smooth') as ScrollBehavior,
+									top: 0,
+								});
+
+								onContinue?.(
+									formikHelpers,
+									StepType.ACTIVITIES
+								);
+							}}
 						>
 							Continue
 							{isSubmitting && (

@@ -2106,7 +2106,7 @@ public class GitWorkingDirectory {
 			throw new IOException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to find log between ", branch1, " and ", branch2,
-					".\n\n", result.getStandardError()));
+					":\n\n", result.getStandardError()));
 		}
 
 		return log(Integer.parseInt(result.getStandardOut()));

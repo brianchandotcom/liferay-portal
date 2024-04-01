@@ -9,7 +9,7 @@ import AdministratorDashboardOutlet from './AdministratorDashboardOutlet';
 
 import './index.scss';
 import App from '../PublishedAppsDashboard/Apps/App';
-import AppAdministrator from './pages/AppsAdministrator';
+import Apps from './pages/Apps';
 import Metrics from './pages/Metrics';
 import PublisherRequest from './pages/PublisherRequest';
 
@@ -25,7 +25,7 @@ const AdministratorDashboardRouter = () => (
 				/>
 
 				<Route path="apps">
-					<Route element={<AppAdministrator />} index />
+					<Route element={<Apps />} index />
 					<Route path=":appId">
 						<Route
 							element={<App isAdministratorDashboard />}

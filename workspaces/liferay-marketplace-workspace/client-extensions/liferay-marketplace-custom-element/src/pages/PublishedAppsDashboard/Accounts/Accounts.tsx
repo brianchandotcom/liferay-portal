@@ -74,9 +74,8 @@ function AccountDetailsPage({
 	totalMembers,
 }: AccountDetailsPageProps) {
 	const navigate = useNavigate();
-	const [selectedAccountAddress, setSelectedAccountAddress] = useState<
-		AccountPostalAddresses[]
-	>();
+	const [selectedAccountAddress, setSelectedAccountAddress] =
+		useState<AccountPostalAddresses[]>();
 
 	let accountType = '';
 	if (selectedAccount) {
@@ -125,14 +124,14 @@ function AccountDetailsPage({
 
 						<div className="account-details-header-right-container">
 							<AccountHeaderButton
-								count={(totalApps as unknown) as string}
+								count={totalApps as unknown as string}
 								name="apps"
 								onClick={() => navigate('/')}
 								text="Apps"
 								title="Apps"
 							/>
 							<AccountHeaderButton
-								count={(totalMembers as unknown) as string}
+								count={totalMembers as unknown as string}
 								name="members"
 								onClick={() => navigate('/members')}
 								text="Items"
@@ -367,7 +366,7 @@ function AccountDetailsPage({
 const Accounts = () => {
 	const {appsTotalCount, selectedAccount} = useOutletContext<any>();
 
-	const {members} = useMembers({
+	const {data: members = []} = useMembers({
 		accountId: Liferay.CommerceContext.account?.accountId ?? 0,
 		isCustomerDashboard: false,
 		isPublisherDashboard: true,

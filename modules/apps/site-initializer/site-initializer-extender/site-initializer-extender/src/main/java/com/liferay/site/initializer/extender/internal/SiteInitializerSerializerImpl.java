@@ -478,7 +478,7 @@ public class SiteInitializerSerializerImpl
 					organization.getOrganizationId())) {
 
 			_serializeOrganization(
-				(JSONArray)jsonObject.get("childOrganizations"),
+				jsonObject.getJSONArray("childOrganizations"),
 				childOrganization);
 		}
 

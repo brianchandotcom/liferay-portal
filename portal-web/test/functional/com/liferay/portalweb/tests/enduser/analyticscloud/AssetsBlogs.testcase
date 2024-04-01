@@ -45,7 +45,7 @@ definition {
 		task ("View the blog") {
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

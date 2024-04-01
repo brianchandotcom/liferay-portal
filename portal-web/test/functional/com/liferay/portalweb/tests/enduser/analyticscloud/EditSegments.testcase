@@ -108,17 +108,12 @@ definition {
 	@description = "Edit a dynamic segment and check the edits are saved"
 	@priority = 5
 	test CanEditDynamicSegmentCheckEditSaved {
-		property portal.upstream = "quarantine";
-		property test.run.type = "single";
-
-		// AC Quarantine Reason: Segment membership takes long time to load
-		// AC refactor ticket: LRAC-10769
-
 		property portal.acceptance = "false";
+		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
@@ -130,7 +125,7 @@ definition {
 
 		ACUtils.navigateToSitePageWithUser(
 			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title",
+			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 			emailList = "ac@liferay.com",
 			pageName = "AC Page",
 			siteName = "Site Name");
@@ -139,13 +134,13 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
 		ACSegments.createDynamicSegment();
 
-		ACUtils.setItemName(itemName = "Dynamic Segment Test");
+		ACUtils.setItemName(itemName = "Edit Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Viewed Blog");
 
@@ -156,26 +151,6 @@ definition {
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no items found.");
-
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
 		ACSegments.viewSegmentCriteriaWebBehavior(
 			activitiesOption = "has",
 			atLeastMost = "at least",
@@ -184,13 +159,11 @@ definition {
 			timeOption = "since",
 			timePeriod = "Last 24 hours");
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewNameList(nameList = "ac ac");
-
 		ACNavigation.goToSegments();
 
-		ACSegments.editSegment(segmentName = "Dynamic Segment Test");
+		ACSegments.viewSegmentName(searchTerm = "Edit Segment Test");
+
+		ACSegments.editSegment(segmentName = "Edit Segment Test");
 
 		ACSegments.editWebBehaviorCriterion(
 			activitiesOption = "has not",
@@ -199,11 +172,9 @@ definition {
 			occurenceNumber = 5,
 			timeOption = "ever");
 
+		ACUtils.setItemName(itemName = "Rename Segment Test");
+
 		ACSegments.saveSegment();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
 		ACSegments.viewSegmentCriteriaWebBehavior(
 			activitiesOption = "has not",
@@ -212,9 +183,9 @@ definition {
 			searchTerm = "'Blogs AC Title'",
 			timeOption = "ever");
 
-		ACNavigation.switchTab(tabName = "Membership");
+		ACNavigation.goToSegments();
 
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
+		ACSegments.viewSegmentName(searchTerm = "Rename Segment Test");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8135 | Test Summary: Edit a static segment and check the edits are saved"
@@ -284,71 +255,6 @@ definition {
 		ACNavigation.switchTab(tabName = "Membership");
 
 		ACUtils.viewNameList(nameList = ${nameList});
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
-	@ignore = "true"
-	@priority = 5
-	test CanRenameIndividualsSegment {
-		property test.run.type = "single";
-
-		// AC Bug ticket: LRAC-15408
-
-		ACUtils.createBlogsAndAddToPage();
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		JSONUser.addUser(
-			userEmailAddress = "ac@liferay.com",
-			userFirstName = "ac",
-			userLastName = "ac",
-			userScreenName = "ac");
-
-		ACDXPSettings.syncNewContactData();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "ac@liferay.com",
-			userLoginFullName = "ac ac");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View Blog",
-			documentTitleList = "Blogs AC Title",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-		ACNavigation.goToSegments();
-
-		ACSegments.createDynamicSegment();
-
-		ACUtils.setItemName(itemName = "Dynamic Segment Test");
-
-		ACSegments.addSegmentField(segmentField = "Viewed Blog");
-
-		ACSegments.editWebBehaviorCriterion(
-			indexField = 1,
-			searchTerm = "Blogs AC Title");
-
-		ACSegments.saveSegment();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.viewSegmentName(searchTerm = "Dynamic Segment Test");
-
-		ACSegments.editSegment(segmentName = "Dynamic Segment Test");
-
-		ACUtils.setItemName(itemName = "Rename Segment");
-
-		ACSegments.saveSegment();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.viewSegmentName(searchTerm = "Rename Segment");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8585 | Test Summary: It is not possible to add a duplicate user to a static segment"

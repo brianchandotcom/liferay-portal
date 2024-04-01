@@ -45,4 +45,10 @@ public interface Captcha {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException;
 
+	public void setMaxChallenges(
+		HttpServletRequest httpServletRequest, Integer maxChallenges);
+
+	public void setMaxChallenges(
+		PortletRequest portletRequest, Integer maxChallenges);
+
 }

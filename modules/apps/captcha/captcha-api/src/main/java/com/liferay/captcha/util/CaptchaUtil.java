@@ -61,6 +61,18 @@ public class CaptchaUtil {
 		getCaptcha().serveImage(httpServletRequest, httpServletResponse);
 	}
 
+	public static void setMaxChallenges(
+		HttpServletRequest httpServletRequest, Integer maxChallenges) {
+
+		getCaptcha().setMaxChallenges(httpServletRequest, maxChallenges);
+	}
+
+	public static void setMaxChallenges(
+		PortletRequest portletRequest, Integer maxChallenges) {
+
+		getCaptcha().setMaxChallenges(portletRequest, maxChallenges);
+	}
+
 	private static final Snapshot<CaptchaProvider> _captchaProviderSnapshot =
 		new Snapshot<>(CaptchaUtil.class, CaptchaProvider.class);
 

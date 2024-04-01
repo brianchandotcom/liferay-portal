@@ -64,10 +64,10 @@ import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -505,9 +505,9 @@ public class SiteInitializerSerializerImpl
 	private void _serializeUserAccounts(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
-		Set<Organization> allOrganizations = new HashSet<>();
-		Set<AccountEntry> allAccountEntries = new HashSet<>();
-		Set<Role> allRoles = new HashSet<>();
+		Set<Organization> allOrganizations = new TreeSet<>();
+		Set<AccountEntry> allAccountEntries = new TreeSet<>();
+		Set<Role> allRoles = new TreeSet<>();
 
 		JSONArray usersJSONArray = _jsonFactory.createJSONArray();
 

@@ -83,7 +83,9 @@ export function Attachments({
 
 	useEffect(() => {
 		const currentObjectDefinition = objectDefinitions?.find(
-			(item) => item.id === values.objectDefinitionId
+			(objectDefinition) =>
+				objectDefinition.externalReferenceCode ===
+				values.objectDefinitionExternalReferenceCode
 		);
 
 		const newObjectDefinitionItems: ObjectDefinitionItem[] = [];
@@ -111,16 +113,6 @@ export function Attachments({
 			}
 		);
 
-		setObjectDefinitionItems(newObjectDefinitionItems);
-
-		setSelectedEntityValue(currentObjectDefinition?.externalReferenceCode);
-	}, [objectDefinitions, values.objectDefinitionId]);
-
-	useEffect(() => {
-		const currentObjectDefinition = objectDefinitions?.find(
-			(item) => item.id === values.objectDefinitionId
-		);
-
 		if (!currentObjectDefinition) {
 			setValues({
 				...values,
@@ -129,15 +121,17 @@ export function Attachments({
 			});
 		}
 
-		setSelectedEntityValue(currentObjectDefinition?.externalReferenceCode);
-
 		if (values.objectDefinitionId) {
 			getAttachmentFields(
 				values.objectDefinitionExternalReferenceCode as string
 			);
 		}
+
+		setObjectDefinitionItems(newObjectDefinitionItems);
+		setSelectedEntityValue(currentObjectDefinition?.externalReferenceCode);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.objectDefinitionId]);
+	}, [objectDefinitions, values.objectDefinitionId]);
 
 	useEffect(() => {
 		if (attachmentsFields.length) {

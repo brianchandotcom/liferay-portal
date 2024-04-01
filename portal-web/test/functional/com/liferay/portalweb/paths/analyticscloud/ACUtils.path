@@ -180,6 +180,11 @@
 	<td>xpath=(//div[@class='audience-report-chart-donut'])[${key_index}]//*[text()='${key_metricValue}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VIEWER_SEGMENTS_CHART</td>
+	<td>//div[contains(@class,'analytics-bar-chart')]//span[text()='${key_segmentName}']</td>
+	<td></td>
+</tr>
 
 <!-- CLICKABLE -->
 

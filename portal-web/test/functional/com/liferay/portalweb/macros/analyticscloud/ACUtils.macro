@@ -405,6 +405,23 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro assertViewerSegmentsCard(segmentNameList) {
+		ACUtils.waitForLoading();
+
+		for (var segmentName : list ${segmentNameList}) {
+			var key_segmentName = ${segmentName};
+
+			while ((IsElementNotPresent(locator1 = "ACUtils#VIEWER_SEGMENTS_CHART")) && (maxIterations = "50")) {
+				TestUtils.hardRefresh();
+
+				ACUtils.waitForLoading();
+			}
+
+			AssertElementPresent(locator1 = "ACUtils#VIEWER_SEGMENTS_CHART");
+		}
+	}
+
+	@summary = "Default summary"
 	macro assertXAxisTimedGraph(parentName = null) {
 		var key_parentName = ${parentName};
 

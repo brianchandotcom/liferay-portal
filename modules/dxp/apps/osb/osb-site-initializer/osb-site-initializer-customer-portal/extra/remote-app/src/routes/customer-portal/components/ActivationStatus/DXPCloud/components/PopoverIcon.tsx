@@ -9,7 +9,7 @@ import i18n from '../../../../../../common/I18n';
 
 const PopoverIcon = ({
 	symbol = 'info-circle',
-	title = 'lxc-sm-is-the-abbreviation-of-liferay-experience-cloud-self-managed',
+	title = 'formerly-known-as-lxc-sm',
 }) => (
 	<ClayTooltipProvider>
 		<span>

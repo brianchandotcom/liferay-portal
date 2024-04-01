@@ -126,7 +126,7 @@ const LiferayExperienceCloudModal = ({
 						) : (
 							<p className="mb-2 ml-4 mt-4">
 								{i18n.translate(
-									'please-confirm-the-lxm-project-id'
+									'please-confirm-the-lxc-project-id'
 								)}
 							</p>
 						)}

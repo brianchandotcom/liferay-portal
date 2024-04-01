@@ -123,7 +123,7 @@ function JobInformation({job}) {
 		jobParameterDefinitions = job.definition.parameterDefinitions;
 	}
 
-	let jobParameters = "";
+	let jobParameters = '';
 
 	if (job.parameters) {
 		jobParameters = JSON.parse(job.parameters);

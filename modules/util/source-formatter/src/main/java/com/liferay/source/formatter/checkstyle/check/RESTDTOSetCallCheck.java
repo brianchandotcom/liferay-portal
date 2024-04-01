@@ -89,6 +89,10 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 			String variableName = getVariableName(methodCallDetailAST);
 
+			if (variableName == null) {
+				return;
+			}
+
 			String fullyQualifiedTypeName = getVariableTypeName(
 				methodCallDetailAST, variableName, false, false, true);
 

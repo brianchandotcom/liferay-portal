@@ -514,7 +514,9 @@ public class SiteInitializerSerializerImpl
 			JSONUtil.toJSONArray(
 				_userLocalService.getGroupUsers(groupId),
 				user -> {
-					for (Role role : user.getRoles()) {
+					List<Role> userRoles = user.getRoles();
+
+					for (Role role : userRoles) {
 						if (StringUtil.equals(
 								role.getName(), RoleConstants.ADMINISTRATOR) ||
 							StringUtil.equals(
@@ -524,7 +526,7 @@ public class SiteInitializerSerializerImpl
 						}
 					}
 
-					roles.addAll(user.getRoles());
+					roles.addAll(userRoles);
 
 					List<AccountEntry> userAccountEntries =
 						_accountEntryLocalService.getUserAccountEntries(

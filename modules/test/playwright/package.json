@@ -31,7 +31,7 @@
 		"local:teardown": "ts-node ./scripts/localTeardown.ts",
 		"playwright": "playwright",
 		"test": "playwright test",
-		"testUI": "playwright test --ui"
+		"test:ui": "playwright test --ui"
 	},
 	"version": "1.0.0"
 }

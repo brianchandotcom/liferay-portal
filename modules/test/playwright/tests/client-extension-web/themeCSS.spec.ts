@@ -11,8 +11,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
-import {themeCSSClientExtensionsPageTest} from './fixtures/themeCSSClientExtensionsPageTest';
-import {ThemeCSSClientExtensionsPage} from './pages/ThemeCSSClientExtensionsPage';
+import {editThemeCSSClientExtensionsPageTest} from './fixtures/editThemeCSSClientExtensionsPageTest';
+import {EditThemeCSSClientExtensionsPage} from './pages/EditThemeCSSClientExtensionsPage';
 
 export const test = mergeTests(
 	clientExtensionsPageTest,
@@ -22,16 +22,16 @@ export const test = mergeTests(
 	loginTest(),
 	pagesAdminPageTest,
 	styleBookPageTest,
-	themeCSSClientExtensionsPageTest
+	editThemeCSSClientExtensionsPageTest
 );
 
 const uploadAndValidateFile = async (
 	fileName: string,
 	message: string,
 	page: Page,
-	themeCSSClientExtensionsPage: ThemeCSSClientExtensionsPage
+	editThemeCSSClientExtensionsPage: EditThemeCSSClientExtensionsPage
 ) => {
-	await themeCSSClientExtensionsPage.uploadFrontendTokenDefinitionFile(
+	await editThemeCSSClientExtensionsPage.uploadFrontendTokenDefinitionFile(
 		__dirname,
 		fileName
 	);
@@ -40,64 +40,64 @@ const uploadAndValidateFile = async (
 };
 
 test('ThemeCSS client extension supports frontend token definition JSON file upload', async ({
+	editThemeCSSClientExtensionsPage,
 	page,
-	themeCSSClientExtensionsPage,
 }) => {
-	await themeCSSClientExtensionsPage.goto();
+	await editThemeCSSClientExtensionsPage.goto();
 
 	await uploadAndValidateFile(
 		'empty-json-file.json',
 		'The frontend token definition JSON file was uploaded and contributed 0 token categories, 0 token sets, and 0 tokens.',
 		page,
-		themeCSSClientExtensionsPage
+		editThemeCSSClientExtensionsPage
 	);
 
 	await uploadAndValidateFile(
 		'frontend-token-definition.json',
 		'The frontend token definition JSON file was uploaded and contributed 1 token categories, 1 token sets, and 2 tokens.',
 		page,
-		themeCSSClientExtensionsPage
+		editThemeCSSClientExtensionsPage
 	);
 
 	await uploadAndValidateFile(
 		'frontend-token-definition-empty-object.json',
 		'The frontend token definition JSON file was uploaded and contributed 0 token categories, 0 token sets, and 0 tokens.',
 		page,
-		themeCSSClientExtensionsPage
+		editThemeCSSClientExtensionsPage
 	);
 
 	await uploadAndValidateFile(
 		'frontend-token-definition-invalid-schema.json',
 		'The format is invalid. Please upload a valid Frontend Token Definition JSON file.',
 		page,
-		themeCSSClientExtensionsPage
+		editThemeCSSClientExtensionsPage
 	);
 });
 
 test('ThemeCSS client extension frontend token definition tokens appears stylebooks', async ({
 	clientExtensionsPage,
+	editThemeCSSClientExtensionsPage,
 	page,
 	pagesAdminPage,
 	styleBooksPage,
-	themeCSSClientExtensionsPage,
 }) => {
 
 	// Create Theme CSS client extension.
 
-	await themeCSSClientExtensionsPage.goto();
+	await editThemeCSSClientExtensionsPage.goto();
 
 	const clientExtensionName = getRandomString();
 
-	await themeCSSClientExtensionsPage.nameInput.fill(clientExtensionName);
+	await editThemeCSSClientExtensionsPage.nameInput.fill(clientExtensionName);
 
 	await uploadAndValidateFile(
 		'frontend-token-definition.json',
 		'The frontend token definition JSON file was uploaded and contributed 1 token categories, 1 token sets, and 2 tokens.',
 		page,
-		themeCSSClientExtensionsPage
+		editThemeCSSClientExtensionsPage
 	);
 
-	await themeCSSClientExtensionsPage.editClientExtensionSubmitButton.click();
+	await editThemeCSSClientExtensionsPage.editClientExtensionSubmitButton.click();
 
 	// Apply Theme CSS client extension to all pages.
 

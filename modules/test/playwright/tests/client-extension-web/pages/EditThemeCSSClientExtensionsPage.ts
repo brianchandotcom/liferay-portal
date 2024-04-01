@@ -8,7 +8,7 @@ import * as path from 'path';
 
 import {ClientExtensionsPage} from './ClientExtensionsPage';
 
-export class ThemeCSSClientExtensionsPage {
+export class EditThemeCSSClientExtensionsPage {
 	readonly clientExtensionsPage: ClientExtensionsPage;
 	readonly editClientExtensionSubmitButton: Locator;
 	readonly nameInput: Locator;

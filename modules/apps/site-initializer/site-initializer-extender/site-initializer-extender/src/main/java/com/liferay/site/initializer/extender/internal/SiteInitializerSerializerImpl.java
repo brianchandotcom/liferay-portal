@@ -67,6 +67,7 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -475,7 +476,7 @@ public class SiteInitializerSerializerImpl
 	}
 
 	private void _serializeOrganizations(
-			HashSet<Organization> organizations, ZipWriter zipWriter)
+			Set<Organization> organizations, ZipWriter zipWriter)
 		throws Exception {
 
 		JSONArray organizationsJSONArray = _jsonFactory.createJSONArray();
@@ -504,9 +505,9 @@ public class SiteInitializerSerializerImpl
 	private void _serializeUserAccounts(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
-		HashSet<Organization> allOrganizations = new HashSet<>();
-		HashSet<AccountEntry> allAccountEntries = new HashSet<>();
-		HashSet<Role> allRoles = new HashSet<>();
+		Set<Organization> allOrganizations = new HashSet<>();
+		Set<AccountEntry> allAccountEntries = new HashSet<>();
+		Set<Role> allRoles = new HashSet<>();
 
 		JSONArray usersJSONArray = _jsonFactory.createJSONArray();
 

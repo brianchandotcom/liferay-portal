@@ -38,10 +38,7 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
@@ -305,14 +302,11 @@ public class FileEntryInfoItemFormProvider
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
-			Map<Locale, String> nameMap = new HashMap<>(
-				ddmStructure.getNameMap());
-
 			return InfoLocalizedValue.<String>builder(
 			).defaultLocale(
 				LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId())
 			).values(
-				nameMap
+				ddmStructure.getNameMap()
 			).build();
 		}
 		catch (NoSuchStructureException noSuchStructureException) {

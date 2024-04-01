@@ -100,13 +100,22 @@ public class LayoutPermissionTest {
 
 	@Test
 	public void testContainsGuestWithPreviewDraftPermission() throws Exception {
-		Assert.assertTrue(
-			_layoutPermission.containsLayoutPreviewDraftPermission(
-				_getPermissionChecker(
-					ActionKeys.PREVIEW_DRAFT,
-					_roleLocalService.getRole(
-						_group.getCompanyId(), RoleConstants.GUEST)),
-				LayoutTestUtil.addTypeContentLayout(_group)));
+		Role role = _roleLocalService.getRole(
+			_group.getCompanyId(), RoleConstants.GUEST);
+
+		try {
+			Assert.assertTrue(
+				_layoutPermission.containsLayoutPreviewDraftPermission(
+					_getPermissionChecker(ActionKeys.PREVIEW_DRAFT, role),
+					LayoutTestUtil.addTypeContentLayout(_group)));
+		}
+		finally {
+			_resourcePermissionLocalService.removeResourcePermission(
+				_group.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(_group.getCompanyId()), role.getRoleId(),
+				ActionKeys.PREVIEW_DRAFT);
+		}
 	}
 
 	@Test
@@ -127,14 +136,22 @@ public class LayoutPermissionTest {
 	public void testContainsPortalContentReviewerWithPreviewDraftPermission()
 		throws Exception {
 
-		Assert.assertTrue(
-			_layoutPermission.containsLayoutPreviewDraftPermission(
-				_getPermissionChecker(
-					ActionKeys.PREVIEW_DRAFT,
-					_roleLocalService.getRole(
-						TestPropsValues.getCompanyId(),
-						RoleConstants.PORTAL_CONTENT_REVIEWER)),
-				LayoutTestUtil.addTypeContentLayout(_group)));
+		Role role = _roleLocalService.getRole(
+			_group.getCompanyId(), RoleConstants.PORTAL_CONTENT_REVIEWER);
+
+		try {
+			Assert.assertTrue(
+				_layoutPermission.containsLayoutPreviewDraftPermission(
+					_getPermissionChecker(ActionKeys.PREVIEW_DRAFT, role),
+					LayoutTestUtil.addTypeContentLayout(_group)));
+		}
+		finally {
+			_resourcePermissionLocalService.removeResourcePermission(
+				_group.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(_group.getCompanyId()), role.getRoleId(),
+				ActionKeys.PREVIEW_DRAFT);
+		}
 	}
 
 	@Test

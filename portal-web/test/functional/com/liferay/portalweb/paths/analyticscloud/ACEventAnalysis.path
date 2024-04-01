@@ -92,7 +92,7 @@
 
 <tr>
 	<td>VIEW_TOTAL_NUMBER_RELATED_COLUMN_INFORMATION</td>
-	<td>//span[text()='${key_columnInformationValue}']/ancestor::tr//span[text()='${key_totalEventsValue}']</td>
+	<td>//span[contains(text(),'${key_columnInformationValue}')]/ancestor::tr//span[text()='${key_totalEventsValue}']</td>
 	<td></td>
 </tr>
 <tr>

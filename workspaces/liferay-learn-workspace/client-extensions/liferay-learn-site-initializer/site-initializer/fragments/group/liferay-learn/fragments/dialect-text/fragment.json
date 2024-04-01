@@ -1,6 +1,10 @@
 {
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
 	"fragmentEntryKey": "dialect-text",
+	"htmlPath": "index.html",
 	"icon": "text-editor",
+	"jsPath": "index.js",
 	"name": "dialect-text",
 	"type": "component"
 }

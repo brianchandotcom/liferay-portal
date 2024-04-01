@@ -1,6 +1,10 @@
 {
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
 	"fragmentEntryKey": "dialect-tabs",
+	"htmlPath": "index.html",
 	"icon": "tabs",
+	"jsPath": "index.js",
 	"name": "dialect-tabs",
 	"type": "component"
 }

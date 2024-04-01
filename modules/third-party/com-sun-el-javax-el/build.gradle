@@ -17,6 +17,7 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "com/sun/el/parser/AstIdentifier.java"
 	fileNames "com/sun/el/parser/ELParser.java"
 	fileNames "javax/el/BeanELResolver.java"
 

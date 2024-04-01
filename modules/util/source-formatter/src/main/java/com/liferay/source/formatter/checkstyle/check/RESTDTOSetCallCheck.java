@@ -44,7 +44,9 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String absolutePath = getAbsolutePath();
 
-		if (absolutePath.contains("/test/") ||
+		if ((!absolutePath.contains("/modules/") &&
+			 !absolutePath.contains("/workspaces/")) ||
+			absolutePath.contains("/test/") ||
 			absolutePath.contains("/testIntegration/")) {
 
 			return;

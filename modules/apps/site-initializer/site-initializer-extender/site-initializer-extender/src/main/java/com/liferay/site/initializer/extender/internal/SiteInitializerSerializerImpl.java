@@ -557,25 +557,6 @@ public class SiteInitializerSerializerImpl
 			zipWriter);
 
 		_addZipEntry(
-			"roles.json",
-			JSONUtil.toJSONArray(
-				roles,
-				role -> {
-					if (StringUtil.equals(role.getName(), RoleConstants.USER)) {
-						return null;
-					}
-
-					return JSONUtil.put(
-						"name", role.getName()
-					).put(
-						"name_i18n", JSONUtil.put("en-US", role.getName())
-					).put(
-						"type", role.getType()
-					);
-				}),
-			zipWriter);
-
-		_addZipEntry(
 			"accounts.json",
 			JSONUtil.toJSONArray(
 				accountEntries,
@@ -596,6 +577,25 @@ public class SiteInitializerSerializerImpl
 		}
 
 		_addZipEntry("organizations.json", jsonArray, zipWriter);
+
+		_addZipEntry(
+			"roles.json",
+			JSONUtil.toJSONArray(
+				roles,
+				role -> {
+					if (StringUtil.equals(role.getName(), RoleConstants.USER)) {
+						return null;
+					}
+
+					return JSONUtil.put(
+						"name", role.getName()
+					).put(
+						"name_i18n", JSONUtil.put("en-US", role.getName())
+					).put(
+						"type", role.getType()
+					);
+				}),
+			zipWriter);
 	}
 
 	@Reference

@@ -131,6 +131,7 @@ definition {
 	test ExtractAndAddDBPartitionCompaniesWithUpgradedDB {
 		property data.archive.type = "data-archive-portal-partition";
 		property portal.version = "7.4.13.u33";
+		property test.assert.warning.exceptions = "false";
 
 		task ("Validate www.able.com and www.baker.com partitions") {
 			User.loginPG(

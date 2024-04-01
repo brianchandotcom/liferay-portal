@@ -227,7 +227,17 @@ const overrides = (
 
 const filterSchema = {
 	buildCaseTypes: {
-		fields: [baseFilters.priority, baseFilters.team] as RendererFields[],
+		fields: [
+			overrides(baseFilters.priority, {
+				name: 'caseTypeToCases/priority',
+				removeQuoteMark: true,
+			}),
+			overrides(baseFilters.team, {
+				name:
+					'caseTypeToCases/componentToCases/r_teamToComponents_c_teamId',
+				type: 'multiselect',
+			}),
+		] as RendererFields[],
 		name: 'buildCaseTypes',
 	},
 	buildComponents: {
@@ -424,17 +434,26 @@ const filterSchema = {
 				name: 'runToCaseResult/caseToCaseResult/caseTypeToCases/id',
 			}),
 			overrides(baseFilters.team, {
-				disabled: true,
+				name:
+					'runToCaseResult/componentToCaseResult/r_teamToComponents_c_teamId',
 			}),
 		] as RendererFields[],
 		name: 'buildRuns',
 	},
 	buildTeams: {
 		fields: [
-			overrides(baseFilters.priority, {disabled: true, type: 'select'}),
-			overrides(baseFilters.caseType, {disabled: true, type: 'select'}),
+			overrides(baseFilters.priority, {
+				name: 'teamToComponents/componentToCases/priority',
+				removeQuoteMark: true,
+			}),
+			overrides(baseFilters.caseType, {
+				name: 'teamToComponents/componentToCases/caseTypeToCases/id',
+			}),
 			overrides(baseFilters.team, {name: 'id', type: 'multiselect'}),
-			overrides(baseFilters.run, {disabled: true}),
+			overrides(baseFilters.run, {
+				name:
+					'teamToComponents/componentToCaseResult/runToCaseResult/id',
+			}),
 		] as RendererFields[],
 		name: 'buildTeams',
 	},
@@ -726,9 +745,9 @@ const filterSchema = {
 				type: 'text',
 			},
 			{
-				disabled: true,
 				label: i18n.translate('case'),
-				name: 'case',
+				name:
+					'requiremenToRequirementsCases/caseToRequirementsCases/name',
 				operator: 'contains',
 				optionalOperators: 'ne',
 				type: 'textarea',
@@ -738,9 +757,19 @@ const filterSchema = {
 	},
 	routines: {
 		fields: [
-			baseFilters.priority,
-			baseFilters.caseType,
-			baseFilters.team,
+			overrides(baseFilters.priority, {
+				name:
+					'routineToBuilds/buildToCaseResult/caseToCaseResult/priority',
+				removeQuoteMark: true,
+			}),
+			overrides(baseFilters.caseType, {
+				name:
+					'routineToBuilds/buildToCaseResult/caseToCaseResult/caseTypeToCases/id',
+			}),
+			overrides(baseFilters.team, {
+				name:
+					'routineToBuilds/buildToCaseResult/componentToCaseResult/r_teamToComponents_c_teamId',
+			}),
 		] as RendererFields[],
 		name: 'routines',
 	},

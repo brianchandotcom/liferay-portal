@@ -228,10 +228,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Create a new page',
 				async () => {
 					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage(
-							site.id,
-							getRandomString()
-						);
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
 
 					return pageLayout;
 				}
@@ -287,10 +287,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Create a page with a Data Set fragment',
 				async () => {
 					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage(
-							site.id,
-							getRandomString()
-						);
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
 
 					return pageLayout;
 				}
@@ -348,10 +348,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Create a page with a Data Set fragment',
 				async () => {
 					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage(
-							site.id,
-							getRandomString()
-						);
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
 
 					return pageLayout;
 				}
@@ -452,10 +452,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Create a page with a Data Set fragment',
 				async () => {
 					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage(
-							site.id,
-							getRandomString()
-						);
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
 
 					return pageLayout;
 				}
@@ -548,10 +548,10 @@ fragmentTest.describe('Data Set Default Visualization Mode in fragment', () => {
 				'Create a page with a Data Set fragment',
 				async () => {
 					const pageLayout =
-						await apiHelpers.headlessDelivery.createSitePage(
-							site.id,
-							getRandomString()
-						);
+						await apiHelpers.headlessDelivery.createSitePage({
+							siteId: site.id,
+							title: getRandomString(),
+						});
 
 					return pageLayout;
 				}

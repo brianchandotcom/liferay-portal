@@ -4211,9 +4211,92 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByC_EA(companyId, emailAddress);
 
-		sendPasswordLockoutNotification(
-			user, companyId, fromName, fromAddress, subject, body,
-			serviceContext);
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		if (Validator.isNull(fromName)) {
+			fromName = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
+		}
+
+		if (Validator.isNull(fromAddress)) {
+			fromAddress = PrefsPropsUtil.getString(
+				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
+		}
+
+		String toName = user.getFullName();
+		String toAddress = user.getEmailAddress();
+
+		if (Validator.isNull(body)) {
+			try {
+				body = StringUtil.read(
+					PortalClassLoaderUtil.getClassLoader(),
+					PropsValues.ADMIN_EMAIL_PASSWORD_LOCKOUT_BODY);
+
+				if (passwordPolicy.getLockoutDuration() > 0) {
+					body = StringUtil.read(
+						PortalClassLoaderUtil.getClassLoader(),
+						PropsValues.ADMIN_EMAIL_PASSWORD_LOCKOUT_UNTIL_BODY);
+				}
+			}
+			catch (IOException ioException) {
+				_log.error("Unable to read the content", ioException);
+			}
+		}
+
+		if (Validator.isNull(subject)) {
+			try {
+				subject = StringUtil.read(
+					PortalClassLoaderUtil.getClassLoader(),
+					PropsValues.ADMIN_EMAIL_PASSWORD_LOCKOUT_SUBJECT);
+			}
+			catch (IOException ioException) {
+				_log.error("Unable to read the content", ioException);
+			}
+		}
+
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
+
+		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", fromAddress);
+		mailTemplateContextBuilder.put(
+			"[$FROM_NAME$]", new EscapableObject<>(fromName));
+		mailTemplateContextBuilder.put(
+			"[$PORTAL_URL$]", serviceContext.getPortalURL());
+		mailTemplateContextBuilder.put(
+			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr());
+		mailTemplateContextBuilder.put(
+			"[$REMOTE_HOST$]",
+			new EscapableObject<>(serviceContext.getRemoteHost()));
+		mailTemplateContextBuilder.put("[$TO_ADDRESS$]", toAddress);
+		mailTemplateContextBuilder.put(
+			"[$TO_FIRST_NAME$]", new EscapableObject<>(user.getFirstName()));
+		mailTemplateContextBuilder.put(
+			"[$TO_NAME$]", new EscapableObject<>(toName));
+		mailTemplateContextBuilder.put(
+			"[$USER_ID$]", String.valueOf(user.getUserId()));
+		mailTemplateContextBuilder.put(
+			"[$USER_SCREENNAME$]", new EscapableObject<>(user.getScreenName()));
+
+		if (passwordPolicy.getLockoutDuration() > 0) {
+			DateFormat dateFormat = DateFormatFactoryUtil.getDateTime(
+				user.getLocale());
+
+			mailTemplateContextBuilder.put(
+				"[$TIME_TO_UNLOCK]",
+				new EscapableObject<>(dateFormat.format(user.getUnlockDate())));
+		}
+
+		MailTemplateContext mailTemplateContext =
+			mailTemplateContextBuilder.build();
+
+		try {
+			_sendNotificationEmail(
+				fromAddress, fromName, toAddress, user, subject, body,
+				mailTemplateContext);
+		}
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
+		}
 
 		return false;
 	}
@@ -6651,99 +6734,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
-	}
-
-	protected void sendPasswordLockoutNotification(
-			User user, long companyId, String fromName, String fromAddress,
-			String subject, String body, ServiceContext serviceContext)
-		throws PortalException {
-
-		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
-		if (Validator.isNull(fromName)) {
-			fromName = PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_NAME);
-		}
-
-		if (Validator.isNull(fromAddress)) {
-			fromAddress = PrefsPropsUtil.getString(
-				companyId, PropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
-		}
-
-		String toName = user.getFullName();
-		String toAddress = user.getEmailAddress();
-
-		if (Validator.isNull(body)) {
-			try {
-				body = StringUtil.read(
-					PortalClassLoaderUtil.getClassLoader(),
-					PropsValues.ADMIN_EMAIL_PASSWORD_LOCKOUT_BODY);
-
-				if (passwordPolicy.getLockoutDuration() > 0) {
-					body = StringUtil.read(
-						PortalClassLoaderUtil.getClassLoader(),
-						PropsValues.ADMIN_EMAIL_PASSWORD_LOCKOUT_UNTIL_BODY);
-				}
-			}
-			catch (IOException ioException) {
-				_log.error("Unable to read the content", ioException);
-			}
-		}
-
-		if (Validator.isNull(subject)) {
-			try {
-				subject = StringUtil.read(
-					PortalClassLoaderUtil.getClassLoader(),
-					PropsValues.ADMIN_EMAIL_PASSWORD_LOCKOUT_SUBJECT);
-			}
-			catch (IOException ioException) {
-				_log.error("Unable to read the content", ioException);
-			}
-		}
-
-		MailTemplateContextBuilder mailTemplateContextBuilder =
-			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
-
-		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", fromAddress);
-		mailTemplateContextBuilder.put(
-			"[$FROM_NAME$]", new EscapableObject<>(fromName));
-		mailTemplateContextBuilder.put(
-			"[$PORTAL_URL$]", serviceContext.getPortalURL());
-		mailTemplateContextBuilder.put(
-			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr());
-		mailTemplateContextBuilder.put(
-			"[$REMOTE_HOST$]",
-			new EscapableObject<>(serviceContext.getRemoteHost()));
-		mailTemplateContextBuilder.put("[$TO_ADDRESS$]", toAddress);
-		mailTemplateContextBuilder.put(
-			"[$TO_FIRST_NAME$]", new EscapableObject<>(user.getFirstName()));
-		mailTemplateContextBuilder.put(
-			"[$TO_NAME$]", new EscapableObject<>(toName));
-		mailTemplateContextBuilder.put(
-			"[$USER_ID$]", String.valueOf(user.getUserId()));
-		mailTemplateContextBuilder.put(
-			"[$USER_SCREENNAME$]", new EscapableObject<>(user.getScreenName()));
-
-		if (passwordPolicy.getLockoutDuration() > 0) {
-			DateFormat dateFormat = DateFormatFactoryUtil.getDateTime(
-				user.getLocale());
-
-			mailTemplateContextBuilder.put(
-				"[$TIME_TO_UNLOCK]",
-				new EscapableObject<>(dateFormat.format(user.getUnlockDate())));
-		}
-
-		MailTemplateContext mailTemplateContext =
-			mailTemplateContextBuilder.build();
-
-		try {
-			_sendNotificationEmail(
-				fromAddress, fromName, toAddress, user, subject, body,
-				mailTemplateContext);
-		}
-		catch (PortalException portalException) {
-			ReflectionUtil.throwException(portalException);
-		}
 	}
 
 	protected void sendPasswordNotification(

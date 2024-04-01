@@ -59,13 +59,6 @@ export class ClientExtensionsPage {
 		await this.applicationsMenuPage.goToClientExtensions();
 	}
 
-	async gotoNewEditorConfigContributorPage() {
-		await this.goto();
-
-		await this.newClientExtensionButton.click();
-		await this.editorConfigContributorMenuItem.click();
-	}
-
 	async openItemActionsDropdown(clientExtensionName: string) {
 		await this.page
 			.locator('.dnd-tr')

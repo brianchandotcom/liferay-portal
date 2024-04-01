@@ -5,50 +5,29 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ClientExtensionsPage} from './ClientExtensionsPage';
+import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
-export class EditEditorConfigContributorPage {
+export class EditEditorConfigContributorPage extends EditClientExtensionsPage {
 	readonly aiCreatorEditorToolbarButton: Locator;
-	readonly clientExtensionsPage: ClientExtensionsPage;
-	readonly descriptionEditable: Locator;
 	readonly editorConfigKeysInput: Locator;
 	readonly editorNamesInput: Locator;
-	readonly nameInput: Locator;
 	readonly portletNamesInput: Locator;
-	readonly publishButton: Locator;
-	readonly page: Page;
 	readonly urlInput: Locator;
 
 	constructor(page: Page) {
-		this.clientExtensionsPage = new ClientExtensionsPage(page);
-		this.page = page;
-
-		const portletId =
-			'_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet';
-
-		this.nameInput = page.locator(`#${portletId}_name`);
-
-		const descriptionIframe = page.frameLocator(
-			`#cke_${portletId}_description iframe`
-		);
-
-		this.descriptionEditable = descriptionIframe.locator('.cke_editable');
+		super(page, 'editorConfigContributor');
 
 		this.aiCreatorEditorToolbarButton =
 			page.getByTitle('Create AI Content');
-		this.urlInput = page.locator(`#${portletId}_url`);
+		this.urlInput = page.locator(`#${this.portletId}_url`);
 		this.portletNamesInput = page.locator(
-			`[name=${portletId}_portletNames]`
+			`[name=${this.portletId}_portletNames]`
 		);
-		this.editorNamesInput = page.locator(`[name=${portletId}_editorNames]`);
+		this.editorNamesInput = page.locator(
+			`[name=${this.portletId}_editorNames]`
+		);
 		this.editorConfigKeysInput = page.locator(
-			`[name=${portletId}_editorConfigKeys]`
+			`[name=${this.portletId}_editorConfigKeys]`
 		);
-
-		this.publishButton = page.getByRole('button', {name: 'Publish'});
-	}
-
-	async goto() {
-		await this.clientExtensionsPage.gotoNewEditorConfigContributorPage();
 	}
 }

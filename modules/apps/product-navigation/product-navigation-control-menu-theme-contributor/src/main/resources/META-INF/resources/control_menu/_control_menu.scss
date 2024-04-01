@@ -107,7 +107,6 @@ html#{$cadmin-selector} {
 
 		.control-menu-level-1-nav {
 			display: flex;
-			flex-wrap: wrap;
 
 			> div,
 			> li {
@@ -208,6 +207,10 @@ html#{$cadmin-selector} {
 			list-style: none;
 			margin-bottom: 0;
 			padding-left: 0;
+		}
+
+		.control-menu-nav-category {
+			min-width: auto;
 		}
 
 		.control-menu-nav-item {

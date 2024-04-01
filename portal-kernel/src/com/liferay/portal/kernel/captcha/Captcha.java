@@ -28,6 +28,10 @@ public interface Captcha {
 
 	public void check(PortletRequest portletRequest) throws CaptchaException;
 
+	public void enforceCaptcha(HttpServletRequest httpServletRequest);
+
+	public void enforceCaptcha(PortletRequest portletRequest);
+
 	public String getTaglibPath();
 
 	public boolean isEnabled(HttpServletRequest httpServletRequest);

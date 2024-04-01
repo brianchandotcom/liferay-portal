@@ -22,78 +22,88 @@ const claimSchema = object({
 				budgets: array().when('selected', {
 					is: (selected: boolean) => selected,
 					then: (schema) =>
-						schema.of(
-							object({
-								invoice: mixed().when('selected', {
-									is: (selected: boolean) => selected,
-									then: (schema) =>
-										schema
-											.test(
-												'fileSize',
-												validateDocument.fileSize
-													.message,
-												(invoice) => {
-													if (
-														invoice &&
-														!invoice.documentId
-													) {
-														return (
-															Math.ceil(
-																invoice.size /
-																	1000
-															) <=
-															validateDocument
-																.fileSize
-																.maxSize
-														);
-													}
+						schema
+							.of(
+								object({
+									invoice: mixed().when('selected', {
+										is: (selected: boolean) => selected,
+										then: (schema) =>
+											schema
+												.test(
+													'fileSize',
+													validateDocument.fileSize
+														.message,
+													(invoice) => {
+														if (
+															invoice &&
+															!invoice.documentId
+														) {
+															return (
+																Math.ceil(
+																	invoice.size /
+																		1000
+																) <=
+																validateDocument
+																	.fileSize
+																	.maxSize
+															);
+														}
 
-													return true;
-												}
-											)
-											.required()
-											.test(
-												'fileType',
-												validateDocument.document
-													.message,
-												(invoice) => {
-													if (
-														invoice &&
-														!invoice.documentId
-													) {
-														return validateDocument.document.types.includes(
-															invoice.type
-														);
+														return true;
 													}
+												)
+												.required()
+												.test(
+													'fileType',
+													validateDocument.document
+														.message,
+													(invoice) => {
+														if (
+															invoice &&
+															!invoice.documentId
+														) {
+															return validateDocument.document.types.includes(
+																invoice.type
+															);
+														}
 
-													return true;
-												}
-											)
-											.required('Required'),
-								}),
-								invoiceAmount: number().when('selected', {
-									is: (selected: boolean) => selected,
-									then: (schema) =>
-										schema
-											.moreThan(
-												0,
-												'Need be bigger than 0'
-											)
-											.test(
-												'biggerAmount',
-												'Invoice amount is larger than the MDF requested amount',
-												(invoiceAmount, testContext) =>
-													Number(invoiceAmount) <=
-													Number(
-														testContext.parent
-															.requestAmount
-													)
-											)
-											.required('Required'),
-								}),
-								requestAmount: number(),
-							})
-						),
+														return true;
+													}
+												)
+												.required('Required'),
+									}),
+									invoiceAmount: number().when('selected', {
+										is: (selected: boolean) => selected,
+										then: (schema) =>
+											schema
+												.moreThan(
+													0,
+													'Need be bigger than 0'
+												)
+												.test(
+													'biggerAmount',
+													'Invoice amount is larger than the MDF requested amount',
+													(
+														invoiceAmount,
+														testContext
+													) =>
+														Number(invoiceAmount) <=
+														Number(
+															testContext.parent
+																.requestAmount
+														)
+												)
+												.required('Required'),
+									}),
+									requestAmount: number(),
+								})
+							)
+							.test(
+								'needMoreThanOneBudgetSelected',
+								'Need at least one budget selected',
+								(value: any) =>
+									value.some((item: any) => item.selected)
+							),
 				}),
 				eventProgram: mixed().when(['selected', 'typeActivity'], {
 					is: (selected: boolean, typeActivity: LiferayPicklist) =>
@@ -312,18 +322,6 @@ const claimSchema = object({
 			'Need at least one activity selected',
 			(activities) =>
 				Boolean(activities?.some((activity) => activity.selected))
-		)
-		.test(
-			'needMoreThanOneBudgetSelected',
-			'Need at least one budget selected',
-			(activities) =>
-				Boolean(
-					activities?.some((activity) =>
-						Boolean(
-							activity.budgets?.some((budget) => budget.selected)
-						)
-					)
-				)
 		)
 		.test(
 			'selectedActivityNeedsAtLeastOneBudget',

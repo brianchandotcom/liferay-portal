@@ -34,7 +34,7 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 }) => {
 	await editEditorConfigContributorPage.goto();
 
-	const sampleName1 = 'Sample Name 1';
+	const sampleName1 = getRandomString();
 
 	await editEditorConfigContributorPage.nameInput.fill(sampleName1);
 
@@ -64,7 +64,7 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 
 	await clientExtensionsPage.editClientExtension(sampleName1);
 
-	const sampleName2 = 'Sample Name 2';
+	const sampleName2 = getRandomString();
 
 	await editEditorConfigContributorPage.nameInput.fill(sampleName2);
 

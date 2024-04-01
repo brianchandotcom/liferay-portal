@@ -7,7 +7,7 @@ import {Locator, Page} from '@playwright/test';
 
 import {ClientExtensionsPage} from './ClientExtensionsPage';
 
-export class NewEditorConfigContributorPage {
+export class EditEditorConfigContributorPage {
 	readonly aiCreatorEditorToolbarButton: Locator;
 	readonly clientExtensionsPage: ClientExtensionsPage;
 	readonly descriptionEditable: Locator;

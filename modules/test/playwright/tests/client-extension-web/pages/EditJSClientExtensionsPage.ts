@@ -5,7 +5,7 @@
 
 import {Page} from '@playwright/test';
 
-import { EditClientExtensionsPage } from './EditClientExtensionsPage';
+import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
 export class EditJSClientExtensionsPage extends EditClientExtensionsPage {
 	constructor(page: Page) {

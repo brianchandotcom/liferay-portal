@@ -13,8 +13,8 @@ import getRandomString from '../../utils/getRandomString';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
+import {editEditorConfigContributorPageTest} from './fixtures/editEditorConfigContributorPageTest';
 import {editorSamplesPageTest} from './fixtures/editorSamplesPageTest';
-import {newEditorConfigContributorPageTest} from './fixtures/newEditorConfigContributorPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -25,12 +25,12 @@ export const test = mergeTests(
 		'LPS-186870': true,
 	}),
 	isolatedSiteTest,
-	newEditorConfigContributorPageTest
+	editEditorConfigContributorPageTest
 );
 
 test('Create, edit and delete editor config contributor client extension @LPS-186870', async ({
 	clientExtensionsPage,
-	newEditorConfigContributorPage,
+	editEditorConfigContributorPage,
 }) => {
 	await clientExtensionsPage.goto();
 
@@ -40,41 +40,41 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 
 	const sampleName1 = 'Sample Name 1';
 
-	await newEditorConfigContributorPage.nameInput.fill(sampleName1);
+	await editEditorConfigContributorPage.nameInput.fill(sampleName1);
 
-	await newEditorConfigContributorPage.descriptionEditable.isEditable();
+	await editEditorConfigContributorPage.descriptionEditable.isEditable();
 
-	await newEditorConfigContributorPage.descriptionEditable.fill(
+	await editEditorConfigContributorPage.descriptionEditable.fill(
 		'Sample Description'
 	);
 
-	await newEditorConfigContributorPage.urlInput.fill(
+	await editEditorConfigContributorPage.urlInput.fill(
 		'https://www.liferay.com'
 	);
 
-	await newEditorConfigContributorPage.portletNamesInput.fill(
+	await editEditorConfigContributorPage.portletNamesInput.fill(
 		'Sample Portlet Name'
 	);
 
-	await newEditorConfigContributorPage.editorNamesInput.fill(
+	await editEditorConfigContributorPage.editorNamesInput.fill(
 		'Sample Editor Names'
 	);
 
-	await newEditorConfigContributorPage.editorConfigKeysInput.fill(
+	await editEditorConfigContributorPage.editorConfigKeysInput.fill(
 		'Sample Editor Config Keys'
 	);
 
-	await newEditorConfigContributorPage.publishButton.click();
+	await editEditorConfigContributorPage.publishButton.click();
 
 	await clientExtensionsPage.editClientExtension(sampleName1);
 
 	const sampleName2 = 'Sample Name 2';
 
-	await newEditorConfigContributorPage.nameInput.click();
+	await editEditorConfigContributorPage.nameInput.click();
 
-	await newEditorConfigContributorPage.nameInput.fill(sampleName2);
+	await editEditorConfigContributorPage.nameInput.fill(sampleName2);
 
-	await newEditorConfigContributorPage.publishButton.click();
+	await editEditorConfigContributorPage.publishButton.click();
 
 	await clientExtensionsPage.deleteClientExtension(sampleName2);
 });

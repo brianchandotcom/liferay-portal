@@ -388,11 +388,15 @@ definition {
 
 		Blueprints.addElement(element = "Limit Search to These Sites");
 
-		Type(
-			key_elementName = "Limit Search to These Sites",
-			key_fieldLabel = "Group IDs",
-			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
-			value1 = 12345);
+		Click(locator1 = "Button#SELECT");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+		LexiconEntry.gotoEntry(rowEntry = ${siteName});
+
+		SelectFrameTop();
 
 		Blueprints.addElement(element = "Limit Search to the Current Site");
 

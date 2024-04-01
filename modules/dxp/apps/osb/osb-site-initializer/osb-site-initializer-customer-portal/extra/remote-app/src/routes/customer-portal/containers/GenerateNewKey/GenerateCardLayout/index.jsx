@@ -4,6 +4,7 @@
  */
 
 import ClayCard from '@clayui/card';
+import { getProperProductsNames } from '~/routes/customer-portal/utils/getProperProductsNames';
 import i18n from '../../../../../common/I18n';
 import {FORMAT_DATE_TYPES} from '../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
@@ -51,7 +52,7 @@ const GenerateCardLayout = ({
 						<p className="m-0">{i18n.translate('product')}</p>
 
 						<p className="font-weight-normal">
-							{selectedKeyData?.productType}
+							{getProperProductsNames(selectedKeyData?.productType)}
 						</p>
 
 						<p className="m-0">{i18n.translate('version')}</p>

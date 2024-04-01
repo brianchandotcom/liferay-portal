@@ -5,6 +5,7 @@
 import DOMPurify from 'dompurify';
 import {useEffect, useState} from 'react';
 import {Liferay} from '~/common/services/liferay';
+import { getProperProductsNames } from '~/routes/customer-portal/utils/getProperProductsNames';
 import i18n from '../../../../../../common/I18n';
 import {Table} from '../../../../../../common/components';
 import {fetchHeadless} from '../../../../../../common/services/liferay/api';
@@ -87,7 +88,7 @@ const Commerce = () => {
 
 				promiseStructuredContentList.push({
 					instructions: await structuredComponent.text(),
-					version: dxpVersion?.contentFieldValue?.data || '',
+					version: getProperProductsNames(dxpVersion?.contentFieldValue?.data) || '',
 				});
 
 				return structuredContentList;

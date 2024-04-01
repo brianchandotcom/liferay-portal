@@ -9,6 +9,7 @@ import {useEffect, useState} from 'react';
 
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
+import { getProperProductsNames } from '~/routes/customer-portal/utils/getProperProductsNames';
 import i18n from '../../../../../../common/I18n';
 import {
 	DXPIcon,
@@ -47,7 +48,7 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 		currentActivationKey?.expirationDate
 	);
 
-	const formatedProductName = getFormatedProductName(
+	const formattedProductName = getFormatedProductName(
 		currentActivationKey?.productName
 	);
 
@@ -69,7 +70,7 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 	};
 
 	const Logo =
-		formatedProductName === PRODUCT_TYPES.portal ? PortalIcon : DXPIcon;
+		formattedProductName === PRODUCT_TYPES.portal ? PortalIcon : DXPIcon;
 
 	return (
 		<div className="container">
@@ -115,10 +116,14 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 
 			<div className="row">
 				<div className="col-2">
-					<p className="align-items-center bg-brand-primary-lighten-5 cp-key-details-paragraph d-flex px-3 py-2 rounded">
+					<p className={classNames('align-items-center bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded', {
+							'': formattedProductName === 'DXP',
+							'd-flex': formattedProductName === 'Portal',
+						})}
+					>
 						<Logo className="mr-2" />
 
-						{formatedProductName}
+						{getProperProductsNames(formattedProductName)}
 					</p>
 				</div>
 

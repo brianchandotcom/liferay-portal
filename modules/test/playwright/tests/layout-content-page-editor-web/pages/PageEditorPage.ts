@@ -23,7 +23,7 @@ export class PageEditorPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.publishButton = page.getByText('Publish');
+		this.publishButton = page.getByLabel('Publish', {exact: true});
 		this.redoButton = page.getByTitle('Redo');
 		this.undoButton = page.getByTitle('Undo');
 		this.undoHistory = page.locator('.page-editor__undo-history');

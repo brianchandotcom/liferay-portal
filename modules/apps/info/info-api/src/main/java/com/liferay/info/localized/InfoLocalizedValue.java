@@ -11,7 +11,6 @@ import com.liferay.info.localized.bundle.ResourceBundleInfoLocalizedValue;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.HashMap;
@@ -157,10 +156,6 @@ public interface InfoLocalizedValue<T> {
 
 			if (value == null) {
 				value = _builder._values.get(getDefaultLocale());
-			}
-
-			if (value instanceof String) {
-				value = (T)LanguageUtil.get(locale, (String)value);
 			}
 
 			return value;

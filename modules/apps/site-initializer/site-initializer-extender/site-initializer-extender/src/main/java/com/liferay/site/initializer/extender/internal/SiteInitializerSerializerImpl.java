@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -509,75 +508,76 @@ public class SiteInitializerSerializerImpl
 		Set<AccountEntry> allAccountEntries = new TreeSet<>();
 		Set<Role> allRoles = new TreeSet<>();
 
-		JSONArray usersJSONArray = _jsonFactory.createJSONArray();
+		_addZipEntry(
+			"user-accounts.json",
+			JSONUtil.toJSONArray(
+				_userLocalService.getGroupUsers(groupId),
+				user -> {
+					boolean admin = false;
 
-		for (User user : _userLocalService.getGroupUsers(groupId)) {
-			boolean admin = false;
+					for (Role role : user.getRoles()) {
+						if (StringUtil.equals(
+								role.getName(), "Administrator") ||
+							StringUtil.equals(role.getName(), "Power User")) {
 
-			for (Role role : user.getRoles()) {
-				if (StringUtil.equals(role.getName(), "Administrator") ||
-					StringUtil.equals(role.getName(), "Power User")) {
+							admin = true;
 
-					admin = true;
+							break;
+						}
+					}
 
-					break;
-				}
-			}
+					if (admin) {
+						return null;
+					}
 
-			if (admin) {
-				continue;
-			}
+					allRoles.addAll(user.getRoles());
 
-			allRoles.addAll(user.getRoles());
+					JSONArray userAccountBriefsJSONArray =
+						_jsonFactory.createJSONArray();
 
-			JSONArray userAccountBriefsJSONArray =
-				_jsonFactory.createJSONArray();
+					List<AccountEntry> accountEntries =
+						_accountEntryLocalService.getUserAccountEntries(
+							user.getUserId(), null, null, null,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			List<AccountEntry> accountEntries =
-				_accountEntryLocalService.getUserAccountEntries(
-					user.getUserId(), null, null, null, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
+					allAccountEntries.addAll(accountEntries);
 
-			allAccountEntries.addAll(accountEntries);
+					for (AccountEntry accountEntry : accountEntries) {
+						userAccountBriefsJSONArray.put(
+							JSONUtil.put(
+								"externalReferenceCode",
+								accountEntry.getExternalReferenceCode()));
+					}
 
-			for (AccountEntry accountEntry : accountEntries) {
-				userAccountBriefsJSONArray.put(
-					JSONUtil.put(
-						"externalReferenceCode",
-						accountEntry.getExternalReferenceCode()));
-			}
+					JSONArray userOrganizationBriefsJSONArray =
+						_jsonFactory.createJSONArray();
 
-			JSONArray userOrganizationBriefsJSONArray =
-				_jsonFactory.createJSONArray();
+					allOrganizations.addAll(user.getOrganizations());
 
-			allOrganizations.addAll(user.getOrganizations());
+					for (Organization organization : user.getOrganizations()) {
+						userOrganizationBriefsJSONArray.put(
+							JSONUtil.put("name", organization.getName()));
+					}
 
-			for (Organization organization : user.getOrganizations()) {
-				userOrganizationBriefsJSONArray.put(
-					JSONUtil.put("name", organization.getName()));
-			}
-
-			usersJSONArray.put(
-				JSONUtil.put(
-					"accountBriefs", userAccountBriefsJSONArray
-				).put(
-					"alternateName", user.getScreenName()
-				).put(
-					"emailAddress", user.getEmailAddresses()
-				).put(
-					"externalReferenceCode", user.getExternalReferenceCode()
-				).put(
-					"familyName", user.getLastName()
-				).put(
-					"givenName", user.getFirstName()
-				).put(
-					"name", user.getFullName()
-				).put(
-					"organizationBriefs", userOrganizationBriefsJSONArray
-				));
-		}
-
-		_addZipEntry("user-accounts.json", usersJSONArray, zipWriter);
+					return JSONUtil.put(
+						"accountBriefs", userAccountBriefsJSONArray
+					).put(
+						"alternateName", user.getScreenName()
+					).put(
+						"emailAddress", user.getEmailAddresses()
+					).put(
+						"externalReferenceCode", user.getExternalReferenceCode()
+					).put(
+						"familyName", user.getLastName()
+					).put(
+						"givenName", user.getFirstName()
+					).put(
+						"name", user.getFullName()
+					).put(
+						"organizationBriefs", userOrganizationBriefsJSONArray
+					);
+				}),
+			zipWriter);
 
 		JSONArray roleJSONArray = _jsonFactory.createJSONArray();
 

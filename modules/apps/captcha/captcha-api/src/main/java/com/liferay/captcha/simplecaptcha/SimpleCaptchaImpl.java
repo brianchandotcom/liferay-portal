@@ -83,6 +83,26 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	@Override
+	public void enforceCaptcha(HttpServletRequest httpServletRequest) {
+		HttpSession httpSession = _getHttpSession(httpServletRequest);
+
+		String key = _CAPTCHA_MAX_CHALLENGES;
+
+		String portletId = portal.getPortletId(httpServletRequest);
+
+		if (Validator.isNotNull(portletId)) {
+			key = portal.getPortletNamespace(portletId) + key;
+		}
+
+		httpSession.setAttribute(key, 0);
+	}
+
+	@Override
+	public void enforceCaptcha(PortletRequest portletRequest) {
+		enforceCaptcha(portal.getHttpServletRequest(portletRequest));
+	}
+
+	@Override
 	public String getTaglibPath() {
 		return _TAGLIB_PATH;
 	}
@@ -465,6 +485,9 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		return classLoader.loadClass(className);
 	}
+
+	private static final String _CAPTCHA_MAX_CHALLENGES =
+		"CAPTCHA_MAX_CHALLENGES";
 
 	private static final String _TAGLIB_PATH = "/captcha/simplecaptcha.jsp";
 

@@ -5,9 +5,9 @@
 
 package com.liferay.gradle.plugins;
 
+import aQute.bnd.gradle.BeanProperties;
 import aQute.bnd.gradle.BndUtils;
-import aQute.bnd.gradle.BundleTaskConvention;
-import aQute.bnd.gradle.PropertiesWrapper;
+import aQute.bnd.gradle.BundleTaskExtension;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
@@ -815,15 +815,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							public void execute(Task task) {
 								Logger logger = project.getLogger();
 
-								Properties gradleProperties =
-									new PropertiesWrapper();
+								Properties beanProperties =
+									new BeanProperties();
 
-								gradleProperties.put("project", project);
-								gradleProperties.put("task", task);
+								beanProperties.put("project", project);
+								beanProperties.put("task", task);
 
 								try (Builder builder = new Builder(
-										new Processor(
-											gradleProperties, false))) {
+										new Processor(beanProperties, false))) {
 
 									Map<String, String> properties =
 										_getBuilderProperties(
@@ -858,11 +857,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 										"project.buildpath",
 										buildDirs.getAsPath());
 
-									if (logger.isDebugEnabled() ||
-										Boolean.getBoolean(
-											"build.bnd.print.builder." +
-												"classpath")) {
-
+									if (logger.isDebugEnabled()) {
 										logger.lifecycle(
 											"BND Builder Classpath {}: {}",
 											project.getName(),
@@ -1480,10 +1475,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					Map<String, Object> plugins = convention.getPlugins();
 
-					final BundleTaskConvention bundleTaskConvention =
-						new BundleTaskConvention(jar);
+					final BundleTaskExtension bundleTaskExtension =
+						new BundleTaskExtension(jar);
 
-					plugins.put("bundle", bundleTaskConvention);
+					plugins.put("bundle", bundleTaskExtension);
 
 					jar.setDescription(
 						"Assembles a bundle containing the main classes.");
@@ -1520,35 +1515,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 									}
 								}
 
-								bundleTaskConvention.setBnd(bundleExtension);
+								bundleTaskExtension.setBnd(bundleExtension);
 							}
 
 						});
 
-					jar.doLast(
-						new Action<Task>() {
-
-							@Override
-							public void execute(Task task) {
-								bundleTaskConvention.buildBundle();
-
-								Logger logger = task.getLogger();
-
-								if (logger.isDebugEnabled() ||
-									Boolean.getBoolean(
-										"build.bnd.print.builder.classpath")) {
-
-									FileCollection builderClasspath =
-										bundleTaskConvention.getClasspath();
-
-									logger.lifecycle(
-										"BND Builder Classpath {}: {}",
-										project.getName(),
-										builderClasspath.getAsPath());
-								}
-							}
-
-						});
+					jar.doLast(bundleTaskExtension.buildAction());
 
 					File bndFile = project.file("bnd.bnd");
 

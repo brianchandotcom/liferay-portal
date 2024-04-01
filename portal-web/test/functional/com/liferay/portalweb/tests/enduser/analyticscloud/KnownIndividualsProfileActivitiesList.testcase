@@ -36,18 +36,14 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8151 | Test Summary: Individual activities list shows accurate activities from today when switched to 24 hour view"
-	@ignore = "true"
 	@priority = 5
 	test IndividualActivitiesListShowsAccurateActivitiesWhenSwitchedTo24HourView {
-
-		// AC Bug ticket: LRAC-10734
-
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
 		ACUtils.createDMAndAddToPage();
 
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		for (var name : list ${usernameList}) {
 			JSONUser.addUser(
@@ -70,7 +66,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		for (var name : list ${usernameList}) {
 			ACNavigation.goToIndividuals();
@@ -89,6 +85,12 @@ definition {
 			ACTimeFilter.setLast24Hours();
 
 			ACIndividualsDashboard.viewActivitiesNumberInPeriod(activitiesNumber = ${currentTotalActivities});
+
+			ACIndividualsDashboard.viewRechartsBarOnIndividualsActivitiesChart();
+
+			task ("Check if events appear in user history") {
+				ACUtils.assertPageTitle(pageTitle = "documentPreviewed");
+			}
 		}
 	}
 

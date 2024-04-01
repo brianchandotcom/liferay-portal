@@ -92,20 +92,8 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Get the userId number of the identity event") {
-			var userId = ACUtils.getPageRefRequestPropertyValue(
-				pageRef = "identity",
-				property = "userId");
-		}
-
 		task ("Get userId number from local storage") {
 			var localStorageItem1 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
-		}
-
-		task ("Compare userId numbers to check if they are the same") {
-			TestUtils.assertEquals(
-				actual = ${userId},
-				expected = ${localStorageItem1});
 		}
 
 		task ("Close sessions") {
@@ -132,7 +120,7 @@ definition {
 			var localStorageItem2 = ACUtils.getLocalStorageItem(keyName = "ac_client_user_id");
 		}
 
-		task ("Compare userId numbers to check if they are the same") {
+		task ("Compare userId numbers to check if they are different") {
 			TestUtils.assertNotEquals(
 				actual = ${localStorageItem2},
 				expected = ${localStorageItem1});

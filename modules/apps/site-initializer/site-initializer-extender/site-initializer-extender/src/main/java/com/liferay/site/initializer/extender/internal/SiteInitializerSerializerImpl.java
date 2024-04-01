@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -515,8 +516,9 @@ public class SiteInitializerSerializerImpl
 				user -> {
 					for (Role role : user.getRoles()) {
 						if (StringUtil.equals(
-								role.getName(), "Administrator") ||
-							StringUtil.equals(role.getName(), "Power User")) {
+								role.getName(), RoleConstants.ADMINISTRATOR) ||
+							StringUtil.equals(
+								role.getName(), RoleConstants.POWER_USER)) {
 
 							return null;
 						}
@@ -570,7 +572,7 @@ public class SiteInitializerSerializerImpl
 			JSONUtil.toJSONArray(
 				roles,
 				role -> {
-					if (StringUtil.equals(role.getName(), "User")) {
+					if (StringUtil.equals(role.getName(), RoleConstants.USER)) {
 						return null;
 					}
 

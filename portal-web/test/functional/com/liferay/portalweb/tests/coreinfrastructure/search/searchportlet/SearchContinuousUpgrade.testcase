@@ -51,7 +51,7 @@ definition {
 			panel = "Applications",
 			portlet = "Result Rankings");
 
-		Click(locator1 = "//a[contains(@class,'btn')][contains(@href,'new') or contains(@href,'redirect') or contains(@href,'mvc') or contains(@href,'javascript')][.//*[name()='svg'][contains(@class,'icon-plus')]][not(contains(@class,'borderless'))]");
+		Click.javaScriptClick(locator1 = "//div//a[contains(@class,'btn')][contains(@href,'new') or contains(@href,'redirect') or contains(@href,'mvc') or contains(@href,'javascript')][.//*[name()='svg'][contains(@class,'icon-plus')]][not(contains(@class,'borderless'))]");
 
 		PortletEntry.inputText(
 			fieldLabel = "Search Query",
@@ -73,7 +73,7 @@ definition {
 			key_query = "Article",
 			locator1 = "SearchTuning#RESULT_RANKINGS_INACTIVE_RANKING");
 
-		Click(locator1 = "//a[contains(@class,'btn')][contains(@href,'new') or contains(@href,'redirect') or contains(@href,'mvc') or contains(@href,'javascript')][.//*[name()='svg'][contains(@class,'icon-plus')]][not(contains(@class,'borderless'))]");
+		Click.javaScriptClick(locator1 = "//div//a[contains(@class,'btn')][contains(@href,'new') or contains(@href,'redirect') or contains(@href,'mvc') or contains(@href,'javascript')][.//*[name()='svg'][contains(@class,'icon-plus')]][not(contains(@class,'borderless'))]");
 
 		PortletEntry.inputText(
 			fieldLabel = "Search Query",

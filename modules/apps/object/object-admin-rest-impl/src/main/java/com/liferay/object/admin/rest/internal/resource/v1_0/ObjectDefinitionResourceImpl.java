@@ -1015,8 +1015,8 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectDefinition.getObjectDefinitionId(),
 				rootServiceBuilderObjectDefinition.getObjectDefinitionId());
 
-		_objectDefinitionLocalService.updateObjectDefinitionPortlet(
-			serviceBuilderObjectDefinition);
+		_objectDefinitionLocalService.updatePortlet(
+			serviceBuilderObjectDefinition.getObjectDefinitionId());
 
 		return serviceBuilderObjectDefinition;
 	}

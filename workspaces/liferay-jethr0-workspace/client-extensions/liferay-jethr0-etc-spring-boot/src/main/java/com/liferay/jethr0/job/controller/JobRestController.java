@@ -43,6 +43,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JobRestController {
 
+	@PostMapping("/action")
+	public ResponseEntity<String> action(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String body) {
+
+		JSONObject jsonObject = new JSONObject(body);
+
+		System.out.println(jsonObject.toString(2));
+
+		return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
+	}
+
 	@PostMapping("/create")
 	public ResponseEntity<String> createJob(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String body) {

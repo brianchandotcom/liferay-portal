@@ -5,8 +5,8 @@
 
 package com.liferay.gradle.plugins.task;
 
+import aQute.bnd.gradle.BeanProperties;
 import aQute.bnd.gradle.BndUtils;
-import aQute.bnd.gradle.PropertiesWrapper;
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Jar;
@@ -66,13 +66,13 @@ public class ExecuteBndTask extends DefaultTask {
 
 		long clockStart = System.currentTimeMillis();
 
-		Properties gradleProperties = new PropertiesWrapper();
+		Properties beanProperties = new BeanProperties();
 
-		gradleProperties.put("project", project);
-		gradleProperties.put("task", this);
+		beanProperties.put("project", project);
+		beanProperties.put("task", this);
 
 		try (Builder builder = new Builder(
-				new Processor(gradleProperties, false))) {
+				new Processor(beanProperties, false))) {
 
 			Properties properties = getProperties();
 
@@ -86,9 +86,7 @@ public class ExecuteBndTask extends DefaultTask {
 			builder.setClasspath(_toArray(buildDirs));
 			builder.setProperty("project.buildpath", buildDirs.getAsPath());
 
-			if (logger.isDebugEnabled() ||
-				Boolean.getBoolean("build.bnd.print.builder.classpath")) {
-
+			if (logger.isDebugEnabled()) {
 				logger.lifecycle(
 					"BND Builder Classpath {}: {}", project.getName(),
 					buildDirs.getAsPath());

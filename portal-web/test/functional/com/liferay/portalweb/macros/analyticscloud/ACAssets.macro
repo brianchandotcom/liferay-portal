@@ -83,7 +83,7 @@ definition {
 
 		ScrollWebElementIntoView(locator1 = "ACCards#CARD_TITLE");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "ACAssets#APPEARS_ON_PAGE_NAME",
 			value1 = ${pageName});
 

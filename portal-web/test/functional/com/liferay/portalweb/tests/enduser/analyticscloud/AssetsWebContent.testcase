@@ -206,15 +206,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8449 | Test Summary: Web content audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = 5
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInWC {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: The membership list takes a long time to update
-		// AC Refactor ticket: LRAC-10769 and LRAC-10024
-
 		property test.run.type = "single";
 
-		var usernameList = "ac,liferay";
-		var emailList = "ac@liferay.com,liferay@liferay.com";
+		var usernameList = "ac,liferay,dxp";
+		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
 
 		task ("Create users and sync") {
 			for (var name : list ${usernameList}) {
@@ -230,15 +225,9 @@ definition {
 
 		task ("Go to page and get data for unsegmented individuals") {
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				emailList = ${emailList},
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("View page with anonymous user") {
-			User.logoutPG();
-
-			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -263,21 +252,7 @@ definition {
 			ACSegments.saveSegment();
 		}
 
-		task ("Go to page and get data for segmented individuals") {
-			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
-
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close all sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Go to created WC") {
-			ACUtils.launchAC();
-
+		task ("Go to Assets > Go to Web Content") {
 			ACNavigation.goToAssets();
 
 			ACNavigation.switchTab(tabName = "Web Content");
@@ -289,14 +264,12 @@ definition {
 			ACNavigation.openItem(itemName = "Web Content AC Title");
 		}
 
-		task ("Assert the correct percentage") {
-			ACIndividualsDashboard.goToOverviewTab();
-
-			ACNavigation.viewActiveSwitchTab(tabName = "Overview");
-
+		task ("Assert views number of segmented and unsegmented users") {
 			ACUtils.assertAudienceCard(
 				index = 2,
 				percentageList = "66.67%,33.33%");
+
+			ACUtils.assertViewerSegmentsCard(segmentNameList = "Static Segment Test");
 		}
 	}
 

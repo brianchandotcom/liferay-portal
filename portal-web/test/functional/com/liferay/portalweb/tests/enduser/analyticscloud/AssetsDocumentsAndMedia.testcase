@@ -211,12 +211,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8403 | Test Summary: Documents audience card shows expected amount of segmented and unsegmented individuals"
 	@priority = 5
 	test AudienceCardShowsExpectedAmountSegmentedAndUnsegmentedInDM {
-
-		// AC Quarantine reason: The percentage of the downloads does not match the correct one
-		// AC Quarantine ticket: LRAC-9806
-
-		property portal.upstream = "quarantine";
-
 		var userNames = "ac,ac2,ac3";
 		var emailList = "ac@liferay.com,ac2@liferay.com,ac3@liferay.com";
 
@@ -229,22 +223,26 @@ definition {
 					userScreenName = ${name});
 			}
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Logout and login the AC") {
 			ACUtils.navigateToSitePageWithUser(
 				actionType = "Download DM",
-				documentTitleList = "DM AC Title",
+				documentTitleList = "DM AC Title,DM AC Title,DM AC Title,DM AC Title",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
 		task ("Create segment") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSegments();
 
@@ -257,27 +255,7 @@ definition {
 			ACSegments.saveSegment();
 		}
 
-		task ("Go to DXP") {
-			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
-		}
-
-		task ("Login and download the document") {
-			ACUtils.navigateToSitePage(
-				actionType = "Download DM",
-				documentTitleList = "DM AC Title",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-
-			ACUtils.launchAC();
-		}
-
-		task ("Assert segmented and unsegmented in documents and media") {
-			ACProperties.switchProperty(propertyName = ${propertyName});
-
+		task ("Go to Assets > Go to Documents and Media") {
 			ACNavigation.goToAssets();
 
 			ACNavigation.switchTab(tabName = "Documents and Media");
@@ -289,10 +267,12 @@ definition {
 			ACNavigation.openItem(itemName = "DM AC Title");
 		}
 
-		task ("Assert views by download number of know and anoymous users") {
+		task ("Assert views by download number of segmented and unsegmented users") {
 			ACUtils.assertAudienceCard(
 				index = 2,
 				percentageList = "66.67%,33.33%");
+
+			ACUtils.assertViewerSegmentsCard(segmentNameList = "Static Segment Test");
 		}
 	}
 

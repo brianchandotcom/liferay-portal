@@ -4,23 +4,18 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import classNames from 'classnames';
 
 type LoadingProps = {
 	className?: string;
 };
 
 const Loading: React.FC<LoadingProps> = ({className}) => (
-	<div
-		className={classNames(
-			'align-items-center',
-			'd-flex',
-			'w-100',
-			className
-		)}
-	>
-		<ClayLoadingIndicator />
-	</div>
+	<ClayLoadingIndicator
+		className={className}
+		displayType="primary"
+		shape="squares"
+		size="lg"
+	/>
 );
 
 export default Loading;

@@ -23,6 +23,8 @@ import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -101,6 +103,7 @@ public class SiteInitializerSerializerImpl
 				"journal-articles", zipWriter);
 			_serializeStyleBookEntries(groupId, zipWriter);
 			_serializeUserAccounts(groupId, zipWriter);
+			_serializeUtilityLayouts(groupId, zipWriter);
 
 			return zipWriter.getFile();
 		}
@@ -611,6 +614,52 @@ public class SiteInitializerSerializerImpl
 			zipWriter);
 	}
 
+	private void _serializeUtilityLayouts(long groupId, ZipWriter zipWriter)
+		throws Exception {
+
+		List<LayoutUtilityPageEntry> layoutUtilityPageEntries =
+			_layoutUtilityPageEntryLocalService.getLayoutUtilityPageEntries(
+				groupId);
+
+		long[] layoutUtilityPageEntryIds =
+			new long[layoutUtilityPageEntries.size()];
+
+		for (int index = 0; index < layoutUtilityPageEntries.size(); index++) {
+			layoutUtilityPageEntryIds[index] = layoutUtilityPageEntries.get(
+				index
+			).getLayoutUtilityPageEntryId();
+		}
+
+		File layoutUtilityPageEntriesFile =
+			_layoutsExporter.exportLayoutUtilityPageEntries(
+				layoutUtilityPageEntryIds);
+
+		ZipReader zipReader = null;
+
+		try {
+			zipReader = _zipReaderFactory.getZipReader(
+				layoutUtilityPageEntriesFile);
+
+			for (String name : zipReader.getEntries()) {
+				InputStream inputStream = zipReader.getEntryAsInputStream(name);
+
+				String entryNewName = StringUtil.removeSubstring(
+					name, "layout-utility-page-template/");
+
+				_addZipEntry(
+					"layout-utility-page-entries/" + entryNewName, inputStream,
+					zipWriter);
+			}
+		}
+		finally {
+			if (zipReader != null) {
+				zipReader.close();
+			}
+
+			layoutUtilityPageEntriesFile.delete();
+		}
+	}
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -644,6 +693,10 @@ public class SiteInitializerSerializerImpl
 
 	@Reference
 	private LayoutsExporter _layoutsExporter;
+
+	@Reference
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

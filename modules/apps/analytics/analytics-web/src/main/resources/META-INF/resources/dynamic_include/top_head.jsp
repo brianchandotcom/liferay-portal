@@ -21,6 +21,47 @@
 	var analyticsFeatureFlagEnabled = <%= FeatureFlagManagerUtil.isEnabled("LPD-10588") %>;
 
 	var cookieManagers = {
+		'cookie.onetrust': {
+			enabled: () => {
+				if (!window.OneTrustStub) {
+					return Promise.resolve(false);
+				}
+
+				return new Promise((resolve, reject) => {
+					var startTime = Date.now();
+
+					var checkObject = () => {
+						if (window['OneTrust']) {
+							resolve(window['OneTrust']);
+						}
+						else if (Date.now() - startTime >= 5000) {
+							reject();
+						}
+						else {
+							setTimeout(checkObject, 100);
+						}
+					};
+
+					checkObject();
+				})
+					.then(() => {
+						return Promise.resolve(true);
+					})
+					.catch(() => {
+						return Promise.resolve(false);
+					});
+			},
+			checkConsent: () => {
+				var OptanonActiveGroups = window.OptanonActiveGroups;
+
+				return OptanonActiveGroups && OptanonActiveGroups.includes('C0002');
+			},
+			onConsentChange: (callbackFn) => {
+				var OneTrust = window.OneTrust;
+
+				OneTrust.OnConsentChanged(callbackFn);
+			},
+		},
 		'cookie.liferay': {
 			actions: {
 				getItem: (key) => {
@@ -86,61 +127,29 @@
 					}
 				},
 			},
-			checkConsent: () => {
+			checkConsent: ({navigation}) => {
+				if (navigation === 'normal' && window.Analytics) {
+					return false;
+				}
+
 				var performanceCookieEnabled = Liferay.Util.Cookie.get(
 					Liferay.Util.Cookie.TYPES.PERFORMANCE
 				);
 
+				if (
+					!analyticsCookiesConsentMode &&
+					typeof performanceCookieEnabled === 'undefined'
+				) {
+					return true;
+				}
+
 				return performanceCookieEnabled === 'true';
 			},
 			enabled: () => {
-				return Promise.resolve(
-					analyticsFeatureFlagEnabled && analyticsCookiesConsentMode
-				);
+				return Promise.resolve(analyticsFeatureFlagEnabled);
 			},
 			onConsentChange: (callbackFn) => {
 				Liferay.on('cookieBannerSetCookie', callbackFn);
-			},
-		},
-		'cookie.onetrust': {
-			enabled: () => {
-				if (!window.OneTrustStub) {
-					return Promise.resolve(false);
-				}
-
-				return new Promise((resolve, reject) => {
-					var startTime = Date.now();
-
-					var checkObject = () => {
-						if (window['OneTrust']) {
-							resolve(window['OneTrust']);
-						}
-						else if (Date.now() - startTime >= 5000) {
-							reject();
-						}
-						else {
-							setTimeout(checkObject, 100);
-						}
-					};
-
-					checkObject();
-				})
-					.then(() => {
-						return Promise.resolve(true);
-					})
-					.catch(() => {
-						return Promise.resolve(false);
-					});
-			},
-			checkConsent: () => {
-				var OptanonActiveGroups = window.OptanonActiveGroups;
-
-				return OptanonActiveGroups && OptanonActiveGroups.includes('C0002');
-			},
-			onConsentChange: (callbackFn) => {
-				var OneTrust = window.OneTrust;
-
-				OneTrust.OnConsentChanged(callbackFn);
 			},
 		},
 	};
@@ -192,60 +201,87 @@
 				Analytics.send('pageViewed', 'Page');
 
 				<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED)) %>">
-					function <portlet:namespace />initializeAnalyticsSDKFromSPA() {
-						Liferay.on('endNavigate', (event) => {
-							Analytics.dispose();
+					Liferay.on('endNavigate', (event) => {
+						var allPromises = Object.keys(cookieManagers).map((key) =>
+							cookieManagers[key].enabled()
+						);
 
-							var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
-
-							if (
-								!themeDisplay.isControlPanel() &&
-								analyticsClientGroupIds.indexOf(groupId) >= 0
+						Promise.all(allPromises).then((result) => {
+							function <portlet:namespace />initializeAnalyticsSDKFromSPA(
+								event
 							) {
-								Analytics.create(config, [dxpMiddleware]);
+								Analytics.dispose();
 
-								if (themeDisplay.isSignedIn()) {
-									Analytics.setIdentity({
-										email: themeDisplay.getUserEmailAddress(),
-										name: themeDisplay.getUserName(),
+								var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+
+								if (
+									!themeDisplay.isControlPanel() &&
+									analyticsClientGroupIds.indexOf(groupId) >= 0
+								) {
+									Analytics.create(config, [dxpMiddleware]);
+
+									if (themeDisplay.isSignedIn()) {
+										Analytics.setIdentity({
+											email: themeDisplay.getUserEmailAddress(),
+											name: themeDisplay.getUserName(),
+										});
+									}
+
+									runMiddlewares();
+
+									Analytics.send('pageViewed', 'Page', {
+										page: event.path,
 									});
 								}
+							}
 
-								runMiddlewares();
+							var selectedIndex = result.findIndex((enabled) => enabled);
+							var selectedCookieManager = Object.values(cookieManagers)[
+								selectedIndex
+							];
 
-								Analytics.send('pageViewed', 'Page', {
-									page: event.path,
+							if (selectedCookieManager) {
+								selectedCookieManager.onConsentChange(() => {
+									if (
+										selectedCookieManager.checkConsent({
+											navigation: 'spa',
+										})
+									) {
+										<portlet:namespace />initializeAnalyticsSDKFromSPA(
+											event
+										);
+									}
 								});
+
+								if (
+									selectedCookieManager.checkConsent({
+										navigation: 'spa',
+									})
+								) {
+									<portlet:namespace />initializeAnalyticsSDKFromSPA(
+										event
+									);
+								}
+							}
+							else {
+								<portlet:namespace />initializeAnalyticsSDKFromSPA(
+									event
+								);
 							}
 						});
-					}
-
-					if (selectedCookieManager) {
-						selectedCookieManager.onConsentChange(() => {
-							if (selectedCookieManager.checkConsent()) {
-								<portlet:namespace />initializeAnalyticsSDKFromSPA();
-							}
-						});
-
-						if (selectedCookieManager.checkConsent()) {
-							<portlet:namespace />initializeAnalyticsSDKFromSPA();
-						}
-					}
-					else {
-						<portlet:namespace />initializeAnalyticsSDKFromSPA();
-					}
+					});
 				</c:if>
 			});
 		}
 
 		if (selectedCookieManager) {
 			selectedCookieManager.onConsentChange(() => {
-				if (selectedCookieManager.checkConsent()) {
+				if (selectedCookieManager.checkConsent({navigation: 'normal'})) {
 					<portlet:namespace />initializeAnalyticsSDK();
 				}
 			});
 
-			if (selectedCookieManager.checkConsent()) {
+			if (selectedCookieManager.checkConsent({navigation: 'normal'})) {
 				<portlet:namespace />initializeAnalyticsSDK();
 			}
 		}

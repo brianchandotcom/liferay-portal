@@ -3,16 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class PagesAdminPage {
+	readonly configurationSaveButton: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.configurationSaveButton = page.getByRole('button', {
+			exact: true,
+			name: 'Save',
+		});
 		this.page = page;
 	}
 
@@ -68,9 +73,7 @@ export class PagesAdminPage {
 			trigger: addButton,
 		});
 
-		await this.page
-			.getByRole('button', {exact: true, name: 'Save'})
-			.click();
+		await this.configurationSaveButton.click();
 	}
 
 	async selectThemeCSSClientExtension(clientExtensionName: string) {
@@ -100,12 +103,7 @@ export class PagesAdminPage {
 			trigger: clientExtension,
 		});
 
-		await this.page
-			.getByRole('button', {
-				exact: true,
-				name: 'Save',
-			})
-			.click();
+		await this.configurationSaveButton.click();
 	}
 
 	async selectPageAndChangePermissions(

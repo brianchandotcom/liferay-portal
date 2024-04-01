@@ -22,14 +22,14 @@ export const test = mergeTests(
 	editJSClientExtensionsPageTest
 );
 
-test('Create a new JS with an attribute field', async ({
+test('Create a new JS client extension with a script element attribute', async ({
 	clientExtensionsPage,
 	editJSClientExtensionsPage,
 	page,
 	pagesAdminPage,
 }) => {
 
-	// Create new JS with a attribute
+	// Create a new JS client extension with a script element attribute.
 
 	await editJSClientExtensionsPage.goto();
 
@@ -52,7 +52,7 @@ test('Create a new JS with an attribute field', async ({
 
 	await editJSClientExtensionsPage.publish();
 
-	// Apply JS client extension to all pages
+	// Apply JS client extension to all pages.
 
 	await pagesAdminPage.selectJavaScriptClientExtension(clientExtensionName);
 
@@ -69,7 +69,7 @@ test('Create a new JS with an attribute field', async ({
 	await clientExtensionsPage.deleteClientExtension(clientExtensionName);
 });
 
-test('The "src" attribute cannot be specified', async ({
+test('JS client extension does not allow "src" as a script element attribute', async ({
 	editJSClientExtensionsPage,
 	page,
 }) => {

@@ -158,8 +158,7 @@ function CreateJobPage() {
 				</ClayForm.Group>
 
 				{jobParameters &&
-					jobDefinitionParameters &&
-					jobDefinitionParameters.map((jobParameterDefinition) => {
+					jobDefinitionParameters?.map((jobParameterDefinition) => {
 						return (
 							<ClayForm.Group key={jobParameterDefinition.key}>
 								<label htmlFor={jobParameterDefinition.key}>

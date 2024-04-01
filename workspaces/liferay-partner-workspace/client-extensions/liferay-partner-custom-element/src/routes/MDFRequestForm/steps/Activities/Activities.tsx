@@ -145,8 +145,7 @@ const Activities = ({
 
 	useEffect(() => {
 		if (
-			(isButtonClicked &&
-				!isObjectEmpty(activityErrors as Object)) ||
+			(isButtonClicked && !isObjectEmpty(activityErrors as Object)) ||
 			(!isObjectEmpty(activityErrors as Object) &&
 				currentActivityIndexEdit !== undefined)
 		) {
@@ -235,7 +234,7 @@ const Activities = ({
 						disabled={
 							currentActivityIndex !== undefined
 								? (!isObjectEmpty(activityErrors as Object) &&
-									isButtonClicked) ||
+										isButtonClicked) ||
 								  (!isObjectEmpty(activityErrors as Object) &&
 										currentActivityIndexEdit !== undefined)
 								: !isValid

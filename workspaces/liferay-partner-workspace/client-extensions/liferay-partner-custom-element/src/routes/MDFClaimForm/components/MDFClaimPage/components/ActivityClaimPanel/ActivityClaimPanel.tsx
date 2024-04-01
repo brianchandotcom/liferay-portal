@@ -76,13 +76,17 @@ const ActivityClaimPanel = ({
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
 	const [expanded, setExpanded] = useState<boolean>(!activity.selected);
 
-  const isNotBudgetSelected = Array.isArray(errors?.activities)
-  ? errors.activities
-      .map((activity, index) => ({ activity, index })) 
-      .filter(({ activity }) => activity && 'budgets' in activity && typeof activity.budgets === 'string')
-      .map(({ index }) => index) 
-  : undefined;
-
+	const isNotBudgetSelected = Array.isArray(errors?.activities)
+		? errors.activities
+				.map((activity, index) => ({activity, index}))
+				.filter(
+					({activity}) =>
+						activity &&
+						'budgets' in activity &&
+						typeof activity.budgets === 'string'
+				)
+				.map(({index}) => index)
+		: undefined;
 
 	const siteURL = Liferay.ThemeDisplay.getLayoutRelativeControlPanelURL().split(
 		'/'
@@ -241,15 +245,16 @@ const ActivityClaimPanel = ({
 							/>
 						))}
 
-					{
-					isNotBudgetSelected &&
-						isNotBudgetSelected.includes(activityIndex) &&
-						(isButtonClicked || isDraft) && (
-						<ClayAlert displayType="danger" hideCloseIcon={true}>
-							Need at least one budget selected
-						</ClayAlert>
-						)
-					}
+						{isNotBudgetSelected &&
+							isNotBudgetSelected.includes(activityIndex) &&
+							(isButtonClicked || isDraft) && (
+								<ClayAlert
+									displayType="danger"
+									hideCloseIcon={true}
+								>
+									Need at least one budget selected
+								</ClayAlert>
+							)}
 
 						<div className="align-items-center d-flex justify-content-between">
 							<PRMFormik.Field

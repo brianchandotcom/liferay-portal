@@ -49,6 +49,8 @@ public class SaveFormInstanceMVCResourceCommandTest {
 		String javaLocaleProviders = System.getProperty(
 			"java.locale.providers");
 
+		// TODO Clean up after CLDR update is finished
+
 		if (!JavaDetector.isJDK8() && javaLocaleProviders.equals("CLDR")) {
 			Assert.assertEquals(
 				"Apr 18, 2018, 2:00 PM",

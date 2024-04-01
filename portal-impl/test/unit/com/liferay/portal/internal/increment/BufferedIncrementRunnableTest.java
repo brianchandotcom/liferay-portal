@@ -64,16 +64,9 @@ public class BufferedIncrementRunnableTest {
 		BatchablePipe<Serializable, Increment<?>> batchablePipe =
 			new BatchablePipe<Serializable, Increment<?>>() {
 				{
-					put(
-						_invokeMethodInCompanyIdContext(
-							"method", _TEST_COMPANY_ID1));
-					put(
-						_invokeMethodInCompanyIdContext(
-							"method", _TEST_COMPANY_ID2));
-
-					put(
-						_invokeMethodInCompanyIdContext(
-							"method", _TEST_COMPANY_ID1));
+					put(_invoke(_TEST_COMPANY_ID1));
+					put(_invoke(_TEST_COMPANY_ID2));
+					put(_invoke(_TEST_COMPANY_ID1));
 				}
 			};
 
@@ -108,8 +101,8 @@ public class BufferedIncrementRunnableTest {
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	private IncreasableEntry<Serializable, Increment<?>>
-		_invokeMethodInCompanyIdContext(String method, long companyId) {
+	private IncreasableEntry<Serializable, Increment<?>> _invoke(
+		long companyId) {
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
@@ -117,7 +110,7 @@ public class BufferedIncrementRunnableTest {
 			return new BufferedIncreasableEntry(
 				_createTestMethodInvocation(
 					ReflectionTestUtil.getMethod(
-						TestInterceptedClass.class, method, long.class,
+						TestInterceptedClass.class, "method", long.class,
 						long.class, long.class, int.class)),
 				new Object[] {
 					companyId, RandomTestUtil.randomLong(),
@@ -145,10 +138,9 @@ public class BufferedIncrementRunnableTest {
 			Assert.assertEquals(
 				Long.valueOf(companyId), CompanyThreadLocal.getCompanyId());
 
-			companyIncrement.put(CompanyThreadLocal.getCompanyId(), increment);
+			companyIncrement.put(companyId, increment);
 			companyInvokedMethodCounter.compute(
-				CompanyThreadLocal.getCompanyId(),
-				(key, value) -> (value == null) ? 1 : value + 1);
+				companyId, (key, value) -> (value == null) ? 1 : value + 1);
 		}
 
 		public Map<Long, Integer> companyIncrement = new ConcurrentHashMap<>();

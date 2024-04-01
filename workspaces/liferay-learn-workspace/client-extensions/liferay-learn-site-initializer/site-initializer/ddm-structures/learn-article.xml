@@ -35,10 +35,10 @@
 							"displayStyle": "multiline",
 							"indexType": "none",
 							"label": {
-								"en_US": "TOC"
+								"en_US": "Navigation"
 							},
 							"localizable": false,
-							"name": "toc",
+							"name": "navigation",
 							"predefinedValue": {
 								"en_US": ""
 							},

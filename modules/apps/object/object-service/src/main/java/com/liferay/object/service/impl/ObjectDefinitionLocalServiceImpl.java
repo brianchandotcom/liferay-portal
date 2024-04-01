@@ -432,7 +432,7 @@ public class ObjectDefinitionLocalServiceImpl
 						rootObjectDefinitionId);
 			}
 
-			updatePortlet(objectDefinition1);
+			updatePortlet(objectDefinition1.getObjectDefinitionId());
 
 			ObjectDefinition objectDefinition2 =
 				objectDefinitionLocalService.getObjectDefinition(
@@ -446,7 +446,7 @@ public class ObjectDefinitionLocalServiceImpl
 			_objectFieldLocalService.updateRequired(
 				objectRelationship.getObjectFieldId2(), true);
 
-			updatePortlet(objectDefinition2);
+			updatePortlet(objectDefinition2.getObjectDefinitionId());
 		}
 	}
 

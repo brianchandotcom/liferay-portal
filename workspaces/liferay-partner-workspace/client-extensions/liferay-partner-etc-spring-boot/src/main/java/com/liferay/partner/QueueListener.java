@@ -91,7 +91,7 @@ public class QueueListener {
 						StringBundler.concat(
 							"Account with name ",
 							koroneikiAccountJSONObject.getString("name"),
-							" is not a Partner Account"));
+							" is not a partner account"));
 				}
 
 				return;
@@ -108,7 +108,7 @@ public class QueueListener {
 						StringBundler.concat(
 							"Account with name ",
 							koroneikiAccountJSONObject.getString("name"),
-							" does not have Salesforce Account Key"));
+							" does not have a Salesforce account key"));
 				}
 
 				return;

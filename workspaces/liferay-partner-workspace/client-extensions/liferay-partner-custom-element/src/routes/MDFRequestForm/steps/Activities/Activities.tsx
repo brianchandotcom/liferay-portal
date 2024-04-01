@@ -6,7 +6,7 @@
 import Button from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {ArrayHelpers, useFormikContext} from 'formik';
+import {ArrayHelpers, setNestedObjectValues, useFormikContext} from 'formik';
 import {useCallback, useEffect, useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
@@ -47,6 +47,8 @@ const Activities = ({
 	const [currentActivityIndexEdit, setCurrentActivityIndexEdit] = useState<
 		number
 	>();
+
+	const [isButtonClicked, setIsButtonClicked] = useState(false);
 
 	const [isDraft, setIsDraft] = useState(false);
 
@@ -98,6 +100,8 @@ const Activities = ({
 	};
 
 	const onPreviousForm = useCallback(() => {
+		setIsButtonClicked(false);
+
 		if (currentActivityIndex !== undefined) {
 			arrayHelpers.remove(currentActivityIndex);
 
@@ -138,6 +142,24 @@ const Activities = ({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isDraft]);
+
+	useEffect(() => {
+		if (
+			(isButtonClicked &&
+				!isObjectEmpty(activityErrors as Object)) ||
+			(!isObjectEmpty(activityErrors as Object) &&
+				currentActivityIndexEdit !== undefined)
+		) {
+			formikHelpers.setTouched(setNestedObjectValues(errors, true));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [
+		errors,
+		isButtonClicked,
+		activityErrors,
+		currentActivityIndex,
+		currentActivityIndexEdit,
+	]);
 
 	return (
 		<PRMForm
@@ -212,10 +234,29 @@ const Activities = ({
 						className="inline-item inline-item-after"
 						disabled={
 							currentActivityIndex !== undefined
-								? !isObjectEmpty(activityErrors as Object)
+								? (!isObjectEmpty(activityErrors as Object) &&
+									isButtonClicked) ||
+								  (!isObjectEmpty(activityErrors as Object) &&
+										currentActivityIndexEdit !== undefined)
 								: !isValid
 						}
-						onClick={onContinueForm}
+						onClick={() => {
+							setIsButtonClicked(true);
+							window.scrollTo({
+								behavior: (isValid
+									? 'instant'
+									: 'smooth') as ScrollBehavior,
+								top: 0,
+							});
+							if (
+								(isObjectEmpty(activityErrors as Object) &&
+									isButtonClicked) ||
+								isObjectEmpty(activityErrors as Object)
+							) {
+								setIsButtonClicked(false);
+								onContinueForm();
+							}
+						}}
 					>
 						Continue
 						{isSubmitting && (

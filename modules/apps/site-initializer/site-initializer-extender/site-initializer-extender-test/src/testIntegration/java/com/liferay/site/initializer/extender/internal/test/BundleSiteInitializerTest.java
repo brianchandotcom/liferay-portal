@@ -2647,6 +2647,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Private Child Layout 1",
 			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("portlet", privateChildLayout.getType());
 	}
 
 	private void _assertPrivateLayouts2() {
@@ -2675,12 +2676,14 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Private Child Layout 1 Update",
 			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("content", privateChildLayout.getType());
 
 		privateChildLayout = privateChildLayouts.get(1);
 
 		Assert.assertEquals(
 			"Test Private Child Layout 2",
 			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("content", privateChildLayout.getType());
 	}
 
 	private void _assertPublicLayouts1() throws Exception {

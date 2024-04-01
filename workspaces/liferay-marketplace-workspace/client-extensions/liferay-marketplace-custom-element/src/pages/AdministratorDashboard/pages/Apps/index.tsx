@@ -5,13 +5,17 @@
 
 import useSWR from 'swr';
 
-import {DashboardPage} from '../../../../components/DashBoardPage/DashboardPage';
 import i18n from '../../../../i18n';
 import HeadlessCommerceAdminCatalogImpl from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import AppAdministratorTable from './AppAdministratorTable';
+import Page from '../../../../components/Page';
 
 const AppAdministrator = () => {
-	const {data: apps} = useSWR<APIResponse<PublisherRequestInfo>>(
+	const {
+		data: apps,
+		isLoading,
+		error,
+	} = useSWR<APIResponse<PublisherRequestInfo>>(
 		'administrator-dashboard/apps',
 		() =>
 			HeadlessCommerceAdminCatalogImpl.getProducts(
@@ -23,14 +27,13 @@ const AppAdministrator = () => {
 	);
 
 	return (
-		<DashboardPage
-			messages={{
-				description: i18n.translate('all-published-apps'),
-				title: i18n.translate('published-apps'),
-			}}
+		<Page
+			description={i18n.translate('list-with-latest-published-apps')}
+			title={i18n.translate('recent-published-apps')}
+			pageRendererProps={{isLoading, error}}
 		>
 			<AppAdministratorTable items={apps?.items || []} />
-		</DashboardPage>
+		</Page>
 	);
 };
 

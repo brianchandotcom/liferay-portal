@@ -7,10 +7,10 @@ import DropDown from '@clayui/drop-down';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 
-import arrowDownIcon from '../../assets/icons/arrow_down_icon.svg';
-import circleFillIcon from '../../assets/icons/circle_fill_icon.svg';
-import liferayIcon from '../../assets/icons/liferay_icon.svg';
-import {Tag} from '../../components/Tag/Tag';
+import arrowDownIcon from '../../../assets/icons/arrow_down_icon.svg';
+import circleFillIcon from '../../../assets/icons/circle_fill_icon.svg';
+import liferayIcon from '../../../assets/icons/liferay_icon.svg';
+import {Tag} from '../../../components/Tag/Tag';
 
 import './ProjectsTableRow.scss';
 

@@ -458,41 +458,40 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 			return fullHierarchyDDMForm;
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select parentStructureId from DDMStructureVersion where " +
 					"structureId = ? and structureVersionId = ? and " +
 						"ctCollectionId = 0")) {
 
-			preparedStatement.setLong(1, structureId);
-			preparedStatement.setLong(2, structureVersionId);
+			preparedStatement1.setLong(1, structureId);
+			preparedStatement1.setLong(2, structureVersionId);
 
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					long parentStructureId = resultSet.getLong(
+			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+				if (resultSet1.next()) {
+					long parentStructureId = resultSet1.getLong(
 						"parentStructureId");
 
 					fullHierarchyDDMForm = _getDDMForm(
 						structureId, structureVersionId);
 
 					if (parentStructureId > 0) {
-						PreparedStatement preparedStatement1 =
+						PreparedStatement preparedStatement2 =
 							connection.prepareStatement(
 								StringBundler.concat(
-									"select ",
-									"DDMStructureVersion.structureVersionId ",
-									"from DDMStructureVersion WHERE ",
-									"structureId = ?"));
+									"select structureVersionId from ",
+									"DDMStructureVersion where structureId = ",
+									"?"));
 
-						preparedStatement1.setLong(1, parentStructureId);
+						preparedStatement2.setLong(1, parentStructureId);
 
-						try (ResultSet resultSet1 =
-								preparedStatement1.executeQuery()) {
+						try (ResultSet resultSet2 =
+								preparedStatement2.executeQuery()) {
 
-							if (resultSet.next()) {
+							if (resultSet2.next()) {
 								DDMForm parentDDMForm =
 									_getFullHierarchyDDMForm(
 										parentStructureId,
-										resultSet1.getLong(
+										resultSet2.getLong(
 											"structureVersionId"));
 
 								List<DDMFormField> ddmFormFields =

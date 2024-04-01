@@ -63,7 +63,6 @@ export default {
 	'content-policy': 'Content policy',
 	'continue': 'Continue',
 	'coupon-code': 'Coupon Code',
-	'created-at': 'Created At',
 	'create-a-cloud-app-to-be-delivered-as-a-live-service':
 		'Create a Cloud App to be delivered as a Live Service',
 	'create-a-dxp-app-to-be-delivered-as-a-download':
@@ -71,6 +70,7 @@ export default {
 	'create-license-key': 'Create License Key',
 	'create-new-licenses-and-they-will-show-up-here':
 		'Create new licenses and they will show up here.',
+	'created-at': 'Created At',
 	'customer-account': 'Customer Account',
 	'customer-dashboard': 'Customer Dashboard',
 	'customer-roject': 'Customer Project',
@@ -143,7 +143,6 @@ export default {
 	'last-name': 'Last Name',
 	'last-update': 'Last Update',
 	'learn-more': 'Learn More',
-	'list-with-latest-published-apps': 'List with latest published apps',
 	'learn-more-about-app-resource-requirements':
 		'Learn more about App Resource Requirements',
 	'learn-more-about-becoming-a-liferay-customer':
@@ -153,6 +152,7 @@ export default {
 	'licenses': 'Licenses',
 	'liferay-learn': 'Liferay Learn',
 	'liferay-s': 'Liferay’s',
+	'list-with-latest-published-apps': 'List with latest published apps',
 	'lorem-ipsum-dolor-sit-amet-consectetur':
 		'Lorem ipsum dolor sit amet consectetur.',
 	'mac-addresses': 'Mac Addresses',
@@ -204,11 +204,11 @@ export default {
 	'qty': 'Qty',
 	'ram': 'RAM',
 	'ram-in-gbs': 'RAM in GBs',
+	'recent-published-apps': 'Recent Published Apps',
 	'remove-a-version': 'Remove a Version',
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',
 	'request-account': 'Request Account',
-	'recent-published-apps': 'Recent Published Apps',
 	'request-description': 'Request Description',
 	'request-details': 'Request details',
 	'request-sent-successfully': 'Request sent successfully',

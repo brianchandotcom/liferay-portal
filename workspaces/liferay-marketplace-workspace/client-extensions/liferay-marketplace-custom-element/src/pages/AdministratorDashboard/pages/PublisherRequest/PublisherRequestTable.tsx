@@ -32,8 +32,9 @@ const STATUS = {
 
 const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 	const {observer, onOpenChange, open} = useModal();
-	const [selectedRequest, setSelectedRequest] =
-		useState<PublisherRequestInfo>();
+	const [selectedRequest, setSelectedRequest] = useState<
+		PublisherRequestInfo
+	>();
 
 	const showModalButtons =
 		(selectedRequest?.requestStatus?.key ?? 'open') === 'open';

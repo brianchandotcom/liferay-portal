@@ -5,9 +5,9 @@
 
 import {ComponentProps, ReactElement, ReactNode} from 'react';
 
-import {Header} from './Header/Header';
 import FetcherError from '../services/fetcher/FetcherError';
 import EmptyState from './EmptyState';
+import {Header} from './Header/Header';
 import Loading from './Loading';
 
 export type PageRendererProps = {
@@ -41,17 +41,17 @@ const PageRenderer: React.FC<PageRendererProps> = ({
 type PageProps = {
 	children: any;
 	description: string;
-	title: string;
-	rightButton?: ReactNode;
 	pageRendererProps?: Omit<ComponentProps<typeof PageRenderer>, 'children'>;
+	rightButton?: ReactNode;
+	title: string;
 };
 
 const Page: React.FC<PageProps> = ({
 	children,
 	description,
+	pageRendererProps,
 	rightButton,
 	title,
-	pageRendererProps,
 }) => (
 	<div className="w-100">
 		<div className="align-items-center d-flex justify-content-between">

@@ -22,7 +22,7 @@ const GetSolutionRouter = () => {
 	const productId = Number(urlParams.get('productId')) + 1;
 
 	const {data: product, isLoading} = useDeliveryProduct(
-		productId as unknown as string
+		(productId as unknown) as string
 	);
 
 	if (isLoading) {

@@ -7,6 +7,7 @@ import ClayChart from '@clayui/charts';
 import {useMemo} from 'react';
 import useSWR from 'swr';
 
+import ErrorBoundary from '../../../../components/ErrorBoundary';
 import i18n from '../../../../i18n';
 import HeadlessCommerceAdminOrderImpl from '../../../../services/rest/HeadlessCommerceAdminOrder';
 import InfoCard from '../../components/InfoCard';
@@ -17,7 +18,6 @@ import useOrderMetrics, {
 } from '../../hooks/useOrderMetrics';
 import {colors} from '../../mock';
 import OrdersTable from './OrdersTab';
-import ErrorBoundary from '../../../../components/ErrorBoundary';
 
 const getTotalAmountCurrency = (amount = 0) =>
 	new Intl.NumberFormat('en-US', {

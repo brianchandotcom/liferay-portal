@@ -3,19 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
-import ClayButton from '@clayui/button';
 
 import appsIcon from '../../../assets/icons/apps_fill_icon.svg';
 import {DashboardPage} from '../../../components/DashBoardPage/DashboardPage';
 import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
+import Page from '../../../components/Page';
 import {Liferay} from '../../../liferay/liferay';
 import {usePurchasedOrders} from '../usePurchasedOrders';
 import PurchasedAppsTable from './components/PurchasedAppsTable';
-import Page from '../../../components/Page';
 
 const Apps = () => {
 	const [page, setPage] = useState(1);
@@ -71,8 +71,8 @@ const Apps = () => {
 
 	return (
 		<Page
+			description="Manage apps purchase from the Marketplace"
 			pageRendererProps={{isLoading}}
-			title="My Apps"
 			rightButton={
 				<ClayButton
 					onClick={() => Liferay.Util.navigate(getSiteURL() || '/')}
@@ -80,7 +80,7 @@ const Apps = () => {
 					Add Apps
 				</ClayButton>
 			}
-			description="Manage apps purchase from the Marketplace"
+			title="My Apps"
 		>
 			<PurchasedAppsTable
 				items={(purchasedAppTable.items ?? []) as any}

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo, useState} from 'react';
 import ClayButton from '@clayui/button';
+import {useMemo, useState} from 'react';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {Liferay} from '../../liferay/liferay';
@@ -18,8 +18,8 @@ import {DashboardMemberTableRow} from '../DashboardTable/DashboardMemberTableRow
 import {DashboardTable, TableHeaders} from '../DashboardTable/DashboardTable';
 import {InviteMemberModal} from '../InviteMemberModal/InviteMemberModal';
 import {MemberProfile} from '../MemberProfile/MemberProfile';
-import useMembers from './useMembers';
 import Page from '../Page';
+import useMembers from './useMembers';
 
 type MembersPageProps = {
 	icon: string;
@@ -70,11 +70,9 @@ export function MembersPage({
 
 	const marketplaceContext = useMarketplaceContext();
 
-	const currentUserAccountBriefs =
-		marketplaceContext.myUserAccount?.accountBriefs?.find(
-			(accountBrief: {id: number}) =>
-				accountBrief.id === selectedAccount?.id
-		);
+	const currentUserAccountBriefs = marketplaceContext.myUserAccount?.accountBriefs?.find(
+		(accountBrief: {id: number}) => accountBrief.id === selectedAccount?.id
+	);
 
 	const myUserAccount = useMemo(
 		() => ({
@@ -96,11 +94,11 @@ export function MembersPage({
 
 	const {
 		data: members = [],
-		mutate: mutateMembers,
-		isLoading,
 		error,
+		isLoading,
+		mutate: mutateMembers,
 	} = useMembers({
-		accountId: accountId ?? (selectedAccount?.id as unknown as string),
+		accountId: accountId ?? ((selectedAccount?.id as unknown) as string),
 		isCustomerDashboard,
 		isPublisherDashboard,
 		selectedAccount,
@@ -108,9 +106,8 @@ export function MembersPage({
 
 	return (
 		<Page
-			title="Members"
-			pageRendererProps={{isLoading, error}}
 			description="Manage users in your development team and invite new ones"
+			pageRendererProps={{error, isLoading}}
 			rightButton={
 				myUserAccount.isAdminAccount ? (
 					<ClayButton onClick={() => setVisible(true)}>
@@ -118,6 +115,7 @@ export function MembersPage({
 					</ClayButton>
 				) : null
 			}
+			title="Members"
 		>
 			<>
 				{selectedMember ? (

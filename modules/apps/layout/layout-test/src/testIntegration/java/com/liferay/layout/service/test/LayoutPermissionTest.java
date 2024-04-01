@@ -88,6 +88,28 @@ public class LayoutPermissionTest {
 	}
 
 	@Test
+	public void testContainsGuestWithoutPreviewDraftPermission()
+		throws Exception {
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				PermissionCheckerFactoryUtil.create(
+					_userLocalService.getGuestUser(_group.getCompanyId())),
+				LayoutTestUtil.addTypeContentLayout(_group)));
+	}
+
+	@Test
+	public void testContainsGuestWithPreviewDraftPermission() throws Exception {
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(
+					ActionKeys.PREVIEW_DRAFT,
+					_roleLocalService.getRole(
+						_group.getCompanyId(), RoleConstants.GUEST)),
+				LayoutTestUtil.addTypeContentLayout(_group)));
+	}
+
+	@Test
 	public void testContainsPortalContentReviewerWithoutPreviewDraftPermission()
 		throws Exception {
 

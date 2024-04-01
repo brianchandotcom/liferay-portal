@@ -5,6 +5,8 @@
 
 package com.liferay.testray;
 
+import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
+
 import java.net.URI;
 
 import java.time.OffsetDateTime;
@@ -25,7 +27,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -37,9 +38,8 @@ import org.springframework.web.util.UriBuilder;
 @Component
 public class TestrayCommandLineRunner implements CommandLineRunner {
 
-	public void autoArchiveTestrayBuilds() throws Exception {
-		JSONArray testrayBuildsJSONArray = _sendRequest(
-			"", HttpMethod.GET,
+	public void archiveTestrayBuilds() throws Exception {
+		JSONArray testrayBuildsJSONArray = _get(
 			uriBuilder -> uriBuilder.path(
 				"/o/c/builds"
 			).queryParam(
@@ -81,16 +81,11 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 			_log.info("Archiving " + jsonArray.length() + " builds");
 		}
 
-		_sendRequest(
-			jsonArray.toString(), HttpMethod.PUT,
-			uriBuilder -> uriBuilder.path(
-				"/o/c/builds/batch"
-			).build());
+		_put(jsonArray.toString(), "/o/c/builds/batch");
 	}
 
 	public void deleteArchivedTestrayBuilds() throws Exception {
-		JSONArray jsonArray = _sendRequest(
-			"", HttpMethod.GET,
+		JSONArray jsonArray = _get(
 			uriBuilder -> uriBuilder.path(
 				"/o/c/builds"
 			).queryParam(
@@ -118,17 +113,57 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 			_log.info("Deleting " + jsonArray.length() + " builds");
 		}
 
-		_sendRequest(
-			jsonArray.toString(), HttpMethod.DELETE,
-			uriBuilder -> uriBuilder.path(
-				"/o/c/builds/batch"
-			).build());
+		_delete(jsonArray.toString(), "/o/c/builds/batch");
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		deleteArchivedTestrayBuilds();
-		autoArchiveTestrayBuilds();
+
+		archiveTestrayBuilds();
+	}
+
+	private void _delete(String bodyValue, String path) {
+		_getWebClient(
+		).method(
+			HttpMethod.DELETE
+		).uri(
+			uriBuilder -> uriBuilder.path(
+				path
+			).build()
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).accept(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
+		).bodyValue(
+			bodyValue
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
+	}
+
+	private JSONObject _get(Function<UriBuilder, URI> uriFunction) {
+		return new JSONObject(
+			_getWebClient(
+			).get(
+			).uri(
+				uriBuilder -> uriFunction.apply(uriBuilder)
+			).accept(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION, _getAuthorization()
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
+	}
+
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			_liferayOAuthApplicationExternalReferenceCodes);
 	}
 
 	private WebClient _getWebClient() {
@@ -146,29 +181,25 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 		).build();
 	}
 
-	private JSONObject _sendRequest(
-		String bodyValue, HttpMethod httpMethod,
-		Function<UriBuilder, URI> uriFunction) {
-
-		return new JSONObject(
-			_getWebClient(
-			).method(
-				httpMethod
-			).uri(
-				uriBuilder -> uriFunction.apply(uriBuilder)
-			).contentType(
-				MediaType.APPLICATION_JSON
-			).accept(
-				MediaType.APPLICATION_JSON
-			).header(
-				HttpHeaders.AUTHORIZATION,
-				"Bearer " + _oAuth2AccessToken.getTokenValue()
-			).bodyValue(
-				bodyValue
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block());
+	private void _put(String bodyValue, String path) {
+		_getWebClient(
+		).put(
+		).uri(
+			uriBuilder -> uriBuilder.path(
+				path
+			).build()
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, _getAuthorization()
+		).bodyValue(
+			bodyValue
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
 	}
 
 	private static final Log _log = LogFactory.getLog(
@@ -179,6 +210,12 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 	).truncatedTo(
 		ChronoUnit.SECONDS
 	);
+
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	@Value("${liferay.oauth.application.external.reference.codes}")
+	private String _liferayOAuthApplicationExternalReferenceCodes;
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
 	private String _lxcDXPMainDomain;
@@ -191,8 +228,5 @@ public class TestrayCommandLineRunner implements CommandLineRunner {
 
 	@Value("${liferay.testray.etc.cron.max.days.opened}")
 	private Long _maxDaysOpened;
-
-	@Autowired
-	private OAuth2AccessToken _oAuth2AccessToken;
 
 }

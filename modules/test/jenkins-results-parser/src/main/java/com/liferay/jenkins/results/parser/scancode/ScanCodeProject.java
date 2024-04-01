@@ -56,7 +56,7 @@ public class ScanCodeProject {
 		sb.append("'");
 		sb.append(" --header ");
 		sb.append(_CONTENT_TYPE);
-		sb.append("--request POST ");
+		sb.append(" --request POST ");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
 			sb.toString());
@@ -247,13 +247,8 @@ public class ScanCodeProject {
 
 			JSONObject outputJSONObject = new JSONObject(output);
 
-			Object projectID = outputJSONObject.get("uuid");
-
-			_projectID = projectID.toString();
-
-			Object projectName = outputJSONObject.get("name");
-
-			_projectName = projectName.toString();
+			_projectID = outputJSONObject.getString("uuid");
+			_projectName = outputJSONObject.getString("name");
 		}
 		catch (IOException ioException) {
 			ioException.printStackTrace();
@@ -337,7 +332,7 @@ public class ScanCodeProject {
 		sb.append(_projectID);
 		sb.append("/ --header ");
 		sb.append(_CONTENT_TYPE);
-		sb.append("--request GET ");
+		sb.append(" --request GET ");
 
 		while (true) {
 			try {
@@ -361,9 +356,7 @@ public class ScanCodeProject {
 
 				JSONObject runJSONObject = new JSONObject(run.toString());
 
-				String projectStatus = runJSONObject.get(
-					"status"
-				).toString();
+				String projectStatus = runJSONObject.getString("status");
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(

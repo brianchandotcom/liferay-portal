@@ -513,21 +513,13 @@ public class SiteInitializerSerializerImpl
 			JSONUtil.toJSONArray(
 				_userLocalService.getGroupUsers(groupId),
 				user -> {
-					boolean admin = false;
-
 					for (Role role : user.getRoles()) {
 						if (StringUtil.equals(
 								role.getName(), "Administrator") ||
 							StringUtil.equals(role.getName(), "Power User")) {
 
-							admin = true;
-
-							break;
+							return null;
 						}
-					}
-
-					if (admin) {
-						return null;
 					}
 
 					allRoles.addAll(user.getRoles());

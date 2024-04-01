@@ -170,6 +170,8 @@ test('checks that the advanced configuration of a fragment appears in its corres
 		})
 	);
 
+	await fragmentEditorPage.publish();
+
 	// Create a content page with the fragment previously created
 
 	const fragmentDefinition = getFragmentDefinition(

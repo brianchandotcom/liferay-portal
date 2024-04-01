@@ -35,9 +35,9 @@ export class FragmentEditorPage {
 
 		await this.page.keyboard.type(configuration);
 		await this.page.getByText('Changes Saved').waitFor();
+	}
 
-		// Publish
-
+	async publish() {
 		await this.page.getByRole('button', {name: 'Publish'}).click();
 
 		await waitForSuccessAlert(this.page);

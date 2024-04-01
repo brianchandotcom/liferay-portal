@@ -25,7 +25,9 @@ group = "com.example"
 version = bndProperties[Constants.BUNDLE_VERSION]
 
 jar {
-	bnd "-include": "bnd.bnd"
+	bundle {
+		bnd "-include": "bnd.bnd"
+	}
 }
 
 publishing {

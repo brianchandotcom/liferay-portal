@@ -1,4 +1,4 @@
-import aQute.bnd.gradle.BundleTaskConvention
+import aQute.bnd.gradle.BundleTaskExtension
 import aQute.bnd.osgi.Constants
 
 import org.gradle.util.VersionNumber
@@ -34,15 +34,13 @@ baselineConfiguration {
 }
 
 jar {
-	BundleTaskConvention bundleTaskConvention = new BundleTaskConvention(jar)
+	BundleTaskExtension bundleTaskExtension = new BundleTaskExtension(jar)
 
-	bundleTaskConvention.bndfile = file("bnd.bnd")
+	bundleTaskExtension.bndfile.set(file("bnd.bnd"))
 
-	convention.plugins.bundle = bundleTaskConvention
+	convention.plugins.bundle = bundleTaskExtension
 
-	doLast {
-		bundleTaskConvention.buildBundle()
-	}
+	doLast bundleTaskExtension.buildAction()
 }
 
 repositories {

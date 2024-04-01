@@ -8,7 +8,7 @@ export async function waitForSuccessAlert(
 	page: Page,
 	text = 'Success:Your request completed successfully.'
 ) {
-	const alert = await page.locator('.alert-success', {
+	const alert = page.locator('.alert-success', {
 		hasText: text,
 	});
 

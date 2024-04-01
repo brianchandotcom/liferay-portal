@@ -22,7 +22,9 @@ export interface BackendPage {
  * The provided `backendPage` is guaranteed to be at the home page.
  */
 const backendPageTest = test.extend<BackendPage>({
-	backendPage: async ({browser}, use) => {
+	backendPage: async ({browser, page}, use) => {
+		await page.goto('/');
+
 		const backendContext = await browser.newContext();
 		const backendPage = await backendContext.newPage();
 		const tempFile = `backendPageTest.json`;

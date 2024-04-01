@@ -104,8 +104,7 @@ const ActivityPanel = ({
 
 			{hasErrors && (
 				<ClayAlert displayType="danger" hideCloseIcon={true}>
-					Missing information! Please complete the activity&apos;s
-					required fields before proceeding to the next step.
+					Please complete the activity&apos;s required fields before proceeding to the next step.
 				</ClayAlert>
 			)}
 		</div>

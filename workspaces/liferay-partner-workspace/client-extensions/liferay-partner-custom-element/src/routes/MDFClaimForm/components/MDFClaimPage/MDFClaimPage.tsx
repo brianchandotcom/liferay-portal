@@ -6,8 +6,8 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useFormikContext} from 'formik';
-import {useCallback} from 'react';
+import {setNestedObjectValues, useFormikContext} from 'formik';
+import {useCallback, useEffect, useState} from 'react';
 
 import PRMForm from '../../../../common/components/PRMForm';
 import InputMultipleFilesListing from '../../../../common/components/PRMForm/components/fields/InputMultipleFilesListing/InputMultipleFilesListing';
@@ -38,6 +38,7 @@ const MDFClaimPage = ({
 	onSaveAsDraft,
 }: PRMFormikPageProps & MDFClaimProps & IProps) => {
 	const {
+		errors,
 		isSubmitting,
 		isValid,
 		setFieldValue,
@@ -59,6 +60,16 @@ const MDFClaimPage = ({
 	);
 
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
+
+	const [isButtonClicked, setIsButtonClicked] = useState(false);
+
+	useEffect(() => {
+		if (isButtonClicked || !!values.id) {
+			formikHelpers.setTouched(setNestedObjectValues(errors, true));
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [errors, isButtonClicked, values.id]);
 
 	const claimsFiltered = mdfRequest.mdfReqToMDFClms?.filter(
 		(mdfRequestToMdfClaim) => {
@@ -158,9 +169,12 @@ const MDFClaimPage = ({
 								<ActivityClaimPanel
 									activity={activity}
 									activityIndex={index}
+									errors={errors}
 									hasPermissionEditClaimActivity={
 										hasPermissionShowForm
 									}
+									isButtonClicked={isButtonClicked}
+									isDraft={!!values.id}
 									key={`${activity.id}-${index}`}
 									overallCampaignDescription={
 										mdfRequest.overallCampaignDescription
@@ -169,6 +183,18 @@ const MDFClaimPage = ({
 								/>
 							)
 					)}
+
+					{errors?.activities &&
+											errors.activities ===
+												'Need at least one activity selected' &&
+											(setIsButtonClicked || !!values.id) && (
+												<ClayAlert
+													displayType="danger"
+													hideCloseIcon={true}
+												>
+													Need at least one activity selected
+												</ClayAlert>
+						)}
 				</PRMForm.Section>
 
 				<PRMForm.Section
@@ -242,7 +268,20 @@ const MDFClaimPage = ({
 
 						<ClayButton
 							className="inline-item inline-item-after"
-							disabled={!isValid || isSubmitting || submitted}
+							disabled={
+								((!isValid || isSubmitting || submitted) &&
+									isButtonClicked) ||
+								(!!values.id && !isValid)
+							}
+							onClick={() => {
+								setIsButtonClicked(true);
+								window.scrollTo({
+									behavior: (isValid
+										? 'instant'
+										: 'smooth') as ScrollBehavior,
+									top: 0,
+								});
+							}}
 							type="submit"
 						>
 							Submit

@@ -475,19 +475,6 @@ public class SiteInitializerSerializerImpl
 		jsonArray.put(jsonObject);
 	}
 
-	private void _serializeOrganizations(
-			Set<Organization> organizations, ZipWriter zipWriter)
-		throws Exception {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (Organization organization : organizations) {
-			_serializeOrganization(jsonArray, organization);
-		}
-
-		_addZipEntry("organizations.json", jsonArray, zipWriter);
-	}
-
 	private void _serializeStyleBookEntries(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
@@ -602,7 +589,13 @@ public class SiteInitializerSerializerImpl
 				)),
 			zipWriter);
 
-		_serializeOrganizations(organizations, zipWriter);
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (Organization organization : organizations) {
+			_serializeOrganization(jsonArray, organization);
+		}
+
+		_addZipEntry("organizations.json", jsonArray, zipWriter);
 	}
 
 	@Reference

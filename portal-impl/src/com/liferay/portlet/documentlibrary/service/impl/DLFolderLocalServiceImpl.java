@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.lock.InvalidLockException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.lock.NoSuchLockException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -1305,25 +1308,34 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			DLFolder dlFolder, boolean includeTrashedEntries)
 		throws PortalException {
 
-		RepositoryEventTrigger repositoryEventTrigger =
-			RepositoryUtil.getRepositoryEventTrigger(
-				dlFolder.getRepositoryId());
+		try {
+			RepositoryEventTrigger repositoryEventTrigger =
+				RepositoryUtil.getRepositoryEventTrigger(
+					dlFolder.getRepositoryId());
 
-		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
-			dlFolder.getGroupId(), dlFolder.getFolderId());
+			List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
+				dlFolder.getGroupId(), dlFolder.getFolderId());
 
-		for (DLFolder curDLFolder : dlFolders) {
-			TrashHelper trashHelper = _trashHelperSnapshot.get();
+			for (DLFolder curDLFolder : dlFolders) {
+				TrashHelper trashHelper = _trashHelperSnapshot.get();
 
-			if (includeTrashedEntries ||
-				!trashHelper.isInTrashExplicitly(curDLFolder)) {
+				if (includeTrashedEntries ||
+					!trashHelper.isInTrashExplicitly(curDLFolder)) {
 
-				repositoryEventTrigger.trigger(
-					RepositoryEventType.Delete.class, Folder.class,
-					new LiferayFolder(curDLFolder));
+					repositoryEventTrigger.trigger(
+						RepositoryEventType.Delete.class, Folder.class,
+						new LiferayFolder(curDLFolder));
 
-				dlFolderLocalService.deleteFolder(
-					curDLFolder, includeTrashedEntries);
+					dlFolderLocalService.deleteFolder(
+						curDLFolder, includeTrashedEntries);
+				}
+			}
+		}
+		catch (UndeployedExternalRepositoryException
+					undeployedExternalRepositoryException) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(undeployedExternalRepositoryException);
 			}
 		}
 	}
@@ -1449,6 +1461,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					" is invalid because it contains a /"));
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFolderLocalServiceImpl.class);
 
 	private static final Snapshot<TrashHelper> _trashHelperSnapshot =
 		new Snapshot<>(DLFolderLocalServiceImpl.class, TrashHelper.class);

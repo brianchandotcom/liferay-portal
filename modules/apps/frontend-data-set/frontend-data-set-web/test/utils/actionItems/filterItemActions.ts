@@ -27,6 +27,18 @@ const testActionsWithPermissionKey: IItemsActions[] = [
 	},
 ];
 
+const testActionsWithRandomCasePermissionKey: IItemsActions[] = [
+	{
+		data: {
+			permissionKey: 'STANDALONEACTION',
+			title: 'Stand Alone Action',
+		},
+		href: '/o/data-test-endpoint/{id}',
+		label: 'Stand Alone Action',
+		target: 'headless',
+	},
+];
+
 const testActionsWithoutPermissionKey: IItemsActions[] = [
 	{
 		href: '/o/data-test-endpoint/{id}',
@@ -40,51 +52,52 @@ const testActionsWithoutPermissionKey: IItemsActions[] = [
 	},
 ];
 
-const availableItemData = [
-	{
-		actions: {
-			delete: {
-				href: 'http://someurl/o/data-test-endpoint/fields/38212',
-				method: 'DELETE',
-			},
-			get: {
-				href: 'http://someurl/o/data-test-endpoint/fields/38212',
-				method: 'GET',
-			},
-			permissions: {
-				href:
-					'http://someurl/o/data-test-endpoint/fields/38212/permissions',
-				method: 'GET',
-			},
-
-			replace: {
-				href: 'http://someurl/o/data-test-endpoint/fields/38212',
-				method: 'PUT',
-			},
-			update: {
-				href: 'http://someurl/o/data-test-endpoint/fields/38212',
-				method: 'PATCH',
-			},
+const availableItemData = {
+	actions: {
+		delete: {
+			href: 'http://someurl/o/data-test-endpoint/fields/38212',
+			method: 'DELETE',
 		},
-		creator: {
-			additionalName: '',
-			contentType: 'UserAccount',
-			familyName: 'Test',
-			givenName: 'Test',
-			id: 2222,
-			name: 'Test Test',
+		get: {
+			href: 'http://someurl/o/data-test-endpoint/fields/38212',
+			method: 'GET',
 		},
-		id: 38212,
-		label: 'id',
-		label_i18n: {
-			en_US: 'id',
+		permissions: {
+			href:
+				'http://someurl/o/data-test-endpoint/fields/38212/permissions',
+			method: 'GET',
 		},
-		name: 'id',
-		renderer: 'default',
-		sortable: true,
-		type: 'integer',
+		replace: {
+			href: 'http://someurl/o/data-test-endpoint/fields/38212',
+			method: 'PUT',
+		},
+		standAloneAction: {
+			href: 'http://someurl/o/data-test-endpoint/fields/38212',
+			method: 'POST',
+		},
+		update: {
+			href: 'http://someurl/o/data-test-endpoint/fields/38212',
+			method: 'PATCH',
+		},
 	},
-];
+	creator: {
+		additionalName: '',
+		contentType: 'UserAccount',
+		familyName: 'Test',
+		givenName: 'Test',
+		id: 2222,
+		name: 'Test Test',
+	},
+	id: 38212,
+	label: 'id',
+	label_i18n: {
+		en_US: 'id',
+	},
+	name: 'id',
+	renderer: 'default',
+	sortable: true,
+	type: 'integer',
+};
 
 describe('filterItemActions', () => {
 	describe('when permissionKey is defined for an action', () => {
@@ -96,6 +109,17 @@ describe('filterItemActions', () => {
 
 			expect(filteredActions.length).toBeLessThan(
 				testActionsWithPermissionKey.length
+			);
+		});
+
+		it('returns the actions where the permissionKey matches the itemData.actions key regardless of letter case', () => {
+			const filteredActions = filterItemActions(
+				testActionsWithRandomCasePermissionKey,
+				availableItemData
+			);
+
+			expect(filteredActions[0].data).toMatchObject(
+				testActionsWithRandomCasePermissionKey[0].data
 			);
 		});
 	});

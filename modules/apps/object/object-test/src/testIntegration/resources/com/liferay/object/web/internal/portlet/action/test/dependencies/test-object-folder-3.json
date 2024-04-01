@@ -20,18 +20,6 @@
 			"objectDefinition": {
 				"accountEntryRestricted": false,
 				"accountEntryRestrictedObjectFieldName": "",
-				"actions": {
-					"delete": {
-					},
-					"get": {
-					},
-					"permissions": {
-					},
-					"publish": {
-					},
-					"update": {
-					}
-				},
 				"active": false,
 				"defaultLanguageId": "en_US",
 				"enableCategorization": true,

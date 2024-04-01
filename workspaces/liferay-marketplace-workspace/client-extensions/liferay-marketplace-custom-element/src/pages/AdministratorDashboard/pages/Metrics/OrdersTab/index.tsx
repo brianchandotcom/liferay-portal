@@ -74,14 +74,18 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 			id: 2,
 			name: i18n.translate('publisher-dashboard'),
 			onClick: async (order: Order) => {
-				const product = await HeadlessCommerceAdminCatalogImpl.getProducts(
-					new URLSearchParams({
-						filter: new SearchBuilder()
-							.eq('name', `${order.orderItems[0]?.name?.en_US}`)
-							.build(),
-						nestedFields: 'catalog',
-					})
-				);
+				const product =
+					await HeadlessCommerceAdminCatalogImpl.getProducts(
+						new URLSearchParams({
+							filter: new SearchBuilder()
+								.eq(
+									'name',
+									`${order.orderItems[0]?.name?.en_US}`
+								)
+								.build(),
+							nestedFields: 'catalog',
+						})
+					);
 
 				const accountId = product.items[0]?.catalog?.accountId;
 
@@ -177,7 +181,7 @@ const OrdersTable: React.FC<AppsTableProps> = ({items}) => {
 								)}
 							</span>
 						),
-						title: i18n.translate('request-created'),
+						title: i18n.translate('created-at'),
 					},
 					{
 						align: 'right',

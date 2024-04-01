@@ -17,6 +17,7 @@ import useOrderMetrics, {
 } from '../../hooks/useOrderMetrics';
 import {colors} from '../../mock';
 import OrdersTable from './OrdersTab';
+import ErrorBoundary from '../../../../components/ErrorBoundary';
 
 const getTotalAmountCurrency = (amount = 0) =>
 	new Intl.NumberFormat('en-US', {
@@ -157,43 +158,45 @@ const Metrics = () => {
 						</span>
 
 						<div className="mt-4">
-							{!analyticsLoading &&
-								analytics?.viewsMetrics.length > 1 && (
-									<ClayChart
-										axis={{
-											x: {
-												type: 'category',
-											},
-										}}
-										bar={{
-											padding: 1,
-											radius: {
-												ratio: 0.2,
-											},
-											width: {
-												max: 25,
-											},
-										}}
-										data={{
-											colors: analytics.colors,
-											columns: analytics.columns,
-											type: 'bar',
-											x: 'x',
-										}}
-										grid={{
-											lines: {
-												front: false,
-											},
-											x: {
-												show: false,
-											},
-											y: {
-												show: false,
-											},
-										}}
-										legend={{show: false}}
-									/>
-								)}
+							<ErrorBoundary className="ml-5">
+								{!analyticsLoading &&
+									analytics?.columns[0].length > 1 && (
+										<ClayChart
+											axis={{
+												x: {
+													type: 'category',
+												},
+											}}
+											bar={{
+												padding: 1,
+												radius: {
+													ratio: 0.2,
+												},
+												width: {
+													max: 25,
+												},
+											}}
+											data={{
+												colors: analytics.colors,
+												columns: analytics.columns,
+												type: 'bar',
+												x: 'x',
+											}}
+											grid={{
+												lines: {
+													front: false,
+												},
+												x: {
+													show: false,
+												},
+												y: {
+													show: false,
+												},
+											}}
+											legend={{show: false}}
+										/>
+									)}
+							</ErrorBoundary>
 						</div>
 					</div>
 				</div>

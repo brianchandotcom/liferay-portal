@@ -63,6 +63,7 @@ export default {
 	'content-policy': 'Content policy',
 	'continue': 'Continue',
 	'coupon-code': 'Coupon Code',
+	'created-at': 'Created At',
 	'create-a-cloud-app-to-be-delivered-as-a-live-service':
 		'Create a Cloud App to be delivered as a Live Service',
 	'create-a-dxp-app-to-be-delivered-as-a-download':
@@ -142,6 +143,7 @@ export default {
 	'last-name': 'Last Name',
 	'last-update': 'Last Update',
 	'learn-more': 'Learn More',
+	'list-with-latest-published-apps': 'List with latest published apps',
 	'learn-more-about-app-resource-requirements':
 		'Learn more about App Resource Requirements',
 	'learn-more-about-becoming-a-liferay-customer':
@@ -206,7 +208,7 @@ export default {
 	'request-a-marketplace-publisher-account':
 		'Request a Marketplace Publisher Account',
 	'request-account': 'Request Account',
-	'request-created': 'Request Created',
+	'recent-published-apps': 'Recent Published Apps',
 	'request-description': 'Request Description',
 	'request-details': 'Request details',
 	'request-sent-successfully': 'Request sent successfully',

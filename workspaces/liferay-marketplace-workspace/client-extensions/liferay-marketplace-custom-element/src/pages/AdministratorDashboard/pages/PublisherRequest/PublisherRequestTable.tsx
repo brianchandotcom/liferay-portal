@@ -32,9 +32,8 @@ const STATUS = {
 
 const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 	const {observer, onOpenChange, open} = useModal();
-	const [selectedRequest, setSelectedRequest] = useState<
-		PublisherRequestInfo
-	>();
+	const [selectedRequest, setSelectedRequest] =
+		useState<PublisherRequestInfo>();
 
 	const showModalButtons =
 		(selectedRequest?.requestStatus?.key ?? 'open') === 'open';
@@ -112,7 +111,7 @@ const PublisherRequestTable: React.FC<AppsTableProps> = ({items, mutate}) => {
 								{format(new Date(dateCreated), 'MMM dd, yyyy')}
 							</span>
 						),
-						title: i18n.translate('request-created'),
+						title: i18n.translate('created-at'),
 					},
 					{
 						key: 'requestStatus',

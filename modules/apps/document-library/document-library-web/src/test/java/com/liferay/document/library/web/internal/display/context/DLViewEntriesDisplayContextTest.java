@@ -49,8 +49,11 @@ public class DLViewEntriesDisplayContextTest {
 	public static void setUpClass() {
 		_fileVersion = Mockito.mock(FileVersion.class);
 
-		_setUpDLURLHelperUtil();
+		// Order is important because FrameworkUtil is used during
+		// initialization of DLURLHelperUtil.
+
 		_setUpFrameworkUtil();
+		_setUpDLURLHelperUtil();
 		_setUpPortalUtil();
 	}
 

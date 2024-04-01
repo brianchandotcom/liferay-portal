@@ -8,6 +8,7 @@ import globeIcon from '../../assets/icons/globe_icon.svg';
 import phoneIcon from '../../assets/icons/phone_icon.svg';
 import sitesIcon from '../../assets/icons/sites_icon.svg';
 import usageTermsIcon from '../../assets/icons/usage_terms_icon.svg';
+import {TierPrices} from '../../components/LicensePriceCard/LicensePriceChildren';
 
 export type App = {
 	'attachmentTitle': string;
@@ -21,6 +22,7 @@ export type App = {
 		cpu: string;
 		ram: string;
 	};
+	'skus': SKU[];
 	'storefront': ProductImages[];
 	'supportAndHelp': {
 		icon: string;
@@ -29,6 +31,7 @@ export type App = {
 	}[];
 	'tags': string[];
 	'thumbnail': string;
+	'tierPrice': TierPrices[];
 	'type': string;
 	'version': string;
 	'versionDescription': string;

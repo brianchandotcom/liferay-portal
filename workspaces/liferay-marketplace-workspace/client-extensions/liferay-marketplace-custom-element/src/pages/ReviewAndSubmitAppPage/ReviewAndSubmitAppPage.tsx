@@ -10,12 +10,15 @@ import {Checkbox} from '../../components/Checkbox/Checkbox';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../components/Section/Section';
+import {getTierPrice} from '../../utils/api';
 import {getThumbnailByProductAttachment, showAppImage} from '../../utils/util';
 import {CardSectionsBody} from './CardSectionsBody';
 import {App, supportAndHelpMap} from './ReviewAndSubmitAppPageUtil';
 
 import './ReviewAndSubmitAppPage.scss';
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {PRODUCT_CATEGORIES} from '../../enums/Product';
+import {Liferay} from '../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../services/rest/HeadlessCommerceAdminCatalog';
 import {getProductCategoriesByVocabularyName} from '../../utils/productUtils';
 
@@ -34,6 +37,9 @@ export function ReviewAndSubmitAppPage({
 	productId,
 	readonly = false,
 }: ReviewAndSubmitAppPageProps) {
+	const {channel} = useMarketplaceContext();
+	const accountId = Liferay.CommerceContext.account?.accountId;
+
 	const [checked, setChecked] = useState(false);
 	const [app, setApp] = useState<App>();
 	const [loading, setLoading] = useState(false);
@@ -75,6 +81,12 @@ export function ReviewAndSubmitAppPage({
 				) ?? false;
 
 			let sku = skus[0];
+
+			const tierPrices = await getTierPrice(
+				channel?.id,
+				product?.productId,
+				Number(accountId)
+			);
 
 			if (isCloud) {
 				sku = skus.find(
@@ -153,12 +165,14 @@ export function ReviewAndSubmitAppPage({
 					cpu: dataProduct.cpu,
 					ram: dataProduct.ram,
 				},
+				skus,
 				storefront: (product.images || []).filter(
 					(image) => image.galleryEnabled
 				),
 				supportAndHelp: supportAndHelpCardInfos,
 				tags: productTags,
 				thumbnail,
+				tierPrice: tierPrices,
 				...dataProduct,
 			};
 

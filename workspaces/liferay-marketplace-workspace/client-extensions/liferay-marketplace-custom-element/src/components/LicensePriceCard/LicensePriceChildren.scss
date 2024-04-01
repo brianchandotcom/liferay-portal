@@ -1,53 +1,9 @@
-.license {
-	&-container {
-		align-items: center;
-		display: flex;
-		justify-content: space-between;
-		margin-top: 1.25rem;
-		width: 32.5rem;
+.license-container {
+	.license-type {
+		width: 160px;
 	}
 
-	&-currency {
-		align-items: flex-end;
-		display: flex;
-
-		&-icon {
-			margin-right: 4px;
-			width: 22px;
-		}
-
-		&-country-abbreviation {
-			font-size: 14px;
-			font-weight: 600;
-			margin-right: 8px;
-		}
-
-		&-value {
-			font-size: 16px;
-			font-weight: 400;
-		}
-	}
-
-	&-value {
-		font-size: 16px;
-		font-weight: 600;
-		margin-right: 8px;
-	}
-
-	&-title {
-		color: #6c6c75;
-		font-size: 13px;
-		font-weight: 400;
-		margin-right: 8px;
-	}
-
-	&-total {
-		margin-right: 17px;
-	}
-
-	&-type {
-		font-size: 13px;
-		font-weight: 600;
-		line-height: 16px;
+	.license-tier-prices {
+		width: 95px;
 	}
 }

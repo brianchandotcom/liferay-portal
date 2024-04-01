@@ -10,7 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import getRandomString from '../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
-import {globalJSClientExtensionsPageTest} from './fixtures/globalJSClientExtensionsPageTest';
+import {editJSClientExtensionsPageTest} from './fixtures/editJSClientExtensionsPageTest';
 
 export const test = mergeTests(
 	clientExtensionsPageTest,
@@ -19,24 +19,24 @@ export const test = mergeTests(
 	}),
 	loginTest(),
 	pagesAdminPageTest,
-	globalJSClientExtensionsPageTest
+	editJSClientExtensionsPageTest
 );
 
 test('Create a new JS with an attribute field', async ({
 	clientExtensionsPage,
-	globalJSClientExtensionsPage,
+	editJSClientExtensionsPage,
 	page,
 	pagesAdminPage,
 }) => {
 
 	// Create new JS with a attribute
 
-	await globalJSClientExtensionsPage.goto();
+	await editJSClientExtensionsPage.goto();
 
 	const clientExtensionName = getRandomString();
 	const clientExtensionValue = getRandomString();
 
-	await globalJSClientExtensionsPage.nameInput.fill(clientExtensionName);
+	await editJSClientExtensionsPage.nameInput.fill(clientExtensionName);
 
 	await page
 		.getByRole('textbox', {name: 'JavaScript URL'})
@@ -50,7 +50,7 @@ test('Create a new JS with an attribute field', async ({
 
 	await page.getByLabel('Value', {exact: true}).fill(clientExtensionValue);
 
-	await globalJSClientExtensionsPage.editClientExtensionSubmitButton.click();
+	await editJSClientExtensionsPage.editClientExtensionSubmitButton.click();
 
 	await page.waitForLoadState();
 
@@ -72,10 +72,10 @@ test('Create a new JS with an attribute field', async ({
 });
 
 test('The "src" attribute cannot be specified', async ({
-	globalJSClientExtensionsPage,
+	editJSClientExtensionsPage,
 	page,
 }) => {
-	await globalJSClientExtensionsPage.goto();
+	await editJSClientExtensionsPage.goto();
 
 	await page
 		.getByRole('textbox', {

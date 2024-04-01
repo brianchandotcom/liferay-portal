@@ -16,6 +16,7 @@ export class JournalEditArticlePage {
 	readonly journalPage: JournalPage;
 	readonly propertiesTab: Locator;
 	readonly publishButton: Locator;
+	readonly submitForWorkflowButton: Locator;
 	readonly titlePlaceholder: Locator;
 
 	constructor(page: Page) {
@@ -24,6 +25,9 @@ export class JournalEditArticlePage {
 		this.journalPage = new JournalPage(page);
 		this.propertiesTab = page.getByRole('tab', {name: 'Properties'});
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
+		this.submitForWorkflowButton = page.getByRole('button', {
+			name: 'Submit for Workflow',
+		});
 		this.titlePlaceholder = page.getByPlaceholder(
 			'Untitled Basic Web Content'
 		);
@@ -173,6 +177,25 @@ export class JournalEditArticlePage {
 			.locator('span.label')
 			.filter({hasText: workflow ? 'Pending' : 'Scheduled'})
 			.waitFor();
+	}
+
+	async submitArticleForWorkflow(title: string) {
+		await this.fillTitle(title);
+
+		await this.submitForWorkflowButton.click();
+
+		await this.page
+			.locator(
+				'#_com_liferay_journal_web_portlet_JournalPortlet_articlesSearchContainer .list-group-item'
+			)
+			.filter({hasText: title})
+			.waitFor();
+
+		const row = await this.page
+			.locator('.list-group-item')
+			.filter({hasText: title});
+
+		await row.locator('span.label').filter({hasText: 'Pending'}).waitFor();
 	}
 
 	async assertScheduleDate(

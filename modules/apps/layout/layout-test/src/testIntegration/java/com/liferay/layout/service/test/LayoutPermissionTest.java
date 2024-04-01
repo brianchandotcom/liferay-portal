@@ -88,6 +88,34 @@ public class LayoutPermissionTest {
 	}
 
 	@Test
+	public void testContainsPortalContentReviewerWithoutPreviewDraftPermission()
+		throws Exception {
+
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(
+					_roleLocalService.getRole(
+						TestPropsValues.getCompanyId(),
+						RoleConstants.PORTAL_CONTENT_REVIEWER),
+					UserTestUtil.addUser()),
+				LayoutTestUtil.addTypeContentLayout(_group)));
+	}
+
+	@Test
+	public void testContainsPortalContentReviewerWithPreviewDraftPermission()
+		throws Exception {
+
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutPreviewDraftPermission(
+				_getPermissionChecker(
+					ActionKeys.PREVIEW_DRAFT,
+					_roleLocalService.getRole(
+						TestPropsValues.getCompanyId(),
+						RoleConstants.PORTAL_CONTENT_REVIEWER)),
+				LayoutTestUtil.addTypeContentLayout(_group)));
+	}
+
+	@Test
 	public void testContainsPreviewDraftPermissionOnAssetDisplayLayoutWithPreviewDraftPermission()
 		throws Exception {
 
@@ -497,22 +525,31 @@ public class LayoutPermissionTest {
 		return mockHttpServletRequest;
 	}
 
-	private PermissionChecker _getPermissionChecker(String actionId)
+	private PermissionChecker _getPermissionChecker(Role role, User user)
 		throws Exception {
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		RoleTestUtil.addResourcePermission(
-			role, Layout.class.getName(), ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(_group.getCompanyId()), actionId);
-
-		User user = UserTestUtil.addUser();
 
 		_roleLocalService.clearUserRoles(user.getUserId());
 
 		_roleLocalService.addUserRole(user.getUserId(), role);
 
 		return PermissionCheckerFactoryUtil.create(user);
+	}
+
+	private PermissionChecker _getPermissionChecker(String actionId)
+		throws Exception {
+
+		return _getPermissionChecker(
+			actionId, RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR));
+	}
+
+	private PermissionChecker _getPermissionChecker(String actionId, Role role)
+		throws Exception {
+
+		RoleTestUtil.addResourcePermission(
+			role, Layout.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_group.getCompanyId()), actionId);
+
+		return _getPermissionChecker(role, UserTestUtil.addUser());
 	}
 
 	private void _removeGuestViewPermission(Layout layout) throws Exception {

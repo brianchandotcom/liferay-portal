@@ -504,9 +504,9 @@ public class SiteInitializerSerializerImpl
 	private void _serializeUserAccounts(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
-		Set<AccountEntry> allAccountEntries = new TreeSet<>();
-		Set<Organization> allOrganizations = new TreeSet<>();
-		Set<Role> allRoles = new TreeSet<>();
+		Set<AccountEntry> accountEntries = new TreeSet<>();
+		Set<Organization> organizations = new TreeSet<>();
+		Set<Role> roles = new TreeSet<>();
 
 		_addZipEntry(
 			"user-accounts.json",
@@ -522,23 +522,24 @@ public class SiteInitializerSerializerImpl
 						}
 					}
 
-					allRoles.addAll(user.getRoles());
+					roles.addAll(user.getRoles());
 
-					List<AccountEntry> accountEntries =
+					List<AccountEntry> userAccountEntries =
 						_accountEntryLocalService.getUserAccountEntries(
 							user.getUserId(), null, null, null,
 							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-					allAccountEntries.addAll(accountEntries);
+					accountEntries.addAll(userAccountEntries);
 
-					List<Organization> organizations = user.getOrganizations();
+					List<Organization> userOrganizations =
+						user.getOrganizations();
 
-					allOrganizations.addAll(organizations);
+					organizations.addAll(userOrganizations);
 
 					return JSONUtil.put(
 						"accountBriefs",
 						JSONUtil.toJSONArray(
-							accountEntries,
+							userAccountEntries,
 							accountEntry -> JSONUtil.put(
 								"externalReferenceCode",
 								accountEntry.getExternalReferenceCode()))
@@ -557,7 +558,7 @@ public class SiteInitializerSerializerImpl
 					).put(
 						"organizationBriefs",
 						JSONUtil.toJSONArray(
-							organizations,
+							userOrganizations,
 							organization -> JSONUtil.put(
 								"name", organization.getName()))
 					);
@@ -567,7 +568,7 @@ public class SiteInitializerSerializerImpl
 		_addZipEntry(
 			"roles.json",
 			JSONUtil.toJSONArray(
-				allRoles,
+				roles,
 				role -> {
 					if (StringUtil.equals(role.getName(), "User")) {
 						return null;
@@ -586,7 +587,7 @@ public class SiteInitializerSerializerImpl
 		_addZipEntry(
 			"accounts.json",
 			JSONUtil.toJSONArray(
-				allAccountEntries,
+				accountEntries,
 				accountEntry -> JSONUtil.put(
 					"externalReferenceCode",
 					accountEntry.getExternalReferenceCode()
@@ -597,7 +598,7 @@ public class SiteInitializerSerializerImpl
 				)),
 			zipWriter);
 
-		_serializeOrganizations(allOrganizations, zipWriter);
+		_serializeOrganizations(organizations, zipWriter);
 	}
 
 	@Reference

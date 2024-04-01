@@ -112,7 +112,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 									</c:otherwise>
 								</c:choose>
 
-								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10626") && !journalDisplayContext.hasGuestViewPermission(curArticle) %>'>
+								<c:if test="<%= !journalDisplayContext.hasGuestViewPermission(curArticle) %>">
 									<clay:icon
 										aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
 										cssClass="c-ml-2 c-mt-1 lfr-portal-tooltip text-4 text-secondary"
@@ -230,7 +230,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 											translated="<%= false %>"
 										/>
 
-										<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-10626") && !journalDisplayContext.hasGuestViewPermission(curArticle) %>'>
+										<c:if test="<%= !journalDisplayContext.hasGuestViewPermission(curArticle) %>">
 											<clay:icon
 												aria-label="<%= LanguageUtil.get(request, "not-visible-to-guest-users") %>"
 												cssClass="c-ml-1 c-mt-0 lfr-portal-tooltip text-4 text-secondary"

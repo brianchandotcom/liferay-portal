@@ -544,37 +544,82 @@ public class Main {
 		_errorMessages.add(errorMessage);
 	}
 
-	private JSONArray _getBreadcrumbLinksJSONArray(File file) throws Exception {
-		JSONArray breadcrumbLinksJSONArray = new JSONArray();
+	private JSONArray _getBreadcrumbJSONArray(File file) throws Exception {
+		JSONArray breadcrumbJSONArray = new JSONArray();
 
-		File originalFile = file;
 		File parentMarkdownFile;
 
 		while ((parentMarkdownFile = _getParentMarkdownFile(file)) != null) {
-			JSONObject linkJSONObject = new JSONObject();
-
-			linkJSONObject.put(
-				"title",
-				_getTitle(
-					FileUtils.readFileToString(
-						parentMarkdownFile, StandardCharsets.UTF_8)));
-
-			Path originalFilePath = Paths.get(originalFile.getParent());
-			Path parentMarkdownFilePath = Paths.get(parentMarkdownFile.toURI());
-
-			String parentMarkdownFilePathString = String.valueOf(
-				originalFilePath.relativize(parentMarkdownFilePath));
-
-			linkJSONObject.put(
-				"url",
-				FilenameUtils.removeExtension(parentMarkdownFilePathString));
+			breadcrumbJSONArray.put(
+				_getNavigationItemJSONObject(parentMarkdownFile));
 
 			file = parentMarkdownFile;
-
-			breadcrumbLinksJSONArray.put(linkJSONObject);
 		}
 
-		return breadcrumbLinksJSONArray;
+		return breadcrumbJSONArray;
+	}
+
+	private JSONArray _getChildrenJSONArray(File file) throws Exception {
+		JSONArray childrenJSONArray = new JSONArray();
+
+		Document document = _parser.parse(
+			FileUtils.readFileToString(file, StandardCharsets.UTF_8));
+
+		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
+			new SnakeYamlFrontMatterVisitor();
+
+		snakeYamlFrontMatterVisitor.visit(document);
+
+		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
+
+		if ((data == null) || !data.containsKey("toc")) {
+			return childrenJSONArray;
+		}
+
+		Object toc = data.get("toc");
+
+		if (!(toc instanceof ArrayList)) {
+			return childrenJSONArray;
+		}
+
+		for (Object tocEntry : (ArrayList)toc) {
+			if (!(tocEntry instanceof String)) {
+				continue;
+			}
+
+			Matcher matcher = _markdownLinkPattern.matcher((String)tocEntry);
+
+			if (matcher.find()) {
+				JSONObject linkJSONObject = new JSONObject();
+
+				linkJSONObject.put(
+					"title", matcher.group(1)
+				).put(
+					"url", matcher.group(2)
+				);
+
+				childrenJSONArray.put(linkJSONObject);
+
+				continue;
+			}
+
+			String tocFileName = (String)tocEntry;
+
+			String filePathString =
+				file.getParent() + File.separator + tocFileName;
+
+			File tocFile = new File(filePathString);
+
+			if (!tocFile.exists() || tocFile.isDirectory()) {
+				_warn("Nonexistent or invalid TOC file " + tocFile.getPath());
+
+				continue;
+			}
+
+			childrenJSONArray.put(_getNavigationItemJSONObject(tocFile));
+		}
+
+		return childrenJSONArray;
 	}
 
 	private String _getDescription(String text) {
@@ -683,109 +728,49 @@ public class Main {
 		return StringPool.BLANK;
 	}
 
-	private JSONArray _getNavigationLinksJSONArray(
-			File navigationFile, File file, String text)
+	private JSONObject _getNavigationItemJSONObject(File file)
 		throws Exception {
 
-		JSONArray navigationLinksJSONArray = new JSONArray();
+		JSONObject navigationItemJSONObject = new JSONObject();
 
-		Document document = _parser.parse(text);
+		navigationItemJSONObject.put(
+			"title",
+			_getTitle(
+				FileUtils.readFileToString(file, StandardCharsets.UTF_8)));
 
-		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
-			new SnakeYamlFrontMatterVisitor();
+		Path docsPath = Paths.get(_docsDirName);
+		Path filePath = Paths.get(file.toURI());
 
-		snakeYamlFrontMatterVisitor.visit(document);
-
-		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
-
-		if ((data == null) || !data.containsKey("toc")) {
-			return navigationLinksJSONArray;
-		}
-
-		Object toc = data.get("toc");
-
-		if (!(toc instanceof ArrayList)) {
-			return navigationLinksJSONArray;
-		}
-
-		for (Object tocEntry : (ArrayList)toc) {
-			if (!(tocEntry instanceof String)) {
-				continue;
-			}
-
-			Matcher matcher = _markdownLinkPattern.matcher((String)tocEntry);
-
-			if (matcher.find()) {
-				JSONObject linkJSONObject = new JSONObject();
-
-				linkJSONObject.put(
-					"title", matcher.group(1)
-				).put(
-					"url", matcher.group(2)
-				);
-
-				navigationLinksJSONArray.put(linkJSONObject);
-
-				continue;
-			}
-
-			String tocFileName = (String)tocEntry;
-
-			String filePathString =
-				navigationFile.getParent() + File.separator + tocFileName;
-
-			File tocFile = new File(filePathString);
-
-			if (!tocFile.exists() || tocFile.isDirectory()) {
-				_warn("Nonexistent or invalid TOC file " + tocFile.getPath());
-
-				continue;
-			}
-
-			JSONObject linkJSONObject = new JSONObject();
-
-			linkJSONObject.put(
-				"title",
-				_getTitle(
-					FileUtils.readFileToString(
-						tocFile, StandardCharsets.UTF_8)));
-
-			Path filePath = Paths.get(file.getParent());
-			Path tocPath = Paths.get(tocFile.toURI());
-
-			linkJSONObject.put(
-				"url",
+		String urlString =
+			"/w/" +
 				FilenameUtils.removeExtension(
-					String.valueOf(filePath.relativize(tocPath))));
+					String.valueOf(docsPath.relativize(filePath)));
 
-			navigationLinksJSONArray.put(linkJSONObject);
-		}
+		urlString =
+			urlString.substring(0, urlString.indexOf("/latest/")) +
+				urlString.substring(urlString.indexOf("/latest/") + 10);
 
-		return navigationLinksJSONArray;
+		navigationItemJSONObject.put("url", urlString);
+
+		return navigationItemJSONObject;
 	}
 
-	private JSONArray _getNavigationLinksJSONArray(File file, String text)
-		throws Exception {
+	private JSONObject _getNavigationJSONObject(File file) throws Exception {
+		JSONObject navigationJSONObject = new JSONObject();
 
-		JSONArray navigationLinksJSONArray = _getNavigationLinksJSONArray(
-			file, file, text);
+		navigationJSONObject.put(
+			"breadcrumb", _getBreadcrumbJSONArray(file)
+		).put(
+			"children", _getChildrenJSONArray(file)
+		).put(
+			"parent", _getNavigationItemJSONObject(_getParentMarkdownFile(file))
+		).put(
+			"self", _getNavigationItemJSONObject(file)
+		).put(
+			"siblings", _getChildrenJSONArray(_getParentMarkdownFile(file))
+		);
 
-		if (navigationLinksJSONArray.isEmpty()) {
-			File parentMarkdownFile = _getParentMarkdownFile(file);
-
-			if (parentMarkdownFile != null) {
-				navigationLinksJSONArray = _getNavigationLinksJSONArray(
-					parentMarkdownFile, file,
-					FileUtils.readFileToString(
-						parentMarkdownFile, StandardCharsets.UTF_8));
-			}
-		}
-
-		if (navigationLinksJSONArray.isEmpty()) {
-			_warn("Missing navigation for " + file.getPath());
-		}
-
-		return navigationLinksJSONArray;
+		return navigationJSONObject;
 	}
 
 	private String _getOAuthAuthorization() throws Exception {
@@ -943,17 +928,6 @@ public class Main {
 			});
 
 		return permissions.toArray(new Permission[0]);
-	}
-
-	private String _getProduct(File file) {
-		String filePathString = file.getPath();
-
-		String relativeFilePathString = filePathString.substring(
-			_docsDirName.length() + 1);
-
-		String[] dirNames = _getDirNames(relativeFilePathString);
-
-		return dirNames[0];
 	}
 
 	private List<StructuredContent> _getSiteStructuredContents(long siteId)
@@ -1414,26 +1388,10 @@ public class Main {
 		String englishText = FileUtils.readFileToString(
 			englishFile, StandardCharsets.UTF_8);
 
-		ContentFieldValue englishBreadcrumbLinksContentFieldValue =
-			new ContentFieldValue() {
-				{
-					setData(
-						() -> String.valueOf(
-							_getBreadcrumbLinksJSONArray(englishFile)));
-				}
-			};
 		ContentFieldValue englishContentContentFieldValue =
 			new ContentFieldValue() {
 				{
 					setData(() -> _getHTML(englishFile));
-				}
-			};
-		ContentFieldValue englishLandingPageContentFieldValue =
-			new ContentFieldValue() {
-				{
-					setData(
-						() -> String.valueOf(
-							_landingPageFiles.contains(englishFile)));
 				}
 			};
 		ContentFieldValue englishMD5HexContentFieldValue =
@@ -1442,19 +1400,12 @@ public class Main {
 					setData(() -> DigestUtils.md5Hex(englishFile.toString()));
 				}
 			};
-		ContentFieldValue englishNavigationLinksContentFieldValue =
+		ContentFieldValue englishNavigationContentFieldValue =
 			new ContentFieldValue() {
 				{
 					setData(
 						() -> String.valueOf(
-							_getNavigationLinksJSONArray(
-								englishFile, englishText)));
-				}
-			};
-		ContentFieldValue englishProductContentFieldValue =
-			new ContentFieldValue() {
-				{
-					setData(() -> _getProduct(englishFile));
+							_getNavigationJSONObject(englishFile)));
 				}
 			};
 		String englishTitle = _getTitle(englishText);
@@ -1468,28 +1419,6 @@ public class Main {
 
 			structuredContent.setContentFields(
 				new ContentField[] {
-					new ContentField() {
-						{
-							setContentFieldValue(
-								() -> englishBreadcrumbLinksContentFieldValue);
-							setContentFieldValue_i18n(
-								() -> HashMapBuilder.put(
-									"en-US",
-									englishBreadcrumbLinksContentFieldValue
-								).put(
-									"ja-JP",
-									new ContentFieldValue() {
-										{
-											setData(
-												() -> String.valueOf(
-													_getBreadcrumbLinksJSONArray(
-														japaneseFile)));
-										}
-									}
-								).build());
-							setName(() -> "breadcrumbLinks");
-						}
-					},
 					new ContentField() {
 						{
 							setContentFieldValue(
@@ -1507,19 +1436,6 @@ public class Main {
 									}
 								).build());
 							setName(() -> "content");
-						}
-					},
-					new ContentField() {
-						{
-							setContentFieldValue(
-								() -> englishLandingPageContentFieldValue);
-							setContentFieldValue_i18n(
-								() -> HashMapBuilder.put(
-									"en-US", englishLandingPageContentFieldValue
-								).put(
-									"ja-JP", englishLandingPageContentFieldValue
-								).build());
-							setName(() -> "landingPage");
 						}
 					},
 					new ContentField() {
@@ -1545,44 +1461,22 @@ public class Main {
 					new ContentField() {
 						{
 							setContentFieldValue(
-								() -> englishNavigationLinksContentFieldValue);
+								() -> englishNavigationContentFieldValue);
 							setContentFieldValue_i18n(
 								() -> HashMapBuilder.put(
-									"en-US",
-									englishNavigationLinksContentFieldValue
+									"en-US", englishNavigationContentFieldValue
 								).put(
 									"ja-JP",
 									new ContentFieldValue() {
 										{
 											setData(
 												() -> String.valueOf(
-													_getNavigationLinksJSONArray(
-														japaneseFile,
-														japaneseText)));
+													_getNavigationJSONObject(
+														japaneseFile)));
 										}
 									}
 								).build());
-							setName(() -> "navigationLinks");
-						}
-					},
-					new ContentField() {
-						{
-							setContentFieldValue(
-								() -> englishProductContentFieldValue);
-							setContentFieldValue_i18n(
-								() -> HashMapBuilder.put(
-									"en-US", englishProductContentFieldValue
-								).put(
-									"ja-JP",
-									new ContentFieldValue() {
-										{
-											setData(
-												() -> _getProduct(
-													japaneseFile));
-										}
-									}
-								).build());
-							setName(() -> "product");
+							setName(() -> "navigation");
 						}
 					}
 				});
@@ -1612,22 +1506,8 @@ public class Main {
 					new ContentField() {
 						{
 							setContentFieldValue(
-								() -> englishBreadcrumbLinksContentFieldValue);
-							setName(() -> "breadcrumbLinks");
-						}
-					},
-					new ContentField() {
-						{
-							setContentFieldValue(
 								() -> englishContentContentFieldValue);
 							setName(() -> "content");
-						}
-					},
-					new ContentField() {
-						{
-							setContentFieldValue(
-								() -> englishLandingPageContentFieldValue);
-							setName(() -> "landingPage");
 						}
 					},
 					new ContentField() {
@@ -1640,15 +1520,8 @@ public class Main {
 					new ContentField() {
 						{
 							setContentFieldValue(
-								() -> englishNavigationLinksContentFieldValue);
-							setName(() -> "navigationLinks");
-						}
-					},
-					new ContentField() {
-						{
-							setContentFieldValue(
-								() -> englishProductContentFieldValue);
-							setName(() -> "product");
+								() -> englishNavigationContentFieldValue);
+							setName(() -> "navigation");
 						}
 					}
 				});
@@ -1702,7 +1575,6 @@ public class Main {
 	private final String _docsDirName;
 	private final List<String> _errorMessages = new ArrayList<>();
 	private final Set<String> _fileNames = new TreeSet<>();
-	private final Set<File> _landingPageFiles = new HashSet<>();
 	private final String _lastestHashFileName;
 	private final long _liferayContentStructureId;
 	private final String _liferayOAuthClientId;

@@ -432,7 +432,7 @@ public class ObjectDefinitionLocalServiceImpl
 						rootObjectDefinitionId);
 			}
 
-			updateObjectDefinitionPortlet(objectDefinition1);
+			updatePortlet(objectDefinition1);
 
 			ObjectDefinition objectDefinition2 =
 				objectDefinitionLocalService.getObjectDefinition(
@@ -446,7 +446,7 @@ public class ObjectDefinitionLocalServiceImpl
 			_objectFieldLocalService.updateRequired(
 				objectRelationship.getObjectFieldId2(), true);
 
-			updateObjectDefinitionPortlet(objectDefinition2);
+			updatePortlet(objectDefinition2);
 		}
 	}
 
@@ -1194,23 +1194,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ObjectDefinition updateObjectDefinitionPortlet(
-			ObjectDefinition objectDefinition)
-		throws PortalException {
-
-		if (objectDefinition.isPortlet() &&
-			objectDefinition.isRootDescendantNode()) {
-
-			objectDefinition.setPortlet(false);
-
-			return objectDefinitionPersistence.update(objectDefinition);
-		}
-
-		return objectDefinition;
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public ObjectDefinition updateObjectFolderId(
 			long objectDefinitionId, long objectFolderId)
 		throws PortalException {
@@ -1229,6 +1212,25 @@ public class ObjectDefinitionLocalServiceImpl
 		_objectFolderItemLocalService.updateObjectFolderObjectFolderItem(
 			objectDefinitionId, objectDefinition.getObjectFolderId(),
 			oldObjectFolderId);
+
+		return objectDefinition;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectDefinition updatePortlet(long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition.isPortlet() &&
+			objectDefinition.isRootDescendantNode()) {
+
+			objectDefinition.setPortlet(false);
+
+			return objectDefinitionPersistence.update(objectDefinition);
+		}
 
 		return objectDefinition;
 	}

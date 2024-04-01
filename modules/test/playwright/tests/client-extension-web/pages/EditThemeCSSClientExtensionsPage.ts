@@ -6,33 +6,17 @@
 import {Locator, Page} from '@playwright/test';
 import * as path from 'path';
 
-import {ClientExtensionsPage} from './ClientExtensionsPage';
+import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
-export class EditThemeCSSClientExtensionsPage {
-	readonly clientExtensionsPage: ClientExtensionsPage;
-	readonly editClientExtensionSubmitButton: Locator;
-	readonly nameInput: Locator;
-	readonly page: Page;
+export class EditThemeCSSClientExtensionsPage extends EditClientExtensionsPage {
 	readonly themeCSSFrontendTokenDefinitionSelectFileButton: Locator;
 
 	constructor(page: Page) {
-		this.clientExtensionsPage = new ClientExtensionsPage(page);
-		this.editClientExtensionSubmitButton = page.getByRole('button', {
-			name: 'Publish',
-		});
-		this.nameInput = page.getByLabel('Name');
-		this.page = page;
+		super(page, 'themeCSS');
+
 		this.themeCSSFrontendTokenDefinitionSelectFileButton = page
 			.getByRole('button', {exact: true, name: 'Select File'})
 			.or(page.getByRole('button', {name: 'Replace File'}));
-	}
-
-	async goto() {
-		await this.clientExtensionsPage.goto();
-
-		await this.clientExtensionsPage.newClientExtensionButton.click();
-
-		await this.clientExtensionsPage.addThemeCSSMenuItem.click();
 	}
 
 	async uploadFrontendTokenDefinitionFile(dirname: string, fileName: string) {

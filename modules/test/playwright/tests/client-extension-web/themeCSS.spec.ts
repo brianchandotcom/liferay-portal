@@ -97,7 +97,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 		editThemeCSSClientExtensionsPage
 	);
 
-	await editThemeCSSClientExtensionsPage.editClientExtensionSubmitButton.click();
+	await editThemeCSSClientExtensionsPage.publish();
 
 	// Apply Theme CSS client extension to all pages.
 

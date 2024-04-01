@@ -98,7 +98,7 @@ public class SiteInitializerSerializerImpl
 				groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"journal-articles", zipWriter);
 			_serializeStyleBookEntries(groupId, zipWriter);
-			_serializeUsers(groupId, zipWriter);
+			_serializeUserAccounts(groupId, zipWriter);
 
 			return zipWriter.getFile();
 		}
@@ -141,7 +141,7 @@ public class SiteInitializerSerializerImpl
 		return StringUtil.replace(string, CharPool.SPACE, CharPool.DASH);
 	}
 
-	private void _serializeAccounts(
+	private void _serializeAccountEntries(
 			HashSet<AccountEntry> accountEntries, ZipWriter zipWriter)
 		throws Exception {
 
@@ -545,7 +545,7 @@ public class SiteInitializerSerializerImpl
 		}
 	}
 
-	private void _serializeUsers(long groupId, ZipWriter zipWriter)
+	private void _serializeUserAccounts(long groupId, ZipWriter zipWriter)
 		throws Exception {
 
 		HashSet<Organization> allOrganizations = new HashSet<>();
@@ -622,7 +622,7 @@ public class SiteInitializerSerializerImpl
 
 		_addZipEntry("user-accounts.json", usersJSONArray, zipWriter);
 		_serializeRoles(allRoles, zipWriter);
-		_serializeAccounts(allAccountEntries, zipWriter);
+		_serializeAccountEntries(allAccountEntries, zipWriter);
 		_serializeOrganizations(allOrganizations, zipWriter);
 	}
 

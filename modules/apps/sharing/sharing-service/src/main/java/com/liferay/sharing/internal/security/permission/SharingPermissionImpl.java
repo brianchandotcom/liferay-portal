@@ -116,7 +116,7 @@ public class SharingPermissionImpl implements SharingPermission {
 
 			if (className == null) {
 				throw new PrincipalException(
-					"sharing permission checker is null for class name ID " +
+					"Sharing permission checker is null for class name ID " +
 						classNameId);
 			}
 
@@ -129,7 +129,7 @@ public class SharingPermissionImpl implements SharingPermission {
 
 		if (sharingPermissionChecker == null) {
 			throw new PrincipalException(
-				"sharing permission checker is null for class name ID " +
+				"Sharing permission checker is null for class name ID " +
 					classNameId);
 		}
 

@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -236,6 +237,8 @@ public class ObjectDefinitionResourceImpl
 					transformToList(
 						objectDefinition.getObjectFields(),
 						objectField -> ObjectFieldUtil.toObjectField(
+							LocaleUtil.fromLanguageId(
+								objectDefinition.getDefaultLanguageId()),
 							GetterUtil.getBoolean(
 								objectDefinition.getEnableLocalization()),
 							_listTypeDefinitionLocalService, objectField,
@@ -277,6 +280,8 @@ public class ObjectDefinitionResourceImpl
 									ObjectFieldConstants.
 										BUSINESS_TYPE_RELATIONSHIP)),
 						objectField -> ObjectFieldUtil.toObjectField(
+							LocaleUtil.fromLanguageId(
+								objectDefinition.getDefaultLanguageId()),
 							GetterUtil.getBoolean(
 								objectDefinition.getEnableLocalization()),
 							_listTypeDefinitionLocalService, objectField,
@@ -329,6 +334,8 @@ public class ObjectDefinitionResourceImpl
 								ObjectFieldConstants.
 									BUSINESS_TYPE_AGGREGATION)),
 						objectField -> ObjectFieldUtil.toObjectField(
+							LocaleUtil.fromLanguageId(
+								objectDefinition.getDefaultLanguageId()),
 							false, _listTypeDefinitionLocalService, objectField,
 							_objectFieldLocalService,
 							_objectFieldSettingLocalService,

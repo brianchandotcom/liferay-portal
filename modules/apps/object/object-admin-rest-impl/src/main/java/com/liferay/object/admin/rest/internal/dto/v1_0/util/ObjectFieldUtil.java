@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -180,7 +181,7 @@ public class ObjectFieldUtil {
 	}
 
 	public static com.liferay.object.model.ObjectField toObjectField(
-		boolean enableLocalization,
+		Locale defaultLocale, boolean enableLocalization,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ObjectField objectField,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -223,8 +224,21 @@ public class ObjectFieldUtil {
 			GetterUtil.getBoolean(objectField.getIndexedAsKeyword()));
 		serviceBuilderObjectField.setIndexedLanguageId(
 			objectField.getIndexedLanguageId());
-		serviceBuilderObjectField.setLabelMap(
-			LocalizedMapUtil.getLocalizedMap(objectField.getLabel()));
+
+		Map<Locale, String> labelMap = LocalizedMapUtil.getLocalizedMap(
+			objectField.getLabel());
+
+		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
+
+		if (!Objects.equals(defaultLocale, siteDefaultLocale) &&
+			Validator.isNull(labelMap.get(siteDefaultLocale)) &&
+			Validator.isNotNull(labelMap.get(defaultLocale))) {
+
+			labelMap.put(siteDefaultLocale, labelMap.get(defaultLocale));
+		}
+
+		serviceBuilderObjectField.setLabelMap(labelMap);
+
 		serviceBuilderObjectField.setLocalized(
 			GetterUtil.getBoolean(
 				objectField.getLocalized(), enableLocalization));

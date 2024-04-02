@@ -46,17 +46,23 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 			return content;
 		}
 
-		BNDSettings bndSettings = getBNDSettings(fileName);
+		String packagePath = "";
 
-		if (bndSettings == null) {
-			return content;
+		if (absolutePath.contains("/portal-impl/")) {
+			packagePath = "portal-impl";
 		}
+		else {
+			BNDSettings bndSettings = getBNDSettings(fileName);
 
-		String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
-			bndSettings.getContent(), "Bundle-SymbolicName");
+			if (bndSettings == null) {
+				return content;
+			}
 
-		bundleSymbolicName = StringUtil.replace(
-			bundleSymbolicName, ".service", ".model");
+			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
+				bndSettings.getContent(), "Bundle-SymbolicName");
+
+			packagePath = StringUtil.removeLast(bundleSymbolicName, ".service");
+		}
 
 		Matcher matcher = _alterTableAddColumnCallPattern.matcher(content);
 
@@ -99,8 +105,7 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 				continue;
 			}
 
-			Object[] modelInformation = _getModelInformation(
-				bundleSymbolicName);
+			Object[] modelInformation = _getModelInformation(packagePath);
 
 			if (modelInformation == null) {
 				continue;
@@ -185,9 +190,9 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 		}
 	}
 
-	private synchronized Object[] _getModelInformation(String packageName) {
+	private synchronized Object[] _getModelInformation(String packagePath) {
 		if (_modelInformationsMap != null) {
-			return _modelInformationsMap.get(packageName);
+			return _modelInformationsMap.get(packagePath);
 		}
 
 		_modelInformationsMap = new HashMap<>();
@@ -203,7 +208,7 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 			return null;
 		}
 
-		return _modelInformationsMap.get(packageName);
+		return _modelInformationsMap.get(packagePath);
 	}
 
 	private String _getTableSQL(String tablesSQLContent, String tableName) {
@@ -225,10 +230,10 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 	}
 
 	private void _populateTablesSQLFileLocations() throws IOException {
-		File file = getPortalDir();
+		File portalDir = getPortalDir();
 
 		List<String> serviceXMLFileNames = SourceFormatterUtil.scanForFileNames(
-			file.getCanonicalPath(), new String[] {"**/service.xml"});
+			portalDir.getCanonicalPath(), new String[] {"**/service.xml"});
 
 		for (String serviceXMLFileName : serviceXMLFileNames) {
 			Document serviceXMLDocument = SourceUtil.readXML(
@@ -240,28 +245,19 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 
 			Element serviceXMLElement = serviceXMLDocument.getRootElement();
 
-			String packagePath = serviceXMLElement.attributeValue(
-				"api-package-path");
-
-			if (packagePath == null) {
-				packagePath = serviceXMLElement.attributeValue("package-path");
-			}
-
-			if (packagePath == null) {
-				continue;
-			}
-
 			serviceXMLFileName = StringUtil.replace(
 				serviceXMLFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
+			String packagePath = "";
 			String tablesSQLFilePath = "";
 
-			if (serviceXMLFileNames.contains("portal-impl/")) {
-				tablesSQLFilePath =
-					SourceUtil.getRootDirName(serviceXMLFileName) +
-						"/sql/portal-tables.sql";
+			if (serviceXMLFileName.contains("/portal-impl/")) {
+				packagePath = "portal-impl";
+				tablesSQLFilePath = portalDir + "/sql/portal-tables.sql";
 			}
 			else {
+				packagePath = serviceXMLElement.attributeValue("package-path");
+
 				int x = serviceXMLFileName.lastIndexOf("/");
 
 				tablesSQLFilePath =
@@ -270,7 +266,7 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 			}
 
 			_modelInformationsMap.put(
-				packagePath + ".model",
+				packagePath,
 				new Object[] {serviceXMLElement, tablesSQLFilePath});
 		}
 	}

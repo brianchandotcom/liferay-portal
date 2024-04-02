@@ -11,9 +11,9 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import GetSolutionOutlet from './GetSolutionOutlet';
-import GetSolutionAccount from './pages/Account';
-import SolutionCreated from './pages/Done';
-import GetSolutionForm from './pages/Form';
+import Account from './pages/Account';
+import Finish from './pages/Done';
+import Form from './pages/Form';
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -40,15 +40,13 @@ const GetSolutionRouter = () => {
 							/>
 						}
 					>
-						<Route element={<GetSolutionAccount />} index />
-						<Route element={<GetSolutionForm />} path="form" />
+						<Route element={<Account />} index />
+						<Route element={<Form />} path="form" />
 					</Route>
 
 					<Route
 						element={
-							<SolutionCreated
-								product={product as DeliveryProduct}
-							/>
+							<Finish product={product as DeliveryProduct} />
 						}
 						path="finish"
 					/>

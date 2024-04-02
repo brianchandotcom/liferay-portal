@@ -254,7 +254,6 @@ export function RightSidebarObjectRelationshipDetails({
 
 			<div className="lfr-objects__model-builder-right-sidebar-object-relationship-content">
 				<InputLocalized
-					disableFlag={readOnly}
 					disabled={readOnly}
 					error={errors.label}
 					label={Liferay.Language.get('label')}

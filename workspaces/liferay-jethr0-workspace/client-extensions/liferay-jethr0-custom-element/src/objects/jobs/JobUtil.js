@@ -28,11 +28,15 @@ export function createJob({data, redirect}) {
 				urlPath: `/o/c/jobs/${parentResultJSON.id}/object-actions/jethr0EtcSpringBootJobAdd`,
 			})
 				.then((request) => request.text())
-				.then((result) => {
+				.then(() => {
 					if (redirect !== null) {
 						redirect(parentResult);
 					}
 				})
+				.catch((error) => {
+					// eslint-disable-next-line no-console
+					console.log(error);
+				});
 		})
 		.catch((error) => {
 			// eslint-disable-next-line no-console

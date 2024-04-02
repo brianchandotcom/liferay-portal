@@ -24,11 +24,13 @@ export type GroovyScriptUseItem = {
 interface ScriptManagementContainerProps {
 	allowScriptContentBeExecutedOrIncluded: boolean;
 	baseResourceURL: string;
+	scriptManagementConfigurationDefined: boolean;
 }
 
 export default function ScriptManagementContainer({
 	allowScriptContentBeExecutedOrIncluded,
 	baseResourceURL,
+	scriptManagementConfigurationDefined,
 }: ScriptManagementContainerProps) {
 	const [allowScriptContent, setAllowScriptContent] = useState(
 		allowScriptContentBeExecutedOrIncluded
@@ -36,6 +38,10 @@ export default function ScriptManagementContainer({
 	const [groovyScriptUses, setGroovyScriptUses] = useState<
 		GroovyScriptUseItem[]
 	>([]);
+	const [
+		isScriptManagementConfigurationDefined,
+		setIsScriptManagementConfigurationDefined,
+	] = useState(scriptManagementConfigurationDefined);
 	const [showGroovyScriptUsesModal, setShowGroovyScriptUsesModal] = useState<
 		boolean
 	>(false);
@@ -76,6 +82,13 @@ export default function ScriptManagementContainer({
 					: 'danger',
 			});
 
+			if (
+				editScriptManagementConfigurationResponse.ok &&
+				!scriptManagementConfigurationDefined
+			) {
+				setIsScriptManagementConfigurationDefined(true);
+			}
+
 			return;
 		}
 
@@ -89,14 +102,16 @@ export default function ScriptManagementContainer({
 				{Liferay.Language.get('script-management')}
 			</Text>
 
-			<ClayAlert
-				displayType="info"
-				title={`${Liferay.Language.get('alert-helper-info')}:`}
-			>
-				{Liferay.Language.get(
-					'this-configuration-is-not-saved-yet.-the-values-shown-are-the-default'
-				)}
-			</ClayAlert>
+			{!isScriptManagementConfigurationDefined && (
+				<ClayAlert
+					displayType="info"
+					title={`${Liferay.Language.get('alert-helper-info')}:`}
+				>
+					{Liferay.Language.get(
+						'this-configuration-is-not-saved-yet.-the-values-shown-are-the-default'
+					)}
+				</ClayAlert>
+			)}
 
 			<div className="lfr__script-management-checkbox-container">
 				<ClayCheckbox

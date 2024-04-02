@@ -20,6 +20,8 @@ ScriptManagementConfigurationDisplayContext scriptManagementConfigurationDisplay
 			"allowScriptContentBeExecutedOrIncluded", scriptManagementConfigurationDisplayContext.isAllowScriptContentBeExecutedOrIncluded()
 		).put(
 			"baseResourceURL", String.valueOf(baseResourceURL)
+		).put(
+			"scriptManagementConfigurationDefined", scriptManagementConfigurationDisplayContext.isScriptManagementConfigurationDefined()
 		).build()
 	%>'
 />

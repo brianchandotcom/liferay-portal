@@ -14,9 +14,11 @@ export declare type GroovyScriptUseItem = {
 interface ScriptManagementContainerProps {
 	allowScriptContentBeExecutedOrIncluded: boolean;
 	baseResourceURL: string;
+	scriptManagementConfigurationDefined: boolean;
 }
 export default function ScriptManagementContainer({
 	allowScriptContentBeExecutedOrIncluded,
 	baseResourceURL,
+	scriptManagementConfigurationDefined,
 }: ScriptManagementContainerProps): JSX.Element;
 export {};

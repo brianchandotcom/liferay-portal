@@ -9,7 +9,7 @@ import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import useCart from '../../../../hooks/useCart';
 import {Liferay} from '../../../../liferay/liferay';
 import {getLicenseDescription, getTierPrice} from '../../../../utils/api';
-import {SkuOptions} from '../../enums/skuOptions';
+import {isCloudProduct, isTrialSKU} from '../../../../utils/productUtils';
 import LicenseCard from './LicenseCard';
 
 type PaidTimelineProps = {
@@ -37,15 +37,8 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 		})();
 	}, [accountId, channel.id, product?.productId]);
 
-	const purchasebleSkus = skus?.filter((sku) =>
-		sku?.skuOptions.find(
-			(skuOption) =>
-				skuOption.skuOptionValueKey.toLocaleLowerCase() !==
-					SkuOptions.TRIAL ||
-				(skuOption.skuOptionValueKey.toLocaleLowerCase() ===
-					SkuOptions.TRIAL &&
-					skuOption.skuOptionValueKey === 'no')
-		)
+	const purchasebleSkus = (skus || []).filter(
+		(sku) => sku.purchasable && !isTrialSKU((sku as unknown) as SKU)
 	);
 
 	return (
@@ -54,11 +47,7 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 				<p className="mt-3">Need help with license calculations?</p>
 
 				{purchasebleSkus
-					?.map((sku, index) => {
-						if (sku?.sku.endsWith('ts')) {
-							return null;
-						}
-
+					.map((sku, index) => {
 						const tierPricesFiltered = tierPrices?.filter(
 							(tier: any) =>
 								tier?.tierPrice.length && tier.skuId === sku.id
@@ -81,7 +70,10 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 									}
 									licensetiers={tierPricesFiltered}
 									lisenceType={
-										skuOption?.skuOptionValueKey ?? sku.sku
+										isCloudProduct(product)
+											? 'Standard'
+											: skuOption?.skuOptionValueKey ??
+											  sku.sku
 									}
 									productId={productId}
 									sku={sku}

@@ -8,6 +8,7 @@ package com.liferay.jethr0.entity.repository;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.dalo.EntityRelationshipDALO;
+import com.liferay.jethr0.entity.factory.EntityFactory;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,6 +25,19 @@ import org.json.JSONObject;
  */
 public abstract class BaseEntityRepository<T extends Entity>
 	implements EntityRepository<T> {
+
+	@Override
+	public T add(JSONObject jsonObject) {
+		EntityDALO<T> entityDALO = getEntityDALO();
+
+		EntityFactory<T> entityFactory = entityDALO.getEntityFactory();
+
+		T entity = entityFactory.newEntity(jsonObject);
+
+		add(entity);
+
+		return entity;
+	}
 
 	@Override
 	public T create(JSONObject jsonObject) {

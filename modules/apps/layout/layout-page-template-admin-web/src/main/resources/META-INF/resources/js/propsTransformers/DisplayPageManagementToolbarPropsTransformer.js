@@ -47,12 +47,25 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 		});
 	};
 
-	const exportDisplayPages = (itemData) => {
-		const form = document.getElementById(`${portletNamespace}fm`);
+	const exportSelectedEntries = (itemData) => {
+		const form = document.getElementById(
+			`${portletNamespace}actionEntriesFm`
+		);
 
-		if (form) {
-			submitForm(form, itemData?.exportDisplayPageURL);
-		}
+		setFormValues(form, {
+			layoutPageTemplateCollectionsIds: getCheckedCheckboxes(
+				document.getElementById(`${portletNamespace}fm`),
+				'',
+				`${portletNamespace}rowIdsLayoutPageTemplateCollection`
+			),
+			layoutPageTemplateEntriesIds: getCheckedCheckboxes(
+				document.getElementById(`${portletNamespace}fm`),
+				'',
+				`${portletNamespace}rowIds`
+			),
+		});
+
+		submitForm(form, itemData?.exportSelectedEntriesURL);
 	};
 
 	const moveSelectedEntries = (itemData) => {
@@ -100,8 +113,8 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			else if (action === 'deleteSelectedEntries') {
 				deleteSelectedEntries(data);
 			}
-			else if (action === 'exportDisplayPages') {
-				exportDisplayPages(data);
+			else if (action === 'exportSelectedEntries') {
+				exportSelectedEntries(data);
 			}
 			else if (action === 'moveSelectedEntries') {
 				moveSelectedEntries(data);

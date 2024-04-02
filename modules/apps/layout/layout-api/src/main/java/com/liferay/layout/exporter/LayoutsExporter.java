@@ -25,6 +25,11 @@ public interface LayoutsExporter {
 			long[] layoutPageTemplateEntryIds, int type)
 		throws Exception;
 
+	public File exportLayoutPageTemplateEntriesAndLayoutPageTemplateCollections(
+			long[] layoutPageTemplateEntryIds,
+			long[] layoutPageTemplateCollectionIds)
+		throws Exception;
+
 	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)
 		throws Exception;
 

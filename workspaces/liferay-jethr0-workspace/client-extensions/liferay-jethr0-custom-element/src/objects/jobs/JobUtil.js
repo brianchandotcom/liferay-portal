@@ -18,11 +18,21 @@ export function createJob({data, redirect}) {
 		method: 'POST',
 		urlPath: '/o/c/jobs',
 	})
-		.then((request) => request.text())
-		.then((result) => {
-			if (redirect !== null) {
-				redirect(result);
-			}
+		.then((parentRequest) => parentRequest.text())
+		.then((parentResult) => {
+			const parentResultJSON = JSON.parse(parentResult);
+
+			liferayRequest({
+				headers,
+				method: 'PUT',
+				urlPath: `/o/c/jobs/${parentResultJSON.id}/object-actions/jethr0EtcSpringBootJobAdd`,
+			})
+				.then((request) => request.text())
+				.then((result) => {
+					if (redirect !== null) {
+						redirect(parentResult);
+					}
+				})
 		})
 		.catch((error) => {
 			// eslint-disable-next-line no-console

@@ -93,8 +93,7 @@ public class SignInNavigationPrePageInclude implements PageInclude {
 					_layoutUtilityPageEntryLayoutProvider.
 						getDefaultLayoutUtilityPageEntryLayout(
 							themeDisplay.getScopeGroupId(),
-							LayoutUtilityPageEntryConstants.
-								TYPE_LOGIN);
+							LayoutUtilityPageEntryConstants.TYPE_LOGIN);
 
 				if (layout != null) {
 					signInURL = _portal.getLayoutURL(layout, themeDisplay);

@@ -164,12 +164,12 @@ public class JournalRecentArticlesResultRowSplitterTest {
 
 		JournalArticle journalArticle = Mockito.mock(JournalArticle.class);
 
-		LocalDateTime modifiedLocalDateTime = localDateTime.minusDays(days);
+		LocalDateTime createLocalDateTime = localDateTime.minusDays(days);
 
 		Mockito.when(
-			journalArticle.getModifiedDate()
+			journalArticle.getCreateDate()
 		).thenReturn(
-			Date.from(modifiedLocalDateTime.toInstant(ZoneOffset.UTC))
+			Date.from(createLocalDateTime.toInstant(ZoneOffset.UTC))
 		);
 
 		return journalArticle;

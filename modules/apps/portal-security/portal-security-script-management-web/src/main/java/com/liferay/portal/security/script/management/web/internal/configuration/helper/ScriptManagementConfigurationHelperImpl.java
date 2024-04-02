@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
+import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
@@ -93,7 +94,7 @@ public class ScriptManagementConfigurationHelperImpl
 
 		try {
 			String filterString = StringBundler.concat(
-				"(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
+				"(", Constants.SERVICE_PID, StringPool.EQUAL,
 				ScriptManagementConfiguration.class.getName(), ")");
 
 			if (_configurationAdmin.listConfigurations(filterString) != null) {

@@ -70,10 +70,6 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 			String methodCall1 = JavaSourceUtil.getMethodCall(
 				content, matcher.start(1));
 
-			if (methodCall1 == null) {
-				continue;
-			}
-
 			List<String> parameterNames1 = JavaSourceUtil.getParameterNames(
 				methodCall1);
 
@@ -98,10 +94,6 @@ public class JavaUpgradeAlterTableAddColumnCallsOrderCheck
 			}
 
 			String methodCall2 = JavaSourceUtil.getMethodCall(content, x);
-
-			if (methodCall2 == null) {
-				continue;
-			}
 
 			List<String> parameterNames2 = JavaSourceUtil.getParameterNames(
 				methodCall2);

@@ -148,6 +148,11 @@ public class FaroServiceUpgradeStepRegistrator
 			"18.0.0", "19.0.0",
 			new com.liferay.osb.faro.internal.upgrade.v19_0_0.
 				UpgradeFaroProjectUpgradeProcess());
+
+		registry.register(
+			"19.0.0", "20.0.0",
+			new com.liferay.osb.faro.internal.upgrade.v20_0_0.
+				UpgradeFaroProjectUpgradeProcess());
 	}
 
 }

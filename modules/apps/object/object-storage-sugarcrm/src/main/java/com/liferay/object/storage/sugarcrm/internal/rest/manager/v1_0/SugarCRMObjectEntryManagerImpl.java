@@ -11,36 +11,23 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
-import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException;
+import com.liferay.object.rest.manager.http.ObjectEntryManagerHttp;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.storage.sugarcrm.configuration.SugarCRMConfiguration;
-import com.liferay.object.storage.sugarcrm.internal.web.cache.SugarCRMAccessTokenWebCacheItem;
 import com.liferay.petra.function.UnsafeTriConsumer;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.net.HttpURLConnection;
 
 import java.util.Collections;
 import java.util.List;
@@ -72,7 +59,7 @@ public class SugarCRMObjectEntryManagerImpl
 			ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		JSONObject responseJSONObject = _sugarCRMHttp.post(
+		JSONObject responseJSONObject = _objectEntryManagerHttp.post(
 			objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
 			_getObjectLocation(objectDefinition),
@@ -97,7 +84,7 @@ public class SugarCRMObjectEntryManagerImpl
 			ActionKeys.DELETE, objectDefinition, scopeKey,
 			dtoConverterContext.getUser());
 
-		_sugarCRMHttp.delete(
+		_objectEntryManagerHttp.delete(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			objectDefinition.getExternalReferenceCode() +
 				StringPool.FORWARD_SLASH + externalReferenceCode);
@@ -138,12 +125,11 @@ public class SugarCRMObjectEntryManagerImpl
 		return toObjectEntry(
 			companyId, getDateFormat(), _defaultObjectFieldNames,
 			dtoConverterContext,
-			_sugarCRMHttp.get(
+			_objectEntryManagerHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				StringBundler.concat(
 					_getObjectLocation(objectDefinition),
-					StringPool.FORWARD_SLASH, externalReferenceCode),
-				null),
+					StringPool.FORWARD_SLASH, externalReferenceCode)),
 			objectDefinition);
 	}
 
@@ -173,7 +159,7 @@ public class SugarCRMObjectEntryManagerImpl
 			return null;
 		}
 
-		JSONObject responseJSONObject = _sugarCRMHttp.put(
+		JSONObject responseJSONObject = _objectEntryManagerHttp.put(
 			objectDefinition.getCompanyId(),
 			getGroupId(objectDefinition, scopeKey),
 			StringBundler.concat(
@@ -307,11 +293,10 @@ public class SugarCRMObjectEntryManagerImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject = _sugarCRMHttp.get(
+		JSONObject responseJSONObject = _objectEntryManagerHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_generatePreparedLocation(
-				objectDefinition, filterString, pagination, sorts, false),
-			null);
+				objectDefinition, filterString, pagination, sorts, false));
 
 		if ((responseJSONObject == null) ||
 			(responseJSONObject.length() == 0)) {
@@ -338,11 +323,10 @@ public class SugarCRMObjectEntryManagerImpl
 			String filterString, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject = _sugarCRMHttp.get(
+		JSONObject responseJSONObject = _objectEntryManagerHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
 			_generatePreparedLocation(
-				objectDefinition, filterString, pagination, sorts, true),
-			null);
+				objectDefinition, filterString, pagination, sorts, true));
 
 		return responseJSONObject.getInt("record_count", 0);
 	}
@@ -361,12 +345,6 @@ public class SugarCRMObjectEntryManagerImpl
 		};
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SugarCRMObjectEntryManagerImpl.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
 	private final Map<String, String> _defaultObjectFieldNames =
 		HashMapBuilder.put(
 			"createDate", "date_entered"
@@ -383,174 +361,12 @@ public class SugarCRMObjectEntryManagerImpl
 	)
 	private FilterFactory<String> _filterFactory;
 
-	@Reference
-	private Http _http;
-
-	@Reference
-	private JSONFactory _jsonFactory;
+	@Reference(
+		target = "(object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SUGARCRM + ")"
+	)
+	private ObjectEntryManagerHttp _objectEntryManagerHttp;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	private final SugarCRMHttp _sugarCRMHttp = new SugarCRMHttp();
-
-	private class SugarCRMHttp {
-
-		public JSONObject delete(
-			long companyId, long groupId, String location) {
-
-			try {
-				return _invoke(
-					companyId, groupId, location, Http.Method.DELETE, null);
-			}
-			catch (Exception exception) {
-				return ReflectionUtil.throwException(exception);
-			}
-		}
-
-		public JSONObject get(
-			long companyId, long groupId, String location,
-			JSONObject jsonObject) {
-
-			try {
-				return _invoke(
-					companyId, groupId, location, Http.Method.GET, jsonObject);
-			}
-			catch (Exception exception) {
-				return ReflectionUtil.throwException(exception);
-			}
-		}
-
-		public JSONObject post(
-			long companyId, long groupId, String location,
-			JSONObject bodyJSONObject) {
-
-			try {
-				return _invoke(
-					companyId, groupId, location, Http.Method.POST,
-					bodyJSONObject);
-			}
-			catch (Exception exception) {
-				return ReflectionUtil.throwException(exception);
-			}
-		}
-
-		public JSONObject put(
-			long companyId, long groupId, String location,
-			JSONObject bodyJSONObject) {
-
-			try {
-				return _invoke(
-					companyId, groupId, location, Http.Method.PUT,
-					bodyJSONObject);
-			}
-			catch (Exception exception) {
-				return ReflectionUtil.throwException(exception);
-			}
-		}
-
-		private JSONObject _getSugarCRMAccessTokenJSONObject(
-			SugarCRMConfiguration sugarCRMConfiguration) {
-
-			JSONObject jSONObject = SugarCRMAccessTokenWebCacheItem.get(
-				sugarCRMConfiguration);
-
-			if (jSONObject == null) {
-				throw new ObjectEntryManagerHttpException(
-					"Unable to authenticate with SugarCRM");
-			}
-
-			return jSONObject;
-		}
-
-		private SugarCRMConfiguration _getSugarCRMConfiguration(
-			long companyId, long groupId) {
-
-			try {
-				if (groupId == 0) {
-					return _configurationProvider.getCompanyConfiguration(
-						SugarCRMConfiguration.class, companyId);
-				}
-
-				return _configurationProvider.getGroupConfiguration(
-					SugarCRMConfiguration.class, groupId);
-			}
-			catch (ConfigurationException configurationException) {
-				return ReflectionUtil.throwException(configurationException);
-			}
-		}
-
-		private JSONObject _invoke(
-				long companyId, long groupId, String location,
-				Http.Method method, JSONObject bodyJSONObject)
-			throws Exception {
-
-			byte[] bytes = _invokeAsBytes(
-				companyId, groupId, location, method, bodyJSONObject);
-
-			if (bytes == null) {
-				return _jsonFactory.createJSONObject();
-			}
-
-			return _jsonFactory.createJSONObject(new String(bytes));
-		}
-
-		private byte[] _invokeAsBytes(
-				long companyId, long groupId, String location,
-				Http.Method method, JSONObject bodyJSONObject)
-			throws Exception {
-
-			Http.Options options = new Http.Options();
-
-			if (bodyJSONObject != null) {
-				options.addHeader(
-					HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
-			}
-
-			SugarCRMConfiguration sugarCRMConfiguration =
-				_getSugarCRMConfiguration(companyId, groupId);
-
-			JSONObject jsonObject = _getSugarCRMAccessTokenJSONObject(
-				sugarCRMConfiguration);
-
-			options.addHeader(
-				"Authorization",
-				"Bearer " + jsonObject.getString("access_token"));
-
-			if (bodyJSONObject != null) {
-				options.setBody(
-					bodyJSONObject.toString(), ContentTypes.APPLICATION_JSON,
-					StringPool.UTF8);
-			}
-
-			options.setFollowRedirects(false);
-			options.setLocation(
-				sugarCRMConfiguration.baseURL() + StringPool.FORWARD_SLASH +
-					location);
-			options.setMethod(method);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"SugarCRM connector calling URL: " + options.getLocation());
-			}
-
-			byte[] bytes = _http.URLtoByteArray(options);
-
-			Http.Response response = options.getResponse();
-
-			if ((response.getResponseCode() < HttpURLConnection.HTTP_OK) ||
-				(response.getResponseCode() >=
-					HttpURLConnection.HTTP_MULT_CHOICE)) {
-
-				throw new ObjectEntryManagerHttpException(
-					StringBundler.concat(
-						"Unexpected response code ", response.getResponseCode(),
-						" with response message: ", new String(bytes)));
-			}
-
-			return bytes;
-		}
-
-	}
 
 }

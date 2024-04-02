@@ -111,7 +111,7 @@ public class LocalStagingPublishParentLayoutsByDefaultTest
 				TestPropsValues.getUser());
 
 		String content = StringUtil.replace(
-			_read("journal_content.xml"), new String[] {"$GROUP_NAME"},
+			_read("journal_content.xml"), new String[] {"[$GROUP_NAME]"},
 			new String[] {
 				stagingGroup.getName(
 					"en_US"

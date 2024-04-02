@@ -151,7 +151,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				_read("data_definition.json"), TestPropsValues.getUser());
 
 		String content = StringUtil.replace(
-			_read("journal_content.xml"), new String[] {"$GROUP_NAME"},
+			_read("journal_content.xml"), new String[] {"[$GROUP_NAME]"},
 			new String[] {
 				group.getName(
 					"en_US"
@@ -211,7 +211,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 				_read("data_definition.json"), TestPropsValues.getUser());
 
 		String content = StringUtil.replace(
-			_read("journal_content.xml"), new String[] {"$GROUP_NAME"},
+			_read("journal_content.xml"), new String[] {"[$GROUP_NAME]"},
 			new String[] {
 				group.getName(
 					"en_US"

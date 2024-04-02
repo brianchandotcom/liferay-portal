@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.object.rest.filter.factory,\
 	com.liferay.object.rest.filter.parser,\
 	com.liferay.object.rest.manager.exception,\
+	com.liferay.object.rest.manager.http,\
 	com.liferay.object.rest.manager.v1_0,\
 	com.liferay.object.rest.odata.entity.v1_0.provider,\
 	com.liferay.object.rest.openapi.v1_0,\

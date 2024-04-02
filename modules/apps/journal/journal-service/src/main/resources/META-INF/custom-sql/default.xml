@@ -273,7 +273,7 @@
 	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findA_ByG_U_F_DDMSI_L">
 		<![CDATA[
 			SELECT
-				JournalArticle.folderId AS modelFolderId, JournalArticle.articleId AS articleId, JournalArticleLocalization.title AS title, JournalArticle.version AS version, 0 AS modelFolder, JournalArticle.displayDate AS displayDate, JournalArticle.modifiedDate AS modifiedDate
+				JournalArticle.folderId AS modelFolderId, JournalArticle.articleId AS articleId, JournalArticleLocalization.title AS title, JournalArticle.version AS version, 0 AS modelFolder, JournalArticle.createDate AS createDate, JournalArticle.displayDate AS displayDate, JournalArticle.modifiedDate AS modifiedDate
 			FROM
 				(
 					SELECT
@@ -329,7 +329,7 @@
 	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findF_ByG_F_L">
 		<![CDATA[
 			SELECT
-				DISTINCT folderId AS modelFolderId, '' AS articleId, JournalFolder.name AS title, 0 AS version, 1 AS modelFolder, JournalFolder.createDate AS displayDate, JournalFolder.modifiedDate AS modifiedDate
+				DISTINCT folderId AS modelFolderId, '' AS articleId, JournalFolder.name AS title, 0 AS version, 1 AS modelFolder, JournalFolder.createDate AS createDate, JournalFolder.createDate AS displayDate, JournalFolder.modifiedDate AS modifiedDate
 			FROM
 				JournalFolder
 			WHERE

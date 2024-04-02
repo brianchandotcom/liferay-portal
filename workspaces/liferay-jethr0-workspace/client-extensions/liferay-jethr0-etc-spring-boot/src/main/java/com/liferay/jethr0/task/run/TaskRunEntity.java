@@ -7,6 +7,7 @@ package com.liferay.jethr0.task.run;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.task.TaskEntity;
+import com.liferay.jethr0.util.EntityUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,12 +35,9 @@ public interface TaskRunEntity extends Entity {
 
 		FAILED("failed"), PASSED("passed");
 
-		public static Result get(JSONObject jsonObject) {
-			return getByKey(jsonObject.getString("key"));
-		}
-
-		public static Result getByKey(String key) {
-			return _results.get(key);
+		public static Result get(Object picklistValue) {
+			return _results.get(
+				EntityUtil.getKeyFromPicklistValue(picklistValue));
 		}
 
 		public JSONObject getJSONObject() {

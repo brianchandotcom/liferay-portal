@@ -308,8 +308,8 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		_name = jsonObject.getString("name");
 		_priority = jsonObject.optInt("priority");
 		_startDate = StringUtil.toDate(jsonObject.optString("startDate"));
-		_state = State.get(jsonObject.getJSONObject("state"));
-		_type = Type.get(jsonObject.getJSONObject("type"));
+		_state = State.get(jsonObject.get("state"));
+		_type = Type.get(jsonObject.get("type"));
 
 		String parameters = jsonObject.getString("parameters");
 

@@ -8,6 +8,7 @@ package com.liferay.jethr0.bui1d.run;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
+import com.liferay.jethr0.util.EntityUtil;
 
 import java.net.URL;
 
@@ -51,12 +52,9 @@ public interface BuildRunEntity extends Entity {
 
 		FAILED("failed", "Failed"), PASSED("passed", "Passed");
 
-		public static Result get(JSONObject jsonObject) {
-			return getByKey(jsonObject.getString("key"));
-		}
-
-		public static Result getByKey(String key) {
-			return _results.get(key);
+		public static Result get(Object picklistValue) {
+			return _results.get(
+				EntityUtil.getKeyFromPicklistValue(picklistValue));
 		}
 
 		public JSONObject getJSONObject() {
@@ -99,12 +97,9 @@ public interface BuildRunEntity extends Entity {
 		OPENED("opened", "Opened"), QUEUED("queued", "Queued"),
 		RUNNING("running", "Running");
 
-		public static State get(JSONObject jsonObject) {
-			return getByKey(jsonObject.getString("key"));
-		}
-
-		public static State getByKey(String key) {
-			return _states.get(key);
+		public static State get(Object picklistValue) {
+			return _states.get(
+				EntityUtil.getKeyFromPicklistValue(picklistValue));
 		}
 
 		public JSONObject getJSONObject() {

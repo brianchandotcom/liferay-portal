@@ -155,10 +155,9 @@ public abstract class BaseEnvironmentEntity
 		_browser = jsonObject.getString("browser");
 		_database = jsonObject.getString("database");
 		_javaVersion = jsonObject.getString("operatingSystem");
-		_liferayBundle = LiferayBundle.get(
-			jsonObject.getJSONObject("liferayBundle"));
+		_liferayBundle = LiferayBundle.get(jsonObject.get("liferayBundle"));
 		_liferayPortalBranch = LiferayPortalBranch.get(
-			jsonObject.getJSONObject("liferayPortalBranch"));
+			jsonObject.get("liferayPortalBranch"));
 		_operatingSystem = jsonObject.getString("operatingSystem");
 	}
 

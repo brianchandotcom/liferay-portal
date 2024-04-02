@@ -323,7 +323,7 @@ public abstract class BaseBuildEntity
 		_jenkinsJobName = jsonObject.getString("jenkinsJobName");
 		_jobEntityId = jsonObject.optLong("r_jobToBuilds_c_jobId");
 		_name = jsonObject.getString("name");
-		_state = State.get(jsonObject.getJSONObject("state"));
+		_state = State.get(jsonObject.get("state"));
 
 		String paramaters = jsonObject.getString("parameters");
 

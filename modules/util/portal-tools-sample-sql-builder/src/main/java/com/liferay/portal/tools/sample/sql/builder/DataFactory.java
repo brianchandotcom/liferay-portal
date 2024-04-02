@@ -710,6 +710,23 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_PUBLICATION_COUNT;
 	}
 
+	public int getMaxPublicationJournalArticleCount() {
+		return BenchmarksPropsValues.MAX_PUBLICATION_JOURNAL_ARTICLE_COUNT;
+	}
+
+	public int getMaxPublicationJournalArticlePageCount() {
+		return BenchmarksPropsValues.MAX_PUBLICATION_JOURNAL_ARTICLE_PAGE_COUNT;
+	}
+
+	public int getMaxPublicationJournalArticleSize() {
+		return BenchmarksPropsValues.MAX_PUBLICATION_JOURNAL_ARTICLE_SIZE;
+	}
+
+	public int getMaxPublicationJournalArticleVersionCount() {
+		return BenchmarksPropsValues.
+			MAX_PUBLICATION_JOURNAL_ARTICLE_VERSION_COUNT;
+	}
+
 	public int getMaxSegmentsEntrySegmentsExperienceCount() {
 		return BenchmarksPropsValues.
 			MAX_SEGMENTS_ENTRY_SEGMENTS_EXPERIENCE_COUNT;
@@ -5302,6 +5319,14 @@ public class DataFactory {
 		}
 
 		return portletPreferenceValueModel;
+	}
+
+	public GroupModel newPublicationGroupModel() {
+		long groupId = _groupCounter.get();
+
+		return newGroupModel(
+			getClassNameId(Group.class), groupId, groupId, "Publication Group",
+			false);
 	}
 
 	public List<ReleaseModel> newReleaseModels() throws Exception {

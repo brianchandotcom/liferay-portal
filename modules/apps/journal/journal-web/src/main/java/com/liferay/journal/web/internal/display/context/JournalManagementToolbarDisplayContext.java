@@ -726,6 +726,8 @@ public class JournalManagementToolbarDisplayContext
 				).setNavigation(
 					"recent"
 				).setParameter(
+					"navigationMine", (Boolean)null
+				).setParameter(
 					"navigationRecent", Boolean.TRUE
 				).buildPortletURL()
 			).setLabel(

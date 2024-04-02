@@ -100,4 +100,44 @@ describe('ScriptManagementContainer component', () => {
 
 		expect(checkboxInput).not.toBeChecked();
 	});
+
+	it('check if configuration information alert will render correctly when scriptManagementConfigurationDefined is false', () => {
+		const {getByRole, getByText} = render(
+			<ScriptManagementContainer
+				allowScriptContentBeExecutedOrIncluded={false}
+				baseResourceURL=""
+				scriptManagementConfigurationDefined={false}
+			/>
+		);
+
+		const alertHelperInfo = getByText('alert-helper-info:');
+		const alertText = getByText(
+			'this-configuration-is-not-saved-yet.-the-values-shown-are-the-default'
+		);
+		const infoCircleIcon = getByRole('presentation');
+
+		expect(alertHelperInfo).toBeInTheDocument();
+		expect(alertText).toBeInTheDocument();
+		expect(infoCircleIcon).toHaveClass('lexicon-icon-info-circle');
+	});
+
+	it('check if configuration information alert will not render when scriptManagementConfigurationDefined is true', () => {
+		const {queryByRole, queryByText} = render(
+			<ScriptManagementContainer
+				allowScriptContentBeExecutedOrIncluded={false}
+				baseResourceURL=""
+				scriptManagementConfigurationDefined={true}
+			/>
+		);
+
+		const alertHelperInfo = queryByText('alert-helper-info:');
+		const alertText = queryByText(
+			'this-configuration-is-not-saved-yet.-the-values-shown-are-the-default'
+		);
+		const infoCircleIcon = queryByRole('presentation');
+
+		expect(alertHelperInfo).not.toBeInTheDocument();
+		expect(alertText).not.toBeInTheDocument();
+		expect(infoCircleIcon).not.toBeInTheDocument();
+	});
 });

@@ -64,6 +64,7 @@ public class DisplayPageManagementToolbarDisplayContext
 	@Override
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
+			() -> FeatureFlagManagerUtil.isEnabled("LPS-189856"),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
@@ -100,6 +101,7 @@ public class DisplayPageManagementToolbarDisplayContext
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
+			() -> FeatureFlagManagerUtil.isEnabled("LPS-189856"),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(

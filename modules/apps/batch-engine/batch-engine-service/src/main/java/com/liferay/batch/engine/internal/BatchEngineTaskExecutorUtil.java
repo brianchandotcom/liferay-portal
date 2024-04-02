@@ -37,15 +37,15 @@ public class BatchEngineTaskExecutorUtil {
 				new LiberalPermissionChecker(user));
 		}
 
-		String name = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
 		AuditRequestThreadLocal auditRequestThreadLocal =
 			AuditRequestThreadLocal.getAuditThreadLocal();
 
 		auditRequestThreadLocal.setRealUserEmailAddress(user.getEmailAddress());
 		auditRequestThreadLocal.setRealUserId(user.getUserId());
+
+		String name = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(user.getUserId());
 
 		try {
 			unsafeRunnable.run();

@@ -176,7 +176,7 @@ export default function SearchBar({
 			const oldKeyword = localStorage.getItem('keyword');
 			const queryString = _updateQueryString(document.location.search);
 
-			if (oldKeyword && keyword !== oldKeyword) {
+			if (keyword === '' || keyword !== oldKeyword) {
 				FacetUtil.clearAllSelections(queryString);
 			}
 

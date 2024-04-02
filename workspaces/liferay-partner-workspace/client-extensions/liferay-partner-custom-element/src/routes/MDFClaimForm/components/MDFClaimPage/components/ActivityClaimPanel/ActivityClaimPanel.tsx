@@ -76,14 +76,14 @@ const ActivityClaimPanel = ({
 }: IProps & Pick<FormikContextType<MDFClaim>, 'setFieldValue'>) => {
 	const [expanded, setExpanded] = useState<boolean>(!activity.selected);
 
-	const isNotBudgetSelected = Array.isArray(errors?.activities)
+	const isBudgetSelected = Array.isArray(errors?.activities)
 		? errors.activities
 				.map((activity, index) => ({activity, index}))
 				.filter(
 					({activity}) =>
 						activity &&
 						'budgets' in activity &&
-						typeof activity.budgets === 'string'
+						typeof activity.budgets !== 'string'
 				)
 				.map(({index}) => index)
 		: undefined;
@@ -245,8 +245,8 @@ const ActivityClaimPanel = ({
 							/>
 						))}
 
-						{isNotBudgetSelected &&
-							isNotBudgetSelected.includes(activityIndex) &&
+						{isBudgetSelected &&
+							!isBudgetSelected.includes(activityIndex) &&
 							(isButtonClicked || isDraft) && (
 								<ClayAlert
 									displayType="danger"

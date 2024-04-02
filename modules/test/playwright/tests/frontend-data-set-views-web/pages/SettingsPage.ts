@@ -9,7 +9,7 @@ import {ViewPage} from './view/ViewPage';
 
 export class SettingsPage {
 	readonly cancelButton: Locator;
-	readonly configureNewLayoutButton: Locator;
+	readonly goToVisualizationModesLink: Locator;
 	readonly defaultVisualizationModeLabel: Locator;
 	readonly notConfiguredPlaceholder: Locator;
 	readonly page: Page;
@@ -19,9 +19,9 @@ export class SettingsPage {
 
 	constructor(page: Page) {
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
-		this.configureNewLayoutButton = page.getByRole('option', {
-			name: 'Go to Visualization Modes',
-		});
+		this.goToVisualizationModesLink = page.getByText(
+			'Go to Visualization Modes'
+		);
 		this.defaultVisualizationModeLabel = page.getByLabel(
 			'Default Visualization Mode',
 			{exact: true}

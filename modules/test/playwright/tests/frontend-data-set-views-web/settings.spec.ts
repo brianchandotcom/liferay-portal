@@ -78,13 +78,11 @@ test.describe('Data Set Settings', () => {
 			});
 
 			await test.step('Navigate to Visualization Mode section if  "Not Configured"', async () => {
-				await settingsPage.defaultVisualizationModeLabel.click();
-
 				await expect(
-					settingsPage.configureNewLayoutButton
+					settingsPage.goToVisualizationModesLink
 				).toBeInViewport();
 
-				await settingsPage.configureNewLayoutButton.click();
+				await settingsPage.goToVisualizationModesLink.click();
 
 				await expect(
 					visualizationModesPage.page.getByText(

@@ -6,9 +6,9 @@
 import {Body, Cell, Head, Row, Table as ClayTable} from '@clayui/core';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
+import TableColumn from '../../interfaces/tableColumn';
 
 import './index.css';
-import TableColumn from '../../interfaces/tableColumn';
 
 interface BasicRow {
 	[key: string]: string | number | boolean | string[] | undefined;
@@ -70,7 +70,7 @@ const Table = <T extends BasicRow>({
 								<Cell
 									align="left"
 									className="border-0 font-weight-normal py-4 table-cell"
-									key={colIndex}
+									key={`${rowIndex}-${colIndex}`}
 								>
 									{column.render ? (
 										column.render(data, row, rowIndex)

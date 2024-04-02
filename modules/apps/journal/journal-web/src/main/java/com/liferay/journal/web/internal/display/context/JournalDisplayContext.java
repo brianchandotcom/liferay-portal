@@ -677,6 +677,20 @@ public class JournalDisplayContext {
 			));
 	}
 
+	public String getFolderSubtitle(JournalFolder folder) {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-11218") &&
+			(isNavigationMine() || isNavigationRecent())) {
+
+			return _getSubtitle(
+				folder.getCreateDate(), "created-x-ago-by-x",
+				folder.getUserName());
+		}
+
+		return _getSubtitle(
+			folder.getModifiedDate(), "modified-x-ago-by-x",
+			folder.getStatusByUserName());
+	}
+
 	public long getHighlightedDDMStructureId() {
 		if (_highlightedDDMStructureId != null) {
 			return _highlightedDDMStructureId;

@@ -374,13 +374,6 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
 						>
-
-							<%
-							Date createDate = curFolder.getCreateDate();
-
-							String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-							%>
-
 							<div class="d-flex">
 								<c:choose>
 									<c:when test="<%= rowURL.toString() != StringPool.BLANK %>">
@@ -401,7 +394,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							</div>
 
 							<span class="c-pt-1 text-secondary">
-								<liferay-ui:message arguments="<%= new String[] {createDateDescription, HtmlUtil.escape(curFolder.getUserName())} %>" key="modified-x-ago-by-x" />
+								<%= journalDisplayContext.getFolderSubtitle(curFolder) %>
 							</span>
 
 							<c:if test="<%= journalDisplayContext.isSearch() && ((curFolder.getParentFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curFolder.getParentFolder(), ActionKeys.VIEW)) %>">

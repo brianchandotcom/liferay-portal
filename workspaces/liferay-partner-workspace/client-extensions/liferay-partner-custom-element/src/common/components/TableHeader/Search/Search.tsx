@@ -26,10 +26,12 @@ const Search = ({initialSearchTerm, onSearchSubmit, urlParams}: IProps) => {
 			onSearchSubmit(term);
 			setSearching(false);
 
-			if (term && urlParams) {
-				urlParams.set('searchterm', term);
-			}
-			else if (urlParams) {
+			if (urlParams) {
+				if (term) {
+					urlParams.set('searchterm', term);
+
+					return;
+				}
 				urlParams.delete('searchterm');
 			}
 

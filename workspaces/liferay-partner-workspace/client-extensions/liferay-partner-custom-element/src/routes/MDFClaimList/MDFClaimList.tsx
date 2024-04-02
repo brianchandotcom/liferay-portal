@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTabs from '@clayui/tabs';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
@@ -25,9 +25,9 @@ import useIsChannel from '../../common/hooks/useIsChannel';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
+import useQueryParams from '../../common/hooks/useQueryParams';
 import {MDFClaimListItem} from '../../common/interfaces/mdfClaimListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
-import {Liferay} from '../../common/services/liferay';
 import {Filters} from '../../common/utils/constants/filters';
 import getDropDownFilterMenus from '../../common/utils/getDropDownFilterMenus';
 import useDynamicFieldEntries from './hooks/useDynamicFieldEntries';
@@ -54,17 +54,7 @@ const MDFClaimList = () => {
 
 	const {companiesEntries} = useDynamicFieldEntries();
 
-	const [urlParams] = useState(
-		new URLSearchParams(window.location.href.split('?')[1])
-	);
-	const urlParamsEntries = urlParams.entries();
-	useEffect(() => {
-		window.history.replaceState(
-			null,
-			'',
-			`${Liferay.ThemeDisplay.getLayoutRelativeURL()}?${urlParams.toString()}`
-		);
-	}, [urlParams, urlParamsEntries]);
+	const urlParams = useQueryParams();
 
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
 		openClaimsFilter,

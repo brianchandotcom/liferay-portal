@@ -45,6 +45,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.AutoIncrementObjectFieldBuilder;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
@@ -59,6 +60,7 @@ import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -172,7 +174,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Matija Petanjek
  */
-@FeatureFlags({"LPS-135430", "LPS-164948", "LPS-187142"})
+@FeatureFlags({"LPS-135430", "LPS-164948", "LPS-187142", "LPS-196724"})
 @RunWith(Arquillian.class)
 public class BatchEngineBrokerTest {
 
@@ -1179,6 +1181,34 @@ public class BatchEngineBrokerTest {
 								_createObjectFieldSetting(
 									"maximumFileSize", "100"))
 						).build(),
+						new AutoIncrementObjectFieldBuilder(
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).name(
+							"testAutoIncrementField"
+						).objectFieldSettings(
+							Arrays.asList(
+								new ObjectFieldSettingBuilder(
+								).name(
+									ObjectFieldSettingConstants.
+										NAME_INITIAL_VALUE
+								).value(
+									"1"
+								).build(),
+								new ObjectFieldSettingBuilder(
+								).name(
+									ObjectFieldSettingConstants.NAME_PREFIX
+								).value(
+									"prefix-"
+								).build(),
+								new ObjectFieldSettingBuilder(
+								).name(
+									ObjectFieldSettingConstants.NAME_SUFFIX
+								).value(
+									"-suffix"
+								).build())
+						).build(),
 						new BooleanObjectFieldBuilder(
 						).labelMap(
 							LocalizedMapUtil.getLocalizedMap(
@@ -1585,10 +1615,11 @@ public class BatchEngineBrokerTest {
 	private static final List<String> _objectEntryExportCSVFieldNames =
 		Arrays.asList(
 			"dateCreated", "dateModified", "externalReferenceCode", "id",
-			"keywords", "scopeKey", "testAggregationField", "testBooleanField",
-			"testDateField", "testDateTimeField", "testDecimalField",
-			"testEncryptedField", "testFormulaField", "testIntegerField",
-			"testLongIntegerField", "testLongTextField", "testPicklistField",
+			"keywords", "scopeKey", "testAggregationField",
+			"testAutoIncrementField", "testBooleanField", "testDateField",
+			"testDateTimeField", "testDecimalField", "testEncryptedField",
+			"testFormulaField", "testIntegerField", "testLongIntegerField",
+			"testLongTextField", "testPicklistField",
 			"testPrecisionDecimalField", "testRichTextField", "testTextField");
 	private static final List<String> _objectEntryExportFieldNames =
 		Arrays.asList(
@@ -1601,11 +1632,11 @@ public class BatchEngineBrokerTest {
 	private static final List<String> _objectEntryImportCSVFieldNames =
 		Arrays.asList(
 			"dateCreated", "dateModified", "externalReferenceCode", "id",
-			"keywords", "scopeKey", "testBooleanField", "testDateField",
-			"testDateTimeField", "testDecimalField", "testEncryptedField",
-			"testIntegerField", "testLongIntegerField", "testLongTextField",
-			"testPicklistField", "testPrecisionDecimalField",
-			"testRichTextField", "testTextField");
+			"keywords", "scopeKey", "testAutoIncrementField",
+			"testBooleanField", "testDateField", "testDateTimeField",
+			"testDecimalField", "testEncryptedField", "testIntegerField",
+			"testLongIntegerField", "testLongTextField", "testPicklistField",
+			"testPrecisionDecimalField", "testRichTextField", "testTextField");
 	private static final List<String> _objectEntryImportFieldNames =
 		Arrays.asList(
 			"externalReferenceCode", "keywords", "testAttachmentField",

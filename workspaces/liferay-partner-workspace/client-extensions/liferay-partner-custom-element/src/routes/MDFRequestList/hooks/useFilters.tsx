@@ -17,8 +17,8 @@ export default function useFilters(
 	isChannel?: boolean
 ) {
 	const [filters, setFilters] = useState(() => {
-		const initialFilter: typeof INITIAL_FILTER = JSON.parse(
-			JSON.stringify(INITIAL_FILTER)
+		const initialFilter: typeof INITIAL_FILTER = structuredClone(
+			INITIAL_FILTER
 		);
 
 		if (urlParams.get('enddate')) {

@@ -6,11 +6,9 @@
 const viewButtons = document.getElementsByClassName('view-btn');
 
 if (viewButtons) {
-	const urlParams = new URLSearchParams(window.location.href.split('?')[1]);
-	for (let i = 0; i < viewButtons.length; i++) {
-		viewButtons[
-			i
-		].href += `?${urlParams.toString()}&p_l_back_url=${encodeURIComponent(
+	const urlParams = new URLSearchParams(window.location.search);
+	for (const viewButton of viewButtons) {
+		viewButton.href += `?${urlParams.toString()}&p_l_back_url=${encodeURIComponent(
 			Liferay.ThemeDisplay.getLayoutRelativeURL()
 		)}`;
 	}

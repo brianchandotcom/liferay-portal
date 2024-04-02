@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTabs from '@clayui/tabs';
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {CSVLink} from 'react-csv';
 
 import Table from '../../common/components/Table';
@@ -26,6 +26,7 @@ import useIsChannel from '../../common/hooks/useIsChannel';
 import useLiferayNavigate from '../../common/hooks/useLiferayNavigate';
 import usePagination from '../../common/hooks/usePagination';
 import usePermissionActions from '../../common/hooks/usePermissionActions';
+import useQueryParams from '../../common/hooks/useQueryParams';
 import MDFRequestDTO from '../../common/interfaces/dto/mdfRequestDTO';
 import {MDFRequestListItem} from '../../common/interfaces/mdfRequestListItem';
 import TableColumn from '../../common/interfaces/tableColumn';
@@ -56,17 +57,7 @@ const MDFRequestList = () => {
 	const {userAccount} = useDynamicFieldEntries();
 	const actions = usePermissionActions(ObjectActionName.MDF_REQUEST);
 
-	const [urlParams] = useState(
-		new URLSearchParams(window.location.href.split('?')[1])
-	);
-	const urlParamsEntries = urlParams.entries();
-	useEffect(() => {
-		window.history.replaceState(
-			null,
-			'',
-			`${Liferay.ThemeDisplay.getLayoutRelativeURL()}?${urlParams.toString()}`
-		);
-	}, [urlParams, urlParamsEntries]);
+	const urlParams = useQueryParams();
 
 	const {filters, filtersTerm, onFilter, setFilters} = useFilters(
 		openRequestFilter,

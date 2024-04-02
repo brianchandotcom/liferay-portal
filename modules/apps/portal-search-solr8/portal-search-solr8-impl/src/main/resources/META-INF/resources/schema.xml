@@ -670,6 +670,9 @@
 		<field docValues="true" indexed="true" name="assetCategoryId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="assetCategoryIds" stored="true" type="string" />
 		<field indexed="true" name="assetCategoryTitle" stored="true" termPositions="true" termVectors="true" type="text" />
+		<field indexed="true" multiValued="true" name="assetInternalCategoryIds" stored="true" type="string" />
+		<field indexed="true" multiValued="true" name="assetInternalCategoryTitles" stored="true" type="string" />
+		<field indexed="true" multiValued="true" name="assetInternalVocabularyIds" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="assetTagId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="assetTagIds" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="assetTagNames" stored="true" termPositions="true" termVectors="true" type="text" />

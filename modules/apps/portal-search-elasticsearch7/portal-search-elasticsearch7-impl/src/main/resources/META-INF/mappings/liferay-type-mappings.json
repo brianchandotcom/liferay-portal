@@ -1542,6 +1542,14 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"assetInternalCategoryTitles": {
+			"store": true,
+			"type": "keyword"
+		},
+		"assetInternalVocabularyIds": {
+			"store": true,
+			"type": "keyword"
+		},
 		"assetTagId": {
 			"store": true,
 			"type": "keyword"

@@ -32,10 +32,10 @@ import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
 import EVENTS from './utils/eventsDefinitions';
+import getRandomId from './utils/getRandomId';
 import {
 	formatItemChanges,
 	getCurrentItemUpdates,
-	getRandomId,
 	loadData,
 } from './utils/index';
 import {logError} from './utils/logError';

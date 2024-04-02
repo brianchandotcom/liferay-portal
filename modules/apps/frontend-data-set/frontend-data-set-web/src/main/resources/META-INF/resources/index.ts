@@ -91,19 +91,6 @@ export interface IBaseActions {
 	itemId: number | string;
 }
 
-export interface ICardsView {
-	items: Array<any>;
-	schema: ICardSchema;
-}
-
-export interface ICardSchema {
-	description: string;
-	image: string;
-	link: string;
-	symbol: string;
-	title: string;
-}
-
 export interface IItemsActions {
 	data?: IItemActionsData;
 	href?: string;

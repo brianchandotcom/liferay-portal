@@ -11,11 +11,19 @@ import React, {useContext, useRef} from 'react';
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
-import {ICardSchema, IItemsActions} from '../../index';
+import {IItemsActions} from '../../index';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import getRandomId from '../../utils/getRandomId';
 import isLink from '../../utils/isLink';
 import imagePropsTransformer from '../utils/imagePropsTransformer';
+
+interface ICardSchema {
+	description: string;
+	image: string;
+	link: string;
+	symbol: string;
+	title: string;
+}
 
 const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 	const {

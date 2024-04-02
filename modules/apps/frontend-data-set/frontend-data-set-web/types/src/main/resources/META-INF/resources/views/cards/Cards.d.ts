@@ -5,7 +5,13 @@
 
 /// <reference types="react" />
 
-import {ICardSchema} from '../../index';
+interface ICardSchema {
+	description: string;
+	image: string;
+	link: string;
+	symbol: string;
+	title: string;
+}
 declare const Cards: ({
 	items,
 	schema,

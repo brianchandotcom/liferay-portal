@@ -1,2 +1,2 @@
-dateModified,dateCreated,externalReferenceCode,id,name,scopeKey,testAutoIncrementField,testDateField,testDateTimeField,testDecimalField,testIntegerField,testLongInteger,testLongTextField,testPrecisionDecimalField
-2024-01-04,2024-01-04,83b46736-f89b-9b90-188c-497d06c08271,35622,TestName,,prefix-1-suffix,2024-01-05,2024-01-05T15:00:00.000Z,"10,2",100,123456789,This is a long text to test testLongTextField,"321,123"
+dateModified,dateCreated,externalReferenceCode,id,scopeKey,testAutoIncrementField,testDateField,testDateTimeField,testDecimalField,testIntegerField,testLongInteger,testLongTextField,testPrecisionDecimalField,testTextField
+2024-01-04,2024-01-04,83b46736-f89b-9b90-188c-497d06c08271,35622,,prefix-1-suffix,2024-01-05,2024-01-05T15:00:00.000Z,"10,2",100,123456789,This is a long text to test testLongTextField,"321,123",Test

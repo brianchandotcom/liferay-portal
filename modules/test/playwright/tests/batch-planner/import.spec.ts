@@ -216,13 +216,13 @@ const companyObjectDefinition = {
 		{
 			DBType: 'String',
 			businessType: 'Text',
-			externalReferenceCode: 'Test-NameField',
+			externalReferenceCode: 'Test-TextField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
-			label: {en_US: 'name'},
+			label: {en_US: 'testTextField'},
 			listTypeDefinitionId: 0,
-			name: 'name',
+			name: 'testTextField',
 			required: false,
 			system: false,
 			type: 'String',
@@ -444,13 +444,13 @@ const siteObjectDefinition = {
 		{
 			DBType: 'String',
 			businessType: 'Text',
-			externalReferenceCode: 'Test-NameField',
+			externalReferenceCode: 'Test-TextField',
 			indexed: true,
 			indexedAsKeyword: false,
 			indexedLanguageId: '',
-			label: {en_US: 'name'},
+			label: {en_US: 'testTextField'},
 			listTypeDefinitionId: 0,
-			name: 'name',
+			name: 'testTextField',
 			required: false,
 			system: false,
 			type: 'String',
@@ -519,7 +519,6 @@ test('can import CSV file with an unexisting field', async ({
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
 			id: expect.any(Number),
 			keywords: [],
-			name: 'TestName',
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			status: expect.any(Object),
@@ -538,6 +537,7 @@ test('can import CSV file with an unexisting field', async ({
 			testRelationshipERC: '',
 			testRichTextField: 'null',
 			testRichTextFieldRawText: 'null',
+			testTextField: 'Test',
 		},
 	]);
 
@@ -585,7 +585,6 @@ test('can import CSV file with custom columns order', async ({
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
 			id: expect.any(Number),
 			keywords: [],
-			name: 'TestName',
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
@@ -607,6 +606,7 @@ test('can import CSV file with custom columns order', async ({
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField  </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField',
+			testTextField: 'Test',
 		},
 	]);
 
@@ -652,7 +652,6 @@ test('can import CSV file with multiple site scoped object entries', async ({
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
 			id: expect.any(Number),
 			keywords: [],
-			name: 'TestName_FirstEntry',
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
@@ -675,6 +674,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The first entry.  </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. The first entry.',
+			testTextField: 'Test_FirstEntry',
 		},
 		{
 			actions: expect.any(Object),
@@ -684,7 +684,6 @@ test('can import CSV file with multiple site scoped object entries', async ({
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
 			id: expect.any(Number),
 			keywords: [],
-			name: 'TestName_SecondEntry',
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
@@ -707,6 +706,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The second entry.  </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. The second entry.',
+			testTextField: 'Test_SecondEntry',
 		},
 	]);
 
@@ -764,7 +764,6 @@ test('can import CSV file with new and existing site scoped object entries', asy
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
 			id: expect.any(Number),
 			keywords: [],
-			name: 'TestName',
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
@@ -787,6 +786,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField.  </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField.',
+			testTextField: 'Test',
 		},
 		{
 			actions: expect.any(Object),
@@ -796,7 +796,6 @@ test('can import CSV file with new and existing site scoped object entries', asy
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
 			id: expect.any(Number),
 			keywords: [],
-			name: 'TestName_SecondEntry',
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
@@ -819,6 +818,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. New entry.  </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. New entry.',
+			testTextField: 'Test_SecondEntry',
 		},
 	]);
 
@@ -872,7 +872,6 @@ test('can import CSV file with new and modified existing company scoped object e
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
 			id: expect.any(Number),
 			keywords: [],
-			name: 'TestName_Modified',
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			status: expect.any(Object),
@@ -894,6 +893,7 @@ test('can import CSV file with new and modified existing company scoped object e
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The modified entry.  </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. The modified entry.',
+			testTextField: 'Test_Modified',
 		},
 		{
 			actions: expect.any(Object),
@@ -903,7 +903,6 @@ test('can import CSV file with new and modified existing company scoped object e
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
 			id: expect.any(Number),
 			keywords: [],
-			name: 'TestName_NewEntry',
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			status: expect.any(Object),
@@ -925,6 +924,7 @@ test('can import CSV file with new and modified existing company scoped object e
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The new entry.  </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. The new entry.',
+			testTextField: 'Test_NewEntry',
 		},
 	]);
 
@@ -957,7 +957,7 @@ test('can map all imported fields', async ({
 	await expect(page.getByText('testLongTextField')).toBeVisible();
 	await expect(page.getByText('testPrecisionDecimalField')).toBeVisible();
 	await expect(page.getByText('testRichTextField')).toBeVisible();
-	await expect(page.getByText('name', {exact: true})).toBeVisible();
+	await expect(page.getByText('testTextField')).toBeVisible();
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);
 });
@@ -988,11 +988,6 @@ test('can preview CSV file', async ({
 		page
 			.getByLabel('Preview')
 			.getByRole('cell', {name: 'externalReferenceCode'})
-	).toBeVisible();
-	await expect(
-		page
-			.getByLabel('Preview')
-			.getByRole('cell', {exact: true, name: 'name'})
 	).toBeVisible();
 	await expect(
 		page
@@ -1035,6 +1030,11 @@ test('can preview CSV file', async ({
 		page
 			.getByLabel('Preview')
 			.getByRole('cell', {exact: true, name: 'testRichTextField'})
+	).toBeVisible();
+	await expect(
+		page
+			.getByLabel('Preview')
+			.getByRole('cell', {exact: true, name: 'testTextField'})
 	).toBeVisible();
 
 	await apiHelpers.objectAdmin.deleteObjectDefinition(response.id);

@@ -109,6 +109,19 @@ public class LoginAction implements Action {
 			return null;
 		}
 
+		Layout loginUtilityPage =
+			LayoutUtilityPageEntryLayoutProviderUtil.
+				getDefaultLayoutUtilityPageEntryLayout(
+					themeDisplay.getScopeGroupId(),
+					LayoutUtilityPageEntryConstants.TYPE_LOGIN);
+
+		if (loginUtilityPage != null) {
+			httpServletResponse.sendRedirect(
+				PortalUtil.getLayoutURL(loginUtilityPage, themeDisplay));
+
+			return null;
+		}
+
 		String redirect = PortalUtil.getSiteLoginURL(themeDisplay);
 
 		if (Validator.isNull(redirect)) {

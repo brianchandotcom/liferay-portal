@@ -72,7 +72,7 @@ public class JournalRecentArticlesResultRowSplitter
 				(JournalArticle)resultRow.getObject();
 
 			LocalDateTime localDateTime = _toLocalDateTime(
-				journalArticle.getModifiedDate(),
+				journalArticle.getCreateDate(),
 				ZoneId.of(user.getTimeZoneId()));
 
 			if (localDateTime.isBefore(thirtyDaysAgoLocalDateTime)) {

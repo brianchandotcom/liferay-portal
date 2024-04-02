@@ -447,3 +447,31 @@ The getJSOnClickConfigJSONObject function in PersonalMenuEntry is changed so it 
 
 This change makes getJSOnClickConfigJSONObject generic so that it can be used for any type of on-click interaction, not just for opening a selection modal.
 ```
+
+----
+
+# 1b0f30a46f323932a2b9151fd4771910f07bb0b7
+
+The commit message does not contain the reason of the What section. The correct message is:
+
+```
+LPD-15236 Add companyId argument to scope every request by companyId.
+
+This is necessary because, given the following Object Definitions and companyIds:
+    - C_Test & companyId 1
+    - C_test & companyId 2
+
+If we call the method with itemClassName = com.liferay.object.rest.dto.v1_0.ObjectEntry and taskItemDelegateName = C_test from a request in the companyId = 1, the method will return an instance of BatchEngineTaskItemDelegate, but thatshould not happen, as the C_test taskItemDelegateName is only defined in companyId = 2.
+
+For that, in the following commits we need to scope by companyId all the BatchEngineTaskItemDelegates (if there is a companyId parameter, if not, it will be returned for all the companies)
+
+# breaking
+
+## What modules/apps/batch-engine/batch-engine-api/src/main/java/com/liferay/batch/engine/BatchEngineTaskItemDelegateRegistry.java
+
+The method getBatchEngineTaskItemDelegate(String itemClassName, String taskItemDelegateName) has been replaced with getBatchEngineTaskItemDelegate(long companyId, String itemClassName, String taskItemDelegateName), as the invocation must be scoped by company.
+
+## Why
+
+To get the BatchEngineTaskItemDelegate based on the company too, it must be scoped by the company, because it depends on the company that a taskItemDelegateName exists or not (an Object Definition given its name)
+```

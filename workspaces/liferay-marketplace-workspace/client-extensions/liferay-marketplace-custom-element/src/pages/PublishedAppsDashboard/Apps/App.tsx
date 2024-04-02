@@ -7,13 +7,11 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useSWR, {KeyedMutator} from 'swr';
 
 import circleFullIcon from '../../../assets/icons/circle_fill_icon.svg';
-import {useAppContext} from '../../../manage-app-state/AppManageState';
-import {TYPES} from '../../../manage-app-state/actionTypes';
 import {ReviewAndSubmitAppPage} from '../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 
 import './App.scss';
@@ -124,7 +122,6 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 };
 
 const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
-	const [, dispatch] = useAppContext();
 	const {appId} = useParams();
 	const {myUserAccount} = useMarketplaceContext();
 	const navigate = useNavigate();
@@ -149,27 +146,6 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 			),
 		[selectedApp?.productSpecifications]
 	);
-
-	useEffect(() => {
-		if (!selectedApp) {
-			return;
-		}
-
-		dispatch({
-			payload: {
-				value: {
-					appERC: selectedApp.externalReferenceCode,
-					appProductId: selectedApp.productId,
-				},
-			},
-			type: TYPES.SUBMIT_APP_PROFILE,
-		});
-	}, [
-		dispatch,
-		selectedApp,
-		selectedApp?.externalReferenceCode,
-		selectedApp?.productId,
-	]);
 
 	if (!selectedApp || isLoading) {
 		return null;

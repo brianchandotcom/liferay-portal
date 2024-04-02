@@ -19,10 +19,7 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 
 	@Override
 	public JobEntity newEntity(JSONObject jsonObject) {
-		JSONObject typeJSONObject = jsonObject.getJSONObject("type");
-
-		JobEntity.Type type = JobEntity.Type.getByKey(
-			typeJSONObject.getString("key"));
+		JobEntity.Type type = JobEntity.Type.get(jsonObject.get("type"));
 
 		if (type == JobEntity.Type.ARCHIVE_CI_BUILD_DATA) {
 			return new ArchiveCIBuildDataJobEntity(jsonObject);

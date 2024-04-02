@@ -11,6 +11,7 @@ import com.liferay.jethr0.git.branch.GitBranchEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
+import com.liferay.jethr0.util.EntityUtil;
 
 import java.net.URL;
 
@@ -118,12 +119,9 @@ public interface JobEntity extends Entity {
 		OPENED("opened", "Opened"), QUEUED("queued", "Queued"),
 		RUNNING("running", "Running");
 
-		public static State get(JSONObject jsonObject) {
-			return getByKey(jsonObject.getString("key"));
-		}
-
-		public static State getByKey(String key) {
-			return _states.get(key);
+		public static State get(Object picklistValue) {
+			return _states.get(
+				EntityUtil.getKeyFromPicklistValue(picklistValue));
 		}
 
 		public JSONObject getJSONObject() {
@@ -238,12 +236,9 @@ public interface JobEntity extends Entity {
 		VERIFICATION("verification", "Verification"),
 		VERIFICATION_NODE("verificationNode", "Verification Node");
 
-		public static Type get(JSONObject jsonObject) {
-			return getByKey(jsonObject.getString("key"));
-		}
-
-		public static Type getByKey(String key) {
-			return _types.get(key);
+		public static Type get(Object picklistValue) {
+			return _types.get(
+				EntityUtil.getKeyFromPicklistValue(picklistValue));
 		}
 
 		public static Set<String> getKeys() {

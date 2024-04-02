@@ -11,6 +11,7 @@ import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.task.TaskEntity;
+import com.liferay.jethr0.util.EntityUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -104,12 +105,9 @@ public interface BuildEntity extends Entity {
 		OPENED("opened", "Opened"), QUEUED("queued", "Queued"),
 		RUNNING("running", "Running");
 
-		public static State get(JSONObject jsonObject) {
-			return getByKey(jsonObject.getString("key"));
-		}
-
-		public static State getByKey(String key) {
-			return _states.get(key);
+		public static State get(Object picklistValue) {
+			return _states.get(
+				EntityUtil.getKeyFromPicklistValue(picklistValue));
 		}
 
 		public JSONObject getJSONObject() {

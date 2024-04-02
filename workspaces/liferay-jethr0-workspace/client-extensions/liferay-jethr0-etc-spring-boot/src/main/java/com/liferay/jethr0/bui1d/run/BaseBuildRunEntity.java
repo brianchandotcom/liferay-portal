@@ -190,13 +190,8 @@ public abstract class BaseBuildRunEntity
 				jsonObject.optString("jenkinsBuildURL"));
 		}
 
-		JSONObject resultJSONObject = jsonObject.optJSONObject("result");
-
-		if (resultJSONObject != null) {
-			_result = Result.get(resultJSONObject);
-		}
-
-		_state = State.get(jsonObject.getJSONObject("state"));
+		_result = Result.get(jsonObject.opt("result"));
+		_state = State.get(jsonObject.get("state"));
 	}
 
 	private static final long _MAX_DURATION_IN_QUEUE = 1000 * 60 * 2;

@@ -67,7 +67,7 @@ public class BaseTaskRunEntity extends BaseEntity implements TaskRunEntity {
 		super(jsonObject);
 
 		_duration = jsonObject.getLong("duration");
-		_result = Result.get(jsonObject.getJSONObject("result"));
+		_result = Result.get(jsonObject.get("result"));
 	}
 
 	private long _duration;

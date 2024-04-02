@@ -8,6 +8,7 @@ package com.liferay.jethr0.environment;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.task.TaskEntity;
+import com.liferay.jethr0.util.EntityUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,12 +67,9 @@ public interface EnvironmentEntity extends Entity {
 		DXP_SOURCE("dxpSource"), PORTAL_RELEASE("portalRelease"),
 		PORTAL_SOURCE("portalSource");
 
-		public static LiferayBundle get(JSONObject jsonObject) {
-			return getByKey(jsonObject.getString("key"));
-		}
-
-		public static LiferayBundle getByKey(String key) {
-			return _liferayBundles.get(key);
+		public static LiferayBundle get(Object picklistValue) {
+			return _liferayBundles.get(
+				EntityUtil.getKeyFromPicklistValue(picklistValue));
 		}
 
 		public JSONObject getJSONObject() {
@@ -106,12 +104,9 @@ public interface EnvironmentEntity extends Entity {
 		BRANCH_EE_6_2_10("ee6210"), BRANCH_EE_6_2_x("ee62x"),
 		BRANCH_MASTER("master");
 
-		public static LiferayPortalBranch get(JSONObject jsonObject) {
-			return getByKey(jsonObject.getString("key"));
-		}
-
-		public static LiferayPortalBranch getByKey(String key) {
-			return _liferayPortalBranches.get(key);
+		public static LiferayPortalBranch get(Object picklistValue) {
+			return _liferayPortalBranches.get(
+				EntityUtil.getKeyFromPicklistValue(picklistValue));
 		}
 
 		public JSONObject getJSONObject() {

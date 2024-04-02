@@ -33,47 +33,51 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8351 | Test Summary: Page profile audience card shows known and anonymous individuals as well as segmented/unsegmented individuals"
+	@description = "Feature ID: Legacy | Automation ID: LRAC-8351 | Test Summary: Check that page profile audience card displays only known individuals in the segmented/unsegmented graph"
 	@priority = 5
 	test ShowsKnownAnonymousIndividualsAsWellAsSegmentedUnsegmentedIndividuals {
-
-		// AC Refactor: Timing issues may happen on this test case
-		// AC Refactor ticket: LRAC-9409
-
-		property portal.upstream = "quarantine";
-
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 
+		for (var name : list ${usernameList}) {
+			JSONUser.addUser(
+				userEmailAddress = "${name}@liferay.com",
+				userFirstName = ${name},
+				userLastName = ${name},
+				userScreenName = ${name});
+		}
+
 		task ("Add page and Blog for interaction with the AC") {
 			ACUtils.addSiteAndPage();
-
-			ACUtils.createBlogsAndAddToPage();
 		}
 
 		task ("Add users and interact with the page to get data from known and unsegmented users") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-			for (var name : list ${usernameList}) {
-				JSONUser.addUser(
-					userEmailAddress = "${name}@liferay.com",
-					userFirstName = ${name},
-					userLastName = ${name},
-					userScreenName = ${name});
-			}
-
-			ACDXPSettings.syncNewContactData();
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 			ACUtils.navigateToSitePageWithUser(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				emailList = ${emailList},
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
-		task ("Logout and interact whith the page to get data from anonymous user") {
-			User.logoutPG();
+		task ("Close all sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
 
+		task ("Sign out") {
+			UserBar.signOut();
+		}
+
+		task ("Clear local storage") {
+			ACUtils.clearLocalStorage();
+		}
+
+		task ("Interact whith the page to get data from anonymous user") {
 			ACUtils.navigateToSitePage(
+				actionType = "View WC",
+				documentTitleList = "1,2,3,4",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -85,7 +89,7 @@ definition {
 		task ("Go to AC and create segment for the user") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToSegments();
 
@@ -98,50 +102,22 @@ definition {
 			ACSegments.saveSegment();
 		}
 
-		task ("Go to DXP and interact with the page to get data from segmented users") {
-			ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
-
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			ACUtils.navigateToSitePageWithUser(
-				emailList = "liferay@liferay.com",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Logout and interact with the page to get data from anonymous unsegmented user") {
-			User.logoutPG();
-
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close all sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Go to pages and open the page created in DXP") {
-			ACUtils.launchAC();
+		task ("Navigate to Pages tab in Sites") {
+			ACNavigation.goToSites();
 
 			ACNavigation.switchTab(tabName = "Pages");
+		}
 
+		task ("Set time filter use 24 hours") {
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
+		}
 
-			var portalURL = PropsUtil.get("portal.url");
+		task ("Navigate to page report entry") {
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
-			var portalURL = StringUtil.replace(${portalURL}, "http://", "");
-
-			var portalURL = StringUtil.replace(${portalURL}, ":8080", "");
-
-			ACNavigation.openItem(itemName = "AC Page - Site Name - ${portalURL}");
-
-			// The page takes too long to appear in the Page Section in AC
-
+			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
 		}
 
 		task ("Assert that Known, Anonymous, Segmented and Unsegmented Individuals are displayed") {
@@ -151,7 +127,7 @@ definition {
 
 			ACUtils.assertAudienceCard(
 				index = 2,
-				percentageList = "66.67%,33.33%");
+				percentageList = "50%,50%");
 		}
 	}
 

@@ -46,7 +46,9 @@ const getProductBasePriceAndTrial = (
 	}
 
 	const {isFreeApp} = getProductPriceModel(product);
-	const skus = (product.skus as unknown) as DeliverySKU[];
+	const skus = ((product.skus as unknown) as DeliverySKU[]).filter(
+		({purchasable}) => purchasable
+	);
 
 	if (isFreeApp) {
 		return {
@@ -74,8 +76,7 @@ const getProductBasePriceAndTrial = (
 					skuOption.skuOptionValueKey === 'no'
 			)
 		);
-	}
-	else {
+	} else {
 		const skusLicenseUsageTypes = skus
 			.map(({skuOptions, ...sku}) => ({
 				...sku,
@@ -214,8 +215,7 @@ const GetAppOutlet = () => {
 			}
 
 			window.location.href = nextStepsCallbackURL;
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Unable to handleGetApp', error);
 
 			Liferay.Util.openToast({

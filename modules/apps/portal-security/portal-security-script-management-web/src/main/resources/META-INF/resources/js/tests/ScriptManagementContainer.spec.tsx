@@ -32,6 +32,7 @@ describe('ScriptManagementContainer component', () => {
 			<ScriptManagementContainer
 				allowScriptContentBeExecutedOrIncluded={false}
 				baseResourceURL=""
+				scriptManagementConfigurationDefined={false}
 			/>
 		);
 
@@ -47,6 +48,7 @@ describe('ScriptManagementContainer component', () => {
 			<ScriptManagementContainer
 				allowScriptContentBeExecutedOrIncluded={false}
 				baseResourceURL=""
+				scriptManagementConfigurationDefined={false}
 			/>
 		);
 
@@ -60,6 +62,7 @@ describe('ScriptManagementContainer component', () => {
 			<ScriptManagementContainer
 				allowScriptContentBeExecutedOrIncluded={false}
 				baseResourceURL=""
+				scriptManagementConfigurationDefined={false}
 			/>
 		);
 
@@ -75,6 +78,7 @@ describe('ScriptManagementContainer component', () => {
 			<ScriptManagementContainer
 				allowScriptContentBeExecutedOrIncluded={true}
 				baseResourceURL=""
+				scriptManagementConfigurationDefined={false}
 			/>
 		);
 
@@ -88,6 +92,7 @@ describe('ScriptManagementContainer component', () => {
 			<ScriptManagementContainer
 				allowScriptContentBeExecutedOrIncluded={false}
 				baseResourceURL=""
+				scriptManagementConfigurationDefined={false}
 			/>
 		);
 

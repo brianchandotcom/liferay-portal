@@ -151,6 +151,45 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 	}
 
 	@Override
+	public File exportLayoutPageTemplateEntriesAndLayoutPageTemplateCollections(
+			long[] layoutPageTemplateEntryIds,
+			long[] layoutPageTemplateCollectionIds)
+		throws Exception {
+
+		DTOConverter<LayoutStructure, PageDefinition>
+			pageDefinitionDTOConverter = _getPageDefinitionDTOConverter();
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
+
+		for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+					layoutPageTemplateEntryId);
+
+			if (layoutPageTemplateEntry.isDraft() ||
+				(layoutPageTemplateEntry.getType() !=
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE)) {
+
+				continue;
+			}
+
+			_populateDisplayPagesZipWriter(
+				layoutPageTemplateEntry, pageDefinitionDTOConverter,
+				StringPool.BLANK, zipWriter);
+		}
+
+		_exportLayoutPageTemplateCollections(
+			TransformUtil.transformToList(
+				layoutPageTemplateCollectionIds,
+				layoutPageTemplateCollectionId ->
+					_layoutPageTemplateCollectionLocalService.
+						fetchLayoutPageTemplateCollection(
+							layoutPageTemplateCollectionId)),
+			_getPageDefinitionDTOConverter(), StringPool.BLANK, zipWriter);
+
+		return zipWriter.getFile();
+	}
+
+	@Override
 	public File exportLayoutUtilityPageEntries(long[] layoutUtilityPageEntryIds)
 		throws Exception {
 
@@ -184,10 +223,11 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionKey();
 
-			path = path + StringPool.SLASH + layoutPageTemplateCollectionKey;
+			String newPath =
+				path + StringPool.SLASH + layoutPageTemplateCollectionKey;
 
 			_populateDisplayPagesZipWriter(
-				layoutPageTemplateCollection, path, zipWriter);
+				layoutPageTemplateCollection, newPath, zipWriter);
 
 			List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
@@ -200,8 +240,8 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 					layoutPageTemplateEntries) {
 
 				_populateDisplayPagesZipWriter(
-					layoutPageTemplateEntry, pageDefinitionDTOConverter, path,
-					zipWriter);
+					layoutPageTemplateEntry, pageDefinitionDTOConverter,
+					newPath, zipWriter);
 			}
 
 			_exportLayoutPageTemplateCollections(
@@ -210,7 +250,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 						layoutPageTemplateCollection.getGroupId(),
 						layoutPageTemplateCollection.
 							getLayoutPageTemplateCollectionId()),
-				pageDefinitionDTOConverter, path, zipWriter);
+				pageDefinitionDTOConverter, newPath, zipWriter);
 		}
 	}
 

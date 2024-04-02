@@ -88,9 +88,9 @@ public class DisplayPageManagementToolbarDisplayContext
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
 							dropdownItem.putData(
-								"action", "exportDisplayPages");
+								"action", "exportSelectedEntries");
 							dropdownItem.putData(
-								"exportDisplayPageURL",
+								"exportSelectedEntriesURL",
 								_getExportDisplayPageURL());
 							dropdownItem.setIcon("upload");
 							dropdownItem.setLabel(
@@ -154,6 +154,13 @@ public class DisplayPageManagementToolbarDisplayContext
 
 		if (LayoutPageTemplateCollectionPermission.contains(
 				_themeDisplay.getPermissionChecker(),
+				layoutPageTemplateCollection, ActionKeys.VIEW)) {
+
+			availableActions.add("exportSelectedEntries");
+		}
+
+		if (LayoutPageTemplateCollectionPermission.contains(
+				_themeDisplay.getPermissionChecker(),
 				layoutPageTemplateCollection, ActionKeys.UPDATE)) {
 
 			availableActions.add("copySelectedEntries");
@@ -179,7 +186,7 @@ public class DisplayPageManagementToolbarDisplayContext
 		if ((layoutPageTemplateEntry.getLayoutPrototypeId() == 0) &&
 			!layoutPageTemplateEntry.isDraft()) {
 
-			availableActions.add("exportDisplayPages");
+			availableActions.add("exportSelectedEntries");
 		}
 
 		if (LayoutPageTemplateEntryPermission.contains(
@@ -352,7 +359,8 @@ public class DisplayPageManagementToolbarDisplayContext
 		return ResourceURLBuilder.createResourceURL(
 			liferayPortletResponse
 		).setResourceID(
-			"/layout_page_template_admin/export_display_pages"
+			"/layout_page_template_admin/export_layout_page_template_entries_" +
+				"and_layout_page_template_collections"
 		).buildString();
 	}
 

@@ -1910,6 +1910,10 @@ public class JournalDisplayContext {
 			orderByAsc = true;
 		}
 
+		if (Objects.equals(getOrderByCol(), "create-date")) {
+			return new Sort("createDate", Sort.LONG_TYPE, !orderByAsc);
+		}
+
 		if (Objects.equals(getOrderByCol(), "display-date")) {
 			return new Sort("displayDate", Sort.LONG_TYPE, !orderByAsc);
 		}

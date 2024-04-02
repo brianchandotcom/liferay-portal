@@ -41,7 +41,7 @@ const ProductFooter: React.FC<ProductFooter> = ({
 							cartUtil.removeCart(cartUtil.cart.id);
 						}
 
-						Liferay.Util.navigate(getSiteURL());
+						Liferay.Util.navigate(getSiteURL() || '/');
 					}}
 				>
 					{i18n.translate('cancel')}

@@ -285,31 +285,14 @@ public class JournalDisplayContext {
 		if (FeatureFlagManagerUtil.isEnabled("LPD-11218") &&
 			(isNavigationMine() || isNavigationRecent())) {
 
-			Date createDate = article.getCreateDate();
-
-			String dateDescription = LanguageUtil.getTimeDescription(
-				_httpServletRequest,
-				System.currentTimeMillis() - createDate.getTime(), true);
-
-			return LanguageUtil.format(
-				_httpServletRequest, "created-x-ago-by-x",
-				new String[] {
-					dateDescription, HtmlUtil.escape(article.getUserName())
-				});
+			return _getSubtitle(
+				article.getCreateDate(), "created-x-ago-by-x",
+				article.getUserName());
 		}
 
-		Date modifiedDate = article.getModifiedDate();
-
-		String modifiedDateDescription = LanguageUtil.getTimeDescription(
-			_httpServletRequest,
-			System.currentTimeMillis() - modifiedDate.getTime(), true);
-
-		return LanguageUtil.format(
-			_httpServletRequest, "modified-x-ago-by-x",
-			new String[] {
-				modifiedDateDescription,
-				HtmlUtil.escape(article.getStatusByUserName())
-			});
+		return _getSubtitle(
+			article.getModifiedDate(), "modified-x-ago-by-x",
+			article.getStatusByUserName());
 	}
 
 	public List<DropdownItem> getArticleVersionActionDropdownItems(
@@ -1940,6 +1923,18 @@ public class JournalDisplayContext {
 		}
 
 		return null;
+	}
+
+	private String _getSubtitle(
+		Date date, String languageKey, String userName) {
+
+		String dateDescription = LanguageUtil.getTimeDescription(
+			_httpServletRequest, System.currentTimeMillis() - date.getTime(),
+			true);
+
+		return LanguageUtil.format(
+			_httpServletRequest, languageKey,
+			new String[] {dateDescription, HtmlUtil.escape(userName)});
 	}
 
 	private SearchContainer<JournalArticle> _getVersionsSearchContainer() {

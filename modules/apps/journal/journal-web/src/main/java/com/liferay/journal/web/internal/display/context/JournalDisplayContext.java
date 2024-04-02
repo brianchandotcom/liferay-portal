@@ -35,6 +35,7 @@ import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.FolderArticleArticleIdComparator;
+import com.liferay.journal.util.comparator.FolderArticleCreateDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
@@ -1784,7 +1785,10 @@ public class JournalDisplayContext {
 			orderByAsc = true;
 		}
 
-		if (Objects.equals(getOrderByCol(), "display-date")) {
+		if (Objects.equals(getOrderByCol(), "create-date")) {
+			return new FolderArticleCreateDateComparator(orderByAsc);
+		}
+		else if (Objects.equals(getOrderByCol(), "display-date")) {
 			return new FolderArticleDisplayDateComparator(orderByAsc);
 		}
 		else if (Objects.equals(getOrderByCol(), "id")) {

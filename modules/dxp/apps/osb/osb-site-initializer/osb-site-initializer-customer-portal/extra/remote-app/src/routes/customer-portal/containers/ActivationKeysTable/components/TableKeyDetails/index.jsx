@@ -9,7 +9,7 @@ import {useEffect, useState} from 'react';
 
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import PopoverIconButton from '~/routes/customer-portal/components/PopoverIconButton';
-import { getProperProductsNames } from '~/routes/customer-portal/utils/getProperProductsNames';
+import { getProperProductNames } from '~/routes/customer-portal/utils/getProperProductNames';
 import i18n from '../../../../../../common/I18n';
 import {
 	DXPIcon,
@@ -21,7 +21,7 @@ import {PRODUCT_TYPES} from '../../../../utils/constants';
 import {getLicenseKeyPermanentStatus} from '../../../GenerateNewKey/utils/licenseKeyPermanentStatus';
 import {
 	getEnvironmentType,
-	getFormatedProductName,
+	getFormattedProductName,
 	getInstanceSize,
 	getProductDescription,
 	getStatusActivationTag,
@@ -48,7 +48,7 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 		currentActivationKey?.expirationDate
 	);
 
-	const formattedProductName = getFormatedProductName(
+	const formattedProductName = getFormattedProductName(
 		currentActivationKey?.productName
 	);
 
@@ -123,7 +123,7 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 					>
 						<Logo className="mr-2" />
 
-						{getProperProductsNames(formattedProductName)}
+						{getProperProductNames(formattedProductName)}
 					</p>
 				</div>
 

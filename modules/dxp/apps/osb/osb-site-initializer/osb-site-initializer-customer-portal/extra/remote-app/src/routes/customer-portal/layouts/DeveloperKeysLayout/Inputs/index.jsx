@@ -7,7 +7,7 @@ import ClayAlert from '@clayui/alert';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
-import { getProperProductsNames } from '~/routes/customer-portal/utils/getProperProductsNames';
+import { getProperProductNames } from '~/routes/customer-portal/utils/getProperProductNames';
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
@@ -95,7 +95,7 @@ const DeveloperKeysInputs = ({
 
 			return downloadFromBlob(
 				licenseBlob,
-				`activation-key-${getProperProductsNames(productName).toLowerCase().replace(' ', '-')}-development-${selectedVersionSplitted}-${projectFileName}${extensionFile}`
+				`activation-key-${getProperProductNames(productName).toLowerCase().replace(' ', '-')}-development-${selectedVersionSplitted}-${projectFileName}${extensionFile}`
 			);
 		}
 

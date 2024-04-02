@@ -12,7 +12,7 @@ import {InsuficientResources} from './pages/InsuficientResources';
 import ContactSalesPage from './pages/InsuficientResources/ContactSales';
 import ContactSalesForm from './pages/InsuficientResources/ContactSalesForm';
 import LicenseStep from './pages/License';
-import PaymentStep from './pages/Payment';
+import Payment from './pages/Payment';
 import ProjectStep from './pages/Project';
 
 const GetAppRouter = () => (
@@ -23,7 +23,7 @@ const GetAppRouter = () => (
 					<Route element={<GetAppPage />} index />
 					<Route element={<ProjectStep />} path="project" />
 					<Route element={<LicenseStep />} path="license" />
-					<Route element={<PaymentStep />} path="payment" />
+					<Route element={<Payment />} path="payment" />
 				</Route>
 
 				<Route

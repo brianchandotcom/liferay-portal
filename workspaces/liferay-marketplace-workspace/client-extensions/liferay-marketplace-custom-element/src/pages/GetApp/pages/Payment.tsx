@@ -9,6 +9,7 @@ import {useOutletContext} from 'react-router-dom';
 
 import {Input} from '../../../components/Input/Input';
 import useCommerceRegions from '../../../hooks/useCommerceRegions';
+import i18n from '../../../i18n';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {GetAppOutletContext} from '../GetAppOutlet';
 import {BillingAddress} from '../components/SelectPaymentMethod/BillingAddress/BillingAddress';
@@ -19,7 +20,7 @@ import Container from '../containers/Container';
 import LicenseTermsCheckbox from '../containers/LicenseTermsCheckbox';
 import {PaymentMethod} from '../enums/paymentMethod';
 
-export default function SelectPaymentMethod() {
+export default function Payment() {
 	const {
 		addresses,
 		cartUtil,
@@ -47,22 +48,29 @@ export default function SelectPaymentMethod() {
 	const cartTotalPrice = cartUtil?.cart?.summary?.totalFormatted ?? 0;
 	const cartId = cartUtil?.cart?.id;
 
+	const isTrial = selectedPaymentMethod === PaymentMethod.TRIAL;
+
+	const primaryButtonMessage = (paymentMethod: PaymentMethod) => {
+		if (paymentMethod === PaymentMethod.TRIAL) {
+			return i18n.translate('start-trial');
+		}
+		if (paymentMethod === PaymentMethod.PAY) {
+			return `Pay ${cartTotalPrice} Now`;
+		}
+
+		return `Create PO for ${cartTotalPrice}`;
+	};
+
 	return (
 		<>
 			<Container
 				className="d-flex flex-column select-payment-step"
 				footerProps={{
 					primaryButtonProps: {
-						children:
-							selectedPaymentMethod === PaymentMethod.PAY
-								? `Pay ${cartTotalPrice} Now`
-								: `Create PO for ${cartTotalPrice}`,
+						children: primaryButtonMessage(selectedPaymentMethod),
 						disabled: !isValid || loading,
 						onClick: async () => {
-							if (
-								selectedPaymentMethod === PaymentMethod.TRIAL &&
-								cartId
-							) {
+							if (isTrial && cartId) {
 								await cartUtil.removeCart(cartId);
 							}
 
@@ -70,7 +78,7 @@ export default function SelectPaymentMethod() {
 						},
 					},
 				}}
-				title="Account Selection"
+				title="Payment Method"
 			>
 				<div className="d-flex justify-content-between mb-6">
 					<PaymentMethodSelector
@@ -99,7 +107,9 @@ export default function SelectPaymentMethod() {
 					showNewAddressButton={showNewAddressButton}
 				/>
 
-				{paymentMethod === PaymentMethod.TRIAL && <TrialMethod />}
+				{isTrial && PaymentMethod.TRIAL === selectedPaymentMethod && (
+					<TrialMethod />
+				)}
 
 				{paymentMethod === PaymentMethod.PAY && (
 					<PaymentMethodMode selectedPaymentMethod={paymentMethod} />
@@ -144,17 +154,19 @@ export default function SelectPaymentMethod() {
 				)}
 			</Container>
 
-			<div className="d-flex flex-column mt-5 text-gray text-right">
-				<span className="text-2">
-					You will be redirected to PayPal to complete payment
-				</span>
+			{!isTrial && (
+				<div className="d-flex flex-column mt-5 text-gray text-right">
+					<span className="text-2">
+						You will be redirected to PayPal to complete payment
+					</span>
 
-				<span className="text-2">
-					<ClayIcon className="mr-2" symbol="info-panel-open" />
-					Terms, privacy, returns, or contact support. All costs are
-					in US Dollars
-				</span>
-			</div>
+					<span className="text-2">
+						<ClayIcon className="mr-2" symbol="info-panel-open" />
+						Terms, privacy, returns, or contact support. All costs
+						are in US Dollars
+					</span>
+				</div>
+			)}
 		</>
 	);
 }

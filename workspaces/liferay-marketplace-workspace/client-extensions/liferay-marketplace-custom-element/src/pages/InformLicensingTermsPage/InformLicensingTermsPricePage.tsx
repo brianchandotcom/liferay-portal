@@ -123,9 +123,7 @@ export function InformLicensingTermsPricePage({
 				);
 			}
 
-			if (sku?.sku !== 'TRIAL' || sku?.sku.endsWith('ts')) {
-				await processTier(priceEntry);
-			}
+			await processTier(priceEntry);
 		}
 	};
 
@@ -133,11 +131,18 @@ export function InformLicensingTermsPricePage({
 		const skusJSON = await getProductIdSkusPage(appProductId);
 
 		for (const sku of skusJSON?.items) {
-			await handlePostPriceEntryIdTierPrice(sku);
-			await patchSKUById(sku?.id, {
-				...sku,
-				price: getSkuPrice(appLicensePrice, sku),
-			});
+			if (
+				!['trial', 'yes'].some(
+					(optionValue) => sku?.skuOptions[0]?.value === optionValue
+				) &&
+				(sku?.sku !== 'TRIAL' || !sku?.sku.endsWith('ts'))
+			) {
+				await handlePostPriceEntryIdTierPrice(sku);
+				await patchSKUById(sku?.id, {
+					...sku,
+					price: getSkuPrice(appLicensePrice, sku),
+				});
+			}
 		}
 	};
 

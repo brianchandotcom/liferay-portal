@@ -55,6 +55,10 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 
 				{purchasebleSkus
 					?.map((sku, index) => {
+						if (sku?.sku.endsWith('ts')) {
+							return null;
+						}
+
 						const tierPricesFiltered = tierPrices?.filter(
 							(tier: any) =>
 								tier?.tierPrice.length && tier.skuId === sku.id

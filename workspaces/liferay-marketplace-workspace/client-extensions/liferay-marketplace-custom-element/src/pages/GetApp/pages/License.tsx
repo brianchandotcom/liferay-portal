@@ -21,6 +21,7 @@ export default function LicenseSelector() {
 			formState: {isValid},
 			license,
 			product,
+			stepState,
 		},
 		dispatch,
 	] = useGetAppContext();
@@ -57,6 +58,16 @@ export default function LicenseSelector() {
 				primaryButtonProps: {
 					children: i18n.translate('continue'),
 					disabled: !isValid,
+					onClick: () => {
+						if (licenseType === 'TRIAL') {
+							dispatch({
+								payload: 'trial',
+								type: 'SET_PAYMENT_METHOD',
+							});
+						}
+
+						stepState.onNext();
+					},
 				},
 			}}
 			title="License Selection"

@@ -83,6 +83,7 @@ export default {
 	'discover-and-customize': 'Discover and customize',
 	'download-app': 'Download App',
 	'download-key': 'Download Key',
+	'draft': 'Draft',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
 	'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc':
 		'DXP module-based apps are not supported on Liferay SaaS.',
@@ -232,6 +233,7 @@ export default {
 	'solutions': 'Solutions',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'start-date': 'Start Date',
+	'start-trial': 'Start Trial',
 	'status': 'Status',
 	'subtotal': 'Subtotal',
 	'subtotal-discount': 'Subtotal Discount',

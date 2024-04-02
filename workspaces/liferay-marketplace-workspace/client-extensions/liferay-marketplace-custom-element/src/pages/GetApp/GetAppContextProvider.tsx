@@ -312,6 +312,10 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 			return state.payment.eulaCheckbox;
 		}
 
+		if (paymentMethod === 'trial') {
+			return isAddressValid;
+		}
+
 		if (paymentMethod === 'order') {
 			const invoiceValues = Object.values(state.payment.invoice);
 

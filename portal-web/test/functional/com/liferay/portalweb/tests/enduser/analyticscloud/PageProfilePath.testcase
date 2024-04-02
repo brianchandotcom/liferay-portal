@@ -360,8 +360,10 @@ definition {
 			ACUtils.waitForLoading();
 		}
 
-		task ("Observe page total") {
-			ACPagePath.viewPagePathTotal(pageTotal = 1);
+		task ("Observe that the data appears") {
+			AssertElementNotPresent(
+				key_textValue = "There are no data found.",
+				locator1 = "ACUtils#GENERIC_TEXT");
 		}
 
 		task ("Click Filter button") {
@@ -372,16 +374,18 @@ definition {
 			ACPagePath.clickFilterSegment(segmentName = "Dynamic Segment Test");
 		}
 
-		task ("Observe page total changes with filter") {
-			ACPagePath.viewPagePathTotal(pageTotal = 0);
+		task ("Observe that the empty state appears after add the filter") {
+			ACUtils.viewGenericText(textValueList = "There are no data found.,Check back later to verify if data has been received from your data sources.");
 		}
 
 		task ("Remove segment from filter") {
 			ACPagePath.removeSegmentFilter();
 		}
 
-		task ("Observe page total changes with filter") {
-			ACPagePath.viewPagePathTotal(pageTotal = 1);
+		task ("Observe that the data appears after remove the filter") {
+			AssertElementNotPresent(
+				key_textValue = "There are no data found.",
+				locator1 = "ACUtils#GENERIC_TEXT");
 		}
 	}
 

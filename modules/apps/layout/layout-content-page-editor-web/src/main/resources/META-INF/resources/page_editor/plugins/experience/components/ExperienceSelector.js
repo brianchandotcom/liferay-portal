@@ -423,7 +423,7 @@ const ExperienceSelector = ({experiences, segments, selectedExperience}) => {
 				aria-label={`${Liferay.Language.get('experience')}: ${
 					selectedExperience.name
 				}`}
-				className="form-control-select pr-4 text-left text-truncate"
+				className="form-control-select page-editor__experience-selector pr-4 text-left text-truncate"
 				disabled={!canUpdateExperiences}
 				displayType="secondary"
 				onClick={() => debouncedSetOpen(!open)}

@@ -209,10 +209,7 @@ function get_absolute_dir {
 }
 
 function get_gradlew {
-	if [[ -e ${_PORTAL_PROJECT_DIR}/gradlew ]]
-	then
-		echo ${_PORTAL_PROJECT_DIR}/gradlew
-	elif [[ -e ./gradlew ]]
+	if [[ -e ./gradlew ]]
 	then
 		echo "$(pwd)/gradlew"
 	elif [[ $(pwd) == / ]]

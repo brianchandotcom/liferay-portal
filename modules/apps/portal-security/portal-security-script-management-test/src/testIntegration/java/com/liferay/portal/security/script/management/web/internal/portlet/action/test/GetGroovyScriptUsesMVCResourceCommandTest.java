@@ -45,7 +45,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.definition.groovy.script.use.WorkflowDefinitionGroovyScriptUseSourceURLFactory;
-import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTabRegistry;
 
@@ -305,15 +304,17 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 			companyId, userId,
 			companyName + "PublishedGroovyWorkflowDefinition",
 			companyName + "PublishedGroovyWorkflowDefinition",
-			_getContentBytes("groovy-workflow-definition.xml"));
+			_getContentBytes("workflow-definition-2.json"));
 		_workflowDefinitionManager.deployWorkflowDefinition(
 			companyId, userId, companyName + "PublishedWorkflowDefinition",
-			StringUtil.randomId(), _getContentBytes("workflow-definition.xml"));
+			StringUtil.randomId(),
+			_getContentBytes("workflow-definition-1.json"));
 
 		_workflowDefinitionManager.saveWorkflowDefinition(
 			companyId, userId,
 			companyName + "UnpublishedGroovyWorkflowDefinition",
-			StringUtil.randomId(), _getContentBytes("workflow-definition.xml"));
+			StringUtil.randomId(),
+			_getContentBytes("workflow-definition-1.json"));
 	}
 
 	private byte[] _getContentBytes(String fileName) throws Exception {
@@ -326,8 +327,7 @@ public class GetGroovyScriptUsesMVCResourceCommandTest {
 				"com/liferay/portal/security/script/management/web/internal",
 				"/portlet/action/test/dependencies/", fileName));
 
-		String content = WorkflowDefinitionContentUtil.toJSON(
-			StringUtil.read(inputStream));
+		String content = StringUtil.read(inputStream);
 
 		return content.getBytes();
 	}

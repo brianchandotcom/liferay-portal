@@ -10,26 +10,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileVisitOption;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,10 +54,11 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 
 		String javaTermContent = _formatGetterMethodCalls(
-			javaTerm, fileContent, fileName, importNames);
+			javaTerm, fileContent, fileName, absolutePath, importNames);
 
 		return _formatSetterMethodCalls(
-			javaTerm, javaTermContent, fileContent, fileName, importNames);
+			javaTerm, javaTermContent, fileContent, fileName, absolutePath,
+			importNames);
 	}
 
 	@Override
@@ -76,7 +68,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 	private String _formatGetterMethodCalls(
 			JavaTerm javaTerm, String fileContent, String fileName,
-			List<String> importNames)
+			String absolutePath, List<String> importNames)
 		throws IOException {
 
 		String content = javaTerm.getContent();
@@ -98,7 +90,8 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				matcher.group(3), TextFormatter.I);
 
 			if (_isBooleanColumn(
-					variableTypeName, getterObjectName, importNames)) {
+					absolutePath, variableTypeName, getterObjectName,
+					importNames)) {
 
 				return StringUtil.replaceFirst(
 					content, "get", "is", matcher.start(2));
@@ -110,7 +103,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 	private String _formatSetterMethodCalls(
 			JavaTerm javaTerm, String content, String fileContent,
-			String fileName, List<String> importNames)
+			String fileName, String absolutePath, List<String> importNames)
 		throws IOException {
 
 		Matcher matcher1 = _setterCallsPattern.matcher(content);
@@ -149,7 +142,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 				}
 
 				Object[] modelInformation = _getModelInformation(
-					_getPackageName(variableTypeName, importNames));
+					_packagePath(absolutePath, variableTypeName, importNames));
 
 				if (modelInformation == null) {
 					continue outerLoop;
@@ -236,17 +229,15 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		return -1;
 	}
 
-	private Object[] _getModelInformation(String packageName) {
+	private synchronized Object[] _getModelInformation(String packagePath) {
 		if (_modelInformationsMap != null) {
-			return _modelInformationsMap.get(packageName);
+			return _modelInformationsMap.get(packagePath);
 		}
 
 		_modelInformationsMap = new HashMap<>();
 
 		try {
-			_populateTablesSQLFileLocations("modules/apps", 6);
-			_populateTablesSQLFileLocations("modules/dxp/apps", 6);
-			_populateTablesSQLFileLocations("portal-impl/src/com/liferay", 4);
+			_populateTablesSQLFileLocations();
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
@@ -256,36 +247,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			return null;
 		}
 
-		return _modelInformationsMap.get(packageName);
-	}
-
-	private String _getPackageName(
-		String variableTypeName, List<String> importNames) {
-
-		int x = variableTypeName.lastIndexOf(StringPool.PERIOD);
-
-		if (x != -1) {
-			String packageName = variableTypeName.substring(0, x);
-
-			if (packageName.startsWith("com.liferay.") &&
-				packageName.endsWith(".model")) {
-
-				return packageName;
-			}
-
-			return StringPool.BLANK;
-		}
-
-		for (String importName : importNames) {
-			if (importName.startsWith("com.liferay.") &&
-				importName.endsWith(".model." + variableTypeName)) {
-
-				return StringUtil.replaceLast(
-					importName, "." + variableTypeName, StringPool.BLANK);
-			}
-		}
-
-		return StringPool.BLANK;
+		return _modelInformationsMap.get(packagePath);
 	}
 
 	private String _getTableName(
@@ -329,12 +291,12 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	}
 
 	private boolean _isBooleanColumn(
-			String variableTypeName, String getterObjectName,
-			List<String> importNames)
+			String absolutePath, String variableTypeName,
+			String getterObjectName, List<String> importNames)
 		throws IOException {
 
 		Object[] modelInformation = _getModelInformation(
-			_getPackageName(variableTypeName, importNames));
+			_packagePath(absolutePath, variableTypeName, importNames));
 
 		if (modelInformation == null) {
 			return false;
@@ -377,47 +339,50 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		return false;
 	}
 
-	private void _populateTablesSQLFileLocations(String dirName, int maxDepth)
-		throws IOException {
+	private String _packagePath(
+		String absolutePath, String variableTypeName,
+		List<String> importNames) {
 
-		File directory = getFile(dirName, getMaxDirLevel());
+		int x = variableTypeName.lastIndexOf(StringPool.PERIOD);
 
-		if (directory == null) {
-			return;
+		if (x != -1) {
+			String packageName = variableTypeName.substring(0, x);
+
+			if (packageName.startsWith("com.liferay.") &&
+				packageName.endsWith(".model")) {
+
+				return StringUtil.replaceLast(
+					packageName, ".model", StringPool.BLANK);
+			}
+
+			return StringPool.BLANK;
 		}
 
-		final List<File> serviceXMLFiles = new ArrayList<>();
+		for (String importName : importNames) {
+			if (importName.startsWith("com.liferay.") &&
+				importName.endsWith(".model." + variableTypeName)) {
 
-		Files.walkFileTree(
-			directory.toPath(), EnumSet.noneOf(FileVisitOption.class), maxDepth,
-			new SimpleFileVisitor<Path>() {
+				return StringUtil.replaceLast(
+					importName, ".model." + variableTypeName, StringPool.BLANK);
+			}
+		}
 
-				@Override
-				public FileVisitResult preVisitDirectory(
-					Path dirPath, BasicFileAttributes basicFileAttributes) {
+		if (absolutePath.contains("/portal-impl/")) {
+			return "portal-impl";
+		}
 
-					String dirName = String.valueOf(dirPath.getFileName());
+		return StringPool.BLANK;
+	}
 
-					if (ArrayUtil.contains(_SKIP_DIR_NAMES, dirName)) {
-						return FileVisitResult.SKIP_SUBTREE;
-					}
+	private void _populateTablesSQLFileLocations() throws IOException {
+		File portalDir = getPortalDir();
 
-					Path path = dirPath.resolve("service.xml");
+		List<String> serviceXMLFileNames = SourceFormatterUtil.scanForFileNames(
+			portalDir.getCanonicalPath(), new String[] {"**/service.xml"});
 
-					if (Files.exists(path)) {
-						serviceXMLFiles.add(path.toFile());
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
-		for (File serviceXMLFile : serviceXMLFiles) {
+		for (String serviceXMLFileName : serviceXMLFileNames) {
 			Document serviceXMLDocument = SourceUtil.readXML(
-				FileUtil.read(serviceXMLFile));
+				FileUtil.read(new File(serviceXMLFileName)));
 
 			if (serviceXMLDocument == null) {
 				continue;
@@ -425,48 +390,31 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 			Element serviceXMLElement = serviceXMLDocument.getRootElement();
 
-			String packagePath = serviceXMLElement.attributeValue(
-				"api-package-path");
+			serviceXMLFileName = StringUtil.replace(
+				serviceXMLFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-			if (packagePath == null) {
-				packagePath = serviceXMLElement.attributeValue("package-path");
-			}
-
-			if (packagePath == null) {
-				continue;
-			}
-
-			String serviceXMLFilePath = serviceXMLFile.getAbsolutePath();
-
-			serviceXMLFilePath = StringUtil.replace(
-				serviceXMLFilePath, CharPool.BACK_SLASH, CharPool.SLASH);
-
+			String packagePath = "";
 			String tablesSQLFilePath = "";
 
-			if (dirName.startsWith("portal-impl/")) {
-				tablesSQLFilePath =
-					SourceUtil.getRootDirName(serviceXMLFilePath) +
-						"/sql/portal-tables.sql";
+			if (serviceXMLFileName.contains("/portal-impl/")) {
+				packagePath = "portal-impl";
+				tablesSQLFilePath = portalDir + "/sql/portal-tables.sql";
 			}
 			else {
-				int x = serviceXMLFilePath.lastIndexOf("/");
+				packagePath = serviceXMLElement.attributeValue("package-path");
+
+				int x = serviceXMLFileName.lastIndexOf("/");
 
 				tablesSQLFilePath =
-					serviceXMLFilePath.substring(0, x) +
+					serviceXMLFileName.substring(0, x) +
 						"/src/main/resources/META-INF/sql/tables.sql";
 			}
 
 			_modelInformationsMap.put(
-				packagePath + ".model",
+				packagePath,
 				new Object[] {serviceXMLElement, tablesSQLFilePath});
 		}
 	}
-
-	private static final String[] _SKIP_DIR_NAMES = {
-		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
-		"classes", "dependencies", "node_modules", "node_modules_cache", "sql",
-		"src", "test", "test-classes", "test-coverage", "test-results", "tmp"
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JavaServiceObjectCheck.class);

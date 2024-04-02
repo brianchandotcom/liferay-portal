@@ -252,24 +252,16 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
-
 		Map<String, Object> fdsViewObjectEntryProperties =
 			fdsViewObjectEntry.getProperties();
 
-		String fdsDefaultVisualizationMode = String.valueOf(
-			fdsViewObjectEntryProperties.get("defaultVisualizationMode"));
-
-		String fdsEntryObjectEntryERC = String.valueOf(
-			fdsViewObjectEntryProperties.get(
-				"r_fdsEntryFDSViewRelationship_c_fdsEntryERC"));
-
-		ObjectDefinition fdsEntryObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				fragmentEntryLink.getCompanyId(), "FDSEntry");
-
 		ObjectEntry fdsEntryObjectEntry = _getObjectEntry(
-			fragmentEntryLink.getCompanyId(), fdsEntryObjectEntryERC,
-			fdsEntryObjectDefinition);
+			fragmentEntryLink.getCompanyId(),
+			String.valueOf(
+				fdsViewObjectEntryProperties.get(
+					"r_fdsEntryFDSViewRelationship_c_fdsEntryERC")),
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				fragmentEntryLink.getCompanyId(), "FDSEntry"));
 
 		Set<ObjectEntry> fdsFieldObjectEntries = _getFDSFieldObjectEntries(
 			fdsViewObjectDefinition, fdsViewObjectEntry);
@@ -321,7 +313,10 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				"views",
 				_getFDSViewsJSONArray(
 					fragmentEntryLink.getCompanyId(),
-					fdsCardsSectionObjectEntries, fdsDefaultVisualizationMode,
+					fdsCardsSectionObjectEntries,
+					String.valueOf(
+						fdsViewObjectEntryProperties.get(
+							"defaultVisualizationMode")),
 					fdsFieldObjectEntries, fdsListSectionObjectEntries,
 					httpServletRequest)
 			).build(),

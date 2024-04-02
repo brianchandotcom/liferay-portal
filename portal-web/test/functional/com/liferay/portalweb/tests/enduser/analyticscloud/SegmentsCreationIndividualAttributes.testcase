@@ -654,11 +654,6 @@ definition {
 	@description = "Bug: LRAC-11848 | Automation ID: LRAC-12005 | Test Summary: Add a segment using custom field of type Breakdwon, Checkbox and Radio"
 	@priority = 4
 	test CanAddSegmentWithCustomFieldThatUsesList {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine reason: Custom field values take a long time to appear in AC
-		// AC Quarantine ticket: Wait for segments migration to see if this case becomes faster - LRAC-11818
-
 		var customFieldDropdown = "user custom field dropdown";
 		var customFieldCheckbox = "user custom field checkbox";
 		var customFieldRadio = "user custom field radio";
@@ -734,6 +729,10 @@ definition {
 				attributeNameList = ${customFieldNameList});
 		}
 
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
 		task ("View the page as the new added user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -741,7 +740,7 @@ definition {
 
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
-				documentTitleList = "Blogs AC Title",
+				documentTitleList = "Blogs AC Title,Blogs AC Title,Blogs AC Title,Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -778,19 +777,21 @@ definition {
 			ACSegments.previewSegmentMembership();
 
 			ACUtils.viewNameList(nameList = "ac ac");
+
+			ACUtils.closeModal();
 		}
 
 		task ("Save the segment") {
 			ACSegments.saveSegment();
 		}
 
-		task ("Check if the segment title appears to verify that the page is not broken") {
-			ACUtils.viewGenericText(textValueList = "Dynamic Segment Dropdown");
+		task ("Check that the segment is created") {
+			ACNavigation.goToSegments();
+
+			ACUtils.viewNameList(nameList = "Dynamic Segment Dropdown");
 		}
 
 		task ("Add a new dynamic segment with all custom fields created") {
-			ACNavigation.goToSegments();
-
 			ACSegments.createDynamicSegment();
 
 			ACUtils.setItemName(itemName = "Dynamic Segment Using Custom Fields");
@@ -819,14 +820,14 @@ definition {
 			ACSegments.previewSegmentMembership();
 
 			ACUtils.viewNameList(nameList = "ac ac");
+
+			ACUtils.closeModal();
 		}
 
-		task ("Save the segment") {
-			ACSegments.saveSegment();
-		}
+		task ("Check that the segment is created") {
+			ACNavigation.goToSegments();
 
-		task ("Check if the segment title appears to verify that the page is not broken") {
-			ACUtils.viewGenericText(textValueList = "Dynamic Segment Using Custom Fields");
+			ACUtils.viewNameList(nameList = "Dynamic Segment Using Custom Fields");
 		}
 	}
 

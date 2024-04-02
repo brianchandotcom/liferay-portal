@@ -9,6 +9,7 @@ import {useNavigate} from 'react-router-dom';
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import zodSchema from '../../schema/zod';
 import {getUrlParam} from '../../utils/getUrlParam';
+import {isCloudProduct} from '../../utils/productUtils';
 import {StepType} from './enums/stepType';
 import useGetResourceInfo from './hooks/useGetResourceInfo';
 
@@ -242,11 +243,7 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const {data: product} = useDeliveryProduct(getUrlParam('productId') ?? '');
 
-	const isCloudApp =
-		product?.productSpecifications?.some(
-			({specificationKey, value}) =>
-				specificationKey === 'type' && value === 'cloud'
-		) ?? false;
+	const isCloudApp = isCloudProduct(product);
 
 	const appResourceInfo = useGetResourceInfo({
 		product,

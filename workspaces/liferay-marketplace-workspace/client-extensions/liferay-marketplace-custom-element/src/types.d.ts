@@ -473,8 +473,10 @@ type DeliverySKU = {
 	price: {price: number; priceFormatted: string};
 	purchasable: boolean;
 	sku: string;
-	skuOptions: {skuOptionKey: string; skuOptionValueKey: string}[];
+	skuOptions: DeliverySKUOption[];
 };
+
+type DeliverySKUOption = {skuOptionKey: string; skuOptionValueKey: string};
 
 interface DeliveryProduct {
 	attachments: DeliveryProductAttachment[];

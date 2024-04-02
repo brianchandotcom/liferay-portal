@@ -13,6 +13,7 @@ import {ReactNode} from 'react';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import i18n from '../../../../i18n';
 import formatLocaleCurrency from '../../../../utils/formatLocaleCurrency';
+import {isCloudProduct} from '../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../utils/util';
 import getProductPriceModel from '../../../GetApp/utils/getProductPriceModel';
 import {formatDate} from '../../../PublishedAppsDashboard/PublishedDashboardPageUtil';
@@ -26,6 +27,7 @@ const App = () => {
 			Object.keys(field === 'Project Name')
 		) || '-';
 
+	const isCloud = isCloudProduct(product);
 	const {isPaidApp} = getProductPriceModel(product);
 
 	return (
@@ -110,8 +112,11 @@ const App = () => {
 											{isPaidApp && (
 												<>
 													<p className="col-5 text-capitalize">
-														{optionName[0].value ||
-															''}
+														{isCloud
+															? 'Standard'
+															: optionName[0]
+																	.value ||
+															  ''}
 													</p>
 													<p className="col-3">
 														{order.quantity}

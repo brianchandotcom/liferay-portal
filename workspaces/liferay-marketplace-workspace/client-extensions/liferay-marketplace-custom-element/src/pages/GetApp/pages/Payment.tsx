@@ -20,6 +20,17 @@ import Container from '../containers/Container';
 import LicenseTermsCheckbox from '../containers/LicenseTermsCheckbox';
 import {PaymentMethod} from '../enums/paymentMethod';
 
+const primaryButtonMessage = (paymentMethod: PaymentMethod, price: string) => {
+	if (paymentMethod === PaymentMethod.TRIAL) {
+		return i18n.translate('start-trial');
+	}
+	if (paymentMethod === PaymentMethod.PAY) {
+		return `Pay ${price} Now`;
+	}
+
+	return `Create PO for ${price}`;
+};
+
 export default function Payment() {
 	const {
 		addresses,
@@ -40,26 +51,12 @@ export default function Payment() {
 	] = useGetAppContext();
 
 	const {data: regionsResponse} = useCommerceRegions();
-
 	const [selectedAddress, setSelectedAddress] = useState('');
 	const [showNewAddressButton, setShowNewAddressButton] = useState(true);
 
-	const stepType = steps[currentStep].id;
-	const cartTotalPrice = cartUtil?.cart?.summary?.totalFormatted ?? 0;
 	const cartId = cartUtil?.cart?.id;
-
 	const isTrial = selectedPaymentMethod === PaymentMethod.TRIAL;
-
-	const primaryButtonMessage = (paymentMethod: PaymentMethod) => {
-		if (paymentMethod === PaymentMethod.TRIAL) {
-			return i18n.translate('start-trial');
-		}
-		if (paymentMethod === PaymentMethod.PAY) {
-			return `Pay ${cartTotalPrice} Now`;
-		}
-
-		return `Create PO for ${cartTotalPrice}`;
-	};
+	const stepType = steps[currentStep].id;
 
 	return (
 		<>
@@ -67,7 +64,10 @@ export default function Payment() {
 				className="d-flex flex-column select-payment-step"
 				footerProps={{
 					primaryButtonProps: {
-						children: primaryButtonMessage(selectedPaymentMethod),
+						children: primaryButtonMessage(
+							selectedPaymentMethod,
+							cartUtil?.cart?.summary?.totalFormatted ?? '0'
+						),
 						disabled: !isValid || loading,
 						onClick: async () => {
 							if (isTrial && cartId) {

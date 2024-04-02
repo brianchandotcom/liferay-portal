@@ -1,5 +1,5 @@
-dateModified,dateCreated,externalReferenceCode,id,name,scopeKey,testAutoIncrementField,testBooleanField,testDateField,testDateTimeField,testDecimalField,testIntegerField,testLongInteger,testLongTextField,testPrecisionDecimalField,testRichTextField
-2024-01-04,2024-01-04,83b46736-f89b-9b90-188c-497d06c08271,35622,TestName_FirstEntry,,prefix-1-suffix,true,2024-01-05,2024-01-05T15:00:00.000Z,"10,2",100,123456789,This is a long text to test testLongTextField. The first entry,"321,123","""<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The first entry.
- </p>"""
-2024-01-05,2024-01-05,83b46736-f89b-9b90-188c-497d06c08273,35623,TestName_SecondEntry,,prefix-2-suffix,false,2024-01-06,2024-01-06T15:00:00.000Z,"11,2",101,123456790,This is a long text to test testLongTextField. The second entry,"123,321","""<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The second entry.
- </p>"""
+dateModified,dateCreated,externalReferenceCode,id,scopeKey,testAutoIncrementField,testBooleanField,testDateField,testDateTimeField,testDecimalField,testIntegerField,testLongInteger,testLongTextField,testPrecisionDecimalField,testRichTextField,testTextField
+2024-01-04,2024-01-04,83b46736-f89b-9b90-188c-497d06c08271,35622,,prefix-1-suffix,true,2024-01-05,2024-01-05T15:00:00.000Z,"10,2",100,123456789,This is a long text to test testLongTextField. The first entry,"321,123","""<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The first entry.
+ </p>""",Test_FirstEntry
+2024-01-05,2024-01-05,83b46736-f89b-9b90-188c-497d06c08273,35623,,prefix-2-suffix,false,2024-01-06,2024-01-06T15:00:00.000Z,"11,2",101,123456790,This is a long text to test testLongTextField. The second entry,"123,321","""<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The second entry.
+ </p>""",Test_SecondEntry

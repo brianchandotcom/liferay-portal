@@ -11,7 +11,7 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "J3Y7-PRIORITIES",
+			"externalReferenceCode": "J3Y7_PRIORITIES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "CRITICAL",
@@ -60,7 +60,7 @@
 			}
 		},
 		{
-			"externalReferenceCode": "J3Y7-REGIONS",
+			"externalReferenceCode": "J3Y7_REGIONS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "APAC",
@@ -101,7 +101,7 @@
 			}
 		},
 		{
-			"externalReferenceCode": "J3Y7-RESOLUTIONS",
+			"externalReferenceCode": "J3Y7_RESOLUTIONS",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "APPROVED",
@@ -166,7 +166,7 @@
 			}
 		},
 		{
-			"externalReferenceCode": "J3Y7-STATUSES",
+			"externalReferenceCode": "J3Y7_STATUSES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "ANSWERED",
@@ -193,7 +193,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "IN-PROGRESS",
+					"externalReferenceCode": "IN_PROGRESS",
 					"key": "inProgress",
 					"name": "In Progress",
 					"name_i18n": {
@@ -201,7 +201,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "IN-REVIEW",
+					"externalReferenceCode": "IN_REVIEW",
 					"key": "inReview",
 					"name": "In Review",
 					"name_i18n": {
@@ -247,10 +247,10 @@
 			}
 		},
 		{
-			"externalReferenceCode": "J3Y7-TYPES",
+			"externalReferenceCode": "J3Y7_TYPES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "ACCOUNT-ISSUE",
+					"externalReferenceCode": "ACCOUNT_ISSUE",
 					"key": "accountIssue",
 					"name": "Account Issue",
 					"name_i18n": {
@@ -266,7 +266,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "CREDIT-LIMIT",
+					"externalReferenceCode": "CREDIT_LIMIT",
 					"key": "creditLimitIncrease",
 					"name": "Credit Limit Increase",
 					"name_i18n": {
@@ -274,7 +274,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "DELIVERY-ISSUE",
+					"externalReferenceCode": "DELIVERY_ISSUE",
 					"key": "deliveryIssue",
 					"name": "Delivery Issue",
 					"name_i18n": {
@@ -282,7 +282,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "ORDER-ISSUE",
+					"externalReferenceCode": "ORDER_ISSUE",
 					"key": "orderIssue",
 					"name": "Order Issue",
 					"name_i18n": {
@@ -298,7 +298,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "PRODUCT-ISSUE",
+					"externalReferenceCode": "PRODUCT_ISSUE",
 					"key": "productIssue",
 					"name": "Product Issue",
 					"name_i18n": {
@@ -306,7 +306,7 @@
 					}
 				},
 				{
-					"externalReferenceCode": "SITE-ISSUE",
+					"externalReferenceCode": "SITE_ISSUE",
 					"key": "siteIssue",
 					"name": "Site Issue",
 					"name_i18n": {

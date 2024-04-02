@@ -5,7 +5,7 @@
 		"name_i18n": {
 			"en-US": "Tickets Admins"
 		},
-		"segmentsEntryKey": "M2H8-TICKETS-ADMINS",
+		"segmentsEntryKey": "M2H8_TICKETS_ADMINS",
 		"type": "com.liferay.portal.kernel.model.User"
 	}
 ]

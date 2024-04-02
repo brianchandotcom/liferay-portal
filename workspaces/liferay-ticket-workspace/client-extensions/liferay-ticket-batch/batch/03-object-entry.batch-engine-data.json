@@ -13,12 +13,12 @@
 		{
 			"attachment": {
 				"fileBase64": "@batch_object_entry_file_base64@",
-				"name": "ticket-1.pdf"
+				"name": "ticket_1.pdf"
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
 			"description": "Is there any company that you have partnered with in order to do little adjustments to my frames?",
-			"externalReferenceCode": "TICKET-1",
+			"externalReferenceCode": "TICKET_1",
 			"priority": {
 				"key": "minor",
 				"name": "Minor"
@@ -45,12 +45,12 @@
 		{
 			"attachment": {
 				"fileBase64": "@batch_object_entry_file_base64@",
-				"name": "ticket-2.pdf"
+				"name": "ticket_2.pdf"
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
 			"description": "No, we don’t have any retail stores because we make the digital experience even better.",
-			"externalReferenceCode": "TICKET-2",
+			"externalReferenceCode": "TICKET_2",
 			"priority": {
 				"key": "critical",
 				"name": "Critical"
@@ -77,12 +77,12 @@
 		{
 			"attachment": {
 				"fileBase64": "@batch_object_entry_file_base64@",
-				"name": "ticket-3.pdf"
+				"name": "ticket_3.pdf"
 			},
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
 			"description": "All our glasses and sunglasses are a Standard Size. For the majority of people, this Standard Size is the correct fit on the face.",
-			"externalReferenceCode": "TICKET-3",
+			"externalReferenceCode": "TICKET_3",
 			"priority": {
 				"key": "major",
 				"name": "Major"
@@ -110,7 +110,7 @@
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
 			"description": "I need to understand what's the process for sending my glassess to a review as they have different problems in the side pieces.",
-			"externalReferenceCode": "TICKET-4",
+			"externalReferenceCode": "TICKET_4",
 			"priority": {
 				"key": "moderate",
 				"name": "Moderate"
@@ -138,7 +138,7 @@
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
 			"description": "I need to adquire another pair of glasses. For existing customers, are you thinking on creating a specific promotion?",
-			"externalReferenceCode": "TICKET-5",
+			"externalReferenceCode": "TICKET_5",
 			"priority": {
 				"key": "unassigned",
 				"name": "Unassigned"
@@ -166,7 +166,7 @@
 			"dateCreated": "2023-05-04T21:49:04Z",
 			"dateModified": "2023-05-04T21:49:04Z",
 			"description": "I want to know what are the main recommended brands to clean my glasses, model 45TRGR",
-			"externalReferenceCode": "TICKET-6",
+			"externalReferenceCode": "TICKET_6",
 			"priority": {
 				"key": "unassigned",
 				"name": "Unassigned"

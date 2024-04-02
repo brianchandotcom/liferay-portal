@@ -12,37 +12,37 @@
 	"items": [
 		{
 			"done": false,
-			"externalReferenceCode": "STEP-1",
+			"externalReferenceCode": "STEP_1",
 			"stepNumber": 1
 		},
 		{
 			"done": false,
-			"externalReferenceCode": "STEP-2",
+			"externalReferenceCode": "STEP_2",
 			"stepNumber": 2
 		},
 		{
 			"done": false,
-			"externalReferenceCode": "STEP-3",
+			"externalReferenceCode": "STEP_3",
 			"stepNumber": 3
 		},
 		{
 			"done": false,
-			"externalReferenceCode": "STEP-4",
+			"externalReferenceCode": "STEP_4",
 			"stepNumber": 4
 		},
 		{
 			"done": false,
-			"externalReferenceCode": "STEP-5",
+			"externalReferenceCode": "STEP_5",
 			"stepNumber": 5
 		},
 		{
 			"done": false,
-			"externalReferenceCode": "STEP-6",
+			"externalReferenceCode": "STEP_6",
 			"stepNumber": 6
 		},
 		{
 			"done": false,
-			"externalReferenceCode": "STEP-7",
+			"externalReferenceCode": "STEP_7",
 			"stepNumber": 7
 		}
 	]

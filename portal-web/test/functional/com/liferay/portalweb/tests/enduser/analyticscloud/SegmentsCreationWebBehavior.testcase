@@ -366,18 +366,7 @@ definition {
 	@description = "Create a Web Behavior Segment Submitting a Form"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentSubmittingForm {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: The membership list takes a long time to update
-		// AC Refactor ticket: LRAC-10769
-
 		property test.run.type = "single";
-
-		ACUtils.createFormAndAddToPage();
-
-		Navigator.openURL();
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "ac@liferay.com",
@@ -385,7 +374,9 @@ definition {
 			userLastName = "ac",
 			userScreenName = "ac");
 
-		ACDXPSettings.syncNewContactData();
+		ACUtils.createFormAndAddToPage();
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "ac@liferay.com",
@@ -393,6 +384,7 @@ definition {
 
 		ACUtils.navigateToSitePage(
 			actionType = "Submit Form",
+			documentTitleList = "1,2,3,4",
 			pageName = "AC Page",
 			siteName = "Site Name",
 			submitText = "Test Segments");
@@ -401,7 +393,7 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.switchProperty(propertyName = ${propertyName});
+		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 		ACNavigation.goToSegments();
 
@@ -415,34 +407,17 @@ definition {
 			documentTitle = "Created Form Name",
 			indexField = 1);
 
-		ACSegments.setOccurence(occurenceNumber = 4);
+		ACSegments.previewSegmentMembership();
+
+		ACUtils.viewNameList(nameList = "ac ac");
+
+		ACUtils.closeModal();
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewGenericText(textValueList = "There are no members found on the selected time period.,Check back later to verify if data has been received from your data sources.,Learn more about individuals.");
-
-		ACUtils.launchDXP(userEmailAddress = "ac@liferay.com");
-
-		ACUtils.navigateToSitePage(
-			actionType = "Submit Form",
-			documentTitleList = "1,2,3",
-			pageName = "AC Page",
-			siteName = "Site Name",
-			submitText = "Test Segments");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
 		ACNavigation.goToSegments();
 
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		ACUtils.viewNameList(nameList = "ac ac");
+		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9216 | Test Summary: Add segment using a web behavior 'after' some time"

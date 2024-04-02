@@ -79,41 +79,46 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 			return;
 		}
 
-		Layout layout =
-			_layoutUtilityPageEntryLayoutProvider.
-				getDefaultLayoutUtilityPageEntryLayout(
-					themeDisplay.getScopeGroupId(),
-					LayoutUtilityPageEntryConstants.
-						TYPE_FORGOT_PASSWORD);
+		try {
+			Layout layout =
+				_layoutUtilityPageEntryLayoutProvider.
+					getDefaultLayoutUtilityPageEntryLayout(
+						themeDisplay.getScopeGroupId(),
+						LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD);
 
-		String forgetPasswordURL = null;
+			String forgetPasswordURL = null;
 
-		if (layout != null) {
-			forgetPasswordURL = _portal.getLayoutURL(layout, themeDisplay);
+			if (layout != null) {
+				forgetPasswordURL = _portal.getLayoutURL(layout, themeDisplay);
+			}
+			else {
+				RenderURLTag renderURLTag = new RenderURLTag();
+
+				renderURLTag.setPageContext(pageContext);
+
+				renderURLTag.addParam("saveLastPath", Boolean.FALSE.toString());
+				renderURLTag.addParam(
+					"mvcRenderCommandName", "/login/forgot_password");
+				renderURLTag.setVar("forgotPasswordURL");
+				renderURLTag.setWindowState(WindowState.MAXIMIZED.toString());
+
+				renderURLTag.doTag(pageContext);
+
+				forgetPasswordURL = (String)pageContext.getAttribute(
+					"forgotPasswordURL");
+			}
+
+			IconTag iconTag = new IconTag();
+
+			iconTag.setCssClass("text-4");
+			iconTag.setMessage("forgot-password");
+			iconTag.setUrl(forgetPasswordURL);
+
+			iconTag.doTag(pageContext);
 		}
-		else {
-			RenderURLTag renderURLTag = new RenderURLTag();
-
-			renderURLTag.setPageContext(pageContext);
-
-			renderURLTag.addParam("saveLastPath", Boolean.FALSE.toString());
-			renderURLTag.addParam("mvcRenderCommandName", "/login/forgot_password");
-			renderURLTag.setVar("forgotPasswordURL");
-			renderURLTag.setWindowState(WindowState.MAXIMIZED.toString());
-
-			renderURLTag.doTag(pageContext);
-
-			forgetPasswordURL = (String)pageContext.getAttribute(
-				"forgotPasswordURL");
+		catch (Exception exception) {
+			throw new JspException(exception);
 		}
-
-		IconTag iconTag = new IconTag();
-
-		iconTag.setCssClass("text-4");
-		iconTag.setMessage("forgot-password");
-		iconTag.setUrl(forgetPasswordURL);
-
-		iconTag.doTag(pageContext);
 	}
 
 	@Reference

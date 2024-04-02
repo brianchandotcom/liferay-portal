@@ -221,8 +221,8 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				}
 
 				if (${propertyName} != null) {
-                	return ${propertyName};
-                }
+					return ${propertyName};
+				}
 
 				if (_${propertyName}Supplier != null) {
 					${propertyName} = _${propertyName}Supplier.get();
@@ -234,8 +234,8 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			}
 
 			public Map<String, UnsafeSupplier<Object, Exception>> getLazy${capitalizedPropertyName}() {
-            	return _lazy${capitalizedPropertyName};
-            }
+				return _lazy${capitalizedPropertyName};
+			}
 
 			@JsonIgnore
 			public void setLazy${capitalizedPropertyName}(Map<String, UnsafeSupplier<Object, Exception>> lazy${capitalizedPropertyName}) {
